@@ -1,0 +1,95 @@
+@use 'global' as global;
+
+/* ============================================================
+   SDuX Example Viewer Header (canonical, theme-variable driven)
+   ============================================================ */
+.example-viewer-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: global.$spacing-md;
+  border-radius: var(--sdux-border-radius);
+
+  background-color: var(--sdux-surface-main);
+  color: var(--sdux-text-default);
+  //border: 1px solid var(--sdux-surface-outline);
+  box-shadow: global.$sdux-shadow-base;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+
+  /*Hover elevation (no color override — theme stays intact) */
+  /*
+  I didn't like this 2025-11-28 - Brian
+  &:hover {
+    @include global.sdux-elevate(hover);
+  }
+    */
+
+  /* ================================
+     Title + Subtitle Container
+     ================================ */
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: global.$spacing-xs;
+    flex: 1;
+    user-select: none;
+
+    .title {
+      @include global.sdux-font-body(
+        global.$font-size-lg,
+        global.$font-weight-bold
+      );
+      color: var(--sdux-text-default);
+    }
+
+    .sub-title {
+      @include global.sdux-font-body(
+        global.$font-size-sm,
+        global.$font-weight-medium
+      );
+      color: var(--sdux-text-subtle);
+    }
+  }
+
+  .button-container {
+    .check-mark {
+      @include global.sdux-icon-button(36, global.$sdux-success-base);
+    }
+
+    mat-icon {
+      transition: opacity 0.2s ease;
+    }
+  }
+
+  /* ================================
+     Icon Buttons
+     ================================ */
+  button[mat-icon-button] {
+    @include global.sdux-icon-button();
+  }
+
+  /* Spacing between icon buttons */
+  button + button {
+    margin-left: global.$spacing-xs;
+  }
+
+  /* ===================================
+     Responsive adjustments
+     =================================== */
+  @media (max-width: global.$breakpoint-md) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: global.$spacing-sm;
+
+    button[mat-icon-button] {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}

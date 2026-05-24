@@ -1,0 +1,109 @@
+<nav aria-label="Pipeline Controllers">
+  <mat-expansion-panel class="nav-expansion">
+    <mat-expansion-panel-header>
+      <span class="nav-section-label">Pipeline Controllers</span>
+    </mat-expansion-panel-header>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header"
+          >Architecture Overview</span
+        >
+      </mat-expansion-panel-header>
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/controllers/what-is-a-controller"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">What is a Controller?</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/extensions/building-custom-controllers"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Building Custom Controllers</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/welcome/testing"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Testing <sdux-brand-name /> </span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/controllers/policy"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Policy Overview</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/controllers/with-delay-controller"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">Delay</span>
+    </a>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Errors</span>
+      </mat-expansion-panel-header>
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/controllers/with-max-failures-controller"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Max Failures</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/controllers/with-replay-global-error-controller"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Replay Global Error</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/controllers/with-stepwise-controller"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Stepwise</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/controllers/with-tab-sync-controller"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <div class="menu-icon menu-content">
+        Tab Sync
+        <sdux-image
+          class="logo"
+          image="brand/brand-icon.svg"
+          height="20"></sdux-image>
+      </div>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/controllers/with-throttle-controller"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">Throttle</span>
+    </a>
+  </mat-expansion-panel>
+</nav>

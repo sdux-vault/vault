@@ -1,0 +1,478 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Object Shallow Merge Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Object Shallow Merge</strong> is a <em>Merge behavior</em> that
+      combines object-based
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+      values using a <em>single-level</em> merge strategy during the
+      <strong>Merge stage</strong>.
+    </p>
+
+    <p>
+      This behavior treats objects as <em>immutable values</em>. When both the
+      current state and the incoming value are plain objects, the incoming
+      object is spread over the existing state, producing a new object where
+      only the first-level properties are merged.
+    </p>
+
+    <p>
+      Nested objects are <em>not</em> merged recursively. If a nested property
+      exists in the incoming value, it fully replaces the corresponding property
+      in the current state. Non-object values, arrays, and
+      <code>null</code> values bypass merging and are forwarded directly.
+    </p>
+
+    <p>
+      Object Shallow Merge runs within the core Merge stage and produces the
+      merged candidate state passed to downstream pipeline stages. It does not
+      mutate existing state, does not emit snapshots directly, and does not
+      influence pipeline control flow beyond producing the merged value.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      The Merge stage is entered exclusively through explicit state-update APIs.
+      Pipeline executions that invoke merge semantics are initiated via the
+      <strong>mergeState</strong> method, which supply the incoming value and
+      optional merge configuration used by the active Merge behavior.
+    </p>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/1.0/1.2.2-merge-state-flow.svg"
+        [tooltip]="'Merge State Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Object shallow merge behavior is configured as part of the
+        <strong>Merge stage</strong> and defines how object-based
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        state values are combined with incoming resolved values using
+        <em>single-level, structural merge semantics</em>.
+      </p>
+
+      <p>
+        Exactly one merge behavior is active for a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> at any
+        time. When
+        <strong
+          ><a href="/docs/pipeline/addons/with-object-shallow-merge-behavior"
+            >withObjectShallowMergeBehavior</a
+          ></strong
+        >
+        is provided, it replaces the default merge strategy and becomes the
+        active merge behavior for that
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+
+      <p>
+        Merge behaviors may be influenced by the
+        <strong>clearUndefined</strong> configuration flag. When
+        <em>clearUndefined</em> is enabled, an incoming <em>undefined</em> value
+        is treated as an intentional clear request and results in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        being cleared. When disabled, incoming <em>undefined</em> values
+        preserve the existing state and produce no merge output.
+      </p>
+
+      <p>
+        The <em>clearUndefined</em> option is supplied at the time a merge-style
+        update is initiated and is evaluated by the active merge behavior during
+        the Merge stage. It does not affect resolution, operators, or downstream
+        pipeline stages.
+      </p>
+
+      <p>
+        Object shallow merge combines only the first level of
+        <em>plain-object</em> properties. Nested objects are not merged
+        recursively and are replaced in their entirety when present in the
+        incoming value. Non-object values, arrays, and <code>null</code> values
+        bypass merging and are forwarded directly.
+      </p>
+
+      <sdux-vault-object-merge-behaviors-common [type]="'shallow'" />
+
+      <sdux-vault-merge-fluent-api-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Evaluation Outcomes</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Object Shallow Merge</strong> behavior evaluates the
+        <em
+          >current committed
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state</em
+        >
+        and the <em>incoming resolved value</em> to produce a single merged
+        result during the <strong>Merge stage</strong>.
+      </p>
+
+      <p>
+        When both the current state and incoming value are
+        <em>plain objects</em>, Object Shallow Merge performs a
+        <em>single-level merge</em>. Properties from the incoming object
+        overwrite properties on the existing state at the top level only. Nested
+        objects are <em>not merged recursively</em> and are replaced in their
+        entirety when present.
+      </p>
+
+      <p>
+        Non-object values—including primitives, arrays, and
+        <code>null</code>—bypass merging and replace the existing state
+        directly. Existing state is never mutated.
+      </p>
+
+      <p>
+        When the incoming value is <em>undefined</em>, merge behavior is
+        controlled by the <em>clearUndefined</em> configuration option. This
+        determines whether the existing state is preserved or intentionally
+        cleared.
+      </p>
+
+      <div class="table-title">Example 1: Shallow Object Merge</div>
+      <table aria-label="Example 1: Shallow Object Merge">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: &#123; user: &#123; id: 1, name: "Jane" &#125;, active:
+              true &#125;
+              <p>next: &#123; user: &#123; name: "Jane Doe" &#125; &#125;</p>
+            </td>
+            <td>
+              &#123; user: &#123; name: "Jane Doe" &#125;, active: true &#125; —
+              nested object is replaced, not merged
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Example 2: Non-Object Incoming Value</div>
+      <table aria-label="Example 2: Non-Object Incoming Value">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: &#123; count: 5 &#125;
+              <p>next: 9</p>
+            </td>
+            <td>9 — incoming value replaces the existing state</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Example 3: Null Incoming Value</div>
+      <table aria-label="Example 3: Null Incoming Value">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: &#123; enabled: true &#125;
+              <p>next: null</p>
+            </td>
+            <td>null — null replaces the existing state directly</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">
+        Example 4: Undefined Incoming Value (Preserve)
+      </div>
+      <table aria-label="Example 4: Undefined Incoming Value (Preserve)">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: &#123; enabled: true &#125;
+              <p>next: undefined</p>
+              <p>clearUndefined: false</p>
+            </td>
+            <td>&#123; enabled: true &#125; — existing state is preserved</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Example 5: Undefined Incoming Value (Clear)</div>
+      <table aria-label="Example 5: Undefined Incoming Value (Clear)">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: &#123; enabled: true &#125;
+              <p>next: undefined</p>
+              <p>clearUndefined: true</p>
+            </td>
+            <td>undefined — state is intentionally cleared</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <h4>
+        Example 1: Use the withObjectShallowMergeBehavior in a FeatureCell
+      </h4>
+
+      <p>
+        This example demonstrates a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        configured with the
+        <strong
+          ><a href="/docs/pipeline/addons/with-object-shallow-merge-behavior"
+            >withObjectShallowMergeBehavior</a
+          ></strong
+        >. Incoming values provided via <code>mergeState</code> are merged at
+        the <em>top level only</em>. When a property exists in both the current
+        state and the incoming value, the incoming property replaces the
+        existing one entirely.
+      </p>
+
+      <p>
+        Shallow merge does <em>not</em> recursively combine nested objects. If a
+        nested object is provided in the incoming value, it replaces the
+        corresponding nested object on the existing state rather than merging
+        its fields.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        When a custom merge behavior is supplied, it replaces the default
+        <strong
+          ><a href="/docs/pipeline/behaviors/merge/with-array-merge-behavior"
+            >withArrayMergeBehavior</a
+          ></strong
+        >
+        for that
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        Exactly one merge behavior is active at any time.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Use the Object Shallow Merge in a FeatureCell'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {
+        key: 'employee-profile',
+        initialState: {
+          user: {
+            id: 1,
+            name: 'Jane',
+            preferences: {
+              theme: 'light'
+            }
+          },
+          active: true
+        }
+      },
+      [
+        // Explicitly attach the Object Shallow Merge behavior
+        withObjectShallowMergeBehavior
+      ]
+    )
+  ]
+};
+
+// bank-employee.service.ts
+
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { EmployeeProfile } from './employee-profile.shape';
+
+@FeatureCell&lt;EmployeeProfile&gt;('employee-profile')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault&lt;EmployeeProfile&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+
+  updateEmployee(): void {
+    this.vault.mergeState({
+      value: {
+        user: {
+          name: 'Jane Doe'
+        }
+      }
+    });
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Use the Object Shallow Merge in a FeatureCell'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;EmployeeProfile&gt;(
+  {
+    key: 'employee-profile',
+    initialState: {
+      user: {
+        id: 1,
+        name: 'Jane',
+        preferences: {
+          theme: 'light'
+        }
+      },
+      active: true
+    },
+  },
+  [
+    // Explicitly attach the Object Shallow Merge behavior
+    withObjectShallowMergeBehavior
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+
+// Shallow-merge a top-level update
+employeeCell.mergeState({
+  value: {
+    user: {
+      name: 'Jane Doe'
+    }
+  }
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Use the Object Shallow Merge in a FeatureCell'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;EmployeeProfile&gt;(
+  {
+    key: 'employee-profile',
+    initialState: {
+      user: {
+        id: 1,
+        name: 'Jane',
+        preferences: {
+          theme: 'light'
+        }
+      },
+      active: true
+    },
+  },
+  [
+    // Explicitly attach the Object Shallow Merge behavior
+    withObjectShallowMergeBehavior
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+
+// Shallow-merge a top-level update
+employeeCell.mergeState({
+  value: {
+    user: {
+      name: 'Jane Doe'
+    }
+  }
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

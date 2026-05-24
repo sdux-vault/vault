@@ -1,0 +1,624 @@
+<nav aria-label="Pipeline Behaviors">
+  <mat-expansion-panel class="nav-expansion">
+    <mat-expansion-panel-header>
+      <span class="nav-section-label">Pipeline Behaviors</span>
+    </mat-expansion-panel-header>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header"
+          >Architecture Overview</span
+        >
+      </mat-expansion-panel-header>
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/what-is-a-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">What is a Behavior?</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/what-is-an-addon"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">What is an Add-on?</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/extensions/building-custom-behaviors"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Building Custom Behaviors</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/welcome/testing"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Testing <sdux-brand-name /> </span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/behaviors/state/updating"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Updating State</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/behaviors/deprecated/dispatch"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Dispatch <sdux-deprecated /> </span>
+    </a>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <div class="menu-icon">
+          <span class="sub-menu-content sub-item sub-header">Encrypt</span>
+          <sdux-image
+            class="logo"
+            image="brand/brand-icon.svg"
+            height="20"></sdux-image>
+        </div>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/encrypt"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/encrypt/with-aes256encrypt-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <div class="menu-icon">
+            <span class="menu-content">AES-256 Encryption</span>
+            <sdux-image
+              class="logo"
+              image="brand/brand-icon.svg"
+              height="20"></sdux-image>
+          </div>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Entity Access</span>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/entity-access"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/entity-access/with-lookup-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Lookup</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/entity-access/with-query-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Query</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/entity-access/with-state-cache-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">State Cache</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Error</span>
+      </mat-expansion-panel-header>
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/error"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/error/with-core-error-callback-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Error Callbacks</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/error/with-error-transform-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Error Transforms</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/behaviors/filters"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Filters</span>
+    </a>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Initialize</span>
+      </mat-expansion-panel-header>
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/initialize"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/initialize"
+          fragment="hydrate"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">hydrate()</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/initialize"
+          fragment="initial-state"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">initialState</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/initialize"
+          fragment="replace-state"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">replaceState</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/initialize"
+          fragment="persisted-storage"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Storage</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Interceptors</span>
+      </mat-expansion-panel-header>
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/interceptors"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/interceptors/rxjs"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">RxJS</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/interceptors/with-global-error-pause-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Global Error Pause</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Entity Access</span>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/entity-access/with-lookup-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Lookup</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Merge</span>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/merge"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Array Append Merge</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/merge/with-array-merge-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Array Merge (default)</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/merge/with-array-push-merge-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Array Push Merge</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/merge/with-object-deep-merge-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Object Deep Merge</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/merge/with-object-shallow-merge-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Object Shallow Merge</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Operators</span>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/operators"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/operators/with-distinct-until-changed"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Distinct Until Changed</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <div class="menu-icon">
+          <span class="sub-menu-content sub-item sub-header">Persist</span>
+          <sdux-image
+            class="logo"
+            image="brand/brand-icon.svg"
+            height="20"></sdux-image>
+        </div>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/persist"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <div class="menu-icon">
+            <span class="menu-content sub-item">Stage Overview</span>
+            <sdux-image
+              class="logo"
+              image="brand/brand-icon.svg"
+              height="20"></sdux-image>
+          </div>
+        </a>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/persist/with-cookie-storage-persist-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Cookie Storage</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/persist/with-local-storage-persist-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Local Storage</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/persist/with-session-storage-persist-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Session Storage</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/controllers/policy"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Policy (Controllers)</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/behaviors/reducers"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Reducers</span>
+    </a>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Resolve</span>
+      </mat-expansion-panel-header>
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/resolve"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/resolve/with-core-from-deferred-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">fromDeferred Bridge</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/resolve/with-core-from-observable-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">fromObservable Bridge</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/resolve/with-core-from-promise-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">fromPromise Bridge</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/resolve/with-core-from-stream-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">fromStream</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/resolve/with-http-resource-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">HttpResource Resolve (Angular)</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/resolve/with-core-promise-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Promise Resolve</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/resolve/with-core-observable-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Observable Resolve</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/resolve/with-core-value-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Value Resolve</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/behaviors/deprecated/selectors"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Selectors <sdux-deprecated /> </span>
+    </a>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">State</span>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/state"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/state/updating"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Updating State</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/state/with-core-emit-state-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Emit State Emit</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Stepwise</span>
+      </mat-expansion-panel-header>
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/stepwise"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/stepwise/with-stepwise-filter-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Stepwise Filter</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/stepwise/with-stepwise-reducer-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Stepwise Reducer</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/stepwise/with-stepwise-resolve-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Stepwise Resolve</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/behaviors/tab-sync"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <div class="menu-icon menu-content">
+        Tab Sync
+        <sdux-image
+          class="logo"
+          image="brand/brand-icon.svg"
+          height="20"></sdux-image>
+      </div>
+    </a>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Taps</span>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/taps"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Stage Overview</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/taps/with-core-after-tap-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">After Tap</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/taps/with-core-before-tap-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item">Before Tap</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+  </mat-expansion-panel>
+</nav>

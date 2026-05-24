@@ -1,0 +1,251 @@
+# Interceptor Stage — Contract & Checklist
+
+This document defines the **Interceptor stage contract** in the SDuX pipeline.  
+It is intentionally short, strict, and checklist-oriented so behaviors can be reviewed mechanically and enforced consistently.
+
+---
+
+## Purpose
+
+**Interceptors decide whether a replace or merge candidate may enter the pipeline.**
+
+They are **gatekeepers**, not transformers, not schedulers, and not emitters.
+
+### Does this logic decide _before_ the attempt runs, or _during_ execution?
+
+**If the answer is: _Before the attempt runs_ → Use a Controller**
+
+- Decides **whether** and **when** an attempt may enter the pipeline
+- Can wait, block, retry, buffer, abort, or coordinate over time or external signals
+- Operates on **attempts**, not values
+
+**If the answer is: _During execution_ → Use an Interceptor**
+
+- Runs **after** an attempt is already admitted
+- Transforms, filters, validates, or observes the value
+- Operates on **values**, not scheduling or admission
+
+---
+
+### What question does it answer?
+
+**“Should this attempt run right now?” → Controller**
+
+- Controls pipeline admission and timing
+
+**“What should happen to the value now that it’s running?” → Interceptor**
+
+- Controls data flow and transformation
+
+---
+
+### Does it wait, sleep, or react later?
+
+**Yes → Controller**
+
+- Time-based logic, IO, approvals, coordination
+- Can block the pipeline intentionally
+
+**No (single sync or awaited step) → Interceptor**
+
+- Pure value handling
+- No temporal coordination
+
+---
+
+### Does it affect _when_ the pipeline runs or _how_ the value flows?
+
+**When → Controller**
+
+- Scheduling
+- Policy enforcement
+- Gating and coordination
+
+**How → Interceptor**
+
+- Mapping
+- Filtering
+- Enrichment
+
+---
+
+## Position in Pipeline
+
+```text
+Queue
+↓
+Interceptors   ← YOU ARE HERE
+↓
+Resolve
+↓
+Merge / Replace
+↓
+Operators → Filters → Reducers → State
+```
+
+Interceptors run **after queueing** and **before resolve**.
+
+---
+
+## Input
+
+- `BehaviorContext<T>`
+  - `ctx.incoming`: candidate state input
+  - `ctx.lastSnapshot`: previous committed state
+  - `ctx.operation`: Replace | Merge
+- Context is **read-only**.
+
+---
+
+## Output (STRICT)
+
+An interceptor may return **only**:
+
+| Return value | Meaning                         |
+| ------------ | ------------------------------- |
+| `undefined`  | **Allow** candidate to continue |
+| `VAULT_STOP` | **Abort** this candidate        |
+
+❌ Interceptors **must not**:
+
+- return promises that emit values later
+- return transformed values
+- re-enqueue work
+- interact with the conductor
+- emit or commit state
+
+---
+
+## Execution Model
+
+- Interceptors are awaited **sequentially**
+- The **first `VAULT_STOP` aborts the candidate**
+- If all interceptors return `undefined`, the pipeline continues
+
+```ts
+const result = await behavior.applyInterceptor(ctx);
+if (isSignalStop(result)) return VAULT_STOP;
+```
+
+---
+
+## Sync / Async Rules
+
+- Interceptors **may be async**
+- Async work is allowed **only** to decide allow vs stop
+- The decision must be finalized **within the same invocation**
+- Interceptors must **never resume the pipeline later**
+
+### ✅ Valid async use
+
+- checking external state
+- awaiting I/O or signals required to decide allow vs stop
+
+### ❌ Invalid async use
+
+- delaying admission using timers
+- resuming a candidate after the call returns
+- replaying or buffering values
+- reopening admission based on elapsed time
+
+---
+
+### ⏱️ Time-Based Rule (STRICT)
+
+Interceptors **must not** use time to reopen or resume admission.
+
+- Timers may exist **only** to track a gate window
+- Timers must **never** cause a previously blocked candidate to proceed
+- Any behavior that allows a candidate **later** based on elapsed time  
+  **must be implemented as a Controller**
+
+---
+
+## Error Handling
+
+- Any thrown error:
+  - is captured by the orchestrator
+  - aborts the pipeline
+  - enters standard error handling
+- Interceptors must **not** swallow errors
+
+---
+
+## State Mutation Rules
+
+- ❌ Never mutate `ctx`
+- ❌ Never mutate `ctx.incoming`
+- ❌ Never commit state
+- ❌ Never trigger side effects that emit state
+
+Interceptors **observe only**.
+
+---
+
+## Lifecycle Responsibilities
+
+If internal state is used (timers, subscriptions):
+
+- `destroy()` must clean up
+- `reset()` must fully clear state
+- No timers or subscriptions may survive reset/destroy
+
+---
+
+## Behavior Classification Examples
+
+|                        | Behavior | Valid as Interceptor?               | Reason |
+| ---------------------- | -------- | ----------------------------------- | ------ |
+| Destroyed gate         | ✅       | Terminal, irreversible condition    |
+| Feature disabled gate  | ✅       | Static configuration                |
+| Read-only gate         | ✅       | Deterministic legality check        |
+| Frozen snapshot gate   | ✅       | Hard immutability constraint        |
+| Permission / license   | ✅       | Binary external authorization       |
+| Throttle (any form)    | ❌       | Time-based policy → Controller      |
+| Debounce (any form)    | ❌       | Time-based admission → Controller   |
+| Retry / buffer / delay | ❌       | Lifecycle & scheduling → Controller |
+
+---
+
+## Mental Model
+
+**Interceptor** = “Can this candidate enter right now?”  
+**Controller** = “What should happen to this attempt over time?”
+
+If it:
+
+- answers yes or no within the same invocation (sync or awaited)
+- does **not** depend on elapsed time after return  
+  → **Interceptor**
+
+If it:
+
+- waits outside of the invocation
+- retries
+- buffers
+- reacts later  
+  → **Controller**
+
+---
+
+## Review Checklist
+
+Before approving an interceptor:
+
+- [ ] Returns only `undefined` or `VAULT_STOP`
+- [ ] Never emits state
+- [ ] Never resumes pipeline later
+- [ ] Does not use time to reopen or resume admission
+- [ ] No conductor interaction
+- [ ] Errors propagate naturally
+- [ ] Timers/subscriptions cleaned up
+- [ ] Pure gatekeeping logic only
+
+---
+
+**This contract is strict and intentional.**  
+Violations will cause deadlocks, hangs, replay bugs, or controller interference.
+
+```
+
+```

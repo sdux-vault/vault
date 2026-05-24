@@ -1,0 +1,246 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Vault Initialization</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Vault Initialization</strong> establishes the global execution
+      environment required for all FeatureCells. It configures platform-wide
+      behavior such as scheduling, diagnostics, and logging policy before any
+      pipeline execution occurs.
+    </p>
+
+    <h4>Initialization Contract Summary</h4>
+    <ul>
+      <li>Vault initialization must occur once at application startup</li>
+      <li>Initialization is global and affects all FeatureCells</li>
+      <li>
+        Configuration applies platform-wide and is not
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a
+        >-specific
+      </li>
+      <li>Initialization does not modify pipeline logic or state semantics</li>
+      <li>All options are optional and have defined defaults</li>
+    </ul>
+
+    <p>
+      Vault initialization defines <strong>execution context only</strong>. It
+      does not participate in state computation, pipeline stages, or value
+      transformation. Its responsibility is limited to preparing shared runtime
+      services required for
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      execution.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      <strong
+        >Vault initialization must precede
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        registration.</strong
+      >
+      The Vault runtime is required before any
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> may be
+      declared or initialized. Calling <strong>provideFeatureCell</strong>, or
+      using the
+      <strong
+        >&#64;<a href="/docs/references/functions/feature-cell"
+          >FeatureCell</a
+        ></strong
+      >
+      decorator in Angular, prior to invoking
+      <strong
+        ><a href="/docs/references/functions/provide-vault"
+          >provideVault</a
+        ></strong
+      >
+      is invalid and will result in a runtime error. This ordering guarantee
+      ensures that all FeatureCells execute within a fully prepared and
+      consistent global execution environment.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- INITIALIZATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Initialization</div>
+
+    <div class="section-body">
+      <p>
+        The Vault is initialized using the
+        <strong
+          ><a href="/docs/references/functions/provide-vault"
+            >provideVault</a
+          ></strong
+        >
+        API. This function establishes the global Vault runtime and must be
+        invoked before any FeatureCells are created or initialized.
+      </p>
+
+      <p>
+        Initialization is performed once, typically during application
+        bootstrap. Repeated calls do not create additional Vault instances and
+        do not reconfigure existing runtime state.
+      </p>
+
+      <h4>Global Scope</h4>
+      <p>
+        Vault initialization is <strong>application-scoped</strong>. All
+        FeatureCells created within the application share the same Vault runtime
+        configuration, including queue policy, diagnostics settings, and logging
+        behavior.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Vault initialization accepts an optional configuration object that
+        defines platform-level behavior. These settings influence diagnostics,
+        scheduling infrastructure, and logging policy, but they do not alter
+        pipeline semantics or state contracts.
+      </p>
+
+      <p>
+        All configuration options are optional. When omitted, the Vault applies
+        its default runtime configuration.
+      </p>
+    </div>
+
+    <sdux-vault-config-common />
+
+    <sdux-vault-log-level-common />
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- API -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">API</div>
+
+    <div class="section-body">
+      <div class="table-title">
+        <a href="/docs/references/functions/provide-vault">provideVault</a>
+      </div>
+
+      <table aria-label="provideVault">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Signature</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <strong
+                ><a href="/docs/references/functions/provide-vault"
+                  >provideVault</a
+                ></strong
+              >
+              <p>inputs:</p>
+              <ul>
+                <li>
+                  options:
+                  <a href="/docs/references/config/vault-config">VaultConfig</a>
+                  (optional)
+                </li>
+              </ul>
+              <p>returns: void</p>
+            </td>
+            <td>
+              Initializes the global Vault runtime using the supplied
+              configuration. This function prepares shared execution services
+              required by all FeatureCells and must be invoked before
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              initialization.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLES -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <p>
+                How
+                <a href="/docs/references/functions/provide-vault"
+                  >provideVault</a
+                >
+                is initialized using Angular.
+              </p>
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Initialize the Vault with Default Settings</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Default Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault()
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>
+                  Example 2: Initialize the Vault with Diagnostics Enabled
+                </h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Vault Initialization with Configuration'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ 
+      devMode: true,
+      logLevel: 'debug'
+    })
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [
+    { "path": "./libs/addons/tsconfig.lib.json" },
+    { "path": "./libs/addons/tsconfig.spec.json" },
+    { "path": "./libs/core/tsconfig.lib.json" },
+    { "path": "./libs/core/tsconfig.spec.json" },
+    { "path": "./libs/core-extensions/angular/tsconfig.lib.json" },
+    { "path": "./libs/core-extensions/angular/tsconfig.spec.json" },
+    { "path": "./libs/devtools/tooling/tsconfig.lib.json" },
+    { "path": "./libs/devtools/tooling/tsconfig.spec.json" },
+    { "path": "./libs/shared/tsconfig.lib.json" },
+    { "path": "./libs/shared/tsconfig.spec.json" },
+    { "path": "./apps/devtools-ui/tsconfig.app.json" },
+    { "path": "./apps/devtools-ui/tsconfig.spec.json" },
+    { "path": "./apps/docs-app/tsconfig.app.json" },
+    { "path": "./apps/docs-app/tsconfig.spec.json" },
+    { "path": "./libs/testing/integration/tsconfig.lib.json" },
+    { "path": "./libs/testing/integration/tsconfig.spec.json" },
+    { "path": "./libs/ui/web-components/tsconfig.lib.json" },
+    { "path": "./libs/ui/web-components/tsconfig.spec.json" }
+  ]
+}

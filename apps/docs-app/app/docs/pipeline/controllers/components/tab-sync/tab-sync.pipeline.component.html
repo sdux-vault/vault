@@ -1,0 +1,872 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-05-11 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Tab Sync Controller</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Tab Sync Controller</strong> coordinates
+      <em>cross-tab state negotiation</em> during
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      initialization. When a new browser tab opens, the controller determines
+      whether existing peer tabs hold established state and, if so, synchronizes
+      that state into the new tab before the initial pipeline execution
+      completes.
+    </p>
+
+    <h4>Tab Sync Contract Summary</h4>
+    <ul>
+      <li>
+        The controller participates exclusively in the
+        <strong>Policy stage</strong> during the first pipeline Attempt
+      </li>
+      <li>
+        Peer detection uses a <strong>localStorage tab registry</strong> to
+        deterministically identify active tabs without relying on
+        timing-sensitive negotiation
+      </li>
+      <li>
+        Each tab maintains a <strong>heartbeat</strong> that refreshes its
+        registry timestamp at a fixed interval; stale entries are pruned
+        automatically
+      </li>
+      <li>
+        When peers exist, the controller sends a snapshot request via the native
+        browser
+        <strong>BroadcastChannel</strong> and waits for a peer response or a
+        fixed internal timeout
+      </li>
+      <li>
+        When no peers exist, the controller immediately clears the negotiation
+        cache and abstains, allowing the pipeline to proceed with its initial
+        state
+      </li>
+      <li>
+        After the first Attempt, the controller abstains on all subsequent
+        pipeline messages and responds to snapshot requests from newly opened
+        tabs
+      </li>
+    </ul>
+
+    <p>
+      The Tab Sync Controller does not observe, derive, or modify state values.
+      Its sole responsibility is to coordinate whether the initial pipeline
+      execution should proceed with bootstrap state or adopt established state
+      from a peer tab. Once negotiation completes, the controller becomes
+      passive and delegates all subsequent cross-tab state broadcasting to the
+      <strong>Tab Sync State Behavior</strong>.
+    </p>
+
+    <p>
+      The Tab Sync system requires both the
+      <strong>Tab Sync Controller</strong> and the
+      <strong>Tab Sync State Behavior</strong> to be registered on the same
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>. The
+      controller handles the initial negotiation, while the behavior manages
+      ongoing cross-tab state broadcasting and reception after negotiation
+      completes.
+    </p>
+
+    <div class="callout callout-info">
+      <p>
+        The Tab Sync Controller uses a two-phase broadcast gating mechanism to
+        prevent bootstrap state from overwriting established state in peer tabs.
+        After a <strong>ClearCache</strong> resolution (no peers responded), the
+        first pipeline finalize enables broadcasting but does not broadcast.
+        Only subsequent pipeline finalizations are broadcast to other tabs. This
+        ensures that a new tab's initial empty or default state is never
+        propagated to existing tabs that hold meaningful data.
+      </p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">License Requirement</div>
+      <p>
+        Tab Sync requires a
+        <strong> valid <sdux-vault-brand-name [tm]="true" /> license </strong>.
+        License validation is performed asynchronously at construction time
+        using the license token provided in the behavior context. If validation
+        fails, the behavior is marked as unlicensed and the pipeline rejects it.
+      </p>
+      <a [routerLink]="[]" fragment="licensing-and-tab-sync">Learn More →</a>
+    </div>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- Design Decisions -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Design Decisions</div>
+
+    <div class="section-body">
+      <p>
+        The Tab Sync Controller was designed to solve a specific production
+        failure: browser background-tab throttling makes timing-based
+        negotiation unreliable. When multiple tabs are open, background tabs may
+        be throttled by the browser, causing BroadcastChannel messages to be
+        delayed beyond the negotiation timeout. This led to new tabs incorrectly
+        concluding that no peers existed and broadcasting their bootstrap state,
+        overwriting established state in other tabs.
+      </p>
+
+      <h4>localStorage Tab Registry</h4>
+      <p>
+        Instead of relying solely on BroadcastChannel responses within a fixed
+        timeout, the controller uses a
+        <strong>localStorage tab registry</strong>
+        for deterministic peer detection. Each tab registers itself in the
+        registry on construction and maintains a heartbeat that refreshes its
+        timestamp at a fixed interval. When a new tab opens, it reads the
+        registry to determine whether peers exist before deciding whether to
+        send a snapshot request or proceed independently.
+      </p>
+
+      <p>
+        This approach eliminates the race condition inherent in timing-based
+        detection: if the registry contains fresh entries, peers definitively
+        exist regardless of whether those tabs respond to BroadcastChannel
+        messages within the timeout window.
+      </p>
+
+      <h4>Two-Phase Broadcast Gating</h4>
+      <p>
+        When a tab determines it is the first tab online (no peers in the
+        registry), the controller issues a <strong>ClearCache</strong> command.
+        The behavior sets <code>negotiationComplete</code> to
+        <code>true</code> but leaves <code>broadcastReady</code> as
+        <code>false</code>. The first <code>FinalizePipeline</code> after
+        ClearCache enables <code>broadcastReady</code> but does
+        <strong>not</strong> broadcast that initial state. Only subsequent
+        pipeline finalizations are broadcast.
+      </p>
+
+      <p>
+        This two-phase gating prevents the exact production failure where a new
+        tab's bootstrap state (<code>null</code> or default values) was
+        broadcast to peer tabs, overwriting their established state.
+      </p>
+
+      <h4>Peer Timeout</h4>
+      <p>
+        When peers are detected in the registry, the controller sends a snapshot
+        request via BroadcastChannel and races a peer response against a fixed
+        internal timeout. If a peer responds with a snapshot, the controller
+        issues a <strong>CommitCache</strong> command and aborts the initial
+        pipeline Attempt. If the timeout expires before any peer responds, the
+        controller falls back to <strong>ClearCache</strong> and abstains.
+      </p>
+
+      <h4>Settling Period</h4>
+      <p>
+        After receiving a peer snapshot and issuing CommitCache, the controller
+        enters a brief settling period during which subsequent Attempt messages
+        are aborted. This prevents the tab's bootstrap pipelines from executing
+        and potentially broadcasting stale initial state before the synced state
+        has been fully committed.
+      </p>
+
+      <div class="callout callout-info">
+        <div class="title">Degraded Mode</div>
+        <p>
+          If the <code>BroadcastChannel</code> API or <code>localStorage</code>
+          is unavailable, the Tab Sync Controller degrades gracefully — it
+          immediately clears the negotiation cache and abstains, allowing the
+          pipeline to proceed with bootstrap state. The behavior continues to
+          operate as standard Core State. No errors are thrown and no pipeline
+          execution is blocked. The
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          functions normally as a single-tab state container.
+        </p>
+        <p>
+          This makes Tab Sync safe to use in server-side rendering (SSR),
+          Node.js services, Deno, web workers, and any other runtime where
+          browser-specific APIs are not present. The same
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          configuration works across all environments without conditional logic
+          or feature detection.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Diagrams -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/9.0/9.5-tab-sync-controller-flow.svg"
+        [tooltip]="'Tab Sync Controller and Behavior Flow'" />
+
+      <sdux-diagram
+        image="diagrams/6.0/6.0-controller-flow.svg"
+        [tooltip]="'Controller Flow'" />
+
+      <sdux-diagram
+        image="diagrams/9.0/9.1-policy-flow.svg"
+        [tooltip]="'Policy Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Configuration -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Tab Sync Controller</strong> operates within the
+        <strong>Policy stage</strong> during the first pipeline Attempt. It uses
+        a localStorage tab registry for deterministic peer detection and
+        BroadcastChannel for cross-tab snapshot exchange.
+      </p>
+
+      <p>
+        The controller does not require explicit configuration options. Peer
+        detection, heartbeat intervals, stale thresholds, and timeout durations
+        are managed internally with production-tested defaults.
+      </p>
+
+      <p>
+        Tab Sync requires both a controller and a behavior to be registered on
+        the same
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. The
+        controller handles the initial cross-tab negotiation, while the behavior
+        manages ongoing state broadcasting and reception after negotiation
+        completes.
+      </p>
+
+      <div class="table-title"><sdux-brand-name /> Tab Sync Controller</div>
+      <table aria-label="Tab Sync Controller">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Controller</th>
+            <th scope="col" class="column-auto">Description</th>
+            <th scope="col" class="column-150">Package</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <strong
+                ><a href="/docs/pipeline/controllers/with-tab-sync-controller"
+                  >withTabSyncController</a
+                ></strong
+              >
+              <p>type: controller</p>
+            </td>
+            <td>
+              Coordinates initial cross-tab state negotiation using a
+              localStorage tab registry for peer detection and BroadcastChannel
+              for snapshot exchange. On the first pipeline Attempt, the
+              controller determines whether to adopt peer state or proceed
+              independently. After negotiation, the controller abstains on all
+              subsequent Attempts and responds to snapshot requests from newly
+              opened tabs.
+            </td>
+            <td><sdux-package-name />/core</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Internal Configuration Constants</div>
+      <table aria-label="Internal Configuration Constants">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Constant</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="column-250"><code>TAB_SYNC_PEER_TIMEOUT</code></td>
+            <td class="column-auto">
+              Maximum time (in milliseconds) to wait for a peer snapshot
+              response before falling back to ClearCache. Default:
+              <strong>3,000ms</strong>.
+            </td>
+          </tr>
+          <tr>
+            <td class="column-250"><code>TAB_SYNC_HEARTBEAT_INTERVAL</code></td>
+            <td class="column-auto">
+              Interval (in milliseconds) at which each tab refreshes its
+              registry timestamp. Default: <strong>5,000ms</strong>.
+            </td>
+          </tr>
+          <tr>
+            <td class="column-250"><code>TAB_SYNC_STALE_THRESHOLD</code></td>
+            <td class="column-auto">
+              Maximum age (in milliseconds) of a registry entry before it is
+              considered stale and pruned. Default:
+              <strong>15,000ms</strong>.
+            </td>
+          </tr>
+          <tr>
+            <td class="column-250"><code>TAB_SYNC_REGISTRY_PREFIX</code></td>
+            <td class="column-auto">
+              localStorage key prefix for the tab registry. Combined with the
+              featureCellKey to produce a unique registry key per
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Registering -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Registering the Tab Sync Controller</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Tab Sync Controller</strong> and
+        <strong>Tab Sync State Behavior</strong> are attached structurally when
+        the <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        defined. Both must be present for cross-tab synchronization to function.
+      </p>
+
+      <p>
+        Unlike other controllers such as Throttle or Delay, the Tab Sync
+        Controller does not require fluent API configuration during
+        initialization. Registration alone is sufficient to enable cross-tab
+        state negotiation.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Tab Sync'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: [],
+      },
+      [
+        // Tab Sync State Behavior is required
+        withTabSyncStateBehavior
+      ],
+      [
+        // Tab Sync Controller is required
+        withTabSyncController
+      ]
+    )
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Tab Sync'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Tab Sync State Behavior is required
+    withTabSyncStateBehavior
+  ],
+  [
+    // Tab Sync Controller is required
+    withTabSyncController
+  ]
+);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Tab Sync'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Tab Sync State Behavior is required
+    withTabSyncStateBehavior
+  ],
+  [
+    // Tab Sync Controller is required
+    withTabSyncController
+  ]
+);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- <a href="/docs/references/functions/feature-cell">FeatureCell</a> Initialization -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        The Tab Sync Controller activates automatically when the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized. No additional fluent API calls are required. The controller
+        registers itself in the localStorage tab registry, starts its heartbeat,
+        opens the BroadcastChannel, and subscribes to bus notifications during
+        construction.
+      </p>
+
+      <p>
+        When <code>.initialize()</code> is called on the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>, the
+        first pipeline Attempt triggers the negotiation flow. The controller
+        reads the tab registry, determines whether peers exist, and coordinates
+        state synchronization before the initial pipeline completes.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Initialize a FeatureCell with Tab Sync'
+                    ">
+                    <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell&lt;Employee[]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]>(EmployeeService);
+
+  constructor() {
+    // Tab Sync activates automatically on initialize
+    this.vault.initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Initialize a FeatureCell with Tab Sync'
+                    ">
+                    <pre class="code-inline"><code class="language-ts">{{`
+// Tab Sync activates automatically on initialize
+employeeCell.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Initialize a FeatureCell with Tab Sync'
+                    ">
+                    <pre class="code-inline"><code class="language-ts">{{`
+// Tab Sync activates automatically on initialize
+employeeCell.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- When to Use -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">When to Use Tab Sync Controller</div>
+
+    <div class="section-body">
+      <p>
+        Tab Sync is designed for applications where users commonly work with
+        multiple browser tabs open simultaneously and state consistency across
+        tabs is a requirement. Common use cases include:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Multi-tab dashboards</strong> — ensuring all tabs reflect the
+          same data after a user performs an action in any single tab
+        </li>
+        <li>
+          <strong>Form state continuity</strong> — preventing data loss when a
+          user opens a new tab and expects to see the same form state
+        </li>
+        <li>
+          <strong>Session-wide settings</strong> — synchronizing user
+          preferences, theme selections, or configuration changes across all
+          open tabs
+        </li>
+        <li>
+          <strong>Collaborative workflows</strong> — keeping shared application
+          state consistent when multiple tabs interact with the same backend
+          resources
+        </li>
+      </ul>
+
+      <div class="callout callout-warning">
+        <p>
+          Tab Sync is not a replacement for server-side state synchronization.
+          It operates exclusively within the browser using localStorage and
+          BroadcastChannel. State changes are synchronized between tabs on the
+          same origin in the same browser. Cross-browser, cross-device, or
+          cross-origin synchronization requires a server-side solution.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Negotiation Flow -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Negotiation Flow</div>
+
+    <div class="section-body">
+      <p>
+        The Tab Sync Controller executes its negotiation logic exclusively on
+        the first pipeline Attempt. The flow differs based on whether peers are
+        detected in the localStorage tab registry.
+      </p>
+
+      <h4>No Peers Detected</h4>
+      <p>
+        When the registry contains no fresh entries from other tabs, the
+        controller immediately issues a <strong>ClearCache</strong> command and
+        votes <strong>Abstain</strong>. No BroadcastChannel messages are sent.
+        The behavior enables <code>negotiationComplete</code> and begins the
+        two-phase broadcast gating sequence.
+      </p>
+
+      <h4>Peers Detected</h4>
+      <p>
+        When the registry contains fresh entries from other tabs, the controller
+        sends a snapshot request via BroadcastChannel and races two outcomes:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Peer responds</strong> — the controller issues a
+          <strong>CommitCache</strong> command with the received snapshot,
+          enters the settling period, and votes <strong>Abort</strong>. The
+          behavior applies the peer snapshot directly and enables
+          <code>broadcastReady</code> immediately.
+        </li>
+        <li>
+          <strong>Timeout expires</strong> — the controller issues a
+          <strong>ClearCache</strong> command and votes
+          <strong>Abstain</strong>. The behavior proceeds with the two-phase
+          broadcast gating sequence.
+        </li>
+      </ul>
+
+      <div class="table-title">Negotiation Outcomes</div>
+      <table aria-label="Negotiation Outcomes">
+        <thead>
+          <tr>
+            <th scope="col" class="column-150">Registry State</th>
+            <th scope="col" class="column-150">Peer Response</th>
+            <th scope="col" class="column-150">Bus Command</th>
+            <th scope="col" class="column-100">Vote</th>
+            <th scope="col" class="column-auto">broadcastReady</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>No peers</td>
+            <td>N/A</td>
+            <td>ClearCache</td>
+            <td>Abstain</td>
+            <td>Deferred (enabled after first FinalizePipeline)</td>
+          </tr>
+          <tr>
+            <td>Peers exist</td>
+            <td>Snapshot received</td>
+            <td>CommitCache</td>
+            <td>Abort</td>
+            <td>Immediate</td>
+          </tr>
+          <tr>
+            <td>Peers exist</td>
+            <td>Timeout</td>
+            <td>ClearCache</td>
+            <td>Abstain</td>
+            <td>Deferred (enabled after first FinalizePipeline)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Graceful Degradation -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Graceful Degradation</div>
+
+    <div class="section-body">
+      <p>
+        The Tab Sync Controller degrades gracefully when browser APIs are
+        unavailable:
+      </p>
+
+      <ul>
+        <li>
+          <strong>BroadcastChannel unavailable</strong> — the controller
+          immediately issues ClearCache and abstains. The
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          operates as if Tab Sync is not configured.
+        </li>
+        <li>
+          <strong>localStorage unavailable</strong> — the controller skips
+          registry operations and falls back to the no-peers fast path.
+          Heartbeat and beforeunload cleanup are silently skipped.
+        </li>
+        <li>
+          <strong>sessionStorage unavailable</strong> — the controller generates
+          a random UUID for the tab identifier instead of persisting it across
+          page reloads.
+        </li>
+      </ul>
+
+      <p>
+        In all degradation scenarios, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        continues to function normally as a single-tab state container. No
+        errors are thrown and no pipeline execution is blocked.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Examples -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        Tab Sync is enabled by registering both the
+        <strong>Tab Sync Controller</strong> and the
+        <strong>Tab Sync State Behavior</strong> during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        definition. No additional fluent API configuration is required.
+      </p>
+
+      <h4>Example 1: Complete Tab Sync Configuration</h4>
+
+      <p>
+        In this example, a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        configured with Tab Sync. When the application opens in a new tab, the
+        controller checks for existing peer tabs. If a peer responds with a
+        snapshot, the new tab adopts the peer's state. If no peers exist, the
+        tab proceeds with its initial state. After negotiation, all tabs
+        broadcast state changes to each other automatically.
+      </p>
+    </div>
+
+    <div class="sdux-tab-container">
+      <mat-tab-group
+        animationDuration="200ms"
+        mat-stretch-tabs="false"
+        class="sdux-tabs"
+        [selectedIndex]="0">
+        <mat-tab label="Angular">
+          <div class="tab-panel">
+            <ng-content select="[retrieve]">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 1: Complete Tab Sync Configuration'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: [],
+      },
+      [
+        // Tab Sync State Behavior handles broadcasting and receiving
+        withTabSyncStateBehavior
+      ],
+      [
+        // Tab Sync Controller handles initial negotiation
+        withTabSyncController
+      ]
+    )
+  ]
+};
+
+@FeatureCell&lt;Employee[]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]>(EmployeeService);
+
+  constructor() {
+    // Tab Sync activates automatically — no fluent API required
+    this.vault.initialize();
+  }
+}`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </ng-content>
+          </div>
+        </mat-tab>
+        <mat-tab label="React">
+          <div class="tab-panel">
+            <ng-content select="[retrieve]">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 1: Complete Tab Sync Configuration'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Tab Sync State Behavior handles broadcasting and receiving
+    withTabSyncStateBehavior
+  ],
+  [
+    // Tab Sync Controller handles initial negotiation
+    withTabSyncController
+  ]
+);
+
+// Tab Sync activates automatically — no fluent API required
+employeeCell.initialize();`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </ng-content>
+          </div>
+        </mat-tab>
+        <mat-tab label="Vue">
+          <div class="tab-panel">
+            <ng-content select="[retrieve]">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 1: Complete Tab Sync Configuration'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Tab Sync State Behavior handles broadcasting and receiving
+    withTabSyncStateBehavior
+  ],
+  [
+    // Tab Sync Controller handles initial negotiation
+    withTabSyncController
+  ]
+);
+
+// Tab Sync activates automatically — no fluent API required
+employeeCell.initialize();`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </ng-content>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </section>
+
+  <sdux-vault-tab-sync-licensing-common />
+
+  <sdux-vault-tab-sync-privacy-common />
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,1968 @@
+{
+  "options": {
+    "AES256BehaviorOptions": {
+      "kind": "interface",
+      "docKind": "options",
+      "name": "AES256BehaviorOptions",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/vault/encrypt/behaviors/aes256/options/aes256-behavior.options.ts",
+      "docLink": "options"
+    },
+    "FromStreamOptions": {
+      "kind": "interface",
+      "docKind": "options",
+      "name": "FromStreamOptions",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/resolve/from-stream/options/from-stream.options.ts",
+      "docLink": "options"
+    },
+    "LookupBehaviorOptions": {
+      "kind": "interface",
+      "docKind": "options",
+      "name": "LookupBehaviorOptions",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/entity-access/lookup/options/lookup-behavior.options.ts",
+      "docLink": "options"
+    },
+    "QueryBehaviorOptions": {
+      "kind": "interface",
+      "docKind": "options",
+      "name": "QueryBehaviorOptions",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/entity-access/query/options/query-behavior.options.ts",
+      "docLink": "options"
+    },
+    "StateCacheBehaviorOptions": {
+      "kind": "interface",
+      "docKind": "options",
+      "name": "StateCacheBehaviorOptions",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/entity-access/cache/state-cache/options/state-cache-behavior.options.ts",
+      "docLink": "options"
+    },
+    "StepwiseBehaviorOptions": {
+      "kind": "interface",
+      "docKind": "options",
+      "name": "StepwiseBehaviorOptions",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/stepwise/symbols/options/stepwise-behavior.options.ts",
+      "docLink": "options"
+    },
+    "WithDelayControllerOptions": {
+      "kind": "interface",
+      "docKind": "options",
+      "name": "WithDelayControllerOptions",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/controllers/with-delay/options/with-delay-controller.options.ts",
+      "docLink": "options"
+    },
+    "WithMaxFailureControllerOptions": {
+      "kind": "interface",
+      "docKind": "options",
+      "name": "WithMaxFailureControllerOptions",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/controllers/with-max-failures/options/with-max-failure-controller.options.ts",
+      "docLink": "options"
+    },
+    "WithThrottleControllerOptions": {
+      "kind": "interface",
+      "docKind": "options",
+      "name": "WithThrottleControllerOptions",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/controllers/with-throttle/options/with-throttle-controller.options.ts",
+      "docLink": "options"
+    }
+  },
+  "const": {
+    "BEHAVIOR_META": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "BEHAVIOR_META",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/constants/behavior-meta.constant.ts",
+      "docLink": "const"
+    },
+    "BehaviorTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "BehaviorTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/behavior/behavior.type.ts",
+      "docLink": "const"
+    },
+    "CONTROLLER_META": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "CONTROLLER_META",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/constants/controller-meta.constant.ts",
+      "docLink": "const"
+    },
+    "CacheTTL": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "CacheTTL",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/entity-access/cache/state-cache/types/cache-ttl.type.ts",
+      "docLink": "const"
+    },
+    "ControllerMessageTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "ControllerMessageTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/controller/controller-message.type.ts",
+      "docLink": "const"
+    },
+    "ControllerTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "ControllerTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/controller/controller.type.ts",
+      "docLink": "const"
+    },
+    "ControllerVotes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "ControllerVotes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/controller/controller-vote.type.ts",
+      "docLink": "const"
+    },
+    "DEVTOOLS_AGGREGATE_KEY_CONSTANT": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "DEVTOOLS_AGGREGATE_KEY_CONSTANT",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/constants/dev-tools/devtools-aggregate-key.constant.ts",
+      "docLink": "const"
+    },
+    "DEVTOOLS_LOGGING_KEY_CONSTANT": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "DEVTOOLS_LOGGING_KEY_CONSTANT",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/constants/dev-tools/devtools-logging-key.constant.ts",
+      "docLink": "const"
+    },
+    "DebugWidgetEventInstantScopeTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "DebugWidgetEventInstantScopeTypes",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/types/debug-widget-event-instant-scope.type.ts",
+      "docLink": "const"
+    },
+    "DebugWidgetEventSourceTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "DebugWidgetEventSourceTypes",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/types/debug-widget-event-source.type.ts",
+      "docLink": "const"
+    },
+    "DebugWidgetEventTracePhaseTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "DebugWidgetEventTracePhaseTypes",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/types/debug-widget-event-trace-phase.type.ts",
+      "docLink": "const"
+    },
+    "DebugWidgetLatencyCategoryTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "DebugWidgetLatencyCategoryTypes",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/types/debug-widget-latency-category.type.ts",
+      "docLink": "const"
+    },
+    "DecisionOutcomeTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "DecisionOutcomeTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/controller/decision-outcome.type.ts",
+      "docLink": "const"
+    },
+    "DevMode": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "DevMode",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/dev-mode/dev-mode.util.ts",
+      "docLink": "const"
+    },
+    "EventBoundaryTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "EventBoundaryTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/event/event-boundary.type.ts",
+      "docLink": "const"
+    },
+    "EventTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "EventTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/event/event.type.ts",
+      "docLink": "const"
+    },
+    "LogLevelTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "LogLevelTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/logging/log-level.type.ts",
+      "docLink": "const"
+    },
+    "OperationTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "OperationTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/operation.type.ts",
+      "docLink": "const"
+    },
+    "ResolveTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "ResolveTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/resolve.type.ts",
+      "docLink": "const"
+    },
+    "StateEmitTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "StateEmitTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/state/state-emit.type.ts",
+      "docLink": "const"
+    },
+    "VAULT_CLEAR_STATE": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "VAULT_CLEAR_STATE",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/constants/vault/vault-clear-state.constant.ts",
+      "docLink": "const"
+    },
+    "VAULT_CONTINUE": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "VAULT_CONTINUE",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/constants/vault/vault-continue.constant.ts",
+      "docLink": "const"
+    },
+    "VAULT_NOOP": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "VAULT_NOOP",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/constants/vault/vault-noop.constant.ts",
+      "docLink": "const"
+    },
+    "VAULT_STOP": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "VAULT_STOP",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/constants/vault/vault-stop.constant.ts",
+      "docLink": "const"
+    },
+    "VaultErrorKindTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "VaultErrorKindTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/error/vault-error-kind.type.ts",
+      "docLink": "const"
+    },
+    "VaultErrorNameTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "VaultErrorNameTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/error/vault-error-name.type.ts",
+      "docLink": "const"
+    },
+    "VaultErrorUsageKindTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "VaultErrorUsageKindTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/error/vault-error-usage-kind.type.ts",
+      "docLink": "const"
+    },
+    "cryptoPlatform": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "cryptoPlatform",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/vault/encrypt/behaviors/aes256/with-aes256-encrypt.behavior.ts",
+      "docLink": "const"
+    },
+    "isTestEnv": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "isTestEnv",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/dev-mode/testing-environment.util.ts",
+      "docLink": "const"
+    }
+  },
+  "types": {
+    "BehaviorExtFunction": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "BehaviorExtFunction",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/behavior/behavior.interface.ts",
+      "docLink": "types"
+    },
+    "BehaviorExtension": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "BehaviorExtension",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/behavior/behavior.interface.ts",
+      "docLink": "types"
+    },
+    "BehaviorType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "BehaviorType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/behavior/behavior.type.ts",
+      "docLink": "types"
+    },
+    "CacheTTLType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "CacheTTLType",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/entity-access/cache/state-cache/types/cache-ttl.type.ts",
+      "docLink": "types"
+    },
+    "ControllerMessageShape": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "ControllerMessageShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/controller/controller-message.shape.ts",
+      "docLink": "types"
+    },
+    "ControllerMessageType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "ControllerMessageType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/controller/controller-message.type.ts",
+      "docLink": "types"
+    },
+    "ControllerType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "ControllerType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/controller/controller.type.ts",
+      "docLink": "types"
+    },
+    "ControllerVote": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "ControllerVote",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/controller/controller-vote.type.ts",
+      "docLink": "types"
+    },
+    "CoreEmitStateCallback": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "CoreEmitStateCallback",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/callback/core-emit-state-callback.type.ts",
+      "docLink": "types"
+    },
+    "CoreEmitStateResult": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "CoreEmitStateResult",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/state/core-emit-state-result.type.ts",
+      "docLink": "types"
+    },
+    "DebugWidgetEventInstantScopeType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "DebugWidgetEventInstantScopeType",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/types/debug-widget-event-instant-scope.type.ts",
+      "docLink": "types"
+    },
+    "DebugWidgetEventSourceType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "DebugWidgetEventSourceType",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/types/debug-widget-event-source.type.ts",
+      "docLink": "types"
+    },
+    "DebugWidgetEventTracePhaseType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "DebugWidgetEventTracePhaseType",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/types/debug-widget-event-trace-phase.type.ts",
+      "docLink": "types"
+    },
+    "DebugWidgetLatencyCategoryType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "DebugWidgetLatencyCategoryType",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/types/debug-widget-latency-category.type.ts",
+      "docLink": "types"
+    },
+    "DecisionOutcomeType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "DecisionOutcomeType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/controller/decision-outcome.type.ts",
+      "docLink": "types"
+    },
+    "DeferredFactory": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "DeferredFactory",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/state/deferred-factory.type.ts",
+      "docLink": "types"
+    },
+    "DeferredType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "DeferredType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/state/deferred.type.ts",
+      "docLink": "types"
+    },
+    "DistinctComparison": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "DistinctComparison",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/behavior/distinct-comparison.type.ts",
+      "docLink": "types"
+    },
+    "EventBoundaryType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "EventBoundaryType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/event/event-boundary.type.ts",
+      "docLink": "types"
+    },
+    "EventType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "EventType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/event/event.type.ts",
+      "docLink": "types"
+    },
+    "FilterFunction": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "FilterFunction",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/function/filter-function.type.ts",
+      "docLink": "types"
+    },
+    "FinalState": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "FinalState",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/state/final-state.type.ts",
+      "docLink": "types"
+    },
+    "InterceptorStateType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "InterceptorStateType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/interceptor-state.type.ts",
+      "docLink": "types"
+    },
+    "LogLevelType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "LogLevelType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/logging/log-level.type.ts",
+      "docLink": "types"
+    },
+    "OperationType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "OperationType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/operation.type.ts",
+      "docLink": "types"
+    },
+    "PipelinePersistValue": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "PipelinePersistValue",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/pipeline/pipeline-persist-value.type.ts",
+      "docLink": "types"
+    },
+    "PipelineUpstreamValue": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "PipelineUpstreamValue",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/pipeline/pipeline-upstream-value.type.ts",
+      "docLink": "types"
+    },
+    "PipelineValue": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "PipelineValue",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/pipeline/pipeline-value.type.ts",
+      "docLink": "types"
+    },
+    "ReducerFunction": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "ReducerFunction",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/function/reducer-function.type.ts",
+      "docLink": "types"
+    },
+    "ResolveType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "ResolveType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/resolve.type.ts",
+      "docLink": "types"
+    },
+    "StateEmitType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "StateEmitType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/state/state-emit.type.ts",
+      "docLink": "types"
+    },
+    "StateInputType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "StateInputType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/state/state-input.type.ts",
+      "docLink": "types"
+    },
+    "StepwiseFunction": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "StepwiseFunction",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/stepwise/symbols/types/function/stepwise-function.type.ts",
+      "docLink": "types"
+    },
+    "TapCallback": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "TapCallback",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/callback/tap-callback.type.ts",
+      "docLink": "types"
+    },
+    "VaultErrorCallback": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "VaultErrorCallback",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/callback/vault-error-callback.type.ts",
+      "docLink": "types"
+    },
+    "VaultErrorKindType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "VaultErrorKindType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/error/vault-error-kind.type.ts",
+      "docLink": "types"
+    },
+    "VaultErrorNameType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "VaultErrorNameType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/error/vault-error-name.type.ts",
+      "docLink": "types"
+    },
+    "VaultErrorUsageKindType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "VaultErrorUsageKindType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/error/vault-error-usage-kind.type.ts",
+      "docLink": "types"
+    }
+  },
+  "behaviors": {
+    "withAes256EncryptBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withAes256EncryptBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/vault/encrypt/behaviors/aes256/with-aes256-encrypt.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withArrayAppendMergeBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withArrayAppendMergeBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/merge/array/array-append-merge/with-array-append-merge.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withArrayMergeBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withArrayMergeBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/merge/array/with-array-merge.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withArrayPushMergeBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withArrayPushMergeBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/merge/array/array-push-merge/with-array-push-merge.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCookieStoragePersistBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCookieStoragePersistBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/vault/persist/behaviors/cookie-storage/with-cookie-storage-persist.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreAfterTapBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreAfterTapBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/tap/with-core-after-tap.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreBeforeTapBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreBeforeTapBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/tap/with-core-before-tap.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreEmitStateBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreEmitStateBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/state/with-core-emit-state/with-core-emit-state.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreErrorBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreErrorBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/error/with-core-error/with-core-error.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreErrorCallbackBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreErrorCallbackBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/error/with-core-error-callback/with-core-error-callback.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreFilterBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreFilterBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/filter/with-core-filter.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreFromObservableBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreFromObservableBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/observable/with-core-from-observable.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreFromPromiseBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreFromPromiseBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/promise/with-core-from-promise.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreFromStreamBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreFromStreamBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/resolve/from-stream/with-core-from-stream.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreObservableBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreObservableBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/resolve/core-observable/with-core-observable.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCorePromiseBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCorePromiseBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/resolve/core-promise/with-core-promise.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreReducerBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreReducerBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/reducer/with-core-reducer.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreStateBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreStateBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/state/with-core-state/with-core-state.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withCoreValueBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCoreValueBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/resolve/core-value/with-core-value.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withDistinctUntilChanged": {
+      "kind": "function",
+      "docKind": "behavior",
+      "name": "withDistinctUntilChanged",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/operators/distinct-until-changed/with-distinct-until-changed.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withGlobalErrorPauseBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withGlobalErrorPauseBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/interceptors/error/global-error-pause/with-global-error-pause.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withHttpResourceBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withHttpResourceBehavior",
+      "project": "angular",
+      "relativePath": "libs/core-extensions/angular/src/lib/behaviors/resolve/http-resource/with-http-resource.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withLocalStoragePersistBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withLocalStoragePersistBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/vault/persist/behaviors/local-storage/with-local-storage-persist.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withLookupBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withLookupBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/entity-access/lookup/with-lookup.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withObjectDeepMergeBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withObjectDeepMergeBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/merge/object/object-deep-merge/with-object-deep-merge.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withObjectShallowMergeBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withObjectShallowMergeBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/merge/object/with-object-shallow-merge.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withQueryBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withQueryBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/entity-access/query/with-query.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withSessionStoragePersistBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withSessionStoragePersistBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/vault/persist/behaviors/session-storage/with-session-storage-persist.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withStateCacheBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withStateCacheBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/entity-access/cache/state-cache/with-state-cache.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withStepwiseFilterBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withStepwiseFilterBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/stepwise/with-stepwise-filter/with-stepwise-filter.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withStepwiseReducerBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withStepwiseReducerBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/stepwise/with-stepwise-reducer/with-stepwise-reducer.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withStepwiseResolveBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withStepwiseResolveBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/stepwise/with-stepwise-resolve/with-stepwise-resolve.behavior.ts",
+      "docLink": "behaviors"
+    },
+    "withTabSyncStateBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withTabSyncStateBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/vault/with-tab-sync-state/with-tab-sync-state.behavior.ts",
+      "docLink": "behaviors"
+    }
+  },
+  "shapes": {
+    "BehaviorMetaShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "BehaviorMetaShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/behavior-meta.shape.ts",
+      "docLink": "shapes"
+    },
+    "ControllerAttemptMessageShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "ControllerAttemptMessageShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/controller/controller-attempt-message.shape.ts",
+      "docLink": "shapes"
+    },
+    "ControllerDecisionShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "ControllerDecisionShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/controller/controller-decision.shape.ts",
+      "docLink": "shapes"
+    },
+    "ControllerFailMessageShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "ControllerFailMessageShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/controller/controller-fail-message.shape.ts",
+      "docLink": "shapes"
+    },
+    "ControllerFinalizeMessageShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "ControllerFinalizeMessageShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/controller/controller-finalize-message.shape.ts",
+      "docLink": "shapes"
+    },
+    "ControllerMetaShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "ControllerMetaShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/controller/controller-meta.shape.ts",
+      "docLink": "shapes"
+    },
+    "ControllerSuccessMessageShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "ControllerSuccessMessageShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/controller/controller-success-message.shape.ts",
+      "docLink": "shapes"
+    },
+    "DebugWidgetDumpShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "DebugWidgetDumpShape",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/shapes/debug-widget-dump.shape.ts",
+      "docLink": "shapes"
+    },
+    "DebugWidgetEventShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "DebugWidgetEventShape",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/shapes/debug-widget-event.shape.ts",
+      "docLink": "shapes"
+    },
+    "DebugWidgetEventStatShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "DebugWidgetEventStatShape",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/shapes/debug-widget-event-stat.shape.ts",
+      "docLink": "shapes"
+    },
+    "DebugWidgetLicenseSummaryShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "DebugWidgetLicenseSummaryShape",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/shapes/debug-widget-license-summary.shape.ts",
+      "docLink": "shapes"
+    },
+    "DebugWidgetLongTasksShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "DebugWidgetLongTasksShape",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/shapes/debug-widget-long-tasks.shape.ts",
+      "docLink": "shapes"
+    },
+    "DebugWidgetRegistryShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "DebugWidgetRegistryShape",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/shapes/debug-widget-registry.shape.ts",
+      "docLink": "shapes"
+    },
+    "DebugWidgetTraceEventArgsShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "DebugWidgetTraceEventArgsShape",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/shapes/debug-widget-trace-event-args.shape.ts",
+      "docLink": "shapes"
+    },
+    "DebugWidgetTraceEventShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "DebugWidgetTraceEventShape",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/shapes/debug-widget-trace-event.shape.ts",
+      "docLink": "shapes"
+    },
+    "EventShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "EventShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/event/event.shape.ts",
+      "docLink": "shapes"
+    },
+    "FeatureCellBaseShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "FeatureCellBaseShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/feature-cell/feature-cell.base.shape.ts",
+      "docLink": "shapes"
+    },
+    "FeatureCellShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "FeatureCellShape",
+      "project": "engine",
+      "relativePath": "../engine/lib/src/shapes/feature-cell/feature-cell.shape.ts",
+      "docLink": "shapes"
+    },
+    "HttpResourceRefShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "HttpResourceRefShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/http-resource-ref-shape.shape.ts",
+      "docLink": "shapes"
+    },
+    "SDuXShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "SDuXShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/sdux/sdux.shape.ts",
+      "docLink": "shapes"
+    },
+    "SerializedFeatureCellShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "SerializedFeatureCellShape",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/shapes/serialized-feature-cell.shape.ts",
+      "docLink": "shapes"
+    },
+    "StateEmitSnapshotShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "StateEmitSnapshotShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/state/state-emit-snapshot.shape.ts",
+      "docLink": "shapes"
+    },
+    "StateInputShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "StateInputShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/state/state-input.shape.ts",
+      "docLink": "shapes"
+    },
+    "StateSnapshotShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "StateSnapshotShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/state/state-snapshot.shape.ts",
+      "docLink": "shapes"
+    },
+    "StepwiseBehaviorDecisionShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "StepwiseBehaviorDecisionShape",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/stepwise/symbols/shapes/stepwise-behavior-decision.shape.ts",
+      "docLink": "shapes"
+    },
+    "VaultErrorShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "VaultErrorShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/vault-error.shape.ts",
+      "docLink": "shapes"
+    },
+    "VaultLicensingShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "VaultLicensingShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/vault/vault-licensing.shape.ts",
+      "docLink": "shapes"
+    },
+    "VaultRegistrationEntityShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "VaultRegistrationEntityShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/vault/vault-registration.entity.shape.ts",
+      "docLink": "shapes"
+    },
+    "VaultRegistrationFluentApiShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "VaultRegistrationFluentApiShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/vault/vault-registration.fluent-api.shape.ts",
+      "docLink": "shapes"
+    },
+    "VaultRegistrationShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "VaultRegistrationShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/vault/vault-registration.shape.ts",
+      "docLink": "shapes"
+    }
+  },
+  "controllers": {
+    "withDelayController": {
+      "kind": "behavior",
+      "docKind": "controller",
+      "name": "withDelayController",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/controllers/with-delay/with-delay.controller.ts",
+      "docLink": "controllers"
+    },
+    "withMaxFailuresController": {
+      "kind": "behavior",
+      "docKind": "controller",
+      "name": "withMaxFailuresController",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/controllers/with-max-failures/with-max-failure.controller.ts",
+      "docLink": "controllers"
+    },
+    "withReplayGlobalErrorController": {
+      "kind": "behavior",
+      "docKind": "controller",
+      "name": "withReplayGlobalErrorController",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/controllers/replay-global-error/with-replay-global-error.controller.ts",
+      "docLink": "controllers"
+    },
+    "withStepwiseController": {
+      "kind": "behavior",
+      "docKind": "controller",
+      "name": "withStepwiseController",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/controllers/stepwise/with-stepwise.controller.ts",
+      "docLink": "controllers"
+    },
+    "withTabSyncController": {
+      "kind": "behavior",
+      "docKind": "controller",
+      "name": "withTabSyncController",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/controllers/vault/tab-sync/with-tab-sync.controller.ts",
+      "docLink": "controllers"
+    },
+    "withThrottleController": {
+      "kind": "behavior",
+      "docKind": "controller",
+      "name": "withThrottleController",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/controllers/with-throttle/with-throttle.controller.ts",
+      "docLink": "controllers"
+    }
+  },
+  "interfaces": {
+    "FeatureCellExtension": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "FeatureCellExtension",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/feature-cell-extension.interface.ts",
+      "docLink": "interfaces"
+    },
+    "FeatureCellFluentApi": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "FeatureCellFluentApi",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/feature-cell-fluent-api.interface.ts",
+      "docLink": "interfaces"
+    },
+    "FromObservableBehaviorExtension": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "FromObservableBehaviorExtension",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/observable/interface/from-observable-behavior.interface.ts",
+      "docLink": "interfaces"
+    },
+    "FromPromiseBehaviorExtension": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "FromPromiseBehaviorExtension",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/promise/interface/from-promise-behavior.interface.ts",
+      "docLink": "interfaces"
+    },
+    "FromStreamBehaviorExtension": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "FromStreamBehaviorExtension",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/resolve/from-stream/interface/from-stream-behavior.interface.ts",
+      "docLink": "interfaces"
+    },
+    "VaultSignalStateRef": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "VaultSignalStateRef",
+      "project": "angular",
+      "relativePath": "libs/core-extensions/angular/src/lib/references/vault-signal.reference.ts",
+      "docLink": "interfaces"
+    },
+    "VaultStateRef": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "VaultStateRef",
+      "project": "engine",
+      "relativePath": "../engine/lib/src/references/vault.reference.ts",
+      "docLink": "interfaces"
+    }
+  },
+  "abstracts": {
+    "AbstractActiveController": {
+      "kind": "class",
+      "docKind": "abstract",
+      "name": "AbstractActiveController",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/abstracts/controllers/active-controller.abstract.ts",
+      "docLink": "abstracts"
+    },
+    "AbstractErrorCallbackBehavior": {
+      "kind": "class",
+      "docKind": "abstract",
+      "name": "AbstractErrorCallbackBehavior",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/abstracts/behaviors/error/with-error-callback.abstract.ts",
+      "docLink": "abstracts"
+    },
+    "AbstractErrorTransformBehavior": {
+      "kind": "class",
+      "docKind": "abstract",
+      "name": "AbstractErrorTransformBehavior",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/abstracts/behaviors/error/with-error-transform.abstract.ts",
+      "docLink": "abstracts"
+    },
+    "LicensingAbstract": {
+      "kind": "class",
+      "docKind": "abstract",
+      "name": "LicensingAbstract",
+      "project": "engine",
+      "relativePath": "../engine/lib/src/licensing/licensing.abstract.ts",
+      "docLink": "abstracts"
+    },
+    "TapAbstractBehavior": {
+      "kind": "class",
+      "docKind": "abstract",
+      "name": "TapAbstractBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/tap/tap.abstract.ts",
+      "docLink": "abstracts"
+    }
+  },
+  "functions": {
+    "EventBus": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "EventBus",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/utils/event-bus.ts",
+      "docLink": "functions"
+    },
+    "FeatureCell": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "FeatureCell",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/factories/feature-cell/feature-cell.ts",
+      "docLink": "functions"
+    },
+    "Vault": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "Vault",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/factories/vault/vault.ts",
+      "docLink": "functions"
+    },
+    "VaultErrorService": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "VaultErrorService",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/services/error/vault-error.service.ts",
+      "docLink": "functions"
+    },
+    "createVaultError": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "createVaultError",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/error/create-vault-error.util.ts",
+      "docLink": "functions"
+    },
+    "defineBehaviorKey": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "defineBehaviorKey",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/behavior/define-behavior-key.util.ts",
+      "docLink": "functions"
+    },
+    "defineControllerKey": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "defineControllerKey",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/controller/define-controller-key.util.ts",
+      "docLink": "functions"
+    },
+    "defineVaultKey": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "defineVaultKey",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/behavior/define-behavior-key.util.ts",
+      "docLink": "functions"
+    },
+    "getVaultLogLevel": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "getVaultLogLevel",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logger/logger.util.ts",
+      "docLink": "functions"
+    },
+    "isDeferredFactory": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isDeferredFactory",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/deferred-factory/is-deferred-factory.util.ts",
+      "docLink": "functions"
+    },
+    "isDefined": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isDefined",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logic/logic.utils.ts",
+      "docLink": "functions"
+    },
+    "isFunction": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isFunction",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logic/logic.utils.ts",
+      "docLink": "functions"
+    },
+    "isHttpResourceRef": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isHttpResourceRef",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/resolve/is-http-resource.util.ts",
+      "docLink": "functions"
+    },
+    "isNull": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isNull",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logic/logic.utils.ts",
+      "docLink": "functions"
+    },
+    "isNullish": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isNullish",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logic/logic.utils.ts",
+      "docLink": "functions"
+    },
+    "isObject": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isObject",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logic/logic.utils.ts",
+      "docLink": "functions"
+    },
+    "isPromise": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isPromise",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/promise/is-promise.util.ts",
+      "docLink": "functions"
+    },
+    "isStateInputShape": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isStateInputShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logic/logic.utils.ts",
+      "docLink": "functions"
+    },
+    "isUndefined": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isUndefined",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logic/logic.utils.ts",
+      "docLink": "functions"
+    },
+    "isVaultClearState": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isVaultClearState",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logic/logic.utils.ts",
+      "docLink": "functions"
+    },
+    "isVaultContinue": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isVaultContinue",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logic/logic.utils.ts",
+      "docLink": "functions"
+    },
+    "isVaultNoop": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isVaultNoop",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logic/logic.utils.ts",
+      "docLink": "functions"
+    },
+    "isolateValue": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isolateValue",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/isolate-value/isolate-value.util.ts",
+      "docLink": "functions"
+    },
+    "registerVersion": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "registerVersion",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/version/version.register.ts",
+      "docLink": "functions"
+    },
+    "safeStringify": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "safeStringify",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/safe-stringify/safe-stringify.util.ts",
+      "docLink": "functions"
+    },
+    "setVaultLogLevel": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "setVaultLogLevel",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logger/logger.util.ts",
+      "docLink": "functions"
+    },
+    "validateBehaviorKey": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "validateBehaviorKey",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/behavior/define-behavior-key.util.ts",
+      "docLink": "functions"
+    },
+    "validateControllerKey": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "validateControllerKey",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/controller/define-controller-key.util.ts",
+      "docLink": "functions"
+    },
+    "vaultDebug": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "vaultDebug",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logger/logger.util.ts",
+      "docLink": "functions"
+    },
+    "vaultError": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "vaultError",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logger/logger.util.ts",
+      "docLink": "functions"
+    },
+    "vaultLog": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "vaultLog",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logger/logger.util.ts",
+      "docLink": "functions"
+    },
+    "vaultWarn": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "vaultWarn",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/utils/logger/logger.util.ts",
+      "docLink": "functions"
+    }
+  },
+  "contracts": {
+    "AfterTapBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "AfterTapBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/tap/after-tap-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "BeforeTapBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "BeforeTapBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/tap/before-tap-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "BehaviorClassContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "BehaviorClassContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/behavior/behavior-class.interface.ts",
+      "docLink": "contracts"
+    },
+    "BehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "BehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/behavior/behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "CellBuilderContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "CellBuilderContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/cell-builder.interface.ts",
+      "docLink": "contracts"
+    },
+    "ControllerClassContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "ControllerClassContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/controllers/controller-class.interface.ts",
+      "docLink": "contracts"
+    },
+    "ControllerContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "ControllerContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/controllers/controller.interface.ts",
+      "docLink": "contracts"
+    },
+    "CoreEmitStateBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "CoreEmitStateBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/core-emit-state-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "CoreErrorBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "CoreErrorBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/core-error-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "CoreStateBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "CoreStateBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/core-state-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "DebugWidgetEngineContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "DebugWidgetEngineContract",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/interfaces/debug-widget-engine.contract.ts",
+      "docLink": "contracts"
+    },
+    "DevPipelineObserverBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "DevPipelineObserverBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/dev/dev-pipeline-observer-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "EncryptBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "EncryptBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/encrypt-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "ErrorCallbackBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "ErrorCallbackBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/error-callback-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "ErrorTransformBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "ErrorTransformBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/error-transform-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "EventBusContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "EventBusContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/event/event-bus.interface.ts",
+      "docLink": "contracts"
+    },
+    "FilterBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "FilterBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/filter-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "InterceptorBehaviorClassContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "InterceptorBehaviorClassContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/interceptor/interceptor-behavior-class.interface.ts",
+      "docLink": "contracts"
+    },
+    "InterceptorBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "InterceptorBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/interceptor/interceptor-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "MergeBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "MergeBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/merge-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "OperatorBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "OperatorBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/operator/operator-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "OperatorsBehaviorClassContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "OperatorsBehaviorClassContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/operator/operator-behavior-class.interface.ts",
+      "docLink": "contracts"
+    },
+    "PersistBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "PersistBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/persist-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "ReduceBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "ReduceBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/reduce-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "ResolveBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "ResolveBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/resolve-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "StepwiseBehaviorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "StepwiseBehaviorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/stepwise-behavior.interface.ts",
+      "docLink": "contracts"
+    },
+    "VaultErrorServiceContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "VaultErrorServiceContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/vault/vault-error-service.interface.ts",
+      "docLink": "contracts"
+    },
+    "VaultMonitorContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "VaultMonitorContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/vault/vault-monitor.interface.ts",
+      "docLink": "contracts"
+    },
+    "VaultPrivateErrorServiceContract": {
+      "kind": "interface",
+      "docKind": "contract",
+      "name": "VaultPrivateErrorServiceContract",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/vault/vault-private-error-service.interface.ts",
+      "docLink": "contracts"
+    }
+  },
+  "classes": {
+    "EventBusInstance": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "EventBusInstance",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/utils/event-bus.ts",
+      "docLink": "classes"
+    },
+    "FeatureCellClass": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "FeatureCellClass",
+      "project": "engine",
+      "relativePath": "../engine/lib/src/factories/feature-cell/feature-cell.class.ts",
+      "docLink": "classes"
+    },
+    "VaultEncryptionIntegrityError": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "VaultEncryptionIntegrityError",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/errors/vault-error.encryption-integrity.ts",
+      "docLink": "classes"
+    },
+    "VaultError": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "VaultError",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/errors/vault-error.ts",
+      "docLink": "classes"
+    },
+    "VaultLicenseError": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "VaultLicenseError",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/errors/vault-error.license.ts",
+      "docLink": "classes"
+    },
+    "VaultUsageError": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "VaultUsageError",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/errors/vault-error.usage.ts",
+      "docLink": "classes"
+    },
+    "VaultUsagePromiseError": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "VaultUsagePromiseError",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/errors/vault-error.usage.promise.ts",
+      "docLink": "classes"
+    },
+    "VaultUsagePromiseFactoryRequiredError": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "VaultUsagePromiseFactoryRequiredError",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/errors/vault-error.usage.promise-factory-required.ts",
+      "docLink": "classes"
+    }
+  },
+  "config": {
+    "FeatureCellConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "FeatureCellConfig",
+      "project": "engine",
+      "relativePath": "../engine/lib/src/config/feature-cell.config.ts",
+      "docLink": "config"
+    },
+    "InsightConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "InsightConfig",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/config/insight.config.ts",
+      "docLink": "config"
+    },
+    "MergeConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "MergeConfig",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/config/merge.config.ts",
+      "docLink": "config"
+    },
+    "ObjectDeepMergeConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "ObjectDeepMergeConfig",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/config/object-deep-merge.config.ts",
+      "docLink": "config"
+    },
+    "VaultConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "VaultConfig",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/config/vault.config.ts",
+      "docLink": "config"
+    }
+  },
+  "contexts": {
+    "BehaviorClassContext": {
+      "kind": "interface",
+      "docKind": "context",
+      "name": "BehaviorClassContext",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/contexts/behavior-class.context.ts",
+      "docLink": "contexts"
+    },
+    "BehaviorContext": {
+      "kind": "interface",
+      "docKind": "context",
+      "name": "BehaviorContext",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/contexts/behavior.context.ts",
+      "docLink": "contexts"
+    },
+    "ControllerClassContext": {
+      "kind": "interface",
+      "docKind": "context",
+      "name": "ControllerClassContext",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/contexts/controller-class.context.ts",
+      "docLink": "contexts"
+    },
+    "ControllerContext": {
+      "kind": "interface",
+      "docKind": "context",
+      "name": "ControllerContext",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/contexts/controller.context.ts",
+      "docLink": "contexts"
+    },
+    "FeatureCellExtensionContext": {
+      "kind": "interface",
+      "docKind": "context",
+      "name": "FeatureCellExtensionContext",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/contexts/feature-cell-extension.context.ts",
+      "docLink": "contexts"
+    },
+    "LicensableClassContext": {
+      "kind": "interface",
+      "docKind": "context",
+      "name": "LicensableClassContext",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/contexts/licensable-class.context.ts",
+      "docLink": "contexts"
+    },
+    "TabSyncBehaviorClassContext": {
+      "kind": "interface",
+      "docKind": "context",
+      "name": "TabSyncBehaviorClassContext",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/contexts/tab-sync-behavior-class.context.ts",
+      "docLink": "contexts"
+    }
+  },
+  "decorators": {
+    "VaultBehavior": {
+      "kind": "function",
+      "docKind": "decorator",
+      "name": "VaultBehavior",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/decorators/vault-behavior.decorator.ts",
+      "docLink": "decorators"
+    },
+    "VaultController": {
+      "kind": "function",
+      "docKind": "decorator",
+      "name": "VaultController",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/decorators/vault-controller.decorator.ts",
+      "docLink": "decorators"
+    }
+  },
+  "services": {
+    "VaultErrorServiceClass": {
+      "kind": "class",
+      "docKind": "service",
+      "name": "VaultErrorServiceClass",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/services/error/vault-error.service.ts",
+      "docLink": "services"
+    }
+  }
+}

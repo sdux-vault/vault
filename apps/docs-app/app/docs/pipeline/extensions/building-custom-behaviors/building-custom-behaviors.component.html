@@ -1,0 +1,818 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-04-28 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Building Custom Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      A <strong>custom Behavior</strong> is a user-authored pipeline extension
+      that plugs into a stage in the <sdux-brand-name /> pipeline. Custom
+      Behaviors follow the same contract and lifecycle as built-in Behaviors,
+      allowing engineers to add domain-specific logic to any supported pipeline
+      stage without modifying <sdux-brand-name /> internals. Because custom
+      Behaviors are subject to the same stage isolation, ordering, and lifecycle
+      rules as built-in Behaviors, they extend pipeline capabilities without
+      compromising its deterministic execution guarantees.
+    </p>
+
+    <p>
+      Every Behavior—built-in or custom—implements
+      <a href="/docs/references/contracts/behavior-contract">BehaviorContract</a
+      >&lt;T&gt; and is decorated with &#64;<a
+        href="/docs/references/decorators/vault-behavior"
+        >VaultBehavior</a
+      >. The orchestrator discovers, validates, and executes custom Behaviors
+      exactly as it does core Behaviors.
+    </p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- OVERVIEW                                                     -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">What You Need</div>
+
+    <div class="section-body">
+      <p>A complete custom Behavior consists of the following pieces:</p>
+
+      <ol>
+        <li>
+          A <strong>Behavior class</strong> decorated with &#64;<a
+            href="/docs/references/decorators/vault-behavior"
+            >VaultBehavior</a
+          >
+          and implementing
+          <a href="/docs/references/contracts/behavior-contract"
+            >BehaviorContract</a
+          >&lt;T&gt;.
+        </li>
+        <li>
+          An <strong>options interface</strong> that defines the configuration
+          the Behavior accepts.
+        </li>
+        <li>
+          A <strong>fluent API installer</strong> (installFluentApi) so
+          engineers can configure the Behavior with a chained method call on the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+        <li>
+          An optional <strong>extension interface</strong> with TypeScript
+          module augmentation if the Behavior adds new methods to the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> API
+          surface.
+        </li>
+        <li>
+          Registration in the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          declaration's Behavior array.
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STEP 1: OPTIONS                                              -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Step 1 — Define an Options Interface</div>
+
+    <div class="section-body">
+      <p>
+        The options interface describes the configuration your Behavior expects.
+        It is passed to the constructor via behaviorCtx.behaviorConfig.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'my-behavior.options.ts'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export interface MyBehaviorOptions&lt;T&gt; {
+  /** How often the Behavior runs its check, in milliseconds. */
+  intervalMs: number;
+
+  /** Optional predicate to skip processing for certain values. */
+  shouldSkip?: (value: T) => boolean;
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STEP 2: BEHAVIOR CLASS                                       -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Step 2 — Create the Behavior Class</div>
+
+    <div class="section-body">
+      <p>
+        Decorate the class with &#64;<a
+          href="/docs/references/decorators/vault-behavior"
+          >VaultBehavior</a
+        >
+        and implement
+        <a href="/docs/references/contracts/behavior-contract"
+          >BehaviorContract</a
+        >&lt;T&gt;. The decorator metadata tells the orchestrator which pipeline
+        stage to assign the Behavior to, its unique key, and whether it requires
+        configuration.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'with-my-behavior.behavior.ts'">
+          <pre class="code-inline"><code class="language-ts">{{`import {
+  BehaviorClassContext,
+  BehaviorContract,
+  BehaviorType,
+  BehaviorTypes,
+  defineBehaviorKey,
+  FeatureCellBaseShape,
+  FeatureCellExtensionContext,
+  VaultBehavior
+} from '@sdux-vault/shared';
+
+import { MyBehaviorOptions } from './my-behavior.options';
+
+@VaultBehavior({
+  type: BehaviorTypes.Extension,
+  key: defineBehaviorKey('Custom', 'MyBehavior'),
+  critical: false,
+  wantsConfig: true,
+  configKey: 'withMyBehavior'
+})
+export class withMyBehavior&lt;T&gt; implements BehaviorContract&lt;T&gt; {
+
+  // ── Static metadata (mirrored by the decorator) ──────────
+  static readonly type: BehaviorType;
+  static readonly key: string;
+  static readonly critical: boolean;
+  static readonly wantsConfig: boolean;
+  static readonly configKey: string;
+
+  // ── Instance fields ──────────────────────────────────────
+  readonly type = withMyBehavior.type;
+  readonly key: string;
+  readonly critical = withMyBehavior.critical;
+
+  readonly #options: MyBehaviorOptions&lt;T&gt;;
+
+  // ── Fluent API installer ─────────────────────────────────
+  static installFluentApi&lt;T&gt;(
+    cell: FeatureCellBaseShape&lt;T&gt;,
+    behaviorConfigs: Map&lt;string, unknown&gt;
+  ) {
+    cell.withMyBehavior = function (options: MyBehaviorOptions&lt;T&gt;) {
+      behaviorConfigs.set(withMyBehavior.configKey, options);
+      return this;
+    };
+  }
+
+  // ── Constructor ──────────────────────────────────────────
+  constructor(key: string, readonly behaviorCtx: BehaviorClassContext) {
+    this.key = key;
+    this.#options = behaviorCtx.behaviorConfig as MyBehaviorOptions&lt;T&gt;;
+
+    if (typeof this.#options?.intervalMs !== 'number') {
+      throw new Error(
+        '[vault] withMyBehavior requires intervalMs (number).'
+      );
+    }
+  }
+
+  // ── Lifecycle ────────────────────────────────────────────
+  extendCellAPI(ctx: FeatureCellExtensionContext&lt;T&gt;): void {
+    // Subscribe to state emissions, set up timers, etc.
+  }
+
+  reset(): void {
+    // Reset internal state between pipeline cycles.
+  }
+
+  destroy(): void {
+    // Tear down subscriptions and release resources.
+  }
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <div class="note">Note</div>
+      <p>
+        The static fields (type, key, critical, wantsConfig, configKey) are
+        populated at runtime by the &#64;<a
+          href="/docs/references/decorators/vault-behavior"
+          >VaultBehavior</a
+        >
+        decorator. Declare them as static readonly for type safety.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DECORATOR METADATA                                           -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Decorator Metadata Reference</div>
+
+    <div class="section-body">
+      <p>
+        The &#64;<a href="/docs/references/decorators/vault-behavior"
+          >VaultBehavior</a
+        >
+        decorator accepts the following metadata:
+      </p>
+
+      <div class="table-title">
+        <a href="/docs/references/shapes/behavior-meta-shape"
+          >BehaviorMetaShape</a
+        >
+      </div>
+      <table aria-label="BehaviorMetaShape">
+        <thead>
+          <tr>
+            <th scope="col" class="column-275">Property</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              type:
+              <a href="/docs/references/types/behavior-type">BehaviorType</a>
+              <p>required</p>
+            </td>
+            <td>
+              The pipeline stage in which this Behavior participates. Determines
+              when the orchestrator invokes the Behavior. Use a value from
+              <a href="/docs/references/const/behavior-types">BehaviorTypes</a>.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              key: string
+              <p>required</p>
+            </td>
+            <td>
+              Unique identifier for this Behavior. Created with
+              <a href="/docs/references/functions/define-behavior-key"
+                >defineBehaviorKey</a
+              >('Domain', 'Name'). The key follows the format
+              SDUX::Behavior::Domain::Name. Used for diagnostics, DevTools
+              visualization, and orchestrator classification.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              critical: boolean
+              <p>required</p>
+            </td>
+            <td>
+              Indicates whether this Behavior is critical. When true, any error
+              in this Behavior halts the pipeline. When false, errors are logged
+              and the pipeline continues.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              resolveType?:
+              <a href="/docs/references/types/resolve-type">ResolveType</a>
+              <p>optional</p>
+            </td>
+            <td>
+              Optional resolve strategy associated with this Behavior. Only set
+              for resolution Behaviors that determine how state is initially
+              derived (e.g., value, http, observable).
+            </td>
+          </tr>
+          <tr>
+            <td>
+              wantsConfig?: boolean
+              <p>optional</p>
+            </td>
+            <td>
+              When true, the orchestrator passes the fluent configuration to the
+              constructor via behaviorCtx.behaviorConfig.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              configKey?: string
+              <p>optional</p>
+            </td>
+            <td>
+              The key used to look up the Behavior's configuration from the
+              fluent API config map.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              needsLicense?: boolean
+              <p>optional</p>
+            </td>
+            <td>
+              Indicates whether this Behavior requires a valid license to
+              execute. When true, the orchestrator validates the license before
+              invoking the Behavior.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              licenseId?: string
+              <p>optional</p>
+            </td>
+            <td>
+              The license identifier required for this Behavior. Used by the
+              orchestrator to validate that the appropriate license is present.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STEP 3: EXTENSION INTERFACE                                  -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Step 3 — Module Augmentation (Optional)</div>
+
+    <div class="section-body">
+      <p>
+        If your Behavior adds new methods to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> (via
+        extendCellAPI), declare them using TypeScript module augmentation so
+        consumers get full type safety.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'my-behavior.interface.ts'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { MyBehaviorOptions } from '../options/my-behavior.options';
+
+export interface MyBehaviorExtension&lt;T&gt; {
+  myCustomMethod(arg: string): Promise&lt;T&gt;;
+}
+
+declare module '@sdux-vault/shared' {
+  interface FeatureCellExtension&lt;T&gt; {
+    myCustomMethod?(arg: string): Promise&lt;T&gt;;
+  }
+
+  interface FeatureCellFluentApi&lt;T&gt; {
+    withMyBehavior?(options: MyBehaviorOptions&lt;T&gt;): this;
+  }
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        This augmentation makes cell.myCustomMethod() and cell.withMyBehavior()
+        available with full IntelliSense in consuming code.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STEP 4: REGISTER                                             -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Step 4 — Register the Behavior</div>
+
+    <div class="section-body">
+      <p>
+        Pass the Behavior class to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        declaration's Behavior array. Then use the fluent API to provide
+        configuration.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'feature-cell-usage.ts'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+import { withMyBehavior } from './with-my-behavior.behavior';
+
+export const myCell = FeatureCell(
+  MyCellToken,
+  {
+    key: 'my-cell',
+    initialState: {}
+  },
+  [
+    withMyBehavior   // register in the behavior array
+  ],
+  []
+);
+
+myCell
+  .withMyBehavior({ intervalMs: 5000 })
+  .initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- LIFECYCLE                                                    -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Behavior Lifecycle</div>
+
+    <div class="section-body">
+      <p>
+        The orchestrator manages each Behavior through a predictable lifecycle:
+      </p>
+
+      <ol>
+        <li>
+          <strong>Construction</strong> — The orchestrator instantiates the
+          Behavior, passing the assigned key and a context object containing the
+          configuration (if wantsConfig is true).
+        </li>
+        <li>
+          <strong>extendCellAPI</strong> — Called once after construction if the
+          Behavior exposes extension methods on the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+        <li>
+          <strong>Pipeline execution</strong> — The Behavior's stage-specific
+          logic runs each time the pipeline processes a state change.
+        </li>
+        <li>
+          <strong>reset</strong> — Called when the pipeline resets between
+          cycles. Use this to clear caches or internal counters.
+        </li>
+        <li>
+          <strong>destroy</strong> — Called when the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+          destroyed. Tear down all subscriptions and release resources.
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- EXTENDING EXISTING BEHAVIORS                                 -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Extending an Existing Behavior</div>
+
+    <div class="section-body">
+      <p>
+        You can extend a built-in Behavior class to inherit its base logic and
+        override or augment specific methods. This is useful when you need the
+        same pipeline stage assignment and core mechanics but want to customize
+        a subset of the logic.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'with-custom-distinct.behavior.ts'">
+          <pre class="code-inline"><code class="language-ts">{{`import {
+  BehaviorTypes,
+  defineBehaviorKey,
+  VaultBehavior
+} from '@sdux-vault/shared';
+import { withDistinctUntilChangedBehavior } from '@sdux-vault/addons';
+
+@VaultBehavior({
+  type: BehaviorTypes.Operator,
+  key: defineBehaviorKey('Custom', 'CustomDistinct'),
+  critical: false,
+  wantsConfig: true,
+  configKey: 'withCustomDistinct'
+})
+export class withCustomDistinctBehavior&lt;T&gt;
+  extends withDistinctUntilChangedBehavior&lt;T&gt; {
+
+  // Override or add methods as needed.
+  // The parent class handles the standard distinct logic.
+  // Your subclass can customize the comparison function,
+  // add logging, or inject additional side effects.
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <div class="note">Note</div>
+      <p>
+        When extending an existing Behavior, apply a new &#64;<a
+          href="/docs/references/decorators/vault-behavior"
+          >VaultBehavior</a
+        >
+        decorator with a unique key and configKey. The new decorator replaces
+        the parent's metadata so the orchestrator treats your subclass as a
+        distinct Behavior.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ABSTRACT BEHAVIORS                                           -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Abstract Behavior Base Classes</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> provides abstract base classes for Behavior
+        categories that share significant implementation logic. The
+        StepwiseBehaviorAbstract&lt;T&gt; class, for example, encapsulates the
+        coordination protocol with the stepwise controller bus. Concrete
+        implementations such as
+        <a href="/docs/pipeline/addons/stepwise/with-stepwise-resolve-behavior"
+          >withStepwiseResolveBehavior</a
+        >,
+        <a href="/docs/pipeline/addons/stepwise/with-stepwise-filter-behavior"
+          >withStepwiseFilterBehavior</a
+        >, and
+        <a href="/docs/pipeline/addons/stepwise/with-stepwise-reducer-behavior"
+          >withStepwiseReducerBehavior</a
+        >
+        each extend this abstract base.
+      </p>
+
+      <p>
+        When building a family of related Behaviors, consider extracting shared
+        logic into an abstract class. This avoids duplication while preserving
+        the single-responsibility contract that each concrete Behavior must
+        satisfy.
+      </p>
+
+      <p>
+        For most custom Behaviors that target a single pipeline stage,
+        implementing
+        <a href="/docs/references/contracts/behavior-contract"
+          >BehaviorContract</a
+        >&lt;T&gt; directly is the recommended approach. Use an abstract base
+        only when you are creating multiple Behaviors that share substantial
+        internal mechanics.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- EXTENSIBLE BEHAVIOR TYPES                                    -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Extensible Behavior Types</div>
+
+    <div class="section-body">
+      <p>
+        The following Behavior types are available for custom Extensions. Each
+        type corresponds to a pipeline stage where the custom Behavior will
+        execute.
+      </p>
+
+      <div class="table-title">Extensible Behavior Types</div>
+      <table aria-label="Extensible Behavior Types">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Behavior Type</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Encrypt</td>
+            <td>
+              Behaviors that apply encryption or decryption transformations to
+              state values during pipeline processing. The developer assumes
+              complete responsibility for protecting the end-user's data.
+            </td>
+          </tr>
+          <tr>
+            <td>ErrorTransform</td>
+            <td>
+              Behaviors that transform or enrich error objects before they are
+              dispatched to error callbacks.
+            </td>
+          </tr>
+          <tr>
+            <td>Extension</td>
+            <td>
+              General-purpose Behaviors that add methods to the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              API surface.
+            </td>
+          </tr>
+          <tr>
+            <td>Interceptor</td>
+            <td>
+              Behaviors that observe or react to pipeline events such as errors.
+            </td>
+          </tr>
+          <tr>
+            <td>Merge</td>
+            <td>
+              Behaviors that define custom merge strategies for combining
+              current and incoming state.
+            </td>
+          </tr>
+          <tr>
+            <td>Operator</td>
+            <td>Behaviors that apply RxJS operators to the emission stream.</td>
+          </tr>
+          <tr>
+            <td>Persist</td>
+            <td>
+              Behaviors that persist committed state to external storage such as
+              localStorage, sessionStorage, or IndexedDB. The developer assumes
+              complete responsibility for protecting the end-user's data.
+            </td>
+          </tr>
+          <tr>
+            <td>ReplayGlobalError</td>
+            <td>
+              Behaviors that replay previously captured global errors into the
+              pipeline for reprocessing or observation.
+            </td>
+          </tr>
+          <tr>
+            <td>StepwiseFilter</td>
+            <td>
+              Behaviors that conditionally suppress pipeline values using the
+              stepwise bus coordination protocol.
+            </td>
+          </tr>
+          <tr>
+            <td>StepwiseReducer</td>
+            <td>
+              Behaviors that derive or transform candidate values using the
+              stepwise bus coordination protocol.
+            </td>
+          </tr>
+          <tr>
+            <td>StepwiseResolve</td>
+            <td>
+              Behaviors that normalize incoming state inputs using the stepwise
+              bus coordination protocol.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- RESTRICTED BEHAVIOR TYPES                                    -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Restricted Behavior Types</div>
+
+    <div class="section-body">
+      <p>
+        Not all Behavior types are available for custom Extensions. The
+        Orchestrator enforces a strict boundary between core pipeline
+        infrastructure and the extensible Behavior surface. Behaviors that
+        belong to core pipeline stages are managed exclusively by the
+        Orchestrator and are silently removed if provided in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        Behavior array.
+      </p>
+
+      <p>
+        The following Behavior types are restricted and cannot be registered as
+        custom Extensions:
+      </p>
+
+      <div class="table-title">Restricted Behavior Types</div>
+      <table aria-label="Restricted Behavior Types">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Behavior Type</th>
+            <th scope="col" class="column-auto">Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CoreAfterTap</td>
+            <td>
+              Executes registered AfterTap observation callbacks. Managed
+              internally by the Orchestrator.
+            </td>
+          </tr>
+          <tr>
+            <td>CoreBeforeTap</td>
+            <td>
+              Executes registered BeforeTap observation callbacks. Managed
+              internally by the Orchestrator.
+            </td>
+          </tr>
+          <tr>
+            <td>CoreEmitState</td>
+            <td>
+              Dispatches finalized State to registered emit-state callbacks.
+              Managed internally based on
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              emit-state callback configuration.
+            </td>
+          </tr>
+          <tr>
+            <td>CoreError</td>
+            <td>
+              Normalizes raw errors into the canonical error shape. Exactly one
+              instance is required and is provided by the core pipeline.
+            </td>
+          </tr>
+          <tr>
+            <td>CoreErrorCallback</td>
+            <td>
+              Dispatches normalized errors to registered error callbacks.
+              Managed internally based on
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              error callback configuration.
+            </td>
+          </tr>
+          <tr>
+            <td>CoreState</td>
+            <td>
+              Manages finalized State commitment and snapshot emission. Exactly
+              one instance is required and is provided by the core pipeline.
+            </td>
+          </tr>
+          <tr>
+            <td>Filter</td>
+            <td>
+              Applies registered filter functions to pipeline values. The core
+              Filter Behavior is provided by the pipeline; filter functions are
+              supplied separately through
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              configuration.
+            </td>
+          </tr>
+          <tr>
+            <td>FromObservable</td>
+            <td>
+              Resolves Observable-based State inputs. Installed as part of the
+              core Resolve stage.
+            </td>
+          </tr>
+          <tr>
+            <td>FromPromise</td>
+            <td>
+              Resolves deferred factory (Promise-backed) State inputs. Installed
+              as part of the core Resolve stage.
+            </td>
+          </tr>
+          <tr>
+            <td>FromStream</td>
+            <td>
+              Resolves stream-based State inputs. Installed as part of the core
+              Resolve stage.
+            </td>
+          </tr>
+          <tr>
+            <td>Reduce</td>
+            <td>
+              Applies registered reducer functions to pipeline values. The core
+              Reduce Behavior is provided by the pipeline; reducer functions are
+              supplied separately through
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              configuration.
+            </td>
+          </tr>
+          <tr>
+            <td>Resolve</td>
+            <td>
+              Normalizes incoming State inputs into a canonical upstream value.
+              Core Resolve Behaviors are installed by default and execute based
+              on the resolved input type.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        If a custom Behavior is registered with any of the restricted types
+        listed above, the Orchestrator removes it during pipeline
+        initialization. No error is raised; the Behavior is silently excluded
+        from pipeline execution.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- LICENSING                                                    -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Licensing</div>
+
+    <div class="section-body">
+      <p>
+        Custom Behavior extensions are available exclusively with a purchased
+        <strong><sdux-vault-brand-name /> Pro plan</strong>. The licensing
+        controller validates the <sdux-vault-brand-name /> active license during
+        pipeline initialization and silently excludes custom Behaviors when a
+        valid Pro license is not present. For licensing details and plan
+        options, see the
+        <a href="/sdux/vault"><sdux-vault-brand-name /> product page</a>.
+      </p>
+    </div>
+  </section>
+
+  <sdux-devmode-licensing-common />
+
+  <!-- ============================================================ -->
+  <!-- RELATED TOPICS                                               -->
+  <!-- ============================================================ -->
+  <sdux-pipeline-related-topics />
+</div>

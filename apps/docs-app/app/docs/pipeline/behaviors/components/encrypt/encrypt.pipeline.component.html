@@ -1,0 +1,321 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container">
+  <div class="header">
+    <h3>Encrypt Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      An <strong>Encrypt Behavior</strong> protects persisted
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state by
+      transforming finalized pipeline output into an encrypted representation
+      before storage, and restoring it during rehydration. Encryption is
+      optional, opt-in, and operates strictly at the pipeline boundary—after
+      state computation and before persistence.
+    </p>
+
+    <p>
+      Encrypt behaviors do not participate in state computation, validation, or
+      transformation. They exist solely to ensure that values written to
+      external storage are protected, while the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      continues to operate on plain, in-memory state.
+    </p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- ENCRYPT STAGE                                                -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Encrypt Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Encrypt stage runs <em>after</em> the Processing Layer has produced
+        a finalized state snapshot and <em>before</em> the Persist stage writes
+        data to storage. During rehydration, decryption runs symmetrically after
+        persisted data is loaded and before any state snapshot is emitted.
+      </p>
+
+      <p>
+        Encrypt behaviors operate on the pipeline’s persistence value only. They
+        never alter the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        in-memory state and do not feed encrypted values back into computation.
+      </p>
+
+      <ul>
+        <li>
+          Encryption is opt-in and enabled only when an encrypt behavior is
+          registered
+        </li>
+        <li>Null and undefined values bypass encryption</li>
+        <li>Encrypted output is a structured, versioned envelope</li>
+        <li>Decryption validates envelope shape and compatibility</li>
+        <li>
+          untime encryption failures surface as a
+          <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a
+          >. Initialization-time decryption failures are handled during state
+          resolution and do not attach errors to emitted snapshots
+        </li>
+        <li>
+          A secret must be configured before encryption or decryption can occur
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Initialization-Time Decryption</div>
+
+    <div class="section-body">
+      <p>
+        During
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization, persisted state is restored before any state snapshot is
+        emitted. When an Encrypt behavior is present alongside a Persist
+        behavior, this restoration process includes automatic decryption of the
+        persisted value. The encrypted envelope is decrypted as part of
+        initialization-time state resolution, and the resulting plain value
+        becomes the initial snapshot emitted by the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>, if
+        such persisted data exists.
+      </p>
+
+      <p>
+        This initialization-time decryption is distinct from runtime encryption:
+        encryption applies only to the pipeline’s persistence value after a
+        finalized snapshot has been produced, while decryption applies only when
+        restoring persisted data during initialization.
+      </p>
+
+      <p>
+        If no persisted data is available, or if decryption cannot be performed,
+        initialization proceeds according to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        configured initial state and error handling contracts. This process
+        occurs before the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> begins
+        emitting snapshots to consumers and ensures that all emitted state
+        conforms to the same
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >
+        contract, regardless of whether the value originated from persistence or
+        from static initialization.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Design Decisions</div>
+
+    <div class="section-body">
+      <p>
+        Encrypt behaviors participate in the persistence lifecycle and are
+        configured at
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization time. Missing or invalid encryption configuration is a
+        <strong>fatal initialization error</strong> that prevents the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> from
+        becoming operational. This condition cannot be recovered at runtime and
+        requires a corrected build to resolve.
+      </p>
+
+      <p>
+        This split ensures encryption configuration errors are surfaced
+        immediately and deterministically at initialization, while
+        persisted-data corruption does not prevent the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> from
+        starting with a known fallback state.
+      </p>
+
+      <h4>Configuration</h4>
+      <p>
+        <strong>Missing encryption configuration (Example 6)</strong> occurs
+        during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization. Because the encrypt behavior cannot be constructed
+        without its required configuration, initialization fails and the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> never
+        becomes operational. No
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >
+        is emitted, and the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> cannot
+        accept replaceState() or mergeState() calls. Resolving this condition
+        requires a corrected build and a fresh initialization attempt.
+      </p>
+
+      <pre class="code-inline"><code class="language-ts">{{`// Fatal Error
+Error: [vault] AES256Encrypt behavior requires configuration via setAes256Secret()`}}</code></pre>
+
+      <h4>Decrypt Failure</h4>
+      <p>
+        <strong>Invalid encrypted payload (Example 7)</strong> is treated
+        differently because it occurs during initialization-time restoration
+        from persistence. If previously persisted data is present but cannot be
+        decrypted, the persisted value is treated as unavailable and
+        initialization continues using the configured initialState. The
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        remains operational and emits a valid initial
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >
+        derived from initialState.
+      </p>
+
+      <h4>Encrypt Failure</h4>
+
+      <p>
+        An encrypt failure occurs when an Encrypt behavior throws during
+        pipeline execution. In this case, the error is captured and normalized
+        as a
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>.
+      </p>
+
+      <p>
+        When encryption fails, the pipeline aborts the persistence sequence. The
+        candidate persistence value is not encrypted, no data is written by any
+        Persist behavior, and no encrypted output is produced.
+      </p>
+
+      <p>
+        The <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        in-memory state is not modified by an encrypt failure. The previously
+        committed
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >
+        remains intact, and no partial or encrypted value is applied to state.
+      </p>
+
+      <p>
+        The resulting
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+        is emitted through the error handling lifecycle, allowing consumers and
+        error observers to react, while preserving determinism and preventing
+        corrupted or partially encrypted data from reaching storage.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DESIGN CONSTRAINTS                                           -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Design Constraints</div>
+
+    <div class="section-body">
+      <ul>
+        <li>
+          Encrypt behaviors never modify or replace
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state
+        </li>
+        <li>Encryption output is not observable as state</li>
+        <li>All encrypted data is treated as a persistence side effect</li>
+        <li>State snapshots always expose plain, decrypted values</li>
+        <li>Encrypt behaviors do not influence pipeline control flow</li>
+        <li>
+          Encrypt behaviors have no effect unless paired with a persist
+          behavior. Because encryption operates exclusively on pipeline output
+          and does not affect in-memory state, encrypting without persistence
+          produces no observable result.
+        </li>
+        <li>
+          If any encryption configuration values change (including the secret,
+          salt, or iteration count), previously persisted encrypted data will no
+          longer decrypt successfully. Encryption configuration must remain
+          stable for the lifetime of the stored data. The encryption secret and
+          salt should be stored durably and committed to a repository or
+          equivalent configuration source to ensure long-term consistency.
+        </li>
+        <li>
+          Very large encrypted payloads may impact memory usage. Persisted
+          encrypted data larger than approximately
+          <strong>5&nbsp;MB</strong> is discouraged; external storage mechanisms
+          should be considered for large datasets.
+        </li>
+      </ul>
+
+      <p>
+        These constraints ensure that encryption provides confidentiality for
+        persisted data without compromising determinism, observability, or
+        correctness of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipeline, while also clarifying that encryption is meaningful only when
+        used as part of an output persistence strategy.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.7/3.7.1-encrypt-lifecycle.svg"
+        [tooltip]="'Encrypt Lifecycle'"></sdux-diagram>
+
+      <sdux-diagram
+        image="diagrams/3.7/3.7.3-decrypt-lifecycle.svg"
+        [tooltip]="'Decrypt Lifecycle'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2.1-pipeline-initialization-flow.svg"
+        [tooltip]="'FeatureCell Initialization Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CONFIGURATION OPTIONS                                        -->
+  <!-- ============================================================ -->
+
+  <section class="section">
+    <div class="section-title">Available Encrypt Behaviors</div>
+
+    <div class="section-body">
+      <table aria-label="Available Encrypt Behaviors">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Behavior</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p>
+                <strong
+                  ><a
+                    href="/docs/pipeline/addons/encrypt/with-aes256encrypt-behavior"
+                    >withAes256EncryptBehavior</a
+                  ></strong
+                >
+              </p>
+              <p>Algorithm: AES-256-GCM</p>
+            </td>
+            <td>
+              <p>
+                Encrypts finalized state using AES-256-GCM and produces a
+                versioned encrypted envelope suitable for persistence. Requires
+                an engineer-configured secret and encryption parameters. During
+                rehydration, decrypts the envelope back into its original plain
+                value.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <sdux-vault-encrypt-licensing-common />
+
+  <sdux-pipeline-related-topics />
+</div>

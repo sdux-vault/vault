@@ -1,0 +1,862 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-24 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Core Error Callback Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Core Error Callback Behaviors</strong> provide a controlled,
+      observational mechanism for responding to finalized Vault error
+      conditions. They execute after error normalization and state commitment,
+      allowing legacy or convenience callbacks to observe error events without
+      influencing pipeline execution or error authority.
+    </p>
+
+    <h4>Error Callback Contract Summary</h4>
+    <ul>
+      <li>
+        Error callbacks are observational only and must not transform errors
+      </li>
+      <li>Error callbacks must not throw or rethrow errors</li>
+      <li>
+        Error callbacks receive the finalized
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+      </li>
+      <li>Error callbacks receive an immutable state snapshot</li>
+      <li>
+        Callback execution does not affect error finalization or state
+        commitment
+      </li>
+    </ul>
+
+    <p>
+      The Core Error Callback contract guarantees that callback execution is
+      <strong>isolated and non-authoritative</strong>. Callbacks are invoked
+      only after the error state has been fully normalized, transformed, and
+      committed. Any failures within callbacks are contained and do not alter
+      the committed error state or pipeline outcome.
+    </p>
+
+    <p>
+      Core Error Callback Behaviors do not participate in error normalization,
+      transformation, pipeline control, or scheduling. Their sole responsibility
+      is to provide a compatibility and observation surface for
+      already-finalized error conditions.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Add-on Error Callback Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        In addition to core error normalization and transformation, FeatureCells
+        may opt into
+        <em>add-on error callback behaviors</em>. These behaviors observe the
+        finalized
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+        after it has been committed to state and may perform supplemental,
+        observational handling such as logging, diagnostics, or compatibility
+        callbacks. Error callbacks do not replace, suppress, or alter error
+        finalization.
+      </p>
+
+      <p>
+        Legacy error callbacks exist solely for convenience and backward
+        compatibility. The primary mechanism for observing and responding to
+        errors is the reactive vault.state().error. Callback-based handling
+        should not be relied upon for core application logic.
+      </p>
+
+      <h4>Fluent Errors() API</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        declare <strong>multiple error callbacks</strong> using the fluent
+        <strong>.errors()</strong> API. This API accepts an ordered array of
+        error callbacks that are executed sequentially after the error state has
+        been finalized. Callback registration occurs during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        Error callbacks are strictly observational. They do not influence
+        pipeline control flow, do not transform the error, and always return
+        <a href="/docs/references/const/vault_noop">VAULT_NOOP</a>.
+      </p>
+
+      <p>
+        An empty errors array is ignored and has no effect on pipeline
+        execution.
+      </p>
+
+      <h4>Engineer-Supplied Error Callbacks</h4>
+      <p>
+        Error callbacks are supplied by engineers during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization and execute exclusively after the authoritative error
+        state has been committed. Each callback receives the normalized
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+        and an immutable state snapshot. Callbacks must not throw, must not
+        mutate state, and must not attempt to resume pipeline execution.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Although multiple error callbacks may be composed, callback logic should
+        remain narrowly scoped and observational. Complex or interdependent
+        callbacks can obscure intent and complicate failure analysis. Error
+        callbacks are most effective when limited to logging, diagnostics, or
+        transitional compatibility concerns.
+      </p>
+    </div>
+  </section>
+
+  <sdux-error-handling-order-common />
+
+  <sdux-error-consumption-mechanism-common />
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/7.0/7.0-error-flow.svg"
+        [tooltip]="'Error Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Error callbacks are configured separately from error normalization and
+        transformation. When declared, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        registers a core error callback behavior that executes
+        <em>after</em> the error has been finalized and committed to state.
+        Error callbacks are attached exclusively through the fluent
+        <strong>.errors()</strong> API during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        Error callbacks are optional and observational. They do not participate
+        in error normalization, do not transform the
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>,
+        and do not influence pipeline control or state commitment. Their
+        execution is isolated and failures within callbacks do not affect the
+        authoritative error state.
+      </p>
+
+      <sdux-vault-error-behaviors-common [type]="'callback'" />
+
+      <sdux-vault-error-callback-shape-common />
+
+      <sdux-state-snapshot-shape-common />
+
+      <sdux-vault-error-shape-common />
+    </div>
+  </section>
+
+  <sdux-vault-error-callback-fluent-api-common />
+
+  <!-- ====================================================== -->
+  <!-- error CALLBACK PATTERNS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Error Callback Patterns</div>
+
+    <div class="section-body">
+      <p>
+        Error callbacks permit side effects, but they execute after error
+        finalization and must not influence pipeline control or state. Because
+        of this, function structure, binding discipline, and isolation are
+        especially important.
+      </p>
+
+      <p>
+        The following categories describe supported and discouraged error
+        callback patterns, ordered from most to least preferred.
+      </p>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY A -->
+      <!-- ====================================================== -->
+
+      <h4>Category A: Pure / Context-Free Functions (Recommended)</h4>
+
+      <p>
+        Pure error callbacks depend only on their inputs and perform
+        deterministic, observational side effects. They do not reference
+        instance context and do not close over mutable external state.
+      </p>
+
+      <p>This is the safest and most reusable callback form.</p>
+
+      <h4>Example 1: Pure Error Callback</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 1: Pure Error Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.errors(
+  [
+    (error: VaultErrorShape, state: StateSnapshotShape&lt;Employee[]>) => {
+      console.info('Error occurred:', error.message);
+      console.info('Current state value:', state.value);
+    }
+  ]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 2: Factory-Generated Pure Error Callback</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 2: Factory-Generated Error Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export function createErrorLogger(label: string) {
+  return (error: VaultErrorShape, state: StateSnapshotShape&lt;Employee[]>) => { => {
+    console.info(label, error.message);
+  };
+}
+
+employeeCell.errors(
+  [
+    createErrorLogger('EmployeeCell')
+  ]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY B -->
+      <!-- ====================================================== -->
+
+      <h4>
+        Category B: Instance-Aware but Correctly Bound Callbacks (Acceptable)
+      </h4>
+
+      <p>
+        Error callbacks may reference instance-owned configuration when properly
+        bound. These callbacks remain deterministic per
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance and must not be shared across cells.
+      </p>
+
+      <h4>Example 3: Arrow Function Using Instance State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 3: Instance-Bound Arrow Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`readonly prefix = '[Employee Error]';
+
+readonly logError = (
+  error: VaultErrorShape
+) => {
+  console.info(this.prefix, error.message);
+};
+
+employeeCell.errors(
+  [this.logError]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 4: Bound Instance Method</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 4: Bound Instance Method'">
+          <pre class="code-inline"><code class="language-ts">{{`public logError(
+  error: VaultErrorShape,
+  state: StateSnapshotShape&lt;Employee[]>
+) {
+  console.info('Error:', error.message);
+  console.info('Snapshot value:', state.value);
+}
+
+employeeCell.errors(
+  [this.logError.bind(this)]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY C -->
+      <!-- ====================================================== -->
+
+      <h4>Category C: Delegating Callbacks</h4>
+
+      <p>
+        Error callbacks may delegate work to helper functions as long as
+        delegation remains observational and does not rely on external mutable
+        state.
+      </p>
+
+      <h4>Example 5: Delegated Error Logging</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 5: Delegated Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`function logErrorMessage(error: VaultErrorShape) {
+  console.info('Logged error:', error.message);
+}
+
+employeeCell.errors(
+  [
+    (error: VaultErrorShape) => logErrorMessage(error)
+  ]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY D -->
+      <!-- ====================================================== -->
+
+      <h4>Category D: Inline Lambda Callbacks (Allowed, Use Sparingly)</h4>
+
+      <p>
+        Inline callbacks are allowed but should remain trivial. Inline lambdas
+        make it easy to accidentally introduce hidden coupling or complex logic.
+      </p>
+
+      <h4>Example 6: Inline Conditional Callback</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 6: Inline Conditional Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.errors(
+  [
+    (error: VaultErrorShape) => {
+      if (error.status === 404) {
+        console.info('Resource not found');
+      }
+    }
+  ]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Error Callback ANTI-PATTERNS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Error Callback Anti-Patterns</div>
+
+    <div class="section-body">
+      <p>
+        Error callbacks are <em>observational hooks</em>. They exist to react to
+        finalized error state, not to influence pipeline execution or state.
+        Misuse can introduce hidden coupling, degraded performance, or incorrect
+        assumptions about error handling guarantees.
+      </p>
+
+      <h4>Common Anti-Patterns</h4>
+      <ul>
+        <li>Mutating the error or state snapshot</li>
+        <li>Performing long-running, blocking, or asynchronous work</li>
+        <li>Embedding business logic or decision-making</li>
+        <li>Depending on external mutable or shared state</li>
+        <li>Assuming callback execution affects pipeline flow or recovery</li>
+      </ul>
+
+      <p>
+        Violations in error callbacks are not always mechanically detectable.
+        Issues typically surface as subtle bugs, degraded observability, or
+        incorrect mental models of pipeline behavior.
+      </p>
+
+      <h4>Example: Discouraged Mutation Inside an Error Callback</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example: Discouraged Mutation in Error Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.errors(
+  [
+    (error: VaultErrorShape, state: StateSnapshotShape&lt;Employee[]>) => {
+      // ❌ Mutating the finalized error
+      error.message = 'Modified message';
+      console.info('Error message:', error.message);
+    }
+  ]
+).initialize();
+
+// ❌ Violates the error callback contract: error and state are immutable snapshots`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        Even if such mutation appears to have an effect, it violates pipeline
+        guarantees. Error callbacks must treat both the error and state snapshot
+        as immutable and authoritative.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Error Callback Summary</div>
+    <div class="section-body">
+      <h4>Error Callback Comparison</h4>
+
+      <p>
+        The following table summarizes the practical differences between the
+        error callback styles demonstrated above. While all valid examples may
+        execute correctly, they differ in reusability, testability, and
+        long-term safety.
+      </p>
+
+      <div class="table-title">Error Callback Characteristics</div>
+      <div class="table-scroll">
+        <table aria-label="Error Callback Characteristics">
+          <thead>
+            <tr>
+              <th scope="col" class="column-175">Dimension</th>
+
+              <th scope="col" class="column-auto">
+                Examples 1 / 2<br />
+                <span class="table-header-secondary"
+                  >Pure / Factory Callbacks</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Examples 3 / 4<br />
+                <span class="table-header-secondary"
+                  >Instance-Bound Callbacks</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 5<br />
+                <span class="table-header-secondary">Delegating Callback</span>
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 6<br />
+                <span class="table-header-secondary">Inline Lambda</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Purity</td>
+              <td>✅</td>
+              <td>⚠️ Instance-scoped</td>
+              <td>⚠️ Depends on delegate</td>
+              <td>⚠️</td>
+            </tr>
+
+            <tr>
+              <td>Determinism</td>
+              <td>✅</td>
+              <td>⚠️ Per instance</td>
+              <td>⚠️ Delegate-dependent</td>
+              <td>⚠️</td>
+            </tr>
+
+            <tr>
+              <td>Safety for Pipelines</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>⚠️</td>
+              <td>⚠️</td>
+            </tr>
+
+            <tr>
+              <td>Reusability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>Medium</td>
+              <td>Low</td>
+            </tr>
+
+            <tr>
+              <td>Testability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>Medium</td>
+              <td>Lower</td>
+            </tr>
+
+            <tr>
+              <td>Risk of Accidental Closure</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Medium</td>
+              <td>High</td>
+            </tr>
+
+            <tr>
+              <td>Intended Lifespan</td>
+              <td>Long-lived</td>
+              <td>Instance-limited</td>
+              <td>Contextual</td>
+              <td>Ephemeral</td>
+            </tr>
+
+            <tr>
+              <td>Recommended Usage</td>
+              <td>Preferred</td>
+              <td>Acceptable</td>
+              <td>Use with care</td>
+              <td>Use sparingly</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Summary Rule</h4>
+      <p>
+        Any error callback must either be
+        <strong>referentially transparent</strong> or
+        <strong>explicitly instance-scoped and bound</strong>. Functions that
+        depend on external mutable state or unbound instance context introduce
+        hidden coupling and should be avoided.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Callback Examples</div>
+
+    <!-- Examples Section ---------------------------------------------------------->
+
+    <div class="section-body">
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Use the Array Push Merge in a FeatureCell'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {  
+        key: 'employees',
+        initialState: [],
+      },
+      [
+        // **Important**
+        // Error Callback behaviors are not registered as part of the 
+        // FeatureCell’s declarative configuration.
+      ],
+      [
+        // opt-in Controllers 
+      ]
+    )
+  ]
+};
+
+// bank-employee.service.ts
+
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.shape';
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.errors(
+      [
+        (error, state) => {
+          // Observational side effect only
+          console.info('Employee FeatureCell error:', error.message);
+          console.info('Last known state value:', state.value);
+        }
+      ]
+    ).initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Async Error Callback (Remote Logging)</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Async Error Callback (Remote Logging)'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {  
+        key: 'employees',
+        initialState: [],
+      },
+      [
+        // **Important**
+        // Error Callback behaviors are not registered as part of the 
+        // FeatureCell’s declarative configuration.
+      ],
+      [
+        // opt-in Controllers 
+      ]
+    )
+  ]
+};
+
+// bank-employee.service.ts
+
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.shape';
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault
+      .errors(
+        [
+          async (error, state) => {
+            await logErrorToApi({
+              feature: 'employees',
+              message: error.message,
+              stateValue: state.value,
+            });
+          }
+        ]
+      )
+      .initialize();
+  }
+
+  async logErrorToApi(payload: {
+    message: string;
+    feature: string;
+    stateValue: unknown;
+  }): Promise&lt;void&gt; {
+    await fetch('/api/logs/errors', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Register an Error Callback</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Register an Error Callback'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // **Important**
+    // Error Callback behaviors are not registered as part of the 
+    // FeatureCell’s declarative configuration.
+  ],
+  [
+    // opt-in Controllers 
+  ]
+);
+
+// Register an error callback during initialization
+employeeCell.errors(
+  [
+    (error, state) => {
+      // Observational side effect only
+      console.info('Employee FeatureCell error:', error.message);
+      console.info('Last known state value:', state.value);
+    }
+  ]
+)
+.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Async Error Callback (Remote Logging)</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Async Error Callback (Remote Logging)'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // **Important**
+    // Error Callback behaviors are not registered as part of the 
+    // FeatureCell’s declarative configuration.
+  ],
+  [
+    // opt-in Controllers 
+  ]
+);
+
+// Example async logger (implementation is app-owned)
+async function logErrorToApi(payload: {
+  message: string;
+  feature: string;
+  stateValue: unknown;
+}): Promise&lt;void&gt; {
+  await fetch('/api/logs/errors', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+}
+
+// Register an async error callback during initialization
+employeeCell
+  .errors(
+    [
+      async (error, state) => {
+        await logErrorToApi({
+          feature: 'employees',
+          message: error.message,
+          stateValue: state.value,
+        });
+      }
+    ]
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Register an Error Callback</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Register an Error Callback'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // **Important**
+    // Error Callback behaviors are not registered as part of the 
+    // FeatureCell’s declarative configuration.
+  ],
+  [
+    // opt-in Controllers 
+  ]
+);
+
+// Register an error callback during initialization
+employeeCell.errors(
+  [
+    (error, state) => {
+      // Observational side effect only
+      console.info('Employee FeatureCell error:', error.message);
+      console.info('Last known state value:', state.value);
+    }
+  ]
+)
+.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Async Error Callback (Remote Logging)</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Async Error Callback (Remote Logging)'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // **Important**
+    // Error Callback behaviors are not registered as part of the 
+    // FeatureCell’s declarative configuration.
+  ],
+  [
+    // opt-in Controllers 
+  ]
+);
+
+// Example async logger (implementation is app-owned)
+async function logErrorToApi(payload: {
+  message: string;
+  feature: string;
+  stateValue: unknown;
+}): Promise&lt;void&gt; {
+  await fetch('/api/logs/errors', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+}
+
+// Register an async error callback during initialization
+employeeCell
+  .errors(
+    [
+      async (error, state) => {
+        await logErrorToApi({
+          feature: 'employees',
+          message: error.message,
+          stateValue: state.value,
+        });
+      }
+    ]
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

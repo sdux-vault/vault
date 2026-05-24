@@ -1,0 +1,69 @@
+@use 'global' as global;
+
+@mixin button-toggle-container($style: large) {
+  z-index: 999;
+
+  $size: 32px;
+  $font: 24px;
+
+  @if $style == small {
+    $size: 24px;
+    $font: 16px;
+  }
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $size;
+  height: $size;
+
+  .button-toggle {
+    /* Reset native button styling */
+    appearance: none;
+    border: none;
+    padding: 0;
+    background: none;
+    outline: none;
+
+    background-color: global.$sdux-primary-light;
+    border-radius: 50%;
+    box-shadow: global.$sdux-shadow-base;
+
+    cursor: pointer;
+    z-index: 999;
+
+    transition:
+      background-color 0.2s ease,
+      transform 0.15s ease;
+
+    &:hover {
+      background-color: global.$sdux-primary-base;
+      transform: translateY(-2px);
+    }
+
+    /* Accessible focus state */
+    &:focus-visible {
+      box-shadow:
+        0 0 0 2px var(--sdux-surface-base),
+        0 0 0 4px var(--sdux-primary);
+    }
+
+    .mat-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: $font;
+      width: $size;
+      height: $size;
+      color: global.$sdux-text-black;
+
+      &:hover {
+        color: global.$sdux-text-white;
+      }
+    }
+  }
+}
+
+.button-toggle-container {
+  @include button-toggle-container();
+}

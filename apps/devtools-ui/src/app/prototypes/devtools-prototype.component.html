@@ -1,0 +1,53 @@
+<div class="page-container">
+  <div class="state-container">
+    @if (activeTimelineId !== null) {
+      Active Timeline: {{ activeTimelineId }}
+    }
+  </div>
+
+  <div class="timeline-container" #timelineContainer>
+    <div class="timeline-row">
+      @for (timeline of timelines; track timeline.id) {
+        <div
+          class="timeline"
+          [class.selected]="selectedTimelineId === timeline.id"
+          (mouseenter)="setHoveredTimeline(timeline.id)"
+          (mouseleave)="setHoveredTimeline(null)"
+          (click)="selectTimeline(timeline.id)"
+          (keydown.enter)="selectTimeline(timeline.id)"
+          tabindex="0">
+          {{ timeline.id }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="event-container">
+    <div class="event-column-container">
+      <div class="event-column">
+        @for (event of activeTimeline?.events ?? []; track event.id) {
+          <div
+            class="event"
+            [class.selected]="selectedEventId === event.id"
+            (mouseenter)="setHoveredEvent(event.id)"
+            (mouseleave)="setHoveredEvent(null)"
+            (click)="selectEvent(event.id)"
+            (keydown.enter)="selectEvent(event.id)"
+            tabindex="0">
+            {{ event.behaviorKey }}
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="event-data-container">
+      @if (activeEvent) {
+        <div><strong>ID:</strong> {{ activeEvent.id }}</div>
+        <div><strong>Behavior Key:</strong> {{ activeEvent.behaviorKey }}</div>
+        <div><strong>Cell:</strong> {{ activeEvent.cell }}</div>
+        <div><strong>Name:</strong> {{ activeEvent.name }}</div>
+        <div><strong>Timestamp:</strong> {{ activeEvent.timestamp }}</div>
+      }
+    </div>
+  </div>
+</div>

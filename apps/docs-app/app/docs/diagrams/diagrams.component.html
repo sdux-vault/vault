@@ -1,0 +1,1417 @@
+<div class="docs-container">
+  <a id="top" aria-hidden="true"></a>
+
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Diagrams</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      This page provides a visual overview of the
+      <strong>SDuX pipeline architecture</strong> and its core behaviors and
+      controllers. Diagrams are ordered by conceptual importance first, followed
+      by execution order through the pipeline. Each diagram is intended to stand
+      on its own, serving as a concise mental model for how data flows,
+      decisions are made, and state is committed within a FeatureCell.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- TABLE OF CONTENTS -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Table of Contents</div>
+
+    <div class="section-body">
+      <div class="toc-container">
+        <h4>Sections</h4>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="pipeline-diagrams"
+              >Pipeline Flow Diagrams</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="behavior-addon-diagrams"
+              >Behavior & Add-on Diagrams</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="controller-diagrams"
+              >Controller Diagrams</a
+            >
+          </li>
+        </ul>
+
+        <div class="sorted-container">
+          <div class="panel-left">
+            <h4>Alphabetical</h4>
+
+            <div class="table-title">Flows</div>
+            <ul class="toc">
+              @for (link of flowLinks; track link.fragment) {
+                <li>
+                  <a [routerLink]="[]" [fragment]="link.fragment">
+                    {{ link.display }}
+                  </a>
+                </li>
+              }
+            </ul>
+
+            <div class="table-title">Behaviors</div>
+            <ul class="toc">
+              @for (link of behaviorLinks; track link.fragment) {
+                <li>
+                  <a [routerLink]="[]" [fragment]="link.fragment">
+                    {{ link.display }}
+                  </a>
+                </li>
+              }
+            </ul>
+
+            <div class="table-title">Controllers</div>
+            <ul class="toc">
+              @for (link of controllerLinks; track link.fragment) {
+                <li>
+                  <a [routerLink]="[]" [fragment]="link.fragment">
+                    {{ link.display }}
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+          <div class="panel-right">
+            <h4>By Stage</h4>
+
+            <div class="table-title">Flows</div>
+            <ul class="toc">
+              @for (link of stageFlows; track link.fragment) {
+                <li>
+                  <a [routerLink]="[]" [fragment]="link.fragment">
+                    {{ link.display }}
+                  </a>
+                </li>
+              }
+            </ul>
+
+            <div class="table-title">Behaviors and Controllers</div>
+            <ul class="toc">
+              @for (link of stageBehaviors; track link.fragment) {
+                <li>
+                  <a [routerLink]="[]" [fragment]="link.fragment">
+                    {{ link.display }}
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+
+        <div class="sorted-container">
+          <div class="panel-left">
+            <h4>Testing</h4>
+
+            <ul class="toc">
+              @for (link of testingLinks; track link.fragment) {
+                <li>
+                  <a [routerLink]="[]" [fragment]="link.fragment">
+                    {{ link.display }}
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sdux-hr" />
+
+  <section class="diagram-section" id="pipeline-diagrams">
+    <h4>Pipeline Diagrams</h4>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FULL PIPELINE -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="full-pipeline">
+    <div class="section-title-navigation">
+      <div class="section-title">Full Pipeline</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram shows the complete end-to-end pipeline, from initial
+        decision arbitration through persistence, encryption, and final state
+        emission. It is the authoritative reference for pipeline ordering and
+        responsibility boundaries.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXECUTION FLOW -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="simplified-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Simplified Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates the control flow between high-level SDuX
+        components, from consumer code through the orchestrator and into the
+        pipeline. It clarifies ownership and execution boundaries.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.1/2.1-execution-flow.svg"
+        [tooltip]="'Execution Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FEATURECELL LIFECYCLE -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="featurecell-lifecycle">
+    <div class="section-title-navigation">
+      <div class="section-title">FeatureCell Lifecycle</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram captures the lifecycle of a FeatureCell from user
+        interaction through pipeline execution and final state commitment. It
+        provides a conceptual foundation for all other diagrams.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/1.0/1.1-featurecell-lifecycle.svg"
+        [tooltip]="'FeatureCell Lifecycle'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="featurecell-initialization-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">FeatureCell Initialization Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates the initialization lifecycle of a FeatureCell
+        from explicit initialization through initial pipeline execution and
+        first state commitment. It captures how the system determines the
+        initial upstream value before normal pipeline processing begins.
+      </p>
+
+      <p>
+        During initialization, the pipeline evaluates available initialization
+        sources and resolves the first effective state input before committing
+        the initial authoritative state snapshot. Once initialization completes,
+        subsequent updates follow the standard pipeline flow.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2.1-pipeline-initialization-flow.svg"
+        [tooltip]="'FeatureCell Initialization Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- INCOMING PIPELINE -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="incoming-pipeline">
+    <div class="section-title-navigation">
+      <div class="section-title">Incoming Pipeline</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how incoming values enter and traverse the
+        pipeline stages after initial admission. It highlights the ordering of
+        operators and behaviors applied to each update.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Policy PIPELINE -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="policy-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Policy Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how incoming values enter and traverse the
+        policy layer and then progress to the pipeline, if allowed. It
+        highlights the ordering of controllers applied to each update.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/9.0/9.1-policy-flow.svg"
+        [tooltip]="'Policy Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RESOLVE PROCESSING -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="resolve-processing">
+    <div class="section-title-navigation">
+      <div class="section-title">Resolve Processing</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram isolates the resolve phase and its immediate downstream
+        stages, showing how raw inputs are transformed into candidate values
+        before policy and mutation stages apply.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.4/2.4-resolve-processing.svg"
+        [tooltip]="'Resolve Processing'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RESOLVE DECISION FLOW -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="resolve-decision-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Resolve Decision Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on the Resolve stage’s classification boundary,
+        illustrating how an incoming state candidate is evaluated and routed to
+        the appropriate resolve behavior. It captures the decision surface where
+        supported input forms are identified and normalized before any
+        downstream computation occurs.
+      </p>
+
+      <p>
+        The Resolve Decision Flow ensures that all supported input
+        categories—such as plain values, deferred factories, observable sources,
+        stream-based inputs, or framework-specific resource references—are
+        handled deterministically and converge into a consistent upstream value
+        shape. Downstream pipeline stages never observe unresolved or ambiguous
+        input forms.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.4/2.4.1-resolve-decision-flow.svg"
+        [tooltip]="'Resolve Decision Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Error Flow -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="error-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Error Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates the complete error-handling lifecycle within
+        the
+        <sdux-brand-name /> pipeline. It is the authoritative reference for how
+        errors are normalized, transformed, committed, and observed once a
+        failure occurs during pipeline execution.
+      </p>
+
+      <p>
+        The flow emphasizes that error state is finalized and committed before
+        any secondary observation occurs. Transform behaviors shape the error
+        prior to commitment, while callbacks and the Global Error Service are
+        notified only after the error state becomes authoritative.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/7.0/7.0-error-flow.svg"
+        [tooltip]="'Error Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <hr class="sdux-hr" />
+
+  <section class="diagram-section" id="behavior-addon-diagrams">
+    <h4>Behavior & Add-on Diagrams</h4>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- INTERCEPTOR BEHAVIOR -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="interceptor-behavior">
+    <div class="section-title-navigation">
+      <div class="section-title">Interceptor Behavior</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Interceptors execute before pipeline admission and may halt execution
+        entirely. This diagram shows how pre-processing and admission control
+        interact with the rest of the pipeline.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.5/3.5-interceptor-behavior.svg"
+        [tooltip]="'Interceptor Pipeline Processing Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="global-error-pause-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Global Error Pause Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how the
+        <strong>Global Error Pause</strong> behavior intercepts incoming
+        pipeline candidates when a global Vault error is active. The behavior
+        operates before pipeline admission and determines whether an incoming
+        candidate is allowed to enter the pipeline.
+      </p>
+
+      <p>
+        When a global error is present, incoming candidates are blocked at the
+        interceptor boundary and do not proceed into downstream pipeline stages.
+        Blocked candidates are discarded and are not queued or replayed
+        automatically when the global error is cleared.
+      </p>
+
+      <p>
+        Once the global error signal is resolved, normal pipeline admission
+        resumes for newly incoming candidates. Replay behavior is not part of
+        this flow and must be provided explicitly by a controller if required.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/6.0/6.2-global-error-pause-behavior-flow.svg"
+        [tooltip]="'Global Error Pause Behavior Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- OPERATOR PROCESSING -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="operator-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Operator Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates the Operator stage in isolation, showing how
+        resolved and merged pipeline values are evaluated before entering
+        filtering, reduction, and tap stages. Operators receive the fully
+        resolved pipeline value and determine whether that value should continue
+        through the remaining pipeline stages.
+      </p>
+
+      <p>
+        An operator may forward the value unchanged, forward a modified value,
+        or terminate the current pipeline execution by returning
+        <em><a href="/docs/references/const/vault_noop">VAULT_NOOP</a></em
+        >. When a noop is returned, downstream stages are skipped and no
+        snapshot is emitted for that execution. Future pipeline executions are
+        unaffected and will re-enter the Operator stage normally.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.6/2.6-operator-flow.svg"
+        [tooltip]="'Operator Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RESOLVE PROCESSING -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="resolve-processing">
+    <div class="section-title-navigation">
+      <div class="section-title">Resolve Processing</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram isolates the resolve phase and its immediate downstream
+        stages, showing how raw inputs are transformed into candidate values
+        before policy and mutation stages apply.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.4/2.4-resolve-processing.svg"
+        [tooltip]="'Resolve Processing'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- REPLACE STATE FLOW -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="replace-state-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Replace State Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Replace operations overwrite existing state entirely. This diagram shows
+        how replaceState bypasses merge logic and commits a new value directly.
+      </p>
+      <sdux-diagram
+        image="diagrams/1.0/1.2.1-replace-state-flow.svg"
+        [tooltip]="'Replace State Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="from-deferred-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">fromDeferred Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how <strong>fromDeferred()</strong> operates
+        outside of the pipeline as a single-resolution bridge for deferred-based
+        workflows. The deferred function is invoked and resolved externally,
+        normalized into a <code>StateType&lt;T&gt;</code>, and then injected
+        into the pipeline using standard state update APIs.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.4/2.4.5-from-deferred-flow.svg"
+        [tooltip]="'fromDeferred Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- MERGE STATE FLOW -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="merge-state-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Merge State Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Merge operations combine incoming values with existing state using a
+        configured merge strategy. This diagram illustrates how partial updates
+        are computed and committed.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/1.0/1.2.2-merge-state-flow.svg"
+        [tooltip]="'Merge State Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="from-observable-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">fromObservable Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how <strong>fromObservable()</strong> operates
+        outside of the pipeline as a single-resolution bridge. The observable is
+        subscribed to externally, normalized into a
+        <code>StateType&lt;T&gt;</code>, and then injected into the pipeline
+        using standard state update mechanisms.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.4/2.4.3-from-observable-flow.svg"
+        [tooltip]="'fromObservable Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="from-promise-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">fromPromise Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how <strong>fromPromise()</strong> operates
+        outside of the pipeline as a single-resolution bridge for promise-based
+        workflows. The promise is invoked and resolved externally, normalized
+        into a <code>StateType&lt;T&gt;</code>, and then injected into the
+        pipeline using standard state update APIs.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.4/2.4.4-from-promise-flow.svg"
+        [tooltip]="'fromPromise Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="from-stream-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">fromStream Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how <strong>fromStream()</strong> operates
+        outside of the pipeline and bridges observable emissions into normal
+        pipeline execution.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.4/2.4.2-from-stream-flow.svg"
+        [tooltip]="'fromStream Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STEPWISE BEHAVIOR -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="stepwise-resolve-function-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Stepwise Resolve Function Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Stepwise behaviors introduce explicit policy checkpoints into the
+        pipeline. This diagram shows how current and candidate values are
+        evaluated to determine whether execution continues, is blocked, or
+        clears state.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.8/3.8-stepwise-function-flow.svg"
+        [tooltip]="'Stepwise Function Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FILTER BEHAVIOR -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="filter-behavior">
+    <div class="section-title-navigation">
+      <div class="section-title">Filter Behavior</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Filters refine or suppress candidate values during pipeline execution.
+        This diagram shows how values are either passed through or suppressed
+        using VAULT_NOOP semantics.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.3/3.3-filter-behavior.svg"
+        [tooltip]="'Filter Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STEPWISE BEHAVIOR -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="stepwise-filter-function-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Stepwise Filter Function Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Stepwise behaviors introduce explicit policy checkpoints into the
+        pipeline. This diagram shows how current and candidate values are
+        evaluated to determine whether execution continues, is blocked, or
+        clears state.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.8/3.8-stepwise-function-flow.svg"
+        [tooltip]="'Stepwise Function Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="before-tap-behavior">
+    <div class="section-title-navigation">
+      <div class="section-title">Before Tap Stage</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates the <strong>Before Tap</strong> stage within
+        the pipeline. Before taps execute at a well-defined boundary
+        <em>before reducer evaluation</em>, allowing engineers to observe the
+        in-flight candidate value and perform side effects without influencing
+        pipeline control flow or state outcomes.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.6/3.6-tap-behavior.svg"
+        [tooltip]="'Tap Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- REDUCER BEHAVIOR -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="reducer-behavior">
+    <div class="section-title-navigation">
+      <div class="section-title">Reducer Behavior</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Reducers apply sequential transformations to state. This diagram
+        illustrates how multiple reducer functions are chained to produce a
+        final committed value.
+      </p>
+      <sdux-diagram
+        image="diagrams/3.4/3.4-reducer-behavior.svg"
+        [tooltip]="'Reducer Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STEPWISE BEHAVIOR -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="stepwise-reducer-function-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Stepwise Reducer Function Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Stepwise behaviors introduce explicit policy checkpoints into the
+        pipeline. This diagram shows how current and candidate values are
+        evaluated to determine whether execution continues, is blocked, or
+        clears state.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.8/3.8-stepwise-function-flow.svg"
+        [tooltip]="'Stepwise Function Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="after-tap-behavior">
+    <div class="section-title-navigation">
+      <div class="section-title">After Tap Stage</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates the <strong>After Tap</strong> stage within the
+        pipeline. After taps execute at a well-defined boundary
+        <em>after reducer evaluation</em>, allowing engineers to observe the
+        in-flight candidate value and perform side effects without influencing
+        pipeline control flow or state outcomes.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.6/3.6-tap-behavior.svg"
+        [tooltip]="'Tap Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="state-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">State Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how the <strong>State Stage</strong> emits the
+        finalized state snapshot after pipeline execution completes. The
+        committed snapshot is exposed through the synchronous
+        <strong>.state</strong> surface (represented as a signal in Angular) and
+        emitted through the reactive <strong>.state$</strong> observable.
+      </p>
+
+      <p>
+        After the snapshot is committed and exposed through
+        <strong>.state</strong> and <strong>.state$</strong>, optional
+        <strong>emit-state callbacks</strong> may observe the same immutable
+        snapshot for legacy, diagnostic, or compatibility handling. Emit-state
+        callbacks are observational and do not influence state commitment or
+        pipeline execution.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/4.0/4.0-state-execution-flow.svg"
+        [tooltip]="'State Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="tab-sync-behavior-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Tab Sync Behavior Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how the Tab Sync Behavior coordinates tab
+        synchronization across multiple pipeline stages, ensuring consistent
+        state updates and preventing race conditions.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/9.0/9.5-tab-sync-controller-flow.svg"
+        [tooltip]="'Tab Sync Controller and Behavior Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ENCRYPT LIFECYCLE -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="encrypt-lifecycle">
+    <div class="section-title-navigation">
+      <div class="section-title">Encrypt Lifecycle</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Encryption occurs after state computation and before persistence. This
+        diagram highlights how encrypted storage remains a side effect while
+        emitted state snapshots stay plaintext.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.7/3.7.1-encrypt-lifecycle.svg"
+        [tooltip]="'Encrypt Lifecycle'"></sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DECRYPT LIFECYCLE -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="decrypt-lifecycle">
+    <div class="section-title-navigation">
+      <div class="section-title">Decrypt Lifecycle</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Decryption occurs during FeatureCell initialization when persisted
+        encrypted state is restored. This diagram shows how encrypted data is
+        converted back into an initial plaintext snapshot.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.7/3.7.3-decrypt-lifecycle.svg"
+        [tooltip]="'Decrypt Lifecycle'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- PERSIST LIFECYCLE -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="persist-lifecycle">
+    <div class="section-title-navigation">
+      <div class="section-title">Persist Lifecycle</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Persistence occurs after state computation and any optional encryption
+        has completed. This diagram illustrates how persist behaviors observe
+        the finalized, committed FeatureCell state and write it to external
+        storage as a side effect, without influencing emitted state snapshots or
+        pipeline control flow.
+      </p>
+
+      <p>
+        Persist behaviors operate exclusively on the final pipeline output. They
+        do not transform state, do not emit snapshots, and do not participate in
+        decision-making. Persisted storage is updated only after state has been
+        fully reduced and committed.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.7/3.7.2-persist-lifecycle.svg"
+        [tooltip]="'Persist Lifecycle'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="state-cache-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">State Cache Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        State cache operations introduce an identifier-based lookup surface that
+        coordinates cache hits, cache misses, refresh resolution, and fan-out
+        handling through the FeatureCell pipeline. This diagram illustrates how
+        cached entities are resolved, refreshed, and delivered without bypassing
+        pipeline execution.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.7/2.7.1-state-cache-flow.svg"
+        [tooltip]="'Entity Access - State Cache Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="lookup-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Lookup Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Lookup operations provide identifier-based entity resolution without
+        time-based expiration. This diagram shows how lookup requests coordinate
+        hits, lookup-miss resolution, and concurrent fan-out through the
+        FeatureCell pipeline before delivering a resolved entity to the
+        consumer.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.7/2.7.2-lookup-flow.svg"
+        [tooltip]="'Entity Access - Lookup Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="query-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Query Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Query operations provide synchronous identifier-based access to entities
+        that already exist in finalized FeatureCell state. The query behavior
+        maintains an internal entity index derived from committed state
+        emissions and resolves requests directly from this index without
+        triggering pipeline execution.
+      </p>
+
+      <p>
+        This diagram illustrates how finalized state emissions populate the
+        query cache and how query requests resolve immediately from locally
+        indexed entities while preserving the FeatureCell pipeline as the
+        authoritative source of truth.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.7/2.7.3-query-flow.svg"
+        [tooltip]="'Entity Access - Query Flow'" />
+    </div>
+  </section>
+
+  <hr class="sdux-hr" />
+
+  <section class="diagram-section" id="controller-diagrams">
+    <h4>Controller Diagrams</h4>
+  </section>
+
+  <section class="diagram-section" id="policy-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Policy Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how incoming values enter and traverse the
+        policy layer and then progress to the pipeline, if allowed. It
+        highlights the ordering of controllers applied to each update.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/9.0/9.1-policy-flow.svg"
+        [tooltip]="'Policy Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="controller-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how <strong>Controllers</strong> participate in
+        pipeline execution. Controllers do not execute within a pipeline stage.
+        Instead, they operate through the <em>Conductor</em>, receiving
+        execution requests emitted by Behaviors and issuing authoritative
+        decisions that govern pipeline progression.
+      </p>
+
+      <p>
+        The flow highlights the role of the <strong>Decision Engine</strong> as
+        a centralized progression gate, ensuring that all controller decisions
+        are serialized, validated, and applied deterministically before state
+        commitment.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/6.0/6.0-controller-flow.svg"
+        [tooltip]="'Controller Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="delay-controller-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Delay Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how the delay controller blocks and allows
+        values entering and traversing the pipeline based on the
+        millisecondDelay option.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/9.0/9.3-delay-controller-flow.svg"
+        [tooltip]="'Delay Controller Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section
+    class="diagram-section"
+    id="replay-global-error-controller-execution">
+    <div class="section-title-navigation">
+      <div class="section-title">Replay Global Error Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how the
+        <strong>Replay Global Error Controller</strong> participates in pipeline
+        execution when a global Vault error is present. Controllers do not
+        execute within a pipeline stage and do not observe state directly.
+        Instead, they operate through the <em>Conductor</em>, responding to
+        execution <em>attempt</em> messages and issuing votes that determine
+        whether a pipeline execution may proceed, be denied, or be replayed.
+      </p>
+
+      <p>
+        The flow highlights the role of the
+        <strong>VaultErrorService</strong> as the authoritative source of global
+        error state. When a global error is active, the service emits an error
+        signal that influences both interceptor gating and controller
+        arbitration. While the paired interceptor blocks new pipeline admission,
+        the Replay Global Error controller evaluates execution attempts
+        associated with the current trace and issues denial votes while the
+        error remains active.
+      </p>
+
+      <p>
+        The <strong>Decision Engine</strong> acts as the centralized arbitration
+        point, collecting controller votes and applying them deterministically.
+        When the global error state changes—such as when
+        <code>VaultErrorService.clear()</code> is invoked—the controller may
+        request a revote for previously denied attempts, allowing execution to
+        resume under the updated conditions.
+      </p>
+
+      <p>
+        This design cleanly separates responsibilities: the VaultErrorService
+        signals global error lifecycle events, the interceptor controls pipeline
+        admission, and the controller governs execution replay and retry
+        behavior through formal arbitration rather than side effects or implicit
+        retries.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/6.0/6.1-replay-global-error-controller-flow.svg"
+        [tooltip]="'Replay Global Error Controller Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="stepwise-controller-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Stepwise Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how the
+        <strong>Stepwise Controller</strong> coordinates policy-driven execution
+        control when a Stepwise behavior emits a decision request. Unlike
+        standard pipeline stages, Stepwise does not resolve synchronously.
+        Instead, execution is intentionally paused while awaiting an explicit
+        external decision.
+      </p>
+
+      <p>
+        When a Stepwise behavior is invoked at the Filter, Reducer, or Resolve
+        stage, it emits a decision request rather than returning a value. The
+        pipeline immediately suspends execution for the current trace and
+        forwards the request to the Stepwise Controller through the Stepwise
+        bus.
+      </p>
+
+      <p>
+        The Stepwise Controller serializes all incoming requests using a FIFO
+        queue, ensuring that only one Stepwise decision is active at any given
+        time. This guarantees deterministic execution order and prevents
+        overlapping or ambiguous policy resolution when multiple Stepwise
+        behaviors are configured.
+      </p>
+
+      <p>
+        While awaiting a response, no downstream pipeline stages execute, no
+        snapshots are committed, and no additional updates are admitted for the
+        affected execution trace. The pipeline remains fully paused until an
+        external system — such as user input, developer tooling, or an automated
+        policy engine — emits a corresponding decision.
+      </p>
+
+      <p>
+        Once a response is received, the controller translates it into a
+        canonical pipeline control signal and resumes execution according to the
+        decision:
+      </p>
+
+      <ul>
+        <li>
+          <strong>continue</strong> — resume pipeline execution at the
+          appropriate downstream stage
+        </li>
+        <li>
+          <strong>block</strong> — suppress the current update with no state
+          change
+        </li>
+        <li>
+          <strong>clear</strong> — clear existing state and terminate the
+          current update
+        </li>
+      </ul>
+
+      <p>
+        After resolving the active request, the controller advances its internal
+        queue and processes the next pending Stepwise request, if any. This
+        design ensures that policy enforcement remains explicit, serialized, and
+        fully observable without compromising pipeline safety or determinism.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.8/3.8.1-stepwise-controller-flow.svg"
+        [tooltip]="'Stepwise Controller Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="tab-sync-controller-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Tab Sync Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how the Tab Sync Controller coordinates tab
+        synchronization across multiple pipeline stages, ensuring consistent
+        state updates and preventing race conditions.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/9.0/9.5-tab-sync-controller-flow.svg"
+        [tooltip]="'Tab Sync Controller and Behavior Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="throttle-controller-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Throttle Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how the throttle controller aborts and allows
+        values entering and traversing the pipeline based on the
+        millisecondThrottle option.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/9.0/9.2-throttle-controller-flow.svg"
+        [tooltip]="'Throttle Controller Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <hr class="sdux-hr" />
+
+  <section class="diagram-section" id="testing-diagrams">
+    <h4>Testing & Stabilization Diagrams</h4>
+  </section>
+
+  <section class="diagram-section" id="integration-testing-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Integration Testing Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates the deterministic stabilization model for
+        FeatureCell integration tests. A state mutation triggers synchronous
+        pipeline execution followed by a deferred microtask finalize boundary.
+        Tests must await <code>vaultSettled()</code> to synchronize with that
+        boundary before asserting.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/11.0/11.1-integration-testing-flow.svg"
+        [tooltip]="'Integration Testing Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="mutation-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Mutation Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram isolates a single state mutation as it moves through the
+        conductor queue and into the microtask finalize boundary. It clarifies
+        the separation between synchronous compute and deferred settlement
+        publication.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/11.0/11.2-mutation-flow.svg"
+        [tooltip]="'Mutation Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="effect-mutation-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Effect Mutation Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how Angular <code>effect()</code> scheduling
+        introduces a secondary mutation cycle after initial pipeline settlement.
+        Tests must stabilize both the Vault microtask boundary and the Angular
+        scheduler layer.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/11.0/11.3-effect-mutation-flow.svg"
+        [tooltip]="'Effect Mutation Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="integration-effect-testing-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Integration Effect Testing Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram formalizes the correct stabilization order for Angular
+        environments: await settlement → flush Angular scheduler → await
+        settlement again. It ensures deterministic verification across both
+        execution layers.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/11.0/11.4-integration-effect-testing-flow.svg"
+        [tooltip]="'Integration Effect Testing Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="integration-timer-testing-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Integration Timer Testing Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates deterministic testing when timers are involved.
+        Tests must advance virtual time to execute macrotasks, then await
+        <code>vaultSettled()</code>
+        to synchronize with the microtask finalize boundary.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/11.0/11.5-integration-timer-testing-flow.svg"
+        [tooltip]="'Integration Timer Testing Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="mutation-timer-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Mutation Timer Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram isolates a timer-delayed mutation. The macrotask executes
+        first, triggering synchronous pipeline compute, followed by the
+        microtask finalize boundary that publishes settlement.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/11.0/11.6-mutation-timer-flow.svg"
+        [tooltip]="'Mutation Timer Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+</div>

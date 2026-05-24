@@ -1,0 +1,231 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-25 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>state</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>state</strong> property provides synchronous access to the
+      current immutable state snapshot of a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>. This is
+      the <strong>primary mechanism</strong> for reading state from a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> at a
+      specific moment in time.
+    </p>
+
+    <h4>State Contract Summary</h4>
+    <ul>
+      <li>Returns the current state snapshot synchronously</li>
+      <li>Always reflects the latest committed state</li>
+      <li>Returns an immutable snapshot</li>
+      <li>Does not emit or subscribe to changes</li>
+      <li>Safe to read at any time after initialization</li>
+    </ul>
+
+    <p>
+      The <strong>state</strong> property exposes a read-only view of the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s most
+      recent state snapshot. It does not participate in pipeline execution, does
+      not trigger computation, and does not create subscriptions.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      The returned snapshot is <strong>immutable</strong>. Consumers must treat
+      the snapshot as read-only and must not attempt to mutate its contents.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- state -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>state</strong> property is typically used for synchronous
+        reads, conditional logic, or imperative inspection where reactive
+        subscription is not required.
+      </p>
+
+      <h4>Example: Reading FeatureCell State</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Read FeatureCell State'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`const snapshot = employeeCell.state;
+
+console.info(snapshot.value);
+console.info(snapshot.hasValue);
+console.info(snapshot.isLoading);
+console.info(snapshot.error);`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>
+          Reads the current
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state synchronously
+        </li>
+        <li>Does not subscribe to future updates</li>
+        <li>Does not trigger pipeline execution</li>
+        <li>Returns a stable, immutable snapshot</li>
+      </ul>
+
+      <p>
+        This access pattern is ideal for imperative reads, guards, logging,
+        debugging, or one-time inspection of state without reactive overhead.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ANGULAR INTEGRATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Angular Integration</div>
+
+    <div class="section-body">
+      <p>
+        When <strong><sdux-package-name />/angular</strong> is installed, the
+        <strong>state</strong> property is overridden with a
+        <strong>signal-based state reference</strong>. Instead of returning a
+        snapshot object, <code>state</code> exposes reactive Angular
+        <strong>Signals</strong> for each state field.
+      </p>
+
+      <p>
+        This allows
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        to integrate directly with Angular’s reactivity model without
+        subscriptions, async pipes, or manual change detection.
+      </p>
+
+      <h4>Angular State Surface</h4>
+      <p>
+        In Angular environments, <strong>state</strong> is a
+        <code>VaultSignalStateRef&lt;T&gt;</code>:
+      </p>
+
+      <ul>
+        <li>Each state field is exposed as an Angular <code>Signal</code></li>
+        <li>Signals update automatically when state changes</li>
+        <li>No subscriptions or teardown logic required</li>
+        <li>State remains immutable and read-only</li>
+      </ul>
+
+      <h4>Example: Reading FeatureCell State with Signals</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Angular Signal State Example'">
+          <pre class="code-inline"><code class="language-ts">{{`&#64;Component({
+  selector: 'employee-view',
+  template: \`
+    &#64;if (state.hasValue()) {
+      &lt;div&gt;
+        &lt;p&gt;Employees: {{ state.value() | json }}&lt;/p&gt;
+      &lt;/div&gt;
+    }
+
+    &#64;if (state.isLoading()) {
+      &lt;div&gt;
+        Loading...
+      &lt;/div&gt;
+    }
+
+    &#64;if (state.error()) {
+      &lt;div&gt;
+        Error: {{ state.error()?.message }}
+      &lt;/div&gt;
+    }
+  \`
+})
+export class EmployeeComponent {
+  private bankEmployeeServce = inject(EmployeeService);
+  state = this.bankEmployeeService.vault.state;
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>
+          Reads
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state reactively using Angular Signals
+        </li>
+        <li>Automatically updates the view on state changes</li>
+        <li>Requires no subscriptions or manual cleanup</li>
+        <li>Preserves Vault immutability guarantees</li>
+      </ul>
+
+      <p>
+        This override is automatic when
+        <strong><sdux-package-name />/angular</strong> is present. No
+        configuration changes are required.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="table-title">State Access</div>
+    <table aria-label="State Access">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Member</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong>state</strong>
+
+            <p>type:</p>
+            <ul>
+              <li>
+                <a href="/docs/references/shapes/state-snapshot-shape"
+                  >StateSnapshotShape</a
+                >&lt;T&gt;
+              </li>
+            </ul>
+
+            <p>mutability:</p>
+            <ul>
+              <li>Immutable</li>
+            </ul>
+          </td>
+          <td>
+            Returns the current immutable state snapshot for the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            This snapshot reflects the most recently committed state and may be
+            read synchronously at any time after initialization.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <sdux-state-snapshot-shape-common />
+
+    <sdux-vault-signal-state-ref-common />
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

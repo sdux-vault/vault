@@ -1,0 +1,157 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-25 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>reset$</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>reset$</strong> stream emits a notification whenever a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+      reset. This stream provides a lifecycle signal that indicates the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s state
+      has been cleared and returned to a neutral baseline while remaining fully
+      initialized and operable.
+    </p>
+
+    <h4>Stream Contract Summary</h4>
+    <ul>
+      <li>
+        Emits each time the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        reset
+      </li>
+      <li>
+        Does not terminate the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle
+      </li>
+      <li>Does not complete on emission</li>
+      <li>
+        May emit multiple times over the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        lifetime
+      </li>
+      <li>Does not emit state values or snapshots</li>
+    </ul>
+
+    <p>
+      The <strong>reset$</strong> stream defines a
+      <strong>non-terminal lifecycle signal</strong>. It does not participate in
+      pipeline execution, does not influence control flow, and does not suppress
+      future updates. Its sole responsibility is to notify observers that a
+      reset operation has occurred.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      Unlike <strong>destroyed$</strong>, the <strong>reset$</strong> stream
+      does not indicate teardown. After a reset event, the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> remains
+      active and may continue processing updates, executing pipelines, and
+      emitting state snapshots.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- reset$ -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>reset$</strong> observable allows consumers to react to
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        resets. This is commonly used to clear derived UI state, reset local
+        caches, or reinitialize external resources that depend on
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state.
+      </p>
+
+      <h4>Example: Observing FeatureCell Reset</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Observe FeatureCell Reset'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reset$
+  .subscribe(() => {
+    console.info('FeatureCell was reset');
+  });`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>
+          Subscribes to the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          reset signal
+        </li>
+        <li>Receives a notification each time reset() is called</li>
+        <li>Continues listening across multiple resets</li>
+        <li>Does not receive state values or snapshots</li>
+      </ul>
+
+      <p>
+        This stream is ideal for coordinating cleanup or reinitialization logic
+        that must run whenever
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        is cleared, without requiring
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        teardown.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="table-title">Lifecycle Stream</div>
+    <table aria-label="Lifecycle Stream">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Member</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong>reset$</strong>
+
+            <p>type:</p>
+            <ul>
+              <li>Observable&lt;void&gt;</li>
+            </ul>
+
+            <p>emissions:</p>
+            <ul>
+              <li>Emits on each reset</li>
+            </ul>
+          </td>
+          <td>
+            Emits whenever the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+            reset. Signals that state and error information have been cleared
+            while preserving the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+            initialized runtime surface.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,284 @@
+<!-- Finished 2026-01-27 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Pipeline Execution Guarantees</h3>
+  </div>
+
+  <header class="docs-header">
+    <div class="lead">
+      <strong>Pipeline Execution Guarantees</strong> describes the execution
+      model, ordering rules, and state commitment guarantees that underpin
+      <sdux-brand-name /> pipeline reliability.
+    </div>
+
+    <p>
+      This document explains <em>how</em> and <em>when</em> pipeline computation
+      is executed, how asynchronous inputs are coordinated, and why state
+      updates in <sdux-brand-name /> are deterministic, atomic, and immune to
+      common reentrancy and timing bugs.
+    </p>
+
+    <p>
+      These guarantees are not incidental. They are the result of deliberate
+      architectural decisions that separate pipeline computation from state
+      commitment and enforce strict execution boundaries.
+    </p>
+
+    <p>
+      This page is intended for advanced users, framework integrators, and
+      engineers who want a precise mental model of
+      <sdux-brand-name /> execution semantics.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">
+      The <sdux-brand-name [tm]="true" /> Execution Model
+    </div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> executes state updates in two distinct phases:
+        <strong>pipeline computation</strong> and
+        <strong>state commitment</strong>.
+      </p>
+
+      <p>
+        Pipeline computation determines <em>what</em> the next state should be.
+        State commitment determines <em>when</em> and <em>how</em> that result
+        becomes visible to synchronous getters, reactive observers, callbacks,
+        signals (in <sdux-package-name />/angular), and DevTools.
+      </p>
+
+      <p>
+        These phases are intentionally separated and never interleaved. No state
+        mutation, signal emission, or observer notification occurs until
+        pipeline computation has completed successfully.
+      </p>
+
+      <p>
+        This separation is fundamental to <sdux-brand-name />’s correctness
+        guarantees.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Compute First, Commit Later</div>
+
+    <div class="section-body">
+      <p>
+        During pipeline execution, <sdux-brand-name /> performs all of the
+        following steps <em>without mutating state</em>:
+      </p>
+
+      <ul>
+        <li>Interceptor evaluation</li>
+        <li>Resolve behavior execution</li>
+        <li>Operator, filter, and reducer processing</li>
+        <li>Error normalization and transformation</li>
+        <li>Final state decision (commit, noop, stop, clear)</li>
+      </ul>
+
+      <p>
+        Only after the pipeline has fully determined a final outcome does
+        <sdux-brand-name /> proceed to state commitment.
+      </p>
+
+      <p>
+        This ensures that partial results, intermediate reducer output, and
+        transient values are never observable outside the pipeline.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Microtask-Based State Commitment</div>
+
+    <div class="section-body">
+      <p>
+        Once pipeline computation completes, <sdux-brand-name /> schedules state
+        commitment using a <strong>microtask boundary</strong>.
+      </p>
+
+      <p>
+        State commitment—including signal updates, state callbacks, DevTools
+        notifications, and controller notifications—is executed inside a
+        <code>queueMicrotask</code>.
+      </p>
+
+      <p>This guarantees that:</p>
+
+      <ul>
+        <li>
+          The current pipeline run completes fully before any observers are
+          notified
+        </li>
+        <li>
+          No observer can trigger a new pipeline run while a commit is in
+          progress
+        </li>
+        <li>All observers see the same finalized snapshot</li>
+      </ul>
+
+      <p>
+        This design prevents reentrancy bugs, timing anomalies, and partial
+        snapshot visibility that commonly affect asynchronous state systems.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Atomic Snapshot Guarantees</div>
+
+    <div class="section-body">
+      <p>
+        Every successful <sdux-brand-name /> pipeline execution produces exactly
+        one atomic snapshot.
+      </p>
+
+      <p>That snapshot is:</p>
+
+      <ul>
+        <li>Fully resolved</li>
+        <li>Fully filtered</li>
+        <li>Fully reduced</li>
+        <li>Fully normalized</li>
+        <li>Fully encrypted and persisted (if applicable)</li>
+      </ul>
+
+      <p>
+        Observers never see intermediate states, partially reduced values, or
+        pre-normalized data. Either the entire snapshot is committed, or no
+        state change is visible at all.
+      </p>
+
+      <p>
+        This atomicity applies equally to synchronous inputs, promises,
+        observables, streams, and resource-backed values.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Reentrancy Is Structurally Impossible</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> prevents reentrant state updates by construction.
+      </p>
+
+      <p>
+        Because state commitment is deferred to a microtask, any attempt to
+        trigger a new state update from within:
+      </p>
+
+      <ul>
+        <li>Reducers</li>
+        <li>State callbacks</li>
+        <li>DevTools hooks</li>
+        <li>Error handlers</li>
+      </ul>
+
+      <p>will always occur <em>after</em> the current commit has completed.</p>
+
+      <p>
+        This eliminates entire classes of bugs common in Redux-style systems,
+        including:
+      </p>
+
+      <ul>
+        <li>Dispatching during reducer execution</li>
+        <li>Promise resolution interleaving with state writes</li>
+        <li>Observer-triggered infinite loops</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      Deterministic Ordering Across Async Boundaries
+    </div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> enforces a strict ordering model across synchronous
+        code, promises, observables, and streams.
+      </p>
+
+      <p>
+        Regardless of how an input originates, the following ordering is
+        guaranteed:
+      </p>
+
+      <ol>
+        <li>Pipeline computation completes</li>
+        <li>Final outcome is determined</li>
+        <li>State commitment occurs in a microtask</li>
+        <li>Observers are notified</li>
+      </ol>
+
+      <p>
+        This ordering is consistent across environments and does not depend on
+        browser, Node.js, or event loop implementation details.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Why This Matters for Async Integrations</div>
+
+    <div class="section-body">
+      <p>
+        The execution guarantees described above are the foundation that allows
+        <sdux-brand-name /> to safely support:
+      </p>
+
+      <ul>
+        <li>Deferred promise factories</li>
+        <li>Observable resolution</li>
+        <li>Continuous stream ingestion</li>
+        <li>HTTP resource integration</li>
+      </ul>
+
+      <p>
+        By deferring commitment and enforcing lifecycle-aware resolution,
+        <sdux-brand-name /> ensures that asynchronous values cannot resolve
+        outside of pipeline control or produce invalid state snapshots.
+      </p>
+
+      <p>
+        This is why <sdux-brand-name /> strongly prefers deferred factories and
+        pipeline-managed resolution over externally resolved promises or
+        manually normalized values.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Execution Contract Summary</div>
+
+    <div class="section-body">
+      <ul>
+        <li>Pipeline computation is pure and side-effect free</li>
+        <li>State commitment is deferred and atomic</li>
+        <li>Reentrancy is structurally impossible</li>
+        <li>Async resolution is lifecycle-safe</li>
+        <li>Observers always see complete, consistent snapshots</li>
+        <li>
+          Referential isolation is enforced at every stage boundary (<a
+            href="/docs/pipeline/isolation"
+            >Pipeline Isolation</a
+          >)
+        </li>
+      </ul>
+
+      <p>
+        These guarantees are foundational. Every behavior, extension, and
+        integration in <sdux-brand-name /> is designed to preserve them.
+      </p>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

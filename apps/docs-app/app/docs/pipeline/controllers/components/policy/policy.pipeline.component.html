@@ -1,0 +1,143 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-24 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Policy Layer</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>The Policy Layer</strong> is the authoritative decision-making
+      stage of the <sdux-brand-name /> pipeline. It governs <em>whether</em>,
+      <em>when</em>, and <em>how</em>
+      a pipeline execution attempt is allowed to proceed, pause, retry, abort,
+      or terminate, without deriving values or mutating state.
+    </p>
+
+    <p>
+      The Policy Layer is responsible for enforcing execution rules that span
+      beyond individual behaviors, such as rate limiting, gating, retries,
+      failure resolution, and external coordination. These decisions are applied
+      deterministically and centrally, ensuring that pipeline execution remains
+      safe, predictable, and serializable under all conditions.
+    </p>
+
+    <p>
+      Policy logic is implemented through <strong>Controllers</strong>, which
+      are evaluated by the Decision Engine and enforced by the Conductor.
+      Controllers do not perform work themselves; instead, they issue
+      authoritative control decisions that determine how pipeline execution
+      proceeds.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Policy Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Policy Stage is responsible for evaluating and enforcing execution
+        authority for each pipeline attempt. It represents the exclusive
+        decision boundary where update attempts are allowed to proceed, paused,
+        aborted, retried, or denied based on centralized policy evaluation.
+      </p>
+
+      <p>
+        The Policy Stage executes at well-defined points in the pipeline
+        lifecycle—most notably during attempt admission and failure handling. It
+        guarantees that every pipeline execution is governed by explicit,
+        deterministic control decisions before work begins and after failures
+        occur.
+      </p>
+
+      <p>Policy controllers:</p>
+
+      <ul>
+        <li>
+          Operate exclusively on execution lifecycle signals, not values or
+          state
+        </li>
+        <li>
+          Issue authoritative control decisions such as allow, pause, abort, or
+          deny
+        </li>
+        <li>Do not derive, transform, or inspect candidate state values</li>
+        <li>Do not mutate state or emit snapshots</li>
+        <li>
+          Must preserve execution safety, determinism, and serial ordering
+        </li>
+      </ul>
+
+      <h4>Core Execution Stage</h4>
+      <p>
+        The Policy stage is a core execution stage and is always present as part
+        of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. A core decision engine executes to coordinate and arbitrate
+        all registered policy controllers. While the decision engine itself
+        cannot be omitted, individual policy controllers are optional and
+        participate in execution only when explicitly registered.
+      </p>
+
+      <p>
+        Policy controllers do not perform work, resume pipeline stages, or
+        finalize outcomes themselves. Their responsibility is limited to issuing
+        authoritative decisions that the Conductor enforces. Once a decision is
+        resolved, pipeline execution proceeds—or terminates—according to that
+        outcome.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/9.0/9.1-policy-flow.svg"
+        [tooltip]="'Policy Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available Policy Controllers</div>
+
+    <div class="section-body">
+      <p>
+        The Policy Stage is a <strong>core execution stage</strong> and is
+        always present as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. A core decision engine executes to coordinate and arbitrate
+        all policy decisions that govern pipeline execution.
+      </p>
+
+      <p>
+        Individual <strong>policy controllers</strong> are optional, add-on
+        authorities that participate in the Policy stage only when explicitly
+        registered. Each controller enforces a specific execution policy—such as
+        timing, rate limiting, or external gating—without inspecting or
+        modifying state values.
+      </p>
+
+      <p>
+        Policy controllers do not derive values, emit snapshots, or perform
+        work. Their sole responsibility is to issue authoritative execution
+        decisions that the Conductor enforces deterministically.
+      </p>
+
+      <sdux-controller-delay-common />
+
+      <sdux-controller-replay-global-error-common />
+
+      <sdux-controller-stepwise-common />
+
+      <sdux-controller-throttle-common />
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

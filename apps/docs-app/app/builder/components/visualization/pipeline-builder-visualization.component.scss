@@ -1,0 +1,138 @@
+@use 'global' as global;
+
+/**
+ * Layout goals:
+ * - No magic 1000px heights
+ * - Stable flex with correct min-height: 0 for scroll containers
+ * - Left panel scrolls, right panel scrolls
+ * - Visualization expands/collapses cleanly
+ * - Mobile flyout works without collapsing the whole layout
+ */
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.visualization-container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden; // ← critical
+
+  .visualization {
+    @include global.sdux-elevate(hover);
+
+    border-radius: global.$border-radius-lg;
+    border: 1px solid var(--sdux-surface-outline);
+
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    /* allow it to be present but not force fixed heights */
+    flex: 1 1 auto;
+    min-height: 0;
+
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+
+    transition: display 200ms ease;
+
+    &.visualization-open {
+      /* shown when builder is "closed" */
+      display: flex;
+    }
+
+    &.visualization-closed {
+      /* hide without height-jank */
+      display: none;
+    }
+
+    .section-body {
+      padding: global.$spacing-lg;
+      max-width: 900px;
+
+      .section-title {
+        font-size: global.$font-size-xl;
+        font-weight: global.$font-weight-semibold;
+        margin-bottom: global.$spacing-md;
+      }
+
+      h3 {
+        margin-top: global.$spacing-lg;
+        margin-bottom: global.$spacing-sm;
+        font-size: global.$font-size-md;
+        font-weight: global.$font-weight-semibold;
+      }
+
+      ul {
+        margin-bottom: global.$spacing-md;
+
+        li {
+          margin-bottom: global.$spacing-xs;
+          font-size: global.$font-size-sm;
+          line-height: global.$line-height;
+        }
+      }
+
+      p {
+        font-size: global.$font-size-sm;
+        line-height: global.$line-height;
+        margin-bottom: global.$spacing-md;
+      }
+    }
+
+    .visual-pane {
+      padding: global.$spacing-md;
+      background: var(--sdux-surface-bg);
+
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+    }
+
+    mat-tab-group {
+      flex: 1 1 auto;
+      min-height: 0;
+
+      /* ensure tab bodies can scroll if needed */
+      ::ng-deep .mat-mdc-tab-body-wrapper {
+        height: 100%;
+        min-height: 0;
+      }
+
+      ::ng-deep .mat-mdc-tab-body {
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      ::ng-deep .mat-mdc-tab-body-content {
+        height: 100%;
+        min-height: 0;
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
+
+      ::ng-deep .mat-mdc-tab-header {
+        background: var(--sdux-surface-main);
+        border-bottom: 1px solid var(--sdux-surface-outline);
+      }
+
+      ::ng-deep .mdc-tab {
+        font-weight: global.$font-weight-medium;
+        font-size: global.$font-size-sm;
+      }
+
+      ::ng-deep .mdc-tab--active {
+        color: global.$sdux-primary-light;
+      }
+    }
+  }
+}

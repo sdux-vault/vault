@@ -1,0 +1,255 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-25 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>filters()</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>filters()</strong> method registers pure filter functions on a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> that
+      execute during the Filter stage of the pipeline. Filters refine or
+      suppress candidate state values before reduction while preserving the
+      structural shape of state.
+    </p>
+
+    <h4>Method Contract Summary</h4>
+    <ul>
+      <li>
+        Filter functions are registered declaratively on a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance
+      </li>
+      <li>Filters execute before reducers and taps</li>
+      <li>Filters receive the candidate next value</li>
+      <li>Filters must be pure and side-effect free</li>
+      <li>Errors propagate as Vault errors</li>
+    </ul>
+
+    <p>
+      The <strong>filters()</strong> method defines
+      <strong>value refinement only</strong>. It does not mutate existing state,
+      does not emit snapshots, and does not influence pipeline scheduling or
+      control flow. Its responsibility is limited to accepting, refining, or
+      suppressing candidate values prior to reduction. For details on how
+      referential isolation is enforced at every stage boundary, see
+      <a href="/docs/pipeline/isolation">Pipeline Isolation</a>.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      The <strong>filters()</strong> method is additive. It may be invoked
+      multiple times, and each invocation appends filter functions to the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s filter
+      list. Filters execute in the exact order they are registered during
+      initialization.
+    </p>
+
+    <p>
+      While multiple invocations are supported, the recommended practice is to
+      register related filters as a single ordered array to preserve clarity and
+      intentional execution ordering.
+    </p>
+
+    <h4>Learn More</h4>
+    <a routerLink="/docs/pipeline/behaviors/filters">
+      <span class="menu-content sub-item">Filter Behavior</span>
+    </a>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAMS -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.3/3.3-filter-behavior.svg"
+        [tooltip]="'Filter Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <div class="table-title">Initialization</div>
+      <table aria-label="Initialization">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Method</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <strong>filters&lt;T&gt;</strong>
+
+              <p>inputs:</p>
+              <ul>
+                <li>
+                  filters:
+                  <a href="/docs/references/types/filter-function"
+                    >FilterFunction</a
+                  >&lt;T&gt;[]
+                </li>
+              </ul>
+
+              <p>return:</p>
+              <ul>
+                <li>
+                  <a href="/docs/references/contracts/cell-builder-contract"
+                    >CellBuilderContract</a
+                  >&lt;T&gt;
+                </li>
+              </ul>
+            </td>
+            <td>
+              Registers pure filter functions that execute during the Filter
+              stage. Filters refine or suppress candidate values while
+              preserving structural type and do not mutate state or influence
+              pipeline control flow.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <sdux-vault-filter-function-shape-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- filters() -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>filters()</strong> method registers one or more filter
+        functions that evaluate candidate next values during pipeline execution.
+        Each filter may refine the value, return it unchanged, or suppress the
+        update by returning <em>undefined</em>.
+      </p>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>
+          Registers one or more filter functions on the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        </li>
+        <li>Filters execute before reducers</li>
+        <li>Filters receive the candidate next value</li>
+        <li>Returning <em>undefined</em> suppresses snapshot emission</li>
+      </ul>
+
+      <p>
+        This demonstrates the intended use of <strong>filters()</strong> as a
+        declarative mechanism for value acceptance, refinement, or rejection
+        prior to reduction.
+      </p>
+
+      <h4>Example: Registering Filter Functions</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example: Registering Filter Functions'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault
+      .filters(
+        [
+          (employees) => employees.filter(e => e.active)
+        ]
+      ).initialize();
+  }
+}
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example: Registering Filter Functions'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: [{ name: 'John', age: 30 }] 
+});
+
+employeeCell
+  .filters(
+    [
+      (employees) => employees.filter(e => e.active)
+    ]
+  ).initialize();
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example: Registering Filter Functions'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: [{ name: 'John', age: 30 }]
+});
+
+employeeCell
+  .filters(
+    [
+      (employees) => employees.filter(e => e.active)
+    ]
+  ).initialize();
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,94 @@
+@use 'global' as global;
+
+/* ============================================================
+   SDuX — Example Viewer Source Tabs
+   ============================================================ */
+:host {
+  /* Ensure the entire tab group inherits surface colors correctly */
+  .mat-mdc-tab-group {
+    background-color: transparent;
+    color: var(--sdux-text-default);
+  }
+
+  pre[class*='language-'] {
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  /* ============================================================
+     TAB LABEL BAR (The horizontal bar with tab buttons)
+     ============================================================ */
+  .mat-mdc-tab-list {
+    border-bottom: 1px solid var(--sdux-surface-outline);
+
+    background: linear-gradient(
+      to right,
+      var(--sdux-primary-dark),
+      var(--sdux-primary)
+    );
+
+    color: var(--sdux-text-white);
+
+    /* Remove MDC elevation shadow */
+    box-shadow: none;
+  }
+
+  /* ============================================================
+     INDIVIDUAL TAB BUTTONS
+     ============================================================ */
+  .mdc-tab {
+    font-weight: global.$font-weight-semibold;
+    letter-spacing: 0.02em;
+
+    color: rgba(var(--sdux-text-white-rgb), 0.85);
+
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    /* ACTIVE TAB */
+    &.mdc-tab--active {
+      color: var(--sdux-text-white);
+      background-color: rgba(var(--sdux-text-white-rgb), 0.12);
+    }
+
+    /* HOVER TAB */
+    &:hover:not(.mdc-tab--active) {
+      color: var(--sdux-text-white);
+      background-color: rgba(var(--sdux-text-white-rgb), 0.15);
+    }
+
+    /* TAB LABEL TEXT */
+    .mdc-tab__text-label {
+      font-size: global.$font-size-sm;
+      text-transform: none;
+    }
+  }
+
+  /* ============================================================
+     TAB PAGINATION ARROWS  ( <  > )
+     These were invisible in dark mode — FIXED
+     ============================================================ */
+  .mat-mdc-tab-header-pagination {
+    /* !important: override Material's inline pagination background for dark mode */
+    background: transparent !important;
+
+    .mat-mdc-tab-header-pagination-chevron {
+      /* !important: override Material's inline chevron color for dark mode */
+      border-color: var(--sdux-text-white) !important;
+    }
+
+    &:hover {
+      background-color: rgba(var(--sdux-text-white-rgb), 0.15);
+    }
+  }
+
+  /* ============================================================
+     TAB INK BAR (underline under active tab)
+     ============================================================ */
+  .mdc-tab-indicator__content--underline {
+    /* !important: override Material's inline ink bar color for theme consistency */
+    border-color: var(--sdux-accent-base) !important;
+  }
+}

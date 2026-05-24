@@ -1,0 +1,47 @@
+@use 'global' as global;
+
+.help-container {
+  display: flex;
+  width: 250px;
+
+  align-items: center;
+  justify-content: center;
+  gap: global.$spacing-xs;
+
+  .help {
+    height: 20px;
+    font-size: global.$font-size-sm;
+  }
+}
+
+.toc-container {
+  width: 100%;
+
+  .sorted-container {
+    width: calc(100% - #{global.$spacing-sm});
+    min-width: 350px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+    justify-content: space-between;
+    padding-right: global.$spacing-sm;
+
+    .panel-left {
+      width: calc(50% - #{global.$spacing-sm});
+      min-width: 350px;
+    }
+
+    .panel-right {
+      min-width: 350px;
+      width: calc(50% - #{global.$spacing-sm});
+    }
+  }
+}
+
+.license-textarea {
+  width: calc(100% - #{global.$spacing-sm} * 2);
+  height: 300px;
+  color: global.$sdux-text-black;
+  padding: global.$spacing-sm;
+  font-size: global.$font-size-sm;
+}

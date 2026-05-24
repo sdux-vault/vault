@@ -1,0 +1,251 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Entity Access Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      Entity Access Behaviors provide deterministic mechanisms for retrieving
+      entities by identifier from
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state.
+      These behaviors extend the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> runtime
+      surface with entity-focused access patterns while preserving the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> pipeline
+      as the single authoritative source of truth.
+    </p>
+
+    <p>
+      Entity access operates after state finalization and relies on committed
+      state emissions as the authoritative data source. Each behavior exposes a
+      different resolution model depending on how entities should be retrieved
+      and whether additional resolution work is permitted.
+    </p>
+
+    <p>
+      Entity access behaviors do not mutate state directly and do not bypass the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      pipeline. Instead, they coordinate with the pipeline lifecycle to ensure
+      that entity resolution remains deterministic, lifecycle-aware, and
+      consistent with
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+      semantics.
+    </p>
+
+    <p>Supported entity access behaviors include:</p>
+
+    <ul>
+      <li>
+        <strong>Query Behavior</strong> — synchronous access to entities already
+        present in finalized state
+      </li>
+      <li>
+        <strong>Lookup Behavior</strong> — identifier-based entity resolution
+        through pipeline execution
+      </li>
+      <li>
+        <strong>State Cache Behavior</strong> — TTL-based entity caching with
+        controlled refresh
+      </li>
+    </ul>
+
+    <p>
+      Each behavior provides a different access model while maintaining a
+      consistent integration boundary with the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      pipeline.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Entity Access Extension</div>
+    <div class="section-body">
+      <p>
+        Entity access behaviors extend the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        runtime with APIs that resolve entities by identifier. These APIs allow
+        application code to retrieve entities without directly interacting with
+        the underlying pipeline resolution mechanisms.
+      </p>
+
+      <p>Entity access behaviors share several architectural guarantees:</p>
+
+      <ul>
+        <li>They operate after pipeline finalization</li>
+        <li>
+          They do not mutate
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state directly
+        </li>
+        <li>They do not bypass pipeline resolution</li>
+        <li>
+          They preserve
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          lifecycle boundaries
+        </li>
+        <li>
+          They treat the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state pipeline as the authoritative source of truth
+        </li>
+      </ul>
+
+      <p>Depending on the selected behavior, entity access may:</p>
+
+      <ul>
+        <li>Resolve immediately from finalized state</li>
+        <li>Trigger pipeline resolution for missing entities</li>
+        <li>Cache resolved entities with expiration semantics</li>
+      </ul>
+
+      <p>
+        Each behavior is installed through the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> fluent
+        configuration API during initialization.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.7/2.7.2-lookup-flow.svg"
+        [tooltip]="'Entity Access - Lookup Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.7/2.7.3-query-flow.svg"
+        [tooltip]="'Entity Access - Query Flow'" />
+      <sdux-diagram
+        image="diagrams/2.7/2.7.1-state-cache-flow.svg"
+        [tooltip]="'Entity Access - State Cache Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available Entity Access Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        Entity access behaviors are <strong>add-on behaviors</strong> and must
+        be registered with the <sdux-feature-cell /> during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        declaration.
+      </p>
+
+      <p>
+        These behaviors extend the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        runtime with identifier-based entity access while preserving the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipeline as the authoritative source of truth. Entity access operations
+        never mutate state directly and never bypass pipeline execution.
+      </p>
+
+      <p>
+        Instead, entity access behaviors coordinate with finalized state
+        emissions and pipeline lifecycle events to provide deterministic entity
+        resolution.
+      </p>
+
+      <sdux-vault-entity-access-behaviors-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Entity Access Behavior Models</div>
+    <div class="section-body">
+      <p>
+        The following table summarizes the different entity access behaviors and
+        how they interact with
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        and pipeline execution.
+      </p>
+
+      <div class="table-title">Entity Access Behavior Comparison</div>
+
+      <div class="table-scroll">
+        <table aria-label="Entity Access Behavior Comparison">
+          <thead>
+            <tr>
+              <th scope="col" class="column-200">Behavior</th>
+              <th scope="col" class="column-200">Resolution Model</th>
+              <th scope="col" class="column-200">Pipeline Execution</th>
+              <th scope="col" class="column-250">Data Source</th>
+              <th scope="col" class="column-250">Typical Use Cases</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Query Behavior</strong></td>
+              <td>Immediate (synchronous)</td>
+              <td>Never</td>
+              <td>
+                Finalized
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                state
+              </td>
+              <td>Fast entity access when state is already populated</td>
+            </tr>
+
+            <tr>
+              <td><strong>Lookup Behavior</strong></td>
+              <td>On-demand resolution</td>
+              <td>Yes (on miss)</td>
+              <td>Finalized state or pipeline fetch</td>
+              <td>Lazy loading entities by identifier</td>
+            </tr>
+
+            <tr>
+              <td><strong>State Cache Behavior</strong></td>
+              <td>TTL-based caching</td>
+              <td>Yes (on miss or expiration)</td>
+              <td>Cached entities derived from finalized state</td>
+              <td>High-performance entity access with refresh control</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <sdux-entity-access-behavior-selection-common />
+
+  <section class="section">
+    <div class="section-title">Architectural Summary</div>
+    <div class="section-body">
+      <p>
+        Entity Access Behaviors provide structured access to entities without
+        compromising the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipeline as the authoritative state mechanism.
+      </p>
+
+      <p>Each behavior maintains strict alignment with pipeline semantics:</p>
+
+      <ul>
+        <li><strong>Query Behavior</strong> reflects finalized state.</li>
+        <li>
+          <strong>Lookup Behavior</strong> resolves entities through pipeline
+          execution.
+        </li>
+        <li>
+          <strong>State Cache Behavior</strong> augments lookup resolution with
+          TTL-based caching.
+        </li>
+      </ul>
+
+      <p>
+        Together, these behaviors allow FeatureCells to expose flexible entity
+        access models while preserving deterministic state management and
+        lifecycle control.
+      </p>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

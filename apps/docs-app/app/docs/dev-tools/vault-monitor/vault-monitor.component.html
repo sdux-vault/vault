@@ -1,0 +1,326 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3>Vault Monitor</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The Vault Monitor is the internal telemetry system used by
+      <sdux-brand-name [tm]="true" /> to observe pipeline execution and emit
+      structured runtime events for development tools.
+    </p>
+
+    <p>
+      During pipeline execution the monitor records lifecycle transitions, stage
+      activity, controller decisions, runtime errors, and other diagnostic
+      signals. These events are normalized into a consistent format and
+      forwarded to the DevTools <code>EventBus</code>, where they can be
+      consumed by debugging tools, analytics utilities, or external DevTools
+      integrations.
+    </p>
+
+    <p>
+      The Vault Monitor operates passively and does not influence pipeline
+      execution. It simply observes pipeline activity and produces structured
+      telemetry that can be inspected during development.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      Enabling <code>&#123; debug: true &#125;</code> on the main Vault instance
+      is only necessary when the Vault Monitor output is being consumed by the
+      <sdux-brand-name /> Debugger or a custom
+      <code>EventBus</code> integration. Otherwise the monitor will still emit
+      events, but nothing will be listening to them.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- HOW IT WORKS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">How the Vault Monitor Works</div>
+
+    <div class="section-body">
+      <p>
+        As the Vault pipeline executes, each stage and lifecycle boundary
+        reports activity to the Vault Monitor. The monitor converts these
+        signals into structured <code>EventShape</code> objects describing what
+        occurred during execution.
+      </p>
+
+      <p>These events include information such as:</p>
+
+      <ul>
+        <li>Pipeline stage transitions</li>
+        <li>Controller decisions and outcomes</li>
+        <li>Runtime errors and warnings</li>
+        <li>Lifecycle events such as initialization and destruction</li>
+        <li>Optional state snapshots and payload metadata</li>
+      </ul>
+
+      <p>
+        Once normalized, the events are forwarded to the DevTools
+        <code>EventBus</code>. Development tools such as the built-in debugger,
+        analytics utilities, or browser extensions subscribe to this event
+        stream to observe runtime behavior.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        The Vault Monitor only emits events when development mode is active.
+        This ensures that telemetry and debugging instrumentation are available
+        during development while avoiding unnecessary runtime overhead in
+        production environments.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Vault emission is active only when development mode is enabled. This
+        ensures that pipeline telemetry is available for diagnostics during
+        development without becoming part of normal production execution
+        behavior.
+      </p>
+
+      <p>
+        When development mode is inactive, pipeline events are not emitted
+        through the Event Bus. Consumers may still obtain the singleton
+        instance, but no pipeline event stream will be produced.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ 
+      devMode: true,
+    })
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`Vault({
+  devMode: true,
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// main.ts
+Vault({
+  devMode: true,
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- VAULT MONITOR EVENT MODEL -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Vault Monitor Event Model</div>
+
+    <div class="section-body">
+      <p>
+        The Vault Monitor emits structured runtime events describing pipeline
+        activity during Vault execution. These events are normalized into a
+        consistent format and forwarded to the DevTools Event Bus where they can
+        be consumed by debugging tools, analytics utilities, and DevTools
+        integrations.
+      </p>
+
+      <p>
+        Rather than documenting individual monitor methods, the event model is
+        defined by three concepts:
+        <strong>event categories</strong>, <strong>event domains</strong>, and
+        the <strong>event structure</strong>. Together these describe how all
+        Vault Monitor telemetry is produced and interpreted.
+      </p>
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- EVENT CATEGORIES -->
+    <!-- ====================================================== -->
+    <div class="section-body">
+      <p>
+        Each emitted event is assigned a category that determines which fields
+        may appear on the event payload. This policy ensures consistent event
+        structure across the entire pipeline.
+      </p>
+
+      <div class="table-title">Event Categories</div>
+      <table>
+        <thead>
+          <tr>
+            <th class="column-200">Category</th>
+            <th class="column-300">Description</th>
+            <th class="column-100">State</th>
+            <th class="column-100">Payload</th>
+            <th class="column-100">Error</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>Boundary</strong></td>
+            <td>
+              Signals transitions in the pipeline lifecycle such as stage
+              start/end, controller decisions, or conductor orchestration
+              events.
+            </td>
+            <td>No</td>
+            <td>Optional</td>
+            <td>No</td>
+          </tr>
+
+          <tr>
+            <td><strong>State</strong></td>
+            <td>
+              Events that produce or emit a state snapshot during pipeline
+              execution.
+            </td>
+            <td>Required</td>
+            <td>Optional</td>
+            <td>No</td>
+          </tr>
+
+          <tr>
+            <td><strong>Error</strong></td>
+            <td>
+              Events representing runtime failures, warnings, or controller
+              exceptions.
+            </td>
+            <td>Required</td>
+            <td>Optional</td>
+            <td>Required</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- EVENT DOMAINS -->
+    <!-- ====================================================== -->
+    <div class="section-body">
+      <p>
+        Each event belongs to a domain describing where it originates in the
+        Vault execution engine. The event name combines the domain, phase, and
+        operation.
+      </p>
+
+      <div class="table-title">Event Domains</div>
+      <table>
+        <thead>
+          <tr>
+            <th class="column-200">Domain</th>
+            <th class="column-350">Description</th>
+            <th class="column-auto">Example Event</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>Stage</strong></td>
+            <td>
+              Events produced by pipeline processing stages such as resolve,
+              reducer, operator, or filter.
+            </td>
+            <td><code>stage:start:resolve</code></td>
+          </tr>
+
+          <tr>
+            <td><strong>Lifecycle</strong></td>
+            <td>
+              Core runtime lifecycle operations including initialization, state
+              emission, error transformation, and internal runtime boundaries.
+            </td>
+            <td><code>lifecycle:end:initialized</code></td>
+          </tr>
+
+          <tr>
+            <td><strong>Controller</strong></td>
+            <td>
+              Events emitted during controller evaluation including attempts,
+              votes, successes, failures, and restart decisions.
+            </td>
+            <td><code>controller:end:vote</code></td>
+          </tr>
+
+          <tr>
+            <td><strong>Conductor</strong></td>
+            <td>
+              Events describing orchestration decisions made by the Vault
+              conductor, including dispatch, revotes, aborts, and license
+              checks.
+            </td>
+            <td><code>conductor:start:dispatch</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- EVENT STRUCTURE -->
+    <!-- ====================================================== -->
+    <div class="section-body">
+      <p>
+        All Vault Monitor events follow a consistent structure defined by the
+        <a href="/docs/references/shapes/event-shape">EventShape</a> interface.
+        Depending on the event category and configured insight policy, some
+        fields may be omitted from the final emitted event.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

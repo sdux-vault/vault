@@ -1,0 +1,56 @@
+echo "Running library coverage before push..."
+
+npm run test:coverage:clean
+
+npm run test:coverage:addons || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'addons' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+npm run test:coverage:angular || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'angular' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+
+npm run test:coverage:core || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'core' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+npm run test:coverage:devtools || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'devtools' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+npm run test:coverage:devtools-ui || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'devtools-ui' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+npm run test:coverage:shared || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'shared' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+npm run test:coverage:docs-app || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'docs-app app' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+npm run test:coverage:web-components || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'web-components' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+npm run test:coverage:integration || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'integration' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+npm run test:tools || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'tools' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+echo "Pre-push checks complete."

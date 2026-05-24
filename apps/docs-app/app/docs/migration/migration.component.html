@@ -1,0 +1,943 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Redux Concepts in <sdux-brand-name /></h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      If you are familiar with Redux, most of your architectural knowledge
+      transfers directly to
+      <sdux-brand-name />. The primary difference is not conceptual — it is
+      structural.
+    </p>
+
+    <p>
+      This page is designed to help you bridge your understanding between Redux
+      and
+      <sdux-brand-name />. It is not a step-by-step migration guide. Instead, it
+      explains how common Redux concepts map to <sdux-brand-name /> constructs
+      so you can reason about both systems clearly.
+    </p>
+
+    <p>
+      Redux centralizes state through a global store and reducer tree.
+      <sdux-brand-name /> scopes state to independent FeatureCells and executes
+      updates through a deterministic pipeline.
+    </p>
+
+    <p>
+      Reducers, pure functions, selectors, and immutable state principles all
+      remain valid. In many cases, existing reducer logic and transformation
+      functions can be reused without modification, provided they remain pure
+      and deterministic.
+    </p>
+
+    <p>
+      Redux and <sdux-brand-name /> can run side by side within the same
+      application. You are not required to migrate existing stores immediately.
+      New state can be implemented using FeatureCells while existing Redux
+      stores continue operating unchanged. Over time, you may choose to convert
+      specific slices — or run both systems in parallel to validate behavior
+      before switching fully.
+    </p>
+
+    <p>
+      It may initially feel unusual not to write action creators, switch
+      statements, or boilerplate-heavy reducer composition. That difference is
+      intentional. <sdux-brand-name /> reduces ceremony by formalizing execution
+      inside the pipeline rather than requiring repetitive structural code. The
+      reduced surface area is not a simplification of capability — it is a
+      simplification of mechanics.
+    </p>
+
+    <p>
+      <strong>Plain TypeScript. Zero Magic.</strong> That is the design
+      constraint. <sdux-brand-name /> does not rely on hidden runtime behavior,
+      implicit mutation, or framework-level interception. What you write is what
+      executes. Pure functions stay pure. Side effects are explicit. Execution
+      is observable. The goal is not abstraction for its own sake — it is
+      clarity.
+    </p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- TABLE OF CONTENTS                                            -->
+  <!-- ============================================================ -->
+  <section class="section" id="toc">
+    <div class="section-title">Table of Contents</div>
+
+    <div class="section-body">
+      <ul class="toc">
+        <li>
+          <a [routerLink]="[]" fragment="diagram">Diagram</a>
+        </li>
+        <li>
+          <a [routerLink]="[]" fragment="state">State</a>
+        </li>
+        <li>
+          <a [routerLink]="[]" fragment="actions">Actions</a>
+        </li>
+        <li>
+          <a [routerLink]="[]" fragment="dispatch">Dispatch</a>
+        </li>
+        <li>
+          <a [routerLink]="[]" fragment="reducers">Reducers</a>
+        </li>
+        <li>
+          <a [routerLink]="[]" fragment="effects">Effects</a>
+        </li>
+        <li>
+          <a [routerLink]="[]" fragment="selectors">Selectors</a>
+        </li>
+        <li>
+          <a [routerLink]="[]" fragment="store-setup">Store Setup</a>
+        </li>
+        <li>
+          <a [routerLink]="[]" fragment="components">Components</a>
+        </li>
+        <li>
+          <a [routerLink]="[]" fragment="testing">Testing</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="diagram">
+    <div class="section-title-navigation">
+      <div class="section-title">Diagram</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="section" id="state">
+    <div class="section-title-navigation">
+      <div class="section-title">State</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>Redux</h4>
+      <p>
+        State is stored in a single global Store. Reducers combine into a root
+        reducer, producing a single immutable tree.
+      </p>
+
+      <h4><sdux-brand-name /></h4>
+      <p>
+        State is owned by independent FeatureCells. Each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        maintains its own isolated state and execution lifecycle.
+      </p>
+
+      <p>
+        Instead of combining reducers into a single tree, you define multiple
+        FeatureCells. Each cell is independently initialized and executed.
+      </p>
+
+      <p>
+        Your state shapes remain the same. The structural difference is where
+        ownership lives.
+      </p>
+
+      <h4>Additional Information</h4>
+      <ul>
+        <li>
+          <a href="/docs/pipeline/behaviors/state">Understanding State</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="actions">
+    <div class="section-title-navigation">
+      <div class="section-title">Actions</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>Redux</h4>
+      <p>
+        Actions are plain objects describing state transitions. They are
+        dispatched globally and interpreted by reducers within the root store.
+      </p>
+
+      <pre
+        class="code-inline"><code class="language-ts">{{`{ type: 'ADD_USER', payload: user }`}}</code></pre>
+
+      <p>
+        Because Redux uses a single global store, every action is broadcast to
+        the entire reducer tree. Each reducer decides whether to respond based
+        on the action type.
+      </p>
+
+      <h4><sdux-brand-name /></h4>
+      <p>
+        <sdux-brand-name /> does not use global action objects. Instead, state
+        updates are invoked directly on a specific
+        <strong
+          ><a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >
+        using <code>mergeState()</code> or <code>replaceState()</code>.
+      </p>
+
+      <pre
+        class="code-inline"><code class="language-ts">{{`vault.replaceState(nextValue)
+
+or
+
+vault.mergeState(partialValue)`}}</code></pre>
+
+      <p>
+        Each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> owns
+        its own state. When you invoke <code>mergeState()</code>, you are
+        explicitly updating that
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        — not broadcasting an event to a global store.
+      </p>
+
+      <p>
+        This removes ambiguity. The update target is always clear because the
+        method is called on the state owner itself.
+      </p>
+
+      <p>
+        If you prefer action-like structures for organization or traceability,
+        you may still structure your input objects that way. However, they are
+        passed directly into the owning
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> rather
+        than dispatched globally.
+      </p>
+
+      <p>
+        That said, <sdux-brand-name /> is intentionally designed to minimize
+        structural boilerplate. Action creators, switch statements, and large
+        type unions are not required for correctness. It is generally
+        recommended to avoid recreating Redux-style ceremony unless it provides
+        clear value for your application.
+      </p>
+
+      <h4>Additional Information</h4>
+      <ul>
+        <li>
+          <a href="/docs/pipeline/apis/feature-cell-api/merge-state-method">
+            Understanding mergeState()
+          </a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/apis/feature-cell-api/replace-state-method">
+            Understanding replaceState()
+          </a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/behaviors/resolve">
+            Understanding the Resolve Stage
+          </a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/behaviors/merge">
+            Understanding Merge Behaviors
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="dispatch">
+    <div class="section-title-navigation">
+      <div class="section-title">Dispatch</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>Redux</h4>
+      <p>
+        <code>dispatch(action)</code> sends an action through middleware and the
+        reducer tree. Because Redux uses a single global store, every dispatched
+        action is broadcast to all reducers.
+      </p>
+
+      <pre class="code-inline"><code class="language-ts">{{`
+dispatch({ type: 'ADD_USER', payload: user })
+`}}</code></pre>
+
+      <p>
+        Each reducer decides whether to respond based on the action type.
+        Execution order may be influenced by middleware composition and reducer
+        structure.
+      </p>
+
+      <h4><sdux-brand-name /></h4>
+
+      <p>
+        <sdux-brand-name /> does not use global dispatch. Instead, state updates
+        are invoked directly on the owning
+        <strong
+          ><a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >.
+      </p>
+
+      <p>Updates are triggered by calling:</p>
+
+      <ul>
+        <li><code>mergeState()</code></li>
+        <li><code>replaceState()</code></li>
+      </ul>
+
+      <pre
+        class="code-inline"><code class="language-ts">{{`vault.replaceState(nextValue)
+
+or
+
+vault.mergeState(partialValue)`}}</code></pre>
+
+      <p>
+        When you call <code>mergeState()</code>, you are explicitly updating
+        that specific
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> — not
+        broadcasting an event to a global store.
+      </p>
+
+      <p>
+        This makes the update target unambiguous. The state owner is known at
+        the call site, and execution flows through a deterministic pipeline
+        rather than a reducer tree.
+      </p>
+
+      <p>
+        Instead of dispatching an action object, you submit state input into the
+        pipeline. The conductor serializes execution, and the pipeline finalizes
+        each attempt in a controlled microtask boundary.
+      </p>
+
+      <p>
+        Boilerplate-heavy dispatch patterns are not required for correctness.
+        <sdux-brand-name /> favors direct, explicit state invocation over
+        ceremony-based event broadcasting.
+      </p>
+
+      <h4>Additional Information</h4>
+      <ul>
+        <li>
+          <a href="/docs/pipeline/apis/feature-cell-api/merge-state-method">
+            Understanding mergeState()
+          </a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/apis/feature-cell-api/replace-state-method">
+            Understanding replaceState()
+          </a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/behaviors/resolve">
+            Understanding the Resolve Stage
+          </a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/behaviors/merge">
+            Understanding Merge Behaviors
+          </a>
+        </li>
+        <li>
+          <a href="/docs/pipelines"> Understanding the Pipeline </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="reducers">
+    <div class="section-title-navigation">
+      <div class="section-title">Reducers</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>Redux</h4>
+
+      <p>
+        Reducers in Redux are pure functions that compute the next state from
+        the current state and an action.
+      </p>
+
+      <p>
+        Reducers are typically composed into a root reducer tree and executed
+        whenever
+        <code>dispatch()</code> is called.
+      </p>
+
+      <p>
+        Advanced Redux setups may dynamically inject reducers at runtime,
+        replace reducer trees, or alter store structure during application
+        execution.
+      </p>
+
+      <h4><sdux-brand-name /></h4>
+
+      <p>
+        In <sdux-brand-name />, reducers exist as a dedicated
+        <strong>Reducer Stage</strong>
+        within the pipeline.
+      </p>
+
+      <p>
+        Reducer functions remain pure and deterministic. Existing Redux reducer
+        logic can typically be reused without modification as long as:
+      </p>
+
+      <ul>
+        <li>They are pure</li>
+        <li>They do not mutate state</li>
+        <li>They preserve structural shape</li>
+      </ul>
+
+      <p>
+        However, reducers in <sdux-brand-name /> are registered declaratively
+        through the fluent <code>.reducers()</code> API and must be configured
+        <strong>before</strong> the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized.
+      </p>
+
+      <pre class="code-inline"><code class="language-ts">{{`
+featureCell
+  .reducers([
+    (current) => ({ ...current, count: current.count + 1 })
+  ])
+  .initialize()
+`}}</code></pre>
+
+      <p>
+        Reducers are not dynamically injected into the pipeline. Once
+        <code>initialize()</code> is called, the pipeline structure is fixed.
+      </p>
+
+      <p>
+        This guarantees that reducer execution order is stable and deterministic
+        for the lifetime of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+
+      <p>
+        Unlike Redux reducer trees, which may be composed or replaced at
+        runtime,
+        <sdux-brand-name /> enforces pipeline consistency. Reducers cannot be
+        added, removed, or reordered after initialization.
+      </p>
+
+      <p>This constraint ensures:</p>
+
+      <ul>
+        <li>Predictable execution ordering</li>
+        <li>Stable state derivation rules</li>
+        <li>No hidden runtime mutations of state logic</li>
+        <li>Deterministic pipeline guarantees</li>
+      </ul>
+
+      <p>
+        Reducers are the <em>only</em> stage permitted to produce the committed
+        state value They never control scheduling, never emit snapshots
+        directly, and never influence pipeline flow.
+      </p>
+
+      <h4>Additional Information</h4>
+      <ul>
+        <li>
+          <a href="/docs/pipeline/behaviors/reducers">Reducer Behaviors</a>
+        </li>
+        <li>
+          <a href="/docs/pipelines">The Pipeline</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="effects">
+    <div class="section-title-navigation">
+      <div class="section-title">Effects</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>Redux</h4>
+      <p>
+        Effects are implemented through middleware (Thunk, Saga, Observable).
+        They handle asynchronous operations and dispatch new actions.
+      </p>
+
+      <h4><sdux-brand-name /></h4>
+      <p>
+        Asynchronous input is handled through Resolve behaviors, Interceptors,
+        or Controllers.
+      </p>
+
+      <p>
+        Instead of middleware dispatching new actions at arbitrary times,
+        asynchronous results enter the pipeline as controlled attempts.
+      </p>
+
+      <p>
+        Side effects remain possible, but execution is serialized and finalized
+        consistently.
+      </p>
+
+      <h4>Execution Model</h4>
+
+      <p>
+        Unlike Redux middleware or effects libraries, asynchronous resolution in
+        <sdux-brand-name /> is coordinated by the pipeline itself.
+      </p>
+
+      <p>
+        Async inputs are resolved under pipeline coordination before state
+        commitment occurs. State commitment is deferred to a microtask boundary,
+        ensuring that observers never see partial results and that reentrancy is
+        structurally impossible.
+      </p>
+
+      <p>For a detailed explanation of these guarantees, see:</p>
+
+      <ul>
+        <li>
+          <a href="/docs/pipeline/execution-guarantee">
+            Pipeline Execution Guarantee
+          </a>
+        </li>
+      </ul>
+
+      <h4>Additional Information</h4>
+      <ul>
+        <li>
+          <a href="/docs/pipeline/controllers/policy"> Controllers </a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/behaviors/what-is-a-behavior"> Behaviors</a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/behaviors/resolve">
+            Understanding the Resolve Stage
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="selectors">
+    <div class="section-title-navigation">
+      <div class="section-title">Selectors</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>Redux</h4>
+
+      <p>
+        Selectors derive computed state from the global store. They are often
+        memoized using libraries such as Reselect to avoid unnecessary
+        recomputation.
+      </p>
+
+      <p>
+        Because Redux uses a single store, selectors typically receive the
+        entire state tree and project a subset of it.
+      </p>
+
+      <h4><sdux-brand-name /></h4>
+
+      <p>
+        In <sdux-brand-name />, state is owned by individual
+        <strong>FeatureCells</strong>, not a global store. Derived state is
+        therefore scoped to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> that
+        owns it.
+      </p>
+
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> can
+        be injected wherever it is needed, and its state APIs are reactive
+        across the entire application.
+      </p>
+
+      <ul>
+        <li><code>.state</code> — synchronous immutable snapshot</li>
+        <li><code>.state$</code> — reactive observable stream</li>
+        <li>
+          <code>.state.value()</code> — Angular signal (when using
+          <sdux-package-name />/angular)
+        </li>
+      </ul>
+
+      <p>
+        Because the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> itself
+        is injectable, any component, service, or controller that injects it
+        receives the same reactive state source.
+      </p>
+
+      <p>Derived state can be implemented using:</p>
+
+      <ul>
+        <li>Plain TypeScript functions</li>
+        <li>Computed signals (Angular)</li>
+        <li>RxJS operators on <code>.state$</code></li>
+        <li>
+          Getter methods colocated with the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        </li>
+      </ul>
+
+      <p>
+        Memoization strategies remain valid. However, because state updates are
+        atomic and deterministic, recomputation behavior is easier to reason
+        about.
+      </p>
+
+      <p>
+        Selectors are not global projections — they are scoped, reusable views
+        of a specific state owner.
+      </p>
+
+      <p>
+        This eliminates the need for a global selector registry and avoids tight
+        coupling to a centralized store structure.
+      </p>
+
+      <h4>Additional Information</h4>
+      <ul>
+        <li>
+          <a href="/docs/pipelines"> The Pipeline </a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/apis/feature-cell-api"> FeatureCell API </a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/execution-guarantee">
+            Pipeline Execution Guarantees
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="store-setup">
+    <div class="section-title-navigation">
+      <div class="section-title">Store Setup</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>Redux</h4>
+      <p>
+        A global Store is created using <code>createStore()</code> and reducer
+        composition.
+      </p>
+
+      <h4><sdux-brand-name /></h4>
+      <p>There is no monolithic root store.</p>
+
+      <p>Instead:</p>
+
+      <ul>
+        <li>Initialize Vault once.</li>
+        <li>Register FeatureCells individually.</li>
+      </ul>
+
+      <p>FeatureCells can run alongside Redux during gradual adoption.</p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Register a FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: [] 
+      }
+    )
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Register a FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`Vault({
+  devMode: true,
+  logLevel: 'debug'
+});
+
+export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: [],
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Register a FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`Vault({
+  devMode: true,
+  logLevel: 'debug'
+});
+
+export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: [],
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <h4>Additional Information</h4>
+      <ul>
+        <li>
+          <a href="/docs/pipeline/apis/vault">How to Define a Vault</a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/apis/feature-cell"
+            >How to Define a FeatureCell</a
+          >
+        </li>
+        <li>
+          <a href="/docs/pipeline/apis/provide-vault"
+            >How to Define a Vault (Angular)</a
+          >
+        </li>
+        <li>
+          <a href="/docs/pipeline/apis/provide-feature-cell"
+            >How to Define a FeatureCell (Angular)</a
+          >
+        </li>
+        <li>
+          <a href="/docs/welcome/how-to-define-your-state"
+            >How to Define Your State</a
+          >
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="components">
+    <div class="section-title-navigation">
+      <div class="section-title">Components</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>Redux</h4>
+
+      <p>
+        Components subscribe to the global Store using hooks
+        (<code>useSelector</code>, <code>useDispatch</code>) or higher-order
+        components (<code>connect</code>).
+      </p>
+
+      <p>
+        State selection and dispatch logic are typically colocated in the
+        component or abstracted into selector files. Every dispatched action is
+        broadcast to the entire reducer tree, and subscribed components
+        re-evaluate selectors on each store update.
+      </p>
+
+      <p>A Provider must wrap the application to supply the Store instance.</p>
+
+      <h4><sdux-brand-name /></h4>
+
+      <p>
+        Components do not connect to a global store. Instead, they inject or
+        import the specific
+        <strong
+          ><a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >
+        whose state they depend on.
+      </p>
+
+      <p>
+        Because FeatureCells are state owners, a component interacts directly
+        with the state it cares about — not a centralized root tree.
+      </p>
+
+      <p>State can be consumed through:</p>
+
+      <ul>
+        <li><code>cell.state</code> — synchronous immutable snapshot</li>
+        <li><code>cell.state$</code> — reactive observable stream</li>
+        <li>
+          <code>cell.state.value()</code> — Angular signal (if applicable)
+        </li>
+      </ul>
+
+      <p>
+        There is no global store Provider requirement and no store-wide
+        broadcast. Updates are scoped to the owning
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+
+      <p>
+        Because state commitment is atomic and deferred to a microtask,
+        components never observe intermediate values or partially reduced state.
+        Every render sees a finalized snapshot.
+      </p>
+
+      <p>The mental model shifts from:</p>
+
+      <ul>
+        <li><em>Subscribe to a global store and select a slice</em></li>
+      </ul>
+
+      <p>to:</p>
+
+      <ul>
+        <li><em>Inject the state owner and consume it directly</em></li>
+      </ul>
+
+      <p>
+        This reduces wiring, eliminates dispatch plumbing, and keeps state
+        access explicit and localized.
+      </p>
+
+      <h4>Additional Information</h4>
+      <ul>
+        <li>
+          <a href="/docs/pipeline/behaviors/state">Understanding State</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="testing">
+    <div class="section-title-navigation">
+      <div class="section-title">Testing</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>Redux</h4>
+
+      <p>
+        Reducers are tested as pure functions. Async logic is typically tested
+        through mocked middleware (thunks, sagas, observables) or by asserting
+        dispatch sequences.
+      </p>
+
+      <p>
+        Complex flows often require mock stores, fake timers, middleware
+        orchestration, and manual resolution of async behavior.
+      </p>
+
+      <h4><sdux-brand-name /></h4>
+
+      <p>
+        Reducers remain pure and directly testable. Existing reducer tests can
+        typically be reused without modification.
+      </p>
+
+      <p>
+        Asynchronous resolution does not require middleware mocking. All state
+        input flows through a deterministic pipeline.
+      </p>
+
+      <p>Pipeline execution can be explicitly awaited using:</p>
+
+      <ul>
+        <li><code>vaultSettled()</code></li>
+        <li><code>flushVaultPipeline()</code></li>
+      </ul>
+
+      <p>
+        Because execution is serialized and state commitment is atomic, tests do
+        not need to account for reentrancy, partial state visibility, or
+        interleaved async commits.
+      </p>
+
+      <p>
+        Each pipeline attempt either commits a complete snapshot or produces no
+        visible state change. This makes outcome-based testing straightforward.
+      </p>
+
+      <p>
+        Instead of asserting dispatched action sequences, tests can assert final
+        state directly.
+      </p>
+
+      <h4>Additional Information</h4>
+      <ul>
+        <li>
+          <a href="/docs/welcome/testing"> Testing with <sdux-brand-name /> </a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/execution-guarantee">
+            Pipeline Execution Guarantees
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,376 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Trusted: all [innerHTML] bindings below use roadmap data from internal compile-time constants -->
+
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Roadmap & Call for Help</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-brand-name [tm]="true" /> is not intended to be built by a single
+      team or locked to a single framework. It is designed as a shared
+      foundation for modern state management that can evolve through a
+      world-wide, framework-agnostic community.
+    </p>
+
+    <p>
+      This is an opportunity for engineers across ecosystems—Angular, React,
+      Next.js, and beyond—to collaborate on a common set of state primitives,
+      behaviors, and tooling. Rather than fragmenting solutions per framework,
+      <sdux-brand-name /> aims to provide a shared core that frameworks can
+      build on together.
+    </p>
+
+    <p>
+      This page outlines where the project stands today, what is already
+      complete, and where help from the community can have the greatest impact.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">TL;DR</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> is designed to grow through a shared,
+        cross-framework community. The core system is intentionally stable and
+        focused, while many advanced capabilities are built as behaviors that
+        can evolve independently.
+      </p>
+
+      <ul>
+        <li>
+          The foundation is solid, production-ready, and already feature-rich
+        </li>
+        <li>Many powerful behaviors are complete and available today</li>
+        <li>
+          Upcoming features are designed to be modular, extensible, and
+          community-driven
+        </li>
+        <li>
+          Contributions can shape how <sdux-brand-name /> evolves across
+          frameworks
+        </li>
+      </ul>
+
+      <p>
+        If you care about predictable state, streaming workflows, and clean
+        ownership boundaries, this roadmap is an open invitation to help build
+        the next generation of state management— together.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- REPOSITORIES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Project Repositories</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> is organized into a small set of focused
+        repositories. Each repository has a clear responsibility and is designed
+        to evolve independently while sharing a common core philosophy.
+      </p>
+
+      <ul>
+        <li>
+          <strong><sdux-package-name />/addons</strong><br />
+          Addon behaviors and controllers. Framework-agnostic.
+        </li>
+        <li>
+          <strong><sdux-package-name />/core</strong><br />
+          Core runtime, pipeline,
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+          Vault, behaviors, and contracts. Framework-agnostic.
+        </li>
+
+        <li>
+          <strong><sdux-package-name />/angular</strong><br />
+          Angular integration, Signals support, DI adapters, and
+          Angular-specific tooling.
+        </li>
+
+        <li>
+          <strong><sdux-package-name />/devtools</strong><br />
+          Chrome DevTools extension, InsightService consumers, and observability
+          tooling.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FINISHED BEHAVIORS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Completed Features and Behaviors</div>
+
+    <div class="section-body">
+      <div class="callout callout-info">
+        <strong>Ext</strong> (Extendable) indicates whether the behavior can be
+        customized, composed, or replaced by writing a custom Behavior, or
+        whether multiple interchangeable behaviors exist.
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>Core Features and Behaviors</h4>
+      <p>
+        This table highlights features and behaviors that are already
+        implemented and verified in the
+        <sdux-brand-name /> core.
+      </p>
+
+      <div class="roadmap-sort">
+        <mat-form-field appearance="outline" class="sort-field">
+          <mat-label>Sort Core by</mat-label>
+
+          <mat-select [(ngModel)]="selectedCoreSort">
+            @for (opt of coreSortOptions; track opt.key) {
+              <mat-option [value]="opt.key">
+                {{ opt.value }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          mat-icon-button
+          type="button"
+          (click)="coreSortAsc = !coreSortAsc"
+          aria-label="Toggle sort direction">
+          <mat-icon>
+            {{ coreSortAsc ? 'arrow_upward' : 'arrow_downward' }}
+          </mat-icon>
+        </button>
+      </div>
+
+      <table aria-label="Core Features and Behaviors">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Feature/Behavior</th>
+            <th scope="col" class="column-50">Ext</th>
+            <th scope="col" class="column-200">Package</th>
+            <th scope="col" class="column-auto">Behavior</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (roadMap of sortedCoreRoadMap; track roadMap.feature) {
+            <tr>
+              <td [innerHTML]="roadMap.feature"></td>
+              <td>
+                @if (roadMap.isExtendable) {
+                  ✅
+                }
+              </td>
+              <td [innerHTML]="roadMap.package"></td>
+              <td [innerHTML]="roadMap.behavior"></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <h4>Add-on Behaviors</h4>
+      <p>
+        This table highlights behaviors that are already implemented and
+        verified as <sdux-brand-name /> add-ons.
+      </p>
+
+      <div class="roadmap-sort">
+        <mat-form-field appearance="outline" class="sort-field">
+          <mat-label>Sort Addons by</mat-label>
+
+          <mat-select [(ngModel)]="selectedAddonSort">
+            @for (opt of coreSortOptions; track opt.key) {
+              <mat-option [value]="opt.key">
+                {{ opt.value }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          mat-icon-button
+          type="button"
+          (click)="addonSortAsc = !addonSortAsc"
+          aria-label="Toggle sort direction">
+          <mat-icon>
+            {{ addonSortAsc ? 'arrow_upward' : 'arrow_downward' }}
+          </mat-icon>
+        </button>
+      </div>
+
+      <table aria-label="Add-on Behaviors">
+        <thead>
+          <tr>
+            <th scope="col" class="column-225">Feature/Behavior</th>
+            <th scope="col" class="column-50">Ext</th>
+            <th scope="col" class="column-auto">Package</th>
+            <th scope="col" class="column-auto">Behavior</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (roadMap of sortedAddonRoadMap; track roadMap.feature) {
+            <tr>
+              <td [innerHTML]="roadMap.feature"></td>
+              <td>
+                @if (roadMap.isExtendable) {
+                  ✅
+                }
+              </td>
+              <td [innerHTML]="roadMap.package"></td>
+              <td [innerHTML]="roadMap.behavior"></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <h4>Pro License Behaviors</h4>
+      <p>
+        This table highlights behaviors that are already implemented and
+        verified as <sdux-vault-brand-name /> add-ons.
+      </p>
+
+      <div class="roadmap-sort">
+        <mat-form-field appearance="outline" class="sort-field">
+          <mat-label>Sort Pro License by</mat-label>
+
+          <mat-select [(ngModel)]="selectedProLicenseSort">
+            @for (opt of coreSortOptions; track opt.key) {
+              <mat-option [value]="opt.key">
+                {{ opt.value }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          mat-icon-button
+          type="button"
+          (click)="proLicenseSortAsc = !proLicenseSortAsc"
+          aria-label="Toggle sort direction">
+          <mat-icon>
+            {{ proLicenseSortAsc ? 'arrow_upward' : 'arrow_downward' }}
+          </mat-icon>
+        </button>
+      </div>
+
+      <table aria-label="Pro License Behaviors">
+        <thead>
+          <tr>
+            <th scope="col" class="column-225">Feature/Behavior</th>
+            <th scope="col" class="column-50">Ext</th>
+            <th scope="col" class="column-auto">Package</th>
+            <th scope="col" class="column-auto">Behavior</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (roadMap of sortedProLicenseRoadMap; track roadMap.feature) {
+            <tr>
+              <td [innerHTML]="roadMap.feature"></td>
+              <td>
+                @if (roadMap.isExtendable) {
+                  ✅
+                }
+              </td>
+              <td [innerHTML]="roadMap.package"></td>
+              <td [innerHTML]="roadMap.behavior"></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FUTURE BEHAVIORS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Future Features and Behaviors</div>
+
+    <div class="callout callout-info">
+      <strong>Ext</strong> (Extendable) indicates whether the behavior can be
+      customized, composed, or replaced by writing a custom Behavior, or whether
+      multiple interchangeable behaviors exist.
+    </div>
+
+    <div class="section-body">
+      <p>
+        This table highlights features and behaviors currently planned or
+        proposed on the
+        <sdux-brand-name /> roadmap.
+      </p>
+
+      <p>
+        This is an opportunity for the community to help shape the future of the
+        project. Please visit the
+        <strong>sdux-core</strong> GitHub issues page to learn more, contribute
+        ideas, or get involved.
+      </p>
+
+      <div class="roadmap-sort">
+        <mat-form-field appearance="outline" class="sort-field">
+          <mat-label>Sort Future by</mat-label>
+
+          <mat-select [(ngModel)]="selectedFutureSort">
+            @for (opt of futureSortOptions; track opt.key) {
+              <mat-option [value]="opt.key">
+                {{ opt.value }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          mat-icon-button
+          type="button"
+          (click)="futureSortAsc = !futureSortAsc"
+          aria-label="Toggle sort direction">
+          <mat-icon>
+            {{ futureSortAsc ? 'arrow_upward' : 'arrow_downward' }}
+          </mat-icon>
+        </button>
+      </div>
+
+      <table aria-label="Future Features and Behaviors">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Feature/Behavior</th>
+            <th scope="col" class="column-75">Type</th>
+            <th scope="col" class="column-50">Ext</th>
+            <th scope="col" class="column-auto">Explanation</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (roadMap of sortedFutureRoadMap; track roadMap.feature) {
+            @if (!roadMap.hide) {
+              <tr>
+                <td [innerHTML]="roadMap.feature"></td>
+                <td [innerHTML]="roadMap.type"></td>
+                <td>
+                  @if (roadMap.isExtendable) {
+                    ✅
+                  }
+                </td>
+                <td [innerHTML]="roadMap.explanation"></td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

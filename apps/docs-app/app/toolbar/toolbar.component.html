@@ -1,0 +1,72 @@
+<header>
+  <mat-toolbar class="toolbar" role="banner">
+    <a class="title-container" routerLink="/" aria-label="Go to sdux home">
+      <sdux-image
+        [image]="image()"
+        tooltip="SDuX — Plain TypeScript, Zero Magic"
+        height="40"></sdux-image>
+
+      @if (!this.isMobile()) {
+        <div class="text-block">
+          <span class="subtitle"><sdux-catch-phrase [tm]="true" /></span>
+        </div>
+      }
+    </a>
+
+    <span class="sdux-container-spacer"></span>
+
+    <sdux-search />
+
+    <button
+      type="button"
+      mat-icon-button
+      #menuTrigger="matMenuTrigger"
+      [matMenuTriggerFor]="menu"
+      aria-label="Toolbar settings menu"
+      [attr.aria-expanded]="menuTrigger.menuOpen"
+      class="menu-trigger">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu" aria-label="Toolbar settings">
+      <button type="button" mat-menu-item (click)="openDocumentation()">
+        <mat-icon class="icon">menu_book</mat-icon>
+        <span>View Documentation</span>
+      </button>
+
+      @if (!isAuthenticated()) {
+        <button type="button" mat-menu-item routerLink="/signup">
+          <mat-icon class="icon">person_add</mat-icon>
+          <span>Sign Up</span>
+        </button>
+
+        <button type="button" mat-menu-item routerLink="/login">
+          <mat-icon class="icon">login</mat-icon>
+          <span> Login </span>
+        </button>
+      } @else {
+        <button type="button" mat-menu-item routerLink="/dashboard">
+          <mat-icon class="icon">dashboard</mat-icon>
+          Dashboard
+        </button>
+      }
+
+      <button type="button" mat-menu-item (click)="toggleTheme()">
+        <mat-icon class="icon">{{ themeIcon() }}</mat-icon>
+        <span>{{ themeLabel() }}</span>
+      </button>
+
+      <button type="button" mat-menu-item (click)="toggleDirection()">
+        <mat-icon class="icon">{{ dirIcon() }}</mat-icon>
+        <span>{{ dirLabel() }}</span>
+      </button>
+
+      @if (isAuthenticated()) {
+        <button type="button" mat-menu-item (click)="logout()">
+          <mat-icon class="icon">logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      }
+    </mat-menu>
+  </mat-toolbar>
+</header>

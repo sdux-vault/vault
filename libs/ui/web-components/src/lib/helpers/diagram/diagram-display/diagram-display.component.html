@@ -1,0 +1,69 @@
+<div
+  class="diagram-dialog"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Diagram: {{ data.tooltip }}">
+  <div class="diagram-dialog-header">
+    <div class="title">Diagram: {{ data.tooltip }}</div>
+
+    <button
+      type="button"
+      mat-icon-button
+      mat-dialog-close
+      aria-label="Close diagram"
+      class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="diagram-dialog-content">
+    <div class="diagram-viewer" (wheel)="onWheel($event)">
+      <div
+        class="diagram-canvas"
+        [style.transform]="
+          'translate(' + panX + 'px,' + panY + 'px) scale(' + zoom + ')'
+        "
+        (pointerdown)="startPan($event)"
+        (pointermove)="onPan($event)"
+        (pointerup)="stopPan()"
+        (pointerleave)="stopPan()"
+        (pointercancel)="stopPan()">
+        <sdux-image
+          [image]="data.image"
+          [tooltip]="data.tooltip ?? 'Diagram'"
+          [isThemeEnabled]="false"
+          draggable="false" />
+      </div>
+
+      <!-- MOVE CONTROLS HERE -->
+    </div>
+  </div>
+
+  <div class="diagram-dialog-footer">
+    <div class="diagram-controls">
+      <button
+        type="button"
+        mat-icon-button
+        aria-label="Zoom out"
+        (click)="zoomOut()">
+        <mat-icon>remove</mat-icon>
+      </button>
+
+      <button
+        type="button"
+        mat-icon-button
+        aria-label="Reset zoom"
+        (click)="reset()">
+        <mat-icon>center_focus_strong</mat-icon>
+      </button>
+
+      <button
+        type="button"
+        mat-icon-button
+        aria-label="Zoom in"
+        (click)="zoomIn()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

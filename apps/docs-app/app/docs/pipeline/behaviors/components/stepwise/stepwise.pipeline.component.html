@@ -1,0 +1,575 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-23 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Stepwise Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Stepwise Behavior</strong> enables
+      <em>policy-driven pipeline control</em> at defined
+      <em>pipeline execution stages</em>. Engineer-supplied Stepwise functions
+      observe the <em>current committed state</em> alongside the
+      <em>stage-appropriate candidate value</em>
+      and explicitly decide whether pipeline execution should
+      <strong>continue</strong>, <strong>block</strong>, or
+      <strong>clear</strong>.
+    </p>
+
+    <h4>Stepwise Contract Summary</h4>
+    <ul>
+      <li>Stepwise functions must be pure and side-effect free</li>
+      <li>
+        The pipeline provides Stepwise functions with isolated, read-only
+        snapshots of both the
+        <em>current state</em> and the
+        <em>stage-appropriate candidate value</em>; these values must not be
+        mutated
+      </li>
+      <li>
+        Stepwise functions do not return a value — they must emit exactly one
+        decision:
+        <strong>continue</strong>, <strong>block</strong>, or
+        <strong>clear</strong>
+      </li>
+      <li>
+        Exactly one Stepwise function may be registered per supported pipeline
+        stage
+      </li>
+      <li>
+        Errors thrown during stepwise evaluation propagate as Vault errors and
+        terminate the current update
+      </li>
+    </ul>
+
+    <p>
+      Stepwise behaviors participate exclusively in <em>policy evaluation</em>.
+      They do not derive values, do not mutate state, and do not emit snapshots.
+      Their sole responsibility is to determine whether a candidate value should
+      be accepted, suppressed, or used to clear existing state.
+    </p>
+
+    <p>
+      The Stepwise contract guarantees that policy evaluation is
+      <strong>deterministic and authoritative</strong>. If a Stepwise function
+      throws an error, that error is promoted to a
+      <strong>Vault error</strong> and immediately terminates the current
+      pipeline execution. The in-flight candidate value is discarded, no
+      decision is applied, and no snapshot is emitted. This ensures that policy
+      failures never result in ambiguous control flow or inconsistent pipeline
+      outcomes. For details on how referential isolation is enforced at every
+      stage boundary, see
+      <a href="/docs/pipeline/isolation">Pipeline Isolation</a>.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      Because a Stepwise behavior does not return a value, failing to invoke a
+      decision method (<strong>continue</strong>,
+      <strong>block</strong>, or <strong>clear</strong>) leaves the pipeline
+      awaiting a response that never arrives. This creates a policy deadlock and
+      prevents the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> from
+      processing further updates.
+    </p>
+
+    <p>
+      Stepwise behaviors require the Stepwise Controller to be present. If any
+      Stepwise behavior is configured without the Stepwise Controller, the
+      pipeline will throw a runtime error and halt
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      execution for the current update.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Stepwise Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Stepwise stage executes <em>after</em> a pipeline stage has produced
+        a candidate value. Depending on configuration, Stepwise evaluation may
+        occur after the Resolve stage, the Filter stage, or the Reducer stage.
+      </p>
+
+      <p>
+        When present, the Stepwise stage executes immediately <em>after</em> its
+        associated pipeline stage has produced a candidate value and
+        <em>before</em> that value is admitted into downstream pipeline
+        processing.
+      </p>
+
+      <p>
+        Stepwise functions are invoked with isolated, read-only snapshots of the
+        <em>current committed state</em> and the
+        <em>stage-appropriate candidate value</em>, along with a decision
+        controller. Based on this evaluation, the function must explicitly emit
+        exactly one execution outcome:
+      </p>
+
+      <ul>
+        <li>
+          <strong>continue()</strong> — allow the candidate value to proceed
+          through the pipeline
+        </li>
+        <li>
+          <strong>block()</strong> — suppress the candidate update while leaving
+          existing state unchanged
+        </li>
+        <li>
+          <strong>clear()</strong> — clear the current committed state and
+          terminate processing for this update
+        </li>
+      </ul>
+
+      <p>
+        Stepwise functions must always emit exactly one decision. Failure to do
+        so results in pipeline termination to preserve deterministic and safe
+        execution semantics.
+      </p>
+
+      <h4>Add-on Pipeline Stage</h4>
+      <p>
+        Stepwise stages are optional, add-on behaviors within the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. The Stepwise Controller and individual Stepwise behaviors are
+        registered as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        declarative configuration. Individual Stepwise behaviors are attached
+        exclusively through the fluent API during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization, ensuring that stage control is defined explicitly at
+        startup rather than embedded into static configuration.
+      </p>
+
+      <h4>Fluent Stepwise APIs</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        declare Stepwise behavior for supported pipeline stages using the
+        <strong>.withStepwiseResolve()</strong>,
+        <strong>.withStepwiseFilter()</strong>, and
+        <strong>.withStepwiseReducer()</strong> fluent APIs. Each API accepts a
+        single Stepwise callback function for its respective stage.
+      </p>
+
+      <p>
+        Stepwise behaviors execute in the <em>Processing Layer</em> at their
+        associated pipeline stage. The order in which Stepwise APIs are declared
+        does not affect pipeline execution order.
+      </p>
+
+      <p>
+        Providing a Stepwise configuration without a valid callback function
+        results in a Vault error and prevents pipeline execution.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Although multiple Stepwise stages may be configured across the pipeline,
+        each should have a clearly defined and isolated policy responsibility.
+        Because Stepwise behaviors directly influence pipeline admission and
+        state control, combining complex or overlapping policies can introduce
+        interactions that are difficult to reason about or debug.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.8/3.8-stepwise-function-flow.svg"
+        [tooltip]="'Stepwise Function Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available Stepwise Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        Stepwise behaviors are optional, engineer-selected policy behaviors
+        attached during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization. They may be sourced from
+        <em><sdux-package-name />/addons</em> or implemented directly by
+        engineers to enforce feature-specific or domain-specific policy
+        constraints.
+      </p>
+
+      <p>
+        Regardless of origin, all Stepwise behaviors execute exclusively within
+        the <em>Processing Layer</em> and must respect stage responsibility
+        boundaries. Stepwise behaviors influence <em>whether</em> a candidate
+        update is admitted into the pipeline, without deriving values, mutating
+        state, or participating in computation.
+      </p>
+    </div>
+
+    <div class="table-title">
+      Pre-built <sdux-brand-name /> Stepwise Controller
+    </div>
+    <table aria-label="Pre-built  Stepwise Controller">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Addon Controller</th>
+          <th scope="col" class="column-auto">Description</th>
+          <th scope="col" class="column-50">Package</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong
+              ><a href="/docs/pipeline/addons/with-stepwise-controller"
+                >withStepwiseController</a
+              ></strong
+            >
+            <p>type: controller</p>
+          </td>
+          <td>
+            Coordinates Stepwise policy evaluation by mediating decision
+            requests and responses between Stepwise behaviors and the pipeline.
+            The controller is required whenever any Stepwise behavior is
+            configured.
+          </td>
+          <td><sdux-package-name />/addons</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="table-title">
+      Pre-built <sdux-brand-name /> Stepwise Behaviors
+    </div>
+    <table aria-label="Pre-built  Stepwise Behaviors">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Addon Behavior</th>
+          <th scope="col" class="column-auto">Description</th>
+          <th scope="col" class="column-50">Package</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong
+              ><a href="/docs/pipeline/addons/with-stepwise-filter-behavior"
+                >withStepwiseFilterBehavior</a
+              ></strong
+            >
+            <p>stage: Stepwise Filter</p>
+            <p>type: policy</p>
+          </td>
+          <td>
+            Executes an engineer-supplied Stepwise Filter function immediately
+            after the Filter stage produces a filtered candidate value. The
+            function evaluates pipeline state and emits a control decision that
+            determines whether execution continues, is suppressed, or clears
+            existing state.
+            <ul>
+              <li>Does not mutate state</li>
+              <li>Does not derive or return values</li>
+              <li>Maps decisions to Vault-native control signals</li>
+            </ul>
+          </td>
+          <td><sdux-package-name />/addons</td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong
+              ><a href="/docs/pipeline/addons/with-stepwise-reducer-behavior"
+                >withStepwiseReducerBehavior</a
+              ></strong
+            >
+            <p>stage: Stepwise Reducer</p>
+            <p>type: policy</p>
+          </td>
+          <td>
+            Executes an engineer-supplied Stepwise Reducer function immediately
+            after the Reducer stage produces a reduced candidate value. The
+            function evaluates pipeline state and emits a control decision that
+            determines whether execution continues, is suppressed, or clears
+            existing state.
+            <ul>
+              <li>Does not mutate state</li>
+              <li>Does not derive or return values</li>
+              <li>Maps decisions to Vault-native control signals</li>
+            </ul>
+          </td>
+          <td><sdux-package-name />/addons</td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong
+              ><a href="/docs/pipeline/addons/with-stepwise-resolve-behavior"
+                >withStepwiseResolveBehavior</a
+              ></strong
+            >
+            <p>stage: Stepwise Resolve</p>
+            <p>type: policy</p>
+          </td>
+          <td>
+            Executes an engineer-supplied Stepwise Resolve function immediately
+            after the Resolve stage produces a resolved candidate value. The
+            function evaluates pipeline state and emits a control decision that
+            determines whether execution continues, is suppressed, or clears
+            existing state.
+            <ul>
+              <li>Does not mutate state</li>
+              <li>Does not derive or return values</li>
+              <li>Maps decisions to Vault-native control signals</li>
+            </ul>
+          </td>
+          <td><sdux-package-name />/addons</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <sdux-vault-stepwise-function-common />
+
+    <sdux-vault-stepwise-decision-shape-common />
+
+    <div class="table-title">StepwiseStageTypes</div>
+    <div class="table-scroll">
+      <table aria-label="StepwiseStageTypes">
+        <thead>
+          <tr>
+            <th scope="col" class="column-100">Stage</th>
+            <th scope="col" class="column-300">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <code>filter</code>
+            </td>
+            <td>
+              Indicates that the Stepwise behavior executes immediately after
+              the Filter stage has produced a filtered candidate value.
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <code>reducer</code>
+            </td>
+            <td>
+              Indicates that the Stepwise behavior executes immediately after
+              the Reducer stage has produced a reduced candidate value.
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <code>resolve</code>
+            </td>
+            <td>
+              Indicates that the Stepwise behavior executes immediately after
+              the Resolve stage has produced a resolved candidate value.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <sdux-vault-stepwise-fluent-api-common />
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        Stepwise behaviors are enabled by registering the Stepwise Controller
+        and one or more Stepwise behaviors during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <h4>Example 1: Configuring a FeatureCell with Stepwise behaviors</h4>
+
+      <p>
+        In this example, Stepwise Filter, Stepwise Reducer, and Stepwise Resolve
+        behaviors are all attached. Each behavior executes at its corresponding
+        pipeline stage regardless of the order in which the fluent APIs are
+        declared. Execution order is determined exclusively by pipeline stage,
+        not by fluent configuration order.
+      </p>
+    </div>
+
+    <div class="sdux-tab-container">
+      <mat-tab-group
+        animationDuration="200ms"
+        mat-stretch-tabs="false"
+        class="sdux-tabs"
+        [selectedIndex]="0">
+        <mat-tab label="Angular">
+          <div class="tab-panel">
+            <ng-content select="[retrieve]">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="
+                    'Example 1: Configuring a FeatureCell with Stepwise behaviors'
+                  ">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: [] 
+      },
+      [
+        // Stepwise behaviors are registered declaratively
+        withStepwiseFilterBehavior,
+        withStepwiseReducerBehavior,
+        withStepwiseResolveBehavior,
+      ],
+      [
+        // Stepwise Controller is required
+        withStepwiseController
+      ]
+    );
+  ]
+}
+
+// Attach Stepwise callbacks during initialization
+@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more operators during initialization
+    this.vault
+      .withStepwiseFilter({
+        stepwiseCallback: fn()
+      })
+      .withStepwiseReducer({
+        stepwiseCallback: fn()
+      })
+      .withStepwiseResolve({
+        stepwiseCallback: fn()
+      })
+    .initialize();
+    
+  }
+}`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </ng-content>
+          </div>
+        </mat-tab>
+        <mat-tab label="React">
+          <div class="tab-panel">
+            <ng-content select="[retrieve]">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="
+                    'Example 1: Configuring a FeatureCell with Stepwise behaviors'
+                  ">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Stepwise behaviors are registered declaratively
+    withStepwiseFilterBehavior,
+    withStepwiseReducerBehavior,
+    withStepwiseResolveBehavior,
+  ],
+  [
+    // Stepwise Controller is required
+    withStepwiseController
+  ]
+);
+
+// Attach Stepwise callbacks during initialization
+employeeCell
+  .withStepwiseFilter({
+    stepwiseCallback: fn()
+  })
+  .withStepwiseReducer({
+    stepwiseCallback: fn()
+  })
+  .withStepwiseResolve({
+    stepwiseCallback: fn()
+  })
+  .initialize();`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </ng-content>
+          </div>
+        </mat-tab>
+        <mat-tab label="Vue">
+          <div class="tab-panel">
+            <ng-content select="[retrieve]">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="
+                    'Example 1: Configuring a FeatureCell with Stepwise behaviors'
+                  ">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Stepwise behaviors are registered declaratively
+    withStepwiseFilterBehavior,
+    withStepwiseReducerBehavior,
+    withStepwiseResolveBehavior,
+  ],
+  [
+    // Stepwise Controller is required
+    withStepwiseController
+  ]
+);
+
+// Attach Stepwise callbacks during initialization
+employeeCell
+  .withStepwiseFilter({
+    stepwiseCallback: fn()
+  })
+  .withStepwiseReducer({
+    stepwiseCallback: fn()
+  })
+  .withStepwiseResolve({
+    stepwiseCallback: fn()
+  })
+  .initialize();`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </ng-content>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,73 @@
+{
+  "name": "@sdux-vault/addons",
+  "version": "0.8.0",
+  "license": "MIT",
+  "author": {
+    "name": "SDuX Vault",
+    "email": "sduxvault@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdux-vault/vault.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://www.sdux-vault.com",
+  "keywords": [
+    "sdux",
+    "sdux-vault",
+    "state-management",
+    "reactive",
+    "deterministic",
+    "pipeline",
+    "feature-cell",
+    "snapshot",
+    "signals",
+    "angular",
+    "framework-agnostic",
+    "composable",
+    "immutable",
+    "zoneless",
+    "react",
+    "svelte",
+    "vue",
+    "devtools"
+  ],
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "rxjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@sdux-vault/engine": "0.27.0",
+    "@sdux-vault/shared": "0.7.0",
+    "rxjs": "^7.0.0"
+  },
+  "files": [
+    "fesm2022/",
+    "types/",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "types": "./types/sdux-vault-addons.d.ts",
+  "main": "./fesm2022/sdux-vault-addons.mjs",
+  "sideEffects": [
+    "./fesm2022/*.mjs",
+    "src/lib/version/version.register.ts",
+    "src/lib/behaviors/entity-access/cache/state-cache/interfaces/state-cache-behavior.interface",
+    "src/lib/behaviors/entity-access/lookup/interfaces/lookup-behavior.interface",
+    "src/lib/behaviors/entity-access/query/interfaces/query-behavior.interface",
+    "src/lib/behaviors/stepwise/symbols/interfaces/stepwise-behavior.interface",
+    "src/lib/vault/encrypt/behaviors/aes256/interface/aes256-behavior.interface",
+    "src/lib/controllers/with-delay/interfaces/extend-with-delay.interface",
+    "src/lib/controllers/with-max-failures/interfaces/extend-with-max-failure.interface",
+    "src/lib/controllers/with-throttle/interfaces/extend-with-throttle.interface",
+    "src/extensions/index.ts"
+  ]
+}

@@ -1,0 +1,15 @@
+<div class="vault-devtools">
+  <section class="event-stream">
+    @if (events()) {
+      <div class="event-list">
+        @for (event of events(); track event.id; let i = $index) {
+          <div class="event-row">
+            <sdux-devtools-pipeline-event
+              [event]="event"
+              [totalEvents]="totalEvents() - i"></sdux-devtools-pipeline-event>
+          </div>
+        }
+      </div>
+    }
+  </section>
+</div>

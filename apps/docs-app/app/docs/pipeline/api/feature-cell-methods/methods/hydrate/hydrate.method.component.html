@@ -1,0 +1,458 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Created 2026-02-18 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>hydrate()</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>hydrate()</strong> method declares a deferred factory as the
+      authoritative initial state source for a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>. It
+      provides a deterministic mechanism for resolving dynamic or
+      runtime-derived data during initialization.
+    </p>
+
+    <h4>Method Contract Summary</h4>
+    <ul>
+      <li>hydrate() is optional</li>
+      <li>hydrate() must be called before initialize()</li>
+      <li>hydrate() has highest initialization precedence</li>
+      <li>hydrate() does not execute until initialize() is called</li>
+      <li>hydrate() integrates directly with the core pipeline</li>
+    </ul>
+
+    <p>
+      When declared, <strong>hydrate()</strong> overrides Persist behaviors and
+      <code>descriptor.initialState</code>. It represents an explicit decision
+      to derive initial state from a runtime-evaluated source.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- WHAT HYDRATE DOES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">What hydrate() Does</div>
+
+    <div class="section-body">
+      <p>
+        Calling <code>hydrate(factory)</code> registers a deferred factory that
+        will be executed during the initialization cycle.
+      </p>
+
+      <p>The factory may:</p>
+
+      <ul>
+        <li>Return a value synchronously</li>
+        <li>Return a Promise that resolves asynchronously</li>
+        <li>Return <code>undefined</code></li>
+        <li>Throw an error</li>
+      </ul>
+
+      <p>
+        hydrate() does not immediately execute the factory. The factory runs
+        only when
+        <code>initialize()</code> is called.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION TABLE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <div class="table-title">hydrate()</div>
+      <table aria-label="hydrate()">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Method</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong>hydrate(factory)</strong>
+
+              <p>inputs:</p>
+              <ul>
+                <li>
+                  <a href="/docs/references/types/deferred-type">DeferredType</a
+                  >&lt;T&gt;
+                </li>
+              </ul>
+
+              <p>returns:</p>
+              <ul>
+                <li>
+                  <a href="/docs/references/contracts/cell-builder-contract"
+                    >CellBuilderContract</a
+                  >&lt;T&gt;
+                </li>
+              </ul>
+            </td>
+            <td>
+              Registers a deferred factory as the authoritative initialization
+              source. Must be called before
+              <code>initialize()</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXECUTION MODEL -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Execution Model</div>
+
+    <div class="section-body">
+      <p>
+        During initialization, hydrate() is evaluated first. No other
+        initialization source is considered.
+      </p>
+
+      <p>
+        If the factory produces a value, that value is enqueued as a standard
+        <code>replaceState</code> operation and processed through the full
+        pipeline:
+      </p>
+
+      <ul>
+        <li>Resolve</li>
+        <li>Operators</li>
+        <li>Filters</li>
+        <li>Reducers</li>
+        <li>Emit</li>
+      </ul>
+
+      <p>
+        Initialization is not a direct mutation. The hydrated value is subject
+        to all installed pipeline logic.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.2/2.2.1-pipeline-initialization-flow.svg"
+        [tooltip]="'FeatureCell Initialization Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RESOLUTION OUTCOMES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Resolution Outcomes</div>
+
+    <div class="section-body">
+      <div class="table-title">hydrate() Resolution Outcomes</div>
+      <table aria-label="hydrate() Resolution Outcomes">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Factory Result</th>
+            <th scope="col" class="column-auto">Behavior</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Returns value</strong></td>
+            <td>
+              Value is processed as a <code>replaceState</code> operation
+              through the full pipeline.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Resolves to undefined</strong></td>
+            <td>
+              No write occurs.
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              remains with <code>value: undefined</code> and
+              <code>hasValue: false</code>.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Throws</strong></td>
+            <td>
+              Initialization fails. No fallback source is evaluated. The error
+              is emitted.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Undefined resolution is not treated as failure. A thrown error is
+        treated as an initialization failure because the declared authoritative
+        source did not resolve successfully.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- WHY HYDRATE HAS PRECEDENCE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Why hydrate() Has Highest Precedence</div>
+
+    <div class="section-body">
+      <p>
+        hydrate() represents an explicit request for dynamic, runtime-derived
+        data. When declared, the engineer is intentionally choosing fresh or
+        computed state over previously persisted or statically configured
+        values.
+      </p>
+
+      <p>
+        Persisted storage may contain stale data. descriptor.initialState is
+        static by definition. hydrate() communicates that neither of those
+        sources should be considered authoritative for this initialization
+        cycle.
+      </p>
+
+      <p>
+        If dynamic resolution is not desired, do not declare
+        <code>hydrate()</code>. Vault will then evaluate storage or static
+        configuration according to precedence rules.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CORE API NOTE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Core Fluent API</div>
+
+    <div class="section-body">
+      <p>
+        hydrate() is a core fluent API method provided by
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. It
+        does not require additional Behaviors to be registered on the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        declaration.
+      </p>
+
+      <p>
+        The Resolve stage already includes built-in support for deferred
+        factories and Promise-based inputs. hydrate() integrates directly with
+        this core capability.
+      </p>
+
+      <p>
+        No custom resolve behavior is required. No special configuration is
+        necessary beyond calling
+        <code>hydrate()</code> before <code>initialize()</code>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example: Asynchronous Hydration</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure descriptor.initialState initialization'
+                    ">
+                    <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault
+      .hydrate(() =>
+        fetch('/api/employees')
+          .then(res => res.json())
+      )
+      .initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example: Synchronous Hydration</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: How to configure .hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault
+      .hydrate(() => [
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' }
+      ])
+      .initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example: Synchronous Hydration</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Synchronous hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+  key: 'employees'
+});
+
+employeeCell
+  .hydrate(() => [
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' }
+  ])
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example: Asynchronous Hydration</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Asynchronous hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+  key: 'employees'
+});
+
+employeeCell
+  .hydrate(() =>
+    fetch('/api/employees')
+      .then(res => res.json())
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example: Synchronous Hydration</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Synchronous hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+  key: 'employees'
+});
+
+employeeCell
+  .hydrate(() => [
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' }
+  ])
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example: Asynchronous Hydration</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Asynchronous hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+  key: 'employees'
+});
+
+employeeCell
+  .hydrate(() =>
+    fetch('/api/employees')
+      .then(res => res.json())
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FAILURE MODEL -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Failure Model</div>
+
+    <div class="section-body">
+      <p>
+        hydrate() failure occurs only when the factory throws or a returned
+        Promise rejects.
+      </p>
+
+      <p>On failure:</p>
+
+      <ul>
+        <li><code>hasValue</code> remains false</li>
+        <li><code>value</code> remains undefined</li>
+        <li><code>error</code> is populated</li>
+      </ul>
+
+      <p>
+        The pipeline remains operational, but the initialization contract did
+        not resolve as declared.
+      </p>
+
+      <p>
+        Recovery, if desired, must be explicit using <code>reset()</code> and
+        <code>replaceState()</code>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

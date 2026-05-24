@@ -1,0 +1,187 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>State Update APIs</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      State in <sdux-brand-name /> is updated by submitting candidate values
+      into the pipeline through the
+      <strong
+        ><a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        API</strong
+      >. Whether replacing state, merging partial updates, or streaming values
+      over time, every update follows the same deterministic pipeline lifecycle
+      before being committed by the State stage.
+    </p>
+    <p>
+      If you are familiar with Redux, <strong>replaceState()</strong> and
+      <strong>mergeState()</strong> serve the role of dispatching updates.
+      Instead of dispatching actions, you submit candidate state directly into
+      the pipeline, where it is resolved, processed, and committed as an
+      immutable snapshot.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Updating State</div>
+
+    <div class="section-body">
+      <p>
+        While the <strong>State Stage</strong> is responsible for committing
+        finalized pipeline outcomes, state updates are initiated through the
+        <strong
+          ><a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          API</strong
+        >. A
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        exposes three distinct mechanisms for submitting state updates into the
+        pipeline: <strong>replaceState()</strong>,
+        <strong>mergeState()</strong>, <strong>fromStream()</strong>,
+        <strong>fromDeferred()</strong>, <strong>fromObservable()</strong>, and
+        <strong>fromPromise()</strong>.
+      </p>
+
+      <p>
+        Each mechanism enters the pipeline through a different admission path
+        but ultimately resolves, processes, and commits state through the same
+        deterministic pipeline stages.
+      </p>
+    </div>
+    <div class="section-body">
+      <h4>Mental Model</h4>
+
+      <p>Updating state in <sdux-brand-name /> follows a simple pattern:</p>
+
+      <ul>
+        <li>
+          Submit a candidate value using a
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          update API.
+        </li>
+        <li>
+          The pipeline resolves and processes the candidate deterministically.
+        </li>
+        <li>The State stage commits a single immutable snapshot.</li>
+      </ul>
+
+      <p>
+        The difference between update mechanisms lies in how the
+        <em>candidate state</em> is produced—not in how it is committed.
+      </p>
+
+      <sdux-state-update-mechanism-common />
+    </div>
+
+    <div class="section-body">
+      <div class="h-title-navigation">
+        <h4>Selecting an Update Mechanism</h4>
+      </div>
+
+      <ul>
+        <li>
+          Use <strong>replaceState()</strong> when the incoming value represents
+          a complete, authoritative replacement.
+        </li>
+        <li>
+          Use <strong>mergeState()</strong> when applying partial or incremental
+          updates to existing committed state.
+        </li>
+        <li>
+          Use <strong>fromStream()</strong> when state must react continuously
+          to an external observable source.
+        </li>
+      </ul>
+
+      <p>
+        Bridge APIs exist primarily for migration and interoperability
+        scenarios. In most cases, submitting values directly to
+        <strong>replaceState()</strong> or
+        <strong>mergeState()</strong> provides the most direct and predictable
+        update path.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <h4>Execution Guarantees</h4>
+
+      <ul>
+        <li>
+          All values submitted to replaceState(), mergeState(), or fromStream()
+          enter the pipeline through standard admission.
+        </li>
+        <li>
+          All inputs are processed by the Resolve stage before downstream
+          execution.
+        </li>
+        <li>
+          The State stage commits exactly one authoritative state snapshot per
+          execution.
+        </li>
+        <li>Committed state remains immutable once emitted.</li>
+      </ul>
+
+      <p>
+        The difference between these mechanisms lies in
+        <em>how candidate state is produced</em>:
+        <strong>replaceState()</strong> forwards a resolved value directly,
+        <strong>mergeState()</strong> combines it with existing committed state
+        using a Merge behavior, and <strong>fromStream()</strong> produces
+        repeated candidate updates over time.
+      </p>
+
+      <p>
+        Regardless of admission path, state commitment remains centralized and
+        deterministic within the State stage.
+      </p>
+
+      <h4>Pipeline Position</h4>
+      <p>
+        Update APIs do not commit state directly. They produce candidate input
+        that enters the pipeline before the Resolve, operator, filter, and
+        reducer stages. Final commitment occurs exclusively within the State
+        stage.
+      </p>
+
+      <p>
+        This separation ensures that all updates—regardless of source—are
+        processed uniformly and committed exactly once.
+      </p>
+    </div>
+  </section>
+
+  <sdux-state-emission-order-common />
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/4.0/4.0-state-execution-flow.svg"
+        [tooltip]="'State Flow'" />
+
+      <sdux-diagram
+        image="diagrams/1.0/1.2.2-merge-state-flow.svg"
+        [tooltip]="'Merge State Flow'" />
+
+      <sdux-diagram
+        image="diagrams/1.0/1.2.1-replace-state-flow.svg"
+        [tooltip]="'Replace State Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.4/2.4.2-from-stream-flow.svg"
+        [tooltip]="'fromStream Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <sdux-state-consumption-mechanism-common />
+
+  <sdux-pipeline-related-topics />
+</div>

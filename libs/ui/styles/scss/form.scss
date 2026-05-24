@@ -1,0 +1,110 @@
+@use 'global' as global;
+
+// ===========================================
+// SDuX Form Layout Utilities
+// ===========================================
+
+/**
+ * Form Row Container
+ * - Aligns form elements in a responsive row with flexible spacing.
+ */
+.form-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  gap: global.$spacing-sm; // Modern replacement for calc-based spacing
+}
+
+/**
+ * Field Widths
+ * - Provides flexible field widths using the SDuX spacing scale.
+ */
+.field-full-width {
+  // flex: 1 1 100%;
+  width: 100%;
+}
+
+.field-half-width {
+  flex: 1 1 calc(50% - global.$spacing-sm);
+}
+
+.field-third-width {
+  flex: 1 1 calc(33.33% - global.$spacing-sm);
+}
+
+.field-quarter-width {
+  flex: 1 1 calc(25% - global.$spacing-sm);
+}
+
+/**
+ * Stacked Form Rows
+ * - Adds vertical spacing between multiple rows.
+ */
+.form-row + .form-row {
+  margin-top: global.$spacing-md;
+}
+
+/**
+ * Input Defaults
+ * - Prevents flex overflow and ensures consistent sizing.
+ */
+input,
+select,
+textarea {
+  min-width: 0;
+  width: 100%;
+  font-family: global.$sdux-font-family;
+  font-size: global.$font-size-md;
+  color: global.$sdux-text-black;
+}
+
+/**
+ * Material Form Field Adjustments
+ * - Ensures consistent height and appearance across fields.
+ */
+:host ::ng-deep {
+  .mat-input-element {
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .mat-form-field {
+    height: 40px;
+    max-height: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    flex: none;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    margin-top: global.$spacing-xs;
+  }
+}
+
+/**
+ * Disabled / Readonly States
+ */
+input[disabled],
+select[disabled],
+textarea[disabled] {
+  background-color: global.$sdux-surface-light;
+  color: global.$sdux-text-disabled;
+  cursor: not-allowed;
+}
+
+/**
+ * Validation States
+ */
+.field--error {
+  border: 1px solid global.$sdux-accent-base;
+}
+
+.field--success {
+  border: 1px solid global.$sdux-success-base;
+}

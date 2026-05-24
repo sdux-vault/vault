@@ -1,0 +1,223 @@
+@use 'global' as global;
+@use 'font' as font;
+@use 'form';
+@use 'button';
+
+:host {
+  display: block;
+  height: calc(100vh - global.$toolbar-height);
+  overflow: hidden;
+}
+
+.signup-page {
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--sdux-surface-bg);
+  color: var(--sdux-text-primary);
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: global.$spacing-lg;
+
+  box-sizing: border-box;
+
+  .signup-shell {
+    width: 100%;
+    max-width: 760px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-lg;
+
+    /*
+    ----------------------------
+    Header
+    ----------------------------
+    */
+    .signup-intro {
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-sm;
+
+      h1 {
+        margin: 0;
+
+        font-family: global.$sdux-font-family;
+        font-size: clamp(global.$font-size-3xl, 4vw, global.$font-size-5xl);
+        font-weight: global.$font-weight-bold;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--sdux-primary);
+      }
+
+      .lead {
+        @include font.font-md;
+        margin: global.$spacing-sm;
+      }
+    }
+
+    .signup-note {
+      padding: global.$spacing-md global.$spacing-lg;
+
+      border-radius: global.$border-radius-lg;
+      border: 1px solid rgb(255 255 255 / 8%);
+
+      box-shadow: global.$sdux-shadow-hover;
+
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-xs;
+
+      strong {
+        color: var(--sdux-primary);
+        font-weight: global.$font-weight-semibold;
+      }
+
+      span {
+        @include font.font-sm;
+      }
+    }
+
+    /*
+    ----------------------------
+    Signup Card
+    ----------------------------
+    */
+    .signup-card {
+      width: 100%;
+      box-sizing: border-box;
+
+      border-radius: global.$border-radius-lg;
+      border: 1px solid rgb(255 255 255 / 10%);
+
+      background-color: var(--sdux-surface-elevated);
+      box-shadow: global.$sdux-shadow-hover;
+
+      overflow: hidden;
+
+      .signup-form {
+        width: 100%;
+        box-sizing: border-box;
+
+        display: flex;
+        flex-direction: column;
+        gap: global.$spacing-md;
+        padding: global.$spacing-lg;
+
+        .cta-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: global.$spacing-md;
+
+          margin-top: global.$spacing-sm;
+          padding-top: global.$spacing-md;
+
+          border-top: 1px solid rgb(255 255 255 / 8%);
+
+          .helper-copy {
+            display: flex;
+            flex-direction: column;
+            gap: global.$spacing-xs;
+
+            span:first-child {
+              @include font.font-sm;
+              font-weight: global.$font-weight-medium;
+            }
+
+            span:last-child {
+              @include font.font-xs;
+              color: global.$sdux-text-secondary;
+            }
+          }
+
+          .signup-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 140px;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+
+    /*
+    ----------------------------
+    Login Redirect
+    ----------------------------
+    */
+    .login-redirect {
+      margin-top: global.$spacing-md;
+
+      text-align: center;
+      @include font.font-sm;
+
+      a {
+        margin-left: 6px;
+        text-decoration: none;
+        font-weight: global.$font-weight-semibold;
+        color: var(--sdux-primary);
+      }
+    }
+  }
+}
+
+/*
+---------------------------------------
+Angular Material overrides
+---------------------------------------
+*/
+::ng-deep {
+  .mat-mdc-text-field-wrapper {
+    border-radius: global.$border-radius-md !important;
+    background-color: global.$sdux-surface-light !important;
+  }
+
+  .mat-mdc-input-element {
+    color: global.$sdux-text-black !important;
+  }
+}
+
+/*
+---------------------------------------
+Responsive
+---------------------------------------
+*/
+@media (max-width: global.$breakpoint-lg) {
+  .signup-page {
+    .signup-shell {
+      .signup-header {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
+
+@media (max-width: global.$breakpoint-md) {
+  .signup-page {
+    padding: global.$spacing-md;
+
+    .signup-shell {
+      .signup-card {
+        .signup-form {
+          padding: global.$spacing-md;
+
+          .cta-row {
+            flex-direction: column;
+            align-items: stretch;
+
+            .signup-button {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

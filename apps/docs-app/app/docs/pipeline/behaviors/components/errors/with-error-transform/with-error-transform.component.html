@@ -1,0 +1,216 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-24 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Error Transform Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Error Transform Behaviors</strong> provide an authoritative
+      extension point within the Error Stage that allows FeatureCells to modify,
+      enrich, or replace the
+      <a href="/docs/references/interfaces/references-vault-error-shape"
+        >VaultErrorShape</a
+      >
+      before it is committed to state and exposed to observers.
+    </p>
+
+    <p>
+      Error transform behaviors participate directly in the error-handling
+      pipeline and are evaluated as part of error finalization. Unlike
+      callbacks, which are observational, transforms are permitted to produce a
+      new
+      <a href="/docs/references/interfaces/references-vault-error-shape"
+        >VaultErrorShape</a
+      >
+      that becomes the active error for all downstream processing and final
+      state commitment.
+    </p>
+
+    <p>
+      Error transform behaviors execute only after core error normalization has
+      completed and before the error is committed to state. This guarantees that
+      all transforms operate on a canonical error shape while preserving a
+      single, authoritative error outcome.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Add-on Error Transform Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        In addition to core error normalization, FeatureCells may opt into
+        <em>add-on error transform behaviors</em>. These behaviors participate
+        directly in the Error Stage and are permitted to
+        <strong
+          >transform the current
+          <a href="/docs/references/interfaces/references-vault-error-shape"
+            >VaultErrorShape</a
+          ></strong
+        >
+        before it is committed and exposed.
+      </p>
+
+      <p>
+        Error transform behaviors execute <em>after</em> core error
+        normalization and <em>before</em>
+        state commitment and callback execution. Each transform receives the raw
+        thrown error, the current
+        <a href="/docs/references/interfaces/references-vault-error-shape"
+          >VaultErrorShape</a
+        >, and an immutable state snapshot. Based on this input, a transform may
+        return a new
+        <a href="/docs/references/interfaces/references-vault-error-shape"
+          >VaultErrorShape</a
+        >
+        or
+        <a href="/docs/references/const/references-vault_noop">VAULT_NOOP</a> to
+        preserve the existing value.
+      </p>
+
+      <p>
+        Unlike callbacks, error transform behaviors are
+        <strong>authoritative</strong>. When a transform returns a new
+        <a href="/docs/references/interfaces/references-vault-error-shape"
+          >VaultErrorShape</a
+        >, that value becomes the active error for all subsequent transforms and
+        for final error state commitment.
+      </p>
+
+      <p>
+        Error transform behaviors must not throw, must not mutate state, and
+        must not attempt to resume or suppress error finalization. Any
+        exceptions raised by a transform are isolated, logged, and do not
+        interrupt downstream error handling.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Multiple error transform behaviors may be composed. When configured,
+        they execute sequentially in the exact order they are declared in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        definition. Each transform receives the
+        <em>current</em>
+        <a href="/docs/references/interfaces/references-vault-error-shape"
+          >VaultErrorShape</a
+        >
+        produced by the preceding behavior—starting with core error
+        normalization—and may replace it or pass it through unchanged.
+      </p>
+
+      <p>
+        Because transforms are applied cumulatively, their order is semantically
+        significant. Error transform behaviors should remain narrowly scoped and
+        intentional. Overlapping or order-dependent transforms can obscure error
+        provenance and complicate failure analysis.
+      </p>
+    </div>
+  </section>
+
+  <sdux-error-handling-order-common />
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/7.0/7.0-error-flow.svg"
+        [tooltip]="'Error Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <sdux-vault-error-behaviors-common [type]="'transform'" />
+
+      <p>
+        The transform contract returns <em>unknown</em> to allow domain-specific
+        error representations. When a transform returns a non-<a
+          href="/docs/references/const/references-vault_noop"
+          >VAULT_NOOP</a
+        >
+        value, that value becomes the active error payload for subsequent error
+        handling and for state commitment.
+      </p>
+
+      <sdux-state-snapshot-shape-common />
+
+      <sdux-vault-error-shape-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Error Transform Examples</div>
+
+    <!-- Examples Section ---------------------------------------------------------->
+
+    <div class="section-body">
+      <h4>Example 1: Register a Custom Error Transform Behavior</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Register a Custom Error Transform Behavior'">
+          <pre class="code-inline"><code class="language-ts">{{`
+// ------------------------------------------------------------
+// Custom Error Transform Behavior
+// ------------------------------------------------------------
+
+@VaultBehavior({
+  type: BehaviorTypes.ErrorTransform,
+  key: defineBehaviorKey('Addon', 'TagEmployeeError'),
+  critical: true
+})
+export class withEmployeeErrorTagTransform&lt;T>
+  extends AbstractErrorTransformBehavior&lt;T> {
+
+  async transformError(
+    error: unknown,
+    current: VaultErrorShape,
+    state: StateSnapshotShape&lt;T>
+  ): Promise&lt;unknown | typeof VAULT_NOOP> {
+
+    // Replace the error with an enriched version
+    return {
+      ...current,
+      message: \`[Employees] \${current.message}\`,
+      metadata: {
+        ...current.metadata,
+        feature: 'employees'
+      }
+    };
+  }
+}
+
+// ------------------------------------------------------------
+// FeatureCell Configuration
+// ------------------------------------------------------------
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    withEmployeeErrorTagTransform
+  ],
+  [
+    // opt-in Controllers 
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+
+// Any error thrown in this FeatureCell will now
+// carry a feature tag and normalized message
+`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

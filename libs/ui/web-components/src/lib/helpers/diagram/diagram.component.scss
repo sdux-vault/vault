@@ -1,0 +1,44 @@
+@use 'global' as global;
+
+.diagram-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  background: inherit;
+  overflow: visible;
+
+  .diagram-title {
+    font-weight: global.$font-weight-bold;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: global.$font-size-sm;
+    line-height: 1.4;
+
+    @include global.h5-element;
+    margin-top: global.$spacing-sm;
+    margin-bottom: global.$spacing-sm;
+  }
+
+  .diagram-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: zoom-in;
+    width: 100%;
+    overflow: visible;
+  }
+}
+
+/* ::ng-deep: required to style child ImageComponent's rendered <img> element */
+:host ::ng-deep img.sdux-image {
+  max-width: 700px;
+  min-height: 175px;
+  overflow: visible;
+  filter: drop-shadow(0 4px 10px rgba(25, 118, 210, 0.4));
+
+  &:hover {
+    box-shadow: none;
+  }
+}

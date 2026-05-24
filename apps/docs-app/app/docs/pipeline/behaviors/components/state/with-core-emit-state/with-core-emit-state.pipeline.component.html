@@ -1,0 +1,820 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-24 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Core Emit State Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Core Emit State Behavior</strong> provides a controlled,
+      observational mechanism for responding to finalized state snapshots after
+      pipeline execution completes. It executes after state commitment and
+      exposure, allowing legacy or convenience callbacks to observe state
+      changes without influencing pipeline execution or state authority.
+    </p>
+
+    <h4>Emit-State Callback Contract Summary</h4>
+    <ul>
+      <li>
+        Emit-state callbacks are observational only and must not modify state
+      </li>
+      <li>Emit-state callbacks must not throw or interrupt execution</li>
+      <li>
+        Emit-state callbacks receive the finalized immutable state snapshot
+      </li>
+      <li>Emit-state callbacks execute after state commitment and exposure</li>
+      <li>
+        Callback execution does not affect state commitment or pipeline outcome
+      </li>
+    </ul>
+
+    <p>
+      The Core Emit State contract guarantees that callback execution is
+      <strong>isolated and non-authoritative</strong>. Callbacks are invoked
+      only after the state snapshot has been fully committed and exposed through
+      the <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+      state surfaces. Any failures within callbacks are contained and do not
+      alter committed state or pipeline completion semantics.
+    </p>
+
+    <p>
+      Core Emit State Behaviors do not participate in state derivation, state
+      commitment, pipeline control, or scheduling. Their sole responsibility is
+      to provide a compatibility and observation surface for already-finalized
+      state snapshots.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Add-on State Emit Callback Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        In addition to core state commitment and snapshot exposure, FeatureCells
+        may opt into
+        <em>add-on state emit callback behaviors</em>. These behaviors observe
+        the finalized
+        <strong
+          ><a href="/docs/references/shapes/state-snapshot-shape"
+            >StateSnapshotShape</a
+          ></strong
+        >
+        after it has been committed and exposed and may perform supplemental,
+        observational handling such as logging, diagnostics, integration hooks,
+        or compatibility callbacks.
+      </p>
+
+      <p>
+        Emit-state callbacks do not replace, suppress, or alter state
+        commitment. They do not derive values, do not influence pipeline control
+        flow, and do not participate in pipeline admission. Their responsibility
+        is limited to observing immutable snapshots that already represent a
+        completed pipeline execution.
+      </p>
+
+      <p>
+        Emit-state callbacks exist primarily for convenience and backward
+        compatibility with callback-oriented or imperative codebases. The
+        primary mechanisms for consuming state are
+        <strong>.state</strong> (synchronous getter; represented as a
+        <em>signal</em> in Angular) and <strong>.state$</strong> (reactive
+        observable). Emit-state callbacks should not be relied upon for core
+        application logic.
+      </p>
+
+      <h4>Fluent emitStates() API</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        declare <strong>multiple emit-state callbacks</strong> using the fluent
+        <strong>.emitStates()</strong> API. This API accepts an ordered array of
+        callbacks that are executed sequentially after each state snapshot has
+        been finalized and exposed. Callback registration occurs during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        Emit-state callbacks are strictly observational. They do not return
+        values, do not modify the snapshot, and always yield
+        <code>VAULT_NOOP</code>. An empty <code>emitStates</code> array is
+        ignored and has no effect on pipeline execution.
+      </p>
+
+      <h4>Engineer-Supplied Emit-State Callbacks</h4>
+      <p>
+        Emit-state callbacks are supplied by engineers during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization and execute exclusively after the authoritative state
+        snapshot has been committed. Each callback receives the finalized
+        immutable
+        <strong
+          ><a href="/docs/references/shapes/state-snapshot-shape"
+            >StateSnapshotShape</a
+          ></strong
+        >
+        representing pipeline completion.
+      </p>
+
+      <p>
+        Callbacks must not throw, must not mutate the snapshot, and must not
+        attempt to resume or interrupt pipeline execution. Any errors raised by
+        callbacks are isolated and do not affect state commitment, state
+        exposure, or downstream observers.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Although multiple emit-state callbacks may be composed, callback logic
+        should remain narrowly scoped and observational. Complex or
+        interdependent callbacks can obscure intent and complicate state-change
+        analysis. Emit-state callbacks are most effective when limited to
+        diagnostics, transitional compatibility, or integration side effects.
+      </p>
+    </div>
+  </section>
+
+  <sdux-state-emission-order-common />
+
+  <sdux-state-consumption-mechanism-common />
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/4.0/4.0-state-execution-flow.svg"
+        [tooltip]="'State Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Emit-state callbacks are configured separately from core state
+        commitment and snapshot exposure. When declared, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        registers a core emit-state behavior that executes <em>after</em> the
+        state snapshot has been finalized, committed, and exposed through the
+        standard state surfaces. Emit-state callbacks are attached exclusively
+        through the fluent <strong>.emitStates()</strong> API during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        Emit-state callbacks are optional and strictly observational. They do
+        not participate in state derivation, do not modify the committed state
+        snapshot, and do not influence pipeline control or execution. Callback
+        execution is isolated, and any failures within callbacks do not affect
+        state commitment, state exposure, or downstream observers.
+      </p>
+    </div>
+
+    <sdux-vault-state-behaviors-common [type]="'emit'" />
+
+    <sdux-state-emit-callback-common />
+
+    <sdux-state-snapshot-shape-common />
+  </section>
+
+  <sdux-vault-state-callback-fluent-api-common />
+
+  <!-- ====================================================== -->
+  <!-- error CALLBACK PATTERNS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">State Emit Patterns</div>
+
+    <div class="section-body">
+      <p>
+        Emit-state callbacks permit side effects, but they execute only after a
+        state snapshot has been finalized and committed by the State stage.
+        Emit-state callbacks must not influence pipeline execution, must not
+        modify the committed snapshot, and must not be used as an alternative to
+        consuming <strong>.state</strong> or <strong>.state$</strong>.
+      </p>
+
+      <p>
+        Emit-state callbacks are registered through the fluent
+        <strong>.emitStates()</strong> API and are invoked sequentially for each
+        committed state snapshot. The categories below describe supported and
+        discouraged callback patterns, ordered from most to least preferred.
+      </p>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY A -->
+      <!-- ====================================================== -->
+
+      <h4>Category A: Pure / Context-Free Functions (Recommended)</h4>
+
+      <p>
+        Pure emit-state callbacks depend only on their input snapshot and
+        perform deterministic, observational side effects. They do not reference
+        instance context and do not close over mutable external state.
+      </p>
+
+      <p>This is the safest and most reusable emit-state callback form.</p>
+
+      <h4>Example 1: Pure Emit-State Callback</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Pure Emit-State Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.emitStates(
+  [
+    (snapshot: StateSnapshotShape&lt;Employee[]>) => {
+      console.info('State committed');
+      console.info('isLoading:', snapshot.isLoading);
+      console.info('hasValue:', snapshot.hasValue);
+      console.info('value:', snapshot.value);
+      console.info('error:', snapshot.error);
+    }
+  ]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 2: Factory-Generated Pure Emit-State Callback</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 2: Factory-Generated Emit-State Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export function createStateLogger(label: string) {
+  return (snapshot: StateSnapshotShape&lt;Employee[]>) => {
+    console.info(label, 'hasValue=', snapshot.hasValue, 'isLoading=', snapshot.isLoading);
+  };
+}
+
+employeeCell.emitStates(
+  [
+    createStateLogger('EmployeeCell')
+  ]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY B -->
+      <!-- ====================================================== -->
+
+      <h4>
+        Category B: Instance-Aware but Correctly Bound Callbacks (Acceptable)
+      </h4>
+
+      <p>
+        Emit-state callbacks may reference instance-owned configuration when
+        properly bound. These callbacks remain deterministic per
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance and must not be shared across FeatureCells.
+      </p>
+
+      <h4>Example 3: Arrow Function Using Instance State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 3: Instance-Bound Arrow Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`readonly prefix = '[Employee State]';
+
+readonly logState = (snapshot: StateSnapshotShape&lt;Employee[]>) => {
+  console.info(this.prefix, snapshot.hasValue ? 'value present' : 'no value');
+};
+
+employeeCell.emitStates(
+  [this.logState]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 4: Bound Instance Method</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 4: Bound Instance Method'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`public logState(snapshot: StateSnapshotShape&lt;Employee[]>) {
+  console.info('Committed snapshot value:', snapshot.value);
+}
+
+employeeCell.emitStates(
+  [this.logState.bind(this)]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY C -->
+      <!-- ====================================================== -->
+
+      <h4>Category C: Delegating Callbacks</h4>
+
+      <p>
+        Emit-state callbacks may delegate work to helper functions as long as
+        delegation remains observational and does not rely on external mutable
+        state.
+      </p>
+
+      <h4>Example 5: Delegated Emit-State Logging</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 5: Delegated Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`function logSnapshot(snapshot: StateSnapshotShape&lt;Employee[]>) {
+  console.info('Snapshot committed. hasValue=', snapshot.hasValue);
+}
+
+employeeCell.emitStates(
+  [
+    (snapshot: StateSnapshotShape&lt;Employee[]>) => logSnapshot(snapshot)
+  ]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY D -->
+      <!-- ====================================================== -->
+
+      <h4>Category D: Inline Lambda Callbacks (Allowed, Use Sparingly)</h4>
+
+      <p>
+        Inline callbacks are allowed but should remain trivial. Inline lambdas
+        make it easy to accidentally introduce hidden coupling or complex logic.
+      </p>
+
+      <h4>Example 6: Inline Conditional Emit-State Callback</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 6: Inline Conditional Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.emitStates(
+  [
+    (snapshot: StateSnapshotShape&lt;Employee[]>) => {
+      if (snapshot.error) {
+        console.info('State committed with error:', snapshot.error.message);
+      }
+    }
+  ]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Error Callback ANTI-PATTERNS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">State Emit Anti-Patterns</div>
+
+    <div class="section-body">
+      <p>
+        Emit-state callbacks are <em>observational hooks</em>. They exist solely
+        to observe finalized state snapshots after state commitment. They must
+        not influence pipeline execution, must not modify committed state, and
+        must not be treated as an alternative to consuming
+        <strong>.state</strong> or <strong>.state$</strong>.
+      </p>
+
+      <p>
+        Misuse of emit-state callbacks can introduce hidden coupling, incorrect
+        assumptions about pipeline guarantees, or subtle state visibility bugs.
+      </p>
+
+      <h4>Common Anti-Patterns</h4>
+      <ul>
+        <li>Mutating the committed state snapshot</li>
+        <li>Attempting to derive, replace, or “fix” state values</li>
+        <li>Embedding business logic or decision-making</li>
+        <li>Performing long-running, blocking, or asynchronous work</li>
+        <li>Depending on external mutable or shared state</li>
+        <li>
+          Assuming emit-state callbacks influence pipeline flow or recovery
+        </li>
+      </ul>
+
+      <p>
+        Violations in emit-state callbacks are not always mechanically
+        detectable. Issues typically surface as subtle bugs, degraded
+        observability, or incorrect mental models of state finalization.
+      </p>
+
+      <h4>Example: Discouraged Mutation Inside an Emit-State Callback</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example: Discouraged Mutation in Emit-State Callback'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.emitStates(
+  [
+    (snapshot: StateSnapshotShape&lt;Employee[]>) => {
+      // ❌ Mutating the finalized state snapshot
+      snapshot.value = [];
+      snapshot.hasValue = false;
+      console.info('Modified snapshot value:', snapshot.value);
+    }
+  ]
+).initialize();
+
+// ❌ Violates the emit-state contract: snapshots are immutable and authoritative`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        Even if such mutation appears to have an effect locally, it violates
+        pipeline guarantees. Emit-state callbacks must treat the state snapshot
+        as immutable, authoritative, and already finalized.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">State Emit Callback Summary</div>
+
+    <div class="section-body">
+      <h4>State Emit Callback Comparison</h4>
+
+      <p>
+        The following table summarizes the practical differences between the
+        state emit callback styles demonstrated above. While all valid examples
+        may execute correctly, they differ in reusability, testability, and
+        long-term safety when observing finalized state snapshots.
+      </p>
+
+      <div class="table-title">State Emit Callback Characteristics</div>
+      <div class="table-scroll">
+        <table aria-label="State Emit Callback Characteristics">
+          <thead>
+            <tr>
+              <th scope="col" class="column-175">Dimension</th>
+
+              <th scope="col" class="column-auto">
+                Examples 1 / 2<br />
+                <span class="table-header-secondary"
+                  >Pure / Factory Callbacks</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Examples 3 / 4<br />
+                <span class="table-header-secondary"
+                  >Instance-Bound Callbacks</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 5<br />
+                <span class="table-header-secondary">Delegating Callback</span>
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 6<br />
+                <span class="table-header-secondary">Inline Lambda</span>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Purity</td>
+              <td>✅</td>
+              <td>⚠️ Instance-scoped</td>
+              <td>⚠️ Delegate-dependent</td>
+              <td>⚠️</td>
+            </tr>
+
+            <tr>
+              <td>Determinism</td>
+              <td>✅</td>
+              <td>
+                ⚠️ Per
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+              </td>
+              <td>⚠️ Delegate-dependent</td>
+              <td>⚠️</td>
+            </tr>
+
+            <tr>
+              <td>Safety for State Emission</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>⚠️</td>
+              <td>⚠️</td>
+            </tr>
+
+            <tr>
+              <td>Reusability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>Medium</td>
+              <td>Low</td>
+            </tr>
+
+            <tr>
+              <td>Testability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>Medium</td>
+              <td>Lower</td>
+            </tr>
+
+            <tr>
+              <td>Risk of Accidental Closure</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Medium</td>
+              <td>High</td>
+            </tr>
+
+            <tr>
+              <td>Intended Lifespan</td>
+              <td>Long-lived</td>
+              <td>Instance-limited</td>
+              <td>Contextual</td>
+              <td>Ephemeral</td>
+            </tr>
+
+            <tr>
+              <td>Recommended Usage</td>
+              <td>Preferred</td>
+              <td>Acceptable</td>
+              <td>Use with care</td>
+              <td>Use sparingly</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Summary Rule</h4>
+      <p>
+        Any state emit callback must either be
+        <strong>referentially transparent</strong> or
+        <strong>explicitly instance-scoped and bound</strong>. Emit-state
+        callbacks must treat the received state snapshot as immutable and
+        authoritative and must not assume they influence state commitment,
+        pipeline execution, or downstream visibility.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Register a State Emit Callback</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Register a State Emit Callback'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {
+        key: 'employees',
+        initialState: [],
+      },
+      [
+        // **Important**
+        // State emit callbacks are not registered as part of the
+        // FeatureCell’s declarative configuration.
+      ],
+      [
+        // opt-in Controllers
+      ]
+    )
+  ]
+};
+
+// bank-employee.service.ts
+
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.shape';
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault
+      .emitStates(
+        [
+          (snapshot) => {
+            // Observational side effect only
+            console.info('Employees snapshot emitted');
+            console.info('Current value:', snapshot.value);
+            console.info('Loading:', snapshot.isLoading);
+          }
+        ]
+      )
+      .initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Async State Emit Callback (Remote Logging)</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Async State Emit Callback (Remote Logging)'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// bank-employee.service.ts
+
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault
+      .emitStates(
+        [
+          async (snapshot) => {
+            await logStateToApi({
+              feature: 'employees',
+              value: snapshot.value,
+              isLoading: snapshot.isLoading,
+              hasValue: snapshot.hasValue,
+            });
+          }
+        ]
+      )
+      .initialize();
+  }
+}
+
+async function logStateToApi(payload: {
+  feature: string;
+  value: unknown;
+  isLoading: boolean;
+  hasValue: boolean;
+}): Promise&lt;void&gt; {
+  await fetch('/api/logs/state', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Register a State Emit Callback</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Register a State Emit Callback'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // **Important**
+    // State emit callbacks are not part of declarative configuration.
+  ],
+  [
+    // opt-in Controllers
+  ]
+);
+
+// Register a state emit callback during initialization
+employeeCell
+  .emitStates(
+    [
+      (snapshot) => {
+        console.info('Employees snapshot emitted');
+        console.info('Value:', snapshot.value);
+        console.info('Has value:', snapshot.hasValue);
+      }
+    ]
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Async State Emit Callback (Remote Logging)</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Async State Emit Callback (Remote Logging)'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`async function logState(payload: {
+  feature: string;
+  value: unknown;
+}) {
+  await fetch('/api/logs/state', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+}
+
+employeeCell
+  .emitStates(
+    [
+      async (snapshot) => {
+        await logState({
+          feature: 'employees',
+          value: snapshot.value,
+        });
+      }
+    ]
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Register a State Emit Callback</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Register a State Emit Callback'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [],
+  []
+);
+
+employeeCell
+  .emitStates(
+    [
+      (snapshot) => {
+        console.info('Employees snapshot emitted');
+        console.info('Current value:', snapshot.value);
+      }
+    ]
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Async State Emit Callback (Remote Logging)</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Async State Emit Callback (Remote Logging)'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell
+  .emitStates(
+    [
+      async (snapshot) => {
+        await fetch('/api/logs/state', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            feature: 'employees',
+            value: snapshot.value,
+          }),
+        });
+      }
+    ]
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

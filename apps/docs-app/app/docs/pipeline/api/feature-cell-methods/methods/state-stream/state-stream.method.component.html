@@ -1,0 +1,240 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-25 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>state$</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>state$</strong> stream emits notifications whenever a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> commits
+      a new state snapshot. It provides a
+      <strong>reactive, observable view</strong> of state changes, including
+      metadata describing <em>where</em> and <em>why</em> the change occurred.
+    </p>
+
+    <h4>Stream Contract Summary</h4>
+    <ul>
+      <li>Emits on every committed state change</li>
+      <li>Includes the full immutable state snapshot</li>
+      <li>Includes optional metadata associated with the update</li>
+      <li>Includes the pipeline stage that originated the change</li>
+      <li>
+        Completes when the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        destroyed
+      </li>
+    </ul>
+
+    <p>
+      The <strong>state$</strong> stream is the primary mechanism for
+      <strong>reactive state observation</strong>. It does not influence
+      pipeline execution, does not control scheduling, and does not participate
+      in state computation. Its sole responsibility is to emit committed state
+      transitions.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      All emissions from <strong>state$</strong> represent
+      <strong>fully committed, immutable state</strong>. Subscribers must treat
+      emitted values as read-only.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- state$ -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>state$</strong> observable is typically used for reactive
+        subscriptions, side effects, integration with external systems, or
+        advanced coordination logic that depends on state transitions.
+      </p>
+
+      <h4>Example: Subscribing to FeatureCell State Changes</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Observe FeatureCell State Changes'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.state$
+  .subscribe(({ snapshot, type, options }) => {
+    console.info('State value:', snapshot.value);
+    console.info('Origin type:', type);
+    console.info('Options:', options);
+  });`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>Subscribes to all committed state updates</li>
+        <li>Receives the full immutable state snapshot</li>
+        <li>Receives the pipeline origin of the change</li>
+        <li>Receives optional metadata associated with the update</li>
+      </ul>
+
+      <p>
+        This pattern is ideal for analytics, logging, debugging, cross-feature
+        coordination, or external integrations that must react to state changes
+        over time.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STATE EMIT SHAPE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">State Emission Shape</div>
+
+    <div class="section-body">
+      <p>
+        Each emission from <strong>state$</strong> is a structured object that
+        describes both the resulting state and the context in which the state
+        change occurred.
+      </p>
+
+      <sdux-state-emit-snapshot-shape-common />
+
+      <sdux-state-snapshot-shape-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STATE EMIT TYPES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">State Emit Types</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>type</strong> field indicates the origin of the state
+        emission within the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle or pipeline.
+      </p>
+
+      <div class="table-title">
+        <a href="/docs/references/types/state-emit-type">StateEmitType</a>
+      </div>
+      <table aria-label="StateEmitType">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Type</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="column-250">Incoming</td>
+            <td class="column-auto">
+              Indicates that a new state value entered the pipeline and began
+              processing.
+            </td>
+          </tr>
+          <tr>
+            <td class="column-250">Finalize</td>
+            <td class="column-auto">
+              Indicates that a state value was finalized and successfully
+              committed.
+            </td>
+          </tr>
+          <tr>
+            <td class="column-250">Error</td>
+            <td class="column-auto">
+              Indicates that a state emission occurred as part of error
+              handling.
+            </td>
+          </tr>
+          <tr>
+            <td class="column-250">Reset</td>
+            <td class="column-auto">
+              Indicates that the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              was reset and its state cleared.
+            </td>
+          </tr>
+          <tr>
+            <td class="column-250">Destroy</td>
+            <td class="column-auto">
+              Indicates that the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              was destroyed and its lifecycle terminated.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        These values are informational and observational only. They do not
+        influence pipeline behavior and must not be relied upon for control
+        flow.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="table-title">State Stream</div>
+    <table aria-label="State Stream">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Member</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong>state$</strong>
+
+            <p>type:</p>
+            <ul>
+              <li>
+                Observable&lt;<a
+                  href="/docs/references/shapes/state-emit-snapshot-shape"
+                  >StateEmitSnapshotShape</a
+                >&lt;T&gt;&gt;
+              </li>
+            </ul>
+
+            <p>lifecycle:</p>
+            <ul>
+              <li>
+                Emits until
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                destruction
+              </li>
+            </ul>
+          </td>
+          <td>
+            Emits a structured snapshot each time the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            commits state. Includes the immutable state snapshot, optional
+            update metadata, and the pipeline origin of the change.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

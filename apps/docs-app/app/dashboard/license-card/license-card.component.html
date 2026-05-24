@@ -1,0 +1,369 @@
+<!-- Single License Card -->
+
+<article class="license-card">
+  <header class="license-card-header">
+    <div class="license-domain-row">
+      <div class="license-title-group">
+        <h3 class="license-domain" [matTooltip]="licensePayload().domain">
+          {{ licensePayload().domain }}
+        </h3>
+        <span
+          class="license-status-badge"
+          [class.active]="isActive()"
+          [class.inactive]="!isActive()"
+          [class.error]="hasError()">
+          {{ status() }}
+        </span>
+      </div>
+      @if (!isInvalid()) {
+        <div class="license-actions-top desktop-only">
+          <button type="button" class="sdux-button" (click)="copyLicense()">
+            Copy License
+          </button>
+
+          <button
+            type="button"
+            class="sdux-button-secondary"
+            (click)="downloadLicense()">
+            Download
+          </button>
+        </div>
+
+        <div class="license-actions-top mobile-only">
+          <button
+            type="button"
+            class="icon-action"
+            (click)="copyLicense()"
+            matTooltip="Copy License"
+            aria-label="Copy License">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+
+          <button
+            type="button"
+            class="icon-action"
+            (click)="downloadLicense()"
+            matTooltip="Download License"
+            aria-label="Download License">
+            <mat-icon>download</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+
+    <div class="license-type-row">
+      <span class="license-type-badge {{ license().licenseType }}">
+        {{ license().licenseType | titlecase }} License
+      </span>
+
+      @if (hasError()) {
+        <span class="warning">
+          Unable to display license details. Please contact support.
+        </span>
+      } @else if (!isActive()) {
+        <span class="warning">
+          This license is inactive. Renew or contact support to restore access.
+        </span>
+      } @else {
+        <div class="license-security-badge desktop-only">
+          Cryptographically Signed
+          <span class="check"> ✓ </span>
+        </div>
+
+        <span class="license-security-badge muted desktop-only">
+          Base64 Encoded Payload
+        </span>
+      }
+
+      <div class="toggle-container">
+        <div class="button-toggle-container">
+          <button
+            type="button"
+            class="button-toggle"
+            (click)="toggle()"
+            aria-label="Toggle license details"
+            [attr.aria-expanded]="isExpanded()"
+            matTooltip="View License Details">
+            <mat-icon>
+              {{ isExpanded() ? 'expand_more' : 'expand_less' }}
+            </mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    @if (!hasError() && isActive()) {
+      <div class="license-security-row mobile-only">
+        <div class="license-security-badge">
+          Cryptographically Signed
+          <span class="check"> ✓ </span>
+        </div>
+
+        <span class="license-security-badge muted">
+          Base64 Encoded Payload
+        </span>
+      </div>
+    }
+  </header>
+
+  <div class="license-container" [class.is-displayed]="isExpanded()">
+    <div class="license-meta-grid">
+      <div class="meta-item">
+        <span class="meta-label">Organization</span>
+        <span class="meta-value">{{ licensePayload().organization }}</span>
+      </div>
+
+      <div class="meta-item">
+        <span class="meta-label">Licensed To</span>
+        <span class="meta-value">{{ contact()?.email }}</span>
+      </div>
+
+      <div class="meta-item">
+        <span class="meta-label">Issued</span>
+        <span class="meta-value">
+          {{ formatLicenseDate(license().created) }}
+        </span>
+      </div>
+
+      <div class="meta-item">
+        <span class="meta-label">Expires</span>
+        <span class="meta-value">
+          @if (license().expires) {
+            {{ formatLicenseDate(license().expires) }}
+          } @else {
+            Forever
+          }
+        </span>
+      </div>
+
+      <div class="meta-item">
+        <span class="meta-label"
+          >Fingerprint
+          <mat-icon
+            class="help-icon"
+            aria-label="Fingerprint help"
+            matTooltip="Unique SHA-256 fingerprint. Safe to share with support for verification.">
+            help_outline
+          </mat-icon>
+        </span>
+
+        <div class="meta-item-copy">
+          <span class="meta-value mono" [matTooltip]="license().fingerprint">
+            {{ license().fingerprintDisplay }}
+          </span>
+
+          @if (copySuccess()) {
+            <mat-icon class="check-mark">check</mat-icon>
+          } @else {
+            <mat-icon
+              class="copy-icon"
+              tabindex="0"
+              role="button"
+              aria-label="Copy Fingerprint"
+              (click)="copyFingerprint()"
+              matTooltip="Copy Fingerprint">
+              content_copy</mat-icon
+            >
+          }
+        </div>
+      </div>
+
+      <div class="meta-item">
+        <span class="meta-label">Verification</span>
+        @if (isInvalid()) {
+          <span class="meta-value invalid">Signature invalid</span>
+        } @else {
+          <span class="meta-value verified">✓ Signature valid</span>
+        }
+      </div>
+    </div>
+
+    <div class="license-key-section">
+      <div class="section-label-row">
+        <span class="section-label">License Key JSON</span>
+        <span class="section-help">
+          Copy this entire value into your SDUX runtime or deployment secret.
+        </span>
+      </div>
+
+      <textarea
+        class="license-key-textarea"
+        readonly
+        aria-label="License Key JSON"
+        spellcheck="false"
+        [value]="licenseObject() | json">
+      </textarea>
+
+      <p class="validation">
+        This license is cryptographically signed. Any modification will
+        invalidate it.
+      </p>
+    </div>
+
+    <div class="license-key-section">
+      <div class="section-label-row">
+        <span class="section-label">
+          How to install the <sdux-brand-name /> license
+        </span>
+      </div>
+
+      <ul class="instructions">
+        <li>Copy the entire license object exactly as provided.</li>
+
+        <li>
+          Add the license to your Vault configuration inside the
+          <code>licenses</code> array during initialization.
+        </li>
+
+        <li>
+          Paste the license object directly into your configuration or store it
+          in a dedicated file and import it into the
+          <code>licenses</code> array.
+        </li>
+
+        <li>
+          Restart your application after adding the license to ensure Vault
+          initialization and validation completes successfully.
+        </li>
+      </ul>
+
+      <div class="license-key-section">
+        <div class="section-label-row">
+          <span class="section-label">
+            Installation and Configuration Examples</span
+          >
+        </div>
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <h4>Example: Dedicated Configuration</h4>
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Vault Configuration – Inline License'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{getAngularEmbeddedExample() }} </code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example: Dedicated License File</h4>
+
+                <p>Create a license file</p>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'sdux-vault.license.ts'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{getFileExample()
+}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <p>Then import the license and supply it to Vault</p>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Vault Initialization with Imported License'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+import { provideVault } from '@sdux-vault/angular';
+import { sduxVaultLicense } from './sdux-vault.license';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ 
+      licenses: [sduxVaultLicense]
+    })
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <h4>Example: Dedicated Configuration</h4>
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Vault Configuration – Inline License'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{getEmbeddedExample() }} </code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example: Dedicated License File</h4>
+
+                <p>Create a license file</p>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'sdux-vault.license.ts'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{getFileExample()
+}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <p>Then import the license and supply it to Vault</p>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Vault Initialization with Imported License'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { sduxVaultLicense } from './sdux-vault.license';
+
+Vault({ 
+  licenses: [sduxVaultLicense]
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <h4>Example: Dedicated Configuration</h4>
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Vault Configuration – Inline License'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{getEmbeddedExample() }} </code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example: Dedicated License File</h4>
+
+                <p>Create a license file</p>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'sdux-vault.license.ts'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{getFileExample()
+}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <p>Then import the license and supply it to Vault</p>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Vault Initialization with Imported License'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { sduxVaultLicense } from './sdux-vault.license';
+                    
+Vault({ 
+  licenses: [sduxVaultLicense]
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</article>

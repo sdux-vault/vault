@@ -1,0 +1,35 @@
+@use 'global' as global;
+
+/**
+ * Spacer Utility Classes
+ * - `.sdux-spacer-{size}`: Creates width-based spacers (1px - 50px)
+ * - `.sdux-vspacer-{size}`: Creates height-based spacers (1px - 50px)
+ */
+.sdux-container-spacer {
+  flex: 1 1 auto;
+}
+
+// Generate width-based spacers (1px - 50px)
+@for $i from 1 through 50 {
+  .sdux-spacer-#{$i} {
+    text-align: center;
+    @include global.spacer($i, width);
+  }
+}
+
+// Generate height-based spacers (1px - 50px)
+@for $i from 1 through 50 {
+  .sdux-vspacer-#{$i} {
+    text-align: center;
+    @include global.spacer($i, height);
+  }
+}
+
+.sdux-hr {
+  appearance: none;
+  border: none;
+  height: 1px;
+  background-color: global.$sdux-border-color;
+  display: block;
+  width: 100%;
+}

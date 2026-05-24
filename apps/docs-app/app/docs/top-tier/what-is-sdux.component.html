@@ -1,0 +1,394 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>What is <sdux-brand-name [tm]="true" />?</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-brand-name [tm]="true" /> is a state management system built around
+      a deterministic, reactive pipeline. It combines the discipline of
+      Redux-style state transitions with modern reactive programming to help
+      applications manage state clearly, predictably, and at scale.
+    </p>
+
+    <sdux-nothing-happened-quote />
+
+    <p>
+      This page provides a high-level, plain-language explanation of what
+      <sdux-brand-name /> is, the problems it solves, and the mental model
+      behind its core ideas.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">TL;DR</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> is designed for applications that need clarity,
+        composability, and confidence in how state changes over time.
+      </p>
+
+      <ul>
+        <li>Predictable, ordered state updates</li>
+        <li>Clear ownership boundaries per feature</li>
+        <li>Reactive consumption suitable for modern UIs</li>
+        <li>Extensibility without hidden side effects</li>
+      </ul>
+
+      <p>
+        By combining a disciplined update model with reactive output,
+        <sdux-brand-name /> provides a foundation that scales from small
+        features to large applications.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Why <sdux-brand-name [tm]="true" /> Exists</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> was created in response to recurring pain points in
+        real-world application state management—especially in large, long-lived
+        JavaScript Framework applications where state tends to become
+        fragmented, over-engineered, or difficult to reason about over time.
+      </p>
+
+      <p>
+        The goal was not to invent a new paradigm, but to remove friction while
+        preserving the things that already work: predictability, explicit data
+        flow, and strong boundaries.
+      </p>
+
+      <h4>The Core Motivations</h4>
+
+      <ol>
+        <li>
+          <strong>Remove Boilerplate</strong><br />
+          Traditional state systems often require large amounts of repetitive
+          setup—actions, reducers, selectors, effects—before any real business
+          logic can be expressed. <sdux-brand-name /> was designed so that state
+          logic lives where it’s used, with minimal ceremony and no redundant
+          scaffolding.
+        </li>
+
+        <li>
+          <strong>Remove the Dispatch Mental Overhead</strong><br />
+          Explicit dispatching introduces indirection that often obscures
+          intent. <sdux-brand-name /> replaces dispatch with direct, explicit
+          state update APIs (replaceState, mergeState) that clearly express what
+          is happening without hiding it behind event objects.
+        </li>
+
+        <li>
+          <strong>Centralize Ownership Without Centralizing Everything</strong
+          ><br />
+          Instead of one global store, <sdux-brand-name /> centralizes
+          ownership, not data. Each
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> owns
+          exactly one slice of state, with a clear lifecycle and responsibility,
+          avoiding both global sprawl and excessive coupling. This supports
+          large-scale application maintenance by promoting single-purpose
+          features and modern, ownership-driven architectural practices.
+        </li>
+
+        <li>
+          <strong>Treat State as a Stream</strong><br />
+          Modern applications are inherently reactive.
+          <sdux-brand-name /> treats state changes as a continuous,
+          deterministic stream flowing through a pipeline, rather than isolated
+          mutations. This makes state easier to reason about over time, not just
+          at a single moment.
+        </li>
+
+        <li>
+          <strong>Fluent, Intent-Driven APIs</strong><br />
+          Configuration and setup use a fluent API that reads like intent rather
+          than configuration. The Vault is initialized using this fluent API
+          directly alongside the feature code, allowing filters, reducers,
+          callbacks, and behaviors to be declared in one place. This makes state
+          behavior easier to compose, easier to review, and harder to misuse.
+        </li>
+
+        <li>
+          <strong>Built-In, Layered Error Handling</strong><br />
+          <sdux-brand-name /> provides first-class error handling at both the
+          feature and application levels. Errors can be handled directly within
+          a
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> when
+          they are domain-specific, or observed globally through the
+          <a href="/docs/references/functions/vault-error-service"
+            >VaultErrorService</a
+          >
+          for centralized logging, monitoring, analytics, and tooling. This
+          layered model is built in by default, requiring no custom error buses,
+          global stores, or additional infrastructure.
+        </li>
+
+        <li>
+          <strong>Make State Extensible by Design</strong><br />
+          Real applications need persistence, encryption, caching, analytics,
+          and debugging. <sdux-brand-name /> bakes extensibility into the core
+          through Behaviors, allowing capabilities to be added or removed
+          without rewriting state logic or breaking contracts. This gives
+          engineers a clear path to use built-in behaviors, adopt
+          community-provided extensions, or author their own behaviors to meet
+          evolving state management needs.
+        </li>
+
+        <li>
+          <strong><sdux-catch-phrase /></strong><br />
+          <sdux-brand-name /> is built with standard TypeScript primitives.
+          There are no code generators, no hidden runtime tricks, and no opaque
+          abstractions. What you write is what runs.
+        </li>
+
+        <li>
+          <strong>Declarative, Not Implicit</strong><br />
+          State behavior in <sdux-brand-name /> is declared explicitly: what
+          updates state, how it flows through the pipeline, and which behaviors
+          participate. There are no hidden side effects or implicit execution
+          paths.
+        </li>
+
+        <li>
+          <strong>Modern Programming Techniques</strong><br />
+          <sdux-brand-name /> is built around modern concepts—immutability,
+          composition, deterministic pipelines, and reactive primitives—without
+          forcing developers to adopt unfamiliar or experimental syntax.
+        </li>
+
+        <li>
+          <strong>Testability as a First-Class Concern</strong><br />
+          Because FeatureCells are isolated, lifecycle-bound, and deterministic,
+          state logic can be tested without global setup, mocking entire stores,
+          or simulating complex event chains.
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ANALOGY -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">A Simple Analogy</div>
+
+    <div class="section-body">
+      <p>
+        A useful way to think about <sdux-brand-name /> is to imagine a
+        <strong>battery</strong>.
+      </p>
+
+      <p>
+        The Vault is the battery casing — secure, stable, and responsible for
+        holding everything together. Each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> inside
+        the Vault is like an individual battery cell, contributing its own
+        energy (state) to the overall system.
+      </p>
+
+      <p>
+        Each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        focuses on its own responsibility, while the Vault ensures all cells
+        work together in a coordinated, predictable way.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- VAULT AND FEATURECELL -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      <sdux-vault-brand-name [tm]="true" /> and
+      <sdux-feature-cell [tm]="true" />
+    </div>
+
+    <div class="section-body">
+      <h4><sdux-vault-brand-name [tm]="true" /></h4>
+      <p>
+        A Vault defines system-level runtime configuration used by FeatureCells,
+        such as queue behavior and logging defaults. It serves as a shared
+        configuration surface and coordination context, but does not expose
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization, state access, or state update APIs.
+      </p>
+
+      <h4><sdux-feature-cell [tm]="true" /></h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> is a
+        feature-scoped State container and the primary consumer-facing API
+        surface. It defines a single feature domain and exposes the entry points
+        used to initialize state, read state, and apply updates through
+        replaceState() and mergeState().
+      </p>
+
+      <p>
+        In practice, a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        represents one clearly owned slice of application state, with a
+        well-defined lifecycle and a focused responsibility. This structure
+        enables scalable, manageable state management by centralizing state
+        ownership and behavior without introducing unnecessary coordination or
+        boilerplate.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- PIPELINE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">The Pipeline</div>
+
+    <div class="section-body">
+      <p>
+        All state updates in <sdux-brand-name /> flow through a deterministic
+        pipeline. Whether a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        replaces state or merges a partial update, the update is processed in a
+        known order and produces a predictable result.
+      </p>
+
+      <p>
+        This pipeline-based approach ensures that transformations, side effects,
+        persistence, and observation all happen in a consistent and inspectable
+        way.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STATE AND SNAPSHOTS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">State and Snapshots</div>
+
+    <div class="section-body">
+      <p>
+        In <sdux-brand-name />, state is treated as immutable data owned by a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        Rather than mutating state directly, updates are processed through the
+        pipeline and emitted as new results.
+      </p>
+
+      <p>
+        These results are exposed as <strong>Snapshots</strong> — immutable
+        representations of state at a specific moment in time. Snapshots are
+        what consumers observe and render.
+      </p>
+
+      <p>
+        This separation makes it easier to reason about loading states, errors,
+        and data availability without mixing concerns.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ERROR HANDLING -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Built-In Error Handling</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> provides a first-class, built-in error handling
+        model that works at both the feature level and the application level.
+      </p>
+
+      <p>
+        Errors can be handled directly within a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> when
+        the error is specific to that feature’s domain, or observed globally
+        through the
+        <a href="/docs/references/functions/vault-error-service"
+          >VaultErrorService</a
+        >
+        when errors need to be monitored, logged, visualized, or reacted to
+        across the entire application.
+      </p>
+
+      <p>
+        This dual-level approach allows teams to keep feature-specific error
+        logic close to the feature itself, while still enabling centralized
+        error reporting, analytics, and tooling without additional wiring or
+        custom infrastructure.
+      </p>
+
+      <p>
+        All error normalization, propagation, and exposure is built into the
+        system by default. Developers do not need to create custom error buses,
+        global stores, or cross-cutting services to achieve consistent error
+        handling.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Built-In DevTools and Observability</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> includes first-class observability out of the box. A
+        dedicated Chrome DevTools plugin allows engineers to inspect
+        FeatureCells, observe state transitions, trace pipeline stages, and
+        debug errors in real time—without adding any application code.
+      </p>
+
+      <p>
+        Under the hood, all monitoring is powered by the InsightService, which
+        emits structured, lifecycle-aware events from the pipeline. This same
+        service can be used to build custom monitors, internal dashboards,
+        analytics pipelines, or logging integrations tailored to your
+        organization’s needs.
+      </p>
+
+      <p>
+        Because monitoring is part of the core runtime—not an
+        afterthought—developers get deep visibility into state behavior while
+        keeping application code clean, explicit, and free of instrumentation
+        concerns.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- HOW DO YOU PRONOUNCE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      How do you pronounce <sdux-brand-name [tm]="true" />?
+    </div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> (pronounced <em>S-D-U-X</em>) stands for
+        <strong>Streams + reDUx + eXtendable</strong>. It is a way of organizing
+        application state so that updates flow through a predictable pipeline,
+        producing consistent, observable results.
+      </p>
+
+      <p>
+        At a high level, <sdux-brand-name /> treats state changes as
+        <strong>intentional updates</strong> that are processed in order, rather
+        than ad-hoc mutations scattered across an application. This makes it
+        easier to reason about how state changes, how errors occur, and how data
+        moves from services to the UI.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,742 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-04-28 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Building Custom Controllers</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      A <strong>custom Controller</strong> is a user-authored coordination
+      authority that plugs into the <sdux-brand-name /> Conductor. Custom
+      Controllers follow the same contract and lifecycle as built-in
+      Controllers, allowing engineers to implement domain-specific policy, rate
+      limiting, gating, or error-handling logic without modifying
+      <sdux-brand-name /> internals. Because custom Controllers are subject to
+      the same voting protocol, ordering, and lifecycle rules as built-in
+      Controllers, they extend pipeline capabilities without compromising its
+      deterministic execution guarantees.
+    </p>
+
+    <p>
+      Every Controller—built-in or custom—implements
+      <a href="/docs/references/contracts/controller-contract"
+        >ControllerContract</a
+      >&lt;T&gt; and is decorated with &#64;<a
+        href="/docs/references/decorators/vault-controller"
+        >VaultController</a
+      >. The Conductor discovers, validates, and invokes custom Controllers
+      exactly as it does add-on Controllers.
+    </p>
+
+    <p>
+      Controllers do not transform state. They receive messages about pipeline
+      attempts, successes, and failures, and respond with a
+      <strong>vote</strong> that tells the Conductor how to proceed.
+    </p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- OVERVIEW                                                     -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">What You Need</div>
+
+    <div class="section-body">
+      <p>A complete custom Controller consists of the following pieces:</p>
+
+      <ol>
+        <li>
+          A <strong>Controller class</strong> decorated with &#64;<a
+            href="/docs/references/decorators/vault-controller"
+            >VaultController</a
+          >
+          and implementing
+          <a href="/docs/references/contracts/controller-contract"
+            >ControllerContract</a
+          >&lt;T&gt;.
+        </li>
+        <li>
+          An <strong>options interface</strong> that defines the configuration
+          the Controller accepts.
+        </li>
+        <li>
+          A <strong>fluent API installer</strong> (installFluentApi) so
+          engineers can configure the Controller with a chained method call on
+          the <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+        <li>
+          An optional <strong>extension interface</strong> with TypeScript
+          module augmentation for the fluent API type.
+        </li>
+        <li>
+          Registration in the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          declaration's Controller array.
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- VOTING MODEL                                                 -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">The Voting Model</div>
+
+    <div class="section-body">
+      <p>
+        Controllers respond to pipeline messages by returning a
+        <strong>vote</strong>. The Conductor collects votes from all registered
+        Controllers and uses them to determine pipeline progression.
+      </p>
+
+      <div class="table-title">
+        <a href="/docs/references/types/controller-vote">ControllerVote</a>
+      </div>
+      <table aria-label="ControllerVote">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Vote</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Abstain</td>
+            <td>
+              The Controller has no opinion. The pipeline proceeds as if this
+              Controller were not present.
+            </td>
+          </tr>
+          <tr>
+            <td>Deny</td>
+            <td>
+              The Controller blocks the current attempt. The Conductor may
+              revote the attempt later (for example, after a timer expires).
+            </td>
+          </tr>
+          <tr>
+            <td>Abort</td>
+            <td>
+              The Controller permanently blocks the attempt. This acts as a
+              circuit breaker and the attempt is not retried.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">
+        <a href="/docs/references/types/controller-message-type"
+          >ControllerMessageType</a
+        >
+      </div>
+      <table aria-label="ControllerMessageType">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Message Type</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Attempt</td>
+            <td>A new pipeline attempt is requesting permission to proceed.</td>
+          </tr>
+          <tr>
+            <td>Success</td>
+            <td>An attempt completed successfully.</td>
+          </tr>
+          <tr>
+            <td>Failure</td>
+            <td>An attempt encountered an error.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STEP 1: OPTIONS                                              -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Step 1 — Define an Options Interface</div>
+
+    <div class="section-body">
+      <p>
+        The options interface describes the configuration your Controller
+        expects. It is passed to the constructor via
+        controllerCtx.controllerConfig.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'my-controller.options.ts'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export interface MyControllerOptions {
+  /** Maximum number of concurrent pipeline attempts allowed. */
+  maxConcurrent: number;
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STEP 2: CONTROLLER CLASS                                     -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Step 2 — Create the Controller Class</div>
+
+    <div class="section-body">
+      <p>
+        Decorate the class with &#64;<a
+          href="/docs/references/decorators/vault-controller"
+          >VaultController</a
+        >
+        and implement
+        <a href="/docs/references/contracts/controller-contract"
+          >ControllerContract</a
+        >&lt;T&gt;. The decorator metadata tells the Conductor the Controller's
+        type, unique key, and whether it requires configuration.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'with-my-controller.controller.ts'">
+          <pre class="code-inline"><code class="language-ts">{{`import {
+  ControllerClassContext,
+  ControllerContract,
+  ControllerMessageShape,
+  ControllerMessageTypes,
+  ControllerType,
+  ControllerTypes,
+  ControllerVote,
+  ControllerVotes,
+  defineControllerKey,
+  FeatureCellBaseShape,
+  VaultController
+} from '@sdux-vault/shared';
+import { Observable, of } from 'rxjs';
+
+import { MyControllerOptions } from './my-controller.options';
+
+@VaultController({
+  type: ControllerTypes.Policy,
+  key: defineControllerKey('Policy', 'MyController'),
+  critical: false,
+  wantsConfig: true,
+  configKey: 'withMyController'
+})
+export class withMyController&lt;T&gt; implements ControllerContract&lt;T&gt; {
+
+  // ── Static metadata (mirrored by the decorator) ──────────
+  static readonly type: ControllerType;
+  static readonly key: string;
+  static readonly critical: boolean;
+  static readonly wantsConfig: boolean;
+  static readonly configKey: string;
+
+  // ── Instance fields ──────────────────────────────────────
+  readonly type = withMyController.type;
+  readonly key: string;
+  readonly critical = withMyController.critical;
+
+  readonly #maxConcurrent: number;
+  #activeCount = 0;
+
+  // ── Fluent API installer ─────────────────────────────────
+  static installFluentApi&lt;T&gt;(
+    cell: FeatureCellBaseShape&lt;T&gt;,
+    controllerConfigs: Map&lt;string, unknown&gt;
+  ) {
+    cell.withMyController = function (
+      options: MyControllerOptions
+    ) {
+      controllerConfigs.set(
+        withMyController.configKey, options
+      );
+      return this;
+    };
+  }
+
+  // ── Constructor ──────────────────────────────────────────
+  constructor(
+    key: string,
+    readonly controllerCtx: ControllerClassContext
+  ) {
+    this.key = key;
+
+    const options =
+      controllerCtx.controllerConfig as MyControllerOptions;
+
+    if (
+      typeof options?.maxConcurrent !== 'number' ||
+      options.maxConcurrent < 1
+    ) {
+      throw new Error(
+        '[vault] withMyController requires ' +
+        'maxConcurrent (number >= 1).'
+      );
+    }
+
+    this.#maxConcurrent = options.maxConcurrent;
+  }
+
+  // ── Message handler ──────────────────────────────────────
+  handleMessage(
+    msg: ControllerMessageShape&lt;T&gt;
+  ): Observable&lt;ControllerVote | void&gt; {
+
+    switch (msg.type) {
+      case ControllerMessageTypes.Attempt:
+        if (this.#activeCount >= this.#maxConcurrent) {
+          return of(ControllerVotes.Deny);
+        }
+        this.#activeCount++;
+        return of(ControllerVotes.Abstain);
+
+      case ControllerMessageTypes.Success:
+      case ControllerMessageTypes.Failure:
+        this.#activeCount = Math.max(0, this.#activeCount - 1);
+        return of(ControllerVotes.Abstain);
+
+      default:
+        return of(ControllerVotes.Abstain);
+    }
+  }
+
+  // ── Lifecycle ────────────────────────────────────────────
+  reset(): void {
+    this.#activeCount = 0;
+  }
+
+  destroy(): void {
+    this.#activeCount = 0;
+  }
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <div class="note">Note</div>
+      <p>
+        The static fields (type, key, critical, wantsConfig, configKey) are
+        populated at runtime by the &#64;<a
+          href="/docs/references/decorators/vault-controller"
+          >VaultController</a
+        >
+        decorator. Declare them as static readonly for type safety.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DECORATOR METADATA                                           -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Decorator Metadata Reference</div>
+
+    <div class="section-body">
+      <p>
+        The &#64;<a href="/docs/references/decorators/vault-controller"
+          >VaultController</a
+        >
+        decorator accepts the following metadata:
+      </p>
+
+      <div class="table-title">
+        <a href="/docs/references/shapes/controller-meta-shape"
+          >ControllerMetaShape</a
+        >
+      </div>
+      <table aria-label="ControllerMetaShape">
+        <thead>
+          <tr>
+            <th scope="col" class="column-275">Property</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              type:
+              <a href="/docs/references/types/controller-type"
+                >ControllerType</a
+              >
+              <p>required</p>
+            </td>
+            <td>
+              The Controller category. Determines how the Conductor classifies
+              and invokes the Controller. Use a value from
+              <a href="/docs/references/const/controller-types"
+                >ControllerTypes</a
+              >.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              key: string
+              <p>required</p>
+            </td>
+            <td>
+              Unique identifier for this Controller. Created with
+              <a href="/docs/references/functions/define-controller-key"
+                >defineControllerKey</a
+              >('Domain', 'Name'). The key follows the format
+              SDUX::Controller::Domain::Name. Used for diagnostics, DevTools
+              visualization, and Conductor classification.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              critical?: boolean
+              <p>optional</p>
+            </td>
+            <td>
+              Indicates whether this Controller is critical. When true, any
+              error in this Controller halts the pipeline.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              wantsConfig?: boolean
+              <p>optional</p>
+            </td>
+            <td>
+              When true, the Conductor passes the fluent configuration to the
+              constructor via controllerCtx.controllerConfig. Defaults to false
+              when not provided.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              configKey?: string
+              <p>optional</p>
+            </td>
+            <td>
+              The key used to look up the Controller's configuration from the
+              fluent API config map.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              needsLicense?: boolean
+              <p>optional</p>
+            </td>
+            <td>
+              Indicates whether this Controller requires a valid license to
+              execute. When true, the Conductor validates the license before
+              invoking the Controller. Defaults to false when not provided.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              licenseId?: string
+              <p>optional</p>
+            </td>
+            <td>
+              The license identifier required for this Controller. Used by the
+              Conductor to validate that the appropriate license is present.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STEP 3: MODULE AUGMENTATION                                  -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Step 3 — Module Augmentation (Optional)</div>
+
+    <div class="section-body">
+      <p>
+        Add a module augmentation so the fluent API (cell.withMyController()) is
+        visible to TypeScript.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'extend-with-my-controller.interface.ts'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { MyControllerOptions } from '../options/my-controller.options';
+
+declare module '@sdux-vault/shared' {
+  interface FeatureCellFluentApi&lt;T&gt; {
+    withMyController?(options: MyControllerOptions): this;
+  }
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STEP 4: REGISTER                                             -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Step 4 — Register the Controller</div>
+
+    <div class="section-body">
+      <p>
+        Pass the Controller class to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        declaration's Controller array. Then use the fluent API to provide
+        configuration.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'feature-cell-usage.ts'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+import { withMyController } from './with-my-controller.controller';
+
+export const myCell = FeatureCell(
+  MyCellToken,
+  {
+    key: 'my-cell',
+    initialState: {}
+  },
+  [],
+  [
+    withMyController   // register in the controller array
+  ]
+);
+
+myCell
+  .withMyController({ maxConcurrent: 3 })
+  .initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- LIFECYCLE                                                    -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Controller Lifecycle</div>
+
+    <div class="section-body">
+      <p>
+        The Conductor manages each Controller through a predictable lifecycle:
+      </p>
+
+      <ol>
+        <li>
+          <strong>Construction</strong> — The Conductor instantiates the
+          Controller, passing the assigned key and a context object containing
+          the configuration (if wantsConfig is true).
+        </li>
+        <li>
+          <strong>handleMessage</strong> — Called each time the pipeline needs a
+          vote. The Controller inspects the message type and trace ID, then
+          returns an Observable&lt;<a
+            href="/docs/references/types/controller-vote"
+            >ControllerVote</a
+          >&gt;.
+        </li>
+        <li>
+          <strong>reset</strong> — Called when the pipeline resets. Clear
+          internal counters, maps, or timers.
+        </li>
+        <li>
+          <strong>destroy</strong> — Called when the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+          destroyed. Release all resources.
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- EXTENDING EXISTING CONTROLLERS                               -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Extending an Existing Controller</div>
+
+    <div class="section-body">
+      <p>
+        You can extend a built-in Controller class to inherit its base logic and
+        override specific methods. Apply a new &#64;<a
+          href="/docs/references/decorators/vault-controller"
+          >VaultController</a
+        >
+        decorator with a unique key and configKey so the Conductor treats your
+        subclass as a distinct Controller.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'with-custom-delay.controller.ts'">
+          <pre class="code-inline"><code class="language-ts">{{`import {
+  ControllerTypes,
+  defineControllerKey,
+  VaultController
+} from '@sdux-vault/shared';
+import { withDelayController } from '@sdux-vault/addons';
+
+@VaultController({
+  type: ControllerTypes.Policy,
+  key: defineControllerKey('Policy', 'CustomDelay'),
+  critical: false,
+  wantsConfig: true,
+  configKey: 'withCustomDelay'
+})
+export class withCustomDelayController&lt;T&gt;
+  extends withDelayController&lt;T&gt; {
+
+  // Override handleMessage to add logging,
+  // adjust delay logic, or add conditional bypasses.
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <div class="note">Note</div>
+      <p>
+        The new &#64;<a href="/docs/references/decorators/vault-controller"
+          >VaultController</a
+        >
+        decorator replaces the parent's metadata entirely. The Conductor will
+        register your subclass under the new key and config key.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- EXTENSIBLE CONTROLLER TYPES                                  -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Extensible Controller Types</div>
+
+    <div class="section-body">
+      <p>
+        The following Controller types are available for custom Extensions. Each
+        type corresponds to a coordination category that the Conductor
+        recognizes.
+      </p>
+
+      <div class="table-title">Extensible Controller Types</div>
+      <table aria-label="Extensible Controller Types">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Controller Type</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Error</td>
+            <td>
+              Controllers that define error-handling policies for the pipeline.
+              Only one Error Controller may be active per
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            </td>
+          </tr>
+          <tr>
+            <td>Policy</td>
+            <td>
+              Controllers that enforce pipeline execution policies such as rate
+              limiting, circuit breakers, concurrency gates, or approval
+              workflows.
+            </td>
+          </tr>
+          <tr>
+            <td>ReplayGlobalError</td>
+            <td>
+              Controllers that coordinate the replay of previously captured
+              global errors back into the pipeline.
+            </td>
+          </tr>
+          <tr>
+            <td>Stepwise</td>
+            <td>
+              Controllers that coordinate stepwise bus interactions, mediating
+              multi-phase pipeline resolution through the voting model.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- RESTRICTED CONTROLLER TYPES                                  -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Restricted Controller Types</div>
+
+    <div class="section-body">
+      <p>
+        Not all Controller types are available for custom Extensions. The
+        Conductor enforces a strict boundary between core pipeline
+        infrastructure and the extensible Controller surface. Controllers that
+        belong to core pipeline internals are managed exclusively by the
+        Conductor and are silently removed if provided in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        Controller array.
+      </p>
+
+      <p>
+        The following Controller types are restricted and cannot be registered
+        as custom Extensions:
+      </p>
+
+      <div class="table-title">Restricted Controller Types</div>
+      <table aria-label="Restricted Controller Types">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Controller Type</th>
+            <th scope="col" class="column-auto">Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CoreAbstain</td>
+            <td>
+              Manages the core abstain voting protocol. Reserved for internal
+              use by the Conductor.
+            </td>
+          </tr>
+          <tr>
+            <td>License</td>
+            <td>
+              Enforces license validation for pipeline execution. Reserved for
+              internal use by the Conductor.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        If a custom Controller is registered with any of the restricted types
+        listed above, the Conductor removes it during pipeline initialization.
+        No error is raised; the Controller is silently excluded from pipeline
+        execution.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- LICENSING                                                    -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Licensing</div>
+
+    <div class="section-body">
+      <p>
+        Custom Controller extensions are available exclusively with a purchased
+        <strong><sdux-vault-brand-name /> Pro plan</strong>. The Conductor
+        validates the <sdux-vault-brand-name /> active license during pipeline
+        initialization and silently excludes custom Controllers when a valid Pro
+        license is not present. For licensing details and plan options, see the
+        <a href="/sdux/vault"><sdux-vault-brand-name /> product page</a>.
+      </p>
+    </div>
+  </section>
+
+  <sdux-devmode-licensing-common />
+
+  <!-- ============================================================ -->
+  <!-- RELATED TOPICS                                               -->
+  <!-- ============================================================ -->
+  <sdux-pipeline-related-topics />
+</div>

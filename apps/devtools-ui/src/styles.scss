@@ -1,0 +1,134 @@
+@use 'global' as global;
+@use 'index' as sdux;
+
+/* ----------------------------------------------
+   Root Theme Variables
+   ---------------------------------------------- */
+
+body {
+  // Default: Light Mode
+  color-scheme: light;
+
+  background-color: var(--sdux-surface-light);
+  color: var(--sdux-text-inverse);
+  font-family: global.$sdux-font-family;
+  font-weight: global.$sdux-font-weight;
+  font-size: global.$font-size-md;
+  line-height: global.$line-height;
+
+  // Smooth text rendering
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  // Material–Vault variable mapping
+  --mat-sys-surface: var(--sdux-surface-light);
+  --mat-sys-on-surface: var(--sdux-text-inverse);
+  --mat-sys-primary: var(--sdux-primary);
+  --mat-sys-on-primary: #{global.$sdux-text-white};
+  --mat-sys-error: var(--sdux-warn);
+  --mat-sys-success: var(--sdux-success);
+  --mat-sys-outline: #{global.$sdux-surface-outline};
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  overflow-x: hidden;
+  background-color: var(--surface-bg);
+  color: var(--text-color);
+}
+
+:root {
+  color-scheme: light;
+
+  --sdux-primary: #{global.$sdux-primary-base};
+  --sdux-accent: #{global.$sdux-accent-base};
+  --sdux-warn: #{global.$sdux-warn-base};
+  --sdux-success: #{global.$sdux-success-base};
+
+  // Surface / Background Defaults
+  --sdux-bg: #{global.$sdux-surface-light}; // default = light theme
+  --sdux-bg-dark: #{global.$sdux-surface-dark};
+  --sdux-bg-light: #{global.$sdux-surface-light};
+
+  --sdux-border-radius: #{global.$border-radius-lg};
+
+  //  Text Colors
+  --sdux-text-primary: #{global.$sdux-text-primary};
+  --sdux-text-secondary: #{global.$sdux-text-secondary};
+  --sdux-text-inverse: #{global.$sdux-text-inverse};
+  --sdux-text-default: var(--sdux-text-inverse); // safe default
+
+  // Borders, Shadows, Layout
+  --sdux-border-color: #{global.$sdux-surface-outline};
+  --sdux-shadow: #{global.$sdux-shadow-base};
+  --app-toolbar-height: #{global.$toolbar-height};
+  --app-footer-height: #{global.$footer-height};
+
+  // Body & surfaces
+  --surface-bg: #{global.$sdux-surface-light};
+  --surface-text: #{global.$sdux-text-inverse};
+  --surface-outline: #{global.$sdux-surface-outline};
+
+  // Toolbar
+  --toolbar-bg: #{global.$sdux-primary-base};
+  --toolbar-text: #{global.$sdux-text-white};
+  --toolbar-border: #{global.$sdux-surface-outline};
+
+  // Sidenav & Navigation
+  --sdux-surface-bg: #{global.$sdux-primary-base};
+  --sdux-text-default: #{global.$sdux-text-white};
+
+  // Footer & floating box
+  --footer-border: #{global.$sdux-primary-base};
+
+  // Link colors
+  --link-color: #{global.$sdux-primary-base};
+  --link-hover: #{global.$sdux-accent-base};
+  --link-visited: #{global.$sdux-primary-dark};
+
+  // Angular Material bridge
+  --mat-sys-surface: #{global.$sdux-surface-light};
+  --mat-sys-on-surface: #{global.$sdux-text-inverse};
+  --mat-sys-primary: #{global.$sdux-primary-base};
+  --mat-sys-on-primary: #{global.$sdux-text-white};
+
+  --mat-active-text: #{global.$sdux-primary-base};
+}
+
+/* ----------------------------------------------
+   Scrollbars (DevTools panel only)
+   ---------------------------------------------- */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-outline) var(--surface-bg);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--surface-outline);
+  border-radius: var(--sdux-border-radius);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--surface-bg);
+}
+
+::ng-deep .mat-mdc-tab-label-container {
+  background-color: global.$sdux-text-primary !important;
+}

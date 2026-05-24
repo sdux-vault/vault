@@ -1,0 +1,146 @@
+// stage-review.component.scss
+
+@use 'global' as global;
+
+.stage-review-container {
+  display: flex;
+  gap: global.$spacing-xs;
+
+  .stage-review-status {
+    width: 5px;
+    flex-shrink: 0;
+
+    &.active {
+      background-color: global.$sdux-primary-base;
+      border: 1px solid global.$sdux-primary-light;
+      border-radius: global.$border-radius-md;
+    }
+  }
+
+  .stage-review {
+    flex: 1;
+    width: calc(100% - 5px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    padding: global.$spacing-sm;
+    border-radius: global.$border-radius-md;
+
+    cursor: pointer;
+
+    /* Theme-native surface */
+    background-color: var(--sdux-surface-base);
+    border: 1px solid var(--sdux-surface-outline);
+    box-shadow: var(--sdux-shadow-base);
+
+    .review {
+      flex: 1;
+      @include global.sdux-font-body(
+        global.$font-size-md,
+        global.$font-weight-medium,
+        var(--sdux-text-primary)
+      );
+      line-height: global.$line-height;
+
+      /* Expanded / readable */
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+
+      .review-top-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: global.$spacing-sm;
+
+        .label-group {
+          display: flex;
+          align-items: baseline;
+          justify-content: flex-start;
+          gap: global.$spacing-xxs;
+          min-width: 0;
+          flex: 1;
+
+          .label {
+            font-weight: global.$font-weight-bold;
+            font-size: global.$font-size-lg;
+          }
+
+          /* Help icon */
+          .learn-icon {
+            border: none;
+            background: none;
+            padding: 0;
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            opacity: 0.7;
+
+            position: relative;
+            transform: translateY(-4px);
+
+            transition:
+              transform 0.18s ease,
+              opacity 0.18s ease,
+              color 0.18s ease;
+
+            transform-origin: left bottom;
+            will-change: transform;
+
+            &:hover {
+              color: global.$sdux-primary-base;
+              transform: translateY(-4px) scale(1.1);
+              opacity: 1;
+            }
+
+            mat-icon {
+              font-size: global.$font-size-sm;
+              width: global.$font-size-sm;
+              height: global.$font-size-sm;
+              line-height: global.$font-size-sm;
+            }
+          }
+        }
+      }
+
+      .note {
+        font-size: global.$font-size-sm;
+        border: 1px solid global.$sdux-surface-outline;
+        margin: global.$spacing-sm;
+        padding: global.$spacing-sm;
+      }
+
+      .description {
+        font-size: global.$font-size-sm;
+      }
+    }
+  }
+
+  .collapse {
+    overflow: hidden;
+
+    max-height: 100vh;
+    opacity: 1;
+    transform: translateY(0);
+
+    transition:
+      max-height 0.35s ease,
+      opacity 0.25s ease,
+      transform 0.3s ease;
+
+    &.is-collapsed {
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+    }
+  }
+
+  .mini-label {
+    font-size: global.$font-size-xs;
+    margin-top: global.$spacing-xs;
+    opacity: 0.6;
+  }
+}

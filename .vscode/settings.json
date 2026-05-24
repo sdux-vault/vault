@@ -1,0 +1,42 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "prettier.printWidth": 80,
+  "prettier.singleQuote": true,
+  "prettier.useTabs": false,
+  "prettier.tabWidth": 2,
+  "prettier.semi": true,
+  "prettier.bracketSpacing": true,
+  "prettier.trailingComma": "none",
+  "prettier.bracketSameLine": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "js/ts.preferences.importModuleSpecifier": "relative",
+  "files.watcherExclude": {
+    "**/.angular/**": true,
+    "**/.integration/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/build/**": true,
+    "**/coverage/**": true,
+    "**/dist/**": true,
+    "**/docker/docker-production/output/**": true,
+    "**/documentation/**": true,
+    "**/logs/**": true,
+    "**/node_modules/**": true,
+    "**/tsc-out/**": true,
+  }
+}

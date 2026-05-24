@@ -1,0 +1,65 @@
+{
+  "name": "@sdux-vault/angular",
+  "version": "0.10.0",
+  "license": "MIT",
+  "author": {
+    "name": "SDuX Vault",
+    "email": "sduxvault@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdux-vault/vault.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://www.sdux-vault.com",
+  "keywords": [
+    "sdux",
+    "sdux-vault",
+    "state-management",
+    "reactive",
+    "deterministic",
+    "pipeline",
+    "feature-cell",
+    "snapshot",
+    "signals",
+    "angular",
+    "angular-signals",
+    "angular-state-management",
+    "dependency-injection",
+    "zoneless",
+    "composable",
+    "immutable",
+    "devtools"
+  ],
+  "dependencies": {
+    "@sdux-vault/core": "0.8.0",
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/core": "^21.0.0",
+    "rxjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@sdux-vault/engine": "0.27.0",
+    "@sdux-vault/shared": "0.7.0",
+    "rxjs": "^7.0.0"
+  },
+  "files": [
+    "fesm2022/",
+    "types/",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "types": "./types/sdux-vault-angular.d.ts",
+  "main": "./fesm2022/sdux-vault-angular.mjs",
+  "sideEffects": [
+    "./fesm2022/*.mjs",
+    "src/lib/version/version.register.ts"
+  ]
+}

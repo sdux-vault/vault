@@ -1,0 +1,17 @@
+<div class="example-viewer-wrapper">
+  <sdux-example-viewer-header
+    [title]="title()"
+    [subTitle]="subTitle()"
+    [exampleId]="exampleId()">
+  </sdux-example-viewer-header>
+
+  <div
+    class="example-viewer-source-container"
+    [class.visible]="sourceVisible()">
+    <ng-content select="[source]"></ng-content>
+  </div>
+
+  <sdux-example-viewer-body class="example-viewer-body">
+    <ng-content select="[example]"></ng-content>
+  </sdux-example-viewer-body>
+</div>

@@ -1,0 +1,63 @@
+{
+  "name": "@sdux-vault/devtools",
+  "version": "0.8.0",
+  "license": "MIT",
+  "author": {
+    "name": "SDuX Vault",
+    "email": "sduxvault@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdux-vault/vault.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://www.sdux-vault.com",
+  "keywords": [
+    "sdux",
+    "sdux-vault",
+    "state-management",
+    "reactive",
+    "deterministic",
+    "pipeline",
+    "feature-cell",
+    "snapshot",
+    "signals",
+    "angular",
+    "framework-agnostic",
+    "composable",
+    "immutable",
+    "zoneless",
+    "react",
+    "svelte",
+    "vue",
+    "devtools"
+  ],
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "rxjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@sdux-vault/shared": "0.7.0",
+    "rxjs": "^7.0.0"
+  },
+  "files": [
+    "fesm2022/",
+    "types/",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "types": "./types/sdux-vault-devtools.d.ts",
+  "main": "./fesm2022/sdux-vault-devtools.mjs",
+  "sideEffects": [
+    "./fesm2022/*.mjs",
+    "src/lib/version/version.register.ts"
+  ]
+}

@@ -1,0 +1,97 @@
+<nav aria-label="DevTools">
+  <mat-expansion-panel class="nav-expansion">
+    <mat-expansion-panel-header>
+      <span class="nav-section-label">DevTools</span>
+    </mat-expansion-panel-header>
+
+    <a
+      mat-list-item
+      routerLink="/docs/dev-tools/overview"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Overview</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/dev-tools/built-in-debugger"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item"
+        >Built-in <sdux-brand-name /> Debugger</span
+      >
+    </a>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header"
+          >Chrome DevTools Extension</span
+        >
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a mat-list-item>
+          <span class="menu-content">Coming Soon</span>
+        </a>
+      </div>
+
+      <!-- <div class="sub-menu">
+        <a mat-list-item routerLink="/docs/dev-tools/installation" routerLinkActive="active" (click)="closeSidenav()">
+          <span class="menu-content">Installation</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/dev-tools/event-pipeline-viewer"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Event Pipeline Viewer</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/dev-tools/feature-cell-tree"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">FeatureCell Tree</span>
+        </a>
+
+        <a mat-list-item routerLink="/docs/dev-tools/time-travel" routerLinkActive="active" (click)="closeSidenav()">
+          <span class="menu-content">Time Travel</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/dev-tools/troubleshooting"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Troubleshooting</span>
+        </a>
+      </div> -->
+    </mat-expansion-panel>
+
+    <a
+      mat-list-item
+      routerLink="/docs/dev-tools/event-bus"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Event Bus</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/dev-tools/event-bus"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Custom Devtools API</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/dev-tools/vault-monitor"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Vault Monitor</span>
+    </a>
+  </mat-expansion-panel>
+</nav>

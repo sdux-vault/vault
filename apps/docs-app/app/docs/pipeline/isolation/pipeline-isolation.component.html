@@ -1,0 +1,582 @@
+<div class="docs-container">
+  <div class="header">
+    <h3>Pipeline Isolation</h3>
+  </div>
+
+  <header class="docs-header">
+    <div class="lead">
+      <strong>Pipeline Isolation</strong> describes the referential isolation
+      contract that <sdux-brand-name /> enforces at every pipeline boundary to
+      prevent unintended mutations from propagating across stages.
+    </div>
+
+    <p>
+      This document explains <em>what</em> isolation means in the context of
+      <sdux-brand-name /> pipeline execution, <em>how</em> the isolation
+      strategy works, and <em>where</em> isolation is applied across the
+      pipeline lifecycle.
+    </p>
+
+    <p>
+      These guarantees are not incidental. They are the result of deliberate
+      architectural decisions that ensure every pipeline stage operates on an
+      independent copy of the data, eliminating mutation leaks by construction.
+    </p>
+
+    <p>
+      This page is intended for engineers who want a precise understanding of
+      <sdux-brand-name />'s isolation boundaries, the types that receive full
+      isolation, and the edge cases where JavaScript imposes inherent
+      constraints.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">
+      The <sdux-brand-name [tm]="true" /> Isolation Strategy
+    </div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> enforces referential isolation at every pipeline
+        boundary. All state values passed into and returned from pipeline stages
+        are isolated automatically, preventing unintended mutations from
+        propagating across stage boundaries.
+      </p>
+
+      <p>
+        The pipeline uses a
+        <strong>clone-first, freeze-safe fallback</strong> strategy to guarantee
+        deterministic structural isolation:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Primary:</strong> Deep cloning via
+          <em>structuredClone</em> produces a fully independent copy of the
+          value. This is the preferred path for plain objects, arrays, dates,
+          typed arrays, and JSON-like data graphs.
+        </li>
+        <li>
+          <strong>Fallback:</strong> When deep cloning is not possible (for
+          example functions, promises, or class instances), the pipeline applies
+          a deep freeze or returns the value as-is, depending on the type. This
+          prevents mutation where possible and preserves identity where cloning
+          is not meaningful.
+        </li>
+      </ul>
+
+      <p>
+        Primitives (number, string, boolean, bigint, symbol, null, undefined)
+        are immutable by definition and are returned as-is without cloning.
+      </p>
+
+      <p>
+        Already-frozen objects are recognized as isolated and are returned
+        without additional processing.
+      </p>
+
+      <p>
+        This separation between clone and freeze paths is fundamental to
+        <sdux-brand-name />'s isolation contract.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Isolation Guarantees</div>
+
+    <div class="section-body">
+      <p>
+        The isolation strategy provides the following guarantees across the
+        entire pipeline lifecycle:
+      </p>
+
+      <ul>
+        <li>No mutation leaks across pipeline boundaries</li>
+        <li>Stable, predictable data flow through all stages</li>
+        <li>Isolation is automatic and independent of user input shape</li>
+        <li>Cyclic object graphs are handled safely</li>
+      </ul>
+
+      <p>
+        These guarantees hold regardless of whether the pipeline processes
+        synchronous values, promises, observables, or streams.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Isolation Limitations</div>
+
+    <div class="section-body">
+      <p>
+        JavaScript imposes inherent constraints on certain value types. The
+        following are <strong>not guaranteed</strong> by pipeline isolation:
+      </p>
+
+      <ul>
+        <li>Prototype chain preservation on class instances</li>
+        <li>Custom properties on Error objects</li>
+        <li>
+          Internal mutability of engine objects (Map, Set, Promise) when the
+          fallback path is used
+        </li>
+        <li>Non-enumerable and symbol-keyed property visibility</li>
+      </ul>
+
+      <p>
+        <sdux-brand-name /> does not attempt to fight JavaScript's limitations.
+        It constrains them deterministically, providing production-grade
+        isolation for the vast majority of state shapes while remaining
+        transparent about edge cases.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Isolation Behavior Matrix</div>
+
+    <div class="section-body">
+      <p>
+        The following table documents the isolation behavior for each value type
+        that may pass through the pipeline. The <em>Isolated</em> column
+        indicates whether mutation leaks are prevented for that type.
+      </p>
+
+      <div class="table-title">Isolation Levels</div>
+      <table aria-label="Isolation Levels">
+        <thead>
+          <tr>
+            <th scope="col" class="column-150">Level</th>
+            <th scope="col" class="column-auto">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>✅ Yes</td>
+            <td>No mutation leaks possible</td>
+          </tr>
+          <tr>
+            <td>⚠️ Partial</td>
+            <td>Wrapper safe, but internal state may remain mutable</td>
+          </tr>
+          <tr>
+            <td>❌ No</td>
+            <td>Cannot guarantee isolation</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Primary Value Types</div>
+      <div class="table-scroll">
+        <table aria-label="Primary Value Types">
+          <thead>
+            <tr>
+              <th scope="col" class="column-175">Category</th>
+              <th scope="col" class="column-150">Type</th>
+              <th scope="col" class="column-auto">Clone Behavior</th>
+              <th scope="col" class="column-auto">Fallback Behavior</th>
+              <th scope="col" class="column-75">Isolated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Primitives</td>
+              <td>number, string, boolean, bigint, symbol, null, undefined</td>
+              <td>Returned as-is</td>
+              <td>Returned as-is</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>Plain Objects</td>
+              <td>{{ '{ a: 1 }' }}</td>
+              <td>Deep cloned</td>
+              <td>Deep cloned + frozen</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>Arrays</td>
+              <td>[1, 2, 3]</td>
+              <td>Deep cloned</td>
+              <td>Deep cloned + frozen</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>JSON-like Data</td>
+              <td>POJO graphs</td>
+              <td>Deep cloned</td>
+              <td>Deep cloned + frozen</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>Dates</td>
+              <td>new Date()</td>
+              <td>Cloned</td>
+              <td>Frozen</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>RegExp</td>
+              <td>/abc/g</td>
+              <td>Cloned</td>
+              <td>Frozen</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>TypedArray</td>
+              <td>Uint8Array</td>
+              <td>Cloned</td>
+              <td>Frozen</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>ArrayBuffer</td>
+              <td>ArrayBuffer</td>
+              <td>Cloned</td>
+              <td>Frozen</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>DataView</td>
+              <td>DataView</td>
+              <td>Cloned</td>
+              <td>Frozen</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>Cyclic Objects</td>
+              <td>{{ '{ self }' }}</td>
+              <td>Cloned with cycles</td>
+              <td>Deep cloned + frozen (cycle-safe)</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>Frozen Objects</td>
+              <td>Object.freeze(obj)</td>
+              <td>Returned as-is</td>
+              <td>Returned as-is</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>Null-proto Object</td>
+              <td>Object.create(null)</td>
+              <td>Cloned</td>
+              <td>Deep cloned + frozen</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>Shared References</td>
+              <td>{{ '{ a: x, b: x }' }}</td>
+              <td>Preserved in clone</td>
+              <td>Preserved in clone</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>Sparse Arrays</td>
+              <td>[ , , 3 ]</td>
+              <td>Preserved</td>
+              <td>Preserved</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>Boxed Primitives</td>
+              <td>new Number(1)</td>
+              <td>Cloned</td>
+              <td>Frozen</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td>Functions</td>
+              <td>() =&gt; {{ '{}' }}</td>
+              <td>Cannot clone</td>
+              <td>Returned as-is</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Promises</td>
+              <td>Promise.resolve()</td>
+              <td>Cannot clone</td>
+              <td>Returned as-is</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Map</td>
+              <td>new Map()</td>
+              <td>Deep cloned</td>
+              <td>Frozen wrapper</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Set</td>
+              <td>new Set()</td>
+              <td>Deep cloned</td>
+              <td>Frozen wrapper</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Error</td>
+              <td>new Error()</td>
+              <td>Cloned (core fields)</td>
+              <td>Frozen</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Class Instance</td>
+              <td>new Foo()</td>
+              <td>Prototype stripped</td>
+              <td>Frozen instance</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Observable</td>
+              <td>new Observable()</td>
+              <td>Cannot clone</td>
+              <td>Frozen wrapper</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Getters / Setters</td>
+              <td>{{ '{ get x(){} }' }}</td>
+              <td>Getter invoked</td>
+              <td>Getter not invoked</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Non-enumerable Props</td>
+              <td>defineProperty</td>
+              <td>Dropped</td>
+              <td>Preserved if fallback path</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Symbol-keyed Props</td>
+              <td>{{ '{ [sym]: 1 }' }}</td>
+              <td>Dropped</td>
+              <td>Preserved if fallback path</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Proxy (well-formed)</td>
+              <td>new Proxy()</td>
+              <td>Cloned</td>
+              <td>Frozen target</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Intl Objects</td>
+              <td>Intl.DateTimeFormat</td>
+              <td>Cloned</td>
+              <td>Frozen</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>Mixed Graphs</td>
+              <td>fn + object</td>
+              <td>Partial clone</td>
+              <td>Clone + preserve refs</td>
+              <td>⚠️ Partial</td>
+            </tr>
+            <tr>
+              <td>WeakMap</td>
+              <td>new WeakMap()</td>
+              <td>Cannot clone</td>
+              <td>Returned as-is</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td>WeakSet</td>
+              <td>new WeakSet()</td>
+              <td>Cannot clone</td>
+              <td>Returned as-is</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td>DOM Nodes</td>
+              <td>HTMLElement</td>
+              <td>Cannot clone</td>
+              <td>Frozen wrapper</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td>Proxy (malicious)</td>
+              <td>fake ownKeys</td>
+              <td>Throws</td>
+              <td>Throws</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td>ES Modules</td>
+              <td>module namespace</td>
+              <td>Cannot clone</td>
+              <td>Returned as-is</td>
+              <td>❌ No</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Recommended State Shapes</div>
+
+    <div class="section-body">
+      <p>
+        For maximum isolation guarantees, state values should be plain objects,
+        arrays, primitives, dates, or JSON-serializable graphs. These value
+        types receive full deep-clone isolation and are the ideal use case for
+        pipeline state.
+      </p>
+
+      <p>
+        Avoid storing class instances, DOM nodes, observables, or
+        WeakMap/WeakSet values in pipeline state. These types cannot be fully
+        isolated and may produce unexpected behavior across pipeline boundaries.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Where Isolation Is Applied</div>
+
+    <div class="section-body">
+      <p>
+        Isolation is applied automatically at every pipeline boundary where
+        state values cross between stages. The following table documents the
+        specific isolation points enforced by the Conductor and Orchestrator.
+      </p>
+
+      <div class="table-title">Pipeline Isolation Points</div>
+      <table aria-label="Pipeline Isolation Points">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Pipeline Boundary</th>
+            <th scope="col" class="column-auto">What Is Isolated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Incoming State</td>
+            <td>
+              State input values are isolated when entering the pipeline to
+              prevent consumer-side mutations from affecting pipeline execution.
+            </td>
+          </tr>
+          <tr>
+            <td>Pipeline Options</td>
+            <td>
+              Options passed into pipeline operations are isolated to prevent
+              shared configuration from being mutated during execution.
+            </td>
+          </tr>
+          <tr>
+            <td>Interceptor Stage</td>
+            <td>
+              The incoming state is isolated before each Interceptor behavior
+              executes, preventing interceptors from mutating the original
+              incoming value.
+            </td>
+          </tr>
+          <tr>
+            <td>Resolve Stage</td>
+            <td>
+              Resolve results are isolated after computation to prevent
+              downstream stages from seeing unintended mutations.
+            </td>
+          </tr>
+          <tr>
+            <td>Stepwise Stages</td>
+            <td>
+              Both the last snapshot value and the current candidate are
+              isolated before each Stepwise evaluation (StepwiseResolve,
+              StepwiseFilter, StepwiseReducer).
+            </td>
+          </tr>
+          <tr>
+            <td>Merge Stage</td>
+            <td>
+              Both the current state and the partial update are isolated before
+              the merge computation. The merge result is isolated before
+              continuing downstream.
+            </td>
+          </tr>
+          <tr>
+            <td>Filter Stage</td>
+            <td>
+              The current state is isolated before each filter function
+              executes. Filter results are isolated before continuing
+              downstream.
+            </td>
+          </tr>
+          <tr>
+            <td>Reducer Stage</td>
+            <td>
+              The current state is isolated before each reducer function
+              executes. Reducer results are isolated before continuing
+              downstream.
+            </td>
+          </tr>
+          <tr>
+            <td>BeforeTap / AfterTap</td>
+            <td>
+              Observation stages receive isolated copies, ensuring that tap
+              callbacks cannot corrupt pipeline data flow.
+            </td>
+          </tr>
+          <tr>
+            <td>Final State</td>
+            <td>
+              The resolved state is isolated after reduction and before
+              committing to the output layer.
+            </td>
+          </tr>
+          <tr>
+            <td>Error Handling</td>
+            <td>
+              Error values, current state, and snapshots are all isolated before
+              being passed to error transform behaviors and error callbacks.
+            </td>
+          </tr>
+          <tr>
+            <td>Global Error Service</td>
+            <td>
+              The finalized error state is isolated before being committed to
+              the global error service.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Isolation Contract Summary</div>
+
+    <div class="section-body">
+      <ul>
+        <li>Every pipeline stage operates on an isolated copy of the data</li>
+        <li>
+          Isolation uses clone-first with a freeze-safe fallback for
+          non-cloneable types
+        </li>
+        <li>
+          Isolation is automatic and requires no manual cloning by engineers
+        </li>
+        <li>
+          JSON-serializable state shapes receive full deep-clone isolation
+        </li>
+        <li>
+          Edge cases are constrained deterministically, not silently ignored
+        </li>
+      </ul>
+
+      <p>
+        These guarantees are foundational. Every behavior, extension, and
+        integration in <sdux-brand-name /> is designed to preserve them.
+      </p>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

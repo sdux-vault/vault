@@ -1,0 +1,285 @@
+# Controller Stage — Contract & Checklist
+
+This document defines the **Controller stage contract** in the SDuX pipeline.  
+It is intentionally short and checklist-oriented so controllers can be reviewed mechanically and reasoned about consistently.
+
+---
+
+## Purpose
+
+**Controllers decide what should happen to a pipeline attempt over time.**
+
+They express **policy**, **coordination**, and **lifecycle decisions** — not state transformation.
+
+### Does this logic decide _before_ the attempt runs, or _during_ execution?
+
+**If the answer is: _Before the attempt runs_ → Use a Controller**
+
+- Decides **whether** and **when** an attempt may enter the pipeline
+- Can wait, block, retry, buffer, abort, or coordinate over time or external signals
+- Operates on **attempts**, not values
+
+**If the answer is: _During execution_ → Use an Interceptor**
+
+- Runs **after** an attempt is already admitted
+- Transforms, filters, validates, or observes the value
+- Operates on **values**, not scheduling or admission
+
+---
+
+### What question does it answer?
+
+**“Should this attempt run right now?” → Controller**
+
+- Controls pipeline admission and timing
+
+**“What should happen to the value now that it’s running?” → Interceptor**
+
+- Controls data flow and transformation
+
+---
+
+### Does it wait, sleep, or react later?
+
+**Yes → Controller**
+
+- Time-based logic, IO, approvals, coordination
+- Can block the pipeline intentionally
+
+**No (single sync or awaited step) → Interceptor**
+
+- Pure value handling
+- No temporal coordination
+
+---
+
+### Does it affect _when_ the pipeline runs or _how_ the value flows?
+
+**When → Controller**
+
+- Scheduling
+- Policy enforcement
+- Gating and coordination
+
+**How → Interceptor**
+
+- Mapping
+- Filtering
+- Enrichment
+
+---
+
+## Position in Pipeline
+
+```text
+FeatureCell
+↓
+Conductor   ← YOU ARE HERE
+↓
+Controllers
+↓
+Decision Engine
+↓
+Arbitrator
+↓
+Orchestrator
+↓
+Queue
+↓
+Interceptors
+↓
+Resolve → Merge / Replace → …
+```
+
+Controllers run **before the orchestrator executes** and **before interceptors**.  
+They operate on **attempts**, not state writes.
+
+---
+
+## Input
+
+Controllers receive **controller messages**, not state:
+
+### Primary message types
+
+| Message Type | When It Is Sent                              | Meaning                                 | Controller Responsibility |
+| ------------ | -------------------------------------------- | --------------------------------------- | ------------------------- |
+| Attempt      | A new pipeline attempt reaches the Conductor | Request for admission into the pipeline | Must emit a vote          |
+| Success      | An attempt completed successfully            | Informational lifecycle signal          | Observe only (no vote)    |
+| Fail         | An attempt failed with an error              | Informational lifecycle signal          | Observe only (no vote)    |
+| Finalize     | A trace is being cleaned up                  | Terminal lifecycle signal               | Cleanup internal state    |
+
+### Context provided
+
+- `ControllerContext<T>`
+  - `traceId`
+  - `featureCellKey`
+  - `incoming`
+  - `snapshot`
+  - `operation`
+
+Controllers must treat context as **read-only**.
+
+---
+
+## Output (STRICT)
+
+Controllers respond to `Attempt` messages by emitting **votes**.
+
+### Valid controller votes
+
+| Vote       | Meaning                     | Queue Effect  | Pipeline Effect           | Typical Use Case              |
+| ---------- | --------------------------- | ------------- | ------------------------- | ----------------------------- |
+| Abstain    | No opinion                  | No change     | Defers decision to others | Default / passive controllers |
+| Deny       | Block until external change | Head stays    | Pipeline is blocked       | Waiting on IO, UI, approval   |
+| Abort      | Kill permanently            | Head removed  | Attempt is discarded      | Rate limiting, invalid input  |
+| Retry      | Retry immediately           | Head resets   | Controllers re-run        | Transient errors              |
+| Buffer     | Defer execution             | Head retained | Re-evaluated later        | Scheduling, delay             |
+| (implicit) | All abstain                 | Head proceeds | Orchestrator runs         | Normal execution              |
+
+Votes are **aggregated**, not executed directly.
+
+---
+
+## Decision Aggregation
+
+- Votes are collected by the **Arbitrator**
+- Priority order is deterministic:
+
+```text
+Deny
+↓
+Abort
+↓
+Retry
+↓
+Buffer
+↓
+All Abstain → Complete
+```
+
+Controllers **never decide execution directly** — they only vote.
+
+---
+
+## Execution Model
+
+- Controllers are evaluated **per attempt**
+- All controllers receive the same `Attempt` message
+- Votes are aggregated into a single `DecisionOutcome`
+- The Conductor reacts to the outcome
+
+Controllers do **not** run the pipeline themselves.
+
+---
+
+## Sync / Async Rules
+
+- Controllers **may be async**
+- Controllers **may wait indefinitely**
+- Controllers **may react to external events**
+- Controllers **may request re-votes**
+
+✅ Valid async use:
+
+- waiting for timers
+- listening to external services
+- coordinating multiple in-flight attempts
+- buffering or retrying attempts
+- reacting to global state changes
+
+❌ Invalid async use:
+
+- emitting state
+- mutating pipeline data
+- bypassing the conductor
+- executing orchestrator logic
+
+---
+
+## Error Handling
+
+- Errors thrown by a controller:
+  - are caught by the Arbitrator
+  - are converted to a `Deny` vote
+  - do **not** crash the pipeline
+
+Controllers must **never throw intentionally** to control flow.
+
+---
+
+## State Mutation Rules
+
+Controllers **must not**:
+
+- mutate state
+- emit values
+- call orchestrator methods
+- interact with interceptors
+- touch the vault queue directly
+
+Controllers operate only via **votes and signals**.
+
+---
+
+## Lifecycle Responsibilities
+
+If a controller maintains internal state (timers, queues, subscriptions):
+
+- `destroy()` must release all resources
+- `reset()` must clear all internal state
+- No timers, subscriptions, or pending work may survive reset/destroy
+
+---
+
+## Behavior Classification Examples
+
+| Behavior            | Valid as Controller? | Reason                      |
+| ------------------- | -------------------- | --------------------------- |
+| Retry policy        | ✅                   | Temporal policy             |
+| Buffering           | ✅                   | Scheduling                  |
+| Global error replay | ✅                   | External coordination       |
+| Stepwise approval   | ✅                   | External decision           |
+| Delay               | ✅                   | Temporal coordination       |
+| Debounce (any form) | ✅                   | Time-based policy           |
+| Throttle (any form) | ✅                   | Time-based admission policy |
+
+---
+
+## Mental Model
+
+Controller = “What should happen to this attempt over time?”
+Interceptor = “Can this candidate enter right now?”
+
+If it:
+
+- waits outside of the invocation
+- retries
+- buffers
+- reacts later
+  → **Controller**
+
+If it:
+
+- answers yes or no before the call returns (sync or awaited)
+  → **Interceptor**
+
+---
+
+## Review Checklist
+
+Before approving a controller:
+
+- [ ] Emits only controller votes
+- [ ] Does not mutate state
+- [ ] Does not execute pipeline logic
+- [ ] Uses votes, not side effects
+- [ ] Handles async safely
+- [ ] Cleans up timers/subscriptions
+- [ ] Does not bypass the conductor
+- [ ] Represents policy, not transformation
+
+---
+
+This contract is non-negotiable.  
+Violations will cause race conditions, deadlocks, or inconsistent pipeline behavior.

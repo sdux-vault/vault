@@ -1,0 +1,11 @@
+{
+  "spec_dir": "tools",
+  "spec_files": [
+    "example-generation/tests/**/*.spec.mjs",
+    "documentation/**/tests/**/*.spec.mjs",
+    "release/**/tests/**/*.spec.mjs",
+    "stackblitz/**/tests/**/*.spec.mjs"
+  ],
+  "helpers": [],
+  "random": false
+}

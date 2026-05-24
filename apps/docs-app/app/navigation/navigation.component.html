@@ -1,0 +1,294 @@
+<mat-sidenav-container class="sdux-sidenav-container">
+  <mat-sidenav
+    #sidenav
+    class="sdux-sidenav"
+    [mode]="mode()"
+    [(opened)]="isExpanded"
+    position="start"
+    (closed)="closing()"
+    role="navigation"
+    aria-label="SDuX Documentation Navigation">
+    <div class="sidenav-content">
+      <mat-nav-list class="navigation-list">
+        <!-- ========================== -->
+        <!-- Top-Level Navigation -->
+        <!-- ========================== -->
+
+        <div class="menu-content-container">
+          <a
+            mat-list-item
+            routerLink="docs/pipeline/builder"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <div class="menu-content">Pipeline Builder</div>
+          </a>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <sdux-getting-started-subnavigation />
+
+        <mat-divider></mat-divider>
+
+        <sdux-migration-subnavigation></sdux-migration-subnavigation>
+
+        <mat-divider></mat-divider>
+
+        <sdux-vault-feature-cell-api-subnavigation />
+
+        <mat-divider></mat-divider>
+
+        <sdux-pipeline-subnavigation></sdux-pipeline-subnavigation>
+
+        <mat-divider></mat-divider>
+
+        <sdux-pipeline-controllers-subnavigation />
+
+        <mat-divider></mat-divider>
+
+        <sdux-pipeline-behaviors-subnavigation />
+
+        <mat-divider></mat-divider>
+
+        <sdux-pipeline-extensions-subnavigation />
+
+        <mat-divider></mat-divider>
+
+        <div class="menu-content-container">
+          <a
+            mat-list-item
+            routerLink="/docs/global-error-handler"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <div class="menu-content">Global Error Handler</div>
+          </a>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="menu-content-container">
+          <a
+            mat-list-item
+            routerLink="/docs/pipeline/execution-guarantee"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <div class="menu-content">Pipeline Execution Guarantees</div>
+          </a>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="menu-content-container">
+          <a
+            mat-list-item
+            routerLink="/docs/pipeline/isolation"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <div class="menu-content">Pipeline Isolation</div>
+          </a>
+        </div>
+
+        <!-- <mat-divider></mat-divider>
+
+        <nav aria-labelledby="resolve-section-label">
+          <mat-expansion-panel class="nav-expansion">
+            <mat-expansion-panel-header>
+              <div class="nav-section-label">
+                <div class="menu-icon">
+                  <span class="menu-content">Auto-Vaulting</span>
+
+                  <sdux-image class="logo" image="brand/brand-icon.svg" height="20"></sdux-image>
+                </div>
+              </div>
+            </mat-expansion-panel-header>
+
+            <a mat-list-item routerLink="/docs/auto-vaulting/get" routerLinkActive="active" (click)="closeSidenav()">
+              <span class="menu-content">Auto-Vaulting Get</span>
+            </a>
+
+            <a mat-list-item routerLink="/docs/auto-vaulting/delete" routerLinkActive="active" (click)="closeSidenav()">
+              <span class="menu-content">Auto-Vaulting Delete</span>
+            </a>
+          </mat-expansion-panel>
+        </nav> -->
+
+        <mat-divider></mat-divider>
+
+        <sdux-dev-tools-subnavigation />
+
+        <mat-divider></mat-divider>
+
+        <div class="menu-content-container">
+          <a
+            mat-list-item
+            routerLink="/docs/stackblitz"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <div class="menu-content">StackBlitz Examples</div>
+          </a>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <nav aria-label="Reference Guides">
+          <mat-expansion-panel class="nav-expansion">
+            <mat-expansion-panel-header>
+              <span class="nav-section-label">Reference Guides</span>
+            </mat-expansion-panel-header>
+
+            <sdux-references-subnavigation />
+
+            <a
+              mat-list-item
+              routerLink="/docs/diagrams"
+              routerLinkActive="active"
+              (click)="closeSidenav()">
+              <span class="menu-content">Diagrams</span>
+            </a>
+
+            <a
+              mat-list-item
+              routerLink="/docs/welcome/testing"
+              routerLinkActive="active"
+              (click)="closeSidenav()">
+              <span class="menu-content">Testing {{ brandName }}</span>
+            </a>
+          </mat-expansion-panel>
+        </nav>
+
+        <mat-divider></mat-divider>
+
+        <nav aria-label="Licensing">
+          <mat-expansion-panel class="nav-expansion">
+            <mat-expansion-panel-header>
+              <span class="nav-section-label">Licensing</span>
+            </mat-expansion-panel-header>
+
+            <a
+              mat-list-item
+              routerLink="/sdux/vault"
+              routerLinkActive="active"
+              (click)="closeSidenav()">
+              <div class="menu-icon menu-content">
+                <sdux-image
+                  class="logo"
+                  image="brand/brand-icon.svg"
+                  height="20"></sdux-image>
+                Purchase {{ vaultBrandName }}
+              </div>
+            </a>
+
+            <a
+              mat-list-item
+              routerLink="/docs/welcome/license"
+              aria-label="Licensing"
+              routerLinkActive="active"
+              (click)="closeSidenav()">
+              <div class="menu-content">{{ brandName }} License</div>
+            </a>
+
+            <a
+              mat-list-item
+              routerLink="/docs/welcome/trademark-usage"
+              aria-label="Trademark Usage & Brand Policy"
+              routerLinkActive="active"
+              (click)="closeSidenav()">
+              <div class="menu-content">{{ brandName }} Trademark Usage</div>
+            </a>
+
+            <a
+              mat-list-item
+              routerLink="/docs/pipeline/extensions/licensing-and-monetization"
+              routerLinkActive="active"
+              (click)="closeSidenav()">
+              <span class="menu-content sub-item"
+                >Licensing & Monetization</span
+              >
+            </a>
+          </mat-expansion-panel>
+        </nav>
+
+        <mat-divider></mat-divider>
+
+        <nav aria-label="Get Involved">
+          <mat-expansion-panel class="nav-expansion">
+            <mat-expansion-panel-header>
+              <span class="nav-section-label">Get Involved</span>
+            </mat-expansion-panel-header>
+
+            <a
+              mat-list-item
+              routerLink="/docs/welcome/roadmap"
+              routerLinkActive="active"
+              (click)="closeSidenav()">
+              <div class="menu-content">Roadmap (Call for Help)</div>
+            </a>
+
+            <a
+              mat-list-item
+              routerLink="/docs/welcome/contributors"
+              routerLinkActive="active"
+              (click)="closeSidenav()">
+              <div class="menu-content">Contributors</div>
+            </a>
+          </mat-expansion-panel>
+        </nav>
+
+        <div class="menu-content-container">
+          <a
+            mat-list-item
+            routerLink="/sdux/vault"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <div class="menu-icon menu-content">
+              <sdux-image
+                class="logo"
+                image="brand/brand-icon.svg"
+                height="20"></sdux-image>
+              Purchase {{ vaultBrandName }}
+            </div>
+          </a>
+        </div>
+
+        <div class="menu-content-container">
+          <a
+            mat-list-item
+            routerLink="/sdux/enterprise"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <div class="menu-content">
+              <sdux-brand-name /> Enterprise Support
+            </div>
+          </a>
+        </div>
+
+        <div class="menu-content-container">
+          <a
+            mat-list-item
+            routerLink="/sdux/training"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <div class="menu-content"><sdux-brand-name /> Trainings</div>
+          </a>
+        </div>
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="sdux-main-content" role="main">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div class="button-toggle-container sdux-sidenav-toggle">
+  <button
+    type="button"
+    class="button-toggle"
+    aria-label="Toggle Site Navigation"
+    (click)="toggleSidenav()"
+    matTooltip="Toggle Site Navigation">
+    <mat-icon>
+      {{ isExpanded() ? 'chevron_left' : 'chevron_right' }}
+    </mat-icon>
+  </button>
+</div>

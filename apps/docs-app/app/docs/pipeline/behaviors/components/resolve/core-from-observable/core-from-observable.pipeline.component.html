@@ -1,0 +1,413 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>fromObservable Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <div class="lead">
+      <strong>
+        <a href="/docs/featurecell/extensions/from-observable"
+          >fromObservable</a
+        >
+      </strong>
+      is a <a href="/docs/references/functions/feature-cell">FeatureCell</a> API
+      extension that converts an <code>Observable&lt;T&gt;</code> into a
+      normalized <code>StateType&lt;T&gt;</code>, allowing asynchronous
+      observable results to be injected into the pipeline using standard state
+      update APIs.
+    </div>
+
+    <p>
+      This behavior operates <strong>outside of the pipeline</strong> and does
+      not participate directly in Resolve, operator, filter, or reducer stages.
+      Instead, it acts as a bridge that resolves a single observable emission
+      and produces a structured state envelope suitable for pipeline admission.
+    </p>
+
+    <p>
+      <strong>fromObservable</strong> exists primarily as a migration and
+      interoperability aid for engineers accustomed to Redux-style patterns,
+      where state updates are often wrapped in observables and manually
+      normalized before dispatch. It enables those workflows to transition
+      cleanly into the SDuX model without requiring immediate changes to
+      application architecture.
+    </p>
+
+    <p>
+      This behavior
+      <strong
+        >extends the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance</strong
+      >
+      by adding a <strong><code>fromObservable()</code></strong> method that
+      returns an <code>Observable&lt;StateType&lt;T&gt;&gt;</code>. The returned
+      observable may then be passed directly to <strong>replaceState</strong> or
+      <strong>mergeState</strong>.
+    </p>
+
+    <p>
+      When <code>fromObservable()</code> is invoked, the source observable is
+      subscribed once. The first emitted value is wrapped in a standard state
+      envelope and emitted downstream, after which the subscription completes.
+      Errors are normalized into pipeline-compatible error objects.
+    </p>
+
+    <p>
+      Subscription lifetime is bound to the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      lifecycle. Active subscriptions are automatically terminated on reset or
+      destruction, ensuring that observable resolution cannot outlive the owning
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      or produce orphaned state updates.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      <code>fromObservable()</code> is a <em>single-resolution bridge</em>, not
+      a streaming mechanism. It exists primarily to support migration from
+      Redux-style or externally managed async flows where observables are
+      resolved before state submission.
+    </p>
+
+    <p>
+      In most cases, it is
+      <strong>recommended to pass the observable directly</strong> to
+      <strong>replaceState</strong> or <strong>mergeState</strong> and allow the
+      Resolve stage to handle normalization automatically. This reduces
+      indirection, minimizes unnecessary wrapping code, and avoids subtle
+      debugging issues caused by resolving values outside the pipeline.
+    </p>
+
+    <p>
+      Use <code>fromObservable()</code> only when you explicitly need to adapt
+      or transform an observable into a <code>StateType&lt;T&gt;</code> envelope
+      before submission. For continuous or high-frequency observable sources
+      that emit over time, use <strong>fromStream()</strong> instead.
+    </p>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.4/2.4.3-from-observable-flow.svg"
+        [tooltip]="'fromObservable Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a
+            href="/docs/pipeline/behaviors/observable/with-core-from-observable-behavior"
+            >withCoreFromObservableBehavior</a
+          ></strong
+        >
+        is configured by invoking the
+        <strong><code>fromObservable()</code></strong> method on an initialized
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. This
+        method wraps an observable source and returns a derived observable that
+        emits normalized <code>StateType&lt;T&gt;</code> values.
+      </p>
+
+      <p>
+        Unlike resolve behaviors that execute <em>inside</em> the pipeline,
+        <strong
+          ><a
+            href="/docs/pipeline/behaviors/observable/with-core-from-observable-behavior"
+            >withCoreFromObservableBehavior</a
+          ></strong
+        >
+        operates <em>outside</em> of pipeline execution. It acts as a bridge
+        that converts observable emissions into standard state envelopes, which
+        can then be injected into the pipeline using
+        <strong>replaceState</strong> or <strong>mergeState</strong>.
+      </p>
+
+      <p>
+        The observable produced by <code>fromObservable()</code> emits at most a
+        single normalized state value and completes. Subscription lifetime is
+        automatically bound to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle and is terminated on reset or destruction, ensuring that
+        asynchronous resolution cannot outlive the owning cell.
+      </p>
+
+      <p>
+        This API exists primarily as a migration and interoperability bridge for
+        patterns common in Redux-style systems, where asynchronous sources are
+        resolved externally and then dispatched as state updates. In most cases,
+        directly supplying observables to the vault and allowing the Resolve
+        stage to handle normalization is preferred.
+      </p>
+
+      <sdux-vault-resolve-behaviors-common [type]="'fromObservable'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Observable Integration
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a
+            href="/docs/pipeline/behaviors/observable/with-core-from-observable-behavior"
+            >withCoreFromObservableBehavior</a
+          ></strong
+        >
+        extends the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance with a <strong><code>fromObservable()</code></strong> method,
+        providing a bridge for integrating RxJS observables into state updates
+        without directly submitting the observable to the pipeline.
+      </p>
+
+      <p>
+        Unlike <strong>replaceState</strong> and <strong>mergeState</strong>,
+        which accept finalized state inputs, <code>fromObservable()</code> wraps
+        an observable source and produces a derived observable that emits a
+        normalized <code>StateType&lt;T&gt;</code> value.
+      </p>
+
+      <p>
+        This method does not inject values into the pipeline automatically.
+        Instead, it externalizes observable resolution and allows the resulting
+        state envelope to be explicitly submitted using
+        <strong>replaceState</strong> or <strong>mergeState</strong>. Resolution
+        and commitment still occur through the standard Resolve and State
+        stages.
+      </p>
+
+      <div class="table-title">
+        Extended
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> API
+      </div>
+
+      <table aria-label="Extended">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">API</th>
+            <th scope="col" class="column-300">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p><strong>.fromObservable(source$)</strong></p>
+
+              <p>inputs:</p>
+              <ul>
+                <li><code>source$</code>: Observable&lt;T&gt;</li>
+              </ul>
+
+              <p>returns:</p>
+              <ul>
+                <li><code>Observable&lt;StateType&lt;T&gt;&gt;</code></li>
+              </ul>
+            </td>
+
+            <td>
+              <p>
+                Wraps an observable source and resolves a single emitted value
+                into a normalized state envelope containing
+                <code>value</code>, <code>loading</code>, and
+                <code>error</code> fields.
+              </p>
+
+              <p>
+                The returned observable completes after emitting once and is
+                automatically bound to the
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                lifecycle. Subscriptions are terminated on reset or destruction,
+                preventing asynchronous resolution from outliving the owning
+                cell.
+              </p>
+
+              <p>
+                This API is intended as a migration and interoperability bridge
+                for Redux-style or external async flows, where values are
+                traditionally resolved outside the store and then dispatched as
+                state updates.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a
+            href="/docs/pipeline/behaviors/observable/with-core-from-observable-behavior"
+            >withCoreFromObservableBehavior</a
+          ></strong
+        >
+        provides a bridge for resolving a single value from an
+        <code>Observable</code> and converting it into a normalized
+        <code>StateType</code>.
+      </p>
+
+      <p>
+        Unlike <strong>fromStream()</strong>, which continuously injects values,
+        <code>fromObservable()</code> resolves exactly once. The resulting state
+        envelope must then be explicitly injected into the pipeline using
+        <strong>mergeState</strong> or <strong>replaceState</strong>.
+      </p>
+
+      <p>
+        In the examples below, a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized normally. After initialization, an observable is resolved
+        using <code>fromObservable()</code>, and the resulting state envelope is
+        forwarded into the pipeline using <strong>mergeState</strong>.
+      </p>
+
+      <h4>Example 1: Resolve an Observable and Inject the Result</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Resolve an Observable and Inject the Result'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+
+    // Observable defined locally in the cell
+    const employees$ = of([
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+    ]);
+
+    // Resolve the observable once and inject the result into the pipeline
+    this.vault.fromObservable(employees$).subscribe({
+      next: (incoming: StateType&lt;Employee[]>) => this.vault.mergeState(incoming)
+    });
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Resolve an Observable and Inject the Result'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { of } from 'rxjs';
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+employeeCell.initialize();
+
+// Observable defined locally in the module
+const employees$ = of([
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' }
+]);
+
+// Resolve the observable once and inject the result into the pipeline
+employeeCell.fromObservable(employees$).subscribe({
+  next: (incoming: StateType&lt;Employee[]>) => this.vault.mergeState(incoming)
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Resolve an Observable and Inject the Result'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { of } from 'rxjs';
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+employeeCell.initialize();
+
+// Observable defined locally in the module
+const employees$ = of([
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' }
+]);
+
+// Resolve the observable once and inject the result into the pipeline
+employeeCell.fromObservable(employees$).subscribe({
+  next: (incoming: StateType&lt;Employee[]>) => this.vault.mergeState(incoming)
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

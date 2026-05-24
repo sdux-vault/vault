@@ -1,0 +1,1411 @@
+<div class="docs-container">
+  <div class="header">
+    <h3><sdux-vault-brand-name [tm]="true" /> Enterprise</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-vault-brand-name [tm]="true" /> Enterprise provides the support,
+      security, observability, and compliance capabilities that organizations
+      need to operate <sdux-brand-name /> safely in production environments at
+      scale.
+    </p>
+
+    <p>
+      This page describes the enterprise-grade features available to
+      organizations that require guaranteed support response times, security
+      advisory coverage, compliance documentation, and advanced operational
+      tooling beyond the open-source
+      <sdux-brand-name /> core.
+      <a [routerLink]="[]" fragment="enterprise-contact"
+        >Contact our enterprise team</a
+      >
+      to learn more.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Overview</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-vault-brand-name /> Enterprise extends the core
+        <sdux-brand-name /> platform with capabilities designed for
+        organizations that operate in regulated, security-conscious, or
+        large-scale production environments.
+      </p>
+
+      <ul>
+        <li>Dedicated SLA support and architecture consulting</li>
+        <li>Security advisories, audit logging, and tamper protection</li>
+        <li>Pipeline telemetry, production tracing, and observability</li>
+        <li>Compliance documentation, audit trails, and SBOM generation</li>
+        <li>Private packages, air-gapped builds, and offline documentation</li>
+        <li>Long-term support (LTS) releases and version policy guarantees</li>
+        <li>Advanced Chrome DevTools profiling and tracing dashboards</li>
+      </ul>
+
+      <p>
+        Ready to get started?
+        <a [routerLink]="[]" fragment="enterprise-contact"
+          >Contact enterprise sales</a
+        >
+        to discuss licensing and support options for your organization.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="toc">
+    <div class="section-title">Enterprise Capabilities</div>
+
+    <div class="section-body">
+      <div class="toc-container">
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="enterprise-support"
+              >Enterprise Support</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="sla-support">SLA Support</a>
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="architecture-consulting"
+                  >Architecture Consulting</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="security-advisories"
+                  >Security Advisories & Updates</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="advanced-security"
+              >Advanced Security</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="tamper-protection"
+                  >Tamper Protection</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="deterministic-state-recovery"
+                  >Deterministic State Recovery</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="audit-logs">Audit Logs</a>
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="security-audit"
+                  >Security Audit</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="sso-compatibility"
+                  >SSO Integration Compatibility</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="enterprise-observability"
+              >Enterprise Observability</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="advanced-telemetry-profiling"
+                  >Advanced Telemetry Profiling</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="production-tracing"
+                  >Production Tracing</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="full-pipeline-tracing"
+                  >Full Pipeline Tracing</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="compliance-governance"
+              >Compliance & Governance</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="compliance-documentation"
+                  >Compliance Documentation</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="audit-trails">Audit Trails</a>
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="sbom-generation"
+                  >SBOM Generation</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="enterprise-deployment"
+              >Enterprise Deployment</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="private-packages"
+                  >Private Packages</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="air-gapped-builds"
+                  >Air-Gapped Builds</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="offline-documentation"
+                  >Offline Documentation</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="enterprise-reliability"
+              >Enterprise Reliability</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="lts-releases"
+                  >Long-Term Support (LTS Releases)</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="version-policy"
+                  >Version Policy</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="enterprise-devtools"
+              >Enterprise Chrome DevTools</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="devtools-telemetry-profiling"
+                  >Advanced Telemetry Profiling</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="devtools-production-tracing"
+                  >Production Tracing Dashboards</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="enterprise-contact"
+              >Contact Enterprise Sales</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="enterprise-support">
+    <div class="section-title-navigation">
+      <div class="section-title">Enterprise Support</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong><sdux-vault-brand-name /></strong> Enterprise includes dedicated
+        support services designed to help organizations adopt, scale, and
+        maintain <sdux-brand-name /> within production environments.
+      </p>
+
+      <p>
+        Enterprise support provides direct access to the
+        <sdux-brand-name /> engineering team for architectural guidance,
+        security advisory coverage, and guaranteed response times.
+      </p>
+    </div>
+
+    <div class="section-body" id="sla-support">
+      <div class="h-title-navigation">
+        <div class="h-title">SLA Support</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Enterprise customers receive service-level agreements (SLAs) that
+        guarantee response times for support requests, issue escalation, and
+        critical incident resolution.
+      </p>
+
+      <p>
+        SLA tiers are structured to match the operational requirements of the
+        customer's deployment, from standard business-hours response to priority
+        coverage for production-critical systems.
+      </p>
+
+      <ul>
+        <li>Guaranteed response times for support tickets</li>
+        <li>Escalation paths for critical production issues</li>
+        <li>Dedicated communication channels</li>
+        <li>Tiered response windows based on severity</li>
+      </ul>
+
+      <p>
+        SLA terms are defined during the enterprise engagement process and
+        tailored to the scope and criticality of the customer's
+        <sdux-brand-name /> deployment.
+      </p>
+    </div>
+
+    <div class="section-body" id="architecture-consulting">
+      <div class="h-title-navigation">
+        <div class="h-title">Architecture Consulting</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Enterprise customers can engage the <sdux-brand-name /> engineering team
+        for direct architectural guidance. Consulting sessions cover pipeline
+        design, FeatureCell structure, state composition strategies, and
+        integration planning for complex application architectures.
+      </p>
+
+      <p>
+        Architecture consulting helps teams avoid common pitfalls, accelerate
+        onboarding, and ensure that their <sdux-brand-name /> implementation
+        follows established patterns for scalability and maintainability.
+      </p>
+
+      <ul>
+        <li>Pipeline architecture design reviews</li>
+        <li>FeatureCell composition and state modeling guidance</li>
+        <li>Integration planning for existing application architectures</li>
+        <li>Performance optimization recommendations</li>
+        <li>Migration strategy consulting</li>
+      </ul>
+
+      <p>
+        Consulting engagements are scoped to the customer's needs and can be
+        structured as one-time reviews or ongoing advisory relationships.
+      </p>
+    </div>
+
+    <div class="section-body" id="security-advisories">
+      <div class="h-title-navigation">
+        <div class="h-title">Security Advisories &amp; Updates</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Enterprise customers receive priority notification of security
+        advisories, vulnerability disclosures, and patch releases affecting
+        <strong><sdux-vault-brand-name /></strong> and its dependencies.
+      </p>
+
+      <p>
+        Security advisories are issued through a dedicated channel and include
+        severity assessment, affected versions, mitigation guidance, and patched
+        release availability.
+      </p>
+
+      <ul>
+        <li>Priority security advisory notifications</li>
+        <li>Vulnerability severity assessment and impact analysis</li>
+        <li>Patch release availability and upgrade guidance</li>
+        <li>Coordinated vulnerability disclosure process</li>
+        <li>SECURITY.md and responsible disclosure policy</li>
+      </ul>
+
+      <p>
+        The <sdux-brand-name /> security response process follows industry
+        standards for vulnerability handling, including CVE coordination where
+        applicable, and ensures that enterprise customers are informed and
+        protected before public disclosure.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="advanced-security">
+    <div class="section-title-navigation">
+      <div class="section-title">Advanced Security</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong><sdux-vault-brand-name /></strong> provides a set of
+        security-focused capabilities designed for applications that must
+        protect sensitive state and operate within controlled enterprise
+        environments.
+      </p>
+
+      <p>
+        These features extend the Vault persistence pipeline with protections
+        that help detect data corruption, enforce cryptographic integrity, and
+        maintain compatibility with enterprise identity infrastructure.
+      </p>
+
+      <p>
+        The sections below describe the security mechanisms available within
+        <strong><sdux-vault-brand-name /></strong>, including encrypted
+        persistence safeguards and operational compatibility with common
+        enterprise security systems.
+      </p>
+    </div>
+
+    <div class="section-body" id="tamper-protection">
+      <div class="h-title-navigation">
+        <div class="h-title">Tamper Protection</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        <strong><sdux-vault-brand-name /></strong> protects persisted state
+        using <strong>authenticated encryption</strong>. All encrypted payloads
+        are secured with <strong>AES-256-GCM</strong>, ensuring that any
+        modification to encrypted data is automatically detected during
+        decryption.
+      </p>
+
+      <p>
+        If encrypted data is altered, corrupted, or decrypted using an incorrect
+        secret, the authentication check fails and the state is rejected.
+        Decryption does not silently recover or attempt partial restoration of
+        unauthenticated data.
+      </p>
+
+      <div class="callout callout-warning">
+        <strong>Integrity Enforcement</strong>
+        <p>
+          When authentication fails, the Vault pipeline throws a
+          <a href="/docs/references/classes/vault-encryption-integrity-error">
+            VaultEncryptionIntegrityError </a
+          >. This prevents corrupted or tampered state from entering the
+          FeatureCell lifecycle.
+        </p>
+      </div>
+
+      <p>
+        These guarantees ensure that persisted state cannot be silently
+        modified, downgraded, or replayed with incompatible encryption
+        parameters. Any integrity violation immediately halts the persistence
+        pipeline and protects the application from loading compromised data.
+      </p>
+
+      <p>
+        By enforcing strict integrity validation during decryption,
+        <strong><sdux-vault-brand-name /></strong> provides deterministic
+        protection for sensitive application state across browser storage, local
+        persistence layers, and enterprise deployment environments.
+      </p>
+    </div>
+
+    <div class="section-body" id="deterministic-state-recovery">
+      <div class="h-title-navigation">
+        <div class="h-title">Deterministic State Recovery</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        <strong><sdux-vault-brand-name /></strong> guarantees deterministic
+        restoration of persisted application state. During initialization,
+        encrypted snapshots are validated and decrypted before any state is
+        rehydrated into the <strong>FeatureCell</strong> lifecycle.
+      </p>
+
+      <p>
+        If persisted state fails integrity verification, decryption, or envelope
+        validation, the Vault pipeline refuses to restore the snapshot. The
+        application will instead initialize with a clean state rather than
+        attempting partial or undefined recovery.
+      </p>
+
+      <div class="callout callout-warning">
+        <strong>Corruption Protection</strong>
+        <p>
+          Invalid or tampered snapshots are never applied to the application
+          state. This prevents corrupted persistence data from entering the
+          runtime lifecycle.
+        </p>
+      </div>
+
+      <p>
+        This deterministic recovery model ensures that applications built with
+        <strong><sdux-vault-brand-name /></strong> cannot silently load
+        corrupted state, replay incompatible encrypted snapshots, or recover
+        from partially written persistence records.
+      </p>
+
+      <p>
+        By enforcing strict validation during initialization, the Vault pipeline
+        protects application stability and guarantees that state restoration
+        remains predictable across browser storage, persistence adapters, and
+        enterprise deployment environments.
+      </p>
+    </div>
+
+    <div class="section-body" id="sso-compatibility">
+      <div class="h-title-navigation">
+        <div class="h-title">SSO Compatibility</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        <strong><sdux-vault-brand-name /></strong> operates independently of
+        authentication and identity management systems. The Vault pipeline is
+        responsible only for encrypting and restoring application state and does
+        not participate in user authentication, token issuance, or identity
+        verification.
+      </p>
+
+      <p>
+        Because Vault does not introduce its own authentication layer, it
+        remains fully compatible with enterprise Single Sign-On (SSO) systems
+        and identity providers.
+      </p>
+
+      <ul>
+        <li>OAuth-based authentication systems</li>
+        <li>SAML identity providers</li>
+        <li>OpenID Connect authentication flows</li>
+        <li>Enterprise identity platforms</li>
+      </ul>
+
+      <p>
+        Applications using <sdux-vault-brand-name /> can safely store encrypted
+        application state alongside existing authentication infrastructure
+        without altering identity flows or introducing additional security
+        boundaries.
+      </p>
+
+      <p>
+        Authentication tokens, credentials, and identity information remain
+        under the control of the application's existing security architecture
+        while the Vault pipeline ensures that persisted state is securely
+        encrypted and restored.
+      </p>
+    </div>
+
+    <div class="section-body" id="audit-logs">
+      <div class="h-title-navigation">
+        <div class="h-title">Audit Logs</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        <strong><sdux-vault-brand-name /></strong> can emit structured audit
+        records for every state transition that flows through the Vault
+        pipeline. Because all state updates follow the deterministic pipeline
+        lifecycle, every transition produces a traceable event that can be
+        captured, persisted, and reviewed.
+      </p>
+
+      <p>
+        Audit log entries capture the intent, candidate state, and committed
+        result for each pipeline execution. This provides a real-time event
+        stream that can be consumed by monitoring systems, alerting
+        infrastructure, and operational dashboards.
+      </p>
+
+      <ul>
+        <li>Structured log entries emitted for each pipeline commit</li>
+        <li>Intent, candidate, and committed state captured per transition</li>
+        <li>Timestamps and FeatureCell identifiers for traceability</li>
+        <li>Compatible with centralized log aggregation platforms</li>
+        <li>Exportable to enterprise SIEM and monitoring systems</li>
+      </ul>
+
+      <p>
+        Audit logging provides the runtime event emission mechanism that enables
+        real-time operational monitoring, incident alerting, and integration
+        with enterprise logging infrastructure. For persistent,
+        compliance-focused record retention, see
+        <a [routerLink]="[]" fragment="audit-trails">Audit Trails</a>.
+      </p>
+    </div>
+
+    <div class="section-body" id="security-audit">
+      <div class="h-title-navigation">
+        <div class="h-title">Security Audit</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        <strong><sdux-vault-brand-name /></strong> is designed to support
+        enterprise security review and audit processes. The architecture,
+        encryption implementation, and dependency surface are structured to
+        facilitate independent security assessments.
+      </p>
+
+      <p>
+        The encryption pipeline uses exclusively platform-native cryptographic
+        primitives (<strong>AES-256-GCM</strong> via the
+        <strong>WebCrypto API</strong>) and does not introduce third-party
+        cryptographic libraries, reducing the audit surface and simplifying
+        security review.
+      </p>
+
+      <ul>
+        <li>Minimal dependency surface for reduced audit scope</li>
+        <li>
+          Platform-native cryptography with no third-party crypto libraries
+        </li>
+        <li>
+          Deterministic pipeline architecture with auditable state transitions
+        </li>
+        <li>Source code available for enterprise security review</li>
+        <li>Architecture documentation to support threat modeling</li>
+      </ul>
+
+      <p>
+        Enterprise customers can request architecture documentation, dependency
+        manifests, and encryption design details to support internal security
+        review processes, third-party penetration testing, and compliance
+        audits.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="enterprise-deployment">
+    <div class="section-title-navigation">
+      <div class="section-title">Enterprise Deployment</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong><sdux-vault-brand-name /></strong> is designed to integrate
+        cleanly into enterprise build and deployment environments, including
+        infrastructures that enforce strict dependency control, network
+        isolation, and internal distribution policies.
+      </p>
+
+      <p>
+        The deployment capabilities described in this section ensure that Vault
+        can be installed, packaged, and operated within internal registries,
+        regulated CI/CD pipelines, and restricted network environments without
+        introducing external runtime dependencies.
+      </p>
+
+      <p>
+        The following sections describe the supported enterprise deployment
+        models for
+        <strong><sdux-vault-brand-name /></strong>.
+      </p>
+    </div>
+
+    <div class="section-body" id="private-packages">
+      <div class="h-title-navigation">
+        <div class="h-title">Private Packages</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Enterprise customers can access <sdux-brand-name /> and
+        <sdux-vault-brand-name /> through privately distributed packages. This
+        allows organizations to install and manage the Vault runtime within
+        their own internal package registries without relying on public
+        distribution channels.
+      </p>
+
+      <p>
+        Private package distribution enables teams to maintain full control over
+        how Vault components are consumed, audited, and deployed within their
+        organization. Packages can be mirrored, version-pinned, and reviewed
+        internally as part of standard enterprise dependency management
+        workflows.
+      </p>
+
+      <p>
+        Private packages are compatible with common enterprise package
+        infrastructures, including internal npm registries and artifact
+        repositories.
+      </p>
+
+      <ul>
+        <li>Internal npm registries</li>
+        <li>Private artifact repositories</li>
+        <li>Enterprise CI/CD dependency mirrors</li>
+        <li>Air-gapped deployment environments</li>
+      </ul>
+
+      <p>
+        This approach supports organizations that require strict supply-chain
+        governance, internal dependency approval processes, or controlled
+        software distribution policies.
+      </p>
+
+      <p>
+        By distributing Vault through private packages, enterprises can
+        integrate
+        <sdux-brand-name /> securely into their existing build pipelines while
+        maintaining full visibility and control over dependency usage across
+        teams and environments.
+      </p>
+    </div>
+
+    <div class="section-body" id="air-gapped-builds">
+      <div class="h-title-navigation">
+        <div class="h-title">Air-Gapped Build Compatibility</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+      <p>
+        <strong><sdux-vault-brand-name /></strong> is designed to operate
+        cleanly within enterprise build pipelines, including environments that
+        enforce strict network isolation. The library can be compiled, packaged,
+        and deployed in fully air-gapped systems without requiring external
+        connectivity during build or runtime execution.
+      </p>
+
+      <p>
+        All encryption capabilities are implemented using the platform's native
+        <strong>WebCrypto API</strong>, allowing <sdux-vault-brand-name /> to
+        perform cryptographic operations locally without relying on remote key
+        services, external cryptography providers, or network-based security
+        components. This design ensures that encryption remains deterministic,
+        auditable, and compatible with highly restricted infrastructure.
+      </p>
+
+      <p>
+        Because the encryption pipeline is entirely self-contained,
+        organizations can safely integrate
+        <sdux-vault-brand-name /> into hardened CI/CD environments, internal
+        artifact repositories, and regulated deployment systems without
+        introducing hidden network dependencies.
+      </p>
+
+      <p>This architecture enables air-gapped deployments by ensuring that:</p>
+
+      <ul>
+        <li>
+          No runtime downloads or remote dependency resolution are required
+        </li>
+        <li>
+          No external key management services are contacted during encryption or
+          decryption
+        </li>
+        <li>
+          All cryptographic primitives execute using the host runtime's
+          WebCrypto implementation
+        </li>
+        <li>
+          The build process relies only on standard TypeScript and Node.js
+          tooling
+        </li>
+      </ul>
+
+      <p>
+        In fully isolated environments, package dependencies can be mirrored
+        internally and builds can run within disconnected CI workers while
+        maintaining full functionality of the encryption pipeline. Runtime
+        execution of
+        <sdux-vault-brand-name /> does not require internet connectivity.
+      </p>
+    </div>
+
+    <div class="section-body" id="offline-documentation">
+      <div class="h-title-navigation">
+        <div class="h-title">Offline Documentation</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Enterprise customers receive a complete
+        <strong><sdux-brand-name /></strong>
+        documentation bundle that can run entirely offline. The package includes
+        the full documentation site, reference materials, architecture diagrams,
+        and search index, allowing teams to access documentation without
+        requiring an internet connection.
+      </p>
+
+      <p>
+        The documentation bundle is distributed as a self-contained archive and
+        can be deployed inside restricted networks, internal developer portals,
+        or air-gapped environments. Once extracted, the documentation runs
+        locally in a browser and does not depend on external services or remote
+        assets.
+      </p>
+
+      <ul>
+        <li>Complete documentation site and API references</li>
+        <li>Architecture diagrams and developer guides</li>
+        <li>Offline search index for fast documentation lookup</li>
+        <li>Bundled assets including fonts, styles, and icons</li>
+        <li>Cross-platform launch scripts for Mac, Windows, and Linux</li>
+      </ul>
+
+      <p>
+        The documentation can be launched locally using the included startup
+        scripts, which start a lightweight local server and open the
+        documentation in a browser. This allows teams to browse the full
+        <sdux-brand-name />
+        documentation experience without requiring external connectivity.
+      </p>
+
+      <p>
+        Offline documentation bundles are designed for organizations operating
+        in regulated environments, classified infrastructure, or networks with
+        restricted outbound connectivity.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="enterprise-observability">
+    <div class="section-title-navigation">
+      <div class="section-title">Enterprise Observability</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong><sdux-vault-brand-name /></strong> provides server-side and
+        platform-level observability capabilities that give engineering teams
+        visibility into pipeline execution, state transition performance, and
+        FeatureCell activity across production environments.
+      </p>
+
+      <p>
+        Because the Vault pipeline is deterministic, every stage of execution
+        produces measurable events that can be instrumented, traced, and
+        exported to enterprise monitoring infrastructure. These capabilities
+        focus on telemetry data collection and export — for browser-based visual
+        tooling, see
+        <a [routerLink]="[]" fragment="enterprise-devtools"
+          >Enterprise Chrome DevTools</a
+        >.
+      </p>
+    </div>
+
+    <div class="section-body" id="advanced-telemetry-profiling">
+      <div class="h-title-navigation">
+        <div class="h-title">Advanced Telemetry Profiling</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Enterprise telemetry profiling instruments the Vault pipeline to capture
+        execution timing, FeatureCell duration, and subscriber fan-out metrics.
+        Profiling data is collected at each pipeline stage and can be exported
+        to external monitoring platforms.
+      </p>
+
+      <ul>
+        <li>Pipeline stage execution timing</li>
+        <li>FeatureCell initialization and update duration</li>
+        <li>Subscriber notification latency</li>
+        <li>Persistence read and write timing</li>
+        <li>Exportable to OpenTelemetry and custom telemetry collectors</li>
+      </ul>
+
+      <p>
+        Telemetry profiling helps teams identify performance bottlenecks,
+        optimize pipeline configurations, and establish baselines for production
+        performance monitoring.
+      </p>
+    </div>
+
+    <div class="section-body" id="production-tracing">
+      <div class="h-title-navigation">
+        <div class="h-title">Production Tracing</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Production tracing captures the full lifecycle of state transitions as
+        they flow through the Vault pipeline in live environments. Each trace
+        records the intent, pipeline stage execution, and final committed state.
+      </p>
+
+      <p>
+        Traces can be exported to enterprise observability platforms for
+        correlation with application-level monitoring, error tracking, and
+        incident response workflows.
+      </p>
+
+      <ul>
+        <li>End-to-end pipeline lifecycle traces</li>
+        <li>Intent-to-commit state transition tracking</li>
+        <li>Integration with OpenTelemetry trace exporters</li>
+        <li>Correlation with application-level monitoring systems</li>
+        <li>Production-safe instrumentation with minimal overhead</li>
+      </ul>
+
+      <p>
+        Production tracing provides the operational visibility required for
+        debugging complex state interactions, diagnosing performance
+        regressions, and supporting incident root-cause analysis.
+      </p>
+    </div>
+
+    <div class="section-body" id="full-pipeline-tracing">
+      <div class="h-title-navigation">
+        <div class="h-title">Full Pipeline Tracing</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Full pipeline tracing provides stage-by-stage visibility into every step
+        of the Vault pipeline execution. Each pipeline stage — from intent
+        reception through filters, reducers, behaviors, and final commit — is
+        individually traced and timed.
+      </p>
+
+      <p>
+        This level of granularity enables teams to pinpoint exactly which
+        pipeline stage is responsible for unexpected behavior, excessive
+        latency, or state transformation issues.
+      </p>
+
+      <ul>
+        <li>Individual stage-level execution traces</li>
+        <li>Filter, reducer, and behavior execution visibility</li>
+        <li>Stage-level timing and ordering</li>
+        <li>DevTools integration for visual pipeline inspection</li>
+        <li>Exportable trace data for offline analysis</li>
+      </ul>
+
+      <p>
+        Full pipeline tracing is designed for teams that need complete
+        transparency into how state updates are processed, validated, and
+        committed within the deterministic pipeline.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="compliance-governance">
+    <div class="section-title-navigation">
+      <div class="section-title">Compliance &amp; Governance</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong><sdux-vault-brand-name /></strong> supports enterprise
+        compliance and governance requirements through structured documentation,
+        traceable state history, and automated dependency reporting.
+      </p>
+
+      <p>
+        These capabilities help organizations satisfy internal security reviews,
+        regulatory audit requirements, and supply-chain governance policies.
+      </p>
+    </div>
+
+    <div class="section-body" id="compliance-documentation">
+      <div class="h-title-navigation">
+        <div class="h-title">Compliance Documentation</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Enterprise customers receive compliance documentation that describes the
+        <sdux-vault-brand-name /> security architecture, encryption design,
+        dependency management practices, and operational boundaries.
+      </p>
+
+      <p>
+        This documentation is designed to support internal security review
+        processes, vendor risk assessments, and regulatory compliance
+        evaluations.
+      </p>
+
+      <ul>
+        <li>
+          Security architecture overview and encryption design documentation
+        </li>
+        <li>Dependency management and supply-chain documentation</li>
+        <li>Operational boundary and data flow descriptions</li>
+        <li>Encryption algorithm and key derivation specifications</li>
+        <li>Threat model reference documentation</li>
+      </ul>
+
+      <p>
+        Compliance documentation is maintained alongside each release and
+        updated to reflect architectural changes, dependency updates, and
+        security enhancements.
+      </p>
+    </div>
+
+    <div class="section-body" id="audit-trails">
+      <div class="h-title-navigation">
+        <div class="h-title">Audit Trails</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        While <a [routerLink]="[]" fragment="audit-logs">Audit Logs</a>
+        provide real-time event emission for operational monitoring, audit
+        trails focus on persistent, compliance-grade record retention. The
+        deterministic Vault pipeline produces a complete, ordered history of
+        every state transition that can be persisted for regulatory and
+        governance purposes.
+      </p>
+
+      <p>
+        Audit trail records are designed for long-term storage and can be
+        exported to enterprise compliance systems, retained for post-incident
+        forensic review, or submitted as evidence during regulatory audits.
+      </p>
+
+      <ul>
+        <li>Persistent, chronological record of all state mutations</li>
+        <li>Intent and commit history with timestamps and identifiers</li>
+        <li>FeatureCell-scoped audit boundaries for targeted review</li>
+        <li>Designed for long-term retention and regulatory compliance</li>
+        <li>Supports record retention policies and governance workflows</li>
+      </ul>
+
+      <p>
+        Because the pipeline is deterministic, audit trail entries provide a
+        reliable, reproducible record of how application state evolved over time
+        — supporting compliance audits, forensic analysis, and operational
+        accountability.
+      </p>
+    </div>
+
+    <div class="section-body" id="sbom-generation">
+      <div class="h-title-navigation">
+        <div class="h-title">SBOM Generation</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Enterprise releases of <strong><sdux-vault-brand-name /></strong>
+        include Software Bill of Materials (SBOM) files that enumerate all
+        direct and transitive dependencies included in each release.
+      </p>
+
+      <p>
+        SBOM files are generated automatically during the release build process
+        and are available in industry-standard formats.
+      </p>
+
+      <ul>
+        <li>Automated SBOM generation for every release</li>
+        <li>CycloneDX and SPDX format support</li>
+        <li>Complete dependency tree including transitive dependencies</li>
+        <li>License identification for all included packages</li>
+        <li>Integration with enterprise vulnerability scanning tools</li>
+      </ul>
+
+      <p>
+        SBOM files enable organizations to satisfy supply-chain security
+        requirements, perform vulnerability assessments against known CVE
+        databases, and maintain auditable dependency inventories across their
+        software portfolio.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="enterprise-reliability">
+    <div class="section-title-navigation">
+      <div class="section-title">Enterprise Reliability</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong><sdux-vault-brand-name /></strong> Enterprise provides
+        reliability guarantees designed for organizations that require long-term
+        stability, predictable upgrade paths, and sustained security coverage
+        for production deployments.
+      </p>
+    </div>
+
+    <div class="section-body" id="lts-releases">
+      <div class="h-title-navigation">
+        <div class="h-title">Long-Term Support (LTS Releases)</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Enterprise customers have access to designated Long-Term Support (LTS)
+        releases that receive security patches, critical bug fixes, and
+        stability updates for an extended support window.
+      </p>
+
+      <p>
+        LTS releases provide a stable foundation for production deployments that
+        cannot adopt every major release, allowing teams to maintain security
+        coverage without requiring frequent upgrades.
+      </p>
+
+      <ul>
+        <li>Designated LTS release branches with extended support windows</li>
+        <li>Security patches backported to active LTS versions</li>
+        <li>Critical bug fixes for stability and reliability</li>
+        <li>Clear end-of-life timelines for planning upgrade cycles</li>
+        <li>Migration guides for transitioning between LTS versions</li>
+      </ul>
+
+      <p>
+        LTS release policies are defined as part of the enterprise engagement
+        and include clear timelines for active support, security-only
+        maintenance, and end-of-life.
+      </p>
+    </div>
+
+    <div class="section-body" id="version-policy">
+      <div class="h-title-navigation">
+        <div class="h-title">Version Policy</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        <strong><sdux-vault-brand-name /></strong> follows semantic versioning
+        (SemVer) across all published packages. Version increments communicate
+        the nature and risk of each release.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Major</strong> — Breaking changes to public API contracts.
+          Migration guides are provided for all breaking changes.
+        </li>
+        <li>
+          <strong>Minor</strong> — New features and capabilities added in a
+          backward-compatible manner.
+        </li>
+        <li>
+          <strong>Patch</strong> — Bug fixes, security patches, and stability
+          improvements with no API changes.
+        </li>
+      </ul>
+
+      <p>
+        Enterprise customers receive advance notification of upcoming major
+        releases, deprecation timelines, and migration guidance to support
+        planned upgrade cycles.
+      </p>
+
+      <div class="callout callout-warning">
+        <strong>Deprecation Policy</strong>
+        <p>
+          Deprecated APIs are marked in documentation and emit compile-time
+          warnings for at least one full major release cycle before removal.
+          This ensures teams have adequate time to migrate before breaking
+          changes take effect.
+        </p>
+      </div>
+
+      <p>
+        The version policy ensures that enterprise deployments can adopt updates
+        predictably, with full visibility into the scope and risk of each
+        release.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="enterprise-devtools">
+    <div class="section-title-navigation">
+      <div class="section-title">Enterprise Chrome DevTools</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong><sdux-vault-brand-name /></strong> Enterprise includes advanced
+        Chrome DevTools integration that provides visual profiling, telemetry
+        dashboards, and production tracing capabilities directly within the
+        browser developer tools.
+      </p>
+
+      <p>
+        While
+        <a [routerLink]="[]" fragment="enterprise-observability"
+          >Enterprise Observability</a
+        >
+        focuses on telemetry data collection and export to backend monitoring
+        platforms, Enterprise DevTools provides browser-based visual tooling for
+        interactive debugging, real-time profiling, and in-browser dashboard
+        visualization built on the standard
+        <sdux-brand-name /> DevTools inspector.
+      </p>
+    </div>
+
+    <div class="section-body" id="devtools-telemetry-profiling">
+      <div class="h-title-navigation">
+        <div class="h-title">Advanced Telemetry Profiling</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        The Enterprise DevTools profiling panel visualizes pipeline execution
+        timing, FeatureCell update frequency, and subscriber notification
+        latency in real time. Profiling data is displayed alongside the standard
+        DevTools timeline, allowing correlation with other browser performance
+        metrics.
+      </p>
+
+      <ul>
+        <li>Real-time pipeline execution flame graphs</li>
+        <li>FeatureCell update frequency and duration charts</li>
+        <li>Subscriber fan-out visualization</li>
+        <li>Persistence operation timing</li>
+        <li>Exportable profiling snapshots for offline analysis</li>
+      </ul>
+
+      <p>
+        Advanced profiling helps teams identify slow pipeline stages, excessive
+        state update frequency, and subscriber bottlenecks during development
+        and production debugging.
+      </p>
+    </div>
+
+    <div class="section-body" id="devtools-production-tracing">
+      <div class="h-title-navigation">
+        <div class="h-title">Production Tracing Dashboards</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Enterprise DevTools includes production tracing dashboards that
+        aggregate telemetry data from live pipeline execution into visual
+        summaries. Dashboards display state transition volume, pipeline
+        throughput, error rates, and performance trends.
+      </p>
+
+      <ul>
+        <li>State transition volume and throughput metrics</li>
+        <li>Pipeline error rate tracking and alerting thresholds</li>
+        <li>Historical performance trend visualization</li>
+        <li>FeatureCell-level activity breakdown</li>
+        <li>
+          Exportable dashboard data for integration with monitoring platforms
+        </li>
+      </ul>
+
+      <p>
+        Production tracing dashboards provide operational teams with the
+        visibility needed to monitor <sdux-brand-name /> health in live
+        environments, detect anomalies, and support data-driven performance
+        optimization.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="enterprise-contact">
+    <div class="section-title-navigation">
+      <div class="section-title">Contact Enterprise Sales</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      @if (submitted()) {
+        <div class="callout callout-warning">
+          <strong>Thank you for your interest.</strong>
+          <p>
+            Your inquiry has been submitted. A member of the
+            <sdux-brand-name /> enterprise team will contact you within two
+            business days.
+          </p>
+        </div>
+      } @else {
+        <p>
+          Interested in <strong><sdux-vault-brand-name /></strong> Enterprise?
+          Complete the form below and our team will reach out to discuss
+          licensing, support tiers, and deployment options tailored to your
+          organization.
+        </p>
+
+        <form
+          [formGroup]="contactForm"
+          (ngSubmit)="submitContact()"
+          class="enterprise-contact-form">
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="field-half-width">
+              <mat-label>First Name</mat-label>
+              <input
+                matInput
+                formControlName="firstName"
+                autocomplete="given-name" />
+              @if (contactForm.controls.firstName.hasError('required')) {
+                <mat-error>First name is required.</mat-error>
+              } @else if (
+                contactForm.controls.firstName.hasError('maxlength')
+              ) {
+                <mat-error
+                  >First name must not exceed 100 characters.</mat-error
+                >
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="field-half-width">
+              <mat-label>Last Name</mat-label>
+              <input
+                matInput
+                formControlName="lastName"
+                autocomplete="family-name" />
+              @if (contactForm.controls.lastName.hasError('required')) {
+                <mat-error>Last name is required.</mat-error>
+              } @else if (contactForm.controls.lastName.hasError('maxlength')) {
+                <mat-error>Last name must not exceed 100 characters.</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="field-half-width">
+              <mat-label>Work Email</mat-label>
+              <input
+                matInput
+                formControlName="email"
+                type="email"
+                autocomplete="email" />
+              @if (contactForm.controls.email.hasError('required')) {
+                <mat-error>Email is required.</mat-error>
+              } @else if (contactForm.controls.email.hasError('maxlength')) {
+                <mat-error>Email must not exceed 255 characters.</mat-error>
+              } @else if (contactForm.controls.email.hasError('email')) {
+                <mat-error>Email must be a valid email address.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="field-half-width">
+              <mat-label>Company</mat-label>
+              <input
+                matInput
+                formControlName="company"
+                autocomplete="organization" />
+              @if (contactForm.controls.company.hasError('required')) {
+                <mat-error>Company name is required.</mat-error>
+              } @else if (contactForm.controls.company.hasError('maxlength')) {
+                <mat-error
+                  >Company name must not exceed 200 characters.</mat-error
+                >
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="field-half-width">
+              <mat-label>Job Title</mat-label>
+              <input
+                matInput
+                formControlName="jobTitle"
+                autocomplete="organization-title" />
+              @if (contactForm.controls.jobTitle.hasError('maxlength')) {
+                <mat-error>Job title must not exceed 150 characters.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="field-half-width">
+              <mat-label>Engineering Team Size</mat-label>
+              <mat-select formControlName="teamSize">
+                <mat-option value="1-10">1 – 10</mat-option>
+                <mat-option value="11-50">11 – 50</mat-option>
+                <mat-option value="51-200">51 – 200</mat-option>
+                <mat-option value="201-500">201 – 500</mat-option>
+                <mat-option value="500+">500+</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="field-full-width">
+              <mat-label>How can we help?</mat-label>
+              <textarea matInput formControlName="message" rows="5"></textarea>
+              @if (contactForm.controls.message.hasError('required')) {
+                <mat-error>Please describe your enterprise needs.</mat-error>
+              } @else if (contactForm.controls.message.hasError('maxlength')) {
+                <mat-error>Message must not exceed 2000 characters.</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <button
+              type="submit"
+              mat-flat-button
+              color="primary"
+              class="sdux-button"
+              [disabled]="contactForm.invalid">
+              Submit Inquiry
+            </button>
+          </div>
+        </form>
+      }
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

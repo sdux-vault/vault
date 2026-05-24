@@ -1,0 +1,423 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>fromPromise Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <div class="lead">
+      <strong>
+        <a href="/docs/featurecell/extensions/from-promise">fromPromise</a>
+      </strong>
+      is a <a href="/docs/references/functions/feature-cell">FeatureCell</a> API
+      extension that converts a
+      <a href="/docs/references/types/deferred-factory">DeferredFactory</a
+      >&lt;T&gt; into a normalized <code>StateType&lt;T&gt;</code>, allowing
+      promise-backed asynchronous results to be injected into the pipeline using
+      standard state update APIs.
+    </div>
+
+    <p>
+      This behavior operates <strong>outside of the pipeline</strong> and does
+      not participate directly in Resolve, operator, filter, or reducer stages.
+      Instead, it acts as a bridge that invokes a deferred promise factory,
+      awaits its result, and produces a structured state envelope suitable for
+      pipeline admission.
+    </p>
+
+    <p>
+      <strong>fromPromise</strong> exists primarily as a migration and
+      interoperability aid for engineers accustomed to Redux-style async action
+      patterns, where state updates are often wrapped in promises and manually
+      normalized before dispatch. It enables those workflows to transition
+      cleanly into the SDuX model without requiring immediate architectural
+      changes.
+    </p>
+
+    <p>
+      This behavior
+      <strong
+        >extends the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance</strong
+      >
+      by adding <strong><code>fromPromise()</code></strong> (and its alias
+      <strong><code>fromDeferred()</code></strong
+      >) methods that return a <code>Promise&lt;StateType&lt;T&gt;&gt;</code>.
+      The resolved state envelope may then be passed directly to
+      <strong>replaceState</strong> or <strong>mergeState</strong>.
+    </p>
+
+    <p>
+      When <code>fromPromise()</code> is invoked, the deferred factory is
+      executed within the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> context.
+      The returned promise is awaited, its value is wrapped in a standard state
+      envelope, and errors are normalized into pipeline-compatible error
+      objects.
+    </p>
+
+    <p>
+      Because the promise is deferred, resolution is guaranteed to occur
+      <em>within</em> the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      lifecycle. This prevents promises from resolving or rejecting outside of
+      pipeline control, avoiding false state snapshots and orphaned updates.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      <code>fromPromise()</code> is a <em>single-resolution bridge</em>, not a
+      pipeline resolve mechanism. It exists to adapt externally managed or
+      legacy promise-based workflows into a normalized
+      <code>StateType&lt;T&gt;</code>.
+    </p>
+
+    <p>
+      In most cases, it is
+      <strong>recommended to pass a deferred factory directly</strong> to
+      <strong>replaceState</strong> or <strong>mergeState</strong> and allow the
+      Resolve stage to handle normalization automatically. This minimizes
+      indirection, reduces unnecessary boilerplate, and avoids subtle debugging
+      issues caused by resolving promises outside the pipeline.
+    </p>
+
+    <p>
+      Use <code>fromPromise()</code> or <code>fromDeferred()</code> only when
+      you explicitly need to adapt or normalize a promise result into a
+      <code>StateType&lt;T&gt;</code> before submission.
+    </p>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.4/2.4.4-from-promise-flow.svg"
+        [tooltip]="'fromPromise Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a
+            href="/docs/pipeline/behaviors/promise/with-core-from-promise-behavior"
+            >withCoreFromPromiseBehavior</a
+          ></strong
+        >
+        is configured by invoking the
+        <strong><code>fromPromise()</code></strong> (or its alias
+        <strong><code>fromDeferred()</code></strong
+        >) method on an initialized
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. This
+        method accepts a
+        <a href="/docs/references/types/deferred-factory">DeferredFactory</a
+        >&lt;T&gt; and returns a promise that resolves to a normalized
+        <code>StateType&lt;T&gt;</code>.
+      </p>
+
+      <p>
+        Unlike resolve behaviors that execute <em>inside</em> the pipeline,
+        <strong
+          ><a
+            href="/docs/pipeline/behaviors/promise/with-core-from-promise-behavior"
+            >withCoreFromPromiseBehavior</a
+          ></strong
+        >
+        operates <em>outside</em> of pipeline execution. It acts as a bridge
+        that invokes a deferred promise factory, awaits its result, and produces
+        a standard state envelope that can be injected into the pipeline using
+        <strong>replaceState</strong> or <strong>mergeState</strong>.
+      </p>
+
+      <p>
+        The promise returned by <code>fromPromise()</code> resolves exactly once
+        and does not establish any long-lived subscriptions. Resolution is bound
+        to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle, ensuring that deferred promises cannot resolve or reject
+        after the cell has been reset or destroyed.
+      </p>
+
+      <p>
+        This API exists primarily as a migration and interoperability bridge for
+        Redux-style patterns, where asynchronous state updates are commonly
+        wrapped in promises and normalized manually before dispatch. In most
+        cases, directly supplying a deferred factory to
+        <strong>replaceState</strong> or <strong>mergeState</strong>
+        and allowing the Resolve stage to handle normalization is preferred.
+      </p>
+
+      <sdux-vault-resolve-behaviors-common [type]="'fromPromise'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> Promise
+      Integration
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a
+            href="/docs/pipeline/behaviors/promise/with-core-from-promise-behavior"
+            >withCoreFromPromiseBehavior</a
+          ></strong
+        >
+        extends the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance with a <strong><code>fromPromise()</code></strong> method,
+        providing a bridge for integrating promise-based asynchronous logic into
+        state updates without directly submitting the promise to the pipeline.
+      </p>
+
+      <p>
+        Unlike <strong>replaceState</strong> and <strong>mergeState</strong>,
+        which accept finalized state inputs, <code>fromPromise()</code> accepts
+        a
+        <a href="/docs/references/types/deferred-factory">DeferredFactory</a
+        >&lt;T&gt; and resolves it into a normalized
+        <code>StateType&lt;T&gt;</code> value.
+      </p>
+
+      <p>
+        This method does not inject values into the pipeline automatically.
+        Instead, it externalizes promise resolution and allows the resulting
+        state envelope to be explicitly submitted using
+        <strong>replaceState</strong> or <strong>mergeState</strong>. Resolution
+        and commitment still occur through the standard Resolve and State
+        stages.
+      </p>
+
+      <div class="table-title">
+        Extended
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> API
+      </div>
+
+      <table aria-label="Extended">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">API</th>
+            <th scope="col" class="column-300">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p><strong>.fromPromise(incoming)</strong></p>
+
+              <p>inputs:</p>
+              <ul>
+                <li>
+                  <code>incoming</code>:
+                  <a href="/docs/references/types/deferred-factory"
+                    >DeferredFactory</a
+                  >&lt;T&gt;
+                </li>
+              </ul>
+
+              <p>returns:</p>
+              <ul>
+                <li><code>Promise&lt;StateType&lt;T&gt;&gt;</code></li>
+              </ul>
+            </td>
+
+            <td>
+              <p>
+                Invokes a deferred factory and resolves its promise-backed value
+                into a normalized state envelope containing <code>value</code>,
+                <code>loading</code>, and <code>error</code> fields.
+              </p>
+
+              <p>
+                Promise resolution is bound to the
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                lifecycle. If the cell is reset or destroyed before the promise
+                settles, resolution is safely abandoned, preventing stale or
+                orphaned state updates.
+              </p>
+
+              <p>
+                This API is intended as a migration and interoperability bridge
+                for Redux-style or externally managed async flows, where
+                promises are traditionally resolved outside the store and then
+                dispatched as state updates.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a
+            href="/docs/pipeline/behaviors/promise/with-core-from-promise-behavior"
+            >withCoreFromPromiseBehavior</a
+          ></strong
+        >
+        provides a bridge for resolving a single promise-backed value from a
+        <code>DeferredFactory</code> and converting it into a normalized
+        <code>StateType</code>.
+      </p>
+
+      <p>
+        <code>fromPromise()</code> resolves exactly once. The resulting state
+        envelope must then be explicitly injected into the pipeline using
+        <strong>mergeState</strong> or <strong>replaceState</strong>.
+      </p>
+
+      <p>
+        In the examples below, a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized normally. After initialization, a deferred promise is
+        resolved using <code>fromPromise()</code>, and the resulting state
+        envelope is forwarded into the pipeline using
+        <strong>mergeState</strong>.
+      </p>
+
+      <h4>Example 1: Resolve a Promise and Inject the Result</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Resolve a Promise and Inject the Result'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+
+    const deferredEmployees = {
+      value: () =>
+        Promise.resolve([
+          { id: 1, name: 'Alice' },
+          { id: 2, name: 'Bob' }
+        ])
+    };
+
+    // Resolve the promise once and inject the result into the pipeline
+    this.vault.fromPromise(deferredEmployees).then(
+      (incoming: StateType&lt;Employee[]>) => this.vault.mergeState(incoming)
+    );
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Resolve a Promise and Inject the Result'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+employeeCell.initialize();
+
+const deferredEmployees = {
+  value: () =>
+    Promise.resolve([
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+    ])
+};
+
+// Resolve the promise once and inject the result into the pipeline
+employeeCell.fromPromise(deferredEmployees).then(
+  (incoming) => employeeCell.mergeState(incoming)
+);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Resolve a Promise and Inject the Result'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+employeeCell.initialize();
+
+const deferredEmployees = {
+  value: () =>
+    Promise.resolve([
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+    ])
+};
+
+// Resolve the promise once and inject the result into the pipeline
+employeeCell.fromPromise(deferredEmployees).then(
+  (incoming) => employeeCell.mergeState(incoming)
+);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

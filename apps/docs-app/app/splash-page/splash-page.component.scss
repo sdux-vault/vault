@@ -1,0 +1,1051 @@
+@use 'global' as global;
+
+// ─── SDuX Splash Page — Final Composite ───
+// Layout: Stratum (Example 20) | Copy: best-copy.md | CSS: brian1 Horizon
+
+$splash-bg: global.$sdux-surface-light;
+$splash-surface: global.$sdux-surface-light-mid;
+$splash-text: global.$sdux-text-inverse;
+$splash-muted: color-mix(in srgb, global.$sdux-text-inverse 60%, transparent);
+$splash-primary: global.$sdux-primary-base;
+$splash-primary-soft: color-mix(
+  in srgb,
+  global.$sdux-primary-base 8%,
+  global.$sdux-surface-light
+);
+$splash-accent: global.$sdux-primary-light;
+$splash-border: color-mix(
+  in srgb,
+  global.$sdux-primary-base 14%,
+  global.$sdux-surface-light-mid
+);
+$splash-code-bg: global.$sdux-surface-dark;
+$splash-code-text: global.$sdux-text-primary;
+$splash-success: global.$sdux-success-base;
+
+:host {
+  display: block;
+  background: $splash-bg;
+  color: $splash-text;
+  font-family: global.$sdux-font-family;
+  line-height: global.$line-height;
+  overflow-x: hidden;
+}
+
+.section-background {
+  background-image: url('/assets/background/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+// ─── Hero (Split with Terminal) ───
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: global.$spacing-3xl global.$spacing-xl;
+  overflow: hidden;
+
+  &-glow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 900px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, $splash-primary 18%, transparent) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &-split {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: global.$spacing-2xl;
+    max-width: 1200px;
+    width: 100%;
+    align-items: center;
+
+    @media (max-width: global.$breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &-copy {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+  }
+
+  &-eyebrow {
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    font-weight: global.$font-weight-semibold;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $splash-primary;
+    display: inline-flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+
+    &::before,
+    &::after {
+      content: '';
+      width: 2rem;
+      height: 1px;
+      background: $splash-primary;
+    }
+  }
+
+  &-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: global.$font-weight-bold;
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+    margin: 0;
+  }
+
+  &-subtitle {
+    font-size: clamp(global.$font-size-md, 1.8vw, global.$font-size-xl);
+    color: $splash-muted;
+    max-width: 44ch;
+    margin: 0;
+    font-weight: global.$font-weight-regular;
+  }
+
+  &-actions {
+    display: flex;
+    gap: global.$spacing-md;
+    flex-wrap: wrap;
+    margin-top: global.$spacing-md;
+  }
+
+  // Terminal chrome
+  &-terminal {
+    border-radius: global.$border-radius-lg;
+    overflow: hidden;
+    border: 1px solid $splash-border;
+  }
+
+  &-terminal-chrome {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-xs;
+    padding: global.$spacing-sm global.$spacing-md;
+    background: color-mix(in srgb, $splash-code-bg 95%, $splash-primary);
+    border-bottom: 1px solid $splash-border;
+  }
+
+  &-terminal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: color-mix(in srgb, $splash-text 20%, transparent);
+
+    &:first-child {
+      background: global.$sdux-warn-base;
+    }
+
+    &:nth-child(2) {
+      background: global.$sdux-success-base;
+    }
+  }
+
+  &-terminal-title {
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xxs;
+    color: $splash-muted;
+    margin-left: auto;
+  }
+
+  &-terminal-code {
+    background: $splash-code-bg;
+    padding: global.$spacing-xl;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-sm;
+    color: $splash-code-text;
+    line-height: 1.7;
+    margin: 0;
+    overflow-x: auto;
+  }
+}
+
+// ─── Buttons ───
+.btn-primary {
+  @include global.button-base(
+    global.$sdux-surface-light,
+    $splash-primary,
+    $splash-primary
+  );
+  font-size: global.$font-size-md;
+  padding: global.$spacing-sm global.$spacing-xl;
+  border-radius: global.$border-radius-md;
+}
+
+.btn-ghost {
+  font-family: global.$sdux-font-family;
+  font-size: global.$font-size-md;
+  font-weight: global.$font-weight-medium;
+  padding: global.$spacing-sm global.$spacing-xl;
+  border-radius: global.$border-radius-md;
+  border: 1px solid $splash-border;
+  background: transparent;
+  color: $splash-text;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+
+  &:hover {
+    border-color: $splash-primary;
+    background: $splash-primary-soft;
+  }
+}
+
+// ─── Section base ───
+.section {
+  padding: global.$spacing-3xl global.$spacing-xl;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &-tinted {
+    background: $splash-surface;
+    max-width: none;
+    padding-left: global.$spacing-xl;
+    padding-right: global.$spacing-xl;
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+
+  &-label {
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xxs;
+    font-weight: global.$font-weight-semibold;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: $splash-primary;
+    margin-bottom: global.$spacing-sm;
+  }
+
+  &-heading {
+    font-size: clamp(global.$font-size-3xl, 4vw, global.$font-size-5xl);
+    font-weight: global.$font-weight-bold;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    margin: 0 0 global.$spacing-md;
+  }
+
+  &-subheading {
+    font-size: global.$font-size-lg;
+    color: $splash-muted;
+    margin: 0 0 global.$spacing-2xl;
+  }
+}
+
+// ─── Trusted By ───
+.trusted {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: global.$spacing-2xl;
+
+  &-label {
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-medium;
+    color: $splash-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    width: 100%;
+    text-align: center;
+  }
+
+  &-logo {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    font-size: global.$font-size-lg;
+    font-weight: global.$font-weight-semibold;
+    color: color-mix(in srgb, $splash-text 50%, transparent);
+    transition: color 0.2s ease;
+
+    mat-icon {
+      font-size: 18px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &:hover {
+      color: $splash-text;
+    }
+  }
+}
+
+// ─── Bento Grid ───
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: global.$spacing-lg;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+
+  &-card {
+    grid-column: span 4;
+    padding: global.$spacing-xl;
+    border-radius: global.$border-radius-lg;
+    border: 1px solid $splash-border;
+    background: $splash-bg;
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+
+    &:hover {
+      border-color: $splash-primary;
+      box-shadow: 0 0 0 1px $splash-primary;
+    }
+
+    &-wide {
+      grid-column: span 8;
+    }
+
+    &-half {
+      grid-column: span 6;
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      grid-column: span 1 !important; // exception: responsive override for bento grid
+    }
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: global.$border-radius-md;
+    background: $splash-primary-soft;
+    color: $splash-primary;
+    margin-bottom: global.$spacing-md;
+
+    mat-icon {
+      font-size: 24px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &-title {
+    font-size: global.$font-size-xl;
+    font-weight: global.$font-weight-semibold;
+    margin: 0 0 global.$spacing-sm;
+  }
+
+  &-text {
+    font-size: global.$font-size-md;
+    color: $splash-muted;
+    margin: 0 0 global.$spacing-sm;
+  }
+
+  &-note {
+    font-size: global.$font-size-sm;
+    color: $splash-muted;
+    margin: 0;
+  }
+
+  &-pipeline-strip {
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    color: $splash-primary;
+    padding: global.$spacing-sm global.$spacing-md;
+    background: $splash-primary-soft;
+    border-radius: global.$border-radius-sm;
+    margin-top: global.$spacing-md;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  &-api-list {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-xs;
+    margin: global.$spacing-sm 0;
+
+    code {
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-sm;
+      color: $splash-primary;
+      background: $splash-primary-soft;
+      padding: global.$spacing-xxs global.$spacing-sm;
+      border-radius: global.$border-radius-sm;
+      width: fit-content;
+    }
+  }
+}
+
+// ─── Pipeline Architecture ───
+.pipeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+
+  &-track {
+    position: absolute;
+    left: 28px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      $splash-primary,
+      color-mix(in srgb, $splash-primary 20%, transparent)
+    );
+
+    @media (max-width: global.$breakpoint-md) {
+      left: 20px;
+    }
+  }
+
+  &-stage {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-lg;
+    padding: global.$spacing-lg 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  &-marker {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: $splash-bg;
+    border: 2px solid $splash-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-bold;
+    color: $splash-primary;
+
+    @media (max-width: global.$breakpoint-md) {
+      width: 40px;
+      height: 40px;
+      font-size: global.$font-size-xs;
+    }
+  }
+
+  &-body {
+    flex: 1;
+  }
+
+  &-name {
+    font-size: global.$font-size-xl;
+    font-weight: global.$font-weight-semibold;
+    margin: 0 0 global.$spacing-xs;
+    cursor: pointer;
+
+    &:hover {
+      color: global.$sdux-primary-base;
+    }
+  }
+
+  &-desc {
+    font-size: global.$font-size-md;
+    color: $splash-muted;
+    margin: 0;
+    max-width: 48ch;
+  }
+}
+
+// ─── Ownership Model ───
+.ownership {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: global.$spacing-2xl;
+  align-items: center;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+
+  &-visual {
+    background: $splash-code-bg;
+    border-radius: global.$border-radius-lg;
+    padding: global.$spacing-xl;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-sm;
+    color: $splash-code-text;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+  }
+
+  &-point {
+    display: flex;
+    gap: global.$spacing-md;
+    align-items: flex-start;
+  }
+
+  &-bullet {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $splash-primary;
+    margin-top: 0.55em;
+  }
+
+  &-point-text {
+    font-size: global.$font-size-md;
+    color: $splash-text;
+    margin: 0;
+
+    strong {
+      font-weight: global.$font-weight-semibold;
+    }
+
+    &.white {
+      background: global.$sdux-text-white;
+    }
+  }
+}
+
+// ─── Deterministic / Testing ───
+.deterministic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: global.$spacing-2xl;
+  align-items: center;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+
+  &-code {
+    background: $splash-code-bg;
+    border-radius: global.$border-radius-lg;
+    padding: global.$spacing-xl;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-sm;
+    color: $splash-code-text;
+    line-height: 1.7;
+    margin: 0;
+    overflow-x: auto;
+  }
+
+  &-points {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+  }
+
+  &-label {
+    font-size: global.$font-size-lg;
+    font-weight: global.$font-weight-semibold;
+    color: $splash-primary;
+    margin: 0 0 global.$spacing-md;
+  }
+}
+
+.button-width {
+  width: 250px;
+}
+// ─── Comparison Table ───
+.compare-wrap {
+  overflow-x: auto;
+
+  .button-container {
+    display: flex;
+    gap: global.$spacing-md;
+    margin-top: global.$spacing-md;
+  }
+
+  .compare {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: global.$spacing-md global.$spacing-lg;
+      text-align: left;
+      border-bottom: 1px solid $splash-border;
+      font-size: global.$font-size-md;
+    }
+
+    th {
+      font-weight: global.$font-weight-semibold;
+      font-size: global.$font-size-sm;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: $splash-muted;
+    }
+
+    &-highlight {
+      color: $splash-primary;
+      font-weight: global.$font-weight-semibold;
+    }
+
+    &-dash {
+      color: $splash-muted;
+    }
+  }
+}
+
+// ─── Framework Support ───
+.frameworks {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: global.$spacing-lg;
+  text-align: center;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: global.$breakpoint-sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.framework-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: global.$spacing-xl global.$spacing-md;
+  border-radius: global.$border-radius-lg;
+  border: 1px solid $splash-border;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: $splash-primary;
+  }
+
+  &-name {
+    font-size: global.$font-size-md;
+    font-weight: global.$font-weight-semibold;
+    margin: global.$spacing-sm 0 0;
+  }
+
+  &-note {
+    font-size: global.$font-size-xs;
+    color: $splash-muted;
+    margin: global.$spacing-xs 0 0;
+  }
+
+  mat-icon {
+    font-size: 20px;
+    color: $splash-primary;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+// ─── Pipeline Builder ───
+.builder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: global.$spacing-2xl;
+  align-items: start;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+
+  &-action {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: global.$spacing-lg;
+
+    &-heading {
+      font-size: global.$font-size-xl;
+      font-weight: global.$font-weight-semibold;
+      margin: 0;
+    }
+
+    &-text {
+      font-size: global.$font-size-md;
+      color: $splash-muted;
+      margin: 0;
+      max-width: 40ch;
+    }
+
+    &-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-xs;
+      font-size: global.$font-size-sm;
+      color: $splash-text;
+
+      li::before {
+        content: '✓ ';
+        color: $splash-primary;
+        font-weight: global.$font-weight-bold;
+      }
+    }
+  }
+
+  &-steps {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-lg;
+    counter-reset: builder-step;
+
+    &.white {
+      background: global.$sdux-text-white;
+    }
+  }
+
+  &-step {
+    counter-increment: builder-step;
+    display: flex;
+    gap: global.$spacing-md;
+    align-items: flex-start;
+
+    &::before {
+      content: counter(builder-step);
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: $splash-primary;
+      color: global.$sdux-text-white;
+      font-weight: global.$font-weight-bold;
+      font-size: global.$font-size-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &-step-title {
+    font-size: global.$font-size-lg;
+    font-weight: global.$font-weight-semibold;
+    margin: 0 0 global.$spacing-xs;
+  }
+
+  &-step-text {
+    font-size: global.$font-size-md;
+    color: $splash-muted;
+    margin: 0;
+  }
+
+  &-preview {
+    background: $splash-code-bg;
+    border-radius: global.$border-radius-lg;
+    padding: global.$spacing-xl;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-sm;
+    color: $splash-code-text;
+    line-height: 1.7;
+    overflow-x: auto;
+    position: sticky;
+    top: global.$spacing-xl;
+  }
+}
+
+// ─── StackBlitz ───
+.stackblitz {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: global.$spacing-lg;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+
+  .stackblitz-card {
+    border: 1px solid $splash-border;
+    border-radius: global.$border-radius-lg;
+    overflow: hidden;
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      border-color: $splash-primary;
+      transform: translateY(-2px);
+    }
+
+    &-preview {
+      background: $splash-code-bg;
+      padding: global.$spacing-lg;
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-xs;
+      color: $splash-code-text;
+      line-height: 1.6;
+      min-height: 265px;
+
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      code {
+        font-family: inherit;
+        font-size: inherit;
+      }
+    }
+
+    &-info {
+      padding: global.$spacing-md global.$spacing-lg;
+    }
+
+    &-title {
+      font-size: global.$font-size-md;
+      font-weight: global.$font-weight-semibold;
+      margin: 0 0 global.$spacing-xs;
+    }
+
+    &-desc {
+      font-size: global.$font-size-sm;
+      color: $splash-muted;
+      margin: 0 0 global.$spacing-md;
+      min-height: 50px;
+    }
+
+    &-link {
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-medium;
+      color: $splash-primary;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: global.$spacing-xs;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// ─── Enterprise ───
+.enterprise-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: global.$spacing-lg;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+
+  .enterprise-item {
+    display: flex;
+    gap: global.$spacing-md;
+    padding: global.$spacing-lg;
+    border-radius: global.$border-radius-md;
+    border: 1px solid $splash-border;
+    background: global.$sdux-text-white;
+
+    &-icon {
+      flex-shrink: 0;
+      color: $splash-primary;
+
+      mat-icon {
+        font-size: 24px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &-title {
+      font-size: global.$font-size-md;
+      font-weight: global.$font-weight-semibold;
+      margin: 0 0 global.$spacing-xs;
+    }
+
+    &-text {
+      font-size: global.$font-size-sm;
+      color: $splash-muted;
+      margin: 0;
+    }
+  }
+}
+
+// ─── Testimonials ───
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: global.$spacing-lg;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.testimonial {
+  padding: global.$spacing-xl;
+  border-radius: global.$border-radius-lg;
+  background: $splash-surface;
+
+  &-quote {
+    font-size: global.$font-size-md;
+    font-style: italic;
+    line-height: 1.7;
+    margin: 0 0 global.$spacing-lg;
+    color: $splash-text;
+  }
+
+  &-author {
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-semibold;
+    margin: 0;
+  }
+
+  &-role {
+    font-size: global.$font-size-xs;
+    color: $splash-muted;
+    margin: global.$spacing-xxs 0 0;
+  }
+}
+
+// ─── Deep CTA ───
+.deep-cta {
+  text-align: center;
+  padding: global.$spacing-3xl global.$spacing-xl;
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: global.$spacing-lg;
+    margin-top: global.$spacing-2xl;
+
+    @media (max-width: global.$breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.deep-cta-card {
+  padding: global.$spacing-xl;
+  border-radius: global.$border-radius-lg;
+  border: 1px solid $splash-border;
+  text-align: left;
+  transition: border-color 0.2s ease;
+  background: global.$sdux-text-white;
+
+  &:hover {
+    border-color: $splash-primary;
+  }
+
+  &-title {
+    font-size: global.$font-size-lg;
+    font-weight: global.$font-weight-semibold;
+    margin: 0 0 global.$spacing-sm;
+  }
+
+  &-text {
+    font-size: global.$font-size-sm;
+    color: $splash-muted;
+    margin: 0 0 global.$spacing-md;
+  }
+
+  &-link {
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-medium;
+    color: $splash-primary;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ─── Footer CTA ───
+.footer-cta {
+  text-align: center;
+  padding: global.$spacing-3xl global.$spacing-xl;
+  background: radial-gradient(
+    ellipse at center bottom,
+    color-mix(in srgb, $splash-primary 12%, transparent) 0%,
+    $splash-bg 70%
+  );
+
+  &-title {
+    font-size: clamp(global.$font-size-3xl, 5vw, global.$font-size-5xl);
+    font-weight: global.$font-weight-bold;
+    letter-spacing: -0.03em;
+    margin: 0 0 global.$spacing-md;
+  }
+
+  &-text {
+    font-size: global.$font-size-lg;
+    color: $splash-muted;
+    margin: 0 0 global.$spacing-2xl;
+    max-width: 48ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &-actions {
+    display: flex;
+    gap: global.$spacing-md;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+// ─── Code highlights ───
+.code-keyword {
+  color: color-mix(in srgb, global.$sdux-primary-light 90%, white);
+}
+
+.code-type {
+  color: global.$sdux-warn-light;
+}
+
+.code-string {
+  color: global.$sdux-success-light;
+}
+
+.code-comment {
+  color: global.$sdux-text-disabled;
+  font-style: italic;
+}
+
+.view-all-button {
+  display: flex;
+  gap: global.$spacing-md;
+  padding: global.$spacing-lg;
+}

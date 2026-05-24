@@ -1,0 +1,42 @@
+<div class="stage-question-container">
+  <div class="stage-question-status" [class.active]="active()"></div>
+
+  <div
+    class="stage-question {{ stageStatus() }}"
+    (click)="onStageClick()"
+    (keydown.enter)="onStageClick()"
+    tabindex="0">
+    <!-- HEADER ROW -->
+    <div class="stage-header">
+      <div class="stage-title">
+        <span class="stage-label">
+          {{ stage().label }}
+        </span>
+      </div>
+
+      <div class="controls" [matTooltip]="tooltip()">
+        @if (isSingleSelection()) {
+          <button
+            type="button"
+            class="button-toggle sdux-button-toggle {{ noButtonClass() }}"
+            (click)="selectNo(); $event.stopPropagation()">
+            No
+          </button>
+
+          <button
+            type="button"
+            class="button-toggle sdux-button-toggle {{ yesButtonClass() }}"
+            [class.is-disabled]="disabled()"
+            (click)="selectYes(); $event.stopPropagation()">
+            Yes
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- DESCRIPTION ROW -->
+    <div class="stage-description">
+      {{ stage().shortDescription }}
+    </div>
+  </div>
+</div>

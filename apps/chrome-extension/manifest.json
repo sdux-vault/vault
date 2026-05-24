@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Vault DevTools",
+  "version": "0.0.2",
+  "description": "Developer tools panel for inspecting ngVault state and events.",
+
+  "devtools_page": "devtools/devtools.html",
+
+  "background": {
+    "service_worker": "background/background.js"
+  },
+
+  "icons": {
+    "128": "icons/ng-sdux-128.png"
+  },
+
+  "permissions": ["scripting", "tabs", "storage", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/content-script.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "bridge/bridge-inject.js",
+        "assets/brand/ng-sdux-landscapte-dark.svg"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

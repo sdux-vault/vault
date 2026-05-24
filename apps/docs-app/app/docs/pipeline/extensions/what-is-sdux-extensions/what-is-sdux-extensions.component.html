@@ -1,0 +1,487 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-04-28 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>What is <sdux-brand-name [tm]="true" /> Extensions</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong><sdux-brand-name /> Extensions</strong> is the developer-facing
+      extensibility model that allows engineers to build, deploy, and register
+      custom <strong>Behaviors</strong> and <strong>Controllers</strong> within
+      the <sdux-brand-name /> pipeline. Extensions follow the same contracts,
+      decorators, and lifecycle hooks used by built-in add-ons, ensuring that
+      custom code participates in pipeline execution with full orchestrator and
+      Conductor support.
+    </p>
+
+    <p>
+      Extensions are not a separate runtime or plugin system. They are
+      first-class pipeline participants that implement
+      <a href="/docs/references/contracts/behavior-contract">BehaviorContract</a
+      >&lt;T&gt; or
+      <a href="/docs/references/contracts/controller-contract"
+        >ControllerContract</a
+      >&lt;T&gt;, are decorated with &#64;<a
+        href="/docs/references/decorators/vault-behavior"
+        >VaultBehavior</a
+      >
+      or &#64;<a href="/docs/references/decorators/vault-controller"
+        >VaultController</a
+      >, and are registered in the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      declaration alongside built-in add-ons. The orchestrator and Conductor
+      discover, validate, and execute Extensions exactly as they do core and
+      add-on pipeline units.
+    </p>
+
+    <p>
+      This model allows teams to address domain-specific requirements—such as
+      custom merge strategies, specialized error handling, rate-limiting
+      policies, or gated approval workflows—without modifying
+      <sdux-brand-name /> internals.
+    </p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- WHY EXTENSIONS                                               -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Why Extensions</div>
+
+    <div class="section-body">
+      <p>
+        The built-in add-on library covers common concerns such as caching,
+        distinct-until-changed operators, deep merge strategies, throttling, and
+        delay-based rate limiting. However, production applications frequently
+        encounter requirements that are unique to a specific domain,
+        organization, or integration surface.
+      </p>
+
+      <p>
+        Extensions exist so that engineers can implement those requirements
+        using the same pipeline guarantees that built-in add-ons rely on:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Stage isolation</strong> — Custom Behaviors execute only
+          within their declared pipeline stage and cannot interfere with other
+          stages.
+        </li>
+        <li>
+          <strong>Deterministic ordering</strong> — The orchestrator enforces
+          execution order based on stage classification, not registration order.
+        </li>
+        <li>
+          <strong>Lifecycle management</strong> — Construction, reset, and
+          destroy hooks are called automatically by the orchestrator and
+          Conductor.
+        </li>
+        <li>
+          <strong>Fluent configuration</strong> — Extensions integrate with the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          fluent API for type-safe, chainable configuration.
+        </li>
+        <li>
+          <strong>Tooling and diagnostics</strong> — Extensions are visible to
+          DevTools, diagnostics, and introspection APIs through their declared
+          keys.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- WHAT CAN BE EXTENDED                                         -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">What Can Be Extended</div>
+
+    <div class="section-body">
+      <p>
+        The <sdux-brand-name /> pipeline supports two categories of extensions:
+      </p>
+
+      <h4>Custom Behaviors</h4>
+      <p>
+        Behaviors are stage-bound units of responsibility that perform work
+        within a specific pipeline stage. A custom Behavior can target any
+        supported stage, including:
+      </p>
+
+      <table aria-label="Custom Behaviors">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Behavior Type</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Extension</td>
+            <td>
+              General-purpose Behaviors that add methods to the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              API surface.
+            </td>
+          </tr>
+          <tr>
+            <td>Interceptor</td>
+            <td>
+              Behaviors that observe or react to pipeline events such as errors.
+            </td>
+          </tr>
+          <tr>
+            <td>Merge</td>
+            <td>
+              Behaviors that define custom merge strategies for combining
+              current and incoming state.
+            </td>
+          </tr>
+          <tr>
+            <td>Operator</td>
+            <td>Behaviors that apply RxJS operators to the emission stream.</td>
+          </tr>
+          <tr>
+            <td>Encrypt</td>
+            <td>
+              Behaviors that apply encryption or decryption transformations to
+              state values during pipeline processing.
+            </td>
+          </tr>
+          <tr>
+            <td>ErrorTransform</td>
+            <td>
+              Behaviors that transform or enrich error objects before they are
+              dispatched to error callbacks.
+            </td>
+          </tr>
+          <tr>
+            <td>Persist</td>
+            <td>
+              Behaviors that persist committed state to external storage such as
+              localStorage, sessionStorage, or IndexedDB.
+            </td>
+          </tr>
+          <tr>
+            <td>ReplayGlobalError</td>
+            <td>
+              Behaviors that replay previously captured global errors into the
+              pipeline for reprocessing or observation.
+            </td>
+          </tr>
+          <tr>
+            <td>StepwiseFilter</td>
+            <td>
+              Behaviors that conditionally suppress pipeline values using the
+              stepwise bus coordination protocol.
+            </td>
+          </tr>
+          <tr>
+            <td>StepwiseReducer</td>
+            <td>
+              Behaviors that derive or transform candidate values using the
+              stepwise bus coordination protocol.
+            </td>
+          </tr>
+          <tr>
+            <td>StepwiseResolve</td>
+            <td>
+              Behaviors that normalize incoming state inputs using the stepwise
+              bus coordination protocol.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Custom Behaviors implement
+        <a href="/docs/references/contracts/behavior-contract"
+          >BehaviorContract</a
+        >&lt;T&gt; and are decorated with &#64;<a
+          href="/docs/references/decorators/vault-behavior"
+          >VaultBehavior</a
+        >. For a complete list of extensible and restricted Behavior types, see
+        <a routerLink="/docs/pipeline/extensions/building-custom-behaviors"
+          >Building Custom Behaviors</a
+        >.
+      </p>
+
+      <h4>Custom Controllers</h4>
+      <p>
+        Controllers are coordination authorities that mediate pipeline execution
+        through a voting model. A custom Controller can implement policies such
+        as:
+      </p>
+
+      <table aria-label="Custom Controllers">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Controller Type</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Error</td>
+            <td>
+              Controllers that define error-handling policies for the pipeline.
+              Only one Error Controller may be active per
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            </td>
+          </tr>
+          <tr>
+            <td>Policy</td>
+            <td>
+              Controllers that enforce pipeline execution policies such as rate
+              limiting, circuit breakers, concurrency gates, or approval
+              workflows.
+            </td>
+          </tr>
+          <tr>
+            <td>ReplayGlobalError</td>
+            <td>
+              Controllers that coordinate the replay of previously captured
+              global errors back into the pipeline.
+            </td>
+          </tr>
+          <tr>
+            <td>Stepwise</td>
+            <td>
+              Controllers that coordinate stepwise bus interactions, mediating
+              multi-phase pipeline resolution through the voting model.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Custom Controllers implement
+        <a href="/docs/references/contracts/controller-contract"
+          >ControllerContract</a
+        >&lt;T&gt; and are decorated with &#64;<a
+          href="/docs/references/decorators/vault-controller"
+          >VaultController</a
+        >. For a complete list of extensible and restricted Controller types,
+        see
+        <a routerLink="/docs/pipeline/extensions/building-custom-controllers"
+          >Building Custom Controllers</a
+        >.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- EXTENSION ANATOMY                                            -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Extension Anatomy</div>
+
+    <div class="section-body">
+      <p>
+        Every Extension—whether a Behavior or Controller—follows a consistent
+        structural pattern:
+      </p>
+
+      <ul>
+        <li>
+          A <strong>decorator</strong> (&#64;<a
+            href="/docs/references/decorators/vault-behavior"
+            >VaultBehavior</a
+          >
+          or &#64;<a href="/docs/references/decorators/vault-controller"
+            >VaultController</a
+          >) that declares metadata such as type, key, criticality, and
+          configuration requirements.
+        </li>
+        <li>
+          A <strong>contract implementation</strong> (<a
+            href="/docs/references/contracts/behavior-contract"
+            >BehaviorContract</a
+          >&lt;T&gt; or
+          <a href="/docs/references/contracts/controller-contract"
+            >ControllerContract</a
+          >&lt;T&gt;) that defines the Extension's runtime behavior.
+        </li>
+        <li>
+          An <strong>options interface</strong> that describes the configuration
+          the Extension accepts through the fluent API.
+        </li>
+        <li>
+          A <strong>fluent API installer</strong> (installFluentApi) that
+          registers a chainable configuration method on the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+        <li>
+          An optional <strong>module augmentation</strong> that extends
+          TypeScript's type surface so consumers receive full IntelliSense for
+          new
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          methods and fluent configuration.
+        </li>
+      </ul>
+
+      <p>
+        This pattern is identical for built-in add-ons and custom Extensions.
+        There is no separate plugin API, registration ceremony, or runtime
+        discovery mechanism.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- BUILD VS EXTEND                                              -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Build from Scratch vs Extend Existing</div>
+
+    <div class="section-body">
+      <p>
+        Engineers have two approaches when creating custom pipeline
+        participants:
+      </p>
+
+      <h4>Implement the Contract Directly</h4>
+      <p>
+        The recommended default. Implement
+        <a href="/docs/references/contracts/behavior-contract"
+          >BehaviorContract</a
+        >&lt;T&gt; or
+        <a href="/docs/references/contracts/controller-contract"
+          >ControllerContract</a
+        >&lt;T&gt; directly and apply the appropriate decorator. This gives full
+        control over the Extension's logic and lifecycle.
+      </p>
+
+      <h4>Extend an Existing Class</h4>
+      <p>
+        When an existing built-in Behavior or Controller already provides most
+        of the required logic, extend its concrete class and apply a new
+        decorator with a unique key and configKey. The new decorator replaces
+        the parent's metadata entirely, so the orchestrator or Conductor treats
+        the subclass as a distinct pipeline participant.
+      </p>
+
+      <p>
+        This approach is useful for adding logging, adjusting thresholds,
+        introducing conditional bypasses, or customizing a single method without
+        reimplementing the entire Extension.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Abstract base classes are available for Behavior families that share
+        substantial internal mechanics. For example,
+        StepwiseBehaviorAbstract&lt;T&gt; provides the shared stepwise bus
+        coordination protocol used by
+        <a href="/docs/pipeline/addons/stepwise/with-stepwise-resolve-behavior"
+          >withStepwiseResolveBehavior</a
+        >,
+        <a href="/docs/pipeline/addons/stepwise/with-stepwise-filter-behavior"
+          >withStepwiseFilterBehavior</a
+        >, and
+        <a href="/docs/pipeline/addons/stepwise/with-stepwise-reducer-behavior"
+          >withStepwiseReducerBehavior</a
+        >. For most custom Extensions, implementing the contract interface
+        directly is sufficient.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- REGISTRATION                                                 -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Registration</div>
+
+    <div class="section-body">
+      <p>
+        Extensions are registered by passing the class to the appropriate array
+        in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        declaration:
+      </p>
+
+      <ul>
+        <li>
+          Custom Behaviors are added to the <strong>Behavior array</strong>
+          (third argument).
+        </li>
+        <li>
+          Custom Controllers are added to the <strong>Controller array</strong>
+          (fourth argument).
+        </li>
+      </ul>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'FeatureCell Declaration'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const myCell = FeatureCell(
+  MyCellToken,
+  {
+    key: 'my-cell',
+    initialState: {}
+  },
+  [
+    withMyCustomBehavior     // custom behavior
+  ],
+  [
+    withMyCustomController   // custom controller
+  ]
+);
+
+myCell
+  .withMyCustomBehavior({ /* options */ })
+  .withMyCustomController({ /* options */ })
+  .initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        Extensions that are not registered in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        declaration are not discovered, validated, or executed. There is no
+        global registry or implicit activation.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- RESTRICTED TYPES                                             -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Restricted Types</div>
+
+    <div class="section-body">
+      <p>
+        Not all Behavior and Controller types are available for custom
+        Extensions. The Orchestrator and Conductor enforce strict boundaries
+        between core pipeline infrastructure and the extensible surface.
+        Behaviors or Controllers that belong to core pipeline stages are managed
+        exclusively by the runtime and are silently removed if provided in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        declaration.
+      </p>
+
+      <p>
+        For the complete list of restricted types, see
+        <a routerLink="/docs/pipeline/extensions/building-custom-behaviors"
+          >Building Custom Behaviors</a
+        >
+        and
+        <a routerLink="/docs/pipeline/extensions/building-custom-controllers"
+          >Building Custom Controllers</a
+        >.
+      </p>
+    </div>
+  </section>
+
+  <sdux-devmode-licensing-common />
+
+  <!-- ============================================================ -->
+  <!-- RELATED TOPICS                                               -->
+  <!-- ============================================================ -->
+  <sdux-pipeline-related-topics />
+</div>

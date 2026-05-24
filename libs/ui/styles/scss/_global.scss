@@ -1,0 +1,558 @@
+// ────────────────────────────────
+// Primary Palette — Vault Blue
+// ────────────────────────────────
+$sdux-primary-base: #1976d2; // Vault Blue (core identity)
+$sdux-primary-light: #63a4ff;
+$sdux-primary-dark: #004ba0;
+$sdux-primary-outline: #000000;
+
+// ────────────────────────────────
+// Accent Palette — Reactive Red
+// ────────────────────────────────
+$sdux-accent-base: #d32f2f; // Strong red, energy/action
+$sdux-accent-light: #ef5350;
+$sdux-accent-dark: #b71c1c;
+$sdux-accent-outline: #fff8dc; // Warm contrast (soft gold)
+
+// ────────────────────────────────
+// Caution Palette — Vault Amber
+// ────────────────────────────────
+$sdux-warn-base: #fbc02d; // Vault Amber / warning
+$sdux-warn-light: #fff263;
+$sdux-warn-dark: #c49000;
+$sdux-warn-outline: #212121; // Deep neutral border
+
+// ────────────────────────────────
+// Success Palette — Emerald Green
+// ────────────────────────────────
+$sdux-success-base: #388e3c;
+$sdux-success-dark: #1b5e20;
+$sdux-success-light: #81c784;
+$sdux-success-outline: #e8f5e9;
+
+// ────────────────────────────────
+// Neutral Palette — Text + Surfaces
+// ────────────────────────────────
+$sdux-text-primary: #e2e8f0; // Light slate (main text on dark bg)
+$sdux-text-secondary: #94a3b8; // Muted slate
+$sdux-text-disabled: #64748b; // Cool grey
+$sdux-text-inverse: #0f172a; // Deep navy
+$sdux-text-white: #ffffff;
+$sdux-text-black: #000000;
+
+$diagram-background-color: #f2e9d8;
+
+// ===========================================
+// Light Mode Surface Palette
+// ===========================================
+// App background
+$sdux-surface-light: #ffffff;
+
+// Mid-tone (panel backgrounds)
+$sdux-surface-light-mid: #f1f5f9;
+
+// Elevated elements
+$sdux-surface-light-accent: #e2e8f0;
+
+// Divider / outline stays primary-light
+$sdux-surface-outline-light: $sdux-primary-light;
+
+// ===========================================
+// Dark Mode Surface Palette
+// ===========================================
+
+// Deep background (keep)
+$sdux-surface-darker: #0a0e1a;
+
+// App background (slightly lighter)
+$sdux-surface-dark: #0f172a;
+
+// Cards
+$sdux-surface-mid: #1f2a3a; // slightly lighter & more neutral
+
+// Elevated / interactive surfaces
+$sdux-surface-lightish: #2c3a4f; // noticeably brighter
+
+$sdux-surface-light: #ffffff;
+$sdux-surface-light-mid: #f1f5f9;
+
+// ===========================================
+// Dark Mode Semantic Surfaces
+// ===========================================
+
+$sdux-surface-active: color-mix(
+  in srgb,
+  $sdux-primary-base 22%,
+  $sdux-surface-mid
+);
+
+$sdux-surface-idle: color-mix(
+  in srgb,
+  $sdux-primary-light 16%,
+  $sdux-surface-mid
+);
+
+$sdux-surface-complete: color-mix(
+  in srgb,
+  $sdux-success-base 26%,
+  $sdux-surface-mid
+);
+
+$sdux-surface-inactive: color-mix(
+  in srgb,
+  $sdux-text-disabled 28%,
+  $sdux-surface-mid
+);
+
+// ===========================================
+// Light Mode Semantic Surfaces
+// ===========================================
+
+$sdux-surface-active-light: color-mix(
+  in srgb,
+  $sdux-surface-light 18%,
+  $sdux-surface-light-mid
+);
+
+$sdux-surface-idle-light: color-mix(
+  in srgb,
+  $sdux-primary-base 8%,
+  $sdux-surface-light-mid
+);
+
+$sdux-surface-complete-light: color-mix(
+  in srgb,
+  $sdux-success-base 16%,
+  $sdux-surface-light-mid
+);
+
+$sdux-surface-inactive-light: color-mix(
+  in srgb,
+  $sdux-text-disabled 18%,
+  $sdux-surface-light-mid
+);
+
+// ===========================================
+// Light Mode Semantic Surfaces
+// ===========================================
+
+$sdux-border-active: $sdux-primary-base;
+
+$sdux-border-idle: $sdux-surface-outline-light;
+
+$sdux-border-complete: $sdux-success-base;
+
+$sdux-border-inactive: $sdux-text-disabled;
+
+// Outlines / dividers
+$sdux-surface-outline: $sdux-primary-light;
+
+/*
+$sdux-surface-dark: #0f172a; // Vault UI background
+$sdux-surface-darker: #0a0e1a;
+$sdux-surface-light: #ffffff; // Base for light mode
+$sdux-surface-outline: $sdux-primary-light; // Neutral outline tone
+*/
+
+// ────────────────────────────────
+// Shadows / Elevation
+// ────────────────────────────────
+$sdux-shadow-base: 0 0 8px rgba(25, 118, 210, 0.4);
+$sdux-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.35);
+$sdux-shadow-active: 0 3px 10px rgba(0, 0, 0, 0.45);
+
+$sdux-border-color: $sdux-primary-base;
+$sdux-hover-background-color: rgba(255, 255, 255, 0.08);
+
+/**
+  * Breakpoints
+  */
+$breakpoint-sm: 480px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+
+/**
+  * Border Radius
+  */
+$border-radius-xs: 0.25rem; // 4px
+$border-radius-sm: 0.3125rem; // 5px
+$border-radius-md: 0.5rem; // 8px
+$border-radius-lg: 0.75rem; // 12px
+
+/**
+  * Font Sizes
+  */
+$font-size-xxs: 0.625rem; // 10px
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-md: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-2xl: 1.5rem; // 24px
+$font-size-3xl: 1.875rem; // 30px
+$font-size-4xl: 2.25rem; // 36px
+$font-size-5xl: 3rem; // 48px
+
+// Font Weights
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+/**
+* Line height
+**/
+$line-height: 1.6;
+
+/**
+  * UI Element Dimensions
+*/
+$admin-toolbar-height: 64px;
+$admin-footer-height: 40px;
+$button-icon-size: 22px;
+$button-height: 40px;
+$module-container-min-width: 690px;
+
+/**
+  * Spacing
+*/
+$spacing-xxs: 0.125rem; // 2px
+$spacing-xs: 0.25rem; // 4px
+$spacing-sm: 0.5rem; // 8px
+$spacing-md: 1rem; // 16px
+$spacing-lg: 1.5rem; // 24px
+$spacing-xl: 2rem; // 32px
+$spacing-2xl: 3rem; // 48px
+$spacing-3xl: 4rem; // 64px (optional future-proofing)
+
+/**
+* Layout 
+*/
+$toolbar-height: 64px;
+$sidenav-width: 300px;
+$footer-height: 60px;
+
+// ────────────────────────────────
+// Typography
+// ────────────────────────────────
+$sdux-font-family: 'Inter', system-ui, sans-serif !default;
+$sdux-font-weight: 400 !default;
+$sdux-font-weight-medium: 500;
+$sdux-font-weight-bold: 600;
+$sdux-font-size: $font-size-md !default;
+$sdux-font-color: $sdux-text-primary !default;
+
+// In your _global.scss
+$sdux-font-logo: 'Inter', system-ui, sans-serif !default;
+
+// In your _global.scss
+$sdux-code-font:
+  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+  monospace !default;
+
+.pointer {
+  cursor: pointer;
+}
+
+// ────────────────────────────────
+// Mixins
+// ────────────────────────────────
+@mixin sdux-elevate($level: base) {
+  @if $level == hover {
+    box-shadow: $sdux-shadow-hover;
+    color: $sdux-text-black; // strongest readable foreground
+    font-weight: $font-weight-medium;
+  } @else if $level == active {
+    box-shadow: $sdux-shadow-active;
+    color: var(--sdux-text-inverse); // high-focus foreground
+    font-weight: $font-weight-bold;
+  } @else {
+    // default = base
+    box-shadow: $sdux-shadow-base;
+    color: $sdux-text-black; // strongest readable foreground
+    font-weight: $font-weight-regular;
+  }
+}
+
+@mixin sdux-text($color: $sdux-text-primary, $weight: $sdux-font-weight) {
+  color: $color;
+  font-weight: $weight;
+  font-family: $sdux-font-family;
+}
+
+@mixin sdux-surface($color: $sdux-surface-dark) {
+  background-color: $color;
+  border: 1px solid $sdux-surface-outline;
+}
+
+/**
+  * Typography Mixins
+  */
+@mixin label {
+  font-size: $font-size-md;
+  font-weight: bold;
+}
+
+@mixin color-black {
+  color: $color-text-black;
+}
+
+@mixin h-element {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: $font-weight-bold;
+}
+
+@mixin h1-element {
+  font-size: $font-size-3xl; // 2.5rem
+  margin-top: $spacing-md; // 1rem
+  margin-bottom: $spacing-md;
+  @include h-element;
+}
+
+@mixin h2-element {
+  font-size: $font-size-2xl; // 2rem
+  margin-top: $spacing-md; // 1rem
+  margin-bottom: $spacing-md;
+  @include h-element;
+}
+
+@mixin h3-element {
+  font-size: $font-size-xl; // 1.25rem
+  margin-top: $spacing-xs; // 0.25rem
+  margin-bottom: $spacing-lg; // 1.5rem
+  @include h-element;
+}
+
+@mixin h4-element {
+  font-size: $font-size-md; // 1rem
+  margin-top: $spacing-xs; // 0.25rem
+  margin-bottom: $spacing-md; // 1rem
+  @include h-element;
+}
+
+@mixin h5-element {
+  font-size: $font-size-sm; // 0.875rem
+  margin-top: $spacing-xs;
+  margin-bottom: $spacing-sm; // 0.5rem
+  @include h-element;
+}
+
+@mixin h6-element {
+  font-size: $font-size-xs; // 0.75rem
+  margin-top: $spacing-xs;
+  margin-bottom: $spacing-xs;
+  @include h-element;
+}
+
+@mixin sdux-font-body(
+  $size: $sdux-font-size,
+  $weight: $sdux-font-weight,
+  $color: $sdux-font-color
+) {
+  font-family: var(--sdux-font-body, #{$sdux-font-family});
+  font-weight: var(--sdux-font-body-weight, #{$weight});
+  font-size: var(--sdux-font-body-size, #{$size});
+  color: var(--sdux-font-body-color, #{$color});
+  line-height: $line-height;
+  font-style: normal;
+}
+
+@mixin sdux-font-logo {
+  font-family: var(--sdux-font-logo, #{$sdux-font-logo});
+  font-weight: var(--sdux-font-logo-weight, 600);
+  letter-spacing: 0.02em;
+  font-size: $font-size-2xl;
+  color: $sdux-text-primary;
+}
+
+/**
+ * Link Styles
+ */
+@mixin a-link($color, $hover: null, $visited: null) {
+  cursor: pointer;
+  text-decoration: none;
+  color: $color;
+
+  @if $hover {
+    &:hover {
+      color: $hover;
+      text-decoration: underline;
+    }
+  }
+
+  @if $visited {
+    &:visited {
+      color: $visited;
+    }
+  }
+}
+
+// Usage Examples
+@mixin a-link-primary {
+  @include a-link($sdux-primary-base, $sdux-text-inverse);
+}
+
+/* visited link */
+@mixin a-link-visited {
+  text-decoration: none;
+}
+
+// Visited primary link
+@mixin a-link-visited-primary {
+  color: $sdux-primary-base;
+  @include a-link-visited;
+}
+
+// Hover underline only
+@mixin a-link-hover {
+  text-decoration: underline;
+}
+
+// Hover primary link
+@mixin a-link-hover-primary {
+  color: $sdux-text-inverse; // better contrast on hover
+  @include a-link-hover;
+}
+
+/* active link */
+@mixin a-link-active {
+  text-decoration: underline;
+}
+
+@mixin a-link-active-primary {
+  color: $sdux-accent-base;
+  text-decoration: underline;
+}
+
+/**
+ * Spacer Utility Classes
+ * Dynamically generates `.sdux-spacer-{size}` & `.sdux-vspacer-{size}`
+ */
+@mixin spacer($size, $type: width) {
+  #{$type}: #{$size}px;
+}
+
+/**
+ * Generic Button Styles
+ * @param {string} $color Text color
+ * @param {string} $background Background color
+ * @param {string} $border Border color
+ * @param {number} $radius Border radius
+ */
+
+@mixin button-base(
+  $color,
+  $background,
+  $border,
+  $font-size: $font-size-sm,
+  $padding: $spacing-sm,
+  $radius: $border-radius-sm
+) {
+  height: $button-height !important;
+  min-width: 90px !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: $color !important;
+  background-color: $background !important;
+  border: 1px solid $border !important;
+  border-radius: $radius !important;
+  font-size: $font-size !important;
+  padding: $padding;
+  gap: $spacing-xs;
+  font-weight: $font-weight-semibold;
+
+  .mat-icon {
+    transform: scale(0.75);
+  }
+
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  .button-text {
+    height: $button-height;
+  }
+
+  .mat-icon {
+    width: $button-icon-size !important;
+    height: $button-icon-size !important;
+    position: relative;
+    padding-left: $spacing-xs;
+    padding-right: $spacing-xs;
+    gap: $spacing-xs; // Ensures uniform spacing
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// Generic theme mixin — consistent with sdux naming
+@mixin sdux-theme($bg, $text, $border) {
+  background-color: $bg;
+  color: $text;
+  border-color: $border;
+}
+
+/// SDuX Icon Button Mixin
+/// Generates a circular icon button used across documentation and components.
+///
+/// @param {number | string} $size - Width and height of the button (default: 36px)
+///
+/// Example:
+///   @include sdux-icon-button(48px);
+///   @include sdux-icon-button(2.5rem);
+///
+@mixin sdux-icon-button($size: 36px, $backgroundColor: $sdux-primary-base) {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: $size;
+  height: $size;
+  padding: 0;
+  margin: 0;
+
+  border-radius: 50%;
+  cursor: pointer;
+
+  background-color: $backgroundColor;
+  color: $sdux-text-white;
+  border: 1px solid transparent;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
+
+  /* Perfectly center Material icons */
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    line-height: 1;
+    font-size: $font-size-lg;
+  }
+
+  &:hover {
+    background-color: $backgroundColor;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    @include sdux-elevate(active);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $sdux-primary-light;
+    outline-offset: 3px;
+  }
+}

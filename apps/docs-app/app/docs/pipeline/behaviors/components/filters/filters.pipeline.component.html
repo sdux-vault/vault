@@ -1,0 +1,739 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Filter Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Filter Behaviors</strong> allow engineers to refine or suppress
+      candidate state values during pipeline processing while strictly
+      preserving structural type. Filters operate on the value being considered
+      for the next state snapshot and determine whether, and in what form, that
+      value may proceed to reduction.
+    </p>
+
+    <h4>Filter Contract Summary</h4>
+    <ul>
+      <li>Filters must be pure and side-effect free</li>
+      <li>Filters must not mutate the incoming value</li>
+      <li>Filters must preserve the structural shape and type of state</li>
+      <li>Filters execute in initialization order</li>
+      <li>Errors during filter execution propagate as Vault errors</li>
+    </ul>
+
+    <p>
+      The Filter contract guarantees that filter execution is
+      <strong>deterministic and isolated</strong>. If a filter function throws
+      an error, that error is promoted to a <strong>Vault error</strong> and
+      immediately terminates the current pipeline execution. The in-flight
+      candidate value is discarded, no reducers are executed, and no snapshot is
+      emitted. This ensures that filter failures never result in partially
+      refined state or inconsistent pipeline outcomes. For details on how
+      referential isolation is enforced at every stage boundary, see
+      <a href="/docs/pipeline/isolation">Pipeline Isolation</a>.
+    </p>
+
+    <p>
+      Filters never mutate existing state, never influence pipeline scheduling
+      or control flow, and never emit snapshots directly. Their sole
+      responsibility is to refine or suppress the
+      <em>candidate next value</em> before reduction.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- FILTER STAGE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Filter Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Filter Stage runs after the resolve and merge stages and before
+        reducers and taps. Filters receive the candidate next value produced by
+        earlier stages and may refine or suppress that value while strictly
+        preserving its structural type.
+      </p>
+
+      <p>A filter may:</p>
+
+      <ul>
+        <li>Return the value unchanged</li>
+        <li>Return a modified value with the same structural shape</li>
+        <li>
+          Return <em>undefined</em>, which suppresses the update and prevents
+          snapshot emission
+        </li>
+      </ul>
+
+      <p>
+        Filters must be pure. They may not mutate the incoming value, and they
+        may not change its structural type. Arrays must remain arrays, objects
+        must remain objects, and primitives must retain their original primitive
+        type. Structural violations result in controlled Vault errors to protect
+        pipeline integrity.
+      </p>
+
+      <h4>Core Pipeline Stage</h4>
+      <p>
+        The Filter stage is a core pipeline stage and is always present as part
+        of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. However, individual filter functions are
+        <em>not</em> registered as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        declarative configuration. Instead, filter functions are attached
+        exclusively through the fluent <strong>.filters()</strong> API during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization, ensuring that value refinement and suppression rules are
+        defined explicitly at startup rather than embedded into static cell
+        configuration.
+      </p>
+
+      <h4>Fluent Filters() API</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        declare <strong>multiple filters</strong>. The fluent
+        <strong>.filters()</strong> API accepts an array of filter functions,
+        which is treated as a declarative, ordered configuration. When provided,
+        filters are executed in the <em>Processing Layer</em> in the exact order
+        they are listed during initialization.
+      </p>
+
+      <p>
+        An empty filter array is ignored and has no effect on pipeline
+        execution.
+      </p>
+
+      <h4>Engineer-Supplied Filter Functions</h4>
+      <p>
+        Filter functions are supplied by engineers during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization and execute exclusively within the Filter stage. Each
+        function is evaluated as a pure, deterministic operation that must
+        preserve the structural contract of the state. Filter functions do not
+        own pipeline flow, scheduling, or lifecycle concerns; their sole
+        responsibility is to accept, refine, or suppress the candidate value
+        presented to them.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Although multiple filter functions may be composed, filter logic should
+        remain narrowly focused and structurally conservative. Overly complex or
+        interdependent filters can obscure intent and make rejection or
+        transformation behavior difficult to reason about. Filters are most
+        effective when each function enforces a single, clearly defined
+        invariant.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FILTER STAGE DIAGRAM -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Filter Stage Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.3/3.3-filter-behavior.svg"
+        [tooltip]="'Filter Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- AVAILABLE FILTER BEHAVIORS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Available Filter Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        The Filter behavior is part of the core pipeline and always present as a
+        stage. Engineers supply
+        <em>filter functions</em> that are executed by the core filter behavior
+        during pipeline processing.
+      </p>
+    </div>
+
+    <div class="table-title">Core Filter Behavior</div>
+    <table aria-label="Core Filter Behavior">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Behavior</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <p>
+              <strong
+                ><a
+                  href="/docs/pipeline/behaviors/filter/with-core-filter-behavior"
+                  >withCoreFilterBehavior</a
+                ></strong
+              >
+            </p>
+            <p>input: candidateValue, filterFn</p>
+          </td>
+          <td>
+            <p>
+              Executes an engineer-supplied pure filter function against the
+              candidate next value. The filter function may refine the value or
+              suppress it by returning <em>undefined</em>.
+            </p>
+
+            <ul>
+              <li>Arrays must return arrays</li>
+              <li>Objects must return objects</li>
+              <li>Primitives must retain their primitive type</li>
+            </ul>
+
+            <p>
+              Structural mismatches produce controlled Vault errors. This stage
+              is ideal for conditional acceptance, sanitization, clamping, or
+              value refinement without altering state shape.
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <sdux-vault-filter-function-shape-common />
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        The Filter stage exposes a fluent configuration API that allows
+        engineers to register filter functions during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        This API does not execute filters directly. It records an ordered set of
+        filter functions that are later applied by the Filter stage during
+        pipeline execution.
+      </p>
+
+      <div class="table-title">Fluent Filter Configuration</div>
+      <table aria-label="Fluent Filter Configuration">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Fluent API</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p><strong>.filters(filters)</strong></p>
+              <p>input:</p>
+              <ul>
+                <li>
+                  filters:
+                  <a href="/docs/references/types/filter-function"
+                    >FilterFunction</a
+                  >&lt;T&gt;[]
+                </li>
+              </ul>
+              <p>
+                returns:
+                <a href="/docs/references/shapes/feature-cell-base-shape"
+                  >FeatureCellBaseShape</a
+                >
+                (chainable)
+              </p>
+            </td>
+
+            <td>
+              <p>
+                Registers filter functions for a
+                <a href="/docs/references/functions/feature-cell">FeatureCell</a
+                >. The supplied functions define how candidate pipeline values
+                may be refined or suppressed before reaching reducers and taps.
+              </p>
+
+              <p>
+                Filters are executed in the <em>Processing Layer</em> in the
+                exact order they are registered. This method must be called
+                before <code>initialize()</code>. Multiple calls overwrite prior
+                filter configuration.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Filter Function Patterns</div>
+
+    <div class="section-body">
+      <p>
+        The Filter behavior is a core pipeline construct, but the
+        <em>filter functions</em> they execute are supplied by engineers. While
+        JavaScript allows many ways to express a function, only a small subset
+        of patterns are safe and appropriate for use in the Filter stage.
+      </p>
+
+      <p>
+        From the pipeline’s perspective, there are only two dimensions that
+        matter:
+      </p>
+
+      <ul>
+        <li>Whether the function depends on instance state</li>
+        <li>Whether the function is deterministic for a given input</li>
+      </ul>
+
+      <p>
+        The following categories describe the supported and discouraged ways to
+        supply filter functions, ordered from most to least preferred.
+      </p>
+
+      <h4>Category A: Pure / Context-Free Functions (Recommended)</h4>
+      <p>
+        Pure filter functions depend only on their input value and produce a
+        deterministic output. They do not reference
+        <code>this</code>, do not close over mutable external state, and are
+        fully predictable across executions.
+      </p>
+
+      <p>
+        This is the safest and most reusable form of filter function and is
+        recommended whenever possible.
+      </p>
+
+      <h4>Example 1: Pure Filter Function</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 1: Pure Filter Function'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    (employees) => employees.filter(e => e.status === 'Active')
+  ]
+).initialize()
+// Inactive employees are removed`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 2: Factory-Generated Pure Filter Function</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 2: Factory-Generated Pure Filter Function'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Factory function produces a pure, parameterized filter
+export function partialFilterStartDateAfter(cutoff: string) {
+  const cutoffDate = new Date(cutoff);
+
+  return (employees) =>
+    employees.filter(e => new Date(e.hireDate) >= cutoffDate);
+}
+
+// Register the generated filter during initialization
+&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    partialFilterStartDateAfter('2020-01-01')
+  ]
+).initialize()
+
+// Employees hired before 2020-01-01 are removed`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>
+        Category B: Instance-Aware but Correctly Bound Functions (Acceptable)
+      </h4>
+      <p>
+        Filter functions may reference instance state as long as they are
+        correctly bound to the instance. These functions are deterministic per
+        instance but must not be shared across FeatureCells.
+      </p>
+
+      <p>
+        This pattern is acceptable when filter logic depends on configuration or
+        state owned by the containing class.
+      </p>
+
+      <h4>Example 3: Arrow Function Using Instance State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 3: Arrow Function Using Instance State'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`readonly salaryThreshold = 80000;
+
+readonly filterBySalary = (employees) => {
+  return employees.filter(e => e.salary > this.salaryThreshold);
+};
+
+&lt;employeeCell\|this&gt;.vault.filters(
+  [this.filterBySalary]
+).initialize()`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 4: Bound Instance Method</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 4: Bound Instance Method'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`public filterByCity(employees) {
+  return employees.filter(e => e.address.city === 'New York');
+}
+
+&lt;employeeCell\|this&gt;.vault.filters(
+  [this.filterByCity.bind(this)]
+).initialize()`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Category C: Inline Lambdas (Allowed, Use Sparingly)</h4>
+      <p>
+        Inline lambda functions are allowed, but they are easier to misuse.
+        Because they are often written inline, it is easy to accidentally close
+        over mutable variables or embed complex logic that is difficult to test
+        or reuse.
+      </p>
+
+      <p>Inline filters are best reserved for trivial, self-contained rules.</p>
+
+      <h4>Example 5: Inline Lambda Filter</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 5: Inline Lambda Filter'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    (value: number) => Math.min(value, 10)
+  ]
+).initialize()
+// 15 → 10`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Filter Function Anti-Patterns</div>
+
+    <div class="section-body">
+      <h4>
+        Category D: External Mutable State (“Standalone” Functions —
+        Discouraged)
+      </h4>
+      <p>
+        Functions that appear standalone but rely on external mutable state are
+        unsafe. Their behavior can change based on call order, shared state, or
+        concurrent execution, making them unsuitable for deterministic pipeline
+        processing.
+      </p>
+
+      <p>
+        If a filter requires state, that state must be instance-scoped and
+        explicitly bound. External mutable variables should never influence
+        filter behavior.
+      </p>
+
+      <h4>Example 6: Discouraged External State Dependency</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 6: Discouraged External State Dependency'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`let cutoffDate = new Date('2024-01-01');
+
+&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    (employees) =>
+      employees.filter(e => new Date(e.hireDate) >= cutoffDate)
+  ]
+).initialize()
+
+// ❌ Behavior depends on external mutable state`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Filter Function Summary</div>
+    <div class="section-body">
+      <h4>Filter Function Comparison</h4>
+
+      <p>
+        The following table summarizes the practical differences between the
+        filter function styles demonstrated above. While all valid examples may
+        execute correctly, they differ in reusability, testability, and
+        long-term safety.
+      </p>
+
+      <div class="table-title">Filter Function Characteristics</div>
+      <div class="table-scroll">
+        <table aria-label="Filter Function Characteristics">
+          <thead>
+            <tr>
+              <th scope="col" class="column-175">Dimension</th>
+
+              <th scope="col" class="column-auto">
+                Examples 1 / 2<br />
+                <span class="table-header-secondary"
+                  >Pure Filter Functions</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Examples 3 / 4<br />
+                <span class="table-header-secondary"
+                  >Instance-Bound Functions</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 5<br />
+                <span class="table-header-secondary">Inline Lambda</span>
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 6<br />
+                <span class="table-header-secondary"
+                  >External Mutable State</span
+                >
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Purity</td>
+              <td>✅</td>
+              <td>⚠️ Instance-scoped</td>
+              <td>✅</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Determinism</td>
+              <td>✅</td>
+              <td>⚠️ Per instance</td>
+              <td>✅</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Safety for Pipelines</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>⚠️</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Reusability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>Low</td>
+              <td>Low</td>
+            </tr>
+
+            <tr>
+              <td>Testability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>Lower</td>
+              <td>Low</td>
+            </tr>
+
+            <tr>
+              <td>Risk of Accidental Closure</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Higher</td>
+              <td>High</td>
+            </tr>
+
+            <tr>
+              <td>Intended Lifespan</td>
+              <td>Long-lived</td>
+              <td>Instance-limited</td>
+              <td>Ephemeral</td>
+              <td>Unpredictable</td>
+            </tr>
+
+            <tr>
+              <td>Recommended Usage</td>
+              <td>Preferred</td>
+              <td>Acceptable</td>
+              <td>Use sparingly</td>
+              <td>Discouraged</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Summary Rule</h4>
+      <p>
+        Any filter function must either be
+        <strong>referentially transparent</strong> or
+        <strong>explicitly instance-scoped and bound</strong>. Functions that
+        depend on external mutable state or unbound instance context introduce
+        hidden coupling and should be avoided.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        Filters are applied by supplying pure filter functions that operate on
+        the candidate next value during pipeline execution. The following
+        examples illustrate valid and invalid filter function behavior.
+      </p>
+
+      <h4>Example 1: Array Filter — Keep Only Even Numbers</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Array Filter - Keep Only Even Number'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    (value: number[]) => value.filter(n => n % 2 === 0)
+  ]
+).initialize()
+// [1 , 2, 3, 4] → [2, 4]`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 2: Reject Update</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 2: Reject Update'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    () => undefined
+  ]
+).initialize()
+// any incoming value → update suppressed`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 3: Invalid Structural Change</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 3: Invalid Structural Change'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    (value: number[]) => 42
+  ]
+).initialize()
+// ❌ throws Vault error — array structure must be preserved`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 4: Object Filter — Remove Sensitive Fields</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 4: Object Filter - Remove Sensitive Fields'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    (value: { id: number; name: string; password: string }) => {
+      const { password, ...rest } = value;
+      return rest;
+    }
+  ]
+).initialize()
+// { id, name, password } → { id, name }`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 5: Primitive Filter — Clamp Value</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 5: Primitive Filter - Clamp Value'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    (value: number) => Math.min(value, 10)
+  ]
+).initialize()
+// 15 → 10`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Filter Anti-Pattern Examples</div>
+
+    <div class="section-body">
+      <p>
+        The following examples demonstrate
+        <strong>invalid filter function behavior</strong>. These patterns
+        violate the Filter contract by mutating the incoming value or by
+        returning a value that does not preserve the original structural type.
+        Such violations are detected and rejected by the Vault to protect
+        pipeline integrity and ensure deterministic behavior.
+      </p>
+
+      <!-- Example 5 -->
+      <h4>Example 6: Invalid — Mutating the Input</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 6: Invalid Mutation'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    (current) => {
+      current.count++; // ❌ mutation
+      return current;
+    }
+  ]
+).initialize()
+
+// ❌ Vault error: filters must not mutate the incoming value`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- Example 6 -->
+      <h4>Example 7: Invalid — Returning Wrong Shape</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 7: Invalid Structural Return'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+  [
+    (current) => 123 // ❌ incorrect type
+  ]
+).initialize()
+
+// ❌ Vault error: filter returned incompatible value type`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

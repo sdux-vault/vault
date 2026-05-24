@@ -1,0 +1,385 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-26 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>&#64;FeatureCell</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The
+      <strong
+        >&#64;<a href="/docs/references/functions/feature-cell"
+          >FeatureCell</a
+        ></strong
+      >
+      decorator is an <strong>Angular-only</strong> API that marks an injectable
+      class as a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> within
+      the SDuX Vault. It establishes
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      identity, state typing, and vault integration using Angular’s dependency
+      injection model.
+    </p>
+
+    <h4>Decorator Contract Summary</h4>
+    <ul>
+      <li>
+        Declares a class as a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        provider
+      </li>
+      <li>
+        Assigns a unique
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> key
+      </li>
+      <li>
+        Anchors the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        state type at compile time
+      </li>
+      <li>
+        Enables typed vault injection via <code>injectVault&lt;T&gt;()</code>
+      </li>
+      <li>Integrates with Angular DI and lifecycle management</li>
+    </ul>
+
+    <p>
+      The
+      <strong
+        >&#64;<a href="/docs/references/functions/feature-cell"
+          >FeatureCell</a
+        ></strong
+      >
+      decorator defines <strong>identity and typing only</strong>. It does not
+      execute pipelines, initialize the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>, or emit
+      state. Its responsibility is limited to attaching stable metadata that the
+      Vault orchestrator reads during Angular-based registration.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      This decorator is available only when using
+      <strong><sdux-package-name />/angular</strong>. Non-Angular environments
+      must use <strong>provideFeatureCell()</strong> for
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      registration.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- PURPOSE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Purpose</div>
+
+    <div class="section-body">
+      <p>
+        In Angular applications, FeatureCells are typically implemented as
+        injectable services. The
+        <strong
+          >&#64;<a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >
+        decorator bridges the gap between Angular’s DI system and the Vault
+        runtime by attaching
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        metadata directly to the class constructor.
+      </p>
+
+      <p>This metadata allows the Vault to:</p>
+
+      <ul>
+        <li>
+          Register the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          under a stable, unique key
+        </li>
+        <li>
+          Infer the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+          state type everywhere it is consumed
+        </li>
+        <li>
+          Provide strongly typed vault instances through dependency injection
+        </li>
+      </ul>
+
+      <p>
+        Unlike framework decorators,
+        <strong
+          >&#64;<a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >
+        does not rely on reflection or runtime type analysis. It stores explicit
+        metadata using stable keys that are read by the Vault orchestrator
+        during registration.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DECORATOR SIGNATURE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Decorator Signature</div>
+
+    <div class="table-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a
+      >&lt;TState&gt;
+    </div>
+    <table aria-label="FeatureCell">
+      <thead>
+        <tr>
+          <th scope="col" class="column-300">Signature</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong
+              >&#64;<a href="/docs/references/functions/feature-cell"
+                >FeatureCell</a
+              >&lt;TState&gt;</strong
+            >
+            <p>inputs:</p>
+            <ul>
+              <li>key: string</li>
+            </ul>
+          </td>
+          <td>
+            Declares the decorated class as a
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            and assigns it a unique key. The generic type parameter
+            <code>TState</code> defines the strongly typed state managed by the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STATE TYPING -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">State Typing</div>
+
+    <div class="section-body">
+      <p>
+        The generic type parameter supplied to
+        <strong
+          >&#64;<a href="/docs/references/functions/feature-cell">FeatureCell</a
+          >&lt;TState&gt;</strong
+        >
+        establishes the authoritative state type for the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. This
+        type is captured at compile time and propagated throughout the system.
+      </p>
+
+      <p>This enables:</p>
+
+      <ul>
+        <li>Strong typing for <code>injectVault&lt;TState&gt;()</code></li>
+        <li>Type-safe reducers, filters, interceptors, and merges</li>
+        <li>
+          Consistent state typing across services, components, and controllers
+        </li>
+      </ul>
+
+      <p>
+        The decorator internally stores a <em>type anchor</em> to preserve the
+        generic state type without introducing runtime overhead. This mechanism
+        exists solely to support TypeScript inference and does not affect
+        execution.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- USAGE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Usage</div>
+
+    <div class="section-body">
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        typically declared as an Angular service. The
+        <strong
+          >&#64;<a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >
+        decorator is applied alongside <code>&#64;Injectable()</code>, and the
+        vault is injected using <strong>injectVault&lt;T&gt;()</strong>.
+      </p>
+
+      <h4>Example: Declaring an Angular FeatureCell</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Angular FeatureCell Declaration'">
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: [] 
+      }
+    )
+  ]
+};
+          
+// bank-employee.service.ts
+// The provideFeatureCell key must match the &#64;FeatureCell key input
+          
+import { Injectable } from '&#64;angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.shape';
+
+&#64;FeatureCell&lt;BankEmployeeShape&gt;('employees')
+&#64;Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    // Required to activate the FeatureCell
+    this.vault.initialize();
+  }
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>
+          Declares the service as a
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        </li>
+        <li>
+          Registers the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          under a unique key
+        </li>
+        <li>Establishes strongly typed state for the cell</li>
+        <li>
+          Integrates the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> with
+          Angular DI
+        </li>
+        <li>Requires explicit initialization to become operable</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RULES & CONSTRAINTS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Rules & Constraints</div>
+
+    <div class="section-body">
+      <ul>
+        <li>
+          <strong
+            >Defines
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            identity</strong
+          ><br />
+          The <code>&#64;FeatureCell</code> decorator declares the unique key
+          and state type used to create the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+          Angular DI token.
+        </li>
+
+        <li>
+          <strong
+            ><a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            keys must be globally unique</strong
+          ><br />
+          Each
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> key
+          may be registered only once within the application. Duplicate keys
+          result in a runtime error outside of
+          <a href="/docs/references/const/dev-mode">DevMode</a>.
+        </li>
+
+        <li>
+          <strong>Creation occurs during registration</strong><br />
+          The
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          token is created when <code>provideFeatureCell()</code> is evaluated,
+          not when the service is instantiated.
+        </li>
+
+        <li>
+          <strong
+            ><a href="/docs/references/const/dev-mode">DevMode</a> relaxes
+            enforcement for testing</strong
+          ><br />
+          In <a href="/docs/references/const/dev-mode">DevMode</a>, duplicate
+          keys may be tolerated to support hot reloads and isolated test
+          environments. Production builds enforce strict uniqueness.
+        </li>
+      </ul>
+
+      <p>
+        These constraints ensure that each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> has a
+        single, unambiguous owner within the Angular dependency graph and that
+        state boundaries remain deterministic.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- INITIALIZATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Initialization</div>
+
+    <div class="section-body">
+      <p>
+        Applying
+        <strong
+          >&#64;<a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >
+        does <em>not</em> initialize the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        Initialization is a required, explicit step that activates the pipeline,
+        behaviors, and state emission.
+      </p>
+
+      <p>
+        If <code>initialize()</code> is not called, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        considered inactive and any attempt to use state APIs will result in a
+        runtime error.
+      </p>
+
+      <p>
+        Initialization is typically performed in the service constructor,but may
+        be deferred if advanced lifecycle control is required.
+      </p>
+      x
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

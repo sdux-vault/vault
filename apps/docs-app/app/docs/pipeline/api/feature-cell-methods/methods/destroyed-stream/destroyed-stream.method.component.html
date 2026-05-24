@@ -1,0 +1,150 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-25 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>destroyed$</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>destroyed$</strong> stream emits a single notification when a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+      permanently destroyed. This stream provides a reliable lifecycle signal
+      that indicates the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> has been
+      fully torn down and will no longer participate in Vault-managed execution.
+    </p>
+
+    <h4>Stream Contract Summary</h4>
+    <ul>
+      <li>
+        Emits exactly once when the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        destroyed
+      </li>
+      <li>Completes immediately after emission</li>
+      <li>
+        Signals permanent teardown of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      </li>
+      <li>Never emits values during normal execution</li>
+      <li>Cannot emit again once completed</li>
+    </ul>
+
+    <p>
+      The <strong>destroyed$</strong> stream defines a
+      <strong>terminal lifecycle boundary</strong>. It does not emit state
+      values, does not participate in pipeline execution, and does not influence
+      control flow. Its sole responsibility is to notify subscribers that the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      lifecycle has ended.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      The <strong>destroyed$</strong> stream is completed as part of the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      destruction process. Once this stream emits, the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      cannot be re-initialized or reused.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- destroyed$ -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>destroyed$</strong> observable allows consumers to react to
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        teardown. This is typically used to clean up subscriptions, release
+        external resources, or coordinate higher-level lifecycle behavior.
+      </p>
+
+      <h4>Example: Observing FeatureCell Destruction</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Observe FeatureCell Destruction'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.destroyed$
+  .subscribe(() => {
+    console.info('FeatureCell has been destroyed');
+  });`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>
+          Subscribes to the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          destruction signal
+        </li>
+        <li>Receives a single notification when destruction occurs</li>
+        <li>Automatically completes after emitting</li>
+        <li>Does not receive state values or snapshots</li>
+      </ul>
+
+      <p>
+        This stream is ideal for teardown coordination and cleanup logic that
+        must run exactly once when the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle ends.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="table-title">Lifecycle Stream</div>
+    <table aria-label="Lifecycle Stream">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Member</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong>destroyed$</strong>
+
+            <p>type:</p>
+            <ul>
+              <li>Observable&lt;void&gt;</li>
+            </ul>
+
+            <p>emissions:</p>
+            <ul>
+              <li>Single emission on destruction</li>
+            </ul>
+          </td>
+          <td>
+            Emits once when the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+            destroyed and completes immediately thereafter. Signals the
+            permanent end of the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            lifecycle.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

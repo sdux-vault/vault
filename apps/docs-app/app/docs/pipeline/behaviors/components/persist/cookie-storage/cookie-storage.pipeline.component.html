@@ -1,0 +1,279 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Cookie Storage Persist Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Cookie Storage Persist</strong> is a
+      <em>Persist behavior</em> that writes committed
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state to
+      browser cookies during the Persist stage. It provides lightweight,
+      session-scoped persistence using <code>document.cookie</code> and is
+      intended for small, durable values that must survive page reloads without
+      external storage dependencies.
+    </p>
+
+    <p>
+      This behavior observes the finalized pipeline output after all upstream
+      processing—including resolve, merge, operators, filters, and reducers—has
+      completed. The received value represents the authoritative, reduced state
+      and is serialized and stored as a feature-scoped cookie.
+    </p>
+
+    <p>
+      Cookie Storage Persist does not transform values, emit snapshots, or
+      influence pipeline control flow. Its role is limited strictly to
+      persistence and hydration of finalized state in a predictable, fail-safe
+      manner.
+    </p>
+
+    <h4>Storage Constraints</h4>
+    <p>
+      Browser cookies are limited to approximately <strong>4096 bytes</strong>.
+      To ensure safe operation across browsers, this behavior enforces a hard
+      payload limit of <strong>4000 bytes</strong>. Writes that exceed this
+      threshold are rejected and logged without throwing.
+    </p>
+
+    <p>
+      When the persisted state is <code>undefined</code>, the associated cookie
+      is removed entirely. When a valid value is present, it is serialized using
+      <code>JSON.stringify</code>, URL-encoded, and written as a session cookie
+      scoped to the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+    </p>
+
+    <h4>Execution Semantics</h4>
+    <p>
+      Cookie Storage Persist executes synchronously within the Persist stage.
+      Cookie writes and removals occur inline and complete before the pipeline
+      proceeds. All errors during serialization, encoding, or cookie access are
+      caught and logged without interrupting pipeline execution.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      Cookie-based persistence is best suited for small identifiers, flags, or
+      lightweight configuration values. It is not recommended for large data
+      structures, high-frequency updates, or sensitive information. For larger
+      or more durable persistence requirements, alternative persist behaviors
+      should be used.
+    </p>
+  </header>
+
+  <sdux-vault-data-security-persist-common />
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.7/3.7.2-persist-lifecycle.svg"
+        [tooltip]="'Persist Lifecycle'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Cookie Storage Persist does not accept runtime configuration options.
+        Its behavior is fully defined and deterministic, enforcing safe cookie
+        size limits, serialization rules, and fail-safe execution by default.
+      </p>
+
+      <p>
+        Configuration consists solely of attaching or removing the persist
+        behavior from a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. When
+        present, the behavior automatically participates in the Persist stage
+        and observes finalized pipeline output.
+      </p>
+
+      <p>
+        Cookie Storage Persist may be freely stacked with other persist
+        behaviors. When multiple persist behaviors are configured, each is
+        invoked in sequence with the same final state value.
+      </p>
+
+      <sdux-vault-persist-behaviors-common [type]="'cookie'" />
+    </div>
+  </section>
+
+  <sdux-vault-persist-behavior-comparison-common />
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <h4>
+        Example 1: Use the Cookie Storage Persist Behavior in a FeatureCell
+      </h4>
+
+      <p>
+        This example demonstrates a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        configured with the
+        <strong>
+          <a href="/docs/pipeline/addons/with-cookie-storage-persist-behavior">
+            withCookieStoragePersistBehavior
+          </a> </strong
+        >. When state updates are committed via <code>mergeState</code>, the
+        finalized
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> value
+        is written to <code>document.cookie</code> during the
+        <strong>Persist stage</strong>.
+      </p>
+
+      <p>
+        Cookie Storage Persist observes the fully reduced pipeline output and
+        performs persistence as a side effect. It does not transform values,
+        influence merge semantics, or participate in pipeline control flow.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Persist behaviors operate after all upstream stages—including resolve,
+        merge, operators, filters, and reducers—have completed. Multiple persist
+        behaviors may be attached to a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
+        will be executed sequentially.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Persist FeatureCell State to Cookies'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {
+        key: 'employees',
+        initialState: []
+      },
+      [
+        // Attach cookie-based persistence
+        withCookieStoragePersistBehavior
+      ]
+    )
+  ]
+};
+
+// bank-employee.service.ts
+
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.shape';
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+
+  addEmployee(): void {
+    // Final state is persisted to document.cookie
+    this.vault.mergeState({
+      value: [{ id: 1, name: 'Jane Doe' }]
+    });
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Persist FeatureCell State to Cookies'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Attach cookie-based persistence
+    withCookieStoragePersistBehavior
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+
+// Commit state and persist to document.cookie
+employeeCell.mergeState({
+  value: [{ id: 1, name: 'Jane Doe' }]
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Persist FeatureCell State to Cookies'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Attach cookie-based persistence
+    withCookieStoragePersistBehavior
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+
+// Commit state and persist to document.cookie
+employeeCell.mergeState({
+  value: [{ id: 1, name: 'Jane Doe' }]
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-vault-persist-licensing-common />
+
+  <sdux-pipeline-related-topics />
+</div>

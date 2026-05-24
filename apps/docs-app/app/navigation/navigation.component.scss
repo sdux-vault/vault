@@ -1,0 +1,256 @@
+@use 'global' as global;
+
+/* ======================================================
+   SDuX Sidenav Container
+   ====================================================== */
+
+.sdux-sidenav-container {
+  width: 100%;
+  height: calc(100vh - var(--app-toolbar-height) - var(--app-footer-height));
+  background-color: var(--sdux-surface-bg);
+  display: flex;
+  overflow: hidden;
+
+  .sdux-main-content {
+    width: 100%;
+    background-color: var(--sdux-surface-bg);
+    color: var(--sdux-text-default);
+    overflow-y: auto;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .sdux-sidenav {
+    // test are expandable
+
+    width: global.$sidenav-width;
+    min-width: global.$sidenav-width;
+    background-color: var(--sdux-surface-bg);
+    color: var(--sdux-text-default);
+    border-radius: 0;
+
+    border-inline-end: 1px solid var(--sdux-surface-outline);
+    overflow: hidden;
+
+    .sidenav-content {
+      width: 100%;
+      overflow-x: hidden;
+
+      .navigation-list {
+        padding: 0;
+        margin: 0;
+        background-color: var(--sdux-surface-bg);
+
+        transition:
+          background-color 0.25s ease,
+          color 0.25s ease;
+
+        .menu-content-container {
+          height: 42px;
+
+          .menu-content {
+            // padding-top: 8px;
+            height: 24px;
+            font-weight: global.$font-weight-medium;
+
+            // hteser are the non-expandable one
+            color: var(--sdux-text-default);
+
+            .logo {
+              height: 25px;
+            }
+
+            .type {
+              font-size: global.$font-size-xs;
+            }
+
+            &.sub-item {
+              padding-inline-start: global.$spacing-md;
+              color: var(--sdux-text-default);
+            }
+          }
+        }
+
+        /* ===============================
+           Sub-item indentation
+           =============================== */
+        .sub-item {
+          // these are children
+          padding-inline-start: calc(global.$spacing-md + 12px);
+          color: var(--sdux-text-default);
+        }
+
+        a.mat-mdc-list-item {
+          transition: background-color 0.2s ease;
+          border-radius: 0;
+
+          &:focus-visible {
+            outline: 2px solid var(--sdux-primary);
+            outline-offset: 2px;
+          }
+
+          &.mdc-list-item--with-one-line {
+            height: 42px;
+
+            .logo {
+              height: 42px;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: flex-start;
+            }
+          }
+
+          &.active {
+            background-color: color-mix(
+              in srgb,
+              var(--sdux-primary) 20%,
+              transparent
+            );
+            border-radius: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.sdux-sidenav-toggle {
+  position: fixed;
+  bottom: calc(var(--app-footer-height) + 12px);
+  inset-inline-start: 12px;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+.nav-expansion {
+  background: var(--sidenav-bg) !important;
+  color: var(--sidenav-text) !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  margin: 0;
+  padding: 0;
+
+  // .mat-expansion-panel {
+
+  .mat-expansion-panel-header {
+    border-radius: 0;
+    padding-left: 0;
+    // font-weight: global.$font-weight-semibold;
+    min-height: 36px !important;
+    height: 42px;
+
+    .mat-content {
+      .nav-section-label {
+        padding: 0;
+        padding: global.$spacing-sm global.$spacing-md;
+        // font-size: global.$font-size-xs;
+        // font-weight: global.$font-weight-semibold;
+        // text-transform: uppercase;
+        // letter-spacing: 0.04em;
+        color: var(--sdux-text-muted);
+
+        .tiny-label {
+          font-size: global.$font-size-xs;
+        }
+      }
+    }
+
+    &.mat-expanded {
+      border-bottom: 1px solid global.$sdux-primary-base;
+      height: 42px;
+    }
+
+    /*
+    .menu-content {
+      border: 4px solid red !important;
+      padding-left: global.$spacing-md;
+    }
+      */
+
+    .sub-menu-content {
+      padding-inline-start: global.$spacing-sm;
+      font-size: global.$font-size-sm;
+    }
+  }
+  // }
+
+  /*
+  .mat-expansion-panel-body {
+    border: 2px solid blue;
+    padding: 0;
+    background: var(--sidenav-bg);
+  }
+    */
+
+  &.grandparent {
+    .sub-menu-content {
+      padding-inline-start: global.$spacing-sm;
+      font-size: global.$font-size-sm;
+    }
+
+    .sub-menu {
+      padding-inline-start: global.$spacing-sm;
+
+      .sub-header {
+        font-weight: global.$font-weight-medium !important;
+      }
+
+      a.mat-mdc-list-item {
+        padding-inline-start: 0;
+
+        .menu-content {
+          opacity: 0.9;
+          padding-inline-start: global.$spacing-lg !important;
+          font-size: global.$font-size-sm;
+          color: var(--sdux-text-default);
+        }
+      }
+    }
+  }
+}
+
+/* Sub-items inside expansion panel */
+/**
+These don't seem to do anythin
+*/
+.nav-expansion .sub-menu a.mat-mdc-list-item {
+  padding-inline-start: global.$spacing-md !important;
+
+  .menu-content {
+    opacity: 0.9;
+    padding-inline-start: global.$spacing-lg !important;
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-default);
+  }
+}
+
+.nav-expansion a.mat-mdc-list-item {
+  padding: 0 !important;
+
+  .menu-content {
+    // these are children without expansion
+    padding-inline-start: calc(global.$spacing-lg + 4px) !important;
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-default);
+  }
+}
+
+.menu-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: global.$spacing-sm;
+
+  .logo {
+    height: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}

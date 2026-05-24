@@ -1,0 +1,231 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>The <sdux-brand-name [tm]="true" /> Global Error Handler</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      The <strong><sdux-brand-name /> Global Error Handler</strong> is a
+      singleton Vault service that exposes a unified, observable view of global
+      Vault error state. It provides a centralized mechanism for observing,
+      clearing, and reacting to errors that occur across FeatureCells and
+      pipeline execution.
+    </p>
+
+    <p>
+      The Global Error Handler does not participate in state computation or
+      pipeline control. It exists solely as a coordination and observation
+      surface for error conditions that have already been normalized and
+      committed by the Vault.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Global Error Service</div>
+
+    <div class="section-body">
+      <p>
+        The Global Error Handler is exposed as a
+        <strong>singleton service</strong>. A single instance is shared across
+        the application lifetime and reflects the current global Vault error
+        state at all times.
+      </p>
+
+      <p>
+        The service provides an observable error stream that emits the latest
+        <em
+          ><a href="/docs/references/shapes/vault-error-shape"
+            >VaultErrorShape</a
+          ></em
+        >
+        or <em>null</em> when no global error is present. This allows
+        application-level infrastructure—such as error banners, logging systems,
+        or recovery workflows—to react consistently to error conditions without
+        coupling to individual FeatureCells.
+      </p>
+
+      <h4>Responsibilities</h4>
+      <ul>
+        <li>Expose the current global Vault error state</li>
+        <li>Emit error updates through a single observable stream</li>
+        <li>Indicate whether a global error condition is currently active</li>
+        <li>Provide a controlled mechanism for clearing global errors</li>
+      </ul>
+
+      <p>
+        Clearing the global error does not modify
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        or pipeline history. It affects only the global error signal and allows
+        error-aware consumers to resume normal operation.
+      </p>
+
+      <h4>Scope and Guarantees</h4>
+      <ul>
+        <li>
+          The Global Error Handler is a singleton and is instantiated once
+        </li>
+        <li>It reflects errors produced by Vault-managed execution only</li>
+        <li>It does not generate, transform, or suppress errors</li>
+        <li>It does not influence pipeline execution or state snapshots</li>
+        <li>It provides observation and coordination only</li>
+      </ul>
+
+      <p>
+        By centralizing global error visibility in a dedicated Vault service,
+        <sdux-brand-name /> enables consistent, predictable error handling at
+        the application boundary while preserving strict separation between
+        state computation and error observation.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Vault Error Service Contract</div>
+    <div class="section-body">
+      <table>
+        <thead>
+          <tr>
+            <th class="column-250">Member</th>
+            <th class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="column-250">
+              error$: Observable&lt;<a
+                href="/docs/references/shapes/vault-error-shape"
+                >VaultErrorShape</a
+              >
+              | null&gt;
+            </td>
+            <td class="column-auto">
+              Observable stream that emits the current global
+              <em
+                ><a href="/docs/references/shapes/vault-error-shape"
+                  >VaultErrorShape</a
+                ></em
+              >
+              when an error is present, or <em>null</em> when no global error
+              condition exists.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">hasError: boolean</td>
+            <td class="column-auto">
+              Indicates whether a global Vault error condition is currently
+              active.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">clear(): void</td>
+            <td class="column-auto">
+              Clears the current global Vault error state. This affects only the
+              global error signal and does not modify
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              state or pipeline history.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        The Global Error Handler exposes a singleton observable interface for
+        monitoring Vault-level errors across the application. Consumers may
+        subscribe to this service to react to global error conditions without
+        coupling to individual FeatureCells.
+      </p>
+
+      <h4>Example 1: Subscribe to Global Errors</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Subscribe to Global Errors'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Acquire the singleton Global Error Handler
+const globalError = VaultErrorService();
+
+// Subscribe to the global error stream
+const stopErrorListening = globalError.error$.subscribe(async (error: VaultErrorShape | null) => {
+  if (!error || !globalError.hasError) {
+    return;
+  }
+
+  // Display an application-level error dialog
+  // WARNING ... this is PSUED-OCODE
+  const userResponse = await showErrorDialog({
+    title: 'An error occurred',
+    message: error.message,
+    details: error.metadata
+  });
+
+  // Wait for the user to acknowledge or dismiss the dialog
+  if (userResponse === 'acknowledged') {
+    // Clear the global error after it has been handled
+    globalError.clear();
+  }
+});
+
+// Dispose the subscription when it is no longer needed
+stopErrorListening.unsubscribe();
+`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Related Topics</div>
+    <div class="section-body">
+      <ul>
+        <li>
+          <a routerLink="/docs/diagrams"><sdux-brand-name /> Diagrams</a>
+        </li>
+        <li>
+          <a routerLink="/docs/pipelines">The <sdux-brand-name /> Pipeline</a>
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/what-is-a-behavior"
+            >What is an Behavior?</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/addons/what-is-an-addon"
+            >What is an Add-on?</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/errors"
+            >Core Error Behavior</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/addons/error/with-error-transform-behavior"
+            >Error Transform Add-on</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/controllers/with-replay-global-error-controller"
+            >Replay Global Error Controller</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/behaviors/interceptors/with-global-error-pause-behavior"
+            >Global Error Pause Behavior</a
+          >
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>

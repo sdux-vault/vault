@@ -1,0 +1,81 @@
+<form [formGroup]="stateDefinitionForm" class="state-form">
+  <!-- Framework -->
+  <section class="form-section">
+    <h3 class="question-title">Where will this state run?</h3>
+    <p class="question-hint">
+      We tailor the generated service, examples, and documentation to match your
+      framework.
+    </p>
+
+    <mat-radio-group formControlName="framework" class="radio-group">
+      @for (framework of frameworks; track framework) {
+        <mat-radio-button class="entity" [value]="framework">{{
+          framework
+        }}</mat-radio-button>
+      }
+    </mat-radio-group>
+  </section>
+
+  <!-- Shape Name -->
+  <section class="form-section">
+    <h3 class="question-title">What should we call this state?</h3>
+    <p class="question-hint">
+      This becomes the name of your generated service and TypeScript model (for
+      example: <code>UserState</code>, <code>Cart</code>, or
+      <code>EmployeesModel</code>).
+    </p>
+
+    <mat-form-field appearance="outline" class="field-full-width">
+      <input
+        matInput
+        placeholder="e.g. UserState"
+        formControlName="shapeName" />
+    </mat-form-field>
+  </section>
+
+  <!-- Primitive -->
+  <section class="form-section">
+    <h3 class="question-title">What type of data does this state hold?</h3>
+    <p class="question-hint">
+      Choose the structure that best represents your data — a single value, an
+      object, or a collection.
+    </p>
+
+    <mat-radio-group formControlName="primitive" class="radio-group">
+      @for (entity of primitives; track entity.value) {
+        <mat-radio-button
+          class="entity"
+          [value]="entity.value"
+          [matTooltip]="entity.label"
+          >{{ entity.value }}</mat-radio-button
+        >
+      }
+    </mat-radio-group>
+  </section>
+
+  <!-- Initial Value -->
+  <section class="form-section">
+    <h3 class="question-title">What should this state start as?</h3>
+    <p class="question-hint">
+      This is the initial value before any data is fetched, merged, or updated.
+    </p>
+
+    <mat-radio-group formControlName="initialValue" class="radio-group">
+      @for (entity of filteredInitialValues(); track entity.value) {
+        <mat-radio-button
+          class="entity"
+          [value]="entity.value"
+          [matTooltip]="entity.label">
+          {{ entity.label }}
+        </mat-radio-button>
+      }
+    </mat-radio-group>
+
+    <!-- Show input only when Custom is selected -->
+    <!-- @if (displayCustomValue()) {
+      <mat-form-field appearance="outline" class="field-full-width">
+        <input matInput placeholder="Enter custom initial value" formControlName="customValue" />
+      </mat-form-field>
+    } -->
+  </section>
+</form>

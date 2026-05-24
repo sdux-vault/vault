@@ -1,0 +1,126 @@
+<div class="behavior-question {{ behaviorStatus() }}">
+  <div class="content">
+    <div class="content-top-row">
+      <div class="label-group">
+        <div class="label">
+          {{ behavior().label }}
+          @if (behavior().documentationComponentReference) {
+            <button
+              type="button"
+              class="learn-icon"
+              (click)="openDocumentation()"
+              aria-label="More documentation"
+              matTooltip="More documentation">
+              <mat-icon>help_outline</mat-icon>
+            </button>
+          }
+        </div>
+        @if (aiAssist()) {
+          <div
+            class="ai-assist"
+            matTooltip="AI Assist provides structured, copy-ready prompts to help you generate this implementation correctly.">
+            AI Assist
+          </div>
+        }
+      </div>
+      <div class="controls" [matTooltip]="tooltip()">
+        @if (this.isMultipleSelectionMode()) {
+          <button
+            type="button"
+            class="button-toggle sdux-button-toggle {{ getNoButtonClass() }}"
+            (click)="selectNo()">
+            No
+          </button>
+        }
+
+        <button
+          type="button"
+          class="button-toggle sdux-button-toggle {{ getYesButtonClass() }}"
+          [class.is-selected]="selected()"
+          [class.is-not-selected]="!selected()"
+          [class.is-disabled]="disabled()"
+          [class.is-select]="!isMultipleSelectionMode()"
+          (click)="selectYes()">
+          {{ isMultipleSelectionMode() ? 'Yes' : 'Select' }}
+        </button>
+      </div>
+    </div>
+    <div class="question">{{ behavior().question }}</div>
+    @if (behavior().description) {
+      <div class="description">
+        {{ behavior().description }}
+      </div>
+    }
+  </div>
+
+  <!-- Drawer -->
+  <div class="drawer" [class.is-open]="selected()">
+    @if (selected()) {
+      @for (param of behavior().params ?? []; track param.key) {
+        <div class="param">
+          <label [attr.for]="'param-' + param.key">{{ param.label }}</label>
+
+          @switch (param.type) {
+            @case ('number') {
+              <input
+                [id]="'param-' + param.key"
+                type="number"
+                [placeholder]="param.placeholder"
+                [value]="paramsState()[param.key] ?? param.defaultValue ?? null"
+                (input)="
+                  updateParam(param, $any($event.target).valueAsNumber)
+                " />
+            }
+
+            @case ('function') {
+              <textarea
+                [id]="'param-' + param.key"
+                class="code-input"
+                rows="4"
+                [placeholder]="param.placeholder"
+                [value]="paramsState()[param.key] ?? param.defaultValue ?? ''"
+                (input)="updateParam(param, $any($event.target).value)">
+              </textarea>
+            }
+
+            @case ('string') {
+              <input
+                [id]="'param-' + param.key"
+                type="text"
+                [placeholder]="param.placeholder"
+                [value]="paramsState()[param.key] ?? param.defaultValue ?? ''"
+                (input)="updateParam(param, $any($event.target).value)" />
+            }
+
+            @case ('select') {
+              <select
+                [id]="'param-' + param.key"
+                [value]="paramsState()[param.key] ?? param.defaultValue"
+                (change)="updateParam(param, $any($event.target).value)">
+                @for (opt of param.options ?? []; track opt.value) {
+                  <option [value]="opt.value">
+                    {{ opt.label }}
+                  </option>
+                }
+              </select>
+            }
+
+            @case ('boolean') {
+              <input
+                type="checkbox"
+                [checked]="
+                  paramsState()[param.key] ?? param.defaultValue ?? false
+                "
+                (change)="updateParam(param, $any($event.target).checked)" />
+            }
+          }
+
+          @if (param.hint) {
+            <!-- Trusted: param.hint comes from internal behavior config constants -->
+            <div class="param-hint" [innerHTML]="param.hint"></div>
+          }
+        </div>
+      }
+    }
+  </div>
+</div>

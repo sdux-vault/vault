@@ -1,0 +1,303 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<!-- | Input                                                         | Interpretation                | Behavior                                                      | Pipeline | Notes                                                |
+| ------------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------- | -------- | ---------------------------------------------------- |
+| `.reset()`                                                    | Explicit reset                | `isLoading = false`, `value = undefined`, `error = null`      | ❌ NOOP  | Full reset of state                                  |
+| `replaceState(null)`                                          | Explicit reset                | `isLoading = false`, `value = undefined`, `error = null`      | ❌ NOOP  | Full reset of state                                  |
+| `replaceState()`                                              | Explicit reset                | `isLoading = false`, `value = undefined`, `error = null`      | ❌ NOOP  | Full reset of state                                  |
+| `replaceState(undefined)`                                     | Explicit reset                | `isLoading = false`, `value = undefined`, `error = null`      | ❌ NOOP  | Full reset of state                                  |
+| `replaceState({value: null})`                                 | Explicit reset                | `isLoading = false`, `value = undefined`, `error = null`      | ❌ NOOP  | Full reset of state                                  |
+| `replaceState({})`                                            | No change                     | No state changes                                              | ❌ NOOP  | True no-op input                                     |
+| `replaceState({ value: undefined })`                          | Ignore value                  | No state changes                                              | ❌ NOOP  | Value, error and isLoading are intentionally ignored |
+| `replaceState({ loading: undefined })`                        | Ignore loading                | No state changes                                              | ❌ NOOP  | loading is intentionally ignored                     |
+| `replaceState({ error: undefined })`                          | Ignore error                  | No state changes                                              | ❌ NOOP  | error is intentionally ignored                       |
+| `replaceState({ loading: true })`                             | Update loading                | `isLoading = true`, `value` & `error` unchanged               | ❌ NOOP  | isLoading is set. Value and error unchanged          |
+| `replaceState({ error: x, loading: false })`                  | Update error & loading        | `error = x`, `isLoading = false`, `value` unchanged           | ❌ NOOP  | isLoading and error are set. Value unchanged         |
+| `replaceState({ error: x })`                                  | Update error                  | `error = x`, `value` & `isLoading` unchanged                  | ❌ NOOP  | Error is set. Value and isLoading unchanged          |
+| `replaceState({ error: null })`                               | Clear error                   | `error = null`, others unchanged                              | ❌ NOOP  | Explicit error reset                                 |
+| `replaceState({ value: something })`                          | Update value                  | `value = something` , `error` & `isLoading` unchanged         | ✅ RUNS  | Triggers full pipeline (reducers, filters, etc.)     |
+| `replaceState({ value: something, error: x })`                | Update value & error          | `value = something` , `error = x` , `isLoading` unchanged     | ✅ RUNS  | Triggers full pipeline (reducers, filters, etc.)     |
+| `replaceState({ value: something, loading: false })`          | Update value & loading        | `value = something` , `isLoading = false` , `error` unchanged | ✅ RUNS  | Triggers full pipeline (reducers, filters, etc.)     |
+| `replaceState({ value: something, error: x, loading: true })` | Update value, error & loading | `value = something` , `error = x`, `isLoading = true`         | ✅ RUNS  | Triggers full pipeline (reducers, filters, etc.)     |
+
+| Category     | Input                                   | Behavior                                                        | Pipeline | Notes                              |
+| ------------ | --------------------------------------- | --------------------------------------------------------------- | -------- | ---------------------------------- |
+| Reset        | `replaceState()` / `undefined` / `null` | Full reset (`isLoading=false`, `value=undefined`, `error=null`) | ❌ NOOP  | All reset forms behave identically |
+| No-op        | `replaceState({})`                      | No changes                                                      | ❌ NOOP  | Explicit no-op                     |
+| Partial      | `replaceState({ loading, error })`      | Updates provided fields only                                    | ❌ NOOP  | Missing/undefined fields ignored   |
+| Value update | `replaceState({ value })`               | Updates value                                                   | ✅ RUNS  | Triggers pipeline                  | -->
+
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>State Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>State Behaviors</strong> provide a deterministic, centralized
+      mechanism for committing and exposing pipeline results as authoritative
+      state snapshots. State behaviors finalize pipeline outcomes, normalize
+      state transitions, and emit immutable snapshots that represent the
+      completed result of pipeline execution.
+    </p>
+
+    <h4>State Contract Summary</h4>
+    <ul>
+      <li>State behaviors must not derive or transform candidate values</li>
+      <li>State behaviors must not control pipeline execution or admission</li>
+      <li>
+        State behaviors must emit exactly one authoritative state snapshot per
+        execution
+      </li>
+      <li>State behaviors must not mutate previously emitted snapshots</li>
+      <li>Core state handling is always executed and cannot be omitted</li>
+    </ul>
+
+    <p>
+      The State contract guarantees that state commitment is
+      <strong>deterministic and isolated</strong>. Regardless of how pipeline
+      execution completes—success, suppression, error, stop, reset, or
+      destruction—the State stage finalizes execution by committing a single,
+      canonical state snapshot.
+    </p>
+
+    <p>
+      State behaviors do not participate in value derivation, policy evaluation,
+      scheduling, or control flow. Their sole responsibility is to finalize
+      pipeline execution and expose the resulting state in a consistent,
+      observable form.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">State Stage</div>
+
+    <div class="section-body">
+      <p>
+        The State Stage is responsible for finalizing and committing pipeline
+        outcomes into the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        authoritative state snapshot. It represents the exclusive execution
+        boundary where resolved values, loading transitions, and error states
+        are atomically applied and emitted as immutable state snapshots.
+      </p>
+
+      <p>
+        The State Stage executes after successful pipeline completion,
+        controlled termination, or error finalization. It guarantees that each
+        pipeline execution results in a single, deterministic state emission
+        that reflects the final outcome of that execution.
+      </p>
+
+      <p>State behaviors:</p>
+
+      <ul>
+        <li>Operate exclusively on immutable state snapshot shapes</li>
+        <li>Commit finalized values, loading transitions, and error states</li>
+        <li>
+          Emit authoritative state snapshots representing pipeline completion
+        </li>
+        <li>Do not derive new values or influence pipeline control flow</li>
+        <li>Must preserve atomicity and snapshot consistency</li>
+      </ul>
+
+      <h4>Core Pipeline Stage</h4>
+      <p>
+        The State stage is a core pipeline stage and is always present as part
+        of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. A core state behavior executes first to guarantee that all
+        pipeline outcomes are committed consistently and emitted as a canonical
+        state snapshot. This behavior cannot be omitted. Optional add-on state
+        behaviors may observe the finalized snapshot but must not alter it.
+      </p>
+
+      <p>
+        State behaviors do not resume pipeline execution, re-enter processing
+        stages, or modify committed outcomes. Their responsibility ends once the
+        finalized state snapshot has been emitted to observers.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Updating State</div>
+
+    <div class="section-body">
+      <p>
+        While the <strong>State Stage</strong> is responsible for committing
+        finalized pipeline outcomes, state updates are initiated through the
+        <strong
+          ><a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          API</strong
+        >. A
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        exposes three distinct mechanisms for submitting state updates into the
+        pipeline: <strong>replaceState()</strong>,
+        <strong>mergeState()</strong>, <strong>fromStream()</strong>,
+        <strong>fromDeferred()</strong>, <strong>fromObservable()</strong>, and
+        <strong>fromPromise()</strong>.
+      </p>
+
+      <p>
+        Each mechanism enters the pipeline through a different admission path
+        but ultimately resolves, processes, and commits state through the same
+        deterministic pipeline stages.
+      </p>
+
+      <sdux-state-update-mechanism-common />
+    </div>
+    <div class="section-body">
+      <h4>Execution Guarantees</h4>
+
+      <ul>
+        <li>
+          All update mechanisms enter the pipeline through standard admission.
+        </li>
+        <li>
+          All inputs are processed by the Resolve stage before downstream
+          execution.
+        </li>
+        <li>
+          The State stage commits exactly one authoritative state snapshot per
+          execution.
+        </li>
+        <li>Committed state remains immutable once emitted.</li>
+      </ul>
+
+      <p>
+        The difference between these mechanisms lies in
+        <em>how candidate state is produced</em>:
+        <strong>replaceState()</strong> forwards a resolved value directly,
+        <strong>mergeState()</strong> combines it with existing committed state
+        using a Merge behavior, and <strong>fromStream()</strong> produces
+        repeated candidate updates over time.
+      </p>
+
+      <p>
+        Regardless of admission path, state commitment remains centralized and
+        deterministic within the State stage.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Add-on State Emit Callback Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        In addition to core state commitment and snapshot emission, FeatureCells
+        may opt into
+        <em>add-on state emit callback behaviors</em>. These behaviors observe
+        finalized state snapshots after they have been committed and emitted and
+        may perform supplemental, observational handling after emission such as
+        logging, integration hooks, or compatibility callbacks.
+      </p>
+
+      <p>
+        State emit callbacks do not participate in state derivation, do not
+        influence pipeline control flow, and do not alter committed state. Their
+        sole responsibility is to observe immutable state snapshots that have
+        already been finalized by the State stage.
+      </p>
+
+      <p>
+        Emit-state callbacks exist solely for convenience and backward
+        compatibility with imperative or callback-oriented codebases. The
+        primary and recommended mechanisms for observing state are the reactive
+        <strong>.state$</strong> observable or the synchronous
+        <strong>.state</strong> getter (exposed as a signal in /Angular).
+        Emit-state callbacks are strictly observational and should not be used
+        for core application logic.
+      </p>
+
+      <h4>Fluent emitStates() API</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        declare <strong>multiple state emit callbacks</strong> using the fluent
+        <strong>.emitStates()</strong> API. This API accepts an ordered array of
+        callbacks that are executed sequentially for each finalized state
+        snapshot. Callback registration occurs during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        Emit-state callbacks are strictly observational. They do not return
+        values, do not modify the snapshot, and always yield
+        <code>VAULT_NOOP</code>. An empty emitStates array is ignored and has no
+        effect on pipeline execution.
+      </p>
+
+      <h4>Engineer-Supplied State Emit Callbacks</h4>
+      <p>
+        State emit callbacks are supplied by engineers during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization and execute exclusively after the authoritative state
+        snapshot has been committed. Each callback receives the immutable state
+        snapshot representing pipeline completion.
+      </p>
+
+      <p>
+        Callbacks must not throw, must not mutate state, and must not attempt to
+        resume or interrupt pipeline execution. Any errors raised by callbacks
+        are isolated and do not affect state finalization or downstream
+        observers.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Although multiple emit-state callbacks may be composed, callback logic
+        should remain narrowly scoped and observational. These callbacks are
+        best suited for transitional integrations, diagnostics, or legacy
+        interoperability rather than primary state consumption.
+      </p>
+    </div>
+  </section>
+
+  <sdux-state-emission-order-common />
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/4.0/4.0-state-execution-flow.svg"
+        [tooltip]="'State Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available State Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        The State Stage is a <strong>core pipeline stage</strong> and is always
+        present as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. A core state behavior executes to commit finalized pipeline
+        outcomes into an authoritative <em>state snapshot</em>, updating the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        value, loading flags, and error fields in a single, deterministic
+        operation.
+      </p>
+
+      <p>
+        Optional add-on state behaviors may observe committed state snapshots
+        after finalization, but they do not participate in state derivation,
+        pipeline control, or snapshot commitment.
+      </p>
+
+      <sdux-vault-state-behaviors-common />
+    </div>
+  </section>
+
+  <sdux-state-consumption-mechanism-common />
+
+  <sdux-pipeline-related-topics />
+</div>

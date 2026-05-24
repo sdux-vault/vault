@@ -1,0 +1,278 @@
+@use 'global' as global;
+@use 'font' as font;
+@use 'button';
+
+:host {
+  display: block;
+  height: calc(100vh - global.$toolbar-height);
+  overflow: auto;
+}
+
+.dashboard-page {
+  width: 100%;
+  min-height: 100%;
+
+  background-color: var(--sdux-surface-bg);
+  color: var(--sdux-text-primary);
+
+  display: flex;
+  justify-content: center;
+
+  padding: global.$spacing-lg;
+  box-sizing: border-box;
+
+  .dashboard-shell {
+    width: 100%;
+    max-width: 1100px;
+
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-lg;
+
+    .stripe-banner {
+      border-radius: global.$border-radius-lg;
+      padding: global.$spacing-md global.$spacing-lg;
+      font-weight: global.$font-weight-semibold;
+      @include font.font-sm;
+    }
+
+    .stripe-success {
+      background-color: global.$sdux-success-outline;
+      color: global.$sdux-success-dark;
+      border: 1px solid global.$sdux-success-base;
+    }
+
+    .stripe-cancel {
+      background-color: global.$sdux-warn-light;
+      color: global.$sdux-warn-dark;
+      border: 1px solid global.$sdux-warn-base;
+    }
+
+    .dashboard-intro {
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-sm;
+
+      .dashboard-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: global.$spacing-md;
+
+        width: 100%;
+      }
+
+      .dashboard-title {
+        display: flex;
+        flex-direction: column;
+
+        @include global.h1-element;
+        margin: 0;
+
+        color: var(--sdux-primary);
+
+        .lead {
+          color: var(--sdux-text-primary);
+          @include font.font-sm;
+        }
+      }
+
+      .company-identity {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-end;
+
+        padding: global.$spacing-xs global.$spacing-sm;
+
+        min-width: 160px;
+
+        .user-name {
+          font-weight: global.$font-weight-semibold;
+          font-size: global.$font-size-sm;
+          color: var(--sdux-text-primary);
+        }
+
+        .organization-name {
+          @include font.font-xs;
+          color: global.$sdux-text-secondary;
+        }
+      }
+    }
+
+    /*
+    --------------------------------
+    Dashboard Cards
+    --------------------------------
+    */
+
+    .dashboard-card {
+      border-radius: global.$border-radius-lg;
+      border: 1px solid rgb(255 255 255 / 10%);
+
+      background-color: var(--sdux-surface-elevated);
+      color: var(--sdux-text-inverse);
+      box-shadow: global.$sdux-shadow-hover;
+
+      padding: global.$spacing-lg;
+
+      display: flex;
+      flex-direction: column;
+
+      .card-header {
+        @include global.h2-element;
+        margin: 0;
+
+        margin-bottom: global.$spacing-lg;
+      }
+    }
+
+    /*
+    --------------------------------
+    Purchase Card
+    --------------------------------
+    */
+
+    .purchase-section {
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-md;
+
+      .purchase-description {
+        @include font.font-sm;
+        color: global.$sdux-text-secondary;
+      }
+
+      .action-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .domain-input {
+          width: 320px;
+        }
+
+        button {
+          margin-top: 0;
+        }
+      }
+
+      .pricing {
+        display: flex;
+        align-items: baseline;
+        gap: global.$spacing-xs;
+
+        .price {
+          font-size: global.$font-size-3xl;
+          font-weight: global.$font-weight-bold;
+        }
+
+        .price-sub {
+          @include font.font-sm;
+          color: global.$sdux-text-secondary;
+        }
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: global.$spacing-lg;
+
+        padding: global.$spacing-md 0;
+        border-top: 1px solid rgb(255 255 255 / 8%);
+
+        @media (max-width: global.$breakpoint-md) {
+          grid-template-columns: 1fr;
+        }
+
+        .features-column {
+          display: flex;
+          flex-direction: column;
+          gap: global.$spacing-sm;
+
+          .features-column-title {
+            font-size: global.$font-size-xs;
+            font-weight: global.$font-weight-semibold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: global.$sdux-primary-light;
+            margin-bottom: global.$spacing-xs;
+          }
+
+          .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: global.$spacing-sm;
+            @include font.font-sm;
+            color: global.$sdux-text-secondary;
+
+            .feature-check {
+              flex-shrink: 0;
+              font-size: global.$font-size-xs;
+              line-height: 1.6;
+            }
+          }
+        }
+      }
+
+      .purchase-button {
+        width: 200px;
+        margin-top: global.$spacing-sm;
+      }
+    }
+
+    /*
+    --------------------------------
+    License List
+    --------------------------------
+    */
+
+    .license-list {
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-lg;
+    }
+
+    /*
+    --------------------------------
+    Empty State
+    --------------------------------
+    */
+
+    .empty-state {
+      text-align: center;
+      @include font.font-sm;
+      color: global.$sdux-text-secondary;
+    }
+  }
+}
+
+/*
+--------------------------------
+Responsive
+--------------------------------
+*/
+
+@media (max-width: global.$breakpoint-md) {
+  .dashboard-page {
+    padding: global.$spacing-md;
+
+    .dashboard-shell {
+      .purchase-section {
+        .domain-input {
+          width: 100%;
+        }
+
+        .purchase-button {
+          width: 100%;
+        }
+      }
+
+      .license-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: global.$spacing-sm;
+      }
+    }
+  }
+}

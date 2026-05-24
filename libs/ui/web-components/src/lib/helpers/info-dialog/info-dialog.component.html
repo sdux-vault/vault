@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>
+  <mat-icon class="mr-2">person</mat-icon>
+  {{ data?.name || 'Unknown' }}
+</h2>
+
+<mat-dialog-content>
+  <p><strong>ID:</strong> {{ data?.id }}</p>
+  @if (data) {
+    <pre class="data-json">
+    @for (entry of (data | keyvalue); track entry.key) {
+      "{{ entry.key }}": {{ entry.value | json }}@if (!$last) {,}
+    }
+  </pre>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button type="button" mat-stroked-button color="primary" (click)="close()">
+    Close
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,248 @@
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Community & Contributor Call</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-brand-name [tm]="true" /> is a TypeScript-first, framework-agnostic
+      state system. It is not owned by a single framework, or ecosystem. Its
+      long-term success depends on a shared, cross-framework community.
+    </p>
+
+    <p>
+      This page is a direct call for contributors, maintainers, reviewers, and
+      ecosystem representatives. If you care about predictable state management,
+      deterministic execution, and clean architectural boundaries, this is an
+      opportunity to help shape a shared foundation across Angular, React, Vue,
+      and beyond.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- WHY CONTRIBUTE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Why This Project Matters</div>
+
+    <div class="section-body">
+      <p>
+        The JavaScript ecosystem has repeatedly fragmented state management
+        solutions by framework.
+        <sdux-brand-name /> takes a different approach:
+      </p>
+
+      <ul>
+        <li>A single deterministic core runtime</li>
+        <li>Framework adapters layered on top</li>
+        <li>Composable behaviors instead of monolithic state engines</li>
+        <li>Formal execution guarantees and test stabilization boundaries</li>
+      </ul>
+
+      <p>
+        This architecture only works if engineers from multiple ecosystems help
+        steward it. A framework-agnostic core must not drift toward a single
+        framework’s assumptions.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- WHO WE NEED -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Who We Are Looking For</div>
+
+    <div class="section-body">
+      <p>
+        We are actively seeking contributors and long-term maintainers from
+        across the TypeScript ecosystem.
+      </p>
+
+      <h4>Angular Representatives</h4>
+      <ul>
+        <li>Signal integration feedback</li>
+        <li>DI ergonomics improvements</li>
+        <li>Angular testing stabilization patterns</li>
+        <li>Documentation and example stewardship</li>
+      </ul>
+
+      <h4>React Representatives</h4>
+      <ul>
+        <li>Hook-based integration patterns</li>
+        <li>Concurrent rendering considerations</li>
+        <li>Next.js and SSR integration validation</li>
+        <li>React testing alignment</li>
+      </ul>
+
+      <h4>Vue Representatives</h4>
+      <ul>
+        <li>Composition API alignment</li>
+        <li>Reactivity boundary validation</li>
+        <li>Nuxt and SSR considerations</li>
+        <li>Vue ecosystem documentation ownership</li>
+      </ul>
+
+      <h4>TypeScript & Tooling Contributors</h4>
+      <ul>
+        <li>Advanced type inference improvements</li>
+        <li>DevTools expansion</li>
+        <li>Editor tooling and DX enhancements</li>
+        <li>Performance benchmarking and profiling</li>
+      </ul>
+
+      <p>
+        This project is not Angular-first, React-first, or Vue-first. It is
+        TypeScript-first and execution-model-first. We need strong voices from
+        each community to keep it that way.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- HOW TO CONTRIBUTE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">How to Contribute (GitHub Workflow)</div>
+
+    <div class="section-body">
+      <p>All collaboration occurs openly through GitHub.</p>
+
+      <h4>1. Start with Issues</h4>
+      <ul>
+        <li>Review open issues labeled <strong>good first issue</strong></li>
+        <li>Comment before starting significant work</li>
+        <li>Propose RFC-style issues for architectural changes</li>
+      </ul>
+
+      <h4>2. Fork and Branch</h4>
+      <ul>
+        <li>Create a feature branch from <code>main</code></li>
+        <li>
+          Use clear branch naming (<code>feature/</code>, <code>fix/</code>,
+          <code>docs/</code>)
+        </li>
+        <li>Keep pull requests focused and atomic</li>
+      </ul>
+
+      <h4>3. Pull Requests</h4>
+      <ul>
+        <li>Reference related issue numbers</li>
+        <li>Include tests for behavior changes</li>
+        <li>Update documentation when API surfaces change</li>
+        <li>Pass all CI checks before review</li>
+      </ul>
+
+      <h4>4. Reviews</h4>
+      <p>Reviews focus on:</p>
+      <ul>
+        <li>Deterministic execution preservation</li>
+        <li>Immutability discipline</li>
+        <li>Framework neutrality</li>
+        <li>Type safety and inference integrity</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- MAINTAINERS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Maintainers & Repository Stewards</div>
+
+    <div class="section-body">
+      <p>We are seeking long-term maintainers for:</p>
+
+      <ul>
+        <li>
+          <strong><sdux-package-name />/core</strong> – Runtime, pipeline
+          engine, behavior contracts
+        </li>
+        <li>
+          <strong><sdux-package-name />/angular</strong> – Angular adapter and
+          signals integration
+        </li>
+        <li>
+          <strong><sdux-package-name />/devtools</strong> – Observability and
+          debugging tooling
+        </li>
+        <li>Future React and Vue adapter packages</li>
+      </ul>
+
+      <p>Maintainers are responsible for:</p>
+
+      <ul>
+        <li>Reviewing pull requests</li>
+        <li>Enforcing architectural boundaries</li>
+        <li>Managing issue triage</li>
+        <li>Coordinating minor and major releases</li>
+        <li>Preventing framework bias in core decisions</li>
+      </ul>
+
+      <p>
+        If you are interested in repository stewardship, please open a
+        discussion issue outlining your experience, ecosystem involvement, and
+        intended scope of contribution.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONTRIBUTION PRINCIPLES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Contribution Principles</div>
+
+    <div class="section-body">
+      <ul>
+        <li>Determinism over convenience</li>
+        <li>Explicit boundaries over implicit magic</li>
+        <li>Framework neutrality over ecosystem favoritism</li>
+        <li>Tests are non-negotiable</li>
+        <li>Documentation must evolve alongside code</li>
+      </ul>
+
+      <p>
+        Architectural consistency is more important than rapid feature growth.
+        Stability and clarity are foundational values.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FINAL CALL -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">A Direct Invitation</div>
+
+    <div class="section-body">
+      <p>
+        If you believe state management can be deterministic, transparent, and
+        framework-agnostic— this is your opportunity to help build it.
+      </p>
+
+      <p>
+        We need engineers from Angular, React, Vue, and the broader TypeScript
+        community to help ensure this remains a shared foundation rather than a
+        framework-specific tool.
+      </p>
+
+      <p>
+        Open an issue. Review a pull request. Improve documentation. Propose an
+        RFC. Become a maintainer.
+      </p>
+
+      <p>
+        <strong>
+          <sdux-brand-name /> will only become ecosystem-level infrastructure if
+          the ecosystem helps build it.
+        </strong>
+      </p>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

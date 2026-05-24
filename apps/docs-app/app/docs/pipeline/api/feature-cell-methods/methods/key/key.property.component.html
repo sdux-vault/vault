@@ -1,0 +1,95 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-25 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>key</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>key</strong> property is the unique identifier assigned to a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> at
+      registration time. It is used by the Vault runtime to identify, route, and
+      attribute state, errors, and lifecycle events.
+    </p>
+
+    <h4>Property Contract Summary</h4>
+    <ul>
+      <li>
+        The key is assigned during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        registration
+      </li>
+      <li>The key is immutable and read-only</li>
+      <li>
+        Each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> key
+        must be unique
+      </li>
+      <li>
+        The key identifies the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> across
+        the Vault runtime
+      </li>
+    </ul>
+
+    <p>
+      The <strong>key</strong> property does not participate in pipeline
+      execution or state computation. It exists solely to provide stable
+      identity for the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <h4>Example: Key</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example: Key'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.initialize();
+
+console.info(employeeCell.key)`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- PROPERTY -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Property</div>
+
+    <div class="section-body">
+      <table aria-label="Property">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Property</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>key: string</strong></td>
+            <td>
+              Unique identifier assigned to the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+              The key is defined during registration and remains constant for
+              the lifetime of the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

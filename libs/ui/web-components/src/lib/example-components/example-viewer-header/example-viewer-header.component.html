@@ -1,0 +1,39 @@
+<div class="example-viewer-title">
+  <div class="title-container">
+    <div class="title">
+      {{ title() }}
+    </div>
+
+    <div class="sub-title">
+      {{ subTitle() }}
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button
+      mat-icon-button
+      type="button"
+      matTooltip="Copy link to example"
+      aria-label="Copy link to {{ title() }} example to the clipboard"
+      (click)="copyLink()">
+      @if (copySuccess()) {
+        <mat-icon class="check-mark">check</mat-icon>
+      } @else {
+        <mat-icon>link</mat-icon>
+      }
+    </button>
+
+    <button
+      mat-icon-button
+      type="button"
+      matTooltip="View source"
+      aria-label="View source code"
+      (click)="toggleSource()">
+      @if (isOpen()) {
+        <mat-icon fontSet="material-symbols-outlined">code_off</mat-icon>
+      } @else {
+        <mat-icon fontSet="material-symbols-outlined">code</mat-icon>
+      }
+    </button>
+  </div>
+</div>

@@ -1,0 +1,695 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-27 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>State Cache Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>State Cache Behavior</strong> provides an authoritative extension
+      point that enables TTL-based entity caching within a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>. This
+      behavior coordinates cache lookup, cache-miss resolution, and cache
+      refresh through the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+      pipeline.
+    </p>
+
+    <p>
+      State cache behavior integrates directly with state resolution and
+      finalization. Cached entities are populated exclusively from finalized
+      state emissions and refreshed through controlled pipeline execution.
+    </p>
+
+    <p>
+      This behavior does not replace state ownership or pipeline semantics. It
+      augments a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> with a
+      deterministic cache surface while preserving a single, authoritative
+      source of truth.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">State Cache Extension</div>
+
+    <div class="section-body">
+      <p>
+        When enabled, the State Cache Behavior extends the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> API
+        with cache lookup methods that resolve entities by identifier. Cache
+        lookups are coordinated through the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipeline and respect lifecycle boundaries, error handling, and state
+        finalization.
+      </p>
+
+      <p>
+        Cached entities are stored with a defined time-to-live (TTL). When a
+        cache entry expires or does not exist, resolution is triggered through
+        the pipeline using a configured fetch strategy. All cached values
+        originate exclusively from finalized state emissions.
+      </p>
+
+      <p>
+        Cache behavior operates as an <strong>authoritative extension</strong>.
+        It does not mutate state directly and does not bypass pipeline
+        execution. Instead, it reacts to committed state snapshots and augments
+        the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> with
+        deterministic lookup semantics.
+      </p>
+
+      <h4>Fluent Configuration</h4>
+      <p>
+        State cache behavior is registered using the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> fluent
+        API. Configuration is declared explicitly during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization using <strong>withStateCache()</strong> and is consumed
+        during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        activation.
+      </p>
+
+      <h4>Notes</h4>
+      <ul>
+        <li>
+          <strong>Cache lookup APIs and state update APIs coexist.</strong>
+          The
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          continues to expose <code>replaceState()</code> and
+          <code>mergeState()</code> alongside <code>cacheLookup()</code> and
+          <code>cacheLookup$()</code>. Direct state updates remain valid. When
+          cache behavior is enabled, cache lookup APIs provide TTL evaluation
+          and pending-lookup coordination for identifier-based resolution.
+        </li>
+
+        <li>
+          <strong
+            >Direct state updates update cached values without resetting
+            TTL.</strong
+          >
+          When state is updated through <code>replaceState()</code> or
+          <code>mergeState()</code>, any resolved entities that correspond to
+          existing cache entries update the cached value but preserve the
+          original expiration window. TTL is established only when an entity is
+          first recorded in the cache.
+        </li>
+
+        <li>
+          <strong>Expired entries may refresh without a lookup.</strong>
+          When an entry expires, refresh can be initiated by the cache refresh
+          loop, in addition to lookup-driven refresh. All refresh execution
+          still occurs through the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          pipeline.
+        </li>
+
+        <li>
+          <strong>Interceptors can influence cache refresh timing.</strong>
+          Cache-miss and TTL-expiration refreshes are resolved through the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          pipeline. Interceptors such as debounce, delay, throttling, or
+          conditional gating may delay or suppress resolution execution. When
+          such interceptors are present, cache refresh execution timing is
+          affected by the interceptor policy.
+        </li>
+
+        <li>
+          <strong>Lifecycle alignment is preserved.</strong>
+          Cache state is reset or destroyed in coordination with the owning
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          lifecycle, ensuring that cached data never outlives the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> that
+          produced it.
+        </li>
+
+        <li>
+          <strong>Filters may intentionally discard resolved entities.</strong>
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          filters may remove or suppress a resolved entity during pipeline
+          evaluation, resulting in a finalized <code>undefined</code> value even
+          when the entity exists in upstream state or is available from a remote
+          source. In this case, the corresponding cache entry is removed and
+          pending lookups resolve as <code>undefined</code>.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Design Decisions</div>
+
+    <div class="section-body">
+      <p>
+        State cache behavior is designed to integrate deterministically with the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipeline while preserving explicit lifecycle control, immutability
+        guarantees, and predictable resolution semantics. The following table
+        documents how the cache responds to key runtime conditions and lifecycle
+        events.
+      </p>
+
+      <div class="table-title">State Cache Design Decisions</div>
+
+      <table aria-label="State Cache Design Decisions">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Condition</th>
+            <th scope="col" class="column-auto">Behavior</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- Cache Miss ------------------------------------------------------- -->
+          <tr>
+            <td><strong>No Cache Hit</strong></td>
+            <td>
+              When no cached entry exists for the requested identifier, a
+              cache-miss resolution is triggered through the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              pipeline using the configured fetch strategy. The lookup resolves
+              only after state finalization and cache recording complete.
+            </td>
+          </tr>
+
+          <!-- Cache Hit -------------------------------------------------------- -->
+          <tr>
+            <td><strong>Cache Hit (TTL Valid)</strong></td>
+            <td>
+              When a resolved entity exists in cached state for the requested
+              identifier and its TTL has not expired, the cached entity is
+              returned immediately without triggering pipeline execution or
+              state resolution.
+            </td>
+          </tr>
+
+          <!-- Undefined / Null Resolution ------------------------------------- -->
+
+          <tr>
+            <td><strong>Undefined Resolution</strong></td>
+            <td>
+              When a finalized state emission resolves to
+              <code>undefined</code> for a specific identifier, the
+              corresponding cache entry is removed. Any pending lookups for that
+              identifier are resolved as undefined. Other cached entries remain
+              unaffected.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Null Resolution (State Clear)</strong></td>
+            <td>
+              A finalized state emission with a <code>null</code> value is
+              treated as an authoritative state clear. All cached entries are
+              removed, all pending lookups are resolved as undefined, and cache
+              state is fully reset.
+            </td>
+          </tr>
+
+          <!-- TTL Expiration -------------------------------------------------- -->
+          <tr>
+            <td><strong>TTL Expired</strong></td>
+            <td>
+              When a cached entry expires, refresh may be initiated by lookup or
+              by the refresh loop through the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              pipeline. Until finalization completes, concurrent lookups are
+              fan-out coordinated and resolved together.
+            </td>
+          </tr>
+
+          <!-- Fan-out Coordination ------------------------------------------- -->
+          <tr>
+            <td><strong>Concurrent Lookups</strong></td>
+            <td>
+              Multiple concurrent lookups for the same identifier are
+              coordinated through a shared pending resolution. Only one pipeline
+              resolution is initiated; all awaiting callers are resolved
+              together when finalization completes.
+            </td>
+          </tr>
+
+          <!-- replaceState / mergeState -------------------------------------- -->
+          <tr>
+            <td><strong>replaceState / mergeState Updates</strong></td>
+            <td>
+              State updates applied through <code>replaceState()</code> or
+              <code>mergeState()</code> update cached entity values when
+              identifiers match. These updates do not reset or extend the
+              existing TTL associated with the cache entry.
+            </td>
+          </tr>
+
+          <!-- Reset ----------------------------------------------------------- -->
+          <tr>
+            <td>
+              <strong
+                ><a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                Reset</strong
+              >
+            </td>
+            <td>
+              A
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              reset clears all cached entries, resolves all pending lookups as
+              undefined, and halts any in-progress refresh operations. Cache
+              state does not survive a reset.
+            </td>
+          </tr>
+
+          <!-- Destroy --------------------------------------------------------- -->
+          <tr>
+            <td>
+              <strong
+                ><a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                Destroy</strong
+              >
+            </td>
+            <td>
+              When the owning
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              is destroyed, all cache state is cleared, all pending lookups are
+              resolved as undefined, and all cache-related subscriptions and
+              refresh loops are terminated.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Pipeline Error (Scoped)</strong></td>
+            <td>
+              When an error is finalized for a specific identifier, the
+              corresponding cache entry is removed and any pending lookups for
+              that identifier resolve as <code>undefined</code>.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Pipeline Error (Global)</strong></td>
+            <td>
+              When an error is finalized without an identifier scope, all
+              pending lookups resolve as
+              <code>undefined</code>. Cached entries remain subject to
+              subsequent state emissions and lifecycle events.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CACHE STAGE DIAGRAM -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">State Cache Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.7/2.7.1-state-cache-flow.svg"
+        [tooltip]="'Entity Access - State Cache Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Cache Lookup API</div>
+
+    <div class="section-body">
+      <p>
+        When state cache behavior is enabled, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        runtime surface is extended with dedicated cache lookup methods.
+      </p>
+
+      <ul>
+        <li>
+          <strong>cacheLookup(id)</strong> — resolves a cached entity by
+          identifier and returns a Promise that completes when the entity is
+          available.
+        </li>
+        <li>
+          <strong>cacheLookup$(id)</strong> — resolves a cached entity by
+          identifier and returns an Observable that emits once and completes.
+        </li>
+      </ul>
+
+      <p>
+        Both lookup methods coordinate cache hits, cache misses, and refresh
+        behavior through the state pipeline. Pending lookups for the same
+        identifier are fan-out coordinated and resolved together.
+      </p>
+      <p>
+        If pipeline finalization does not produce an entity for the requested
+        identifier (for example: filtered output, scoped error finalization, or
+        cache entry removal), lookup resolution completes with
+        <code>undefined</code>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Enables TTL-based entity caching for a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        Cached entities are indexed by a configured identifier key and populated
+        from authoritative state emissions.
+      </p>
+
+      <p>
+        Cache misses and refresh operations trigger state merges using the
+        configured fetch strategy.
+      </p>
+
+      <sdux-vault-entity-access-behaviors-common [type]="'cache'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+    <div class="section-body">
+      <p>
+        The State Cache Behavior exposes a fluent configuration API that allows
+        engineers to register cache options during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        This API does not perform caching directly. It records configuration
+        that is later consumed by the State Cache Behavior during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        activation.
+      </p>
+
+      <div class="table-title">Fluent State Cache Configuration</div>
+      <table aria-label="Fluent State Cache Configuration">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Fluent API</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p><strong>withStateCache(options)</strong></p>
+              <p>input:</p>
+              <ul>
+                <li>
+                  options:
+                  <a
+                    href="/docs/references/options/state-cache-behavior-options"
+                    >StateCacheBehaviorOptions</a
+                  >&lt;T>
+                </li>
+              </ul>
+              <p>
+                returns:
+                <a href="/docs/references/shapes/feature-cell-base-shape"
+                  >FeatureCellBaseShape</a
+                >
+                (chainable)
+              </p>
+            </td>
+
+            <td>
+              <p>
+                Registers state cache configuration for a
+                <a href="/docs/references/functions/feature-cell">FeatureCell</a
+                >. The supplied options define cache lifetime, entity
+                identification, and cache-miss resolution strategy.
+              </p>
+
+              <p>
+                This method must be called before <code>initialize()</code>.
+                When invoked, it stores cache configuration that is consumed by
+                the State Cache Behavior during activation.
+              </p>
+
+              <p>Multiple calls overwrite prior cache configuration.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Usage</div>
+    <div class="section-body">
+      <div class="table-title">Cache Lookup APIs</div>
+
+      <table aria-label="Cache Lookup APIs">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">API</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- cacheLookup ---------------------------------------------------- -->
+          <tr>
+            <td>
+              <p><strong>cacheLookup(id: string)</strong></p>
+              <p>inputs:</p>
+              <ul>
+                <li>id: string</li>
+              </ul>
+              <p>returns:</p>
+              <ul>
+                <li>Promise&lt;TEntity&gt;</li>
+              </ul>
+            </td>
+
+            <td>
+              <p>
+                Performs a cache lookup for the specified entity identifier. If
+                a valid cached entry exists, the cached entity is returned
+                immediately.
+              </p>
+
+              <p>
+                If the entry is missing or expired, the lookup triggers a
+                cache-miss resolution through the
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                state pipeline using the configured fetch strategy. The returned
+                promise resolves when lookup finalization completes. If
+                finalization does not produce an entity, the promise resolves
+                with <code>undefined</code>.
+              </p>
+
+              <p>
+                Concurrent lookups for the same identifier are automatically
+                fan-out coordinated and resolved together.
+              </p>
+            </td>
+          </tr>
+
+          <!-- cacheLookup$ --------------------------------------------------- -->
+          <tr>
+            <td>
+              <p><strong>cacheLookup$(id: string)</strong></p>
+              <p>inputs:</p>
+              <ul>
+                <li>id: string</li>
+              </ul>
+              <p>returns:</p>
+              <ul>
+                <li>Observable&lt;TEntity&gt;</li>
+              </ul>
+            </td>
+
+            <td>
+              <p>
+                Reactive variant of <strong>cacheLookup</strong>. Emits the
+                resolved entity (or <code>undefined</code> when finalization
+                produces no entity) and then completes.
+              </p>
+
+              <p>
+                This API integrates cache lookup into reactive workflows while
+                preserving the same cache-miss resolution, fan-out coordination,
+                and pipeline semantics as the promise-based variant.
+              </p>
+
+              <p>
+                The observable emits exactly once per invocation and completes.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">State Cache Examples</div>
+
+    <div class="section-body">
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Configure State Cache Behavior</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Configure State Cache Behavior'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Assumes withStateCacheBehavior is registered during FeatureCell setup (provideFeatureCell)
+    this.vault
+      .withStateCache({
+        ttl: CacheTTL.FiveMinutes,
+        idKey: 'id',
+        fetchType: ResolveType.Promise,
+        fetch: (id) => fetchEmployeeById(id)
+      })
+      .initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Lookup a Cached Entity</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Example 2: Cache Lookup'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// Promise-based lookup
+const employee = await this.vault.cacheLookup('123');
+
+// Observable-based lookup
+this.vault.cacheLookup$('123').subscribe(emp => {
+  console.info(emp);
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Configure State Cache Behavior</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Configure State Cache Behavior'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    withStateCacheBehavior
+  ]
+);
+
+// Executed during application startup (e.g. app.config.ts)
+employeeCell
+  .withStateCache({
+    ttl: CacheTTL.FiveMinutes,
+    idKey: 'id',
+    fetchType: ResolveType.Promise,
+    fetch: (id) => fetchEmployeeById(id)
+  })
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Lookup a Cached Entity</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Example 2: Cache Lookup'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// Promise-based lookup
+const employee = await employeeCell.cacheLookup('123');
+
+// Observable-based lookup
+employeeCell.cacheLookup$('123').subscribe(emp => {
+  console.info(emp);
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Configure State Cache Behavior</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Configure State Cache Behavior'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    withStateCacheBehavior
+  ]
+);
+
+// Executed during application startup (e.g. app.config.ts)
+employeeCell
+  .withStateCache({
+    ttl: CacheTTL.FiveMinutes,
+    idKey: 'id',
+    fetchType: ResolveType.Promise,
+    fetch: (id) => fetchEmployeeById(id)
+  })
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Lookup a Cached Entity</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Example 2: Cache Lookup'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// Promise-based lookup
+const employee = await employeeCell.cacheLookup('123');
+
+// Observable-based lookup
+employeeCell.cacheLookup$('123').subscribe(emp => {
+  console.info(emp);
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,145 @@
+@use 'global' as global;
+
+.example-viewer-source {
+  height: auto;
+  // background-color: var(--sdux-surface-elevated);
+  color: var(--sdux-text-black);
+
+  &.tabs {
+    min-height: 300px;
+    border: 1px solid black;
+    border-top: 1px solid global.$sdux-primary-base;
+
+    .source-row {
+      min-height: 300px;
+
+      pre {
+        min-height: 300px;
+        code {
+          width: calc(100% - global.$spacing-md * 3 - 4px);
+          min-height: 300px;
+          margin-top: global.$spacing-md;
+          margin-left: global.$spacing-md;
+          margin-bottom: global.$spacing-md;
+
+          padding-left: global.$spacing-md;
+          padding-right: global.$spacing-md;
+        }
+      }
+    }
+  }
+
+  .source-row {
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    &.isMobile {
+      flex-direction: column-reverse;
+      align-items: flex-end;
+    }
+
+    // background-color: var(--sdux-surface-bg);
+    // border-radius: var(--sdux-border-radius);
+    // box-shadow: global.$sdux-shadow-base;
+
+    transition:
+      box-shadow 0.25s ease,
+      background-color 0.3s ease;
+
+    /*
+    &:hover {
+      @include global.sdux-elevate(hover);
+    }
+      */
+
+    /* ===============================
+       PRE / CODE BLOCK
+       =============================== */
+    pre {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+
+      color: var(--sdux-text-black);
+      overflow: auto;
+
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-start;
+
+      scrollbar-gutter: stable;
+
+      code {
+        width: 100%;
+
+        display: flex;
+
+        color: var(--sdux-text-black);
+
+        font-family: 'JetBrains Mono', monospace;
+        font-size: global.$font-size-sm;
+        line-height: global.$line-height;
+
+        border-radius: var(--sdux-border-radius);
+        white-space: pre;
+        overflow: scroll;
+
+        tab-size: 2;
+        text-align: left;
+
+        transition: box-shadow 0.3s ease;
+
+        &:hover {
+          box-shadow: global.$sdux-shadow-base;
+        }
+      }
+    }
+
+    /* ===============================
+       COPY BUTTON (cleaned)
+       =============================== */
+
+    .copy-btn {
+      @include global.sdux-icon-button(36px);
+
+      margin: global.$spacing-sm;
+      position: relative;
+      flex-shrink: 0;
+
+      .check-mark {
+        @include global.sdux-icon-button(36, global.$sdux-success-base);
+      }
+    }
+  }
+
+  /* ===============================================
+     MOBILE RESPONSIVE
+     =============================================== */
+
+  @media (max-width: global.$breakpoint-md) {
+    height: auto;
+
+    .source-row {
+      height: auto;
+      flex-direction: column;
+
+      pre {
+        height: auto;
+        code {
+          height: auto;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  @media (max-width: global.$breakpoint-sm) {
+    .source-row {
+      padding: global.$spacing-sm;
+    }
+  }
+}

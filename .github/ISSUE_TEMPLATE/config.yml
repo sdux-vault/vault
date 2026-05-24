@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: SDuX Vault Documentation
+    url: https://www.sdux-vault.com
+    about: Visit the official SDuX Vault documentation.
+  - name: SDuX Vault Discord
+    url: https://discord.gg/sduxvault
+    about: Ask questions and get help from the community.

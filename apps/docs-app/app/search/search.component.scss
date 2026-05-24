@@ -1,0 +1,142 @@
+@use 'global' as global;
+
+:host {
+  position: relative;
+  display: inline-block;
+}
+
+/* Wrap fixes Angular structural directive issues */
+.search-wrapper {
+  position: relative;
+  display: inline-block;
+
+  /* -----------------------------------------------
+   SEARCH BOX ICON → EXPAND → INPUT
+------------------------------------------------ */
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+
+    width: 2.25rem; // collapsed (icon only)
+    transition: width 0.25s ease;
+
+    &.active {
+      width: 20rem;
+    }
+
+    .search-trigger {
+      @include global.sdux-icon-button(36px);
+      flex-shrink: 0;
+    }
+
+    input {
+      flex: 1 1 auto;
+
+      opacity: 0;
+      height: 0;
+      pointer-events: none;
+
+      padding: global.$spacing-sm global.$spacing-md;
+      border-radius: global.$border-radius-md;
+      border: 1px solid var(--sdux-surface-outline);
+      background: var(--sdux-surface-main);
+
+      @include global.sdux-font-body($size: global.$font-size-sm);
+      color: var(--sdux-text-primary);
+
+      transition:
+        opacity 0.2s ease,
+        height 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+    }
+
+    &.active input {
+      opacity: 1;
+      height: auto;
+      pointer-events: auto;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--sdux-primary);
+      background-color: var(--sdux-surface-elevated);
+    }
+  }
+
+  /* -----------------------------------------------
+   DROPDOWN PANEL (RESULTS + NO RESULTS)
+------------------------------------------------ */
+  .dropdown {
+    position: absolute;
+    top: calc(100% + global.$spacing-xs);
+    right: 0;
+    width: 20rem;
+    z-index: 99999;
+    display: none;
+  }
+
+  /* Show dropdown only when search box is active */
+  .search-box.active ~ .dropdown {
+    display: block;
+  }
+
+  .results,
+  .no-results {
+    max-height: 340px;
+    overflow-y: auto;
+
+    background-color: var(--sdux-surface-elevated);
+    border: 1px solid var(--sdux-surface-outline);
+    border-radius: global.$border-radius-md;
+    box-shadow: var(--sdux-shadow-base);
+    backdrop-filter: blur(6px);
+
+    padding: global.$spacing-xs 0;
+  }
+
+  /* -----------------------------------------------
+   RESULT ROWS
+------------------------------------------------ */
+  .result {
+    padding: global.$spacing-sm global.$spacing-md;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-xs;
+
+    &:hover {
+      background: color-mix(in srgb, var(--sdux-primary) 18%, transparent);
+    }
+    &:active {
+      background: color-mix(in srgb, var(--sdux-primary) 28%, transparent);
+    }
+
+    .title {
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-semibold;
+      color: var(--sdux-primary);
+    }
+
+    .meta {
+      font-size: global.$font-size-xs;
+      color: var(--sdux-text-secondary);
+      display: flex;
+      gap: global.$spacing-xs;
+
+      span:not(:last-child)::after {
+        content: '·';
+        opacity: 0.5;
+        margin-left: global.$spacing-xs;
+      }
+    }
+  }
+
+  .no-results {
+    padding: global.$spacing-sm global.$spacing-md;
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-secondary);
+  }
+}

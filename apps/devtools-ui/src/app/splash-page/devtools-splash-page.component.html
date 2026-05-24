@@ -1,0 +1,59 @@
+<div class="vault-devtools">
+  <!-- Header -->
+  <header class="header">
+    <div class="title">
+      <div class="logo">
+        <img src="/assets/brand/ng-sdux-landscape-dark.svg" alt="Vault" />
+      </div>
+      <span class="subtitle">DevTools</span>
+    </div>
+
+    <div class="meta">
+      <span class="event-count">{{ totalEvents() }} events</span>
+      <button type="button" class="btn-clear" (click)="clearEvents()">
+        Clear
+      </button>
+    </div>
+  </header>
+
+  @if (totalEvents()) {
+    <mat-tab-group class="vault-tabs" animationDuration="200ms">
+      <mat-tab label="All Pipeline Events">
+        <section class="vault-tab-content">
+          <sdux-devtools-main-pipeline-panel></sdux-devtools-main-pipeline-panel>
+        </section>
+      </mat-tab>
+      <mat-tab label="Pipeline Error Events">
+        <section class="vault-tab-content"></section>
+      </mat-tab>
+      <mat-tab label="Pipeline Warn Events">
+        <section class="vault-tab-content"></section>
+      </mat-tab>
+
+      <!-- add more tabs later -->
+    </mat-tab-group>
+  } @else {
+    <section class="warning">
+      Events only appear
+      <strong
+        >after this panel opens and a decorated &#64;FeatureCell service is
+        instantiated.</strong
+      >.
+      <p>
+        FeatureCells are lazyloaded and only activated when the service is
+        instantiated. The DevTools
+        <strong>will only</strong> connect once an &#64;FeatureCell is active.
+      </p>
+      <p>
+        Click on a route with a component using an injected &#64;FeatureCell
+        service to trigger events in your app.
+      </p>
+    </section>
+    <section class="vault-empty">
+      <img
+        class="logo"
+        src="/assets/brand/ng-sdux-landscape-dark.svg"
+        alt="Vault logo" />
+    </section>
+  }
+</div>

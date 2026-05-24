@@ -1,0 +1,502 @@
+@use 'global' as global;
+
+// example.scss
+
+/* ============================================
+   DOCS SECTION CONTAINER
+   - Responsive
+   - Light/Dark compliant
+   - A11y Friendly
+   ============================================ */
+
+.docs-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: global.$spacing-md;
+
+  padding: global.$spacing-md;
+  border-radius: var(--sdux-border-radius);
+
+  background-color: var(--sdux-surface-bg);
+  color: var(--sdux-text-muted);
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+
+  /* Improve readability on large screens */
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* High-contrast outlines for keyboard users */
+  /*
+  &:focus-within {
+    outline: 2px solid var(--sdux-primary);
+    outline-offset: 4px;
+  }
+    */
+
+  /* ============================================
+   SUBTITLE / SECTION HEADING
+   ============================================ */
+  .docs-section-subtitle {
+    font-size: global.$font-size-md;
+    font-weight: global.$font-weight-medium;
+    color: var(--sdux-text-default);
+
+    margin: 0;
+    padding: global.$spacing-sm 0;
+
+    transition: color 0.25s ease;
+  }
+}
+
+.docs-container {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+  padding: global.$spacing-md;
+  color: var(--sdux-text-default);
+  transition:
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  /* Default mobile */
+  max-width: 100%;
+
+  /* Tablet */
+  @media (min-width: global.$breakpoint-md) {
+    max-width: 720px;
+  }
+
+  /* Small laptop */
+  @media (min-width: global.$breakpoint-lg) {
+    max-width: 960px;
+  }
+
+  /* Desktop */
+  @media (min-width: 1280px) {
+    max-width: 1120px;
+  }
+
+  /* Large desktop */
+  @media (min-width: 1600px) {
+    max-width: 1280px;
+  }
+
+  .note {
+    @include global.h5-element;
+    margin-top: global.$spacing-md;
+    margin-bottom: -#{global.$spacing-md};
+  }
+
+  .docs-header {
+    background-color: var(--sdux-surface-bg) !important;
+    padding-left: global.$spacing-sm;
+    padding-right: global.$spacing-sm;
+    color: var(--sdux-text-default);
+
+    .concept-box {
+      @include global.sdux-surface(global.$sdux-surface-light-mid);
+      @include global.sdux-text();
+
+      border-left: 4px solid global.$sdux-primary-base;
+
+      padding: global.$spacing-md;
+      margin: global.$spacing-lg 0;
+
+      border-radius: global.$border-radius-md;
+
+      @include global.sdux-elevate(base);
+
+      .concept-box strong {
+        display: block;
+
+        font-size: global.$font-size-sm;
+        font-weight: global.$font-weight-semibold;
+
+        margin-bottom: global.$spacing-xs;
+      }
+    }
+
+    .class-meta {
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+
+      .meta-badge {
+        display: inline-block;
+        padding: global.$spacing-xs global.$spacing-sm;
+        font-size: global.$font-size-xs;
+        font-weight: global.$font-weight-semibold;
+        border-radius: global.$border-radius-xs;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+
+        &.meta-injectable {
+          background: global.$sdux-surface-light-accent; // #e0f2fe;
+          color: global.$sdux-primary-dark;
+          border: 1px solid global.$sdux-primary-light;
+        }
+
+        &.meta-deprecated {
+          background: global.$sdux-accent-outline;
+          color: global.$sdux-accent-base;
+          border: 1px solid global.$sdux-accent-light;
+        }
+      }
+    }
+  }
+
+  .header {
+    width: calc(100% - global.$spacing-md * 2);
+    padding: global.$spacing-sm global.$spacing-md;
+    border-radius: var(--sdux-border-radius);
+    background: linear-gradient(
+      to right,
+      var(--mat-sys-primary, global.$sdux-primary-base),
+      var(--mat-sys-primary-light, global.$sdux-primary-light)
+    );
+    color: global.$sdux-text-white;
+    box-shadow: global.$sdux-shadow-hover;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+      a {
+        @include global.a-link(
+          global.$sdux-text-white,
+          global.$sdux-text-inverse
+        );
+      }
+      font-size: global.$font-size-lg;
+      font-weight: global.$font-weight-semibold;
+      margin: 0;
+      letter-spacing: 0.02em;
+      user-select: none;
+    }
+  }
+
+  .diagram-section,
+  .section {
+    scroll-margin-top: 96px; /* height of fixed header */
+    background-color: var(--sdux-surface-bg);
+    border-radius: var(--sdux-border-radius);
+    box-shadow: var(--sdux-shadow-sm);
+
+    .section-title {
+      font-size: global.$font-size-lg;
+      font-weight: global.$font-weight-semibold;
+      margin-bottom: global.$spacing-sm;
+      padding: global.$spacing-sm;
+      background-color: var(--sdux-surface-light);
+
+      &.warning {
+        background-color: global.$sdux-accent-base;
+        color: global.$sdux-text-white;
+      }
+    }
+
+    .section-title-navigation {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: global.$spacing-sm;
+      background-color: var(--sdux-surface-light);
+
+      .section-title {
+        flex: auto;
+        margin-bottom: 0;
+      }
+
+      .section-top-link {
+        padding-right: 10px;
+        width: 45px;
+
+        a {
+          @include global.a-link(
+            global.$sdux-text-white,
+            global.$sdux-text-inverse
+          );
+        }
+      }
+    }
+
+    .section-body {
+      padding: global.$spacing-sm;
+      background-color: var(--sdux-surface-bg) !important;
+      color: var(--sdux-text-default);
+
+      .toc-container {
+        .toc {
+          padding-left: global.$spacing-xl;
+          margin-top: 0;
+          margin-bottom: 0;
+
+          .inner-toc {
+            padding-left: global.$spacing-md;
+          }
+        }
+
+        .toc-title {
+          @include global.h5-element;
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+      }
+
+      .h-title-navigation {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: global.$spacing-sm;
+        background-color: inherit;
+
+        .h-title {
+          @include global.h4-element;
+          flex: auto;
+          margin-bottom: 0;
+        }
+
+        .h-top-link {
+          padding-right: 10px;
+          width: 45px;
+          display: none;
+
+          a {
+            @include global.a-link(
+              var(--sdux-text-primary),
+              var(--sdux-test-inverse)
+            );
+          }
+        }
+      }
+    }
+
+    /* 👇 This is the key fix */
+    .section-body + .section-body {
+      margin-top: global.$spacing-lg;
+      border-top: 1px solid var(--sdux-surface-outline);
+
+      .h-title-navigation {
+        .h-top-link {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .diagram-section {
+    .section-body {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: global.$spacing-lg;
+    }
+  }
+
+  .docs-section-content {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+
+    /* Smooth scroll on code examples */
+    scroll-behavior: smooth;
+
+    /* Prevent horizontal clipping on mobile */
+    @media (max-width: global.$breakpoint-md) {
+      overflow-x: visible;
+    }
+
+    /* Ensure sdux-example-viewer fills available width */
+    > * {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .code-inline {
+    display: block;
+    background: var(--sdux-surface-elevated);
+    color: var(--sdux-text-black); // readable in dark mode too
+    padding: 12px;
+    border-radius: var(--sdux-border-radius);
+    font-family: monospace;
+    font-size: 13px;
+
+    white-space: pre;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+
+    /* Smooth scroll bar */
+    scrollbar-width: thin;
+
+    .language-ts {
+      color: var(--sdux-text-black); // readable in dark mode too
+    }
+
+    &:hover {
+      @include global.sdux-elevate(active);
+    }
+  }
+
+  /* Mobile tweaks */
+  @media (max-width: global.$breakpoint-md) {
+    padding: global.$spacing-md;
+
+    .api-table th,
+    .api-table td {
+      padding: global.$spacing-xs global.$spacing-sm;
+    }
+  }
+
+  /* ================================
+   SDuX Docs Table Styling
+   Works in light/dark via CSS vars
+================================ */
+
+  .table-title {
+    @include global.h5-element;
+    margin-top: global.$spacing-md;
+    margin-bottom: global.$spacing-xs;
+  }
+
+  .table-header-secondary {
+    font-size: global.$font-size-xs;
+  }
+
+  /* Header styling */
+  table thead tr {
+    background: color-mix(
+      in srgb,
+      var(--sdux-primary) 15%,
+      var(--sdux-surface-elevated)
+    );
+  }
+
+  table th {
+    text-align: left;
+    padding: global.$spacing-sm global.$spacing-sm;
+    font-weight: var(--sdux-font-weight-medium, 600);
+    color: var(--sdux-text-inverse); /* FIX: ensures visible in dark mode */
+    border-bottom: 1px solid var(--sdux-surface-outline);
+  }
+
+  /* Rows */
+  table td {
+    padding: global.$spacing-sm global.$spacing-sm;
+    color: var(--sdux-text-inverse); /* FIX: always readable */
+    border-bottom: 1px solid var(--sdux-surface-outline);
+    vertical-align: top !important;
+
+    ul {
+      margin-left: 0;
+      padding-left: global.$spacing-md;
+    }
+
+    &:first-of-type {
+      p {
+        // font-weight: global.$font-weight-semibold;
+        margin-top: global.$spacing-sm;
+        margin-bottom: 0;
+      }
+
+      ul {
+        margin-top: 0;
+        list-style: none;
+        padding-left: 0;
+        margin-left: global.$spacing-sm;
+      }
+    }
+
+    .not-supported {
+      color: global.$sdux-accent-base;
+    }
+  }
+
+  /* Last row */
+  table tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Hover */
+  table tbody tr:hover {
+    background: color-mix(in srgb, var(--sdux-primary) 20%, transparent);
+    transition: background 0.2s ease;
+  }
+
+  /* Code cells */
+
+  /* Optional: subtle border on entire table for contrast */
+  table {
+    border: 1px solid
+      color-mix(in srgb, var(--sdux-surface-outline) 60%, transparent);
+  }
+}
+
+.sdux-quote {
+  margin: global.$spacing-xl;
+  padding: global.$spacing-md;
+  border: 1px solid global.$sdux-border-color;
+
+  .quote-author {
+    text-align: right;
+    font-weight: global.$font-weight-bold;
+    margin-top: global.$spacing-md;
+    margin-right: global.$spacing-lg;
+    padding-right: global.$spacing-xl;
+  }
+}
+
+.callout {
+  border-left: 4px solid global.$sdux-primary-base;
+  background-color: var(--sdux-surface-bg);
+  padding: global.$spacing-md;
+  margin: global.$spacing-md 0;
+  border-radius: global.$border-radius-sm;
+
+  .title {
+    font-size: global.$font-size-md;
+    font-weight: global.$font-weight-semibold;
+    margin-top: 0;
+    margin-bottom: global.$spacing-xs;
+  }
+
+  strong {
+    display: inline-block;
+    margin-bottom: global.$spacing-xs;
+    font-weight: global.$font-weight-semibold;
+  }
+
+  p {
+    margin: global.$spacing-xs 0 0;
+  }
+
+  &.callout-info {
+    border-left-color: global.$sdux-primary-base;
+  }
+
+  &.callout-warning {
+    border-left-color: global.$sdux-warn-base;
+  }
+}
+
+.cta-button {
+  min-width: 200px !important;
+  max-width: 250px !important;
+  width: auto !important;
+  text-decoration: none;
+}

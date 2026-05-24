@@ -1,0 +1,93 @@
+@use 'global' as global;
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: global.$toolbar-height;
+  padding-inline: global.$spacing-md;
+  background-color: var(--toolbar-bg);
+  color: var(--toolbar-text);
+  border-bottom: 1px solid var(--toolbar-border);
+  box-shadow: global.$sdux-shadow-hover;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+
+  /* Logo + title */
+  .title-container {
+    display: flex;
+    flex: 0 1 auto;
+    min-width: 0; // prevent overflow push
+    flex-direction: row;
+    align-items: center;
+    gap: global.$spacing-sm;
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+
+    transition:
+      transform 0.15s ease,
+      opacity 0.15s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      opacity: 0.9;
+    }
+
+    sdux-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px; /* responsive */
+      width: auto;
+    }
+
+    .text-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      .subtitle {
+        font-size: global.$font-size-xs;
+        color: var(--toolbar-text);
+        font-weight: global.$font-weight-medium;
+        letter-spacing: 0.02em;
+      }
+    }
+  }
+
+  .menu-trigger mat-icon {
+    flex-shrink: 0;
+    color: var(--toolbar-text);
+  }
+}
+
+// exception: mat-menu renders in an overlay outside component DOM; ::ng-deep required for third-party overrides
+::ng-deep .mat-mdc-menu-item {
+  .mat-icon {
+    color: global.$sdux-primary-base;
+    width: 25px;
+    height: 25px;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mdc-list-item__primary-text {
+    font-family: global.$sdux-font-family;
+    font-size: global.$font-size-sm;
+  }
+}
+
+/* Hide text on mobile */
+@media (max-width: global.$breakpoint-md) {
+  .toolbar .text-block {
+    display: none;
+  }
+}

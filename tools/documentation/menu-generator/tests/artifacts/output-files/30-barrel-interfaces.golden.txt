@@ -1,0 +1,13 @@
+
+    <!--
+AUTO-GENERATED DOCUMENTATION COMPONENT
+Tools/documentation/menu-generator
+-->
+    @switch (type) {
+@case ('bank-employee-shape') {
+  <sdux-bank-employee-shape />
+}
+
+@default {
+  <sdux-not-found />
+}}

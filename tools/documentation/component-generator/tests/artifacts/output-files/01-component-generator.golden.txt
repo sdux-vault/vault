@@ -1,0 +1,811 @@
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: ValueResolveExampleComponent
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-value-resolve-example-component',
+  standalone: true,
+  template: `<div class="docs-container">
+      <div class="header">
+        <h3>ValueResolveExampleComponent</h3>
+      </div>
+      <header class="docs-header">
+        <div class="lead">Defines configuration options that control state cache behavior.<br/><br/>
+These options specify cache lifetime, entity identification, and
+how cache misses are resolved through the state pipeline.<br/><br/></div>
+        
+      </header>
+      <section class="section">
+      <div class="section-title">Installation</div>
+      <div class="section-body">
+         Part of the <strong>@sdux-vault/core</strong> project.
+
+        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/core</code></pre>
+      </div>
+    </section>
+<section class="section">
+        <div class="section-title">Methods</div>
+        <div class="section-body">
+          <table aria-label="Methods">
+            <thead>
+              <tr>
+                <th scope="col" class="column-300">Method</th>
+                <th scope="col" class="column-auto">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+          <td>
+            <strong>ngOnInit</strong>
+            
+            
+            <p>returns: void</p>
+          </td>
+          <td>
+            Lifecycle hook that runs once the component is initialized.<br/><br/>
+          </td>
+        </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+<section class="section">
+        <div class="section-title">Properties</div>
+        <div class="section-body">
+          <table aria-label="Properties">
+            <thead>
+              <tr>
+                <th scope="col" class="column-300">Property</th>
+                <th scope="col" class="column-auto">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+          <td class="column-300">
+            <strong>exampleValue</strong>
+            
+            <p class="type">type: unknown</p>
+            
+          </td>
+          <td class="column-auto">
+            Example public property exposed by the component.<br/><br/>
+          </td>
+        </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-title">Documentation Generation Notes</div>
+        <div class="section-body">
+          <p>
+            This reference API documentation is generated from @jsdoc-annotated source code using
+            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+          </p>
+        </div>
+      </section>
+    </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class ValueResolveExampleComponent{}
+
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: AbstractActiveController
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-abstract-active-controller',
+  standalone: true,
+  template: `<div class="docs-container">
+      <div class="header">
+        <h3>ValueResolveExampleComponent</h3>
+      </div>
+      <header class="docs-header">
+        <div class="lead">No description available.<br/><br/></div>
+        
+      </header>
+      <section class="section">
+      <div class="section-title">Installation</div>
+      <div class="section-body">
+         Part of the <strong>@sdux-vault/core</strong> project.
+
+        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/core</code></pre>
+      </div>
+    </section>
+<section class="section">
+        <div class="section-title">Constructor</div>
+        <div class="section-body">
+          <table aria-label="Constructor">
+            <thead>
+              <tr>
+                <th scope="col" class="column-300">Signature</th>
+                <th scope="col" class="column-auto">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                   <strong>constructor</strong>
+                  <p>inputs:</p>
+        <ul>
+        <li>key: string</li><li>ctx: ControllerClassContext</li>
+        </ul>
+                  
+                  <p>implements:</p>
+        <ul>
+          <li>ControllerContract</li>
+        </ul>
+                </td>
+                <td>
+                  
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+<section class="section">
+        <div class="section-title">Properties</div>
+        <div class="section-body">
+          <table aria-label="Properties">
+            <thead>
+              <tr>
+                <th scope="col" class="column-300">Property</th>
+                <th scope="col" class="column-auto">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+          <td class="column-300">
+            <strong>#subscription</strong>
+            
+            <p class="type">type: Subscription</p>
+            
+          </td>
+          <td class="column-auto">
+            
+          </td>
+        </tr><tr>
+          <td class="column-300">
+            <strong>critical</strong>
+            <p class="modifiers">readonly</p>
+            <p class="type">type: unknown</p>
+            <p class="default">default: false</p>
+          </td>
+          <td class="column-auto">
+            
+          </td>
+        </tr><tr>
+          <td class="column-300">
+            <strong>destroy</strong>
+            
+            <p class="type">type: unknown</p>
+            
+          </td>
+          <td class="column-auto">
+            
+          </td>
+        </tr><tr>
+          <td class="column-300">
+            <strong>handleMessage</strong>
+            
+            <p class="type">type: unknown</p>
+            
+          </td>
+          <td class="column-auto">
+            All controllers must implement this<br/><br/>
+          </td>
+        </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-title">Documentation Generation Notes</div>
+        <div class="section-body">
+          <p>
+            This reference API documentation is generated from @jsdoc-annotated source code using
+            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+          </p>
+        </div>
+      </section>
+    </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class AbstractActiveControllerComponent{}
+
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: BankEmployeeModel
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-bank-employee-model',
+  standalone: true,
+  template: `<div class="docs-container">
+        <div class="header">
+          <h3>BankEmployeeModel</h3>
+        </div>
+
+        <p>No documentation found in Compodocs for this interface.</p>
+      </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class BankEmployeeModelComponent{}
+
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: DevMode
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-dev-mode',
+  standalone: true,
+  template: `<div class="docs-container">
+      <div class="header">
+        <h3>DevMode</h3>
+      </div>
+      <header class="docs-header">
+        <div class="lead">No description available.<br/><br/></div>
+        
+      </header>
+      <section class="section">
+      <div class="section-title">Installation</div>
+      <div class="section-body">
+         Part of the <strong>@sdux-vault/shared</strong> project.
+
+        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+      </div>
+    </section>
+<section class="section">
+        <div class="section-title">API</div>
+        <div class="section-body">
+          <table aria-label="API">
+            <thead>
+              <tr>
+                <th scope="col" class="column-300">API</th>
+                <th scope="col" class="column-auto">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+      <td>
+        <p><strong>active()</strong></p>
+        
+        <p>returns:</p>
+        <ul>
+          <li>boolean </li>
+        </ul>
+      </td>
+      <td>
+        <p>Part of the singleton API.</p>
+      </td>
+    </tr><tr>
+      <td>
+        <p><strong>unitTestActive()</strong></p>
+        
+        <p>returns:</p>
+        <ul>
+          <li>boolean </li>
+        </ul>
+      </td>
+      <td>
+        <p>Part of the singleton API.</p>
+      </td>
+    </tr><tr>
+      <td>
+        <p><strong>setDevMode(isDevMode)</strong></p>
+        <p>inputs:</p>
+      <ul>
+        <li>isDevMode: boolean</li>
+      </ul>
+        <p>returns:</p>
+        <ul>
+          <li>void </li>
+        </ul>
+      </td>
+      <td>
+        <p>Part of the singleton API.</p>
+      </td>
+    </tr><tr>
+      <td>
+        <p><strong>setUnitTestMode(isUnitTestMode)</strong></p>
+        <p>inputs:</p>
+      <ul>
+        <li>isUnitTestMode: boolean</li>
+      </ul>
+        <p>returns:</p>
+        <ul>
+          <li>void </li>
+        </ul>
+      </td>
+      <td>
+        <p>Part of the singleton API.</p>
+      </td>
+    </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-title">Documentation Generation Notes</div>
+        <div class="section-body">
+          <p>
+            This reference API documentation is generated from @jsdoc-annotated source code using
+            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+          </p>
+        </div>
+      </section>
+    </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class DevModeComponent{}
+
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: CacheTTL
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-cache-ttl',
+  standalone: true,
+  template: `<div class="docs-container">
+      <div class="header">
+        <h3>CacheTTL</h3>
+      </div>
+      <header class="docs-header">
+        <div class="lead">Defines supported cache time-to-live durations in milliseconds.<br/><br/>
+These values provide fixed expiration intervals used to control cache
+validity and refresh behavior.<br/><br/></div>
+        
+      </header>
+      <section class="section">
+      <div class="section-title">Installation</div>
+      <div class="section-body">
+         Part of the <strong>@sdux-vault/addons</strong> project.
+
+        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+      </div>
+    </section>
+<section class="section">
+        <div class="section-title">Properties</div>
+        <div class="section-body">
+          <table aria-label="Properties">
+            <thead>
+              <tr>
+                <th scope="col" class="column-300">Property</th>
+                <th scope="col" class="column-auto">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+          <td class="column-300">
+            <strong>OneMinute</strong>
+          </td>
+          <td class="column-auto">
+            <code>60000</code>
+          </td>
+        </tr><tr>
+          <td class="column-300">
+            <strong>FiveMinutes</strong>
+          </td>
+          <td class="column-auto">
+            <code>300000</code>
+          </td>
+        </tr><tr>
+          <td class="column-300">
+            <strong>TenMinutes</strong>
+          </td>
+          <td class="column-auto">
+            <code>600000</code>
+          </td>
+        </tr><tr>
+          <td class="column-300">
+            <strong>FifteenMinutes</strong>
+          </td>
+          <td class="column-auto">
+            <code>900000</code>
+          </td>
+        </tr><tr>
+          <td class="column-300">
+            <strong>ThirtyMinutes</strong>
+          </td>
+          <td class="column-auto">
+            <code>1800000</code>
+          </td>
+        </tr><tr>
+          <td class="column-300">
+            <strong>OneHour</strong>
+          </td>
+          <td class="column-auto">
+            <code>3600000</code>
+          </td>
+        </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-title">Documentation Generation Notes</div>
+        <div class="section-body">
+          <p>
+            This reference API documentation is generated from @jsdoc-annotated source code using
+            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+          </p>
+        </div>
+      </section>
+    </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class CacheTTLComponent{}
+
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: BEHAVIOR_META
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-behavior_meta',
+  standalone: true,
+  template: `<div class="docs-container">
+      <div class="header">
+        <h3>BEHAVIOR_META</h3>
+      </div>
+      <header class="docs-header">
+        <div class="lead">Unique metadata symbol used to associate &#123;&#64;link BehaviorMeta&#125; definitions
+with behavior classes decorated using &#64;VaultBehavior.<br/><br/>
+This symbol is applied directly to behavior constructors and is read by
+the behavior initialization system to determine the behavior’s type,
+key, criticality, and extension capabilities.<br/><br/>
+It functions as the canonical lookup key for all behavior metadata stored
+on a behavior class and is required for correct pipeline registration.<br/><br/></div>
+        
+      </header>
+      <section class="section">
+      <div class="section-title">Installation</div>
+      <div class="section-body">
+         Part of the <strong>@sdux-vault/shared</strong> project.
+
+        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+      </div>
+    </section>
+<section class="section">
+        <div class="section-title">Definition</div>
+        <div class="section-body">
+          <pre class="code-inline"><code class="language-ts">const Symbol(&#39;BEHAVIOR_META&#39;)</code></pre>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-title">Documentation Generation Notes</div>
+        <div class="section-body">
+          <p>
+            This reference API documentation is generated from @jsdoc-annotated source code using
+            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+          </p>
+        </div>
+      </section>
+    </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class BEHAVIOR_METAComponent{}
+
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: isDefined
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-is-defined',
+  standalone: true,
+  template: `<div class="docs-container">
+      <div class="header">
+        <h3>isDefined</h3>
+      </div>
+      <header class="docs-header">
+        <div class="lead">Determines whether a value is defined (not undefined).
+Note: This intentionally does *not* exclude null.<br/><br/></div>
+        
+      </header>
+      <section class="section">
+      <div class="section-title">Installation</div>
+      <div class="section-body">
+         Part of the <strong>@sdux-vault/shared</strong> project.
+
+        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+      </div>
+    </section>
+<section class="section">
+      <div class="section-title">API</div>
+      <div class="section-body">
+        <table aria-label="API">
+          <thead>
+            <tr>
+              <th scope="col" class="column-300">API</th>
+              <th scope="col" class="column-auto">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+      <td>
+        <p><strong>isDefined()</strong></p>
+        
+        <p>returns:</p>
+        <ul>
+          <li>void</li>
+        </ul>
+      </td>
+      <td>
+        Determines whether a value is defined (not undefined).
+Note: This intentionally does *not* exclude null.<br/><br/>
+      </td>
+    </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+      <section class="section">
+        <div class="section-title">Documentation Generation Notes</div>
+        <div class="section-body">
+          <p>
+            This reference API documentation is generated from @jsdoc-annotated source code using
+            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+          </p>
+        </div>
+      </section>
+    </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class isDefinedComponent{}
+
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: isHttpResourceRef
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-is-http-resource-ref',
+  standalone: true,
+  template: `<div class="docs-container">
+      <div class="header">
+        <h3>isHttpResourceRef</h3>
+      </div>
+      <header class="docs-header">
+        <div class="lead">Type guard that determines whether a value is an HttpResourceRef&amp;lt;T&amp;gt;.
+An HttpResourceRef is a structured object produced by Angular’s
+HttpClient resource APIs. It contains a standardized shape used by
+ngVault to detect and normalize resource-backed state transitions.
+This utility checks only for the presence of the canonical
+HttpResourceRef fields (value, isLoading, error, hasValue)
+and does not validate the internal content of those properties.<br/><br/></div>
+        
+      </header>
+      <section class="section">
+      <div class="section-title">Installation</div>
+      <div class="section-body">
+         Part of the <strong>@sdux-vault/shared</strong> project.
+
+        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+      </div>
+    </section>
+<section class="section">
+      <div class="section-title">API</div>
+      <div class="section-body">
+        <table aria-label="API">
+          <thead>
+            <tr>
+              <th scope="col" class="column-300">API</th>
+              <th scope="col" class="column-auto">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+      <td>
+        <p><strong>isHttpResourceRef(obj)</strong></p>
+        <p>inputs:</p>
+      <ul>
+        <li>obj: any</li>
+      </ul>
+        <p>returns:</p>
+        <ul>
+          <li>HttpResourceRefShape&lt;T&gt;</li>
+        </ul>
+      </td>
+      <td>
+        Type guard that determines whether a value is an HttpResourceRef&amp;lt;T&amp;gt;.
+An HttpResourceRef is a structured object produced by Angular’s
+HttpClient resource APIs. It contains a standardized shape used by
+ngVault to detect and normalize resource-backed state transitions.
+This utility checks only for the presence of the canonical
+HttpResourceRef fields (value, isLoading, error, hasValue)
+and does not validate the internal content of those properties.<br/><br/>
+      </td>
+    </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+      <section class="section">
+        <div class="section-title">Documentation Generation Notes</div>
+        <div class="section-body">
+          <p>
+            This reference API documentation is generated from @jsdoc-annotated source code using
+            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+          </p>
+        </div>
+      </section>
+    </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class isHttpResourceRefComponent{}
+
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: VaultBehavior
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-vault-behavior',
+  standalone: true,
+  template: `<div class="docs-container">
+      <div class="header">
+        <h3>VaultBehavior</h3>
+      </div>
+      <header class="docs-header">
+        <div class="lead">Decorator that registers a class as an ngVault behavior.
+The VaultBehavior decorator attaches the provided BehaviorMeta
+definition to the target constructor, making the behavior discoverable by
+the orchestrator during pipeline initialization. Metadata fields such as
+type, key, and critical are also mirrored onto static properties of
+the decorated class to support lightweight runtime introspection.
+This decorator does not modify method logic or structure; it only assigns
+metadata required for orchestrator classification and behavior lifecycle
+management.<br/><br/></div>
+        
+      </header>
+      <section class="section">
+      <div class="section-title">Installation</div>
+      <div class="section-body">
+         Part of the <strong>@sdux-vault/shared</strong> project.
+
+        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+      </div>
+    </section>
+<section class="section">
+      <div class="section-title">API</div>
+      <div class="section-body">
+        <table aria-label="API">
+          <thead>
+            <tr>
+              <th scope="col" class="column-300">API</th>
+              <th scope="col" class="column-auto">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+      <td>
+        <p><strong>VaultBehavior(meta)</strong></p>
+        <p>inputs:</p>
+      <ul>
+        <li>meta: BehaviorMetaShape</li>
+      </ul>
+        <p>returns:</p>
+        <ul>
+          <li>void</li>
+        </ul>
+      </td>
+      <td>
+        Decorator that registers a class as an ngVault behavior.
+The VaultBehavior decorator attaches the provided BehaviorMeta
+definition to the target constructor, making the behavior discoverable by
+the orchestrator during pipeline initialization. Metadata fields such as
+type, key, and critical are also mirrored onto static properties of
+the decorated class to support lightweight runtime introspection.
+This decorator does not modify method logic or structure; it only assigns
+metadata required for orchestrator classification and behavior lifecycle
+management.<br/><br/>
+      </td>
+    </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+      <section class="section">
+        <div class="section-title">Documentation Generation Notes</div>
+        <div class="section-body">
+          <p>
+            This reference API documentation is generated from @jsdoc-annotated source code using
+            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+          </p>
+        </div>
+      </section>
+    </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class VaultBehaviorComponent{}
+
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: BehaviorType
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-behavior-type',
+  standalone: true,
+  template: `<div class="docs-container">
+      <div class="header">
+        <h3>BehaviorType</h3>
+      </div>
+      <header class="docs-header">
+        <div class="lead">Union of all valid ngVault behavior type strings.
+This type is derived from BehaviorTypes using literal inference, ensuring
+strong typing while preserving full runtime compatibility.<br/><br/></div>
+        
+      </header>
+      <section class="section">
+      <div class="section-title">Installation</div>
+      <div class="section-body">
+         Part of the <strong>@sdux-vault/shared</strong> project.
+
+        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+      </div>
+    </section>
+<section class="section">
+      <div class="section-title">Type Definition</div>
+      <div class="section-body">
+        <p>
+          <strong>BehaviorType</strong> is a derived type alias.
+        </p>
+        <p>
+          Its definition is inferred from another symbol at compile time and
+          cannot be expanded into a concrete union at runtime.
+        </p>
+        <p>
+          See the description above for details on how this type is constructed.
+        </p>
+      </div>
+    </section>
+      <section class="section">
+        <div class="section-title">Documentation Generation Notes</div>
+        <div class="section-body">
+          <p>
+            This reference API documentation is generated from @jsdoc-annotated source code using
+            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+          </p>
+        </div>
+      </section>
+    </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class BehaviorTypeComponent{}

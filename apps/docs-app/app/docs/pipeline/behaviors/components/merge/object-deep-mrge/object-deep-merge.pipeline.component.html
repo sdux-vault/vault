@@ -1,0 +1,485 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Object Deep Merge Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Object Deep Merge</strong> is a <em>Merge behavior</em> that
+      combines object-based
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+      values by recursively merging nested plain-object structures during the
+      <strong>Merge stage</strong>.
+    </p>
+
+    <p>
+      This behavior treats objects as <em>immutable values</em>. When both the
+      current state and the incoming value are plain objects, a deep, recursive
+      merge is performed, producing a new object that incorporates nested
+      updates without mutating existing state.
+    </p>
+
+    <p>
+      Non-plain-object values—including primitives, arrays, <code>null</code>,
+      and class instances—are replaced directly rather than merged. This ensures
+      predictable structural behavior and avoids unintended traversal of
+      non-object data.
+    </p>
+
+    <p>
+      Object Deep Merge runs within the core Merge stage and produces the merged
+      candidate state passed to downstream pipeline stages. It does not mutate
+      existing state, does not emit snapshots directly, and does not influence
+      pipeline control flow beyond producing the merged value.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      The Merge stage is entered exclusively through explicit state-update APIs.
+      Pipeline executions that invoke merge semantics are initiated via the
+      <strong>mergeState</strong> methods, which supply the incoming value and
+      optional merge configuration used by the active Merge behavior.
+    </p>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/1.0/1.2.2-merge-state-flow.svg"
+        [tooltip]="'Merge State Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Object deep merge behavior is configured as part of the
+        <strong>Merge stage</strong> and defines how object-based
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        state values are combined with incoming resolved values using
+        <em>recursive, structural merge semantics</em>.
+      </p>
+
+      <p>
+        Exactly one merge behavior is active for a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> at any
+        time. When
+        <strong
+          ><a href="/docs/pipeline/addons/with-object-deep-merge-behavior"
+            >withObjectDeepMergeBehavior</a
+          ></strong
+        >
+        is provided, it replaces the default merge strategy and becomes the
+        active merge behavior for that
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+
+      <p>
+        Merge behaviors may be influenced by the
+        <strong>clearUndefined</strong> configuration flag. When
+        <em>clearUndefined</em> is enabled, an incoming <em>undefined</em> value
+        is treated as an intentional clear request and results in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        being cleared. When disabled, incoming <em>undefined</em> values
+        preserve the existing state and produce no merge output.
+      </p>
+
+      <p>
+        Object Deep Merge also supports the
+        <strong>stripNulls</strong> configuration option. When enabled,
+        properties with <em>null</em> values are removed from the merged result
+        after recursive merging is complete. This allows intentional field
+        removal without replacing the entire object structure.
+      </p>
+
+      <p>
+        The <em>clearUndefined</em> and <em>stripNulls</em> options are supplied
+        at the time a merge-style update is initiated and are evaluated by the
+        active merge behavior during the Merge stage. These options do not
+        affect resolution, operators, or downstream pipeline stages.
+      </p>
+
+      <p>
+        Object deep merge recursively combines nested
+        <em>plain-object</em> structures. Non-plain objects—including
+        primitives, arrays, <code>null</code>, and class instances—are replaced
+        directly rather than merged. Existing state is never mutated, and all
+        merged results are produced as new immutable objects.
+      </p>
+
+      <sdux-vault-object-merge-behaviors-common [type]="'deep'" />
+
+      <sdux-vault-merge-fluent-api-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Evaluation Outcomes</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Object Deep Merge</strong> behavior evaluates the
+        <em
+          >current committed
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state</em
+        >
+        and the <em>incoming resolved value</em> to produce a single merged
+        result during the <strong>Merge stage</strong>.
+      </p>
+
+      <p>
+        When both the current state and incoming value are
+        <em>plain objects</em>, Object Deep Merge recursively combines nested
+        properties. Existing nested fields are preserved unless explicitly
+        replaced by the incoming value.
+      </p>
+
+      <p>
+        Non-object values—including primitives, arrays, <code>null</code>, and
+        class instances—are replaced directly rather than merged. No mutation of
+        existing state occurs.
+      </p>
+
+      <p>
+        When the incoming value is <em>undefined</em>, merge behavior is
+        controlled by the <em>clearUndefined</em> configuration option. This
+        determines whether the existing state is preserved or intentionally
+        cleared. Optional <em>stripNulls</em> configuration may also remove
+        <code>null</code> fields from the merged result.
+      </p>
+
+      <div class="table-title">Example 1: Recursive Object Merge</div>
+      <table aria-label="Example 1: Recursive Object Merge">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: &#123; user: &#123; id: 1, name: "Jane" &#125; &#125;
+              <p>next: &#123; user: &#123; name: "Jane Doe" &#125; &#125;</p>
+            </td>
+            <td>
+              &#123; user: &#123; id: 1, name: "Jane Doe" &#125; &#125; — nested
+              objects are merged recursively
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Example 2: Replace Non-Plain Object</div>
+      <table aria-label="Example 2: Replace Non-Plain Object">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: &#123; count: 5 &#125;
+              <p>next: 9</p>
+            </td>
+            <td>9 — non-object value replaces the existing state</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Example 3: Strip Null Fields</div>
+      <table aria-label="Example 3: Strip Null Fields">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: &#123; user: &#123; id: 1, name: "Jane" &#125; &#125;
+              <p>next: &#123; user: &#123; name: null &#125; &#125;</p>
+              <p>stripNulls: true</p>
+            </td>
+            <td>
+              &#123; user: &#123; id: 1 &#125; &#125; — null fields are removed
+              after merge
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">
+        Example 4: Undefined Incoming Value (Preserve)
+      </div>
+      <table aria-label="Example 4: Undefined Incoming Value (Preserve)">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: &#123; enabled: true &#125;
+              <p>next: undefined</p>
+              <p>clearUndefined: false</p>
+            </td>
+            <td>&#123; enabled: true &#125; — existing state is preserved</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Example 5: Undefined Incoming Value (Clear)</div>
+      <table aria-label="Example 5: Undefined Incoming Value (Clear)">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: &#123; enabled: true &#125;
+              <p>next: undefined</p>
+              <p>clearUndefined: true</p>
+            </td>
+            <td>undefined — state is intentionally cleared</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <h4>Example 1: Use the withObjectDeepMergeBehavior in a FeatureCell</h4>
+
+      <p>
+        This example demonstrates a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        configured with the
+        <strong
+          ><a href="/docs/pipeline/addons/with-object-deep-merge-behavior"
+            >withObjectDeepMergeBehavior</a
+          ></strong
+        >. Instead of replacing the entire state object, incoming values
+        provided via <code>mergeState</code> are
+        <em>recursively merged</em> into the existing state, preserving
+        unaffected nested properties.
+      </p>
+
+      <p>
+        By explicitly attaching the Object Deep Merge behavior, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        adopts deep, structural merge semantics during the
+        <strong>Merge stage</strong>. This makes it suitable for hierarchical or
+        patch-style state updates where only a subset of nested fields change
+        over time.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        When a custom merge behavior is supplied, it replaces the default
+        <strong
+          ><a href="/docs/pipeline/behaviors/merge/with-array-merge-behavior"
+            >withArrayMergeBehavior</a
+          ></strong
+        >
+        for that
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        Exactly one merge behavior is active at any time.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Use the Object Deep Merge in a FeatureCell'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {
+        key: 'employee-profile',
+        initialState: {
+          user: {
+            id: 1,
+            name: 'Jane',
+            preferences: {
+              theme: 'light'
+            }
+          }
+        }
+      },
+      [
+        // Explicitly attach the Object Deep Merge behavior
+        withObjectDeepMergeBehavior
+      ]
+    )
+  ]
+};
+
+// bank-employee.service.ts
+
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { EmployeeProfile } from './employee-profile.shape';
+
+@FeatureCell&lt;EmployeeProfile&gt;('employee-profile')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault&lt;EmployeeProfile&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+
+  updateEmployeeName(): void {
+    this.vault.mergeState({
+      value: {
+        user: {
+          name: 'Jane Doe'
+        }
+      }
+    });
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Use the Object Deep Merge in a FeatureCell'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;EmployeeProfile&gt;(
+  {
+    key: 'employee-profile',
+    initialState: {
+      user: {
+        id: 1,
+        name: 'Jane',
+        preferences: {
+          theme: 'light'
+        }
+      }
+    },
+  },
+  [
+    // Explicitly attach the Object Deep Merge behavior
+    withObjectDeepMergeBehavior
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+
+// Deep-merge a nested update
+employeeCell.mergeState({
+  value: {
+    user: {
+      name: 'Jane Doe'
+    }
+  }
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Use the Object Deep Merge in a FeatureCell'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;EmployeeProfile&gt;(
+  {
+    key: 'employee-profile',
+    initialState: {
+      user: {
+        id: 1,
+        name: 'Jane',
+        preferences: {
+          theme: 'light'
+        }
+      }
+    },
+  },
+  [
+    // Explicitly attach the Object Deep Merge behavior
+    withObjectDeepMergeBehavior
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+
+// Deep-merge a nested update
+employeeCell.mergeState({
+  value: {
+    user: {
+      name: 'Jane Doe'
+    }
+  }
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

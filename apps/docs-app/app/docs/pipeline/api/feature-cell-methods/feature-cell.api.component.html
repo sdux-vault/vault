@@ -1,0 +1,202 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-24 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>FeatureCellShape&lt;T&gt;</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      A
+      <strong
+        ><a href="/docs/references/functions/feature-cell"
+          >FeatureCell</a
+        ></strong
+      >
+      exposes a stable runtime surface defined by the
+      <strong
+        ><a href="/docs/references/shapes/feature-cell-shape"
+          >FeatureCellShape</a
+        >&lt;T&gt;</strong
+      >
+      contract. This shape represents the complete public interaction surface
+      for configuring behaviors, observing state, and issuing state updates
+      after registration.
+    </p>
+
+    <h4>FeatureCellShape Contract Summary</h4>
+    <ul>
+      <li>
+        Defines the complete public runtime API of a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      </li>
+      <li>
+        Available only after
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        registration
+      </li>
+      <li>Used to configure behaviors during initialization</li>
+      <li>Used to observe state and lifecycle events</li>
+      <li>Used to issue state updates and control lifecycle</li>
+    </ul>
+
+    <p>
+      <strong
+        ><a href="/docs/references/shapes/feature-cell-shape"
+          >FeatureCellShape</a
+        >&lt;T&gt;</strong
+      >
+      does not describe pipeline internals, execution mechanics, or behavior
+      implementation. It defines only the externally visible interaction surface
+      exposed by a registered
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      A
+      <a href="/docs/references/shapes/feature-cell-shape">FeatureCellShape</a>
+      instance is returned by <strong>provideFeatureCell()</strong> and becomes
+      active only after initialization. All methods on this shape are scoped to
+      the owning
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
+      operate within the globally initialized Vault runtime.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Table of Contents</div>
+
+    <div class="section-body">
+      <ul class="toc">
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/after-taps-method"
+            >afterTaps()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/before-taps-method"
+            >beforeTaps()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/destroy-method"
+            >destroy()</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/apis/feature-cell/destroyed-stream-method"
+            >destroyed$</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/emit-states-method"
+            >emitStates()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/errors-method"
+            >errors()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/filters-method"
+            >filters()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/hydrate-method"
+            >hydrate()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/initialize-method"
+            >initialize()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/interceptors-method"
+            >interceptors()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/key-property">key</a>
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/merge-state-method"
+            >mergeState()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/operators-method"
+            >operators()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/reducers-method"
+            >reducers()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/replace-state-method"
+            >replaceState()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/reset-method"
+            >reset()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/reset-stream-method"
+            >reset$</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/state-property"
+            >state</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell/state-stream-method"
+            >state$</a
+          >
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FEATURECELL SHAPE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/shapes/feature-cell-shape">FeatureCellShape</a
+      >&lt;T&gt;
+    </div>
+
+    <div class="section-body">
+      <p>
+        The following table defines the complete
+        <strong
+          ><a href="/docs/references/shapes/feature-cell-shape"
+            >FeatureCellShape</a
+          >&lt;T&gt;</strong
+        >
+        API. Each member represents a stable interaction point for configuring
+        behaviors, observing state, or issuing state updates.
+      </p>
+
+      <sdux-feature-cell-shape-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

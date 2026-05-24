@@ -1,0 +1,106 @@
+@use 'global' as global;
+
+/**
+ * Global Button Style
+ * - Provides a default button style.
+ */
+.button-global {
+  @include global.button-base(
+    global.$sdux-warn-light,
+    global.$sdux-text-secondary,
+    global.$sdux-warn-light
+  );
+}
+
+/**
+ * Admin Button Styles
+ * - Standard admin button with primary theme.
+ */
+.sdux-button {
+  @include global.button-base(
+    global.$sdux-text-white,
+    global.$sdux-primary-base,
+    global.$sdux-primary-dark
+  );
+}
+
+/**
+ * Admin Button Styles
+ * - Standard admin button with primary theme.
+ */
+.sdux-button-toggle {
+  @include global.button-base(
+    global.$sdux-text-white,
+    global.$sdux-primary-light,
+    global.$sdux-primary-base
+  );
+  min-width: 30px !important;
+  padding: 0;
+}
+
+/**
+ * Admin Button - Caution
+ * - Uses a high-contrast amber background for better visibility.
+ */
+.sdux-button-caution {
+  @include global.button-base(
+    global.$sdux-text-inverse,
+    global.$sdux-warn-base,
+    global.$sdux-warn-dark
+  );
+}
+
+/**
+ * Admin Button - Warning
+ * - Uses the accent red to indicate danger or delete.
+ */
+.sdux-button-warn {
+  @include global.button-base(
+    global.$sdux-text-white,
+    global.$sdux-accent-base,
+    global.$sdux-accent-dark
+  );
+}
+
+.sdux-button-secondary {
+  @include global.button-base(
+    global.$sdux-text-inverse,
+    global.$sdux-surface-light-mid,
+    global.$sdux-surface-outline
+  );
+}
+
+// ============================================
+// SDUX Stage Action Button
+// Glass Primary — Tactical Progress Button
+// ============================================
+
+.sdux-button,
+.sdux-button-toggle,
+.sdux-button-caution,
+.sdux-button-secondary,
+.sdux-button-warn {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: global.$sdux-shadow-hover;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+    box-shadow: global.$sdux-shadow-active;
+  }
+
+  &:disabled {
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.65;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}

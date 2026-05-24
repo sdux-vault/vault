@@ -1,0 +1,52 @@
+@use 'global' as global;
+
+.docs-header {
+  display: flex;
+
+  .instructions {
+    flex-basis: calc(100% - 48px);
+    overflow: hidden;
+
+    max-height: 1000px;
+    opacity: 1;
+    transform: translateY(0);
+
+    transition:
+      flex-basis 0.4s ease,
+      max-height 0.35s ease,
+      opacity 0.25s ease,
+      transform 0.3s ease;
+
+    &.is-collapsed {
+      flex-basis: 0;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+    }
+
+    .start-button-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: global.$spacing-lg;
+
+      .start-button {
+        height: 50px !important;
+        width: 200px !important;
+        font-size: global.$font-size-xl !important;
+        font-weight: global.$font-weight-bold !important;
+      }
+    }
+  }
+
+  .mini-instructions {
+    width: calc(100% - 32px);
+    display: none;
+
+    &.is-displayed {
+      display: block;
+    }
+  }
+}

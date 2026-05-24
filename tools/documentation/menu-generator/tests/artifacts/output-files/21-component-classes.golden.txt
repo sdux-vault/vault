@@ -1,0 +1,41 @@
+
+/**
+* AUTO-GENERATED DOCUMENTATION COMPONENT
+* Tools/documentation/menu-generator
+*/
+    
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ActivatedRoute } from '@angular/router';
+import { NotFoundComponent } from '../../../not-found/not-found.component';
+
+import { ValueResolveExampleComponentComponent } from './value-resolve-example-component.component';
+
+@Component({
+  selector: 'sdux-references-classes-splashpage',
+  standalone: true,
+  imports: [
+    NotFoundComponent,
+    CommonModule,
+    MatTabsModule,
+    MatExpansionModule,
+    ValueResolveExampleComponentComponent
+  ],
+  templateUrl: './references-classes.component.html',
+  styleUrls: ['../../scss/example.scss']
+})
+export class ReferencesClassesLandingPageComponent{
+  type!: string;
+
+  constructor(
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.route.paramMap.subscribe((params) => {
+      this.type = params.get('type') ?? 'value';
+      this.cdr.markForCheck(); // forces UI update
+    });
+  }
+}

@@ -1,0 +1,287 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container">
+  <div class="header">
+    <h3>fromStream()</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>fromStream()</strong> method performs a
+      <strong>stream-driven state update</strong> on a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>. It
+      subscribes to an <code>Observable</code> source and forwards each emitted
+      value into the pipeline as a discrete state update.
+    </p>
+
+    <p>
+      Unlike <strong>replaceState()</strong> and <strong>mergeState()</strong>,
+      which perform single execution updates,
+      <strong>fromStream()</strong> establishes a long-lived subscription that
+      may produce multiple pipeline executions over time.
+    </p>
+
+    <h4>Method Contract Summary</h4>
+    <ul>
+      <li>Must be called after <code>initialize()</code></li>
+      <li>Subscribes to an <code>Observable&lt;T&gt;</code></li>
+      <li>Each emission triggers a merge-style pipeline execution</li>
+      <li>
+        Stream errors are converted to <code>VaultError</code> and submitted as
+        state
+      </li>
+      <li>
+        Automatically unsubscribes when the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        destroyed
+      </li>
+      <li>Returns <code>void</code></li>
+    </ul>
+
+    <div class="note">Note</div>
+    <p>
+      <strong>fromStream()</strong> does not commit state directly. Each emitted
+      value is forwarded to <strong>mergeState()</strong>, where it enters the
+      full pipeline and is processed through Resolve, operators, filters,
+      reducers, and taps before final commitment in the State stage.
+    </p>
+
+    <h4>Learn More</h4>
+    <a
+      routerLink="/docs/pipeline/addons/resolve/with-core-from-stream-behavior">
+      <span class="menu-content sub-item">FromStream Behavior</span>
+    </a>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.4/2.4.2-from-stream-flow.svg"
+        [tooltip]="'fromStream Flow'" />
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <div class="table-title">Runtime Invocation</div>
+      <table aria-label="Runtime Invocation">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Method</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <strong>fromStream&lt;T&gt;</strong>
+
+              <p>inputs:</p>
+              <ul>
+                <li>source$: <code>Observable&lt;T&gt;</code></li>
+                <li>
+                  <code>options?</code>:
+                  <a href="/docs/references/config/from-stream-options"
+                    >FromStreamOptions</a
+                  >
+                </li>
+              </ul>
+
+              <p>return:</p>
+              <ul>
+                <li><code>void</code></li>
+              </ul>
+            </td>
+            <td>
+              Subscribes to an observable source and forwards each emitted value
+              into the pipeline via
+              <strong>mergeState()</strong>. Each emission produces a discrete
+              pipeline execution.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Options</div>
+      <table aria-label="Options">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Option</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>autoResetError</strong>: boolean</td>
+            <td>
+              When <em>true</em> (default), clears any existing error before
+              forwarding the incoming value. When <em>false</em>, existing error
+              state is preserved unless explicitly overridden.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Stream emissions always forward values using merge semantics. Replace
+        semantics are not used by
+        <strong>fromStream()</strong>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Execution Model</div>
+
+    <div class="section-body">
+      <p>
+        Each <code>next</code> emission from the source observable produces a
+        new candidate state submission through <strong>mergeState()</strong>.
+      </p>
+
+      <ul>
+        <li>
+          <strong>next</strong> → forwarded as <code>{{ `{ value }` }}</code>
+        </li>
+        <li>
+          <strong>error</strong> → converted to <code>VaultError</code> and
+          forwarded as <code>{{ `{ error }` }}</code>
+        </li>
+        <li>
+          <strong>complete</strong> → ingress marked complete (no automatic
+          state mutation)
+        </li>
+      </ul>
+
+      <p>
+        Subscriptions are automatically bound to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle and are terminated when the cell is destroyed.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>fromStream()</strong> method connects an observable source
+        directly to the pipeline. Each emission produces a deterministic
+        pipeline execution and final state snapshot.
+      </p>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>Subscribes to a stream</li>
+        <li>Forwards each value via mergeState()</li>
+        <li>Processes through the full pipeline</li>
+        <li>Commits a new immutable snapshot per emission</li>
+      </ul>
+
+      <h4>Example: Streaming Live Updates</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Example: fromStream()'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell&lt;number>('counter')
+@Injectable({ providedIn: 'root' })
+export class CounterService {
+
+  private readonly vault = injectVault&lt;number&gt;(CounterService);
+
+  constructor() {
+    this.vault.initialize();
+
+    const ticker$ = interval(1000);
+
+    this.vault.fromStream(ticker$);
+  }
+}
+
+// Every second:
+// mergeState({ value: emittedNumber })
+// → full pipeline execution
+// → committed state snapshot
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Example: fromStream()'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+const counterCell = FeatureCell&lt;number>({
+  key: 'counter',
+  initialState: 0
+});
+
+counterCell.initialize();
+
+const ticker$ = interval(1000);
+
+counterCell.fromStream(ticker$);
+
+// Each emission triggers merge-style execution
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Example: fromStream()'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+const counterCell = FeatureCell&lt;number>({
+  key: 'counter',
+  initialState: 0
+});
+
+counterCell.initialize();
+
+const ticker$ = interval(1000);
+
+counterCell.fromStream(ticker$);
+
+// Each emission triggers merge-style execution
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <div class="note">Note</div>
+      <p>
+        <strong>fromStream()</strong> does not replace state directly. It
+        delegates to <strong>mergeState()</strong>
+        for each emission. The active Merge behavior determines how values are
+        structurally combined with existing committed state.
+      </p>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,374 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-24 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Complete CellBuilder Api</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong
+        ><a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        Registration</strong
+      >
+      defines and registers an isolated unit of state, behavior, and control
+      within the Vault runtime. A
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      establishes the ownership boundary for state snapshots, pipeline
+      execution, and behavior composition associated with a single domain
+      concern.
+    </p>
+
+    <h4>FeatureCell Contract Summary</h4>
+    <ul>
+      <li>
+        Each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        identified by a unique key
+      </li>
+      <li>
+        Registration binds configuration, behaviors, and controllers together
+      </li>
+      <li>FeatureCells execute within the global Vault runtime</li>
+      <li>Registration does not trigger pipeline execution</li>
+      <li>
+        Each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> key
+        may be registered exactly once
+      </li>
+    </ul>
+
+    <p>
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      registration defines <strong>ownership and composition only</strong>. It
+      does not perform state computation, pipeline execution, or value emission.
+      Its responsibility is limited to declaring the structure and capabilities
+      of a <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      before runtime use.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      <strong
+        >Vault initialization must precede
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        registration.</strong
+      >
+      Calling <strong>provideFeatureCell</strong> before the Vault runtime has
+      been initialized is invalid and results in a runtime error. This ordering
+      guarantee ensures that all FeatureCells are registered against a fully
+      prepared and consistent execution environment.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- REGISTRATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Registration</div>
+
+    <div class="section-body">
+      <p>
+        FeatureCells are registered using the
+        <strong>provideFeatureCell</strong> API. Registration binds a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        descriptor together with optional behaviors and controllers into a
+        single, addressable runtime unit.
+      </p>
+
+      <p>
+        Registration is declarative. It establishes the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        identity and capabilities but does not initialize execution, schedule
+        pipelines, or emit state.
+      </p>
+
+      <h4>Scope</h4>
+      <p>
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        registration is <strong>application-scoped</strong>. Once registered, a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        globally addressable by its key and participates in Vault-managed
+        execution according to its declared configuration.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        configured using a descriptor object that defines its identity, initial
+        state, and optional insight configuration. This configuration
+        establishes the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        structural contract and diagnostic intent.
+      </p>
+    </div>
+
+    <div class="table-title">
+      <a href="/docs/references/config/feature-cell-config"
+        >FeatureCellConfig</a
+      >
+    </div>
+    <table class="documentation-table" aria-label="FeatureCellConfig">
+      <thead>
+        <tr>
+          <th scope="col" class="column-275">Property</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="column-250">key: string</td>
+          <td class="column-auto">
+            Unique identifier assigned to the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            This key is used for registration, lookup, and error attribution.
+          </td>
+        </tr>
+
+        <tr>
+          <td class="column-250">initialState: T</td>
+          <td class="column-auto">
+            Initial state value that seeds the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            before any pipeline execution occurs.
+          </td>
+        </tr>
+
+        <tr>
+          <td class="column-250">
+            insights?:
+            <a href="/docs/references/config/insight-config">InsightConfig</a>
+          </td>
+          <td class="column-auto">
+            Optional configuration enabling diagnostic and observational insight
+            emission for the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            Insights are required only when implementing custom devtools that
+            subscribe to the Insight
+            <a href="/docs/references/functions/event-bus">EventBus</a>; when
+            using the <sdux-brand-name /> Chrome DevTools extension, this
+            configuration can be omitted.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <sdux-feature-cell-insights-config-common />
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- API -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">API</div>
+
+    <div class="section-body">
+      <div class="table-title">provideFeatureCell</div>
+
+      <table aria-label="provideFeatureCell">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Signature</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <strong>provideFeatureCell&lt;T&gt;</strong>
+              <p>inputs:</p>
+              <ul>
+                <li>
+                  descriptor:
+                  <a href="/docs/references/config/feature-cell-config"
+                    >FeatureCellConfig</a
+                  >&lt;T&gt;
+                </li>
+                <li>
+                  behaviors?:
+                  <a href="/docs/references/contracts/behavior-class-contract"
+                    >BehaviorClassContract</a
+                  >&lt;T&gt;[]
+                </li>
+                <li>
+                  controllers?:
+                  <a href="/docs/references/contracts/controller-class-contract"
+                    >ControllerClassContract</a
+                  >&lt;T&gt;[]
+                </li>
+              </ul>
+
+              <p>return:</p>
+              <ul>
+                <li>
+                  <a href="/docs/references/shapes/feature-cell-shape"
+                    >FeatureCellShape</a
+                  >&lt;T&gt;
+                </li>
+              </ul>
+            </td>
+            <td>
+              Registers a
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              with the Vault runtime using the supplied configuration,
+              behaviors, and controllers. Registration establishes the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a
+              >’s identity and execution boundaries without triggering pipeline
+              execution.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FEATURECELL SHAPE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/shapes/feature-cell-shape">FeatureCellShape</a
+      >&lt;T&gt;
+    </div>
+
+    <div class="section-body">
+      <p>
+        A
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        exposes a stable runtime surface defined by the
+        <strong
+          ><a href="/docs/references/shapes/feature-cell-shape"
+            >FeatureCellShape</a
+          >&lt;T&gt;</strong
+        >
+        contract. This shape represents the complete public interaction surface
+        for configuring behaviors, observing state, and issuing state updates
+        after registration.
+      </p>
+
+      <sdux-feature-cell-shape-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <h4>Example 1: Register a Basic FeatureCell</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 1: Register a FeatureCell'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: []
+});
+
+// Initialization the FeatureCell 
+employeeCell.initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 2: Register a FeatureCell with Insights Enabled</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 2: FeatureCell with Insights'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: [],
+  insights: {
+    id: 'employees-insight',
+    wantsState: true,
+    wantsErrors: true
+  }
+});
+
+// Initialization the FeatureCell 
+employeeCell.initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 3: Configuring a FeatureCell with Behaviors</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="
+            'Example 1: Configuring a FeatureCell with Stepwise behaviors'
+          ">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Array Push Merge behavior is registered declaratively
+    withArrayPushMergeBehavior
+  ],
+);
+
+// Initialization the FeatureCell 
+employeeCell.initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>
+        Example 4: Configuring a FeatureCell with Behaviors and Controllers
+      </h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="
+            'Example 1: Configuring a FeatureCell with Stepwise behaviors'
+          ">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Stepwise behaviors are registered declaratively
+    withStepwiseFilterBehavior,
+    withStepwiseReducerBehavior,
+    withStepwiseResolveBehavior,
+  ],
+  [
+    // Stepwise Controller is required
+    withStepwiseController
+  ]
+);
+
+// Attach Stepwise callbacks during initialization
+employeeCell
+  .withStepwiseFilter({
+    stepwiseCallback: fn()
+  })
+  .withStepwiseReducer({
+    stepwiseCallback: fn()
+  })
+  .withStepwiseResolve({
+    stepwiseCallback: fn()
+  })
+  .initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

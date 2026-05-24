@@ -1,0 +1,70 @@
+/**
+ * AUTO-GENERATED DOCUMENTATION COMPONENT
+ * Symbol: <a href="/docs/references/functions/event-bus">EventBus</a>
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'sdux-event-bus',
+  standalone: true,
+  template: `<div class="docs-container">
+      <div class="header">
+        <h3>EventBus</h3>
+      </div>
+      <header class="docs-header">
+        <div class="lead">Returns the global <a href="/docs/references/functions/event-bus">EventBus</a> singleton used to emit and observe DevTools events.
+This function ensures a single <a href="/docs/references/functions/event-bus">EventBus</a> instance is created and reused for the application lifecycle.<br/><br/></div>
+        
+      </header>
+      <section class="section">
+      <div class="section-title">Installation</div>
+      <div class="section-body">
+         Part of the <strong>@sdux-vault/dev-tools</strong> project.
+
+        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/dev-tools</code></pre>
+      </div>
+    </section>
+<section class="section">
+      <div class="section-title">API</div>
+      <div class="section-body">
+        <table aria-label="API">
+          <thead>
+            <tr>
+              <th scope="col" class="column-300">API</th>
+              <th scope="col" class="column-auto">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+      <td>
+        <p><strong><a href="/docs/references/functions/event-bus">EventBus</a>()</strong></p>
+        
+        <p>returns:</p>
+        <ul>
+          <li><a href="/docs/references/contracts/event-bus-contract">EventBusContract</a></li>
+        </ul>
+      </td>
+      <td>
+        Returns the global <a href="/docs/references/functions/event-bus">EventBus</a> singleton used to emit and observe DevTools events.
+This function ensures a single <a href="/docs/references/functions/event-bus">EventBus</a> instance is created and reused for the application lifecycle.<br/><br/>
+      </td>
+    </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+      <section class="section">
+        <div class="section-title">Documentation Generation Notes</div>
+        <div class="section-body">
+          <p>
+            This reference API documentation is generated from @jsdoc-annotated source code using
+            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+          </p>
+        </div>
+      </section>
+    </div>`,
+  styleUrl: '../../scss/example.scss',
+  encapsulation: ViewEncapsulation.None
+})
+export class EventBusComponent {}

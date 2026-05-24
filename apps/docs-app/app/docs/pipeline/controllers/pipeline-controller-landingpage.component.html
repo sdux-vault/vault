@@ -1,0 +1,37 @@
+@switch (type) {
+  @case ('with-replay-global-error-controller') {
+    <sdux-pipeline-replay-global-error-controller />
+  }
+
+  @case ('with-stepwise-controller') {
+    <sdux-pipeline-stepwise-controller />
+  }
+
+  @case ('policy') {
+    <sdux-pipeline-policy />
+  }
+
+  @case ('with-delay-controller') {
+    <sdux-pipeline-delay-controller />
+  }
+
+  @case ('with-max-failures-controller') {
+    <sdux-pipeline-max-failures-controller />
+  }
+
+  @case ('with-tab-sync-controller') {
+    <sdux-pipeline-tab-sync-controller />
+  }
+
+  @case ('with-throttle-controller') {
+    <sdux-pipeline-with-throttle-controller />
+  }
+
+  @case ('what-is-a-controller') {
+    <sdux-pipeline-what-is-a-controller />
+  }
+
+  @default {
+    <sdux-pipeline-what-is-a-controller />
+  }
+}

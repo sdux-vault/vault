@@ -1,0 +1,585 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container">
+  <div class="header">
+    <h3>Query Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Query Behavior</strong> provides a deterministic extension that
+      exposes identifier-based entity access for entities that already exist in
+      finalized
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state.
+      Query behavior maintains a lightweight entity cache derived from committed
+      state emissions and exposes synchronous query APIs for retrieving entities
+      by identifier.
+    </p>
+
+    <p>
+      Query behavior observes finalized state emissions and records entities
+      using a configured identifier key. Entities are cached locally within the
+      behavior and can be resolved immediately without triggering pipeline
+      execution.
+    </p>
+
+    <p>
+      Unlike Lookup Behavior, Query Behavior never performs fetch operations and
+      never submits pipeline work. It reflects only entities that have already
+      entered
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+      through normal pipeline execution.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- QUERY EXTENSION -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Query Extension</div>
+
+    <div class="section-body">
+      <p>
+        When enabled, Query Behavior extends the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        runtime surface with synchronous query methods that allow entities to be
+        retrieved by identifier. Query results are resolved from a
+        behavior-managed cache populated from finalized state emissions.
+      </p>
+
+      <p>
+        The behavior subscribes to
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        emissions and observes finalized pipeline output. Whenever a finalized
+        state snapshot contains entities with identifiers matching the
+        configured identifier key, those entities are recorded in the internal
+        query cache.
+      </p>
+
+      <p>
+        Query behavior operates purely as a
+        <strong>state-derived extension</strong>. It does not mutate state,
+        trigger pipeline execution, or submit resolution work. It only reflects
+        entities that have already been committed to
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state.
+      </p>
+
+      <h4>Fluent Configuration</h4>
+
+      <p>
+        Query behavior is registered using the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> fluent
+        API. Configuration is declared during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization using <strong>withQuery()</strong> and is consumed when
+        the <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        activates.
+      </p>
+
+      <h4>Notes</h4>
+
+      <ul>
+        <li>
+          <strong>No fetch or resolution execution occurs.</strong>
+          Query behavior never triggers pipeline execution. Entities must
+          already exist in finalized
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state before they can be queried.
+        </li>
+
+        <li>
+          <strong>Query results are synchronous.</strong>
+          The query API resolves entities immediately from the local cache and
+          does not return Promises or Observables.
+        </li>
+
+        <li>
+          <strong>Cache population is state-driven.</strong>
+          Entities enter the query cache only through finalized pipeline
+          emissions. The behavior never inserts entities directly into state.
+        </li>
+
+        <li>
+          <strong>Pipeline lifecycle alignment is preserved.</strong>
+          The query cache is cleared automatically when the owning
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          resets, destroys, or emits a state-clearing snapshot.
+        </li>
+
+        <li>
+          <strong>Query behavior does not guarantee presence.</strong>
+          If an entity has not yet entered state or has been removed from state,
+          queries resolve with
+          <code>undefined</code>.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DESIGN DECISIONS -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Design Decisions</div>
+
+    <div class="section-body">
+      <p>
+        Query behavior is designed to provide deterministic entity access
+        without altering pipeline execution or introducing additional resolution
+        logic. The behavior reflects committed state and preserves the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> as the
+        authoritative source of truth.
+      </p>
+
+      <div class="table-title">Query Behavior Design Decisions</div>
+
+      <table aria-label="Query Behavior Design Decisions">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Condition</th>
+            <th scope="col" class="column-auto">Behavior</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>Query Hit</strong></td>
+            <td>
+              When an entity with the requested identifier exists in the query
+              cache, the entity is returned immediately.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Query Miss</strong></td>
+            <td>
+              When no entity exists for the requested identifier, the query
+              resolves with <code>undefined</code>. Query behavior never
+              triggers pipeline execution or fetch resolution.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Finalize Pipeline Emission</strong></td>
+            <td>
+              When the pipeline finalizes state containing entities, those
+              entities are indexed in the query cache using the configured
+              identifier key.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Incoming Pipeline with Null State</strong></td>
+            <td>
+              A pipeline emission containing <code>null</code> is treated as an
+              authoritative state clear. The entire query cache is reset.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Pipeline Reset</strong></td>
+            <td>When a pipeline reset occurs, the query cache is cleared.</td>
+          </tr>
+
+          <tr>
+            <td>
+              <strong
+                ><a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                Reset</strong
+              >
+            </td>
+            <td>
+              The query cache is cleared when the owning
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              resets.
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <strong
+                ><a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                Destroy</strong
+              >
+            </td>
+            <td>
+              When the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              is destroyed, the query cache is cleared and state subscriptions
+              are released.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Non-Identifiable Entities</strong></td>
+            <td>
+              Entities that do not contain the configured identifier property or
+              whose identifier is not a string or number are ignored and not
+              recorded in the cache.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- QUERY DIAGRAM -->
+  <!-- ====================================================== -->
+
+  <section class="diagram-section">
+    <div class="section-title">Query Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.7/2.7.3-query-flow.svg"
+        [tooltip]="'Entity Access - Query Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- QUERY API -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Query API</div>
+
+    <div class="section-body">
+      <p>
+        When Query Behavior is enabled, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        runtime surface is extended with synchronous query methods that resolve
+        entities from the query cache.
+      </p>
+
+      <ul>
+        <li>
+          <strong>query(id)</strong> — returns the entity with the specified
+          identifier if it exists in cache, otherwise returns
+          <code>undefined</code>.
+        </li>
+      </ul>
+
+      <p>
+        Query operations do not interact with the pipeline and do not trigger
+        state resolution. They simply read from the local entity cache populated
+        by finalized pipeline emissions.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Enables identifier-based entity querying for entities already present in
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state.
+        Entities are indexed using the configured identifier key and become
+        available through the query API once state finalization occurs.
+      </p>
+
+      <sdux-vault-entity-access-behaviors-common [type]="'query'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FEATURECELL INITIALIZATION -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        Query behavior exposes a fluent configuration API that allows engineers
+        to configure identifier extraction during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        The configuration is recorded during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> setup
+        and applied when the behavior activates.
+      </p>
+
+      <div class="table-title">Fluent Query Configuration</div>
+
+      <table aria-label="Fluent Query Configuration">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Fluent API</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p><strong>withQuery(options)</strong></p>
+
+              <p>input:</p>
+
+              <ul>
+                <li>
+                  options:
+                  <a href="/docs/references/options/query-behavior-options"
+                    >QueryBehaviorOptions</a
+                  >
+                </li>
+              </ul>
+
+              <p>
+                returns:
+                <a href="/docs/references/shapes/feature-cell-base-shape"
+                  >FeatureCellBaseShape</a
+                >
+                (chainable)
+              </p>
+            </td>
+
+            <td>
+              <p>
+                Registers query configuration for a
+                <a href="/docs/references/functions/feature-cell">FeatureCell</a
+                >. The supplied options define how identifiers are extracted
+                from entities entering finalized state.
+              </p>
+
+              <p>
+                This method must be called before <code>initialize()</code>.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- USAGE -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Usage</div>
+
+    <div class="section-body">
+      <div class="table-title">Query API</div>
+
+      <table aria-label="Query API">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">API</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p><strong>query(id: string)</strong></p>
+
+              <p>inputs:</p>
+
+              <ul>
+                <li>id: string</li>
+              </ul>
+
+              <p>returns:</p>
+
+              <ul>
+                <li>TEntity | undefined</li>
+              </ul>
+            </td>
+
+            <td>
+              <p>
+                Retrieves an entity by identifier from the query cache. If the
+                entity exists in the cache it is returned immediately.
+              </p>
+
+              <p>
+                If no entity exists for the specified identifier the method
+                returns <code>undefined</code>. Query operations never trigger
+                pipeline execution or fetch resolution.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- QUERY EXAMPLES -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Query Examples</div>
+
+    <div class="section-body">
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- ANGULAR -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Configure Query Behavior</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Configure Query Behavior'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+
+  private readonly vault = injectVault&lt;Employee[]>(EmployeeService);
+
+  constructor() {
+    // Assumes withQueryBehavior is registered during FeatureCell setup (provideFeatureCell)
+    this.vault
+      .withQuery({
+        idKey: 'id'
+      })
+      .initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Query an Entity</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Query an Entity'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`const employee = this.vault.query('123');
+
+if (employee) {
+  console.info(employee.name);
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- REACT -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Configure Query Behavior</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Configure Query Behavior'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: []
+  },
+  [
+    withQueryBehavior
+  ]
+);
+
+// Executed during application startup (e.g. app.config.ts)
+employeeCell
+  .withQuery({
+    idKey: 'id'
+  })
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Query an Entity</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Query an Entity'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`const employee = employeeCell.query('123');
+
+if (employee) {
+  console.info(employee.name);
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- VUE -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Configure Query Behavior</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Configure Query Behavior'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: []
+  },
+  [
+    withQueryBehavior
+  ]
+);
+
+// Executed during application startup (e.g. app.config.ts)
+employeeCell
+  .withQuery({
+    idKey: 'id'
+  })
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Query an Entity</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Query an Entity'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`const employee = employeeCell.query('123');
+
+if (employee) {
+  console.info(employee.name);
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

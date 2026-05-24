@@ -1,0 +1,924 @@
+<!-- <sdux-brand-name /> Splash Page — Best Layout + Best Copy -->
+<!-- Layout: Stratum (Example 20) | Copy: best-copy.md IDs | CSS: brian1 patterns -->
+
+<!-- ─── Hero (Split with Terminal) ─── -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-split">
+    <div class="hero-copy">
+      <span class="hero-eyebrow">Deterministic state. Reactive by design.</span>
+
+      <h1 class="hero-title">
+        The pipeline is the contract. The contract is the truth.
+      </h1>
+
+      <p class="hero-subtitle">
+        <sdux-brand-name /> replaces the unpredictable sprawl of state
+        management with a single, ordered, traceable execution pipeline. Every
+        transition explicit. Every output guaranteed. No exceptions.
+      </p>
+
+      <div class="hero-actions">
+        <button type="button" class="btn-primary" (click)="openBuilder()">
+          Launch your first pipeline
+        </button>
+        <button type="button" class="btn-ghost" (click)="openStartHere()">
+          Read the architecture
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-terminal">
+      <sdux-splash-page-example />
+    </div>
+  </div>
+</section>
+
+<!-- ─── Ecosystem Strip ─── -->
+<section class="section">
+  <div class="trusted">
+    <span class="trusted-label">
+      <sdux-catch-phrase />
+    </span>
+    <span class="trusted-logo">
+      <sdux-image
+        image="brand/angular/angular-icon.png"
+        height="15"
+        alt="Angular logo" />
+      Angular</span
+    >
+    <span class="trusted-logo">
+      <sdux-image
+        image="brand/react/react-icon.svg"
+        height="15"
+        alt="React logo" />
+      React</span
+    >
+    <span class="trusted-logo">
+      <sdux-image image="brand/vue/vue-icon.svg" height="13" alt="VueJs logo" />
+      Vue</span
+    >
+
+    <span class="trusted-logo">
+      <sdux-image
+        image="brand/nodejs/nodejs-icon.svg"
+        height="15"
+        alt="NodeJs logo" />
+      Node</span
+    >
+
+    <span class="trusted-logo">
+      <sdux-image
+        image="brand/typescript/typescript-icon.svg"
+        height="15"
+        alt="TypeScript logo" />
+      TypeScript</span
+    >
+  </div>
+</section>
+
+<!-- ─── Why <sdux-brand-name /> — Bento Grid ─── -->
+<section class="section section-background">
+  <span class="section-label">Why <sdux-brand-name /></span>
+  <h2 class="section-heading">Not another store library.</h2>
+  <p class="section-subheading">
+    Not dispatch spaghetti. Not magic. Not guesswork.
+  </p>
+
+  <div class="bento">
+    <!-- Row 1: 8-col + 4-col -->
+    <article class="bento-card bento-card-wide">
+      <div class="bento-icon"><mat-icon>lock</mat-icon></div>
+      <h3 class="bento-title">Deterministic by design</h3>
+      <p class="bento-text">
+        Same input. Same pipeline. Same result. Every time.
+      </p>
+      <div class="bento-pipeline-strip">
+        Controllers &rarr; Interceptors &rarr; Resolve &rarr; Filters &rarr;
+        Reducers &rarr; Taps &rarr; Extensions
+      </div>
+    </article>
+
+    <article class="bento-card">
+      <div class="bento-icon"><mat-icon>bolt</mat-icon></div>
+      <h3 class="bento-title">Direct APIs</h3>
+      <p class="bento-text">Ceremony out. Clarity in.</p>
+      <div class="bento-api-list">
+        <code>replaceState()</code>
+        <code>mergeState()</code>
+      </div>
+      <p class="bento-note">Your intent is the API.</p>
+    </article>
+
+    <!-- Row 2: 4-col + 8-col -->
+    <article class="bento-card">
+      <div class="bento-icon"><mat-icon>account_tree</mat-icon></div>
+      <h3 class="bento-title">FeatureCell Ownership</h3>
+      <p class="bento-text">One feature. One cell. One truth.</p>
+      <p class="bento-note">
+        Clear boundaries. Clear lifecycle. Clear responsibility.
+      </p>
+    </article>
+
+    <article class="bento-card bento-card-wide">
+      <div class="bento-icon"><mat-icon>extension</mat-icon></div>
+      <h3 class="bento-title">Composable Behaviors</h3>
+      <p class="bento-text">Everything explicit. Everything traceable.</p>
+      <p class="bento-note">
+        Behaviors enhance pipeline execution without changing contracts. Add
+        caching, encryption, persistence &mdash; all opt-in, all traceable.
+      </p>
+    </article>
+
+    <!-- Row 3: 6-col + 6-col -->
+    <article class="bento-card bento-card-half">
+      <div class="bento-icon"><mat-icon>gavel</mat-icon></div>
+      <h3 class="bento-title">Policy Controllers</h3>
+      <p class="bento-text">Ownership stops state from becoming politics.</p>
+      <p class="bento-note">
+        Permissions, timing, and flow control &mdash; separated from business
+        logic.
+      </p>
+    </article>
+
+    <article class="bento-card bento-card-half">
+      <div class="bento-icon"><mat-icon>enhanced_encryption</mat-icon></div>
+      <h3 class="bento-title">Persistence + Encryption</h3>
+      <p class="bento-text">
+        Persist only after final pipeline commit. Core semantics stay
+        deterministic.
+      </p>
+      <p class="bento-note">
+        Side effects run after the pipeline resolves. State stays pure.
+      </p>
+    </article>
+  </div>
+</section>
+
+<!-- ─── Pipeline Architecture ─── -->
+<section class="section section-tinted">
+  <div class="section-inner">
+    <span class="section-label">Pipeline</span>
+    <h2 class="section-heading">
+      Seven stages. One direction. Zero ambiguity.
+    </h2>
+    <p class="section-subheading">Ordered. Predictable. Traceable.</p>
+
+    <div class="pipeline">
+      <div class="pipeline-track" aria-hidden="true"></div>
+
+      <div class="pipeline-stage">
+        <div class="pipeline-marker">1</div>
+        <div class="pipeline-body">
+          <h3
+            class="pipeline-name"
+            tabindex="0"
+            (click)="openControllers()"
+            (keydown.enter)="openControllers()">
+            Controllers
+          </h3>
+          <p class="pipeline-desc">
+            Policy-driven governance. Control when, how, and whether execution
+            proceeds.
+          </p>
+        </div>
+      </div>
+
+      <div class="pipeline-stage">
+        <div class="pipeline-marker">2</div>
+        <div class="pipeline-body">
+          <h3
+            class="pipeline-name"
+            tabindex="0"
+            (click)="openInterceptors()"
+            (keydown.enter)="openInterceptors()">
+            Interceptors
+          </h3>
+          <p class="pipeline-desc">
+            Guard and transform incoming actions before they reach the pipeline.
+            Validate, enrich, or reject at the gate.
+          </p>
+        </div>
+      </div>
+
+      <div class="pipeline-stage">
+        <div class="pipeline-marker">3</div>
+        <div class="pipeline-body">
+          <h3
+            class="pipeline-name"
+            tabindex="0"
+            (click)="openResolvers()"
+            (keydown.enter)="openResolvers()">
+            Resolve
+          </h3>
+          <p class="pipeline-desc">
+            Async data resolution. Fetch what you need before state commits.
+          </p>
+        </div>
+      </div>
+
+      <div class="pipeline-stage">
+        <div class="pipeline-marker">4</div>
+        <div class="pipeline-body">
+          <h3
+            class="pipeline-name"
+            tabindex="0"
+            (click)="openFilters()"
+            (keydown.enter)="openFilters()">
+            Filters
+          </h3>
+          <p class="pipeline-desc">
+            Conditional execution gates. Skip or allow pipeline continuation
+            based on current state or action shape.
+          </p>
+        </div>
+      </div>
+
+      <div class="pipeline-stage">
+        <div class="pipeline-marker">5</div>
+        <div class="pipeline-body">
+          <h3
+            class="pipeline-name"
+            tabindex="0"
+            (click)="openReducers()"
+            (keydown.enter)="openReducers()">
+            Reducers
+          </h3>
+          <p class="pipeline-desc">
+            Pure state transformations. Deterministic computation with zero side
+            effects.
+          </p>
+        </div>
+      </div>
+
+      <div class="pipeline-stage">
+        <div class="pipeline-marker">6</div>
+        <div class="pipeline-body">
+          <h3
+            class="pipeline-name"
+            tabindex="0"
+            (click)="openTaps()"
+            (keydown.enter)="openTaps()">
+            Taps
+          </h3>
+          <p class="pipeline-desc">
+            Observe committed state without modifying it. Logging, analytics,
+            sync triggers.
+          </p>
+        </div>
+      </div>
+
+      <div class="pipeline-stage">
+        <div class="pipeline-marker">7</div>
+        <div class="pipeline-body">
+          <h3
+            class="pipeline-name"
+            tabindex="0"
+            (click)="openExtensions()"
+            (keydown.enter)="openExtensions()">
+            Extensions
+          </h3>
+          <p class="pipeline-desc">
+            Post-commit behaviors like persistence and encryption. State remains
+            pure; extensions act on committed output.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FeatureCell Ownership ─── -->
+<section class="section section-background">
+  <span class="section-label">Ownership</span>
+  <h2 class="section-heading">One feature. One cell. One truth.</h2>
+  <p class="section-subheading">
+    FeatureCells encapsulate state, pipeline, and lifecycle into a single
+    boundary that a team can own entirely.
+  </p>
+
+  <div class="ownership">
+    <div class="ownership-content">
+      <div class="ownership-point">
+        <span class="ownership-bullet" aria-hidden="true"></span>
+        <p class="ownership-point-text white">
+          <strong>Isolated typed state</strong> &mdash; each domain feature gets
+          its own cell with typed state and scoped pipeline.
+        </p>
+      </div>
+      <div class="ownership-point">
+        <span class="ownership-bullet" aria-hidden="true"></span>
+        <p class="ownership-point-text white">
+          <strong>Scoped pipeline</strong> &mdash; dedicated stages per feature
+          with no cross-feature state leaks.
+        </p>
+      </div>
+      <div class="ownership-point">
+        <span class="ownership-bullet" aria-hidden="true"></span>
+        <p class="ownership-point-text white">
+          <strong>Lifecycle-aware</strong> &mdash; cells mount and unmount with
+          their feature, releasing memory and subscriptions automatically.
+        </p>
+      </div>
+      <div class="ownership-point">
+        <span class="ownership-bullet" aria-hidden="true"></span>
+        <p class="ownership-point-text white">
+          <strong>Team-scale boundaries</strong> &mdash; one team owns one cell.
+          No cross-feature state leaks.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="btn-primary button-width"
+        (click)="openFeatureCells()">
+        Learn about FeatureCells
+      </button>
+    </div>
+
+    <pre
+      class="ownership-visual"><span class="code-keyword">const</span> cartCell =
+  <span class="code-keyword">new</span> <span class="code-type">FeatureCell</span>&lt;<span class="code-type">CartState</span>&gt;(&#123;
+  name: <span class="code-string">'cart'</span>,
+  initialState: &#123;
+    items: [],
+    total: 0,
+    status: <span class="code-string">'idle'</span>
+  &#125;
+&#125;);
+
+cartCell.<span class="code-keyword">replaceState</span>(&#123;
+  value: &#123;
+    items: updatedItems,
+    total: computeTotal(items),
+    status: <span class="code-string">'ready'</span>
+  &#125;
+&#125;);</pre>
+  </div>
+</section>
+
+<!-- ─── Why Deterministic ─── -->
+<section class="section section-tinted">
+  <div class="section-inner">
+    <span class="section-label">Testing</span>
+    <h2 class="section-heading">
+      Testing becomes stable because execution becomes stable.
+    </h2>
+    <p class="section-subheading">
+      No flaky tests. No timing hacks. No marble diagrams. Just deterministic
+      queue semantics and clear settlement boundaries.
+    </p>
+
+    <div class="deterministic">
+      <pre
+        class="deterministic-code"><span class="code-comment">// act &rarr; settle &rarr; assert</span>
+it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">async</span> () =&gt; &#123;
+  cartCell.<span class="code-keyword">mergeState</span>(&#123;
+    value: mockItems
+  &#125;);
+
+  <span class="code-keyword">await</span> cartCellSettled(&lt;cart-cell-key&gt;);
+
+  expect(cartCell.state.total).toBe(42);
+&#125;);</pre>
+
+      <div class="deterministic-points">
+        <h3 class="deterministic-label">Fast. Reliable. Repeatable.</h3>
+        <div class="ownership-point">
+          <span class="ownership-bullet" aria-hidden="true"></span>
+          <p class="ownership-point-text">No timing hacks or fake timers</p>
+        </div>
+        <div class="ownership-point">
+          <span class="ownership-bullet" aria-hidden="true"></span>
+          <p class="ownership-point-text">No flaky async waits</p>
+        </div>
+        <div class="ownership-point">
+          <span class="ownership-bullet" aria-hidden="true"></span>
+          <p class="ownership-point-text">
+            Every pipeline resolves to a predictable end state
+          </p>
+        </div>
+        <div class="ownership-point">
+          <span class="ownership-bullet" aria-hidden="true"></span>
+          <p class="ownership-point-text">
+            Test entire flows, not isolated reducers
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="btn-primary button-width"
+          (click)="openTesting()">
+          Learn testing best practices
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Comparison Table ─── -->
+<section class="section section-background">
+  <span class="section-label">Comparison</span>
+  <h2 class="section-heading">
+    Redux gave you a pattern. It forgot the contract.
+  </h2>
+  <p class="section-subheading">No more dispatch spaghetti.</p>
+
+  <div class="compare-wrap">
+    <table class="compare" aria-label="SDuX vs Redux Comparison">
+      <thead>
+        <tr>
+          <th scope="col"><strong> Capability </strong></th>
+          <th scope="col"><strong> Redux / NgRx </strong></th>
+          <th scope="col" class="compare-highlight">
+            <strong> <sdux-brand-name /> </strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>State transitions</td>
+          <td>Action + reducer pairs</td>
+          <td class="compare-highlight">replaceState / mergeState</td>
+        </tr>
+        <tr>
+          <td>Execution order</td>
+          <td>Unguaranteed middleware</td>
+          <td class="compare-highlight">Ordered pipeline stages</td>
+        </tr>
+        <tr>
+          <td>State ownership</td>
+          <td>Global store, shared</td>
+          <td class="compare-highlight">FeatureCell &mdash; scoped</td>
+        </tr>
+        <tr>
+          <td>Testing</td>
+          <td>Mock deps, varied</td>
+          <td class="compare-highlight">act &rarr; settle &rarr; assert</td>
+        </tr>
+        <tr>
+          <td>Governance</td>
+          <td>Custom middleware</td>
+          <td class="compare-highlight">Policy Controllers</td>
+        </tr>
+        <tr>
+          <td>Persistence</td>
+          <td>Third-party middleware</td>
+          <td class="compare-highlight">Built-in post-commit</td>
+        </tr>
+        <tr>
+          <td>Boilerplate</td>
+          <td>Very high</td>
+          <td class="compare-highlight">
+            Minimal &mdash; Builder generates it
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="button-container">
+      <button
+        type="button"
+        class="btn-primary button-width"
+        (click)="openComparisons()">
+        See more comparisons
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Cross Framework ─── -->
+<section class="section section-tinted">
+  <div class="section-inner">
+    <span class="section-label">Frameworks</span>
+    <h2 class="section-heading">One runtime. Every platform.</h2>
+    <p class="section-subheading">
+      Pure TypeScript core. First-class bindings for every major framework.
+    </p>
+
+    <div class="frameworks">
+      <div class="framework-tile">
+        <sdux-image
+          image="brand/angular/angular-icon.png"
+          tooltip="Angular"
+          height="20"
+          alt="Angular logo" />
+        <p class="framework-tile-name">Angular</p>
+        <p class="framework-tile-note">Injectable services</p>
+      </div>
+      <div class="framework-tile">
+        <sdux-image
+          image="brand/react/react-icon.svg"
+          tooltip="React"
+          height="20"
+          alt="React logo" />
+        <p class="framework-tile-name">React</p>
+        <p class="framework-tile-note">Hooks + context</p>
+      </div>
+      <div class="framework-tile">
+        <sdux-image
+          image="brand/vue/vue-icon.svg"
+          tooltip="Vue"
+          height="20"
+          alt="Vue logo" />
+        <p class="framework-tile-name">Vue</p>
+        <p class="framework-tile-note">Composition API</p>
+      </div>
+      <div class="framework-tile">
+        <sdux-image
+          image="brand/nodejs/nodejs-icon.svg"
+          tooltip="Node.js"
+          height="20"
+          alt="Node.js logo" />
+        <p class="framework-tile-name">Node</p>
+        <p class="framework-tile-note">Server-side state</p>
+      </div>
+      <div class="framework-tile">
+        <sdux-image
+          image="brand/typescript/typescript-icon.svg"
+          tooltip="TypeScript"
+          height="20"
+          alt="TypeScript logo" />
+        <p class="framework-tile-name">Any TS</p>
+        <p class="framework-tile-note">Zero dependencies</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Pipeline Builder ─── -->
+<section class="section section-background">
+  <span class="section-label">Pipeline Builder</span>
+  <h2 class="section-heading">
+    Stop writing boilerplate. Start building pipelines.
+  </h2>
+  <p class="section-subheading">
+    The fastest path from curiosity to production-ready <sdux-brand-name />.
+    Minutes instead of hours.
+  </p>
+
+  <div class="builder">
+    <div class="builder-steps white">
+      <div class="builder-step">
+        <div>
+          <h3 class="builder-step-title">Define state shape</h3>
+          <p class="builder-step-text">
+            Name your state, choose a framework, and set your initial value.
+          </p>
+        </div>
+      </div>
+
+      <div class="builder-step">
+        <div>
+          <h3 class="builder-step-title">Configure pipeline stages</h3>
+          <p class="builder-step-text">
+            Add resolvers, filters, reducers, and update strategies to shape how
+            state flows through the pipeline.
+          </p>
+        </div>
+      </div>
+
+      <div class="builder-step">
+        <div>
+          <h3 class="builder-step-title">Preview + copy</h3>
+          <p class="builder-step-text">
+            See generated code live. Copy with one click. Includes npm commands
+            and AI assist files.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="builder-action">
+      <h3 class="builder-action-heading">
+        Four core stages. Production-ready output.
+      </h3>
+      <p class="builder-action-text">
+        The Pipeline Builder walks you through resolvers, filters, reducers, and
+        update strategies &mdash; then generates type-safe TypeScript you can
+        copy or launch directly in StackBlitz.
+      </p>
+      <ul class="builder-action-features">
+        <li>Real-time code preview as you build</li>
+        <li>Full type-safe service generation</li>
+        <li>One-click StackBlitz export</li>
+      </ul>
+      <button
+        type="button"
+        class="btn-primary button-width"
+        (click)="openStackBlitz()">
+        Launch the Pipeline Builder
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── StackBlitz Live Examples ─── -->
+<section class="section section-tinted">
+  <div class="section-inner">
+    <span class="section-label">Live Examples</span>
+    <h2 class="section-heading">Try it now. No install required.</h2>
+    <p class="section-subheading">
+      Explore real <sdux-brand-name /> pipelines in StackBlitz. Modify,
+      experiment, and see deterministic execution in action.
+    </p>
+
+    <div class="stackblitz">
+      <article class="stackblitz-card">
+        <div class="stackblitz-card-preview">
+          <pre><code>const cell = FeatureCell(
+  ExampleService,
+  &#123;
+    key: 'example-feature-cell-key',
+    initialState: [],
+  &#125;
+);
+
+cell
+  .filters([ filterFn ])
+  .reducers([ reducerFn ])
+  .initialize();</code></pre>
+        </div>
+        <div class="stackblitz-card-info">
+          <h3 class="stackblitz-card-title">Filter &amp; Reducer Pipeline</h3>
+          <p class="stackblitz-card-desc">
+            Data flows through filters and reducers before becoming state.
+          </p>
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="viewExamples('basic-filter-reducer')">
+            View Examples
+          </button>
+        </div>
+      </article>
+
+      <article class="stackblitz-card">
+        <div class="stackblitz-card-preview">
+          <pre><code>const cell = FeatureCell(
+  ExampleService,
+  &#123;
+    key: 'example-feature-cell-key',
+    initialState: [],
+  &#125;,
+  [],
+  [withDelayController]
+);
+
+cell.withDelay?.(&#123; 
+  millisecondDelay: 3_000
+&#125;).initialize();</code></pre>
+        </div>
+        <div class="stackblitz-card-info">
+          <h3 class="stackblitz-card-title">Delay Interceptor</h3>
+          <p class="stackblitz-card-desc">
+            State updates flow through a delay interceptor before committing.
+          </p>
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="viewExamples('interceptor-delay')">
+            View Examples
+          </button>
+        </div>
+      </article>
+
+      <article class="stackblitz-card">
+        <div class="stackblitz-card-preview">
+          <pre><code>Vault( &#123; devMode: true &#125; );
+
+const cell = FeatureCell( ExampleService, &#123;
+  key: 'example-feature-cell-key',
+  initialState: [], 
+  insights: &#123;
+    wantsErrors: true,
+    wantsPayload: true,
+    wantsState: false
+  &#125; as InsightConfig
+&#125;);
+
+cell.initialize();</code></pre>
+        </div>
+        <div class="stackblitz-card-info">
+          <h3 class="stackblitz-card-title">Built-in Debugger</h3>
+          <p class="stackblitz-card-desc">Record, export &amp; diagnose.</p>
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="viewExamples('debugger')">
+            View Examples
+          </button>
+        </div>
+      </article>
+    </div>
+
+    <div class="view-all-button">
+      <button type="button" class="btn-primary" (click)="viewExamples('top')">
+        View All Examples
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Enterprise Readiness ─── -->
+<section class="section section-background">
+  <span class="section-label">Enterprise</span>
+  <h2 class="section-heading">
+    A category-defining state platform for teams that build serious software.
+  </h2>
+  <p class="section-subheading">
+    Adopt incrementally by feature domain rather than platform rewrite.
+  </p>
+
+  <div class="enterprise-grid">
+    <div class="enterprise-item">
+      <div class="enterprise-item-icon">
+        <mat-icon>verified_user</mat-icon>
+      </div>
+      <div>
+        <h3 class="enterprise-item-title">Auditability</h3>
+        <p class="enterprise-item-text">
+          Every state transition is logged and traceable through the pipeline.
+          Full execution history for compliance reviews.
+        </p>
+      </div>
+    </div>
+
+    <div class="enterprise-item">
+      <div class="enterprise-item-icon">
+        <mat-icon>security</mat-icon>
+      </div>
+      <div>
+        <h3 class="enterprise-item-title">Security</h3>
+        <p class="enterprise-item-text">
+          Post-commit encryption extensions protect sensitive state without
+          compromising deterministic purity.
+        </p>
+      </div>
+    </div>
+
+    <div class="enterprise-item">
+      <div class="enterprise-item-icon">
+        <mat-icon>analytics</mat-icon>
+      </div>
+      <div>
+        <h3 class="enterprise-item-title">Observability</h3>
+        <p class="enterprise-item-text">
+          Pipeline taps provide built-in telemetry hooks. Connect to any
+          monitoring platform without middleware.
+        </p>
+      </div>
+    </div>
+
+    <div class="enterprise-item">
+      <div class="enterprise-item-icon">
+        <mat-icon>gavel</mat-icon>
+      </div>
+      <div>
+        <h3 class="enterprise-item-title">Compliance</h3>
+        <p class="enterprise-item-text">
+          Separate governance from business logic for clearer control evidence.
+        </p>
+      </div>
+    </div>
+
+    <div class="enterprise-item">
+      <div class="enterprise-item-icon">
+        <mat-icon>sync_alt</mat-icon>
+      </div>
+      <div>
+        <h3 class="enterprise-item-title">Migration</h3>
+        <p class="enterprise-item-text">
+          Adopt incrementally by feature domain rather than platform rewrite.
+        </p>
+      </div>
+    </div>
+
+    <div class="enterprise-item">
+      <div class="enterprise-item-icon">
+        <mat-icon>scale</mat-icon>
+      </div>
+      <div>
+        <h3 class="enterprise-item-title">Scale</h3>
+        <p class="enterprise-item-text">
+          Bounded ownership keeps product growth coherent across teams.
+        </p>
+      </div>
+    </div>
+    <div class="view-all-button">
+      <button type="button" class="btn-primary" (click)="openEnterprise()">
+        See Enterprise Capabilities
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Testimonials ─── -->
+<!-- <section class="section section-tinted">
+  <div class="section-inner">
+    <span class="section-label">Voices</span>
+    <h2 class="section-heading">What engineers are saying.</h2>
+
+    <div class="testimonials">
+      <blockquote class="testimonial">
+        <p class="testimonial-quote">
+          &ldquo;We replaced our entire Redux layer with 8 FeatureCells. Our
+          test suite went from 12 minutes to 90 seconds.&rdquo;
+        </p>
+        <p class="testimonial-author">Elena Vasquez</p>
+        <p class="testimonial-role">Staff Engineer</p>
+      </blockquote>
+
+      <blockquote class="testimonial">
+        <p class="testimonial-quote">
+          &ldquo;The Pipeline Builder generated our checkout state architecture
+          in 15 minutes. It would have taken us a full sprint to design
+          manually.&rdquo;
+        </p>
+        <p class="testimonial-author">Amara Osei</p>
+        <p class="testimonial-role">Tech Lead</p>
+      </blockquote>
+
+      <blockquote class="testimonial">
+        <p class="testimonial-quote">
+          &ldquo;Policy controllers let us enforce HIPAA compliance at the state
+          layer. No more scattered permission checks across components.&rdquo;
+        </p>
+        <p class="testimonial-author">David Reyes</p>
+        <p class="testimonial-role">Security Architect</p>
+      </blockquote>
+    </div>
+  </div>
+</section> -->
+
+<!-- ─── Deep Technical CTA ─── -->
+<section class="section section-tinted">
+  <div class="section-inner">
+    <span class="section-label">Go Deeper</span>
+    <h2 class="section-heading">
+      The difference is not style. It is operational clarity.
+    </h2>
+
+    <div class="deep-cta-grid">
+      <article class="deep-cta-card">
+        <h3 class="deep-cta-card-title">Pipeline Reference</h3>
+        <p class="deep-cta-card-text">
+          Complete docs for every stage, hook, and extension.
+        </p>
+        <a
+          class="deep-cta-card-link"
+          href="javascript:void(0)"
+          (click)="openArchitecture()">
+          Read the architecture &rarr;
+        </a>
+      </article>
+
+      <article class="deep-cta-card">
+        <h3 class="deep-cta-card-title">Architecture Guide</h3>
+        <p class="deep-cta-card-text">
+          How FeatureCells, pipelines, and behaviors compose.
+        </p>
+        <a
+          class="deep-cta-card-link"
+          href="javascript:void(0)"
+          (click)="openMenu()">
+          Explore architecture &rarr;
+        </a>
+      </article>
+
+      <article class="deep-cta-card">
+        <h3 class="deep-cta-card-title">Migration Playbook</h3>
+        <p class="deep-cta-card-text">
+          Adopt <sdux-brand-name /> alongside Redux, NgRx, or vanilla.
+        </p>
+        <a
+          class="deep-cta-card-link"
+          href="javascript:void(0)"
+          (click)="openMigration()">
+          Start migrating &rarr;
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer CTA ─── -->
+<footer class="footer-cta" aria-label="Call to action">
+  <h2 class="footer-cta-title">
+    Replace Redux complexity. <br />Start with FeatureCells.
+  </h2>
+  <p class="footer-cta-text">
+    <sdux-brand-name /> feels like the inevitable future of state management.
+  </p>
+  <div class="footer-cta-actions">
+    <button type="button" class="btn-primary" (click)="openBuilder()">
+      Build deterministic state now
+    </button>
+    <button
+      type="button"
+      class="sdux-button-secondary button-width"
+      (click)="openStackBlitz()">
+      Open in StackBlitz
+    </button>
+  </div>
+</footer>

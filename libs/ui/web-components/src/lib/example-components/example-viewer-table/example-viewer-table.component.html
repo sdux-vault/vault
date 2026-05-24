@@ -1,0 +1,121 @@
+<table
+  mat-table
+  multiTemplateDataRows
+  [dataSource]="dataSource()"
+  class="example-table"
+  aria-label="Employee Data">
+  <ng-container matColumnDef="expand">
+    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        type="button"
+        aria-label="expand row"
+        (click)="toggle(element); $event.stopPropagation()"
+        class="example-toggle-button"
+        [class.example-toggle-button-expanded]="isExpanded(element)">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  @for (column of columnsToDisplay; track column) {
+    <ng-container matColumnDef="{{ column }}">
+      <th mat-header-cell *matHeaderCellDef scope="col">
+        {{ getColumnTitle(column) }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+    </ng-container>
+  }
+
+  <ng-container matColumnDef="expandedDetail">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="columnsToDisplayWithExpand.length">
+      <div
+        class="example-element-detail-wrapper"
+        [class.example-element-detail-wrapper-expanded]="isExpanded(element)">
+        <div class="employee-display-wrapper">
+          <div class="employee-detail-card">
+            <div class="employee-identity">
+              <div class="avatar">
+                {{ element.firstName[0] }}{{ element.lastName[0] }}
+              </div>
+
+              <div class="identity-text">
+                <div class="employee-name">
+                  {{ element.firstName }} {{ element.lastName }}
+                </div>
+                <div class="employee-role">{{ element.role }}</div>
+
+                <div class="flag-row">
+                  @if (element.senior) {
+                    <span class="badge badge-senior">Senior</span>
+                  }
+                  @if (element.isLoanOfficer) {
+                    <span class="badge badge-loan">Loan Officer</span>
+                  }
+                  @if (element.isSecurity) {
+                    <span class="badge badge-security">Security</span>
+                  }
+                  @if (element.isActive) {
+                    <span class="badge badge-active">Active</span>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="employee-detail-grid">
+              <div class="detail-item">
+                <div class="label">Salary</div>
+                <div class="value">
+                  {{ element.salary | currency: 'USD' : 'symbol' : '1.0-0' }}
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <div class="label">Hire Date</div>
+                <div class="value">{{ element.hireDate }}</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="label">Birth Date</div>
+                <div class="value">{{ element.birthDate }}</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="label">Phone</div>
+                <div class="value">{{ element.phoneNumber }}</div>
+              </div>
+
+              <div class="detail-item address-block">
+                <div class="label">Address</div>
+                <div class="value">
+                  {{ element.address.street }}<br />
+                  {{ element.address.city }}, {{ element.address.state }}
+                  {{ element.address.zip }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+  <tr
+    mat-row
+    *matRowDef="let element; columns: columnsToDisplayWithExpand"
+    class="example-element-row"
+    [class.example-expanded-row]="isExpanded(element)"
+    (click)="toggle(element)"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="example-detail-row"></tr>
+</table>
+
+@if (!dataSource()) {
+  <div class="no-data">No Data Currently Loaded</div>
+}

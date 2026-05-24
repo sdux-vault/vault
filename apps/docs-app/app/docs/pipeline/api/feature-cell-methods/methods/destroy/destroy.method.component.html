@@ -1,0 +1,145 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-25 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>destroy()</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>destroy()</strong> method permanently tears down a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> instance
+      and releases all resources associated with its runtime execution. Destroy
+      is a lifecycle operation that finalizes the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
+      prevents any further pipeline execution, state updates, or emissions.
+    </p>
+
+    <h4>Method Contract Summary</h4>
+    <ul>
+      <li>
+        Terminates the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle
+      </li>
+      <li>Tears down behaviors and controllers</li>
+      <li>Completes internal event streams</li>
+      <li>Prevents further state updates or pipeline execution</li>
+      <li>Invoked automatically when the hosting provider is destroyed</li>
+    </ul>
+
+    <p>
+      The <strong>destroy()</strong> method defines
+      <strong>finalization and teardown only</strong>. It does not perform state
+      computation, emit snapshots, or participate in pipeline execution. Its
+      responsibility is limited to releasing resources and permanently shutting
+      down the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> runtime
+      surface.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      In typical application usage, <strong>destroy()</strong> is called
+      automatically by the hosting framework or provider lifecycle. Manual
+      invocation is supported but should be reserved for advanced lifecycle
+      control or non-standard hosting environments.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- destroy() -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        Calling <strong>destroy()</strong> permanently deactivates the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. Once
+        destroyed, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> cannot
+        be re-initialized, cannot emit state, and cannot participate in
+        Vault-managed execution.
+      </p>
+
+      <h4>Example: Destroying a FeatureCell</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Destroy a FeatureCell'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Explicitly destroy the FeatureCell
+employeeCell.destroy();
+
+// FeatureCell is now permanently torn down`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>Tears down all registered behaviors</li>
+        <li>Destroys all associated controllers</li>
+        <li>Completes internal event and lifecycle streams</li>
+        <li>Prevents further state updates or pipeline execution</li>
+      </ul>
+
+      <p>
+        After destruction, any attempt to interact with the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        runtime surface is invalid and may result in runtime errors or no-op
+        behavior, depending on the hosting environment.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="table-title">Lifecycle</div>
+    <table aria-label="Lifecycle">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Method</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong>destroy()</strong>
+
+            <p>inputs:</p>
+            <ul>
+              <li>None</li>
+            </ul>
+
+            <p>return:</p>
+            <ul>
+              <li>void</li>
+            </ul>
+          </td>
+          <td>
+            Permanently tears down the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+            releasing all runtime resources, destroying behaviors and
+            controllers, completing internal streams, and finalizing the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            lifecycle.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

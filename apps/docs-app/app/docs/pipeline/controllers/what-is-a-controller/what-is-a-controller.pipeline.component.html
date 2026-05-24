@@ -1,0 +1,272 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>What is a Controller?</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      A <strong>Controller</strong> is a coordinating authority within the
+      <sdux-brand-name /> pipeline. Controllers do not transform state or
+      produce values. Instead, they
+      <em>mediate, arbitrate, and finalize control decisions</em> that affect
+      how pipeline execution proceeds.
+    </p>
+
+    <p>
+      Controllers operate across pipeline stages rather than within a single
+      stage. They observe requests emitted by Behaviors, apply centralized
+      decision logic, and issue authoritative outcomes that determine whether
+      execution execution buffers, retries, completes successfully, denies
+      progression, or fails with error.
+    </p>
+
+    <p>
+      <strong>Controllers are never implicitly enabled.</strong>
+      A Controller participates in a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> pipeline
+      only if it is explicitly registered during
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      configuration. If a required Controller is omitted, the pipeline will fail
+      fast rather than execute with incomplete authority.
+    </p>
+
+    <p>
+      When a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+      configured, <sdux-brand-name /> validates each registered Controller and
+      integrates it into the pipeline’s coordination layer. Controllers do not
+      invoke Behaviors directly, and Behaviors do not coordinate with one
+      another. All cross-cutting decisions flow through Controllers.
+    </p>
+
+    <p>
+      This separation ensures that control flow, arbitration, and policy
+      enforcement are centralized, explicit, and deterministic—rather than being
+      distributed across individual Behaviors.
+    </p>
+
+    <p>
+      There are no <strong>Core Controllers</strong>. Instead, a single
+      <strong>Decision Engine</strong> is always present and coordinates all
+      registered Controllers. Because Controllers may be stacked, the Decision
+      Engine serves as the authoritative coordination layer. All other
+      Controllers are <strong>optional add-on controllers</strong> and
+      participate in the pipeline only when explicitly included in the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      definition.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      Controllers are not required for a <sdux-brand-name />
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> to
+      store, update, or emit state. A
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> can
+      operate correctly using only Behaviors and the core pipeline. Controllers
+      are introduced only when additional coordination, arbitration, or policy
+      enforcement is required.
+    </p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- CONTROLLER ANATOMY                                           -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Controller Anatomy</div>
+
+    <div class="section-body">
+      <p>
+        Every Controller conforms to a strict contract so it can safely
+        coordinate pipeline execution.
+      </p>
+
+      <p>
+        Because all Controllers follow this contract, they can operate
+        independently of the Behaviors that rely on them. A Controller does not
+        need to know <em>which</em> Behavior emitted a request—only how to
+        arbitrate the decision it represents.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CORE VS ADDON CONTROLLERS                                    -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Addon Controllers</div>
+
+    <div class="section-body">
+      <p>
+        There are only add-on Controllers in the <sdux-brand-name /> pipeline.
+      </p>
+
+      <h4>Addon Controllers</h4>
+      <ul>
+        <li>
+          Optional, engineer-selected Controllers registered during
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          configuration.
+        </li>
+        <li>
+          Addon Controllers may be sourced from <sdux-brand-name /> extension
+          packages (such as <strong><sdux-package-name />/addons</strong>) or
+          implemented directly by engineers.
+        </li>
+        <li>
+          Provide centralized coordination for cross-cutting concerns such as
+          stepwise policy enforcement, external approvals, multi-stage gating,
+          or deferred execution.
+        </li>
+        <li>
+          Do not mutate state or emit snapshots; they only issue authoritative
+          control decisions.
+        </li>
+      </ul>
+
+      <p>
+        This separation ensures that control authority is explicit and
+        centralized, while allowing FeatureCells to opt into additional
+        coordination models when required.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- WHY CONTROLLERS MATTER                                       -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Why Controllers Matter</div>
+
+    <div class="section-body">
+      <p>
+        Controllers are what allow <sdux-brand-name /> pipelines to remain
+        deterministic even when control logic spans multiple stages or
+        asynchronous boundaries:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Authoritative</strong> — Controllers are the single source of
+          truth for pipeline control decisions.
+        </li>
+        <li>
+          <strong>Centralized</strong> — Complex coordination logic is not
+          scattered across Behaviors.
+        </li>
+        <li>
+          <strong>Deterministic</strong> — Decisions are serialized, validated,
+          and finalized in one place.
+        </li>
+        <li>
+          <strong>Safe</strong> — Pipelines fail fast if required Controllers
+          are missing or misconfigured.
+        </li>
+      </ul>
+
+      <p>
+        Understanding Controllers is essential for advanced
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipelines, as they define how
+        <sdux-brand-name /> enforces policy, arbitration, and execution safety.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Controller–Behavior Dependency</div>
+
+    <div class="section-body">
+      <p>
+        Some Controllers are designed to coordinate or arbitrate one or more
+        specific Behaviors. When such a dependency exists,
+        <strong
+          >both the Controller and its corresponding Behavior must be
+          included</strong
+        >
+        in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        declaration.
+      </p>
+
+      <p>
+        Registering a dependent Behavior without its required Controller—or
+        registering a Controller without the Behavior it coordinates—results in
+        an invalid
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        configuration and causes pipeline initialization to fail.
+      </p>
+
+      <p>
+        <sdux-brand-name /> does not implicitly enable Controllers or Behaviors.
+        All dependencies must be declared explicitly to ensure deterministic
+        execution, correct arbitration, and enforcement of policy boundaries.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Pipeline</div>
+
+    <div class="section-body">
+      <p>
+        Controllers operate within the Conductor to coordinate pipeline
+        execution rather than transform data. Behaviors emit execution requests;
+        Controllers arbitrate and resolve them.
+      </p>
+
+      <div class="diagram-section">
+        <div class="section-body">
+          <sdux-diagram
+            image="diagrams/6.0/6.0-controller-flow.svg"
+            [tooltip]="'Controller Flow'"></sdux-diagram>
+
+          <sdux-diagram
+            image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+            [tooltip]="'Full Pipeline Flow'" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      Example
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Declaration
+    </div>
+
+    <div class="section-body">
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Array Filter - Keep Only Even Number'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell(
+  EmployeeCell, 
+  {
+    key: 'employees',
+    initialState: [] 
+  },
+  [
+    // opt-in behavior array 
+    withStepwiseResolveBehavior
+  ],
+  [
+    // opt-in controller array 
+    withStepwiseController
+  ]
+);
+
+employeeCell.withStepwiseResolve(
+  stepwiseCallback: fn
+).initialize() `}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

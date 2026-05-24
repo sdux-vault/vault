@@ -1,0 +1,1208 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Initial State</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Initial State</strong> defines how a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> obtains
+      its first authoritative value. Initialization is a deterministic,
+      single-pass operation that executes through the full pipeline as a
+      <code>replaceState</code> operation.
+    </p>
+
+    <p>
+      A <a href="/docs/references/functions/feature-cell">FeatureCell</a> does
+      not assume state. It must be explicitly initialized through one of four
+      intentional configuration mechanisms. Vault does not introduce fallback
+      behavior, hierarchical rescue, or implicit retries.
+    </p>
+
+    <ul>
+      <li>
+        <strong>hydrate()</strong> — Provide a deferred factory (synchronous or
+        asynchronous) that resolves to the authoritative initial value. This is
+        treated as the primary initialization source when declared.
+      </li>
+
+      <li>
+        <strong>Persist Behaviors</strong> — Install one or more Persist
+        behaviors that load previously stored state (e.g., localStorage,
+        sessionStorage, or custom storage providers). The first defined value
+        becomes the initialization candidate.
+      </li>
+
+      <li>
+        <strong>descriptor.initialState</strong> — Supply a static initial value
+        directly in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        descriptor. This value is used only when no hydrate() or Persist
+        behaviors are declared.
+      </li>
+
+      <li>
+        <strong>Explicit replaceState()</strong> — Omit all automatic
+        initialization mechanisms and programmatically initialize the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> after
+        creation using replaceState().
+      </li>
+    </ul>
+
+    <div class="note">Note</div>
+
+    <p>
+      Initialization failures should be treated as catastrophic correctness
+      violations. If the declared initialization source does not produce the
+      expected value, the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> does not
+      silently recover. Recovery is always explicit.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- CATASTROPHIC FAILURE RATIONALE -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">
+      Why Initialization Failure Is Considered Catastrophic
+    </div>
+
+    <div class="section-body">
+      <p>
+        Initialization defines the starting contract of a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. If
+        that contract fails, the pipeline remains operational — but your
+        application logic may now execute against an invalid or unexpected state
+        shape.
+      </p>
+
+      <p>
+        Vault does not automatically fall back, retry silently, or substitute
+        alternate state sources. The declared initialization mechanism
+        represents intentional engineer configuration. If it fails, the
+        resulting state does not match the declared expectation.
+      </p>
+
+      <p>Examples of downstream impact:</p>
+
+      <ul>
+        <li>
+          If you expected an array and received <code>undefined</code>, reducers
+          may attempt to push into a non-existent structure.
+        </li>
+        <li>
+          If you expected hydrated API data, UI components may render incomplete
+          or empty views.
+        </li>
+        <li>
+          If you expected persisted state, user workflows may branch
+          incorrectly.
+        </li>
+        <li>
+          If you expected a populated dropdown, it may render empty while the
+          rest of the application continues executing.
+        </li>
+      </ul>
+
+      <p>
+        For this reason, initialization failure is considered
+        <strong>catastrophic from a correctness perspective</strong>. The system
+        is still running — but your assumptions are no longer aligned with
+        runtime reality.
+      </p>
+
+      <p>When initialization fails:</p>
+
+      <ul>
+        <li>The error is surfaced locally and optionally globally.</li>
+        <li>
+          The state remains <code>value: undefined</code> with
+          <code>hasValue: false</code>.
+        </li>
+        <li>No implicit fallback or recovery occurs.</li>
+      </ul>
+
+      <h4>Recommended Recovery Pattern</h4>
+
+      <p>If recovery is desired, it must be explicit:</p>
+
+      <ol>
+        <li>
+          Call <code>reset()</code> to clear the failed initialization attempt.
+        </li>
+        <li>Provide a known-good value using <code>replaceState()</code>.</li>
+      </ol>
+
+      <p>
+        Recovery is intentional, observable, and deterministic. Vault does not
+        guess.
+      </p>
+
+      <h4>Example: How to Recover from Initialization Failure</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to recover from Initialization Failure'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private isInitializationAttempted = false;
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    effect(() => {
+      const error = this.vault.state.error();
+
+      if (error) {
+        console.error('Initialization failed:', error);
+
+        if (!this.isInitializationAttempted) {
+          // Step 1: Reset the FeatureCell to clear the error state
+          this.vault.reset();
+
+          // Step 2: Explicitly replace state with a known-good value
+          const fallbackEmployees: Employee[] = [
+            { id: 1, name: 'Alice' },
+            { id: 2, name: 'Bob' }
+          ];
+
+          this.vault.replaceState({ value: fallbackEmployees });
+        }
+      }
+
+      this.isInitializationAttempted = true;
+    });
+
+    this.vault
+      .hydrate(() => Promise.resolve(...))
+      .initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to recover from Initialization Failure'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+let isInitializationAttempted = false;
+
+employeeCell.state$.subscribe({ next(state) => {
+  if (state.error) {
+    console.error('Initialization failed:', state.error);
+    if (!isInitializationAttempted) {
+
+      // Step 1: Reset the FeatureCell to clear the error state
+      employeeCell.reset();
+
+      // Step 2: Explicitly replace state with a known-good value
+      const fallbackEmployees: Employee[] = [
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' }
+      ];
+
+      employeeCell.replaceState({ value: fallbackEmployees });
+    } else {
+      // Handle subsequent errors after recovery attempt (optional)
+    }
+  }
+
+  // Handle normal state updates here
+  isInitializationAttempted = true;
+});
+
+employeeCell.hydrate(() => Promise.resolve()).initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to recover from Initialization Failure'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+let isInitializationAttempted = false;
+
+employeeCell.state$.subscribe({ next(state) => {
+  if (state.error) {
+    console.error('Initialization failed:', state.error);
+    if (!isInitializationAttempted) {
+
+      // Step 1: Reset the FeatureCell to clear the error state
+      employeeCell.reset();
+
+      // Step 2: Explicitly replace state with a known-good value
+      const fallbackEmployees: Employee[] = [
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' }
+      ];
+
+      employeeCell.replaceState({ value: fallbackEmployees });
+    } else {
+      // Handle subsequent errors after recovery attempt (optional)
+    }
+  }
+
+  // Handle normal state updates here
+  isInitializationAttempted = true;
+});
+
+employeeCell.hydrate(() => Promise.resolve(...)).initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.2/2.2.1-pipeline-initialization-flow.svg"
+        [tooltip]="'FeatureCell Initialization Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DESIGN DECISIONS -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Design Decisions</div>
+
+    <div class="section-body">
+      <p>
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization is intentionally strict. Initialization integrates into
+        the deterministic pipeline model and does not introduce fallback layers,
+        implicit retries, or hierarchical rescue behavior. The table below
+        documents how initialization responds to specific runtime conditions.
+      </p>
+
+      <div class="table-title">Initialization Design Decisions</div>
+
+      <table aria-label="Initialization Design Decisions">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Condition</th>
+            <th scope="col" class="column-auto">Behavior</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>hydrate() Declared</strong></td>
+            <td>
+              hydrate() is treated as the authoritative initialization source.
+              Persist behaviors and descriptor.initialState are not evaluated.
+              The resolved value is passed through the full pipeline as a
+              <code>replaceState</code> operation.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Persist Behaviors Present (No hydrate)</strong></td>
+            <td>
+              Persist behaviors are evaluated sequentially. The first defined
+              value becomes the initialization candidate and executed as a
+              <code>replaceState</code> operation. descriptor.initialState is
+              not evaluated.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>descriptor.initial Only</strong></td>
+            <td>
+              When neither hydrate() nor Persist behaviors are configured,
+              descriptor.initialState is treated as the authoritative static
+              value and executed as a <code>replaceState</code> operation.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Undefined Resolution</strong></td>
+            <td>
+              If the selected initialization source resolves to undefined, no
+              write occurs. The
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              state value remains as <code>undefined</code> with hasValue =
+              false. This is not treated as an error.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Initialization Source Throws</strong></td>
+            <td>
+              A thrown error during hydrate() or Persist loading is treated as
+              an initialization failure. No fallback source is evaluated. The
+              error is emitted and the state remains undefined.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>No Initialization Mechanism Declared</strong></td>
+            <td>
+              The
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              begins with value = undefined and must be explicitly initialized
+              via replaceState(). This is considered a valid intentional
+              configuration.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Initialization Failure Recovery</strong></td>
+            <td>
+              Recovery is explicit. The engineer must call reset() and then
+              replaceState(). Initialization does not automatically retry and no
+              implicit fallback occurs.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- OVERVIEW -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Initialization Mechanisms</div>
+
+    <div class="section-body">
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        be initialized in exactly one of the following ways:
+      </p>
+
+      <ul>
+        <li>
+          <strong>1. hydrate()</strong> — Deferred factory resolution (highest
+          precedence)
+        </li>
+        <li>
+          <strong>2. Persisted Storage</strong> — Installed Persist behaviors
+        </li>
+        <li>
+          <strong>3. descriptor.initialState</strong> — Static configuration
+          value
+        </li>
+        <li>
+          <strong>4. Manual replaceState()</strong> — Explicit runtime
+          initialization
+        </li>
+      </ul>
+
+      <p>
+        Only one source provides the initial value during a single
+        initialization cycle. These sources are not fallback layers. They are
+        mutually exclusive declarations of intent.
+      </p>
+
+      <p>
+        <strong>Why hydrate() has highest precedence:</strong>
+        The <code>hydrate()</code> mechanism is evaluated first because it
+        represents an explicit request for dynamic, authoritative data. When an
+        engineer declares <code>hydrate()</code>, they are intentionally
+        choosing runtime-derived state (API responses, deferred computation,
+        remote data, etc.) over static configuration or previously persisted
+        storage. In that case, persisted data is considered stale and
+        descriptor-based initial values are irrelevant.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        If dynamic data is not desired, do not use <code>hydrate()</code>. Vault
+        will then resolve initialization using storage or static configuration
+        instead.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- HYDRATE -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="hydrate">
+    <div class="section-title">1. hydrate() — Deferred Initialization</div>
+
+    <div class="section-body">
+      <p>
+        Calling <code>hydrate()</code> declares that the authoritative initial
+        state must be resolved from a deferred factory. This factory may return
+        a value synchronously or resolve asynchronously via Promise.
+      </p>
+
+      <p>
+        If <code>hydrate()</code> is configured, it always executes first.
+        Storage and static initial values are not evaluated.
+      </p>
+
+      <p>If the deferred factory:</p>
+
+      <ul>
+        <li>
+          Resolves to a value → The pipeline executes a <code>Replace</code>.
+        </li>
+        <li>
+          Resolves to <code>undefined</code> → No write occurs. State remains
+          undefined.
+        </li>
+        <li>Throws → Initialization fails.</li>
+      </ul>
+
+      <p>
+        A thrown error is treated as an initialization failure because the
+        declared authoritative source did not resolve successfully.
+      </p>
+
+      <p>
+        <strong>hydrate()</strong> is a core fluent API method provided by the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        itself. It does not require any additional Behaviors to be registered on
+        the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        declaration. The Resolve stage already includes built-in support for
+        deferred factories and Promise-based inputs. When you call
+        <code>hydrate()</code>, you are using a first-class initialization
+        mechanism that integrates directly with the pipeline without installing
+        custom resolve logic.
+      </p>
+
+      <h4>Example: How to configure .hydrate()</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: How to configure .hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault
+      .hydrate(() => Promise.resolve(...))
+      .initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: How to configure .hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // ignored
+    initialState: []
+  }
+);
+
+employeeCell.hydrate(() => Promise.resolve(...)).initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: How to configure .hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // ignored
+    initialState: []
+  }
+);
+
+employeeCell.hydrate(() => Promise.resolve(...)).initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STORAGE -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="persisted-storage">
+    <div class="section-title">2. Persisted Storage — Persist Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        If one or more <strong>Persist behaviors</strong> are registered on the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        declaration and <code>hydrate()</code> is not configured, Vault attempts
+        to load state from storage.
+      </p>
+
+      <p>
+        Persist behaviors must be explicitly registered on the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        Storage loading is not automatic. If no Persist behavior is installed,
+        this initialization path is skipped entirely.
+      </p>
+
+      <p>
+        Persist behaviors are evaluated sequentially. The first
+        <strong>defined</strong> value returned becomes the initial state
+        candidate.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Value returned</strong> → The pipeline executes
+          <code>replaceState</code>.
+        </li>
+        <li>
+          <strong><code>undefined</code> or <code>null</code> returned</strong>
+          → No write occurs. The state remains <code>undefined</code>.
+        </li>
+        <li><strong>Thrown error</strong> → Initialization fails.</li>
+      </ul>
+
+      <p>
+        This mechanism assumes a value actually exists in storage. If storage
+        contains no entry, the Persist behavior simply returns
+        <code>undefined</code> (or <code>null</code>), and no state write is
+        performed.
+      </p>
+
+      <p>
+        If a Persist behavior throws during load, initialization is considered
+        failed. Vault does not fall back to
+        <code>descriptor.initialState</code>.
+      </p>
+
+      <h4>Example: How to configure storage initialization</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure storage initialization'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {  
+        key: 'employees',
+        // ignored
+        initialState: []
+      },
+      [
+        withLocalStorageBehavior, 
+      ]
+    )
+  ]
+};
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure storage initialization'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // ignored
+    initialState: []
+  }
+);
+
+employeeCell.initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure storage initialization'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // ignored
+    initialState: []
+  }
+);
+
+employeeCell.initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DESCRIPTOR INITIAL -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="initial-state">
+    <div class="section-title">
+      3. descriptor.initialState — Static Configuration
+    </div>
+
+    <div class="section-body">
+      <p>
+        If neither Fluent API <code>hydrate()</code> method is configured nor
+        Persist behaviors are registered with the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>, the
+        static <code>initialState</code> value declared in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        descriptor is evaluated.
+      </p>
+
+      <p>
+        This value is treated as authoritative and immediately passed through
+        the pipeline as a
+        <code>Replace</code> operation.
+      </p>
+
+      <p>
+        If <code>initialState</code> is <code>undefined</code>, no write occurs
+        and the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> begins
+        with an undefined state.
+      </p>
+
+      <h4>Example: How to configure descriptor.initialState initialization</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure descriptor.initialState initialization'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {  
+        key: 'employees',
+        // Initial state is declared directly in the descriptor
+        initialState: [
+          { id: 1, name: 'Alice' },
+          { id: 2, name: 'Bob' }
+        ]
+      }
+    )
+  ]
+};
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure descriptor.initialState initialization'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // Initial state is declared directly in the descriptor
+    initialState: [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+    ]
+  },
+);
+
+employeeCell.initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure descriptor.initialState initialization'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // Initial state is declared directly in the descriptor
+    initialState: [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+    ]
+  },
+);
+
+employeeCell.initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- MANUAL REPLACESTATE -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="replace-state">
+    <div class="section-title">
+      4. Manual replaceState() — Explicit Runtime Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        An engineer may choose not to declare <code>hydrate()</code>, Persist
+        behaviors, or <code>descriptor.initialState</code>.
+      </p>
+
+      <p>
+        In this case, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> begins
+        with:
+      </p>
+
+      <ul>
+        <li><code>hasValue: false</code></li>
+        <li><code>isLoading: false</code></li>
+        <li><code>value: undefined</code></li>
+        <li><code>error: null</code></li>
+      </ul>
+
+      <p>
+        The engineer must then explicitly call <code>replaceState()</code>
+        to establish the initial value.
+      </p>
+
+      <p>This is a valid and intentional initialization strategy.</p>
+
+      <div class="note">Note</div>
+
+      <p>
+        When performing manual initialization, you should use
+        <code>replaceState()</code>, not <code>mergeState()</code>. At this
+        point the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> has no
+        existing value. Using <code>mergeState()</code> would attempt to merge
+        onto <code>undefined</code>, which may reproduce the same incorrect
+        assumptions that led to the missing initial state.
+        <code>replaceState()</code> establishes a clean, authoritative baseline
+        and ensures downstream logic operates on a fully defined value.
+      </p>
+
+      <h4>Example: How to configure initialization with replaceState()</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure initialization with replaceState()'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {  
+        key: 'employees',
+        // ignored as undefined
+        initialState: undefined
+      },
+    )
+  ]
+};
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+
+    this.vault.replaceState({
+      value : [
+          { id: 1, name: 'Alice' },
+          { id: 2, name: 'Bob' }
+      ]
+    });
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure initialization with replaceState()'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // ignored as undefined
+    initialState: undefined
+  }
+);
+
+employeeCell.initialize();
+
+employeeCell.replaceState({
+  value : [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+  ]
+});
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure initialization with replaceState()'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // ignored as undefined
+    initialState: undefined
+  }
+);
+
+employeeCell.initialize();
+
+employeeCell.replaceState({
+  value : [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+  ]
+});
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXECUTION MODEL -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Initialization Execution Model</div>
+
+    <div class="section-body">
+      <p>
+        Initialization is not a direct state mutation. It is enqueued into the
+        Conductor and executed as a standard pipeline
+        <code>replaceState</code> operation.
+      </p>
+
+      <p>This guarantees:</p>
+
+      <ul>
+        <li>Deterministic ordering</li>
+        <li>Serialized pipeline execution</li>
+        <li>Full DevTools trace visibility</li>
+        <li>Consistent reducer and behavior participation</li>
+      </ul>
+
+      <p>
+        Initialization passes through the same Resolve, Operator, Filter,
+        Reducer, and Emit stages as any other
+        <code>replaceState</code> operation.
+      </p>
+
+      <p>
+        Because initialization is processed through the full pipeline, any
+        installed interceptors, operators, filters, or reducers may transform,
+        suppress, or reject the initial state candidate. If a value does not
+        ultimately commit to state, Vault does not treat that as an
+        initialization failure — it is behaving exactly as configured. In this
+        case, you as the engineer must recognize that the candidate you
+        submitted was intentionally altered or filtered out by your own pipeline
+        logic.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FAILURE MODEL -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Failure Model</div>
+
+    <div class="section-body">
+      <p>
+        Initialization failure occurs only when a declared initialization source
+        throws an error.
+      </p>
+
+      <p>Undefined resolution is not failure.</p>
+
+      <p>On initialization failure:</p>
+
+      <ul>
+        <li><code>hasValue</code> remains false</li>
+        <li><code>isLoading</code> becomes false</li>
+        <li><code>value</code> remains undefined</li>
+        <li>
+          <code>error</code> is populated as a
+          <a href="/docs/references/shapes/vault-error-shape"
+            >VaultErrorShape</a
+          >
+        </li>
+      </ul>
+
+      <p>
+        The pipeline remains operational, but the initialization cycle is
+        considered catastrophic because declared expectations were violated.
+      </p>
+
+      <p>
+        Vault does not retry. Vault does not fall back. Vault does not rescue
+        implicitly.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RECOVERY -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Recovery</div>
+
+    <div class="section-body">
+      <p>Recovery from initialization failure is explicit.</p>
+
+      <p>The engineer must:</p>
+
+      <ol>
+        <li>Call <code>reset()</code></li>
+        <li>Invoke <code>replaceState()</code> with a valid value</li>
+      </ol>
+
+      <p>
+        Initialization does not automatically re-run. No fallback source is
+        evaluated.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

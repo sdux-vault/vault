@@ -1,0 +1,1085 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-22 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>After Tap Behavior</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      <strong>After Tap Behaviors</strong> allow engineers to
+      <em>observe immutable pipeline state</em> and perform
+      <em>side effects</em> immediately after reducer execution. After taps are
+      strictly observational: they may log, emit metrics, trigger external
+      effects, or collect diagnostics, but they may not mutate state, alter
+      pipeline execution, or influence snapshot emission.
+    </p>
+
+    <h4>After Tap Contract Summary</h4>
+    <ul>
+      <li>After tap functions may perform side effects</li>
+      <li>After tap functions must not mutate the incoming value</li>
+      <li>After tap functions do not return a value</li>
+      <li>After tap functions execute in initialization order</li>
+      <li>Errors thrown during tap execution propagate as Vault errors</li>
+    </ul>
+
+    <p>
+      The After Tap contract guarantees that tap execution is
+      <strong>observational and isolated</strong>. If an after tap function
+      throws an error, that error is promoted to a
+      <strong>Vault error</strong> and immediately terminates the current
+      pipeline execution. The in-flight candidate value is discarded and no
+      snapshot is emitted. This ensures that side-effect failures never result
+      in partially applied state or inconsistent pipeline outcomes.
+    </p>
+
+    <p>
+      After taps participate exclusively in
+      <em>observation and side-effect execution</em>. They do not derive values,
+      do not mutate pipeline state, do not influence control flow, and do not
+      emit snapshots. Their sole responsibility is to observe pipeline values at
+      a precise execution point and react externally.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- after tap STAGE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">After Tap Stage</div>
+
+    <div class="section-body">
+      <p>
+        The After Tap stage executes immediately
+        <em>after reducer execution</em>. After tap functions receive an
+        immutable snapshot of the current pipeline value and are invoked
+        strictly for observation and side-effect execution.
+      </p>
+
+      <p>
+        Tap callbacks are invoked with the current upstream pipeline value. This
+        value is read-only and must not be modified. Any attempt to mutate the
+        value violates pipeline safety guarantees.
+      </p>
+
+      <p>After Taps may:</p>
+      <ul>
+        <li>Observe the pipeline value</li>
+        <li>Log or trace execution</li>
+        <li>Emit metrics or diagnostics</li>
+        <li>Trigger external side effects</li>
+      </ul>
+
+      <p>
+        After taps do not return values, do not influence control flow, and do
+        not affect snapshot emission. Pipeline execution always continues
+        unchanged following after tap execution unless an error is thrown.
+      </p>
+
+      <h4>Core Pipeline Stage</h4>
+      <p>
+        The After Tap stage is a core pipeline stage and is always present in
+        the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. Individual after tap functions are <em>not</em> declared as
+        part of static
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        configuration. Instead, they are registered explicitly during
+        initialization using the fluent <strong>.afterTaps()</strong> API.
+      </p>
+
+      <h4>Fluent afterTaps() API</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        declare <strong>multiple after taps</strong>. The
+        <strong>.afterTaps()</strong> API accepts an ordered array of tap
+        functions, which are executed sequentially in the
+        <em>Processing Layer</em> in the order they are provided. An empty
+        afterTaps array is ignored and has no effect on pipeline execution.
+      </p>
+
+      <h4>Engineer-Supplied After Tap Functions</h4>
+      <p>
+        After tap functions are supplied by engineers during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization and execute exclusively within the After Tap stage. They
+        are intended to observe pipeline state at a precise execution boundary
+        and react externally.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Because after taps allow side effects, their logic should remain
+        narrowly focused and intentional. Long-running, blocking, or stateful
+        operations can degrade pipeline performance and introduce hidden
+        coupling. After taps are most effective when each function performs a
+        single, well-defined observational task such as logging, diagnostics,
+        auditing, or external signaling—not business logic or state derivation.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Diagrams -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.6/3.6-tap-behavior.svg"
+        [tooltip]="'Tap Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- AVAILABLE after tap BEHAVIORS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">After Tap Behavior</div>
+
+    <div class="section-body">
+      <p>
+        The After Tap stage is a core pipeline stage and is always present.
+        Engineers supply
+        <em>tap callback functions</em> that are executed by the core after tap
+        behavior during pipeline evaluation.
+      </p>
+
+      <sdux-vault-tap-behaviors-common [type]="'afterTap'" />
+
+      <sdux-vault-tap-callback-shape-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        The AfterTap stage exposes a fluent configuration API that allows
+        engineers to register tap functions during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        This API does not execute tap functions directly. It records an ordered
+        set of after-tap callbacks that are later invoked by the AfterTap stage
+        after state reduction and snapshot emission.
+      </p>
+
+      <sdux-vault-tap-fluent-api-common [type]="'afterTap'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Registering the afterTap Behavior</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Tap Behavior</strong> is attached structurally when the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized using the Fluent Api .afterTaps method. This determines that
+        the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        participates in an after-tap-based post-filter execution control at
+        runtime.
+      </p>
+
+      <h4>Example: Registering After Tap Callbacks</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Registering After Tap Callback'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {  
+        key: 'employees',
+        initialState: []
+      }
+    )
+  ]
+};
+
+@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more taps during initialization
+    this.vault
+      .afterTaps(
+        [
+          fn
+        ]
+      ).initialize()
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Registering After Tap Callback'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+employeeCell
+  .afterTaps(
+    [
+      fn
+    ]
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Registering After Tap Callback'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+employeeCell
+  .afterTaps(
+    [
+      fn
+    ]
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- after tap FUNCTION PATTERNS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">After Tap Function Patterns</div>
+
+    <div class="section-body">
+      <p>
+        While JavaScript allows many ways to express a function, only a limited
+        set of patterns are appropriate for tap execution. Because taps allow
+        side effects, function structure and binding discipline are especially
+        important.
+      </p>
+
+      <!-- ====================================================== -->
+      <!-- TAP FUNCTION PATTERNS (after tap) -->
+      <!-- ====================================================== -->
+
+      <p>
+        The following categories describe the supported and discouraged ways to
+        supply tap functions, ordered from most to least preferred.
+      </p>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY A -->
+      <!-- ====================================================== -->
+
+      <h4>Category A: Pure / Context-Free Functions (Recommended)</h4>
+
+      <p>
+        Pure tap functions depend only on their input value and perform
+        deterministic side effect behavior. They do not reference
+        <code>this</code>, do not close over mutable external state, and are
+        fully predictable across executions.
+      </p>
+
+      <p>
+        This is the safest and most reusable form of tap function and is
+        recommended whenever possible.
+      </p>
+
+      <h4>Example 1: Pure Tap Function</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 1: Pure Tap Function'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      console.info('AfterTap:', current);
+    }
+  ]
+).initialize();
+
+// observes current pipeline value without mutation`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 2: Factory-Generated Pure Tap Function</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 2: Factory-Generated Pure Tap Function'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export function createLoggingTap(label: string) {
+  return (current) => {
+    console.info(label, current);
+  };
+}
+
+employeeCell.afterTaps(
+  [
+    createLoggingTap('Employee snapshot')
+  ]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY B -->
+      <!-- ====================================================== -->
+
+      <h4>
+        Category B: Instance-Aware but Correctly Bound Tap Functions
+        (Acceptable)
+      </h4>
+
+      <p>
+        Tap functions may reference instance state as long as they are correctly
+        bound to the owning instance. These taps are deterministic
+        <em
+          >per
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          instance</em
+        >, but they must not be shared across FeatureCells.
+      </p>
+
+      <p>
+        This pattern is acceptable when tap behavior depends on configuration
+        values or services owned by the containing class.
+      </p>
+
+      <h4>Example 3: Arrow Function Using Instance State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 3: Arrow Function Using Instance State'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`readonly logPrefix = '[AfterTap]';
+
+readonly loggingTap = (current) => {
+  console.info(this.logPrefix, current);
+};
+
+employeeCell.afterTaps(
+  [this.loggingTap]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 4: Bound Instance Method</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 4: Bound Instance Method'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`public logCurrentState(current) {
+  console.info('AfterTap:', current);
+}
+
+employeeCell.afterTaps(
+  [this.logCurrentState.bind(this)]
+).initialize();
+
+// tap is instance-bound and deterministic per FeatureCell`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY C -->
+      <!-- ====================================================== -->
+
+      <h4>Category C: Delegating Tap Functions</h4>
+
+      <p>
+        Tap functions may delegate their implementation to helper methods or
+        utilities, provided that those methods remain side-effect-safe and
+        operate only on the provided value.
+      </p>
+
+      <p>
+        Because taps do not influence pipeline control flow or state mutation,
+        delegation is safe as long as the delegated logic does not depend on
+        external mutable state or attempt to modify the pipeline value.
+      </p>
+
+      <p>
+        This pattern is useful for organizing complex observability logic or
+        sharing instrumentation across taps.
+      </p>
+
+      <h4>Example 5: Delegating Tap Method</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 5: Delegating Tap Method'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => this.logSnapshot(current)
+  ]
+).initialize();
+
+// tap logic is delegated but remains safe and deterministic`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY D -->
+      <!-- ====================================================== -->
+
+      <h4>Category D: Inline Lambda Taps (Allowed, Use Sparingly)</h4>
+
+      <p>
+        Inline lambda functions are allowed, but they are easier to misuse.
+        Because they are often written inline, it is easy to accidentally close
+        over mutable variables or embed complex logic that is difficult to test
+        or reuse.
+      </p>
+
+      <p>
+        Inline taps are best reserved for trivial, self-contained observations.
+      </p>
+
+      <h4>Example 6: Inline Conditional Tap</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 6: Inline Conditional Tap'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      if (!current?.items?.length) return;
+      console.info('Items present:', current.items);
+    }
+  ]
+).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- after tap ANTI-PATTERNS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">After Tap Anti-Patterns</div>
+
+    <div class="section-body">
+      <p>
+        After taps are <em>observational hooks</em>. They are explicitly
+        designed for side effects, but misuse can degrade pipeline safety,
+        performance, and correctness. The following patterns violate the intent
+        of the After Tap stage and should be avoided.
+      </p>
+
+      <h4>Common Anti-Patterns</h4>
+      <ul>
+        <li>Mutating the pipeline value</li>
+        <li>Performing long-running or blocking operations</li>
+        <li>Encoding business logic or decision-making</li>
+        <li>Depending on external mutable state</li>
+        <li>Assuming tap execution affects pipeline flow</li>
+      </ul>
+
+      <p>
+        Unlike reducers, tap violations are not always mechanically detectable.
+        Most errors manifest as degraded performance, unexpected coupling, or
+        incorrect assumptions about pipeline behavior.
+      </p>
+
+      <h4>Example: Discouraged Mutation Inside a Tap</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example: Discouraged Mutation in After Tap'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      // ❌ Mutating the pipeline value
+      current.count++;
+      console.info('Mutated count:', current.count);
+    }
+  ]
+).initialize();
+
+// ❌ Violates tap contract: pipeline values are immutable snapshots`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        Even if this mutation appears to “work,” it violates pipeline guarantees
+        and may corrupt downstream assumptions. after taps must treat the
+        pipeline value as immutable.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">After Tap Function Summary</div>
+
+    <div class="section-body">
+      <h4>After Tap Function Comparison</h4>
+
+      <p>
+        The following table summarizes the practical differences between the
+        after tap function styles demonstrated above. While all valid examples
+        may execute correctly, they differ in reusability, testability, and
+        long-term safety.
+      </p>
+
+      <div class="table-title">After Tap Function Characteristics</div>
+      <div class="table-scroll">
+        <table aria-label="After Tap Function Characteristics">
+          <thead>
+            <tr>
+              <th scope="col" class="column-175">Dimension</th>
+
+              <th scope="col" class="column-auto">
+                Examples 1 / 2<br />
+                <span class="table-header-secondary">Pure Tap Functions</span>
+              </th>
+
+              <th scope="col" class="column-auto">
+                Examples 3 / 4<br />
+                <span class="table-header-secondary">Instance-Bound Taps</span>
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 5<br />
+                <span class="table-header-secondary">Delegating Tap</span>
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 6<br />
+                <span class="table-header-secondary">Inline Lambda Tap</span>
+              </th>
+
+              <th scope="col" class="column-auto">
+                Anti-Patterns<br />
+                <span class="table-header-secondary"
+                  >Mutation / Blocking / External State</span
+                >
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Determinism</td>
+              <td>✅</td>
+              <td>⚠️ Per instance</td>
+              <td>⚠️ Per instance</td>
+              <td>⚠️</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Pipeline Safety</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>⚠️</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Side-Effect Discipline</td>
+              <td>✅ Minimal / predictable</td>
+              <td>⚠️ Instance-coupled</td>
+              <td>⚠️ Delegated</td>
+              <td>⚠️ Easy to bloat</td>
+              <td>❌ Unbounded / unsafe</td>
+            </tr>
+
+            <tr>
+              <td>Reusability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>Medium</td>
+              <td>Low</td>
+              <td>None</td>
+            </tr>
+
+            <tr>
+              <td>Testability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>High</td>
+              <td>Lower</td>
+              <td>Low</td>
+            </tr>
+
+            <tr>
+              <td>Risk of Accidental Closure</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Higher</td>
+              <td>High</td>
+            </tr>
+
+            <tr>
+              <td>Operational Risk</td>
+              <td>Low</td>
+              <td>Medium</td>
+              <td>Medium</td>
+              <td>Higher</td>
+              <td>High</td>
+            </tr>
+
+            <tr>
+              <td>Intended Lifespan</td>
+              <td>Long-lived</td>
+              <td>Instance-limited</td>
+              <td>Instance-limited</td>
+              <td>Ephemeral</td>
+              <td>Unacceptable</td>
+            </tr>
+
+            <tr>
+              <td>Recommended Usage</td>
+              <td>Preferred</td>
+              <td>Acceptable</td>
+              <td>Acceptable</td>
+              <td>Use sparingly</td>
+              <td>Discouraged</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Summary Rule</h4>
+      <p>
+        Any after tap function must treat the pipeline value as
+        <strong>immutable</strong> and should keep side effects
+        <strong>bounded and intentional</strong>. Taps may be instance-aware or
+        delegated, but they must not mutate the pipeline value, depend on
+        external mutable variables, or perform long-running/blocking work. Tap
+        behavior should remain deterministic within the owning
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        The following examples demonstrate valid and invalid uses of
+        <strong>after tap</strong> functions. After taps are observational
+        hooks: they may read and react to the current pipeline value, but they
+        must not return values or mutate state.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Logging the State</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Logging the State'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more afterTaps during initialization
+    this.vault
+      .afterTaps(
+        [
+          (current) => {
+            console.info('State after reducers:', current);
+          }
+        ]
+      ).initialize();
+  }
+}
+
+// logs the current pipeline value without mutation`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Measuring State Size</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Measuring State Size'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more afterTaps during initialization
+    this.vault
+      .afterTaps(
+        [
+          (current) => {
+            metrics.trackSize(JSON.stringify(current).length);
+          }
+        ]
+      ).initialize();
+  }
+}
+
+// emits diagnostic metrics based on snapshot size`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 3: Snapshot Inspection</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 3: Snapshot Inspection'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more afterTaps during initialization
+    this.vault
+      .afterTaps(
+        [
+          (current) => {
+            if (current.items?.length > 100) {
+              console.warn('Large state detected');
+            }
+          }
+        ]
+      ).initialize();
+  }
+}
+
+// inspects snapshot and emits a warning when thresholds are exceeded`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 4: Invalid — Attempting to Modify State</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 4: Invalid Mutation'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more afterTaps during initialization
+    this.vault
+      .afterTaps(
+        [
+          (current) => {
+            current.count++; // ❌ mutation attempt
+          }
+        ]
+      ).initialize();
+  }
+}
+
+// ❌ Vault error: tap functions must not mutate state`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 5: Invalid — Returning a New Value</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 5: Invalid Return Value'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more afterTaps during initialization
+    this.vault
+      .afterTaps(
+        [
+          (current) => {
+            return { ...current, injected: true }; // ❌ returning a value
+          }
+        ]
+      ).initialize();
+  }
+}
+
+// ❌ Vault error: tap functions must not return or replace state`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Logging the State</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Logging the State'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      console.info('State after reducers:', current);
+    }
+  ]
+).initialize();
+
+// logs the current pipeline value without mutation`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Measuring State Size</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Measuring State Size'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      metrics.trackSize(JSON.stringify(current).length);
+    }
+  ]
+).initialize();
+
+// emits diagnostic metrics based on snapshot size`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 3: Snapshot Inspection</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 3: Snapshot Inspection'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      if (current.items?.length > 100) {
+        console.warn('Large state detected');
+      }
+    }
+  ]
+).initialize();
+
+// inspects snapshot and emits a warning when thresholds are exceeded`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 4: Invalid — Attempting to Modify State</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 4: Invalid Mutation'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      current.count++; // ❌ mutation attempt
+    }
+  ]
+).initialize();
+
+// ❌ Vault error: tap functions must not mutate state`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 5: Invalid — Returning a New Value</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 5: Invalid Return Value'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      return { ...current, injected: true }; // ❌ returning a value
+    }
+  ]
+).initialize();
+
+// ❌ Vault error: tap functions must not return or replace state`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Logging the State</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Logging the State'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      console.info('State after reducers:', current);
+    }
+  ]
+).initialize();
+
+// logs the current pipeline value without mutation`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Measuring State Size</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Measuring State Size'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      metrics.trackSize(JSON.stringify(current).length);
+    }
+  ]
+).initialize();
+
+// emits diagnostic metrics based on snapshot size`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 3: Snapshot Inspection</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 3: Snapshot Inspection'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      if (current.items?.length > 100) {
+        console.warn('Large state detected');
+      }
+    }
+  ]
+).initialize();
+
+// inspects snapshot and emits a warning when thresholds are exceeded`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 4: Invalid — Attempting to Modify State</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 4: Invalid Mutation'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      current.count++; // ❌ mutation attempt
+    }
+  ]
+).initialize();
+
+// ❌ Vault error: tap functions must not mutate state`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 5: Invalid — Returning a New Value</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 5: Invalid Return Value'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.afterTaps(
+  [
+    (current) => {
+      return { ...current, injected: true }; // ❌ returning a value
+    }
+  ]
+).initialize();
+
+// ❌ Vault error: tap functions must not return or replace state`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

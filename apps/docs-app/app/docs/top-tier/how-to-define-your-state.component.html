@@ -1,0 +1,1145 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>How to Define Your State</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      This page describes the supported ways to define and establish state for a
+      <sdux-feature-cell [tm]="true" /> in <sdux-brand-name [tm]="true" />.
+      State definition is explicit, feature-scoped, and bound to the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      lifecycle.
+    </p>
+
+    <p>
+      The sections below walk through each supported step for defining
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state,
+      showing when state can be introduced and which lifecycle context applies
+      to each approach.
+    </p>
+
+    <p><strong>It’s easy:</strong></p>
+
+    <ol>
+      <li>Create a Vault</li>
+      <li>
+        Register a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      </li>
+      <li>
+        Initialize the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      </li>
+      <li>Optionally compose behaviors with the Fluent API</li>
+      <li>Update state explicitly with replaceState() or mergeState()</li>
+      <li>Consume and render the emitted state snapshot</li>
+    </ol>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- CREATE A VAULT -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      Create an <sdux-vault-brand-name [tm]="true" />
+    </div>
+
+    <div class="section-body">
+      <p>
+        A Vault defines system-level runtime configuration used by FeatureCells.
+        Vault configuration is established before FeatureCells are initialized.
+      </p>
+
+      <h4>Examples</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Minimal Angular Vault Configuration'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+import { provideVault } from '@sdux-vault/angular';
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({
+      logLevel: 'off'
+    })
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Minimal React Vault Configuration'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// vault.ts
+import { Vault } from '@sdux-vault/core';
+
+export const vault = Vault({
+  logLevel: 'off'
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 3: Minimal React Main Configuration'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// vault.ts
+import { Vault } from '@sdux-vault/core';
+
+export const vault = Vault({
+  logLevel: 'off'
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <sdux-vault-config-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CREATE A FEATURECELL -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Create a <sdux-feature-cell [tm]="true" /></div>
+
+    <div class="section-body">
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        registered against a Vault using a FeatureCellInvocation. Registration
+        defines the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> key
+        and optional initialState.
+      </p>
+
+      <h4>Examples</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Register a FeatureCell with initialState in Angular'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { provideFeatureCell } from '@sdux-vault/angular';
+                    
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideFeatureCell(
+      EmployeeCell, {
+        key: 'employees',
+        initialState: [],
+        // insights are optional and omitted unless needed
+      }, 
+      [
+        // opt-in Behaviors
+      ],
+      [
+        // opt-in Controllers 
+      ]
+    )
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Register a FeatureCell with initialState in React'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+
+export interface Employee {
+  id: number;
+  name: string;
+}
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: []
+    // insights are optional and omitted unless needed
+  },
+  [
+    // opt-in Behaviors (optional)
+  ],
+  [
+    // opt-in Controllers (optional)
+  ]
+);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Register a FeatureCell with initialState in Vue'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+
+export interface Employee {
+  id: number;
+  name: string;
+}
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: []
+    // insights are optional and omitted unless needed
+  },
+  [
+    // opt-in Behaviors (optional)
+  ],
+  [
+    // opt-in Controllers (optional)
+  ]
+);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <sdux-feature-cell-config-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- INITIALIZE THE FEATURECELL -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      Initialize the <sdux-feature-cell [tm]="true" />
+    </div>
+
+    <div class="section-body">
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> must
+        be initialized before it can emit a
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >
+        or accept state updates. Initialization is invoked through the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        Vault instance.
+      </p>
+
+      <h4>Examples</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Initialize with initialize in Angular'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { @FeatureCell, injectVault } from '@sdux-vault/angular';
+                    
+export interface Employee {
+  id: number;
+  name: string;
+}
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeCell {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeCell);
+  employeeState: StateSnapshotShape&lt;Employee[]>
+
+  constructor() {
+    this.vault.initialize();
+    this.employeeState = this.vault.state;
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Initialize and expose state in React'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+
+export interface Employee {
+  id: number;
+  name: string;
+}
+
+// 1. Register the FeatureCell (global, side-effect registration)
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: []
+  },
+  [
+    // optional Behaviors
+  ],
+  [
+    // optional Controllers
+  ]
+);
+
+// 2. Initialize the FeatureCell
+employeeCell.initialize();
+
+// 3. Expose state (snapshot wrapper)
+export const employeeState = employeeCell.state;`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Initialize and expose state in Vue'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+
+export interface Employee {
+  id: number;
+  name: string;
+}
+
+// 1. Register the FeatureCell (global, side-effect registration)
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: []
+  },
+  [
+    // optional Behaviors
+  ],
+  [
+    // optional Controllers
+  ]
+);
+
+// 2. Initialize the FeatureCell
+employeeCell.initialize();
+
+// 3. Expose state (snapshot wrapper)
+export const employeeState = employeeCell.state;`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <p>
+        This initialization should occur once during application startup and
+        must not be invoked during React component render. It should also not be
+        called unguarded inside hooks such as useEffect, as this can trigger
+        repeated initialization during re-renders.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FLUENT API -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Fluent API</div>
+
+    <div class="section-body">
+      <p>
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization may be performed with initialize() directly, or through
+        fluent configuration that composes behaviors prior to initialize().
+      </p>
+
+      <p>
+        Fluent configuration is declarative; the orchestrator executes behaviors
+        in a fixed pipeline order regardless of the chaining order used during
+        configuration.
+      </p>
+
+      <h4>Examples</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Simple Angular initialize()</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Simple Angular initialize()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`this.vault.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>
+                  Example 2: Angular Fluent configuration then initialize()
+                </h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Angular Fluent configuration then initialize()'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`this.vault.withStateCache!({
+  ttl: CacheTTL.OneMinute,
+  idKey: 'id',
+  fetchType: ResolveTypes.Value,
+  fetch: this.getByPromise
+})
+.interceptors(this.addDebounceInterceptor(1000))
+.operators(this.addOperators())
+.beforeTaps(this.addBeforeTaps())
+.reducers(this.addReducers())
+.afterTaps(this.addAfterTaps())
+.filters(this.addFilters())
+.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Simple React initialize()</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Simple React initialize()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: React Fluent configuration then initialize()</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: React Fluent configuration then initialize()'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.withStateCache!({
+  ttl: CacheTTL.OneMinute,
+  idKey: 'id',
+  fetchType: ResolveTypes.Value,
+  fetch: this.getByPromise
+})
+.interceptors(this.addDebounceInterceptor(1000))
+.operators(this.addOperators())
+.beforeTaps(this.addBeforeTaps())
+.reducers(this.addReducers())
+.afterTaps(this.addAfterTaps())
+.filters(this.addFilters())
+.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example 1: Simple Vue initialize()</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Simple Vue initialize()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Vue Fluent configuration then initialize()</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Vue Fluent configuration then initialize()'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.withStateCache!({
+  ttl: CacheTTL.OneMinute,
+  idKey: 'id',
+  fetchType: ResolveTypes.Value,
+  fetch: this.getByPromise
+})
+.interceptors(this.addDebounceInterceptor(1000))
+.operators(this.addOperators())
+.beforeTaps(this.addBeforeTaps())
+.reducers(this.addReducers())
+.afterTaps(this.addAfterTaps())
+.filters(this.addFilters())
+.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- REPLACE STATE AFTER INITIALIZATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      Define State with replaceState() or mergeState()
+    </div>
+
+    <div class="section-body">
+      <p>
+        After a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> has
+        been initialized, state may be explicitly established or updated by
+        calling replaceState() or mergeState(). These APIs apply a state update
+        that produces a new
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >
+        for consumers.
+      </p>
+
+      <p>
+        Each update is expressed using the StateType shape. All fields on this
+        shape are optional, allowing callers to update only the specific aspects
+        of state they intend to change. replaceState() replaces the snapshot
+        fields explicitly provided, while mergeState() merges incoming values
+        according to the active merge strategy configured on the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+
+      <p>
+        This mechanism is commonly used when loading data from an external
+        source, responding to user interaction, handling errors, or
+        transitioning a feature between loading and ready states. Because
+        updates are explicit and lifecycle-aware, they always override any state
+        previously established during registration or initialization.
+      </p>
+
+      <h4>Example 1: Value Only</h4>
+      <p>
+        In this example, only the value field is provided. The
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> emits
+        a new snapshot containing the supplied data, while other snapshot fields
+        retain their existing values.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Value Only Angular'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`load(): void {
+  this.vault.replaceState({
+    value: [
+      { id: 1, name: 'Ada' },
+      { id: 2, name: 'Brian' }
+    ]
+  });
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Typescript / React / Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Value Only Typescript / React'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`load(): void {
+  employeeCell.replaceState({
+    value: [
+      { id: 1, name: 'Ada' },
+      { id: 2, name: 'Brian' }
+    ]
+  });
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <h4>Example 2: Error Only</h4>
+      <p>
+        This example establishes an error state without modifying the current
+        value. This pattern is typically used when a request or operation fails
+        and error information must be surfaced to consumers.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Error Only Angular'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`load(): void {
+  this.vault.replaceState({
+    error: new Error('this is an example error')
+  });
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Typescript / React / Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Error Only Typescript / React / Vue'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`load(): void {
+  employeeCell.replaceState({
+    error: new Error('this is an example error')
+  });
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <h4>Example 3: Loading Only</h4>
+      <p>
+        Here, only the loading flag is updated. This is commonly used to signal
+        that a feature has entered a loading phase, such as before initiating an
+        asynchronous operation.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 3: Loading Only Angular'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`load(): void {
+  this.vault.replaceState({
+    loading: true
+  });
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Typescript / React / Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 3: Loading Only Typescript / React / Vue'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`load(): void {
+  employeeCell.replaceState({
+    loading: true
+  });
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <h4>Example 4: All Values</h4>
+      <p>
+        In this example, all fields of the StateType are provided at once. This
+        produces a complete snapshot update that simultaneously sets the value,
+        loading state, and error information.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 4: All Values Angular'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`load(): void {
+  this.vault.replaceState({
+    error: new Error('this is an example error'),
+    value: [
+      { id: 1, name: 'Ada' },
+      { id: 2, name: 'Brian' }
+    ],
+    loading: true
+  });
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Typescript / React / Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 4: All Values Typescript / React / Vue'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`load(): void {
+  employeeCell.replaceState({
+    error: new Error('this is an example error'),
+    value: [
+      { id: 1, name: 'Ada' },
+      { id: 2, name: 'Brian' }
+    ],
+    loading: true
+  });
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <p>
+        Whether using replaceState() or mergeState(), the resulting snapshot is
+        immutable and immediately observable through the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >. Consumers react to the emitted snapshot without direct access to
+        state mutation.
+      </p>
+
+      <sdux-state-type-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STATE OWNERSHIP -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">State Ownership</div>
+
+    <div class="section-body">
+      <p>
+        State in <sdux-brand-name /> is owned by a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. Each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        is responsible for defining the shape and initial presence of its state.
+        State is exposed to consumers through a
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >.
+      </p>
+
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> does
+        not share ownership of state with other FeatureCells. Cross-feature
+        coordination is handled outside the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        contract.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DEFINITION METHODS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Supported State Definition Methods</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> supports three contractually defined ways to
+        establish state for a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. Each
+        method is explicit and lifecycle-aware.
+      </p>
+
+      <h4>1. Initial State at FeatureCell Registration</h4>
+      <p>
+        State may be defined when a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        globally registered. This establishes the initial snapshot before the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized.
+      </p>
+
+      <h4>2. Initialization-Time State Resolution</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        resolve its initial state during initialization. This allows state to be
+        established as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle rather than at registration time.
+      </p>
+
+      <p>
+        When a Persist Behavior (such as withLocalStorageBehavior) extends a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+        initialization-time resolution includes restoring previously persisted
+        state. In this case, the persisted value becomes the initial snapshot
+        emitted by the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>, if
+        such a value exists.
+      </p>
+
+      <p>
+        If no persisted state is available, initialization-time resolution may
+        fall back to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        configured initial state, if one was provided at registration.
+      </p>
+
+      <p>
+        This resolution process occurs before the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> begins
+        emitting snapshots to consumers and ensures that restored state, default
+        state, and subsequent updates all conform to the same
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >
+        contract.
+      </p>
+
+      <h4>3. Explicit State Updates After Initialization</h4>
+      <p>
+        State may also be defined by calling replaceState() or mergeState()
+        after the Vault has been initialized. These APIs apply an explicit state
+        update that produces a new
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >.
+      </p>
+
+      <h4>4. Order of Precedence</h4>
+      <p>
+        When multiple state definition methods are used for the same
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+        <sdux-brand-name /> applies them using a well-defined precedence order.
+      </p>
+
+      <p>
+        Explicit state updates applied after initialization take precedence over
+        initialization-time state resolution, which in turn takes precedence
+        over state defined at
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        registration.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Explicit state updates after initialization</strong>
+          (replaceState / mergeState) always override any previously established
+          state.
+        </li>
+        <li>
+          <strong>Initialization-time state resolution</strong> overrides state
+          defined at registration, including default initial values.
+        </li>
+        <li>
+          <strong
+            >Initial state at
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            registration</strong
+          >
+          provides a fallback baseline when no other state has been resolved.
+        </li>
+      </ul>
+
+      <p>
+        This ordering ensures that runtime intent is always respected, restored
+        or resolved state is preferred over static defaults, and all resulting
+        snapshots conform to the same
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >
+        contract.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- LIFECYCLE CONTEXT -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Lifecycle Context</div>
+
+    <div class="section-body">
+      <p>
+        State definition is evaluated within the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. A
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> must
+        be initialized before it can emit snapshots or accept updates.
+      </p>
+
+      <section class="diagram-section">
+        <div class="section-body">
+          <sdux-diagram
+            image="diagrams/1.0/1.1-featurecell-lifecycle.svg"
+            [tooltip]="'FeatureCell Lifecycle'"></sdux-diagram>
+        </div>
+      </section>
+
+      <p>
+        State introduced at different points in the lifecycle results in the
+        same observable contract: immutable snapshots emitted to consumers.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SNAPSHOT CONTRACT -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/shapes/state-snapshot-shape"
+        >StateSnapshotShape</a
+      >
+      Contract
+    </div>
+
+    <div class="section-body">
+      <p>
+        All state, regardless of how it is defined, is exposed through a
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >. Consumers observe snapshots rather than mutating state directly.
+      </p>
+
+      <p>
+        This contract ensures consistent access to isLoading, value, error, and
+        hasValue without exposing internal state mutation.
+      </p>
+
+      <sdux-state-snapshot-shape-common />
+
+      <h4>Example 1: Conditional Rendering</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Conditional Rendering Angular'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@if (employeeState().isLoading()) {
+  &lt;p>Loading…&lt;/p>
+} @else if (employeeState().error()) {
+  &lt;p>Error loading employees&lt;/p>
+} @else if (employeeState().hasValue()) {
+  {{ employeeState().value() | json }}
+} @else {
+  &lt;p>No data&lt;/p>
+}
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Typescript / React / Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Conditional Rendering Typescript / React'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { useEffect, useState } from 'react';
+import type { StateSnapshotShape } from '@sdux-vault/shared';
+import { employeeCell } from './employee-cell'; // wherever it is defined
+
+export function EmployeeView() {
+  const [snapshot, setSnapshot] = useState&lt;StateSnapshotShape&lt;Employee[]> | null>(null);
+
+  useEffect(() => {
+    const stopListening = employeeCell.state$.subscribe(setSnapshot);
+    return () => sub.unsubscribe();
+  }, []);
+
+  if (!snapshot) {
+    return &lt;p>Initializing…&lt;/p>;
+  }
+
+  if (snapshot.isLoading()) {
+    return &lt;p>Loading…&lt;/p>;
+  }
+
+  if (snapshot.error()) {
+    return &lt;p>Error loading employees&lt;/p>;
+  }
+
+  if (snapshot.hasValue()) {
+    return &lt;pre>{JSON.stringify(snapshot.value(), null, 2)}&lt;/pre>;
+  }
+
+  return &lt;p>No data&lt;/p>;
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONSTRAINTS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Constraints and Guarantees</div>
+
+    <div class="section-body">
+      <ul>
+        <li>
+          State ownership is limited to a single
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+        <li>State definition is explicit and lifecycle-bound.</li>
+        <li>Snapshots are immutable.</li>
+        <li>Consumers observe state but do not mutate it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

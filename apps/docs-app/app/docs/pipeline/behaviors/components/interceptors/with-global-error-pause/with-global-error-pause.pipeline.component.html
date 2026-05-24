@@ -1,0 +1,303 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Global Error Pause Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <div class="lead">
+      <strong>Global Error Pause</strong> is a stand-alone interceptor behavior
+      that conditionally blocks incoming pipeline candidates while a global
+      Vault error is active.
+    </div>
+
+    <p>
+      This behavior operates exclusively in the Interceptor stage and does not
+      require a controller to function. It determines <em>whether</em> an
+      incoming candidate is admitted into the pipeline based solely on the
+      presence of a global error signal.
+    </p>
+
+    <p>
+      When a global error is active,
+      <strong>all incoming candidates are blocked</strong> and are
+      <strong>not queued, delayed, or replayed</strong>. Blocked candidates are
+      discarded and do not re-enter the pipeline automatically when the error is
+      cleared. Once the global error is resolved, only newly incoming candidates
+      are eligible for admission.
+    </p>
+
+    <p>
+      Global Error Pause does not transform state, buffer values, or perform
+      validation. Its sole responsibility is to gate pipeline admission in
+      response to global error conditions.
+    </p>
+
+    <p>
+      If replay of blocked candidates is required after a global error is
+      cleared, the
+      <strong
+        ><a
+          href="/docs/pipeline/controllers/with-replay-global-error-controller"
+          >withReplayGlobalErrorController</a
+        ></strong
+      >
+      must be used explicitly. Replay behavior is not provided by the Global
+      Error Pause behavior itself.
+    </p>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/6.0/6.2-global-error-pause-behavior-flow.svg"
+        [tooltip]="'Replay Global Error Controller Flow'" />
+
+      <sdux-diagram
+        image="diagrams/3.5/3.5-interceptor-behavior.svg"
+        [tooltip]="'Interceptor Pipeline Processing Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Global Error Pause introduces a conditional admission gate that prevents
+        incoming state updates from entering the pipeline while a global Vault
+        error is active. When an error is present, all incoming updates are
+        immediately suppressed at the Interceptor stage.
+      </p>
+
+      <p>
+        This behavior does not introduce time-based windows or buffering.
+        Admission is controlled entirely by the current global error state. As
+        soon as the error condition is cleared, subsequent incoming updates are
+        allowed to proceed through the pipeline without delay.
+      </p>
+
+      <p>
+        Global Error Pause is intended to protect pipeline integrity during
+        unrecoverable or system-level failure states. It ensures that no new
+        state mutations are processed while the Vault is in an error condition,
+        preventing cascading failures, partial updates, or inconsistent state
+        transitions.
+      </p>
+
+      <p>
+        This behavior does not accept configuration parameters and does not use
+        the fluent interceptor API. It must be attached during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instantiation.
+      </p>
+
+      <sdux-vault-interceptor-behaviors-common [type]="'globalErrorPause'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Global Error Pause</strong> behavior is attached directly
+        during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        definition and is not configured through a fluent API. This interceptor
+        is registered once, at construction time, as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        structural pipeline configuration.
+      </p>
+
+      <p>
+        Because this behavior gates pipeline admission based on global Vault
+        error state, it must be present before any pipeline execution begins.
+        Attaching it at definition time ensures that all incoming updates are
+        consistently evaluated against global error conditions from the moment
+        the <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized.
+      </p>
+
+      <p>
+        This design ensures deterministic gating behavior and prevents runtime
+        mutation of global error handling rules. The interceptor observes global
+        Vault error signals and blocks incoming pipeline executions while an
+        error is present, resuming normal operation automatically once the error
+        condition is cleared.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a
+            href="/docs/pipeline/addons/interceptors/with-global-error-pause-behavior"
+            >withGlobalErrorPauseBehavior</a
+          ></strong
+        >
+        is a structural interceptor that must be attached when defining a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        Unlike other interceptors, it is <em>not</em> registered through the
+        fluent interceptor API and cannot be added dynamically after
+        initialization.
+      </p>
+
+      <p>
+        This behavior blocks incoming pipeline executions whenever a global
+        Vault error is present.
+      </p>
+
+      <h4>Example 1: Configure a FeatureCell with Global Error Pause</h4>
+
+      <p>
+        In this example, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        defined with a global error pause interceptor. While a global Vault
+        error is active, all incoming state updates are blocked at the
+        Interceptor stage. Once the error is cleared, pending updates are
+        replayed automatically by the paired controller.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Global Error Pause'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault(),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: []
+      },
+      [
+        // Attach the Global Error Pause interceptor at definition time
+        withGlobalErrorPauseBehavior
+      ],
+      [
+        // Additional add-on controllers
+      ]
+    )
+  ]
+};
+
+@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Global Error Pause'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Attach the Global Error Pause interceptor at definition time
+    withGlobalErrorPauseBehavior
+  ],
+  [
+    // Additional add-on controllers
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Global Error Pause'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Attach the Global Error Pause interceptor at definition time
+    withGlobalErrorPauseBehavior
+  ],
+  [
+    // Additional add-on controllers
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

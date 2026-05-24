@@ -1,0 +1,106 @@
+/* ----------------------------------------------------------
+   Font Base Path
+---------------------------------------------------------- */
+
+/* Inter (UI font) */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/inter/inter-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/inter/inter-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/inter/inter-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ----------------------------------------------------------
+   Roboto (Angular Material compatibility)
+---------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/roboto/roboto-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/roboto/roboto-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ----------------------------------------------------------
+   JetBrains Mono (code font)
+---------------------------------------------------------- */
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/assets/fonts/jetbrains-mono/jetbrains-mono-400.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/assets/fonts/jetbrains-mono/jetbrains-mono-500.woff2')
+    format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ----------------------------------------------------------
+   Material Icons
+---------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Material Icons';
+  src: url('/assets/fonts/material-icons/material-icons.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ----------------------------------------------------------
+   Material Symbols
+---------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  src: url('/assets/fonts/material-symbols/material-symbols-outlined.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+}

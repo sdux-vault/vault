@@ -1,0 +1,529 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Throttle Controller</h3>
+  </div>
+
+  <header class="docs-header">
+    <div class="lead">
+      <strong>Throttle Controller</strong> coordinates
+      <em>rate-based execution control</em> by limiting how frequently pipeline
+      execution is allowed to proceed within a fixed time window.
+    </div>
+
+    <p>
+      This controller operates within the <strong>Policy stage</strong> and does
+      not observe, derive, or modify state values. Instead, it acts as an
+      execution authority that determines <em>whether</em> a candidate update is
+      allowed to proceed based on elapsed time since the last permitted
+      execution.
+    </p>
+
+    <p>
+      When an update attempt enters the pipeline, the Throttle Controller
+      evaluates whether the throttle window is currently open. If the window has
+      expired, execution is allowed immediately and a new throttle window
+      begins. If the window is still active, the update attempt is explicitly
+      aborted.
+    </p>
+
+    <p>
+      The Throttle Controller enforces execution frequency rather than execution
+      delay. Updates that arrive during the throttle window are suppressed
+      entirely and do not resume execution later. Only updates admitted outside
+      the throttle window are allowed to proceed through the pipeline.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      The Throttle Controller governs execution rate, not value transformation
+      or state derivation. It does not pause pipeline execution, queue attempts,
+      or resume suppressed updates. Its authority is limited strictly to
+      allowing or aborting execution based on the configured throttle interval.
+    </p>
+  </header>
+  <!-- ====================================================== -->
+  <!-- DIAGRAM -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/9.0/9.2-throttle-controller-flow.svg"
+        [tooltip]="'Throttle Flow'"></sdux-diagram>
+
+      <sdux-diagram
+        image="diagrams/6.0/6.0-controller-flow.svg"
+        [tooltip]="'Controller Flow'" />
+
+      <sdux-diagram
+        image="diagrams/9.0/9.1-policy-flow.svg"
+        [tooltip]="'Policy Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Throttle Controller</strong> introduces a fixed,
+        deterministic execution window that limits how frequently pipeline
+        execution may proceed. When an update attempt enters the pipeline, the
+        controller determines whether execution is currently permitted based on
+        the configured throttle interval.
+      </p>
+
+      <p>
+        If the throttle window is open, the update is allowed to proceed
+        immediately and a new throttle window begins. If the window is still
+        active, the update attempt is explicitly suppressed and does not enter
+        pipeline execution.
+      </p>
+
+      <p>
+        The controller operates at the execution level rather than the value
+        level. It does not inspect, modify, merge, or derive candidate values.
+        Suppressed updates are not queued, delayed, or resumed — they are
+        aborted deterministically based on elapsed time.
+      </p>
+
+      <p>
+        Unlike delay mechanisms, the Throttle Controller does not pause
+        execution or guarantee eventual processing of every update. Its purpose
+        is to enforce execution frequency by allowing at most one update per
+        configured time window.
+      </p>
+
+      <p>
+        This controller is commonly used to limit update frequency, protect
+        downstream systems, reduce redundant pipeline executions, or enforce
+        rate limits on expensive state transitions.
+      </p>
+
+      <p>
+        The throttle duration is supplied explicitly during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        definition. The Throttle Controller is configured once, remains active
+        for the lifetime of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>, and
+        applies uniformly to all update attempts processed by the pipeline.
+      </p>
+
+      <sdux-controller-throttle-common />
+
+      <div class="table-title">Configuration Option</div>
+
+      <table aria-label="Configuration Option">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Property</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="column-250"><code>millisecondThrottle: number</code></td>
+            <td class="column-auto">
+              Fixed throttle window duration, in milliseconds. While the window
+              is active, additional update attempts are aborted. Must be a
+              valid, non-negative number.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ATTACHING THE CONTROLLER -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Registering the Throttle Controller</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Throttle Controller</strong> is attached structurally when
+        the <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        defined. This determines that the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        participates in throttle-based execution control at runtime.
+      </p>
+
+      <p>
+        Registering the controller does not configure throttle controller by
+        itself. It enables the controller so that throttle options supplied
+        later via the fluent API can be applied during pipeline execution.
+      </p>
+
+      <p>
+        Once attached, throttle behavior is configured using the fluent API
+        during initialization via
+        <code>.withThrottle(&lt;WithThrottleControllerOptions&gt;)</code>.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Throttle Controller'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {  
+        key: 'employees',
+        initialState: [],
+      },
+      [
+        // Optional add-on behaviors
+      ],
+      [
+        // Attach the Throttle Controller structurally
+        withThrottleController
+      ]
+    )
+  ]
+};
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Throttle Controller'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Optional add-on behaviors
+  ],
+  [
+    // Attach the Throttle Controller structurally
+    withThrottleController
+  ]
+);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Throttle Controller'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Optional add-on behaviors
+  ],
+  [
+    // Attach the Throttle Controller structurally
+    withThrottleController
+  ]
+);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-controller-throttle-fluent-api-common />
+
+  <section class="section">
+    <div class="section-title">Throttle Execution Timeline</div>
+
+    <div class="section-body">
+      <p>
+        The table below illustrates how the
+        <strong>Throttle Controller</strong> enforces a fixed execution window
+        of <strong>1000 milliseconds</strong>. At most one pipeline execution is
+        permitted per window. Update attempts that occur while the throttle
+        window is active are <em>aborted immediately</em> and do not enter
+        pipeline execution.
+      </p>
+
+      <div class="table-title">
+        Throttle Controller — Execution Example (1000ms)
+      </div>
+      <table aria-label="Throttle Controller — Execution Example (1000ms)">
+        <thead>
+          <tr>
+            <th scope="col" class="column-100">Attempt</th>
+            <th scope="col" class="column-100">Time (ms)</th>
+            <th scope="col" class="column-auto">Controller Outcome</th>
+            <th scope="col" class="column-150">Policy Vote</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>
+              <strong>Allowed immediately</strong> <br />
+              throttle window opened
+              <code>[0..1000)</code>
+            </td>
+            <td>Abstain</td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>250</td>
+            <td>
+              <strong>Aborted</strong> <br />
+              throttle window active
+            </td>
+            <td>Abort</td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>500</td>
+            <td>
+              <strong>Aborted</strong> <br />
+              throttle window active
+            </td>
+            <td>Abort</td>
+          </tr>
+
+          <tr>
+            <td>4</td>
+            <td>750</td>
+            <td>
+              <strong>Aborted</strong> <br />
+              throttle window active
+            </td>
+            <td>Abort</td>
+          </tr>
+
+          <tr>
+            <td>5</td>
+            <td>1000</td>
+            <td>
+              <strong>Allowed immediately</strong> <br />
+              previous window expired
+            </td>
+            <td>Abstain</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        The Throttle Controller never pauses or resumes execution. Instead, it
+        deterministically
+        <strong>aborts</strong> attempts that occur within an active throttle
+        window. Once the window expires, the next eligible attempt is allowed to
+        proceed immediately and opens a new window.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        Throttle is enabled by attaching the
+        <strong>Throttle Controller</strong> via the fluent API during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization. Incoming update attempts are admitted into pipeline
+        execution only if they occur outside the active throttle window.
+      </p>
+
+      <p>
+        Because throttle is implemented as a controller, it coordinates
+        <em>how often</em> pipeline execution is permitted without delaying,
+        modifying, or coalescing state values.
+      </p>
+
+      <h4>Example 1: Configure a FeatureCell with Throttle</h4>
+
+      <p>
+        In this example, pipeline execution is limited to at most one update
+        every
+        <strong>500 milliseconds</strong>. Update attempts that occur within the
+        throttle window are aborted immediately.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Throttle Controller'
+                    ">
+                    <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply throttle controller configuration during initialization
+    this.vault
+      .withThrottle({
+        millisecondThrottle: 500
+      })
+      .initialize();
+  }
+}
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Throttle Controller'
+                    ">
+                    <pre class="code-inline"><code class="language-ts">{{`
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+    [
+      // Additional add-on behaviors
+    ],
+    [
+      withThrottleController
+    ]
+  }
+);
+
+// Apply throttle controller configuration during initialization
+employeeCell
+  .withThrottle({
+    millisecondThrottle: 500
+  })
+  .initialize();
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Throttle Controller'
+                    ">
+                    <pre class="code-inline"><code class="language-ts">{{`
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+    [
+      // Additional add-on behaviors
+    ],
+    [
+      withThrottleController
+    ]
+  }
+);
+
+// Apply throttle controller configuration during initialization
+employeeCell
+  .withThrottle({
+    millisecondThrottle: 500
+  })
+  .initialize();
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <p>
+        In all cases, the Throttle Controller enforces a fixed execution window.
+        The first update attempt opens the window and proceeds immediately;
+        subsequent attempts within the window are aborted. No updates are
+        delayed, merged, or reordered.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

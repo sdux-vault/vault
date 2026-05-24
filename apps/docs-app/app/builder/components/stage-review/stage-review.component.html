@@ -1,0 +1,56 @@
+<div class="stage-review-container">
+  <div class="stage-review">
+    <div class="review">
+      <div class="review-top-row">
+        <div class="label-group">
+          <div class="label">
+            {{ stage()?.label }}
+          </div>
+          @if (stage()?.documentationComponentReference) {
+            <button
+              type="button"
+              class="learn-icon"
+              (click)="openDocumentation(); $event.stopPropagation()"
+              aria-label="More documentation"
+              matTooltip="More documentation">
+              <mat-icon>help_outline</mat-icon>
+            </button>
+          }
+        </div>
+
+        <div class="button-toggle-container">
+          <button
+            type="button"
+            class="button-toggle"
+            (click)="toggle()"
+            aria-label="Toggle stage details"
+            [attr.aria-expanded]="isExpanded()"
+            matTooltip="More information">
+            <mat-icon>
+              {{ isExpanded() ? 'expand_less' : 'expand_more' }}
+            </mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <p class="selection-question">
+        {{ stage()?.question }}
+      </p>
+
+      <div class="collapse" [class.is-collapsed]="!isExpanded()">
+        <div class="description">
+          {{ stage()?.description }}
+        </div>
+
+        @if (stage()?.note) {
+          <blockquote class="note">
+            <div class="note-title">Code Generation:</div>
+            <div>
+              {{ stage()?.note }}
+            </div>
+          </blockquote>
+        }
+      </div>
+    </div>
+  </div>
+</div>

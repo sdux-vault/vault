@@ -1,0 +1,7 @@
+@use 'global' as global;
+
+.stackblitz-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: global.$spacing-md;
+}

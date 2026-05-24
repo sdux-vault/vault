@@ -1,0 +1,292 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Interceptor Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      An <strong>Interceptor Behavior</strong> controls <em>when</em> state
+      updates are allowed to enter the
+      <sdux-brand-name />
+      pipeline. Interceptors operate before any state resolution or
+      transformation occurs and exist solely to manage timing, frequency, and
+      gating of incoming updates.
+    </p>
+
+    <p>
+      Interceptors never modify state values and never participate in
+      computation. Their responsibility is limited to shaping the flow of
+      incoming updates—delaying them, suppressing them, or preventing them from
+      entering the pipeline under specific conditions.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Interceptor Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Interceptor Stage runs <em>before</em> the Resolve stage and serves
+        as the first entry point into the <sdux-brand-name /> pipeline.
+        Interceptors receive raw incoming update requests and may delay,
+        suppress, or gate their execution without altering the value itself.
+      </p>
+
+      <p>
+        Interceptors are designed to control write cadence and execution timing.
+        They never change the structural shape of state and do not participate
+        in resolution, merging, or reduction. If an interceptor suppresses an
+        update, the pipeline does not execute for that emission.
+      </p>
+
+      <h4>Core Pipeline Stage</h4>
+      <p>
+        The Interceptor stage itself is considered a core pipeline stage and is
+        always present as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. However, individual interceptor behaviors are
+        <em>not</em> registered as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        declarative configuration. Instead, interceptor behaviors are attached
+        exclusively through the fluent <strong>.interceptors()</strong> API
+        during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization, ensuring that admission control is defined explicitly
+        and contextually at startup rather than embedded into static cell
+        configuration.
+      </p>
+
+      <h4>Fluent Interceptors() API</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        declare <strong>multiple interceptors</strong>. The fluent
+        .interceptors() API accepts an array of interceptor behaviors, which is
+        treated as a declarative configuration. When provided, interceptors are
+        executed in the <em>Pre-Processing Layer</em> in the exact order they
+        are listed during initialization.
+      </p>
+
+      <p>
+        An empty interceptor array is ignored and has no effect on pipeline
+        execution.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Although interceptor stacking is fully supported, it should be applied
+        with care. Because interceptors influence admission timing and pipeline
+        execution, combining multiple temporal or gating behaviors can introduce
+        complex interactions that may be difficult to reason about or debug.
+        Interceptors are most effective when each has a clear, isolated
+        responsibility.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Interceptor Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.5/3.5-interceptor-behavior.svg"
+        [tooltip]="'Interceptor Pipeline Processing Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available Interceptor Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        Interceptor behaviors are optional, engineer-selected behaviors attached
+        during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization. Interceptors may be sourced from
+        <em><sdux-package-name />/addons</em> or implemented directly by
+        engineers to address feature-specific or domain-specific timing
+        requirements.
+      </p>
+
+      <p>
+        Regardless of origin, all interceptor behaviors execute exclusively
+        within the Interceptor stage and must respect the stage's responsibility
+        boundaries: influencing <em>when</em> incoming updates are admitted into
+        the pipeline without transforming state or participating in computation.
+      </p>
+    </div>
+
+    <sdux-vault-interceptor-behaviors-common />
+
+    <div class="table-title">Pre-built <sdux-brand-name /> Interceptors</div>
+    <table aria-label="Pre-built">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Addon Behavior</th>
+          <th scope="col" class="column-auto">Description</th>
+          <th scope="col" class="column-50">Package</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <a href="/docs/pipeline/addons/with-throttle">withThrottle</a>
+            <p>input: milliseconds</p>
+            <p>type: number</p>
+          </td>
+          <td>
+            Allows the first update through immediately, then suppresses
+            subsequent updates until the throttle window expires. Useful for
+            rate limiting bursty interactions such as scrolling or repeated user
+            actions.
+          </td>
+          <td><sdux-package-name />/addons</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <sdux-vault-interceptor-fluent-api-common />
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        Interceptors are enabled by registering the interceptor behavior during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <h4>Example 1: Configure a FeatureCell with Interceptors</h4>
+
+      <p>
+        In this example, the
+        <a href="/docs/pipeline/addons/with-debounce">withDebounce</a> and
+        <a href="/docs/pipeline/addons/with-delay">withDelay</a> interceptors
+        are stacked. They are applied in the order they are declared during
+        initialization, with
+        <a href="/docs/pipeline/addons/with-debounce">withDebounce</a> (1000 ms)
+        evaluated first, followed by
+        <a href="/docs/pipeline/addons/with-delay">withDelay</a> (500 ms).
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Operators'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more interceptors during initialization
+
+    this.vault.interceptors(
+      [
+        withDebounce(1000),
+        withDelay(500)
+        // up-to N
+      ]
+    ).initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Interceptors'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // **Important**
+    // Interceptor behaviors are not registered as part of the 
+    // FeatureCell’s declarative configuration.
+  ]
+);
+
+// Apply n interceptors during initialization
+employeeCell.interceptors(
+  [
+    withDebounce(1000),
+    withDelay(500)
+    // up-to N
+  ]
+).initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Interceptors'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // **Important**
+    // Interceptor behaviors are not registered as part of the 
+    // FeatureCell’s declarative configuration.
+  ]
+);
+
+// Apply n interceptors during initialization
+employeeCell.interceptors(
+  [
+    withDebounce(1000),
+    withDelay(500)
+    // up-to N
+  ]
+).initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

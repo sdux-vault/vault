@@ -1,0 +1,142 @@
+// ─────────────────────────────────────────────────────────────
+// with-core-http-resource-resolve.behavior.ts
+// ─────────────────────────────────────────────────────────────
+
+import { HttpResourceRef } from '@angular/common/http';
+import {
+  BehaviorClassContext,
+  BehaviorContext,
+  BehaviorType,
+  BehaviorTypes,
+  defineBehaviorKey,
+  PipelineUpstreamValue,
+  ResolveBehaviorContract,
+  ResolveType,
+  ResolveTypes,
+  safeStringify,
+  VaultBehavior
+} from '@sdux-vault/shared';
+
+import { toObservable } from '@angular/core/rxjs-interop';
+import {
+  createVaultError,
+  isHttpResourceRef,
+  vaultDebug,
+  vaultWarn
+} from '@sdux-vault/shared';
+import { filter, firstValueFrom, take } from 'rxjs';
+
+/**
+ * Resolve behavior that extracts state values from an Angular HTTP resource reference.
+ *
+ * This behavior participates in the resolve stage when the incoming state input
+ * is classified as an HTTP resource and produces a resolved pipeline value once
+ * the resource emits a concrete value or error.
+ */
+@VaultBehavior({
+  type: BehaviorTypes.Resolve,
+  key: defineBehaviorKey('Resolve', 'HttpResource'),
+  critical: true,
+  resolveType: ResolveTypes.HttpResource
+})
+export class withHttpResourceBehavior<T> implements ResolveBehaviorContract<T> {
+  /**
+   * Static behavior type metadata used for pipeline classification.
+   */
+  static readonly type: BehaviorType;
+
+  /**
+   * Static behavior key assigned by the decorator.
+   */
+  static readonly key: string;
+
+  /**
+   * Indicates that this resolve behavior is required for pipeline execution.
+   */
+  static readonly critical: boolean;
+
+  /**
+   * Resolve type identifier associated with HTTP resource inputs.
+   */
+  static readonly resolveType: ResolveType;
+
+  /**
+   * Instance-level behavior type identifier.
+   */
+  readonly type = withHttpResourceBehavior.type;
+
+  /**
+   * Indicates that this behavior is critical in the resolve stage.
+   */
+  readonly critical = withHttpResourceBehavior.critical;
+
+  /**
+   * Unique behavior key for this instance.
+   */
+  readonly key: string;
+
+  /**
+   * Resolve type handled by this behavior instance.
+   */
+  resolveType = withHttpResourceBehavior.resolveType;
+
+  /**
+   * Creates a new HTTP resource resolve behavior instance.
+   *
+   * @param key - Unique behavior identifier assigned by the behavior factory.
+   * @param behaviorCtx - Behavior class context provided by the orchestrator.
+   */
+  constructor(
+    key: string,
+    readonly behaviorCtx: BehaviorClassContext
+  ) {
+    this.key = key;
+  }
+
+  /**
+   * Resolves a pipeline value from an HTTP resource reference when supported.
+   *
+   * @param ctx - The behavior context containing the incoming state input.
+   * @returns A promise resolving to the extracted value or undefined when skipped.
+   */
+  async computeResolve(
+    ctx: BehaviorContext<T>
+  ): Promise<PipelineUpstreamValue<T>> {
+    if (ctx.incoming && isHttpResourceRef<T>(ctx.incoming)) {
+      const resource = ctx.incoming as HttpResourceRef<T>;
+      vaultDebug(
+        `${this.key} computeResolve called with "${safeStringify(ctx.incoming)}".`
+      );
+
+      try {
+        const value = await firstValueFrom(
+          toObservable(resource.value).pipe(
+            filter((val): val is T => val !== undefined),
+            take(1)
+          )
+        );
+
+        return value;
+      } catch (err) {
+        throw createVaultError(err, ctx.featureCellKey);
+      }
+    }
+
+    vaultDebug(`${this.key} skipped — not an HttpResourceRef input.`);
+    return;
+  }
+
+  /**
+   * Invoked when the behavior instance is destroyed.
+   */
+  destroy(): void {
+    vaultWarn(`${this.key} - destroy called`);
+  }
+
+  /**
+   * Resets the behavior without modifying internal state.
+   */
+  reset(): void {
+    vaultWarn(`${this.key} - reset called`);
+  }
+}

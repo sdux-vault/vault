@@ -1,0 +1,448 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Updated 2026-02-18 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>initialize()</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>initialize()</strong> method activates a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> within
+      the Vault runtime and begins its initialization cycle. Initialization
+      binds declared behaviors, controllers, and fluent configuration into a
+      deterministic execution pipeline.
+    </p>
+
+    <h4>Method Contract Summary</h4>
+    <ul>
+      <li>
+        Initialization is required before any
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        interaction
+      </li>
+      <li>
+        Initialization activates the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        runtime pipeline
+      </li>
+      <li>
+        Initialization occurs exactly once per
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      </li>
+      <li>
+        Initialization may enqueue an initial
+        <code>replaceState</code> operation
+      </li>
+      <li>
+        Errors during initialization prevent
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        operation
+      </li>
+    </ul>
+
+    <p>
+      The <strong>initialize()</strong> method defines activation and readiness.
+      It does not directly mutate state. Instead, it evaluates the configured
+      initialization mechanism and, if applicable, enqueues a deterministic
+      <code>replaceState</code> operation through the pipeline.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      <strong
+        >initialize() must be called before a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> can be
+        used.</strong
+      >
+      Any attempt to read state, issue updates, or interact with a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> before
+      initialization results in a runtime error. A
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> that is
+      not initialized is non-operational.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- WHAT INITIALIZE DOES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">What initialize() Does</div>
+
+    <div class="section-body">
+      <p>
+        Calling <strong>initialize()</strong> transitions the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> from a
+        configured definition into an active runtime participant.
+      </p>
+
+      <ul>
+        <li>
+          Validates
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          configuration and declared behaviors
+        </li>
+        <li>
+          Registers the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> with
+          the Vault runtime
+        </li>
+        <li>Activates the Conductor execution surface</li>
+        <li>Evaluates the declared initialization source (if any)</li>
+        <li>
+          Enqueues the initial state candidate through the pipeline (if
+          applicable)
+        </li>
+      </ul>
+
+      <p>
+        Initialization does not bypass the pipeline. Any initial value produced
+        by
+        <code>hydrate()</code>, Persist behaviors, or
+        <code>descriptor.initialState</code> is processed as a standard
+        <code>replaceState</code> operation.
+      </p>
+
+      <p>
+        If no initialization mechanism is declared, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        becomes active with <code>value: undefined</code> and awaits explicit
+        <code>replaceState()</code> calls.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- INITIALIZATION FLOW -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Initialization Flow</div>
+
+    <div class="section-body">
+      <p>
+        During initialization, Vault evaluates exactly one initialization source
+        according to precedence rules:
+      </p>
+
+      <ol>
+        <li><strong>hydrate()</strong> (highest precedence)</li>
+        <li><strong>Persist behaviors</strong></li>
+        <li><strong>descriptor.initialState</strong></li>
+        <li>
+          <strong>No source declared</strong> (manual initialization required)
+        </li>
+      </ol>
+
+      <p>
+        Only one source is evaluated. Initialization sources are not fallback
+        layers. If the selected source throws, initialization fails. If it
+        resolves to <code>undefined</code>, no write occurs.
+      </p>
+
+      <p>
+        Any produced value is passed through the full pipeline — Resolve,
+        Operators, Filters, Reducers, and Emit — exactly as if
+        <code>replaceState()</code> had been called manually.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <div class="table-title">Pipeline Initialization Flow</div>
+      <sdux-diagram
+        image="diagrams/2.2/2.2.1-pipeline-initialization-flow.svg"
+        [tooltip]="'FeatureCell Initialization Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RULES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Initialization Rules</div>
+
+    <div class="section-body">
+      <ul>
+        <li>Initialization may be called exactly once</li>
+        <li>Calling initialize() more than once results in a runtime error</li>
+        <li>
+          Initialization must complete successfully for the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> to
+          remain usable
+        </li>
+        <li>Vault must be initialized before FeatureCells are initialized</li>
+      </ul>
+
+      <p>
+        If initialization fails due to a thrown error in the selected
+        initialization source, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> does
+        not activate partially and no fallback source is evaluated.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION TABLE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <div class="table-title">initialize()</div>
+      <table aria-label="initialize()">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Method</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <strong>initialize()</strong>
+
+              <p>inputs:</p>
+              <ul>
+                <li>none</li>
+              </ul>
+
+              <p>returns:</p>
+              <ul>
+                <li>void</li>
+              </ul>
+            </td>
+            <td>
+              Activates the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              runtime and executes the initialization cycle. If an
+              initialization source is declared, its value is processed as a
+              deterministic <code>replaceState</code> operation.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example: Basic Initialization</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure descriptor.initialState initialization'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {  
+        key: 'employees',
+        // Initial state is declared directly in the descriptor
+        initialState: [
+          { id: 1, name: 'Alice' },
+          { id: 2, name: 'Bob' }
+        ]
+      }
+    )
+  ]
+};
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example: hydrate() + initialize()</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: How to configure .hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault
+      .hydrate(() => Promise.resolve(...))
+      .initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example: Basic Initialization</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure descriptor.initialState initialization'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // Initial state is declared directly in the descriptor
+    initialState: [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+    ]
+  },
+);
+
+employeeCell.initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example: hydrate() + initialize()</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: How to configure .hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // ignored
+    initialState: []
+  }
+);
+
+employeeCell.hydrate(() => Promise.resolve(...)).initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>Example: Basic Initialization</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example: How to configure descriptor.initialState initialization'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // Initial state is declared directly in the descriptor
+    initialState: [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+    ]
+  },
+);
+
+employeeCell.initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example: hydrate() + initialize()</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: How to configure .hydrate()'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    // ignored
+    initialState: []
+  }
+);
+
+employeeCell.hydrate(() => Promise.resolve(...)).initialize();
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- LIFECYCLE NOTES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Lifecycle Notes</div>
+
+    <div class="section-body">
+      <p>
+        All fluent configuration methods (<em>filters</em>, <em>reducers</em>,
+        <em>taps</em>, <em>errors</em>, <em>emitStates</em>, and others) must be
+        declared before calling <strong>initialize()</strong>.
+      </p>
+
+      <p>
+        Initialization establishes the execution boundary of a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        Pipelines execute only after initialization has completed.
+      </p>
+
+      <p>
+        Initialization does not guarantee that a produced value commits to
+        state. Because the initial candidate passes through the full pipeline,
+        it may be transformed or filtered according to installed logic.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

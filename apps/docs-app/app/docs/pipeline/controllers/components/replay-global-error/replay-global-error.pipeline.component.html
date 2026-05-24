@@ -1,0 +1,715 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Replay Global Error Controller</h3>
+  </div>
+
+  <header class="docs-header">
+    <div class="lead">
+      <strong>Replay Global Error</strong> is a controller that participates in
+      pipeline arbitration when a global Vault error is present. It evaluates
+      execution attempts and determines whether pipeline execution attempts are
+      denied during a global error and whether previously blocked attempts may
+      be retried once the error condition changes.
+    </div>
+
+    <p>
+      This controller operates within the Policy stage and does not observe or
+      modify state values directly. Instead, it responds to pipeline attempt
+      messages and global error signals to influence execution outcomes through
+      controller voting.
+    </p>
+
+    <p>
+      When a global error is active, the controller denies pipeline attempts
+      associated with the current execution trace. When the error condition is
+      cleared, the controller may trigger a revote for previously denied
+      attempts, allowing normal pipeline execution to resume.
+    </p>
+
+    <p>
+      Replay Global Error does not enqueue values, transform state, or inject
+      side effects. Its responsibility is limited to coordinating retry and
+      replay decisions in response to global error lifecycle events.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      When a global Vault error is active, pipeline execution remains paused
+      until an external action explicitly clears the error state. Clearing the
+      global error is performed by invoking
+      <code>VaultErrorServiceClass().clear()</code>, which removes the active
+      error signal and allows controllers and interceptors that depend on global
+      error state to resume normal operation.
+    </p>
+
+    <p>
+      Until the global error is cleared, new pipeline attempts may be denied and
+      previously blocked executions will not be replayed. This design ensures
+      that recovery from global error conditions is explicit, intentional, and
+      fully controlled by the application rather than occurring implicitly or
+      automatically.
+    </p>
+
+    <h4>Additional Help</h4>
+    <a href="docs/global-error-handler">Global Error Handler</a>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Design Decisions</div>
+
+    <div class="section-body">
+      <p>
+        The <code>featureCellKey</code> field on
+        <strong
+          ><a href="/docs/references/shapes/vault-error-shape"
+            >VaultErrorShape</a
+          ></strong
+        >
+        provides optional contextual information about which
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        originated an error. This metadata allows applications to distinguish
+        between <em>globally blocking failures</em> and
+        <em
+          ><a href="/docs/references/functions/feature-cell">FeatureCell</a
+          >-scoped errors</em
+        >
+        when deciding how recovery should occur.
+      </p>
+
+      <p>
+        When an error represents a system-level failure—such as a backend
+        outage, corrupted environment state, or violated consistency
+        invariant—the <code>featureCellKey</code> may be ignored. In these
+        cases, the error is treated as <strong>global</strong>, and all
+        FeatureCells using Global Error Pause and Replay Global Error are paused
+        uniformly until the error condition is explicitly cleared.
+      </p>
+
+      <p>
+        For user-facing or localized failures, the
+        <code>featureCellKey</code> may be used by application logic to
+        determine which FeatureCells should participate in recovery. This
+        enables targeted remediation flows—such as retry prompts, authentication
+        recovery, or domain-specific correction—without requiring a full
+        application-wide pause.
+      </p>
+
+      <p>
+        The Replay Global Error controller does not interpret or filter errors
+        based on <code>featureCellKey</code>. Instead, the field exists to
+        support higher-level recovery decisions made by the application. Once
+        <code>VaultErrorServiceClass.clear()</code> is invoked, the controller
+        re-evaluates previously blocked execution attempts and allows normal
+        pipeline arbitration to resume according to the updated global error
+        state.
+      </p>
+
+      <p>
+        This design ensures that error scoping remains an application concern,
+        while the pipeline maintains deterministic pause, replay, and recovery
+        semantics regardless of how errors are classified or resolved.
+      </p>
+
+      <sdux-vault-error-shape-common />
+
+      <p>
+        Not all failures should be treated as global. Most domain-level errors —
+        such as validation failures, rejected user input, business rule
+        violations, or expected backend responses — should remain
+        <strong
+          ><a href="/docs/references/functions/feature-cell">FeatureCell</a
+          >-scoped</strong
+        >
+        and handled locally within the pipeline using standard error behaviors.
+        These errors do not require pausing other FeatureCells or halting
+        application-wide execution.
+      </p>
+
+      <p>
+        The Replay Global Error controller is intended only for
+        <strong>system-level or consistency-critical failures</strong> where
+        continued state mutation could produce invalid or incoherent application
+        state. Examples include backend outages, authentication invalidation,
+        corrupted environment state, or invariant violations.
+      </p>
+
+      <p>
+        If an error affects only a single
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
+        does not threaten application-wide consistency, a local error handling
+        strategy is preferred. Global error pause should be reserved for
+        failures that require deliberate, coordinated recovery across multiple
+        FeatureCells.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- Diagrams -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/6.0/6.1-replay-global-error-controller-flow.svg"
+        [tooltip]="'Replay Global Error Controller Flow'" />
+
+      <sdux-diagram
+        image="diagrams/6.0/6.0-controller-flow.svg"
+        [tooltip]="'Controller Flow'" />
+
+      <sdux-diagram
+        image="diagrams/9.0/9.1-policy-flow.svg"
+        [tooltip]="'Policy Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURE THE REPLAY GLOBAL ERROR CONTROLLER -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Replay Global Error Controller</strong> is a structural
+        policy controller that participates in pipeline execution arbitration
+        when a global Vault error is present. Controllers do not observe or
+        modify state values directly and are not configured through fluent APIs.
+      </p>
+
+      <p>
+        This controller is registered once during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        definition. Its configuration is declarative and static: no parameters
+        are accepted, and behavior does not vary per invocation. Once
+        registered, the controller remains active for the lifetime of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+
+      <p>
+        Because this controller participates in execution arbitration, it must
+        be present before any pipeline execution begins. Registering it at
+        definition time ensures that all pipeline attempts are consistently
+        evaluated against global error conditions from the moment the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized.
+      </p>
+
+      <p>
+        During execution, the controller evaluates update attempts associated
+        with a given pipeline trace and issues authoritative votes that
+        determine whether an attempt is allowed to proceed, denied, or retried.
+        When global error state changes, the controller may request revotes to
+        ensure previously blocked or denied executions are reconsidered under
+        the updated conditions.
+      </p>
+
+      <p>
+        This design enforces deterministic error recovery behavior and prevents
+        runtime mutation of controller configuration. Global error handling
+        rules are established once at definition time and remain stable
+        throughout the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle.
+      </p>
+
+      <sdux-controller-replay-global-error-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ATTACHING THE CONTROLLER -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      Registering the Replay Global Error Controller
+    </div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Replay Global Error Controller</strong> is attached
+        structurally when the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        defined. This determines that the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        participates in error-based execution control at runtime.
+      </p>
+
+      <p>Registering the controller does configure the controller by itself.</p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Replay Global Error Controller'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {  
+        key: 'employees',
+        initialState: [],
+      },
+      [
+        // Optional add-on behaviors
+      ],
+      [
+        // Attach the Replay Global Error Controller structurally
+        withReplayGlobalErrorController
+      ]
+    )
+  ]
+};
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Replay Global Error Controller'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Optional add-on behaviors
+  ],
+  [
+    // Attach the Replay Global Error Controller structurally
+    withReplayGlobalErrorController
+  ]
+);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Replay Global Error Controller'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Optional add-on behaviors
+  ],
+  [
+    // Attach the Replay Global Error Controller structurally
+    withReplayGlobalErrorController
+  ]
+);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">When to Use Replay Global Error</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Replay Global Error</strong> controller is intended for
+        scenarios where pipeline execution must be
+        <em>explicitly paused</em> during a global failure and resumed only
+        after a deliberate recovery action. The table below outlines common
+        situations where this controller is appropriate and the expected
+        recovery strategy for each.
+      </p>
+
+      <div class="table-scroll">
+        <table aria-label="When to Use Replay Global Error">
+          <thead>
+            <tr>
+              <th scope="col" class="column-275">Scenario</th>
+              <th scope="col" class="column-250">Recommended Usage</th>
+              <th scope="col" class="column-250">Recovery Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>
+                Critical backend failure
+                <p>Global (all FeatureCells)</p>
+                <p>
+                  Ignore
+                  <a href="/docs/references/shapes/vault-error-shape"
+                    >VaultErrorShape</a
+                  >
+                  featureCellKey
+                </p>
+              </td>
+              <td>
+                Block all incoming state updates while the application is in an
+                unrecoverable error state to prevent inconsistent or partial
+                mutations.
+              </td>
+              <td>
+                Log the error, resolve the underlying issue, then explicitly
+                clear the global error using
+                <code>VaultErrorService.clear()</code>.
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                User-facing blocking error
+                <p>Local (single FeatureCells)</p>
+                <p>
+                  Conditional on
+                  <a href="/docs/references/shapes/vault-error-shape"
+                    >VaultErrorShape</a
+                  >
+                  featureCellKey
+                </p>
+              </td>
+              <td>
+                Pause pipeline execution while prompting the user to take
+                corrective action, such as retrying an operation or
+                re-authenticating.
+              </td>
+              <td>
+                Clear the global error after the user completes the recovery
+                flow, allowing blocked attempts to be replayed.
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                Strict consistency requirements
+                <p>Global (all FeatureCells)</p>
+                <p>
+                  Ignore
+                  <a href="/docs/references/shapes/vault-error-shape"
+                    >VaultErrorShape</a
+                  >
+                  featureCellKey
+                </p>
+              </td>
+              <td>
+                Ensure no state transitions occur while the application is in an
+                invalid or indeterminate state caused by a global error.
+              </td>
+              <td>
+                Perform validation or reconciliation, then clear the error to
+                trigger controlled replay through the controller.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a
+            href="/docs/pipeline/controllers/with-replay-global-error-controller"
+            >withReplayGlobalErrorController</a
+          ></strong
+        >
+        is a structural controller that must be attached when defining a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. It is
+        not registered through a fluent API and cannot be added dynamically
+        after initialization.
+      </p>
+
+      <p>
+        In this example, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        defined with both the Global Error Pause interceptor and the Replay
+        Global Error controller. While a global Vault error is active, incoming
+        state updates are blocked at the Interceptor stage and execution
+        attempts are denied through controller arbitration.
+      </p>
+
+      <p>
+        Pipeline execution remains paused until an external recovery action
+        explicitly clears the global error using
+        <code>VaultErrorServiceClass.clear()</code>. Once the error is cleared,
+        previously blocked attempts are re-evaluated and replayed through the
+        controller, allowing normal pipeline execution to resume in a
+        deterministic and controlled manner.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>
+                  Example 1: Configure a FeatureCell with Replay Global Error
+                </h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Replay Global Error'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault(),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: []
+      },
+      [
+        // Additional add-on behaviors 
+      ],
+      [
+        // REQUIRED: Coordinates replay and retry once the error is cleared
+        withReplayGlobalErrorController
+      ]
+    )
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Configure a Service</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Configure a Service'">
+                    <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 3: Observe and Clear a Global Vault Error</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 3: Observe and Clear a Global Vault Error'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { VaultErrorService } from '@sdux-vault/shared';
+
+// Obtain the singleton service
+const errorService = VaultErrorService();
+
+// Listen for global Vault error changes
+const subscription = errorService.error$.subscribe((error) => {
+  if (error) {
+    console.info('Global Vault error detected:', error.message);
+  } else {
+    console.info('Global Vault error cleared');
+  }
+});
+
+// At some later point (user action, recovery flow, retry button, etc.)
+errorService.clear();
+
+// Cleanup when no longer needed
+subscription.unsubscribe();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <h4>
+                  Example 1: Configure a FeatureCell with Replay Global Error
+                </h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Replay Global Error'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Additional add-on behaviors 
+  ],
+  [
+    // REQUIRED: Coordinates replay and retry once the error is cleared
+    withReplayGlobalErrorController
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Observe and Clear a Global Vault Error</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Observe and Clear a Global Vault Error'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { VaultErrorService } from '@sdux-vault/shared';
+
+// Obtain the singleton service
+const errorService = VaultErrorService();
+
+// Listen for global Vault error changes
+const subscription = errorService.error$.subscribe((error) => {
+  if (error) {
+    console.info('Global Vault error detected:', error.message);
+  } else {
+    console.info('Global Vault error cleared');
+  }
+});
+
+// At some later point (user action, recovery flow, retry button, etc.)
+errorService.clear();
+
+// Cleanup when no longer needed
+subscription.unsubscribe();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Replay Global Error'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Additional add-on behaviors 
+  ],
+  [
+    // REQUIRED: Coordinates replay and retry once the error is cleared
+    withReplayGlobalErrorController
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <h4>Example 2: Observe and Clear a Global Vault Error</h4>
+
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 2: Observe and Clear a Global Vault Error'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { VaultErrorService } from '@sdux-vault/shared';
+
+// Obtain the singleton service
+const errorService = VaultErrorService();
+
+// Listen for global Vault error changes
+const subscription = errorService.error$.subscribe((error) => {
+  if (error) {
+    console.info('Global Vault error detected:', error.message);
+  } else {
+    console.info('Global Vault error cleared');
+  }
+});
+
+// At some later point (user action, recovery flow, retry button, etc.)
+errorService.clear();
+
+// Cleanup when no longer needed
+subscription.unsubscribe();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

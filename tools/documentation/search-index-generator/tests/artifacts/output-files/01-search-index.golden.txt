@@ -1,0 +1,69 @@
+{
+  "documents": [
+    {
+      "id": "class:ValueResolveExampleComponent",
+      "title": "ValueResolveExampleComponent",
+      "kind": "class",
+      "project": "core",
+      "docLink": "classes",
+      "relativePath": "projects/core/src/lib/dir_one/dir_one_file_one.ts",
+      "symbols": [
+        "ValueResolveExampleComponent"
+      ],
+      "content": "ValueResolveExampleComponent ValueResolveExampleComponent class core projects/core/src/lib/dir_one/dir_one_file_one.ts",
+      "url": "/docs/references/classes/value-resolve-example-component"
+    },
+    {
+      "id": "behaviors:withAes256EncryptBehavior",
+      "title": "withAes256EncryptBehavior",
+      "kind": "behavior",
+      "project": "encrypt",
+      "docLink": "behaviors",
+      "relativePath": "projects/encrypt/src/lib/behaviors/aes256/with-aes256-encrypt.behavior.ts",
+      "symbols": [
+        "withAes256EncryptBehavior"
+      ],
+      "content": "withAes256EncryptBehavior withAes256EncryptBehavior behaviors encrypt projects/encrypt/src/lib/behaviors/aes256/with-aes256-encrypt.behavior.ts",
+      "url": "/docs/pipeline/addons/encrypt/with-aes256encrypt-behavior"
+    },
+    {
+      "id": "behaviors:withArrayAppendMergeBehavior",
+      "title": "withArrayAppendMergeBehavior",
+      "kind": "behavior",
+      "project": "addons",
+      "docLink": "behaviors",
+      "relativePath": "projects/addons/src/lib/behaviors/merge/array/array-append-merge/with-array-append-merge.behavior.ts",
+      "symbols": [
+        "withArrayAppendMergeBehavior"
+      ],
+      "content": "withArrayAppendMergeBehavior withArrayAppendMergeBehavior behaviors addons projects/addons/src/lib/behaviors/merge/array/array-append-merge/with-array-append-merge.behavior.ts",
+      "url": "/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+    },
+    {
+      "id": "behaviors:withCookieStoragePersistBehavior",
+      "title": "withCookieStoragePersistBehavior",
+      "kind": "behavior",
+      "project": "persist",
+      "docLink": "behaviors",
+      "relativePath": "projects/persist/src/lib/behaviors/cookie-storage/with-cookie-storage-persist.behavior.ts",
+      "symbols": [
+        "withCookieStoragePersistBehavior"
+      ],
+      "content": "withCookieStoragePersistBehavior withCookieStoragePersistBehavior behaviors persist projects/persist/src/lib/behaviors/cookie-storage/with-cookie-storage-persist.behavior.ts",
+      "url": "/docs/pipeline/addons/persist/with-cookie-storage-persist-behavior"
+    },
+    {
+      "id": "interface:BankEmployeeModel",
+      "title": "BankEmployeeModel",
+      "kind": "interface",
+      "project": "core",
+      "docLink": "interfaces",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "symbols": [
+        "BankEmployeeModel"
+      ],
+      "content": "BankEmployeeModel BankEmployeeModel interface core projects/core/src/lib/file_three.ts",
+      "url": "/docs/references/interfaces/bank-employee-model"
+    }
+  ]
+}

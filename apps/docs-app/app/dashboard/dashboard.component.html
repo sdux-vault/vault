@@ -1,0 +1,170 @@
+<section class="dashboard-page">
+  <div class="dashboard-shell">
+    @if (showSuccess()) {
+      <div class="stripe-banner stripe-success" role="status">
+        Purchase complete — your new license is being activated.
+      </div>
+    }
+
+    @if (showCancel()) {
+      <div class="stripe-banner stripe-cancel" role="alert">
+        Checkout was cancelled. No charge was made.
+      </div>
+    }
+
+    <!-- user and company -->
+    <div class="dashboard-intro">
+      <div class="dashboard-header">
+        <div class="dashboard-title">
+          <div>Your <sdux-brand-name /> Dashboard</div>
+
+          <div class="lead">
+            Manage your <sdux-vault-brand-name [tm]="true" /> licenses and
+            secure your data pipelines.
+          </div>
+        </div>
+
+        <div class="company-identity">
+          <div class="user-name">
+            {{ fullName() }}
+          </div>
+
+          <div class="organization-name">
+            {{ organizationName() }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Purchase -->
+    <div class="dashboard-card purchase-card">
+      <div class="card-header">Deploy Vault on a New Domain</div>
+
+      <div class="purchase-section">
+        <div class="purchase-description">
+          Protect a domain with <sdux-vault-brand-name /> state management,
+          monitoring and governance.
+        </div>
+
+        <div class="action-section">
+          <mat-form-field appearance="outline" class="domain-input">
+            <mat-label>Domain</mat-label>
+
+            <input
+              matInput
+              type="text"
+              placeholder="example.com"
+              [value]="domain()"
+              (input)="updateDomain($any($event.target).value)" />
+
+            @if (domain() && domainError()) {
+              <mat-error>{{ domainError() }}</mat-error>
+            }
+          </mat-form-field>
+
+          <div
+            class="coming-soon-wrapper"
+            aria-label="Coming soon info"
+            matTooltip="Vault is currently in private beta. Join the waitlist for early access.">
+            <button
+              mat-flat-button
+              type="button"
+              class="sdux-button-warn purchase-button"
+              [disabled]="true">
+              Coming Soon
+            </button>
+          </div>
+          <!-- <button
+            mat-flat-button
+            class="sdux-button purchase-button"
+            [disabled]="!domain()"
+            (click)="buyLicense()">
+            Buy License
+          </button> -->
+        </div>
+
+        <div class="pricing">
+          <div class="price">$249</div>
+          <div class="price-sub">usd per domain / lifetime</div>
+        </div>
+
+        <div class="features-grid">
+          <div class="features-column">
+            <div class="features-column-title">Core Architecture</div>
+
+            <div class="feature-item">
+              <span class="feature-check">✅</span>
+              Deterministic state pipeline
+            </div>
+
+            <div class="feature-item">
+              <span class="feature-check">✅</span>
+              Reactive signal system
+            </div>
+
+            <div class="feature-item">
+              <span class="feature-check">✅</span>
+              TypeScript-native integration
+            </div>
+          </div>
+
+          <div class="features-column">
+            <div class="features-column-title">Security &amp; Persistence</div>
+
+            <div class="feature-item">
+              <span class="feature-check">✅</span>
+              Encrypted persistence (AES-256-GCM)
+            </div>
+
+            <div class="feature-item">
+              <span class="feature-check">✅</span>
+              Cross-tab synchronization
+            </div>
+
+            <div class="feature-item">
+              <span class="feature-check">✅</span>
+              Domain isolation
+            </div>
+          </div>
+
+          <div class="features-column">
+            <div class="features-column-title">Tooling &amp; Observability</div>
+
+            <div class="feature-item">
+              <span class="feature-check">✅</span>
+              Advanced DevTools &amp; pipeline inspection
+            </div>
+
+            <div class="feature-item">
+              <span class="feature-check">✅</span>
+              Telemetry metrics &amp; logging exporters
+            </div>
+
+            <div class="feature-item">
+              <span class="feature-check">✅</span>
+              Plugin extension system
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Licenses -->
+    <div class="dashboard-card">
+      <div class="card-header">Active Licenses</div>
+
+      @if (licenses().length) {
+        <div class="license-list">
+          @for (license of licenses(); track license.uuid) {
+            <sdux-license-card [license]="license" />
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <p>No domains protected yet.</p>
+          <p>Deploy Vault to start monitoring your pipelines.</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

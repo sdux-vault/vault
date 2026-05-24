@@ -1,0 +1,119 @@
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3>StackBlitz Examples</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>StackBlitz Examples</strong> are live, runnable projects that
+      demonstrate how <sdux-brand-name [tm]="true" /> manages state across
+      multiple frameworks. Each example launches directly in StackBlitz with all
+      dependencies pre-configured—no local setup required.
+    </p>
+
+    <p>
+      Every example implements the same <sdux-feature-cell [tm]="true" />
+      pipeline logic regardless of framework. Filters, reducers, lifecycle
+      signals, and immutable state snapshots behave identically whether you
+      choose Angular, React, Vue, or Svelte. The only differences are the thin
+      framework adapters that bind pipeline output to the UI.
+    </p>
+
+    <p>
+      Select a framework from any example below to open it in StackBlitz. Modify
+      the pipeline, add behaviors, or extend the state shape—all changes run
+      immediately in the browser.
+    </p>
+  </header>
+
+  <!-- TABLE OF CONTENTS -->
+  <section class="section">
+    <div class="section-title-navigation">
+      <div class="section-title">Examples</div>
+    </div>
+
+    <div class="section-body">
+      <div class="toc-container" id="toc">
+        <div class="toc-title">Available Examples</div>
+        <ul class="toc">
+          @for (group of exampleGroups; track group.id) {
+            <li>
+              <a [routerLink]="[]" [fragment]="group.id">{{ group.heading }}</a>
+              <ul>
+                @for (example of group.examples; track example.id) {
+                  <li>
+                    <a [routerLink]="[]" [fragment]="example.id">{{
+                      example.title
+                    }}</a>
+                  </li>
+                }
+              </ul>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- EXAMPLES                                                     -->
+  <!-- ============================================================ -->
+
+  @for (group of exampleGroups; track group.id) {
+    <section class="section" [id]="group.id">
+      <div class="section-title-navigation">
+        <div class="section-title">{{ group.heading }}</div>
+        <div class="section-top-link">
+          <a [routerLink]="[]" fragment="top">↑ top</a>
+        </div>
+      </div>
+      <div class="section-body">
+        <p>{{ group.description }}</p>
+      </div>
+
+      @for (example of group.examples; track example.id) {
+        <section class="section-body" [id]="example.id">
+          <div class="h-title-navigation">
+            <div class="h-section-title">{{ example.title }}</div>
+            <div class="h-top-link">
+              <a [routerLink]="[]" fragment="top">↑ top</a>
+            </div>
+          </div>
+
+          <div class="section-body">
+            <p>{{ example.description }}</p>
+
+            <table [attr.aria-label]="example.title + ' Languages'">
+              <thead>
+                <tr>
+                  @for (lang of example.languages; track lang.key) {
+                    <th scope="col">{{ lang.name }}</th>
+                  }
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  @for (lang of example.languages; track lang.key) {
+                    <td>
+                      <button
+                        type="button"
+                        class="sdux-button"
+                        (click)="
+                          openStackBlitzExample(lang.key, example.exampleName)
+                        ">
+                        Open
+                      </button>
+                    </td>
+                  }
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      }
+    </section>
+  }
+
+  <sdux-pipeline-related-topics />
+</div>

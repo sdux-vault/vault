@@ -1,0 +1,42 @@
+<div class="search-wrapper">
+  <div class="search-box" [class.active]="focused()">
+    <button
+      type="button"
+      mat-icon-button
+      class="search-trigger"
+      aria-label="Search documentation"
+      (click)="focusInput()">
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <input
+      #searchInput
+      type="search"
+      aria-label="Search documentation"
+      [value]="query()"
+      (focus)="focused.set(true)"
+      (blur)="focused.set(false)"
+      (input)="onQueryChange($event.target.value)" />
+  </div>
+
+  <div class="dropdown">
+    @if (query() && results().length) {
+      <div class="results" [style.left.px]="dropdownLeft()">
+        @for (result of results(); track result.id) {
+          <div class="result" (mousedown)="goTo(result)">
+            <div class="title">{{ result.title }}</div>
+            <div class="meta">
+              <span>{{ result.kind }}</span>
+              <span>{{ buildProject(result.project) }}</span>
+              <span>{{ result.docLink }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    @if (query() && !results().length) {
+      <div class="no-results">No results for "{{ query() }}".</div>
+    }
+  </div>
+</div>

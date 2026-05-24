@@ -1,0 +1,389 @@
+@use '@angular/material' as mat;
+@use 'global' as global;
+@use 'index' as sdux;
+@use 'font' as font;
+@import url('assets/fonts/fonts.css');
+@import url('assets/prism/prism-vsc-dark-plus.css');
+
+/* ============================================
+   Global Application Theme — SDuX + Angular Material
+   ============================================ */
+/* --------------------------------------------
+   Base HTML setup
+--------------------------------------------- */
+html {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+/* ============================================
+   LIGHT THEME (Root Defaults)
+============================================ */
+:root {
+  color-scheme: light;
+
+  /* Brand Colors */
+  --sdux-primary: #{global.$sdux-primary-base};
+  --sdux-accent: #{global.$sdux-accent-base};
+  --sdux-warn: #{global.$sdux-warn-base};
+  --sdux-success: #{global.$sdux-success-base};
+
+  /* Surfaces */
+  --sdux-surface-bg: #{global.$sdux-surface-light-mid};
+  --sdux-surface-main: #{global.$sdux-surface-light-mid};
+  --sdux-surface-elevated: #{global.$sdux-surface-light-accent};
+  --sdux-surface-outline: #{global.$sdux-surface-outline-light};
+  --sdux-surface-light: #{global.$sdux-primary-light};
+
+  /* Text */
+  --sdux-text-primary: #{global.$sdux-text-inverse};
+  --sdux-text-secondary: #{global.$sdux-text-secondary};
+  --sdux-text-inverse: #{global.$sdux-text-inverse};
+  --sdux-text-default: var(--sdux-text-inverse);
+  --sdux-text-black: #{global.$sdux-text-black};
+  --sdux-text-black-white: #{global.$sdux-text-black};
+
+  /* Layout */
+  --app-toolbar-height: #{global.$toolbar-height};
+  --app-footer-height: #{global.$footer-height};
+
+  /* Toolbar */
+  --toolbar-bg: #{global.$sdux-primary-base};
+  --toolbar-text: #{global.$sdux-text-white};
+  --toolbar-border: #{global.$sdux-surface-outline-light};
+
+  /* Sidenav */
+
+  /* Footer */
+  --footer-border: #{global.$sdux-primary-base};
+
+  /* --------------------------------------------
+     GLOBAL LINK COLORS (Light Mode)
+     - Links must be dark on light surfaces
+  --------------------------------------------- */
+  --link-color: #{global.$sdux-text-inverse}; /* readable dark navy */
+  --link-hover: #{global.$sdux-primary-base}; /* brand blue */
+  --link-visited: #{global.$sdux-primary-dark};
+
+  /* Material Bridge Variables */
+  --mat-sys-surface: var(--sdux-surface-bg);
+  --mat-sys-on-surface: var(--sdux-text-default);
+  --mat-sys-primary: var(--sdux-primary);
+  --mat-sys-on-primary: #{global.$sdux-text-white};
+  --mat-sys-secondary: var(--sdux-accent);
+  --mat-sys-on-secondary: #{global.$sdux-text-white};
+  --mat-sys-error: var(--sdux-warn);
+  --mat-sys-outline: var(--sdux-surface-outline);
+
+  --mat-active-text: #{global.$sdux-primary-base};
+
+  --mat-dialog-container-max-width: 80vw;
+
+  @include mat.form-field-density(-4);
+  @include mat.select-density(-4);
+
+  .mat-mdc-menu-item .mat-icon {
+    color: #{global.$sdux-primary-base};
+  }
+}
+
+/* ============================================
+   GLOBAL BODY STYLES
+============================================ */
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+
+  background-color: var(--sdux-surface-bg);
+  color: var(--sdux-text-default);
+  font-family: global.$sdux-font-family;
+  font-weight: global.$sdux-font-weight;
+  font-size: global.$font-size-md;
+  line-height: global.$line-height;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  /* GLOBAL LINK RULES */
+  a {
+    @include global.a-link(
+      var(--link-color),
+      var(--link-hover),
+      var(--link-visited)
+    );
+  }
+
+  a {
+    @include global.a-link-primary;
+  }
+
+  a:visited {
+    @include global.a-link-visited-primary;
+  }
+
+  a:hover {
+    @include global.a-link-hover-primary;
+  }
+
+  a:active {
+    @include global.a-link-active-primary;
+  }
+
+  :not(pre) > code {
+    @include font.code-font;
+
+    white-space: nowrap;
+
+    vertical-align: baseline;
+
+    padding: global.$spacing-xxs global.$spacing-xs;
+
+    border-radius: global.$border-radius-sm;
+
+    background: color-mix(in srgb, currentColor 6%, transparent);
+    border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+  }
+}
+
+/* ============================================
+   DARK THEME
+============================================ */
+html[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --sdux-surface-bg: #{global.$sdux-surface-dark};
+  --sdux-surface-main: #{global.$sdux-surface-mid};
+  --sdux-surface-elevated: #{global.$sdux-surface-light-mid};
+  --sdux-surface-outline: #{global.$sdux-surface-outline};
+
+  /* Text Colors */
+  --sdux-text-primary: #{global.$sdux-text-primary};
+  --sdux-text-secondary: #{global.$sdux-text-secondary};
+  --sdux-text-inverse: #{global.$sdux-text-inverse};
+  --sdux-text-default: var(--sdux-text-primary);
+  --sdux-text-black-white: #{global.$sdux-text-white};
+
+  /* Toolbar */
+  --toolbar-bg: #{global.$sdux-surface-dark};
+  --toolbar-text: #{global.$sdux-text-primary};
+  --toolbar-border: #{global.$sdux-surface-outline};
+
+  /* Footer */
+  --footer-border: #{global.$sdux-primary-light};
+
+  /* --------------------------------------------
+     GLOBAL LINK COLORS (Dark Mode)
+  --------------------------------------------- */
+  --link-color: #{global.$sdux-text-primary};
+  --link-hover: #{global.$sdux-primary-light};
+  --link-visited: #{global.$sdux-primary-light};
+
+  /* Material Bridge */
+  --mat-sys-surface: #{global.$sdux-surface-darker};
+  --mat-sys-on-surface: #{global.$sdux-text-primary};
+  --mat-sys-primary: #{global.$sdux-primary-dark};
+  // --mat-sys-primary: #{global.$sdux-primary-base};
+  --mat-sys-on-primary: #{global.$sdux-text-white};
+  --mat-sys-secondary: #{global.$sdux-accent-light};
+  --mat-sys-on-secondary: #{global.$sdux-text-black};
+  --mat-sys-error: #{global.$sdux-warn-base};
+  --mat-sys-outline: #{global.$sdux-surface-outline};
+
+  --mat-active-text: #{global.$sdux-primary-light};
+
+  /* DARK MODE MENU */
+  .mat-mdc-menu-panel {
+    background-color: #{global.$sdux-surface-dark};
+    color: #{global.$sdux-text-primary};
+  }
+
+  .mat-mdc-menu-item {
+    color: #{global.$sdux-text-primary};
+
+    &:hover {
+      background-color: #{global.$sdux-hover-background-color};
+    }
+
+    .mat-icon {
+      color: #{global.$sdux-primary-light};
+    }
+  }
+
+  .mat-mdc-icon-button {
+    color: #{global.$sdux-text-primary};
+
+    &:hover {
+      background-color: #{global.$sdux-hover-background-color};
+    }
+  }
+
+  /* Force expansion indicator color for dark mode */
+  .mat-expansion-indicator svg path {
+    /* !important: override Material's inline SVG fill for dark mode */
+    fill: var(--sdux-text-primary) !important;
+  }
+}
+
+/* ============================================
+   MATERIAL + COMPONENT BRIDGES
+============================================ */
+/* 
+START TABs
+*/
+/* Pagination Arrows */
+.mat-mdc-tab-header-pagination-chevron {
+  /* !important: override Material's inline chevron color for theme */
+  border-color: var(--sdux-text-primary) !important;
+}
+
+/* TAB BAR BACKGROUND */
+.mat-mdc-tab-header,
+.mat-mdc-tab {
+  /* !important: override Material's inline tab background for theme */
+  background-color: var(--sdux-surface-bg) !important;
+}
+
+/* LABEL COLOR (normal) */
+.mdc-tab__text-label {
+  /* !important: override Material's inline label color for theme */
+  color: var(--sdux-text-primary) !important;
+  transition: color 0.25s ease;
+}
+
+/* ACTIVE / HOVER / FOCUS LABEL */
+.mdc-tab--active .mdc-tab__text-label,
+.mdc-tab:hover .mdc-tab__text-label,
+.mdc-tab:focus .mdc-tab__text-label {
+  /* !important: override Material's inline label color for active/hover/focus states */
+  color: var(--sdux-primary) !important;
+}
+
+/* >>> The missing dark-theme highlight <<< */
+.mat-mdc-tab:hover:not(.mdc-tab--active) {
+  /* !important: override Material's inline hover background for theme */
+  background-color: color-mix(
+    in srgb,
+    var(--sdux-primary) 18%,
+    transparent
+  ) !important;
+}
+
+/* 
+END TABs
+*/
+
+/* List Item Ripple Override */
+.mat-mdc-list-item:hover::before,
+.mat-mdc-list-item:focus::before {
+  /* !important: override Material's ripple overlay for custom hover behavior */
+  background-color: transparent !important;
+  opacity: 0 !important;
+}
+
+/* Hover Highlight */
+.mat-mdc-list-item:hover {
+  /* !important: override Material's inline hover background for theme */
+  background-color: color-mix(
+    in srgb,
+    var(--sdux-primary) 25%,
+    transparent
+  ) !important;
+}
+
+/* routerLinkActive */
+.mat-mdc-list-item.active {
+  /* !important: override Material's inline active background for theme */
+  background-color: color-mix(
+    in srgb,
+    var(--sdux-primary) 18%,
+    transparent
+  ) !important;
+}
+
+.view-code-inline {
+  display: block;
+  color: var(--sdux-text-black); // readable in dark mode too
+  padding: 12px;
+  border-radius: var(--sdux-border-radius);
+  font-family: monospace;
+  font-size: 13px;
+
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+
+  /* Smooth scroll bar */
+  scrollbar-width: thin;
+
+  .token.comment {
+    color: global.$sdux-text-secondary;
+    font-style: italic;
+  }
+
+  .token.comment.doc-comment {
+    color: global.$sdux-text-secondary;
+    font-style: italic;
+  }
+
+  .token.comment:not(.doc-comment) {
+    opacity: 0.7;
+  }
+}
+
+.sdux-diagram-dialog-panel {
+  .diagram-dialog {
+    overflow: hidden;
+    padding-left: global.$spacing-md;
+    padding-right: global.$spacing-md;
+
+    .diagram-dialog-header {
+      display: flex;
+      flex-direction: row;
+      /* !important: override Material's dialog header alignment */
+      align-items: center !important;
+      justify-content: space-between;
+      height: 60px;
+
+      .title {
+        @include global.h2-element;
+        display: flex;
+        flex-direction: row;
+        /* !important: override Material's dialog title alignment */
+        align-items: center !important;
+        justify-content: space-between;
+        margin: 0;
+        padding-left: global.$spacing-md;
+        color: global.$sdux-primary-base;
+      }
+
+      .close-button {
+        @include global.sdux-icon-button();
+      }
+    }
+
+    .diagram-dialog-content {
+      .image-container {
+        aspect-ratio: 1;
+        margin: 0;
+        height: auto;
+      }
+    }
+
+    .diagram-dialog-footer {
+      display: flex;
+      flex-direction: row;
+      /* !important: override Material's dialog footer alignment */
+      align-items: center !important;
+      justify-content: flex-end;
+      height: 50px;
+    }
+  }
+}

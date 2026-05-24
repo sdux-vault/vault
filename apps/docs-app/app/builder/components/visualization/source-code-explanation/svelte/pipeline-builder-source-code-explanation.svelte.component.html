@@ -1,0 +1,76 @@
+<div class="section-body">
+  <div class="section-title">Generated Example Files</div>
+
+  <p>
+    This page contains the <strong>full, generated source output</strong> for
+    the pipeline configuration you selected in the Builder. These files are
+    designed to be <strong>copy/paste ready</strong> and follow
+    <sdux-brand-name /> best practices: the
+    <strong>module-scope <sdux-feature-cell /> owns the Vault</strong>,
+    components consume the reactive state snapshot, and all updates flow through
+    exported cell functions so the pipeline remains deterministic and
+    consistent.
+  </p>
+
+  <h3>What You're Looking At</h3>
+  <ul>
+    <li>
+      <strong>installation</strong> — The minimal install command for the
+      packages required by your selection.
+    </li>
+    <li>
+      <strong>example.cell.ts</strong> — The module-scope
+      <sdux-feature-cell /> that initializes the Vault, registers the cell, and
+      configures the runtime pipeline via the fluent API. Exported functions
+      provide the public API for state updates.
+    </li>
+    <li>
+      <strong>ExampleView.svelte</strong> — A Svelte component that bridges the
+      Vault's reactive state stream into Svelte reactivity via the
+      <code>$state</code> rune and <code>onDestroy</code> lifecycle hook, and
+      delegates state updates to the cell module's exported functions.
+    </li>
+    <li>
+      <strong>main.ts</strong> — The application entry point that mounts the
+      root component.
+    </li>
+  </ul>
+
+  <h3>How to Use These Files</h3>
+  <ul>
+    <li>
+      <strong>Start with installation</strong> and install the listed packages
+      in your project.
+    </li>
+    <li>
+      <strong>Copy the files into your app</strong> (or use them as reference
+      templates).
+    </li>
+    <li>
+      <strong>Rename placeholders</strong> (cell name, state type, and
+      <sdux-feature-cell /> key) to match your domain.
+    </li>
+    <li>
+      <strong>Keep Vault access inside the cell module</strong> — components
+      should only read the exported state and call exported functions to update
+      state.
+    </li>
+  </ul>
+
+  <h3>Important</h3>
+  <ul>
+    <li>
+      The generated pipeline configuration is <strong>deterministic</strong>: it
+      is defined at module scope and activated only when
+      <strong>initialize()</strong> is called.
+    </li>
+    <li>
+      If you add or remove behaviors in the Builder, this output will change to
+      match your new pipeline configuration.
+    </li>
+    <li>
+      Use the <strong>Copy</strong> button on each file to copy the source
+      directly.
+    </li>
+  </ul>
+</div>

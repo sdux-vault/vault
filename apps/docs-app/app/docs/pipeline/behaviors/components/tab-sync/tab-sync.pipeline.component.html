@@ -1,0 +1,1009 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Updated 2026-05-08 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Tab Sync Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Tab Sync</strong> is a <strong>State behavior</strong> that
+      extends
+      <a href="/docs/pipeline/addons/with-core-state-behavior">Core State</a>
+      to broadcast finalized
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+      snapshots to other browser tabs via the
+      <strong> native browser <code>BroadcastChannel</code> API</strong>
+      , and to apply incoming snapshots from remote tabs directly to the local
+      state without re-entering the pipeline.
+    </p>
+
+    <p>
+      This behavior operates at the <strong>State stage</strong> of the
+      pipeline. It extends the standard state commit path by adding a
+      post-commit broadcast step. When a finalized snapshot is committed
+      locally, it is serialized and posted to a feature-scoped
+      <code>BroadcastChannel</code>. Other tabs listening on the same channel
+      receive the snapshot and apply it directly, bypassing resolve, merge,
+      operators, filters, and reducers.
+    </p>
+
+    <p>
+      Tab Sync does not transform values, influence merge semantics, or
+      participate in pipeline control flow beyond its broadcast and receive
+      responsibilities. The
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      continues to operate on plain, in-memory state. Cross-tab coordination
+      occurs only at the commit boundary.
+    </p>
+
+    <h4>Critical Behavior</h4>
+    <p>
+      Tab Sync is a <em>critical</em> behavior. If the behavior does not have a
+      <strong>valid <sdux-vault-brand-name [tm]="true" /> license</strong>, the
+      behavior reports the failure immediately. However, if the
+      <code>BroadcastChannel</code> API is unavailable in the runtime
+      environment, the behavior degrades gracefully — it continues to operate as
+      standard Core State without broadcasting or receiving cross-tab messages.
+      This allows applications running in SSR, Node.js, or restricted
+      environments to use the same
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      configuration without errors.
+    </p>
+
+    <h4>Required Controller</h4>
+    <p>
+      The Tab Sync system requires both the
+      <strong>Tab Sync Controller</strong> and the
+      <strong>Tab Sync State Behavior</strong> to be registered on the same
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>. The
+      controller handles initial cross-tab state negotiation — determining
+      whether the new tab should adopt established state from a peer or proceed
+      with its bootstrap state. The behavior manages ongoing cross-tab state
+      broadcasting and reception after negotiation completes. Without the
+      controller, the behavior cannot safely determine when to begin
+      broadcasting.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="title">Degraded Mode</div>
+      <p>
+        If the <code>BroadcastChannel</code> API or <code>localStorage</code>
+        is unavailable, the Tab Sync Controller degrades gracefully — it
+        immediately clears the negotiation cache and abstains, allowing the
+        pipeline to proceed with bootstrap state. The behavior continues to
+        operate as standard Core State. No errors are thrown and no pipeline
+        execution is blocked. The
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        functions normally as a single-tab state container.
+      </p>
+      <p>
+        This makes Tab Sync safe to use in server-side rendering (SSR), Node.js
+        services, Deno, web workers, and any other runtime where
+        browser-specific APIs are not present. The same
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        configuration works across all environments without conditional logic or
+        feature detection.
+      </p>
+    </div>
+
+    <h4>Channel Lifecycle</h4>
+    <p>
+      The <code>BroadcastChannel</code> remains open for the lifetime of the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> and is
+      closed automatically on <code>destroy</code>. Each tab generates a unique
+      identifier at construction time to distinguish local broadcasts from
+      remote ones.
+    </p>
+
+    <a [routerLink]="[]" fragment="tab-identity-and-broadcast-targeting"
+      >Learn More →</a
+    >
+
+    <h4>Broadcast Filtering</h4>
+    <p>
+      Not all state emission types are broadcast. Destroy, incoming pipeline,
+      error, abort, and deny emission types are filtered from cross-tab
+      propagation. However, the state changes produced by these emissions are
+      still written to the local snapshot. Because broadcasts transmit the
+      <strong>full snapshot</strong>, any state change — including an error
+      value set by a prior non-broadcast emission — will be included in the next
+      broadcastable emission.
+    </p>
+
+    <div class="callout callout-warning">
+      <div class="title">License Requirement</div>
+      <p>
+        Tab Sync requires a
+        <strong> valid <sdux-vault-brand-name [tm]="true" /> license </strong>.
+        License validation is performed asynchronously at construction time
+        using the license token provided in the behavior context. If validation
+        fails, the behavior is marked as unlicensed and the pipeline rejects it.
+      </p>
+      <a [routerLink]="[]" fragment="licensing-and-tab-sync">Learn More →</a>
+    </div>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- CROSS-TAB MESSAGE FLOW -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Cross-Tab Message Flow</div>
+
+    <div class="section-body">
+      <p>
+        When a local <code>commitState</code> produces a broadcastable snapshot,
+        Tab Sync posts a message containing the feature cell key, the
+        originating tab identifier, the isolated snapshot, and the emission
+        type. The message is delivered asynchronously via the native browser
+        <code>BroadcastChannel</code> to all other tabs sharing the same origin
+        and channel name.
+      </p>
+
+      <p>
+        On the receiving side, the behavior filters incoming messages by tab
+        identifier and feature cell key. Messages originating from the same tab
+        or targeting a different feature cell are discarded silently. Valid
+        remote snapshots are applied directly to the local state and emitted as
+        a <code>TabSync</code> emission type without re-entering the pipeline.
+      </p>
+
+      <div class="callout callout-warning">
+        <strong>Re-Broadcast Prevention</strong>
+        <p>
+          Received cross-tab snapshots are committed through the parent
+          <code>super.commitState</code> path, which bypasses the broadcast
+          override entirely. Because the override is only invoked by the local
+          pipeline commit path, incoming remote snapshots are never
+          re-broadcast. This ensures that tab synchronization does not produce
+          infinite broadcast loops between tabs.
+        </p>
+      </div>
+
+      <p>
+        The channel name is scoped per feature cell using a fixed prefix and the
+        feature cell key. This ensures that different feature cells within the
+        same origin maintain independent synchronization channels.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- TAB SYNC STAGE DIAGRAM -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/9.0/9.5-tab-sync-controller-flow.svg"
+        [tooltip]="'Tab Sync Controller and Behavior Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Tab Sync is <strong>opt-in</strong> per <sdux-feature-cell /> and not a
+        global feature. Cross-tab synchronization is not enabled at the
+        application level — only
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instances that explicitly attach
+        <code>withTabSyncStateBehavior</code> will participate in cross-tab
+        broadcasting. All other feature cells continue to operate with standard,
+        tab-local state management.
+      </p>
+
+      <p>
+        Tab Sync does not accept runtime configuration options. Its behavior is
+        fully defined and deterministic, providing automatic cross-tab
+        broadcasting, channel management, and lifecycle teardown by default.
+      </p>
+
+      <p>
+        Configuration consists solely of attaching the Tab Sync behavior to a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        in place of the default Core State behavior. When present, Tab Sync
+        replaces Core State and automatically participates in the State stage
+        with cross-tab synchronization capabilities.
+      </p>
+
+      <p>
+        Tab Sync inherits all state management semantics from Core State,
+        including snapshot isolation, emission classification, and lifecycle
+        management. The only addition is the post-commit broadcast step and the
+        cross-tab receive listener.
+      </p>
+
+      <table aria-label="Tab Sync Behavior">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Behavior</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p>
+                <strong>
+                  <a href="/docs/pipeline/addons/with-tab-sync-state-behavior">
+                    withTabSyncStateBehavior
+                  </a>
+                </strong>
+              </p>
+              <p>Type: TabSyncState</p>
+              <p>Stage: State</p>
+            </td>
+            <td>
+              <p>
+                Extends Core State to broadcast finalized state snapshots to
+                other browser tabs via <strong>BroadcastChannel</strong> and
+                applies incoming remote snapshots directly to the local state
+                without re-entering the pipeline.
+              </p>
+
+              <p>
+                This behavior requires a valid <sdux-brand-name /> Vault
+                license. The channel is opened at construction time and closed
+                automatically on destroy.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Tab Sync</strong> behavior is attached directly during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        definition and is not configured through a fluent API. This behavior is
+        registered once, at construction time, as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>'s
+        structural pipeline configuration.
+      </p>
+
+      <p>
+        Because this behavior replaces the default Core State behavior and
+        manages a <code>BroadcastChannel</code> lifecycle, it must be present
+        before any pipeline execution begins. Attaching it at definition time
+        ensures that all committed state is consistently broadcast and that
+        cross-tab messages are received from the moment the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized.
+      </p>
+
+      <p>
+        This design ensures deterministic synchronization behavior and prevents
+        runtime mutation of cross-tab coordination rules. The behavior opens its
+        channel on instantiation and closes it automatically on destroy.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- TAB IDENTITY AND BROADCAST TARGETING -->
+  <!-- ====================================================== -->
+  <section class="section" id="tab-identity-and-broadcast-targeting">
+    <div class="section-title">Tab Identity and Broadcast Targeting</div>
+
+    <div class="section-body">
+      <p>
+        Each tab maintains a stable identifier stored in
+        <code>sessionStorage</code> under the key
+        <code>sdux-vault:tab-id</code>. This identifier is a UUID generated once
+        per browser tab session and persists across page reloads within the same
+        tab. When a tab is closed, <code>sessionStorage</code> is cleared
+        automatically by the browser, and a new identifier is assigned if the
+        user opens a fresh tab.
+      </p>
+
+      <div class="callout callout-warning">
+        <strong>Non-Persistent Fallback</strong>
+        <p>
+          In environments where <code>sessionStorage</code> is unavailable or
+          access is restricted — such as server-side rendering, sandboxed
+          iframes, or certain privacy-focused browser configurations — the
+          behavior falls back to generating a plain UUID without persistence.
+          The tab identifier remains functional for the lifetime of the behavior
+          instance but will not survive page reloads.
+        </p>
+      </div>
+
+      <p>
+        The tab identifier is included in every broadcast message. Receiving
+        tabs use it to distinguish remote messages from their own and to
+        identify which tab originated a given state change. This opens the door
+        for application-level logic that targets or filters broadcasts based on
+        the originating tab.
+      </p>
+
+      <h4>Reading the Tab Identifier</h4>
+      <p>
+        The tab identifier is accessible at any time from
+        <code>sessionStorage</code> using the
+        <code>sdux-vault:tab-id</code> key. Because it is session-scoped and
+        stable, application code can read it to correlate local activity with
+        incoming broadcast messages.
+      </p>
+
+      <h4>Filtering Broadcasts by Tab</h4>
+      <p>
+        By default, Tab Sync applies all valid remote snapshots to the local
+        state. In some scenarios, applications may want to selectively process
+        broadcasts based on which tab sent them. The stable tab identifier makes
+        this possible by providing a consistent origin reference that survives
+        page navigation and reloads within the same tab session.
+      </p>
+
+      <p>Common scenarios where broadcast filtering by tab is useful:</p>
+      <ul>
+        <li>
+          <strong>Admin versus user tabs</strong> — an administrative tab
+          broadcasts configuration changes, but other admin tabs should ignore
+          those broadcasts to avoid overwriting in-progress edits.
+        </li>
+        <li>
+          <strong>Primary/secondary tab patterns</strong> — only one tab acts as
+          the primary data source while secondary tabs consume its broadcasts,
+          preventing conflicting writes from multiple tabs.
+        </li>
+        <li>
+          <strong>Selective feature sync</strong> — a dashboard tab broadcasts
+          summary state, but a detail-view tab filters out those broadcasts
+          because it manages its own granular state independently.
+        </li>
+        <li>
+          <strong>Debugging and diagnostics</strong> — during development, a
+          developer can log or inspect broadcasts from a specific tab identifier
+          to trace cross-tab state flow without noise from other open tabs.
+        </li>
+        <li>
+          <strong>Conflict resolution</strong> — when multiple tabs commit
+          overlapping state changes, application logic can use tab identifiers
+          to implement last-writer-wins, priority-based, or merge-based conflict
+          strategies.
+        </li>
+      </ul>
+
+      <div class="callout callout-info">
+        <strong>Session Scope</strong>
+        <p>
+          The tab identifier is scoped to <code>sessionStorage</code> and is
+          never transmitted to a server. It exists solely for client-side
+          coordination between browser tabs sharing the same origin.
+        </p>
+      </div>
+      <div class="callout callout-warning">
+        <strong>Duplicate Tab Cloning</strong>
+        <p>
+          When a browser tab is duplicated (for example, using "Duplicate Tab"
+          in Chrome or Firefox), the new tab receives a copy of the original
+          tab's <code>sessionStorage</code>, including the
+          <code>sdux-vault:tab-id</code> value. This means the cloned tab will
+          initially share the same tab identifier as its source. Because Tab
+          Sync uses the tab identifier to filter out self-originated broadcasts,
+          both tabs will discard each other's messages as if they were local —
+          effectively preventing synchronization between them until one tab's
+          identifier changes. A page reload in the cloned tab will not resolve
+          this, as <code>sessionStorage</code> persists across reloads. The
+          identifier is only regenerated when <code>sessionStorage</code> is
+          explicitly cleared or the tab is closed and a new one is opened.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- BROADCAST PAYLOAD AND PLATFORM CONSIDERATIONS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      Broadcast Payload and Platform Considerations
+    </div>
+
+    <div class="section-body">
+      <h4>Full-State Broadcasts</h4>
+      <p>
+        Tab Sync broadcasts the
+        <strong>entire finalized state snapshot</strong> (<a
+          href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >), not a delta or diff of what changed. Each broadcast message contains
+        the complete state value at the time of commit. Receiving tabs replace
+        their local state with the incoming snapshot in its entirety.
+      </p>
+
+      <p>
+        This design eliminates the need for ordered message delivery, diff
+        reconciliation, or sequence tracking between tabs. Every broadcast is
+        self-contained and idempotent — a receiving tab can apply any single
+        message and arrive at a consistent state regardless of how many prior
+        messages it may have missed.
+      </p>
+
+      <div class="callout callout-warning">
+        <strong>Error State in Broadcasts</strong>
+        <p>
+          Because broadcasts contain the full snapshot, an error value that was
+          set by a prior <code>PipelineError</code> emission will be included in
+          subsequent broadcasts. The error emission type itself is filtered from
+          broadcasting, but the error value persists in the snapshot until
+          explicitly cleared. Applications that need to prevent error
+          propagation across tabs should clear the error before committing new
+          state.
+        </p>
+      </div>
+
+      <h4>Data Size Considerations</h4>
+      <p>
+        Because the full state is serialized on every broadcast, large state
+        trees produce proportionally larger messages on the
+        <code>BroadcastChannel</code>. The browser's structured clone algorithm
+        handles serialization, and there is no hard message size limit imposed
+        by the specification. However, very large payloads can increase memory
+        pressure and serialization time across all open tabs.
+      </p>
+
+      <p>
+        For feature cells managing large datasets, consider the following
+        strategies to manage broadcast overhead:
+      </p>
+      <ul>
+        <li>
+          Keep synchronized state focused and minimal — store only the data that
+          other tabs need to reflect, not the entire application model.
+        </li>
+        <li>
+          Use separate feature cells for large, tab-local data that does not
+          need cross-tab synchronization.
+        </li>
+        <li>
+          Profile broadcast frequency and payload size during development to
+          identify potential bottlenecks before they reach production.
+        </li>
+      </ul>
+
+      <h4>Platform Compatibility</h4>
+      <p>
+        Tab Sync relies on the native browser
+        <code>BroadcastChannel</code> API. This API is supported in all modern
+        browsers, including Chrome, Firefox, Edge, and Safari (from version
+        15.4). However, it is <strong>not available</strong> in all TypeScript
+        runtime environments.
+      </p>
+
+      <p>
+        <sdux-vault-brand-name /> is a TypeScript library and can run in any
+        environment that executes TypeScript — including Node.js, Deno,
+        server-side rendering frameworks, and web workers. When the
+        <code>BroadcastChannel</code> API is not available in the runtime, the
+        behavior silently skips channel creation and operates as standard
+        <a href="/docs/pipeline/addons/with-core-state-behavior">Core State</a>.
+        All state management continues to function normally — only cross-tab
+        broadcasting and receiving are disabled.
+      </p>
+
+      <p>
+        This graceful degradation means applications can use the same
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        configuration across browser, SSR, and server environments without
+        conditional logic or runtime feature detection. When running in a
+        browser, Tab Sync activates automatically. When running elsewhere, the
+        behavior falls back to core state seamlessly.
+      </p>
+
+      <div class="callout callout-info">
+        <strong>Universal Configuration</strong>
+        <p>
+          There is no need to conditionally attach
+          <code>withTabSyncStateBehavior</code> based on the runtime
+          environment. The behavior detects the availability of
+          <code>BroadcastChannel</code> and <code>sessionStorage</code> at
+          construction time and adapts accordingly. In non-browser environments,
+          the tab identifier falls back to a plain UUID without persistence.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DEVTOOLS MONITORING -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">DevTools Monitoring</div>
+
+    <div class="section-body">
+      <p>
+        Tab Sync operates entirely outside the <sdux-brand-name /> pipeline.
+        When a remote snapshot arrives via <code>BroadcastChannel</code>, it is
+        applied directly to the local state and emitted as a
+        <code>TabSync</code> emission — it does not pass through the pipeline
+        stages. As a result,
+        <strong
+          >cross-tab state updates produce no additional pipeline messages in
+          the <sdux-brand-name /> DevTools</strong
+        >.
+      </p>
+
+      <p>
+        This is by design. The DevTools trace pipeline execution to help
+        engineers understand how state transitions flow through the behavioral
+        pipeline. Because Tab Sync bypasses the pipeline entirely, there is no
+        execution to trace. The received snapshot is treated as an authoritative
+        external update — equivalent to a finalized state that has already
+        completed its pipeline journey in the originating tab.
+      </p>
+
+      <p>
+        Engineers monitoring cross-tab behavior should be aware of the
+        following:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Originating tab</strong> — the tab that commits state will
+          show normal pipeline traces in DevTools (incoming, resolve, merge,
+          filter, reduce, finalize). The broadcast occurs as a post-commit side
+          effect and is not itself a traced operation.
+        </li>
+        <li>
+          <strong>Receiving tab</strong> — the tab that receives the remote
+          snapshot will reflect the updated state in its observable stream, but
+          no pipeline trace will appear in DevTools because no pipeline was
+          executed.
+        </li>
+        <li>
+          <strong>State timeline</strong> — the DevTools state timeline will
+          <strong>not</strong> show cross-tab snapshot arrivals. Because Tab
+          Sync bypasses the pipeline, there is no traced emission to record.
+          Engineers debugging cross-tab state flow should observe the receiving
+          tab's state observable directly rather than relying on DevTools
+          timeline entries.
+        </li>
+      </ul>
+
+      <div class="callout callout-info">
+        <strong>Zero Noise Guarantee</strong>
+        <p>
+          Tab Sync adds no overhead to DevTools output. Whether an application
+          synchronizes one feature cell or dozens across tabs, the DevTools
+          pipeline view remains clean and focused exclusively on locally
+          initiated state transitions. Cross-tab arrivals update the observable
+          stream silently, keeping signal-to-noise ratio high during debugging.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <h4>Example 1: Use the Tab Sync Behavior in a FeatureCell</h4>
+
+      <p>
+        This example demonstrates a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        configured with the
+        <strong>
+          <a href="/docs/pipeline/addons/with-tab-sync-state-behavior">
+            withTabSyncStateBehavior
+          </a> </strong
+        >. When state updates are committed, the finalized snapshot is broadcast
+        to all other browser tabs sharing the same origin.
+      </p>
+
+      <p>
+        Tab Sync extends Core State and broadcasts finalized snapshots as a
+        post-commit side effect. It does not transform values, influence merge
+        semantics, or participate in pipeline control flow.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="
+                    'Example 1: Synchronize FeatureCell State Across Tabs'
+                  ">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+import { ApplicationConfig } from '@angular/core';
+import { provideVault, provideFeatureCell } from '@sdux-vault/angular';
+import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
+import { EmployeeService } from './employee.service';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: []
+      },
+      [
+        // Enable cross-tab state synchronization
+        withTabSyncStateBehavior
+      ],
+      [
+        // Tab Sync Controller handles initial negotiation
+        withTabSyncController
+      ]
+    )
+  ]
+};
+
+// employee.service.ts
+
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.shape';
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+
+  addEmployee(): void {
+    // State is committed locally and broadcast to other tabs
+    this.vault.mergeState({
+      value: [{ id: 1, name: 'Jane Doe' }]
+    });
+  }
+}`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="
+                    'Example 1: Synchronize FeatureCell State Across Tabs'
+                  ">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
+import { Employee } from './employee.shape';
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Enable cross-tab state synchronization
+    withTabSyncStateBehavior
+  ],
+  [
+    // Tab Sync Controller handles initial negotiation
+    withTabSyncController
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+
+// State is committed locally and broadcast to other tabs
+employeeCell.mergeState({
+  value: [{ id: 1, name: 'Jane Doe' }]
+});`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="
+                    'Example 1: Synchronize FeatureCell State Across Tabs'
+                  ">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
+import { Employee } from './employee.shape';
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Enable cross-tab state synchronization
+    withTabSyncStateBehavior
+  ],
+  [
+    // Tab Sync Controller handles initial negotiation
+    withTabSyncController
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+
+// State is committed locally and broadcast to other tabs
+employeeCell.mergeState({
+  value: [{ id: 1, name: 'Jane Doe' }]
+});`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <h4>Example 2: Receiving State from Another Tab</h4>
+
+      <p>
+        When another tab commits state to the same feature cell, the local tab
+        automatically receives the updated snapshot and emits it as a
+        <code>TabSync</code> emission. No additional configuration is required.
+        Consumers observe the synchronized state through the standard state
+        observable.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 2: Receiving Cross-Tab State'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// Tab A commits state
+this.vault.mergeState({
+  value: [{ id: 1, name: 'Jane Doe' }]
+});
+
+// Tab B automatically receives the updated snapshot
+// via the standard state signal
+console.info(this.vault.state.value());
+// → [{ id: 1, name: 'Jane Doe' }]`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 2: Receiving Cross-Tab State'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// Tab A commits state
+employeeCell.mergeState({
+  value: [{ id: 1, name: 'Jane Doe' }]
+});
+
+// Tab B automatically receives the updated snapshot
+employeeCell.state$.subscribe(snapshot => {
+  console.info(snapshot.value);
+  // → [{ id: 1, name: 'Jane Doe' }]
+});`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 2: Receiving Cross-Tab State'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// Tab A commits state
+employeeCell.mergeState({
+  value: [{ id: 1, name: 'Jane Doe' }]
+});
+
+// Tab B automatically receives the updated snapshot
+employeeCell.state$.subscribe(snapshot => {
+  console.info(snapshot.value);
+  // → [{ id: 1, name: 'Jane Doe' }]
+});`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <h4>Example 3: Pairing Tab Sync with Persistence</h4>
+
+      <p>
+        Tab Sync can be combined with persist and encryption behaviors to
+        achieve cross-tab synchronization, durable storage, and at-rest
+        encryption. When all three behaviors are configured, state is encrypted,
+        persisted locally, and broadcast to other tabs in a single commit cycle.
+        It is never advised to persist state to local storage without
+        encryption.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="
+                    'Example 3: Tab Sync with Local Storage Persistence'
+                  ">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+import { ApplicationConfig } from '@angular/core';
+import { provideVault, provideFeatureCell } from '@sdux-vault/angular';
+import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
+import { withAes256EncryptBehavior } from '@sdux-vault/addons';
+import { withLocalStoragePersistBehavior } from '@sdux-vault/core';
+import { EmployeeService } from './employee.service';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: []
+      },
+      [
+        // Cross-tab synchronization
+        withTabSyncStateBehavior,
+        // AES-256-GCM encryption for persisted state
+        withAes256EncryptBehavior,
+        // Durable local storage persistence
+        withLocalStoragePersistBehavior
+      ],
+      [
+        // Tab Sync Controller handles initial negotiation
+        withTabSyncController
+      ]
+    )
+  ]
+};`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="
+                    'Example 3: Tab Sync with Local Storage Persistence'
+                  ">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
+import { withAes256EncryptBehavior } from '@sdux-vault/addons';
+import { withLocalStoragePersistBehavior } from '@sdux-vault/core';
+import { Employee } from './employee.shape';
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Cross-tab synchronization
+    withTabSyncStateBehavior,
+    // AES-256-GCM encryption for persisted state
+    withAes256EncryptBehavior,
+    // Durable local storage persistence
+    withLocalStoragePersistBehavior
+  ],
+  [
+    // Tab Sync Controller handles initial negotiation
+    withTabSyncController
+  ]
+);`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="
+                    'Example 3: Tab Sync with Local Storage Persistence'
+                  ">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
+import { withAes256EncryptBehavior } from '@sdux-vault/addons';
+import { withLocalStoragePersistBehavior } from '@sdux-vault/core';
+import { Employee } from './employee.shape';
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Cross-tab synchronization
+    withTabSyncStateBehavior,
+    // AES-256-GCM encryption for persisted state
+    withAes256EncryptBehavior,
+    // Durable local storage persistence
+    withLocalStoragePersistBehavior
+  ],
+  [
+    // Tab Sync Controller handles initial negotiation
+    withTabSyncController
+  ]
+);`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-vault-tab-sync-licensing-common />
+
+  <sdux-vault-tab-sync-privacy-common />
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

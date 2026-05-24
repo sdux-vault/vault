@@ -1,0 +1,17 @@
+@switch (type) {
+  @case ('built-in-debugger') {
+    <sdux-dev-tools-built-in-debugger />
+  }
+
+  @case ('event-bus') {
+    <sdux-dev-tools-event-bus />
+  }
+
+  @case ('vault-monitor') {
+    <sdux-dev-tools-vault-monitor />
+  }
+
+  @default {
+    <sdux-dev-tools-overview />
+  }
+}

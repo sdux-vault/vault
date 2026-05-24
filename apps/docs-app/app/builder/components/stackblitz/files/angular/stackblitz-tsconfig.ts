@@ -1,0 +1,28 @@
+export const TSCONFIG_FILE = {
+  compileOnSave: false,
+  compilerOptions: {
+    baseUrl: './',
+    outDir: './dist/out-tsc',
+    strict: true,
+    noImplicitOverride: true,
+    noPropertyAccessFromIndexSignature: false,
+    noImplicitReturns: true,
+    forceConsistentCasingInFileNames: true,
+    noFallthroughCasesInSwitch: true,
+    skipLibCheck: true,
+    isolatedModules: true,
+    experimentalDecorators: true,
+    importHelpers: true,
+    target: 'ES2022',
+    module: 'preserve'
+  },
+  angularCompilerOptions: {
+    enableI18nLegacyMessageIdFormat: false,
+    strictInjectionParameters: true,
+    strictInputAccessModifiers: true,
+    typeCheckHostBindings: true,
+    strictTemplates: true
+  },
+  include: ['src/**/*.ts'],
+  exclude: ['src/**/*.spec.ts']
+};

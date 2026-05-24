@@ -1,0 +1,16 @@
+<div>
+  <sdux-pipeline-builder-stackblitz />
+  @if (displayGeneratedExampleFiles()) {
+    <sdux-pipeline-builder-source-code-explanation />
+  }
+  @for (file of generatedFiles(); track file.id) {
+    <h4>{{ file.name }}</h4>
+    <div class="one">
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="file.name">{{
+          file.contents
+        }}</sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  }
+</div>

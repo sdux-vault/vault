@@ -1,0 +1,74 @@
+<div class="section-body">
+  <div class="section-title">Generated Example Files</div>
+
+  <p>
+    This page contains the <strong>full, generated source output</strong> for
+    the pipeline configuration you selected in the Builder. These files are
+    designed to be <strong>copy/paste ready</strong> and follow
+    <sdux-brand-name /> best practices: the
+    <strong><sdux-feature-cell /> service owns the Vault</strong>, components
+    consume the public state snapshot, and all updates flow through the service
+    so the pipeline remains deterministic and consistent.
+  </p>
+
+  <h3>What You’re Looking At</h3>
+  <ul>
+    <li>
+      <strong>installation</strong> — The minimal install command for the
+      packages required by your selection.
+    </li>
+    <li>
+      <strong>app.config.ts</strong> — Registers the Vault runtime and defines
+      the <sdux-feature-cell /> (key, initial state, and optional
+      definition-time extensions).
+    </li>
+    <li>
+      <strong>example.service.ts</strong> — The <sdux-feature-cell /> service
+      that owns the Vault instance and configures the runtime pipeline via the
+      fluent API.
+    </li>
+    <li>
+      <strong>example.component.ts</strong> — A simple UI consumer that reads
+      from the service’s reactive state snapshot and delegates state updates
+      back to the service.
+    </li>
+  </ul>
+
+  <h3>How to Use These Files</h3>
+  <ul>
+    <li>
+      <strong>Start with installation</strong> and install the listed packages
+      in your project.
+    </li>
+    <li>
+      <strong>Copy the files into your app</strong> (or use them as reference
+      templates).
+    </li>
+    <li>
+      <strong>Rename placeholders</strong> (service name, state type, and
+      FeatureCell key) to match your domain.
+    </li>
+    <li>
+      <strong>Keep Vault access inside the service</strong> — components should
+      only use the service’s public state and call service methods to update
+      state.
+    </li>
+  </ul>
+
+  <h3>Important</h3>
+  <ul>
+    <li>
+      The generated pipeline configuration is <strong>deterministic</strong>: it
+      is installed during service construction and activated only when
+      <strong>initialize()</strong> is called.
+    </li>
+    <li>
+      If you add or remove behaviors in the Builder, this output will change to
+      match your new pipeline configuration.
+    </li>
+    <li>
+      Use the <strong>Copy</strong> button on each file to copy the source
+      directly.
+    </li>
+  </ul>
+</div>

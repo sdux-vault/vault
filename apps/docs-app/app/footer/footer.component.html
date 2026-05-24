@@ -1,0 +1,20 @@
+<footer class="footer" [class.isMobile]="isMobile()" aria-label="Site footer">
+  <div class="info-container">
+    <a routerLink="sdux/training" routerLinkActive="active">
+      Corporate Trainings & Boot Camps
+    </a>
+  </div>
+  @if (!isMobile()) {
+    <span class="sdux-container-spacer"></span>
+  }
+  <div class="license-container">
+    <span>Powered by <sdux-brand-name /> LLC ©2026.</span>
+    <a
+      mat-list-item
+      routerLink="/docs/welcome/license"
+      routerLinkActive="active">
+      Code licensed under an MIT-style License.
+    </a>
+    <span>Documentation licensed under CC BY 4.0.</span>
+  </div>
+</footer>

@@ -1,0 +1,281 @@
+{
+  "classes": {
+    "ValueResolveExampleComponent": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "ValueResolveExampleComponent",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/dir_one/dir_one_file_one.ts",
+      "docLink": "classes"
+    },
+    "ValueResolveService": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "ValueResolveService",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/dir_one/dir_one_file_two.ts",
+      "docLink": "classes"
+    }
+  },
+  "behaviors": {
+    "withCookieStoragePersistBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withCookieStoragePersistBehavior",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/dir_one/dir_one_file_two.ts",
+      "docLink": "behaviors"
+    }
+  },
+  "functions": {
+    "FeatureCell": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "FeatureCell",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "filterStartDateAfterP02": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "filterStartDateAfterP02",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "fn": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "fn",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "getBankEmployeeData": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "getBankEmployeeData",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "injectVault": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "injectVault",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "isDefined": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isDefined",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "isFunctionNoType": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isFunctionNoType",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "isNull": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isNull",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "isVaultClearState": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isVaultClearState",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "isVaultContinue": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "isVaultContinue",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "loadState": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "loadState",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "loadState2": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "loadState2",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "mapper": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "mapper",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "multi": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "multi",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "parse1": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "parse1",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "parse2": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "parse2",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "parse3": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "parse3",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "value": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "value",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    },
+    "withDefault": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "withDefault",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "functions"
+    }
+  },
+  "const": {
+    "CACHE_TTL": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "CACHE_TTL",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "const"
+    },
+    "FEATURE_CELL_REGISTRY": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "FEATURE_CELL_REGISTRY",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "const"
+    },
+    "FLAG": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "FLAG",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "const"
+    },
+    "OPTIONS": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "OPTIONS",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "const"
+    },
+    "UserStatuses": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "UserStatuses",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "const"
+    }
+  },
+  "interfaces": {
+    "BankEmployeeModel": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "BankEmployeeModel",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "interfaces"
+    },
+    "BehaviorInit": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "BehaviorInit",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "interfaces"
+    }
+  },
+  "types": {
+    "LicenseTier": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "LicenseTier",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "types"
+    },
+    "LogLevel": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "LogLevel",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "types"
+    },
+    "PublicKeyTier": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "PublicKeyTier",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "types"
+    },
+    "UserStatus": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "UserStatus",
+      "project": "core",
+      "relativePath": "projects/core/src/lib/file_three.ts",
+      "docLink": "types",
+      "reExportedFrom": [
+        "projects/core/src/lib/file_three.ts"
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "web",
+  "version": "0.0.1",
+  "author": {
+    "name": "SDuX Vault",
+    "email": "sduxvault@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdux-vault/vault.git"
+  },
+  "homepage": "https://www.sdux-vault.com",
+  "keywords": [
+    "sdux",
+    "sdux-vault",
+    "state-management",
+    "reactive",
+    "deterministic",
+    "pipeline",
+    "feature-cell",
+    "snapshot",
+    "signals",
+    "angular",
+    "framework-agnostic",
+    "composable",
+    "immutable",
+    "zoneless",
+    "react",
+    "svelte",
+    "vue",
+    "devtools"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^20.3.0",
+    "@angular/core": "^20.3.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

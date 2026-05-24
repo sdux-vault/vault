@@ -1,0 +1,203 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container">
+  <div class="header">
+    <h3>Merge Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Merge</strong> is a core pipeline stage responsible for combining
+      the
+      <em
+        >current committed
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        state</em
+      >
+      with a newly resolved pipeline value. The Merge stage defines how incoming
+      values are structurally integrated into state before any downstream
+      processing occurs.
+    </p>
+
+    <p>
+      Merge operates after resolution and before operators, filters, reducers,
+      and taps. It produces a single merged candidate value that represents the
+      authoritative state input for the remainder of the pipeline execution.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Merge Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Merge Stage combines the existing
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        with the resolved incoming value produced by the Resolve stage. Its
+        responsibility is limited to determining how the two values are
+        structurally combined into a single candidate state value.
+      </p>
+
+      <p>
+        Merge behaviors do not perform business logic, conditional evaluation,
+        or policy decisions. They do not transform values based on rules or
+        intent. Instead, they define the structural semantics of state
+        combination—such as replacement, preservation, or composition—between
+        the current state and the incoming value.
+      </p>
+
+      <p>
+        Exactly one Merge behavior participates in pipeline execution for a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. The
+        Merge stage always produces a single merged result, which is then
+        forwarded to downstream stages for further evaluation. If the merge
+        result represents a cleared state, that outcome is propagated as the
+        authoritative merge result for the current execution.
+      </p>
+
+      <p>
+        The Merge Stage does not emit snapshots, does not mutate existing state
+        directly, and does not influence pipeline scheduling or control flow.
+        Its sole responsibility is to compute the merged candidate value that
+        downstream stages may accept, modify, or suppress.
+      </p>
+
+      <h4>Core Pipeline Stage</h4>
+      <p>
+        The Merge stage is a core pipeline stage and is always present as part
+        of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. Every pipeline execution includes exactly one active merge
+        strategy to combine the current committed state with the resolved
+        incoming value.
+      </p>
+
+      <p>
+        When no merge behavior is explicitly provided, the pipeline
+        automatically applies the default
+        <strong>withArrayMerge</strong> behavior. This ensures that merge
+        semantics are always defined and that state combination produces a
+        predictable, immutable result for downstream stages.
+      </p>
+
+      <p>
+        FeatureCells may replace the default merge strategy by supplying a
+        custom or pre-built merge behavior as part of the
+        <strong>provideFeatureCell</strong> definition. Merge behaviors are
+        declared declaratively and participate directly in pipeline execution,
+        allowing state-combination semantics to be customized without altering
+        downstream operators, filters, reducers, or taps.
+      </p>
+
+      <p>
+        Exactly one merge behavior may be active per
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. If
+        multiple merge behaviors are provided, pipeline initialization fails to
+        prevent ambiguous or conflicting state combination rules.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        The Merge stage is entered exclusively through explicit state-update
+        APIs. Pipeline executions that invoke merge semantics are initiated via
+        the <strong>mergeState</strong> method, which supply the incoming value
+        and optional merge configuration used by the active Merge behavior.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/1.0/1.2.2-merge-state-flow.svg"
+        [tooltip]="'Merge State Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available Array Merge Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        Array merge behaviors define how list-based state values are combined
+        during the
+        <strong>Merge stage</strong>. These behaviors treat arrays as immutable
+        values and always return a new array instance when a merge occurs.
+      </p>
+
+      <sdux-vault-array-merge-behaviors-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available Object Merge Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        Object merge behaviors define how structured, object-based state values
+        are combined during the
+        <strong>Merge stage</strong>. These behaviors treat objects as immutable
+        values and always return a new object when a merge occurs.
+      </p>
+
+      <p>
+        Object merge strategies differ in how deeply they combine nested
+        structures. Shallow merge replaces properties at the first level only,
+        while deep merge recursively merges nested plain objects.
+      </p>
+
+      <sdux-vault-object-merge-behaviors-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Merge behaviors may optionally be influenced by the
+        <strong>clearUndefined</strong> configuration flag. When
+        <em>clearUndefined</em> is enabled, an incoming <em>undefined</em> value
+        is treated as an intentional clear request and results in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        being cleared. When disabled, incoming <em>undefined</em> values
+        preserve the existing state and produce no structural change.
+      </p>
+
+      <p>
+        The <em>clearUndefined</em> option is supplied at the time a merge-style
+        update is initiated and is evaluated by the active merge behavior during
+        the Merge stage. It does not affect resolution, operators, or downstream
+        pipeline stages.
+      </p>
+
+      <sdux-vault-merge-fluent-api-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Selecting a Merge Behavior</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name />
+        defines exactly one active <strong>Merge behavior</strong> per
+        <sdux-feature-cell />. The Merge stage determines how the
+        <em>current committed state</em> is structurally combined with a newly
+        resolved incoming value.
+      </p>
+
+      <p>
+        Merge behaviors are purely structural. They do not perform business
+        logic, validation, filtering, or policy evaluation. They define
+        <em>how values are combined</em>, not <em>why they change</em>.
+      </p>
+
+      <sdux-merge-input-mechanism-common />
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

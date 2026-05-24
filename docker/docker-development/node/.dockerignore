@@ -1,0 +1,8 @@
+node_modules
+package-lock.json
+.env
+logs
+*.log
+Dockerfile
+docker-compose.yml
+app/node_modules

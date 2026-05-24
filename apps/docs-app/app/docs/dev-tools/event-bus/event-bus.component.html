@@ -1,0 +1,337 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Event Bus (Custom Devtools API)</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <sdux-brand-name /> Event Bus provides a development-only pipeline
+      event stream that can be used to build custom DevTools, diagnostic
+      tooling, and runtime analytics for
+      <sdux-feature-cell [tm]="true" /> execution.
+    </p>
+
+    <p>
+      The Event Bus exposes pipeline events emitted during Vault execution
+      through a shared observable interface. Subscribers can listen to these
+      events and build custom recording, inspection, debugging, or visualization
+      tools without altering pipeline behavior.
+    </p>
+
+    <p>
+      Event emission is gated by development mode. In normal usage, the Event
+      Bus is intended for internal diagnostics, custom DevTools integrations,
+      and analytics workflows during development.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- OVERVIEW -->
+  <!-- ====================================================== -->
+  <section class="section" id="overview">
+    <div class="section-title">Overview</div>
+
+    <div class="section-body">
+      <p>
+        The Event Bus is a singleton runtime channel for observing pipeline
+        events emitted during Vault execution. It provides a single shared
+        stream that development tools can subscribe to in order to inspect
+        runtime activity.
+      </p>
+
+      <p>
+        Pipeline events are emitted as <code>EventShape</code> instances. These
+        events may be consumed directly or enriched by custom tooling before
+        being recorded, displayed, or analyzed.
+      </p>
+
+      <p>
+        The Event Bus is designed for observation only. It does not mutate
+        state, control pipeline execution, or alter
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        behavior.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        The Event Bus intentionally allows developers to emit custom events into
+        the pipeline stream. This flexibility enables advanced diagnostics,
+        analytics, and custom DevTools integrations. Because these events may be
+        synthetic, developers should avoid emitting events that could interfere
+        with or misrepresent actual Vault pipeline behavior.
+      </p>
+
+      <p>
+        In practice, pipeline events emitted by the Vault runtime represent
+        authoritative execution signals, while custom tooling may optionally
+        emit additional diagnostic events for debugging or instrumentation
+        purposes.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DEV MODE -->
+  <!-- ====================================================== -->
+  <section class="section" id="dev-mode-scope">
+    <div class="section-title">Development Mode Scope</div>
+
+    <div class="section-body">
+      <p>
+        Event Bus emission is active only when development mode is enabled. This
+        ensures that pipeline telemetry is available for diagnostics during
+        development without becoming part of normal production execution
+        behavior.
+      </p>
+
+      <p>
+        When development mode is inactive, pipeline events are not emitted
+        through the Event Bus. Consumers may still obtain the singleton
+        instance, but no pipeline event stream will be produced.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ 
+      devMode: true,
+    })
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`Vault({
+  devMode: true,
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// main.ts
+Vault({
+  devMode: true,
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- API SURFACE -->
+  <!-- ====================================================== -->
+  <section class="section" id="api-surface">
+    <div class="section-title">API Surface</div>
+
+    <div class="section-body">
+      <p>
+        The Event Bus exposes a small API surface centered on a singleton access
+        function, event emission, and pipeline observation.
+      </p>
+
+      <div class="table-title">Event Bus API</div>
+      <table>
+        <thead>
+          <tr>
+            <th class="column-275">API</th>
+            <th class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p>
+                <strong><code>EventBus()</code></strong>
+              </p>
+              <p>returns: <code>EventBusContract</code></p>
+            </td>
+            <td>
+              Returns the shared Event Bus singleton used for pipeline event
+              dispatch and observation throughout the application lifecycle.
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <p>
+                <strong><code>nextPipeline(event)</code></strong>
+              </p>
+              <p>input: <code>EventShape</code></p>
+            </td>
+            <td>
+              Emits a pipeline event to subscribed observers when development
+              mode is active.
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <p>
+                <strong><code>pipeline$()</code></strong>
+              </p>
+              <p>returns: Observable of <code>EventShape</code></p>
+            </td>
+            <td>
+              Provides an observable stream of pipeline events for custom
+              DevTools, diagnostics, and analytics subscribers.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        The Event Bus instance is also exposed on the global
+        <code>window.sdux</code> object for DevTools access during development.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CUSTOM DEVTOOLS -->
+  <!-- ====================================================== -->
+  <section class="section" id="custom-devtools">
+    <div class="section-title">Custom DevTools & Analytics</div>
+
+    <div class="section-body">
+      <p>
+        The Event Bus exists to support custom developer tooling built on top of
+        pipeline telemetry. Subscribers may use the pipeline event stream to
+        record execution history, enrich events with development-only metadata,
+        or project pipeline behavior into custom diagnostics surfaces.
+      </p>
+
+      <p>Typical development-only uses include:</p>
+
+      <ul>
+        <li>Custom debugger panels</li>
+        <li>Execution trace recorders</li>
+        <li>Runtime analytics dashboards</li>
+        <li>Pipeline activity inspection tools</li>
+        <li>Extension-based DevTools integrations</li>
+      </ul>
+
+      <p>
+        Because the Event Bus exposes the raw pipeline stream, downstream tools
+        are free to enrich, filter, aggregate, or redirect those events
+        according to their own diagnostic needs.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLES -->
+  <!-- ====================================================== -->
+  <section class="section" id="examples">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        One common usage pattern is subscribing to the Event Bus and recording
+        pipeline events into a custom diagnostic history.
+      </p>
+
+      <div class="table-title">Example: Recording Pipeline Events</div>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Custom recorder'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { EventBus } from '@sdux-vault/devtools';
+import type { EventShape } from '@sdux-vault/shared';
+
+const bus = EventBus();
+
+const sub = bus.pipeline$().subscribe((event: EventShape) => {
+  console.info('Pipeline event', event);
+});
+
+// later
+sub.unsubscribe();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Another common pattern is enriching pipeline events before storing them
+        in a custom DevTools surface. This is how the built-in debugger records
+        derived fields such as sequence ordering, timing metadata, event-loop
+        heuristics, and latency categorization.
+      </p>
+
+      <div class="table-title">
+        Example: Consuming the Event Bus in a DevTools Service
+      </div>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'DevTools service'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { Injectable, inject } from '@angular/core';
+import { EventBus } from '@sdux-vault/devtools';
+
+@Injectable({ providedIn: 'root' })
+export class CustomDevtoolsService {
+  private readonly bus = EventBus();
+
+  pipeline$() {
+    return this.bus.pipeline$();
+  }
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The built-in debugger and DevTools UI both use the Event Bus as their
+        pipeline telemetry source. This makes the Event Bus the primary
+        integration surface for development-only tooling that needs to observe
+        pipeline execution.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

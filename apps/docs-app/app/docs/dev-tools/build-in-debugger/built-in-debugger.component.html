@@ -1,0 +1,1330 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Built-in Debugger</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-brand-name /> includes a built-in runtime debugger that captures
+      deterministic execution traces of the Vault pipeline for individual
+      <sdux-feature-cell [tm]="true" /> instances. The debugger records pipeline
+      activity, controller decisions, lifecycle transitions, and error events
+      during application execution.
+    </p>
+
+    <p>
+      When enabled, the debugger appears as a lightweight floating panel in the
+      browser. From this panel developers can start or stop recording sessions,
+      inspect event counts, export diagnostic logs, and generate AI-assisted
+      debugging reports.
+    </p>
+
+    <p>
+      The debugger does not alter pipeline behavior. It operates as a passive
+      observer that records runtime signals emitted by the execution engine.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      The debugger reconstructs execution traces by listening to Insight events
+      emitted by
+      <sdux-feature-cell /> instances during Vault pipeline execution. Each
+      recorded event represents a lifecycle transition, controller action, or
+      runtime signal occurring within the pipeline.
+    </p>
+
+    <p>
+      By aggregating these events into deterministic traces, the debugger allows
+      engineers to inspect pipeline behavior, analyze performance, and reproduce
+      runtime conditions outside of the running application.
+    </p>
+
+    <p>
+      For a deeper explanation of how runtime events are captured and monitored,
+      see
+      <a href="docs/dev-tools/vault-monitor">Vault Monitor</a>.
+    </p>
+  </header>
+
+  <section class="section" id="quick-start">
+    <div class="section-title-navigation">
+      <div class="section-title">TL;DR</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The fastest way to use the built-in debugger is to enable development
+        mode, record a session, and export the diagnostic logs.
+      </p>
+
+      <ol>
+        <li>Enable the debugger using <code>devMode: true</code>.</li>
+        <li>Run your application and open it in a browser.</li>
+        <li>
+          Click <strong>Record</strong> in the debugger panel to start capturing
+          pipeline activity.
+        </li>
+        <li>Trigger the application behavior you want to inspect.</li>
+        <li>Click <strong>Download Logs</strong> to export the debug dump.</li>
+        <li>
+          Optionally use <strong>AI Assist</strong> to generate an automated
+          diagnostic report.
+        </li>
+      </ol>
+
+      <div class="note">Note</div>
+      <p>
+        In most cases the workflow is simple: enable dev mode, record a session,
+        reproduce the issue, download the debug dump, and analyze it with AI
+        Assist.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="when-to-use">
+    <div class="section-title-navigation">
+      <div class="section-title">When to Use the Debugger</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The built-in debugger is designed to help engineers inspect runtime
+        behavior inside the Vault pipeline. It is particularly useful when
+        investigating complex execution flows or performance issues.
+      </p>
+
+      <ul>
+        <li>Investigating unexpected pipeline behavior.</li>
+        <li>Tracing lifecycle transitions across FeatureCells.</li>
+        <li>Identifying performance bottlenecks in pipeline stages.</li>
+        <li>Debugging controller policy conflicts.</li>
+        <li>Generating diagnostic reports for issue tracking.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- TABLE OF CONTENTS -->
+  <!-- ====================================================== -->
+  <section class="section" id="toc">
+    <div class="section-title-navigation">
+      <div class="section-title">How to use this page</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <div class="toc-container">
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="debugger-ui">Debugger UI</a>
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="enabling-debugger"
+              >Enabling the Debugger</a
+            >
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="debugger-architecture"
+              >Debugger Architecture</a
+            >
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="recording-sessions"
+              >Recording Debug Sessions</a
+            >
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="debug-panel"
+              >Debugger Panel Overview</a
+            >
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="debug-exports">
+              Exporting Debug Artifacts
+            </a>
+
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="exporting-logs">
+                  Download Logs (Exporting Diagnostic Logs)
+                </a>
+              </li>
+
+              <li>
+                <a [routerLink]="[]" fragment="trace-exports">
+                  Chrome Trace Timeline
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="ai-assist">AI Assist</a>
+
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="ai-assist-reports"
+                  >AI Assist Reports</a
+                >
+              </li>
+
+              <li>
+                <a [routerLink]="[]" fragment="issue-reports">
+                  Create Issue (Submitting GitHub Issue Reports)
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="debug-dump-overview"
+              >Debug Dump Overview</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAM -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="debugger-ui">
+    <div class="section-title-navigation">
+      <div class="section-title">Debugger UI</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/12.0/12.0-sdux-debugger-panel-ui.svg"
+        [tooltip]="'Debugger Panel UI'"></sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ENABLING -->
+  <!-- ====================================================== -->
+  <section class="section" id="enabling-debugger">
+    <div class="section-title-navigation">
+      <div class="section-title">Enabling the Debugger</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The built-in debugger is available when the Vault runtime is initialized
+        in development mode.
+      </p>
+
+      <p>
+        To enable the debugger, configure the Vault runtime with
+        <code>devMode: true</code>.
+      </p>
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ 
+      devMode: true,
+    })
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`Vault({
+  devMode: true,
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// main.ts
+Vault({
+  devMode: true,
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        When development mode is active, the debugger widget becomes available
+        and can be attached to the application runtime.
+      </p>
+
+      <p>
+        Debug recording captures additional runtime telemetry when a
+        <sdux-feature-cell /> is configured with insights enabled. Insight
+        signals may include error activity, payload information, and committed
+        state snapshots.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: FeatureCell with Insights'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ devMode: true }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: [],
+        insights: {
+          id: 'employees-insight',
+          wantsState: true,
+          wantsPayload: true,
+          wantsErrors: true
+        }
+      }
+    )
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: FeatureCell with Insights'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: [],
+  insights: {
+    id: 'employees-insight',
+    wantsState: true,
+    wantsPayload: true,
+    wantsErrors: true
+  }
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: FeatureCell with Insights'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: [],
+  insights: {
+    id: 'employees-insight',
+    wantsState: true,
+    wantsPayload: true,
+    wantsErrors: true
+  }
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+    <div class="section-body">
+      <sdux-feature-cell-insights-config-common />
+    </div>
+  </section>
+
+  <section class="section" id="debugger-architecture">
+    <div class="section-title-navigation">
+      <div class="section-title">Debugger Architecture</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The debugger operates as a passive observer of the Vault execution
+        engine using the Vault Monitor in debug mode. During pipeline execution,
+        FeatureCells emit insight events describing lifecycle transitions,
+        controller activity, and state updates.
+      </p>
+
+      <p>
+        When recording is enabled, these events are captured by the debugger and
+        stored in an in-memory execution trace. The debugger then aggregates
+        this trace into structured diagnostic data that can be exported,
+        analyzed offline, or processed by AI-assisted diagnostic tools.
+      </p>
+
+      <p>
+        Because the debugger only listens to emitted signals, it does not alter
+        pipeline execution or affect application behavior.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Typical debug exports are relatively small, often ranging between 50–100
+        KB when recording standard pipeline activity. However, when
+        <code>wantsState</code> is enabled, the debugger records full
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        snapshots for each relevant event. Because state objects can be large
+        and may change frequently during execution, exported debug dumps can
+        grow quickly and may reach 10–20 MB depending on application behavior.
+      </p>
+
+      <p>
+        This additional detail can be extremely valuable when diagnosing complex
+        issues, but it is recommended to enable state recording only when deeper
+        inspection of application state is required.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RECORDING -->
+  <!-- ====================================================== -->
+  <section class="section" id="recording-sessions">
+    <div class="section-title-navigation">
+      <div class="section-title">Recording Debug Sessions</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Debug recording sessions capture runtime execution events emitted by the
+        Insight-enabled
+        <sdux-feature-cell /> instances operating within the Vault pipeline.
+        These events include lifecycle transitions, controller activity,
+        pipeline stage execution, and error signals.
+      </p>
+
+      <p>
+        Recording sessions begin when the <strong>Record</strong> button is
+        activated from the debugger panel. Once recording begins, the debugger
+        continuously captures execution signals until recording is stopped.
+      </p>
+      <p>
+        Recording operates as a passive observer and does not alter pipeline
+        execution behavior. It reacts only to events emitted by the VaultMonitor
+        during pipeline execution.
+      </p>
+
+      <p>
+        While recording is active, the debugger displays a session timer and
+        continuously updates the total number of recorded events and detected
+        error events.
+      </p>
+
+      <p>
+        Recording can be stopped at any time. When stopped, the captured
+        execution history remains available for export or diagnostic analysis.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- PANEL -->
+  <!-- ====================================================== -->
+  <section class="section" id="debug-panel">
+    <div class="section-title-navigation">
+      <div class="section-title">Debugger Panel Overview</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The debugger appears as a movable panel within the browser window. The
+        panel can be repositioned and minimized without interrupting the
+        recording session.
+      </p>
+
+      <p>The panel provides the following operational controls:</p>
+
+      <div class="table-title">Debugger Panel Controls</div>
+      <table>
+        <thead>
+          <tr>
+            <th class="column-250">Control</th>
+            <th class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>Record / Stop</strong></td>
+            <td>
+              Begins or ends a debug recording session. When recording is
+              active, the debugger continuously captures execution events
+              emitted by insight-enabled FeatureCells.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Event Count</strong></td>
+            <td>
+              Displays the total number of execution events captured during the
+              current recording session.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Error Count</strong></td>
+            <td>
+              Displays the number of captured events that include error signals
+              emitted by the pipeline.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Clear</strong></td>
+            <td>
+              Clears all recorded events from the current session and resets the
+              debugger state.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Download Logs</strong></td>
+            <td>
+              Exports the recorded execution trace as a diagnostic dump file
+              that can be inspected or shared for debugging.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>AI Assist</strong></td>
+            <td>
+              Generates an AI-assisted diagnostic report using the recorded
+              execution trace.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Create Issue</strong></td>
+            <td>
+              Generates a structured issue report containing the recorded trace
+              data to assist with debugging or filing a repository issue.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        The debugger panel state and position are persisted locally in the
+        browser so that the panel appears in the same location across sessions.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="debug-exports">
+    <div class="section-title-navigation">
+      <div class="section-title">Exporting Debug Artifacts</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The built-in debugger allows engineers to export recorded execution
+        sessions as structured diagnostic artifacts. These exports capture the
+        internal behavior of the Vault pipeline and can be analyzed outside of
+        the running application.
+      </p>
+
+      <p>
+        Exported artifacts include structured debug dumps and timeline traces
+        that describe pipeline activity, execution ordering, performance
+        characteristics, and runtime context.
+      </p>
+
+      <p>
+        These artifacts are designed for offline inspection, performance
+        analysis, and automated diagnostics. They can be opened in development
+        tools, shared with engineering teams, or attached to issue reports when
+        investigating unexpected pipeline behavior.
+      </p>
+
+      <div class="table-title">Available Export Formats</div>
+
+      <ul>
+        <li>
+          <strong>Debug Dump</strong> — Structured JSON containing the full
+          recorded event timeline and runtime metadata.
+        </li>
+
+        <li>
+          <strong>Chrome Trace Timeline</strong> — Performance trace file that
+          can be opened in Chrome DevTools to visualize pipeline execution as a
+          timeline.
+        </li>
+      </ul>
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- EXPORT -->
+    <!-- ====================================================== -->
+
+    <div class="section-body" id="exporting-logs">
+      <div class="h-title-navigation">
+        <div class="h-title">Download Logs (Exporting Diagnostic Logs)</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+      <p>
+        Recorded execution sessions can be exported as structured diagnostic
+        logs. These logs contain the complete recorded event timeline captured
+        by the debugger.
+      </p>
+
+      <p>
+        Exported logs can be analyzed offline, attached to issue reports, or
+        used for deeper diagnostic analysis of pipeline behavior.
+      </p>
+
+      <p>
+        Exporting logs does not clear the current recording session. Developers
+        may export multiple times during a debugging session.
+      </p>
+
+      <p>
+        See the
+        <a [routerLink]="[]" fragment="dump-schema">Debug Dump Schema</a> for
+        full details.
+      </p>
+
+      <div class="table-title">How To</div>
+
+      <ul>
+        <li>
+          Locate the <strong>Download Logs</strong> button in the debugger
+          panel.
+        </li>
+        <li>Select the button to export the currently recorded session.</li>
+        <li>The debugger downloads the structured debug dump JSON file.</li>
+      </ul>
+    </div>
+
+    <div class="section-body" id="trace-exports">
+      <div class="h-title-navigation">
+        <div class="h-title">Chrome Trace Timeline</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        In addition to the structured debug dump, the debugger can export
+        execution traces in
+        <strong>Chrome Trace format</strong>. This format allows the recorded
+        pipeline activity to be visualized as an interactive flame timeline
+        using Chrome DevTools or other compatible trace viewers.
+      </p>
+
+      <p>
+        The exported trace reconstructs pipeline activity using the recorded
+        execution events. Each pipeline stage appears as a timed span in the
+        timeline, allowing engineers to inspect execution ordering, stage
+        durations, and trace fan-out behavior across
+        <sdux-feature-cell /> pipelines.
+      </p>
+
+      <p>
+        Trace exports are useful when analyzing pipeline performance,
+        identifying execution bottlenecks, or understanding how multiple traces
+        overlap during runtime.
+      </p>
+
+      <div class="table-title">Trace Export Options</div>
+
+      <p>
+        Two trace export modes are available. Both contain the same recorded
+        execution data but differ in how time is represented in the
+        visualization.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Actual Time</strong><br />
+          Exports the trace using the real measured execution timestamps
+          captured by the debugger. Because
+          <sdux-brand-name /> pipeline stages typically execute extremely
+          quickly, many spans may appear very short or nearly invisible in
+          timeline viewers.
+        </li>
+
+        <li>
+          <strong>1000× Zoom</strong><br />
+          Exports the same execution trace but expands very small timing gaps to
+          improve visibility in timeline tools. This mode does
+          <em>not</em> change the recorded ordering or behavior of the
+          pipeline—it only scales timing for visualization so that individual
+          stages are easier to inspect.
+        </li>
+      </ul>
+
+      <p>
+        In most cases the <strong>1000× zoom trace</strong> is easier to inspect
+        when analyzing pipeline execution visually, while the
+        <strong>actual time trace</strong> preserves the precise recorded
+        timings.
+      </p>
+
+      <div class="table-title">Compatible Trace Viewers</div>
+
+      <ul>
+        <li>Chrome DevTools Performance panel</li>
+        <li>Chrome Trace Viewer (<code>chrome://tracing</code>)</li>
+        <li>Perfetto timeline viewer</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="ai-assist">
+    <div class="section-title-navigation">
+      <div class="section-title">AI Assist</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        AI Assist exports a diagnostic bundle designed for automated analysis by
+        large language models. The bundle contains the recorded debug dump
+        together with a structured analysis prompt that instructs an AI system
+        how to interpret the captured runtime data.
+      </p>
+
+      <p>
+        When supplied to an AI model, the debug dump and prompt enable automated
+        inspection of pipeline execution behavior including stage timings,
+        lifecycle transitions, controller activity, and structural runtime
+        signals. The generated report can help engineers identify performance
+        bottlenecks, investigate pipeline behavior, and perform root-cause
+        analysis of complex runtime issues.
+      </p>
+
+      <div class="table-title">AI Analysis Workflow</div>
+
+      <ul>
+        <li>
+          Click the <strong>AI Assist</strong> button in the debugger panel.
+        </li>
+        <li>
+          Download the generated SDuX debug JSON file and AI analysis prompt.
+        </li>
+        <li>
+          Upload the debug JSON file directly to the AI model (do not paste the
+          JSON contents).
+        </li>
+        <li>Submit the provided prompt together with the uploaded file.</li>
+        <li>
+          Review and share the generated structured analysis report with your
+          engineering team.
+        </li>
+      </ul>
+
+      <p>
+        The debugger does not perform the analysis itself. Instead, it prepares
+        a diagnostic bundle that allows external AI systems to evaluate the
+        recorded execution trace and produce a structured engineering report.
+      </p>
+
+      <p>
+        AI Assist works with modern large language models capable of analyzing
+        structured JSON files and long diagnostic prompts. The generated
+        analysis prompt is designed to work reliably with the following models.
+      </p>
+
+      <div class="table-title">Supported AI Models</div>
+
+      <ul>
+        <li><strong>OpenAI</strong> — GPT-4.1, GPT-4o, GPT-5</li>
+        <li>
+          <strong>Anthropic</strong> — Claude 3.5 Sonnet, Claude 3.7 Sonnet
+        </li>
+        <li><strong>Google</strong> — Gemini 1.5 Pro, Gemini 2.0</li>
+        <li><strong>Meta</strong> — Llama 3.1 (large context variants)</li>
+      </ul>
+
+      <div class="note">Note</div>
+      <p>
+        In most cases the workflow is simple: enable dev mode, record a session,
+        reproduce the issue, download the debug dump, and analyze it with AI
+        Assist.
+      </p>
+
+      <div class="note">How To</div>
+      <ul>
+        <li>
+          Locate the <strong>AI Assist</strong> button in the debugger panel.
+        </li>
+        <li>
+          Select the button to download the recorded debug dump and AI analysis
+          prompt.
+        </li>
+        <li>Upload the debug dump JSON file to an AI model.</li>
+        <li>
+          Submit the provided analysis prompt alongside the uploaded file.
+        </li>
+        <li>Review the generated diagnostic report.</li>
+      </ul>
+    </div>
+
+    <div class="section-body" id="trace-exports">
+      <div class="h-title-navigation">
+        <div class="h-title">Pro License Required</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        AI Assist is a Pro-tier feature. A valid
+        <a routerLink="/sdux/vault" fragment="pro">Pro License</a>
+        is required to generate AI-assisted diagnostic reports.
+      </p>
+
+      <div class="callout callout-warning">
+        <strong>Ready to Upgrade?</strong>
+        <p>
+          Unlock encrypted persistence, advanced DevTools, telemetry, and the
+          full plugin system — one payment, lifetime access.
+        </p>
+        <p>
+          <a routerLink="/dashboard" class="sdux-button cta-button"
+            >Purchase Pro License</a
+          >
+        </p>
+        <p>
+          Don't have an account yet?
+          <a routerLink="/signup">Sign up</a> — it only takes a moment.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- AI ASSIST -->
+  <!-- ====================================================== -->
+  <section class="section" id="ai-assist-reports">
+    <div class="section-title-navigation">
+      <div class="section-title">AI Assist Reports</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        AI Assist reports are AI-generated diagnostic analyses produced from
+        exported debugger sessions. The report evaluates the recorded execution
+        trace and summarizes runtime behavior across the Vault pipeline.
+      </p>
+
+      <p>
+        Using the structured debug dump and analysis prompt, an AI model
+        inspects the captured event timeline, pipeline stage timings, controller
+        activity, and structural runtime signals to produce a detailed
+        engineering report.
+      </p>
+
+      <p>
+        The resulting report helps engineers investigate performance
+        bottlenecks, identify pipeline anomalies, and understand execution
+        behavior during complex runtime scenarios.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <div class="h-title-navigation">
+        <div class="h-title">AI Assist Diagnostic Metrics</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        AI Assist reports include a structured set of diagnostic metrics and
+        visualizations that describe the captured execution session. These
+        diagnostics analyze event distribution, pipeline stage performance,
+        scheduling behavior, state mutation patterns, and structural integrity
+        signals detected during execution.
+      </p>
+
+      <p>
+        By aggregating these metrics across traces and pipeline stages, the
+        report highlights performance hotspots, latency sources, recursion
+        risks, and runtime pressure indicators within the Vault pipeline.
+      </p>
+
+      <div class="table-title">AI Assist Diagnostics Overview</div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="column-250">Chart / Metric</th>
+              <th class="column-300">Description</th>
+              <th class="column-300">How to Use It</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td><strong>Executive Summary</strong></td>
+              <td>
+                High-level diagnostic overview identifying the most significant
+                runtime signal observed during the session. This may include
+                dominant stages, abnormal traces, latency signals, or structural
+                anomalies.
+              </td>
+              <td>
+                Start analysis here. The summary highlights the most important
+                optimization target detected by the diagnostic engine.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Diagnostic Summary</strong></td>
+              <td>
+                Key diagnostic indicators including dominant pipeline stages,
+                longest traces, fan-out signals, and potential deadlock
+                indicators.
+              </td>
+              <td>
+                Quickly determine whether the pipeline is suffering from trace
+                explosion, excessive branching, or stage dominance.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Global Event Metrics</strong></td>
+              <td>
+                Overview of recorded execution activity including total event
+                count, error events, session duration, and overall event
+                timeline.
+              </td>
+              <td>
+                Helps determine overall pipeline activity level and verify
+                whether abnormal event volumes or error bursts occurred during
+                the session.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Timestamp Quantization Analysis</strong></td>
+              <td>
+                Measures timestamp precision and collision rates across recorded
+                events to determine the reliability of timing data.
+              </td>
+              <td>
+                If collision rates are high, stage latency values may be
+                under-resolved. Consider enabling higher-resolution
+                instrumentation.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Event Type Distribution</strong></td>
+              <td>
+                Distribution chart showing how frequently each pipeline event
+                type occurred during the session.
+              </td>
+              <td>
+                Helps verify lifecycle symmetry and detect missing or imbalanced
+                stage transitions in the pipeline.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Stage Latency Aggregates</strong></td>
+              <td>
+                Aggregated timing statistics for each pipeline stage including
+                average duration, P95 latency, and maximum execution time.
+              </td>
+              <td>
+                Identify slow stages and determine which pipeline operations
+                contribute most to compute cost.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Pipeline Flamegraph</strong></td>
+              <td>
+                Visual breakdown of pipeline stage execution time across
+                recorded traces, showing which stages consume the largest share
+                of compute time.
+              </td>
+              <td>
+                Use this view to quickly locate pipeline bottlenecks and
+                high-latency execution stages.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Stage Dominance Analysis</strong></td>
+              <td>
+                Calculates the percentage of total compute time consumed by each
+                stage across the entire session.
+              </td>
+              <td>
+                Detect stages that dominate execution cost and may require
+                optimization.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>State Volume Metrics</strong></td>
+              <td>
+                Measures the size and volume of state snapshots emitted during
+                pipeline execution.
+              </td>
+              <td>
+                Helps identify large state payloads or excessive snapshot sizes
+                that may impact performance.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>State Churn Analysis</strong></td>
+              <td>
+                Tracks the rate of state mutations and updates per second across
+                the session.
+              </td>
+              <td>
+                Detect excessive update frequency that may indicate redundant
+                pipeline triggers or unnecessary updates.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>State Structure Quality</strong></td>
+              <td>
+                Evaluates state complexity including nesting depth, object size,
+                repeated identical states, and structural entropy.
+              </td>
+              <td>
+                Identify redundant state emissions or overly complex state
+                shapes that can be simplified.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Payload Analytics</strong></td>
+              <td>
+                Analyzes payload size and structure for values entering the
+                pipeline.
+              </td>
+              <td>
+                Helps detect oversized payloads or unnecessary data being passed
+                through the pipeline.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Scheduler & Event Loop Analysis</strong></td>
+              <td>
+                Shows how pipeline execution interacts with the JavaScript event
+                loop, including microtask, macrotask, and delayed scheduling.
+              </td>
+              <td>
+                Detect excessive scheduling pressure or event loop contention.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>User Interaction Latency</strong></td>
+              <td>
+                Measures delays between pipeline traces to identify gaps caused
+                by user input or application activity.
+              </td>
+              <td>
+                Helps distinguish pipeline latency from user interaction delays.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Burst Analysis</strong></td>
+              <td>
+                Detects bursts of pipeline activity occurring within a single
+                frame or scheduling window.
+              </td>
+              <td>
+                Identify event bursts that may cause frame pressure or UI
+                responsiveness issues.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Trace Analysis</strong></td>
+              <td>
+                Ranks execution traces by duration and event volume to identify
+                unusually long pipeline runs.
+              </td>
+              <td>
+                Use this metric to locate problematic traces that trigger
+                excessive pipeline activity.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Jank & Long Task Correlation</strong></td>
+              <td>
+                Detects long browser tasks that occur alongside pipeline
+                execution.
+              </td>
+              <td>
+                Determine whether UI jank or frame drops correlate with pipeline
+                activity.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Determinism & Structural Integrity</strong></td>
+              <td>
+                Verifies execution determinism by checking for out-of-order
+                events, duplicate traces, or nondeterministic signals.
+              </td>
+              <td>
+                Confirm that pipeline execution remains deterministic and
+                reproducible.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>Pipeline Bottleneck Detection</strong></td>
+              <td>
+                Identifies the most likely runtime bottleneck across all
+                diagnostic signals.
+              </td>
+              <td>
+                Focus optimization efforts on the bottleneck stage or behavior
+                identified by the report.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong>System Health Score</strong></td>
+              <td>
+                Overall diagnostic rating derived from execution stability,
+                performance metrics, and structural signals.
+              </td>
+              <td>
+                Provides a quick indication of overall pipeline health and
+                stability.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ISSUE REPORT -->
+  <!-- ====================================================== -->
+  <section class="section" id="issue-reports">
+    <div class="section-title-navigation">
+      <div class="section-title">Create Issue</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The debugger can generate a structured issue report containing the
+        captured execution trace from a debugging session.
+      </p>
+
+      <p>
+        This report can be attached to GitHub issues when reporting unexpected
+        runtime behavior, controller policy conflicts, or pipeline execution
+        anomalies.
+      </p>
+
+      <p>
+        Because the report includes the deterministic event history of the
+        session, maintainers can reproduce and analyze the observed runtime
+        behavior more effectively.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        When submitting issue reports, certain diagnostic signals are required
+        to help maintainers reproduce and analyze the reported behavior. Error
+        and payload telemetry provide critical context about pipeline failures
+        and controller activity. State snapshots may optionally be included but
+        should be enabled only when appropriate, as state data can contain
+        sensitive application information.
+      </p>
+
+      <ul>
+        <li>
+          <strong>wantsErrors</strong> — Required. Ensures error events are
+          included in the diagnostic report.
+        </li>
+        <li>
+          <strong>wantsPayload</strong> — Required. Captures operation payloads
+          needed to understand event context.
+        </li>
+        <li>
+          <strong>wantsState</strong> — Optional. Includes
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state snapshots and may contain sensitive data.
+        </li>
+      </ul>
+
+      <div class="table-title">How To</div>
+
+      <ul>
+        <li>
+          Locate the <strong>Create Issue</strong> button in the debugger panel.
+        </li>
+        <li>
+          Select the button to generate an issue report for the current session.
+        </li>
+        <li>
+          The debugger will prepare a diagnostic dump and redirect you to
+          GitHub.
+        </li>
+        <li>Attach the generated report to the issue submission.</li>
+        <li>
+          Provide a brief description of the observed behavior before
+          submitting.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="debug-dump-overview">
+    <div class="section-title-navigation">
+      <div class="section-title">Debug Dump Overview</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        When a debug session is exported from the built-in debugger, the
+        recorded execution history is written to a structured
+        <a href="/docs/references/shapes/debug-widget-dump-shape"
+          >DebugWidgetDumpShape</a
+        >
+        (diagnostic dump). The dump captures the full runtime context of the
+        session, including pipeline events, environment metadata, performance
+        signals, and aggregated execution statistics.
+      </p>
+
+      <p>
+        The export format is deterministic and machine-readable. Each section of
+        the dump represents a specific category of diagnostic data, allowing
+        engineers and automated tools to analyze pipeline behavior, detect
+        anomalies, and reproduce execution conditions outside of the running
+        application.
+      </p>
+
+      <p>
+        The tables below document the complete schema of the exported debug
+        dump. They describe the structure of the diagnostic payload, the shape
+        of execution events, captured runtime environment metadata, and the
+        aggregated statistics generated from the recorded event stream.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        For automated analysis, use the
+        <a [routerLink]="[]" fragment="ai-assist">AI Assist</a> feature. It
+        generates a structured diagnostic report from the exported dump without
+        requiring manual inspection.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,500 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-26 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>RxJS Stream Control</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>RxJS Stream Control</strong> is the recommended mechanism for
+      debouncing, switching, cancellation, and other temporal or
+      concurrency-driven stream behaviors before values enter the
+      <sdux-brand-name />
+      pipeline. <sdux-brand-name /> is a state orchestration framework—it
+      consumes values deterministically, but it does not shape the streams that
+      produce them.
+    </p>
+
+    <p>
+      This document explains the boundary between
+      <strong>RxJS stream shaping</strong> and
+      <strong><sdux-brand-name /> state orchestration</strong>, and demonstrates
+      the canonical pattern: apply RxJS operators upstream, then pass the
+      resulting <code>Observable&lt;T&gt;</code> into
+      <strong><code>fromStream()</code></strong
+      >.
+    </p>
+
+    <h4>Key Principle</h4>
+    <p>
+      <strong
+        ><sdux-brand-name /> should never compete with RxJS. It should cooperate
+        with it.</strong
+      >
+      <sdux-brand-name /> does not care how values arrive — only that they
+      arrive — and that state transitions remain deterministic once they do.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- DESIGN BOUNDARY -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      Why <sdux-brand-name /> Opts to Delegate Pre-Pipeline Stream Control to
+      RxJS
+    </div>
+
+    <div class="section-body">
+      <sdux-point-a-to-b-quote />
+      <p>
+        <sdux-brand-name /> is not responsible for time-based stream shaping,
+        event suppression, scheduling heuristics, or concurrency strategies for
+        async sources.
+      </p>
+
+      <p>
+        Stream concerns such as the following are handled upstream using RxJS:
+      </p>
+
+      <ul>
+        <li>Debounce, audit, sampling, and buffering</li>
+        <li>
+          Cancellation and switching (<code>switchMap</code>,
+          <code>exhaustMap</code>, <code>concatMap</code>)
+        </li>
+        <li>Backpressure strategies</li>
+        <li>Retry and timing heuristics at the stream level</li>
+        <li>Deduplication and distinctness</li>
+      </ul>
+
+      <p>
+        These problems are already solved by RxJS using well-tested, composable,
+        declarative operators. Re-implementing them inside
+        <sdux-brand-name /> would duplicate abstractions, expand the API
+        surface, and blur the boundary between <em>temporal policy</em> and
+        <em>state orchestration</em>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Policy Controllers vs RxJS</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Policy Layer</strong> and <strong>RxJS</strong> solve
+        different classes of problems, and both are intentionally supported by
+        <sdux-brand-name />.
+      </p>
+
+      <p>
+        <strong>RxJS</strong> is the preferred tool for
+        <em>pre-pipeline stream shaping</em>: debouncing, buffering,
+        cancellation, concurrency control, and temporal composition
+        <em>before</em> values are submitted to the pipeline.
+      </p>
+
+      <p>
+        <strong>Policy Controllers</strong> exist for cases where execution
+        decisions must be made <em>inside</em> the pipeline lifecycle—based on
+        attempt identity, failure state, re-entry rules, or interaction with
+        other pipeline stages.
+      </p>
+
+      <h4>Use RxJS when:</h4>
+      <ul>
+        <li>Timing and suppression occur <em>before</em> pipeline admission</li>
+        <li>Events may be safely dropped, merged, or canceled upstream</li>
+        <li>
+          No awareness of pipeline attempts, retries, or failures is required
+        </li>
+        <li>Stream semantics are sufficient to express the desired behavior</li>
+      </ul>
+
+      <h4>Use Policy Controllers when:</h4>
+      <ul>
+        <li>
+          Execution decisions depend on <em>pipeline attempts</em> rather than
+          raw events
+        </li>
+        <li>Failures must trigger retries, revotes, or aborts</li>
+        <li>Execution must pause and later re-enter the pipeline</li>
+        <li>
+          Decisions must interact with pipeline stages or global Vault state
+        </li>
+        <li>Suppressed work must be reconsidered rather than discarded</li>
+      </ul>
+
+      <p>
+        In short, RxJS controls <em>whether a value exists</em>. Once an
+        execution is admitted, Policy Controllers ensure it resolves
+        deterministically—even under failure or re-entry.
+      </p>
+
+      <h4>Design Boundary</h4>
+      <p>
+        If a concern can be expressed entirely through stream composition, it
+        belongs in RxJS. If a concern requires awareness of pipeline lifecycle,
+        failures, or re-entry semantics, it belongs in the Policy Layer.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- THE SEAM -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Pre-Pipeline Delegation with RxJS</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> intentionally delegates
+        <em>pre-pipeline stream shaping</em> to RxJS. Temporal control,
+        suppression, buffering, cancellation, and concurrency are applied
+        <strong>before</strong> values are admitted into the <sdux-brand-name />
+        pipeline.
+      </p>
+
+      <p>
+        Whether a value represents a continuous stream or a single state
+        candidate, <sdux-brand-name /> assumes that any value it receives has
+        already been shaped intentionally. Once a value enters the pipeline,
+        <sdux-brand-name /> treats it as authoritative and eligible for
+        deterministic state orchestration.
+      </p>
+
+      <h4>Continuous Streams: <code>fromStream()</code></h4>
+
+      <p>
+        <strong><code>fromStream()</code></strong> is the canonical integration
+        seam for continuous or multi-emission sources. It accepts an
+        <code>Observable&lt;T&gt;</code> and establishes a subscription that
+        forwards each emitted value into the pipeline as a distinct state
+        update.
+      </p>
+
+      <p>
+        RxJS operators are composed upstream. <sdux-brand-name /> does not
+        participates in stream suppression or scheduling.
+      </p>
+
+      <h4>RxJS fromStream State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example: RxJS fromStream Merge State'">
+          <pre class="code-inline">
+<code class="language-ts">{{`&lt;this|employeeCell>.vault.fromStream(
+  events$.pipe(
+    debounceTime(300),
+    distinctUntilChanged();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>
+        Single Candidates: <code>replaceState()</code> and
+        <code>mergeState()</code>
+      </h4>
+
+      <p>
+        RxJS is equally appropriate for <em>single-candidate</em> state updates.
+        When an observable is supplied to
+        <strong><code>replaceState()</code></strong> or
+        <strong><code>mergeState()</code></strong
+        >, <sdux-brand-name /> resolves exactly one emitted value and forwards
+        it through the pipeline.
+      </p>
+
+      <p>
+        This pattern is ideal for deferred, conditional, or asynchronously
+        composed state candidates without converting them into continuous
+        streams.
+      </p>
+
+      <h4>RxJS Replace State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example: RxJS Replace State'">
+          <pre class="code-inline">
+<code class="language-ts">{{`&lt;this|employeeCell>.vault.replaceState(
+  fetchEmployee$.pipe(
+    timeout(2000)
+  )
+);`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>RxJS Merge State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example: RxJS Merge State'">
+          <pre class="code-inline">
+<code class="language-ts">{{`&lt;this|lt;thisemployeeCell>.vault.mergeState(
+  update$.pipe(
+    map(partial => ({ status: 'ready', ...partial }))
+  )
+);`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Design Rule</h4>
+
+      <p>
+        Stream suppression, timing, and cancellation belong
+        <em>before</em> pipeline admission. If a value enters
+        <sdux-brand-name />, <sdux-brand-name /> assumes you intended it to.
+        RxJS defines <em>when</em> values exist; <sdux-brand-name /> defines
+        <em>how</em> those values are orchestrated into state.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- COMMON RECIPES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Common RxJS Recipes</div>
+
+    <div class="section-body">
+      <p>
+        The examples below show common RxJS patterns used to achieve debounce,
+        throttling, buffering, switching, and deduplication before
+        <sdux-brand-name /> receives values.
+      </p>
+
+      <h4>Debounce User Input</h4>
+      <p>
+        Use <code>debounceTime</code> to delay emission until input stabilizes:
+      </p>
+      <pre
+        class="code-inline"><code class="language-ts">{{`import { debounceTime, map } from 'rxjs/operators';
+
+&lt;this|employeeCell>.vault.fromStream(
+  inputChange$.pipe(
+    map(e => e.target.value),
+    debounceTime(300)
+  )
+);`}}</code></pre>
+
+      <h4>Throttle Burst Events</h4>
+      <p>
+        Use <code>throttleTime</code> to allow at most one emission per window:
+      </p>
+      <pre
+        class="code-inline"><code class="language-ts">{{`import { throttleTime } from 'rxjs/operators';
+
+&lt;this|employeeCell>.vault.fromStream(
+  scroll$.pipe(
+    throttleTime(250)
+  )
+);`}}</code></pre>
+
+      <h4>Audit or Sample at a Fixed Cadence</h4>
+      <p>
+        Use <code>auditTime</code> or <code>sampleTime</code> to control cadence
+        without suppressing upstream events:
+      </p>
+      <pre
+        class="code-inline"><code class="language-ts">{{`import { auditTime, sampleTime } from 'rxjs/operators';
+
+&lt;this|lt;thisemployeeCell>.vault.fromStream(events$.pipe(auditTime(1000)));
+&lt;this|lt;thisemployeeCell>.vault.fromStream(events$.pipe(sampleTime(1000)));`}}</code></pre>
+
+      <h4>Distinct Until Changed</h4>
+      <p>
+        Prevent redundant updates when the value has not meaningfully changed:
+      </p>
+      <pre
+        class="code-inline"><code class="language-ts">{{`import { distinctUntilChanged } from 'rxjs/operators';
+
+&lt;this|employeeCell>.vault.fromStream(
+  value$.pipe(
+    distinctUntilChanged()
+  )
+);`}}</code></pre>
+
+      <h4>Buffer Events Over Time</h4>
+      <p>Batch events into arrays using <code>bufferTime</code>:</p>
+      <pre
+        class="code-inline"><code class="language-ts">{{`import { bufferTime, filter } from 'rxjs/operators';
+
+&lt;this|employeeCell>.vault.fromStream(
+  actions$.pipe(
+    bufferTime(500),
+    filter(batch => batch.length > 0)
+  )
+);`}}</code></pre>
+
+      <h4>Switch to the Latest Async Request</h4>
+      <p>
+        Use <code>switchMap</code> when only the latest request should remain
+        active. Prior requests are cancelled at the stream level.
+      </p>
+      <pre
+        class="code-inline"><code class="language-ts">{{`import { switchMap } from 'rxjs/operators';
+
+&lt;this|employeeCell>.vault.fromStream(
+  query$.pipe(
+    switchMap(q => fetchEmployees$(q))
+  )
+);`}}</code></pre>
+
+      <h4>Ignore New Requests While Busy</h4>
+      <p>
+        Use <code>exhaustMap</code> to ignore new triggers while an async task
+        is running (useful for submit buttons).
+      </p>
+      <pre
+        class="code-inline"><code class="language-ts">{{`import { exhaustMap } from 'rxjs/operators';
+
+&lt;this|employeeCell>.vault.fromStream(
+  submitClicks$.pipe(
+    exhaustMap(() => submitForm$())
+  )
+);`}}</code></pre>
+
+      <h4>Queue Requests Sequentially</h4>
+      <p>
+        Use <code>concatMap</code> to guarantee ordering by running async work
+        sequentially, one at a time.
+      </p>
+      <pre
+        class="code-inline"><code class="language-ts">{{`import { concatMap } from 'rxjs/operators';
+
+&lt;this|employeeCell>.vault.fromStream(
+  requests$.pipe(
+    concatMap(req => processRequest$(req))
+  )
+);`}}</code></pre>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- WHAT GOES WHERE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Separation of Concerns</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> stays small and deterministic by keeping stream
+        shaping separate from state orchestration. The table below summarizes
+        where each responsibility belongs.
+      </p>
+
+      <div class="table-title">Responsibility Boundaries</div>
+      <table aria-label="Responsibility Boundaries">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Layer</th>
+            <th scope="col" class="column-auto">Responsibility</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>RxJS</strong></td>
+            <td>
+              Time, scheduling, buffering, cancellation, switching, concurrency,
+              and stream composition
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <strong><sdux-brand-name /> Pipeline</strong>
+            </td>
+            <td>
+              Deterministic state orchestration, lifecycle boundaries,
+              resolution, merge, reduction, and snapshots
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Policy Layer</strong></td>
+            <td>
+              Execution policy, retries, revotes, aborts, permissions, and
+              centralized arbitration
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>UI</strong></td>
+            <td>
+              User interaction, rendering, and presentation-level coordination
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>Rule of Thumb</h4>
+      <p>
+        If the problem is about <strong>time</strong> or
+        <strong>concurrency</strong>, solve it in RxJS. If the problem is about
+        <strong>execution authority</strong> or
+        <strong>permission to proceed</strong>, solve it in the Policy Layer. If
+        the problem is about <strong>authoritative state</strong>, solve it in
+        <sdux-brand-name />.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- GUIDANCE + PITFALLS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Guidance and Pitfalls</div>
+
+    <div class="section-body">
+      <h4>Do: Shape Streams Upstream</h4>
+      <ul>
+        <li>
+          Use RxJS operators to debounce, throttle, batch, or cancel before
+          calling <code>fromStream()</code>.
+        </li>
+        <li>
+          Keep <sdux-brand-name /> updates semantically meaningful: emit values
+          you actually want orchestrated.
+        </li>
+      </ul>
+
+      <h4>Do: Prefer Explicitness Over Magic</h4>
+      <ul>
+        <li>
+          Stream behavior should be visible in the stream definition
+          (<code>pipe(...)</code>), not hidden in
+          <sdux-brand-name />.
+        </li>
+        <li>
+          Temporal rules should remain readable and testable without the
+          <sdux-brand-name /> pipeline present.
+        </li>
+      </ul>
+
+      <h4>Avoid: Recreating RxJS Inside <sdux-brand-name /></h4>
+      <ul>
+        <li>
+          Do not add time-based or cancellation heuristics inside behaviors
+          purely for stream control.
+        </li>
+        <li>
+          Do not rely on “hidden timing” inside the pipeline to compensate for
+          missing stream composition upstream.
+        </li>
+      </ul>
+
+      <div class="note">Note</div>
+      <p>
+        RxJS controls <em>what enters</em> the pipeline and <em>when</em> it
+        enters. Once a value enters <sdux-brand-name />, the <sdux-brand-name />
+        pipeline proceeds deterministically under the rules of orchestration and
+        policy.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

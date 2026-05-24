@@ -1,0 +1,260 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-23 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>What is an Add-on?</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      An <strong>Add-on</strong> is an
+      <em>optional, explicitly enabled extension</em> to the
+      <sdux-brand-name /> pipeline. Add-ons introduce additional behavior or
+      coordination capabilities that are
+      <strong>not part of the core pipeline</strong> and therefore must be
+      declared during
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      configuration.
+    </p>
+
+    <p>
+      In practice, an Add-on is most commonly a <strong>Behavior</strong> that
+      is not included in the core pipeline. Unlike core functionality, Add-ons
+      never execute unless they are explicitly registered in the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      definition.
+    </p>
+
+    <p>
+      <strong>Add-ons are never implicitly enabled.</strong>
+      If an Add-on is not included in the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      declaration, it does not participate in pipeline execution and has no
+      effect on state, control flow, or snapshots.
+    </p>
+
+    <p>
+      When a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+      configured, <sdux-brand-name /> validates each registered Add-on and
+      integrates it into the pipeline at its declared execution boundary.
+      Add-ons do not alter pipeline structure, ordering, or core behavior; they
+      operate strictly within their declared contracts.
+    </p>
+
+    <p>
+      This model ensures that all non-core capabilities are
+      <strong>explicit, opt-in, and auditable</strong>, allowing FeatureCells to
+      remain minimal by default while supporting targeted extension when
+      required.
+    </p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- ADD-ON ANATOMY                                              -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Add-on Anatomy</div>
+
+    <div class="section-body">
+      <p>
+        Every Add-on behavior conforms to the same structural and contractual
+        requirements as the construct it extends.
+      </p>
+
+      <p>
+        Because all Add-ons conform to established contracts, they integrate
+        safely into the pipeline without requiring special handling or awareness
+        from other pipeline participants.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CORE VS ADD-ON                                               -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Core Functionality vs Add-ons</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> distinguishes clearly between
+        <strong>core pipeline functionality</strong> and
+        <strong>Add-ons</strong>.
+      </p>
+
+      <h4>Core Pipeline</h4>
+      <ul>
+        <li>
+          Always present and guaranteed for every
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+        <li>
+          Responsible for scheduling, input resolution, state progression, and
+          snapshot emission.
+        </li>
+        <li>Cannot be disabled, replaced, or reordered.</li>
+      </ul>
+
+      <h4>Add-ons</h4>
+      <ul>
+        <li>Optional, engineer-selected extensions.</li>
+        <li>
+          Must be explicitly included in the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          declaration.
+        </li>
+        <li>
+          May be sourced from <sdux-brand-name /> extension packages (such as
+          <strong><sdux-package-name />/addons</strong>) or implemented directly
+          by engineers.
+        </li>
+        <li>
+          Provide non-core capabilities such as filtering, taps, stepwise policy
+          enforcement, persistence, instrumentation, or coordination.
+        </li>
+        <li>
+          Execute only within their declared boundaries and must not violate
+          pipeline contracts.
+        </li>
+      </ul>
+
+      <p>
+        This separation ensures a stable, predictable core while allowing
+        FeatureCells to opt into additional behavior only when explicitly
+        required.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- WHY ADD-ONS MATTER                                           -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Why Add-ons Matter</div>
+
+    <div class="section-body">
+      <p>
+        Add-ons are the mechanism by which FeatureCells remain both minimal and
+        extensible:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Explicit</strong> — All non-core behavior is declared,
+          visible, and reviewable.
+        </li>
+        <li>
+          <strong>Composable</strong> — FeatureCells are extended by adding
+          Add-ons, not by modifying core logic.
+        </li>
+        <li>
+          <strong>Deterministic</strong> — Add-ons execute only at defined
+          stages with clear contracts.
+        </li>
+        <li>
+          <strong>Safe</strong> — Core pipeline guarantees remain intact
+          regardless of which Add-ons are enabled.
+        </li>
+      </ul>
+
+      <p>
+        Understanding Add-ons is essential to understanding how
+        <sdux-brand-name /> balances extensibility with deterministic pipeline
+        execution.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Pipeline</div>
+
+    <div class="section-body">
+      <p>
+        Add-ons do not alter the pipeline lifecycle. Instead, they occupy
+        well-defined execution slots within it. Pipeline ordering remains
+        deterministic regardless of which Add-ons are enabled.
+      </p>
+
+      <h3>Simplified Execution Flow</h3>
+      <sdux-diagram
+        image="diagrams/2.1/2.1-execution-flow.svg"
+        [tooltip]="'Execution Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      Example
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Declaration
+    </div>
+
+    <div class="section-body">
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Configure a FeatureCell with Debounce'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // opt-in behavior array 
+    withLookupBehavior
+  ],
+  [
+    // opt-in controller array 
+  ]
+);
+
+// Apply debounce during initialization
+employeeCell
+  .withLookup?.({
+    idKey: 'id',
+    fetchType: ResolveTypes.Promise,
+    fetch: (id: string) => promise 
+  })
+.initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Related Topics</div>
+    <div class="section-body">
+      <ul>
+        <li>
+          <a routerLink="/docs/diagrams"><sdux-brand-name /> Diagrams</a>
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/lookup/with-lookup-behavior"
+            >Lookup Behavior</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipelines">The <sdux-brand-name /> Pipeline</a>
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/controllers/what-is-a-controller"
+            >What is a Controller?</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/controllers/what-is-a-behavior"
+            >What is a Behavior?</a
+          >
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>

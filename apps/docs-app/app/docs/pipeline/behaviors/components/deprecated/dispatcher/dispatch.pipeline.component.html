@@ -1,0 +1,278 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-24 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Dispatch</h3>
+  </div>
+
+  <header class="docs-header">
+    <strong>Dispatch does not exist in <sdux-brand-name /></strong> because
+    state changes are not triggered by sending indirect messages to a central
+    store. Instead, state transitions are produced by executing a deterministic
+    pipeline that resolves intent into a finalized state snapshot.
+
+    <p>
+      In dispatch-based architectures, state updates are initiated by emitting
+      actions into a store, where external reducers, middleware, and side
+      effects interpret those actions and eventually mutate or replace state.
+      This model relies on indirect messaging and deferred interpretation.
+    </p>
+
+    <p>
+      <sdux-brand-name /> takes a different approach: state changes are the
+      <em>result</em> of pipeline execution, not the outcome of dispatching
+      commands. Engineers do not dispatch instructions — they submit values,
+      promises, or behaviors to a pipeline that deterministically produces a
+      single, authoritative state snapshot.
+    </p>
+
+    <p>
+      <strong><sdux-brand-name /> doesn’t need dispatch</strong> because intent,
+      execution, and state commitment are already unified. When a pipeline runs,
+      it resolves exactly once, commits exactly once, and emits a finalized,
+      immutable state snapshot through the Vault.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Why There Is No Dispatch Layer</div>
+
+    <div class="section-body">
+      <p>
+        Dispatch-based systems separate <em>intent</em> (actions) from
+        <em>execution</em> (external reducers and middleware). Actions are
+        broadcast into a system that decides how — or whether — state should
+        change.
+      </p>
+
+      <p>
+        <sdux-brand-name /> does not support this indirection. All state
+        transitions are explicit, scoped, and executed through a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipeline. There is no global action bus, no external reducer fan-out,
+        and no implicit mutation triggered by message dispatch.
+      </p>
+
+      <p>
+        Instead of dispatching actions, engineers invoke pipeline entry points
+        such as
+        <strong>replaceState</strong> or <strong>mergeState</strong>. These APIs
+        submit concrete inputs into the pipeline, where resolve, operator,
+        filter, and policy stages execute deterministically before state is
+        committed.
+      </p>
+
+      <h4>Recommended References</h4>
+      <ul>
+        <li>
+          <a href="/docs/pipelines">Pipeline Overview</a> — how intent flows
+          through the system
+        </li>
+        <li>
+          <a href="/docs/pipeline/behaviors/resolve">Resolve Stage</a> — where
+          async and deferred inputs are handled
+        </li>
+        <li>
+          <a href="/docs/pipeline/behaviors/state">State Stage</a> — how
+          finalized snapshots are committed and emitted
+        </li>
+      </ul>
+
+      <p>
+        Engineers migrating from dispatch-based systems should treat pipeline
+        entry APIs as the replacement for dispatch, and pipeline stages as the
+        replacement for external reducers and middleware.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Submitting Intent in SDuX</div>
+
+    <div class="section-body">
+      <p>
+        Although <sdux-brand-name /> does not have dispatch, engineers still
+        express intent to change state. That intent is submitted directly into
+        the pipeline as concrete input rather than as an abstract action.
+      </p>
+
+      <p>
+        This shifts state updates from a <em>message-based command model</em> to
+        an <em>execution-based resolution model</em>. Instead of broadcasting
+        “what happened,” engineers provide “what should be resolved,” and the
+        pipeline deterministically produces the outcome.
+      </p>
+
+      <p>
+        Because pipeline execution is explicit and scoped to a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>, state
+        changes are predictable, isolated, and easier to reason about. There is
+        no ambiguity about which external reducers ran, which middleware
+        intercepted an action, or whether execution short-circuited.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        <sdux-brand-name /> intentionally avoids a global dispatch or action
+        layer. Introducing one would require additional indirection, implicit
+        routing rules, and shared mutable concerns that undermine the pipeline’s
+        determinism and isolation guarantees.
+      </p>
+
+      <p>
+        By submitting intent directly into the pipeline,
+        <sdux-brand-name /> keeps state transitions explicit, auditable, and
+        bound to a single execution boundary.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <p>
+        The diagrams below illustrate how intent flows through the
+        <sdux-brand-name /> pipeline and why a dispatch layer is unnecessary.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      Examples: Submitting Intent Without Dispatch
+    </div>
+
+    <div class="section-body">
+      <p>
+        In dispatch-based architectures, state changes are triggered by sending
+        actions into a store. In
+        <sdux-brand-name />, state changes occur by
+        <em>executing the pipeline</em> with a concrete input. There is no
+        dispatch step.
+      </p>
+
+      <p>
+        The examples below demonstrate how engineers submit intent directly into
+        a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipeline in Angular, React, and Vue using <strong>replaceState</strong>.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <h4>Example: Execute the Pipeline with a Deferred Input</h4>
+
+              <p>
+                In Angular, intent is expressed by invoking a pipeline entry
+                API. A deferred factory is submitted, resolved by the pipeline,
+                and committed as a finalized state snapshot.
+              </p>
+
+              <p>
+                In all cases, intent is submitted directly into the pipeline.
+                The Resolve stage executes the deferred input, the pipeline
+                completes deterministically, and the State stage commits a
+                single authoritative snapshot — without dispatch, external
+                reducers, or action interpretation.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Pipeline execution (no dispatch)'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+@Injectable({ providedIn: 'root' })
+@FeatureCell&lt;Employee[]&gt;('employees')
+export class EmployeeService {
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+
+  loadEmployees() {
+    this.vault.replaceState(() =>
+      fetch('/api/employees').then(r => r.json())
+    );
+  }
+}
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <h4>Example: Execute the Pipeline from Application Code</h4>
+
+              <p>
+                In React, intent is submitted directly to the
+                <a href="/docs/references/functions/feature-cell">FeatureCell</a
+                >. There is no action object and no dispatch call — the pipeline
+                executes immediately.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Pipeline execution (no dispatch)'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+employeeCell.initialize();
+
+function loadEmployees() {
+  employeeCell.replaceState(() =>
+    fetch('/api/employees').then(r => r.json())
+  );
+}
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <h4>Example: Execute the Pipeline from a Composable</h4>
+
+              <p>
+                In Vue, the same pipeline entry API is used. The Vault resolves
+                the deferred input and emits a finalized, immutable state
+                snapshot.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Pipeline execution (no dispatch)'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+employeeCell.initialize();
+
+const loadEmployees = () => {
+  employeeCell.replaceState(() =>
+    fetch('/api/employees').then(r => r.json())
+  );
+};
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

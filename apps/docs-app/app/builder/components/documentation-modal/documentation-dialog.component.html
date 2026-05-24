@@ -1,0 +1,22 @@
+<div
+  class="documentation-dialog"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Documentation">
+  <div class="documentation-dialog-close-row">
+    <div class="title">Documentation</div>
+
+    <button
+      type="button"
+      mat-icon-button
+      aria-label="Close documentation"
+      class="close-button"
+      (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="documentation-dialog-content">
+    <ng-container [ngComponentOutlet]="component"></ng-container>
+  </div>
+</div>

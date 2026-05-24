@@ -1,0 +1,319 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-24 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Error Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Error Behaviors</strong> provide a deterministic, centralized
+      mechanism for handling failures that occur during pipeline execution.
+      Error behaviors normalize, finalize, and expose error conditions as a
+      canonical
+      <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>,
+      ensuring that all failures are handled consistently regardless of where
+      they originate.
+    </p>
+
+    <h4>Error Contract Summary</h4>
+    <ul>
+      <li>Error behaviors must not throw or rethrow errors</li>
+      <li>
+        All errors are normalized into a canonical
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+      </li>
+      <li>Error behaviors must not mutate state snapshots</li>
+      <li>Error behaviors do not emit successful state snapshots</li>
+      <li>Core error handling is always executed and cannot be omitted</li>
+    </ul>
+
+    <p>
+      The Error contract guarantees that error handling is
+      <strong>deterministic and isolated</strong>. If any pipeline stage throws
+      or rejects, pipeline execution is immediately terminated and control is
+      transferred to the Error stage. The in-flight candidate value is
+      discarded, no reducers are executed, and no successful snapshot is
+      emitted. This ensures that failures never result in partially applied
+      state or ambiguous pipeline outcomes.
+    </p>
+
+    <p>
+      Error behaviors do not participate in value derivation, scheduling, or
+      pipeline control. Their sole responsibility is to provide a compatibility
+      and observation surface for already-finalized error conditions.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Error Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Error Stage runs whenever any earlier pipeline stage throws or
+        rejects. It serves as the exclusive execution boundary for error
+        handling and guarantees that all failures are converted into a canonical
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+        before state is finalized.
+      </p>
+
+      <p>
+        When entered, the Error Stage terminates the current pipeline execution
+        and prevents further processing of the candidate value. No reducers,
+        taps, or persistence stages are executed.
+      </p>
+
+      <p>Error behaviors:</p>
+
+      <ul>
+        <li>Receive the raw thrown or rejected value</li>
+        <li>
+          Operate exclusively on a normalized
+          <a href="/docs/references/shapes/vault-error-shape"
+            >VaultErrorShape</a
+          >
+        </li>
+        <li>Have read-only access to the immutable state snapshot</li>
+        <li>May inspect, classify, or enrich error metadata</li>
+        <li>Must preserve error pipeline integrity</li>
+      </ul>
+
+      <h4>Core Pipeline Stage</h4>
+      <p>
+        The Error stage is a core pipeline stage and is always present as part
+        of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. A core error behavior is executed first to guarantee error
+        normalization into a canonical
+        <a href="/docs/references/classes/vault-error">VaultError</a>. This
+        behavior cannot be omitted. Additional error behaviors may be layered
+        after the core behavior and are optional.
+      </p>
+
+      <p>
+        Error behaviors do not resume pipeline execution and do not suppress
+        error finalization. Their responsibility ends once the error state has
+        been committed and exposed.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Add-on Error Callback Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        In addition to core error normalization and transformation, FeatureCells
+        may opt into
+        <em>add-on error callback behaviors</em>. These behaviors observe the
+        finalized
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+        after it has been committed to state and may perform supplemental,
+        observational handling such as logging, diagnostics, or compatibility
+        callbacks. Error callbacks do not replace, suppress, or alter error
+        finalization.
+      </p>
+
+      <p>
+        Legacy error callbacks exist solely for convenience and backward
+        compatibility. The primary mechanism for observing and responding to
+        errors is the reactive vault.state().error. Callback-based handling
+        should not be relied upon for core application logic.
+      </p>
+
+      <h4>Fluent Errors() API</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        declare <strong>multiple error callbacks</strong> using the fluent
+        <strong>.errors()</strong> API. This API accepts an ordered array of
+        error callbacks that are executed sequentially after the error state has
+        been finalized. Callback registration occurs during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        Error callbacks are strictly observational. They do not influence
+        pipeline control flow, do not transform the error, and always return
+        <a href="/docs/references/const/vault_noop">VAULT_NOOP</a>.
+      </p>
+
+      <p>
+        An empty errors array is ignored and has no effect on pipeline
+        execution.
+      </p>
+
+      <h4>Engineer-Supplied Error Callbacks</h4>
+      <p>
+        Error callbacks are supplied by engineers during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization and execute exclusively after the authoritative error
+        state has been committed. Each callback receives the normalized
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+        and an immutable state snapshot. Callbacks must not throw, must not
+        mutate state, and must not attempt to resume pipeline execution.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Although multiple error callbacks may be composed, callback logic should
+        remain narrowly scoped and observational. Complex or interdependent
+        callbacks can obscure intent and complicate failure analysis. Error
+        callbacks are most effective when limited to logging, diagnostics, or
+        transitional compatibility concerns.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Add-on Error Transform Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        In addition to core error normalization, FeatureCells may opt into
+        <em>add-on error transform behaviors</em>. These behaviors participate
+        directly in the Error Stage and are permitted to
+        <strong
+          >transform the current
+          <a href="/docs/references/shapes/vault-error-shape"
+            >VaultErrorShape</a
+          ></strong
+        >
+        before it is committed and exposed.
+      </p>
+
+      <p>
+        Error transform behaviors execute <em>after</em> core error
+        normalization and <em>before</em> error callbacks. Each transform
+        receives the raw thrown error, the current
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>,
+        and an immutable state snapshot. Based on this input, a transform may
+        return a new
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+        or <a href="/docs/references/const/vault_noop">VAULT_NOOP</a> to
+        preserve the existing value.
+      </p>
+
+      <p>
+        Unlike callbacks, error transform behaviors are
+        <strong>authoritative</strong>. When a transform returns a new
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>,
+        that value becomes the active error for all subsequent transforms and
+        for final error state commitment.
+      </p>
+
+      <p>
+        Error transform behaviors must not throw, must not mutate state, and
+        must not attempt to resume or suppress error finalization. Any
+        exceptions raised by a transform are isolated, logged, and do not
+        interrupt downstream error handling.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Multiple error transform behaviors may be composed. When configured,
+        they execute sequentially in the exact order they are declared in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        definition. Each transform receives the
+        <em>current</em>
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+        produced by the preceding behavior—starting with core error
+        normalization—and may replace it or pass it through unchanged.
+      </p>
+
+      <p>
+        Because transforms are applied cumulatively, their order is semantically
+        significant. Error transform behaviors should remain narrowly scoped and
+        intentional. Overlapping or order-dependent transforms can obscure error
+        provenance and complicate failure analysis.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Global Error Service</div>
+
+    <div class="section-body">
+      <p>
+        After error normalization, transformation, and callback handling have
+        completed, the finalized
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
+        is published to the
+        <strong><sdux-brand-name /> Global Error Service</strong>. This service
+        provides a centralized, observable view of the most recent Vault error
+        across all FeatureCells.
+      </p>
+
+      <p>
+        The Global Error Service does not participate in pipeline execution,
+        error transformation, or control flow. It exists solely as an
+        application-level coordination surface for errors that have already been
+        fully processed and committed by the Vault.
+      </p>
+
+      <p>
+        Subscription to the Global Error Service is opt-in and requires explicit
+        consumer code to instantiate the
+        <a href="/docs/references/functions/vault-error-service"
+          >VaultErrorService</a
+        >
+        singleton and subscribe to its observable interface. Errors are emitted
+        regardless of whether any consumer is listening, ensuring that pipeline
+        behavior remains deterministic and unaffected by global observers.
+      </p>
+
+      <p>
+        The Global Error Service represents the final stage of the Vault error
+        lifecycle. Once an error is published globally, no further pipeline
+        activity occurs for the failed update.
+      </p>
+    </div>
+  </section>
+
+  <sdux-error-handling-order-common />
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/7.0/7.0-error-flow.svg"
+        [tooltip]="'Error Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available Error Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        The Error Stage is a <strong>core pipeline stage</strong> and is always
+        present as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. A core error behavior executes first to guarantee that all
+        failures are normalized into a canonical
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>.
+        Optional add-on error behaviors may then observe or transform the error
+        before it is committed and exposed.
+      </p>
+    </div>
+
+    <sdux-vault-error-behaviors-common />
+
+    <sdux-vault-error-callback-shape-common />
+
+    <sdux-state-snapshot-shape-common />
+
+    <sdux-vault-error-shape-common />
+  </section>
+
+  <sdux-vault-error-callback-fluent-api-common />
+
+  <sdux-error-consumption-mechanism-common />
+
+  <sdux-pipeline-related-topics />
+</div>

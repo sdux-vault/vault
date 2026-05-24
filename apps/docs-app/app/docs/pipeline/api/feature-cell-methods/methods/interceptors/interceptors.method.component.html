@@ -1,0 +1,175 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-25 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>interceptors()</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>interceptors()</strong> method registers interceptor behaviors
+      on a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> that
+      control <em>when</em> incoming state updates are allowed to enter the
+      Vault pipeline. Interceptors execute before any resolution or
+      transformation occurs and provide admission control without modifying
+      state values.
+    </p>
+
+    <h4>Method Contract Summary</h4>
+    <ul>
+      <li>Interceptors execute before the Resolve stage</li>
+      <li>Interceptors never modify state values</li>
+      <li>Interceptors control timing, gating, or suppression of updates</li>
+      <li>Interceptors execute in initialization order</li>
+      <li>Errors propagate as Vault errors</li>
+    </ul>
+
+    <p>
+      The <strong>interceptors()</strong> method defines
+      <strong>admission control only</strong>. It does not participate in state
+      computation, resolution, merging, reduction, or snapshot emission. Its
+      responsibility is limited to shaping the flow of incoming updates before
+      pipeline execution begins.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      The <strong>interceptors()</strong> method is additive. It may be invoked
+      multiple times, and each call appends interceptor behaviors to the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+      interceptor list. Interceptors may be supplied as a single array or across
+      multiple method invocations; in all cases, interceptors execute in the
+      exact order they are registered during initialization.
+    </p>
+
+    <p>
+      While multiple invocations are supported, the recommended practice is to
+      register related interceptor behaviors as a single ordered array to
+      preserve clarity and intentional execution ordering.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- interceptors() -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>interceptors()</strong> method registers one or more
+        interceptor behaviors that execute before the Resolve stage of the
+        pipeline. These behaviors observe raw incoming update requests and may
+        delay, suppress, or gate execution without altering the value itself.
+      </p>
+
+      <h4>Example: Registering Interceptors</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Register Interceptors'">
+          <pre class="code-inline"><code class="language-ts">{{`employeeCell
+  .interceptors([
+    withDebounce(500),
+    withThrottle(1000)
+  ])
+  .initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>
+          Registers interceptor behaviors on the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        </li>
+        <li>Interceptors execute before any state resolution</li>
+        <li>Incoming updates may be delayed, gated, or suppressed</li>
+        <li>No state values are modified or transformed</li>
+      </ul>
+
+      <p>
+        This demonstrates the intended use of <strong>interceptors()</strong> as
+        a pre-processing mechanism for controlling update timing and admission
+        into the pipeline.
+      </p>
+
+      <h4>Learn More</h4>
+      <a routerLink="/docs/pipeline/behaviors/interceptors">
+        <span class="menu-content sub-item">Interceptor Behavior</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="table-title">Initialization</div>
+    <table aria-label="Initialization">
+      <thead>
+        <tr>
+          <th scope="col" class="column-300">Method</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong>interceptors&lt;T&gt;</strong>
+
+            <p>inputs:</p>
+            <ul>
+              <li>
+                interceptors:
+                <a
+                  href="/docs/references/contracts/interceptor-behavior-class-contract"
+                  >InterceptorBehaviorClassContract</a
+                >&lt;T&gt;[]
+              </li>
+            </ul>
+
+            <p>return:</p>
+            <ul>
+              <li>
+                <a href="/docs/references/contracts/cell-builder-contract"
+                  >CellBuilderContract</a
+                >&lt;T&gt;
+              </li>
+            </ul>
+          </td>
+          <td>
+            Registers interceptor behaviors executed during the
+            <em>Interceptor</em> stage of the pipeline. Interceptors control
+            when updates are admitted into the pipeline and may delay, suppress,
+            or gate execution without modifying state values.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAMS -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.5/3.5-interceptor-behavior.svg"
+        [tooltip]="'Interceptor Pipeline Processing Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,285 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>What is a Behavior?</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      A <strong>Behavior</strong> is a composable, stage-bound unit of
+      responsibility within the <sdux-brand-name /> pipeline. Each Behavior
+      performs a single, well-defined function, such as resolving input,
+      filtering values, reducing state, observing snapshots, handling errors, or
+      persisting output.
+    </p>
+
+    <p>
+      Behaviors are executed in a strict, predefined order based on their
+      assigned pipeline stage. Each Behavior is aware of
+      <strong>when</strong> it is permitted to run and <strong>what</strong>
+      it is allowed to operate on. Some Behaviors transform candidate values,
+      some observe finalized snapshots, and others perform side-effect work such
+      as caching, persistence, or notification.
+    </p>
+
+    <p>
+      <strong> Behaviors are never implicitly enabled. </strong>
+      A Behavior participates in a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> pipeline
+      only if it is explicitly registered during
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      configuration or is part of the minimal core pipeline provided by
+      <sdux-brand-name />. If a Behavior is not registered, it is not executed.
+    </p>
+
+    <p>
+      When a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+      configured, <sdux-brand-name /> validates each registered Behavior and
+      inserts it into the correct pipeline stage. Ordering, execution
+      boundaries, and stage isolation are enforced automatically. Behaviors do
+      not discover or invoke one another directly.
+    </p>
+
+    <p>
+      This model allows FeatureCells to be assembled from small, focused units
+      rather than relying on monolithic configuration or implicit control flow.
+      Each Behavior exposes a clear contract and is responsible for exactly one
+      concern.
+    </p>
+
+    <p>
+      <strong>Core Behaviors</strong>—such as Queue, Resolve, default Merge, and
+      core error handling— are always present and ensure correct scheduling,
+      input normalization, and immutable state snapshots. All other Behaviors
+      are <strong>optional add-on extensions</strong> that are enabled only when
+      explicitly included in the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      definition.
+    </p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- BEHAVIOR ANATOMY                                             -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Behavior Anatomy</div>
+
+    <div class="section-body">
+      <p>
+        Every Behavior conforms to a common contract so it can be executed
+        safely and predictably within the pipeline:
+      </p>
+
+      <ul>
+        <li>
+          A <strong>type</strong> that determines the pipeline stage in which
+          the Behavior executes.
+        </li>
+        <li>
+          A unique <strong>key</strong> used for diagnostics, introspection, and
+          tooling.
+        </li>
+        <li>
+          A <strong>critical</strong> designation indicating whether the
+          Behavior is required for pipeline correctness.
+        </li>
+        <li>
+          A <strong>context</strong> object that provides access to the current
+          snapshot and pipeline metadata relevant to that stage.
+        </li>
+        <li>
+          One or more <strong>stage-specific callbacks</strong> that perform the
+          Behavior’s work.
+        </li>
+      </ul>
+
+      <p>
+        Because all Behaviors follow this contract, they can be freely composed
+        without awareness of one another. Each Behavior operates only on the
+        inputs provided to its stage and returns a result or a no-op signal that
+        allows the pipeline to continue unchanged.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CORE VS ADDON BEHAVIORS                                      -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Core vs Addon Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        Behaviors fall into two categories: <strong>core</strong> and
+        <strong>addon</strong>.
+      </p>
+
+      <h4>Core Behaviors</h4>
+      <ul>
+        <li>
+          Built into <sdux-brand-name /> and guaranteed for every
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+        <li>
+          Responsible for scheduling, input normalization, merge correctness,
+          and error finalization.
+        </li>
+        <li>Always present and cannot be omitted or reordered.</li>
+      </ul>
+
+      <h4>Addon Behaviors</h4>
+      <ul>
+        <li>
+          Optional, engineer-selected Behaviors registered during
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          configuration.
+        </li>
+        <li>
+          Addon Behaviors may be sourced from <sdux-brand-name /> non-core
+          packages (such as <strong><sdux-package-name />/addons</strong>) or
+          implemented directly by engineers to address feature-specific or
+          domain-specific requirements.
+        </li>
+        <li>
+          Provide capabilities such as filtering, operators, taps, caching,
+          offline coordination, persistence, encryption, and error shaping.
+        </li>
+        <li>
+          Execute only within their declared pipeline stage and must respect all
+          stage boundaries and contracts.
+        </li>
+      </ul>
+
+      <p>
+        This separation ensures a stable, predictable core pipeline while
+        allowing FeatureCells to be extended through explicitly declared,
+        isolated behaviors.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- WHY BEHAVIORS MATTER                                         -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Why Behaviors Matter</div>
+
+    <div class="section-body">
+      <p>
+        Behaviors define how FeatureCells remain modular, predictable, and
+        extensible:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Composable</strong> —
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          pipelines are assembled by listing Behaviors, not by configuring a
+          monolithic store.
+        </li>
+        <li>
+          <strong>Deterministic</strong> — Each Behavior has a fixed stage,
+          clear inputs, and bounded effects.
+        </li>
+        <li>
+          <strong>Extensible</strong> — Custom Behaviors can be introduced
+          without modifying <sdux-brand-name /> core.
+        </li>
+        <li>
+          <strong>Safe</strong> — Core Behaviors enforce invariants, while addon
+          Behaviors are isolated to their declared responsibilities.
+        </li>
+      </ul>
+
+      <p>
+        Understanding Behaviors is essential to understanding how FeatureCells
+        are constructed and how state flows through the
+        <sdux-brand-name /> pipeline.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Pipeline</div>
+
+    <div class="section-body">
+      <p>
+        The Pipeline is the ordered lifecycle through which State is resolved
+        and emitted. Each Stage is an execution slot occupied by a Behavior.
+        Pipeline ordering is deterministic.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.1/2.1-execution-flow.svg"
+        [tooltip]="'Execution Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      Example
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Declaration
+    </div>
+
+    <div class="section-body">
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Array Filter - Keep Only Even Number'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell(
+  EmployeeCell, 
+  {
+    key: 'employees',
+    initialState: [] 
+  },
+  [
+    // opt-in behavior array 
+  ],
+  [
+    // opt-in controller array 
+  ]
+);
+
+employeeCell.initialize() `}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Related Topics</div>
+    <div class="section-body">
+      <ul>
+        <li>
+          <a routerLink="/docs/diagrams"><sdux-brand-name /> Diagrams</a>
+        </li>
+        <li>
+          <a routerLink="/docs/pipelines">The <sdux-brand-name /> Pipeline</a>
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/addons/what-is-an-addon"
+            >What is an Add-on?</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/controllers/what-is-a-controller"
+            >What is a Controller?</a
+          >
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>

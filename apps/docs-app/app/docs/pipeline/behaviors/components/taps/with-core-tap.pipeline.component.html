@@ -1,0 +1,161 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-02-19 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Tap Behaviors</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Tap Behaviors</strong> provide deterministic, ordered observation
+      points within the Processing Layer of the pipeline. Tap behaviors allow
+      engineers to execute side effects against immutable pipeline values
+      without influencing derivation, reduction, control flow, or state
+      commitment.
+    </p>
+
+    <h4>Tap Contract Summary</h4>
+    <ul>
+      <li>Tap functions may perform side effects</li>
+      <li>Tap functions must not mutate pipeline values</li>
+      <li>Tap functions must not return values</li>
+      <li>Tap functions do not influence pipeline control flow</li>
+      <li>Errors thrown during tap execution propagate as Vault errors</li>
+    </ul>
+
+    <p>
+      The Tap contract guarantees that tap execution remains
+      <strong>observational and isolated</strong>. Tap behaviors do not derive
+      values, do not mutate state, and do not emit snapshots. Their sole
+      responsibility is to observe the pipeline value at a precise execution
+      boundary and react externally.
+    </p>
+
+    <p>
+      Tap execution is deterministic and ordered. Multiple tap functions execute
+      sequentially in the exact order they are registered during
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      initialization.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- TAP STAGE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Tap Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Tap stage exists within the <em>Processing Layer</em> and provides
+        two distinct execution boundaries: <strong>Before Tap</strong> and
+        <strong>After Tap</strong>.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Before Tap</strong> executes after filtering and before
+          reducer execution.
+        </li>
+        <li>
+          <strong>After Tap</strong> executes immediately after reducer
+          execution.
+        </li>
+      </ul>
+
+      <p>
+        Both tap stages receive the immutable upstream pipeline value. Tap
+        functions are invoked strictly for observation and side-effect
+        execution. They must treat the pipeline value as read-only.
+      </p>
+
+      <p>
+        If a tap function throws an error, the error is promoted to a Vault
+        error and the current pipeline execution is terminated. No snapshot is
+        emitted for that execution.
+      </p>
+
+      <h4>Core Pipeline Stage</h4>
+      <p>
+        The Tap stage is a core pipeline stage and is always present as part of
+        the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. The core tap behaviors coordinate execution of
+        engineer-supplied tap callback functions. Tap behaviors do not mutate
+        values, resume execution, or alter pipeline outcomes.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- AVAILABLE TAP BEHAVIORS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Available Tap Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        The Tap stage is a <strong>core pipeline stage</strong> and is always
+        present. Engineers supply tap callback functions that are executed by
+        the core tap behaviors at the appropriate execution boundary.
+      </p>
+
+      <div class="table-title">Core Tap Behaviors</div>
+
+      <sdux-vault-tap-behaviors-common [type]="'afterTap'" />
+      <sdux-vault-tap-behaviors-common [type]="'beforeTap'" />
+
+      <sdux-vault-tap-callback-shape-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FEATURECELL INITIALIZATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        Tap behaviors expose fluent configuration APIs that allow engineers to
+        register tap callback functions during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        These APIs do not execute tap functions directly. They record ordered
+        callback lists that are invoked later by the Tap stage during pipeline
+        execution.
+      </p>
+
+      <sdux-vault-tap-fluent-api-common [type]="'afterTap'" />
+      <sdux-vault-tap-fluent-api-common [type]="'beforeTap'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAMS -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.6/3.6-tap-behavior.svg"
+        [tooltip]="'Tap Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

@@ -1,0 +1,52 @@
+@use 'global' as global;
+
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  text-align: center;
+  padding: global.$spacing-xl;
+
+  background-color: var(--sdux-surface-bg);
+  color: var(--sdux-text-primary);
+}
+
+.logo-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: global.$spacing-xl;
+
+  sdux-image {
+    width: 260px;
+    height: auto;
+    margin-bottom: global.$spacing-sm;
+  }
+
+  .sub-title {
+    @include global.sdux-font-logo;
+    font-size: global.$font-size-lg;
+    color: var(--sdux-text-secondary);
+  }
+}
+
+.title {
+  @include global.h2-element;
+  color: var(--sdux-text-primary);
+  margin-bottom: global.$spacing-md;
+}
+
+.message {
+  @include global.sdux-font-body(global.$font-size-md);
+  color: var(--sdux-text-secondary);
+  margin-bottom: global.$spacing-lg;
+}
+
+.home-link {
+  @include global.a-link-primary;
+  font-size: global.$font-size-md;
+  font-weight: global.$font-weight-medium;
+}

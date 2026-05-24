@@ -1,0 +1,535 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "docs-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/docs-app",
+      "sourceRoot": "apps/docs-app",
+      "prefix": "sdux",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "apps/docs-app/main.ts",
+            "tsConfig": "apps/docs-app/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "apps/docs-app/assets",
+                "output": "assets"
+              }
+            ],
+            "styles": ["apps/docs-app/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            },
+            "allowedCommonJsDependencies": [
+              "prismjs",
+              "prismjs/components/prism-typescript"
+            ]
+          },
+          "configurations": {
+            "enterprise": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/docs-app/environments/environment.ts",
+                  "with": "apps/docs-app/environments/environment.enterprise.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3MB",
+                  "maximumError": "4MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "10kB",
+                  "maximumError": "16kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/docs-app/environments/environment.ts",
+                  "with": "apps/docs-app/environments/environment.dev.ts"
+                }
+              ]
+            },
+            "pro": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/docs-app/environments/environment.ts",
+                  "with": "apps/docs-app/environments/environment.pro.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3MB",
+                  "maximumError": "4MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "10kB",
+                  "maximumError": "16kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "bypass-license": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/docs-app/environments/environment.ts",
+                  "with": "apps/docs-app/environments/environment.bypass-license.ts"
+                }
+              ]
+            },
+            "offline-docs": {
+              "index": "apps/docs-app/index.offline.html",
+              "baseHref": "./",
+              "deployUrl": "./",
+              "outputHashing": "none",
+              "optimization": true,
+              "sourceMap": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "15MB",
+                  "maximumError": "20MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "15kB",
+                  "maximumError": "30kB"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "enterprise"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "enterprise": {
+              "buildTarget": "docs-app:build:enterprise"
+            },
+            "development": {
+              "buildTarget": "docs-app:build:development"
+            },
+            "pro": {
+              "buildTarget": "docs-app:build:pro"
+            },
+            "bypass-license": {
+              "buildTarget": "docs-app:build:bypass-license"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "karmaConfig": "apps/docs-app/karma.conf.js",
+            "tsConfig": "apps/docs-app/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "apps/docs-app/assets",
+                "output": "/assets/"
+              }
+            ],
+            "styles": ["apps/docs-app/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            },
+            "fileReplacements": [
+              {
+                "replace": "apps/docs-app/environments/environment.ts",
+                "with": "apps/docs-app/environments/environment.dev.ts"
+              }
+            ],
+            "codeCoverageExclude": [
+              "**/testing/data/**",
+              "**/docs-app/app/builder/services/files/pipeline-file-builder.abstract.ts",
+              "**/docs-app/app/docs/resolve/value/example/resolve-value.example.component.ts"
+            ]
+          }
+        }
+      }
+    },
+    "addons": {
+      "projectType": "library",
+      "root": "libs/addons",
+      "sourceRoot": "libs/addons/src",
+      "prefix": "sdux",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/addons/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/addons/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libs/addons/tsconfig.spec.json",
+            "karmaConfig": "libs/addons/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "codeCoverageExclude": [],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "angular": {
+      "projectType": "library",
+      "root": "libs/core-extensions/angular",
+      "sourceRoot": "libs/core-extensions/angular/src",
+      "prefix": "sdux-angular",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/core-extensions/angular/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/core-extensions/angular/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libs/core-extensions/angular/tsconfig.spec.json",
+            "karmaConfig": "libs/core-extensions/angular/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            },
+            "codeCoverageExclude": ["**/testing/**"],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "core": {
+      "projectType": "library",
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "prefix": "core",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libs/core/tsconfig.spec.json",
+            "karmaConfig": "libs/core/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            },
+            "codeCoverageExclude": [],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "devtools": {
+      "projectType": "library",
+      "root": "libs/devtools/tooling",
+      "sourceRoot": "libs/devtools/tooling/src",
+      "prefix": "sdux-devtools",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/devtools/tooling/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/devtools/tooling/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libs/devtools/tooling/tsconfig.spec.json",
+            "karmaConfig": "libs/devtools/tooling/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            },
+            "codeCoverageExclude": [],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "devtools-ui": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/devtools-ui",
+      "sourceRoot": "apps/devtools-ui/src",
+      "prefix": "sdux",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "allowedCommonJsDependencies": ["reflect-metadata"],
+            "browser": "apps/devtools-ui/src/main.ts",
+            "tsConfig": "apps/devtools-ui/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "apps/devtools-ui/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "apps/devtools-ui/src/assets",
+                "output": "assets"
+              }
+            ],
+            "styles": ["apps/devtools-ui/src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "none"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "outputHashing": "none"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "devtools-ui:build:production"
+            },
+            "development": {
+              "buildTarget": "devtools-ui:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "apps/devtools-ui/tsconfig.spec.json",
+            "karmaConfig": "apps/devtools-ui/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "apps/devtools-ui/public"
+              }
+            ],
+            "styles": ["apps/devtools-ui/src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            }
+          }
+        }
+      }
+    },
+
+    "integration": {
+      "projectType": "library",
+      "root": "libs/testing/integration",
+      "sourceRoot": "libs/testing/integration/src",
+      "prefix": "sdux",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/testing/integration/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/testing/integration/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libs/testing/integration/tsconfig.spec.json",
+            "karmaConfig": "libs/testing/integration/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "codeCoverageExclude": ["**/structure/**", "**/testing/**"],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "shared": {
+      "projectType": "library",
+      "root": "libs/shared",
+      "sourceRoot": "libs/shared/src",
+      "prefix": "sdux",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/shared/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/shared/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libs/shared/tsconfig.spec.json",
+            "karmaConfig": "libs/shared/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            },
+            "codeCoverageExclude": [],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "testing-utils": {
+      "projectType": "library",
+      "root": "libs/testing/utils",
+      "sourceRoot": "libs/testing/utils/src",
+      "prefix": "sdux",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/testing/utils/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/testing/utils/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "web-components": {
+      "projectType": "library",
+      "root": "libs/ui/web-components",
+      "sourceRoot": "libs/ui/web-components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "tsConfig": "libs/ui/web-components/tsconfig.lib.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ui/web-components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/ui/web-components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libs/ui/web-components/tsconfig.spec.json",
+            "karmaConfig": "libs/ui/web-components/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "assets",
+                "output": "/assets/"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            },
+            "scripts": [],
+            "codeCoverageExclude": ["**/factory/**"]
+          }
+        }
+      }
+    }
+  }
+}

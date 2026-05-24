@@ -1,0 +1,261 @@
+@use 'global' as global;
+
+.behavior-question {
+  border-radius: global.$border-radius-md;
+  padding: global.$spacing-sm;
+  box-shadow: global.$sdux-shadow-base;
+  background-color: var(--sdux-surface-bg);
+
+  display: flex;
+  flex-direction: column;
+
+  &.inactive {
+    background-color: global.$sdux-surface-inactive-light;
+    border: 1px solid global.$sdux-border-inactive;
+
+    .stage-label {
+      color: global.$sdux-text-inverse;
+    }
+  }
+
+  &.complete {
+    background-color: global.$sdux-surface-complete-light;
+    border: 1px solid global.$sdux-border-complete;
+
+    .stage-label {
+      color: global.$sdux-success-dark;
+    }
+  }
+
+  &.idle {
+    background-color: global.$sdux-surface-idle-light;
+    border: 1px solid global.$sdux-border-idle;
+
+    .stage-label {
+      color: var(--sdux-text-primary);
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+    min-height: 45px;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    .content-top-row {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      gap: global.$spacing-sm;
+      align-items: center;
+      min-height: 40px;
+
+      .label-group {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: global.$spacing-xxs;
+        min-width: 0;
+        flex: 1;
+
+        .label {
+          font-weight: global.$font-weight-semibold;
+          font-size: global.$font-size-md;
+          margin-bottom: global.$spacing-xs;
+        }
+
+        .learn-icon {
+          border: none;
+          background: none;
+          padding: 0;
+          cursor: pointer;
+
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.7;
+
+          flex-shrink: 0;
+
+          position: relative;
+          transform: translateY(-4px);
+
+          transition:
+            transform 0.18s ease,
+            opacity 0.18s ease,
+            color 0.18s ease;
+
+          transform-origin: left bottom;
+          will-change: transform;
+
+          &:hover {
+            color: global.$sdux-primary-base;
+            transform: translateY(-4px) scale(1.1);
+            opacity: 1;
+          }
+
+          mat-icon {
+            font-size: 12px;
+            width: 12px;
+            height: 12px;
+            line-height: 12px;
+          }
+        }
+
+        .ai-assist {
+          background: global.$sdux-primary-base;
+          color: global.$sdux-text-white;
+          border: 1px solid global.$sdux-primary-dark;
+          border-radius: global.$border-radius-xs;
+          font-size: global.$font-size-xxs;
+          // width: 50px;
+          padding: global.$spacing-xxs;
+          margin: global.$spacing-sm;
+          text-align: center;
+
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+
+          width: 60px;
+          font-weight: global.$font-weight-semibold;
+          // padding: 2px 6px;
+          // font-size: global.$font-size-xxs;
+          // border-radius: global.$border-radius-xs;
+
+          // margin-left: global.$spacing-xs;
+          // padding: 2px 6px;
+          // font-size: global.$font-size-xxs;
+        }
+      }
+    }
+
+    .question {
+      margin-top: global.$spacing-xs;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-medium;
+      line-height: 1.5;
+      opacity: 1;
+    }
+
+    .description {
+      font-size: global.$font-size-sm;
+      line-height: 1.5;
+      opacity: 0.75;
+      margin-top: global.$spacing-xs;
+    }
+
+    .controls {
+      // display: flex;
+      // align-items: center;
+      // justify-content: center;
+      // gap: global.$spacing-sm;
+      // width: 75px;
+
+      display: flex;
+      align-items: flex-start;
+      gap: global.$spacing-sm;
+      flex-shrink: 0; // prevents collapse
+      flex: 0 0 auto;
+
+      .button-toggle {
+        height: 30px !important;
+        transition:
+          background-color 0.2s ease,
+          box-shadow 0.15s ease,
+          transform 0.1s ease;
+
+        &.is-selected {
+          box-shadow: var(--sdux-shadow-active);
+          transform: translateY(-5px);
+        }
+
+        &.is-not-selected {
+          @include global.button-base(
+            global.$sdux-text-disabled,
+            global.$sdux-surface-light,
+            global.$sdux-surface-outline
+          );
+
+          height: 30px !important;
+          min-width: 30px !important;
+          padding: 0;
+        }
+
+        &.is-disabled {
+          @include global.button-base(
+            global.$sdux-text-white,
+            global.$sdux-text-disabled,
+            global.$sdux-surface-outline
+          );
+
+          height: 30px !important;
+          min-width: 30px !important;
+          padding: 0;
+        }
+
+        &.is-select {
+          width: 50px;
+        }
+      }
+    }
+  }
+
+  .drawer {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+
+    transition:
+      max-height 0.35s ease,
+      opacity 0.25s ease,
+      transform 0.25s ease;
+
+    &.is-open {
+      max-height: 1000px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .param {
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-xs;
+      margin-top: global.$spacing-sm;
+
+      label {
+        font-size: global.$font-size-sm;
+        color: global.$sdux-text-secondary;
+      }
+
+      .param-hint {
+        font-size: global.$font-size-xs;
+      }
+
+      .code-input {
+        font-family: monospace;
+        font-size: 13px;
+        padding: 8px;
+        border: 1px solid var(--sdux-border);
+        border-radius: 4px;
+      }
+
+      input[type='text'],
+      input[type='number'] {
+        padding: global.$spacing-xs;
+        border-radius: global.$border-radius-sm;
+        border: 1px solid global.$sdux-surface-outline;
+        background: global.$sdux-surface-light;
+        color: global.$sdux-text-inverse;
+      }
+
+      input[type='checkbox'] {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}

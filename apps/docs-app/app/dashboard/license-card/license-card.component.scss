@@ -1,0 +1,370 @@
+@use 'global' as global;
+@use 'font' as font;
+@use 'toggle' as toggle;
+
+/*
+--------------------------------
+License Card
+--------------------------------
+*/
+
+.license-card {
+  border-radius: global.$border-radius-lg;
+  border: 1px solid rgb(255 255 255 / 8%);
+  box-shadow: global.$sdux-shadow-active;
+
+  background-color: var(--sdux-surface-main);
+  color: var(--sdux-text-black-white);
+
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+
+  padding: global.$spacing-md;
+
+  /*
+--------------------------------
+Header
+--------------------------------
+*/
+
+  .license-card-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: global.$spacing-md;
+
+    .license-domain-row {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-sm;
+      width: 100%;
+      justify-content: space-between;
+
+      @media (max-width: global.$breakpoint-md) {
+        flex-wrap: nowrap;
+      }
+
+      .license-title-group {
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-sm;
+
+        .license-domain {
+          margin: 0;
+          font-weight: global.$font-weight-semibold;
+          font-size: global.$font-size-lg;
+          max-width: 300px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .license-status-badge {
+          padding: 2px 8px;
+          border-radius: global.$border-radius-sm;
+
+          font-size: global.$font-size-xxs;
+          font-weight: global.$font-weight-semibold;
+          text-transform: uppercase;
+
+          color: global.$sdux-text-white;
+
+          &.active {
+            background-color: global.$sdux-success-base;
+          }
+
+          &.error {
+            background-color: global.$sdux-accent-light;
+          }
+
+          &.inactive {
+            color: global.$sdux-text-black;
+            background-color: global.$sdux-warn-light;
+          }
+        }
+      }
+
+      .license-actions-top {
+        display: flex;
+        gap: global.$spacing-md;
+
+        &.desktop-only {
+          @media (max-width: global.$breakpoint-md) {
+            display: none;
+          }
+        }
+
+        &.mobile-only {
+          display: none;
+
+          @media (max-width: global.$breakpoint-md) {
+            display: flex;
+            gap: global.$spacing-xs;
+          }
+        }
+
+        .icon-action {
+          @include global.sdux-icon-button;
+        }
+      }
+    }
+
+    .license-type-row {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-xs;
+      margin-top: global.$spacing-xs;
+      width: 100%;
+
+      @media (max-width: global.$breakpoint-md) {
+        flex-wrap: wrap;
+
+        .warning {
+          order: 3;
+          width: 100%;
+        }
+      }
+
+      .warning {
+        font-size: global.$font-size-sm;
+      }
+
+      .toggle-container {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+
+        .button-toggle-container {
+          @include toggle.button-toggle-container(small);
+        }
+      }
+
+      .license-type-badge {
+        padding: 2px 8px;
+        border-radius: global.$border-radius-sm;
+
+        font-size: global.$font-size-xs;
+        font-weight: global.$font-weight-semibold;
+        text-transform: uppercase;
+
+        background: global.$sdux-warn-base;
+        color: global.$sdux-accent-outline;
+        border: 1px solid global.$sdux-warn-dark;
+
+        &.standard {
+          border: 1px solid global.$sdux-primary-base;
+          background: global.$sdux-primary-light;
+          color: global.$sdux-text-black;
+        }
+
+        &.enterprise {
+          border: 1px solid global.$sdux-primary-light;
+          background: global.$sdux-primary-base;
+          color: global.$sdux-text-white;
+        }
+      }
+    }
+
+    .license-security-badge {
+      display: flex;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: global.$border-radius-sm;
+      gap: global.$spacing-sm;
+
+      font-size: global.$font-size-xs;
+
+      .check {
+        color: global.$sdux-success-base;
+        font-size: global.$font-size-lg;
+        font-weight: global.$font-weight-semibold;
+      }
+
+      &.muted {
+        opacity: 0.7;
+      }
+
+      &.desktop-only {
+        @media (max-width: global.$breakpoint-md) {
+          display: none;
+        }
+      }
+    }
+
+    .license-security-row {
+      display: none;
+      gap: global.$spacing-xs;
+      margin-top: global.$spacing-xs;
+
+      @media (max-width: global.$breakpoint-md) {
+        display: flex;
+      }
+    }
+  }
+
+  .license-container {
+    width: 100%;
+    display: none;
+
+    &.is-displayed {
+      display: block;
+    }
+
+    .license-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: global.$spacing-sm;
+
+      padding: global.$spacing-sm 0;
+
+      .meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .meta-label {
+          @include font.font-xs;
+          color: global.$sdux-text-secondary;
+
+          .help-icon {
+            height: global.$font-size-sm;
+            width: global.$font-size-sm;
+            color: global.$sdux-primary-base;
+            cursor: pointer;
+
+            &:hover {
+              transform: translateY(calc(-1 * global.$spacing-xxs));
+            }
+          }
+        }
+
+        .meta-item-copy {
+          display: flex;
+          gap: global.$spacing-sm;
+
+          .check-mark {
+            color: global.$sdux-success-base;
+            font-weight: global.$font-weight-semibold;
+          }
+
+          .copy-icon {
+            font-size: global.$font-size-sm;
+            transform: translateY(calc(-1 * global.$spacing-xxs));
+            &:hover {
+              transform: translateY(calc(-2 * global.$spacing-xxs));
+            }
+          }
+        }
+
+        .meta-value {
+          @include font.font-sm;
+          font-weight: global.$font-weight-medium;
+        }
+
+        .mono {
+          font-family: 'JetBrains Mono', monospace;
+        }
+
+        .verified {
+          color: global.$sdux-success-base;
+        }
+
+        .invalid {
+          color: global.$sdux-accent-base;
+          font-weight: global.$font-weight-medium;
+        }
+      }
+    }
+
+    /*
+--------------------------------
+License Key
+--------------------------------
+*/
+
+    .license-key-section {
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-xs;
+      @include font.font-sm;
+
+      .validation {
+        margin-top: global.$spacing-sm;
+        opacity: 0.75;
+      }
+
+      .section-label-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid global.$sdux-border-color;
+        padding-top: global.$spacing-sm;
+        margin-bottom: global.$spacing-sm;
+
+        .section-label {
+          @include font.font-sm;
+          font-weight: global.$font-weight-semibold;
+        }
+
+        .section-help {
+          @include font.font-xs;
+          color: global.$sdux-text-secondary;
+        }
+      }
+
+      .instructions {
+        padding-left: global.$spacing-xl;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      .license-key-textarea {
+        width: calc(100% - calc(2 * global.$spacing-sm));
+        min-height: 200px;
+
+        border-radius: global.$border-radius-md;
+        border: 1px solid global.$sdux-border-color;
+
+        background-color: var(--sdux-surface-bg);
+        color: var(--sdux-text-primary);
+
+        padding: global.$spacing-sm;
+
+        font-family: 'JetBrains Mono', monospace;
+        font-size: global.$font-size-sm;
+
+        resize: none;
+
+        letter-spacing: 0.5px;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+/*
+--------------------------------
+Responsive
+--------------------------------
+*/
+
+@media (max-width: global.$breakpoint-md) {
+  .license-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .license-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .install-command-list {
+    grid-template-columns: 1fr;
+  }
+}

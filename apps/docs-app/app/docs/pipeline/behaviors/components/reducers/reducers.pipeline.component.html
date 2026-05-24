@@ -1,0 +1,1153 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Reducer Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Reducer Behaviors</strong> allow engineers to derive the next
+      immutable state snapshot during pipeline processing. Reducers operate on
+      the current state value and deterministically produce the next state that
+      will be emitted, persisted, and observed.
+    </p>
+
+    <h4>Reducer Contract Summary</h4>
+    <ul>
+      <li>Reducers must be pure and side-effect free</li>
+      <li>Reducers must not mutate the incoming state</li>
+      <li>
+        Reducers must return a state value of the same structural shape and type
+      </li>
+      <li>Reducers execute in initialization order</li>
+      <li>Errors during reducer execution propagate as Vault errors</li>
+    </ul>
+
+    <p>
+      The Reducer contract guarantees that reducer execution is
+      <strong>atomic and isolated</strong>. If a reducer function throws an
+      error, that error is promoted to a <strong>Vault error</strong> and
+      immediately terminates the current pipeline execution. The in-flight
+      candidate value is discarded, no state is committed, and no snapshot is
+      emitted. This ensures that reducer failures never result in partially
+      applied state or inconsistent pipeline outcomes. For details on how
+      referential isolation is enforced at every stage boundary, see
+      <a href="/docs/pipeline/isolation">Pipeline Isolation</a>.
+    </p>
+
+    <p>
+      Reducers are the <em>only</em> pipeline stage permitted to change state.
+      They never mutate existing snapshots, never influence pipeline scheduling
+      or control flow, and never emit snapshots directly. Their sole
+      responsibility is to derive the next immutable state value.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- REDUCER STAGE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Reducer Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Reducer Stage runs after operators and filters and before AfterTap
+        and output layers. Reducers receive the current immutable state snapshot
+        and apply deterministic transformation logic to produce the next state.
+      </p>
+
+      <p>A reducer must:</p>
+
+      <ul>
+        <li>Return the current state unchanged</li>
+        <li>Return a new derived state with the same structural shape</li>
+      </ul>
+
+      <p>
+        Reducers must be pure. They may not mutate the incoming state, and they
+        may not change its structural type. Arrays must remain arrays, objects
+        must remain objects, and primitives must retain their original primitive
+        type. Structural violations result in controlled Vault errors to protect
+        pipeline integrity.
+      </p>
+
+      <h4>Core Pipeline Stage</h4>
+      <p>
+        The Reducer stage is a core pipeline stage and is always present as part
+        of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. However, individual reducer functions are
+        <em>not</em> registered as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        declarative configuration. Instead, reducer functions are attached
+        exclusively through the fluent <strong>.reducers()</strong> API during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization, ensuring that state transformation rules are defined
+        explicitly at startup rather than embedded into static cell
+        configuration.
+      </p>
+
+      <h4>Fluent Reducers() API</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        declare <strong>multiple reducers</strong>. The fluent
+        <strong>.reducers()</strong> API accepts an array of reducer functions,
+        which is treated as a declarative, ordered configuration. When provided,
+        reducers are executed in the <em>Processing Layer</em> in the exact
+        order they are listed during initialization.
+      </p>
+
+      <p>
+        An empty reducer array is ignored and has no effect on pipeline
+        execution.
+      </p>
+
+      <h4>Engineer-Supplied Reducer Functions</h4>
+      <p>
+        Reducer functions are supplied by engineers during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization and execute exclusively within the Reducer stage. Each
+        function is evaluated as a pure, deterministic operation that must
+        preserve the structural contract of the state. Reducers do not own
+        pipeline flow, scheduling, or lifecycle concerns; their sole
+        responsibility is to derive the next immutable state value.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Although multiple reducer functions may be composed, reducer logic
+        should remain narrowly focused and structurally conservative. Overly
+        complex or interdependent reducers can obscure intent and make state
+        evolution difficult to reason about. Reducers are most effective when
+        each function enforces a single, clearly defined transformation.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- REDUCER STAGE DIAGRAM -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Reducer Stage Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.4/3.4-reducer-behavior.svg"
+        [tooltip]="'Reducer Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- AVAILABLE REDUCER BEHAVIORS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Available Reducer Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        The Reducer behavior is part of the core pipeline and always present as
+        a stage. Engineers supply
+        <em>reducer functions</em> that are executed by the core reducer
+        behavior during pipeline processing.
+      </p>
+    </div>
+
+    <div class="table-title">Core Reducer Behavior</div>
+    <table aria-label="Core Reducer Behavior">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Behavior</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <p>
+              <strong
+                ><a
+                  href="/docs/pipeline/behaviors/reducer/with-core-reducer-behavior"
+                  >withCoreReducerBehavior</a
+                ></strong
+              >
+            </p>
+            <p>input: currentState, reducerFn</p>
+          </td>
+          <td>
+            <p>
+              Executes an engineer-supplied pure reducer function against the
+              current immutable state snapshot. The reducer must return a new
+              state value or the original state when no change is required.
+            </p>
+
+            <ul>
+              <li>Arrays must return arrays</li>
+              <li>Objects must return objects</li>
+              <li>Primitives must retain their primitive type</li>
+            </ul>
+
+            <p>
+              Structural mismatches produce controlled Vault errors. This stage
+              is the authoritative mechanism for accumulating, deriving, and
+              finalizing application state.
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="table-title">
+      <a href="/docs/references/types/reducer-function">ReducerFunction</a
+      >&lt;T&gt;
+    </div>
+    <table aria-label="ReducerFunction">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Signature</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="column-250">(current: T) =&gt; T</td>
+          <td class="column-auto">
+            A pure function that receives the current immutable state snapshot
+            and returns the next state value of the same structural type.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        The Reducer stage exposes a fluent configuration API that allows
+        engineers to register reducer functions during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        This API does not execute reducers directly. It records an ordered set
+        of reducer functions that are later applied by the Reducer stage during
+        pipeline execution.
+      </p>
+
+      <div class="table-title">Fluent Reducer Configuration</div>
+      <table aria-label="Fluent Reducer Configuration">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Fluent API</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p><strong>.reducers(reducers)</strong></p>
+              <p>input:</p>
+              <ul>
+                <li>
+                  reducers:
+                  <a href="/docs/references/types/reducer-function"
+                    >ReducerFunction</a
+                  >&lt;T&gt;[]
+                </li>
+              </ul>
+              <p>
+                returns:
+                <a href="/docs/references/shapes/feature-cell-base-shape"
+                  >FeatureCellBaseShape</a
+                >
+                (chainable)
+              </p>
+            </td>
+
+            <td>
+              <p>
+                Registers reducer functions for a
+                <a href="/docs/references/functions/feature-cell">FeatureCell</a
+                >. Reducers are responsible for producing the next committed
+                state by combining the current state with the resolved pipeline
+                value.
+              </p>
+
+              <p>
+                Reducers are executed in the <em>Reduction Layer</em> in the
+                exact order they are registered. This method must be called
+                before <code>initialize()</code>. Multiple calls overwrite prior
+                reducer configuration.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- REDUCER FUNCTION PATTERNS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Reducer Function Patterns</div>
+
+    <div class="section-body">
+      <p>
+        The Reducer behavior is a core pipeline construct, but the
+        <em>reducer functions</em> they execute are supplied by engineers. While
+        JavaScript allows many ways to express a function, only a small subset
+        of patterns are safe and appropriate for use in the Reducer stage.
+      </p>
+
+      <p>
+        From the pipeline’s perspective, there are only two dimensions that
+        matter:
+      </p>
+
+      <ul>
+        <li>Whether the function depends on instance state</li>
+        <li>Whether the function is deterministic for a given input</li>
+      </ul>
+
+      <p>
+        The following categories describe the supported and discouraged ways to
+        supply reducer functions, ordered from most to least preferred.
+      </p>
+
+      <h4>Category A: Pure / Context-Free Functions (Recommended)</h4>
+      <p>
+        Pure reducer functions depend only on their input value and produce a
+        deterministic output. They do not reference <code>this</code>, do not
+        close over mutable external state, and are fully predictable across
+        executions.
+      </p>
+
+      <p>
+        This is the safest and most reusable form of reducer function and is
+        recommended whenever possible.
+      </p>
+
+      <h4>Example 1: Pure Reducer Function</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 1: Pure Reducer Function'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.reducers(
+  [
+    (current) => ({ ...current, count: current.count + 1 })
+  ]
+).initialize()
+// count is incremented immutably`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 2: Factory-Generated Pure Reducer Function</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 2: Factory-Generated Pure Reducer Function'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export function withFullName() {
+  return (emp) => ({
+    ...emp,
+    fullName: emp.firstName + ' ' + emp.lastName
+  });
+}
+
+&lt;employeeCell\|this&gt;.vault.reducers(
+  [
+    withFullName()
+  ]
+).initialize()`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>
+        Category B: Instance-Aware but Correctly Bound Reducer Functions
+        (Acceptable)
+      </h4>
+      <p>
+        Reducer functions may reference instance state as long as they are
+        correctly bound to the owning instance. These reducers remain pure with
+        respect to their inputs and are deterministic
+        <em
+          >per
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          instance</em
+        >, but they must not be shared across FeatureCells.
+      </p>
+
+      <p>
+        This pattern is acceptable when reducer logic depends on configuration
+        values or state owned by the containing class. Instance-aware reducers
+        must still obey all reducer contracts: immutability, structural
+        preservation, and absence of side effects.
+      </p>
+
+      <h4>Example 3: Arrow Function Using Instance State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 3: Arrow Function Using Instance State'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`readonly incrementBy = 5;
+
+readonly incrementReducer = (current) => ({
+  ...current,
+  count: current.count + this.incrementBy
+});
+
+&lt;employeeCell\|this&gt;.vault.reducers(
+  [this.incrementReducer]
+).initialize();
+
+// count is incremented using instance-scoped configuration`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 4: Bound Instance Method</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 4: Bound Instance Method'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`public normalizeName(current) {
+  return {
+    ...current,
+    name: current.name.trim().toLowerCase()
+  };
+}
+
+&lt;employeeCell\|this&gt;.vault.reducers(
+  [this.normalizeName.bind(this)]
+).initialize();
+
+// reducer logic is instance-bound and deterministic per FeatureCell`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Category C: Delegating Reducer Functions (Reducers Only)</h4>
+      <p>
+        Reducer functions may delegate their implementation to class methods or
+        helper functions, provided that those methods remain pure and derive
+        their output solely from the reducer’s input value.
+      </p>
+
+      <p>
+        Unlike filters or stepwise behaviors, reducers do not participate in
+        pipeline control flow or admission logic. As a result, delegating
+        reducer logic to standalone methods is safe as long as those methods do
+        not depend on external mutable state and do not mutate the incoming
+        value.
+      </p>
+
+      <p>
+        This pattern is useful for organizing complex reducer logic, sharing
+        implementation across reducers, or improving testability through method
+        extraction.
+      </p>
+
+      <h4>Example 5: Delegating Reducer Method</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 5: Delegating Reducer Method'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.reducers(
+  [
+    (employees) => this.partialReducerStandaloneMethod(employees)
+  ]
+).initialize();
+
+// reducer logic is delegated but remains pure and deterministic`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Category D: Inline Lambda Reducers (Allowed, Use Sparingly)</h4>
+      <p>
+        Inline lambda functions are allowed, but they are easier to misuse.
+        Because they are often written inline, it is easy to accidentally close
+        over mutable variables or embed complex logic that is difficult to test
+        or reuse.
+      </p>
+
+      <p>
+        Inline reducers are best reserved for trivial, self-contained
+        transformations.
+      </p>
+
+      <h4>Example 6: Inline Conditional Reducer</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 6: Inline Conditional Reducer'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.reducers(
+  [
+    (current) => {
+      if (!current.items?.length) return current;
+      return { ...current, items: [...current.items].sort() };
+    }
+  ]
+).initialize()`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- REDUCER ANTI-PATTERNS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Reducer Function Anti-Patterns</div>
+
+    <div class="section-body">
+      <h4>Category E: Mutation or External State (Discouraged)</h4>
+      <p>
+        Reducer functions that mutate state or depend on external mutable
+        variables are unsafe. They violate immutability guarantees and undermine
+        deterministic pipeline behavior.
+      </p>
+
+      <p>
+        If a reducer requires state, that state must be instance-scoped and
+        explicitly bound. External mutable variables should never influence
+        reducer behavior.
+      </p>
+
+      <h4>Example 7: Discouraged Mutation</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 7: Discouraged Mutation'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.reducers(
+  [
+    (current) => {
+      current.count++; // ❌ mutation
+      return current;
+    }
+  ]
+).initialize()
+
+// ❌ Vault error: reducers must not mutate state`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Reducer Function Summary</div>
+    <div class="section-body">
+      <h4>Reducer Function Comparison</h4>
+
+      <p>
+        The following table summarizes the practical differences between the
+        reducer function styles demonstrated above. While all valid examples may
+        execute correctly, they differ in reusability, testability, and
+        long-term safety.
+      </p>
+
+      <div class="table-title">Reducer Function Characteristics</div>
+      <div class="table-scroll">
+        <table aria-label="Reducer Function Characteristics">
+          <thead>
+            <tr>
+              <th scope="col" class="column-175">Dimension</th>
+
+              <th scope="col" class="column-auto">
+                Examples 1 / 2<br />
+                <span class="table-header-secondary"
+                  >Pure Reducer Functions</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Examples 3 / 4<br />
+                <span class="table-header-secondary"
+                  >Instance-Bound Reducers</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 5<br />
+                <span class="table-header-secondary">Delegating Reducer</span>
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 6<br />
+                <span class="table-header-secondary"
+                  >Inline Lambda Reducer</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 7<br />
+                <span class="table-header-secondary"
+                  >Mutation / External State</span
+                >
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Purity</td>
+              <td>✅</td>
+              <td>⚠️ Instance-scoped</td>
+              <td>⚠️ Delegated</td>
+              <td>⚠️</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Determinism</td>
+              <td>✅</td>
+              <td>⚠️ Per instance</td>
+              <td>⚠️ Per instance</td>
+              <td>⚠️</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Safety for Pipelines</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>⚠️</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Reusability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>Medium</td>
+              <td>Low</td>
+              <td>None</td>
+            </tr>
+
+            <tr>
+              <td>Testability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>High</td>
+              <td>Lower</td>
+              <td>Low</td>
+            </tr>
+
+            <tr>
+              <td>Risk of Accidental Closure</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Higher</td>
+              <td>High</td>
+            </tr>
+
+            <tr>
+              <td>Intended Lifespan</td>
+              <td>Long-lived</td>
+              <td>Instance-limited</td>
+              <td>Instance-limited</td>
+              <td>Ephemeral</td>
+              <td>Unacceptable</td>
+            </tr>
+
+            <tr>
+              <td>Recommended Usage</td>
+              <td>Preferred</td>
+              <td>Acceptable</td>
+              <td>Acceptable</td>
+              <td>Use sparingly</td>
+              <td>Discouraged</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Summary Rule</h4>
+      <p>
+        Any reducer function must be
+        <strong>pure with respect to its input</strong> and must return a value
+        of the same structural type. Reducers may be instance-aware or
+        delegated, but they must never mutate state or depend on external
+        mutable variables. All reducer behavior must remain deterministic within
+        the owning
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Examples Section ---------------------------------------------------------->
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        Reducers are applied by supplying pure reducer functions that operate on
+        the current immutable state value during pipeline execution. The
+        following examples illustrate valid and invalid reducer function
+        behavior.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <!-- Example 1 -->
+                <h4>Example 1: Basic Increment Reducer</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Basic Increment Reducer'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more reducers during initialization
+    this.vault.reducers(
+      [
+        (current) => ({
+          ...current,
+          count: current.count + 1
+        })
+      ]
+    ).initialize()
+  }
+}
+// count is incremented immutably`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 2 -->
+                <h4>Example 2: Adding Derived Fields</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Adding Derived Fields'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more reducers during initialization
+    this.vault.reducers(
+      [
+        (emp) => ({
+          ...emp,
+          fullName: emp.firstName + ' ' + emp.lastName,
+          senior: emp.years > 10
+        })
+      ]
+    ).initialize()
+  }
+}
+// derived fields are added immutably`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 3 -->
+                <h4>Example 3: Conditional Reducer</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 3: Conditional Reducer'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more reducers during initialization
+    this.vault.reducers(
+      [
+        (current) => {
+          if (!current.items?.length) return current;
+          return {
+            ...current,
+            items: [...current.items].sort()
+          };
+        }
+      ]
+    ).initialize()
+  }
+}
+// state changes only when items exist`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 4 -->
+                <h4>Example 4: Returning the Same Value (No Change)</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 4: Returning the Same Value'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more reducers during initialization
+    this.vault.reducers(
+      [
+        (current) => current
+      ]
+    ).initialize()
+  }
+}
+// no state change — safe and legal`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <!-- Example 1 -->
+                <h4>Example 1: Basic Increment Reducer</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Basic Increment Reducer'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => ({
+      ...current,
+      count: current.count + 1
+    })
+  ]
+).initialize()
+// count is incremented immutably`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 2 -->
+                <h4>Example 2: Adding Derived Fields</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Adding Derived Fields'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (emp) => ({
+      ...emp,
+      fullName: emp.firstName + ' ' + emp.lastName,
+      senior: emp.years > 10
+    })
+  ]
+).initialize()
+// derived fields are added immutably`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 3 -->
+                <h4>Example 3: Conditional Reducer</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 3: Conditional Reducer'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => {
+      if (!current.items?.length) return current;
+      return {
+        ...current,
+        items: [...current.items].sort()
+      };
+    }
+  ]
+).initialize()
+// state changes only when items exist`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 4 -->
+                <h4>Example 4: Returning the Same Value (No Change)</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 4: Returning the Same Value'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => current
+  ]
+).initialize()
+// no state change — safe and legal`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <!-- Example 1 -->
+                <h4>Example 1: Basic Increment Reducer</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Basic Increment Reducer'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => ({
+      ...current,
+      count: current.count + 1
+    })
+  ]
+).initialize()
+// count is incremented immutably`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 2 -->
+                <h4>Example 2: Adding Derived Fields</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 2: Adding Derived Fields'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (emp) => ({
+      ...emp,
+      fullName: emp.firstName + ' ' + emp.lastName,
+      senior: emp.years > 10
+    })
+  ]
+).initialize()
+// derived fields are added immutably`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 3 -->
+                <h4>Example 3: Conditional Reducer</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 3: Conditional Reducer'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => {
+      if (!current.items?.length) return current;
+      return {
+        ...current,
+        items: [...current.items].sort()
+      };
+    }
+  ]
+).initialize()
+// state changes only when items exist`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 4 -->
+                <h4>Example 4: Returning the Same Value (No Change)</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 4: Returning the Same Value'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => current
+  ]
+).initialize()
+// no state change — safe and legal`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Reducer Anti-Pattern Examples</div>
+
+    <div class="section-body">
+      <p>
+        The following examples demonstrate
+        <strong>invalid reducer function behavior</strong>. These patterns
+        violate the Reducer contract by mutating the
+        <em>current state value</em> or by returning a value that does not
+        preserve the original structural type. Such violations are detected and
+        rejected by the Vault to protect pipeline integrity and ensure
+        deterministic state evolution.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 5: Invalid Mutation'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more reducers during initialization
+    this.vault.reducers(
+      [
+        (current) => {
+          current.count++; // ❌ mutation
+          return current;
+        }
+      ]
+    ).initialize()
+  }
+}
+
+// ❌ Vault error: reducers must not mutate state`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 6 -->
+                <h4>Example 6: Invalid — Returning Wrong Shape</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 6: Invalid Structural Return'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more reducers during initialization
+    this.vault.reducers(
+      [
+        (current) => 123 // ❌ incorrect type
+      ]
+    ).initialize()
+  }
+}
+
+// ❌ Vault error: reducer returned incompatible state type`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <!-- Example 5 -->
+                <h4>Example 5: Invalid — Mutating the Input</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 5: Invalid Mutation'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => {
+      current.count++; // ❌ mutation
+      return current;
+    }
+  ]
+).initialize()
+
+// ❌ Vault error: reducers must not mutate state`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 6 -->
+                <h4>Example 6: Invalid — Returning Wrong Shape</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 6: Invalid Structural Return'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => 123 // ❌ incorrect type
+  ]
+).initialize()
+
+// ❌ Vault error: reducer returned incompatible state type`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <!-- Example 5 -->
+                <h4>Example 5: Invalid — Mutating the Input</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 5: Invalid Mutation'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => {
+      current.count++; // ❌ mutation
+      return current;
+    }
+  ]
+).initialize()
+
+// ❌ Vault error: reducers must not mutate state`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+
+                <!-- Example 6 -->
+                <h4>Example 6: Invalid — Returning Wrong Shape</h4>
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 6: Invalid Structural Return'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => 123 // ❌ incorrect type
+  ]
+).initialize()
+
+// ❌ Vault error: reducer returned incompatible state type`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

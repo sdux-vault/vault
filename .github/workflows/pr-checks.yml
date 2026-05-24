@@ -1,0 +1,53 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches-ignore:
+      - dev
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - run: npm run lint
+
+      - run: npm run format:check
+
+      - run: npm run typecheck
+
+      - run: npm run test:coverage:clean
+
+      - run: npm run test:coverage:addons
+
+      - run: npm run test:coverage:angular
+
+      - run: npm run test:coverage:core
+
+      - run: npm run test:coverage:devtools
+
+      - run: npm run test:coverage:devtools-ui
+
+      - run: npm run test:coverage:shared
+
+      - run: npm run test:coverage:docs-app
+
+      - run: npm run test:coverage:web-components
+
+      - run: npm run test:coverage:integration
+
+      - run: npm run test:tools
+
+      - run: npm run docs:coverage

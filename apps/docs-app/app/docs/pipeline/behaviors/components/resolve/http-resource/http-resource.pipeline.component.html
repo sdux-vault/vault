@@ -1,0 +1,191 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>HTTP Resource Resolve Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <div class="lead">
+      <strong>
+        <a href="/docs/pipeline/behaviors/resolve/with-http-resource-behavior">
+          withHttpResourceBehavior
+        </a>
+      </strong>
+      is a resolve behavior that normalizes Angular
+      <code>HttpResourceRef&lt;T&gt;</code> inputs by observing the resource’s
+      reactive value signal and extracting a resolved value for downstream
+      pipeline processing.
+    </div>
+
+    <p>
+      This behavior operates exclusively in the
+      <strong>Resolve stage</strong> and is available
+      <strong
+        >only when using <code><sdux-package-name />/angular</code></strong
+      >. It affects <em>how</em> an incoming HTTP resource is resolved, never
+      <em>when</em> it enters the pipeline or <em>how</em> it is later
+      processed.
+    </p>
+
+    <p>
+      State updates participate in this behavior when a
+      <code>HttpResourceRef&lt;T&gt;</code> is supplied as the incoming state
+      value. The Resolve stage detects the resource input, subscribes to its
+      reactive value signal, and resolves the first available concrete value for
+      pipeline execution.
+    </p>
+
+    <p>
+      <strong
+        ><a href="/docs/pipeline/addons/resolve/with-http-resource-behavior"
+          >withHttpResourceBehavior</a
+        ></strong
+      >
+      is a <strong>pipeline-critical</strong> resolve behavior in Angular
+      environments. When enabled via the experimental HTTP resource flag,
+      loading and error signals emitted by the resource are synchronized with
+      the pipeline, and resolution failures are normalized and propagated
+      deterministically.
+    </p>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.4/2.4-resolve-processing.svg"
+        [tooltip]="'Resolve Processing'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a href="/docs/pipeline/addons/resolve/with-http-resource-behavior"
+            >withHttpResourceBehavior</a
+          ></strong
+        >
+        requires no explicit configuration parameters at the behavior level. It
+        is installed automatically as part of the Resolve stage when running
+        under
+        <strong
+          ><code><sdux-package-name />/angular</code></strong
+        >
+        and participates conditionally based on the incoming state input type.
+      </p>
+
+      <p>
+        This behavior activates when a state update is supplied with an Angular
+        <code>HttpResourceRef&lt;T&gt;</code> input. During resolution, the
+        Resolve stage detects the resource reference, bridges its reactive value
+        signal into an observable, and resolves the first available concrete
+        value for downstream pipeline processing.
+      </p>
+
+      <p>
+        <strong
+          ><a href="/docs/pipeline/addons/resolve/with-http-resource-behavior"
+            >withHttpResourceBehavior</a
+          ></strong
+        >
+        is <strong>pipeline-critical</strong> in Angular environments and cannot
+        be disabled when the experimental HTTP resource feature is enabled.
+        Loading and error signals emitted by the resource are synchronized with
+        the pipeline, while resolution failures are normalized and propagated
+        deterministically.
+      </p>
+
+      <p>
+        HTTP resource resolution is gated behind an experimental feature flag.
+        When the flag is disabled or when the incoming input is not a
+        <code>HttpResourceRef</code>, this behavior does not participate and
+        resolution proceeds through other applicable resolve behaviors.
+      </p>
+
+      <sdux-vault-resolve-behaviors-common [type]="'httpResource'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a href="/docs/pipeline/addons/resolve/with-http-resource-behavior"
+            >withHttpResourceBehavior</a
+          ></strong
+        >
+        participates automatically in Angular environments when a
+        <code>HttpResourceRef&lt;T&gt;</code> is supplied as a state input. No
+        explicit configuration is required during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        In the example below, a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized normally. After initialization, an Angular HTTP resource is
+        created and submitted using <strong>replaceState</strong>. The Resolve
+        stage detects the <code>HttpResourceRef</code>, observes its reactive
+        value signal, and resolves the first available value before downstream
+        pipeline processing occurs.
+      </p>
+
+      <h4>Example 1: Resolve an Angular HttpResourceRef State Update</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Resolve an Angular HttpResourceRef State Update'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor(private readonly http: HttpClient) {
+    this.vault.initialize();
+
+    // Create an Angular HTTP resource
+    const employeesResource = this.http.resource&lt;Employee[]>('/api/employees');
+
+    // Submit the HttpResourceRef as a state update
+    this.vault.replaceState(employeesResource);
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

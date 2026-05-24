@@ -1,0 +1,1339 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Best Practices</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      This guide defines the recommended architectural, testing, and extension
+      patterns for building stable, deterministic applications with
+      <strong> <sdux-brand-name [tm]="true" /> </strong>.
+    </p>
+
+    <p>
+      The practices in this document focus on predictability, lifecycle clarity,
+      and deterministic execution across application code, integration tests,
+      and framework environments. Each section builds on the core execution
+      model of the <strong> <sdux-vault-brand-name [tm]="true" /> </strong> and
+      <strong> <sdux-feature-cell [tm]="true" /> </strong> pipeline.
+    </p>
+
+    <p>
+      If you are new to <sdux-brand-name />, review the execution model first.
+      If you are building production features or writing tests, use this page as
+      a reference for stabilization patterns and lifecycle guarantees.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- TABLE OF CONTENTS -->
+  <!-- ====================================================== -->
+  <section class="section" id="toc">
+    <div class="section-title-navigation">
+      <div class="section-title">How to use this page</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This page is organized progressively. Begin with the execution model to
+        understand how
+        <sdux-brand-name /> processes state updates and finalizes state
+        commitment. Once the lifecycle model is clear, navigate to the section
+        that matches your use case—feature implementation, integration testing,
+        Angular environments, or extension development.
+      </p>
+
+      <div class="toc-container" id="toc">
+        <ul class="toc">
+          <li>
+            <a [routerLink]="['/docs/diagrams']"
+              ><sdux-brand-name /> Diagrams & Visual Architecture</a
+            >
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="architectural-ownership"
+              >Architectural Ownership Boundaries</a
+            >
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="pipeline-configuration-location"
+              >Pipeline Configuration Location</a
+            >
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="service-featurecell-rule"
+              >Service-to-FeatureCell Interaction Rule</a
+            >
+            <ul class="toc">
+              <li>
+                <a [routerLink]="[]" fragment="service-featurecell-examples"
+                  >Examples</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="component-interaction-rule"
+              >Component Interaction Rule</a
+            >
+            <ul class="toc">
+              <li>
+                <a [routerLink]="[]" fragment="component-interaction-examples"
+                  >Examples</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="deterministic-initialization"
+              >Deterministic Initialization Guarantee</a
+            >
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="state-mutation-discipline">
+              State Mutation Discipline
+            </a>
+            <ul class="toc">
+              <li>
+                <a [routerLink]="[]" fragment="selecting-update-api">
+                  Selecting an Update API
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="merge-strategy-discipline">
+                  Merge Strategy Discipline
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="selecting-a-merge-behavior">
+                  Selecting a Merge Behavior</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="timer-async-stabilization">
+              Timer & Async Stabilization
+            </a>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="persistence-discipline">
+              Persistence & Encryption Discipline
+            </a>
+            <ul class="toc">
+              <li>
+                <a [routerLink]="[]" fragment="data-security-boundary">
+                  Data Security Boundary
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="testing-commitment">
+              Deterministic Testing & Verification
+            </a>
+          </li>
+
+          <li>
+            <a [routerLink]="[]" fragment="architectural-smells">
+              Architectural Smells</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="visual-architecture">
+    <div class="section-title-navigation">
+      <div class="section-title">
+        <sdux-brand-name /> Diagrams & Visual Architecture Reference
+      </div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        If you are looking for visual representations of the
+        <sdux-brand-name /> execution model, pipeline stages, behaviors,
+        controllers, and testing stabilization flows, refer to the dedicated
+        diagrams documentation.
+      </p>
+
+      <p>The diagrams page provides authoritative visual references for:</p>
+
+      <ul>
+        <li>Full pipeline execution order</li>
+        <li>
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          lifecycle and initialization flow
+        </li>
+        <li>Resolve, merge, replace, and stream processing</li>
+        <li>Controller arbitration and policy flow</li>
+        <li>Error handling and state emission ordering</li>
+        <li>Testing and stabilization models</li>
+      </ul>
+
+      <p>
+        These diagrams are designed to stand alone as mental models and may be
+        used alongside this Best Practices guide.
+      </p>
+
+      <p>
+        <a [routerLink]="['/docs/diagrams']">
+          View the complete <sdux-brand-name /> Diagrams documentation →
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="architectural-ownership">
+    <div class="section-title-navigation">
+      <div class="section-title">Architectural Ownership Boundaries</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Every <sdux-feature-cell /> must have a single architectural owner
+        responsible for:
+      </p>
+
+      <ul>
+        <li>Pipeline configuration</li>
+        <li>State mutation</li>
+        <li>Lifecycle activation via <code>initialize()</code></li>
+        <li>Public state exposure</li>
+      </ul>
+
+      <p>
+        A <sdux-feature-cell /> must never be partially configured at runtime.
+        When it becomes accessible to consumers, its pipeline must already be
+        fully defined and activated.
+      </p>
+
+      <p>
+        Once initialized, the pipeline becomes a closed, deterministic execution
+        boundary. State cannot be altered outside of the pipeline, and no
+        external system can mutate committed state directly.
+      </p>
+
+      <p>
+        All mutations must enter through the configured pipeline stages. As a
+        result, execution ordering, side effects, and state commitment are fully
+        controlled and observable. There are no hidden mutation paths, no
+        reducer bypass, and no post-commit state alteration.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="pipeline-configuration-location">
+    <div class="section-title-navigation">
+      <div class="section-title">Pipeline Configuration Location</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> must
+        fully configure its pipeline before exposing public state.
+      </p>
+
+      <h4>Angular</h4>
+
+      <p>
+        Pipeline configuration belongs in the owning service constructor. This
+        ensures deterministic configuration and prevents partial initialization
+        states.
+      </p>
+
+      <ul>
+        <li>Configure behaviors</li>
+        <li>Register filters and reducers</li>
+        <li>Call <code>initialize()</code></li>
+      </ul>
+
+      <h4>React / Vue / Typescrpt</h4>
+
+      <p>
+        When using <sdux-brand-name /> as pure TypeScript, configuration belongs
+        at module scope during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        creation. The cell should be configured and initialized before being
+        exported.
+      </p>
+
+      <p>
+        In all environments, configuration must occur before state consumption.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="service-featurecell-rule">
+    <div class="section-title-navigation">
+      <div class="section-title">
+        Service-to-<a href="/docs/references/functions/feature-cell"
+          >FeatureCell</a
+        >
+        Interaction Rule
+      </div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        State mutation must occur through a single domain boundary. A
+        <sdux-feature-cell /> should never be owned directly by UI components.
+      </p>
+
+      <h4>Note:</h4>
+      <p>
+        In all the patterns, the rule is identical: once initialized, the
+        <sdux-feature-cell /> pipeline is the sole authority over state
+        mutation. No component may bypass the pipeline or mutate state directly.
+      </p>
+    </div>
+    <div class="section-body" id="service-featurecell-examples">
+      <div class="h-title-navigation">
+        <div class="h-title">Examples</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- ====================================================== -->
+          <!-- ANGULAR -->
+          <!-- ====================================================== -->
+
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <p>
+                In Angular applications, a <sdux-feature-cell /> must be owned
+                and configured by a service. The service is responsible for:
+              </p>
+
+              <ul>
+                <li>Configuring behaviors and controllers</li>
+                <li>Calling <code>initialize()</code></li>
+                <li>
+                  Issuing <code>replaceState()</code> and
+                  <code>mergeState()</code> mutations
+                </li>
+                <li>Exposing read-only state to components</li>
+              </ul>
+
+              <p>
+                Components must never inject the Vault directly or invoke
+                mutation APIs.
+              </p>
+
+              <div class="table-title">app.config.ts</div>
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Angular: app.config.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">// app.config.ts
+export const appConfig: ApplicationConfig = &#123;
+  providers: [
+    provideVault(&#123; logLevel: 'off' &#125;),
+
+    provideFeatureCell(
+      EmployeeService,
+      &#123;
+        key: 'employees',
+        initialState: []
+      &#125;,
+      [
+        withArrayPushMergeBehavior
+      ]
+    )
+  ]
+&#125;;</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <div class="table-title">employee.service.ts</div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Angular: employee.service.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">// employee.service.ts
+&#64;FeatureCell&lt;Employee[]&gt;('employees')
+&#64;Injectable(&#123; providedIn: 'root' &#125;)
+export class EmployeeService &#123;
+
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() &#123;
+    this.vault.initialize();
+  &#125;
+
+  add(employee: Employee): void &#123;
+    this.vault.mergeState(&#123;
+      value: [employee]
+    &#125;);
+  &#125;
+
+  readonly state = this.vault.state;
+&#125;</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <p>
+                In React applications, the module that defines the
+                <sdux-feature-cell />
+                acts as the architectural owner. Components must not call
+                mutation APIs directly. Instead, they call exported domain
+                functions.
+              </p>
+
+              <div class="table-title">employee.cell.ts</div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab label="React: employee.cell.ts">
+                  <pre
+                    class="code-inline"><code class="language-ts">// employee.cell.ts
+import &#123; Vault, FeatureCell &#125; from '<sdux-package-name />/core';
+import &#123; withArrayPushMergeBehavior &#125; from '<sdux-package-name />/addons';
+
+// 1️⃣ Initialize global runtime
+Vault(&#123; logLevel: 'off' &#125;);
+
+// 2️⃣ Register FeatureCell
+export const employeeCell = FeatureCell&lt;Employee[]&gt;(
+  &#123;
+    key: 'employees',
+    initialState: []
+  &#125;,
+  [
+    withArrayPushMergeBehavior
+  ]
+);
+
+// 3️⃣ Activate FeatureCell
+employeeCell.initialize();
+
+// 4️⃣ Domain-level mutation function
+export function addEmployee(employee: Employee): void &#123;
+  employeeCell.mergeState(&#123;
+    value: [employee]
+  &#125;);
+&#125;
+
+// 5️⃣ Export state surfaces
+export const employeeState = employeeCell.state;
+export const employeeState$ = employeeCell.state$;</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <p>
+                In Vue applications, the module that defines the
+                <sdux-feature-cell />
+                owns the state boundary. Vue components consume state and call
+                exported domain functions — never the Vault directly.
+              </p>
+
+              <div class="table-title">employee.cell.ts</div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Vue: employee.cell.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">// employee.cell.ts
+import &#123; Vault, FeatureCell &#125; from '<sdux-package-name />/core';
+import &#123; withArrayPushMergeBehavior &#125; from '<sdux-package-name />/addons';
+
+Vault(&#123; logLevel: 'off' &#125;);
+
+export const employeeCell = FeatureCell&lt;Employee[]&gt;(
+  &#123;
+    key: 'employees',
+    initialState: []
+  &#125;,
+  [
+    withArrayPushMergeBehavior
+  ]
+);
+
+employeeCell.initialize();
+
+export function addEmployee(employee: Employee): void &#123;
+  employeeCell.mergeState(&#123;
+    value: [employee]
+  &#125;);
+&#125;
+
+export const employeeState$ = employeeCell.state$;</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="TypeScript">
+            <div class="tab-panel">
+              <p>
+                <sdux-brand-name /> in pure Typescript, the module that defines
+                the <sdux-feature-cell /> acts as the owner. UI components must
+                not call mutation APIs directly.
+              </p>
+
+              <p>
+                Instead, export domain-level functions that wrap state mutation.
+              </p>
+
+              <div class="table-title">employee.cell.ts</div>
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Core: Module-Owned FeatureCell'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// employee.cell.ts
+import { Vault, FeatureCell } from '@sdux-vault/core';
+import { withArrayPushMergeBehavior } from '@sdux-vault/addons';
+
+// 1️⃣ Initialize global runtime
+Vault({ logLevel: 'off' });
+
+// 2️⃣ Register FeatureCell
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: []
+  },
+  [
+    withArrayPushMergeBehavior
+  ]
+);
+
+// 3️⃣ Activate FeatureCell
+employeeCell.initialize();
+
+// 4️⃣ Domain-level mutation function
+export function addEmployee(employee: Employee): void {
+  employeeCell.mergeState({
+    value: [employee]
+  });
+}
+
+// 5️⃣ Export read-only state surfaces
+export const employeeState = employeeCell.state;
+export const employeeState$ = employeeCell.state$;`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="component-interaction-rule">
+    <div class="section-title-navigation">
+      <div class="section-title">Component Interaction Rule</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>Components are consumers of state, not owners of state.</p>
+
+      <p>Components should:</p>
+
+      <ul>
+        <li>Read state from an owning service (Angular)</li>
+        <li>Subscribe to exported state surfaces (React / Vue)</li>
+        <li>Trigger domain methods exposed by the owner</li>
+      </ul>
+
+      <p>Components must not:</p>
+
+      <ul>
+        <li>Call Vault mutation APIs directly</li>
+        <li>Configure pipeline behavior</li>
+        <li>Access pipeline stages</li>
+      </ul>
+
+      <p>
+        This separation guarantees clear responsibility boundaries, improved
+        testability, and stable state lifecycles.
+      </p>
+    </div>
+    <div class="section-body" id="component-interaction-examples">
+      <div class="h-title-navigation">
+        <div class="h-title">Examples</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- ====================================================== -->
+          <!-- ANGULAR -->
+          <!-- ====================================================== -->
+
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <p>
+                In Angular applications, a <sdux-feature-cell /> must be owned
+                and configured by a service. The service is responsible for:
+              </p>
+
+              <ul>
+                <li>Configuring behaviors and controllers</li>
+                <li>Calling <code>initialize()</code></li>
+                <li>
+                  Issuing <code>replaceState()</code> and
+                  <code>mergeState()</code> mutations
+                </li>
+                <li>Exposing read-only state to components</li>
+              </ul>
+
+              <p>
+                Components must never inject the Vault directly or invoke
+                mutation APIs.
+              </p>
+
+              <div class="table-title">employee.component.ts</div>
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Angular: employee.component.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">// employee.component.ts
+
+import &#123; Component, inject &#125; from '&#64;angular/core';
+import &#123; CommonModule &#125; from '&#64;angular/common';
+import &#123; EmployeeService &#125; from './employee.service';
+
+/**
+ * UI component responsible for rendering FeatureCell state.
+ *
+ * This component consumes state exposed by EmployeeService.
+ * It does not configure the pipeline and does not mutate state directly.
+ */
+&#64;Component(&#123;
+  selector: 'employee-view',
+  standalone: true,
+  imports: [CommonModule],
+  template: &#96;
+    &lt;div style=&quot;margin-bottom: 1rem;&quot;&gt;
+      &lt;button (click)=&quot;addSample()&quot;&gt;
+        Add Sample Employees
+      &lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Value --&gt;
+    &#64;if (state.hasValue()) &#123;
+      &lt;div&gt;
+        &lt;p&gt;Employees: &#123; &#123; state.value() | json &#125;&#125;&lt;/p&gt;
+      &lt;/div&gt;
+    &#125;
+
+    &lt;!-- Loading --&gt;
+    &#64;if (state.isLoading()) &#123;
+      &lt;div&gt;
+        Loading...
+      &lt;/div&gt;
+    &#125;
+
+    &lt;!-- Error --&gt;
+    &#64;if (state.error()) &#123;
+      &lt;div&gt;
+        Error: &#123; &#123; state.error()?.message &#125;&#125;
+         
+      &lt;/div&gt;
+    &#125;
+  &#96;
+&#125;)
+export class EmployeeViewComponent &#123;
+
+  /**
+   * Inject the domain service.
+   * The service owns the FeatureCell and Vault pipeline.
+   */
+  private readonly service = inject(EmployeeService);
+
+  /**
+   * Read-only state surface exposed by the service.
+   * This is a reactive StateSnapshotShape&lt;T&gt;.
+   */
+  readonly state = this.service.state;
+
+  /**
+   * Delegate mutation to the service.
+   *
+   * Architectural flow:
+   * UI → Service → Vault → Pipeline → State Stage → Reactive UI update
+   */
+  addSample(): void &#123;
+    const sample = [
+      &#123; id: 11, name: 'Luke' &#125;,
+      &#123; id: 38, name: 'Leia' &#125;
+    ];
+
+    this.service.add(sample);
+  &#125;
+&#125;</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <p>
+                In React applications, the module that defines the
+                <sdux-feature-cell />
+                acts as the architectural owner. Components must not call
+                mutation APIs directly. Instead, they call exported domain
+                functions.
+              </p>
+
+              <div class="table-title">EmployeeView.tsx</div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab label="React: EmployeeView.tsx">
+                  <pre
+                    class="code-inline"><code class="language-tsx">import &#123; useEffect, useState &#125; from 'react';
+import &#123; addEmployee, employeeState$ &#125; from './employee.cell';
+import type &#123;  Employee &#125; from './employee.types';
+
+export function EmployeeView() &#123;
+
+  const [employees, setEmployees] = useState&lt;Employee[]&gt;([]);
+
+  // Subscribe to observable surface
+  useEffect(() =&gt; &#123;
+    const sub = employeeState$.subscribe(snapshot =&gt; &#123;
+    if (snapshot.hasValue) &#123;
+      setEmployees([...snapshot.value]);
+    &#125;
+  &#125;);
+
+    return () =&gt; sub.unsubscribe();
+  &#125;, []);
+
+  function addSample() &#123;
+    addEmployee(&#123; id: 11, name: 'Luke' &#125;);
+    addEmployee(&#123; id: 38, name: 'Leia' &#125;);
+  &#125;
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick=&#123;addSample&#125;&gt;
+        Add Sample Employees
+      &lt;/button&gt;
+
+      &lt;pre&gt;
+        &#123;JSON.stringify(employees, null, 2)&#125;
+      &lt;/pre&gt;
+    &lt;/div&gt;
+  );
+&#125;</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <p>
+                In Vue applications, the module that defines the
+                <sdux-feature-cell />
+                owns the state boundary. Vue components consume state and call
+                exported domain functions — never the Vault directly.
+              </p>
+
+              <div class="table-title">EmployeeView.vue</div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Vue: EmployeeView.vue'">
+                  <pre
+                    class="code-inline"><code class="language-ts">&lt;script setup lang="ts"&gt;
+                      import &#123; ref, onMounted, onUnmounted &#125; from 'vue';
+import &#123; addEmployee, employeeState$ &#125; from './employee.cell';
+
+const employees = ref&lt;Employee[]&gt;([]);
+let subscription: &#123; unsubscribe(): void &#125; | undefined;
+
+onMounted(() =&gt; &#123;
+  subscription = employeeState$.subscribe(snapshot =&gt; &#123;
+    if (snapshot.hasValue) &#123;
+      employees.value = snapshot.value;
+    &#125;
+  &#125;);
+&#125;);
+
+onUnmounted(() =&gt; &#123;
+  subscription?.unsubscribe();
+&#125;);
+
+function addSample() &#123;
+  addEmployee(&#123; id: 11, name: 'Luke' &#125;);
+  addEmployee(&#123; id: 38, name: 'Leia' &#125;);
+&#125;
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;button &#64;click="addSample"&gt;
+      Add Sample Employees
+    &lt;/button&gt;
+
+    &lt;pre&gt;
+      &#123; &#123; employees &#125;&#125;
+    &lt;/pre&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="deterministic-initialization">
+    <div class="section-title-navigation">
+      <div class="section-title">Deterministic Initialization Guarantee</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> does not require asynchronous pipeline
+        configuration.
+      </p>
+
+      <p>
+        Because configuration is synchronous and execution is internally
+        ordered, constructors and module-scope setup are safe initialization
+        boundaries.
+      </p>
+
+      <ul>
+        <li>No deferred configuration patterns are recommended.</li>
+        <li>No lifecycle hooks are required for pipeline setup.</li>
+        <li>No partial initialization states should exist.</li>
+      </ul>
+
+      <p>
+        Once <code>initialize()</code> has been called, execution is
+        deterministic and predictable across all supported environments.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="state-mutation-discipline">
+    <div class="section-title-navigation">
+      <div class="section-title">State Mutation Discipline</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        All state changes in <sdux-brand-name /> must enter the pipeline through
+        explicit <sdux-feature-cell /> update APIs.
+      </p>
+
+      <p>
+        State is never mutated directly. It is never modified in-place. It is
+        never updated outside the pipeline.
+      </p>
+
+      <p>
+        Whether replacing state, merging partial updates, or streaming values
+        over time, every update follows the same deterministic execution
+        lifecycle:
+      </p>
+
+      <ul>
+        <li>Submit candidate value</li>
+        <li>Resolve and process deterministically</li>
+        <li>Commit a single immutable snapshot</li>
+      </ul>
+
+      <p>
+        Update APIs differ only in how candidate state is produced — not in how
+        it is committed.
+      </p>
+
+      <p>For complete API definitions and execution diagrams, see:</p>
+
+      <p>
+        <a
+          [routerLink]="['/docs/pipeline/updating-state']"
+          class="sdux-link-strong">
+          → State Update APIs Documentation
+        </a>
+      </p>
+    </div>
+
+    <div class="section-body" id="selecting-update-api">
+      <div class="h-title-navigation">
+        <div class="h-title">Selecting an Update API</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <div class="section-body">
+        <p>
+          Choose the update mechanism based on the structural intent of the
+          change.
+        </p>
+
+        <ul>
+          <li>
+            Use <strong>replaceState()</strong> when the incoming value is
+            authoritative and should fully replace committed state.
+          </li>
+          <li>
+            Use <strong>mergeState()</strong> when applying partial or
+            incremental updates.
+          </li>
+          <li>
+            Use <strong>fromStream()</strong> when state must react continuously
+            to an external observable source.
+          </li>
+        </ul>
+
+        <p>
+          Bridge APIs exist for migration scenarios but should not be the
+          default choice in modern code.
+        </p>
+
+        <p>
+          In most cases, submit values directly to
+          <strong>replaceState()</strong> or <strong>mergeState()</strong> for
+          clarity and predictability.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-body" id="merge-strategy-discipline">
+      <div class="h-title-navigation">
+        <div class="h-title">Merge Strategy Discipline</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+      <p>
+        Merge semantics define how incoming values are structurally combined
+        with committed state. Exactly one merge behavior may be active per
+        <sdux-feature-cell />.
+      </p>
+
+      <p>
+        Merge behaviors must define structural combination only. They must not
+        encode business logic, validation rules, or conditional intent.
+      </p>
+
+      <ul>
+        <li>Merge defines structure, not meaning.</li>
+        <li>Reducers define meaning and transformation.</li>
+        <li>Filters define admission.</li>
+        <li>Merge never emits snapshots.</li>
+      </ul>
+
+      <p>When selecting a merge behavior:</p>
+
+      <ul>
+        <li>
+          Use shallow or deep object merge when evolving structured state.
+        </li>
+        <li>Use array append or push behaviors for additive collections.</li>
+        <li>Use replace semantics when arrays represent atomic snapshots.</li>
+      </ul>
+
+      <p>
+        Avoid embedding business rules inside merge logic. Structural
+        combination should remain predictable and mechanical.
+      </p>
+
+      <p>For detailed merge behavior documentation, see:</p>
+
+      <p>
+        <a
+          [routerLink]="['/docs/pipeline/behaviors/merge']"
+          class="sdux-link-strong">
+          → Merge Behaviors Documentation
+        </a>
+      </p>
+    </div>
+
+    <div class="section-body" id="selecting-a-merge-behavior">
+      <div class="h-title-navigation">
+        <div class="h-title">Selecting a Merge Behavior</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+      <p>
+        <sdux-brand-name />
+        defines exactly one active <strong>Merge behavior</strong> per
+        <sdux-feature-cell />. The Merge stage determines how the
+        <em>current committed state</em> is structurally combined with a newly
+        resolved incoming value.
+      </p>
+
+      <p>
+        Merge behaviors are purely structural. They do not perform business
+        logic, validation, filtering, or policy evaluation. They define
+        <em>how values are combined</em>, not <em>why they change</em>.
+      </p>
+
+      <sdux-merge-input-mechanism-common />
+    </div>
+  </section>
+  <section class="section" id="timer-async-stabilization">
+    <div class="section-title-navigation">
+      <div class="section-title">Timer & Async Stabilization</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          >Understanding stabilization boundaries is critical when integrating
+          timers, asynchronous inputs, or external scheduling systems.</strong
+        >
+      </p>
+
+      <p>
+        <sdux-brand-name /> separates <em>pipeline computation</em> from
+        <em>state commitment</em>. All state commitment occurs across a
+        microtask boundary using <code>queueMicrotask</code>.
+      </p>
+
+      <p>This guarantees:</p>
+
+      <ul>
+        <li>Atomic state commitment</li>
+        <li>No partial snapshot visibility</li>
+        <li>Structural prevention of reentrancy</li>
+        <li>Deterministic observer notification ordering</li>
+      </ul>
+
+      <p>
+        However, when integrating with timers, policy schedulers, observables,
+        external async systems, (or Angular effects), you must respect this
+        stabilization boundary in both runtime and test environments.
+      </p>
+
+      <p>
+        If a mutation occurs, there is always a deterministic settlement
+        boundary to await.
+      </p>
+
+      <p>
+        For the complete execution model, ordering guarantees, microtask
+        commitment explanation, and async lifecycle semantics, see:
+      </p>
+
+      <p>
+        <a
+          [routerLink]="['/docs/pipeline/execution-guarantee']"
+          class="sdux-link-strong">
+          → Read the Pipeline Execution Guarantees
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="persistence-discipline">
+    <div class="section-title-navigation">
+      <div class="section-title">Persistence & Encryption Discipline</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Persistence is an <strong>output-stage concern</strong>. It must never
+        influence pipeline computation, state transitions, or mutation control
+        flow.
+      </p>
+
+      <p>
+        In <sdux-brand-name />, persistence occurs strictly after a snapshot has
+        been fully computed, reduced, and committed. Persist behaviors operate
+        only on finalized pipeline output and are fail-safe by design.
+      </p>
+
+      <ul>
+        <li>Persistence must never mutate state.</li>
+        <li>Persistence must never affect pipeline success or failure.</li>
+        <li>Persistence must be treated as a durable side effect.</li>
+        <li>
+          Persistence failures must never break
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          execution.
+        </li>
+      </ul>
+
+      <p>
+        When persistence is enabled, it should be configured at
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization time and treated as infrastructure—not as application
+        logic.
+      </p>
+
+      <p>
+        For full implementation details, storage options, lifecycle diagrams,
+        and behavior comparison tables, see:
+      </p>
+
+      <p>
+        <a
+          [routerLink]="['/docs/pipeline/behaviors/persist']"
+          class="sdux-link-strong">
+          → Persist Behaviors Documentation
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="data-security-boundary">
+    <div class="section-title-navigation">
+      <div class="section-title">Data Security Boundary</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Browser storage mechanisms such as <code>localStorage</code>,
+        <code>sessionStorage</code>, and
+        <code>document.cookie</code>
+        should be treated as plaintext by default.
+      </p>
+
+      <p>
+        Persisted
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        may contain user preferences, identifiers, or derived values. Without
+        encryption, these values are readable at rest.
+      </p>
+
+      <p>
+        <strong>
+          If persisted state contains sensitive or user-specific information,
+          encryption should be enabled at the pipeline boundary.
+        </strong>
+      </p>
+
+      <ul>
+        <li>Encryption operates only on persistence output.</li>
+        <li>In-memory state always remains plain and observable.</li>
+        <li>Encryption does not alter pipeline computation.</li>
+        <li>Decryption occurs during initialization before emission.</li>
+      </ul>
+
+      <p>
+        Encryption configuration must remain stable for the lifetime of stored
+        data. Changing encryption parameters invalidates previously persisted
+        values.
+      </p>
+
+      <p>
+        For full lifecycle guarantees, failure semantics, and configuration
+        details, see:
+      </p>
+
+      <p>
+        <a
+          [routerLink]="['/docs/pipeline/behaviors/encrypt']"
+          class="sdux-link-strong">
+          → Encrypt Behavior Documentation
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="testing-commitment">
+    <div class="section-title-navigation">
+      <div class="section-title">Deterministic Testing & Verification</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          >Testing is a first-class architectural requirement in
+          <sdux-brand-name />.</strong
+        >
+      </p>
+
+      <p>
+        The serialized conductor queue, explicit microtask finalization
+        boundary, and strict non-re-entrant execution model exist not only for
+        runtime safety — but for deterministic verification under test.
+      </p>
+
+      <p>
+        Every execution layer is documented. Every stabilization boundary is
+        explicit. The framework provides formal settlement guarantees through
+        <code>vaultSettled()</code> and engine-level isolation tools.
+      </p>
+
+      <p>
+        <strong>
+          If a mutation occurs, there is a deterministic boundary to await.
+        </strong>
+      </p>
+
+      <p>
+        The full testing philosophy, execution diagrams, Angular integration
+        strategy, contributor-level rigor, and 100% coverage enforcement details
+        are documented here:
+      </p>
+
+      <p>
+        <a [routerLink]="['/docs/welcome/testing']" class="sdux-link-strong">
+          → Read the Complete Testing & Stabilization Guide
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="architectural-smells">
+    <div class="section-title-navigation">
+      <div class="section-title">Architectural Smells</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The following patterns violate the deterministic execution model of
+        <sdux-brand-name /> and should be treated as architectural smells. While
+        some may appear to function at runtime, they undermine ownership
+        boundaries, execution guarantees, or immutability discipline.
+      </p>
+
+      <p>These patterns should not appear in production code.</p>
+
+      <h4>UI-Owned Mutation</h4>
+      <p>
+        Components must never call Vault mutation APIs directly. State mutation
+        must pass through a single domain boundary owned by the
+        <sdux-feature-cell /> owner (service or module).
+      </p>
+      <ul>
+        <li>
+          Do not call <code>replaceState()</code> /
+          <code>mergeState()</code> from UI components.
+        </li>
+        <li>Do not inject the Vault into view-layer code.</li>
+        <li>Expose domain-level functions instead.</li>
+      </ul>
+
+      <h4>Business Logic Inside Merge</h4>
+      <p>
+        Merge behaviors define structural combination only. They must not encode
+        validation rules, conditional intent, or business decisions.
+      </p>
+      <ul>
+        <li>Merge defines structure, not meaning.</li>
+        <li>Reducers define meaning and transformation.</li>
+        <li>Filters define admission policy.</li>
+      </ul>
+
+      <h4>Mutable Reducers</h4>
+      <p>
+        Reducers must never mutate existing state. Returning a mutated object
+        violates snapshot immutability and breaks deterministic emission
+        guarantees.
+      </p>
+      <ul>
+        <li>Always return new object or array instances.</li>
+        <li>Never modify properties on the incoming state reference.</li>
+      </ul>
+
+      <h4>Delayed or Conditional Initialization</h4>
+      <p>
+        A <sdux-feature-cell /> must be fully configured and initialized before
+        being exposed to consumers. Delaying <code>initialize()</code> creates
+        partial configuration states and undermines deterministic startup
+        behavior.
+      </p>
+      <ul>
+        <li>Do not initialize inside lifecycle hooks unnecessarily.</li>
+        <li>Do not conditionally initialize based on runtime state.</li>
+        <li>Configure and activate synchronously.</li>
+      </ul>
+
+      <h4>Ignoring the Settlement Boundary in Tests</h4>
+      <p>
+        All state commitment occurs across a microtask boundary. Tests must
+        respect this deterministic settlement boundary.
+      </p>
+      <ul>
+        <li>After a mutation, await settlement before asserting.</li>
+        <li>
+          Use <code>vaultSettled()</code> or equivalent stabilization utilities.
+        </li>
+        <li>Do not assert immediately after invoking mutation APIs.</li>
+      </ul>
+
+      <p>
+        Architectural discipline preserves determinism. When boundaries are
+        respected, execution remains predictable, testable, and free from hidden
+        mutation paths.
+      </p>
+    </div>
+  </section>
+  <sdux-pipeline-related-topics />
+</div>

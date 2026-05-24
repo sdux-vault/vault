@@ -1,0 +1,99 @@
+@use 'global' as global;
+
+// ===========================================
+// SDuX Font Utilities
+// ===========================================
+
+// ────────────────────────────────
+// Font Size Mixins
+// ────────────────────────────────
+@mixin font-xs {
+  font-size: global.$font-size-xs;
+  line-height: global.$line-height;
+  font-weight: global.$sdux-font-weight;
+}
+
+@mixin font-sm {
+  font-size: global.$font-size-sm;
+  line-height: global.$line-height;
+  font-weight: global.$sdux-font-weight;
+}
+
+@mixin font-md {
+  font-size: global.$font-size-md;
+  line-height: global.$line-height;
+  font-weight: global.$sdux-font-weight;
+}
+
+@mixin font-lg {
+  font-size: global.$font-size-lg;
+  line-height: global.$line-height;
+  font-weight: global.$sdux-font-weight;
+}
+
+@mixin font-xl {
+  font-size: global.$font-size-xl;
+  line-height: global.$line-height;
+  font-weight: global.$sdux-font-weight-medium;
+}
+
+// ────────────────────────────────
+// Responsive Font Mixin (Optional Helper)
+// ────────────────────────────────
+@mixin font-responsive($min, $max) {
+  font-size: clamp($min, 1.5vw, $max);
+  line-height: global.$line-height;
+  font-weight: global.$sdux-font-weight;
+}
+
+// ────────────────────────────────
+// Utility Classes
+// ────────────────────────────────
+.font-xs {
+  @include font-xs;
+}
+
+.font-sm {
+  @include font-sm;
+}
+
+.font-md {
+  @include font-md;
+}
+
+.font-lg {
+  @include font-lg;
+}
+
+.font-xl {
+  @include font-xl;
+}
+
+// ────────────────────────────────
+// Responsive Example Classes
+// ────────────────────────────────
+.font-responsive-sm-md {
+  @include font-responsive(global.$font-size-sm, global.$font-size-md);
+}
+
+.font-responsive-md-lg {
+  @include font-responsive(global.$font-size-md, global.$font-size-lg);
+}
+
+@mixin code-font {
+  font-family: global.$sdux-code-font;
+
+  // font-size: global.$font-size-sm;
+  font-size: inherit;
+  font-weight: global.$font-weight-medium;
+  line-height: 1;
+}
+
+// ────────────────────────────────
+// Trademark Symbol
+// ────────────────────────────────
+.trademark {
+  font-size: 1.4em;
+  line-height: 0;
+  margin-left: global.$spacing-xxs;
+}

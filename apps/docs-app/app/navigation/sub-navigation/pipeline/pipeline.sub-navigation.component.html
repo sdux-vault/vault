@@ -1,0 +1,33 @@
+<nav aria-label="Pipeline">
+  <mat-expansion-panel class="nav-expansion">
+    <mat-expansion-panel-header>
+      <span class="nav-section-label">Pipeline</span>
+    </mat-expansion-panel-header>
+
+    <a
+      mat-list-item
+      routerLink="docs/pipeline"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">Overview</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="docs/pipeline/pipeline-architecture"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content"
+        ><sdux-brand-name /> Pipeline Architecture
+      </span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="docs/pipeline/builder"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">Pipeline Builder</span>
+    </a>
+  </mat-expansion-panel>
+</nav>

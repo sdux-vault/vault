@@ -1,0 +1,219 @@
+@use 'global' as global;
+@use 'font' as font;
+@use 'form';
+@use 'button';
+
+:host {
+  display: block;
+  height: calc(100vh - global.$toolbar-height);
+  overflow: hidden;
+}
+
+.login-page {
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--sdux-surface-bg);
+  color: var(--sdux-text-primary);
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: global.$spacing-lg;
+  box-sizing: border-box;
+
+  .login-shell {
+    width: 100%;
+    max-width: 520px;
+
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-lg;
+
+    /*
+    ----------------------------
+    Header
+    ----------------------------
+    */
+    .login-intro {
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-sm;
+      text-align: center;
+
+      h1 {
+        margin: 0;
+
+        font-family: global.$sdux-font-family;
+        font-size: clamp(global.$font-size-3xl, 4vw, global.$font-size-5xl);
+        font-weight: global.$font-weight-bold;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+
+        color: var(--sdux-primary);
+      }
+
+      .lead {
+        @include font.font-md;
+        margin: global.$spacing-sm;
+      }
+    }
+
+    /*
+    ----------------------------
+    Login Card
+    ----------------------------
+    */
+    .login-card {
+      border-radius: global.$border-radius-lg;
+      border: 1px solid rgb(255 255 255 / 10%);
+
+      background-color: var(--sdux-surface-elevated);
+      box-shadow: global.$sdux-shadow-hover;
+
+      overflow: hidden;
+
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: global.$spacing-md;
+
+        padding: global.$spacing-lg;
+
+        .form-row {
+          display: flex;
+
+          .field-full-width {
+            width: 100%;
+          }
+        }
+
+        // .login-error {
+        //   @include sdux-font-body($font-size-sm, $font-weight-medium, $sdux-accent-base);
+
+        //   background-color: color-mix(in srgb, $sdux-accent-base 12%, transparent);
+        //   border: 1px solid $sdux-accent-base;
+
+        //   border-radius: $border-radius-sm;
+
+        //   padding: $spacing-sm $spacing-md;
+        //   margin-bottom: $spacing-md;
+
+        //   display: flex;
+        //   align-items: center;
+
+        //   // subtle elevation so it doesn't feel flat
+        //   @include sdux-elevate(base);
+        // }
+
+        .login-error {
+          color: global.$sdux-accent-base;
+          font-size: global.$font-size-sm;
+        }
+
+        .cta-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: global.$spacing-md;
+
+          margin-top: global.$spacing-sm;
+          padding-top: global.$spacing-md;
+
+          border-top: 1px solid rgb(255 255 255 / 8%);
+
+          .helper-copy {
+            display: flex;
+            flex-direction: column;
+            gap: global.$spacing-xs;
+
+            span:first-child {
+              @include font.font-sm;
+              font-weight: global.$font-weight-medium;
+            }
+
+            span:last-child {
+              @include font.font-xs;
+              color: global.$sdux-text-secondary;
+            }
+          }
+
+          .login-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 140px;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+
+    /*
+    ----------------------------
+    Signup Redirect
+    ----------------------------
+    */
+    .signup-redirect {
+      margin-top: global.$spacing-md;
+
+      text-align: center;
+      @include font.font-sm;
+
+      a {
+        margin-left: 6px;
+        text-decoration: none;
+        font-weight: global.$font-weight-semibold;
+        color: var(--sdux-primary);
+      }
+    }
+  }
+}
+
+/*
+---------------------------------------
+Angular Material overrides
+---------------------------------------
+*/
+::ng-deep {
+  /* !important + ::ng-deep: override Material form field internals for login theme */
+  .mat-mdc-text-field-wrapper {
+    border-radius: global.$border-radius-md !important;
+    background-color: global.$sdux-surface-light !important;
+  }
+
+  .mat-mdc-input-element {
+    /* !important: override Material's inline input color for login theme */
+    color: global.$sdux-text-black !important;
+  }
+}
+
+/*
+---------------------------------------
+Responsive
+---------------------------------------
+*/
+@media (max-width: global.$breakpoint-md) {
+  .login-page {
+    padding: global.$spacing-md;
+
+    .login-shell {
+      .login-card {
+        .login-form {
+          padding: global.$spacing-md;
+
+          .cta-row {
+            flex-direction: column;
+            align-items: stretch;
+
+            .login-button {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

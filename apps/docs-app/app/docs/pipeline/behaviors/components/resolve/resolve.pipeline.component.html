@@ -1,0 +1,186 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Resolve Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Resolve Behaviors</strong> provide a deterministic, centralized
+      mechanism for normalizing incoming state inputs into a canonical upstream
+      value suitable for pipeline processing. The Resolve stage establishes a
+      consistent execution boundary between pipeline admission and downstream
+      computation by classifying and resolving all supported input forms before
+      operators are applied.
+    </p>
+
+    <p>
+      State updates may be submitted through the following
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> APIs:
+      <strong>replaceState</strong>, <strong>mergeState</strong> and
+      <strong>fromStream</strong>. Each API admits a different category of
+      input, but all converge on the same Resolve stage for normalization.
+    </p>
+
+    <p>
+      The Resolve stage is responsible for identifying the input category
+      associated with each invocation and producing a normalized upstream value
+      that downstream pipeline stages can process consistently.
+    </p>
+
+    <p>Supported input forms include:</p>
+
+    <ul>
+      <li>Plain state values and structured state envelopes</li>
+      <li>
+        Deferred factories representing promise-backed resolution, such as
+        functions that initiate network requests, Fetch-based calls, or
+        application-owned API client invocations and resolve asynchronously to a
+        state value.
+      </li>
+
+      <li>
+        Observable-based inputs that emit a single resolved value for pipeline
+        processing, including Angular HttpClient request streams, RxJS-based
+        data sources, or other observable sequences.
+      </li>
+      <li>Angular <strong>HttpResourceRef</strong> inputs (Angular-only)</li>
+      <li>Explicit <code>null</code> and <code>undefined</code> inputs</li>
+    </ul>
+
+    <p>
+      Regardless of the entry point or input form, the Resolve stage guarantees
+      that downstream pipeline stages receive a predictable, normalized upstream
+      value or an explicitly suppressed write.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Resolve Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Resolve Stage is responsible for normalizing incoming state inputs
+        into a canonical upstream value that can be safely processed by
+        downstream pipeline stages. It establishes a strict execution boundary
+        between pipeline admission and computation by ensuring that all
+        supported input forms are resolved into a predictable value shape.
+      </p>
+
+      <p>
+        The Resolve Stage executes after interceptors and before operators,
+        filters, reducers, and merge. Each pipeline execution passes through the
+        Resolve Stage exactly once, guaranteeing that downstream stages always
+        operate on a normalized upstream value or an explicitly suppressed
+        write.
+      </p>
+
+      <p>Resolve behaviors:</p>
+
+      <ul>
+        <li>Operate exclusively on incoming state inputs</li>
+        <li>Normalize supported input forms into a canonical upstream value</li>
+        <li>Ensure consistent value shape before downstream processing</li>
+        <li>Do not derive new state or modify existing state</li>
+        <li>Do not influence pipeline control flow beyond resolution</li>
+      </ul>
+
+      <h4>Core Pipeline Stage</h4>
+      <p>
+        The Resolve stage is a <strong>core pipeline stage</strong> and is
+        always present as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. All required resolve behaviors are installed by default and
+        cannot be omitted. The Resolve stage does not support add-on or
+        user-defined resolve behaviors.
+      </p>
+
+      <p>
+        Resolve behaviors do not persist values, emit state, or perform side
+        effects. Their responsibility ends once the incoming input has been
+        normalized and forwarded to downstream pipeline stages.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Accepted State Input Types</div>
+
+    <div class="section-body">
+      <p>
+        The Resolve stage accepts a well-defined set of input forms that
+        represent both synchronous and asynchronous state updates. These input
+        types allow state updates to be expressed uniformly regardless of
+        whether the value is immediately available, produced lazily, emitted
+        over time, or derived from an external resource.
+      </p>
+
+      <p>
+        All accepted inputs are normalized by the Resolve stage into a canonical
+        upstream value before any downstream pipeline stages execute. This
+        guarantees that operators, filters, reducers, and state commitment logic
+        always receive a predictable value shape and never need to reason about
+        transport, timing, or source-specific concerns.
+      </p>
+
+      <p>
+        Each input form carries explicit semantic intent. Structured envelopes
+        may convey loading or error signals alongside values, deferred factories
+        represent promise-backed resolution, observable-based inputs represent
+        stream-derived values, and explicit
+        <code>undefined</code> or <code>null</code> inputs communicate
+        intentional no-op or state-clearing behavior. These distinctions are
+        preserved through resolution to ensure deterministic pipeline outcomes.
+      </p>
+
+      <sdux-state-input-type-common />
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.4/2.4-resolve-processing.svg"
+        [tooltip]="'Resolve Processing'" />
+
+      <sdux-diagram
+        image="diagrams/2.4/2.4.1-resolve-decision-flow.svg"
+        [tooltip]="'Resolve Decision Flow'">
+      </sdux-diagram>
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available Resolve Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        The Resolve Stage is a <strong>core pipeline stage</strong> and is
+        always present as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. Core resolve behaviors are installed by default and execute
+        to normalize all incoming state inputs into a canonical upstream value
+        before downstream processing begins.
+      </p>
+
+      <p>
+        Resolve behaviors operate exclusively on inbound inputs and do not
+        derive new state, perform side effects, or influence pipeline control
+        flow. Their responsibility is limited to classification, normalization,
+        and forwarding of resolved values to subsequent pipeline stages.
+      </p>
+
+      <sdux-vault-resolve-behaviors-common />
+    </div>
+  </section>
+
+  <sdux-resolve-input-mechanism-common />
+
+  <sdux-pipeline-related-topics />
+</div>

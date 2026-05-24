@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  sdux_backup:
+    container_name: ${CONTAINER_NAME}-backup
+    image: ${CONTAINER_NAME}:${VERSION_TAG}
+    restart: always
+
+    # Expose port 5100 to host
+    ports:
+      - '5100:80'
+
+    # Use bridge networking
+    networks:
+      - sdux_backup_net
+
+networks:
+  sdux_backup_net:
+    driver: bridge

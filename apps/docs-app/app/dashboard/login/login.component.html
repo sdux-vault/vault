@@ -1,0 +1,91 @@
+<section class="login-page">
+  <div class="login-shell">
+    <!-- Intro -->
+    <div class="login-intro">
+      <h1>Welcome back to <sdux-brand-name /></h1>
+
+      <p class="lead">
+        Sign in to continue to your
+        <sdux-vault-brand-name [tm]="true" /> dashboard and manage your secure
+        data pipelines.
+      </p>
+    </div>
+
+    <div class="login-card">
+      <form
+        class="login-form"
+        [formGroup]="form"
+        (ngSubmit)="login()"
+        novalidate>
+        <div class="form-row">
+          <mat-form-field class="field-full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              autocomplete="email"
+              placeholder="sam@your-org.com" />
+
+            @if (hasError('email')) {
+              @if (email.hasError('required')) {
+                <mat-error>Email is required.</mat-error>
+              } @else if (email.hasError('maxlength')) {
+                <mat-error>Email must not exceed 255 characters.</mat-error>
+              } @else if (email.hasError('email')) {
+                <mat-error>Email must be a valid email address.</mat-error>
+              }
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="field-full-width" appearance="outline">
+            <mat-label>Password</mat-label>
+
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              autocomplete="current-password"
+              placeholder="Your password" />
+
+            @if (hasError('password')) {
+              @if (password.hasError('required')) {
+                <mat-error>Password is required.</mat-error>
+              } @else if (password.hasError('maxlength')) {
+                <mat-error>Password must not exceed 128 characters.</mat-error>
+              }
+            }
+          </mat-form-field>
+        </div>
+
+        @if (loginError()) {
+          <div class="login-error" role="alert">
+            {{ loginError() }}
+          </div>
+        }
+
+        <div class="cta-row">
+          <div class="helper-copy">
+            <span>Secure access powered by <sdux-vault-brand-name /></span>
+          </div>
+
+          <button
+            class="sdux-button login-button"
+            mat-flat-button
+            type="submit"
+            [disabled]="!canLogin()">
+            Sign In
+          </button>
+        </div>
+
+        <div class="signup-redirect">
+          <span>New here?</span>
+          <a routerLink="/signup">Create an account</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

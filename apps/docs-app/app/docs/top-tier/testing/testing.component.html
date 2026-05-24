@@ -1,0 +1,3490 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container">
+  <div class="header">
+    <h3>Testing the <sdux-brand-name [tm]="true" /> Pipeline</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      TL;DR — The Stabilization Pattern or
+      <a [routerLink]="[]" fragment="toc">Table of Contents</a>
+    </p>
+
+    <p>
+      Testing <sdux-brand-name /> is deterministic: mutate state → await
+      settlement → assert.
+    </p>
+
+    <sdux-testing-standard-execution-case-common />
+
+    <sdux-testing-example-common />
+
+    <sdux-testing-rule-common />
+
+    <p>
+      That is the entire stabilization boundary. Everything else on this page
+      explains
+      <em>why</em> this works — including the serialized conductor queue, the
+      microtask finalize boundary, Angular’s reactive scheduling layer, and
+      policy timer behavior.
+    </p>
+
+    <h4>Design Commitment</h4>
+    <p>
+      <sdux-brand-name /> is engineered for deterministic execution. The
+      pipeline enforces strict serialization, non-re-entrancy, and explicit
+      settlement boundaries so that tests can verify correctness with precision
+      and confidence — across Karma, Jest, Vitest, and Angular TestBed.
+    </p>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title-navigation">
+      <div class="section-title">Diagrams</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/11.0/11.1-integration-testing-flow.svg"
+        [tooltip]="'Integration Testing Flow'" />
+
+      <sdux-diagram
+        image="diagrams/11.0/11.5-integration-timer-testing-flow.svg"
+        [tooltip]="'Testing Timer Mutation Flow'" />
+    </div>
+  </section>
+
+  <section class="section" id="top">
+    <div class="section-title-navigation">
+      <div class="section-title">The Nitty-Gritty</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong>Testing</strong> is a first-class design priority in
+        <sdux-brand-name />. We are committed to building a product that is not
+        only powerful in production, but demonstrably correct under test. Every
+        execution boundary in the <sdux-brand-name /> pipeline exists to make
+        state transitions deterministic, observable, and testable.
+      </p>
+
+      <blockquote class="sdux-quote">
+        <p>
+          What is the opposite of tl;dr? This page. <sdux-brand-name /> is built
+          for rigor, and rigor demands explanation. Every execution boundary,
+          scheduler layer, and stabilization rule is documented so consumers can
+          test with precision and certainty. This clarity did not happen quickly
+          — it took months of iteration to make these testing guarantees
+          possible.
+        </p>
+        <footer class="quote-author">— Brian, creator</footer>
+      </blockquote>
+
+      <p>
+        <sdux-brand-name /> has been deliberately engineered to support reliable
+        testing. The serialized conductor queue, explicit microtask finalization
+        boundary, and (when applicable) Angular’s reactive scheduling model are
+        not incidental — they exist to guarantee stable, non-re-entrant state
+        transitions that can be asserted with confidence.
+      </p>
+
+      <p>
+        As engineers, we hold ourselves to the highest standard of testing
+        rigor. Determinism, isolation, and execution clarity are not optional
+        qualities — they are architectural requirements. <sdux-brand-name /> is
+        designed so that consumers can hold themselves to the same level of
+        accountability. The framework provides explicit stabilization
+        boundaries, observable settlement guarantees, and predictable scheduler
+        layering so that correctness can be verified with precision.
+      </p>
+
+      <p>
+        Because these boundaries are explicit and predictable, testing becomes a
+        matter of flushing scheduler layers in the same order they execute. This
+        document makes that process straightforward. It explains the
+        stabilization model, visualizes execution flow, and provides clear
+        patterns for unit, integration, and Angular-based tests.
+      </p>
+
+      <h4>Design Principle</h4>
+      <p>
+        <sdux-brand-name /> is designed to be deterministic. Deterministic
+        systems are testable systems. When multiple schedulers overlap — Angular
+        TestBed, microtasks, the Vault conductor queue, and optional policy
+        timers — the solution is not guesswork or repeated
+        <code>tick()</code> calls. The solution is understanding the execution
+        layers and stabilizing them deliberately.
+      </p>
+
+      <h4>Framework Agnostic Challenges</h4>
+      <p>
+        <sdux-brand-name /> is framework-agnostic by design. The core pipeline
+        does not depend on Angular, React, Vue, or any specific runtime. Because
+        of that independence, we have intentionally engineered
+        <sdux-brand-name /> to be testable in any environment — from lightweight
+        unit runners to full integration harnesses — with explicit and
+        deterministic stabilization boundaries.
+      </p>
+
+      <p>
+        And then there is Angular. When <sdux-brand-name /> is used alongside
+        Angular’s TestBed, Signals, and reactive effect scheduling, an
+        additional scheduler layer enters the picture. That interaction is fully
+        supported — and documented — so that Angular-based applications can
+        maintain the same level of deterministic testing rigor.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- TABLE OF CONTENTS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title-navigation">
+      <div class="section-title">How to use this page</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This page is organized progressively. Begin with the execution model to
+        understand how
+        <sdux-brand-name /> schedules work across synchronous compute, microtask
+        finalization, and optional framework schedulers. Once the mental model
+        is clear, move to the section that matches your testing environment.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Understanding How <sdux-brand-name /> Works</strong> —
+          Diagrams explaining the serialized conductor queue, the microtask
+          finalize boundary, and how optional schedulers (Angular effects and
+          policy timers) layer on top. If you understand these flowcharts, the
+          rest of testing becomes straightforward.
+        </li>
+
+        <li>
+          <strong>Feature-Level Testing</strong> — testing patterns for both
+          integration and unit-testing environments.
+        </li>
+
+        <li>
+          <strong>Testing with Angular</strong> — How Angular’s TestBed,
+          Signals, and effect scheduling interact with the
+          <sdux-brand-name /> pipeline. Includes the correct stabilization
+          sequence using <code>vaultSettled()</code> and <code>tick()</code>.
+        </li>
+
+        <li>
+          <strong>Contributor & Extension Testing</strong> — Engine-level
+          testing, conductor isolation, policy timing validation, and
+          verification of deterministic guarantees at the architectural
+          boundary.
+        </li>
+      </ul>
+
+      <div class="toc-container" id="toc">
+        <div class="toc-title">Start Here</div>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="understanding-sdux"
+              >Understanding How <sdux-brand-name /> Works</a
+            >
+          </li>
+          <ul class="inner-toc">
+            <li>
+              <a [routerLink]="[]" fragment="why-queue-microtask"
+                >Why queueMicrotask()</a
+              >
+            </li>
+          </ul>
+        </ul>
+
+        <div class="toc-title">Test Setup</div>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="test-setup">Test Setup</a>
+          </li>
+          <ul class="inner-toc">
+            <li>
+              <a [routerLink]="[]" fragment="initialize-vault"
+                >Step 1 - Initialize VaultTesting (Required)</a
+              >
+            </li>
+            <li>
+              <a [routerLink]="[]" fragment="feature-cell-registration"
+                >Step 2 - Register and Initialize FeatureCell</a
+              >
+            </li>
+            <li>
+              <a [routerLink]="[]" fragment="awaiting-vault-to-settle"
+                >Step 3 - Await Settlement After Mutation</a
+              >
+            </li>
+          </ul>
+        </ul>
+
+        <div class="toc-title">Feature Level Testing</div>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="feature-level-testing"
+              >Feature Level Testing</a
+            >
+          </li>
+        </ul>
+
+        <div class="toc-title">Feature Level Testing</div>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="feature-level-testing"
+              >Feature Level Testing</a
+            >
+          </li>
+        </ul>
+
+        <div class="toc-title">Testing with Angular</div>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="angular-testing"
+              >Testing with Angular</a
+            >
+          </li>
+        </ul>
+
+        <div class="toc-title">Contributor Testing</div>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="contributor-testing"
+              >Contributor Testing</a
+            >
+          </li>
+          <ul class="inner-toc">
+            <li>
+              <a [routerLink]="[]" fragment="flush-vault-pipeline"
+                >flushVaultPipeline()</a
+              >
+            </li>
+            <li>
+              <a [routerLink]="[]" fragment="contributor-testing-example"
+                >Behavior Testing Example</a
+              >
+            </li>
+            <li>
+              <a [routerLink]="[]" fragment="contributor-testing-example"
+                >Controller Testing Example</a
+              >
+            </li>
+            <li>
+              <a [routerLink]="[]" fragment="contributor-testing-tools"
+                >Contributor Testing Tools</a
+              >
+            </li>
+            <li>
+              <a [routerLink]="[]" fragment="test-run-times">
+                Coverage Test Execution Summary (Test Run Times)</a
+              >
+            </li>
+          </ul>
+        </ul>
+
+        <div class="toc-title">Custom Behavior and Controller Testing</div>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="custom-testing">Custom Testing</a>
+          </li>
+        </ul>
+        <div class="toc-title">Testing Mode Comparison</div>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="testing-comparison"
+              >Testing Mode Comparison</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="active-clocks"
+                  >Active Clocks Per Testing Mode</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="timer-testing">Timer Testing</a>
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="await-strategy"
+                  >Await Strategy by Test Type</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="toc-title">Runtime Test Helpers & Safeguards</div>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="test-helpers">Test Helpers</a>
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="test-artifact-downloader"
+              >testArtifactDownloader()</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="testing-architecture"
+              >Testing Architecture</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="dev-mode">DevMode</a>
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="is-test-env">isTestEnv</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="runtime-test-bootstrapping"
+              >Runtime Test Bootstrapping</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="vault-testing">VaultTesting()</a>
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="provide-vault-testing"
+                  >provideVaultTesting() (angular)</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="reset-vault-for-tests"
+                  >resetVaultForTests()</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="featurecell-test-bootstrapping"
+              >FeatureCell Test Bootstrapping</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="create-test-behavior"
+                  >createTestBehavior</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="create-test-controller"
+                  >createTestController</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="reset-feature-cell-token"
+                  >resetFeatureCellToken()</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="settlement-and-stabilization"
+              >Settlement & Stabilization</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="vault-settled">vaultSettled()</a>
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="vault-all-settled"
+                  >vaultAllSettled</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="test-observability"
+              >Observability & Diagnostics</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="vault-error-service"
+                  >VaultErrorService.error$</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="create-test-insight-listener"
+                  >createTestInsightListener()</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="environment-isolation-helpers"
+              >Environment Isolation Helpers</a
+            >
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="cookie-storage-helpers"
+                  >clearCookieStorage()</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="local-storage-helpers"
+                  >clearLocalStorage()</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="session-storage-helpers"
+                  >clearSessionStorage()</a
+                >
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="storage-key-determination"
+                  >Storage Key Determination</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="sdux-test-package"
+              ><sdux-package-name />/testing Package Overview</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="dev-level-logging">Logging</a>
+          </li>
+          <li>
+            Dev Tools
+            <ul class="inner-toc">
+              <li>
+                <a [routerLink]="[]" fragment="built-in-debugger-overview">
+                  Built-in Debugger
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="[]" fragment="chrome-dev-tool"
+                  >Chrome DevTool</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="understanding-sdux">
+    <div class="section-title-navigation">
+      <div class="section-title">
+        Understanding How <sdux-brand-name /> Works
+      </div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Start here. This diagram illustrates the core execution model of
+        <sdux-brand-name />: a serialized conductor queue followed by a deferred
+        microtask finalization boundary. Every testing pattern in this document
+        ultimately revolves around that microtask boundary.
+      </p>
+
+      <p>
+        The conductor executes synchronously — controllers, behaviors, reducers
+        — but settlement is published in a
+        <code>queueMicrotask()</code>. That post-frame finalize step is what
+        makes the pipeline deterministic and non-re-entrant. It is also the
+        reason tests must <code>await</code> stabilization before asserting.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/11.0/11.1-integration-testing-flow.svg"
+        [tooltip]="'Integration Testing Flow'" />
+
+      <h4 id="why-queue-microtask">Why <code>queueMicrotask()</code>?</h4>
+
+      <ul>
+        <li>
+          <strong>Prevents re-entrant mutation</strong><br />
+          A subscriber could call <code>mergeState()</code> inside finalize.
+          Without deferral, the pipeline would recurse while still unwinding.
+        </li>
+
+        <li>
+          <strong>Prevents observable completion in the same stack</strong
+          ><br />
+          Synchronous completion would violate predictable scheduling semantics.
+          Downstream observers could see partially committed state.
+        </li>
+
+        <li>
+          <strong>Creates a stable commit boundary</strong><br />
+          State must be fully reduced before it becomes observable. The
+          microtask establishes a clear post-commit publish phase.
+        </li>
+
+        <li>
+          <strong>Prevents nested conductor runs</strong><br />
+          Without deferral, finalize could trigger a second attempt before the
+          first execution frame exits.
+        </li>
+
+        <li>
+          <strong>Maintains serial determinism</strong><br />
+          The conductor queue must remain strictly serialized. Publishing
+          settlement inside the same stack risks race-like reordering.
+        </li>
+
+        <li>
+          <strong>Separates compute from publish</strong><br />
+          Compute (controllers → reducers) runs synchronously. Publish (settled,
+          DevTools events, side-effects) occurs post-frame.
+        </li>
+      </ul>
+
+      <p>
+        This microtask boundary is architectural, not incidental. It enforces a
+        strict separation between the synchronous compute phase (controllers →
+        behaviors → reducers) and the publish phase (settlement, observers,
+        DevTools, side-effects), guaranteeing non-re-entrant and deterministic
+        state transitions.
+      </p>
+
+      <p>
+        Everything in testing flows from this boundary.
+        <strong> If the pipeline runs, the microtask must flush. </strong>
+        Understanding that single execution rule makes the rest of stabilization
+        straightforward.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="test-setup">
+    <div class="section-title-navigation">
+      <div class="section-title">Test Setup</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Deterministic testing in <sdux-brand-name /> depends on one rule:
+        <strong
+          >tests must synchronize with the pipeline’s settlement boundary before
+          asserting.</strong
+        >
+      </p>
+
+      <p>
+        The execution model — serialized conductor queue followed by a microtask
+        finalize boundary — is explained earlier in this document. This section
+        focuses only on the operational setup required to test correctly.
+      </p>
+
+      <h4 id="initialize-vault">Step 1 — Initialize VaultTesting (Required)</h4>
+
+      <p>
+        Before any
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        declared or initialized in a test environment, you must call
+        <code>VaultTesting()</code>.
+      </p>
+
+      <p>This prepares a deterministic runtime by:</p>
+
+      <ul>
+        <li>Enabling <a href="/docs/references/const/dev-mode">DevMode</a></li>
+        <li>Resetting global Vault state between tests</li>
+        <li>Registering settlement hooks</li>
+      </ul>
+
+      <p>
+        <strong
+          >Vault (or VaultTesting) must be invoked before
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          registration.</strong
+        >
+      </p>
+
+      <h4 id="feature-cell-registration">
+        Step 2 — Register and Initialize FeatureCell
+      </h4>
+
+      <p>
+        After VaultTesting initializes the runtime, register and initialize
+        FeatureCells normally. In
+        <a href="/docs/references/const/dev-mode">DevMode</a>, each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        attaches a settlement hook used by <code>vaultSettled()</code>.
+      </p>
+
+      <p>
+        These hooks are development-only and are not present in production
+        builds.
+      </p>
+
+      <h4 id="awaiting-vault-to-settle">
+        Step 3 — Await Settlement After Mutation
+      </h4>
+
+      <p>
+        After triggering any state mutation (<code>mergeState()</code>,
+        <code>replaceState()</code>, etc.), tests must explicitly await
+        settlement:
+      </p>
+
+      <pre><code>await vaultSettled('employees');</code></pre>
+
+      <p>This resolves only after:</p>
+
+      <ul>
+        <li>The conductor queue has finished processing</li>
+        <li>The microtask finalize boundary has executed</li>
+        <li>The active attempt has fully completed</li>
+      </ul>
+
+      <p>Only after this promise resolves is it safe to assert state.</p>
+
+      <h5>Availability</h5>
+
+      <ul>
+        <li>
+          <a href="/docs/references/const/dev-mode">DevMode</a> must be active
+        </li>
+        <li>
+          VaultTesting (or Vault with devMode enabled) must be initialized
+        </li>
+        <li>
+          The
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> must
+          be registered
+        </li>
+      </ul>
+
+      <p>
+        If these conditions are not met, <code>vaultSettled()</code> will throw.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="feature-level-testing">
+    <div class="section-title-navigation">
+      <div class="section-title">Feature-Level Testing</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Most <sdux-brand-name /> consumers test at the
+        <strong>Feature level</strong>. Even when testing a single service or
+        component, the full <sdux-brand-name /> pipeline executes — including
+        the serialized conductor queue and the microtask finalize boundary.
+      </p>
+
+      <p>
+        Because the complete pipeline runs, tests must await settlement using
+        <code>vaultSettled(key)</code>. This requirement is independent of how
+        the test is labeled (unit or integration). If a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        registered, the serialized conductor queue and microtask finalize
+        boundary are active.
+      </p>
+
+      <p>
+        Engine-level isolation (testing the conductor or behaviors without a
+        registered
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>) is
+        covered separately and uses <code>flushVaultPipeline()</code>.
+      </p>
+
+      <sdux-testing-rule-common />
+
+      <p>
+        The pipeline compute phase (controllers → behaviors → reducers) executes
+        synchronously. Only settlement publication is deferred via
+        <code>queueMicrotask()</code>. Awaiting <code>vaultSettled()</code> does
+        not make the pipeline asynchronous — it synchronizes the test with the
+        commit boundary.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <sdux-testing-standard-execution-case-common />
+    </div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/11.0/11.2-mutation-flow.svg"
+        [tooltip]="'Testing Mutation/Await Flow (Angular)'" />
+    </div>
+
+    <div class="section-body">
+      <sdux-testing-why-you-must-await-common />
+    </div>
+
+    <div class="section-body">
+      <div class="h-title-navigation">
+        <div class="h-section-title">Test Example</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+      <sdux-testing-example-common [type]="'typescript'" />
+    </div>
+  </section>
+
+  <section class="section" id="angular-testing">
+    <div class="section-title-navigation">
+      <div class="section-title">Angular Testing</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Angular introduces an additional scheduler layer on top of the
+        <sdux-brand-name /> execution model. When used with
+        <strong>TestBed</strong>, <strong>Signals</strong>, and
+        <strong>effect()</strong>, pipeline execution may be re-triggered after
+        the initial settlement boundary.
+      </p>
+
+      <p>
+        The <sdux-brand-name /> pipeline itself does not change. The serialized
+        conductor queue and the microtask finalize boundary remain intact.
+        Controllers, behaviors, and reducers execute synchronously. Settlement
+        is published in a <code>queueMicrotask()</code> commit boundary.
+      </p>
+
+      <p>
+        However, Angular <code>effect()</code> evaluation can enqueue additional
+        state mutations after the first pipeline run completes. This creates a
+        second execution cycle that must also be stabilized before assertions
+        are safe.
+      </p>
+
+      <p>
+        Because a registered
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> always
+        executes the full pipeline, tests must await settlement using
+        <code>vaultSettled(key)</code>. This requirement is independent of
+        whether the test is labeled “unit” or “integration.” If the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        is registered, the conductor queue and microtask finalize boundary are
+        active.
+      </p>
+
+      <p>
+        Engine-level isolation (testing the conductor or behaviors without a
+        registered
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>) is
+        covered separately and uses <code>flushVaultPipeline()</code>. That is
+        not the Angular case.
+      </p>
+
+      <p>
+        The pipeline compute phase (controllers → behaviors → reducers) executes
+        synchronously. Only settlement publication is deferred via
+        <code>queueMicrotask()</code>. Awaiting <code>vaultSettled()</code> does
+        not make the pipeline asynchronous — it synchronizes the test with the
+        commit boundary.
+      </p>
+
+      <p>
+        In Angular environments, stabilization may require flushing two layers:
+      </p>
+
+      <ul>
+        <li>The Vault conductor + microtask finalize boundary</li>
+        <li>The Angular effect scheduler</li>
+      </ul>
+
+      <p>The correct stabilization pattern is therefore:</p>
+
+      <sdux-diagram
+        image="diagrams/11.0/11.3-effect-mutation-flow.svg"
+        [tooltip]="'Testing Effect Mutation Flow'" />
+
+      <p>
+        The first await stabilizes the initial pipeline run. Angular effects may
+        then enqueue a second mutation.
+        <code>tick()</code> flushes Angular’s scheduler layer, and the second
+        await guarantees that any subsequent pipeline execution has fully
+        settled.
+      </p>
+
+      <sdux-testing-rule-common />
+    </div>
+
+    <div class="diagram-section">
+      <div class="section-body">
+        <sdux-diagram
+          image="diagrams/11.0/11.4-integration-effect-testing-flow.svg"
+          [tooltip]="'Testing Effect Mutation Flow'" />
+      </div>
+    </div>
+
+    <div class="section-body">
+      <sdux-testing-standard-execution-case-common />
+    </div>
+
+    <div class="section-body">
+      <sdux-testing-standard-execution-case-common [type]="'angular'" />
+    </div>
+
+    <div class="section-body">
+      <sdux-testing-why-you-must-await-common [type]="'angular'" />
+    </div>
+
+    <div class="section-body">
+      <div class="h-title-navigation">
+        <div class="h-section-title">Test Example</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+      <sdux-testing-example-common [type]="'angular'" />
+    </div>
+  </section>
+
+  <section class="section" id="contributor-testing">
+    <div class="section-title-navigation">
+      <div class="section-title">Contributor Testing</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          >Contributor Testing is intended exclusively for engineers
+          contributing to the <sdux-brand-name /> repositories.</strong
+        >
+      </p>
+      <p>
+        This section does not apply to application teams or companies consuming
+        <sdux-brand-name /> in production. If you are building features on top
+        of <sdux-brand-name />, you should use the Feature-level and Angular
+        testing patterns documented earlier in this guide.
+      </p>
+
+      <p>
+        Contributor testing isolates internal engine components — the conductor,
+        controllers, behaviors, and policy timing — without a fully registered
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. In
+        this environment there is no registry settlement hook,
+        <code>vaultSettled()</code> is unavailable, and stabilization requires
+        <code>flushVaultPipeline()</code>. These tests validate deterministic
+        guarantees at the architectural boundary of the engine itself.
+      </p>
+    </div>
+
+    <div class="section-body" id="flush-vault-pipeline">
+      <div class="h-title-navigation">
+        <div class="h-title">flushVaultPipeline() (Engine-Level Fallback)</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        <code>flushVaultPipeline()</code> is a low-level microtask drain utility
+        intended for contributor and engine-level testing scenarios where
+        <code>vaultSettled()</code> is not available.
+      </p>
+
+      <p>
+        In full
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        integration tests, you should always prefer
+        <code>vaultSettled(key)</code> or <code>vaultAllSettled()</code>. This
+        helper exists only for cases where the Vault registry hook is not
+        present, such as isolated Conductor or Behavior testing.
+      </p>
+
+      <h5>Why This Exists</h5>
+
+      <p>
+        The <sdux-brand-name /> finalizes each attempt inside a
+        <code>queueMicrotask()</code>. Without a settlement hook, there is no
+        deterministic signal that the finalize phase has executed.
+      </p>
+
+      <p>
+        Additionally, multiple stages within the pipeline may internally
+        <code>await</code> transactional work (for example: controller votes,
+        behavior orchestration, policy timers, or async reducers). Some stages
+        may introduce more than one await boundary during a single attempt. Each
+        of these boundaries schedules additional microtasks that must fully
+        drain before the attempt can be considered complete.
+      </p>
+
+      <p>
+        <code>flushVaultPipeline()</code> brute-force drains the microtask queue
+        by repeatedly awaiting resolved Promises, ensuring that all queued
+        microtasks — including nested and multi-stage awaits — have executed
+        before assertions run.
+      </p>
+
+      <h5>Source Code</h5>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'flushVaultPipeline - Source Code'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const flushVaultPipeline = async (iterations = 58) => {
+  for (let i = 0; i &lt; iterations; i++) {
+    await Promise.resolve();
+  }
+};`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h5>Important Notes</h5>
+
+      <ul>
+        <li>Intended for contributor and engine-level tests only</li>
+        <li>
+          Not required in standard
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          testing
+        </li>
+        <li>Does not provide semantic guarantees — only drains microtasks</li>
+        <li>Should not be used in production code</li>
+      </ul>
+
+      <p>
+        This utility is intentionally simple. It does not inspect Vault state,
+        conductor queues, or registry entries. It only advances the JavaScript
+        microtask queue to allow deferred finalize operations to execute.
+      </p>
+
+      <strong>
+        Rule: If <code>vaultSettled()</code> is available, use it. Only fall
+        back to <code>flushVaultPipeline()</code> when testing the engine in
+        isolation.
+      </strong>
+
+      <h5>Call for help</h5>
+      <p>Yes, it's ugly. A cleaner solution is always welcome.</p>
+    </div>
+
+    <div class="section-body">
+      <p>This applies when:</p>
+
+      <ul>
+        <li>
+          Testing any code for contributor to the
+          <sdux-brand-name /> repositories
+        </li>
+        <li>
+          No registered
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        </li>
+        <li>No <code>vaultSettled()</code> hook</li>
+      </ul>
+
+      <h4>Core Rule</h4>
+      <pre><code>await flushVaultPipeline();</code></pre>
+
+      <p>There is no settlement hook available.</p>
+
+      <h4>Why Microtasks Must Be Drained</h4>
+      <p>
+        Finalize is always deferred using <code>queueMicrotask()</code>. Without
+        draining:
+      </p>
+
+      <ul>
+        <li>Finalize not emitted</li>
+        <li>Event bus incomplete</li>
+        <li>Attempt not fully completed</li>
+      </ul>
+
+      <h4>What flushVaultPipeline() Does</h4>
+      <pre><code>for i = 0..58: await Promise.resolve()</code></pre>
+      <p>
+        The original version started at i..2 and has grown as the pipeline
+        advanced.
+      </p>
+
+      <p>This brute-force drains the microtask queue.</p>
+
+      <div class="table-title">Unit vs Integration</div>
+      <table aria-label="Unit vs Integration">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Environment</th>
+            <th scope="col" class="column-200">Has Registry?</th>
+            <th scope="col" class="column-200">Has vaultSettled()?</th>
+            <th scope="col" class="column-auto">Await Strategy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Engine Only</td>
+            <td>No</td>
+            <td>No</td>
+            <td>flushVaultPipeline()</td>
+          </tr>
+          <tr>
+            <td>Integration</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>vaultSettled(key)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sdux-tab-container" id="contributor-testing-example">
+      <mat-tab-group
+        animationDuration="200ms"
+        mat-stretch-tabs="false"
+        class="sdux-tabs"
+        [selectedIndex]="0">
+        <mat-tab label="Behavior Example">
+          <div class="tab-panel">
+            <sdux-example-viewer-source [displayTabs]="false">
+              <sdux-example-viewer-tab
+                [label]="'Minimal Behavior Test Pattern'">
+                <pre
+                  class="code-inline"><code class="language-ts">{{`// Example Behavior Test Structure
+describe('Behavior: withArrayAppendMerge', () => {
+  let behavior: WithArrayAppendMergeBehavior&lt;any>;
+  let warnSpy: jasmine.Spy;
+
+  beforeEach(() => {
+    warnSpy = spyOn(console, 'warn');
+
+    // Contributor-level runtime initialization.
+    // Enables DevMode and resets global Vault state.
+    VaultTesting({
+      // Must be set to 'warn' to capture logger output.
+      logLevel: 'warn'
+    });
+
+    // Direct behavior instantiation (no FeatureCell registry).
+    behavior = new WithArrayAppendMergeBehavior('behavior key', {} as any);
+  });
+
+  it('should return currentValue when nextValue is undefined and clearUndefined=false (default)', () => {
+    const curr = [1, 2, 3];
+    const result = behavior.computeMerge(curr, undefined);
+
+    // Pure synchronous merge logic.
+    // No pipeline, no logger, no microtask boundary.
+    expect(result).toBe(curr);
+  });
+
+  it('should call destroy() as noop', async () => {
+    behavior.destroy();
+
+    // Logging is batched via queueMicrotask().
+    // In contributor tests, drain the microtask queue explicitly.
+    await flushVaultPipeline();
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[vault]',
+      'behavior key - destroy "noop"'
+    );
+  });
+});`}}</code></pre>
+              </sdux-example-viewer-tab>
+            </sdux-example-viewer-source>
+          </div>
+        </mat-tab>
+        <mat-tab label="Controller Example">
+          <div class="tab-panel">
+            <sdux-example-viewer-source [displayTabs]="false">
+              <sdux-example-viewer-tab
+                [label]="'Minimal Controller Test Pattern'">
+                <pre
+                  class="code-inline"><code class="language-ts">{{`// Example Controller Test Structure
+describe('Controller: withReplayGlobalError', () => {
+  let controller: WithReplayGlobalErrorController&lt;any>;
+  let warnSpy: jasmine.Spy;
+  let debugSpy: jasmine.Spy;
+  const testOutput: any[] = [];
+
+  beforeAll(() => {
+    warnSpy = spyOn(console, 'warn');
+    debugSpy = spyOn(console, 'debug');
+  });
+
+  beforeEach(() => {
+    warnSpy.calls.reset();
+    debugSpy.calls.reset();
+    testOutput.length = 0;
+
+    // Contributor-level runtime initialization.
+    // Enables DevMode and resets Vault singletons.
+    VaultTesting({ logLevel: 'debug' });
+
+    // Direct controller instantiation (no FeatureCell registry).
+    controller = new WithReplayGlobalErrorController('pause-key', {
+      requestRevote: () => {
+        testOutput.push('request revote');
+      }
+    } as any);
+  });
+
+  afterEach(async () => {
+    controller.destroy();
+
+    // Logging and internal cleanup may be microtask-batched.
+    await flushVaultPipeline();
+  });
+
+  describe('Attempt', () => {
+    it('should return abstain for an Attempt message type without an error', async () => {
+      const mockMessage = {
+        traceId: 'trace-id',
+        type: ControllerMessageTypes.Attempt
+      };
+
+      controller.handleMessage(mockMessage).subscribe({
+        next: (result: any) => {
+          testOutput.push(result);
+        },
+        error: (error: Error) => {
+          testOutput.push(error.message);
+        }
+      });
+
+      // Controller.handleMessage() may:
+      // - Emit synchronously
+      // - Trigger logger batching (queueMicrotask)
+      // - Interact with internal services
+      //
+      // Contributor tests must explicitly drain microtasks.
+      await flushVaultPipeline();
+
+      expect(testOutput).toEqual(['abstain']);
+    });
+  });
+
+  it('reset() should log a diagnostic warning but perform no action', async () => {
+    controller.reset();
+
+    // Logging is deferred via queueMicrotask().
+    await flushVaultPipeline();
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[vault]',
+      'pause-key - reset "noop"'
+    );
+
+    expect(debugSpy).toHaveBeenCalledWith(
+      '[vault]',
+      '[VaultPrivateErrorService] returning existing singleton instance'
+    );
+  });
+});`}}</code></pre>
+              </sdux-example-viewer-tab>
+            </sdux-example-viewer-source>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </section>
+
+  <section class="section" id="contributor-testing-tools">
+    <div class="section-title-navigation">
+      <div class="section-title">Contributor Testing Tooling & Rigor</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          >This section is for <sdux-brand-name /> contributors only.</strong
+        >
+        It does not apply to application teams consuming <sdux-brand-name />.
+      </p>
+
+      <p>
+        The <sdux-brand-name /> repository enforces strict architectural and
+        testing guarantees. Every change — regardless of size — must pass a
+        comprehensive validation pipeline covering unit tests, integration
+        tests, coverage, linting, formatting, type safety, documentation
+        generation, and snapshot verification.
+      </p>
+
+      <p>
+        The integration suite is the architectural contract for
+        <sdux-brand-name />. It validates full pipeline determinism,
+        cross-behavior correctness, DevTools emissions, error boundaries, and
+        transactional guarantees. If the integration suite fails, the
+        architecture is broken.
+      </p>
+
+      <p>
+        The canonical integration philosophy and structure template is available
+        at:
+        <br />
+        <code
+          >tools &gt; readme-generation &gt; templates &gt; projects &gt;
+          integration.template.md</code
+        >
+      </p>
+
+      <p>
+        Contributors are expected to read and follow that template precisely.
+        Integration tests are not optional. They are the release gate.
+      </p>
+
+      <h4>Testing Stack</h4>
+
+      <ul>
+        <li><strong>Karma + Jasmine</strong> — 100% test coverage enforced</li>
+        <li>
+          <strong>Compodoc</strong> — 100% documentation coverage required
+        </li>
+        <li><strong>ESLint</strong> — strict lint enforcement</li>
+        <li><strong>Prettier</strong> — enforced formatting consistency</li>
+        <li><strong>TypeScript strict mode</strong> — zero type drift</li>
+        <li><strong>Husky</strong> — enforced pre-commit and pre-push gates</li>
+        <li>
+          <strong>Snapshot validation</strong> — DevTools emission contract
+          enforcement
+        </li>
+      </ul>
+
+      <h4>Coverage Requirements</h4>
+
+      <ul>
+        <li>All libraries must maintain 100% coverage</li>
+        <li>All integration tests must pass</li>
+        <li>No flaky tests permitted</li>
+        <li>No undocumented APIs</li>
+        <li>No missing matrix coverage entries</li>
+      </ul>
+
+      <p>
+        If coverage drops, CI fails. If documentation coverage drops, CI fails.
+        If formatting fails, the commit is rejected. If integration tests fail,
+        the release stops.
+      </p>
+
+      <h4>Pre-Commit Requirements</h4>
+
+      <ul>
+        <li><code>lint-staged</code> runs ESLint and Prettier</li>
+        <li>
+          <code>npm run docs:coverage</code> verifies documentation coverage
+        </li>
+        <li><code>npm run format:fix</code> ensures formatting compliance</li>
+        <li>
+          <strong
+            ><code>npm run docs:generate</code> must be run before
+            committing</strong
+          >. This script powers the documentation on the website and ensure
+          alignment.
+        </li>
+      </ul>
+
+      <h4>Pre-Push Requirements</h4>
+
+      <ul>
+        <li>Full coverage checks across all packages</li>
+        <li>
+          Core, Addons, DevTools, Angular, Shared, Integration, Tools, etc.
+        </li>
+        <li>Failure in any package blocks the push</li>
+      </ul>
+      <h4>Useful Scripts</h4>
+
+      <ul>
+        <li>
+          <code>npm run verify</code> — Runs lint, format check, typecheck, and
+          CI test suite (release gate check)
+        </li>
+
+        <li>
+          <code>npm run test:&lt;package&gt;</code> — Runs tests in watch mode
+          for a specific project (e.g. core, engine, angular)
+        </li>
+
+        <li>
+          <code>npm run test:coverage</code> — Runs coverage for all packages
+          (aggregate coverage validation)
+        </li>
+
+        <li>
+          <code>npm run test:coverage:&lt;package&gt;</code> — Runs single-run
+          coverage for a specific package in headless mode
+        </li>
+
+        <li>
+          <code>npm run test:coverage:clean</code> — Clears coverage output
+          directories
+        </li>
+
+        <li>
+          <code>npm run test:integration</code> — Executes the full integration
+          test suite (pipeline contract validation)
+        </li>
+
+        <li>
+          <code>npm run docs:generate</code> — Regenerates documentation
+          artifacts, references, menus, search index, and links (must be run
+          before commit)
+        </li>
+
+        <li>
+          <code>npm run docs</code> — Generates Compodoc documentation output
+          for all projects
+        </li>
+
+        <li>
+          <code>npm run docs:coverage</code> — Enforces 100% documentation
+          coverage and fails if below threshold
+        </li>
+
+        <li>
+          <code>npm run docs:serve</code> — Serves generated documentation
+          locally in a browser
+        </li>
+      </ul>
+
+      <p>
+        Snapshot updates are <strong>never</strong> a shortcut to make tests
+        pass. If you did not intentionally modify monitor contracts and snapshot
+        tests fail, you have introduced a regression.
+      </p>
+
+      <p>
+        The rigor is intentional. <sdux-brand-name /> guarantees deterministic
+        state orchestration across complex pipelines. That level of reliability
+        cannot exist without uncompromising validation.
+      </p>
+
+      <p>
+        If you are contributing to <sdux-brand-name />, you are contributing to
+        a system that engineers depend on in production. Treat every change
+        accordingly.
+      </p>
+    </div>
+
+    <div class="section-body" id="test-run-times">
+      <div class="table-title">Coverage Test Execution Summary</div>
+      <table
+        class="documentation-table"
+        aria-label="Coverage Test Execution Summary">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Project</th>
+            <th scope="col" class="column-150">Tests Run</th>
+            <th scope="col" class="column-150">Build Time (s)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>addons</td>
+            <td>556</td>
+            <td>0.46 seconds</td>
+          </tr>
+          <tr>
+            <td>angular</td>
+            <td>66</td>
+            <td>0.096 seconds</td>
+          </tr>
+          <tr>
+            <td>cli</td>
+            <td>1</td>
+            <td>0.015 seconds</td>
+          </tr>
+          <tr>
+            <td>core</td>
+            <td>358</td>
+            <td>0.079 seconds</td>
+          </tr>
+          <tr>
+            <td>dev-tools</td>
+            <td>11</td>
+            <td>0.007 seconds</td>
+          </tr>
+          <tr>
+            <td>dev-tools-ui</td>
+            <td>12</td>
+            <td>0.064 seconds</td>
+          </tr>
+          <tr>
+            <td>engine</td>
+            <td>537</td>
+            <td>0.137 seconds</td>
+          </tr>
+          <tr>
+            <td>integration</td>
+            <td>354</td>
+            <td>0.802 seconds</td>
+          </tr>
+          <tr>
+            <td>shared</td>
+            <td>251</td>
+            <td>0.056 seconds</td>
+          </tr>
+          <tr>
+            <td>web-app</td>
+            <td>620</td>
+            <td>1.547 seconds</td>
+          </tr>
+          <tr>
+            <td>web-components</td>
+            <td>80</td>
+            <td>0.124 seconds</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h5>Note</h5>
+      <ul>
+        <li>as of 2025/02/24</li>
+        <li>Macbook Air</li>
+        <ul>
+          <li>Apple M4</li>
+          <li>16 GB Memory</li>
+        </ul>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="custom-testing">
+    <div class="section-title-navigation">
+      <div class="section-title">Custom Behavior & Controller Testing</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        If you are authoring your own custom <strong>Behaviors</strong> or
+        <strong>Controllers</strong>, testing follows the same pattern described
+        in the <em>Contributor Testing</em> section.
+      </p>
+
+      <p>
+        Custom pipeline components execute at the engine layer — outside of a
+        fully registered <code>FeatureCell</code>. There is no registry hook,
+        <code>vaultSettled()</code> is not available, and stabilization must be
+        handled manually using <code>flushVaultPipeline()</code>.
+      </p>
+
+      <p>Even if your implementation appears synchronous, remember that:</p>
+
+      <ul>
+        <li>Logger output is batched via <code>queueMicrotask()</code></li>
+        <li>Internal services may introduce additional await boundaries</li>
+        <li>Controller message handling may emit asynchronously</li>
+        <li>Multiple microtask layers may exist within a single attempt</li>
+      </ul>
+
+      <p>For this reason, custom Behavior and Controller tests should:</p>
+
+      <ul>
+        <li>Initialize the runtime using <code>VaultTesting()</code></li>
+        <li>
+          Instantiate the component directly (no
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>)
+        </li>
+        <li>Execute the method under test</li>
+        <li>Drain microtasks using <code>await flushVaultPipeline()</code></li>
+        <li>Assert results deterministically</li>
+      </ul>
+
+      <p>
+        In short:
+        <strong
+          >test custom pipeline components exactly the way core contributors
+          test engine internals.</strong
+        >
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="testing-comparison">
+    <div class="section-title-navigation">
+      <div class="section-title">Testing Mode Comparison</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body" id="active-clocks">
+      <div class="h-title-navigation">
+        <div class="h-title">Active Clocks Per Testing Mode</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+      <table aria-label="Active Clocks Per Testing Mode">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Mode</th>
+            <th scope="col" class="column-auto">Conductor Queue</th>
+            <th scope="col" class="column-auto">Microtask Finalize</th>
+            <th scope="col" class="column-auto">Angular Effect Scheduler</th>
+            <th scope="col" class="column-auto">Timer / Timeout Scheduler</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Integration</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>—</td>
+            <td>⚠️ If Used</td>
+          </tr>
+          <tr>
+            <td>Engine Unit</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>—</td>
+            <td>⚠️ If Used</td>
+          </tr>
+          <tr>
+            <td>Angular + Effects</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>⚠️ If Used</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Execution Clocks</div>
+      <table aria-label="Execution Clocks">
+        <thead>
+          <tr>
+            <th scope="col" class="column-150">Clock</th>
+            <th scope="col" class="column-200">Scheduler</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Clock 1</strong></td>
+            <td>Conductor Queue</td>
+            <td>
+              Serialized execution layer that ensures attempts process in
+              strict, non-reentrant order.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Clock 2</strong></td>
+            <td>Microtask Finalize</td>
+            <td>
+              <code>queueMicrotask()</code> commit boundary that publishes
+              settlement after the synchronous pipeline completes.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Clock 3</strong></td>
+            <td>Angular Effect Scheduler</td>
+            <td>
+              Reactive re-enqueue layer triggered by Signals or
+              <code>effect()</code>
+              evaluation in Angular environments.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Clock 4</strong></td>
+            <td>Timer / Timeout Scheduler</td>
+            <td>
+              Macrotask-based delays introduced by controllers, licensing
+              timeouts, debounce/throttle policies, or
+              <code>setTimeout</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-body" id="timer-testing">
+      <div class="h-title-navigation">
+        <div class="h-title">Testing Timers & Delayed Controllers</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <div class="section-body">
+        <p>
+          Some <sdux-brand-name /> behaviors and controllers introduce macrotask
+          delays using <code>setTimeout()</code> (for example: debounce,
+          throttle, license timeouts, or retry policies).
+        </p>
+
+        <p>
+          These delays operate on a separate scheduler layer —
+          <strong>Clock 4: the Timer / Timeout Scheduler</strong>.
+        </p>
+
+        <p>
+          When timers are involved, deterministic testing requires stabilizing
+          three layers in order:
+        </p>
+
+        <ol>
+          <li>Trigger the mutation</li>
+          <li>Advance virtual time</li>
+          <li>Await <code>vaultSettled(key)</code></li>
+        </ol>
+
+        <p>
+          Advancing the timer executes the macrotask. However, the pipeline
+          still finalizes inside a
+          <code>queueMicrotask()</code> boundary. Therefore, advancing time is
+          never sufficient by itself — <code>vaultSettled()</code> must still be
+          awaited.
+        </p>
+
+        <h4>Golden Rule</h4>
+
+        <sdux-diagram
+          image="diagrams/11.0/11.6-mutation-timer-flow.svg"
+          [tooltip]="'Testing Mutation Flow Flow'" />
+
+        <p>
+          If you advance timers without awaiting settlement, you risk asserting
+          before the microtask finalize boundary executes.
+        </p>
+
+        <h4>Important</h4>
+
+        <ul>
+          <li>Timers must be installed in <code>beforeAll()</code></li>
+          <li>Timers must be uninstalled in <code>afterAll()</code></li>
+          <li>Time should be frozen using a mocked Date</li>
+          <li>Always advance time before awaiting settlement</li>
+        </ul>
+
+        <div class="sdux-tab-container">
+          <mat-tab-group
+            animationDuration="200ms"
+            mat-stretch-tabs="false"
+            class="sdux-tabs">
+            <!-- ===================================================== -->
+            <!-- JASMINE -->
+            <!-- ===================================================== -->
+            <mat-tab label="Jasmine">
+              <div class="tab-panel">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Jasmine Timer Pattern'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`describe('Timer Controller (Jasmine)', () => {
+
+  beforeAll(() => {
+    jasmine.clock().install();
+    jasmine.clock().mockDate(new Date('2024-01-01T00:00:00.000Z'));
+  });
+
+  afterAll(() => {
+    jasmine.clock().uninstall();
+  });
+
+  it('should replace through the entire pipe', async () => {
+    const state = testService.getState();
+
+    testService.vault.replaceState({ value: 123 });
+
+    // Advance macrotask scheduler
+    jasmine.clock().tick(1000);
+
+    // Await microtask finalize boundary
+    await vaultSettled(key);
+
+    expect(testService.getState().value).toBe(123);
+  });
+
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </div>
+            </mat-tab>
+
+            <!-- ===================================================== -->
+            <!-- JEST -->
+            <!-- ===================================================== -->
+            <mat-tab label="Jest">
+              <div class="tab-panel">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Jest Timer Pattern'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`describe('Timer Controller (Jest)', () => {
+
+  beforeAll(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2024-01-01T00:00:00.000Z'));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
+  it('should replace through the entire pipe', async () => {
+    testService.vault.replaceState({ value: 123 });
+
+    // Advance macrotask scheduler
+    jest.advanceTimersByTime(1000);
+
+    // Await microtask finalize boundary
+    await vaultSettled(key);
+
+    expect(testService.getState().value).toBe(123);
+  });
+
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </div>
+            </mat-tab>
+
+            <!-- ===================================================== -->
+            <!-- VITEST -->
+            <!-- ===================================================== -->
+            <mat-tab label="Vitest">
+              <div class="tab-panel">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab [label]="'Vitest Timer Pattern'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`describe('Timer Controller (Vitest)', () => {
+
+  beforeAll(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2024-01-01T00:00:00.000Z'));
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
+  it('should replace through the entire pipe', async () => {
+    testService.vault.replaceState({ value: 123 });
+
+    // Advance macrotask scheduler
+    vi.advanceTimersByTime(1000);
+
+    // Await microtask finalize boundary
+    await vaultSettled(key);
+
+    expect(testService.getState().value).toBe(123);
+  });
+
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-body" id="await-strategy">
+      <div class="h-title-navigation">
+        <div class="h-title">Await Strategy by Test Type</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <table aria-label="Await Strategy by Test Type">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Test Type</th>
+            <th scope="col" class="column-auto">Stabilization Strategy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Integration (<a href="/docs/references/functions/feature-cell"
+                >FeatureCell</a
+              >
+              full)
+            </td>
+            <td><code>await vaultSettled(key)</code></td>
+          </tr>
+          <tr>
+            <td>Engine Unit</td>
+            <td><code>await flushVaultPipeline()</code></td>
+          </tr>
+          <tr>
+            <td>Angular + Effects</td>
+            <td>
+              <code>await vaultSettled(key)</code><br />
+              <code>TestBed.tick()</code><br />
+              <code>await vaultSettled(key)</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Timeout / Delayed Controllers
+              <p>Jest</p>
+            </td>
+            <td>
+              <code>testService.vault.replaceState(...)</code>
+              <br />
+              <code>jest.advanceTimersByTime(ms)</code>
+              <br />
+              <code>await vaultSettled(key)</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Timeout / Delayed Controllers
+              <p>vitest</p>
+            </td>
+            <td>
+              <code>testService.vault.replaceState(...)</code>
+              <br />
+              <code>vi.advanceTimersByTime(ms)</code>
+              <br />
+              <code>await vaultSettled(key)</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Timeout / Delayed Controllers
+              <p>Jasmine</p>
+            </td>
+            <td>
+              <code>testService.vault.replaceState(...)</code>
+              <br />
+              <code>jasmine.clock().tick(ms)</code>
+              <br />
+              <code>await vaultSettled(key)</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="test-helpers">
+    <div class="section-title-navigation">
+      <div class="section-title">Test Helpers</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Deterministic testing in <sdux-brand-name /> relies on two internal
+        helpers:
+        <strong><a href="/docs/references/const/dev-mode">DevMode</a></strong>
+        and
+        <strong
+          ><a href="/docs/references/const/is-test-env">isTestEnv</a></strong
+        >. Together, they enable controlled testing hooks such as
+        <code>vaultSettled()</code> while ensuring that no development-only
+        behavior can leak into production builds.
+      </p>
+
+      <p>
+        These helpers form a deliberate safety boundary. Testing features —
+        including settlement hooks, registry inspection, and runtime resets —
+        are only activated when <em>both</em>
+        <a href="/docs/references/const/dev-mode">DevMode</a> is enabled and a
+        recognized test environment is detected. In production, these pathways
+        are inert.
+      </p>
+
+      <p>
+        This design guarantees two things: tests remain fully deterministic, and
+        production execution remains strictly optimized and secure.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="test-artifact-downloader">
+    <div class="section-title-navigation">
+      <div class="section-title">testArtifactDownloader()</div>
+      <div class="section-title">Test Helpers</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        <code>testArtifactDownloader()</code> is a lightweight testing utility
+        that allows developers to download structured test artifacts directly
+        from the browser during test execution or debugging sessions.
+      </p>
+
+      <p>
+        This helper serializes the provided data into formatted JSON, generates
+        a temporary browser
+        <code>Blob</code>, and triggers a download using a dynamically created
+        anchor element. It is primarily useful when inspecting large test
+        outputs, pipeline traces, or diagnostic payloads that are easier to
+        analyze outside the browser.
+      </p>
+
+      <div class="note">Typical Use Cases</div>
+      <ul>
+        <li>Exporting large diagnostic objects during debugging</li>
+        <li>Capturing pipeline state snapshots</li>
+        <li>Saving integration test artifacts for external analysis</li>
+        <li>Inspecting DevTools insight emissions or execution traces</li>
+        <li>Creating testing artifacts for comparison</li>
+      </ul>
+
+      <p>
+        The generated file name includes a timestamp to ensure uniqueness across
+        multiple downloads within the same test session.
+      </p>
+
+      <h5>Example</h5>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Artifact Download Example'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`testArtifactDownloader(
+  'vault-debug-output',
+  'json',
+  diagnosticPayload
+);`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h5>Source Code</h5>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'testArtifactDownloader - Source Code'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export function testArtifactDownloader(
+  filename: string,
+  fileExtension: string,
+  data: unknown
+): void {
+  const blob = new Blob(
+    [JSON.stringify(data, null, 2)],
+    { type: 'application/json' }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const anchor = document.createElement('a');
+  anchor.href = url;
+
+  anchor.download = \`\${filename}-\${Date.now()}.\${fileExtension}\`;
+
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+
+  URL.revokeObjectURL(url);
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <div class="note">Important Notes</div>
+      <ul>
+        <li>Intended for debugging and testing scenarios only</li>
+        <li>Runs only in browser environments</li>
+        <li>Not suitable for Node.js or headless test runners</li>
+        <li>Does not affect Vault pipeline execution or state</li>
+      </ul>
+
+      <p>
+        This helper is purely a developer convenience tool. It does not interact
+        with the
+        <sdux-brand-name /> runtime or testing stabilization mechanisms such as
+        <code>vaultSettled()</code>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="testing-architecture">
+    <div class="section-title-navigation">
+      <div class="section-title">Testing Architecture</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body" id="dev-mode">
+      <h4>DevMode</h4>
+
+      <p>
+        <a href="/docs/references/const/dev-mode">DevMode</a> is a global
+        runtime flag that activates development-only capabilities within the
+        Vault runtime. When enabled, it allows settlement hooks, enhanced
+        diagnostics, and additional internal validation checks to operate.
+      </p>
+
+      <p>
+        <a href="/docs/references/const/dev-mode">DevMode</a> can only be
+        initialized once during normal execution. Attempts to reconfigure it
+        outside of a test environment will throw. This safeguard prevents
+        accidental reconfiguration in production applications.
+      </p>
+
+      <p>
+        In testing,
+        <code>VaultTesting()</code> (<code>
+          <a [routerLink]="[]" fragment="provide-vault-testing"
+            >provideVaultTesting()</a
+          >
+          for angular</code
+        >) explicitly enables
+        <a href="/docs/references/const/dev-mode">DevMode</a> so that
+        deterministic settlement hooks such as
+        <code>vaultSettled()</code> become available. Without
+        <a href="/docs/references/const/dev-mode">DevMode</a>, these hooks do
+        not exist.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'VaultTesting'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const DevMode = {
+  get active(): boolean {
+    return devMode === true;
+  },
+
+  setDevMode(isDevMode: boolean): void {
+    if (devMode !== null && !isTestEnv.active) {
+      throw new Error('[vault] DevMode has already been initialized.');
+    }
+
+    devMode = isDevMode;
+  }
+};`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+
+    <div class="section-body" id="is-test-env">
+      <h4 id="is-test-env">isTestEnv</h4>
+
+      <p>
+        <a href="/docs/references/const/is-test-env">isTestEnv</a> detects
+        whether the current runtime is a known test environment (Jasmine, Jest,
+        or Vitest). It acts as a secondary safeguard to ensure that
+        <a href="/docs/references/const/dev-mode">DevMode</a> reconfiguration
+        and testing resets only occur during test execution.
+      </p>
+
+      <p>
+        Certain operations — such as resetting the Vault runtime between tests
+        or reinitializing
+        <a href="/docs/references/const/dev-mode">DevMode</a> — are permitted
+        only when <code>isTestEnv.active</code>
+        is true. This prevents development behaviors from being invoked in
+        production or non-test contexts.
+      </p>
+
+      <p>
+        Together, <a href="/docs/references/const/dev-mode">DevMode</a> and
+        <a href="/docs/references/const/is-test-env">isTestEnv</a> ensure that
+        testing patterns documented on this page are available during
+        development, yet completely isolated from production execution paths.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'VaultTesting'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const isTestEnv = {
+  get active(): boolean {
+    return (
+      typeof (globalThis as any).jasmine !== 'undefined' ||
+      typeof (globalThis as any).jest !== 'undefined' ||
+      typeof (globalThis as any).vitest !== 'undefined'
+    );
+  }
+};`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <section class="section" id="runtime-test-bootstrapping">
+    <div class="section-title-navigation">
+      <div class="section-title">Runtime Test Bootstrapping</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body" id="vault-testing">
+      <h4>VaultTesting</h4>
+
+      <p>
+        <strong>VaultTesting()</strong> is a convenience wrapper around
+        <code>Vault()</code> that preconfigures the runtime for deterministic
+        test execution.
+      </p>
+
+      <p>
+        It is not a separate runtime. It simply initializes Vault with
+        development-safe defaults and resets internal state between tests. You
+        could call <code>Vault()</code> directly with equivalent configuration —
+        this helper exists to make that setup explicit and repeatable.
+      </p>
+
+      <h5>What It Does</h5>
+
+      <ul>
+        <li>Enables <a href="/docs/references/const/dev-mode">DevMode</a></li>
+        <li>Resets the Vault runtime between tests</li>
+        <li>
+          Clears
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          registration state
+        </li>
+        <li>Ensures settlement hooks are available</li>
+        <li>Applies deterministic logging defaults</li>
+      </ul>
+
+      <p>
+        As in production, Vault (or VaultTesting) must be invoked
+        <strong
+          >before any
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          registration</strong
+        >.
+      </p>
+
+      <p>
+        The same configuration options accepted by <code>Vault()</code> can be
+        passed to <code>VaultTesting()</code>. Any supplied values override the
+        testing defaults.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'VaultTesting Example'">
+          <pre class="code-inline"><code class="language-ts">{{`VaultTesting({
+  logLevel: 'debug',
+  licenses: [
+    // Optional license payloads
+  ],
+  licenseTimeoutMs: 5000
+});`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        Internally, VaultTesting simply forwards the final configuration to
+        <code>Vault()</code> after enabling
+        <a href="/docs/references/const/dev-mode">DevMode</a>
+        and resetting runtime state.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        The implementation is intentionally minimal. VaultTesting does not alter
+        pipeline semantics or execution behavior — it only prepares a clean,
+        development-enabled runtime before delegating to <code>Vault()</code>.
+        The pipeline itself remains identical to production execution.
+      </p>
+
+      <h5>Source Code</h5>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'VaultTesting - Source Code'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export function VaultTesting(config?: VaultTestingConfig): void {
+  const finalConfig: VaultConfig = {
+    devMode: true,
+    logLevel: 'off',
+    unitTest: false,
+    ...config // overrides defaults
+  };
+
+  if (finalConfig?.devMode) {
+    DevMode.setDevMode(true);
+
+    resetVaultForTests();
+    resetFeatureCellToken();
+  }
+
+  Vault(finalConfig);
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+
+    <div class="section-body" id="provide-vault-testing">
+      <h4>provideVaultTesting() — Angular Environment Provider</h4>
+
+      <p>
+        provideVaultTesting() is the Angular environment-provider equivalent of
+        <code>VaultTesting()</code>. It configures the <sdux-brand-name /> for
+        deterministic test execution using Angular’s dependency injection
+        system.
+      </p>
+
+      <p>
+        Functionally, it performs the same runtime preparation as
+        <code>VaultTesting()</code>:
+        <a href="/docs/references/const/dev-mode">DevMode</a> is enabled, the
+        Vault runtime is reset, and settlement hooks are made available. The
+        only difference is that initialization occurs through Angular’s
+        <code>EnvironmentProviders</code> during application bootstrap.
+      </p>
+
+      <h5>When to Use</h5>
+
+      <ul>
+        <li>Angular TestBed environments</li>
+        <li>Standalone Angular test harnesses</li>
+        <li>
+          Applications using <code>provideVault()</code> for production setup
+        </li>
+      </ul>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'provideVaultTesting Example'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`beforeEach(() => {
+  TestBed.configureTestingModule({
+    providers: [
+      provideVaultTesting({
+        logLevel: 'debug'
+      })
+    ]
+  });
+});`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        Like <code>VaultTesting()</code>, this helper does not modify pipeline
+        semantics. It only prepares a development-enabled runtime before
+        delegating to <code>provideVault()</code>.
+      </p>
+
+      <h5>Source Code</h5>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'provideVaultTesting - Source Code'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`export function provideVaultTesting(
+  config?: VaultTestingConfig
+): EnvironmentProviders {
+
+  const finalConfig: VaultConfig = {
+    devMode: true,
+    logLevel: 'off',
+    unitTest: false,
+    ...config
+  };
+
+  if (finalConfig?.devMode) {
+    DevMode.setDevMode(true);
+    resetVaultForTests();
+  }
+
+  return provideVault(finalConfig);
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+
+    <div class="section-body">
+      <h4>Vault Testing Configurations</h4>
+
+      <sdux-vault-config-common />
+      <sdux-vault-log-level-common />
+    </div>
+
+    <div class="section-body" id="reset-vault-for-tests">
+      <h4>resetVaultForTests()</h4>
+
+      <p>
+        resetVaultForTests() clears all global Vault singletons and internal
+        registries to ensure complete test isolation between runs.
+      </p>
+
+      <p>
+        <sdux-brand-name /> enforces single-instance guarantees for core
+        services such as the Vault runtime and the LicensingService. These
+        guarantees are critical in production, but in a test environment they
+        must be reset between test cases to prevent cross-test state leakage.
+      </p>
+
+      <h5>What It Resets</h5>
+
+      <ul>
+        <li>Clears the global VaultCore singleton instance</li>
+        <li>Resets the LicensingService singleton</li>
+        <li>Unsubscribes active licensing and validation streams</li>
+        <li>
+          Clears the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          registry map
+        </li>
+        <li>Clears cached license payloads and terminal license state</li>
+        <li>Removes frozen configuration references</li>
+      </ul>
+
+      <p>
+        This guarantees that each test run begins with a completely clean Vault
+        runtime — no registered FeatureCells, no persisted license state, and no
+        lingering subscriptions.
+      </p>
+
+      <h5>Development-Only Safety</h5>
+
+      <p>
+        This function is only effective when
+        <strong><a href="/docs/references/const/dev-mode">DevMode</a></strong>
+        is active. In production builds, it performs no action and returns
+        immediately.
+      </p>
+
+      <p>
+        Resetting global singletons outside of a test environment would
+        compromise runtime integrity and licensing guarantees. For that reason,
+        this helper exists exclusively to support deterministic testing.
+      </p>
+
+      <h5>When Is It Used?</h5>
+
+      <p>
+        You typically do not call <code>resetVaultForTests()</code> directly. It
+        is invoked internally by <code>VaultTesting()</code> and
+        <code>provideVaultTesting()</code> before reinitializing the Vault
+        runtime.
+      </p>
+
+      <p>
+        If you are writing custom test harnesses or engine-level tests, you may
+        call it manually to guarantee a fully isolated Vault instance.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="featurecell-test-bootstrapping">
+    <div class="section-title-navigation">
+      <div class="section-title">
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> Test
+        Bootstrapping
+      </div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body" id="create-test-behavior">
+      <h4>createTestBehavior() (contributor testing only)</h4>
+
+      <p>
+        createTestBehavior() is a contributor-level testing utility that
+        generates synthetic Behavior classes for engine and conductor testing.
+      </p>
+
+      <p>
+        It allows contributors to simulate any <code>BehaviorType</code> without
+        writing a full decorated <code>&#64;VaultBehavior</code> implementation.
+        The returned class mimics a real behavior by attaching
+        <code>BEHAVIOR_META</code> and implementing the appropriate lifecycle
+        hooks for the selected type.
+      </p>
+
+      <h5>Purpose</h5>
+
+      <ul>
+        <li>Test conductor orchestration without real behaviors</li>
+        <li>
+          Simulate reducer, interceptor, operator, filter, and lifecycle phases
+        </li>
+        <li>Emit controlled outputs for deterministic pipeline assertions</li>
+        <li>Force error scenarios for resilience and ordering validation</li>
+        <li>Validate behavior ordering and execution trace guarantees</li>
+      </ul>
+
+      <p>
+        The factory accepts a <code>BehaviorType</code> and dynamically builds a
+        minimal class that implements only the methods relevant to that type.
+        All other hooks are inert.
+      </p>
+
+      <h5>Testing Capabilities</h5>
+
+      <ul>
+        <li>
+          Track emitted execution steps via the provided
+          <code>emitted</code> array
+        </li>
+        <li>Inject deterministic return values</li>
+        <li>Force error throwing at controlled points</li>
+        <li>Simulate state engine finalization paths</li>
+        <li>
+          Attach dynamic API extensions for FromObservable / FromStream
+          behaviors
+        </li>
+      </ul>
+
+      <p>
+        Internally, the utility also registers a synthetic
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> key to
+        satisfy Vault registration requirements during isolated engine tests.
+      </p>
+
+      <h5>Important</h5>
+
+      <p>
+        <strong>
+          This utility exists exclusively for contributor and engine-level
+          tests. It should never be used in application code.
+        </strong>
+      </p>
+    </div>
+
+    <div class="section-body" id="create-test-controller">
+      <h4>createTestController() (contributor testing only)</h4>
+
+      <p>
+        createTestController() is a contributor-level testing utility that
+        generates synthetic Controller classes for conductor and decision-engine
+        testing.
+      </p>
+
+      <p>
+        It allows contributors to simulate any
+        <code>ControllerType</code> without implementing a full controller
+        class. The returned class mimics a real controller by attaching
+        <code>CONTROLLER_META</code> and implementing the minimal contract
+        required by the conductor.
+      </p>
+
+      <h5>Purpose</h5>
+
+      <ul>
+        <li>Test conductor queue progression deterministically</li>
+        <li>
+          Bypass the arbitrator and decision engine with controlled outcomes
+        </li>
+        <li>Simulate license approval or denial paths</li>
+        <li>Force controller errors and pipeline failures</li>
+        <li>Validate retry, abort, deny, and revote flows</li>
+      </ul>
+
+      <p>
+        The factory accepts a <code>ControllerType</code> and optional
+        configuration that determines the emitted decision outcome, error
+        behavior, and observable return value.
+      </p>
+
+      <h5>Testing Capabilities</h5>
+
+      <ul>
+        <li>
+          Emit deterministic decision outcomes (<code>Complete</code>,
+          <code>Deny</code>, <code>Abort</code>, etc.)
+        </li>
+        <li>Shift multiple outcomes across sequential invocations</li>
+        <li>Trigger synchronous or pipe-level errors</li>
+        <li>Simulate license denial events</li>
+        <li>
+          Observe conductor message flow via the provided
+          <code>emitted</code> array
+        </li>
+      </ul>
+
+      <p>
+        Because the conductor pipeline is strictly serialized, this utility is
+        critical for validating queue ordering, microtask finalization
+        guarantees, and non-reentrant execution boundaries.
+      </p>
+
+      <h5>Key Management Helpers</h5>
+
+      <ul>
+        <li>
+          <code>resetTestControllerKey()</code> — Resets deterministic key
+          suffix counters.
+        </li>
+        <li>
+          <code>setTestControllerUniqueKeys()</code> — Enables unique key
+          suffixing to avoid collisions.
+        </li>
+        <li>
+          <code>resetTestControllerUniqueKeys()</code> — Restores default key
+          behavior.
+        </li>
+      </ul>
+
+      <p>
+        These helpers ensure predictable controller key generation across
+        isolated test runs.
+      </p>
+
+      <h5>Important</h5>
+
+      <p>
+        <strong>
+          This utility exists exclusively for contributor and engine-level
+          tests. It must never be used in application code.
+        </strong>
+      </p>
+    </div>
+
+    <div class="section-body" id="reset-feature-cell-token">
+      <h4>resetFeatureCellToken()</h4>
+
+      <p>
+        resetFeatureCellToken() clears internal
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> token
+        ownership state to ensure complete test isolation.
+      </p>
+
+      <p>
+        <sdux-brand-name /> strict uniqueness and single-consumer guarantees for
+        <code>FeatureCell</code> tokens. In production, a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> key
+        may only be created once and retrieved by a single consumer.
+      </p>
+
+      <p>
+        During testing, however, multiple isolated test cases may create and
+        tear down FeatureCells with the same keys. This helper resets the
+        internal token maps so that each test starts with a clean ownership
+        model.
+      </p>
+
+      <h5>What It Clears</h5>
+
+      <ul>
+        <li>The internal <code>featureCellTokens</code> registry</li>
+        <li>
+          The <code>featureCellTokenRequested</code> ownership tracking map
+        </li>
+      </ul>
+
+      <p>
+        This removes any previously created tokens and clears retrieval tracking
+        so duplicate-key and multi-consumer errors do not persist across test
+        boundaries.
+      </p>
+
+      <h5>Development-Only Safety</h5>
+
+      <p>
+        This function is gated by
+        <strong><a href="/docs/references/const/dev-mode">DevMode</a></strong
+        >. In production builds, it performs no action.
+      </p>
+
+      <p>
+        Resetting token ownership outside of a test environment would violate
+        the single-consumer safety guarantees that protect application
+        integrity.
+      </p>
+
+      <h5>When Is It Used?</h5>
+
+      <p>
+        You typically do not call this function directly. It is invoked
+        internally by <code>VaultTesting()</code> before reinitializing the
+        Vault runtime.
+      </p>
+
+      <p>
+        Contributor-level or engine-level tests may call it manually when
+        testing token resolution mechanics in isolation.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="settlement-and-stabilization">
+    <div class="section-title-navigation">
+      <div class="section-title">Settlement & Stabilization</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body" id="vault-settled">
+      <div class="h-title-navigation">
+        <div class="h-title">vaultSettled(key: string)</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        vaultSettled(key) is a development-only testing helper that resolves
+        when a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        pipeline has fully completed its current execution cycle.
+      </p>
+
+      <p>
+        It allows tests to await the conductor’s microtask finalization boundary
+        so that assertions can run as if execution were synchronous — even
+        though the pipeline intentionally defers settlement via
+        <code>queueMicrotask()</code>.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'vaultSettled Example'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`await vaultSettled('feature-cell-key');`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        After any state mutation (<code>mergeState()</code>,
+        <code>replaceState()</code>, etc.), tests must await settlement before
+        asserting.
+      </p>
+
+      <h5>What It Guarantees</h5>
+
+      <ul>
+        <li>The serialized conductor queue has finished processing</li>
+        <li>The microtask finalize boundary has executed</li>
+        <li>The active attempt has been removed from the queue</li>
+        <li>All synchronous pipeline work has fully drained</li>
+      </ul>
+
+      <p>Only after this promise resolves is it safe to assert state.</p>
+
+      <h5>Development-Only Behavior</h5>
+
+      <ul>
+        <li>
+          Available only when
+          <strong><a href="/docs/references/const/dev-mode">DevMode</a></strong>
+          is active
+        </li>
+        <li>
+          Registered automatically during
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          initialization in development
+        </li>
+        <li>
+          Accessible via the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> key
+        </li>
+        <li>Not exposed in production builds</li>
+      </ul>
+
+      <p>
+        In production mode, <code>vaultSettled()</code> does not exist. The
+        pipeline runs identically — but without testing hooks attached.
+      </p>
+
+      <h5>Why This Exists</h5>
+
+      <p>
+        The <sdux-brand-name /> conductor intentionally finalizes each attempt
+        inside a <code>queueMicrotask()</code>. This creates a strict post-stack
+        commit boundary that prevents re-entrant mutation and guarantees
+        deterministic queue progression.
+      </p>
+
+      <p>
+        Because settlement happens after the current call stack unwinds, tests
+        must explicitly await that boundary.
+        <code>vaultSettled()</code> exposes that boundary in development so
+        tests can synchronize with it deterministically.
+      </p>
+
+      <p>
+        Everything in <sdux-brand-name /> testing revolves around this microtask
+        commit point.
+      </p>
+
+      <strong
+        >Rule: If a test triggers a state mutation, it must await vaultSettled()
+        before asserting.</strong
+      >
+    </div>
+
+    <div class="section-body" id="vault-all-settled">
+      <div class="h-title-navigation">
+        <div class="h-title">vaultAllSettled()</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        vaultAllSettled() is a development-only testing helper that resolves
+        when
+        <em>all registered FeatureCells</em> have fully completed their current
+        execution cycles.
+      </p>
+
+      <p>
+        Whereas <code>vaultSettled(key)</code> targets a single
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+        <code>vaultAllSettled()</code> awaits settlement across the entire Vault
+        runtime. It synchronizes with each conductor’s microtask finalization
+        boundary, allowing tests to treat multi-cell interactions as
+        deterministically settled.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'vaultAllSettled Example'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`await vaultAllSettled();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        This is particularly useful in integration-style tests where multiple
+        FeatureCells may react to a single mutation or where cross-cell
+        orchestration is being validated.
+      </p>
+
+      <h5>What It Guarantees</h5>
+
+      <ul>
+        <li>All serialized conductor queues have finished processing</li>
+        <li>All microtask finalize boundaries have executed</li>
+        <li>
+          No active attempts remain in any registered
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        </li>
+        <li>All synchronous pipeline work has fully drained</li>
+      </ul>
+
+      <p>
+        Only after this promise resolves is it safe to assert global state
+        interactions.
+      </p>
+
+      <h5>Development-Only Behavior</h5>
+
+      <ul>
+        <li>
+          Available only when
+          <strong><a href="/docs/references/const/dev-mode">DevMode</a></strong>
+          is active
+        </li>
+        <li>Operates on the internal Vault registry</li>
+        <li>Not exposed in production builds</li>
+      </ul>
+
+      <p>
+        In production mode, <code>vaultAllSettled()</code> performs no action.
+        The pipeline executes identically, but without global testing hooks.
+      </p>
+
+      <h5>When Should You Use It?</h5>
+
+      <p>Use <code>vaultAllSettled()</code> when:</p>
+
+      <ul>
+        <li>Multiple FeatureCells are involved in a test</li>
+        <li>You are validating cross-cell orchestration</li>
+        <li>You want a single global stabilization barrier</li>
+      </ul>
+
+      <p>
+        For single-cell tests, prefer <code>vaultSettled(key)</code> for more
+        explicit intent.
+      </p>
+
+      <sdux-testing-rule-common />
+
+      <p>
+        The finalize stage cannot execute within the originating call stack.
+        Doing so would permit re-entrant mutation, nested conductor execution,
+        and partially committed state visibility. The microtask boundary
+        guarantees that settlement becomes observable only after the full
+        synchronous pipeline frame has unwound.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="test-observability">
+    <div class="section-title-navigation">
+      <div class="section-title">Observability & Diagnostics</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        In addition to settlement helpers, <sdux-brand-name /> provides
+        observable surfaces for monitoring pipeline execution and global error
+        state.
+      </p>
+
+      <p>
+        Some of these tools are primarily useful in testing environments, while
+        others — such as the global error stream — are fully supported for
+        production use.
+      </p>
+
+      <p>
+        These helpers are primarily intended for advanced debugging,
+        contributor-level testing, and validation of cross-cutting behavior such
+        as global error handling and DevTools insight emission.
+      </p>
+
+      <div class="h-title-navigation" id="vault-error-service">
+        <div class="h-title">
+          <a href="/docs/references/functions/vault-error-service"
+            >VaultErrorService</a
+          >.error$
+        </div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        <code>VaultErrorService().error$</code> is a global observable stream
+        that emits structured pipeline errors captured during execution.
+      </p>
+
+      <p>
+        Tests can subscribe to this stream to assert that expected errors were
+        emitted, transformed, or handled correctly.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Error Stream Example'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`const errorService = VaultErrorService();
+
+const errors: any[] = [];
+const sub = errorService.error$
+  .pipe(tap(error => errors.push(error)))
+  .subscribe();
+
+// ... trigger mutation ...
+
+expect(errors.length).toBe(1);
+
+sub.unsubscribe();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h5>What It Is Used For</h5>
+      <ul>
+        <li>Asserting global error propagation</li>
+        <li>Validating error transformation behavior</li>
+        <li>Testing controller or behavior error outcomes</li>
+        <li>Inspecting pipeline failure flows</li>
+      </ul>
+
+      <p>
+        This observable is production-grade. Applications may subscribe to it to
+        implement global error banners, logging infrastructure, recovery
+        workflows, or cross-feature error coordination.
+      </p>
+    </div>
+
+    <div class="section-body" id="create-test-insight-listener">
+      <div class="h-title-navigation" id="create-test-insight-listener">
+        <div class="h-title">createTestInsightListener()</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        <code>createTestInsightListener()</code> attaches a temporary listener
+        to the <code>InsightService</code> and collects DevTools-style emission
+        events during pipeline execution.
+      </p>
+
+      <p>
+        It is primarily used for contributor-level and advanced integration
+        tests where internal execution traces need to be verified.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Insight Listener Example'">
+          <pre class="code-inline"><code class="language-ts">{{`
+const insightsService = TestBed.inject(InsightService);
+
+const emitted: any[] = [];
+const stopListening = createTestInsightListener(insightsService, emitted);
+
+// ... trigger pipeline work ...
+
+expect(emitted.length).toBeGreaterThan(0);
+
+stopListening();
+`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h5>What It Captures</h5>
+      <ul>
+        <li>DevTools-style lifecycle events</li>
+        <li>Pipeline execution boundaries</li>
+        <li>Controller and behavior emissions</li>
+        <li>Diagnostic payload metadata (when enabled)</li>
+      </ul>
+
+      <p>
+        This helper does not modify pipeline behavior. It only observes emitted
+        diagnostic events.
+      </p>
+
+      <p>
+        It is recommended for advanced debugging scenarios and
+        <sdux-brand-name /> contributor testing, but is rarely required for
+        standard feature-level tests.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="environment-isolation-helpers">
+    <div class="section-title-navigation">
+      <div class="section-title">Environment Isolation Helpers</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        These browser storage helpers are only necessary if your
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        uses one of the built-in persistence behaviors —
+      </p>
+
+      <ul>
+        <li>
+          <a
+            href="/docs/pipeline/addons/persist/with-cookie-storage-persist-behavior"
+            >withCookieStoragePersistBehavior</a
+          >
+        </li>
+        <li>
+          <a
+            href="/docs/pipeline/addons/persist/with-local-storage-persist-behavior"
+            >withLocalStoragePersistBehavior</a
+          >
+        </li>
+        <li>
+          <a
+            href="/docs/pipeline/addons/persist/with-session-storage-persist-behavior"
+            >withSessionStoragePersistBehavior</a
+          >
+        </li>
+        <li>
+          You have implemented a custom storage-backed persistence behavior
+        </li>
+      </ul>
+
+      <p>
+        If your
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> does
+        not persist state to cookies, <code>localStorage</code>, or
+        <code>sessionStorage</code>, these utilities are not required.
+      </p>
+    </div>
+
+    <div class="section-body" id="cookie-storage-helpers">
+      <div class="h-title-navigation">
+        <div class="h-title">Cookie Storage Helpers</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        These helpers provide controlled access to browser cookies for testing
+        persistence and security-related behaviors.
+      </p>
+
+      <p>
+        They ensure consistent encoding, decoding, and serialization when
+        interacting with cookie-based state.
+      </p>
+
+      <h5>Available Helpers</h5>
+
+      <ul>
+        <li><code>setCookieStorage(key, value)</code></li>
+        <li><code>getCookieStorage(key)</code></li>
+        <li><code>clearCookieStorage(key)</code></li>
+      </ul>
+
+      <h5>Behavior</h5>
+
+      <ul>
+        <li>
+          Values are serialized using <code>JSON.stringify()</code> when
+          necessary
+        </li>
+        <li>Cookie values are URL-encoded before storage</li>
+        <li>Retrieved values are decoded and parsed when possible</li>
+        <li>Clearing sets an expired cookie with <code>path=/</code></li>
+      </ul>
+
+      <p>
+        These helpers are intentionally lightweight. They do not manage cookie
+        expiration strategies, domains, or security flags. Their purpose is
+        deterministic test interaction.
+      </p>
+    </div>
+
+    <div class="section-body" id="local-storage-helpers">
+      <div class="h-title-navigation">
+        <div class="h-title">Local Storage Helpers</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        These helpers provide a minimal, consistent wrapper around
+        <code>localStorage</code>
+        for use in deterministic testing scenarios.
+      </p>
+
+      <p>
+        They standardize serialization behavior and make it explicit when state
+        is written, retrieved, or cleared during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        persistence tests.
+      </p>
+
+      <h5>Available Helpers</h5>
+
+      <ul>
+        <li><code>setLocalStorage(key, value)</code></li>
+        <li><code>getLocalStorage(key)</code></li>
+        <li><code>clearLocalStorage(key)</code></li>
+      </ul>
+
+      <h5>Behavior</h5>
+
+      <ul>
+        <li>
+          Non-string values are serialized using <code>JSON.stringify()</code>
+        </li>
+        <li>Retrieved values are parsed using <code>JSON.parse()</code></li>
+        <li>Clearing removes the key entirely from storage</li>
+      </ul>
+
+      <p>
+        These utilities do not introduce additional abstraction or validation.
+        They exist solely to make storage interaction explicit and repeatable in
+        tests.
+      </p>
+    </div>
+
+    <div class="section-body" id="session-storage-helpers">
+      <div class="h-title-navigation">
+        <div class="h-title">Session Storage Helpers</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        These helpers provide a consistent interface for interacting with
+        <code>sessionStorage</code> during testing.
+      </p>
+
+      <p>
+        Like the local storage helpers, they standardize serialization and
+        parsing behavior while keeping the implementation intentionally minimal.
+      </p>
+
+      <h5>Available Helpers</h5>
+
+      <ul>
+        <li><code>setSessionStorage(key, value)</code></li>
+        <li><code>getSessionStorage(key)</code></li>
+        <li><code>clearSessionStorage(key)</code></li>
+      </ul>
+
+      <h5>Behavior</h5>
+
+      <ul>
+        <li>
+          Non-string values are serialized using <code>JSON.stringify()</code>
+        </li>
+        <li>Retrieved values are parsed using <code>JSON.parse()</code></li>
+        <li>Clearing removes the key entirely from session storage</li>
+      </ul>
+
+      <p>
+        These helpers are intended for persistence validation in
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        behaviors such as <code>Persist</code>, encryption, or hydration tests.
+      </p>
+    </div>
+
+    <div class="section-body" id="storage-key-determination">
+      <div class="h-title-navigation">
+        <div class="h-title">Determining the Storage Key</div>
+        <div class="h-top-link">
+          <a [routerLink]="[]" fragment="toc">↑ top</a>
+        </div>
+      </div>
+
+      <p>
+        Persistence behaviors generate deterministic, namespaced storage keys to
+        prevent collisions with user-defined browser storage entries.
+      </p>
+
+      <p>
+        For built-in <sdux-brand-name /> persistence behaviors, the storage key
+        follows a predictable structure.
+      </p>
+
+      <div class="table-title">Storage Key Format</div>
+      <table class="documentation-table" aria-label="Storage Key Format">
+        <thead>
+          <tr>
+            <th scope="col" class="column-150">Segment</th>
+            <th scope="col" class="column-auto">Source</th>
+            <th scope="col" class="column-auto">Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>vault::</td>
+            <td>Fixed namespace prefix</td>
+            <td>vault::</td>
+          </tr>
+          <tr>
+            <td>persistType</td>
+            <td>Persistence mechanism (lowercased)</td>
+            <td>localstorage</td>
+          </tr>
+          <tr>
+            <td>featureCellKey</td>
+            <td>
+              Your
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              key
+            </td>
+            <td>
+              user defined during declaration
+              <p>example: 'employee'</p>
+            </td>
+          </tr>
+          <tr>
+            <td>behaviorKey</td>
+            <td>
+              Generated via
+              <a href="/docs/references/functions/define-behavior-key"
+                >defineBehaviorKey</a
+              >()
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>SDUX::</td>
+            <td>Fixed namespace prefix</td>
+            <td>SDUX::</td>
+          </tr>
+          <tr>
+            <td>Behavior::</td>
+            <td>Fixed entity prefix</td>
+            <td>Behavior::</td>
+          </tr>
+          <tr>
+            <td>Persist::</td>
+            <td>Fixed storage prefix</td>
+            <td>Persist::</td>
+          </tr>
+          <tr>
+            <td>Behavior Type</td>
+            <td>&lt;Local|Session|Cookie>Storage</td>
+            <td>LocalStorage</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Example full key:</p>
+
+      <pre
+        class="code-inline"><code>vault::localstorage::employee::SDUX::Behavior::Persist::LocalStorage</code></pre>
+
+      <h5>Alternative: Use Debug Logging</h5>
+
+      <p>
+        You can also enable <code>logLevel: 'debug'</code> when initializing
+        Vault. In debug mode, <sdux-brand-name /> logs the computed storage key
+        during behavior construction:
+      </p>
+
+      <pre class="code-inline"><code>
+LocalStorage storagekey is "vault::localstorage::..."
+  </code></pre>
+
+      <p>
+        This is the recommended approach when working with custom persistence
+        behaviors, where the key format may not be immediately obvious.
+      </p>
+
+      <p>
+        For the built-in <sdux-brand-name /> persistence behaviors (Cookie,
+        LocalStorage, SessionStorage), the format is deterministic and easy to
+        derive manually.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="sdux-test-package">
+    <div class="section-title-navigation">
+      <div class="section-title">
+        <sdux-package-name />/testing Package Overview
+      </div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The <code><sdux-package-name />/testing</code> package provides
+        framework-agnostic utilities for deterministic Vault and
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        testing.
+      </p>
+
+      <p>
+        These helpers are intended for unit tests, integration tests, and
+        contributor-level validation of pipeline behavior.
+      </p>
+
+      <h5>Exports</h5>
+
+      <ul>
+        <li>
+          <code>VaultTesting()</code> — Preconfigures the Vault runtime for test
+          execution
+        </li>
+        <li>
+          <code>createTestBehavior()</code> — Synthetic behavior factory for
+          pipeline testing
+        </li>
+        <li>
+          <code>createTestController()</code> — Synthetic controller factory for
+          decision testing
+        </li>
+        <li>
+          <code>createTestInsightListener()</code> — DevTools emission collector
+          for testing
+        </li>
+        <li>
+          <code>flushVaultPipeline()</code> — Microtask drain utility for
+          engine-level tests
+        </li>
+        <li><code>VaultTestingConfig</code> — Testing configuration shape</li>
+        <li>
+          Storage utilities — <code>cookie</code>, <code>localStorage</code>,
+          and <code>sessionStorage</code> helpers
+        </li>
+        <li>
+          <code>TestControllerErrorShape</code> — Error configuration shape for
+          controller tests
+        </li>
+      </ul>
+
+      <h5>Angular-Specific Testing</h5>
+
+      <p>
+        Angular integration helpers such as
+        <code>provideVaultTesting()</code> and
+        <code>provideFeatureCellTesting()</code> are available from
+        <code><sdux-package-name />/angular</code> and integrate with Angular’s
+        dependency injection and application bootstrap lifecycle.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="dev-level-logging">
+    <div class="section-title-navigation">
+      <div class="section-title">Logging</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> provides structured, level-based logging designed
+        for development diagnostics and production-safe observability.
+      </p>
+
+      <p>
+        All Vault logs are prefixed with <code>[vault]</code> and are emitted
+        according to the configured <code>logLevel</code>.
+      </p>
+
+      <h4>Log Levels</h4>
+
+      <ul>
+        <li><code>error</code> — Critical failures</li>
+        <li><code>warn</code> — Recoverable or unexpected conditions</li>
+        <li><code>log</code> — Standard informational output</li>
+        <li><code>debug</code> — Detailed execution diagnostics</li>
+        <li><code>off</code> — No logging</li>
+      </ul>
+
+      <p>
+        The active log level is configured via
+        <code>VaultConfig.logLevel</code>. Only messages at or above the
+        configured level are emitted.
+      </p>
+
+      <h4>How Logging Works</h4>
+
+      <p>
+        Logging is internally batched and flushed asynchronously using
+        <code>queueMicrotask()</code>. Messages are added to an internal FIFO
+        queue and emitted in microtask batches to prevent excessive synchronous
+        console I/O.
+      </p>
+
+      <p>
+        To protect performance, the logger enforces a maximum buffer size of
+        <code>200</code> entries. If this limit is exceeded, additional messages
+        are dropped and a warning is emitted during the next flush cycle.
+      </p>
+
+      <h4>Vault Log APIs</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Logging APIs'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`vaultError('Something failed');
+vaultWarn('Unexpected state detected');
+vaultLog('Standard info message');
+vaultDebug('Detailed execution trace');
+`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Enabling Debug Logging</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Vault Config Example'">
+          <pre class="code-inline"><code class="language-ts">{{`VaultTesting({
+  logLevel: 'debug'
+});
+
+// If using angular
+provideVaultTesting({
+  logLevel: 'debug'
+});`
+}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        Debug logging is particularly useful when diagnosing persistence keys,
+        controller decisions, licensing flows, or pipeline execution ordering.
+      </p>
+
+      <h4>Design Goals</h4>
+
+      <ul>
+        <li>Deterministic output ordering</li>
+        <li>Performance-safe console usage</li>
+        <li>Configurable verbosity</li>
+        <li>No impact on pipeline execution semantics</li>
+      </ul>
+
+      <p>
+        Logging is purely observational. It does not alter pipeline state,
+        scheduling, or execution guarantees.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="built-in-debugger-overview">
+    <div class="section-title-navigation">
+      <div class="section-title">Built-in Debugger</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> includes a built-in runtime debugger designed to
+        help engineers inspect deterministic execution inside the Vault
+        pipeline. The debugger captures execution traces, lifecycle transitions,
+        controller activity, and error signals emitted by
+        <sdux-feature-cell /> instances during runtime.
+      </p>
+
+      <p>
+        When development mode is enabled, the debugger appears as a lightweight
+        floating panel within the browser. From this panel developers can record
+        pipeline activity, inspect event counts, export diagnostic logs, and
+        generate AI-assisted diagnostic reports.
+      </p>
+
+      <p>
+        The debugger operates as a passive observer and does not modify pipeline
+        behavior. It simply listens to Insight signals emitted by the runtime
+        and reconstructs the recorded execution trace.
+      </p>
+
+      <p>
+        For full usage instructions, architecture details, and debugging
+        workflows, see the complete documentation:
+        <a routerLink="/docs/dev-tools/built-in-debugger">
+          Built-in Debugger Documentation </a
+        >.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="chrome-dev-tool">
+    <div class="section-title-navigation">
+      <div class="section-title">Chrome DevTool (In Progress)</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        A dedicated <sdux-brand-name /> Chrome DevTools extension is currently
+        in development.
+      </p>
+
+      <p>
+        The extension will provide a visual interface for inspecting
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        state, pipeline execution flow, DevTools insight emissions, and global
+        error activity directly within Chrome’s developer tools.
+      </p>
+
+      <p>
+        Installation instructions and usage documentation will be added here
+        once the extension reaches public release.
+      </p>
+
+      <p>
+        Until then, pipeline insight emissions and diagnostic logging can be
+        observed using
+        <code>logLevel: 'debug'</code> and the existing InsightService hooks.
+      </p>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

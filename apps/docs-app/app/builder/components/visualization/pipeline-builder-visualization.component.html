@@ -1,0 +1,82 @@
+<div class="visualization-container">
+  <section
+    class="visualization visualization-open"
+    [class.visualization-open]="displayPreviewPage()"
+    [class.visualization-closed]="!displayPreviewPage()">
+    <mat-tab-group animationDuration="200ms">
+      <mat-tab label="Source Code">
+        <div class="visual-pane">
+          <sdux-pipeline-builder-source-code-visualization />
+        </div>
+      </mat-tab>
+      <mat-tab label="AI Assist">
+        <div class="section-body">
+          <div class="section-title">AI Assist – Guided Code Generation</div>
+
+          <p>
+            This file contains structured, production-grade prompts designed to
+            help you generate deterministic, pipeline-safe TypeScript functions
+            using any modern AI model (ChatGPT, Claude, Copilot, etc.). Each
+            snippet is tailored to the specific pipeline behaviors you selected
+            in the Builder, so you can quickly produce correct, pure, and
+            structurally safe implementations that conform to the
+            <sdux-brand-name /> pipeline contract.
+          </p>
+
+          <h3>How to Use This File</h3>
+          <ul>
+            <li>
+              <strong>Copy one snippet at a time</strong> into your preferred AI
+              model.
+            </li>
+            <li>
+              <strong>Replace the “Engineer Action” sections</strong> with your
+              real state shape and logic.
+            </li>
+            <li>
+              <strong>Delete unused implementation patterns</strong> before
+              submitting.
+            </li>
+            <li>
+              Submit the refined prompt to the AI and
+              <strong>paste the generated TypeScript</strong> into your project.
+            </li>
+            <li>
+              <strong>Verify correctness</strong> against your domain rules and
+              add/adjust tests as needed.
+            </li>
+          </ul>
+
+          <h3>Important</h3>
+          <ul>
+            <li>
+              These prompts are intentionally strict to enforce determinism,
+              immutability, and structural integrity.
+            </li>
+            <li>
+              The AI is instructed to return
+              <strong>only valid TypeScript code</strong> (no explanations).
+            </li>
+            <li>
+              The Pipeline Builder generates the architecture;
+              <strong>AI Assist helps generate the implementation</strong>.
+            </li>
+          </ul>
+        </div>
+
+        <div class="visual-pane">
+          <sdux-pipeline-builder-source-code-visualization
+            [type]="'ai-assist'" />
+        </div>
+      </mat-tab>
+      <!-- <mat-tab label="Advanced Source Code">
+        <div class="visual-pane"><sdux-pipeline-builder-source-code-visualization [type]="'advanced'" /></div>
+      </mat-tab>
+      <mat-tab label="From Stream Source Code">
+        <div class="visual-pane">
+          <sdux-pipeline-builder-source-code-visualization [type]="'fromStream'" />
+        </div>
+      </mat-tab> -->
+    </mat-tab-group>
+  </section>
+</div>

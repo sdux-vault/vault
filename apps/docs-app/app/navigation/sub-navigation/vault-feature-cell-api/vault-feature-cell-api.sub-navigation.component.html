@@ -1,0 +1,314 @@
+<nav aria-label="Vault Creation API">
+  <mat-expansion-panel class="nav-expansion">
+    <mat-expansion-panel-header>
+      <span class="nav-section-label">Vault Creation API</span>
+    </mat-expansion-panel-header>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/apis/vault"
+      aria-label="Vault documentation"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">Vault</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/apis/feature-cell"
+      aria-label="FeatureCell documentation"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">FeatureCell</span>
+    </a>
+
+    <mat-divider></mat-divider>
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/apis/provide-vault"
+      aria-label="provideVault documentation"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">provideVault (Angular)</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/apis/provide-feature-cell"
+      aria-label="provideFeatureCell documentation"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">provideFeatureCell (Angular)</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/apis/at-feature-cell"
+      aria-label="&#64;FeatureCell decorator documentation"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">&#64;FeatureCell (Angular)</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/apis/inject-vault"
+      aria-label="injectVault injector documentation"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">injectVault (Angular)</span>
+    </a>
+
+    <mat-divider></mat-divider>
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <div class="menu-icon">
+          <span class="sub-menu-content sub-item sub-header">FeatureCell</span>
+        </div>
+      </mat-expansion-panel-header>
+
+      <!-- Complete API -->
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api"
+          routerLinkActive="active"
+          aria-label="Complete FeatureCell API documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">Complete FeatureCell</span>
+        </a>
+      </div>
+
+      <!-- Methods -->
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/after-taps-method"
+          routerLinkActive="active"
+          aria-label="afterTaps method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">afterTaps()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/before-taps-method"
+          routerLinkActive="active"
+          aria-label="beforeTaps method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">beforeTaps()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/destroy-method"
+          routerLinkActive="active"
+          aria-label="destroy method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">destroy()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/destroyed-stream-method"
+          routerLinkActive="active"
+          aria-label="destroyed stream documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">destroyed$</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/emit-states-method"
+          routerLinkActive="active"
+          aria-label="emitStates method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">emitStates()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/errors-method"
+          routerLinkActive="active"
+          aria-label="errors method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">errors()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/filters-method"
+          routerLinkActive="active"
+          aria-label="filters method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">filters()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/from-stream-method"
+          routerLinkActive="active"
+          aria-label="fromStream method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">fromStream()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/hydrate-method"
+          routerLinkActive="active"
+          aria-label="hydrate method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">hydrate()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/initialize-method"
+          routerLinkActive="active"
+          aria-label="initialize method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">initialize()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/interceptors-method"
+          routerLinkActive="active"
+          aria-label="interceptors method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">interceptors()</span>
+        </a>
+      </div>
+
+      <!-- Properties / Streams -->
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/key-property"
+          routerLinkActive="active"
+          aria-label="key property documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">key</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/merge-state-method"
+          routerLinkActive="active"
+          aria-label="mergeState method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">mergeState()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/operators-method"
+          routerLinkActive="active"
+          aria-label="operators method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">operators()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/reducers-method"
+          routerLinkActive="active"
+          aria-label="reducers method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">reducers()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/replace-state-method"
+          routerLinkActive="active"
+          aria-label="replaceState method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">replaceState() </span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/reset-method"
+          routerLinkActive="active"
+          aria-label="reset method documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">reset()</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/reset-stream-method"
+          routerLinkActive="active"
+          aria-label="reset stream documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">reset$</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/state-property"
+          routerLinkActive="active"
+          aria-label="state property documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">state</span>
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/state-stream-method"
+          routerLinkActive="active"
+          aria-label="state stream documentation"
+          (click)="closeSidenav()">
+          <span class="menu-content">state$</span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/apis/cell-builder"
+      aria-label="CellBuilder documentation"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">CellBuilder</span>
+    </a>
+  </mat-expansion-panel>
+</nav>

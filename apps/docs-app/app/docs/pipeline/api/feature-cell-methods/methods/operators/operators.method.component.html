@@ -1,0 +1,255 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-02-19 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>operators()</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>operators()</strong> method registers operator behaviors on a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> that
+      execute during the Operator stage of the pipeline. Operators evaluate the
+      resolved and merged candidate value before filters, reducers, and taps
+      execute.
+    </p>
+
+    <h4>Method Contract Summary</h4>
+    <ul>
+      <li>
+        Operator behaviors are registered declaratively on a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance
+      </li>
+      <li>Operators execute after resolve and merge</li>
+      <li>Operators execute before filters and reducers</li>
+      <li>Operators may forward, modify, or suppress the candidate value</li>
+      <li>Errors propagate as Vault errors</li>
+    </ul>
+
+    <p>
+      The <strong>operators()</strong> method defines
+      <strong>conditional evaluation and transformation only</strong>. It does
+      not mutate existing state, does not emit snapshots, and does not influence
+      pipeline scheduling or lifecycle control. Its responsibility is limited to
+      determining whether, and in what form, the resolved candidate value
+      proceeds to downstream stages.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      The <strong>operators()</strong> method is additive. It may be invoked
+      multiple times, and each invocation appends operator behaviors to the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+      operator list. Operators execute in the exact order they are registered
+      during initialization.
+    </p>
+
+    <p>
+      While multiple invocations are supported, registering related operators as
+      a single ordered array improves clarity and preserves intentional
+      execution ordering.
+    </p>
+
+    <h4>Learn More</h4>
+    <a routerLink="/docs/pipeline/behaviors/operators">
+      <span class="menu-content sub-item">Operator Behavior</span>
+    </a>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAMS -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.6/2.6-operator-flow.svg"
+        [tooltip]="'Operator Execution Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="table-title">Initialization</div>
+    <table aria-label="Initialization">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Method</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong>operators&lt;T&gt;</strong>
+
+            <p>inputs:</p>
+            <ul>
+              <li>
+                operators:
+                <a
+                  href="/docs/references/contracts/operators-behavior-class-contract">
+                  OperatorsBehaviorClassContract </a
+                >&lt;T&gt;[]
+              </li>
+            </ul>
+
+            <p>return:</p>
+            <ul>
+              <li>
+                <a href="/docs/references/contracts/cell-builder-contract">
+                  CellBuilderContract </a
+                >&lt;T&gt;
+              </li>
+            </ul>
+          </td>
+          <td>
+            Registers operator behaviors that execute during the Operator stage.
+            Operators evaluate resolved and merged candidate values and may
+            forward, modify, or suppress them before downstream stages execute.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- EXAMPLE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>operators()</strong> method registers one or more operator
+        behaviors that evaluate resolved and merged candidate values during
+        pipeline execution. Each operator may forward the value unchanged,
+        return a modified value, or suppress further pipeline processing.
+      </p>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>
+          Registers one or more operator behaviors on the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        </li>
+        <li>Operators execute after resolve and merge</li>
+        <li>Operators execute before filters and reducers</li>
+        <li>Suppression short-circuits downstream stages</li>
+      </ul>
+
+      <p>
+        This demonstrates the intended use of <strong>operators()</strong> as a
+        declarative mechanism for conditional evaluation, normalization, or
+        suppression prior to filtering and reduction.
+      </p>
+
+      <h4>Example: Registering Operator Behaviors</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example: Registering Operator Behaviors'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault
+      .operators(
+        [
+          withDistinctUntilChanged()
+        ]
+      ).initialize();
+  }
+}
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- React -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example: Registering Operator Behaviors'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: []
+});
+
+employeeCell
+  .operators(
+    [
+      withDistinctUntilChanged()
+    ]
+  )
+  .initialize();
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- Vue -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example: Registering Operator Behaviors'">
+                  <pre class="code-inline"><code class="language-ts">{{`
+export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: []
+});
+
+employeeCell
+  .operators(
+    [
+      withDistinctUntilChanged()
+    ]
+  )
+  .initialize();
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

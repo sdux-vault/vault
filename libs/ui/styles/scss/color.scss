@@ -1,0 +1,22 @@
+@use 'global' as global;
+
+/**
+ * SDuX Status Utility Classes
+ * These provide quick contextual colors for warnings, success, and caution states.
+ */
+
+.warn {
+  color: global.$sdux-accent-base; // red / danger
+}
+
+.caution {
+  color: global.$sdux-warn-base; // amber / caution
+}
+
+.success {
+  color: global.$sdux-success-base; // green / success
+}
+
+.black {
+  color: global.$sdux-text-black; // neutral black
+}

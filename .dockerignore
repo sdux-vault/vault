@@ -1,0 +1,33 @@
+# Core excludes
+node_modules/
+coverage
+logs
+*.log
+test
+*.md
+*.swp
+*.tsbuildinfo
+
+# Configuration
+tsconfig.eslint.json
+tsconfig.spec.json
+typedoc.json
+
+# Infrastructure/deploy
+.git
+.env
+.env.*
+docker-compose.yml
+docker/
+docker-mysql/
+# docker-production/
+database/
+docker-compose.override.yml
+
+# Project-specific folders
+ai/
+tsc-out/
+/scripts/
+documentation/
+graphics/
+swagger/

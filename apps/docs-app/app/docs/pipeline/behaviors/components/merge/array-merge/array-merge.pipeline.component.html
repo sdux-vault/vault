@@ -1,0 +1,369 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Array Merge Behavior (Default)</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Array Merge</strong> is the default <em>Merge behavior</em> used
+      by a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> when no
+      custom merge strategy is provided. It defines how array-based state values
+      are combined with newly resolved pipeline values during the Merge stage.
+    </p>
+
+    <p>
+      This behavior treats arrays as <em>atomic, immutable values</em>. When an
+      incoming value is an array, it replaces the existing array entirely,
+      producing a new array instance. Element-level merging, diffing, or
+      reconciliation is intentionally not performed.
+    </p>
+
+    <p>
+      Array Merge runs within the core Merge stage and produces the merged
+      candidate state passed to downstream pipeline stages. It does not mutate
+      existing state, does not emit snapshots directly, and does not influence
+      pipeline control flow beyond producing the merged value.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      The Merge stage is entered exclusively through explicit state-update APIs.
+      Pipeline executions that invoke merge semantics are initiated via the
+      <strong>mergeState</strong> method, which supply the incoming value and
+      optional merge configuration used by the active Merge behavior.
+    </p>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/1.0/1.2.2-merge-state-flow.svg"
+        [tooltip]="'Merge State Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Array merge behaviors are configured as part of the
+        <strong>Merge stage</strong> and define how array-based
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        state values are combined with incoming resolved values.
+      </p>
+
+      <p>
+        Exactly one merge behavior is active for a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> at any
+        time. If no custom array merge behavior is provided, the default
+        <strong
+          ><a href="/docs/pipeline/behaviors/merge/with-array-merge-behavior"
+            >withArrayMergeBehavior</a
+          ></strong
+        >
+        is applied automatically.
+      </p>
+
+      <p>
+        Merge behaviors may optionally be influenced by the
+        <strong>clearUndefined</strong> configuration flag. When
+        <em>clearUndefined</em> is enabled, an incoming <em>undefined</em> value
+        is treated as an intentional clear request and results in the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        being cleared. When disabled, incoming <em>undefined</em> values
+        preserve the existing state and produce no merge output.
+      </p>
+
+      <p>
+        The <em>clearUndefined</em> option is supplied at the time a merge-style
+        update is initiated and is evaluated by the active merge behavior during
+        the Merge stage. It does not affect resolution, operators, or downstream
+        pipeline stages.
+      </p>
+
+      <p>
+        Alternative array merge strategies may be selected to support
+        append-style or push-style semantics. These behaviors remain purely
+        structural and do not perform element-level reconciliation or mutation.
+      </p>
+
+      <sdux-vault-array-merge-behaviors-common [type]="'default'" />
+
+      <sdux-vault-merge-fluent-api-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Evaluation Outcomes</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Array Merge</strong> behavior evaluates the
+        <em
+          >current committed
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state</em
+        >
+        and the <em>incoming resolved value</em> to produce a single merged
+        result during the <strong>Merge stage</strong>.
+      </p>
+
+      <p>
+        Array merge treats arrays as <em>atomic values</em>. The incoming array
+        replaces the existing array rather than merging individual elements. The
+        merge result becomes the authoritative candidate state passed to
+        downstream pipeline stages.
+      </p>
+
+      <p>
+        When the incoming value is <em>undefined</em>, merge behavior is
+        controlled by the <em>clearUndefined</em> configuration option. This
+        determines whether the existing state is preserved or intentionally
+        cleared.
+      </p>
+
+      <div class="table-title">Example 1: Array Replacement</div>
+      <table aria-label="Example 1: Array Replacement">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: [1, 2, 3]
+              <p>next: [9, 9]</p>
+            </td>
+            <td>[9, 9] — incoming array replaces the existing array</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">
+        Example 2: Undefined Incoming Value (Preserve)
+      </div>
+      <table aria-label="Example 2: Undefined Incoming Value (Preserve)">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: [1, 2, 3]
+              <p>next: undefined</p>
+              <p>clearUndefined: false</p>
+            </td>
+            <td>[1, 2, 3] — existing state is preserved</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Example 3: Undefined Incoming Value (Clear)</div>
+      <table aria-label="Example 3: Undefined Incoming Value (Clear)">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Inputs</th>
+            <th scope="col" class="column-auto">Merged Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              current: [1, 2, 3]
+              <p>next: undefined</p>
+              <p>clearUndefined: true</p>
+            </td>
+            <td>undefined — state is intentionally cleared</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <h4>Example 1: Use the withArrayMergeBehavior in a FeatureCell</h4>
+
+      <p>
+        This example demonstrates a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> using
+        the default
+        <a href="/docs/pipeline/behaviors/merge/with-array-merge-behavior"
+          >withArrayMergeBehavior</a
+        >
+        without explicitly registering a merge strategy. Incoming state updates
+        provided via mergeState replace the existing array state entirely,
+        producing a new immutable array instance. Because Array Merge is the
+        default behavior, no additional configuration is required to enable this
+        merge semantics—the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        automatically applies array replacement during the Merge stage for each
+        merge-style update.
+      </p>
+
+      <div class="note">Note</div>
+
+      “The
+      <a href="/docs/pipeline/behaviors/merge/with-array-merge-behavior"
+        >withArrayMergeBehavior</a
+      >
+      is the default Merge behavior and does not need to be explicitly attached
+      to a <a href="/docs/references/functions/feature-cell">FeatureCell</a>.”
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Use the Array Merge in a FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: [] 
+      },
+      [
+        // The withArrayMergeBehavior is the default Merge behavior
+        // and does not need to be attached to a FeatureCell.
+      ]
+    )
+  ]
+};
+          
+// bank-employee.service.ts
+// The provideFeatureCell key must match the @FeatureCell key input
+          
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.shape';
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+
+  // Use injectVault to get an instance of the FeatureCell
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    // Required to activate the FeatureCell
+    this.vault.initialize();
+  }
+
+  addEmployee(): void {
+    this.vault.mergeState(
+      {
+        value: [
+          { id: 1, name: 'Jane Doe' }
+        ]
+      }
+    )
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Use the Array Merge in a FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // The withArrayMergeBehavior is the default Merge behavior
+    // and does not need to be attached to a FeatureCell.
+  ],
+);
+
+// Initialization the FeatureCell 
+employeeCell.initialize();
+
+employeeCell.mergeState(
+  {
+    value: [
+      { id: 1, name: 'Jane Doe' }
+    ]
+  }
+)`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Use the Array Merge in a FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // The withArrayMergeBehavior is the default Merge behavior
+    // and does not need to be attached to a FeatureCell.
+  ],
+);
+
+// Initialization the FeatureCell 
+employeeCell.initialize();
+
+employeeCell.mergeState(
+  {
+    value: [
+      { id: 1, name: 'Jane Doe' }
+    ]
+  }
+)`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

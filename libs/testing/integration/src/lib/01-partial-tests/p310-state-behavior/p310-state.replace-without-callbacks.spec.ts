@@ -1,0 +1,112 @@
+import { provideZonelessChangeDetection } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
+import { vaultSettled } from '@sdux-vault/engine';
+import { flushVaultPipeline } from '@sdux-vault/testing-utils';
+import { tap } from 'rxjs';
+import { getBankEmployeeData } from '../../structure/data/bank-employee.data';
+import { BankEmployeeShape } from '../../structure/shapes/bank-employee.shape';
+import { createTestInsightListener } from '../../structure/utils/create-test-insight-listener.util';
+import { expectMonitorSnapshot } from '../../structure/utils/expect-monitor-snapshot.util';
+import { verifyAllEmployees } from '../../structure/utils/verify-all-employees.util';
+import { PartialStateWithEmitCallbacksService } from './partial-state-with-emit-callbacks.service';
+import { p310Snapshot } from './snap-shots/p310-state.replace-without-callbacks.snapshot';
+
+describe('p310: State Service Replace with Emit State Callbacks Test', () => {
+  const key = 'partial-state-with-emit-callbacks';
+  let testService: PartialStateWithEmitCallbacksService<BankEmployeeShape[]>;
+  let stopListening: () => void;
+
+  const emitted: any[] = [];
+  const globalStates: any[] = [];
+  let stateSubscription: any;
+
+  beforeEach(async () => {
+    globalStates.length = 0;
+
+    await TestBed.configureTestingModule({
+      providers: [
+        provideVaultTesting({
+          devMode: true
+        }),
+        provideZonelessChangeDetection(),
+        provideFeatureCell(PartialStateWithEmitCallbacksService, {
+          key,
+          initialState: null,
+          insights: {
+            wantsStates: true,
+            wantsPayload: true
+          } as any
+        })
+      ]
+    });
+
+    stopListening = createTestInsightListener(emitted);
+
+    testService = TestBed.inject(PartialStateWithEmitCallbacksService);
+    await testService.initializeSuccessEmitStateCallbacksTest();
+
+    stateSubscription = testService.vault.state$
+      .pipe(tap((state) => globalStates.push(state)))
+      .subscribe();
+  });
+
+  afterEach(() => {
+    stopListening();
+    stateSubscription.unsubscribe();
+  });
+
+  it('should replace the bank employees and emit states', async () => {
+    const state = testService.getState();
+    await vaultSettled(key);
+
+    expect(state.isLoading()).toBeFalse();
+    expect(state.error()).toBeNull();
+    expect(state.value()).toBeUndefined();
+    expect(state.hasValue()).toBeFalse();
+    expect(testService.getStates()).toEqual([]);
+
+    expect(globalStates).toEqual([]);
+
+    testService.clearStates();
+
+    testService.vault.replaceState(Object({ value: getBankEmployeeData() }));
+    await vaultSettled(key);
+
+    verifyAllEmployees(state.value());
+    expect(state.hasValue()).toBeTrue();
+
+    expect(state.isLoading()).toBeFalse();
+    expect(state.error()).toBeNull();
+
+    expect(testService.getStates()).toEqual([
+      'inline-true',
+      '{"id":"be-001","firstName":"Alice","lastName":"Wells","role":"Teller","status":"Active","salary":48000,"hireDate":"2018-03-12","birthDate":"1992-07-22","phoneNumber":"555-201-8899","address":{"street":"101 Maple St","city":"Springfield","state":"IL","zip":"62704"}}',
+      'arrow-true',
+      '{"id":"be-001","firstName":"Alice","lastName":"Wells","role":"Teller","status":"Active","salary":48000,"hireDate":"2018-03-12","birthDate":"1992-07-22","phoneNumber":"555-201-8899","address":{"street":"101 Maple St","city":"Springfield","state":"IL","zip":"62704"}}',
+      'bound-true',
+      '{"id":"be-001","firstName":"Alice","lastName":"Wells","role":"Teller","status":"Active","salary":48000,"hireDate":"2018-03-12","birthDate":"1992-07-22","phoneNumber":"555-201-8899","address":{"street":"101 Maple St","city":"Springfield","state":"IL","zip":"62704"}}',
+      'private-true',
+      '{"id":"be-001","firstName":"Alice","lastName":"Wells","role":"Teller","status":"Active","salary":48000,"hireDate":"2018-03-12","birthDate":"1992-07-22","phoneNumber":"555-201-8899","address":{"street":"101 Maple St","city":"Springfield","state":"IL","zip":"62704"}}',
+      'pure callback-true',
+      '{"id":"be-001","firstName":"Alice","lastName":"Wells","role":"Teller","status":"Active","salary":48000,"hireDate":"2018-03-12","birthDate":"1992-07-22","phoneNumber":"555-201-8899","address":{"street":"101 Maple St","city":"Springfield","state":"IL","zip":"62704"}}'
+    ]);
+
+    expect(globalStates).toEqual([
+      Object({
+        type: 'Finalize Pipeline',
+        snapshot: Object({
+          isLoading: false,
+          value: getBankEmployeeData(),
+          error: null,
+          hasValue: true
+        })
+      })
+    ]);
+  });
+
+  it('should have the correct insight events', async () => {
+    await flushVaultPipeline();
+    expectMonitorSnapshot(emitted, p310Snapshot);
+  });
+});

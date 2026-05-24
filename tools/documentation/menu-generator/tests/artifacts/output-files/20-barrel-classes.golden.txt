@@ -1,0 +1,13 @@
+
+    <!--
+AUTO-GENERATED DOCUMENTATION COMPONENT
+Tools/documentation/menu-generator
+-->
+    @switch (type) {
+@case ('value-resolve-example-component') {
+  <sdux-value-resolve-example-component />
+}
+
+@default {
+  <sdux-not-found />
+}}

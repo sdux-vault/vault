@@ -1,0 +1,66 @@
+<header class="docs-header">
+  <div
+    class="instructions"
+    [class.is-collapsed]="!pipelineStepService.isExpanded()">
+    <p class="lead">Still writing the same Redux slice over and over?</p>
+
+    <p>
+      Thunks. Loading flags. Error handling. Selectors. Boilerplate everywhere.
+      <br /><br />
+      The <sdux-brand-name [tm]="true" /> Pipeline Builder lets you replace all
+      of that in minutes — just answer a few clear questions and we generate a
+      production-ready <sdux-feature-cell [tm]="true" /> for you.
+    </p>
+
+    <h4>How it works</h4>
+    <ol>
+      @for (
+        instruction of pipelineStepService.stepInstructions;
+        track instruction
+      ) {
+        <li>{{ instruction }}</li>
+      }
+    </ol>
+
+    <h4>
+      Ready to replace hundreds of lines of boilerplate with something that
+      finally feels obvious?
+    </h4>
+
+    <span class="psst">
+      Your progress is saved automatically — feel free to experiment. You can
+      always come back and continue where you left off.
+    </span>
+
+    @if (pipelineStepService.displayStartButton()) {
+      <div class="start-button-container">
+        <button
+          type="button"
+          class="sdux-button-caution start-button"
+          (click)="start()">
+          Build My State
+        </button>
+      </div>
+    }
+  </div>
+
+  <div
+    class="mini-instructions"
+    [class.is-displayed]="!pipelineStepService.isExpanded()">
+    Click to expand overview
+  </div>
+
+  @if (!pipelineStepService.displayStartButton()) {
+    <div class="button-toggle-container">
+      <button
+        type="button"
+        class="button-toggle"
+        (click)="pipelineStepService.toggleInstructions()"
+        matTooltip="Toggle Overview">
+        <mat-icon>
+          {{ pipelineStepService.isExpanded() ? 'expand_less' : 'expand_more' }}
+        </mat-icon>
+      </button>
+    </div>
+  }
+</header>

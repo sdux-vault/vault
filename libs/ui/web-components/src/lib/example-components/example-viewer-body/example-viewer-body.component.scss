@@ -1,0 +1,84 @@
+@use 'global' as global;
+
+$example-min-height: 200px;
+
+/* ===============================================
+   SDuX Example Viewer — Body Container
+   =============================================== */
+.example-viewer-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+
+  flex: 1 1 auto;
+  min-height: $example-min-height;
+
+  // gap: global.$spacing-md;
+  // padding: global.$spacing-xs;
+
+  background-color: var(--sdux-surface-bg);
+  color: var(--sdux-text-default);
+
+  border-top: 1px solid var(--sdux-surface-outline);
+  /* ✔ New drop-shadow to match .source-row */
+  // border-radius: var(--sdux-border-radius);
+  // box-shadow: global.$sdux-shadow-base;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    opacity 0.25s ease,
+    box-shadow 0.25s ease;
+
+  /* ✔ SDuX elevation hover (same as source-row) */
+  &:hover {
+    @include global.sdux-elevate(hover);
+  }
+
+  @media (max-width: global.$breakpoint-md) {
+    justify-content: center;
+  }
+}
+
+/* ===============================================
+   Projected Content Blocks: [display], [example]
+   =============================================== */
+:host {
+  /* ::ng-deep: required to style ng-content projected slots ([display], [example]) */
+  ::ng-deep [display],
+  ::ng-deep [example] {
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: $example-min-height;
+
+    padding: global.$spacing-sm;
+
+    background-color: var(--sdux-surface-bg);
+    border-radius: var(--sdux-border-radius);
+
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  /* ::ng-deep: required to style ng-content projected [display] slot */
+  ::ng-deep [display] {
+    // border: 1px solid var(--sdux-surface-outline);
+    //border-radius: global.$border-radius-md;
+
+    overflow: auto;
+  }
+
+  /* ::ng-deep: required to style ng-content projected [display] hover state */
+  ::ng-deep [display]:hover {
+    background-color: var(--sdux-surface-hover);
+    border-color: var(--sdux-primary);
+  }
+}

@@ -1,0 +1,135 @@
+@use 'global' as global;
+
+@for $i from 1 through 20 {
+  .column-#{$i * 25} {
+    width: #{$i * 25}px;
+  }
+}
+
+.column-auto {
+  width: auto;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* Prevent layout breakage */
+  -webkit-overflow-scrolling: touch;
+
+  /* Optional visual polish */
+  border-radius: var(--sdux-border-radius);
+}
+
+/**
+ * Table Base Styles
+ */
+table {
+  // table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: global.$spacing-lg 0;
+  background-color: var(--sdux-surface-elevated);
+  overflow: hidden;
+  font-size: global.$font-size-sm;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* Prevent layout breakage */
+  -webkit-overflow-scrolling: touch;
+
+  /* Optional visual polish */
+  border-radius: var(--sdux-border-radius);
+}
+
+.table-scroll table {
+  min-width: max-content;
+}
+
+/**
+ * Scrollable Container and Nested Tables
+ */
+.table-parent-container {
+  width: 100%;
+  overflow: auto;
+  background-color: global.$sdux-surface-darker;
+  border: 1px solid global.$sdux-surface-outline;
+  border-radius: var(--sdux-border-radius);
+
+  .child-table,
+  .child-table-border {
+    margin-top: -56px;
+    width: calc(100% - 6px);
+
+    td.mat-mdc-cell {
+      border-bottom-style: none;
+      color: global.$sdux-text-primary;
+    }
+  }
+
+  .table-highlighted td {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-color: global.$sdux-primary-light;
+  }
+
+  .row-detail-highlighted .mat-mdc-table {
+    background-color: rgba(global.$sdux-primary-base, 0.1);
+  }
+
+  .detail-row td.mat-mdc-cell:last-of-type {
+    padding-right: 0;
+  }
+
+  tr.table-highlighted:not(.table-highlighted-row):hover {
+    background: rgba(global.$sdux-primary-base, 0.15);
+  }
+
+  tr.table-highlighted:not(.table-highlighted-row):active {
+    background: rgba(global.$sdux-primary-dark, 0.25);
+  }
+
+  /**
+   * Scrollbar Styles (Dark Mode Compatible)
+   */
+  &::-webkit-scrollbar-track {
+    background-color: global.$sdux-surface-darker;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: global.$sdux-surface-darker;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: global.$sdux-primary-base;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/**
+ * Loading Spinner Container
+ */
+.loading-spinner-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: global.$sdux-text-secondary;
+
+  .spinner-container {
+    height: 360px;
+  }
+
+  mat-spinner {
+    color: global.$sdux-primary-base !important;
+  }
+}

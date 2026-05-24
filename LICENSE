@@ -1,0 +1,249 @@
+# MIT License
+
+(with SDuX Clarification Notice)
+
+---
+
+## MIT License (Standard Text)
+
+Copyright (c) 2026 NextGen Luminary
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## SDuX Clarification Notice (Non-License Commentary)
+
+**IMPORTANT:**
+The following sections are **clarifying notices** provided for transparency, auditability, ecosystem boundary clarity, acquisition readiness, and architectural separation within the SDuX ecosystem. They **do not modify, amend, replace, restrict, supersede, or reinterpret** the MIT License above.
+
+If any conflict is perceived between this clarification notice and the MIT License text above, the MIT License text **controls in all cases**.
+
+The MIT License text above applies **only** to the specific SDuX repositories and npm packages explicitly designated as open source by NextGen Luminary.
+
+---
+
+## 1. Scope of This License
+
+This MIT License applies exclusively to the following SDuX components:
+
+### SDuX Framework Source
+
+- @sdux-vault/core
+- @sdux-vault/add-ons
+- @sdux-vault/shared
+- @sdux-vault/devtools/tooling
+- @sdux-vault/devtools/ui
+- @sdux-vault/ui/web-components
+
+### SDuX Open-Source npm Packages
+
+- Identical package names as listed above when distributed via npm
+
+No other SDuX components are licensed under the MIT License unless explicitly stated in writing by NextGen Luminary.
+
+The MIT License does **not** apply to any repository, package, module, runtime, binary, service, distribution artifact, hosted system, entitlement service, or enforcement subsystem that is not expressly designated as MIT-licensed.
+
+---
+
+## 2. Explicit Exclusion of Proprietary Components
+
+For the avoidance of doubt:
+
+This MIT License **does not apply** to:
+
+- @sdux-vault/engine
+- SDuX Vault runtime components
+- Persistence modules
+- Encryption modules
+- Licensing enforcement modules
+- Telemetry systems
+- Commercial-only features
+- Runtime gating mechanisms
+- Deterministic license validation infrastructure
+- Any proprietary binaries, services, network services, entitlement servers, or internal source code
+
+Use of proprietary SDuX components is governed exclusively by their applicable commercial or community licenses.
+
+No rights—express or implied—are granted to proprietary components by virtue of this MIT License.
+
+In particular, this MIT License does **not** grant rights to:
+
+- Proprietary runtime enforcement systems
+- Deterministic gating or validation logic
+- License timeout mechanisms
+- Runtime license tokens
+- Production-gating systems
+- Commercial entitlement APIs
+- Proprietary network services or validation endpoints
+- Internal orchestration engines not explicitly released under MIT
+
+---
+
+## 3. No Transitive or Implied Licensing
+
+This MIT License:
+
+- Does **not** grant rights to dependencies that are not themselves MIT-licensed
+- Does **not** extend rights to runtime engines, orchestrators, execution layers, or enforcement systems
+- Does **not** create any obligation for NextGen Luminary to open-source additional components
+- Does **not** grant rights to use proprietary licensing APIs, enforcement surfaces, runtime validation endpoints, or commercial network services outside their intended licensed boundaries
+
+Each SDuX package is licensed independently and must be evaluated on its own terms.
+
+No transitive, derivative, architectural, structural, or implied licensing rights arise merely because MIT-licensed components may interoperate with proprietary components.
+
+Interoperability does not imply relicensing, source disclosure obligations, or any grant of rights to non-MIT components.
+
+---
+
+## 4. Use in Commercial and Enterprise Environments
+
+The MIT-licensed SDuX framework components:
+
+- May be used in commercial, enterprise, and production environments
+- May be modified and redistributed in accordance with the MIT License
+- May be included in proprietary products, subject to MIT attribution requirements
+
+This permissive licensing is intentional and designed to:
+
+- Encourage adoption
+- Support long-term maintainability
+- Reduce legal friction during audits and acquisitions
+
+No additional enterprise license is required for the MIT-designated components themselves.
+
+---
+
+## 5. Separation From Third-Party Extensions
+
+Third-party extensions, add-ons, Behaviors, Controllers, integrations, or other modules developed by independent Vendors are **independently licensed**.
+
+This MIT License:
+
+- Does **not** apply to third-party extensions unless explicitly stated by their respective authors
+- Does **not** grant rights to any Vendor-developed Licensed Extension
+- Does **not** modify, override, validate, or enforce any Vendor commercial license
+
+MIT-licensed SDuX components may be used to build extensions.
+However:
+
+- Any proprietary enforcement components used by such extensions remain separately licensed
+- Runtime gating systems remain governed by their applicable community or commercial licenses
+- Validation, entitlement, or enforcement behavior implemented outside MIT-designated repositories remains subject to its own governing license
+
+No open-source contamination, copyleft effect, reciprocal licensing obligation, or forced disclosure requirement is created by virtue of integrating MIT-licensed SDuX components with proprietary or third-party components.
+
+---
+
+## 6. No Grant of Rights to Commercial Services or APIs
+
+For clarity:
+
+This MIT License does **not** grant rights to:
+
+- Access proprietary commercial APIs
+- Access proprietary network services
+- Access entitlement servers
+- Access validation infrastructure
+- Access hosted SDuX services
+- Bypass production-gating or enforcement systems
+
+Any such rights, if available, are governed exclusively by their respective commercial or community licenses.
+
+---
+
+## 7. Trademark and Branding Clarification
+
+This MIT License does **not** grant any trademark rights in the names, logos, product branding, or service marks of NextGen Luminary or SDuX, except as required for reasonable and customary attribution consistent with the MIT License.
+
+Use of SDuX or NextGen Luminary trademarks in product names, marketplace listings, or marketing materials may require separate permission.
+
+Nothing in this clarification notice modifies the trademark rights (or lack thereof) under the MIT License; it is provided solely for clarity and avoidance of confusion.
+
+---
+
+## 8. Relationship to Other SDuX Licenses
+
+This MIT License operates independently from:
+
+- NGL Commercial License 1.0
+- SDuX / Vault Community License
+- Any enterprise or custom licensing agreements
+
+Possession or use of MIT-licensed SDuX components does **not** grant access to or rights under those other licenses.
+
+Likewise, possession of proprietary SDuX licenses does not alter the terms of the MIT License for designated open-source components.
+
+Each license operates independently and must be interpreted separately.
+
+---
+
+## 9. Assignment and Acquisition Clarity
+
+The MIT License is inherently **assignable** and **transferable**.
+
+Accordingly:
+
+- Use of MIT-licensed SDuX components **does not prevent acquisition**
+- No special approval is required to transfer ownership of products containing these components
+- Auditors and acquiring entities may rely on standard MIT interpretations without exception
+
+This aligns with industry-standard expectations for permissive open-source frameworks.
+
+---
+
+## 10. Audit and Due-Diligence Statement
+
+During security reviews, license audits, or acquisition due diligence:
+
+- MIT-licensed SDuX components should be reviewed as standard permissive open-source software
+- No copyleft, reciprocity, source disclosure, or distribution obligations apply beyond standard MIT attribution
+- No viral or contaminating license effects exist
+- No patent retaliation, field-of-use restrictions, sublicense limitations, or production-gating obligations exist beyond those inherent in MIT
+
+These characteristics are intentional and designed to be acquisition-safe and enterprise-friendly.
+
+---
+
+## 11. No Modification of License Terms
+
+Nothing in this clarification notice:
+
+- Modifies the MIT License text
+- Adds restrictions to the MIT License
+- Removes rights granted by the MIT License
+- Expands rights beyond those granted by the MIT License
+
+If any conflict is perceived between this clarification notice and the MIT License text above, the MIT License text **controls**.
+
+---
+
+## 12. Entire Notice
+
+This document consists of:
+
+1. The unmodified MIT License text
+2. A non-binding clarification notice for transparency, architectural boundary clarity, compliance certainty, and acquisition readiness
+
+Together, they provide a complete and accurate description of how MIT licensing is applied within the SDuX ecosystem.
+
+---
+
+**END OF MIT LICENSE (WITH SDUX CLARIFICATION NOTICE)**

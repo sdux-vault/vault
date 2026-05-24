@@ -1,0 +1,54 @@
+@use 'global' as global;
+@use 'font' as font;
+
+:host {
+  height: 600px;
+  padding: global.$spacing_md;
+}
+.state-form {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+
+  .form-section {
+    border: 1px solid var(--sdux-surface-outline);
+    padding: global.$spacing-sm;
+    border-radius: global.$border-radius-md;
+    background: var(--sdux-surface-elevated);
+    color: var(--sdux-text-inverse);
+
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+      box-shadow: global.$sdux-shadow-hover;
+    }
+
+    .question-title {
+      @include font.font-xl;
+      font-weight: global.$font-weight-semibold;
+      margin-top: global.$spacing-xs;
+      margin-bottom: global.$spacing-xs;
+    }
+
+    .question-hint {
+      @include font.font-sm;
+      margin: global.$spacing-xs;
+
+      code {
+        color: global.$sdux-primary-light;
+        font-weight: global.$font-weight-medium;
+      }
+    }
+
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: global.$spacing-sm;
+
+      .entity {
+        // flex: 0 0 calc(20% - global.$spacing-sm);
+        white-space: nowrap;
+      }
+    }
+  }
+}

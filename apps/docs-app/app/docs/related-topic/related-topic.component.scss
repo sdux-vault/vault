@@ -1,0 +1,22 @@
+@use 'global' as global;
+
+.panels {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .panel-column {
+    width: calc(50% - 20px);
+    .panel-top {
+      width: 100%;
+    }
+    .panel-bottom {
+      width: 100%;
+    }
+  }
+}
+
+.documentation {
+  border-top: 1px solid var(--sdux-surface-outline);
+  font-size: global.$font-size-sm;
+}

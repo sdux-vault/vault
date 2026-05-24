@@ -1,0 +1,11 @@
+<div class="explanation">
+  @if (isAngular()) {
+    <sdux-pipeline-builder-source-code-angular-explanation />
+  } @else if (isReact()) {
+    <sdux-pipeline-builder-source-code-react-explanation />
+  } @else if (isVue()) {
+    <sdux-pipeline-builder-source-code-vue-explanation />
+  } @else if (isSvelte()) {
+    <sdux-pipeline-builder-source-code-svelte-explanation />
+  }
+</div>

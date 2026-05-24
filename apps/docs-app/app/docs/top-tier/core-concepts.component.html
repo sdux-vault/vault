@@ -1,0 +1,319 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Core Concepts</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-brand-name [tm]="true" /> is organized around a small set of stable
+      concepts: <sdux-vault-brand-name [tm]="true" />,
+      <sdux-feature-cell [tm]="true" />, Snapshots, and a deterministic
+      streaming Pipeline. These concepts define the public contract surface for
+      state ownership, state updates, and state consumption.
+    </p>
+
+    <p>
+      This page defines the minimal vocabulary and responsibilities you’ll use
+      across all
+      <sdux-brand-name /> documentation and day-to-day development.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- CORE BUILDING BLOCKS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Core Building Blocks</div>
+
+    <div class="section-body">
+      <h4><sdux-vault-brand-name [tm]="true" /></h4>
+      <p>
+        Vault configuration defines system-level runtime defaults used by
+        FeatureCells (for example, queue behavior and log settings). Vault is a
+        configuration surface and does not define
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization, state access, or state update APIs.
+      </p>
+
+      <h4><sdux-feature-cell [tm]="true" /></h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> is a
+        feature-scoped State container and the primary consumer-facing API
+        surface. It defines a feature domain and exposes the consumer entry
+        points for initialization, state access, and state updates, including
+        replaceState() and mergeState().
+      </p>
+
+      <h4>State</h4>
+      <p>
+        State is immutable, feature-owned data managed by a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        <sdux-brand-name /> treats State updates as deterministic, ordered
+        transformations rather than ad-hoc mutation.
+      </p>
+
+      <h4>Snapshot</h4>
+      <p>
+        A Snapshot is an immutable representation of State at a moment in time.
+        Snapshots are the consumer-visible output of a resolution pass and are
+        exposed through the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> output
+        surface.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- BEST PRACTICES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Best Practices</div>
+
+    <div class="section-body">
+      <p>
+        The
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> (or
+        the service/module that owns it) is the architectural boundary for state
+        updates. UI components should not call Vault or state update APIs
+        directly.
+      </p>
+
+      <p>A recommended structure is:</p>
+
+      <ul>
+        <li>Component → calls domain/service methods</li>
+        <li>
+          Service/Module → invokes <code>replaceState()</code> or
+          <code>mergeState()</code>
+        </li>
+      </ul>
+
+      <p>
+        This preserves separation of concerns. Components remain focused on
+        rendering and user interaction, while state ownership and mutation logic
+        remain centralized and testable.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FEATURECELL LIFECYCLE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title"><sdux-feature-cell [tm]="true" /> Lifecycle</div>
+
+    <div class="section-body">
+      <p>
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        interaction is consistent across features: the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        is initialized before state interaction, state updates enter the
+        Pipeline, and Snapshots are produced as output.
+      </p>
+
+      <p>
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> output
+        exposes a Snapshot wrapper suitable for UI consumption. Depending on the
+        integration surface, Snapshot access is available as an Observable
+        stream or as a Signal (angular only).
+      </p>
+
+      <section class="diagram-section">
+        <div class="section-body">
+          <sdux-diagram
+            image="diagrams/1.0/1.1-featurecell-lifecycle.svg"
+            [tooltip]="'FeatureCell Lifecycle'"></sdux-diagram>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STATE UPDATE APIS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">State Update APIs</div>
+
+    <div class="section-body">
+      <p>State updates enter <sdux-brand-name /> through two primary APIs:</p>
+
+      <h3>replaceState</h3>
+      <p>
+        replaceState replaces the entire Snapshot for a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. It is
+        used when the new Snapshot should be considered complete.
+      </p>
+
+      <section class="diagram-section">
+        <div class="section-body">
+          <sdux-diagram
+            image="diagrams/1.0/1.2.1-replace-state-flow.svg"
+            [tooltip]="'Replace State Flow'" />
+        </div>
+      </section>
+
+      <h3>mergeState</h3>
+      <p>
+        mergeState merges partial values into the existing Snapshot using the
+        active Merge Behavior for the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. The
+        default Merge Behavior replaces arrays rather than merging them and
+        passes through non-array values unchanged.
+      </p>
+
+      <section class="diagram-section">
+        <div class="section-body">
+          <sdux-diagram
+            image="diagrams/1.0/1.2.2-merge-state-flow.svg"
+            [tooltip]="'Merge State Flow'" />
+        </div>
+      </section>
+
+      <h3>replaceState and mergeState Input</h3>
+      <p>
+        StateType defines the structured update payload accepted by both
+        replaceState and mergeState. It represents an update intent rather than
+        a complete Snapshot, allowing callers to specify only the portions of
+        state they wish to change. Each field is optional, enabling partial
+        updates while preserving immutability and deterministic processing
+        through the pipeline.
+      </p>
+
+      <sdux-state-type-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- PIPELINE OVERVIEW -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Pipeline</div>
+
+    <div class="section-body">
+      <p>
+        The Pipeline is the ordered lifecycle through which State is resolved
+        and emitted. Each Stage is an execution slot occupied by a Behavior.
+        Pipeline ordering is deterministic.
+      </p>
+
+      <section class="diagram-section">
+        <div class="section-body">
+          <sdux-diagram
+            image="diagrams/2.1/2.1-execution-flow.svg"
+            [tooltip]="'Execution Flow'" />
+
+          <sdux-diagram
+            image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+            [tooltip]="'Full Pipeline Flow'" />
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- BEHAVIORS AND EXTENSIONS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Behaviors and Extensions</div>
+
+    <div class="section-body">
+      <p>
+        Behaviors are built-in (critical behaviors) and opt-in units that
+        participate as Stages within the Pipeline. Behaviors may transform
+        State, constrain emissions, constrain emissions, integrate storage, or
+        expose consumer-facing Extensions.
+      </p>
+
+      <p>
+        Extensions are public APIs contributed by Behaviors that extend the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        fluent API without altering the core
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        contract.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STATE CONSUMPTION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">State Consumption</div>
+
+    <div class="section-body">
+      <p>
+        FeatureCells output exposes a Snapshot wrapper suitable for UI
+        consumption. Depending on the integration surface, Snapshot access is
+        available as an Observable stream or a Signal (angular only).
+      </p>
+
+      <p>
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >
+        defines the Snapshot fields used for consumption and rendering
+        decisions, including loading, value presence, and error state.
+      </p>
+
+      <sdux-state-snapshot-shape-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ERRORS -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Built-In Error Handling</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> provides a first-class, built-in error handling
+        model that works at both the feature level and the application level.
+      </p>
+
+      <p>
+        Errors can be handled directly within a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> when
+        the error is specific to that feature’s domain, or observed globally
+        through the
+        <a href="/docs/references/functions/vault-error-service"
+          >VaultErrorService</a
+        >
+        when errors need to be monitored, logged, visualized, or reacted to
+        across the entire application.
+      </p>
+
+      <p>
+        This dual-level approach allows teams to keep feature-specific error
+        logic close to the feature itself, while still enabling centralized
+        error reporting, analytics, and tooling without additional wiring or
+        custom infrastructure.
+      </p>
+
+      <p>
+        All error normalization, propagation, and exposure is built into the
+        system by default. Developers do not need to create custom error buses,
+        global stores, or cross-cutting services to achieve consistent error
+        handling.
+      </p>
+      <p>
+        User defined or pipeline errors are represented on the Snapshot as an
+        immutable, normalized
+        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>.
+      </p>
+
+      <sdux-vault-error-shape-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

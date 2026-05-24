@@ -1,0 +1,796 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-22 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>AES-256 Encrypt Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>AES-256 Encrypt</strong> is an <em>Encrypt behavior</em> that
+      protects
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state by
+      transforming the finalized pipeline value into a cryptographically secure,
+      encrypted envelope before persistence, and restoring the original plain
+      value during hydration.
+    </p>
+
+    <p>
+      This behavior operates exclusively at the
+      <strong>Encrypt stage</strong> of the pipeline. It runs after all state
+      computation—including resolve, merge, operators, filters, and reducers—has
+      completed, and before any persist behavior writes the value to external
+      storage.
+    </p>
+
+    <p>
+      Encryption is performed using <strong>AES-256-GCM</strong> via the
+      WebCrypto API. Plain state values are serialized and encrypted into a
+      structured envelope containing algorithm metadata, versioning,
+      initialization vector, and ciphertext. Decryption restores the original
+      value transparently before it re-enters the pipeline.
+    </p>
+
+    <p>
+      Encrypt behaviors do not influence state computation, merge semantics,
+      validation, or pipeline control flow. The
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      continues to operate exclusively on plain, in-memory state. Encryption and
+      decryption occur only at the persistence boundary.
+    </p>
+
+    <h4>Critical Behavior</h4>
+    <p>
+      AES-256 Encrypt is a <em>critical</em> behavior. Misconfiguration, missing
+      cryptographic support, or invalid encrypted envelopes result in immediate
+      errors. This guarantees that encrypted state is never silently corrupted,
+      downgraded, or misinterpreted.
+    </p>
+
+    <h4>Asynchronous Execution</h4>
+    <p>
+      Encryption and decryption execute asynchronously. Key material is derived
+      lazily using PBKDF2 and cached per behavior instance. The pipeline awaits
+      completion to preserve strict execution order and ensure deterministic
+      behavior.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Integrity & Tamper Protection</div>
+
+    <div class="section-body">
+      <p>
+        AES-256 encryption in <sdux-brand-name /> provides built-in
+        <strong>tamper protection</strong> using
+        <strong>authenticated encryption</strong>. The behavior uses
+        <strong>AES-256-GCM</strong>, which ensures that encrypted payloads
+        cannot be modified without detection.
+      </p>
+
+      <p>
+        During encryption, the behavior attaches
+        <strong>Additional Authenticated Data (AAD)</strong> containing the
+        internal encryption protocol identifier and version. This authenticated
+        metadata is validated together with the ciphertext during decryption.
+      </p>
+
+      <p>
+        If any part of the encrypted envelope has been altered—including the
+        ciphertext, initialization vector, protocol metadata, or encryption
+        version—the authentication check fails and decryption is rejected.
+      </p>
+
+      <div class="callout callout-warning">
+        <strong>Integrity Protection</strong>
+        <p>
+          If authentication fails, the behavior throws a
+          <a href="/docs/references/classes/vault-encryption-integrity-error"
+            >VaultEncryptionIntegrityError</a
+          >. This indicates that the encrypted payload has been corrupted,
+          modified, or decrypted using an incorrect secret.
+        </p>
+      </div>
+
+      <p>
+        Before decryption occurs, encrypted envelopes are also structurally
+        validated. Invalid envelope shapes, incorrect algorithm identifiers, or
+        incompatible protocol versions immediately produce an error and are
+        never processed further.
+      </p>
+
+      <p>
+        These safeguards ensure that persisted state cannot be silently
+        modified, downgraded, or replayed with incompatible encryption
+        parameters. Any integrity failure stops the pipeline immediately and
+        prevents corrupted state from entering the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Security Properties</div>
+
+    <div class="section-body">
+      <p>
+        The AES-256 Encrypt behavior provides multiple security guarantees
+        through authenticated encryption and strict envelope validation. These
+        guarantees protect persisted state from disclosure, tampering, and
+        invalid decryption attempts.
+      </p>
+
+      <table aria-label="Security Properties">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Property</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>Confidentiality</strong></td>
+            <td>
+              Persisted state is encrypted using <strong>AES-256-GCM</strong>.
+              Without the configured encryption secret, ciphertext cannot be
+              decrypted.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Integrity</strong></td>
+            <td>
+              AES-GCM authenticated encryption ensures ciphertext cannot be
+              modified without detection. Any tampering causes decryption to
+              fail.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Authenticity</strong></td>
+            <td>
+              Encryption includes authenticated protocol metadata and
+              versioning. Decryption validates this information to ensure
+              payloads were produced by a compatible Vault encryption
+              implementation.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        If authentication fails during decryption, Vault throws a
+        <a href="/docs/references/classes/vault-encryption-integrity-error"
+          >VaultEncryptionIntegrityError</a
+        >
+        and prevents corrupted or modified data from entering the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipeline.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.7/3.7.1-encrypt-lifecycle.svg"
+        [tooltip]="'Encrypt Lifecycle'"></sdux-diagram>
+
+      <sdux-diagram
+        image="diagrams/3.7/3.7.3-decrypt-lifecycle.svg"
+        [tooltip]="'Decrypt Lifecycle'" />
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CONFIGURATION OPTIONS                                        -->
+  <!-- ============================================================ -->
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <table aria-label="Configuration">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Behavior</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p>
+                <strong>
+                  <a
+                    href="/docs/pipeline/addons/encrypt/with-aes256-encrypt-behavior">
+                    withAes256EncryptBehavior
+                  </a>
+                </strong>
+              </p>
+              <p>Algorithm: AES-256-GCM</p>
+              <p>Stage: Encrypt</p>
+            </td>
+            <td>
+              <p>
+                Encrypts finalized pipeline state using
+                <strong>AES-256-GCM</strong> and produces a versioned encrypted
+                envelope suitable for persistence. During hydration, the
+                envelope is decrypted back into its original plain value.
+              </p>
+
+              <p>
+                This behavior requires explicit cryptographic configuration and
+                will throw if required parameters are missing, invalid, or
+                unsupported by the runtime environment.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        The AES-256 Encrypt behavior exposes fluent APIs that allow engineers to
+        configure encryption during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        These APIs do not perform encryption directly. They record cryptographic
+        configuration and utilities that are later consumed by the AES-256
+        behavior during pipeline execution.
+      </p>
+
+      <div class="table-title">AES-256 Fluent Configuration</div>
+
+      <table aria-label="AES-256 Fluent Configuration">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Fluent API</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p><strong>.setAes256Secret(options)</strong></p>
+              <p>input:</p>
+              <ul>
+                <li>
+                  options:
+                  <a href="/docs/references/options/aes256behavior-options">
+                    AES256BehaviorOptions
+                  </a>
+                </li>
+              </ul>
+              <p>
+                returns:
+                <a href="/docs/references/shapes/feature-cell-base-shape">
+                  FeatureCellBaseShape
+                </a>
+                (chainable)
+              </p>
+            </td>
+
+            <td>
+              <p>
+                Registers AES-256 encryption configuration for the
+                <a href="/docs/references/functions/feature-cell">FeatureCell</a
+                >. The supplied options define the secret, salt, and
+                key-derivation parameters required by the AES-256 Encrypt
+                behavior.
+              </p>
+
+              <p>
+                This method
+                <strong>must be called before <code>initialize()</code></strong
+                >. Multiple calls overwrite any previously registered AES-256
+                configuration.
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <p><strong>.generateSalt(length?)</strong></p>
+              <p>input:</p>
+              <ul>
+                <li>length: number (optional, default: 16)</li>
+              </ul>
+              <p>returns: Uint8Array</p>
+            </td>
+
+            <td>
+              <p>
+                Generates a cryptographically secure random salt suitable for
+                AES-256 encryption using the WebCrypto API.
+              </p>
+
+              <p>
+                The generated salt is not persisted automatically and must be
+                supplied explicitly to setAes256Secret() as part of the
+                encryption configuration.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- EXAMPLES                                                    -->
+  <!-- ============================================================ -->
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        Encryption is enabled by registering an AES-256 encrypt behavior and
+        supplying its configuration during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> setup.
+        A secret and encryption parameters must be provided before persisted
+        state can be encrypted or decrypted.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <h4>Example 1: Configure the FeatureCell</h4>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 1: Configure the FeatureCell'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {
+        key: 'employees',
+        initialState: []
+      },
+      [
+        withAes256EncryptBehavior,
+        // Recommended to pair with a persist behavior
+        // e.g. withLocalStoragePersistBehavior
+      ]
+    )
+  ]
+};`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>
+                Example 2: Configure AES-256 Encryption during Initialization
+              </h4>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 2: Configure AES-256'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// bank-employee.service.ts
+
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.shape';
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.
+      setAes256Secret(
+        {
+          aes256Secret: 'my-str0ng-password',
+          salt: this.vault.generateSalt(),
+          iterations: 250_000
+        }
+      )
+      .initialize();
+  }
+};`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 3: Encrypting Persisted State</h4>
+
+              <p>
+                Once encryption is initialized and configured, any state written
+                to persistence is automatically encrypted. The
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                continues to operate on plain, in-memory values.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 3: Encrypting Persisted State'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`this.vault.mergeState({
+  value: { id: 1, token: 'abc123' }
+});
+
+// Persisted representation (conceptual):
+// {
+//   v: 1,
+//   alg: 'AES-256-GCM',
+//   iv: 'base64',
+//   data: 'base64 ciphertext'
+// }`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 4: Decrypting During Rehydration</h4>
+
+              <p>
+                When persisted state is loaded, the Encrypt behavior
+                automatically decrypts the stored envelope before the state
+                snapshot is emitted. Consumers always receive plain values.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 4: Decrypting During Rehydration'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`console.info(this.vault.state.value());
+// → { id: 1, token: 'abc123' }`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 5: Null and Undefined Values</h4>
+
+              <p>
+                Null and undefined values bypass encryption entirely. This
+                allows optional or empty state to pass through the pipeline
+                without producing encrypted envelopes.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 5: Null and Undefined Values'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`this.vault.replaceState({ value: null });
+// or
+this.vault.mergeState({ value: undefined });`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 6: Missing Encryption Configuration</h4>
+
+              <p>
+                Encrypt behaviors require valid configuration at
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                initialization time. If an Encrypt behavior is registered but
+                its required configuration is missing or invalid,
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                initialization fails and the pipeline is never activated.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 6: Missing Encryption Configuration'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// Encrypt behavior is registered, but required configuration is missing
+this.vault.initialize();
+
+// Fatal Error:
+Error: [vault] AES256Encrypt behavior requires configuration via setAes256Secret()`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <h4>Example 1: Configure the FeatureCell</h4>
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 1: Configure the FeatureCell'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: []
+  },
+  [
+    withAes256EncryptBehavior,
+    // Recommended to pair with a persist behavior
+    // e.g. withLocalStoragePersistBehavior
+  ]
+);`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>
+                Example 2: Configure AES-256 Encryption during Initialization
+              </h4>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 2: Configure AES-256'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`employeeCell
+  .setAes256Secret(
+    {
+      aes256Secret: 'my-str0ng-password',
+      salt: employeeCell.generateSalt(),
+      iterations: 250_000
+    }
+  )
+  .initialize();`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 3: Encrypting Persisted State</h4>
+
+              <p>
+                Once encryption is initialized and configured, any state written
+                to persistence is automatically encrypted. The
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                continues to operate on plain, in-memory values.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 3: Encrypting Persisted State'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`employeeCell.mergeState({
+  value: { id: 1, token: 'abc123' }
+});
+
+// Persisted representation (conceptual):
+// {
+//   v: 1,
+//   alg: 'AES-256-GCM',
+//   iv: 'base64',
+//   data: 'base64 ciphertext'
+// }`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 4: Decrypting During Rehydration</h4>
+
+              <p>
+                When persisted state is loaded, the Encrypt behavior
+                automatically decrypts the stored envelope before the state
+                snapshot is emitted. Consumers always receive plain values.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 4: Decrypting During Rehydration'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`employeeCell.state$.subscribe(snapshot => {
+  console.info(snapshot.value);
+  // → { id: 1, token: 'abc123' }
+});`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 5: Null and Undefined Values</h4>
+
+              <p>
+                Null and undefined values bypass encryption entirely. This
+                allows optional or empty state to pass through the pipeline
+                without producing encrypted envelopes.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 5: Null and Undefined Values'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`employeeCell.replaceState({ value: null });
+// or
+employeeCell.mergeState({ value: undefined });`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 6: Missing Encryption Configuration</h4>
+
+              <p>
+                Encrypt behaviors require valid configuration at
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                initialization time. If an Encrypt behavior is registered but
+                its required configuration is missing or invalid,
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                initialization fails and the pipeline is never activated.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 6: Missing Encryption Configuration'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// Encrypt behavior is registered, but required configuration is missing
+employeeCell.initialize();
+
+// Fatal Error:
+Error: [vault] AES256Encrypt behavior requires configuration via setAes256Secret()`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ----------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <h4>Example 1: Configure the FeatureCell</h4>
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 1: Configure the FeatureCell'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: []
+  },
+  [
+    withAes256EncryptBehavior,
+    // Recommended to pair with a persist behavior
+    // e.g. withLocalStoragePersistBehavior
+  ]
+);`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>
+                Example 2: Configure AES-256 Encryption during Initialization
+              </h4>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 2: Configure AES-256'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`employeeCell
+  .setAes256Secret({
+    aes256Secret: 'my-str0ng-password',
+    salt: employeeCell.generateSalt(),
+    iterations: 250_000
+  })
+  .initialize();`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 3: Encrypting Persisted State</h4>
+
+              <p>
+                Once encryption is initialized and configured, any state written
+                to persistence is automatically encrypted. The
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                continues to operate on plain, in-memory values.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 3: Encrypting Persisted State'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`employeeCell.mergeState({
+  value: { id: 1, token: 'abc123' }
+});
+
+// Persisted representation (conceptual):
+// {
+//   v: 1,
+//   alg: 'AES-256-GCM',
+//   iv: 'base64',
+//   data: 'base64 ciphertext'
+// }`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 4: Decrypting During Rehydration</h4>
+
+              <p>
+                When persisted state is loaded, the Encrypt behavior
+                automatically decrypts the stored envelope before the state
+                snapshot is emitted. Consumers always receive plain values.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 4: Decrypting During Rehydration'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`employeeCell.state$.subscribe(snapshot => {
+  console.info(snapshot.value);
+  // → { id: 1, token: 'abc123' }
+});`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 5: Null and Undefined Values</h4>
+
+              <p>
+                Null and undefined values bypass encryption entirely. This
+                allows optional or empty state to pass through the pipeline
+                without producing encrypted envelopes.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 5: Null and Undefined Values'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`employeeCell.replaceState({ value: null });
+// or
+employeeCell.mergeState({ value: undefined });`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <h4>Example 6: Missing Encryption Configuration</h4>
+
+              <p>
+                Encrypt behaviors require valid configuration at
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                initialization time. If an Encrypt behavior is registered but
+                its required configuration is missing or invalid,
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                initialization fails and the pipeline is never activated.
+              </p>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 6: Missing Encryption Configuration'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// Encrypt behavior is registered, but required configuration is missing
+employeeCell.initialize();
+
+// Fatal Error:
+Error: [vault] AES256Encrypt behavior requires configuration via setAes256Secret()`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-vault-encrypt-licensing-common />
+
+  <sdux-pipeline-related-topics />
+</div>

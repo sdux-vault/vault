@@ -1,0 +1,38 @@
+{
+  "name": "@sdux-vault/testing-utils",
+  "version": "0.0.4",
+  "license": "MIT",
+  "author": {
+    "name": "SDuX Vault",
+    "email": "sduxvault@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdux-vault/vault.git"
+  },
+  "homepage": "https://www.sdux-vault.com",
+  "keywords": [
+    "sdux",
+    "sdux-vault",
+    "state-management",
+    "reactive",
+    "deterministic",
+    "pipeline",
+    "feature-cell",
+    "snapshot",
+    "signals",
+    "angular",
+    "framework-agnostic",
+    "composable",
+    "immutable",
+    "zoneless",
+    "react",
+    "svelte",
+    "vue",
+    "devtools"
+  ],
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

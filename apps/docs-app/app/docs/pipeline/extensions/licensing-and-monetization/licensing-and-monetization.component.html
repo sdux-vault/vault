@@ -1,0 +1,1918 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Not Finished -->
+
+<a id="main-top" aria-hidden="true"></a>
+<div class="docs-container">
+  <div class="header">
+    <h3>Licensing & Monetization</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Licensing & Monetization</strong> allows third-party engineers to
+      create paid Behaviors and Controllers that integrate directly into the
+      <sdux-brand-name [tm]="true" /> pipeline. Vendors retain full control over
+      license validation, while Vault enforces deterministic execution rules at
+      runtime.
+    </p>
+
+    <p>
+      This page is a practical guide for engineers building monetized
+      extensions. It explains the required contracts, shows complete examples,
+      and outlines the runtime guarantees your extension can rely on.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      <strong>Vault does not validate licenses.</strong> Vault enforces pipeline
+      decisions based on validation results you provide. You own cryptographic
+      verification, remote calls, retries, and token parsing. Vault owns
+      enforcement.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      <strong
+        >Licensing is not active when <code>devMode</code> is set to
+        <code>true</code>.</strong
+      >
+      &nbsp;<a [routerLink]="[]" fragment="devmode-and-licensing">See more →</a>
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- OVERVIEW -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Why Build a Monetized Extension?</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> is designed to be extensible. Engineers frequently
+        build specialized Behaviors and Controllers that provide unique
+        value—advanced persistence strategies, encryption layers, analytics
+        pipelines, compliance tooling, policy engines, or domain-specific
+        orchestration logic.
+      </p>
+
+      <p>
+        If that extension represents proprietary expertise or commercial value,
+        you may choose to distribute it under a paid license. The Vault
+        licensing mechanism exists to support that model in a deterministic,
+        enforcement-safe way.
+      </p>
+
+      <h4>The Business Flow Is Yours</h4>
+
+      <p>
+        Vault does <strong>not</strong> manage commerce, billing, subscriptions,
+        customer records, or entitlements. Those responsibilities belong
+        entirely to you as the vendor.
+      </p>
+
+      <p>A typical monetization flow looks like this:</p>
+    </div>
+
+    <section class="diagram-section">
+      <div class="section-body">
+        <sdux-diagram
+          image="diagrams/10.0/10.2-licensing-purchase-flow.svg"
+          [tooltip]="'Licensing Purchase Flow'" />
+      </div>
+    </section>
+
+    <div class="section-body">
+      <p>You are responsible for:</p>
+
+      <ul>
+        <li>Defining your commercial license agreement</li>
+        <li>Issuing license keys or signed payloads</li>
+        <li>Handling payments, renewals, and entitlement tracking</li>
+        <li>Implementing cryptographic or remote validation logic</li>
+        <li>Retry logic and network resilience</li>
+        <li>Providing customer support for licensing and activation issues</li>
+        <li>Maintaining and updating your extension over time</li>
+        <li>
+          Monitoring security advisories and keeping dependencies (e.g., npm
+          packages) up to date
+        </li>
+      </ul>
+
+      <p>Vault’s role is limited and intentional:</p>
+
+      <ul>
+        <li>Track license state</li>
+        <li>Prevent spoofed validation</li>
+        <li>Enforce deterministic pipeline activation or denial</li>
+        <li>Guarantee timeout safety</li>
+      </ul>
+
+      <p>
+        In short:
+        <strong>You control entitlement. Vault controls enforcement.</strong>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title-navigation">
+      <div class="section-title">What You Are Building</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="main-top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        A monetized extension in <sdux-brand-name /> is a licensed Behavior or
+        Controller that participates in the pipeline only after successful
+        validation.
+      </p>
+
+      <p>Technically, your extension must:</p>
+
+      <ul>
+        <li>Declare <code>needsLicense: true</code> in its decorator</li>
+        <li>
+          Provide a <code>licenseId</code> that matches the customer’s Vault
+          configuration
+        </li>
+        <li>Extend <code>LicensingAbstract</code></li>
+        <li>Call <code>validateLicense(true | false)</code></li>
+      </ul>
+
+      <h4>Activation Rules</h4>
+
+      <ul>
+        <li>
+          If validation succeeds → the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          activates normally.
+        </li>
+        <li>
+          If validation fails → the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+          terminal.
+        </li>
+        <li>If validation never occurs → timeout → terminal.</li>
+      </ul>
+
+      <p>
+        If a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        contains <strong>multiple licensed extensions</strong>, all must
+        validate successfully. A single failure makes the entire
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        terminal.
+      </p>
+
+      <p>
+        If a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        contains <strong>no licensed extensions</strong>, it activates
+        automatically.
+      </p>
+    </div>
+
+    <section class="diagram-section">
+      Deterministic Enforcement
+      <div class="section-body">
+        <sdux-diagram
+          image="diagrams/10.0/10.3-licensing-pending-flow.svg"
+          [tooltip]="'Licensing Pending Flow'" />
+      </div>
+    </section>
+
+    <div class="section-body">
+      <p>
+        Once denied, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> cannot
+        be reactivated without full reinitialization. Vault behaves as a one-way
+        state machine to guarantee deterministic outcomes.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- REQUIRED CONTRACT -->
+  <!-- ====================================================== -->
+
+  <a id="top" aria-hidden="true"></a>
+
+  <section class="section" id="build-licensed-extension">
+    <div class="section-title-navigation">
+      <div class="section-title">How to Build a Monetized Extension</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="main-top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Building a licensed Behavior or Controller is more than adding
+        <code>needsLicense: true</code>. It requires defining your validation
+        strategy, selling and issuing licenses to customers, and integrating
+        your extension with Vault’s enforcement model.
+      </p>
+
+      <p>
+        The sections below outline the complete vendor lifecycle — from selling
+        a license to activating a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> at
+        runtime.
+      </p>
+
+      <ul>
+        <li>
+          <a [routerLink]="[]" fragment="design-validation-strategy">
+            Design Your Validation Strategy
+          </a>
+          <br />
+          Decide how licenses will be verified (public/private key cryptography,
+          signed tokens, remote API validation, etc.).
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="sell-and-issue-license">
+            Sell and Issue the License
+          </a>
+          <br />
+          Define your commercial flow: customer purchase, key generation,
+          entitlement tracking, and expiration or revocation rules.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="define-license-payload">
+            Define the License Payload
+          </a>
+          <br />Determine what data the customer must provide to Vault (token,
+          signature, headers, metadata, etc.).
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="instruct-customer-vault-config">
+            Instruct the Customer How to Configure Vault
+          </a>
+          <br />Document how they supply your <code>licenseId</code> and payload
+          via <code>provideVault()</code>.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="required-contract">
+            Required Contract
+          </a>
+          <br />Declare <code>needsLicense: true</code>, define your
+          <code>licenseId</code>, and extend <code>LicensingAbstract</code>.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="licensing-runtime-integration">
+            Licensing Runtime Integration
+          </a>
+          <br />
+          Understand how Vault injects license payloads and how your extension
+          reports validation results.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="example-licensed-behavior">
+            Example: Licensed Behavior
+          </a>
+          <br />Implement validation inside a Behavior.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="example-licensed-controller">
+            Example: Licensed Controller
+          </a>
+          <br />Apply the same licensing mechanism to Controllers.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="asynchronous-validation">
+            Asynchronous Validation
+          </a>
+          <br />Perform remote or cryptographic verification safely within the
+          timeout window.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="runtime-guarantees">
+            Runtime Guarantees
+          </a>
+          <br />Understand queueing, denial rules, and terminal enforcement.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="license-enforcement-outcomes">
+            License Enforcement Outcomes
+          </a>
+          <br />Understand how validation results activate or deny a
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="architectural-guarantees">
+            Architectural Guarantees
+          </a>
+          <br />Review the strict responsibility boundaries between Vault and
+          Vendor.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="failure-handling-observability">
+            Failure Handling &amp; Observability
+          </a>
+          <br />Learn how denial surfaces to the global error handler and
+          DevTools.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="vendor-responsibilities">
+            Vendor Responsibilities &amp; Operational Obligations
+          </a>
+          <br />Understand your obligations for customer support, maintenance,
+          security practices, dependency updates, and long-term operational
+          stewardship.
+        </li>
+
+        <li>
+          <a [routerLink]="[]" fragment="diagrams"> Diagrams </a>
+        </li>
+      </ul>
+
+      <p>
+        Vault enforces pipeline activation. You control everything else —
+        licensing sales, entitlement management, token creation, validation,
+        retry logic, and revocation.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DESIGN VALIDATION STRATEGY -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="design-validation-strategy">
+    <div class="section-title-navigation">
+      <div class="section-title">Design Your Validation Strategy</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Before writing any code, you must decide
+        <strong>how your licenses will be validated</strong>. Vault does not
+        perform validation — it only enforces the result.
+      </p>
+
+      <p>Your validation strategy may include:</p>
+
+      <ul>
+        <li>Public/private key cryptographic verification</li>
+        <li>Signed JWT or HMAC-based tokens</li>
+        <li>Remote API validation via HTTPS</li>
+        <li>Offline license file verification</li>
+        <li>Hybrid models (local signature + remote entitlement check)</li>
+      </ul>
+
+      <p>
+        Your validation logic must ultimately produce a boolean result and call
+        <code>validateLicense(true | false)</code>.
+      </p>
+
+      <p>
+        You are responsible for retry behavior, revocation handling, expiration
+        logic, network resilience, deduping multiple simultaneous validation
+        requests, and cryptographic integrity.
+      </p>
+
+      <h4>Validation Scope & Licensing Models</h4>
+
+      <p>
+        You must also decide the <strong>scope</strong> of your license —
+        whether it applies globally, per extension, or per
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance. Vault enforces validation per extension instance, but your
+        commercial model determines how you interpret and respond to those
+        validation requests.
+      </p>
+
+      <ul>
+        <li>
+          <strong
+            >Per-<a href="/docs/references/functions/feature-cell"
+              >FeatureCell</a
+            >
+            validation</strong
+          >
+          — If your Behavior or Controller is installed in multiple
+          FeatureCells, each instance will request validation independently. You
+          are responsible for deduplicating remote calls if needed. This model
+          allows seat-based or usage-based licensing, where you may limit how
+          many FeatureCells are permitted to activate.
+        </li>
+
+        <li>
+          <strong>Seat-limited model</strong> — Because validation occurs per
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          instance, you may enforce limits (for example, “5 active
+          FeatureCells”). If the seat count is exceeded, return
+          <code>false</code> for additional instances.
+        </li>
+
+        <li>
+          <strong>Shared license across multiple extensions</strong> — If you
+          provide multiple Behaviors or Controllers that are sold as a single
+          product, you may reuse the same <code>licenseId</code> across all of
+          them. They can share a single entitlement decision.
+        </li>
+
+        <li>
+          <strong>Independent licensing per extension</strong> — If your
+          Behaviors or Controllers are sold separately, assign unique
+          <code>licenseId</code> values to enforce independent validation per
+          extension.
+        </li>
+
+        <li>
+          <strong>Controller + Behavior working together</strong> — If a
+          Controller and Behavior form a single product, reuse the same
+          <code>licenseId</code> and validate once. Vault will enforce
+          activation consistently across both.
+        </li>
+      </ul>
+
+      <p>
+        Vault does not define your commercial scope. It simply enforces the
+        boolean result you return for each registered extension instance.
+        Whether that represents a global entitlement, a seat limit, or a
+        per-extension product decision is entirely up to your validation logic.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SELL AND ISSUE LICENSE -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="sell-and-issue-license">
+    <div class="section-title-navigation">
+      <div class="section-title">Sell and Issue the License</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Monetization requires a commercial flow outside of Vault. You must
+        define how customers purchase, receive, and manage licenses.
+      </p>
+
+      <p>This typically includes:</p>
+
+      <ul>
+        <li>Payment processing</li>
+        <li>License key or token generation</li>
+        <li>Customer entitlement tracking</li>
+        <li>Expiration rules</li>
+        <li>Revocation policies</li>
+      </ul>
+
+      <p>
+        Vault does not issue licenses, track customers, or enforce payments.
+        That lifecycle belongs entirely to you.
+      </p>
+
+      <p>
+        When a customer completes a purchase, you provide them with the data
+        required to activate your extension inside Vault.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Vault is intentionally hands-off. It provides the enforcement mechanism
+        — nothing more. It does not validate tokens, decrypt payloads, contact
+        your servers, retry failures, or manage customer state.
+      </p>
+
+      <p>
+        All validation logic — cryptographic verification, remote API calls,
+        entitlement checks, retry strategy, expiration handling, and revocation
+        rules — is your responsibility. Vault simply accepts your
+        <code>true</code> or <code>false</code> decision and enforces it
+        deterministically.
+      </p>
+
+      <p>
+        Vault does not provide customer support for your extension. Questions
+        related to license activation, validation failures, expired
+        entitlements, cryptographic errors, or runtime behavior of your Behavior
+        or Controller are your responsibility to diagnose and resolve. Vault
+        enforces decisions — it does not troubleshoot your commercial
+        implementation.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DEFINE LICENSE PAYLOAD -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="define-license-payload">
+    <div class="section-title-navigation">
+      <div class="section-title">Define the License Payload</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The customer activates your extension by supplying the
+        <strong><code>licenseId</code> you issued</strong> along with an
+        <strong>extension-specific payload</strong> during Vault configuration.
+      </p>
+
+      <p>
+        The payload is typed as <code>unknown</code>. Vault does not inspect,
+        decrypt, or validate it. You fully define its structure and are solely
+        responsible for parsing and verifying it inside your extension.
+      </p>
+
+      <p>Common payload patterns include:</p>
+
+      <ul>
+        <li>Signed JWT or token strings</li>
+        <li>Public/private key signatures</li>
+        <li>Customer or tenant identifiers</li>
+        <li>Encrypted license blobs</li>
+        <li>Entitlement metadata (plan, expiry, scope)</li>
+      </ul>
+
+      <p>
+        Choose a structure aligned with your validation strategy and hardened
+        against tampering.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        The <code>licenseId</code> declared in your extension decorator must
+        exactly match the <code>licenseId</code> provided in
+        <code>provideVault()</code>. If they do not match, Vault will not inject
+        the payload and validation cannot succeed.
+      </p>
+
+      <h4>Example: Vault Configuration</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Licensed Extension – Vault Configuration'">
+          <pre class="code-inline"><code class="language-ts">{{`provideVault({
+  licenses: [
+    {
+      // Must match the licenseId declared in your extension
+      licenseId: 'vendor-premium',
+      payload: {
+        token: 'signed-jwt-token',
+        customerId: 'acme-123',
+        plan: 'enterprise',
+        expiresAt: '2026-12-31T23:59:59Z',
+        signature: 'base64-signature'
+      }
+    }
+  ]
+});`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example: Extension Decorator</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Licensed Extension – Decorator Configuration'">
+          <pre class="code-inline"><code class="language-ts">{{`@VaultBehavior({
+  type: BehaviorTypes.Merge,
+  key: defineBehaviorKey('Vendor', 'PremiumMerge'),
+  critical: false,
+  needsLicense: true,
+  // Must match the licenseId provided in provideVault()
+  licenseId: 'vendor-premium'
+})`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <div class="table-title">
+        <a href="/docs/references/shapes/vault-licensing-shape"
+          >VaultLicensingShape</a
+        >
+      </div>
+      <table aria-label="VaultLicensingShape">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Property</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>licenseId: string</td>
+            <td>
+              Vendor-defined identifier used to associate a license payload with
+              a specific Behavior or Controller. This value must match the
+              <code>licenseId</code> declared in your extension decorator.
+            </td>
+          </tr>
+
+          <tr>
+            <td>payload: unknown</td>
+            <td>
+              Opaque vendor-defined data supplied at Vault initialization. Vault
+              stores and injects this payload but does not interpret it.
+              Validation logic is entirely your responsibility.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- INSTRUCT CUSTOMER VAULT CONFIG -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="instruct-customer-vault-config">
+    <div class="section-title-navigation">
+      <div class="section-title">
+        Instruct the Customer How to Configure Vault
+      </div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Customers must provide your <strong>exact</strong>&nbsp;<code
+          >licenseId</code
+        >
+        and payload during Vault initialization.
+      </p>
+
+      <p>Your documentation should clearly instruct them how to configure:</p>
+
+      <ul>
+        <li>The exact <code>licenseId</code> you issued</li>
+        <li>The required payload structure</li>
+        <li>
+          Optional timeout configuration via
+          <code>licenseTimeoutMs</code> (default is 15 seconds)
+        </li>
+      </ul>
+
+      <p>
+        It is <strong>strongly recommended</strong> that you provide this
+        configuration to your customer in a copy-paste ready format. The
+        <code>licenseId</code> must match <strong>exactly</strong>, and payload
+        structure errors will result in validation failure.
+      </p>
+
+      <p>
+        For larger payloads or enterprise environments, you may instruct
+        customers to place the license entry in a dedicated file and import it
+        into the <code>licenses</code> array. This reduces configuration
+        mistakes and keeps sensitive data isolated.
+      </p>
+
+      <p>
+        If your validation process may exceed the default 15-second timeout,
+        customers can increase the
+        <code>licenseTimeoutMs</code> value during Vault initialization.
+        However, long-running validation is
+        <strong> strongly discouraged </strong>. License verification should
+        resolve quickly and deterministically. Extended timeouts increase
+        perceived startup latency and delay terminal enforcement. Design your
+        validation strategy to complete within a predictable, bounded window
+        whenever possible.
+      </p>
+
+      <h4>Example: Direct Configuration</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Vault Configuration – Inline License'">
+          <pre class="code-inline"><code class="language-ts">{{`provideVault({
+  licenses: [
+    {
+      licenseId: 'vendor-premium',
+      payload: {
+        token: 'signed-license-token'
+      }
+    }
+  ],
+  licenseTimeoutMs: 15000
+});`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example: Dedicated License File</h4>
+
+      <p>
+        You may instead provide customers with a pre-generated license file:
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'vendor-premium.license.ts'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// vendor-premium.license.ts
+
+import { VaultLicensingShape } from '@sdux-vault/shared';
+
+export const vendorPremiumLicense: VaultLicensingShape = {
+  licenseId: 'vendor-premium',
+  payload: {
+    token: 'signed-jwt-token',
+    customerId: 'acme-123',
+    plan: 'enterprise',
+    expiresAt: '2026-12-31T23:59:59Z',
+    signature: 'base64-signature'
+  }
+};`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>The customer then imports and supplies it to Vault:</p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Vault Initialization with Imported License'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { vendorPremiumLicense } from './vendor-premium.license';
+
+provideVault({
+  licenses: [vendorPremiumLicense]
+});`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <div class="note">Note</div>
+
+      <p>
+        Without this configuration, Vault will treat your extension as pending
+        and, after the configured timeout window, deny
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        activation.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="required-contract">
+    <div class="section-title-navigation">
+      <div class="section-title">Required Contract</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h4>1. Decorator Configuration</h4>
+
+      <p>
+        Your extension must declare both <code>needsLicense: true</code> and a
+        <code>licenseId: string</code>. The <code>licenseId</code> is how Vault
+        matches customer-supplied license payloads to your extension.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Resolve a Promise State Update'">
+          <pre class="code-inline"><code class="language-ts">{{`@VaultBehavior({
+  type: BehaviorTypes.Merge,
+  key: defineBehaviorKey('Vendor', 'PremiumMerge'),
+  critical: false,
+  needsLicense: true,
+  licenseId: 'vendor-premium'
+})`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>
+        The <code>licenseId</code> does not need to be globally unique. It must
+        simply match the <code>licenseId</code> provided by the customer at
+        Vault configuration time.
+      </p>
+
+      <p>
+        If you supply multiple licensed Behaviors or Controllers, you may reuse
+        the same
+        <code>licenseId</code> across all of them so they are validated together
+        under a single entitlement. Alternatively, you may assign unique
+        <code>licenseId</code> values to enforce independent licensing per
+        extension. The choice depends entirely on your commercial model.
+      </p>
+
+      <h4>2. Extend LicensingAbstract</h4>
+
+      <p>
+        Your class must extend <code>LicensingAbstract</code>. This
+        automatically:
+      </p>
+
+      <ul>
+        <li>Registers the extension with Vault</li>
+        <li>Requests a runtime license token</li>
+        <li>Protects against spoofed validation</li>
+      </ul>
+
+      <h4>3. Call validateLicense()</h4>
+
+      <p>
+        You must call <code>validateLicense(true | false)</code> once you have
+        determined the validity of the license. If
+        <code>validateLicense()</code> is never called, Vault will treat the
+        license as pending and deny the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> after
+        the configured timeout window.
+      </p>
+
+      <ul>
+        <li>
+          Passing <code>true</code> indicates the license is valid and the
+          extension may participate in the pipeline.
+        </li>
+        <li>
+          Passing <code>false</code> indicates the license is invalid or revoked
+          and the Behavior or Controller must not execute.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="licensing-runtime-integration">
+    <div class="section-title-navigation">
+      <div class="section-title">Licensing Runtime Integration</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        At runtime, Vault injects license data into your extension and enforces
+        the validation result you provide.
+      </p>
+
+      <p>
+        When <code>needsLicense: true</code> is declared and a matching
+        <code>licenseId</code> is provided in <code>provideVault()</code>, Vault
+        injects the customer-supplied payload into your extension at
+        instantiation time.
+      </p>
+
+      <p>
+        Your extension must interpret that payload, determine validity, and
+        report the result to Vault. Vault does not inspect or validate payload
+        data — it only enforces the boolean result you provide.
+      </p>
+
+      <!-- ====================================================== -->
+      <!-- LICENSE PAYLOAD INJECTION -->
+      <!-- ====================================================== -->
+
+      <p>
+        When a licensed extension is instantiated, Vault injects runtime
+        licensing metadata and exposes a controlled validation surface. These
+        runtime contracts define how your extension receives license data, how
+        it reports validation results, and how Vault enforces those results.
+      </p>
+
+      <p>
+        The <code>BehaviorClassContext</code> provides access to the
+        vendor-defined <code>licensePayload</code> supplied during
+        <code>provideVault()</code>. Your extension is responsible for
+        interpreting this payload, performing any necessary cryptographic or
+        remote validation, and determining whether the license is valid.
+      </p>
+
+      <div class="table-title">
+        <a href="/docs/references/contexts/behavior-class-context"
+          >BehaviorClassContext</a
+        >
+        (Licensing)
+      </div>
+      <table aria-label="BehaviorClassContext (Licensing)">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Property</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="column-250">licensePayload?: unknown</td>
+            <td class="column-auto">
+              Vendor-defined license data injected by Vault at instantiation
+              time when
+              <code>needsLicense: true</code> is declared and a matching
+              <code>licenseId</code> is supplied in <code>provideVault()</code>.
+              <br /><br />
+              Vault does not inspect, decrypt, validate, or transform this
+              value. It is passed through as-is and made available to the
+              extension via
+              <code>behaviorCtx.licensePayload</code>. <br /><br />
+              The extension author is fully responsible for casting, validating,
+              and securely interpreting this payload before reporting the
+              result.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ====================================================== -->
+      <!-- EXTENSION VALIDATION API -->
+      <!-- ====================================================== -->
+
+      <p>
+        Once validation is complete, your extension must report the result using
+        <code>validateLicense(...)</code>. Vault does not inspect tokens or
+        perform entitlement checks — it strictly enforces the boolean outcome
+        you provide, using scoped identifiers and an internal license token to
+        guarantee deterministic and non-spoofable enforcement.
+      </p>
+      <div class="table-title">Extension API: validateLicense()</div>
+      <table aria-label="Extension API: validateLicense()">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Method</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <p>
+                <strong> validateLicense(boolean)</strong>
+              </p>
+
+              <p>input:</p>
+              <ul>
+                <li><code>boolean</code></li>
+              </ul>
+
+              <p>returns: <code>void</code></p>
+            </td>
+
+            <td>
+              <p>
+                Reports the final license validation result to Vault. This
+                method must be called
+                <strong
+                  >after your validation logic determines license
+                  validity</strong
+                >.
+              </p>
+
+              <ul>
+                <li>
+                  <code>true</code> → License approved. The extension may
+                  participate in pipeline execution.
+                </li>
+                <li>
+                  <code>false</code> → License invalid or revoked. The
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  is terminal.
+                </li>
+              </ul>
+
+              <p>
+                If <code>validateLicense()</code> is never called, Vault will
+                treat the license as pending and deny the
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                after the configured timeout window.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        These mechanics guarantee deterministic enforcement while preserving
+        complete vendor control over cryptographic validation.
+      </p>
+    </div>
+  </section>
+  <!-- ====================================================== -->
+  <!-- BASIC EXAMPLE -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="example-licensed-behavior">
+    <div class="section-title-navigation">
+      <div class="section-title">Example: Licensed Behavior</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>This example satisfies all requirements for a licensed Behavior.</p>
+
+      <ul>
+        <li>
+          <strong><code>needsLicense: true</code></strong> — Declares that this
+          Behavior cannot participate in pipeline execution until a license
+          decision is made.
+        </li>
+
+        <li>
+          <strong><code>licenseId</code></strong> — Provides the identifier
+          Vault uses to inject the correct customer-supplied payload into this
+          extension instance.
+        </li>
+
+        <li>
+          <strong>Extends <code>LicensingAbstract&lt;T&gt;</code></strong> —
+          Registers the Behavior with Vault’s licensing system, requests a
+          runtime validation token, and protects against spoofed validation
+          calls.
+        </li>
+
+        <li>
+          <strong>Implements <code>BehaviorContract&lt;T&gt;</code></strong> —
+          Ensures the Behavior conforms to the required pipeline contract (type,
+          key, critical flag, lifecycle hooks).
+        </li>
+
+        <li>
+          <strong>Implements <code>computeMerge()</code></strong> — Satisfies
+          the required contract for <code>BehaviorTypes.Merge</code> by defining
+          how upstream values are combined during the Merge stage. Each pipeline
+          stage requires its own contract-specific methods to be implemented.
+        </li>
+
+        <li>
+          <strong
+            >Implements <code>destroy()</code> and <code>reset()</code></strong
+          >
+          — Satisfies the lifecycle contract. Even if no cleanup is required,
+          these methods must be present.
+        </li>
+
+        <li>
+          <strong>Calls <code>validateLicense(isValid)</code></strong> — After
+          determining license validity, the extension explicitly notifies Vault.
+          This is the only mechanism that transitions the extension from
+          <em>pending</em> to <em>valid</em> or <em>revoked</em>.
+        </li>
+      </ul>
+
+      <div class="note">Note</div>
+      <p>
+        Once <code>validateLicense(true)</code> is called, the Behavior is
+        permitted to participate in the pipeline. If <code>false</code> is
+        supplied, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> along
+        with the pipeline is terminal.
+      </p>
+
+      <p>
+        The validation logic may be synchronous (as shown) or asynchronous. If
+        asynchronous, it must complete within the configured timeout window
+        (default: 15 seconds), or Vault will deny activation automatically.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Resolve a Promise State Update'">
+          <pre class="code-inline"><code class="language-ts">{{`@VaultBehavior({
+  // This behavior participates in the Merge stage of the pipeline.
+  type: BehaviorTypes.Merge,
+
+  // Unique identifier used internally for correlation and diagnostics.
+  key: defineBehaviorKey('Vendor', 'PremiumMerge'),
+
+  // If true, errors would hard-stop the pipeline.
+  // Licensing failures should resolve via validateLicense(false), not by throwing.
+  critical: false,
+
+  // Declares that this behavior requires successful license validation
+  // before it may participate in pipeline execution.
+  needsLicense: true,
+
+  // Must exactly match the licenseId supplied in provideVault().
+  // Vault uses this value to inject the correct license payload.
+  licenseId: 'vendor-premium'
+})
+export class withPremiumMerge&lt;T&gt;
+  extends LicensingAbstract&lt;T&gt;
+  implements BehaviorContract&lt;T&gt; {
+
+  // Required static metadata for pipeline registration.
+  static readonly type: BehaviorType;
+  static readonly critical = false;
+
+  // Instance-level bindings used by the orchestrator.
+  readonly type = withPremiumMerge.type;
+  readonly critical = withPremiumMerge.critical;
+  readonly key: string;
+
+  constructor(key: string, readonly ctx: BehaviorClassContext) {
+    // Registers the behavior with Vault’s licensing system
+    // and requests a license token.
+    super(ctx);
+
+    this.key = key;
+
+    // ----------------------------------------------------------
+    // Vendor validation logic
+    // ----------------------------------------------------------
+    // You are responsible for verifying:
+    // - Cryptographic signatures
+    // - Token expiration
+    // - Remote entitlement status
+    // - Revocation rules
+    //
+    // Vault does not validate the payload.
+    // Vault only enforces the boolean result you provide.
+    const isValid = MyVendorLicenseService().verify();
+
+    // Notify Vault of the final validation result.
+    // true  → behavior may participate in the pipeline
+    // false → FeatureCell will be denied
+    this.validateLicense(isValid);
+  }
+
+  // Required for BehaviorTypes.Merge.
+  // Defines how upstream values are combined during the Merge stage.
+  computeMerge(
+    current: T | undefined,
+    next: T | undefined
+  ): T | undefined {
+    return next;
+  }
+
+  // Lifecycle hooks required by BehaviorContract.
+  // Use these for cleanup or state reset logic if needed.
+  destroy() {}
+
+  reset() {}
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+  <!-- ====================================================== -->
+  <!-- CONTROLLER EXAMPLE -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="example-licensed-controller">
+    <div class="section-title-navigation">
+      <div class="section-title">Example: Licensed Controller</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>This example satisfies all requirements for a licensed Controller.</p>
+
+      <ul>
+        <li>
+          <strong><code>needsLicense: true</code></strong> — Declares that this
+          Controller cannot participate in Policy-stage decisions until license
+          validation completes.
+        </li>
+
+        <li>
+          <strong><code>licenseId</code></strong> — Identifies which
+          customer-supplied payload Vault should inject into this Controller
+          instance during instantiation.
+        </li>
+
+        <li>
+          <strong>Extends <code>LicensingAbstract&lt;T&gt;</code></strong> —
+          Registers the Controller with Vault’s licensing system, obtains a
+          secure runtime token, and prevents spoofed validation calls.
+        </li>
+
+        <li>
+          <strong>Implements <code>ControllerContract&lt;T&gt;</code></strong> —
+          Ensures the Controller conforms to Policy-stage execution
+          requirements.
+        </li>
+
+        <li>
+          <strong>Implements <code>handleMessage()</code></strong> — Provides
+          the Policy-stage vote logic. In this example, the Controller abstains,
+          meaning it does not block or alter execution.
+        </li>
+
+        <li>
+          <strong
+            >Implements <code>destroy()</code> and <code>reset()</code></strong
+          >
+          — Satisfies the lifecycle contract. Even if no cleanup is required,
+          these methods must exist.
+        </li>
+
+        <li>
+          <strong>Calls <code>validateLicense(...)</code></strong> — Once
+          license validity is determined, the Controller explicitly notifies
+          Vault. This is the only mechanism that transitions the extension from
+          <em>pending</em> to <em>valid</em> or <em>revoked</em>.
+        </li>
+      </ul>
+
+      <div class="note">Note</div>
+      <p>
+        Once <code>validateLicense(true)</code> is called, the Controller is
+        permitted to participate in the pipeline. If <code>false</code> is
+        supplied, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
+        pipeline becomes terminal.
+      </p>
+
+      <p>
+        The validation logic may be synchronous (as shown) or asynchronous. If
+        asynchronous, it must complete within the configured timeout window
+        (default: 15 seconds), or Vault will deny activation automatically.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Resolve a Promise State Update'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`@VaultController({
+  // This controller participates in the Policy stage of the pipeline.
+  type: ControllerTypes.Policy,
+
+  // Unique identifier for this controller instance.
+  // Used internally by Vault for correlation and enforcement.
+  key: defineControllerKey('Vendor', 'PremiumPolicy'),
+
+  // If true, any thrown error would hard-stop the pipeline.
+  // Licensing failures should be handled via validateLicense(false),
+  // not by throwing.
+  critical: false,
+
+  // Declares that this controller cannot execute until license validation succeeds.
+  needsLicense: true,
+
+  // Must exactly match the licenseId provided in provideVault().
+  // Vault uses this to inject the correct license payload.
+  licenseId: 'vendor-premium'
+})
+export class withPremiumPolicy&lt;T>
+  extends LicensingAbstract&lt;T>
+  implements ControllerContract&lt;T> {
+
+  // Required static metadata for pipeline registration.
+  static readonly type: ControllerType;
+  static readonly critical = false;
+
+  // Instance-level bindings used by the orchestrator.
+  readonly type = withPremiumPolicy.type;
+  readonly critical = withPremiumPolicy.critical;
+  readonly key: string;
+
+  constructor(key: string, readonly ctx: ControllerClassContext) {
+    // Registers the controller with Vault’s licensing system
+    // and requests a license token.
+    super(ctx);
+
+    this.key = key;
+
+    // ----------------------------------------------------------
+    // Vendor validation logic
+    // ----------------------------------------------------------
+    // You are responsible for verifying:
+    // - Cryptographic signatures
+    // - Token expiration
+    // - Remote entitlement status
+    // - Revocation rules
+    //
+    // Vault does not validate the payload.
+    // Vault only enforces the boolean result you provide.
+    const isValid = MyVendorLicenseService().verify();
+
+    // Notify Vault of the final validation result.
+    // true  → controller may participate in pipeline execution
+    // false → FeatureCell will be denied
+    this.validateLicense(isValid);
+  }
+
+  // Policy controllers must implement handleMessage().
+  // Returning Abstain means this controller does not block execution.
+  handleMessage(): Observable&lt;ControllerVote> {
+    return of(ControllerVotes.Abstain);
+  }
+
+  // Lifecycle hooks required by ControllerContract.
+  // Use these to clean up resources, cancel subscriptions, etc.
+  destroy() {}
+
+  reset() {}
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ASYNC VALIDATION -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="asynchronous-validation">
+    <div class="section-title-navigation">
+      <div class="section-title">Asynchronous Validation</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        When validating your license payload, you are responsible for performing
+        any required cryptographic verification, token decryption, signature
+        checks, expiration validation, or remote entitlement calls before
+        invoking <code>validateLicense()</code>.
+      </p>
+
+      <h4>What This Example Does Correctly</h4>
+
+      <ul>
+        <li>
+          <strong>Uses the injected <code>licensePayload</code></strong> — The
+          extension retrieves the Vault-injected payload from
+          <code>behaviorCtx</code> and explicitly casts it to a vendor-defined
+          request shape.
+        </li>
+
+        <li>
+          <strong>Separates validation logic from the constructor</strong> — The
+          constructor delegates to a dedicated
+          <code>performLicenseValidation()</code> method, keeping instantiation
+          clean and validation concerns isolated.
+        </li>
+
+        <li>
+          <strong>Defines explicit request and response contracts</strong> —
+          Typed interfaces (<code>LicenseValidationRequest</code> and
+          <code>LicenseValidationResponse</code>) make the remote validation
+          boundary predictable and self-documenting.
+        </li>
+
+        <li>
+          <strong>Performs deterministic async validation</strong> — The
+          extension awaits the remote entitlement check and resolves to a single
+          boolean outcome.
+        </li>
+
+        <li>
+          <strong>Fails closed</strong> — Any network, parsing, or runtime error
+          results in <code>validateLicense(false)</code>, ensuring the pipeline
+          does not remain in an indeterminate state.
+        </li>
+
+        <li>
+          <strong>Calls <code>validateLicense()</code> exactly once</strong> —
+          The extension reports a final validation result after the async
+          process completes, allowing Vault to enforce activation or denial
+          deterministically.
+        </li>
+
+        <li>
+          <strong>Exports a shared payload contract</strong> — By exporting
+          <code>LicenseValidationRequest</code>, the vendor provides a strongly
+          typed contract that customers can use when constructing their
+          <code>provideVault()</code> license entry. This reduces configuration
+          errors, enforces payload shape consistency, and improves integration
+          reliability.
+        </li>
+      </ul>
+
+      <h4>Timeout Requirement</h4>
+      <p>
+        Asynchronous validation must complete within the configured timeout
+        window (default: 15 seconds). If validation does not resolve before
+        timeout, Vault will deny the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+
+      <h4>Failure Handling</h4>
+      <p>
+        Your validation logic must always resolve deterministically. If an async
+        operation throws, rejects, or fails, you must explicitly call
+        <code>validateLicense(false)</code> or implement your own retry
+        strategy.
+      </p>
+
+      <p>
+        Vault does not retry, recover, or compensate for failed validation
+        attempts.
+      </p>
+
+      <h4>Asynchronous Validation Example</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example: Remote License Validation Using licensePayload'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// -----------------------------------------------------------------------------
+// Shared Contract: Exported for Customer Type Safety
+// -----------------------------------------------------------------------------
+// Export this interface so customers can correctly type their Vault
+// configuration payload when calling provideVault().
+
+export interface LicenseValidationRequest {
+  token: string;        // Signed license token issued by vendor
+  customerId: string;   // Unique customer or tenant identifier
+}
+
+// Internal response shape returned by your validation service.
+interface LicenseValidationResponse {
+  valid: boolean;       // Final entitlement decision
+}
+
+constructor(
+  key: string,
+  readonly behaviorCtx: BehaviorClassContext
+) {
+  // Registers the behavior with Vault and requests a license token.
+  // Vault injects \`licensePayload\` at this point if a matching licenseId exists.
+  super(behaviorCtx);
+
+  this.key = key;
+
+  // Perform validation immediately upon instantiation.
+  // The extension must eventually call validateLicense(true | false).
+  this.performLicenseValidation();
+}
+
+private async performLicenseValidation(): Promise&lt;void&gt; {
+  try {
+    // -------------------------------------------------------------------------
+    // 1. Retrieve the Vault-injected payload
+    // -------------------------------------------------------------------------
+    // Vault does NOT validate this object.
+    // You are fully responsible for casting and verifying it.
+    const payload = this.behaviorCtx.licensePayload as LicenseValidationRequest;
+
+    // Defensive safeguard — if payload is missing or malformed,
+    // resolve deterministically as invalid.
+    if (!payload) {
+      this.validateLicense(false);
+      return;
+    }
+
+    // -------------------------------------------------------------------------
+    // 2. Construct your validation request
+    // -------------------------------------------------------------------------
+    // Only send the data required for entitlement verification.
+    const request: LicenseValidationRequest = {
+      token: payload.token,
+      customerId: payload.customerId
+    };
+
+    // -------------------------------------------------------------------------
+    // 3. Call your entitlement service
+    // -------------------------------------------------------------------------
+    // This may perform:
+    // - Signature verification
+    // - Expiration checks
+    // - Revocation checks
+    // - Subscription status validation
+    const response = await fetch('/api/license/verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(request)
+    });
+
+    const result: LicenseValidationResponse = await response.json();
+
+    // -------------------------------------------------------------------------
+    // 4. Report final decision to Vault
+    // -------------------------------------------------------------------------
+    // true  → Behavior may participate in pipeline execution
+    // false → FeatureCell becomes denied (terminal)
+    this.validateLicense(result.valid);
+
+  } catch {
+    // -------------------------------------------------------------------------
+    // Any failure must resolve deterministically.
+    // Vault will NOT retry for you.
+    // Network failure, malformed response, cryptographic error —
+    // all must end in a clear true/false decision.
+    // -------------------------------------------------------------------------
+    this.validateLicense(false);
+  }
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Customer Typed Example</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Licensed Extension – Vault Configuration'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Type-safe license payload supplied to Vault.
+// The shape must match the contract expected by the licensed extension.
+const payload: LicenseValidationRequest = {
+  token: 'signed-jwt-token',
+  customerId: 'acme-123'
+};
+
+provideVault({
+  licenses: [
+    {
+      licenseId: 'vendor-premium',
+      payload
+    }
+  ]
+});`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RUNTIME GUARANTEES -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="runtime-guarantees">
+    <div class="section-title-navigation">
+      <div class="section-title">Runtime Guarantees</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Vault’s licensing system enforces a strict, deterministic state model at
+        runtime. Once a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        contains licensed extensions, activation is governed entirely by
+        validation outcomes and timeout rules. The guarantees below define
+        exactly how Vault transitions a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> from
+        <em>pending</em> to <em>active</em> or <em>terminal</em>.
+      </p>
+
+      <ul>
+        <li>
+          If any licensed extension fails →
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+          terminal.
+        </li>
+        <li>If validation never occurs → timeout → terminal.</li>
+        <li>
+          If all validate →
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          activates.
+        </li>
+        <li>If none require license → automatic activation.</li>
+        <li>
+          State updates received while validation is <em>pending</em> are
+          queued.<br />
+          Once the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          activates, all queued updates are processed in order.
+        </li>
+        <li>After terminal denial → no resurrection.</li>
+      </ul>
+    </div>
+
+    <section class="diagram-section">
+      State machine:
+      <div class="section-body">
+        <sdux-diagram
+          image="diagrams/10.0/10.3-licensing-pending-flow.svg"
+          [tooltip]="'Licensing Pending Flow'" />
+      </div>
+    </section>
+  </section>
+
+  <section class="section" id="license-enforcement-outcomes">
+    <div class="section-title-navigation">
+      <div class="section-title">License Enforcement Outcomes</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Vault enforces licensing deterministically. The table below summarizes
+        how validation outcomes affect
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        activation.
+      </p>
+
+      <div class="table-title">License Validation Outcomes</div>
+      <table aria-label="License Validation Outcomes">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Scenario</th>
+            <th scope="col" class="column-auto">Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>Validation returns false</strong></td>
+            <td>
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              is terminal and pipeline execution stops.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Validation never called</strong></td>
+            <td>
+              Timeout window expires →
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              is terminal.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Timeout reached</strong></td>
+            <td>
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              is terminal.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>All licensed extensions valid</strong></td>
+            <td>
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              activates normally.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Late validation after denial</strong></td>
+            <td>
+              Ignored.
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              terminal state cannot be reversed.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        If a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        contains multiple licensed extensions,
+        <strong>all must validate successfully</strong>. A single failure
+        results in denial of the entire pipeline.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="architectural-guarantees">
+    <div class="section-title-navigation">
+      <div class="section-title">Architectural Guarantees</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The licensing model is intentionally strict and clearly separated by
+        responsibility:
+      </p>
+
+      <div class="table-title">Responsibility Boundaries</div>
+      <table aria-label="Responsibility Boundaries">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Component</th>
+            <th scope="col" class="column-auto">Responsibility</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>Vault</strong></td>
+            <td>Deterministic reducer and enforcement engine.</td>
+          </tr>
+
+          <tr>
+            <td><strong>Vendor</strong></td>
+            <td>Cryptographic authority and validation logic owner.</td>
+          </tr>
+
+          <tr>
+            <td><strong>Timeout</strong></td>
+            <td>Liveness guarantee preventing indefinite pending states.</td>
+          </tr>
+
+          <tr>
+            <td><strong>Terminal Denial</strong></td>
+            <td>
+              No resurrection after a license is terminal. Final and
+              irreversible.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Vault never performs cryptographic verification. Vendors never control
+        enforcement. This separation prevents spoofing, eliminates race
+        conditions, and guarantees deterministic activation behavior.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FAILURE HANDLING -->
+  <!-- ====================================================== -->
+
+  <section class="section" id="failure-handling-observability">
+    <div class="section-title-navigation">
+      <div class="section-title">Failure Handling & Observability</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>When a license fails:</p>
+
+      <ul>
+        <li>The pipeline is terminal.</li>
+        <li>The global error handler is notified.</li>
+        <li>DevTools displays the denial (when enabled).</li>
+      </ul>
+
+      <p>
+        Vendors are responsible for handling retry logic, token refresh, and
+        network resilience inside their own validation implementation.
+      </p>
+
+      <p>
+        In addition, when validation fails, it is recommended that your
+        extension make an asynchronous call to your backend or monitoring
+        service to record the failure. This allows you to detect revoked
+        licenses, expired entitlements, misconfigurations, or potential abuse in
+        real time.
+      </p>
+
+      <p>
+        Vault enforces denial deterministically, but vendor-side observability
+        ensures you can investigate, support the customer, and respond
+        appropriately.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="vendor-responsibilities">
+    <div class="section-title-navigation">
+      <div class="section-title">
+        Vendor Responsibilities & Operational Obligations
+      </div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Monetizing a Behavior or Controller means you are operating as a
+        software vendor.
+        <sdux-brand-name /> provides enforcement infrastructure — it does not
+        assume responsibility for your commercial, operational, or security
+        practices.
+      </p>
+
+      <p>As the extension author, you are responsible for:</p>
+
+      <ul>
+        <li>Defining and enforcing your commercial license agreement</li>
+        <li>Managing customer purchases, renewals, upgrades, and revocation</li>
+        <li>Issuing and rotating license keys or signed payloads</li>
+        <li>Maintaining secure cryptographic validation practices</li>
+        <li>
+          Handling network failures, retries, and degraded service scenarios
+        </li>
+        <li>
+          Providing customer support for installation and activation issues
+        </li>
+        <li>
+          Maintaining compatibility with new versions of <sdux-brand-name />
+        </li>
+        <li>Keeping npm dependencies and cryptographic libraries up to date</li>
+        <li>
+          Monitoring security advisories and responding to vulnerabilities
+        </li>
+      </ul>
+
+      <p>
+        Vault guarantees deterministic enforcement of validation results. It
+        does not guarantee commercial correctness, entitlement accuracy, network
+        availability, or security posture.
+      </p>
+
+      <p>
+        If your validation service is compromised, misconfigured, or offline,
+        your extension will fail validation — and the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> will
+        be denied.
+      </p>
+
+      <p>
+        SQX reserves the right to suspend or revoke distribution of third-party
+        extensions that introduce security risks, violate ecosystem policies, or
+        negatively impact platform stability. Maintaining operational integrity
+        and customer trust is a non-negotiable requirement for participation in
+        the ecosystem.
+      </p>
+
+      <p>Design your validation and deployment strategy accordingly.</p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATION TO ECOSYSTEM LICENSING -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title-navigation">
+      <div class="section-title">Relation to SDuX Ecosystem Licensing</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This page describes <strong>how to build</strong> a monetized extension
+        using the Vault licensing mechanism.
+      </p>
+
+      <p>
+        It does not define the legal terms under which your extension is
+        distributed. Licensing terms for
+        <sdux-brand-name />, Vault, and related packages are documented
+        separately in the
+        <a routerLink="/docs/welcome/license">Licensing Overview</a>.
+      </p>
+
+      <p>
+        Extension authors are responsible for defining and distributing their
+        own commercial license agreements independent of
+        <sdux-brand-name /> unless otherwise explicitly stated.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DEVMODE AND LICENSING -->
+  <!-- ====================================================== -->
+
+  <sdux-devmode-licensing-common [fragmentLink]="true" />
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAM -->
+  <!-- ====================================================== -->
+
+  <section class="diagram-section" id="diagrams">
+    <div class="section-title-navigation">
+      <div class="section-title">Diagrams</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/10.0/10.1-licensing-flow.svg"
+        [tooltip]="'Licensing Flow'" />
+
+      <sdux-diagram
+        image="diagrams/10.0/10.2-licensing-purchase-flow.svg"
+        [tooltip]="'Licensing Purchase Flow'" />
+
+      <sdux-diagram
+        image="diagrams/10.0/10.3-licensing-pending-flow.svg"
+        [tooltip]="'Licensing Pending Flow'" />
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

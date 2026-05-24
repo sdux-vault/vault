@@ -1,0 +1,26 @@
+@use 'global' as global;
+
+.sdux-image {
+  display: inline;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+
+  &:hover {
+    transform: scale(1.03);
+    filter: drop-shadow(0 4px 10px rgba(25, 118, 210, 0.4));
+  }
+
+  &:focus-visible {
+    outline: 2px solid global.$sdux-accent-base;
+    outline-offset: 4px;
+  }
+}
+
+/* Disable hover effects inside the diagram dialog */
+:host-context(.diagram-dialog) .sdux-image:hover {
+  transform: none;
+  filter: none;
+  cursor: default;
+}

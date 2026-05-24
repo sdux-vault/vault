@@ -1,0 +1,945 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-22 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Stepwise Resolve Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Stepwise Resolve</strong> enables
+      <em>policy-driven pipeline control</em> immediately
+      <em>after the Resolve stage produces a resolved candidate value</em>.
+      Engineer-supplied Stepwise Resolve functions observe the
+      <em>current committed state</em> alongside the
+      <em>resolved candidate value</em>
+      and explicitly decide whether pipeline execution should
+      <strong>continue</strong>, <strong>block</strong>, or
+      <strong>clear</strong>.
+    </p>
+
+    <h4>Stepwise Resolve Contract Summary</h4>
+    <ul>
+      <li>Stepwise Resolve functions must be pure and side-effect free</li>
+      <li>
+        The pipeline provides Stepwise Resolve functions with isolated,
+        read-only snapshots of both the
+        <em>current state</em> and the <em>resolved candidate value</em>; these
+        values must not be mutated
+      </li>
+      <li>
+        Stepwise Resolve functions do not return a value — they must emit
+        exactly one decision:
+        <strong>continue</strong>, <strong>block</strong>, or
+        <strong>clear</strong>
+      </li>
+      <li>
+        Exactly one Stepwise Resolve function may be registered for the Resolve
+        stage
+      </li>
+      <li>
+        Errors thrown during stepwise evaluation propagate as Vault errors and
+        terminate the current update.
+      </li>
+    </ul>
+
+    <p>
+      Stepwise Resolve participates exclusively in <em>policy evaluation</em>.
+      It does not derive values, does not mutate state, and does not emit
+      snapshots. Its sole responsibility is to determine whether the resolved
+      candidate should be accepted, suppressed, or used to clear existing state.
+    </p>
+
+    <p>
+      The Stepwise contract guarantees that policy evaluation is
+      <strong>deterministic and authoritative</strong>. If a stepwise function
+      throws an error, that error is promoted to a
+      <strong>Vault error</strong> and immediately terminates the current
+      pipeline execution. The in-flight candidate value is discarded, no
+      decision is applied, and no snapshot is emitted. This ensures that policy
+      failures never result in ambiguous control flow or inconsistent pipeline
+      outcomes. For details on how referential isolation is enforced at every
+      stage boundary, see
+      <a href="/docs/pipeline/isolation">Pipeline Isolation</a>.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      Because Stepwise Resolve does not return a value, failing to invoke a
+      decision method (continue, block, or clear) leaves the pipeline awaiting a
+      response that never arrives. This creates a policy deadlock and prevents
+      the <a href="/docs/references/functions/feature-cell">FeatureCell</a> from
+      processing further updates.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- STEPWISE RESOLVE STAGE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Stepwise Resolve Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Stepwise Resolve stage executes immediately
+        <em>after the Resolve stage has produced a resolved candidate value</em>
+        and before that value is admitted into downstream pipeline stages.
+      </p>
+
+      <p>
+        Stepwise Resolve functions are invoked with isolated, read-only
+        snapshots of the
+        <em>current committed state</em> and the
+        <em>resolved candidate value</em>, along with a decision controller.
+        Based on this evaluation, the function must explicitly select exactly
+        one execution outcome:
+      </p>
+
+      <ul>
+        <li>
+          <strong>continue()</strong> — allow the candidate value to proceed
+          through the pipeline
+        </li>
+        <li>
+          <strong>block()</strong> — suppress the candidate update while leaving
+          existing state unchanged
+        </li>
+        <li>
+          <strong>clear()</strong> — clear the current committed state and
+          terminate processing for this update
+        </li>
+      </ul>
+
+      <p>
+        Stepwise Resolve functions must always emit exactly one decision.
+        Failure to do so results in pipeline termination to preserve
+        deterministic and safe execution semantics.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STEPWISE RESOLVE DIAGRAM -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.8/3.8-stepwise-function-flow.svg"
+        [tooltip]="'Stepwise Function Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- AVAILABLE STEPWISE RESOLVE BEHAVIORS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Available Stepwise Resolve Behaviors</div>
+
+    <div class="section-body">
+      <p>
+        Stepwise Resolve is implemented as a core policy behavior. Engineers
+        supply
+        <em>stepwise callback functions</em> that are executed by the core
+        behavior during pipeline evaluation.
+      </p>
+    </div>
+
+    <div class="table-title">Core Stepwise Resolve Behavior</div>
+    <table aria-label="Core Stepwise Resolve Behavior">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Behavior</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong
+              ><a href="/docs/pipeline/addons/with-stepwise-resolve-behavior"
+                >withStepwiseResolveBehavior</a
+              ></strong
+            >
+            <p>stage: Stepwise Resolve</p>
+            <p>type: policy</p>
+          </td>
+          <td>
+            Executes an engineer-supplied stepwise resolve function immediately
+            after the Resolve stage has produced a resolved candidate value. The
+            function evaluates pipeline state and emits a control decision that
+            determines whether execution continues, is suppressed, or is
+            cleared.
+            <ul>
+              <li>Does not mutate state</li>
+              <li>Does not derive or return values</li>
+              <li>Maps decisions to Vault-native control signals</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="table-title">
+      <a href="/docs/references/types/stepwise-function">StepwiseFunction</a
+      >&lt;T&gt;
+    </div>
+    <div class="table-scroll">
+      <table aria-label="StepwiseFunction">
+        <thead>
+          <tr>
+            <th scope="col" class="column-auto">Signature</th>
+            <th scope="col" class="column-300">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong
+                ><a href="/docs/references/types/stepwise-function"
+                  >StepwiseFunction</a
+                >&lt;T&gt;
+              </strong>
+              <p>inputs:</p>
+              <ul>
+                <li><code>current: T | undefined</code></li>
+                <li><code>candidate: T</code></li>
+                <li><code>decisions: StepwiseBehaviorDecisionShape</code></li>
+              </ul>
+              <p>returns: <code>void</code></p>
+            </td>
+            <td>
+              A policy-only function that observes both the current committed
+              state (if any) and the newly resolved candidate value. The
+              function must imperatively emit exactly one control decision using
+              the provided decision controller. It does not return a value.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-title">
+      <a href="/docs/references/shapes/stepwise-behavior-decision-shape"
+        >StepwiseBehaviorDecisionShape</a
+      >
+    </div>
+    <table aria-label="StepwiseBehaviorDecisionShape">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Decision</th>
+          <th scope="col" class="column-auto">Pipeline Effect</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>continue()</code>
+            <p>type: () =&gt; void</p>
+          </td>
+          <td>
+            Allows pipeline execution to proceed normally. The candidate value
+            continues through filters, resolves, and persistence.
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <code>block()</code>
+            <p>type: () =&gt; void</p>
+          </td>
+          <td>
+            Suppresses the current update (<code>VAULT_NOOP</code>). No state
+            changes occur, but the pipeline remains active for future updates.
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <code>clear()</code>
+            <p>type: () =&gt; void</p>
+          </td>
+          <td>
+            Clears the current state (<code>VAULT_CLEAR_STATE</code>) and
+            terminates processing for the current update. Subsequent updates may
+            proceed normally.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Registering the Stepwise Resolve Behavior</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>Stepwise Resolve Behavior</strong> is attached structurally
+        when the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        defined. This determines that the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        participates in stepwise-based post-resolve execution control at
+        runtime.
+      </p>
+
+      <p>
+        Registering the behavior does not configure the behavior by itself. It
+        enables the behavior so that post-resolve stepwise function supplied
+        later via the fluent API can be applied during pipeline execution.
+      </p>
+
+      <div class="note">Note</div>
+
+      <p>
+        Registering the behavior does not register the Stepwise controller. The
+        Stepwise controller must be attached structurally when the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        is defined.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Stepwise Resolve Behavior'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {  
+        key: 'employees',
+        initialState: [],
+      },
+      [
+        withStepwiseResolveBehavior, 
+        // Optional add-on behaviors
+      ],
+      [
+        // Attach the Stepwise Controller structurally
+        withStepwiseController
+      ]
+    )
+  ]
+};
+
+@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more resolves during initialization
+    this.vault
+      .withStepwiseResolve({
+        stepwiseCallback: (current, candidate, decisions) => { 
+          // evaluate current and/or candidate 
+          // and return a decision
+        }
+      })
+    ).initialize()
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Stepwise Resolve Behavior'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    withStepwiseResolveBehavior
+    // Optional add-on behaviors
+  ],
+  [
+    // Attach the Stepwise Controller structurally
+    withStepwiseController
+  ]
+);
+
+employeeCell
+  .withStepwiseResolve({
+    stepwiseCallback: (current, candidate, decisions) => { 
+      // evaluate current and/or candidate 
+      // and return a decision
+    }
+  })
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Stepwise Resolve Behavior'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    withStepwiseResolveBehavior
+    // Optional add-on behaviors
+  ],
+  [
+    // Attach the Stepwise Controller structurally
+    withStepwiseController
+  ]
+);
+
+employeeCell
+  .withStepwiseResolve({
+    stepwiseCallback: (current, candidate, decisions) => { 
+      // evaluate current and/or candidate 
+      // and return a decision
+    }
+  })
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-vault-stepwise-fluent-api-common [type]="'resolve'" />
+
+  <!-- ====================================================== -->
+  <!-- STEPWISE RESOLVE FUNCTION PATTERNS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Stepwise Resolve Function Patterns</div>
+
+    <div class="section-body">
+      <p>
+        Stepwise Resolve functions are supplied by engineers and executed by the
+        core Stepwise Resolve behavior. While JavaScript permits many ways to
+        express a function, only a limited set of patterns are appropriate for
+        deterministic, policy-driven pipeline control.
+      </p>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY A -->
+      <!-- ====================================================== -->
+
+      <h4>Category A: Pure / Context-Free Functions (Recommended)</h4>
+      <p>
+        Pure Stepwise Resolve functions depend only on their inputs and emit
+        deterministic decisions. They do not reference instance state and do not
+        close over mutable external variables.
+      </p>
+
+      <h4>Example 1: Pure Stepwise Resolve Function</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 1: Pure Stepwise Resolve Function'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.withStepwiseResolve({
+  stepwiseCallback: (current, candidate, decisions) => {
+    if (!candidate.length) {
+      decisions.block();
+    } else {
+      decisions.continue();
+    }
+  }
+}).initialize();
+// Updates with an empty candidate value are suppressed `}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 2: Factory-Generated Pure Stepwise Resolve Function</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="
+            'Example 2: Factory-Generated Pure Stepwise Resolve Function'
+          ">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Factory produces a pure, parameterized stepwise policy
+export function enforceMinimumEmployees(minCount: number) {
+  return (current, candidate, decisions) => {
+    if (candidate.length < minCount) {
+      decisions.block();
+    } else {
+      decisions.continue();
+    }
+  };
+}
+// Updates with fewer than 3 employees are suppressed`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY B -->
+      <!-- ====================================================== -->
+
+      <h4>
+        Category B: Instance-Aware but Correctly Bound Functions (Acceptable)
+      </h4>
+      <p>
+        Stepwise Resolve functions may reference instance state when correctly
+        bound. These functions remain deterministic per
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance and must not be shared across cells.
+      </p>
+
+      <h4>Example 3: Arrow Function Using Instance State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 3: Arrow Function Using Instance State'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`readonly minEmployees = 3;
+
+readonly stepwiseCheck = (current, candidate, decisions) => {
+  if (candidate.length < this.minEmployees) {
+    decisions.block();
+  } else {
+    decisions.continue();
+  }
+};`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 4: Bound Instance Method</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Example 4: Bound Instance Method'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`public enforceActiveEmployees(
+  current,
+  candidate,
+  decisions
+) {
+  const hasInactive = candidate.some(e => e.status !== 'Active');
+
+  if (hasInactive) {
+    decisions.clear();
+  } else {
+    decisions.continue();
+  }
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <!-- ====================================================== -->
+      <!-- CATEGORY C -->
+      <!-- ====================================================== -->
+
+      <h4>Category C: Inline Lambda Functions (Allowed, Use Sparingly)</h4>
+      <p>
+        Inline lambdas are allowed but should be limited to trivial,
+        self-contained rules. Complex inline logic can obscure intent and reduce
+        testability.
+      </p>
+
+      <h4>Example 5: Inline Stepwise Resolve Function</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 5: Inline Stepwise Resolve Function'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`vault.withStepwiseResolve({
+  stepwiseCallback: (current, candidate, decisions) => {
+    // Inline lambdas make it easy to accidentally embed policy logic
+    // that would be clearer as a named function
+    if (candidate.some(e => e.status === 'Suspended')) {
+      decisions.clear();
+      return;
+    }
+
+    decisions.continue();
+  }
+}).initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STEPWISE RESOLVE ANTI-PATTERNS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Stepwise Resolve Function Anti-Patterns</div>
+
+    <div class="section-body">
+      <h4>
+        Category D: External Mutable State or Missing Decisions (Discouraged)
+      </h4>
+
+      <p>
+        Stepwise Resolve functions are <em>decision-only</em> policy hooks. They
+        must be fully deterministic and must always emit exactly one control
+        decision. Functions that depend on external mutable state or fail to
+        issue a decision violate the Stepwise Resolve contract and result in
+        invalid pipeline behavior.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Because Stepwise Resolve does not return a value, failing to invoke a
+        decision method (continue, block, or clear) leaves the pipeline awaiting
+        a response that never arrives. This creates a policy deadlock and
+        prevents the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> from
+        processing further updates.
+      </p>
+
+      <h4>Example 6: Invalid — Missing Decision (Deadlock)</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 6: Missing Decision (Invalid)'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`vault.withStepwiseResolve({
+  stepwiseCallback: (current, candidate, decisions) => {
+    if (candidate.length > 5) {
+      // ❌ forgot to call decisions.continue()
+      return;
+    }
+  }
+}).initialize();
+
+// ❌ Pipeline error: Stepwise Resolve function did not emit a decision`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 7: Invalid — External Mutable State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 7: External Mutable State (Invalid)'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`let threshold = 5;
+
+vault.withStepwiseResolve({
+  stepwiseCallback: (current, candidate, decisions) => {
+    if (candidate.length > threshold) {
+      decisions.continue();
+    } else {
+      decisions.block();
+    }
+  }
+}).initialize();
+
+// ❌ Behavior depends on external mutable state`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STEPWISE RESOLVE SUMMARY -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Stepwise Resolve Function Summary</div>
+
+    <div class="section-body">
+      <h4>Stepwise Resolve Function Comparison</h4>
+
+      <p>
+        The following table summarizes the practical differences between the
+        Stepwise Resolve function styles demonstrated above. While all valid
+        examples may execute correctly, they differ in determinism, policy
+        safety, and long-term maintainability.
+      </p>
+
+      <div class="table-title">Stepwise Resolve Function Characteristics</div>
+      <div class="table-scroll">
+        <table aria-label="Stepwise Resolve Function Characteristics">
+          <thead>
+            <tr>
+              <th scope="col" class="column-175">Dimension</th>
+
+              <th scope="col" class="column-auto">
+                Examples 1 / 2<br />
+                <span class="table-header-secondary"
+                  >Pure Stepwise Functions</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Examples 3 / 4<br />
+                <span class="table-header-secondary"
+                  >Instance-Bound Functions</span
+                >
+              </th>
+
+              <th scope="col" class="column-auto">
+                Example 5<br />
+                <span class="table-header-secondary">Inline Lambda</span>
+              </th>
+
+              <th scope="col" class="column-auto">
+                Examples 6 / 7<br />
+                <span class="table-header-secondary"
+                  >Invalid / Anti-Patterns</span
+                >
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Purity</td>
+              <td>✅</td>
+              <td>⚠️ Instance-scoped</td>
+              <td>⚠️</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Determinism</td>
+              <td>✅</td>
+              <td>⚠️ Per instance</td>
+              <td>⚠️</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Decision Safety</td>
+              <td>✅ Exactly one decision</td>
+              <td>✅ Exactly one decision</td>
+              <td>⚠️ Easy to misuse</td>
+              <td>❌ Missing or unstable</td>
+            </tr>
+
+            <tr>
+              <td>Pipeline Safety</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>⚠️</td>
+              <td>❌</td>
+            </tr>
+
+            <tr>
+              <td>Reusability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>Low</td>
+              <td>None</td>
+            </tr>
+
+            <tr>
+              <td>Testability</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>Lower</td>
+              <td>Low</td>
+            </tr>
+
+            <tr>
+              <td>Risk of Deadlock</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Medium</td>
+              <td>High</td>
+            </tr>
+
+            <tr>
+              <td>Intended Lifespan</td>
+              <td>Long-lived</td>
+              <td>Instance-limited</td>
+              <td>Ephemeral</td>
+              <td>Unacceptable</td>
+            </tr>
+
+            <tr>
+              <td>Recommended Usage</td>
+              <td>Preferred</td>
+              <td>Acceptable</td>
+              <td>Use sparingly</td>
+              <td>Discouraged</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Summary Rule</h4>
+      <p>
+        Any Stepwise Resolve function must be <strong>deterministic</strong>,
+        must operate only on the provided snapshots, and must emit
+        <strong>exactly one decision</strong>. Functions that rely on external
+        mutable state or fail to issue a decision introduce nondeterminism or
+        deadlock and are invalid.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        Stepwise Resolve functions are applied during pipeline evaluation after
+        the Resolve stage has produced a candidate value. These functions do not
+        return data or modify state. Instead, they evaluate the current snapshot
+        and candidate value and explicitly decide how the pipeline should
+        proceed.
+      </p>
+
+      <h4>Example 8: Policy-Based Pipeline Control</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 8: Policy-Based Stepwise Resolve'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.withStepwiseResolve({
+  stepwiseCallback: (current, candidate, decisions) => {
+
+    // Clear state entirely if the candidate violates a hard policy
+    if (candidate.some(e => e.status === 'Suspended')) {
+      decisions.clear();
+      return;
+    }
+
+    // Suppress the update if it fails a soft policy check
+    if (candidate.length === 0) {
+      decisions.block();
+      return;
+    }
+
+    // Otherwise, allow the pipeline to proceed normally
+    decisions.continue();
+  }
+}).initialize();
+
+/*
+Decision outcomes:
+- Suspended employee detected → state cleared
+- Empty candidate list       → update suppressed
+- Valid candidate            → pipeline continues
+*/`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <p>This example demonstrates all three Stepwise Resolve outcomes:</p>
+
+      <ul>
+        <li>
+          <strong>continue()</strong> — admits the candidate value into
+          downstream pipeline stages
+        </li>
+        <li>
+          <strong>block()</strong> — suppresses the update without altering
+          existing state
+        </li>
+        <li>
+          <strong>clear()</strong> — resets state by explicitly clearing the
+          current value
+        </li>
+      </ul>
+
+      <p>
+        Stepwise Resolve functions must always issue exactly one decision.
+        Failing to do so results in invalid pipeline behavior and will be
+        rejected by the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Stepwise Resolve Anti-Pattern Examples</div>
+
+    <div class="section-body">
+      <p>
+        The following examples demonstrate
+        <strong>invalid Stepwise Resolve function behavior</strong>. These
+        patterns violate the Stepwise Resolve contract by either failing to emit
+        a decision or by depending on external mutable state. Such violations
+        introduce nondeterminism or policy deadlocks and are detected and
+        rejected by the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> to
+        preserve deterministic pipeline control.
+      </p>
+
+      <h4>Example 9: Invalid — Missing Decision (Policy Deadlock)</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 9: Invalid - Missing Decision (Policy Deadlock)'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.withStepwiseResolve({
+  stepwiseCallback: (current, candidate, decisions) => {
+    if (candidate.length > 5) {
+      // ❌ forgot to call decisions.continue()
+      return;
+    }
+  }
+}).initialize();
+
+// ❌ Vault error: Stepwise Resolve function did not emit a decision.
+// This creates a policy deadlock and prevents the FeatureCell from processing further updates.`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Example 10: Invalid — External Mutable State</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab
+          [label]="'Example 10: Invalid - External Mutable State'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`let threshold = 5;
+
+employeeCell.withStepwiseResolve({
+  stepwiseCallback: (current, candidate, decisions) => {
+    if (candidate.length > threshold) {
+      decisions.continue();
+    } else {
+      decisions.block();
+    }
+  }
+}).initialize();
+
+// ❌ Vault error: Stepwise Resolve function depends on external mutable state`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

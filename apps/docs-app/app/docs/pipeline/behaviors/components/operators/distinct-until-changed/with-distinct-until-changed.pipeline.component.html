@@ -1,0 +1,543 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Distinct Until Changed Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Distinct Until Changed</strong> is an
+      <em>operator behavior</em> that prevents redundant pipeline execution by
+      suppressing emissions when the resolved and merged pipeline value is
+      considered equivalent to the previously emitted value under the configured
+      comparison strategy.
+    </p>
+
+    <h4>Distinct Until Changed Contract Summary</h4>
+    <ul>
+      <li>Operates exclusively within the Operator stage</li>
+      <li>Evaluates the fully resolved and merged pipeline value</li>
+      <li>The first encountered value always proceeds through the pipeline</li>
+      <li>Subsequent equivalent values are suppressed</li>
+      <li>
+        Suppression is expressed by returning
+        <em><a href="/docs/references/const/vault_noop">VAULT_NOOP</a></em
+        >, which ends pipeline execution for the current run
+      </li>
+      <li>
+        Comparison is performed using either a user-supplied equality function
+        or the default structural comparison
+      </li>
+      <li>Does not mutate state and does not emit snapshots directly</li>
+    </ul>
+
+    <p>
+      Distinct Until Changed participates in <em>value admission control</em>.
+      Its sole responsibility is to determine whether a newly produced pipeline
+      value represents a meaningful change compared to the previously emitted
+      value. When no meaningful change is detected, downstream pipeline stages
+      are skipped and no snapshot is produced.
+    </p>
+
+    <p>
+      This behavior is commonly used to eliminate duplicate emissions caused by
+      repeated inputs, identical resolution results, or idempotent update flows.
+      By suppressing redundant pipeline executions early, it helps reduce
+      unnecessary filtering, reduction, and rendering work without altering
+      pipeline semantics.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      When no custom comparison function is supplied, the operator determines
+      equality by performing a
+      <strong>structural JSON comparison</strong> of the incoming value and the
+      last emitted value. If the two values are structurally identical, the
+      update is suppressed and no downstream pipeline stages execute.
+    </p>
+
+    <pre
+      class="code-inline"><code class="language-ts">JSON.stringify(incoming) === JSON.stringify(lastEmittedValue);</code></pre>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Distinct Until Changed Behavior</div>
+
+    <div class="section-body">
+      <p>
+        <strong>Distinct Until Changed</strong> is an operator behavior that
+        performs <em>value-level deduplication</em>
+        within the Operator stage. It evaluates the resolved and merged pipeline
+        value and suppresses further pipeline execution for the current pipeline
+        run when that value is equivalent to the previously emitted value.
+      </p>
+
+      <p>
+        This behavior always allows the <em>first</em> encountered value to
+        proceed through the pipeline. For subsequent pipeline executions, the
+        incoming value is compared against the last successfully emitted value.
+        If the values are considered equivalent, the operator suppresses the
+        update by returning
+        <em><a href="/docs/references/const/vault_noop">VAULT_NOOP</a></em
+        >.
+      </p>
+
+      <p>
+        When suppression occurs, the current pipeline execution ends for that
+        run. Downstream stages—including filters, reducers, and taps—are
+        skipped, and no snapshot is emitted. The pipeline remains available to
+        process future candidates, which may be emitted if they differ from the
+        last accepted value.
+      </p>
+
+      <p>
+        Equality determination may be performed using either a user-supplied
+        comparison function or the default structural comparison strategy. This
+        allows distinctness to be defined according to domain-specific semantics
+        without altering pipeline structure or reducer logic.
+      </p>
+
+      <p>
+        Distinct Until Changed does not mutate state, does not emit snapshots
+        directly, and does not influence pipeline scheduling or lifecycle
+        control. Its responsibility is strictly limited to deciding whether a
+        pipeline candidate represents a meaningful change relative to the
+        previous emission.
+      </p>
+
+      <h4>Behavior Scope</h4>
+      <p>
+        This operator is applied explicitly via the fluent
+        <strong>.operators()</strong> API during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization. When registered, it participates in the Operator stage
+        alongside any other configured operators and is evaluated in the order
+        declared.
+      </p>
+
+      <p>
+        Distinct Until Changed is most effective when used as an early admission
+        control mechanism to eliminate redundant pipeline executions caused by
+        repeated inputs, idempotent resolutions, or unchanged upstream values.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Operator Stage Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.6/2.6-operator-flow.svg"
+        [tooltip]="'Operator Execution Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Distinct Until Changed Behavior</div>
+    <div class="section-body">
+      <sdux-vault-distinct-until-changed-behavior-common />
+
+      <div class="table-title">
+        <a href="/docs/references/types/distinct-comparison"
+          >DistinctComparison</a
+        >&lt;T&gt;
+      </div>
+
+      <table aria-label="DistinctComparison">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Property</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p><strong>compare</strong></p>
+              <p>inputs:</p>
+              <ul>
+                <li>a: T</li>
+                <li>b: T</li>
+              </ul>
+              <p>type:</p>
+              <ul>
+                <li>(a: T, b: T) =&gt; boolean</li>
+              </ul>
+
+              <p>return:</p>
+              <ul>
+                <li>boolean</li>
+              </ul>
+
+              <p>optional</p>
+            </td>
+
+            <td>
+              <p>
+                Optional comparison function used by the
+                <strong>Distinct Until Changed</strong> operator to determine
+                whether the incoming pipeline value should be considered
+                equivalent to the previously emitted pipeline value.
+              </p>
+
+              <p>
+                When provided, this function is invoked with the
+                <em>new incoming value</em> and the
+                <em>last successfully emitted value</em>. If the function
+                returns <code>true</code>, the values are treated as equal and
+                the update is suppressed.
+              </p>
+
+              <p>
+                If no comparison function is supplied, the operator falls back
+                to the default structural comparison strategy.
+              </p>
+
+              <p>
+                The comparison function must be pure, deterministic, and free of
+                side effects. It must not mutate either argument and must return
+                a consistent result for the same input values across executions.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Evaluation Outcomes</div>
+
+    <div class="section-body">
+      <p>
+        <strong>Distinct Until Changed</strong> determines whether an incoming
+        pipeline value should be emitted or suppressed by comparing it against
+        the <em>last successfully emitted value</em>. This comparison is
+        performed for each pipeline execution after resolve and merge.
+      </p>
+
+      <p>
+        By default, the operator uses a structural comparison strategy to
+        determine equality. When a custom comparison function is supplied, that
+        function becomes the authoritative definition of what it means for two
+        values to be considered equivalent.
+      </p>
+
+      <p>
+        In all cases, the <em>first</em> encountered value is always emitted.
+        Subsequent values are evaluated relative to the most recent emitted
+        value. If a value is considered equal under the active comparison
+        strategy, the operator returns
+        <em><a href="/docs/references/const/vault_noop">VAULT_NOOP</a></em
+        >, ending the current pipeline execution for that run.
+      </p>
+
+      <div class="table-title">
+        Example 1: Default Comparison (Primitive Values)
+      </div>
+      <table aria-label="Example 1: Default Comparison (Primitive Values)">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Incoming Value</th>
+            <th scope="col" class="column-auto">Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              5
+              <p>(first emission)</p>
+            </td>
+            <td>Value is emitted (first value always passes through)</td>
+          </tr>
+
+          <tr>
+            <td>
+              5
+              <p>(same as previous)</p>
+            </td>
+            <td>
+              <em
+                ><a href="/docs/references/const/vault_noop">VAULT_NOOP</a></em
+              >
+              — value is considered equal to the previously emitted value and is
+              suppressed
+            </td>
+          </tr>
+
+          <tr>
+            <td>9</td>
+            <td>Value is emitted (value differs from previous emission)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">
+        Example 2: Default Comparison (Structured Values)
+      </div>
+      <table aria-label="Example 2: Default Comparison (Structured Values)">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Incoming Value</th>
+            <th scope="col" class="column-auto">Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              &#123; id: 1, name: "A" &#125;
+              <p>(first emission)</p>
+            </td>
+            <td>Value is emitted</td>
+          </tr>
+
+          <tr>
+            <td>
+              &#123; id: 1, name: "A" &#125;
+              <p>(structurally equivalent)</p>
+            </td>
+            <td>
+              <em
+                ><a href="/docs/references/const/vault_noop">VAULT_NOOP</a></em
+              >
+              — structurally equivalent to the previously emitted value
+            </td>
+          </tr>
+
+          <tr>
+            <td>&#123; id: 2, name: "A" &#125;</td>
+            <td>Value is emitted (value differs from previous emission)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">
+        Example 3: Custom Comparison (Identifier-Based Equality)
+      </div>
+
+      <p>
+        When a custom comparison function is provided, it replaces the default
+        structural comparison entirely. The function is invoked with the
+        <em>incoming value</em> and the <em>last successfully emitted value</em>
+        and must explicitly determine whether the two values should be treated
+        as equivalent.
+      </p>
+
+      <p>
+        In this example, the comparison function evaluates only a stable
+        identifier (<code>id</code>) and ignores all other properties. As a
+        result, values with the same identifier are considered equal even if
+        other fields differ.
+      </p>
+
+      <table aria-label="Distinct Until Changed Behavior">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Incoming Value</th>
+            <th scope="col" class="column-auto">Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              &#123; id: 1, name: "B" &#125;
+              <p>(id unchanged)</p>
+            </td>
+            <td>
+              <em
+                ><a href="/docs/references/const/vault_noop">VAULT_NOOP</a></em
+              >
+              — custom comparison considers values equivalent
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              &#123; id: 1, name: "X" &#125;
+              <p>(id unchanged)</p>
+            </td>
+            <td>
+              <em
+                ><a href="/docs/references/const/vault_noop">VAULT_NOOP</a></em
+              >
+              — custom comparison considers values equivalent
+            </td>
+          </tr>
+
+          <tr>
+            <td>&#123; id: 2, name: "X" &#125;</td>
+            <td>Value is emitted (custom comparison detects a change)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-title">Actual Comparison Function for Example 3</div>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Custom Comparison Function'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Custom comparison function
+const compareById = (a: { id: number }, b: { id: number }) => {
+  return a.id === b.id;
+};
+
+// Registering the operator with a custom comparison function
+&lt;employeeCell|this>.vault
+  .operators(
+    [
+      withDistinctUntilChanged(compareById)
+    ]
+  )
+  .initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        Distinct Until Changed is enabled by attaching the
+        <strong
+          ><a href="/docs/pipeline/addons/with-distinct-until-changed"
+            >withDistinctUntilChanged</a
+          ></strong
+        >
+        operator behavior via the fluent API during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization. When no comparison function is supplied, the operator
+        uses the default structural comparison to suppress duplicate values.
+      </p>
+
+      <h4>Example 1: Configure a FeatureCell with Distinct Until Changed</h4>
+
+      <p>
+        In this example, the operator suppresses consecutive equivalent pipeline
+        values that are structurally equivalent to the previously emitted value.
+        The first value always passes through; subsequent equivalent values are
+        suppressed and do not reach downstream stages.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Distinct Until Changed'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more operators during initialization
+    this.vault
+      .operators(
+        [
+          withDistinctUntilChanged()
+        ]
+      )
+      .initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Distinct Until Changed'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Operator behaviors are not registered as part of the
+    // FeatureCell’s declarative configuration.
+  ]
+);
+
+// Apply distinct-until-changed during initialization
+employeeCell
+  .operators(
+    [
+      withDistinctUntilChanged()
+    ]
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Distinct Until Changed'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Operator behaviors are not registered as part of the
+    // FeatureCell’s declarative configuration.
+  ]
+);
+
+// Apply distinct-until-changed during initialization
+employeeCell
+  .operators(
+    [
+      withDistinctUntilChanged()
+    ]
+  )
+  .initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

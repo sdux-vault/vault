@@ -1,0 +1,39 @@
+@use 'global' as global;
+
+.documentation-dialog {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  background-color: var(--sdux-surface-bg);
+
+  .documentation-dialog-close-row {
+    flex: 0 0 auto;
+    display: flex;
+    padding-right: global.$spacing-lg;
+    height: 60px;
+    align-items: center;
+    justify-content: space-between;
+
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: inherit;
+
+    .title {
+      @include global.h2-element;
+      margin: 0;
+      padding-left: global.$spacing-md;
+      color: global.$sdux-primary-base;
+    }
+
+    .close-button {
+      @include global.sdux-icon-button();
+    }
+  }
+
+  .documentation-dialog-content {
+    flex: 1 1 auto; // 👈 takes remaining height
+    overflow-y: auto; // 👈 ONLY this scrolls
+    padding: global.$spacing-md;
+  }
+}

@@ -1,0 +1,152 @@
+<div class="docs-container">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Pipeline Builder</h3>
+  </div>
+
+  <sdux-builder-start />
+
+  <div
+    class="pipeline-builder"
+    [class.displayBuilder]="!pipelineStepService.displayStartButton()"
+    [class.withDefinitionForm]="isAboutState()">
+    <section
+      class="interaction"
+      [class.interaction-open]="!pipelineStepService.isExpanded()"
+      [class.interaction-closed]="!isBuilderAvailable()">
+      <!-- Trusted: stepInstruction comes from internal pipeline builder step constants -->
+      <div class="step-title" [innerHTML]="this.stepInstruction"></div>
+
+      @if (isAboutState()) {
+        <sdux-state-definition-form />
+      } @else if (isBehaviorConfiguration()) {
+        <div class="panels">
+          <!-- Left Panel -->
+          <aside
+            class="left-panel"
+            [class.flyout]="isSmallScreen()"
+            [style.width]="leftPanelWidth()">
+            <div class="content">
+              @for (stageQuestion of stageQuestions(); track stageQuestion.id) {
+                <sdux-stage-question [stage]="stageQuestion" />
+              }
+            </div>
+          </aside>
+
+          <!-- Right Panel -->
+          <main class="right-panel" [style.width]="rightPanelWidth()">
+            <div
+              class="content"
+              [class.behavior-needs]="isBehaviorConfiguration()">
+              @if (visibleStageController()) {
+                <sdux-stage-review [stage]="visibleStageController()" />
+                @if (hasChildren && isDisplayBehaviors()) {
+                  @for (
+                    behavior of visibleStageBehaviors();
+                    track behavior.id
+                  ) {
+                    <sdux-behavior-question [behavior]="behavior" />
+                  }
+                }
+              } @else {
+                <div class="step-help-card">
+                  <div class="step-help-title">
+                    Define Your Execution Pipeline
+                  </div>
+
+                  <div class="step-help-body">
+                    <p>
+                      In Redux-style architectures, updates typically flow
+                      directly into reducers. In
+                      <strong><sdux-brand-name /></strong>, every update passes
+                      through a deterministic
+                      <strong>execution pipeline</strong> before state is
+                      committed.
+                    </p>
+
+                    <p>
+                      The stages on the left represent each phase of that
+                      pipeline:
+                      <strong>Resolve → Filter → Reduce</strong>.
+                    </p>
+
+                    <ol>
+                      <li>
+                        <strong>Resolve</strong> – Normalize external input into
+                        a canonical value.
+                      </li>
+                      <li>
+                        <strong>Filter</strong> – Validate or suppress updates
+                        before they reach reducers.
+                      </li>
+                      <li>
+                        <strong>Reduce</strong> – Derive the next immutable
+                        state snapshot.
+                      </li>
+                    </ol>
+
+                    <p>
+                      For each stage, read the question carefully and decide
+                      whether your pipeline needs that functionality. If it
+                      does, select the stage and configure it.
+                    </p>
+
+                    <p>
+                      You are defining how your state processes updates — not
+                      just writing reducers, but designing the full execution
+                      contract.
+                    </p>
+                  </div>
+                </div>
+              }
+            </div>
+
+            @if (visibleStageController()) {
+              <div class="stage-actions-bar">
+                <button
+                  type="button"
+                  class="sdux-button-caution"
+                  (click)="resetStage()">
+                  Reset
+                </button>
+
+                <button
+                  type="button"
+                  [disabled]="isActiveBehaviorStageContinueDisabled()"
+                  class="sdux-button"
+                  (click)="continueBehaviorStage()">
+                  Complete Stage
+                </button>
+              </div>
+            }
+          </main>
+        </div>
+      }
+      <div class="actions" [class.border]="isBuilderAvailable()">
+        <div class="sdux-spacer-10"></div>
+        <button type="button" class="sdux-button-warn" (click)="restart()">
+          Restart
+        </button>
+        <div class="sdux-container-spacer"></div>
+        <button
+          type="button"
+          [disabled]="isAboutState()"
+          class="sdux-button-secondary"
+          (click)="back()">
+          Back
+        </button>
+
+        <button
+          type="button"
+          [disabled]="isContinueButtonDisabled()"
+          class="sdux-button"
+          (click)="continue()">
+          Continue
+        </button>
+      </div>
+    </section>
+
+    @if (!isBuilderAvailable()) {
+      <sdux-pipeline-builder-visualization />
+    }
+  </div>
+</div>

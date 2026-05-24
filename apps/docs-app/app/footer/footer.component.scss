@@ -1,0 +1,56 @@
+@use 'global' as global;
+
+$padding-width: global.$spacing-md * 2;
+$info-height: 25px;
+
+.footer {
+  position: relative;
+  height: global.$footer-height;
+  width: calc(100% - $padding-width);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: global.$spacing-md;
+  padding-right: global.$spacing-md;
+
+  &.isMobile {
+    flex-direction: column-reverse;
+  }
+
+  background-color: var(--sdux-surface-bg);
+  color: var(--sdux-text-default);
+  border-top: 1px solid var(--footer-border);
+
+  font-size: global.$font-size-sm;
+  gap: global.$spacing-lg;
+
+  .license-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: global.$font-size-xxs;
+  }
+
+  .info-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: $info-height;
+  }
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Responsive — collapse items cleanly */
+@media (max-width: global.$breakpoint-md) {
+  .footer {
+    flex-wrap: wrap;
+    height: auto;
+    padding-block: global.$spacing-sm;
+    gap: global.$spacing-md;
+  }
+}

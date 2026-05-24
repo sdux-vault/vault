@@ -1,0 +1,50 @@
+@use 'global' as global;
+
+// Generic mixin for mirroring directional properties dynamically
+@mixin rtl-swap($ltr-prop, $rtl-prop, $value: 0) {
+  [dir='rtl'] & {
+    #{$ltr-prop}: auto;
+    #{$rtl-prop}: $value;
+  }
+}
+
+// Logical spacing + alignment for navigation and headers
+
+html[dir='ltr'] {
+  .nav-right .chevron {
+    transform: none;
+  }
+
+  .logo-container {
+    inset-inline-start: global.$spacing-sm; // replaces left/right
+    inset-inline-end: auto;
+  }
+
+  .hamburger-button,
+  .hamburger-menu {
+    inset-inline-end: global.$spacing-sm;
+    inset-inline-start: auto;
+  }
+}
+
+html[dir='rtl'] {
+  .sdux-sidenav-container .mat-sidenav-content {
+    margin-left: 0;
+  }
+
+  .hamburger-button,
+  .hamburger-menu {
+    inset-inline-start: global.$spacing-sm;
+    inset-inline-end: auto;
+  }
+
+  .logo-container {
+    inset-inline-end: global.$spacing-sm;
+    inset-inline-start: auto;
+  }
+
+  .navigation-container {
+    border-left: none;
+    border-right: 1px solid global.$sdux-surface-outline;
+  }
+}

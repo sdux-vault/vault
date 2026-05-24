@@ -1,0 +1,36 @@
+# Ignore compiled output and build artifacts
+dist
+.tmp
+.out-tsc
+.angular
+bazel-out
+
+# Node
+node_modules
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+
+# Coverage
+coverage
+projects/**/coverage
+
+# IDEs and editors
+.idea
+.vscode
+*.sublime-workspace
+*.sublime-project
+
+# Misc
+.DS_Store
+Thumbs.db
+
+# Husky internal scripts
+.husky/_
+
+# HTML reports and generated docs
+**/coverage/**
+**/compodoc/**
+docs/**
+apps/chrome-extension/panel/*

@@ -1,0 +1,272 @@
+@use 'global' as global;
+
+/**
+ * Layout goals:
+ * - No magic 1000px heights
+ * - Stable flex with correct min-height: 0 for scroll containers
+ * - Left panel scrolls, right panel scrolls
+ * - Visualization expands/collapses cleanly
+ * - Mobile flyout works without collapsing the whole layout
+ */
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.docs-container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden; // ← critical
+
+  /* Builder root */
+  .pipeline-builder {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      opacity 180ms ease,
+      height 300ms ease;
+
+    &.displayBuilder {
+      opacity: 1;
+      max-height: 10000px;
+    }
+
+    /* STEP 1 */
+    &.withDefinitionForm {
+      height: 750px;
+    }
+
+    .interaction {
+      flex: 1 1 auto;
+
+      height: 70vh;
+      max-height: 2000px; // large enough to contain content
+
+      display: flex;
+      flex-direction: column;
+
+      border-radius: global.$border-radius-lg;
+      border: 1px solid var(--sdux-surface-outline);
+      //overflow: auto;
+
+      /* Step header */
+      .step-title {
+        padding: global.$spacing-sm global.$spacing-md;
+        border-bottom: 1px solid var(--sdux-surface-outline);
+
+        font-weight: global.$font-weight-semibold;
+        color: var(--sdux-text-default);
+      }
+
+      /* The content region inside interaction */
+      .panels {
+        flex: 1 1 auto;
+        min-height: 0; /* critical */
+
+        display: flex;
+        border-top: 0;
+        background: var(--sdux-surface-bg);
+
+        /* prevent layout jump when right panel is 100% */
+        width: 100%;
+      }
+
+      /* Bottom actions row */
+      > .actions {
+        height: 56px;
+        flex: 0 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: global.$spacing-md;
+
+        padding: 0 global.$spacing-md;
+        border-top: 1px solid var(--sdux-surface-outline);
+        background: var(--sdux-surface-main);
+        border-bottom-left-radius: global.$border-radius-lg;
+        border-bottom-right-radius: global.$border-radius-lg;
+
+        &.border {
+          /* leave this if you want a stronger separation when builder is active */
+          box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.08);
+        }
+      }
+
+      &.interaction-open {
+        height: 70vh; // fixed builder workspace height
+      }
+
+      &.interaction-closed {
+        max-height: 98px;
+        overflow: hidden;
+
+        .step-title {
+          border: none;
+        }
+      }
+
+      .left-panel {
+        flex: 0 0 320px; // fixed width
+        width: 320px; // explicit for safety
+        max-width: 320px; // prevent stretching
+        min-width: 320px; // prevent collapsing
+
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: hidden;
+
+        border-right: 1px solid var(--sdux-surface-outline);
+        background: var(--sdux-surface-main);
+
+        .content {
+          flex: 1 1 auto;
+          min-height: 0; /* critical */
+
+          display: flex;
+          flex-direction: column;
+          gap: global.$spacing-sm;
+          padding: global.$spacing-sm;
+
+          overflow-y: auto;
+          overscroll-behavior: contain;
+        }
+
+        /* Mobile flyout mode */
+        &.flyout {
+          position: fixed;
+          top: global.$toolbar-height;
+          left: 0;
+
+          height: calc(100vh - #{global.$toolbar-height});
+          width: min(92vw, #{global.$sidenav-width});
+
+          z-index: 50;
+
+          border-right: 1px solid var(--sdux-surface-outline);
+          box-shadow: var(--sdux-shadow-active);
+          border-radius: 0 global.$border-radius-lg global.$border-radius-lg 0;
+        }
+      }
+
+      .right-panel {
+        flex: 1 1 auto;
+        min-width: 0; /* critical */
+        min-height: 0; /* critical */
+
+        display: flex;
+        flex-direction: column;
+
+        background: var(--sdux-surface-bg);
+
+        .content {
+          flex: 1 1 auto;
+          min-height: 0;
+          overflow-y: auto;
+
+          display: flex;
+          flex-direction: column;
+
+          padding: global.$spacing-md;
+          gap: global.$spacing-lg;
+
+          overscroll-behavior: contain;
+
+          &.behavior-needs {
+            gap: global.$spacing-md;
+          }
+
+          // Optional: add bottom padding so last item
+          // doesn't collide with action bar visually
+          padding-bottom: global.$spacing-xl;
+
+          .step-help-card {
+            position: relative;
+            padding: global.$spacing-lg;
+            border-radius: global.$border-radius-md;
+            color: var(--sdux-text-inverse);
+
+            box-shadow: global.$sdux-shadow-base;
+
+            .step-help-title {
+              font-size: global.$font-size-lg;
+              font-weight: global.$font-weight-semibold;
+              margin-bottom: global.$spacing-sm;
+              color: var(--sdux-text-inverse);
+            }
+
+            .step-help-body {
+              font-size: global.$font-size-sm;
+              line-height: global.$line-height;
+
+              p {
+                margin-bottom: global.$spacing-sm;
+              }
+
+              ol {
+                margin: global.$spacing-sm 0 global.$spacing-md
+                  global.$spacing-md;
+                padding: 0;
+
+                li {
+                  margin-bottom: global.$spacing-xs;
+
+                  strong {
+                    color: global.$sdux-primary-light;
+                    font-weight: global.$font-weight-medium;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        /* action row inside right panel (Reset / Continue) */
+        .stage-actions-bar {
+          flex: 0 0 auto;
+
+          display: flex;
+          justify-content: space-between;
+          gap: global.$spacing-md;
+
+          padding: global.$spacing-md;
+          border-top: 1px solid var(--sdux-surface-outline);
+
+          button {
+            font-size: global.$font-size-sm;
+            height: 32px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ===============================
+   Responsive tweaks
+=============================== */
+@media (max-width: global.$breakpoint-lg) {
+  .interaction {
+    .panels {
+      flex-direction: column;
+    }
+  }
+
+  .left-panel {
+    /* when not flyout, allow it to behave as a normal block */
+    min-width: 0;
+    max-width: none;
+    border-right: none;
+    border-bottom: 1px solid var(--sdux-surface-outline);
+  }
+}

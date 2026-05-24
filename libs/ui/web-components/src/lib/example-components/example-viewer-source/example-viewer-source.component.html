@@ -1,0 +1,57 @@
+<div class="example-viewer-source" [class.tabs]="displayTabs()">
+  @if (displayTabs()) {
+    <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false">
+      @for (tab of tabs(); let i = $index; track tab) {
+        <mat-tab>
+          <ng-template mat-tab-label>{{ tab.label() }}</ng-template>
+
+          <div
+            class="source-row"
+            [class.isMobile]="mobileLayoutService.isMobile()">
+            <pre><code #codeBlock><ng-container *ngTemplateOutlet="tab.template"></ng-container></code></pre>
+
+            @if (displayCopyPaste()) {
+              <button
+                type="button"
+                mat-icon-button
+                matTooltip="Copy {{ tab.label() }} source"
+                aria-label="Copy {{ tab.label() }} source"
+                class="copy-btn"
+                (click)="copyCode(i)">
+                @if (copySuccess()) {
+                  <mat-icon class="check-mark">check</mat-icon>
+                } @else {
+                  <mat-icon>content_copy</mat-icon>
+                }
+              </button>
+            }
+          </div>
+        </mat-tab>
+      }
+    </mat-tab-group>
+  } @else {
+    @for (tab of tabs(); let i = $index; track tab) {
+      <ng-template mat-tab-label>{{ tab.label() }}</ng-template>
+
+      <div class="source-row" [class.isMobile]="mobileLayoutService.isMobile()">
+        <pre><code #codeBlock><ng-container *ngTemplateOutlet="tab.template"></ng-container></code></pre>
+
+        @if (displayCopyPaste()) {
+          <button
+            type="button"
+            mat-icon-button
+            matTooltip="Copy {{ tab.label() }} source"
+            aria-label="Copy {{ tab.label() }} source"
+            class="copy-btn"
+            (click)="copyCode(i)">
+            @if (copySuccess()) {
+              <mat-icon class="check-mark">check</mat-icon>
+            } @else {
+              <mat-icon>content_copy</mat-icon>
+            }
+          </button>
+        }
+      </div>
+    }
+  }
+</div>

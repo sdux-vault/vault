@@ -1,0 +1,261 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Observable Resolve Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <div class="lead">
+      <strong
+        ><a
+          href="/docs/pipeline/behaviors/resolve/with-core-observable-behavior"
+          >withCoreObservableBehavior</a
+        ></strong
+      >
+      is a resolve behavior that normalizes observable-based state inputs by
+      subscribing to an observable source and extracting a single emitted value
+      for downstream pipeline processing.
+    </div>
+
+    <p>
+      This behavior operates exclusively in the Resolve stage. It affects
+      <em>how</em> an incoming value is resolved, never <em>when</em> it enters
+      the pipeline or <em>how</em> it is later processed. No state mutation,
+      derivation, or policy logic occurs as part of observable resolution.
+    </p>
+
+    <p>
+      State updates may be submitted through the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> APIs
+      <strong>replaceState</strong> and <strong>mergeState</strong>. Each API
+      admits a distinct category of input, but all inputs converge on the same
+      Resolve stage for classification and normalization before downstream
+      processing.
+    </p>
+
+    <p>
+      <strong
+        ><a
+          href="/docs/pipeline/behaviors/resolve/with-core-observable-behavior"
+          >withCoreObservableBehavior</a
+        ></strong
+      >
+      operates exclusively in the <strong>Resolve stage</strong>, executing
+      after interceptors and before operators. It participates only when an
+      <code>Observable&lt;T&gt;</code> input is supplied to a state update API.
+    </p>
+
+    <p>
+      This behavior resolves observable-based inputs by extracting a
+      <em>single emitted value</em> and forwarding it as a normalized upstream
+      value for downstream pipeline processing. Observable errors are normalized
+      and propagated as pipeline errors.
+    </p>
+
+    Note Recommended to use a merge behavior or it is pointless
+    <ul>
+      <li>
+        <a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+          >withArrayAppendMergeBehavior</a
+        >
+      </li>
+      <li>
+        <a href="/docs/pipeline/addons/merge/with-array-push-merge-behavior"
+          >withArrayPushMergeBehavior</a
+        >
+      </li>
+    </ul>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.4/2.4-resolve-processing.svg"
+        [tooltip]="'Resolve Processing'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a
+            href="/docs/pipeline/behaviors/resolve/with-core-observable-behavior"
+            >withCoreObservableBehavior</a
+          ></strong
+        >
+        requires no explicit configuration parameters. It participates
+        automatically when a state update is supplied with an
+        <code>Observable&lt;T&gt;</code> input via
+        <strong>replaceState</strong> or <strong>mergeState</strong>.
+      </p>
+
+      <p>
+        The behavior is installed by default as part of the Resolve stage and
+        activates conditionally based on the resolved input type. When an
+        observable input is detected, the behavior subscribes during pipeline
+        execution and resolves a single emitted value for downstream processing.
+      </p>
+
+      <p>
+        Subscription lifetime is bound to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. Active subscriptions are terminated automatically on reset or
+        destruction, ensuring that observable resolution does not outlive the
+        pipeline execution that initiated it.
+      </p>
+
+      <sdux-vault-resolve-behaviors-common [type]="'observable'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a
+            href="/docs/pipeline/behaviors/resolve/with-core-from-stream-behavior"
+            >withCoreFromStreamBehavior</a
+          ></strong
+        >
+        enables observable streams to be connected directly to a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> via
+        the <code>fromStream()</code> API. This method establishes a
+        subscription that continuously injects emitted values into the pipeline
+        as state updates.
+      </p>
+
+      <p>
+        In the examples below, a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized normally. After initialization, an observable stream is
+        attached using <strong>fromStream()</strong>. Each emitted value is
+        converted into a state update and forwarded through the Resolve stage
+        before being finalized by the State stage.
+      </p>
+
+      <h4>Example 1: Stream Values into a FeatureCell</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Resolve an Observable State Update'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor(private readonly http: HttpClient) {
+    this.vault.initialize();
+
+    // Observable defined locally in the cell
+    const employees$ = of([
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+    ]);
+
+    // Submit an observable-based state update
+    this.vault.replaceState(employees$);
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Resolve an Observable State Update'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { from } from 'rxjs';
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+employeeCell.initialize();
+
+// Observable defined locally in the module
+const employees$ = of([
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' }
+]);
+
+// Submit an observable-based state update
+employeeCell.replaceState(employees$);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Resolve an Observable State Update'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`import { from } from 'rxjs';
+
+export const employeeCell = FeatureCell&t;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+employeeCell.initialize();
+
+// Observable defined locally in the module
+const employees$ = of([
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' }
+]);
+
+// Submit an observable-based state update
+employeeCell.replaceState(employees$);`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

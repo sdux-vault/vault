@@ -1,0 +1,247 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Value Resolve Behavior</h3>
+  </div>
+
+  <header class="docs-header">
+    <div class="lead">
+      <strong>
+        <a href="/docs/pipeline/behaviors/resolve/with-core-value-behavior">
+          withCoreValueBehavior
+        </a>
+      </strong>
+      is the core resolve behavior that normalizes plain state values and
+      structured state envelopes into a canonical upstream value for downstream
+      pipeline processing.
+    </div>
+
+    <p>
+      This behavior operates exclusively in the Resolve stage. It affects
+      <em>how</em> incoming state inputs are normalized, never
+      <em>when</em> they enter the pipeline or <em>how</em> they are later
+      transformed. No policy evaluation, derivation, or mutation logic occurs as
+      part of value resolution.
+    </p>
+
+    <p>
+      State updates may be submitted through the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> APIs
+      <strong>replaceState</strong> and <strong>mergeState</strong>. These APIs
+      accept structured state envelopes that converge on the Resolve stage,
+      where
+      <strong
+        ><a href="/docs/pipeline/behaviors/resolve/with-core-value-behavior"
+          >withCoreValueBehavior</a
+        ></strong
+      >
+      extracts and normalizes the incoming value.
+    </p>
+
+    <p>
+      <strong
+        ><a href="/docs/pipeline/behaviors/resolve/with-core-value-behavior"
+          >withCoreValueBehavior</a
+        ></strong
+      >
+      operates exclusively in the <strong>Resolve stage</strong>, executing
+      after interceptors and before operators. It is the
+      <strong>pipeline-critical</strong> default resolution path for all
+      non-observable, non-deferred, and non-resource inputs.
+    </p>
+
+    <p>
+      This behavior resolves structured state envelopes by extracting the
+      <code>value</code> field and forwarding it as a normalized upstream value.
+      An explicit <code>value: null</code> clears state, while an absent or
+      <code>undefined</code> value suppresses downstream processing.
+    </p>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.4/2.4-resolve-processing.svg"
+        [tooltip]="'Resolve Processing'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a href="/docs/pipeline/behaviors/resolve/with-core-value-behavior"
+            >withCoreValueBehavior</a
+          ></strong
+        >
+        requires no explicit configuration parameters. It is always installed as
+        part of the Resolve stage and participates automatically when a state
+        update is supplied as a plain value or structured state envelope.
+      </p>
+
+      <p>
+        This behavior activates when <strong>replaceState</strong> or
+        <strong>mergeState</strong> is invoked with a non-observable,
+        non-deferred, and non-resource input. The incoming envelope is
+        normalized during resolution by extracting the <code>value</code> field
+        and producing a canonical upstream value for downstream pipeline stages.
+      </p>
+
+      <p>
+        <strong
+          ><a href="/docs/pipeline/behaviors/resolve/with-core-value-behavior"
+            >withCoreValueBehavior</a
+          ></strong
+        >
+        is <strong>pipeline-critical</strong> and cannot be disabled or
+        replaced. It serves as the default resolution path for all synchronous
+        state inputs and guarantees deterministic handling of value extraction,
+        state clearing, and suppressed writes.
+      </p>
+
+      <sdux-vault-resolve-behaviors-common [type]="'value'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        <strong
+          ><a href="/docs/pipeline/behaviors/resolve/with-core-value-behavior"
+            >withCoreValueBehavior</a
+          ></strong
+        >
+        participates automatically when a plain value or structured state
+        envelope is supplied as a state input. No explicit configuration is
+        required during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        In the examples below, a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        initialized normally. After initialization, a synchronous state update
+        is submitted using <strong>mergeState</strong> with a structured state
+        envelope. The Resolve stage extracts the <code>value</code> field and
+        forwards a normalized upstream value to downstream pipeline stages.
+      </p>
+
+      <h4>Example 1: Resolve a Plain Value State Update</h4>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <!-- Angular --------------------------------------------------------- -->
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Resolve a Plain Value State Update'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+
+    const employees = [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+    ];
+
+    // Submit a plain value using a structured state envelope
+    this.vault.mergeState({ value: employees });
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- React ----------------------------------------------------------- -->
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Resolve a Plain Value State Update'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+employeeCell.initialize();
+
+const employees = [
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' }
+];
+
+// Submit a plain value using a structured state envelope
+employeeCell.mergeState({ value: employees });`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <!-- Vue ------------------------------------------------------------- -->
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example 1: Resolve a Plain Value State Update'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  }
+);
+
+employeeCell.initialize();
+
+const employees = [
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' }
+];
+
+// Submit a plain value using a structured state envelope
+employeeCell.mergeState({ value: employees });`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

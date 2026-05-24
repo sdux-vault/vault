@@ -1,0 +1,197 @@
+<nav aria-label="Migration">
+  <mat-expansion-panel class="nav-expansion">
+    <mat-expansion-panel-header>
+      <span class="nav-section-label">Migration</span>
+    </mat-expansion-panel-header>
+
+    <a
+      mat-list-item
+      routerLink="docs/pipeline/builder"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">Pipeline Builder</span>
+    </a>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Bridges</span>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/taps/with-core-after-tap-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">After Tap</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/taps/with-core-before-tap-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Before Tap</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/deprecated/dispatch"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item"
+            >Dispatch <sdux-deprecated />
+          </span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/error/with-core-error-callback-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Error Callback</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/state/with-core-emit-state-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">Emit State</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/resolve/with-core-from-promise-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">fromDeferred</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/resolve/with-core-from-observable-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">fromObservable</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/resolve/with-core-from-promise-behavior"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">fromPromise</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/addons/interceptors/rxjs"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content">RxJS</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/behaviors/deprecated/selectors"
+          routerLinkActive="active"
+          (click)="closeSidenav()">
+          <span class="menu-content sub-item"
+            >Selectors <sdux-deprecated
+          /></span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Phase 1: State -->
+    <a
+      mat-list-item
+      routerLink="/docs/migration"
+      fragment="state"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">State</span>
+    </a>
+
+    <!-- Phase 2: Actions -->
+    <a
+      mat-list-item
+      routerLink="/docs/migration"
+      fragment="actions"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Actions</span>
+    </a>
+
+    <!-- Phase 3: Dispatch -->
+    <a
+      mat-list-item
+      routerLink="/docs/migration"
+      fragment="dispatch"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Dispatch</span>
+    </a>
+
+    <!-- Phase 4: Reducers -->
+    <a
+      mat-list-item
+      routerLink="/docs/migration"
+      fragment="reducers"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Reducers</span>
+    </a>
+
+    <!-- Phase 5: Effects (optional depending on your doc plan) -->
+    <a
+      mat-list-item
+      routerLink="/docs/migration"
+      fragment="effects"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Effects</span>
+    </a>
+
+    <!-- Phase 6: Selectors -->
+    <a
+      mat-list-item
+      routerLink="/docs/migration"
+      fragment="selectors"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Selectors</span>
+    </a>
+
+    <!-- Phase 7: Store Setup -->
+    <a
+      mat-list-item
+      routerLink="/docs/migration"
+      fragment="store-setup"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <div class="menu-content">Store Setup</div>
+    </a>
+
+    <!-- Phase 8: Components -->
+    <a
+      mat-list-item
+      routerLink="/docs/migration"
+      fragment="components"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Components</span>
+    </a>
+
+    <!-- Phase 9: Testing -->
+    <a
+      mat-list-item
+      routerLink="/docs/migration"
+      fragment="testing"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">Testing </span>
+    </a>
+  </mat-expansion-panel>
+</nav>

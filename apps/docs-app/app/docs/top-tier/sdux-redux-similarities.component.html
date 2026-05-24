@@ -1,0 +1,432 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-21 -->
+<div class="docs-container">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> / Redux Similarities</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-brand-name [tm]="true" /> and Redux share the same foundational
+      goal: make state changes predictable, inspectable, and safe to scale.
+    </p>
+
+    <p>Redux established a disciplined model for state transitions;</p>
+    <p>
+      <sdux-brand-name /> builds on that discipline by expressing state updates
+      as a deterministic, streaming pipeline with explicit ownership and
+      first-class extensibility.
+    </p>
+
+    <p>
+      This page compares the two systems at the concept level. Redux is treated
+      as a respected ancestor, while
+      <sdux-brand-name /> is presented as a modern evolution optimized for
+      streaming workflows, modular ownership, and pipeline-driven extensibility.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">TL;DR</div>
+
+    <div class="section-body">
+      <p>
+        Redux established the importance of explicit state transitions and
+        predictable updates.
+        <sdux-brand-name /> builds on that foundation by making modern
+        application concerns first-class, composable parts of a deterministic,
+        streaming pipeline.
+      </p>
+
+      <ul>
+        <li>Explicit ownership per feature</li>
+        <li>Streaming, pipeline-based state resolution</li>
+        <li>Built-in extensibility through behaviors</li>
+        <li>Layered error handling and observability</li>
+        <li>Minimal boilerplate with plain TypeScript</li>
+      </ul>
+
+      <p>
+        The result is a system that preserves Redux’s discipline while reducing
+        indirection, centralizing intent, and scaling naturally with application
+        complexity.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- COMPARISON TABLE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Concept Comparison</div>
+
+    <div class="section-body">
+      <table aria-label="Concept Comparison">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Concept</th>
+            <th scope="col" class="column-auto"><sdux-brand-name /></th>
+            <th scope="col" class="column-auto">Redux</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td class="column-250">Core philosophy</td>
+            <td class="column-auto">
+              Deterministic state resolution through an ordered Pipeline that
+              produces immutable Snapshots.
+            </td>
+            <td class="column-auto">
+              Predictable state transitions through pure reducers that produce
+              next state from current state + action.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Determinism and ordering</td>
+            <td class="column-auto">
+              Pipeline stage ordering is explicit and deterministic; each
+              Behavior executes in a known position.
+            </td>
+            <td class="column-auto">
+              Determinism comes from reducer purity and a single dispatch
+              sequence; middleware ordering is explicit but separate from
+              reducers.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Immutability contract</td>
+            <td class="column-auto">
+              State is treated as immutable feature-owned data; consumers
+              observe immutable Snapshots emitted by resolution passes.
+            </td>
+            <td class="column-auto">
+              State is immutable by convention and reducer discipline; consumers
+              read from the Store and derive views via selectors.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Primary unit of change</td>
+            <td class="column-auto">
+              Intentional state updates processed through replaceState() and
+              mergeState().
+            </td>
+            <td class="column-auto">
+              Actions dispatched into the Store via dispatch().
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Update surface</td>
+            <td class="column-auto">
+              Direct update APIs (replaceState, mergeState) that express outcome
+              intent without event objects.
+            </td>
+            <td class="column-auto">
+              Explicit dispatch of action objects; reducers interpret actions to
+              compute next state.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Streaming model</td>
+            <td class="column-auto">
+              State is a stream of Snapshots over time; updates flow through a
+              deterministic streaming Pipeline.
+            </td>
+            <td class="column-auto">
+              Actions form the primary stream; state changes are derived from
+              dispatch history and reducer outputs.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Async as a first-class input</td>
+            <td class="column-auto">
+              Values, Promises, Observables, and Streams can enter the pipeline
+              directly and resolve into Snapshots.
+            </td>
+            <td class="column-auto">
+              Async is typically handled via middleware patterns (thunks, sagas,
+              observables, listeners) outside reducers.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Ownership model</td>
+            <td class="column-auto">
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              ownership is structural: each
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              owns one slice of state and its lifecycle.
+            </td>
+            <td class="column-auto">
+              Ownership is conventional: a single Store is shared; domains are
+              separated by reducer structure and conventions.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Scope and lifecycle</td>
+            <td class="column-auto">
+              FeatureCells are lifecycle-bound and produce Snapshots as output;
+              state and behaviors are resolved per feature domain.
+            </td>
+            <td class="column-auto">
+              Store typically lives for the application lifetime; feature
+              boundaries exist but lifecycle is usually managed by application
+              structure.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Extensibility mechanism</td>
+            <td class="column-auto">
+              Behaviors participate as ordered pipeline Stages (filters,
+              operators, interceptors, reducers, caching, encryption,
+              persistence, taps).
+            </td>
+            <td class="column-auto">
+              Middleware and enhancers extend dispatch and side effects;
+              reducers remain pure and separate from extension points.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Side effects placement</td>
+            <td class="column-auto">
+              Side effects and cross-cutting concerns can be represented as
+              explicit pipeline stages (taps, persistence, encryption) in a
+              known order.
+            </td>
+            <td class="column-auto">
+              Side effects are external to reducers and typically implemented
+              with middleware or external orchestration.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Cross-cutting concerns</td>
+            <td class="column-auto">
+              Concerns like caching, persistence, encryption, filtering, and
+              reduction are composable via Behaviors and Extensions without
+              altering the core
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              contract.
+            </td>
+            <td class="column-auto">
+              Concerns are commonly handled via middleware stacks, store
+              enhancers, and library-specific patterns.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Error handling model</td>
+            <td class="column-auto">
+              Built-in, layered error handling: feature-local handling on
+              FeatureCells and global handling via
+              <a href="/docs/references/functions/vault-error-service"
+                >VaultErrorService</a
+              >
+              with normalized error shapes.
+            </td>
+            <td class="column-auto">
+              Error handling is typically ad hoc and user-defined; patterns vary
+              by middleware and application conventions.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Observability and DevTools</td>
+            <td class="column-auto">
+              First-class observability via pipeline-aware event emission;
+              Chrome DevTools plugin and InsightService can power custom
+              monitors and tooling.
+            </td>
+            <td class="column-auto">
+              Mature DevTools ecosystem centered on action history, state diffs,
+              and reducer-driven transitions.
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column-250">Testability</td>
+            <td class="column-auto">
+              FeatureCells are isolated and deterministic; pipeline stages and
+              behaviors can be tested as ordered, composable units.
+            </td>
+            <td class="column-auto">
+              Reducers are straightforward to unit test; integration testing
+              often involves middleware/effects and store wiring.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="section">
+    <div class="section-body">
+      <p>
+        The concepts above describe how <sdux-brand-name /> thinks about state.
+        The table below focuses on <em>what is provided out of the box</em>. It
+        highlights capabilities that are modeled as first-class, deterministic
+        parts of the system rather than conventions or optional middleware.
+      </p>
+
+      <p>
+        Redux is intentionally minimal and ecosystem-driven.
+        <sdux-brand-name /> builds on those ideas by making common state
+        concerns explicit, composable stages in a streaming pipeline.
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="section-title">Built-In Capabilities and Behaviors</div>
+
+    <div class="section-body">
+      <strong>How to read this table</strong>
+      <p>
+        This table compares <sdux-brand-name /> and Redux at the
+        <em>conceptual level</em>, not at the level of specific libraries or
+        community add-ons. A checkmark (✅) indicates a capability that is built
+        into the core system. A partial marker (◐) indicates functionality
+        commonly achieved through patterns, middleware, or ecosystem tools. An X
+        (❌) means the concept is not explicitly modeled by the framework.
+      </p>
+      <p>
+        The goal is not to suggest that one system “can” or “cannot” do
+        something, but to show where each framework makes certain concerns
+        first-class versus optional or convention-based.
+      </p>
+
+      <div class="table-title">Built-in Capabilities and Behaviors</div>
+      <table aria-label="Built-in Capabilities and Behaviors">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Concept</th>
+            <th scope="col" class="column-auto"><sdux-brand-name /></th>
+            <th scope="col" class="column-three">Redux</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Deterministic update pipeline</td>
+            <td>✅ Ordered, stage-based pipeline</td>
+            <td>◐ Implicit via reducers + middleware</td>
+          </tr>
+          <tr>
+            <td>State as a stream</td>
+            <td>✅ Native streaming model</td>
+            <td>◐ Typically layered via observables</td>
+          </tr>
+          <tr>
+            <td>Feature-scoped state ownership</td>
+            <td>
+              ✅
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              ownership model
+            </td>
+            <td>◐ Convention-based slices</td>
+          </tr>
+          <tr>
+            <td>Replace vs merge semantics</td>
+            <td>✅ Explicit APIs (replaceState / mergeState)</td>
+            <td>❌ Single reducer-driven mutation path</td>
+          </tr>
+          <tr>
+            <td>Async resolution (Promise / Observable / Stream)</td>
+            <td>✅ First-class resolution behaviors</td>
+            <td>◐ Middleware patterns</td>
+          </tr>
+          <tr>
+            <td>Interceptors (debounce, throttle, delay)</td>
+            <td>✅ Built-in pipeline interceptors</td>
+            <td>◐ Custom middleware</td>
+          </tr>
+          <tr>
+            <td>Filters and emission control</td>
+            <td>✅ Pipeline filter stages</td>
+            <td>◐ Selector-level patterns</td>
+          </tr>
+          <tr>
+            <td>Reducers</td>
+            <td>✅ Reducers as pipeline behaviors</td>
+            <td>✅ Core primitive</td>
+          </tr>
+          <tr>
+            <td>Side-effect taps (before / after)</td>
+            <td>✅ Built-in tap behaviors</td>
+            <td>◐ Middleware or effects</td>
+          </tr>
+          <tr>
+            <td>Built-in persistence</td>
+            <td>✅ Local, session, cookie storage</td>
+            <td>◐ External libraries</td>
+          </tr>
+          <tr>
+            <td>Built-in caching</td>
+            <td>✅ Cache behaviors in pipeline</td>
+            <td>❌ Not modeled</td>
+          </tr>
+          <tr>
+            <td>Built-in encryption</td>
+            <td>✅ Encryption behaviors</td>
+            <td>❌ Not modeled</td>
+          </tr>
+          <tr>
+            <td>Error normalization</td>
+            <td>
+              ✅ Normalized
+              <a href="/docs/references/shapes/vault-error-shape"
+                >VaultErrorShape</a
+              >
+            </td>
+            <td>❌ Unstructured errors</td>
+          </tr>
+          <tr>
+            <td>Feature-level error handling</td>
+            <td>
+              ✅
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a
+              >-scoped handling
+            </td>
+            <td>◐ Reducer conventions</td>
+          </tr>
+          <tr>
+            <td>Global error observation</td>
+            <td>
+              ✅
+              <a href="/docs/references/functions/vault-error-service"
+                >VaultErrorService</a
+              >
+            </td>
+            <td>◐ Middleware / logging tools</td>
+          </tr>
+          <tr>
+            <td>DevTools pipeline awareness</td>
+            <td>✅ Pipeline- and lifecycle-aware</td>
+            <td>◐ Action/state inspection</td>
+          </tr>
+          <tr>
+            <td>Fluent API extensions</td>
+            <td>✅ Behavior-contributed extensions</td>
+            <td>❌ Not applicable</td>
+          </tr>
+          <tr>
+            <td>Zero-magic TypeScript model</td>
+            <td>✅ Plain TypeScript contracts</td>
+            <td>✅ Plain JavaScript / TypeScript</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

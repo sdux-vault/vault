@@ -1,0 +1,169 @@
+<section class="signup-page">
+  <div class="signup-shell">
+    <!-- Header / Intro Row -->
+    <div class="signup-intro">
+      <h1>Create your <sdux-brand-name /> account</h1>
+
+      <p class="lead">
+        Set up your organization, create your administrator account, and tell us
+        the first domain you want to use with
+        <sdux-vault-brand-name [tm]="true" />. This takes less than a minute and
+        gets you ready for the next step in activation.
+      </p>
+    </div>
+
+    <div class="signup-note">
+      <strong>What happens next?</strong>
+      <span>
+        After this step, you’ll land in your dashboard where you can continue
+        setup and connect billing when you’re ready.
+      </span>
+    </div>
+
+    <!-- Form Row -->
+    <div class="signup-card">
+      <form
+        class="signup-form"
+        [formGroup]="form"
+        (ngSubmit)="next()"
+        novalidate>
+        <div class="form-row">
+          <mat-form-field class="field-full-width" appearance="outline">
+            <mat-label>Organization name</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="organizationName"
+              autocomplete="organization"
+              placeholder="Your Organization" />
+
+            @if (hasError('organizationName')) {
+              @if (organizationName.hasError('required')) {
+                <mat-error>Organization name is required.</mat-error>
+              } @else if (organizationName.hasError('maxlength')) {
+                <mat-error
+                  >Organization name must not exceed 255 characters.</mat-error
+                >
+              }
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="field-half-width" appearance="outline">
+            <mat-label>Your name</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="fullName"
+              autocomplete="name"
+              placeholder="Sam Altman" />
+
+            @if (hasError('fullName')) {
+              @if (fullName.hasError('required')) {
+                <mat-error>Your name is required.</mat-error>
+              } @else if (fullName.hasError('maxlength')) {
+                <mat-error>Your name must not exceed 255 characters.</mat-error>
+              }
+            }
+          </mat-form-field>
+
+          <mat-form-field class="field-half-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              autocomplete="email"
+              placeholder="sam@your-org.com" />
+
+            @if (hasError('email')) {
+              @if (email.hasError('required')) {
+                <mat-error>Email is required.</mat-error>
+              } @else if (email.hasError('maxlength')) {
+                <mat-error>Email must not exceed 255 characters.</mat-error>
+              } @else if (email.hasError('email')) {
+                <mat-error>Email must be a valid email address.</mat-error>
+              }
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="field-half-width" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              autocomplete="new-password"
+              placeholder="Minimum 12 characters" />
+
+            @if (hasError('password')) {
+              @if (password.hasError('required')) {
+                <mat-error>Password is required.</mat-error>
+              } @else if (password.hasError('minlength')) {
+                <mat-error>Password must be at least 12 characters.</mat-error>
+              } @else if (password.hasError('maxlength')) {
+                <mat-error>Password must not exceed 128 characters.</mat-error>
+              } @else if (password.hasError('missingUppercase')) {
+                <mat-error
+                  >Password must contain an uppercase letter.</mat-error
+                >
+              } @else if (password.hasError('missingLowercase')) {
+                <mat-error>Password must contain a lowercase letter.</mat-error>
+              } @else if (password.hasError('missingNumber')) {
+                <mat-error>Password must contain a number.</mat-error>
+              } @else if (password.hasError('missingSpecial')) {
+                <mat-error
+                  >Password must contain a special character.</mat-error
+                >
+              }
+            }
+          </mat-form-field>
+
+          <mat-form-field class="field-half-width" appearance="outline">
+            <mat-label>Organization domain</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="domain"
+              autocomplete="url"
+              placeholder="https://your-org.com" />
+
+            @if (hasError('domain')) {
+              @if (domain.hasError('required')) {
+                <mat-error>Organization domain is required.</mat-error>
+              } @else if (domain.hasError('maxlength')) {
+                <mat-error
+                  >Organization domain must not exceed 255
+                  characters.</mat-error
+                >
+              }
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="cta-row">
+          <div class="helper-copy">
+            <span>Your account will be created immediately.</span>
+            <span>You can complete billing from the dashboard.</span>
+          </div>
+
+          <button
+            class="sdux-button signup-button"
+            mat-flat-button
+            type="submit"
+            [disabled]="!canContinue()">
+            Next
+          </button>
+        </div>
+
+        <div class="login-redirect">
+          <span>Already have an account?</span>
+          <a routerLink="/login">Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

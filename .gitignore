@@ -1,0 +1,70 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+ai-tasks
+/dist
+/tmp
+/out-tsc
+/bazel-out
+/documentation
+tools/**/keys
+tools/**/tokens
+tools/documentation/artifacts/*.diff.json
+projects/stackblitz/**/.angular/
+.integration
+.env
+.cli.env
+logs
+docker/**/output
+snapshot-output.log
+logs
+
+
+projects/chrome-plugin/panel/index.html
+projects/chrome-plugin/panel/main.js
+projects/chrome-plugin/panel/styles.css
+
+projects/integration/src/testing/snapshot-output.log
+
+*.comparison.txt
+*.diff.txt
+*.zip
+test.txt
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/keybindings.json
+!.vscode/typescript.code-snippets
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+__screenshots__/
+
+# System files
+.DS_Store
+Thumbs.db

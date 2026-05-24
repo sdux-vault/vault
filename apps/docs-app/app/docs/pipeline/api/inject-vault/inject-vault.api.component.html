@@ -1,0 +1,305 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-25 -->
+<div class="docs-container">
+  <div class="header">
+    <h3>injectVault()</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>injectVault()</strong> function provides access to the
+      strongly typed
+      <strong
+        ><a href="/docs/references/functions/feature-cell">FeatureCell</a> vault
+        instance</strong
+      >
+      associated with an Angular
+      <strong
+        >&#64;<a href="/docs/references/functions/feature-cell"
+          >FeatureCell</a
+        ></strong
+      >-decorated service. It is the
+      <strong>primary and only supported mechanism</strong> for retrieving a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+      runtime API inside Angular.
+    </p>
+
+    <h4>Injection Contract Summary</h4>
+    <ul>
+      <li>Angular-only API</li>
+      <li>Requires a <code>&#64;FeatureCell()</code>-decorated class</li>
+      <li>
+        Must be called inside the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        service constructor or initializer
+      </li>
+      <li>Returns a fully typed <code>FeatureCellShape&lt;T&gt;</code></li>
+      <li>Requires prior registration via <code>provideFeatureCell()</code></li>
+    </ul>
+
+    <p>
+      <strong>injectVault()</strong> does not create or register a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>. It
+      resolves an existing
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> instance
+      from Angular dependency injection using metadata written by the
+      <strong
+        >&#64;<a href="/docs/references/functions/feature-cell"
+          >FeatureCell</a
+        ></strong
+      >
+      decorator.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      <strong>injectVault()</strong> may only be used within the owning
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> service.
+      Attempting to inject the same
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> into
+      multiple services or outside a
+      <strong
+        >&#64;<a href="/docs/references/functions/feature-cell"
+          >FeatureCell</a
+        ></strong
+      >-decorated class is invalid and results in a runtime error.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- USAGE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Usage</div>
+
+    <div class="section-body">
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+        typically declared as an Angular service. The
+        <strong
+          >&#64;<a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >
+        decorator defines the cell’s identity and state type, while
+        <strong>injectVault&lt;T&gt;()</strong> retrieves the corresponding
+        vault instance.
+      </p>
+
+      <p>
+        The vault must be injected <strong>once</strong> per
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
+        must be stored on the service instance. Injection is synchronous and
+        safe during construction.
+      </p>
+
+      <h4>Example: Declaring an Angular FeatureCell</h4>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Angular FeatureCell Declaration'">
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: [] 
+      }
+    )
+  ]
+};
+          
+// bank-employee.service.ts
+// The provideFeatureCell key must match the @FeatureCell key input
+          
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.shape';
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+
+  // Use injectVault to get an instance of the FeatureCell
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    // Required to activate the FeatureCell
+    this.vault.initialize();
+  }
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>
+          Associates the service with a
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> key
+        </li>
+        <li>
+          Resolves the correct
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          vault from Angular DI
+        </li>
+        <li>
+          Provides a fully typed
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          runtime API
+        </li>
+        <li>
+          Ensures the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+          initialized exactly once
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RULES & CONSTRAINTS -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Rules & Constraints</div>
+
+    <div class="section-body">
+      <ul>
+        <li>
+          <strong
+            >Must be called inside a &#64;<a
+              href="/docs/references/functions/feature-cell"
+              >FeatureCell</a
+            >-decorated service</strong
+          ><br />
+          The function relies on static metadata written by the decorator.
+        </li>
+
+        <li>
+          <strong
+            >Must receive the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            class reference</strong
+          ><br />
+          Passing the class allows SDuX to resolve the correct DI token.
+        </li>
+
+        <li>
+          <strong
+            >May only be used once per
+            <a href="/docs/references/functions/feature-cell"
+              >FeatureCell</a
+            ></strong
+          ><br />
+          A
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          vault is owned by exactly one service instance.
+        </li>
+
+        <li>
+          <strong>Requires prior registration</strong><br />
+          <code>provideFeatureCell()</code> must run before injection occurs.
+        </li>
+      </ul>
+
+      <p>
+        Violating any of these constraints results in a controlled runtime error
+        to prevent ambiguous ownership or invalid
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycles.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <div class="table-title">Injection API</div>
+      <table aria-label="Injection API">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Function</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <strong>injectVault&lt;T&gt;</strong>
+
+              <p>inputs:</p>
+              <ul>
+                <li>featureCellClass: Class</li>
+              </ul>
+
+              <p>return:</p>
+              <ul>
+                <li>
+                  <a href="/docs/references/shapes/feature-cell-shape"
+                    >FeatureCellShape</a
+                  >&lt;T&gt;
+                </li>
+              </ul>
+            </td>
+            <td>
+              Resolves and injects the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              vault associated with the given
+              <strong
+                >&#64;<a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                ></strong
+              >-decorated class. The returned object exposes the complete
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              runtime API.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FEATURECELL SHAPE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/shapes/feature-cell-shape">FeatureCellShape</a
+      >&lt;T&gt;
+    </div>
+
+    <div class="section-body">
+      <p>
+        A
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        exposes a stable runtime surface defined by the
+        <strong
+          ><a href="/docs/references/shapes/feature-cell-shape"
+            >FeatureCellShape</a
+          >&lt;T&gt;</strong
+        >
+        contract. This shape represents the complete public interaction surface
+        for configuring behaviors, observing state, and issuing state updates
+        after registration.
+      </p>
+
+      <sdux-feature-cell-shape-common />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

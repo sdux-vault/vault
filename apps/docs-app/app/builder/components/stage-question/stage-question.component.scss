@@ -1,0 +1,187 @@
+@use 'global' as global;
+
+.stage-question-container {
+  display: flex;
+  gap: global.$spacing-xs;
+
+  /* Vertical active bar */
+  .stage-question-status {
+    flex: 0 0 5px;
+    box-sizing: border-box;
+    background-color: transparent;
+
+    &.active {
+      background-color: global.$sdux-primary-base;
+      border: 1px solid global.$sdux-primary-light;
+      border-radius: global.$border-radius-md;
+    }
+  }
+
+  /* ===============================
+     Stage Pill
+  =============================== */
+  .stage-question {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-xs;
+
+    padding: global.$spacing-sm;
+
+    border-radius: global.$border-radius-md;
+    cursor: pointer;
+
+    background-color: var(--sdux-surface-base);
+    border: 1px solid var(--sdux-surface-outline);
+    box-shadow: var(--sdux-shadow-base);
+
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    /* ===============================
+       Status Variants
+    =============================== */
+
+    &.active {
+      background-color: global.$sdux-surface-active-light;
+      border: 1px solid global.$sdux-border-active;
+      box-shadow: 0 0 0 2px rgba(global.$sdux-primary-base, 0.15);
+
+      .stage-label {
+        color: global.$sdux-primary-base;
+      }
+    }
+
+    &.inactive {
+      background-color: global.$sdux-surface-inactive-light;
+      border: 1px solid global.$sdux-border-inactive;
+
+      .stage-label {
+        color: global.$sdux-text-inverse;
+      }
+    }
+
+    &.complete {
+      background-color: global.$sdux-surface-complete-light;
+      border: 1px solid global.$sdux-border-complete;
+
+      .stage-label {
+        color: global.$sdux-success-dark;
+      }
+    }
+
+    &.idle {
+      background-color: global.$sdux-surface-idle-light;
+      border: 1px solid global.$sdux-border-idle;
+
+      .stage-label {
+        color: var(--sdux-text-primary);
+      }
+    }
+
+    /* ===============================
+       Header Row (Label + Controls)
+    =============================== */
+
+    .stage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: global.$spacing-sm;
+      min-width: 0;
+      height: 35px;
+
+      .stage-title {
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-xs;
+        min-width: 0;
+        flex: 1;
+        color: var(--sdux-text-inverse);
+      }
+
+      .stage-label {
+        font-weight: global.$font-weight-semibold;
+        @include global.sdux-font-body(
+          global.$font-size-md,
+          global.$font-weight-semibold,
+          var(--sdux-text-primary)
+        );
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      /* ===============================
+       Controls
+    =============================== */
+
+      .controls {
+        height: 30px !important;
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-xs;
+        flex-shrink: 0;
+
+        .button-toggle {
+          height: 30px !important;
+          transition:
+            background-color 0.2s ease,
+            box-shadow 0.15s ease,
+            transform 0.1s ease;
+
+          &.is-selected {
+            box-shadow: var(--sdux-shadow-active);
+            transform: translateY(-3px);
+            font-weight: global.$font-weight-semibold;
+          }
+
+          &.is-not-selected {
+            @include global.button-base(
+              global.$sdux-text-disabled,
+              global.$sdux-surface-light,
+              global.$sdux-surface-outline
+            );
+            height: 30px !important;
+            min-width: 30px !important;
+            padding: 0;
+          }
+
+          &.is-disabled {
+            @include global.button-base(
+              global.$sdux-text-white,
+              global.$sdux-text-disabled,
+              global.$sdux-surface-outline
+            );
+            height: 30px !important;
+            min-width: 30px !important;
+            padding: 0;
+          }
+        }
+      }
+    }
+
+    /* ===============================
+       Description Row
+    =============================== */
+
+    .stage-description {
+      font-size: global.$font-size-xs;
+      opacity: 0.75;
+      line-height: 1.35;
+
+      word-break: break-word;
+
+      /* Optional: clamp to 2 lines */
+      /*
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      */
+    }
+  }
+}

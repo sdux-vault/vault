@@ -1,0 +1,278 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Pipeline Architecture Index -->
+<div class="docs-container">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Pipeline Architecture</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      This page provides the authoritative structural index of the SDuX reactive
+      pipeline. It enumerates every execution layer and pipeline stage in their
+      deterministic order.
+    </p>
+
+    <p>
+      Each stage listed below links to its dedicated documentation page. This
+      document does not duplicate stage-level specifications. Instead, it serves
+      as the canonical architectural map of pipeline responsibility boundaries
+      and execution flow.
+    </p>
+
+    <p>
+      Use this page when designing
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> behavior
+      stacks, validating execution order, or navigating between pipeline stages.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- STAGE MATRIX -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Pipeline Stage Matrix</div>
+
+    <div class="table-title">Policy Layer</div>
+    <table aria-label="Policy Layer">
+      <thead>
+        <tr>
+          <th scope="col" class="column-150">Stage</th>
+          <th scope="col" class="column-auto">Primary Responsibility</th>
+          <th scope="col" class="column-100">Documentation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Policy (Controllers)</td>
+          <td>
+            Governs execution authority for pipeline attempts. Evaluates and
+            enforces whether an update is allowed, denied, or aborted before
+            pipeline computation begins.
+          </td>
+          <td>
+            <a routerLink="/docs/pipeline/controllers/policy">View</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ===================== -->
+    <!-- PRE-PROCESSING -->
+    <!-- ===================== -->
+    <div class="table-title">Pre-Processing Layer</div>
+    <table aria-label="Pre-Processing Layer">
+      <thead>
+        <tr>
+          <th scope="col" class="column-150">Stage</th>
+          <th scope="col" class="column-auto">Primary Responsibility</th>
+          <th scope="col" class="column-100">Documentation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Interceptors</td>
+          <td>
+            Admission control and conditional gating before pipeline execution
+            begins.
+          </td>
+          <td>
+            <a routerLink="/docs/pipeline/behaviors/interceptors">View</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Pre-Cache</td>
+          <td>Optional pre-admission caching and update coordination.</td>
+          <td>RoadMap</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ===================== -->
+    <!-- PROCESSING -->
+    <!-- ===================== -->
+    <div class="table-title">Processing Layer</div>
+    <table aria-label="Processing Layer">
+      <thead>
+        <tr>
+          <th scope="col" class="column-150">Stage</th>
+          <th scope="col" class="column-auto">Primary Responsibility</th>
+          <th scope="col" class="column-100">Documentation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Resolve</td>
+          <td>
+            Normalizes incoming input types into a resolved candidate value.
+          </td>
+          <td><a routerLink="/docs/pipeline/behaviors/resolve">View</a></td>
+        </tr>
+        <tr>
+          <td>Merge</td>
+          <td>
+            Combines the current committed state with the resolved candidate
+            value.
+          </td>
+          <td><a routerLink="/docs/pipeline/behaviors/merge">View</a></td>
+        </tr>
+        <tr>
+          <td>Stepwise Resolve</td>
+          <td>
+            Optional staged resolution for incremental candidate production.
+          </td>
+          <td><a routerLink="/docs/pipeline/behaviors/stepwise">View</a></td>
+        </tr>
+        <tr>
+          <td>Operators</td>
+          <td>Refines or suppresses the merged candidate before filtering.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/operators">View</a></td>
+        </tr>
+        <tr>
+          <td>Filters</td>
+          <td>Refines or suppresses candidate values prior to reduction.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/filters">View</a></td>
+        </tr>
+        <tr>
+          <td>Stepwise Filter</td>
+          <td>Optional incremental filtering of staged candidates.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/stepwise">View</a></td>
+        </tr>
+        <tr>
+          <td>Before Tap*</td>
+          <td>Observational callbacks executed prior to reduction.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/taps">View</a></td>
+        </tr>
+        <tr>
+          <td>Reducers</td>
+          <td>
+            Computes the finalized candidate state from the processed value.
+          </td>
+          <td><a routerLink="/docs/pipeline/behaviors/reducers">View</a></td>
+        </tr>
+        <tr>
+          <td>Stepwise Reducer</td>
+          <td>Optional incremental reduction of staged values.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/stepwise">View</a></td>
+        </tr>
+        <tr>
+          <td>After Tap*</td>
+          <td>Observational callbacks executed after reduction.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/taps">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ===================== -->
+    <!-- OUTPUT -->
+    <!-- ===================== -->
+    <div class="table-title">Output Layer</div>
+    <table aria-label="Output Layer">
+      <thead>
+        <tr>
+          <th scope="col" class="column-150">Stage</th>
+          <th scope="col" class="column-auto">Primary Responsibility</th>
+          <th scope="col" class="column-100">Documentation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Encryption</td>
+          <td>Transforms outbound snapshots prior to persistence.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/encrypt">View</a></td>
+        </tr>
+        <tr>
+          <td>Persist</td>
+          <td>Stores committed state snapshots externally.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/persist">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ===================== -->
+    <!-- POST-PROCESSING -->
+    <!-- ===================== -->
+    <div class="table-title">Post-Processing Layer</div>
+    <table aria-label="Post-Processing Layer">
+      <thead>
+        <tr>
+          <th scope="col" class="column-150">Stage</th>
+          <th scope="col" class="column-auto">Primary Responsibility</th>
+          <th scope="col" class="column-100">Documentation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>State Cache</td>
+          <td>Coordinates cache synchronization after persistence.</td>
+          <td>
+            <a
+              routerLink="/docs/pipeline/addons/entity-access/with-state-cache-behavior"
+              >View</a
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>Offline Mode</td>
+          <td>Handles external coordination for offline scenarios.</td>
+          <td>RoadMap</td>
+        </tr>
+        <tr>
+          <td>State Emission</td>
+          <td>Commits and exposes finalized state snapshots.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/state">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ===================== -->
+    <!-- ERROR -->
+    <!-- ===================== -->
+    <div class="table-title">Error Layer</div>
+    <table aria-label="Error Layer">
+      <thead>
+        <tr>
+          <th scope="col" class="column-150">Stage</th>
+          <th scope="col" class="column-auto">Primary Responsibility</th>
+          <th scope="col" class="column-100">Documentation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Core Error</td>
+          <td>Normalizes and captures pipeline errors.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/error">View</a></td>
+        </tr>
+        <tr>
+          <td>Error Transform</td>
+          <td>Transforms or augments errors prior to exposure.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/error">View</a></td>
+        </tr>
+        <tr>
+          <td>Error Emitters</td>
+          <td>Emits normalized errors to registered observers.</td>
+          <td><a routerLink="/docs/pipeline/behaviors/error">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FULL PIPELINE DIAGRAM -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Full Pipeline Execution Diagram</div>
+
+    <div class="section-body">
+      The diagram below illustrates the complete deterministic execution order
+      of all pipeline layers and stages, from admission through final state
+      emission.
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'" />
+    </div>
+  </section>
+</div>

@@ -1,0 +1,173 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container">
+  <div class="header">
+    <h3>Persist Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Persist Behaviors</strong> provide the output-stage responsible
+      for writing committed
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> state to
+      browser-accessible or external storage systems such as localStorage,
+      sessionStorage, or custom persistence targets. Persist behaviors observe
+      the finalized pipeline output and perform durable side effects without
+      influencing pipeline execution.
+    </p>
+
+    <p>
+      The Persist stage operates after all upstream processing—including
+      resolve, merge, operators, filters, and reducers—has completed. It
+      receives the authoritative, reduced state value and is responsible solely
+      for persistence and hydration concerns.
+    </p>
+
+    <p>
+      Persist behaviors do not transform values, do not emit snapshots, and do
+      not participate in pipeline control flow. Their role is limited to reading
+      and writing finalized state in a predictable, fail-safe manner.
+    </p>
+
+    <h4>Asynchronous Execution</h4>
+    <p>
+      Persist behaviors may execute asynchronously. When asynchronous
+      persistence is used, the pipeline awaits completion to preserve execution
+      order and prevent overlapping runs. Synchronous persist behaviors execute
+      inline without affecting pipeline scheduling.
+    </p>
+
+    <div class="note">Note</div>
+    <p>
+      Persist behaviors may be freely composed and stacked within a
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>. When
+      multiple persist behaviors are configured, each behavior is invoked in
+      sequence during the Persist stage and receives the same final pipeline
+      value.
+    </p>
+
+    <p>
+      Persist behaviors do not coordinate with one another and do not influence
+      pipeline control flow. The only practical consideration when stacking
+      persist behaviors is execution cost: persistence speed is bounded by the
+      user’s device performance and, when custom asynchronous persist behaviors
+      are introduced, by external I/O latency. The pipeline preserves strict
+      execution order and does not allow overlapping runs.
+    </p>
+  </header>
+
+  <sdux-vault-data-security-persist-common />
+
+  <section class="section">
+    <div class="section-title">Persist Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Persist Stage is the final state-output stage of the Output layer.
+        It receives the fully reduced, committed
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        and performs side-effecting persistence operations such as writing to
+        long-term or medium-term storage. Persist behaviors never modify
+        pipeline data and never affect whether a state update succeeds or fails.
+      </p>
+
+      <p>
+        Persist behaviors are invoked only when explicitly configured for a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. They
+        execute after state has been finalized and committed, ensuring that
+        persistence always reflects the authoritative pipeline outcome. During
+        application startup, persist behaviors may also participate in state
+        hydration by loading previously stored values.
+      </p>
+
+      <p>
+        All persist behaviors follow a strict <em>fail-safe</em> model. Errors
+        during storage access, serialization, or deserialization are caught and
+        logged without throwing. Persistence failures never interrupt pipeline
+        execution, block state updates, or prevent
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization. When persisted data cannot be loaded, the pipeline
+        proceeds as if no stored state were present.
+      </p>
+
+      <p>
+        Persist behaviors are optional and non-destructive. When no persist
+        configuration is supplied, the Persist stage performs no work and is
+        effectively skipped. When present, persist behaviors provide durable
+        state continuity across application lifecycles without introducing
+        coupling to upstream pipeline stages.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Design Decisions</div>
+
+    <div class="section-body">
+      <p>
+        Persist behaviors expose a small, intentional surface area: writing
+        finalized state, restoring it on startup, and clearing it when required.
+        The table below illustrates common persistence scenarios and their
+        expected outcomes across all built-in persist behaviors.
+      </p>
+
+      <p>
+        Persist behaviors are deliberately defensive. Serialization failures,
+        storage quota errors, permission issues, and malformed data never throw
+        or interrupt pipeline execution. When a failure occurs, the behavior
+        logs diagnostic output (when enabled) and returns <em>undefined</em>,
+        allowing FeatureCells to recover gracefully.
+      </p>
+
+      <p>
+        Persisted storage is cleared only as a result of an explicit
+        state-clearing action. When a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        pipeline state is intentionally cleared—either by emitting a merge
+        update with <code>{{ `{ value: null }` }}</code> (with clearing enabled)
+        or by invoking <code>vault.reset()</code>—all configured persist
+        behaviors remove their associated stored entries. This ensures that
+        cleared pipeline state and persisted state remain consistent.
+      </p>
+
+      <p>
+        In contrast, destroying a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> or
+        allowing it to be garbage-collected does <em>not</em> clear persisted
+        storage. Persisted data is designed to outlive in-memory pipeline
+        instances and remain available for future initialization. This allows
+        FeatureCells to be torn down and recreated without losing previously
+        persisted state, unless an explicit clear or reset operation is
+        performed.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagram</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/3.7/3.7.2-persist-lifecycle.svg"
+        [tooltip]="'Persist Lifecycle'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2.1-pipeline-initialization-flow.svg"
+        [tooltip]="'FeatureCell Initialization Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available Persist Behaviors</div>
+    <div class="section-body">
+      <sdux-vault-persist-behaviors-common />
+    </div>
+  </section>
+
+  <sdux-vault-persist-behavior-comparison-common />
+
+  <sdux-vault-persist-licensing-common />
+
+  <sdux-pipeline-related-topics />
+</div>

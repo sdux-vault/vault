@@ -1,0 +1,356 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Operator Behaviors</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Operator Behaviors</strong> provide a pipeline stage for
+      conditional value handling after resolve and merge but before filtering,
+      reduction, and taps. Operators act on the fully resolved pipeline value
+      and determine whether that value should continue through the remaining
+      stages.
+    </p>
+
+    <p>
+      The Operator Stage runs after resolve and merge, receiving the merged
+      pipeline value as input. An operator may forward the value unchanged,
+      forward a modified value, or suppress the update entirely. Operators do
+      not mutate existing state and do not emit snapshots directly.
+    </p>
+
+    <p>
+      Operators are commonly used for deduplication, conditional suppression,
+      and value normalization that must occur before filters or reducers
+      execute. When an operator returns
+      <em><a href="/docs/references/const/vault_noop">VAULT_NOOP</a></em
+      >, the current pipeline execution is short-circuited for that value, no
+      snapshot is emitted, and downstream stages are skipped.
+    </p>
+
+    <h4>Asynchronous Execution</h4>
+    <p>
+      Operator behaviors execute asynchronously and are awaited by the pipeline.
+      This allows operators to perform asynchronous checks or comparisons while
+      preserving strict execution order and non-overlapping pipeline runs.
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Operator Stage</div>
+
+    <div class="section-body">
+      <p>
+        The Operator Stage executes after resolve and merge and before filters,
+        reducers, and taps. Operators receive the fully resolved and merged
+        pipeline value and determine whether that value should continue through
+        the remaining pipeline stages.
+      </p>
+
+      <p>
+        Operators may forward the value unchanged, forward a modified value, or
+        suppress further pipeline processing. Suppression occurs when an
+        operator returns
+        <a href="/docs/references/const/vault_noop">VAULT_NOOP</a>, which
+        immediately ends pipeline execution for the current value. Downstream
+        stages are skipped and no snapshot is emitted. The pipeline resumes
+        normally for future executions.
+      </p>
+
+      <p>
+        Operators do not mutate existing state, do not emit snapshots directly,
+        and do not influence pipeline scheduling or lifecycle control. Their
+        responsibility is limited to evaluating the resolved pipeline value and
+        deciding whether, and in what form, that value proceeds to later stages.
+      </p>
+
+      <h4>Core Pipeline Stage</h4>
+      <p>
+        The Operator stage is a core pipeline stage and is always present as
+        part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        lifecycle. However, individual operator behaviors are
+        <em>not</em> applied implicitly. Operators are attached explicitly
+        through the fluent <strong>.operators()</strong> API during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        Operator configuration is declarative and ordered. When provided,
+        operators are executed in the
+        <em>Processing Layer</em> in the exact order they are registered. This
+        ensures that value refinement, suppression, and deduplication rules are
+        defined explicitly at startup rather than embedded into static cell
+        configuration or implicit runtime behavior.
+      </p>
+
+      <p>
+        Operators are evaluated deterministically for each pipeline execution.
+        They operate in isolation, receive no direct access to state history or
+        reducers, and may not perform side effects. This ensures that operator
+        behavior remains predictable and does not introduce hidden coupling
+        between pipeline stages.
+      </p>
+
+      <h4>Fluent Operators() API</h4>
+      <p>
+        A <a href="/docs/references/functions/feature-cell">FeatureCell</a> may
+        declare <strong>multiple operators</strong>. The fluent
+        <strong>.operators()</strong> API accepts an array of operator
+        behaviors, which is treated as a declarative, ordered configuration.
+        When provided, operators execute in the <em>Processing Layer</em> in the
+        exact order they are listed during initialization.
+      </p>
+
+      <p>
+        Each operator receives the resolved and merged pipeline value produced
+        by earlier stages and determines whether that value should continue
+        through the pipeline. Operators may forward the value unchanged, forward
+        a modified value, or suppress the update entirely.
+      </p>
+
+      <p>
+        An empty operator array is ignored and has no effect on pipeline
+        execution.
+      </p>
+
+      <div class="note">Note</div>
+      <p>
+        Although operator composition is fully supported, operator chains should
+        remain narrowly focused. Because operators may suppress emissions or
+        alter values before reduction, combining multiple operators with
+        overlapping concerns can make pipeline behavior harder to reason about.
+        Operators are most effective when each enforces a single, clearly
+        defined transformation or suppression rule.
+      </p>
+    </div>
+  </section>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.6/2.6-operator-flow.svg"
+        [tooltip]="'Operator Execution Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.3/2.3-incoming-pipeline.svg"
+        [tooltip]="'Incoming Pipeline Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Available Operator Behaviors</div>
+    <div class="section-body">
+      <sdux-vault-distinct-until-changed-behavior-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      Initialization
+    </div>
+
+    <div class="section-body">
+      <p>
+        The Operator stage exposes a fluent configuration API that allows
+        engineers to register operator behaviors during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <p>
+        This API does not execute operators directly. It records an ordered set
+        of operator behaviors that are later applied by the Operator stage
+        during pipeline execution.
+      </p>
+
+      <div class="table-title">Fluent Operator Configuration</div>
+      <table aria-label="Fluent Operator Configuration">
+        <thead>
+          <tr>
+            <th scope="col" class="column-300">Fluent API</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p><strong>.operators(operators)</strong></p>
+              <p>input:</p>
+              <ul>
+                <li>
+                  operators:
+                  <a
+                    href="/docs/references/contracts/operators-behavior-class-contract"
+                    >OperatorsBehaviorClassContract</a
+                  >&lt;T&gt;[]
+                </li>
+              </ul>
+              <p>
+                returns:
+                <a href="/docs/references/shapes/feature-cell-base-shape"
+                  >FeatureCellBaseShape</a
+                >
+                (chainable)
+              </p>
+            </td>
+
+            <td>
+              <p>
+                Registers operator behaviors for a
+                <a href="/docs/references/functions/feature-cell">FeatureCell</a
+                >. The supplied behaviors define how resolved and merged
+                pipeline values may be refined, suppressed, or deduplicated
+                before reaching downstream stages.
+              </p>
+
+              <p>
+                Operators are executed in the <em>Processing Layer</em> in the
+                exact order they are registered. This method must be called
+                before <code>initialize()</code>. Multiple calls overwrite prior
+                operator configuration.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <p>
+        Operators are enabled by registering operator behaviors during
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        initialization.
+      </p>
+
+      <h4>Example 1: Configure a FeatureCell with Operators</h4>
+
+      <p>
+        In this example, the
+        <a href="/docs/pipeline/addons/with-distinct-until-changed"
+          >withDistinctUntilChanged</a
+        >
+        operator is registered during initialization. Operators are executed in
+        the order they are declared and operate on the resolved, merged pipeline
+        value before downstream stages are evaluated.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Operators'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+
+  constructor() {
+    // Apply one or more operators during initialization
+    this.vault
+      .operators(
+        [
+          withDistinctUntilChanged()
+          // up to N operators
+        ]
+      ).initialize();
+  }
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Operators'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Operator behaviors are registered via the fluent API,
+    // not as part of the declarative FeatureCell definition.
+  ]
+);
+
+// Apply one or more operators during initialization
+employeeCell.operators(
+  [
+    withDistinctUntilChanged()
+    // up to N operators
+  ]
+).initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="
+                      'Example 1: Configure a FeatureCell with Operators'
+                    ">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Operator behaviors are registered via the fluent API,
+    // not as part of the declarative FeatureCell definition.
+  ]
+);
+
+// Apply one or more operators during initialization
+employeeCell.operators(
+  [
+    withDistinctUntilChanged()
+    // up to N operators
+  ]
+).initialize();`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

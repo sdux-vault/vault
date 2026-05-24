@@ -1,0 +1,41 @@
+<nav aria-label="Extending SDuX">
+  <mat-expansion-panel class="nav-expansion">
+    <mat-expansion-panel-header>
+      <span class="nav-section-label">Extending {{ brandName }}</span>
+    </mat-expansion-panel-header>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/extensions"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item"
+        >What is {{ brandName }} Extensions?</span
+      >
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/extensions/building-custom-controllers"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Building Custom Controllers</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/extensions/building-custom-behaviors"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Building Custom Behaviors</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/extensions/licensing-and-monetization"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Licensing & Monetization</span>
+    </a>
+  </mat-expansion-panel>
+</nav>

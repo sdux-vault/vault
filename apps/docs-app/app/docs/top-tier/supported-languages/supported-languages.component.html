@@ -1,0 +1,770 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-01-26 -->
+<div class="docs-container">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Supported Languages</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      <strong
+        ><sdux-brand-name [tm]="true" /> is a
+        <sdux-catch-phrase [tm]="true" /> framework.</strong
+      >
+      It does not depend on reflection, runtime patching, framework lifecycles,
+      or hidden side effects. As a result,
+      <sdux-brand-name /> works consistently across
+      <em>any environment capable of running TypeScript and JavaScript</em>.
+    </p>
+
+    <p>
+      All <sdux-brand-name /> concepts—FeatureCells, pipelines, reducers,
+      filters, interceptors, lifecycle signals, and immutable state
+      snapshots—are implemented as
+      <strong>language-level primitives composed in TypeScript</strong>, not
+      framework abstractions.
+    </p>
+
+    <p>
+      Any framework integrations exist only as thin adapters that improve
+      ergonomics without changing behavior or rules.
+    </p>
+
+    <p>
+      This design allows <sdux-brand-name /> to serve as a
+      <strong>shared foundation</strong> for state management across ecosystems.
+      Rather than fragmenting solutions per framework,
+      <sdux-brand-name /> provides a common core that frameworks can build on
+      together and evolve collaboratively.
+    </p>
+
+    <h4>What This Means</h4>
+    <ul>
+      <li>Identical state semantics across all platforms</li>
+      <li>Explicit lifecycle control everywhere</li>
+      <li>No framework lock-in</li>
+      <li>Predictable behavior in any runtime</li>
+      <li>Frameworks add ergonomics, not rules</li>
+    </ul>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- CORE GUARANTEES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Core Guarantees (Applies Everywhere)</div>
+
+    <div class="section-body">
+      <p>
+        Regardless of framework or runtime, the following
+        <sdux-brand-name /> guarantees always hold:
+      </p>
+
+      <ul>
+        <li>
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          identity via a unique string key
+        </li>
+        <li>
+          Explicit
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          registration
+        </li>
+        <li>Explicit initialization (no implicit activation)</li>
+        <li>
+          Deterministic pipeline stages (interceptors → resolve → filters →
+          reducers → taps)
+        </li>
+        <li>Immutable state snapshots</li>
+        <li>
+          Reactive state observation via Observable-based emissions (state$) for
+          snapshot updates
+        </li>
+        <li>
+          Synchronous snapshot access (state) and reactive streams (state$) are
+          both first-class and consistent
+        </li>
+        <li>Well-defined lifecycle signals (reset, destroy, state$, etc.)</li>
+        <li>Strong typing enforced at compile time via generics</li>
+        <li>
+          State evolution follows immutable, reducer-driven semantics aligned
+          with Redux-style principles
+        </li>
+        <li>
+          Tooling- and devtools-friendly architecture with explicit lifecycle
+          and inspectable pipeline stages
+        </li>
+        <li>Extensible by design through composable behaviors and adapters</li>
+        <li>No reliance on decorators unless a platform opts in</li>
+      </ul>
+
+      <p>
+        These guarantees make <sdux-brand-name />&nbsp;<strong
+          >runtime-agnostic by design</strong
+        >.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SUPPORTED RUNTIMES -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Supported Runtimes & Frameworks</div>
+
+    <div class="section-body">
+      <div class="table-title">TypeScript-Compatible Environments</div>
+
+      <table aria-label="TypeScript-Compatible Environments">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Platform</th>
+            <th scope="col" class="column-auto">Support & Notes</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><strong>Angular</strong></td>
+            <td>
+              First-class support via &#64;<a
+                href="/docs/references/functions/feature-cell"
+                >FeatureCell</a
+              >, injectVault, and Angular Signals. Angular adds ergonomic sugar
+              and DI integration on top of the same core runtime but does not
+              alter <sdux-brand-name /> behavior or lifecycle rules.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Bun</strong></td>
+            <td>
+              Fully supported with the same semantics as Node.js. FeatureCells
+              function as long-lived stateful services, ideal for orchestration,
+              background processing, and tooling.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Deno</strong></td>
+            <td>
+              Fully supported. Same semantics as Node.js. FeatureCells function
+              as long-lived stateful services, ideal for orchestration,
+              background processing, and tooling.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Edge Runtimes</strong></td>
+            <td>
+              Supported with awareness of runtime constraints. Long-lived
+              FeatureCells may be limited, but request-bounded FeatureCells
+              remain fully valid.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Electron</strong></td>
+            <td>
+              Supported. Combines browser and Node.js runtimes without altering
+              <sdux-brand-name /> behavior.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>NativeScript</strong></td>
+            <td>
+              Fully supported. UI layer is irrelevant to <sdux-brand-name />;
+              patterns mirror Angular or React usage.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>NestJS</strong></td>
+            <td>
+              Supported with lifecycle awareness. FeatureCells map cleanly to
+              providers.
+              <br /><br />
+              <strong>NestJS-specific notes:</strong>
+              <ul>
+                <li>
+                  initialize() should be called in onModuleInit or
+                  onApplicationBootstrap
+                </li>
+                <li>
+                  destroy() should be called in onModuleDestroy or
+                  beforeApplicationShutdown
+                </li>
+                <li>Singleton-scoped FeatureCells are recommended</li>
+                <li>Request-scoped FeatureCells are generally discouraged</li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Node.js</strong></td>
+            <td>
+              Fully supported. FeatureCells function as long-lived stateful
+              services, ideal for orchestration, background processing, event
+              pipelines, CLIs, and servers.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Qwik</strong></td>
+            <td>
+              Reactivity-first framework. <sdux-brand-name /> owns state
+              correctness; the framework owns rendering. Strong alignment with
+              fine-grained reactivity.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>React</strong></td>
+            <td>
+              Fully supported using plain TypeScript. FeatureCells are
+              registered explicitly and consumed via state, state$, or framework
+              adapters (hooks, external stores). FeatureCells integrate cleanly
+              with React without relying on framework-specific lifecycle
+              assumptions. <br /><br />
+              <strong>React-specific notes:</strong>
+              <ul>
+                <li>
+                  FeatureCells should be registered at application startup (e.g.
+                  module scope or app bootstrap), not inside components.
+                </li>
+                <li>
+                  initialize() must be called explicitly before state is
+                  consumed, typically during application startup or in a
+                  top-level provider.
+                </li>
+                <li>
+                  State consumption is typically performed via:
+                  <ul>
+                    <li>state$ with subscriptions</li>
+                    <li>synchronous state reads</li>
+                    <li>
+                      framework adapters (e.g. hooks or external store bindings)
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  FeatureCells should not be created per render. They are
+                  intended to be long-lived, shared state owners rather than
+                  component-scoped objects.
+                </li>
+                <li>
+                  Component unmounting does <em>not</em> automatically destroy a
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >. Lifecycle control remains explicit via reset() and
+                  destroy().
+                </li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Service Workers</strong></td>
+            <td>
+              Fully supported with lifecycle awareness. FeatureCells operate
+              within a constrained, event-driven lifecycle governed by the
+              browser. Explicit initialization and destruction are critical, as
+              workers may be suspended or terminated at any time by the runtime.
+              <br /><br />
+              Best suited for request-bounded or event-scoped FeatureCells
+              rather than long-lived state owners.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Solid</strong></td>
+            <td>
+              Reactivity-first framework. <sdux-brand-name /> owns state
+              correctness; the framework owns rendering. Strong alignment with
+              fine-grained reactivity.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Svelte</strong></td>
+            <td>
+              Reactivity-first framework. <sdux-brand-name /> owns state
+              correctness; the framework owns rendering. Strong alignment with
+              fine-grained reactivity.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Tauri</strong></td>
+            <td>
+              Supported. Combines browser and Node.js runtimes without altering
+              <sdux-brand-name /> behavior.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Vanilla JavaScript</strong></td>
+            <td>
+              Fully supported. FeatureCells operate as plain runtime objects.
+              Explicit initialization and destruction are clearest and most
+              transparent in this environment.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Vue</strong></td>
+            <td>
+              Same guarantees as React. Vue reactivity integrates cleanly via
+              adapters without influencing
+              <sdux-brand-name /> lifecycle or pipeline semantics.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Web Components</strong></td>
+            <td>
+              Framework-agnostic by nature. FeatureCells may be owned by
+              elements, shared controllers, or host applications without
+              violating any <sdux-brand-name /> contracts.
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Web Workers</strong></td>
+            <td>
+              Fully supported. Web Workers provide a stable, message-driven
+              execution environment well-suited to long-running pipelines.
+              FeatureCells integrate naturally with postMessage-based workflows,
+              where interceptors, filters, and reducers form a deterministic
+              processing pipeline.
+              <br /><br />
+              Explicit lifecycle control enables predictable teardown and
+              resource management.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Support Language Examples</div>
+
+    <div class="section-body">
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <p>
+              A
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              is typically declared as an Angular service. The
+              <strong
+                >&#64;<a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                ></strong
+              >
+              decorator defines the cell’s identity and state type, while
+              <strong>injectVault&lt;T&gt;()</strong> retrieves the
+              corresponding vault instance.
+            </p>
+
+            <p>
+              The vault must be injected <strong>once</strong> per
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              and must be stored on the service instance. Injection is
+              synchronous and safe during construction.
+            </p>
+
+            <h4>What this does</h4>
+            <ul>
+              <li>
+                Associates the service with a
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                key
+              </li>
+              <li>
+                Resolves the correct
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                vault from Angular DI
+              </li>
+              <li>
+                Provides a fully typed
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                runtime API
+              </li>
+              <li>
+                Ensures the
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                is initialized exactly once
+              </li>
+            </ul>
+
+            <h4>Example: Creating a FeatureCell for Angular</h4>
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Creating an Angular FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService,
+      {
+        key: 'employees',
+        initialState: [] 
+      }
+    )
+  ]
+};
+          
+// bank-employee.service.ts
+// The provideFeatureCell key must match the @FeatureCell key input
+          
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.shape';
+
+@FeatureCell&lt;Employee[]&gt;('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+
+  // Use injectVault to get an instance of the FeatureCell
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() {
+    // Required to activate the FeatureCell
+    this.vault.initialize();
+  }
+}
+
+// bank-employee.component.ts
+&#64;Component({
+selector: 'employee-view',
+template: \`
+  &#64;if (state.hasValue()) {
+    &lt;div&gt;
+      &lt;p&gt;Employees: {{ state.value() | json }}&lt;/p&gt;
+    &lt;/div&gt;
+  }
+
+  &#64;if (state.isLoading()) {
+    &lt;div&gt;
+      Loading...
+    &lt;/div&gt;
+  }
+
+  &#64;if (state.error()) {
+    &lt;div&gt;
+      Error: {{ state.error()?.message }}
+    &lt;/div&gt;
+  }
+\`
+})
+export class EmployeeComponent {
+  private bankEmployeeServce = inject(EmployeeService);
+  state = this.bankEmployeeService.vault.state;
+}`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Qwik / React / Solid / Svelte /Vue">
+            <h4>Component-Driven UI Frameworks</h4>
+
+            <p>
+              In component-driven UI frameworks, FeatureCells are
+              <strong>not owned by components</strong>. Instead, they are
+              registered at application startup and consumed by components as
+              long-lived, shared state containers.
+            </p>
+
+            <p>
+              FeatureCells must be created and initialized
+              <strong>outside of render functions</strong>. Components read
+              state synchronously via <code>state</code> or reactively via
+              <code>state$</code> or framework-specific adapters (hooks, stores,
+              signals).
+            </p>
+
+            <h4>What this does</h4>
+            <ul>
+              <li>
+                Registers a
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                at application scope
+              </li>
+              <li>
+                Initializes the
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                exactly once
+              </li>
+              <li>
+                Allows components to consume state without owning lifecycle
+              </li>
+              <li>
+                Prevents accidental per-render
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                creation
+              </li>
+            </ul>
+
+            <h4>Example: Creating a FeatureCell for a UI Application</h4>
+
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: UI Framework FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// main.ts (or index.ts, app.ts, server.ts, etc.)
+import { Vault } from '@sdux-vault/core';
+
+Vault({
+  logLevel: 'off'
+});
+          
+// employee.cell.ts
+import { provideFeatureCell } from '@sdux-vault/core';
+
+export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: []
+});
+
+// Explicit activation
+employeeCell.initialize();
+
+// --------------------------------------------------
+// React / Vue / Svelte / Solid / Qwik components
+// consume state but do not own the FeatureCell
+// --------------------------------------------------
+
+// employee.cell.ts
+const snapshot = employeeCell.state;
+
+// index.ts
+const root = document.getElementById('app');
+
+if (snapshot.hasValue) {
+  root!.innerHTML = \`
+    &lt;h3>Employees&lt;/h3>
+    &lt;pre>\${JSON.stringify(snapshot.value, null, 2)}&lt;/pre>
+  \`;
+}
+
+if (snapshot.error) {
+  root!.innerHTML = \`&lt;p>Error: \${snapshot.error.message}&lt;/p>\`;
+}
+
+`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Workers & Edge Runtimes">
+            <div class="tab-panel">
+              <h4>Web Workers / Service Workers / Edge Runtimes</h4>
+
+              <p>
+                In worker and edge environments, FeatureCells act as
+                <strong>message-driven state pipelines</strong>. They receive
+                input via events or messages, process updates deterministically,
+                and emit results explicitly.
+              </p>
+
+              <p>
+                There is no UI lifecycle. FeatureCells are created per worker
+                scope or per request boundary, initialized explicitly, and
+                destroyed when the worker or execution context ends.
+              </p>
+
+              <h4>What this does</h4>
+              <ul>
+                <li>Creates a deterministic state pipeline inside a worker</li>
+                <li>
+                  Processes incoming messages through the full SDuX pipeline
+                </li>
+                <li>Maintains explicit lifecycle control</li>
+                <li>Avoids framework or DOM dependencies entirely</li>
+              </ul>
+
+              <h4>Example: FeatureCell Inside a Worker</h4>
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Worker FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// worker.ts
+
+import { Vault } from '@sdux-vault/core';
+
+Vault({
+  logLevel: 'off'
+});
+
+import { provideFeatureCell } from '@sdux-vault/core';
+
+const cell = provideFeatureCell({
+  key: 'worker-state',
+  initialState: { count: 0 }
+});
+
+Cell.initialize();
+
+self.onmessage = (event) => {
+  Cell.mergeState(event.data);
+
+  self.postMessage(Cell.state.value);
+};
+
+self.onclose = () => {
+  // Optional cleanup when worker terminates
+  Cell.destroy();
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Node.js / Bun / Deno / Vanilla JavaScript">
+            <div class="tab-panel">
+              <h4>Examples: Plain Runtime & Backend</h4>
+
+              <p>
+                In plain runtime environments, FeatureCells operate as
+                <strong>long-lived, stateful services</strong>. They are created
+                at process startup, initialized explicitly, and participate in
+                application workflows until shutdown.
+              </p>
+
+              <p>
+                This pattern is ideal for servers, background workers, CLIs,
+                orchestration logic, and event-driven systems where
+                deterministic state evolution is required.
+              </p>
+
+              <h4>What this does</h4>
+              <ul>
+                <li>
+                  Creates a long-lived
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  at process scope
+                </li>
+                <li>Uses explicit initialization and shutdown</li>
+                <li>Supports background workflows and orchestration</li>
+                <li>Requires no framework or platform-specific integration</li>
+              </ul>
+
+              <h4>Example: FeatureCell in a Backend Service</h4>
+
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Backend FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// server.ts
+import { Vault } from '@sdux-vault/core';
+
+Vault({
+  logLevel: 'off'
+});
+
+import { provideFeatureCell } from '@sdux-vault/core';
+
+const jobCell = provideFeatureCell({
+  key: 'jobs',
+  initialState: { processed: 0 }
+});
+
+// Activate once at startup
+jobCell.initialize();
+
+// Application logic
+jobCell.mergeState({ processed: 1 });
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  jobCell.destroy();
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SUMMARY -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Summary</div>
+
+    <div class="section-body">
+      <p>
+        <sdux-brand-name /> is not an Angular library, a React pattern, or a
+        framework-specific solution.
+      </p>
+
+      <p>
+        It is a
+        <strong>language-level, runtime-level state architecture</strong> with
+        optional framework adapters. Frameworks change <em>how</em> you
+        register, consume, and wire FeatureCells—but they never change:
+      </p>
+
+      <ul>
+        <li>Ownership rules</li>
+        <li>Deterministic execution</li>
+        <li>Immutability guarantees</li>
+        <li>Pipeline semantics</li>
+        <li>Lifecycle meaning</li>
+      </ul>
+
+      <p>
+        This makes <sdux-brand-name /> suitable for shared, long-term,
+        cross-ecosystem collaboration—exactly as intended.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

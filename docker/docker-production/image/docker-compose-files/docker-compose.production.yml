@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  sdux_production:
+    container_name: ${CONTAINER_NAME}-production
+    image: ${CONTAINER_NAME}:${VERSION_TAG}
+    restart: always
+
+    # Expose port 80 to host
+    ports:
+      - '3100:80'
+
+    # Use bridge networking
+    networks:
+      - sdux_prod_net
+
+networks:
+  sdux_prod_net:
+    driver: bridge

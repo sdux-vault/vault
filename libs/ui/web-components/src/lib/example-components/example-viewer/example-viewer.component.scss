@@ -1,0 +1,96 @@
+@use 'global' as global;
+
+.example-viewer-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 2px);
+  max-width: 1024px;
+  margin: global.$spacing-lg auto;
+
+  border-radius: var(--sdux-border-radius);
+  background-color: var(--sdux-surface-bg);
+  color: var(--sdux-text-default);
+
+  border: 1px solid var(--sdux-surface-outline);
+  border-radius: global.$border-radius-md;
+  // box-shadow: global.$sdux-shadow-base;
+
+  overflow: hidden;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+
+  /* Subtle elevation on hover */
+  &:hover {
+    @include global.sdux-elevate(hover);
+  }
+
+  /* ----------------------------------------------------
+     SOURCE CODE SECTION
+     ---------------------------------------------------- */
+  .example-viewer-source-container {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+
+    will-change: max-height, opacity, transform;
+    transition:
+      max-height 0.35s ease,
+      opacity 0.25s ease,
+      transform 0.35s ease;
+
+    &.visible {
+      max-height: 4000px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    sdux-example-viewer-source {
+      display: block;
+      padding: global.$spacing-md;
+      background-color: var(--sdux-surface-bg);
+      border-top: 1px solid var(--sdux-surface-outline);
+
+      transition: background-color 0.25s ease;
+    }
+  }
+
+  /* ----------------------------------------------------
+     EXAMPLE VIEWER BODY
+     ---------------------------------------------------- */
+  .example-viewer-body {
+    background-color: var(--sdux-surface-bg);
+    color: var(--sdux-text-default);
+
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+
+    /* Let inner components size naturally */
+    overflow: visible;
+  }
+
+  /* ----------------------------------------------------
+     RESPONSIVE BREAKPOINTS
+     ---------------------------------------------------- */
+  @media (max-width: global.$breakpoint-md) {
+    max-width: 100%;
+    width: 95vw;
+
+    .example-viewer-body {
+      padding: global.$spacing-sm;
+    }
+  }
+
+  @media (max-width: global.$breakpoint-sm) {
+    width: 100vw;
+    margin: global.$spacing-md 0;
+    border-radius: calc(var(--sdux-border-radius) * 0.75);
+  }
+
+  @media (min-width: 1440px) {
+    max-width: 1200px;
+  }
+}
