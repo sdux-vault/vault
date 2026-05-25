@@ -1,0 +1,32 @@
+## Create the Certs
+
+```bash
+sudo /opt/bitnami/ctlscript.sh stop apache;
+
+sudo certbot certonly --standalone --expand \
+  -d sdux-vault.com \
+  -d www.sdux-vault.com \
+  -d api.sdux-vault.com \
+  -d backup.sdux-vault.com \
+  -d api.backup.sdux-vault.com \
+  -d docs.sdux-vault.com \
+  -d enterprise.sdux-vault.com \
+  -d staging.sdux-vault.com \
+  -d api.staging.sdux-vault.com \
+  -d sduxvault.com \
+  -d www.sduxvault.com \
+  -d staging.sduxvault.com \
+  -d backup.sduxvault.com;
+
+sudo cp /etc/letsencrypt/live/sdux-vault.com/fullchain.pem /opt/bitnami/letsencrypt/certificates/sdux-vault.com.crt;
+sudo cp /etc/letsencrypt/live/sdux-vault.com/privkey.pem /opt/bitnami/letsencrypt/certificates/sdux-vault.com.key;
+sudo ln -sf /opt/bitnami/letsencrypt/certificates/sdux-vault.com.crt /opt/bitnami/apache/conf/sdux-vault.com.crt;
+sudo ln -sf /opt/bitnami/letsencrypt/certificates/sdux-vault.com.key /opt/bitnami/apache/conf/sdux-vault.com.key;
+
+# Check the configuration
+sudo /opt/bitnami/apache/bin/apachectl configtest
+
+# Restart Apache
+
+sudo /opt/bitnami/ctlscript.sh restart apache
+```
