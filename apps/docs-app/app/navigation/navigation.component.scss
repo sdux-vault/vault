@@ -120,6 +120,30 @@
   position: fixed;
   bottom: calc(var(--app-footer-height) + 12px);
   inset-inline-start: 12px;
+
+  &:has(.pill-toggle) {
+    inset-inline-start: 50px;
+  }
+
+  .pill-toggle {
+    border-radius: global.$border-radius-lg;
+    padding: global.$spacing-xs global.$spacing-md global.$spacing-xs
+      global.$spacing-sm;
+    width: auto;
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-xs;
+
+    .pill-label {
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-medium;
+      white-space: nowrap;
+    }
+
+    &:hover .pill-label {
+      color: global.$sdux-text-white;
+    }
+  }
 }
 
 ::ng-deep .mat-expansion-panel-body {

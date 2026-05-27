@@ -1,0 +1,119 @@
+<div class="docs-container">
+  <div class="header">
+    <h3>Get in touch</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead"></p>
+    If you have questions, feedback, or want to get in touch, please fill out
+    the form below. We aim to respond to all inquiries within 2 business days.
+  </header>
+
+  <section class="section">
+    <div class="section-body">
+      @if (!submitted) {
+        <form
+          class="contact-form"
+          [formGroup]="contactForm"
+          (ngSubmit)="onSubmit()">
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="field-half-width">
+              <mat-label>Name</mat-label>
+              <input
+                matInput
+                formControlName="name"
+                aria-label="Name"
+                autocomplete="name" />
+              @if (contactForm.controls.name.hasError('required')) {
+                <mat-error>Name is required.</mat-error>
+              }
+              @if (contactForm.controls.name.hasError('minlength')) {
+                <mat-error>Name must be at least 2 characters.</mat-error>
+              }
+              @if (contactForm.controls.name.hasError('maxlength')) {
+                <mat-error>Name must not exceed 200 characters.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="field-half-width">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                type="email"
+                formControlName="email"
+                aria-label="Email"
+                autocomplete="email" />
+              @if (contactForm.controls.email.hasError('required')) {
+                <mat-error>Email is required.</mat-error>
+              }
+              @if (contactForm.controls.email.hasError('email')) {
+                <mat-error>Enter a valid email address.</mat-error>
+              }
+              @if (contactForm.controls.email.hasError('maxlength')) {
+                <mat-error>Email must not exceed 255 characters.</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="field-full-width">
+              <mat-label>Message</mat-label>
+              <textarea
+                matInput
+                rows="6"
+                formControlName="message"
+                aria-label="Message"></textarea>
+              @if (contactForm.controls.message.hasError('required')) {
+                <mat-error>Message is required.</mat-error>
+              }
+              @if (contactForm.controls.message.hasError('minlength')) {
+                <mat-error>Message must be at least 10 characters.</mat-error>
+              }
+              @if (contactForm.controls.message.hasError('maxlength')) {
+                <mat-error
+                  >Message must not exceed 10,000 characters.</mat-error
+                >
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <button
+              type="submit"
+              class="sdux-button"
+              [disabled]="contactForm.invalid">
+              Send Request
+            </button>
+          </div>
+        </form>
+
+        @if (submitError) {
+          <p class="contact-error">
+            Something went wrong. Please try again or reach out directly.
+          </p>
+        }
+      } @else {
+        <p class="contact-confirmation">
+          Thank you. Your request has been captured and will be routed through
+          our support workflow.
+        </p>
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-body">
+      <p>
+        Your privacy matters. We never sell, rent, or share your personal
+        information with third parties for marketing or commercial purposes —
+        under any circumstances. Read our
+        <a
+          href="https://www.nextgenluminary.com/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Privacy Policy</a
+        >.
+      </p>
+    </div>
+  </section>
+</div>

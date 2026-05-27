@@ -198,6 +198,39 @@ html[data-theme='dark'] {
 
   --mat-active-text: #{global.$sdux-primary-light};
 
+  /* DARK MODE FORM FIELDS */
+  --mdc-outlined-text-field-input-text-color: #{global.$sdux-text-primary};
+  --mdc-outlined-text-field-container-color: #{global.$sdux-surface-mid};
+  --mdc-outlined-text-field-label-text-color: #{global.$sdux-text-secondary};
+  --mdc-outlined-text-field-outline-color: #{global.$sdux-surface-outline};
+  --mdc-outlined-text-field-hover-outline-color: #{global.$sdux-primary-light};
+  --mdc-outlined-text-field-focus-outline-color: #{global.$sdux-primary-base};
+  --mdc-outlined-text-field-caret-color: #{global.$sdux-primary-light};
+  --mat-form-field-container-text-color: #{global.$sdux-text-primary};
+  --mdc-filled-text-field-container-color: #{global.$sdux-surface-mid};
+  --mdc-filled-text-field-input-text-color: #{global.$sdux-text-primary};
+  --mdc-filled-text-field-label-text-color: #{global.$sdux-text-secondary};
+  --mat-form-field-container-color: #{global.$sdux-surface-mid};
+
+  .mat-mdc-form-field {
+    --mat-form-field-container-text-color: #{global.$sdux-text-primary};
+  }
+
+  .mdc-text-field--outlined .mdc-text-field__input,
+  .mat-mdc-input-element {
+    color: #{global.$sdux-text-primary} !important; // override: Material ignores CSS vars in dark mode
+    caret-color: #{global.$sdux-primary-light};
+  }
+
+  .mdc-text-field--outlined {
+    background-color: #{global.$sdux-surface-mid};
+  }
+
+  .mdc-floating-label,
+  .mat-mdc-form-field .mat-mdc-floating-label {
+    color: #{global.$sdux-text-secondary} !important; // override: Material ignores CSS vars in dark mode
+  }
+
   /* DARK MODE MENU */
   .mat-mdc-menu-panel {
     background-color: #{global.$sdux-surface-dark};

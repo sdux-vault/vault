@@ -17,6 +17,13 @@ export const routes: Routes = [
       )
   },
   {
+    path: 'contact',
+    loadComponent: () =>
+      import('./docs/top-tier/contact-us/contact.component').then(
+        (m) => m.ContactComponent
+      )
+  },
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('./dashboard/dashboard.component').then(

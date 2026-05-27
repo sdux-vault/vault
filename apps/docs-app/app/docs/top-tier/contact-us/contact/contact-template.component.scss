@@ -1,0 +1,29 @@
+@use 'global' as global;
+
+.docs-container {
+  max-width: 800px;
+  background-color: var(--sdux-surface-bg);
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+    width: 100%;
+
+    .sdux-button {
+      width: 150px;
+    }
+  }
+
+  .contact-confirmation {
+    margin-top: global.$spacing-md;
+    font-weight: global.$font-weight-medium;
+    color: global.$sdux-success-base;
+  }
+
+  .contact-error {
+    margin-top: global.$spacing-md;
+    font-weight: global.$font-weight-medium;
+    color: global.$sdux-accent-base;
+  }
+}

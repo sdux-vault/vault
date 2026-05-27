@@ -143,18 +143,54 @@
         color: global.$sdux-text-secondary;
       }
 
-      .action-section {
-        display: flex;
+      .deploy-grid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: global.$spacing-xs global.$spacing-md;
         align-items: center;
-        justify-content: space-between;
 
         .domain-input {
           width: 320px;
         }
+      }
+
+      .deploy-grid-input {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .deploy-grid-action {
+        grid-column: 2;
+        grid-row: 1;
 
         button {
           margin-top: 0;
         }
+      }
+
+      .deploy-grid-pricing {
+        grid-column: 1;
+        grid-row: 2;
+
+        .statement-notice {
+          @include font.font-xs;
+          // color: global.$sdux-text-secondary;
+          margin-top: global.$spacing-xs;
+        }
+      }
+
+      .deploy-grid-contact {
+        grid-column: 2;
+        grid-row: 2;
+        text-align: center;
+      }
+
+      .contact-link {
+        @include font.font-sm;
+        @include global.a-link(
+          global.$sdux-primary-base,
+          global.$sdux-text-inverse
+        );
       }
 
       .pricing {

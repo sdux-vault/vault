@@ -5,7 +5,7 @@ import { of, throwError } from 'rxjs';
 import { SDuXEnterpriseOverviewComponent } from './sdux-enterprise.component';
 import { EnterpriseContactService } from './service/enterprise-contact.service';
 
-describe('Component: SDuXEnterpriseOverviewComponent', () => {
+describe('Component: SDuXEnterpriseOverview', () => {
   let fixture: ComponentFixture<SDuXEnterpriseOverviewComponent>;
   let component: SDuXEnterpriseOverviewComponent;
   let contactService: jasmine.SpyObj<EnterpriseContactService>;

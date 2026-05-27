@@ -46,46 +46,65 @@
           monitoring and governance.
         </div>
 
-        <div class="action-section">
-          <mat-form-field appearance="outline" class="domain-input">
-            <mat-label>Domain</mat-label>
+        <div class="deploy-grid">
+          <div class="deploy-grid-input">
+            <mat-form-field appearance="outline" class="domain-input">
+              <mat-label>Domain</mat-label>
 
-            <input
-              matInput
-              type="text"
-              placeholder="example.com"
-              [value]="domain()"
-              (input)="updateDomain($any($event.target).value)" />
+              <input
+                matInput
+                type="text"
+                placeholder="example.com"
+                [value]="domain()"
+                (input)="updateDomain($any($event.target).value)" />
 
-            @if (domain() && domainError()) {
-              <mat-error>{{ domainError() }}</mat-error>
-            }
-          </mat-form-field>
-
-          <div
-            class="coming-soon-wrapper"
-            aria-label="Coming soon info"
-            matTooltip="Vault is currently in private beta. Join the waitlist for early access.">
-            <button
-              mat-flat-button
-              type="button"
-              class="sdux-button-warn purchase-button"
-              [disabled]="true">
-              Coming Soon
-            </button>
+              @if (domain() && domainError()) {
+                <mat-error>{{ domainError() }}</mat-error>
+              }
+            </mat-form-field>
           </div>
-          <!-- <button
-            mat-flat-button
-            class="sdux-button purchase-button"
-            [disabled]="!domain()"
-            (click)="buyLicense()">
-            Buy License
-          </button> -->
-        </div>
 
-        <div class="pricing">
-          <div class="price">$249</div>
-          <div class="price-sub">usd per domain / lifetime</div>
+          <div class="deploy-grid-action">
+            <div
+              class="coming-soon-wrapper"
+              aria-label="Coming soon info"
+              matTooltip="Vault is currently in private beta. Join the waitlist for early access.">
+              <button
+                mat-flat-button
+                type="button"
+                class="sdux-button-warn purchase-button"
+                [disabled]="true">
+                Coming Soon
+              </button>
+            </div>
+            <!-- <button
+              mat-flat-button
+              class="sdux-button purchase-button"
+              [disabled]="!domain()"
+              (click)="buyLicense()">
+              Buy License
+            </button> -->
+          </div>
+
+          <div class="deploy-grid-pricing">
+            <div class="pricing">
+              <div class="price">$249</div>
+              <div class="price-sub">usd per domain / lifetime</div>
+            </div>
+            <div class="statement-notice">
+              Charges appear as <strong>NextGenLuminary</strong> on your
+              statement.
+            </div>
+          </div>
+
+          <div class="deploy-grid-contact">
+            <a
+              class="contact-link"
+              href="javascript:void(0)"
+              (click)="openContactDialog()"
+              >Questions? Contact Us</a
+            >
+          </div>
         </div>
 
         <div class="features-grid">

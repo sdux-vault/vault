@@ -284,11 +284,15 @@
   <button
     type="button"
     class="button-toggle"
+    [class.pill-toggle]="!isExpanded()"
     aria-label="Toggle Site Navigation"
     (click)="toggleSidenav()"
     matTooltip="Toggle Site Navigation">
     <mat-icon>
       {{ isExpanded() ? 'chevron_left' : 'chevron_right' }}
     </mat-icon>
+    @if (!isExpanded()) {
+      <span class="pill-label">View Docs</span>
+    }
   </button>
 </div>

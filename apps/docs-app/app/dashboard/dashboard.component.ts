@@ -20,6 +20,7 @@ import {
 } from '@sdux-vault/ui/web-components';
 
 import { MatTooltip } from '@angular/material/tooltip';
+import { ContactInquiryDialogService } from '../docs/top-tier/contact-us/contact/service/contact-inquiry-dialog.service';
 import { LicenseCardComponent } from './license-card/license-card.component';
 import { AuthenticationService } from './service/authentication.service';
 import { LicenseService } from './service/license.service';
@@ -48,6 +49,7 @@ export class DashboardComponent {
   #authenticationService = inject(AuthenticationService);
   #window = inject(WINDOW);
   #route = inject(ActivatedRoute);
+  #contactDialogService = inject(ContactInquiryDialogService);
 
   #queryParams = toSignal(this.#route.queryParamMap);
 
@@ -88,6 +90,10 @@ export class DashboardComponent {
 
   fullName = this.#authenticationService.fullName;
   organizationName = this.#authenticationService.organizationName;
+
+  openContactDialog(): void {
+    this.#contactDialogService.open();
+  }
 
   /**
    * buyLicense

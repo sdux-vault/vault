@@ -51,6 +51,11 @@
         </button>
       }
 
+      <button type="button" mat-menu-item routerLink="/contact">
+        <mat-icon class="icon">email</mat-icon>
+        <span> Contact Us </span>
+      </button>
+
       <button type="button" mat-menu-item (click)="toggleTheme()">
         <mat-icon class="icon">{{ themeIcon() }}</mat-icon>
         <span>{{ themeLabel() }}</span>

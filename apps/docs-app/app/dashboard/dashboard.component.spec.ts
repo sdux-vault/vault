@@ -5,6 +5,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { sduxTestingModule, WINDOW } from '@sdux-vault/ui/web-components';
 
 import { getLicenseData } from '../../testing/data/license/license.data';
+import { ContactInquiryDialogService } from '../docs/top-tier/contact-us/contact/service/contact-inquiry-dialog.service';
 import { DashboardComponent } from './dashboard.component';
 import { LicenseService } from './service/license.service';
 import { StripeService } from './service/stripe.service';
@@ -15,6 +16,7 @@ describe('Component: Dashboard', () => {
 
   let licenseService: jasmine.SpyObj<LicenseService>;
   let stripeService: jasmine.SpyObj<StripeService>;
+  let contactDialogService: jasmine.SpyObj<ContactInquiryDialogService>;
   let queryParamMap$: BehaviorSubject<ReturnType<typeof convertToParamMap>>;
 
   const mockWindow = {
@@ -33,6 +35,11 @@ describe('Component: Dashboard', () => {
       'createCheckoutSession'
     ]);
 
+    contactDialogService = jasmine.createSpyObj<ContactInquiryDialogService>(
+      'ContactInquiryDialogService',
+      ['open']
+    );
+
     licenseService.getLicenses.and.returnValue(of(getLicenseData()));
 
     queryParamMap$ = new BehaviorSubject(convertToParamMap({}));
@@ -42,6 +49,10 @@ describe('Component: Dashboard', () => {
       providers: [
         { provide: LicenseService, useValue: licenseService },
         { provide: StripeService, useValue: stripeService },
+        {
+          provide: ContactInquiryDialogService,
+          useValue: contactDialogService
+        },
         { provide: WINDOW, useValue: mockWindow },
         {
           provide: ActivatedRoute,
@@ -136,5 +147,11 @@ describe('Component: Dashboard', () => {
     component.buyLicense();
 
     expect(stripeService.createCheckoutSession).not.toHaveBeenCalled();
+  });
+
+  it('should open contact dialog', () => {
+    component.openContactDialog();
+
+    expect(contactDialogService.open).toHaveBeenCalled();
   });
 });
