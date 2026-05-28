@@ -42,6 +42,13 @@
       limited strictly to pausing and resuming pipeline execution based Flowon
       elapsed time.
     </p>
+
+    <p class="live-example-link">
+      Try it in StackBlitz:
+      <a routerLink="/docs/stackblitz" fragment="interceptor-delay"
+        >Delay Interceptor Pipeline →</a
+      >
+    </p>
   </header>
 
   <!-- ====================================================== -->
@@ -568,6 +575,26 @@ employeeCell
         update trace independently and resumes execution only after the
         configured delay has elapsed. No updates are dropped, merged, or
         reordered.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STACKBLITZ EXAMPLE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Try It Live</div>
+
+    <div class="section-body">
+      <p>
+        A runnable StackBlitz example demonstrates the Delay Controller across
+        Angular, React, Vue, and Svelte — no local setup required.
+      </p>
+
+      <p>
+        <a routerLink="/docs/stackblitz" fragment="interceptor-delay"
+          >Open the Delay Interceptor Pipeline example →</a
+        >
       </p>
     </div>
   </section>

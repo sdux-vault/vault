@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { RouterModule } from '@angular/router';
 import {
   DiagramComponent,
   ExampleViewerSourceComponent,
@@ -18,6 +19,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     ExampleViewerTabComponent,
     DiagramComponent,
     PipelineRelatedTopicComponent,
+    RouterModule,
     MatTabGroup,
     MatTab
   ],
