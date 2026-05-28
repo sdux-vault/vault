@@ -1,6 +1,6 @@
 {
   "name": "@sdux-vault/devtools",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "license": "MIT",
   "author": {
     "name": "SDuX Vault",
@@ -41,7 +41,7 @@
     "rxjs": "^7.0.0"
   },
   "devDependencies": {
-    "@sdux-vault/shared": "0.7.0",
+    "@sdux-vault/shared": "0.9.0",
     "rxjs": "^7.0.0"
   },
   "files": [
