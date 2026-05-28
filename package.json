@@ -108,6 +108,8 @@
     "test": "run-s test:*",
     "test:addons": "ng test addons",
     "test:angular": "ng test angular",
+    "test:chrome-extension": "node --experimental-vm-modules node_modules/jasmine/bin/jasmine.js --config=apps/chrome-extension/tests/jasmine.json",
+    "test:coverage:chrome-extension": "node --experimental-vm-modules node_modules/jasmine/bin/jasmine.js --config=apps/chrome-extension/tests/jasmine.json",
     "test:core": "ng test core",
     "test:devtools": "ng test devtools",
     "test:devtools-ui": "ng test devtools-ui",

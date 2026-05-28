@@ -1,0 +1,6 @@
+{
+  "spec_dir": "apps/chrome-extension",
+  "spec_files": ["tests/**/*.spec.mjs"],
+  "helpers": [],
+  "random": false
+}

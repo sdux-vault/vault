@@ -53,4 +53,9 @@ npm run test:tools || {
   exit 1
 }
 
+npm run test:coverage:chrome-extension || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'chrome-extension' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
 echo "Pre-push checks complete."

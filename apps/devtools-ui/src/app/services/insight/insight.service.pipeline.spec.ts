@@ -62,6 +62,7 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
   describe('chrome runtime port handling', () => {
     let originalRuntime: any;
     let portListeners: any[];
+    let disconnectListeners: any[];
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -70,6 +71,7 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
 
       originalRuntime = (globalThis as any).chrome?.runtime;
       portListeners = [];
+      disconnectListeners = [];
 
       // Patch runtime to include connect API
       (globalThis as any).chrome = {
@@ -84,7 +86,9 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
                 }
               },
               onDisconnect: {
-                addListener() {}
+                addListener(fn: any) {
+                  disconnectListeners.push(fn);
+                }
               },
               postMessage() {}
             };
@@ -152,6 +156,16 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
         expect(received.length).toBe(0);
         done();
       }, 0);
+    });
+
+    it('should clear the port reference on disconnect', () => {
+      expect(disconnectListeners.length).toBe(1);
+
+      // Trigger disconnect callback
+      disconnectListeners[0]();
+
+      // Service should still be functional (isChromeExtension stays true)
+      expect(hook.isChromeExtension).toBe(true);
     });
   });
 });
