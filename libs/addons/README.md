@@ -2,42 +2,47 @@
   <img src="https://raw.githubusercontent.com/sdux-vault/vault/main/apps/docs-app/assets/brand/sdux/brand-landscape.svg" height="80" alt="SDuX Vault" />
 </p>
 
+<h3 align="center">Plain TypeScript. Zero Magic.</h3>
+<p align="center">Deterministic state management for every framework — one pipeline, zero ambiguity.</p>
+
 # @sdux-vault/addons
 
 > Composable controllers and runtime policies for SDuX Vault.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
-  <img src="https://img.shields.io/badge/TypeScript-first-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <a href="https://www.sdux-vault.com"><strong>Docs</strong></a> ·
+  <a href="https://www.sdux-vault.com/stackblitz"><strong>Live Examples</strong></a> ·
+  <a href="https://www.sdux-vault.com/builder"><strong>Pipeline Builder</strong></a> ·
+  <a href="https://github.com/sdux-vault/vault/issues"><strong>Issues</strong></a>
 </p>
 
----
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
+  <img src="https://img.shields.io/badge/TypeScript-first-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/frameworks-Angular%20·%20React%20·%20Vue%20·%20Svelte%20·%20Node-333" alt="Frameworks" />
+</p>
 
-`@sdux-vault/addons` provides **optional, plug-in controllers and extensions** that enhance the SDuX runtime with policies, safeguards, and orchestration logic — without modifying the core engine.
+## What is SDuX Vault?
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+SDuX Vault is a **framework-agnostic, deterministic state management system** built around a reactive execution pipeline. It replaces the unpredictable sprawl of action/reducer architectures with a single, ordered, traceable pipeline where every transition is explicit and every output is guaranteed.
 
----
+## What is SDuX Vault Addons?
 
-## Overview
+`@sdux-vault/addons` provides **optional, plug-in controllers and extensions** that enhance the SDuX Vault runtime with policies, safeguards, and orchestration logic — without modifying the core engine. Add-ons govern _when_ and _whether_ pipeline execution proceeds, not _what_ state becomes.
 
-```plaintext
-shared → engine → core → core-extensions → apps
-                    ↑          └──────────→ devtools
-                  addons
-```
+Every add-on is a composable policy module that plugs into the controller and orchestration layers of the SDuX Vault pipeline. Stack delay, throttle, retry, and failure policies declaratively — each one isolated, deterministic, and safe to compose with any other. No middleware. No side effects. No surprises.
 
-Add-ons plug into the controller and orchestration layers as **policy modules** — they influence pipeline execution without mutating state or executing pipelines directly.
+> Traditional middleware mutates the pipeline. Addons govern it.
 
----
-
-## What This Package Provides
+**Features:**
 
 - **Controller implementations** — reusable policy modules (e.g., delay, throttle)
 - **Failure and retry strategies** — max failure limits, retry policies
 - **Fluent configuration APIs** — attach policies declaratively
 - **Runtime decision hooks** — influence pipeline execution without mutation
 - **Composable extensions** — stack multiple policies safely
+
+For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
 
 ---
 
@@ -57,6 +62,7 @@ const cell = FeatureCell(
 );
 
 cell.withDelay?.({ millisecondDelay: 3_000 }).initialize();
+// Every state update now waits 3 seconds before pipeline execution proceeds
 ```
 
 ---

@@ -2,41 +2,43 @@
   <img src="https://raw.githubusercontent.com/sdux-vault/vault/main/apps/docs-app/assets/brand/sdux/brand-landscape.svg" height="80" alt="SDuX Vault" />
 </p>
 
+<h3 align="center">Plain TypeScript. Zero Magic.</h3>
+<p align="center">Deterministic state management for every framework — one pipeline, zero ambiguity.</p>
+
 # @sdux-vault/core
 
 > Behavior runtime and pipeline execution layer for SDuX Vault.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
-  <img src="https://img.shields.io/badge/TypeScript-first-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <a href="https://www.sdux-vault.com"><strong>Docs</strong></a> ·
+  <a href="https://www.sdux-vault.com/stackblitz"><strong>Live Examples</strong></a> ·
+  <a href="https://www.sdux-vault.com/builder"><strong>Pipeline Builder</strong></a> ·
+  <a href="https://github.com/sdux-vault/vault/issues"><strong>Issues</strong></a>
 </p>
 
----
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
+  <img src="https://img.shields.io/badge/TypeScript-first-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/frameworks-Angular%20·%20React%20·%20Vue%20·%20Svelte%20·%20Node-333" alt="Frameworks" />
+</p>
 
-`@sdux-vault/core` provides the **runtime implementation for behaviors and state pipeline execution**. It builds on the contracts defined in `@sdux-vault/shared` and delivers the concrete execution layer that runs behaviors and applies state changes.
+## What is SDuX Vault?
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+SDuX Vault is a **framework-agnostic, deterministic state management system** built around a reactive execution pipeline. It replaces the unpredictable sprawl of action/reducer architectures with a single, ordered, traceable pipeline where every transition is explicit and every output is guaranteed.
 
----
+## What is SDuX Vault Core?
 
-## Overview
+`@sdux-vault/core` provides the **runtime implementation for behaviors and state pipeline execution**. It builds on the contracts defined in `@sdux-vault/shared` and delivers the concrete execution layer that runs behaviors and applies state changes. Core is the **bridge between contracts and runtime execution** — it takes the interfaces defined in `shared`, the orchestration from `engine`, and produces actual state transitions.
 
-```plaintext
-shared → engine → core → core-extensions → apps
-           └─────────────────────────────→ devtools
-```
-
-Core is the **bridge between contracts and runtime execution** — it takes the interfaces defined in `shared`, the orchestration from `engine`, and produces actual state transitions.
-
----
-
-## What This Package Provides
+**Features:**
 
 - **Behavior runtime** — executes behavior implementations in defined order
 - **Pipeline execution** — runs ordered behavior stages (resolve → filter → reduce → persist → emit)
 - **State commit logic** — applies updates to snapshots with isolation guarantees
 - **State emission** — publishes state changes as isolated copies
 - **FeatureCell factory** — creates and configures feature cells with typed state
+
+For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
 
 ---
 

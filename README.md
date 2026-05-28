@@ -2,7 +2,8 @@
   <img src="https://raw.githubusercontent.com/sdux-vault/vault/main/apps/docs-app/assets/brand/sdux/brand-landscape.svg" height="100" alt="SDuX Vault" />
 </p>
 
-<h3 align="center">Deterministic state. Reactive by design.</h3>
+<h3 align="center">Plain TypeScript. Zero Magic.</h3>
+<p align="center">Deterministic state management for every framework — one pipeline, zero ambiguity.</p>
 
 <p align="center">
   <a href="https://www.sdux-vault.com"><strong>Docs</strong></a> ·

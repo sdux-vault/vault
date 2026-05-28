@@ -2,35 +2,35 @@
   <img src="https://raw.githubusercontent.com/sdux-vault/vault/main/apps/docs-app/assets/brand/sdux/brand-landscape.svg" height="80" alt="SDuX Vault" />
 </p>
 
+<h3 align="center">Plain TypeScript. Zero Magic.</h3>
+<p align="center">Deterministic state management for every framework — one pipeline, zero ambiguity.</p>
+
 # @sdux-vault/shared
 
 > Core primitives, contracts, and utilities for the SDuX Vault platform.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
-  <img src="https://img.shields.io/badge/TypeScript-first-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <a href="https://www.sdux-vault.com"><strong>Docs</strong></a> ·
+  <a href="https://www.sdux-vault.com/stackblitz"><strong>Live Examples</strong></a> ·
+  <a href="https://www.sdux-vault.com/builder"><strong>Pipeline Builder</strong></a> ·
+  <a href="https://github.com/sdux-vault/vault/issues"><strong>Issues</strong></a>
 </p>
 
----
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
+  <img src="https://img.shields.io/badge/TypeScript-first-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/frameworks-Angular%20·%20React%20·%20Vue%20·%20Svelte%20·%20Node-333" alt="Frameworks" />
+</p>
 
-`@sdux-vault/shared` is the **foundation of the SDuX ecosystem**. It defines the universal language used across all SDuX packages — types, contracts, behaviors, and utilities.
+## What is SDuX Vault?
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+SDuX Vault is a **framework-agnostic, deterministic state management system** built around a reactive execution pipeline. It replaces the unpredictable sprawl of action/reducer architectures with a single, ordered, traceable pipeline where every transition is explicit and every output is guaranteed.
 
----
+## What is SDuX Vault Shared?
 
-## Overview
+`@sdux-vault/shared` is the **foundation of the SDuX ecosystem**. It defines the universal language used across all SDuX packages — types, contracts, behaviors, and utilities. Every SDuX package depends on `shared`. It is the lowest layer in the dependency graph and has **zero external dependencies**.
 
-```plaintext
-shared (this package) → engine → core → core-extensions → apps
-                          └─────────────────────────────→ devtools
-```
-
-Every SDuX package depends on `shared`. It is the lowest layer in the dependency graph and has **zero external dependencies**.
-
----
-
-## What This Package Provides
+**Features:**
 
 - **Core contracts** — interfaces, shapes, and types that define the SDuX API surface
 - **Behavior and controller abstractions** — base types for pipeline stages
@@ -39,14 +39,14 @@ Every SDuX package depends on `shared`. It is the lowest layer in the dependency
 - **Error models** — structured error types and services
 - **Runtime instrumentation hooks** — DevTools integration points
 
----
-
-## Key Characteristics
+**Key Characteristics:**
 
 - ✅ **Framework-agnostic** — pure TypeScript, zero dependencies
 - ✅ **Tree-shakable** — domain-based exports, minimal runtime footprint
 - ✅ **SSR-safe and browser-safe** — works everywhere
 - ✅ **Stable public API** — domain-driven, designed for composition
+
+For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
 
 ---
 

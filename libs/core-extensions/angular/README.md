@@ -2,9 +2,19 @@
   <img src="https://raw.githubusercontent.com/sdux-vault/vault/main/apps/docs-app/assets/brand/sdux/brand-landscape.svg" height="80" alt="SDuX Vault" />
 </p>
 
-# @sdux-vault/core-extensions/angular
+<h3 align="center">Plain TypeScript. Zero Magic.</h3>
+<p align="center">Deterministic state management for every framework — one pipeline, zero ambiguity.</p>
+
+# @sdux-vault/angular
 
 > Angular integration layer for SDuX Vault.
+
+<p align="center">
+  <a href="https://www.sdux-vault.com"><strong>Docs</strong></a> ·
+  <a href="https://www.sdux-vault.com/stackblitz"><strong>Live Examples</strong></a> ·
+  <a href="https://www.sdux-vault.com/builder"><strong>Pipeline Builder</strong></a> ·
+  <a href="https://github.com/sdux-vault/vault/issues"><strong>Issues</strong></a>
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
@@ -12,36 +22,22 @@
   <img src="https://img.shields.io/badge/Angular-21+-DD0031?logo=angular&logoColor=white" alt="Angular 21+" />
 </p>
 
----
+## What is SDuX Vault?
 
-`@sdux-vault/core-extensions/angular` provides the **Angular bindings for SDuX Vault**, connecting the runtime to Angular's dependency injection, signals, and reactive model in a framework-native way.
+SDuX Vault is a **framework-agnostic, deterministic state management system** built around a reactive execution pipeline. It replaces the unpredictable sprawl of action/reducer architectures with a single, ordered, traceable pipeline where every transition is explicit and every output is guaranteed.
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+## What is SDuX Vault Angular?
 
----
+`@sdux-vault/angular` provides the **Angular bindings for SDuX Vault**, connecting the runtime to Angular's dependency injection, signals, and reactive model in a framework-native way.
 
-## Overview
-
-```plaintext
-shared → engine → core → core-extensions → apps
-                              ↑
-                        angular (this package)
-```
-
-This package adapts SDuX runtime state into Angular's reactive model:
-
-```plaintext
-SDuX pipeline → Angular signal → component / template
-```
-
----
-
-## What This Package Provides
+**Features:**
 
 - **Angular bindings for FeatureCells** — injectable, DI-compatible services
 - **Signal-based state access** — always up-to-date, reactive by default
 - **DI-compatible providers** — register and consume via Angular's injector
 - **Reactive state consumption** — automatic UI updates, no manual subscriptions
+
+For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
 
 ---
 
