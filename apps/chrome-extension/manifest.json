@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Vault DevTools",
-  "version": "0.0.2",
-  "description": "Developer tools panel for inspecting ngVault state and events.",
+  "name": "SDuX Vault DevTools",
+  "version": "0.0.27",
+  "description": "Developer tools panel for inspecting SDuX Vault state and events.",
 
   "devtools_page": "devtools/devtools.html",
 
@@ -11,7 +11,7 @@
   },
 
   "icons": {
-    "128": "icons/ng-sdux-128.png"
+    "128": "icons/brand-128.png"
   },
 
   "permissions": ["scripting", "tabs", "storage", "activeTab"],
@@ -29,7 +29,7 @@
     {
       "resources": [
         "bridge/bridge-inject.js",
-        "assets/brand/ng-sdux-landscapte-dark.svg"
+        "assets/brand/brand-landscape-dark.svg"
       ],
       "matches": ["<all_urls>"]
     }

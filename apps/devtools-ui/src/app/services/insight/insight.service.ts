@@ -3,11 +3,14 @@ import { Subject } from 'rxjs';
 
 import { EventBus } from '@sdux-vault/devtools';
 import type { EventShape } from '@sdux-vault/shared';
-import type { DevtoolsMessageType } from '../../types/devtools-message.type';
 
 /**
  * Provides a unified observable interface for Vault pipeline events sourced from
  * the Chrome DevTools extension or the internal EventBus.
+ *
+ * When running inside a Chrome extension, events are received over a long-lived
+ * port connection to the background service worker. Outside the extension, the
+ * internal EventBus is used directly.
  */
 @Injectable({ providedIn: 'root' })
 export class InsightService {
@@ -27,24 +30,22 @@ export class InsightService {
   readonly #eventBus = EventBus();
 
   /**
-   * Initializes the service and connects Chrome runtime listeners when available.
+   * Active port connection to the background service worker.
+   */
+  #port: chrome.runtime.Port | null = null;
+
+  /**
+   * Initializes the service and connects a long-lived port when running
+   * inside the Chrome DevTools extension.
    *
    * @param zone - Angular zone used to re-enter the framework boundary.
    */
   constructor(private readonly zone: NgZone) {
     this.isChromeExtension =
-      typeof chrome !== 'undefined' && !!chrome?.runtime?.onMessage;
+      typeof chrome !== 'undefined' && !!chrome?.runtime?.connect;
 
     if (this.isChromeExtension) {
-      chrome.runtime.onMessage.addListener((msg: DevtoolsMessageType) => {
-        if (!msg?.type) return;
-
-        this.zone.run(() => {
-          if (msg.type === 'VAULT_PIPELINE_EVENT') {
-            this.#chromePipeline$.next(msg.event as EventShape);
-          }
-        });
-      });
+      this.#connectPort();
     }
   }
 
@@ -68,5 +69,29 @@ export class InsightService {
   listenPipeline(hook: (event: EventShape) => void): () => void {
     const sub = this.pipeline$().subscribe(hook);
     return () => sub.unsubscribe();
+  }
+
+  /**
+   * Opens a long-lived port to the background service worker and
+   * attaches message and disconnect listeners.
+   */
+  #connectPort(): void {
+    this.#port = chrome.runtime.connect({ name: 'vault-devtools' });
+
+    this.#port.onMessage.addListener(
+      (msg: { type?: string; event?: unknown }) => {
+        if (!msg?.type) return;
+
+        this.zone.run(() => {
+          if (msg.type === 'VAULT_PIPELINE_EVENT') {
+            this.#chromePipeline$.next(msg.event as EventShape);
+          }
+        });
+      }
+    );
+
+    this.#port.onDisconnect.addListener(() => {
+      this.#port = null;
+    });
   }
 }

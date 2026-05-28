@@ -11,9 +11,6 @@
  */
 chrome.devtools.panels.create(
   'Vault',
-  '../icons/Vault-128.png',
-  'panel/panel.html',
-  () => {
-    // Panel created successfully.
-  }
+  '../icons/brand-128.png',
+  'panel/panel.html'
 );

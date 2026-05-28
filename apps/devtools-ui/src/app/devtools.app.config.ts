@@ -18,8 +18,8 @@ import { DevtoolsService } from './services/devtools.service';
  * - Zoneless change detection for improved performance and deterministic signal updates.
  * - Global error listeners for capturing unhandled errors in the DevTools environment.
  * - Client-side routing with hash-based navigation (ensuring Chrome extension compatibility).
- * - Vault configuration with logging disabled (`logLevel: 'off'`) to avoid feedback loops
- *   between DevTools and monitored applications.
+ * - Vault configuration with error-level logging (`logLevel: 'error'`) to surface
+ *   between DevTools and monitored applications while still capturing errors.
  * - A FeatureCell instance (`vault::devtools::feature::cell`) used by the DevTools app
  *   to store internal UI state and event history.
  *
@@ -37,8 +37,8 @@ export const appConfig: ApplicationConfig = {
     /** Registers application routes using hash-based navigation (extension-safe). */
     provideRouter(routes, withHashLocation()),
 
-    /** Configures Vault for the DevTools app with logging disabled. */
-    provideVault({ logLevel: 'off' }),
+    /** Configures Vault for the DevTools app with error-level logging. */
+    provideVault({ logLevel: 'error' }),
 
     /**
      * Provides a FeatureCell dedicated to DevTools internal state.

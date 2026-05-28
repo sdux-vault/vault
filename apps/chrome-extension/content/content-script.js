@@ -45,18 +45,22 @@
  * messages are ignored.
  *
  * Supported message types:
- * - "VAULT_PIPELINE_EVENT" — forwarded pipeline event payload
+ * - "VAULT_PIPELINE_EVENT"  — forwarded pipeline event payload
+ * - "VAULT_BRIDGE_CONNECTED" — bridge successfully connected to Vault
  */
 window.addEventListener('message', (event) => {
   if (event.source !== window) return;
   if (!event.data || event.data.source !== 'vault-devtools') return;
 
   const { type, event: payload } = event.data;
-
-  if (type === 'VAULT_PIPELINE_EVENT') {
-    chrome.runtime.sendMessage({
-      type,
-      event: payload
-    });
+  if (type === 'VAULT_PIPELINE_EVENT' || type === 'VAULT_BRIDGE_CONNECTED') {
+    try {
+      chrome.runtime.sendMessage({
+        type,
+        event: payload
+      });
+    } catch {
+      // Extension context invalidated after reload — silently ignore.
+    }
   }
 });

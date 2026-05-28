@@ -59,24 +59,36 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
     });
   });
 
-  describe('chrome runtime message handling', () => {
+  describe('chrome runtime port handling', () => {
     let originalRuntime: any;
+    let portListeners: any[];
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [InsightService, provideZonelessChangeDetection()]
       });
 
-      originalRuntime = (globalThis as any).chrome.runtime;
+      originalRuntime = (globalThis as any).chrome?.runtime;
+      portListeners = [];
 
-      // Patch runtime to include onMessage API
-      (globalThis as any).chrome.runtime = {
-        onMessage: {
-          listeners: [] as any[],
-          addListener(fn: any) {
-            this.listeners.push(fn);
-          },
-          removeListener() {}
+      // Patch runtime to include connect API
+      (globalThis as any).chrome = {
+        ...(globalThis as any).chrome,
+        runtime: {
+          connect(_connectInfo: any) {
+            return {
+              name: _connectInfo?.name ?? '',
+              onMessage: {
+                addListener(fn: any) {
+                  portListeners.push(fn);
+                }
+              },
+              onDisconnect: {
+                addListener() {}
+              },
+              postMessage() {}
+            };
+          }
         }
       };
 
@@ -86,7 +98,9 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
 
     afterEach(() => {
       // Restore whatever runtime existed originally
-      (globalThis as any).chrome.runtime = originalRuntime;
+      if (originalRuntime) {
+        (globalThis as any).chrome.runtime = originalRuntime;
+      }
     });
 
     it('should emit events when receiving VAULT_PIPELINE_EVENT messages', (done) => {
@@ -103,21 +117,19 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
         done();
       });
 
-      const listener = (globalThis as any).chrome.runtime.onMessage
-        .listeners[0];
+      const listener = portListeners[0];
 
       expect(typeof listener).toBe('function');
 
       listener({ type: 'VAULT_PIPELINE_EVENT', event: mockEvent });
     });
 
-    it('should ignore non-NGVAULT_EVENT messages', (done) => {
+    it('should ignore non-VAULT_PIPELINE_EVENT messages', (done) => {
       const received: EventShape[] = [];
 
       hook.pipeline$().subscribe((e) => received.push(e as any));
 
-      const listener = (globalThis as any).chrome.runtime.onMessage
-        .listeners[0];
+      const listener = portListeners[0];
 
       listener({ type: 'OTHER_EVENT', foo: 123 });
 
@@ -132,8 +144,7 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
 
       hook.pipeline$().subscribe((e) => received.push(e as any));
 
-      const listener = (globalThis as any).chrome.runtime.onMessage
-        .listeners[0];
+      const listener = portListeners[0];
 
       listener({ foo: 123 });
 

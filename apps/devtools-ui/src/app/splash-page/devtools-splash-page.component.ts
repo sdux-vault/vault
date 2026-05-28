@@ -38,17 +38,4 @@ export class DevToolsSplashPageComponent {
   clearEvents(): void {
     this.devtools.clearEvents();
   }
-
-  /**
-   * The constructor
-   */
-  constructor() {
-    // Request full insight emission across all monitors for DevTools UI.
-    window.sdux?.vaultMonitorInstance?.activateGlobalInsights({
-      id: 'dev-tools',
-      wantsState: true,
-      wantsPayload: true,
-      wantsErrors: true
-    });
-  }
 }

@@ -42,7 +42,6 @@ chrome.runtime.onConnect.addListener((port) => {
 chrome.runtime.onMessage.addListener((msg) => {
   if (!devtoolsPort || !msg?.type) return;
 
-  // Forward pipeline events
   if (msg.type === 'VAULT_PIPELINE_EVENT') {
     devtoolsPort.postMessage({
       type: 'VAULT_PIPELINE_EVENT',
