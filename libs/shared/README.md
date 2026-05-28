@@ -88,13 +88,13 @@ npm install @sdux-vault/core
 
 ## Ecosystem
 
-| Package                                                                                      | Purpose                                      |
-| -------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [`@sdux-vault/engine`](https://www.npmjs.com/package/@sdux-vault/engine)                     | Orchestration, conductor, decision engine    |
-| [`@sdux-vault/core`](https://www.npmjs.com/package/@sdux-vault/core)                         | Behavior runtime and pipeline execution      |
-| [`@sdux-vault/addons`](https://www.npmjs.com/package/@sdux-vault/addons)                     | Optional runtime policies and controllers    |
-| [`@sdux-vault/core-extensions`](https://www.npmjs.com/package/@sdux-vault/core-extensions)   | Framework integrations (Angular, React, Vue) |
-| [`@sdux-vault/devtools-tooling`](https://www.npmjs.com/package/@sdux-vault/devtools-tooling) | Observability and debugging                  |
+| Package                                                                                    | Purpose                                      |
+| ------------------------------------------------------------------------------------------ | -------------------------------------------- |
+| [`@sdux-vault/engine`](https://www.npmjs.com/package/@sdux-vault/engine)                   | Orchestration, conductor, decision engine    |
+| [`@sdux-vault/core`](https://www.npmjs.com/package/@sdux-vault/core)                       | Behavior runtime and pipeline execution      |
+| [`@sdux-vault/addons`](https://www.npmjs.com/package/@sdux-vault/addons)                   | Optional runtime policies and controllers    |
+| [`@sdux-vault/core-extensions`](https://www.npmjs.com/package/@sdux-vault/core-extensions) | Framework integrations (Angular, React, Vue) |
+| [`@sdux-vault/devtools`](https://www.npmjs.com/package/@sdux-vault/devtools)               | Observability and debugging                  |
 
 ---
 
