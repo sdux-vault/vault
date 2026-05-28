@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AnalyticsService } from '../analytics/analytics.service';
 import { FooterComponent } from '../footer/footer.component';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { LoadingSpinnerComponent } from '../spinner/loading-spinner.component';
@@ -21,8 +22,10 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 })
 export class AppComponent {
   #themeService = inject(ThemeService);
+  #analyticsService = inject(AnalyticsService);
 
   constructor() {
     this.#themeService.restorePreferences();
+    this.#analyticsService.initialize();
   }
 }
