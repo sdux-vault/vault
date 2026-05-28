@@ -11,15 +11,30 @@
  * detection of Vault for a limited number of attempts.
  */
 (function () {
-  /** Prevent multiple injections of the devtools bridge. */
-  if (window.__vaultDevtoolsBridgeInjected) return;
-  window.__vaultDevtoolsBridgeInjected = true;
+  /**
+   * Prevent multiple injections of the devtools bridge.
+   *
+   * Uses a Symbol key with Object.defineProperty to avoid:
+   * - Fingerprinting via Object.keys / for...in (Symbols are non-enumerable)
+   * - Setter interception via Object.defineProperty traps (configurable: false)
+   */
+  const BRIDGE_KEY = Symbol.for('__vault_devtools_bridge__');
+  if (window[BRIDGE_KEY]) return;
+  Object.defineProperty(window, BRIDGE_KEY, {
+    value: true,
+    writable: false,
+    enumerable: false,
+    configurable: true
+  });
 
   /** Internal retry counter for waiting on Vault globals. */
   let counter = 1;
 
   /** Base wait interval used for exponential retry delays. */
   const elapsedTime = 500;
+
+  /** Active subscription to the pipeline event stream. */
+  let pipelineSub = null;
 
   /**
    * Attempts to detect Vault runtime globals and, once available,
@@ -71,7 +86,7 @@
       // PIPELINE EVENTS
       //
       if (typeof bus.pipeline$ === 'function') {
-        bus.pipeline$().subscribe((event) => {
+        pipelineSub = bus.pipeline$().subscribe((event) => {
           window.postMessage(
             {
               source: 'vault-devtools',
@@ -84,6 +99,17 @@
       }
     }
   }
+
+  /**
+   * Cleans up the pipeline subscription when the page is unloaded
+   * to prevent memory leaks during navigation.
+   */
+  window.addEventListener('beforeunload', () => {
+    if (pipelineSub && typeof pipelineSub.unsubscribe === 'function') {
+      pipelineSub.unsubscribe();
+      pipelineSub = null;
+    }
+  });
 
   waitForVault();
 })();

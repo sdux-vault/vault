@@ -63,6 +63,7 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
     let originalRuntime: any;
     let portListeners: any[];
     let disconnectListeners: any[];
+    let connectCalls: number;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -72,12 +73,14 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
       originalRuntime = (globalThis as any).chrome?.runtime;
       portListeners = [];
       disconnectListeners = [];
+      connectCalls = 0;
 
       // Patch runtime to include connect API
       (globalThis as any).chrome = {
         ...(globalThis as any).chrome,
         runtime: {
           connect(_connectInfo: any) {
+            connectCalls++;
             return {
               name: _connectInfo?.name ?? '',
               onMessage: {
@@ -159,6 +162,7 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
     });
 
     it('should clear the port reference on disconnect', () => {
+      jasmine.clock().install();
       expect(disconnectListeners.length).toBe(1);
 
       // Trigger disconnect callback
@@ -166,6 +170,20 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
 
       // Service should still be functional (isChromeExtension stays true)
       expect(hook.isChromeExtension).toBe(true);
+      jasmine.clock().uninstall();
+    });
+
+    it('should reconnect after disconnect', () => {
+      jasmine.clock().install();
+      const callsBeforeDisconnect = connectCalls;
+
+      // Trigger disconnect
+      disconnectListeners[0]();
+
+      jasmine.clock().tick(InsightService.RECONNECT_DELAY_MS);
+
+      expect(connectCalls).toBe(callsBeforeDisconnect + 1);
+      jasmine.clock().uninstall();
     });
   });
 });

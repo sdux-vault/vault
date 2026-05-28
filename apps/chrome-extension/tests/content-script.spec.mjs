@@ -44,12 +44,12 @@ describe('Chrome Extension: content-script.js', () => {
       dispatchWindowMessage({
         source: 'vault-devtools',
         type: 'VAULT_PIPELINE_EVENT',
-        event: { cell: 'test', type: 'init' }
+        event: { cell: 'test', type: 'init', timestamp: 1 }
       });
 
       expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
         type: 'VAULT_PIPELINE_EVENT',
-        event: { cell: 'test', type: 'init' }
+        event: { cell: 'test', type: 'init', timestamp: 1 }
       });
     });
 
@@ -60,8 +60,7 @@ describe('Chrome Extension: content-script.js', () => {
       });
 
       expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
-        type: 'VAULT_BRIDGE_CONNECTED',
-        event: undefined
+        type: 'VAULT_BRIDGE_CONNECTED'
       });
     });
 
@@ -113,9 +112,91 @@ describe('Chrome Extension: content-script.js', () => {
         dispatchWindowMessage({
           source: 'vault-devtools',
           type: 'VAULT_PIPELINE_EVENT',
-          event: { cell: 'test', type: 'init' }
+          event: { cell: 'test', type: 'init', timestamp: 1 }
         });
       }).not.toThrow();
+    });
+
+    it('should swallow errors for VAULT_BRIDGE_CONNECTED when context is invalidated', () => {
+      chrome.runtime.sendMessage.and.throwError(
+        'Extension context invalidated'
+      );
+
+      expect(() => {
+        dispatchWindowMessage({
+          source: 'vault-devtools',
+          type: 'VAULT_BRIDGE_CONNECTED'
+        });
+      }).not.toThrow();
+    });
+    it('should swallow async rejections from sendMessage', async () => {
+      chrome.runtime.sendMessage.and.returnValue(
+        Promise.reject(new Error('Service worker inactive'))
+      );
+
+      dispatchWindowMessage({
+        source: 'vault-devtools',
+        type: 'VAULT_PIPELINE_EVENT',
+        event: { cell: 'test', type: 'init', timestamp: 1 }
+      });
+
+      // Flush microtask queue — if .catch() is missing, this would trigger
+      // an unhandled rejection
+      await Promise.resolve();
+
+      expect(chrome.runtime.sendMessage).toHaveBeenCalled();
+    });
+  });
+
+  describe('pipeline event schema validation', () => {
+    it('should reject pipeline events missing cell', () => {
+      dispatchWindowMessage({
+        source: 'vault-devtools',
+        type: 'VAULT_PIPELINE_EVENT',
+        event: { type: 'init', timestamp: 1 }
+      });
+
+      expect(chrome.runtime.sendMessage).not.toHaveBeenCalled();
+    });
+
+    it('should reject pipeline events missing type', () => {
+      dispatchWindowMessage({
+        source: 'vault-devtools',
+        type: 'VAULT_PIPELINE_EVENT',
+        event: { cell: 'test', timestamp: 1 }
+      });
+
+      expect(chrome.runtime.sendMessage).not.toHaveBeenCalled();
+    });
+
+    it('should reject pipeline events missing timestamp', () => {
+      dispatchWindowMessage({
+        source: 'vault-devtools',
+        type: 'VAULT_PIPELINE_EVENT',
+        event: { cell: 'test', type: 'init' }
+      });
+
+      expect(chrome.runtime.sendMessage).not.toHaveBeenCalled();
+    });
+
+    it('should reject null pipeline event payload', () => {
+      dispatchWindowMessage({
+        source: 'vault-devtools',
+        type: 'VAULT_PIPELINE_EVENT',
+        event: null
+      });
+
+      expect(chrome.runtime.sendMessage).not.toHaveBeenCalled();
+    });
+
+    it('should reject non-object pipeline event payload', () => {
+      dispatchWindowMessage({
+        source: 'vault-devtools',
+        type: 'VAULT_PIPELINE_EVENT',
+        event: 'injected-string'
+      });
+
+      expect(chrome.runtime.sendMessage).not.toHaveBeenCalled();
     });
   });
 });

@@ -14,7 +14,7 @@
     "128": "icons/brand-128.png"
   },
 
-  "permissions": ["scripting", "tabs", "storage", "activeTab"],
+  "permissions": [],
   "host_permissions": ["<all_urls>"],
 
   "content_scripts": [

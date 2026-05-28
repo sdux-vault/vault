@@ -1,13 +1,18 @@
 import { loadScript } from './chrome-mock.mjs';
 
+const BRIDGE_KEY = Symbol.for('__vault_devtools_bridge__');
+
 describe('Chrome Extension: bridge-inject.js', () => {
   let postMessageCalls;
   let originalPostMessage;
+  let eventListeners;
+  let originalAddEventListener;
 
   beforeEach(() => {
-    delete globalThis.__vaultDevtoolsBridgeInjected;
+    delete globalThis[BRIDGE_KEY];
     delete globalThis.sdux;
     postMessageCalls = [];
+    eventListeners = {};
 
     // bridge-inject.js uses `window` which doesn't exist in Node
     if (!globalThis.window) globalThis.window = globalThis;
@@ -15,14 +20,21 @@ describe('Chrome Extension: bridge-inject.js', () => {
     originalPostMessage = globalThis.postMessage;
     globalThis.postMessage = (...args) => postMessageCalls.push(args);
 
+    originalAddEventListener = globalThis.addEventListener;
+    globalThis.addEventListener = (type, fn) => {
+      if (!eventListeners[type]) eventListeners[type] = [];
+      eventListeners[type].push(fn);
+    };
+
     jasmine.clock().install();
   });
 
   afterEach(() => {
     jasmine.clock().uninstall();
-    delete globalThis.__vaultDevtoolsBridgeInjected;
+    delete globalThis[BRIDGE_KEY];
     delete globalThis.sdux;
     globalThis.postMessage = originalPostMessage;
+    globalThis.addEventListener = originalAddEventListener;
   });
 
   function createMockMonitor() {
@@ -33,15 +45,18 @@ describe('Chrome Extension: bridge-inject.js', () => {
 
   function createMockBus() {
     let subscriber;
+    const unsubscribeSpy = jasmine.createSpy('unsubscribe');
     return {
       pipeline$: jasmine.createSpy('pipeline$').and.callFake(() => ({
         subscribe(fn) {
           subscriber = fn;
+          return { unsubscribe: unsubscribeSpy };
         }
       })),
       _emit(event) {
         subscriber?.(event);
-      }
+      },
+      _unsubscribeSpy: unsubscribeSpy
     };
   }
 
@@ -55,11 +70,34 @@ describe('Chrome Extension: bridge-inject.js', () => {
 
       loadScript('bridge/bridge-inject.js');
 
-      expect(globalThis.__vaultDevtoolsBridgeInjected).toBe(true);
+      expect(globalThis[BRIDGE_KEY]).toBe(true);
+    });
+
+    it('should use a non-enumerable property to prevent fingerprinting', () => {
+      globalThis.sdux = {
+        vaultMonitorInstance: createMockMonitor(),
+        vaultEventBus: createMockBus()
+      };
+      spyOn(console, 'warn');
+
+      loadScript('bridge/bridge-inject.js');
+
+      const descriptor = Object.getOwnPropertyDescriptor(
+        globalThis,
+        BRIDGE_KEY
+      );
+      expect(descriptor.enumerable).toBe(false);
+      expect(descriptor.writable).toBe(false);
     });
 
     it('should not re-execute when already injected', () => {
-      globalThis.__vaultDevtoolsBridgeInjected = true;
+      // Use configurable: true so afterEach cleanup works
+      Object.defineProperty(globalThis, BRIDGE_KEY, {
+        value: true,
+        writable: false,
+        enumerable: false,
+        configurable: true
+      });
       const monitor = createMockMonitor();
       globalThis.sdux = {
         vaultMonitorInstance: monitor,
@@ -150,6 +188,36 @@ describe('Chrome Extension: bridge-inject.js', () => {
       jasmine.clock().tick(1600);
 
       expect(console.error).toHaveBeenCalled();
+    });
+  });
+
+  describe('subscription cleanup', () => {
+    it('should unsubscribe pipeline on beforeunload', () => {
+      const monitor = createMockMonitor();
+      const bus = createMockBus();
+      globalThis.sdux = { vaultMonitorInstance: monitor, vaultEventBus: bus };
+      spyOn(console, 'warn');
+
+      loadScript('bridge/bridge-inject.js');
+
+      expect(bus._unsubscribeSpy).not.toHaveBeenCalled();
+
+      // Trigger beforeunload
+      const listeners = eventListeners['beforeunload'] || [];
+      listeners.forEach((fn) => fn());
+
+      expect(bus._unsubscribeSpy).toHaveBeenCalled();
+    });
+
+    it('should register a beforeunload listener', () => {
+      const monitor = createMockMonitor();
+      const bus = createMockBus();
+      globalThis.sdux = { vaultMonitorInstance: monitor, vaultEventBus: bus };
+      spyOn(console, 'warn');
+
+      loadScript('bridge/bridge-inject.js');
+
+      expect(eventListeners['beforeunload']?.length).toBe(1);
     });
   });
 

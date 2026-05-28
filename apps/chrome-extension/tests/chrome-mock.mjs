@@ -18,6 +18,7 @@ export function buildChromeMock() {
 
   const chrome = {
     runtime: {
+      id: 'mock-extension-id',
       _connectListeners: connectListeners,
       _messageListeners: messageListeners,
 
@@ -39,7 +40,9 @@ export function buildChromeMock() {
           return chrome._createPort(info?.name ?? '');
         }),
 
-      sendMessage: jasmine.createSpy('chrome.runtime.sendMessage'),
+      sendMessage: jasmine
+        .createSpy('chrome.runtime.sendMessage')
+        .and.returnValue(Promise.resolve()),
 
       getURL: jasmine
         .createSpy('chrome.runtime.getURL')

@@ -35,6 +35,16 @@ export class InsightService {
   #port: chrome.runtime.Port | null = null;
 
   /**
+   * Handle for the pending reconnection timer, if any.
+   */
+  #reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+
+  /**
+   * Delay in milliseconds before attempting to reconnect after a disconnect.
+   */
+  static readonly RECONNECT_DELAY_MS = 1000;
+
+  /**
    * Initializes the service and connects a long-lived port when running
    * inside the Chrome DevTools extension.
    *
@@ -92,6 +102,21 @@ export class InsightService {
 
     this.#port.onDisconnect.addListener(() => {
       this.#port = null;
+      this.#scheduleReconnect();
     });
+  }
+
+  /**
+   * Schedules a reconnection attempt after a delay.
+   * Clears any previously scheduled attempt.
+   */
+  #scheduleReconnect(): void {
+    if (this.#reconnectTimer != null) {
+      clearTimeout(this.#reconnectTimer);
+    }
+    this.#reconnectTimer = setTimeout(() => {
+      this.#reconnectTimer = null;
+      this.#connectPort();
+    }, InsightService.RECONNECT_DELAY_MS);
   }
 }

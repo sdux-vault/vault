@@ -37,15 +37,31 @@
 })();
 
 /**
+ * Validates that a pipeline event has the minimum required shape.
+ *
+ * @param event - The event payload to validate.
+ * @returns True if the event has `cell`, `type`, and `timestamp` properties.
+ */
+function isValidPipelineEvent(event) {
+  return (
+    event != null &&
+    typeof event === 'object' &&
+    typeof event.cell === 'string' &&
+    typeof event.type === 'string' &&
+    typeof event.timestamp === 'number'
+  );
+}
+
+/**
  * Forwards Vault DevTools bridge events from the page context to the
  * Chrome extension background script.
  *
  * Only messages explicitly tagged with `source: "vault-devtools"` and
- * originating from the same window context are processed. All other
- * messages are ignored.
+ * originating from the same window context are processed. Pipeline events
+ * are validated against the expected schema before forwarding.
  *
  * Supported message types:
- * - "VAULT_PIPELINE_EVENT"  — forwarded pipeline event payload
+ * - "VAULT_PIPELINE_EVENT"  — forwarded pipeline event payload (schema-validated)
  * - "VAULT_BRIDGE_CONNECTED" — bridge successfully connected to Vault
  */
 window.addEventListener('message', (event) => {
@@ -53,12 +69,16 @@ window.addEventListener('message', (event) => {
   if (!event.data || event.data.source !== 'vault-devtools') return;
 
   const { type, event: payload } = event.data;
-  if (type === 'VAULT_PIPELINE_EVENT' || type === 'VAULT_BRIDGE_CONNECTED') {
+
+  if (type === 'VAULT_PIPELINE_EVENT' && isValidPipelineEvent(payload)) {
     try {
-      chrome.runtime.sendMessage({
-        type,
-        event: payload
-      });
+      chrome.runtime.sendMessage({ type, event: payload }).catch(() => {});
+    } catch {
+      // Extension context invalidated after reload — silently ignore.
+    }
+  } else if (type === 'VAULT_BRIDGE_CONNECTED') {
+    try {
+      chrome.runtime.sendMessage({ type }).catch(() => {});
     } catch {
       // Extension context invalidated after reload — silently ignore.
     }
