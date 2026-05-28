@@ -1,4 +1,9 @@
-import { Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject
+} from '@angular/core';
 import { DevtoolsService } from '../../../services/devtools.service';
 import { DevtoolsPipelineEventComponent } from '../../events/pipeline/devtools-pipeline-event.component';
 
@@ -18,7 +23,8 @@ import { DevtoolsPipelineEventComponent } from '../../events/pipeline/devtools-p
   standalone: true,
   imports: [DevtoolsPipelineEventComponent],
   templateUrl: './devtools-main-pipeline-panel.component.html',
-  styleUrl: './devtools-main-pipeline-panel.component.scss'
+  styleUrl: './devtools-main-pipeline-panel.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DevtoolsMainPipelinePanelComponent {
   /** Injected DevTools state provider. */

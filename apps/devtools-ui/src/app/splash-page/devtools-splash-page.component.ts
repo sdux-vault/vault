@@ -1,4 +1,9 @@
-import { Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject
+} from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DevtoolsMainPipelinePanelComponent } from '../panels/pipeline/main/devtools-main-pipeline-panel.component';
 import { DevtoolsService } from '../services/devtools.service';
@@ -20,7 +25,8 @@ import { DevtoolsService } from '../services/devtools.service';
   standalone: true,
   imports: [MatTabsModule, DevtoolsMainPipelinePanelComponent],
   templateUrl: './devtools-splash-page.component.html',
-  styleUrl: './devtools-splash-page.component.scss'
+  styleUrl: './devtools-splash-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DevToolsSplashPageComponent {
   /** Internal service providing access to DevTools event streams. */

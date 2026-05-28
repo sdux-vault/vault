@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { EventShape } from '@sdux-vault/shared';
 
 /**
@@ -19,7 +19,8 @@ import { EventShape } from '@sdux-vault/shared';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './devtools-pipeline-event.component.html',
-  styleUrl: './devtools-pipeline-event.component.scss'
+  styleUrl: './devtools-pipeline-event.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DevtoolsPipelineEventComponent {
   /**

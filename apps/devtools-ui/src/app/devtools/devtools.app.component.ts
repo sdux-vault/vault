@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 /**
@@ -12,6 +12,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'sdux-devtools-root',
   imports: [RouterOutlet],
   templateUrl: './devtools.app.component.html',
-  styleUrl: './devtools.app.component.scss'
+  styleUrl: './devtools.app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DevToolsApp {}

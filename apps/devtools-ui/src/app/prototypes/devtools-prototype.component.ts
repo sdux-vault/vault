@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ElementRef, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  viewChild
+} from '@angular/core';
 import { EventShape } from '@sdux-vault/shared';
 
 /** Shape representing a timeline containing a sequence of pipeline events. */
@@ -21,7 +27,8 @@ interface TimelineShape {
   standalone: true,
   imports: [],
   templateUrl: './devtools-prototype.component.html',
-  styleUrl: './devtools-prototype.component.scss'
+  styleUrl: './devtools-prototype.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DevtoolsPrototypeComponent implements AfterViewInit {
   /** Reference to the scrollable timeline container element. */

@@ -132,6 +132,7 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
     });
 
     it('should ignore non-VAULT_PIPELINE_EVENT messages', (done) => {
+      spyOn(console, 'warn');
       const received: EventShape[] = [];
 
       hook.pipeline$().subscribe((e) => received.push(e as any));
@@ -142,6 +143,10 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
 
       setTimeout(() => {
         expect(received.length).toBe(0);
+        // eslint-disable-next-line no-console
+        expect(console.warn).toHaveBeenCalledWith(
+          '[Vault DevTools] Unhandled message type: "OTHER_EVENT"'
+        );
         done();
       }, 0);
     });
@@ -182,6 +187,23 @@ describe('Service: NgVaultInsightService - Pipeline', () => {
 
       jasmine.clock().tick(InsightService.RECONNECT_DELAY_MS);
 
+      expect(connectCalls).toBe(callsBeforeDisconnect + 1);
+      jasmine.clock().uninstall();
+    });
+
+    it('should cancel a pending reconnect when disconnected again', () => {
+      jasmine.clock().install();
+      const callsBeforeDisconnect = connectCalls;
+
+      // First disconnect schedules a reconnect
+      disconnectListeners[0]();
+
+      // Second disconnect before timer fires should cancel and reschedule
+      disconnectListeners[0]();
+
+      jasmine.clock().tick(InsightService.RECONNECT_DELAY_MS);
+
+      // Only one reconnect should have occurred, not two
       expect(connectCalls).toBe(callsBeforeDisconnect + 1);
       jasmine.clock().uninstall();
     });

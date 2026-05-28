@@ -92,11 +92,18 @@ export class InsightService {
       (msg: { type?: string; event?: unknown }) => {
         if (!msg?.type) return;
 
-        this.zone.run(() => {
-          if (msg.type === 'VAULT_PIPELINE_EVENT') {
-            this.#chromePipeline$.next(msg.event as EventShape);
-          }
-        });
+        switch (msg.type) {
+          case 'VAULT_PIPELINE_EVENT':
+            this.zone.run(() => {
+              this.#chromePipeline$.next(msg.event as EventShape);
+            });
+            break;
+          default:
+            // eslint-disable-next-line no-console
+            console.warn(
+              `[Vault DevTools] Unhandled message type: "${msg.type}"`
+            );
+        }
       }
     );
 

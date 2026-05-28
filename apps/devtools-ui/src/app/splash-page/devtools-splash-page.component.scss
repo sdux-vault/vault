@@ -54,6 +54,7 @@
         );
 
         &:hover {
+          // exception: overrides Angular Material button ripple specificity
           background-color: global.$sdux-hover-background-color !important;
         }
       }
