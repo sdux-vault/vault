@@ -24,7 +24,7 @@ describe('Service: Analytics', () => {
   });
 
   afterEach(() => {
-    delete (window as Record<string, unknown>)['gtag'];
+    delete (window as unknown as Record<string, unknown>)['gtag'];
   });
 
   it('should be created', () => {
@@ -33,7 +33,7 @@ describe('Service: Analytics', () => {
 
   it('should call gtag on NavigationEnd', () => {
     const gtagSpy = jasmine.createSpy('gtag');
-    (window as Record<string, unknown>)['gtag'] = gtagSpy;
+    (window as unknown as Record<string, unknown>)['gtag'] = gtagSpy;
 
     service.initialize();
     routerEvents$.next(new NavigationEnd(1, '/docs', '/docs'));
@@ -45,7 +45,7 @@ describe('Service: Analytics', () => {
 
   it('should use urlAfterRedirects for page_path', () => {
     const gtagSpy = jasmine.createSpy('gtag');
-    (window as Record<string, unknown>)['gtag'] = gtagSpy;
+    (window as unknown as Record<string, unknown>)['gtag'] = gtagSpy;
 
     service.initialize();
     routerEvents$.next(new NavigationEnd(1, '/old', '/redirected'));
@@ -65,7 +65,7 @@ describe('Service: Analytics', () => {
 
   it('should ignore non-NavigationEnd events', () => {
     const gtagSpy = jasmine.createSpy('gtag');
-    (window as Record<string, unknown>)['gtag'] = gtagSpy;
+    (window as unknown as Record<string, unknown>)['gtag'] = gtagSpy;
 
     service.initialize();
     routerEvents$.next({ type: 'other' });
