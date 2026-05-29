@@ -1,8 +1,13 @@
 @use 'global' as global;
 
-.vault-devtools {
+:host {
+  display: block;
+}
+
+.pipeline-panel {
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 140px);
   padding: global.$spacing-md;
   @include global.sdux-text(global.$sdux-text-primary);
 
@@ -13,13 +18,13 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-height: 0;
 
     .event-list {
       flex: 1;
-      overflow-y: auto;
-      padding-right: global.$spacing-xs;
-
-      padding-bottom: max(global.$spacing-xl, 10vh);
+      min-height: 0;
+      height: 100%;
+      overscroll-behavior: contain;
 
       // Optional nice scrollbars
       &::-webkit-scrollbar {

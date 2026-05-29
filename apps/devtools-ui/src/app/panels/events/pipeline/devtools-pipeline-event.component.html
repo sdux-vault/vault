@@ -1,5 +1,5 @@
 @if (event()) {
-  <div class="event-row-header">
+  <div class="event-row-header" [class.event-row-error]="!!event().error">
     <div class="counter">
       {{ totalEvents() | number: '3.0' }}
     </div>
@@ -12,40 +12,77 @@
       {{ event().type.toUpperCase() }}
     </div>
 
+    <div class="indicators">
+      <span
+        class="icon"
+        [class.active]="event().state?.hasValue"
+        [attr.title]="event().state?.hasValue ? 'Has data' : 'No data'"
+        aria-hidden="true"
+        >&#9679;</span
+      >
+      <span
+        class="icon"
+        [class.active]="!!event().payload"
+        [attr.title]="event().payload ? 'Has payload' : 'No payload'"
+        aria-hidden="true"
+        >&#9998;</span
+      >
+      @if (event().error) {
+        <span class="icon error" title="Has error" aria-hidden="true"
+          >&#9888;</span
+        >
+      }
+    </div>
+
     <!-- Time -->
     <div class="ts">
       {{ event().timestamp | date: 'HH:mm:ss.SSS' }}
     </div>
   </div>
-  <details class="event-details">
+  <details
+    class="event-details"
+    [open]="expanded()"
+    (toggle)="onToggle($any($event).target.open)">
     <summary>Details</summary>
 
     <div class="detail-block">
       <h4>State</h4>
       <ul class="kv">
         <li><strong>id:</strong> {{ event().id }}</li>
-        <li><strong>isLoading:</strong> {{ event().state?.isLoading }}</li>
-        <li><strong>hasValue:</strong> {{ event().state?.hasValue }}</li>
         <li>
-          <strong>error:</strong> {{ event().state?.error?.message ?? 'null' }}
+          <strong>isLoading:</strong>
+          {{ event().state?.isLoading ? 'True' : 'False' }}
+        </li>
+        <li>
+          <strong>hasValue:</strong>
+          {{ event().state?.hasValue ? 'True' : 'False' }}
+        </li>
+        <li>
+          <strong>error:</strong>
+          {{
+            event().state?.error?.message
+              ? event().state?.error?.message
+              : 'null'
+          }}
         </li>
       </ul>
       @if (event().state?.value) {
-        <pre>{{ event().state?.value | json }}</pre>
+        <strong>State</strong>
+        <pre><code>{{ event().state?.value | json }}</code></pre>
       }
     </div>
 
     @if (event().payload) {
       <div class="detail-block">
         <h4>Payload</h4>
-        <pre>{{ event().payload | json }}</pre>
+        <pre><code>{{ event().payload | json }}</code></pre>
       </div>
     }
 
     @if (event().error) {
       <div class="detail-block error-block">
         <h4>Error</h4>
-        <pre>{{ event().error | json }}</pre>
+        <pre><code>{{ event().error | json }}</code></pre>
       </div>
     }
   </details>

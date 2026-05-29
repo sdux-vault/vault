@@ -9,7 +9,11 @@ import { flushVaultPipeline } from '@sdux-vault/testing-utils';
 import { DevtoolsPipelineEventComponent } from '../panels/events/pipeline/devtools-pipeline-event.component';
 import { DevtoolsMainPipelinePanelComponent } from '../panels/pipeline/main/devtools-main-pipeline-panel.component';
 import { DevtoolsService } from '../services/devtools.service';
-import { DevToolsSplashPageComponent } from './devtools-splash-page.component';
+import {
+  DevToolsSplashPageComponent,
+  EXTENSION_VERSION,
+  resolveExtensionVersion
+} from './devtools-splash-page.component';
 
 const mockEvent: any = {
   id: 1,
@@ -52,6 +56,7 @@ describe('Component: SplashPage', () => {
       ],
       providers: [
         { provide: DevtoolsService, useValue: mockService },
+        { provide: EXTENSION_VERSION, useValue: '0.0.27' },
         provideZonelessChangeDetection()
       ]
     }).compileComponents();
@@ -85,5 +90,28 @@ describe('Component: SplashPage', () => {
 
   it('should render template without pipe errors', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
+  });
+
+  it('should use the injected extension version', () => {
+    expect(component.version).toBe('0.0.27');
+  });
+});
+
+describe('resolveExtensionVersion', () => {
+  it('should return "dev" when chrome.runtime.getManifest is unavailable', () => {
+    expect(resolveExtensionVersion()).toBe('dev');
+  });
+
+  it('should return the manifest version when available', () => {
+    const original = (globalThis as any).chrome;
+    (globalThis as any).chrome = {
+      runtime: {
+        getManifest: () => ({ version: '1.2.3' })
+      }
+    };
+
+    expect(resolveExtensionVersion()).toBe('1.2.3');
+
+    (globalThis as any).chrome = original;
   });
 });

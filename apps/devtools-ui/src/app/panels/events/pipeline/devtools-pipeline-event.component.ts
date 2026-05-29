@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output
+} from '@angular/core';
 import { EventShape } from '@sdux-vault/shared';
 
 /**
@@ -35,4 +40,21 @@ export class DevtoolsPipelineEventComponent {
    * display index, ordering, or summary information.
    */
   readonly totalEvents = input.required<number>();
+
+  /**
+   * Whether the details section is expanded. Tracked explicitly to prevent
+   * CDK virtual scroll DOM recycling from leaking open/close state across
+   * reused elements.
+   */
+  readonly expanded = input<boolean>(false);
+
+  /**
+   * Emits when the user toggles the details disclosure.
+   */
+  readonly expandedChange = output<boolean>();
+
+  /** Handles the native `<details>` toggle event. */
+  onToggle(open: boolean): void {
+    this.expandedChange.emit(open);
+  }
 }

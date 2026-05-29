@@ -2,11 +2,33 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject
+  inject,
+  InjectionToken
 } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DevtoolsMainPipelinePanelComponent } from '../panels/pipeline/main/devtools-main-pipeline-panel.component';
 import { DevtoolsService } from '../services/devtools.service';
+
+/**
+ * Resolves the extension version from the Chrome manifest API.
+ *
+ * @returns The manifest version string, or `'dev'` outside the extension.
+ */
+export function resolveExtensionVersion(): string {
+  try {
+    return chrome.runtime.getManifest().version;
+  } catch {
+    return 'dev';
+  }
+}
+
+/**
+ * Injection token providing the extension manifest version string.
+ */
+export const EXTENSION_VERSION = new InjectionToken<string>(
+  'EXTENSION_VERSION',
+  { providedIn: 'root', factory: resolveExtensionVersion }
+);
 
 /**
  * Root splash-page component for the ngSDuX DevTools application.
@@ -31,6 +53,9 @@ import { DevtoolsService } from '../services/devtools.service';
 export class DevToolsSplashPageComponent {
   /** Internal service providing access to DevTools event streams. */
   private devtools = inject(DevtoolsService);
+
+  /** Extension manifest version, resolved via injection token. */
+  readonly version = inject(EXTENSION_VERSION);
 
   /** Reactive list of pipeline events used to populate the UI. */
   readonly events = computed(() => this.devtools.events());

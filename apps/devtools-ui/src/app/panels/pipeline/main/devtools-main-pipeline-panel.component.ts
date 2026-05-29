@@ -1,3 +1,4 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,7 +22,7 @@ import { DevtoolsPipelineEventComponent } from '../../events/pipeline/devtools-p
 @Component({
   selector: 'sdux-devtools-main-pipeline-panel',
   standalone: true,
-  imports: [DevtoolsPipelineEventComponent],
+  imports: [ScrollingModule, DevtoolsPipelineEventComponent],
   templateUrl: './devtools-main-pipeline-panel.component.html',
   styleUrl: './devtools-main-pipeline-panel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -38,4 +39,32 @@ export class DevtoolsMainPipelinePanelComponent {
 
   /** Total number of pipeline events emitted so far. */
   readonly totalEvents = this.devtools.totalEvents;
+
+  /** Tracks which event IDs have their details expanded. */
+  readonly expandedIds = new Set<string | number>();
+
+  /**
+   * Track-by function for virtual scroll item identity.
+   *
+   * @param _index - Item index in the virtual list.
+   * @param event - The pipeline event instance.
+   * @returns The unique event identifier.
+   */
+  trackById(_index: number, event: { id: string | number }): string | number {
+    return event.id;
+  }
+
+  /**
+   * Toggles the expanded state for a given event.
+   *
+   * @param id - The event identifier.
+   * @param open - Whether the details are now open.
+   */
+  toggleExpanded(id: string | number, open: boolean): void {
+    if (open) {
+      this.expandedIds.add(id);
+    } else {
+      this.expandedIds.delete(id);
+    }
+  }
 }

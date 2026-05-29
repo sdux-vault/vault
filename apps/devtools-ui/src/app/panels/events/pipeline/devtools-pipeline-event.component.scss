@@ -3,51 +3,84 @@
 .event-row-header {
   width: 100%;
   display: grid;
-  grid-template-columns: 4rem 140px 1fr auto; // Counter | Cell | spacer | Time
+  grid-template-columns: 4rem 140px 1fr auto auto; // Counter | Cell | Badge | Data | Time
   align-items: center;
   gap: global.$spacing-md;
-}
 
-.badge {
-  @include global.sdux-text(
-    global.$sdux-text-white,
-    global.$font-weight-semibold
-  );
-  font-size: global.$font-size-xs;
-  padding: global.$spacing-xs global.$spacing-sm;
-  border-radius: global.$border-radius-xs;
-  justify-self: start;
+  .badge {
+    @include global.sdux-text(
+      global.$sdux-text-white,
+      global.$font-weight-semibold
+    );
+    font-size: global.$font-size-xs;
+    padding: global.$spacing-xs global.$spacing-sm;
+    border-radius: global.$border-radius-xs;
+    justify-self: start;
 
-  &.init {
-    background-color: global.$sdux-success-base;
+    &.init {
+      background-color: global.$sdux-success-base;
+    }
+    &.patch {
+      background-color: global.$sdux-warn-base;
+      color: global.$sdux-text-black;
+    }
+    &.error {
+      background-color: global.$sdux-accent-base;
+    }
   }
-  &.patch {
-    background-color: global.$sdux-warn-base;
-    color: global.$sdux-text-black;
+
+  .counter {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-size: global.$font-size-sm;
+    width: 3rem;
+    text-align: left;
   }
-  &.error {
-    background-color: global.$sdux-accent-base;
+
+  .cell {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-weight: global.$font-weight-medium;
+    font-size: global.$font-size-md;
+    min-width: 125px;
   }
-}
 
-.counter {
-  @include global.sdux-text(global.$sdux-text-secondary);
-  font-size: global.$font-size-sm;
-  width: 3rem;
-  text-align: left;
-}
+  .data {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-size: global.$font-size-sm;
+    white-space: nowrap;
+  }
 
-.cell {
-  @include global.sdux-text(global.$sdux-text-secondary);
-  font-weight: global.$font-weight-medium;
-  font-size: global.$font-size-md;
-  min-width: 125px;
-}
+  .indicators {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-xs;
 
-.ts {
-  @include global.sdux-text(global.$sdux-text-secondary);
-  font-size: global.$font-size-xs;
-  white-space: nowrap;
+    .icon {
+      font-size: global.$font-size-md;
+      opacity: 0.3;
+      transition: opacity 0.15s ease;
+
+      &.active {
+        opacity: 1;
+        color: global.$sdux-success-base;
+      }
+
+      &.error {
+        opacity: 1;
+        color: global.$sdux-accent-base;
+      }
+    }
+  }
+
+  &.event-row-error {
+    background-color: rgba(global.$sdux-accent-base, 0.08);
+    border-left: 3px solid global.$sdux-accent-base;
+  }
+
+  .ts {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-size: global.$font-size-xs;
+    white-space: nowrap;
+  }
 }
 /* ----------------------------------------------
      DETAILS (STATE, PAYLOAD, ERROR)
