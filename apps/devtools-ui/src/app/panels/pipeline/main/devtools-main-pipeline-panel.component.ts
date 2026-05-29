@@ -35,7 +35,7 @@ export class DevtoolsMainPipelinePanelComponent {
    * Reactive list of all pipeline events emitted by FeatureCells.
    * Automatically updates as the DevTools service receives new telemetry.
    */
-  readonly events = computed(() => this.devtools.events());
+  readonly events = computed(() => [...this.devtools.events()].reverse());
 
   /** Total number of pipeline events emitted so far. */
   readonly totalEvents = this.devtools.totalEvents;

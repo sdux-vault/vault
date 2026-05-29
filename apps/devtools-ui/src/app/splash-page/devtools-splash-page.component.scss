@@ -1,16 +1,25 @@
 @use 'global' as global;
 
+:host {
+  display: block;
+  height: 100%;
+}
+
 .vault-devtools {
-  height: 100vh;
+  height: 100%;
   min-height: 0;
   display: flex;
   flex-direction: column;
   padding: global.$spacing-md;
   overflow: hidden;
 
-  @include global.sdux-surface(global.$sdux-surface-dark);
+  @include global.sdux-surface(global.$sdux-surface-mid);
   @include global.sdux-text(global.$sdux-text-primary);
   border: none;
+
+  @media (max-width: global.$breakpoint-md) {
+    padding: global.$spacing-md;
+  }
 
   /* ----------------------------------------------
      HEADER
@@ -34,6 +43,10 @@
       .subtitle {
         @include global.sdux-text(global.$sdux-text-secondary);
         font-size: global.$font-size-md;
+
+        @media (max-width: global.$breakpoint-md) {
+          display: none;
+        }
       }
     }
 
@@ -86,7 +99,7 @@
 
     /* tab header stays fixed */
     .mat-mdc-tab-header {
-      background-color: global.$sdux-surface-darker;
+      background-color: global.$sdux-surface-dark;
       border-bottom: 1px solid global.$sdux-surface-outline;
     }
 
@@ -119,6 +132,10 @@
     height: 100%;
     overflow: hidden;
     padding-right: global.$spacing-sm;
+
+    @media (max-width: global.$breakpoint-md) {
+      padding-right: global.$spacing-sm;
+    }
 
     /* nice scrollbars */
     &::-webkit-scrollbar {

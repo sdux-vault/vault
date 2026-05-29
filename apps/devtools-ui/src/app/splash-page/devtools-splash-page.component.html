@@ -2,15 +2,25 @@
   <!-- Header -->
   <header class="header">
     <div class="title">
-      <div class="logo">
+      <div class="logo" matTooltip="SDuX Vault DevTools">
         <img src="/assets/brand/brand-landscape-dark.svg" alt="SDuX Vault" />
       </div>
       <span class="subtitle">DevTools (v{{ version }})</span>
     </div>
 
     <div class="meta">
-      <span class="event-count">{{ totalEvents() }} events</span>
-      <button type="button" class="btn-clear" (click)="clearEvents()">
+      <span
+        class="event-count"
+        matTooltip="Total pipeline events captured"
+        aria-label="Total pipeline events captured">
+        {{ totalEvents() }} events
+      </span>
+      <button
+        type="button"
+        class="btn-clear"
+        matTooltip="Clear all events"
+        aria-label="Clear all events"
+        (click)="clearEvents()">
         Clear
       </button>
     </div>
@@ -53,7 +63,8 @@
       <img
         class="logo"
         src="/assets/brand/brand-landscape-dark.svg"
-        alt="SDuX Vault logo" />
+        alt="SDuX Vault logo"
+        matTooltip="SDuX Vault" />
     </section>
   }
 </div>

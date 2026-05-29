@@ -5,6 +5,7 @@ import {
   input,
   output
 } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
 
 /**
@@ -22,7 +23,7 @@ import { EventShape } from '@sdux-vault/shared';
 @Component({
   selector: 'sdux-devtools-pipeline-event',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatTooltipModule],
   templateUrl: './devtools-pipeline-event.component.html',
   styleUrl: './devtools-pipeline-event.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

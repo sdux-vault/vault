@@ -17,7 +17,8 @@ import {
 
 const mockEvent: any = {
   id: 1,
-  type: 'enqueue'
+  type: 'enqueue',
+  behaviorKey: 'test-behavior'
 };
 
 class MockNgVaultDevtoolsService {
@@ -79,7 +80,9 @@ describe('Component: SplashPage', () => {
     mockService.eventsSignal.set([mockEvent]);
     await flushVaultPipeline();
 
-    expect(component.events()).toEqual([Object({ id: 1, type: 'enqueue' })]);
+    expect(component.events()).toEqual([
+      Object({ id: 1, type: 'enqueue', behaviorKey: 'test-behavior' })
+    ]);
 
     component.clearEvents();
     await flushVaultPipeline();

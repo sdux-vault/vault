@@ -8,7 +8,8 @@ describe('Component: DevtoolsPipelineEvent', () => {
 
   const mockEvent: any = {
     cell: 'test-cell',
-    type: 'stage:start',
+    type: 'stage',
+    behaviorKey: 'test-behavior',
     timestamp: 123456789,
     state: {
       value: { foo: 'bar' },
@@ -33,16 +34,21 @@ describe('Component: DevtoolsPipelineEvent', () => {
   });
 
   it('should render the event details', () => {
+    fixture.componentRef.setInput('expanded', true);
+    fixture.detectChanges();
+
     const text = fixture.nativeElement.textContent;
 
-    expect(text).toContain('DetailsStateid: isLoading: falsehasValue: true');
+    expect(text).toContain('isLoading: False');
+    expect(text).toContain('hasValue: True');
     expect(text).toContain('"foo": "bar"');
   });
 
   it('should update when event input changes', () => {
     const nextEvent: EventShape = {
       cell: 'updated',
-      type: 'stage:end',
+      type: 'stage',
+      behaviorKey: 'updated-behavior',
       timestamp: 987654321,
       state: {
         value: { hello: 'world' },
@@ -53,10 +59,31 @@ describe('Component: DevtoolsPipelineEvent', () => {
     } as any;
 
     fixture.componentRef.setInput('event', nextEvent);
+    fixture.componentRef.setInput('expanded', true);
     fixture.detectChanges();
 
     const text = fixture.nativeElement.textContent;
 
     expect(text).toContain('"hello": "world"');
+  });
+
+  it('should emit expandedChange when onToggle is called', () => {
+    const component = fixture.componentInstance;
+    let emitted: boolean | undefined;
+    component.expandedChange.subscribe((v: boolean) => (emitted = v));
+
+    component.onToggle(true);
+    expect(emitted).toBeTrue();
+
+    component.onToggle(false);
+    expect(emitted).toBeFalse();
+  });
+
+  it('should render collapsed header content by default', () => {
+    const text = fixture.nativeElement.textContent;
+
+    expect(text).toContain('test-cell');
+    expect(text).toContain('TEST-BEHAVIOR');
+    expect(text).toContain('003');
   });
 });

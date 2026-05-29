@@ -405,6 +405,69 @@
       }
     },
 
+    "devtools-demo": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/devtools-ui",
+      "sourceRoot": "apps/devtools-ui/demo",
+      "prefix": "sdux",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "apps/devtools-ui/demo/main.ts",
+            "tsConfig": "apps/devtools-ui/tsconfig.demo.json",
+            "inlineStyleLanguage": "scss",
+            "index": "apps/devtools-ui/demo/index.html",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "apps/devtools-ui/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "apps/devtools-ui/demo/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "apps/devtools-ui/src/assets",
+                "output": "assets"
+              }
+            ],
+            "styles": [
+              "apps/devtools-ui/src/styles.scss",
+              "apps/devtools-ui/demo/styles-demo.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            }
+          },
+          "configurations": {
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "development": {
+              "buildTarget": "devtools-demo:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
+
     "integration": {
       "projectType": "library",
       "root": "libs/testing/integration",

@@ -13,6 +13,7 @@
     { "path": "./libs/shared/tsconfig.lib.json" },
     { "path": "./libs/shared/tsconfig.spec.json" },
     { "path": "./apps/devtools-ui/tsconfig.app.json" },
+    { "path": "./apps/devtools-ui/tsconfig.demo.json" },
     { "path": "./apps/devtools-ui/tsconfig.spec.json" },
     { "path": "./apps/docs-app/tsconfig.app.json" },
     { "path": "./apps/docs-app/tsconfig.spec.json" },

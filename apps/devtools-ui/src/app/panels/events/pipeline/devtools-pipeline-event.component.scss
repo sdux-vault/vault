@@ -1,13 +1,71 @@
 @use 'global' as global;
 
-.event-row-header {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 4rem 140px 1fr auto auto; // Counter | Cell | Badge | Data | Time
-  align-items: center;
-  gap: global.$spacing-md;
+:host {
+  display: block;
+  overflow: hidden;
+  background-color: global.$sdux-surface-lightish;
+  border-radius: global.$border-radius-sm;
+  padding: global.$spacing-xs global.$spacing-sm;
+  margin-bottom: global.$spacing-xs;
+}
 
-  .badge {
+.event-row-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: global.$spacing-sm;
+  cursor: pointer;
+
+  .row-primary,
+  .row-secondary {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-md;
+  }
+
+  .row-primary {
+    flex-shrink: 0;
+  }
+
+  .row-secondary {
+    flex: 1;
+    min-width: 0;
+
+    .indicators-ts {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .row-spacer {
+    display: none;
+  }
+
+  @media (max-width: global.$breakpoint-md) {
+    flex-direction: column;
+    align-items: stretch;
+
+    .row-primary,
+    .row-secondary {
+      width: 100%;
+    }
+
+    .row-spacer {
+      display: block;
+      width: calc(global.$font-size-xl + 3rem);
+      flex-shrink: 0;
+    }
+
+    .cell {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .behaviorKey {
     @include global.sdux-text(
       global.$sdux-text-white,
       global.$font-weight-semibold
@@ -15,38 +73,34 @@
     font-size: global.$font-size-xs;
     padding: global.$spacing-xs global.$spacing-sm;
     border-radius: global.$border-radius-xs;
-    justify-self: start;
+    white-space: nowrap;
 
-    &.init {
+    &.stage {
+      background-color: global.$sdux-primary-base;
+    }
+    &.lifecycle {
       background-color: global.$sdux-success-base;
     }
-    &.patch {
+    &.controller {
       background-color: global.$sdux-warn-base;
       color: global.$sdux-text-black;
     }
-    &.error {
+    &.conductor {
       background-color: global.$sdux-accent-base;
     }
   }
 
   .counter {
-    @include global.sdux-text(global.$sdux-text-secondary);
+    @include global.sdux-text(global.$sdux-text-primary);
     font-size: global.$font-size-sm;
     width: 3rem;
     text-align: left;
   }
 
   .cell {
-    @include global.sdux-text(global.$sdux-text-secondary);
+    @include global.sdux-text(global.$sdux-text-white);
     font-weight: global.$font-weight-medium;
     font-size: global.$font-size-md;
-    min-width: 125px;
-  }
-
-  .data {
-    @include global.sdux-text(global.$sdux-text-secondary);
-    font-size: global.$font-size-sm;
-    white-space: nowrap;
   }
 
   .indicators {
@@ -54,18 +108,26 @@
     align-items: center;
     gap: global.$spacing-xs;
 
-    .icon {
+    .icon,
+    .icon-spacer {
+      display: inline-block;
+      width: 1em;
       font-size: global.$font-size-md;
-      opacity: 0.3;
-      transition: opacity 0.15s ease;
+      text-align: center;
+    }
+
+    .icon {
+      transition: color 0.15s ease;
 
       &.active {
-        opacity: 1;
-        color: global.$sdux-success-base;
+        color: global.$sdux-success-light;
+      }
+
+      &.payload {
+        color: global.$sdux-primary-light;
       }
 
       &.error {
-        opacity: 1;
         color: global.$sdux-accent-base;
       }
     }
@@ -77,27 +139,37 @@
   }
 
   .ts {
-    @include global.sdux-text(global.$sdux-text-secondary);
+    @include global.sdux-text(global.$sdux-text-primary);
     font-size: global.$font-size-xs;
     white-space: nowrap;
   }
+
+  .chevron {
+    font-size: global.$font-size-xl;
+    color: global.$sdux-text-primary;
+    transition: transform 0.15s ease;
+    display: inline-block;
+
+    &.open {
+      transform: rotate(90deg);
+    }
+  }
 }
+
 /* ----------------------------------------------
      DETAILS (STATE, PAYLOAD, ERROR)
   ------------------------------------------------*/
 .event-details {
-  grid-column: 1 / -1;
   margin-top: global.$spacing-xs;
   padding-left: global.$spacing-sm;
 
-  summary {
-    cursor: pointer;
-    @include global.sdux-text(global.$sdux-primary-base);
-    font-size: global.$font-size-sm;
-    margin-bottom: global.$spacing-xs;
+  .detail-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: global.$spacing-md;
 
-    &:hover {
-      text-decoration: underline;
+    @media (max-width: global.$breakpoint-md) {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -130,7 +202,9 @@
       border-radius: global.$border-radius-sm;
       padding: global.$spacing-sm;
       font-size: global.$font-size-xs;
-      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      overflow-wrap: break-word;
       color: global.$sdux-text-primary;
     }
   }

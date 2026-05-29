@@ -1,0 +1,12 @@
+/**
+ * Demo-only global overrides.
+ *
+ * In the Chrome extension, the DevTools panel runs inside an iframe whose
+ * viewport height matches the panel size, so `calc(100vh - 140px)` works.
+ * In the demo harness the viewport is the full browser window, so we
+ * override the pipeline panel height to fill its flex container instead.
+ */
+.demo-devtools-frame .pipeline-panel {
+  /* stylelint-disable-next-line declaration-no-important */
+  height: calc(100vh - 500px - 140px) !important;
+}

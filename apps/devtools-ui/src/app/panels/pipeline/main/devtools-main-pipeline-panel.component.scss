@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 140px);
-  padding: global.$spacing-md;
+  padding: 0;
   @include global.sdux-text(global.$sdux-text-primary);
 
   /* ----------------------------------------------
@@ -25,6 +25,10 @@
       min-height: 0;
       height: 100%;
       overscroll-behavior: contain;
+
+      .cdk-virtual-scroll-content-wrapper {
+        padding-bottom: global.$spacing-xl;
+      }
 
       // Optional nice scrollbars
       &::-webkit-scrollbar {
@@ -43,8 +47,7 @@
   ------------------------------------------------*/
   .event-row {
     display: block;
-    padding: global.$spacing-sm;
-    background-color: global.$sdux-surface-darker;
+    padding: global.$spacing-sm 0;
     border-bottom: 1px solid global.$sdux-surface-outline;
 
     &:hover {

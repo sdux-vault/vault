@@ -6,6 +6,7 @@ import {
   InjectionToken
 } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DevtoolsMainPipelinePanelComponent } from '../panels/pipeline/main/devtools-main-pipeline-panel.component';
 import { DevtoolsService } from '../services/devtools.service';
 
@@ -45,7 +46,11 @@ export const EXTENSION_VERSION = new InjectionToken<string>(
 @Component({
   selector: 'sdux-devtools-splash-page',
   standalone: true,
-  imports: [MatTabsModule, DevtoolsMainPipelinePanelComponent],
+  imports: [
+    MatTabsModule,
+    MatTooltipModule,
+    DevtoolsMainPipelinePanelComponent
+  ],
   templateUrl: './devtools-splash-page.component.html',
   styleUrl: './devtools-splash-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

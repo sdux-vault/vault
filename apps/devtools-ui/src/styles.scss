@@ -49,6 +49,11 @@ body {
   color: var(--text-color);
 }
 
+/* Material tab pagination chevrons — white on dark tab header */
+.mat-mdc-tab-header-pagination-chevron {
+  border-color: #{global.$sdux-text-white} !important; // stylelint-disable-line declaration-no-important
+}
+
 :root {
   color-scheme: light;
 

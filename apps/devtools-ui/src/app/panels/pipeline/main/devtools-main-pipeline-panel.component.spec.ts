@@ -11,7 +11,8 @@ import { DevtoolsMainPipelinePanelComponent } from './devtools-main-pipeline-pan
 
 const mockEvent: any = {
   id: 1,
-  type: 'enqueue'
+  type: 'enqueue',
+  behaviorKey: 'test-behavior'
 };
 
 class MockDevtoolsService {
@@ -69,8 +70,8 @@ describe('Component: DevtoolsPanel', () => {
     fixture.detectChanges();
 
     expect(component.events()).toEqual([
-      Object({ id: 1, type: 'enqueue' }),
-      Object({ id: 2, type: 'enqueue' })
+      Object({ id: 2, type: 'enqueue', behaviorKey: 'test-behavior' }),
+      Object({ id: 1, type: 'enqueue', behaviorKey: 'test-behavior' })
     ]);
   });
 
@@ -85,17 +86,33 @@ describe('Component: DevtoolsPanel', () => {
     expect(component.events()).toEqual([
       Object({
         id: 1,
-        type: 'enqueue'
+        type: 'enqueue',
+        behaviorKey: 'test-behavior'
       })
     ]);
 
     mockService.eventsSignal.set([mockEvent3]);
     fixture.detectChanges();
 
-    expect(component.events()).toEqual([Object({ id: 3, type: 'enqueue' })]);
+    expect(component.events()).toEqual([
+      Object({ id: 3, type: 'enqueue', behaviorKey: 'test-behavior' })
+    ]);
   });
 
   it('should render template without pipe errors', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
+  });
+
+  it('should return event id from trackById', () => {
+    expect(component.trackById(0, { id: 'abc' })).toBe('abc');
+    expect(component.trackById(1, { id: 42 })).toBe(42);
+  });
+
+  it('should add and remove expanded ids via toggleExpanded', () => {
+    component.toggleExpanded('evt-1', true);
+    expect(component.expandedIds.has('evt-1')).toBeTrue();
+
+    component.toggleExpanded('evt-1', false);
+    expect(component.expandedIds.has('evt-1')).toBeFalse();
   });
 });
