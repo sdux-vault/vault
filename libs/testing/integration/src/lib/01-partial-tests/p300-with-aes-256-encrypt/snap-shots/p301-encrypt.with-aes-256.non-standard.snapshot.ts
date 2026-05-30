@@ -30,7 +30,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -40,7 +40,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -50,7 +50,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -99,7 +99,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -119,7 +119,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -129,7 +129,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -139,7 +139,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -259,7 +259,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -306,7 +306,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -316,7 +316,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -326,7 +326,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -495,7 +495,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -515,7 +515,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -525,7 +525,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -535,7 +535,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -675,7 +675,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -722,7 +722,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -732,7 +732,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -742,7 +742,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -911,7 +911,7 @@ export const p301Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-encrypt.with-aes-256',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',

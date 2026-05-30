@@ -648,7 +648,7 @@ const exampleCell = FeatureCell<Example[]>(
  *
  * Pipeline execution order:
  *
- * 1. \`.withDelay({ millisecondDelay: 3_000 })\` — Holds all state
+ * 1. \`.withDelay?.({ millisecondDelay: 3_000 })\` — Holds all state
  *    updates for 3 seconds before releasing them into the pipeline.
  *    The UI will not reflect new data until the delay expires.
  *

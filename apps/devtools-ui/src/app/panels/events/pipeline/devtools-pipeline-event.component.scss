@@ -65,27 +65,43 @@
     }
   }
 
-  .behaviorKey {
-    @include global.sdux-text(
-      global.$sdux-text-white,
-      global.$font-weight-semibold
-    );
-    font-size: global.$font-size-xs;
-    padding: global.$spacing-xs global.$spacing-sm;
-    border-radius: global.$border-radius-xs;
-    white-space: nowrap;
+  .behavior-pills {
+    display: flex;
+    gap: 2px;
 
-    &.stage {
+    .pill {
+      @include global.sdux-text(
+        global.$sdux-text-white,
+        global.$font-weight-semibold
+      );
+      font-size: global.$font-size-xs;
+      padding: global.$spacing-xs global.$spacing-sm;
+      white-space: nowrap;
+
+      &:first-child {
+        border-radius: global.$border-radius-xs 0 0 global.$border-radius-xs;
+      }
+
+      &:last-child {
+        border-radius: 0 global.$border-radius-xs global.$border-radius-xs 0;
+      }
+
+      &:only-child {
+        border-radius: global.$border-radius-xs;
+      }
+    }
+
+    &.stage .pill {
       background-color: global.$sdux-primary-base;
     }
-    &.lifecycle {
+    &.lifecycle .pill {
       background-color: global.$sdux-success-base;
     }
-    &.controller {
+    &.controller .pill {
       background-color: global.$sdux-warn-base;
       color: global.$sdux-text-black;
     }
-    &.conductor {
+    &.conductor .pill {
       background-color: global.$sdux-accent-base;
     }
   }

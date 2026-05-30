@@ -30,7 +30,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -40,7 +40,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -50,7 +50,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -79,7 +79,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -99,7 +99,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -109,7 +109,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -119,7 +119,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -239,7 +239,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -259,7 +259,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -269,7 +269,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -279,7 +279,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -429,7 +429,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'lifecycle:notification:revote',
     timestamp: 'ts-removed',
     type: 'lifecycle',
@@ -439,7 +439,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -449,7 +449,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -459,7 +459,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'conductor:notification:deny',
     timestamp: 'ts-removed',
     type: 'conductor',
@@ -489,7 +489,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'lifecycle:notification:abort',
     timestamp: 'ts-removed',
     type: 'lifecycle',
@@ -499,7 +499,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -509,7 +509,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:notification:restart-attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -529,7 +529,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -539,7 +539,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -549,7 +549,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -559,7 +559,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'conductor:notification:deny',
     timestamp: 'ts-removed',
     type: 'conductor',
@@ -569,7 +569,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'lifecycle:notification:revote',
     timestamp: 'ts-removed',
     type: 'lifecycle',
@@ -579,7 +579,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -589,7 +589,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -729,7 +729,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -776,7 +776,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -786,7 +786,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -796,7 +796,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -825,7 +825,7 @@ export const p211Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-replay-global-error',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',

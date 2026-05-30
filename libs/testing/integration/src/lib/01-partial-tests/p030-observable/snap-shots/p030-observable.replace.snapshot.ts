@@ -30,7 +30,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -40,7 +40,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -50,7 +50,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -159,7 +159,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -179,7 +179,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -189,7 +189,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -199,7 +199,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -279,7 +279,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -326,7 +326,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -336,7 +336,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -346,7 +346,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -455,7 +455,7 @@ export const p030Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',

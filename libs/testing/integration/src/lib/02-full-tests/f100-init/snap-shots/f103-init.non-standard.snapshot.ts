@@ -30,7 +30,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -40,7 +40,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -50,7 +50,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -99,7 +99,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -119,7 +119,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -129,7 +129,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -139,7 +139,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -599,7 +599,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -646,7 +646,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -656,7 +656,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -666,7 +666,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -715,7 +715,7 @@ export const f103Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',

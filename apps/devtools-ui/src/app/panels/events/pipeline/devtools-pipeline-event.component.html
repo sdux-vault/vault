@@ -29,8 +29,10 @@
       <div class="row-spacer"></div>
 
       <!-- Badge -->
-      <div class="behaviorKey {{ event().type }}">
-        {{ event().behaviorKey.toUpperCase() }}
+      <div class="behavior-pills {{ event().type }}">
+        @for (segment of parseBehaviorKey(); track $index) {
+          <span class="pill">{{ segment }}</span>
+        }
       </div>
 
       <div class="indicators-ts">

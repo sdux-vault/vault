@@ -54,6 +54,24 @@ export class DevtoolsPipelineEventComponent {
    */
   readonly expandedChange = output<boolean>();
 
+  /**
+   * Parses the raw behavior key into display segments for pill rendering.
+   *
+   * Strips the `SDUX::` prefix and kind segment (`BEHAVIOR`/`CONTROLLER`)
+   * from canonical keys, and strips the `VAULT-` prefix from internal keys.
+   *
+   * @returns An array of uppercase segment strings.
+   */
+  parseBehaviorKey(): string[] {
+    const raw = this.event().behaviorKey;
+    if (raw.startsWith('SDUX::')) {
+      const parts = raw.split('::');
+      return parts.slice(2).map((s) => s.toUpperCase());
+    }
+    const stripped = raw.replace(/^VAULT-/i, '');
+    return [stripped.toUpperCase()];
+  }
+
   /** Handles the native `<details>` toggle event. */
   onToggle(open: boolean): void {
     this.expandedChange.emit(open);

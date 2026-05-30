@@ -3,7 +3,6 @@ import { FeatureCellExtension } from '../../interfaces/behaviors/feature-cell-ex
 import { FeatureCellFluentApi } from '../../interfaces/behaviors/feature-cell-fluent-api.interface';
 import { InterceptorBehaviorClassContract } from '../../interfaces/behaviors/interceptor/interceptor-behavior-class.interface';
 import { OperatorsBehaviorClassContract } from '../../interfaces/behaviors/operator/operator-behavior-class.interface';
-import { CellBuilderContract } from '../../interfaces/cell-builder.interface';
 import { StateEmitSnapshotShape } from '../../shapes/state/state-emit-snapshot.shape';
 import { CoreEmitStateCallback } from '../../types/callback/core-emit-state-callback.type';
 import { TapCallback } from '../../types/callback/tap-callback.type';
@@ -28,7 +27,7 @@ export interface FeatureCellBaseShape<T>
    * @param afterTaps - Functions invoked after the reducer stage.
    * @returns The builder instance for fluent chaining.
    */
-  afterTaps(afterTaps: TapCallback<T>[]): CellBuilderContract<T>;
+  afterTaps(afterTaps: TapCallback<T>[]): this;
 
   /**
    * Registers tap functions executed during the "before tap" stage.
@@ -36,7 +35,7 @@ export interface FeatureCellBaseShape<T>
    * @param beforeTaps - Functions invoked before the reducer stage.
    * @returns The builder instance for fluent chaining.
    */
-  beforeTaps(beforeTaps: TapCallback<T>[]): CellBuilderContract<T>;
+  beforeTaps(beforeTaps: TapCallback<T>[]): this;
 
   /**
    * Performs cleanup and teardown of the FeatureCell.
@@ -55,7 +54,7 @@ export interface FeatureCellBaseShape<T>
    * @param emitStates - EmitState callbacks invoked during state changes.
    * @returns The builder instance for fluent chaining.
    */
-  emitStates(emitStates: CoreEmitStateCallback<T>[]): CellBuilderContract<T>;
+  emitStates(emitStates: CoreEmitStateCallback<T>[]): this;
 
   /**
    * Registers error functions to run during the error stage.
@@ -63,7 +62,7 @@ export interface FeatureCellBaseShape<T>
    * @param errors - Error functions applied to the upstream snapshot.
    * @returns The builder instance for fluent chaining.
    */
-  errors(errors: VaultErrorCallback<T>[]): CellBuilderContract<T>;
+  errors(errors: VaultErrorCallback<T>[]): this;
 
   /**
    * Registers filter functions to run during the filter stage.
@@ -71,7 +70,7 @@ export interface FeatureCellBaseShape<T>
    * @param filters - Filter functions applied to the upstream snapshot.
    * @returns The builder instance for fluent chaining.
    */
-  filters(filters: FilterFunction<T>[]): CellBuilderContract<T>;
+  filters(filters: FilterFunction<T>[]): this;
 
   /**
    * Registers a deferred hydration source for the FeatureCell.
@@ -79,14 +78,14 @@ export interface FeatureCellBaseShape<T>
    * @param incoming - Deferred value used to hydrate the cell state.
    * @returns The builder instance for fluent chaining.
    */
-  hydrate(incoming: DeferredType<T>): CellBuilderContract<T>;
+  hydrate(incoming: DeferredType<T>): this;
 
   /**
    * Finalizes builder configuration and activates the FeatureCell.
    *
    * @returns The builder instance, or a Promise resolving once initialization completes.
    */
-  initialize(): CellBuilderContract<T> | void;
+  initialize(): this | void;
 
   /**
    * Registers interceptor behaviors executed prior to resolve.
@@ -94,9 +93,7 @@ export interface FeatureCellBaseShape<T>
    * @param interceptors - Interceptor behavior classes.
    * @returns The builder instance for fluent chaining.
    */
-  interceptors(
-    interceptors: InterceptorBehaviorClassContract<T>[]
-  ): CellBuilderContract<T>;
+  interceptors(interceptors: InterceptorBehaviorClassContract<T>[]): this;
 
   /**
    * Unique identifier assigned to the FeatureCell.
@@ -117,9 +114,7 @@ export interface FeatureCellBaseShape<T>
    * @param operators - Operator behavior classes.
    * @returns The builder instance for fluent chaining.
    */
-  operators(
-    operators: OperatorsBehaviorClassContract<T>[]
-  ): CellBuilderContract<T>;
+  operators(operators: OperatorsBehaviorClassContract<T>[]): this;
 
   /**
    * Registers reducer functions executed during the reducer stage.
@@ -127,7 +122,7 @@ export interface FeatureCellBaseShape<T>
    * @param reducers - Reducer functions that transform the working state.
    * @returns The builder instance for fluent chaining.
    */
-  reducers(reducers: ReducerFunction<T>[]): CellBuilderContract<T>;
+  reducers(reducers: ReducerFunction<T>[]): this;
 
   /**
    * Performs a replace-style state update that fully replaces the current state.

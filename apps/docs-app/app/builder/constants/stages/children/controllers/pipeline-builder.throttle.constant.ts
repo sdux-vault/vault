@@ -70,7 +70,7 @@ export const PipelineBuilderThrottleConstant: BehaviorDefinitionShape = {
     },
     /**
      * Runtime fluent configuration
-     * Appears in this.#vault.withDelay(...)
+     * Appears in this.#vault.withThrottle?.(...)
      */
     {
       target: FileBuilderTargetTypes.Vault,

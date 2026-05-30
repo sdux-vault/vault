@@ -81,7 +81,7 @@ export const PipelineBuilderStepwiseFilterConstant: BehaviorDefinitionShape = {
 
     /**
      * Runtime fluent configuration
-     * Appears in this.#vault.withDelay(...)
+     * Appears in this.#vault.withDelay?.(...)
      */
     {
       target: FileBuilderTargetTypes.Vault,

@@ -3,7 +3,10 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
-import { withArrayPushMergeBehavior } from '@sdux-vault/addons';
+import {
+  withArrayPushMergeBehavior,
+  withDelayController
+} from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { DEVTOOLS_LOGGING_KEY_CONSTANT } from '@sdux-vault/shared';
 import { DevtoolsService } from '../../src/app/services/devtools.service';
@@ -22,7 +25,7 @@ export const demoConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     { provide: EXTENSION_VERSION, useValue: '0.0.0-demo' },
 
-    provideVault({ devMode: true, logLevel: 'error' }),
+    provideVault({ devMode: true, logLevel: 'error', bypassLicensing: true }),
 
     provideFeatureCell(
       DevtoolsService,
@@ -30,9 +33,14 @@ export const demoConfig: ApplicationConfig = {
       [withArrayPushMergeBehavior]
     ),
 
-    provideFeatureCell(DemoExampleService, {
-      key: 'demo-example-feature-cell-key',
-      initialState: []
-    })
+    provideFeatureCell(
+      DemoExampleService,
+      {
+        key: 'demo-example-feature-cell-key',
+        initialState: []
+      },
+      [],
+      [withDelayController]
+    )
   ]
 };

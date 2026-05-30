@@ -86,4 +86,56 @@ describe('Component: DevtoolsPipelineEvent', () => {
     expect(text).toContain('TEST-BEHAVIOR');
     expect(text).toContain('003');
   });
+
+  describe('parseBehaviorKey', () => {
+    it('should strip SDUX:: prefix and kind segment from canonical keys', () => {
+      fixture.componentRef.setInput('event', {
+        ...mockEvent,
+        behaviorKey: 'SDUX::Behavior::Core::Reducer'
+      });
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.parseBehaviorKey()).toEqual([
+        'CORE',
+        'REDUCER'
+      ]);
+    });
+
+    it('should strip VAULT- prefix from internal keys', () => {
+      fixture.componentRef.setInput('event', {
+        ...mockEvent,
+        behaviorKey: 'VAULT-CONDUCTOR'
+      });
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.parseBehaviorKey()).toEqual([
+        'CONDUCTOR'
+      ]);
+    });
+
+    it('should return a single pill for keys without a known prefix', () => {
+      fixture.componentRef.setInput('event', {
+        ...mockEvent,
+        behaviorKey: 'DECISION-ENGINE'
+      });
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.parseBehaviorKey()).toEqual([
+        'DECISION-ENGINE'
+      ]);
+    });
+
+    it('should handle controller keys', () => {
+      fixture.componentRef.setInput('event', {
+        ...mockEvent,
+        behaviorKey: 'SDUX::Controller::Core::Resolve'
+      });
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.parseBehaviorKey()).toEqual([
+        'CORE',
+        'RESOLVE'
+      ]);
+    });
+  });
 });

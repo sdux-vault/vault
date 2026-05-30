@@ -483,7 +483,7 @@ export class EmployeeService {
   constructor() {
     // Apply delay controller configuration during initialization
     this.vault
-      .withDelay({
+      .withDelay?.({
         millisecondDelay: 500
       })
       .initialize();
@@ -521,7 +521,7 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
 
 // Apply delay controller configuration during initialization
 employeeCell
-  .withDelay({
+  .withDelay?.({
     millisecondDelay: 500
   })
   .initialize();
@@ -557,7 +557,7 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
 
 // Apply delay controller configuration during initialization
 employeeCell
-  .withDelay({
+  .withDelay?.({
     millisecondDelay: 500
   })
   .initialize();
