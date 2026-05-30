@@ -4,6 +4,6 @@ import { registerVersion } from '../utils/version/version.register';
 const SDUX_PACKAGE = '@sdux-vault/shared';
 
 /** Current package version string. */
-const SDUX_VERSION = '0.9.2';
+const SDUX_VERSION = '0.9.3';
 
 registerVersion(SDUX_PACKAGE, SDUX_VERSION);
