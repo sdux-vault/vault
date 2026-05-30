@@ -88,7 +88,7 @@ describe('Component: DevtoolsPipelineEvent', () => {
   });
 
   describe('parseBehaviorKey', () => {
-    it('should strip SDUX:: prefix and kind segment from canonical keys', () => {
+    it('should include kind and name from canonical behavior keys', () => {
       fixture.componentRef.setInput('event', {
         ...mockEvent,
         behaviorKey: 'SDUX::Behavior::Core::Reducer'
@@ -96,7 +96,7 @@ describe('Component: DevtoolsPipelineEvent', () => {
       fixture.detectChanges();
 
       expect(fixture.componentInstance.parseBehaviorKey()).toEqual([
-        'CORE',
+        'BEHAVIOR',
         'REDUCER'
       ]);
     });
@@ -125,7 +125,7 @@ describe('Component: DevtoolsPipelineEvent', () => {
       ]);
     });
 
-    it('should handle controller keys', () => {
+    it('should include kind and name from canonical controller keys', () => {
       fixture.componentRef.setInput('event', {
         ...mockEvent,
         behaviorKey: 'SDUX::Controller::Core::Resolve'
@@ -133,7 +133,7 @@ describe('Component: DevtoolsPipelineEvent', () => {
       fixture.detectChanges();
 
       expect(fixture.componentInstance.parseBehaviorKey()).toEqual([
-        'CORE',
+        'CONTROLLER',
         'RESOLVE'
       ]);
     });

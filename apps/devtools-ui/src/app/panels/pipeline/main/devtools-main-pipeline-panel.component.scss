@@ -2,12 +2,13 @@
 
 :host {
   display: block;
+  height: 100%;
 }
 
 .pipeline-panel {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 140px);
+  height: 100%;
   padding: 0;
   @include global.sdux-text(global.$sdux-text-primary);
 
@@ -25,6 +26,7 @@
       min-height: 0;
       height: 100%;
       overscroll-behavior: contain;
+      margin-bottom: global.$spacing-2xl;
 
       .cdk-virtual-scroll-content-wrapper {
         padding-bottom: global.$spacing-xl;

@@ -57,8 +57,9 @@ export class DevtoolsPipelineEventComponent {
   /**
    * Parses the raw behavior key into display segments for pill rendering.
    *
-   * Strips the `SDUX::` prefix and kind segment (`BEHAVIOR`/`CONTROLLER`)
-   * from canonical keys, and strips the `VAULT-` prefix from internal keys.
+   * Canonical keys (`SDUX::Kind::Domain::Name`) produce two pills:
+   * the kind (Behavior/Controller) and the name, skipping the domain.
+   * Internal keys strip the `VAULT-` prefix and produce a single pill.
    *
    * @returns An array of uppercase segment strings.
    */
@@ -66,7 +67,9 @@ export class DevtoolsPipelineEventComponent {
     const raw = this.event().behaviorKey;
     if (raw.startsWith('SDUX::')) {
       const parts = raw.split('::');
-      return parts.slice(2).map((s) => s.toUpperCase());
+      const kind = parts[1];
+      const name = parts[parts.length - 1];
+      return [kind.toUpperCase(), name.toUpperCase()];
     }
     const stripped = raw.replace(/^VAULT-/i, '');
     return [stripped.toUpperCase()];
