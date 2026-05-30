@@ -1,6 +1,7 @@
 import type { InsightConfig } from '../../config/insight.config';
 import type { ControllerDecisionShape } from '../../shapes/controller/controller-decision.shape';
 import type { VaultErrorShape } from '../../shapes/vault-error.shape';
+import type { ControllerVote } from '../../types/controller/controller-vote.type';
 import type { VaultMonitorContext } from '../../types/vault-monitor-context.type';
 
 /**
@@ -907,31 +908,59 @@ export interface VaultMonitorContract {
   ): void;
 
   /**
-   * Signals the start of a controller vote lifecycle event.
+   * Signals the start of the conductor vote aggregation phase.
    *
    * @param cell - The FeatureCell key.
    * @param behaviorKey - The behavior key.
    * @param ctx - The monitor context for this operation.
    */
-  startControllerVote<T>(
+  startConductorVote<T>(
     cell: string,
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>
   ): void;
 
   /**
-   * Signals the end of a controller vote lifecycle event.
+   * Signals the end of the conductor vote aggregation phase.
    *
    * @param cell - The FeatureCell key.
    * @param behaviorKey - The behavior key.
    * @param ctx - The monitor context for this operation.
    * @param payload - The controller decision result.
    */
-  endControllerVote<T>(
+  endConductorVote<T>(
     cell: string,
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>,
     payload: ControllerDecisionShape
+  ): void;
+
+  /**
+   * Signals the start of an individual controller vote during attempt evaluation.
+   *
+   * @param cell - The FeatureCell key.
+   * @param controllerKey - The key of the controller being evaluated.
+   * @param traceId - The trace identifier for the current attempt.
+   */
+  startControllerVote(
+    cell: string,
+    controllerKey: string,
+    traceId: string
+  ): void;
+
+  /**
+   * Signals the end of an individual controller vote during attempt evaluation.
+   *
+   * @param cell - The FeatureCell key.
+   * @param controllerKey - The key of the controller that voted.
+   * @param traceId - The trace identifier for the current attempt.
+   * @param vote - The resolved controller vote.
+   */
+  endControllerVote(
+    cell: string,
+    controllerKey: string,
+    traceId: string,
+    vote: ControllerVote
   ): void;
 
   /**
