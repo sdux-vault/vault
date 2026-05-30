@@ -143,7 +143,7 @@ describe('CLI: release-manager', () => {
       'git add libs/shared/package.json libs/shared/version.ts',
       'git commit -m "chore(shared): release version bump"',
       'git tag shared@1.2.3',
-      'git push --follow-tags',
+      'HUSKY=0 git push --follow-tags',
       'npm run build:shared',
       'cd /repo/dist/shared && npm pack'
     ]);
@@ -191,7 +191,7 @@ describe('CLI: release-manager', () => {
       'git tag shared@1.2.3',
       '⚠️  [dry-run] command not executed',
       'Pushing changes + tags...',
-      'git push --follow-tags',
+      'HUSKY=0 git push --follow-tags',
       '⚠️  [dry-run] command not executed',
       'Building @sdux-vault/shared...',
       'npm run build:shared',

@@ -163,7 +163,7 @@ export class ReleaseManager {
 
   push() {
     console.info('\nPushing changes + tags...');
-    this.exec('git push --follow-tags');
+    this.exec('HUSKY=0 git push --follow-tags');
   }
 
   buildDependencies() {
