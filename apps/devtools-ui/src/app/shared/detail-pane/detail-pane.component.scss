@@ -1,0 +1,68 @@
+@use 'global' as global;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.detail-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background-color: global.$sdux-surface-dark;
+
+  .detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: global.$spacing-sm global.$spacing-md;
+    border-bottom: 1px solid global.$sdux-surface-outline;
+    flex-shrink: 0;
+
+    h3 {
+      @include global.sdux-text(
+        global.$sdux-text-white,
+        global.$font-weight-semibold
+      );
+      font-size: global.$font-size-md;
+      margin: 0;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: global.$sdux-text-secondary;
+      font-size: global.$font-size-md;
+      cursor: pointer;
+      padding: global.$spacing-xs;
+      border-radius: global.$border-radius-xs;
+      line-height: 1;
+
+      &:hover {
+        color: global.$sdux-text-white;
+        background-color: global.$sdux-surface-outline;
+      }
+    }
+  }
+
+  .detail-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: global.$spacing-md;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: global.$sdux-surface-outline;
+      border-radius: global.$border-radius-xs;
+    }
+  }
+}

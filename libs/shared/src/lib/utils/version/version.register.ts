@@ -7,6 +7,7 @@ import { SDuXShape } from '../../shapes/sdux/sdux.shape';
  * @param version - The semver version string.
  */
 export const registerVersion = (packageName: string, version: string): void => {
+  // istanbul ignore next line - globalThis is always defined in supported runtimes
   if (typeof globalThis === 'undefined') return;
 
   const sdux = (globalThis.sdux ??= {} as SDuXShape);

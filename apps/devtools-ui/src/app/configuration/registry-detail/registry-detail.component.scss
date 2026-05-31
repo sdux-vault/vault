@@ -1,0 +1,139 @@
+@use 'global' as global;
+
+.pipeline-section {
+  margin-bottom: global.$spacing-lg;
+
+  .section-heading {
+    @include global.sdux-text(
+      global.$sdux-text-primary,
+      global.$font-weight-semibold
+    );
+    font-size: global.$font-size-md;
+    margin: 0 0 global.$spacing-sm;
+  }
+
+  .pipeline-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+
+    .pipeline-connector {
+      display: flex;
+      justify-content: center;
+
+      .pipeline-arrow {
+        @include global.sdux-text(global.$sdux-text-disabled);
+        font-size: global.$font-size-xs;
+        line-height: 1;
+      }
+    }
+
+    .pipeline-node {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: global.$spacing-xs global.$spacing-sm;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-sm;
+      background-color: global.$sdux-surface-mid;
+
+      .pipeline-label {
+        @include global.sdux-text(global.$sdux-text-secondary);
+        font-size: global.$font-size-sm;
+      }
+
+      .pipeline-count {
+        @include global.sdux-text(global.$sdux-text-disabled);
+        font-size: global.$font-size-xs;
+      }
+
+      &.pipeline-active {
+        border-color: global.$sdux-primary-base;
+        background-color: global.$sdux-surface-active;
+
+        .pipeline-label {
+          @include global.sdux-text(global.$sdux-text-primary);
+        }
+
+        .pipeline-count {
+          @include global.sdux-text(global.$sdux-primary-light);
+          font-weight: global.$font-weight-semibold;
+        }
+      }
+
+      &.pipeline-start,
+      &.pipeline-end {
+        justify-content: center;
+        background-color: global.$sdux-surface-lightish;
+        border-color: global.$sdux-surface-outline;
+
+        .pipeline-label {
+          @include global.sdux-text(
+            global.$sdux-text-primary,
+            global.$font-weight-semibold
+          );
+          font-size: global.$font-size-sm;
+        }
+      }
+    }
+  }
+}
+
+.entity-section {
+  margin-bottom: global.$spacing-lg;
+
+  .entity-title {
+    @include global.sdux-text(
+      global.$sdux-text-primary,
+      global.$font-weight-semibold
+    );
+    font-size: global.$font-size-md;
+    margin: 0 0 global.$spacing-sm;
+
+    .entity-count {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-weight: global.$font-weight-regular;
+      font-size: global.$font-size-sm;
+    }
+  }
+
+  .entity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .entity-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: global.$spacing-xs global.$spacing-sm;
+      border-bottom: 1px solid global.$sdux-surface-outline;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .entity-key {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-size: global.$font-size-sm;
+        word-break: break-all;
+        flex: 1;
+        margin-right: global.$spacing-sm;
+      }
+
+      .entity-type {
+        @include global.sdux-text(global.$sdux-text-secondary);
+        font-size: global.$font-size-xs;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .entity-empty {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-size: global.$font-size-sm;
+    font-style: italic;
+  }
+}

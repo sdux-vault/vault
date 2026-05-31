@@ -1,0 +1,228 @@
+<sdux-devtools-detail-pane
+  [title]="cellKey()"
+  (closeDetail)="closeDetail.emit()">
+  <section class="pipeline-section">
+    <h4 class="section-heading">Pipeline Flow</h4>
+    <div class="pipeline-flow">
+      <div class="pipeline-node pipeline-start">
+        <span class="pipeline-label">Incoming Value</span>
+      </div>
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <div class="pipeline-node pipeline-start">
+        <span class="pipeline-label">Conductor</span>
+      </div>
+      @for (c of controllers(); track c.key) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node pipeline-active">
+          <span class="pipeline-label">{{ vaultKeyName(c.key) }}</span>
+          <span class="pipeline-count">{{ vaultKeyDomain(c.key) }}</span>
+        </div>
+      }
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <div class="pipeline-node pipeline-start">
+        <span class="pipeline-label">Orchestrator</span>
+      </div>
+      @for (stage of preResolveStages(); track stage.label) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node" [class.pipeline-active]="stage.count > 0">
+          <span class="pipeline-label">{{ stage.label }}</span>
+          <span class="pipeline-count">{{ stage.count }}</span>
+        </div>
+      }
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <div class="pipeline-node pipeline-start">
+        <span class="pipeline-label">Resolve</span>
+      </div>
+      @for (b of resolveBehaviors(); track b.key) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node pipeline-active">
+          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
+          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
+        </div>
+      }
+      @for (b of mergeBehaviors(); track b.key) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node pipeline-active">
+          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
+          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
+        </div>
+      }
+      @for (b of stepwiseResolveBehaviors(); track b.key) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node pipeline-active">
+          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
+          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
+        </div>
+      }
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <div
+        class="pipeline-node"
+        [class.pipeline-active]="cell().fluentApis?.operators">
+        <span class="pipeline-label">Operators</span>
+        <span class="pipeline-count">{{
+          cell().fluentApis?.operators ?? 0
+        }}</span>
+      </div>
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <div
+        class="pipeline-node"
+        [class.pipeline-active]="cell().fluentApis?.filters">
+        <span class="pipeline-label">Filters</span>
+        <span class="pipeline-count">{{
+          cell().fluentApis?.filters ?? 0
+        }}</span>
+      </div>
+      @for (b of stepwiseFilterBehaviors(); track b.key) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node pipeline-active">
+          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
+          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
+        </div>
+      }
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <div
+        class="pipeline-node"
+        [class.pipeline-active]="cell().fluentApis?.beforeTaps">
+        <span class="pipeline-label">Before Taps</span>
+        <span class="pipeline-count">{{
+          cell().fluentApis?.beforeTaps ?? 0
+        }}</span>
+      </div>
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <div
+        class="pipeline-node"
+        [class.pipeline-active]="cell().fluentApis?.reducers">
+        <span class="pipeline-label">Reducers</span>
+        <span class="pipeline-count">{{
+          cell().fluentApis?.reducers ?? 0
+        }}</span>
+      </div>
+      @for (b of stepwiseReducerBehaviors(); track b.key) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node pipeline-active">
+          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
+          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
+        </div>
+      }
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <div
+        class="pipeline-node"
+        [class.pipeline-active]="cell().fluentApis?.afterTaps">
+        <span class="pipeline-label">After Taps</span>
+        <span class="pipeline-count">{{
+          cell().fluentApis?.afterTaps ?? 0
+        }}</span>
+      </div>
+      @for (b of encryptBehaviors(); track b.key) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node pipeline-active">
+          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
+          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
+        </div>
+      }
+      @for (b of persistBehaviors(); track b.key) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node pipeline-active">
+          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
+          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
+        </div>
+      }
+      @for (b of coreStateBehaviors(); track b.key) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node pipeline-active">
+          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
+          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
+        </div>
+      }
+      @for (stage of postResolveStages(); track stage.label) {
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node" [class.pipeline-active]="stage.count > 0">
+          <span class="pipeline-label">{{ stage.label }}</span>
+          <span class="pipeline-count">{{ stage.count }}</span>
+        </div>
+      }
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <div class="pipeline-node pipeline-end">
+        <span class="pipeline-label">State Updated</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="entity-section">
+    <h4 class="entity-title">
+      Behaviors
+      <span class="entity-count">({{ behaviors().length }})</span>
+    </h4>
+    @if (behaviors().length) {
+      <ul class="entity-list">
+        @for (b of behaviors(); track b.key) {
+          <li class="entity-item">
+            <span class="entity-key">{{ b.key }}</span>
+            <span class="entity-type">{{ b.type }}</span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="entity-empty">No behaviors registered.</p>
+    }
+  </section>
+
+  <section class="entity-section">
+    <h4 class="entity-title">
+      Controllers
+      <span class="entity-count">({{ controllers().length }})</span>
+    </h4>
+    @if (controllers().length) {
+      <ul class="entity-list">
+        @for (c of controllers(); track c.key) {
+          <li class="entity-item">
+            <span class="entity-key">{{ c.key }}</span>
+            <span class="entity-type">{{ c.type }}</span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="entity-empty">No controllers registered.</p>
+    }
+  </section>
+</sdux-devtools-detail-pane>

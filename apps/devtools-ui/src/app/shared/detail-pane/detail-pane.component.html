@@ -1,0 +1,17 @@
+<div class="detail-panel">
+  <div class="detail-header">
+    <h3>{{ title() }}</h3>
+    <button
+      type="button"
+      class="close-btn"
+      aria-label="Close detail panel"
+      matTooltip="Close detail panel"
+      (click)="closeDetail.emit()">
+      &#10005;
+    </button>
+  </div>
+
+  <div class="detail-body">
+    <ng-content></ng-content>
+  </div>
+</div>

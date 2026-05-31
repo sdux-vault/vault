@@ -2,17 +2,10 @@ import { Injectable, NgZone, signal } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { EventBus } from '@sdux-vault/devtools';
-import type { EventShape } from '@sdux-vault/shared';
+import type { EventShape, VaultRegistrationShape } from '@sdux-vault/shared';
 
-/**
- * Shape of the serialized Vault configuration forwarded by the Chrome extension bridge.
- */
-export interface VaultConfigMessage {
-  /** Registered package versions keyed by npm package name. */
-  versions: Record<string, string>;
-  /** Serialized FeatureCell registry snapshot. */
-  registry: unknown[] | null;
-}
+import { VaultConfigMessageShape } from '../../shapes/vault-config-message.shape';
+import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
 
 /**
  * Provides a unified observable interface for Vault pipeline events sourced from
@@ -32,7 +25,7 @@ export class InsightService {
   /**
    * Reactive signal holding the latest Vault configuration from the bridge.
    */
-  readonly vaultConfig = signal<VaultConfigMessage | null>(null);
+  readonly vaultConfig = signal<VaultConfigMessageShape | null>(null);
 
   /**
    * Whether the Vault Chrome DevTools extension is available in the environment.
@@ -122,7 +115,7 @@ export class InsightService {
             break;
           case 'VAULT_CONFIG':
             this.zone.run(() => {
-              this.#mergeConfig(msg.config as VaultConfigMessage);
+              this.#mergeConfig(msg.config as VaultConfigMessageShape);
             });
             break;
           default:
@@ -163,24 +156,26 @@ export class InsightService {
     if (!sdux) return;
 
     const versions = sdux.versions ?? {};
-    let registry: unknown[] | null = null;
+    let registry: VaultRegistrationSerializedShape[] | null = null;
 
     if (typeof sdux.getRegistry === 'function') {
       try {
         const raw = sdux.getRegistry();
         if (raw) {
-          registry = Array.from(raw.values()).map((cell) => ({
-            key: cell.key,
-            behaviorsRegistered: !!cell.behaviorsRegistered,
-            controllersRegistered: !!cell.controllersRegistered,
-            fluentApis: cell.fluentApis ?? null,
-            behaviors: cell.behaviors
-              ? Array.from(cell.behaviors.values())
-              : [],
-            controllers: cell.controllers
-              ? Array.from(cell.controllers.values())
-              : []
-          }));
+          registry = Array.from(raw.values()).map(
+            (cell: VaultRegistrationShape) => ({
+              key: cell.key,
+              behaviorsRegistered: !!cell.behaviorsRegistered,
+              controllersRegistered: !!cell.controllersRegistered,
+              fluentApis: cell.fluentApis ?? null,
+              behaviors: cell.behaviors
+                ? Array.from(cell.behaviors.values())
+                : [],
+              controllers: cell.controllers
+                ? Array.from(cell.controllers.values())
+                : []
+            })
+          );
         }
       } catch {
         // Registry not available — ignore.
@@ -194,7 +189,7 @@ export class InsightService {
    * Merges incoming config into the existing vaultConfig signal,
    * preserving fields that the incoming payload does not provide.
    */
-  #mergeConfig(incoming: VaultConfigMessage): void {
+  #mergeConfig(incoming: VaultConfigMessageShape): void {
     const current = this.vaultConfig();
     this.vaultConfig.set({
       versions: { ...current?.versions, ...incoming.versions },

@@ -3,7 +3,7 @@
     <mat-select
       class="cell-filter"
       [value]="selectedCell()"
-      (selectionChange)="selectedCell.set($event.value)"
+      (selectionChange)="selectedCell.set($any($event.value))"
       aria-label="Filter by cell">
       <mat-option value="all">View All</mat-option>
       @for (cell of cellNames(); track cell) {
@@ -13,20 +13,20 @@
     <mat-select
       class="cell-filter"
       [value]="selectedType()"
-      (selectionChange)="selectedType.set($event.value); selectedKey.set('all')"
+      (selectionChange)="
+        selectedType.set($any($event.value)); selectedKey.set('all')
+      "
       aria-label="Filter by event type">
       <mat-option value="all">All Types</mat-option>
       @for (type of typeNames(); track type) {
-        <mat-option [value]="type">{{
-          type[0].toUpperCase() + type.slice(1)
-        }}</mat-option>
+        <mat-option [value]="type">{{ capitalize(type) }}</mat-option>
       }
     </mat-select>
     @if (showKeyFilter()) {
       <mat-select
         class="cell-filter"
         [value]="selectedKey()"
-        (selectionChange)="selectedKey.set($event.value)"
+        (selectionChange)="selectedKey.set($any($event.value))"
         aria-label="Filter by key">
         <mat-option value="all">All Keys</mat-option>
         @for (key of keyNames(); track key) {

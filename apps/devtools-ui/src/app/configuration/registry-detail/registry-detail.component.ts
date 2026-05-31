@@ -1,0 +1,120 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  output
+} from '@angular/core';
+import { BehaviorTypes } from '@sdux-vault/shared';
+import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
+import { DetailPaneComponent } from '../../shared/detail-pane/detail-pane.component';
+
+/**
+ * Detail panel displaying the behaviors and controllers registered
+ * on a single FeatureCell within the Vault configuration view.
+ *
+ * Receives a serialized registry entry and renders its behavior and
+ * controller names in categorized lists. Delegates the panel chrome
+ * to the shared `DetailPaneComponent`.
+ */
+@Component({
+  selector: 'sdux-devtools-registry-detail',
+  standalone: true,
+  imports: [DetailPaneComponent],
+  templateUrl: './registry-detail.component.html',
+  styleUrl: './registry-detail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class RegistryDetailComponent {
+  /** The serialized FeatureCell registry entry to display. */
+  readonly cell = input.required<VaultRegistrationSerializedShape>();
+
+  /** Emits when the user closes the detail panel. */
+  readonly closeDetail = output<void>();
+
+  /** Behavior entities extracted from the registry cell. */
+  readonly behaviors = computed(() => this.cell().behaviors ?? []);
+
+  /** Controller entities extracted from the registry cell. */
+  readonly controllers = computed(() => this.cell().controllers ?? []);
+
+  /** Cell key extracted from the registry cell. */
+  readonly cellKey = computed(() => this.cell().key ?? '');
+
+  /**
+   * Extracts the Name segment from a Vault key.
+   *
+   * @param key - A key in the format `SDUX::<Kind>::<Domain>::<Name>`.
+   * @returns The `<Name>` segment, or the full key if the format is unexpected.
+   */
+  vaultKeyName(key: string): string {
+    const parts = key.split('::');
+    return parts.length === 4 ? parts[3] : key;
+  }
+
+  /**
+   * Extracts the Domain segment from a Vault key.
+   *
+   * @param key - A key in the format `SDUX::<Kind>::<Domain>::<Name>`.
+   * @returns The `<Domain>` segment, or an empty string if the format is unexpected.
+   */
+  vaultKeyDomain(key: string): string {
+    const parts = key.split('::');
+    return parts.length === 4 ? parts[2] : '';
+  }
+
+  /** Pipeline stage labels and their registered counts. */
+  readonly preResolveStages = computed(() => {
+    const apis = this.cell().fluentApis;
+    return [{ label: 'Interceptors', count: apis?.interceptors ?? 0 }];
+  });
+
+  /** Behaviors with type "resolve". */
+  readonly resolveBehaviors = computed(() =>
+    this.behaviors().filter((b) => b.type === BehaviorTypes.Resolve)
+  );
+
+  /** Behaviors with type "merge". */
+  readonly mergeBehaviors = computed(() =>
+    this.behaviors().filter((b) => b.type === BehaviorTypes.Merge)
+  );
+
+  /** Behaviors with type "stepwiseResolve". */
+  readonly stepwiseResolveBehaviors = computed(() =>
+    this.behaviors().filter((b) => b.type === BehaviorTypes.StepwiseResolve)
+  );
+
+  /** Behaviors with type "stepwiseFilter". */
+  readonly stepwiseFilterBehaviors = computed(() =>
+    this.behaviors().filter((b) => b.type === BehaviorTypes.StepwiseFilter)
+  );
+
+  /** Behaviors with type "stepwiseReducer". */
+  readonly stepwiseReducerBehaviors = computed(() =>
+    this.behaviors().filter((b) => b.type === BehaviorTypes.StepwiseReducer)
+  );
+
+  /** Behaviors with type "encrypt". */
+  readonly encryptBehaviors = computed(() =>
+    this.behaviors().filter((b) => b.type === BehaviorTypes.Encrypt)
+  );
+
+  /** Behaviors with type "persist". */
+  readonly persistBehaviors = computed(() =>
+    this.behaviors().filter((b) => b.type === BehaviorTypes.Persist)
+  );
+
+  /** Behaviors with type "coreState". */
+  readonly coreStateBehaviors = computed(() =>
+    this.behaviors().filter((b) => b.type === BehaviorTypes.CoreState)
+  );
+
+  /** Pipeline stages rendered after all behavior-type groups in the flow. */
+  readonly postResolveStages = computed(() => {
+    const apis = this.cell().fluentApis;
+    return [
+      { label: 'Emit State', count: apis?.emitStateCallbacks ?? 0 },
+      { label: 'Error Callbacks', count: apis?.errorCallbacks ?? 0 }
+    ];
+  });
+}

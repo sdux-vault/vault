@@ -37,12 +37,12 @@ describe('debug-widget.dump', () => {
     spyOn(window, 'open');
 
     (globalThis as any).sdux = {
+      getRegistry: (): any => {
+        return REGISTRY_SUCCESS_ARTIFACT;
+      },
       debugWidget: {
         versions: {
           '@sdux-vault/test': '1.0.0'
-        },
-        getRegistry: (): any => {
-          return REGISTRY_SUCCESS_ARTIFACT;
         }
       }
     };

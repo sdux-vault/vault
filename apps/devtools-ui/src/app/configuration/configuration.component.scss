@@ -5,51 +5,116 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  overflow: auto;
+  overflow: hidden;
 }
 
-.configuration {
-  padding: global.$spacing-md;
+.configuration-layout {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 
-  .title {
-    @include global.sdux-text(global.$sdux-text-primary);
-    font-size: global.$font-size-lg;
-    margin: 0 0 global.$spacing-md;
-  }
+  .configuration-content {
+    flex: 1;
+    min-width: 0;
+    overflow: auto;
+    padding: global.$spacing-md;
 
-  .section {
-    margin-bottom: global.$spacing-lg;
-
-    .section-title {
+    .title {
       @include global.sdux-text(global.$sdux-text-primary);
-      font-size: global.$font-size-md;
-      margin: 0 0 global.$spacing-sm;
+      font-size: global.$font-size-lg;
+      margin: 0 0 global.$spacing-md;
     }
-  }
 
-  .versions-table,
-  .registry-table {
-    width: 100%;
-    border-collapse: collapse;
+    .section {
+      margin-bottom: global.$spacing-lg;
 
-    th,
-    td {
+      .section-title {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-size: global.$font-size-md;
+        margin: 0 0 global.$spacing-sm;
+      }
+    }
+
+    .versions-table,
+    .registry-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th,
+      td {
+        @include global.sdux-text(global.$sdux-text-secondary);
+        font-size: global.$font-size-sm;
+        text-align: left;
+        padding: global.$spacing-xs global.$spacing-sm;
+        border-bottom: 1px solid global.$sdux-surface-outline;
+      }
+
+      th {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-weight: global.$font-weight-semibold;
+      }
+    }
+
+    .registry-row {
+      cursor: pointer;
+
+      &:hover {
+        background-color: global.$sdux-surface-outline;
+
+        td {
+          @include global.sdux-text(global.$sdux-text-primary);
+        }
+      }
+
+      &.selected {
+        background-color: global.$sdux-surface-lightish;
+
+        td {
+          @include global.sdux-text(global.$sdux-text-primary);
+        }
+      }
+    }
+
+    .empty {
       @include global.sdux-text(global.$sdux-text-secondary);
       font-size: global.$font-size-sm;
-      text-align: left;
-      padding: global.$spacing-xs global.$spacing-sm;
-      border-bottom: 1px solid global.$sdux-surface-outline;
-    }
-
-    th {
-      @include global.sdux-text(global.$sdux-text-primary);
-      font-weight: global.$font-weight-semibold;
+      font-style: italic;
     }
   }
 
-  .empty {
-    @include global.sdux-text(global.$sdux-text-secondary);
-    font-size: global.$font-size-sm;
-    font-style: italic;
+  .detail-pane {
+    width: 400px;
+    min-width: 400px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid global.$sdux-surface-outline;
+    min-height: 0;
+
+    sdux-devtools-registry-detail {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+    }
+  }
+
+  @media (max-width: global.$breakpoint-md) {
+    flex-direction: column;
+
+    .configuration-content {
+      flex: none;
+      max-height: 50%;
+    }
+
+    .detail-pane {
+      width: 100%;
+      min-width: 0;
+      border-left: none;
+      border-top: 1px solid global.$sdux-surface-outline;
+      flex: 1;
+    }
   }
 }

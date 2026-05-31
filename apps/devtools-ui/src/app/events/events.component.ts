@@ -56,7 +56,7 @@ export class EventsComponent {
   });
 
   /** Unique event type names derived from events matching the selected cell. */
-  readonly typeNames = computed(() => {
+  readonly typeNames = computed((): string[] => {
     const cell = this.selectedCell();
     let result = this.events() ?? [];
     if (cell !== 'all') {
@@ -73,7 +73,7 @@ export class EventsComponent {
   });
 
   /** Unique key names derived from events matching the selected cell and type. */
-  readonly keyNames = computed(() => {
+  readonly keyNames = computed((): string[] => {
     const cell = this.selectedCell();
     const type = this.selectedType();
     let result = this.events() ?? [];
@@ -162,6 +162,16 @@ export class EventsComponent {
   displayKeyName(key: string): string {
     const parts = key.split('::');
     return parts.length > 1 ? parts[parts.length - 1] : key;
+  }
+
+  /**
+   * Capitalizes the first letter of a string.
+   *
+   * @param value - The string to capitalize.
+   * @returns The string with its first character uppercased.
+   */
+  capitalize(value: string): string {
+    return value[0].toUpperCase() + value.slice(1);
   }
 
   /**

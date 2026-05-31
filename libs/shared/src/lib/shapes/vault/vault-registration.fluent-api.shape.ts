@@ -12,6 +12,12 @@ export interface VaultRegistrationFluentApiShape {
   /** Number of registered after-tap callbacks. */
   afterTaps: number;
 
+  /** Number of registered interceptor classes. */
+  interceptors: number;
+
+  /** Number of registered operator classes. */
+  operators: number;
+
   /** Number of registered emit-state callbacks. */
   emitStateCallbacks: number;
 

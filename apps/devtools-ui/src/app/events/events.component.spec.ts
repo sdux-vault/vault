@@ -417,4 +417,169 @@ describe('Component: Events', () => {
       );
     });
   });
+
+  describe('capitalize', () => {
+    it('should capitalize the first letter of a lowercase string', () => {
+      expect(component.capitalize('stage')).toBe('Stage');
+    });
+
+    it('should return the same string if already capitalized', () => {
+      expect(component.capitalize('Controller')).toBe('Controller');
+    });
+
+    it('should handle single character strings', () => {
+      expect(component.capitalize('a')).toBe('A');
+    });
+  });
+
+  describe('latestStateSize', () => {
+    it('should return KB when size is between 1024 and 1048576 bytes', () => {
+      const largeValue = 'x'.repeat(2048);
+      mockService.eventsSignal.set([
+        {
+          ...mockEvent,
+          cell: 'alpha',
+          state: { hasValue: true, value: largeValue }
+        }
+      ]);
+      fixture.detectChanges();
+
+      const result = component.latestStateSize();
+      expect(result).toMatch(/KB$/);
+    });
+
+    it('should return MB when size exceeds 1048576 bytes', () => {
+      const hugeValue = 'x'.repeat(1_100_000);
+      mockService.eventsSignal.set([
+        {
+          ...mockEvent,
+          cell: 'alpha',
+          state: { hasValue: true, value: hugeValue }
+        }
+      ]);
+      fixture.detectChanges();
+
+      const result = component.latestStateSize();
+      expect(result).toMatch(/MB$/);
+    });
+  });
+
+  describe('downloadAllEvents', () => {
+    it('should download all events as JSON', () => {
+      const createObjectURLSpy = spyOn(URL, 'createObjectURL').and.returnValue(
+        'blob:mock-url'
+      );
+      const revokeObjectURLSpy = spyOn(URL, 'revokeObjectURL');
+
+      let clickedDownload = '';
+      spyOn(document, 'createElement').and.callFake((tag: string) => {
+        if (tag === 'a') {
+          const anchor = {
+            href: '',
+            download: '',
+            click: jasmine.createSpy('click')
+          };
+
+          Object.defineProperty(anchor, 'download', {
+            set(val: string) {
+              clickedDownload = val;
+            },
+            get() {
+              return clickedDownload;
+            }
+          });
+
+          return anchor as any;
+        }
+        return document.createElement(tag);
+      });
+
+      const mockClickEvent = new MouseEvent('click');
+      spyOn(mockClickEvent, 'stopPropagation');
+
+      component.downloadAllEvents(mockClickEvent);
+
+      expect(mockClickEvent.stopPropagation).toHaveBeenCalled();
+      expect(createObjectURLSpy).toHaveBeenCalledWith(jasmine.any(Blob));
+      expect(clickedDownload).toMatch(/^sdux-all-events-\d+\.json$/);
+      expect(revokeObjectURLSpy).toHaveBeenCalledWith('blob:mock-url');
+    });
+  });
+
+  describe('downloadErrorEvents', () => {
+    it('should download error events as JSON', () => {
+      mockService.eventsSignal.set([mockEvent, mockEventWithError]);
+      fixture.detectChanges();
+
+      const createObjectURLSpy = spyOn(URL, 'createObjectURL').and.returnValue(
+        'blob:mock-url'
+      );
+      spyOn(URL, 'revokeObjectURL');
+
+      let clickedDownload = '';
+      spyOn(document, 'createElement').and.callFake((tag: string) => {
+        if (tag === 'a') {
+          const anchor = {
+            href: '',
+            download: '',
+            click: jasmine.createSpy('click')
+          };
+
+          Object.defineProperty(anchor, 'download', {
+            set(val: string) {
+              clickedDownload = val;
+            },
+            get() {
+              return clickedDownload;
+            }
+          });
+
+          return anchor as any;
+        }
+        return document.createElement(tag);
+      });
+
+      const mockClickEvent = new MouseEvent('click');
+      spyOn(mockClickEvent, 'stopPropagation');
+
+      component.downloadErrorEvents(mockClickEvent);
+
+      expect(mockClickEvent.stopPropagation).toHaveBeenCalled();
+      expect(createObjectURLSpy).toHaveBeenCalledWith(jasmine.any(Blob));
+      expect(clickedDownload).toMatch(/^sdux-error-events-\d+\.json$/);
+    });
+  });
+
+  describe('null events fallback', () => {
+    it('should handle null events gracefully across all computed signals', () => {
+      mockService.eventsSignal.set(null as any);
+
+      expect(component.cellNames()).toEqual([]);
+      expect(component.typeNames()).toEqual([]);
+      expect(component.keyNames()).toEqual([]);
+      expect(component.filteredEvents()).toBeNull();
+      expect(component.errorEvents()).toEqual([]);
+    });
+
+    it('should handle null events with active cell filter', () => {
+      mockService.eventsSignal.set(null as any);
+      component.selectedCell.set('alpha');
+
+      expect(component.filteredEvents()).toEqual([]);
+    });
+
+    it('should handle null events with active type filter', () => {
+      mockService.eventsSignal.set(null as any);
+      component.selectedType.set('stage');
+
+      expect(component.filteredEvents()).toEqual([]);
+    });
+
+    it('should handle null events with active key filter', () => {
+      mockService.eventsSignal.set(null as any);
+      component.selectedKey.set('SDUX::Behavior::Core::Value');
+
+      expect(component.filteredEvents()).toEqual([]);
+    });
+  });
 });
