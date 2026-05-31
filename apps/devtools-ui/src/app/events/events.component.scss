@@ -16,15 +16,20 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: global.$spacing-md;
-  border-bottom: 1px solid global.$sdux-surface-outline;
 
   .title {
     display: flex;
     align-items: center;
     gap: global.$spacing-sm;
 
-    .logo {
-      width: 120px;
+    .cell-filter {
+      min-width: 250px;
+      width: fit-content;
+      @include global.sdux-text(global.$sdux-text-inverse);
+      background-color: global.$sdux-surface-light;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-sm;
+      padding: global.$spacing-xs global.$spacing-sm;
     }
 
     .subtitle {
@@ -41,6 +46,11 @@
     display: flex;
     align-items: center;
     gap: global.$spacing-md;
+
+    .state-size {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-size: global.$font-size-sm;
+    }
 
     .event-count {
       @include global.sdux-text(global.$sdux-text-secondary);

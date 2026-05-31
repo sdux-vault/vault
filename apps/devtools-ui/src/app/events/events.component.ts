@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject
+  inject,
+  signal
 } from '@angular/core';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
@@ -19,6 +21,7 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
   selector: 'sdux-events',
   standalone: true,
   imports: [
+    MatSelectModule,
     MatTabsModule,
     MatTooltipModule,
     DevtoolsMainPipelinePanelComponent
@@ -37,18 +40,65 @@ export class EventsComponent {
   /** Reactive list of pipeline events used to populate the UI. */
   readonly events = computed(() => this.devtools.events());
 
+  /** Currently selected cell filter. */
+  readonly selectedCell = signal('all');
+
+  /** Unique cell names derived from the current events. */
+  readonly cellNames = computed(() => {
+    const cells = this.events()?.map((e) => e.cell) ?? [];
+    return [...new Set(cells)].sort();
+  });
+
+  /** Events filtered by the selected cell. */
+  readonly filteredEvents = computed(() => {
+    const cell = this.selectedCell();
+    if (cell === 'all') {
+      return this.events();
+    }
+    return this.events()?.filter((e) => e.cell === cell) ?? [];
+  });
+
   /** Total number of pipeline events currently stored. */
-  readonly totalEvents = computed(() => this.events()?.length);
+  readonly totalEvents = computed(() => this.filteredEvents()?.length);
 
   /** Pipeline events filtered to only those with errors. */
   readonly errorEvents = computed(
-    () => this.events()?.filter((e) => !!e.error) ?? []
+    () => this.filteredEvents()?.filter((e) => !!e.error) ?? []
   );
+
+  /** Human-readable total state size across all cells (latest event per cell). */
+  readonly latestStateSize = computed(() => {
+    const events = this.filteredEvents();
+    if (!events?.length) {
+      return null;
+    }
+    const latestByCell = new Map<string, EventShape>();
+    for (const e of events) {
+      if (e.state?.hasValue) {
+        latestByCell.set(e.cell, e);
+      }
+    }
+    if (!latestByCell.size) {
+      return null;
+    }
+    let totalBytes = 0;
+    for (const e of latestByCell.values()) {
+      totalBytes += new Blob([JSON.stringify(e.state!.value)]).size;
+    }
+    if (totalBytes < 1024) {
+      return `${totalBytes} B`;
+    }
+    if (totalBytes < 1048576) {
+      return `${(totalBytes / 1024).toFixed(1)} KB`;
+    }
+    return `${(totalBytes / 1048576).toFixed(1)} MB`;
+  });
 
   /**
    * Clears the current FeatureCell-backed pipeline event history.
    */
   clearEvents(): void {
+    this.selectedCell.set('all');
     this.devtools.clearEvents();
   }
 

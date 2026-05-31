@@ -1,18 +1,26 @@
 <header class="header">
   <div class="title">
-    <div class="logo" matTooltip="SDuX Vault DevTools">
-      <img src="/assets/brand/brand-landscape-dark.svg" alt="SDuX Vault" />
-    </div>
-    <span class="subtitle">DevTools (v{{ version }})</span>
+    <mat-select
+      class="cell-filter"
+      [value]="selectedCell()"
+      (selectionChange)="selectedCell.set($event.value)"
+      aria-label="Filter by cell">
+      <mat-option value="all">View All</mat-option>
+      @for (cell of cellNames(); track cell) {
+        <mat-option [value]="cell">{{ cell }}</mat-option>
+      }
+    </mat-select>
   </div>
 
   <div class="meta">
-    <span
-      class="event-count"
-      matTooltip="Total pipeline events captured"
-      aria-label="Total pipeline events captured">
-      {{ totalEvents() }} events
-    </span>
+    @if (latestStateSize()) {
+      <span
+        class="state-size"
+        matTooltip="Size of latest event state"
+        aria-label="Size of latest event state">
+        {{ latestStateSize() }}
+      </span>
+    }
     <button
       type="button"
       class="btn-clear"
@@ -28,7 +36,7 @@
   <mat-tab>
     <ng-template mat-tab-label>
       <span class="tab-label">
-        All Events
+        All Events ({{ totalEvents() }})
         <button
           type="button"
           class="tab-download-btn"
@@ -49,13 +57,13 @@
     </ng-template>
     <section class="vault-tab-content">
       <sdux-devtools-main-pipeline-panel
-        [events]="events()"></sdux-devtools-main-pipeline-panel>
+        [events]="filteredEvents()"></sdux-devtools-main-pipeline-panel>
     </section>
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
       <span class="tab-label">
-        Error Events
+        Error Events ({{ errorEvents().length }})
         <button
           type="button"
           class="tab-download-btn"
