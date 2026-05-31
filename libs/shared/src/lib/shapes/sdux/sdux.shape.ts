@@ -17,12 +17,20 @@ export interface SDuXShape {
   vaultEventBus?: EventBusContract;
 
   /**
+   * Registered package versions keyed by npm package name.
+   */
+  versions?: Record<string, string>;
+
+  /**
+   * Returns a read-only snapshot of the FeatureCell registry.
+   */
+  getRegistry?: () => ReadonlyMap<string, VaultRegistrationShape>;
+
+  /**
    * Optional debug widget configuration for devtools integration.
    */
   debugWidget?: {
-    versions?: Record<string, string>;
     injected?: boolean;
     aiAssistEnabled?: boolean;
-    getRegistry?: () => ReadonlyMap<string, VaultRegistrationShape>;
   };
 }

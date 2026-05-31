@@ -37,7 +37,7 @@ class DebugWidgetEngineInstance implements DebugWidgetEngineContract {
    * @returns The serialized registry, or undefined if unavailable.
    */
   serializeRegistry(): DebugWidgetDumpShape['registry'] | undefined {
-    const registry = globalThis?.sdux?.debugWidget?.getRegistry?.();
+    const registry = globalThis?.sdux?.getRegistry?.();
     if (!registry) return;
 
     const licenseSummary = {
