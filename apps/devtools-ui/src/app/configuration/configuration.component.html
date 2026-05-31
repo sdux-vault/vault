@@ -1,3 +1,53 @@
 <div class="configuration">
   <h2 class="title">Vault Configuration</h2>
+
+  <section class="section">
+    <h3 class="section-title">Package Versions</h3>
+    @if (versions().length) {
+      <table class="versions-table">
+        <thead>
+          <tr>
+            <th>Package</th>
+            <th>Version</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (entry of versions(); track entry[0]) {
+            <tr>
+              <td>{{ entry[0] }}</td>
+              <td>{{ entry[1] }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p class="empty">No version data available.</p>
+    }
+  </section>
+
+  <section class="section">
+    <h3 class="section-title">FeatureCell Registry</h3>
+    @if (registry().length) {
+      <table class="registry-table">
+        <thead>
+          <tr>
+            <th>Cell Key</th>
+            <th>Behaviors</th>
+            <th>Controllers</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (cell of registry(); track $index) {
+            <tr>
+              <td>{{ $any(cell).key }}</td>
+              <td>{{ $any(cell).behaviors?.length ?? 0 }}</td>
+              <td>{{ $any(cell).controllers?.length ?? 0 }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p class="empty">No registry data available.</p>
+    }
+  </section>
 </div>

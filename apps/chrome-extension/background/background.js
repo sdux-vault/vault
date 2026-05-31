@@ -88,5 +88,16 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
     } else if (eventBuffer.length < MAX_BUFFER_SIZE) {
       eventBuffer.push(outgoing);
     }
+  } else if (msg.type === 'VAULT_CONFIG' && msg.config) {
+    const outgoing = {
+      type: 'VAULT_CONFIG',
+      config: msg.config
+    };
+
+    if (devtoolsPort) {
+      devtoolsPort.postMessage(outgoing);
+    } else if (eventBuffer.length < MAX_BUFFER_SIZE) {
+      eventBuffer.push(outgoing);
+    }
   }
 });

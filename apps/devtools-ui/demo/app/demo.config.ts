@@ -34,7 +34,10 @@ export const demoConfig: ApplicationConfig = {
 
     provideFeatureCell(
       DevtoolsService,
-      { key: DEVTOOLS_LOGGING_KEY_CONSTANT, initialState: [] },
+      {
+        key: DEVTOOLS_LOGGING_KEY_CONSTANT,
+        initialState: []
+      },
       [withArrayPushMergeBehavior]
     ),
 

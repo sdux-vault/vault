@@ -63,12 +63,13 @@ function isValidPipelineEvent(event) {
  * Supported message types:
  * - "VAULT_PIPELINE_EVENT"  — forwarded pipeline event payload (schema-validated)
  * - "VAULT_BRIDGE_CONNECTED" — bridge successfully connected to Vault
+ * - "VAULT_CONFIG"          — versions and registry snapshot
  */
 window.addEventListener('message', (event) => {
   if (event.source !== window) return;
   if (!event.data || event.data.source !== 'vault-devtools') return;
 
-  const { type, event: payload } = event.data;
+  const { type, event: payload, config } = event.data;
 
   if (type === 'VAULT_PIPELINE_EVENT' && isValidPipelineEvent(payload)) {
     try {
@@ -79,6 +80,12 @@ window.addEventListener('message', (event) => {
   } else if (type === 'VAULT_BRIDGE_CONNECTED') {
     try {
       chrome.runtime.sendMessage({ type }).catch(() => {});
+    } catch {
+      // Extension context invalidated after reload — silently ignore.
+    }
+  } else if (type === 'VAULT_CONFIG' && config) {
+    try {
+      chrome.runtime.sendMessage({ type, config }).catch(() => {});
     } catch {
       // Extension context invalidated after reload — silently ignore.
     }

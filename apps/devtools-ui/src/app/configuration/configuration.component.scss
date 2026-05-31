@@ -5,7 +5,7 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .configuration {
@@ -15,5 +15,41 @@
     @include global.sdux-text(global.$sdux-text-primary);
     font-size: global.$font-size-lg;
     margin: 0 0 global.$spacing-md;
+  }
+
+  .section {
+    margin-bottom: global.$spacing-lg;
+
+    .section-title {
+      @include global.sdux-text(global.$sdux-text-primary);
+      font-size: global.$font-size-md;
+      margin: 0 0 global.$spacing-sm;
+    }
+  }
+
+  .versions-table,
+  .registry-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-size: global.$font-size-sm;
+      text-align: left;
+      padding: global.$spacing-xs global.$spacing-sm;
+      border-bottom: 1px solid global.$sdux-surface-outline;
+    }
+
+    th {
+      @include global.sdux-text(global.$sdux-text-primary);
+      font-weight: global.$font-weight-semibold;
+    }
+  }
+
+  .empty {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-size: global.$font-size-sm;
+    font-style: italic;
   }
 }

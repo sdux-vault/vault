@@ -1,8 +1,18 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, signal } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { EventBus } from '@sdux-vault/devtools';
 import type { EventShape } from '@sdux-vault/shared';
+
+/**
+ * Shape of the serialized Vault configuration forwarded by the Chrome extension bridge.
+ */
+export interface VaultConfigMessage {
+  /** Registered package versions keyed by npm package name. */
+  versions: Record<string, string>;
+  /** Serialized FeatureCell registry snapshot. */
+  registry: unknown[] | null;
+}
 
 /**
  * Provides a unified observable interface for Vault pipeline events sourced from
@@ -18,6 +28,11 @@ export class InsightService {
    * Internal stream for pipeline events emitted by the Chrome extension.
    */
   readonly #chromePipeline$ = new Subject<EventShape>();
+
+  /**
+   * Reactive signal holding the latest Vault configuration from the bridge.
+   */
+  readonly vaultConfig = signal<VaultConfigMessage | null>(null);
 
   /**
    * Whether the Vault Chrome DevTools extension is available in the environment.
@@ -60,6 +75,13 @@ export class InsightService {
   }
 
   /**
+   * Reads versions and registry directly from globalThis.sdux.
+   */
+  refreshLocalConfig(): void {
+    this.#loadLocalConfig();
+  }
+
+  /**
    * Returns an observable stream of pipeline events from the Chrome extension or internal EventBus.
    *
    * @returns Observable emitting pipeline events.
@@ -89,13 +111,18 @@ export class InsightService {
     this.#port = chrome.runtime.connect({ name: 'vault-devtools' });
 
     this.#port.onMessage.addListener(
-      (msg: { type?: string; event?: unknown }) => {
+      (msg: { type?: string; event?: unknown; config?: unknown }) => {
         if (!msg?.type) return;
 
         switch (msg.type) {
           case 'VAULT_PIPELINE_EVENT':
             this.zone.run(() => {
               this.#chromePipeline$.next(msg.event as EventShape);
+            });
+            break;
+          case 'VAULT_CONFIG':
+            this.zone.run(() => {
+              this.#mergeConfig(msg.config as VaultConfigMessage);
             });
             break;
           default:
@@ -125,5 +152,53 @@ export class InsightService {
       this.#reconnectTimer = null;
       this.#connectPort();
     }, InsightService.RECONNECT_DELAY_MS);
+  }
+
+  /**
+   * Reads versions and registry directly from globalThis.sdux when
+   * running outside the Chrome extension (demo / standalone mode).
+   */
+  #loadLocalConfig(): void {
+    const sdux = globalThis.sdux;
+    if (!sdux) return;
+
+    const versions = sdux.versions ?? {};
+    let registry: unknown[] | null = null;
+
+    if (typeof sdux.getRegistry === 'function') {
+      try {
+        const raw = sdux.getRegistry();
+        if (raw) {
+          registry = Array.from(raw.values()).map((cell) => ({
+            key: cell.key,
+            behaviorsRegistered: !!cell.behaviorsRegistered,
+            controllersRegistered: !!cell.controllersRegistered,
+            fluentApis: cell.fluentApis ?? null,
+            behaviors: cell.behaviors
+              ? Array.from(cell.behaviors.values())
+              : [],
+            controllers: cell.controllers
+              ? Array.from(cell.controllers.values())
+              : []
+          }));
+        }
+      } catch {
+        // Registry not available — ignore.
+      }
+    }
+
+    this.#mergeConfig({ versions, registry });
+  }
+
+  /**
+   * Merges incoming config into the existing vaultConfig signal,
+   * preserving fields that the incoming payload does not provide.
+   */
+  #mergeConfig(incoming: VaultConfigMessage): void {
+    const current = this.vaultConfig();
+    this.vaultConfig.set({
+      versions: { ...current?.versions, ...incoming.versions },
+      registry: incoming.registry ?? current?.registry ?? null
+    });
   }
 }

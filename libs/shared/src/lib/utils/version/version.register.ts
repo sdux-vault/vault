@@ -1,14 +1,13 @@
 import { SDuXShape } from '../../shapes/sdux/sdux.shape';
-import { DevMode } from '../dev-mode/dev-mode.util';
 
 /**
- * Registers a package version on the global SDuX namespace when dev mode is active.
+ * Registers a package version on the global SDuX namespace.
  *
  * @param packageName - The npm package name to register.
  * @param version - The semver version string.
  */
 export const registerVersion = (packageName: string, version: string): void => {
-  if (!DevMode.active || typeof globalThis === 'undefined') return;
+  if (typeof globalThis === 'undefined') return;
 
   const sdux = (globalThis.sdux ??= {} as SDuXShape);
   const versions = (sdux.versions ??= {});
