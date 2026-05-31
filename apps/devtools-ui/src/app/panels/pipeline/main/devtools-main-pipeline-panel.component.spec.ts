@@ -1,11 +1,6 @@
-import {
-  computed,
-  provideZonelessChangeDetection,
-  signal,
-  WritableSignal
-} from '@angular/core';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DevtoolsService } from '../../../services/devtools.service';
+import { DevtoolsPipelineEventDetailComponent } from '../../events/pipeline/detail/devtools-pipeline-event-detail.component';
 import { DevtoolsPipelineEventComponent } from '../../events/pipeline/devtools-pipeline-event.component';
 import { DevtoolsMainPipelinePanelComponent } from './devtools-main-pipeline-panel.component';
 
@@ -15,33 +10,13 @@ const mockEvent: any = {
   behaviorKey: 'test-behavior'
 };
 
-class MockDevtoolsService {
-  eventsSignal: WritableSignal<any[]> = signal([mockEvent]);
-  totalEventsSignal = computed(() => this.eventsSignal().length);
-
-  events() {
-    return this.eventsSignal();
-  }
-
-  get totalEvents() {
-    return this.totalEventsSignal;
-  }
-
-  clearEvents = jasmine.createSpy('clearEvents').and.callFake(() => {
-    this.eventsSignal.set([]);
-  });
-}
-
 describe('Component: DevtoolsPanel', () => {
   let fixture: ComponentFixture<DevtoolsMainPipelinePanelComponent>;
   let component: DevtoolsMainPipelinePanelComponent;
-  let mockService: MockDevtoolsService;
   let mockEvent2: any;
   let mockEvent3: any;
 
   beforeEach(async () => {
-    mockService = new MockDevtoolsService();
-
     mockEvent2 = structuredClone(mockEvent);
     mockEvent2.id = 2;
 
@@ -51,39 +26,37 @@ describe('Component: DevtoolsPanel', () => {
     await TestBed.configureTestingModule({
       imports: [
         DevtoolsMainPipelinePanelComponent,
-        DevtoolsPipelineEventComponent
+        DevtoolsPipelineEventComponent,
+        DevtoolsPipelineEventDetailComponent
       ],
-      providers: [
-        { provide: DevtoolsService, useValue: mockService },
-        provideZonelessChangeDetection()
-      ]
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(DevtoolsMainPipelinePanelComponent);
-
+    fixture.componentRef.setInput('events', [mockEvent]);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should expose events from the service as a computed signal', () => {
-    mockService.eventsSignal.set([mockEvent, mockEvent2]);
+  it('should reverse events for display via reversedEvents', () => {
+    fixture.componentRef.setInput('events', [mockEvent, mockEvent2]);
     fixture.detectChanges();
 
-    expect(component.events()).toEqual([
+    expect(component.reversedEvents()).toEqual([
       Object({ id: 2, type: 'enqueue', behaviorKey: 'test-behavior' }),
       Object({ id: 1, type: 'enqueue', behaviorKey: 'test-behavior' })
     ]);
   });
 
-  it('should expose totalEvents from the service', () => {
-    mockService.eventsSignal.set([mockEvent, mockEvent2]);
+  it('should expose totalEvents from the events input', () => {
+    fixture.componentRef.setInput('events', [mockEvent, mockEvent2]);
     fixture.detectChanges();
 
     expect(component.totalEvents()).toBe(2);
   });
 
-  it('should recompute events when service updates underlying signal', () => {
-    expect(component.events()).toEqual([
+  it('should recompute reversedEvents when input changes', () => {
+    expect(component.reversedEvents()).toEqual([
       Object({
         id: 1,
         type: 'enqueue',
@@ -91,10 +64,10 @@ describe('Component: DevtoolsPanel', () => {
       })
     ]);
 
-    mockService.eventsSignal.set([mockEvent3]);
+    fixture.componentRef.setInput('events', [mockEvent3]);
     fixture.detectChanges();
 
-    expect(component.events()).toEqual([
+    expect(component.reversedEvents()).toEqual([
       Object({ id: 3, type: 'enqueue', behaviorKey: 'test-behavior' })
     ]);
   });
@@ -108,11 +81,20 @@ describe('Component: DevtoolsPanel', () => {
     expect(component.trackById(1, { id: 42 })).toBe(42);
   });
 
-  it('should add and remove expanded ids via toggleExpanded', () => {
-    component.toggleExpanded('evt-1', true);
-    expect(component.expandedIds.has('evt-1')).toBeTrue();
+  it('should select an event via selectEvent', () => {
+    component.selectEvent(mockEvent);
 
-    component.toggleExpanded('evt-1', false);
-    expect(component.expandedIds.has('evt-1')).toBeFalse();
+    expect(component.selectedEvent()).toEqual(mockEvent);
+  });
+
+  it('should clear selected event via closeDetail', () => {
+    component.selectEvent(mockEvent);
+    component.closeDetail();
+
+    expect(component.selectedEvent()).toBeNull();
+  });
+
+  it('should have no selected event by default', () => {
+    expect(component.selectedEvent()).toBeNull();
   });
 });

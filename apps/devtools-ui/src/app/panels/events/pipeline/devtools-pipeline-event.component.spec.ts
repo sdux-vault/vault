@@ -7,6 +7,7 @@ describe('Component: DevtoolsPipelineEvent', () => {
   let fixture: ComponentFixture<DevtoolsPipelineEventComponent>;
 
   const mockEvent: any = {
+    id: 'evt-1',
     cell: 'test-cell',
     type: 'stage',
     behaviorKey: 'test-behavior',
@@ -33,58 +34,51 @@ describe('Component: DevtoolsPipelineEvent', () => {
     fixture.detectChanges();
   });
 
-  it('should render the event details', () => {
-    fixture.componentRef.setInput('expanded', true);
-    fixture.detectChanges();
-
-    const text = fixture.nativeElement.textContent;
-
-    expect(text).toContain('isLoading: False');
-    expect(text).toContain('hasValue: True');
-    expect(text).toContain('"foo": "bar"');
-  });
-
-  it('should update when event input changes', () => {
-    const nextEvent: EventShape = {
-      cell: 'updated',
-      type: 'stage',
-      behaviorKey: 'updated-behavior',
-      timestamp: 987654321,
-      state: {
-        value: { hello: 'world' },
-        isLoading: true,
-        hasValue: true,
-        error: null
-      }
-    } as any;
-
-    fixture.componentRef.setInput('event', nextEvent);
-    fixture.componentRef.setInput('expanded', true);
-    fixture.detectChanges();
-
-    const text = fixture.nativeElement.textContent;
-
-    expect(text).toContain('"hello": "world"');
-  });
-
-  it('should emit expandedChange when onToggle is called', () => {
-    const component = fixture.componentInstance;
-    let emitted: boolean | undefined;
-    component.expandedChange.subscribe((v: boolean) => (emitted = v));
-
-    component.onToggle(true);
-    expect(emitted).toBeTrue();
-
-    component.onToggle(false);
-    expect(emitted).toBeFalse();
-  });
-
   it('should render collapsed header content by default', () => {
     const text = fixture.nativeElement.textContent;
 
     expect(text).toContain('test-cell');
     expect(text).toContain('TEST-BEHAVIOR');
     expect(text).toContain('003');
+  });
+
+  it('should emit selectEvent when row is clicked', () => {
+    let emitted: EventShape | undefined;
+    fixture.componentInstance.selectEvent.subscribe(
+      (e: EventShape) => (emitted = e)
+    );
+
+    const row = fixture.nativeElement.querySelector('.event-row-header');
+    row.click();
+
+    expect(emitted).toEqual(mockEvent);
+  });
+
+  it('should apply selected class when selected input is true', () => {
+    fixture.componentRef.setInput('selected', true);
+    fixture.detectChanges();
+
+    const row = fixture.nativeElement.querySelector('.event-row-header');
+
+    expect(row.classList).toContain('event-row-selected');
+  });
+
+  it('should not apply selected class by default', () => {
+    const row = fixture.nativeElement.querySelector('.event-row-header');
+
+    expect(row.classList).not.toContain('event-row-selected');
+  });
+
+  it('should apply error class when event has an error', () => {
+    fixture.componentRef.setInput('event', {
+      ...mockEvent,
+      error: { message: 'fail' }
+    });
+    fixture.detectChanges();
+
+    const row = fixture.nativeElement.querySelector('.event-row-header');
+
+    expect(row.classList).toContain('event-row-error');
   });
 
   describe('parseBehaviorKey', () => {

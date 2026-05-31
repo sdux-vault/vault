@@ -43,16 +43,14 @@ export class DevtoolsPipelineEventComponent {
   readonly totalEvents = input.required<number>();
 
   /**
-   * Whether the details section is expanded. Tracked explicitly to prevent
-   * CDK virtual scroll DOM recycling from leaking open/close state across
-   * reused elements.
+   * Whether this event row is currently selected in the master-detail view.
    */
-  readonly expanded = input<boolean>(false);
+  readonly selected = input<boolean>(false);
 
   /**
-   * Emits when the user toggles the details disclosure.
+   * Emits the event when the user clicks this row to select it.
    */
-  readonly expandedChange = output<boolean>();
+  readonly selectEvent = output<EventShape>();
 
   /**
    * Parses the raw behavior key into display segments for pill rendering.
@@ -75,8 +73,20 @@ export class DevtoolsPipelineEventComponent {
     return [stripped.toUpperCase()];
   }
 
-  /** Handles the native `<details>` toggle event. */
-  onToggle(open: boolean): void {
-    this.expandedChange.emit(open);
+  /**
+   * Extracts the name segment from the canonical behavior key.
+   *
+   * For canonical keys (`SDUX::Kind::Domain::Name`), returns the
+   * last segment (Name). For internal keys, returns the raw key
+   * with the `VAULT-` prefix stripped.
+   *
+   * @returns The behavior name in uppercase.
+   */
+  behaviorName(): string {
+    const raw = this.event().behaviorKey;
+    if (raw.startsWith('SDUX::')) {
+      return raw.split('::').pop()!.toUpperCase();
+    }
+    return raw.replace(/^VAULT-/i, '').toUpperCase();
   }
 }

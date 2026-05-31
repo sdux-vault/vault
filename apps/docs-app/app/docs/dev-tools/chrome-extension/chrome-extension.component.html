@@ -1,0 +1,136 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Chrome Extension</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-brand-name /> includes a chrome-extension that captures
+      deterministic execution traces of the Vault pipeline for individual
+      <sdux-feature-cell [tm]="true" /> instances. The debugger records pipeline
+      activity, controller decisions, lifecycle transitions, and error events
+      during application execution.
+    </p>
+  </header>
+
+  <section class="section" id="dimensions">
+    <div class="section-title">Dimensions</div>
+
+    <div class="section-body">
+      <p>
+        For best results, open the Chrome DevTools panel with the following
+        minimum dimensions:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Width:</strong> 768px &mdash; below this threshold the
+          extension switches to a narrow (stacked) layout.
+        </li>
+        <li>
+          <strong>Height:</strong> 500px &mdash; ensures the event list and
+          detail panel are both visible without clipping.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="quick-start">
+    <div class="section-title-navigation">
+      <div class="section-title">TL;DR</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body"></div>
+  </section>
+
+  <section class="section" id="when-to-use">
+    <div class="section-title-navigation">
+      <div class="section-title">When to Use the Extension</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The Chrome Extension is designed to help engineers inspect runtime
+        behavior inside the Vault pipeline. It is particularly useful when
+        investigating complex execution flows or performance issues.
+      </p>
+
+      <ul>
+        <li>Investigating unexpected pipeline behavior.</li>
+        <li>Tracing lifecycle transitions across FeatureCells.</li>
+        <li>Identifying performance bottlenecks in pipeline stages.</li>
+        <li>Debugging controller policy conflicts.</li>
+        <li>Generating diagnostic reports for issue tracking.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- TABLE OF CONTENTS -->
+  <!-- ====================================================== -->
+  <section class="section" id="toc">
+    <div class="section-title-navigation">
+      <div class="section-title">How to use this page</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <div class="toc-container">
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="extension-ui">Extension UI</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAM -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="extension-ui">
+    <div class="section-title-navigation">
+      <div class="section-title">Extension UI</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/12.0/12.0-sdux-debugger-panel-ui.svg"
+        [tooltip]="'Extension Panel UI'"></sdux-diagram>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ENABLING -->
+  <!-- ====================================================== -->
+  <section class="section" id="enabling-extension">
+    <div class="section-title-navigation">
+      <div class="section-title">Enabling the Extension</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="toc">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body"></div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RELATED TOPICS -->
+  <!-- ====================================================== -->
+  <sdux-pipeline-related-topics />
+</div>

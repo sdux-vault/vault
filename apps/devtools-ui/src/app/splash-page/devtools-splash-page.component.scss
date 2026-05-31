@@ -2,11 +2,11 @@
 
 :host {
   display: block;
-  height: 100%;
+  height: 100vh;
 }
 
 .vault-devtools {
-  height: 100%;
+  height: 100vh;
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@
   border: none;
 
   @media (max-width: global.$breakpoint-md) {
-    padding: global.$spacing-md;
+    padding: global.$spacing-md global.$spacing-md 0;
   }
 
   /* ----------------------------------------------
@@ -98,27 +98,32 @@
     flex-direction: column;
 
     /* tab header stays fixed */
-    .mat-mdc-tab-header {
+    // exception: ::ng-deep required to style Angular Material internal tab header
+    ::ng-deep .mat-mdc-tab-header {
       background-color: global.$sdux-surface-dark;
       border-bottom: 1px solid global.$sdux-surface-outline;
     }
 
     /* body wrapper must shrink + allow scroll */
-    .mat-mdc-tab-body-wrapper {
+    // exception: ::ng-deep required to style Angular Material internal tab body wrapper
+    ::ng-deep .mat-mdc-tab-body-wrapper {
       flex: 1;
       min-height: 0;
       display: flex;
     }
 
     /* each tab body must stretch */
-    .mat-mdc-tab-body {
+    // exception: ::ng-deep required to override Angular Material's internal overflow: auto on tab body content
+    ::ng-deep .mat-mdc-tab-body {
       flex: 1;
       min-height: 0;
 
       .mat-mdc-tab-body-content {
-        height: 100%;
+        flex: 1;
         min-height: 0;
-        overflow: hidden; /* leave scrolling to the content wrapper */
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
       }
     }
   }
@@ -129,9 +134,16 @@
   .vault-tab-content {
     flex: 1;
     min-height: 0;
-    height: 100%;
+    height: 0;
     overflow: hidden;
-    padding-right: global.$spacing-sm;
+    display: flex;
+    flex-direction: column;
+
+    sdux-devtools-main-pipeline-panel {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
 
     @media (max-width: global.$breakpoint-md) {
       padding-right: global.$spacing-sm;
@@ -162,6 +174,37 @@
 
       &:hover {
         opacity: 0.9;
+      }
+    }
+  }
+
+  .tab-label {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+
+    .tab-download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      background: none;
+      border: none;
+      color: global.$sdux-text-secondary;
+      cursor: pointer;
+      padding: global.$spacing-xs;
+      border-radius: global.$border-radius-xs;
+      line-height: 1;
+
+      mat-icon {
+        font-size: global.$font-size-md;
+        width: global.$font-size-md;
+        height: global.$font-size-md;
+      }
+
+      &:hover {
+        color: global.$sdux-text-white;
+        background-color: global.$sdux-surface-outline;
       }
     }
   }

@@ -154,81 +154,18 @@
     border-left: 3px solid global.$sdux-accent-base;
   }
 
+  &.event-row-selected {
+    background-color: global.$sdux-hover-background-color;
+    border-left: 3px solid global.$sdux-primary-base;
+  }
+
+  &.event-row-selected.event-row-error {
+    border-left-color: global.$sdux-accent-base;
+  }
+
   .ts {
     @include global.sdux-text(global.$sdux-text-primary);
     font-size: global.$font-size-xs;
     white-space: nowrap;
-  }
-
-  .chevron {
-    font-size: global.$font-size-xl;
-    color: global.$sdux-text-primary;
-    transition: transform 0.15s ease;
-    display: inline-block;
-
-    &.open {
-      transform: rotate(90deg);
-    }
-  }
-}
-
-/* ----------------------------------------------
-     DETAILS (STATE, PAYLOAD, ERROR)
-  ------------------------------------------------*/
-.event-details {
-  margin-top: global.$spacing-xs;
-  padding-left: global.$spacing-sm;
-
-  .detail-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: global.$spacing-md;
-
-    @media (max-width: global.$breakpoint-md) {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .detail-block {
-    margin-bottom: global.$spacing-md;
-
-    h4 {
-      @include global.sdux-text(
-        global.$sdux-text-primary,
-        global.$font-weight-semibold
-      );
-      font-size: global.$font-size-md;
-      margin-bottom: global.$spacing-xs;
-    }
-
-    .kv {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 global.$spacing-xs 0;
-
-      li {
-        margin-bottom: global.$spacing-xs;
-        font-size: global.$font-size-sm;
-      }
-    }
-
-    pre {
-      background-color: global.$sdux-surface-dark;
-      border: 1px solid global.$sdux-surface-outline;
-      border-radius: global.$border-radius-sm;
-      padding: global.$spacing-sm;
-      font-size: global.$font-size-xs;
-      white-space: pre-wrap;
-      word-break: break-all;
-      overflow-wrap: break-word;
-      color: global.$sdux-text-primary;
-    }
-  }
-
-  .error-block {
-    pre {
-      background-color: global.$sdux-accent-dark;
-      border-color: global.$sdux-accent-light;
-    }
   }
 }

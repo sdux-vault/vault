@@ -98,6 +98,125 @@ describe('Component: SplashPage', () => {
   it('should use the injected extension version', () => {
     expect(component.version).toBe('0.0.27');
   });
+
+  it('should compute errorEvents from events with errors', async () => {
+    const errorEvent = { ...mockEvent, id: '2', error: { message: 'fail' } };
+    mockService.eventsSignal.set([mockEvent, errorEvent]);
+    await flushVaultPipeline();
+
+    expect(component.errorEvents().length).toBe(1);
+    expect(component.errorEvents()[0].id).toBe('2');
+  });
+
+  it('should return empty errorEvents when no errors exist', async () => {
+    mockService.eventsSignal.set([mockEvent]);
+    await flushVaultPipeline();
+
+    expect(component.errorEvents().length).toBe(0);
+  });
+
+  it('should download all events as a JSON file', () => {
+    const createObjectURLSpy = spyOn(URL, 'createObjectURL').and.returnValue(
+      'blob:mock-url'
+    );
+    const revokeObjectURLSpy = spyOn(URL, 'revokeObjectURL');
+
+    let clickedDownload = '';
+    spyOn(document, 'createElement').and.callFake((tag: string) => {
+      if (tag === 'a') {
+        const anchor = {
+          href: '',
+          download: '',
+          click: jasmine.createSpy('click')
+        };
+
+        Object.defineProperty(anchor, 'download', {
+          set(val: string) {
+            clickedDownload = val;
+          },
+          get() {
+            return clickedDownload;
+          }
+        });
+
+        return anchor as any;
+      }
+      return document.createElement(tag);
+    });
+
+    const mockClickEvent = new MouseEvent('click');
+    spyOn(mockClickEvent, 'stopPropagation');
+
+    component.downloadAllEvents(mockClickEvent);
+
+    expect(mockClickEvent.stopPropagation).toHaveBeenCalled();
+    expect(createObjectURLSpy).toHaveBeenCalledWith(jasmine.any(Blob));
+    expect(clickedDownload).toMatch(/^sdux-all-events-\d+\.json$/);
+    expect(revokeObjectURLSpy).toHaveBeenCalledWith('blob:mock-url');
+  });
+
+  it('should download error events as a JSON file', () => {
+    const errorEvent = { ...mockEvent, id: '2', error: { message: 'fail' } };
+    mockService.eventsSignal.set([mockEvent, errorEvent]);
+    fixture.detectChanges();
+
+    const createObjectURLSpy = spyOn(URL, 'createObjectURL').and.returnValue(
+      'blob:mock-url'
+    );
+    spyOn(URL, 'revokeObjectURL');
+
+    let clickedDownload = '';
+    spyOn(document, 'createElement').and.callFake((tag: string) => {
+      if (tag === 'a') {
+        const anchor = {
+          href: '',
+          download: '',
+          click: jasmine.createSpy('click')
+        };
+
+        Object.defineProperty(anchor, 'download', {
+          set(val: string) {
+            clickedDownload = val;
+          },
+          get() {
+            return clickedDownload;
+          }
+        });
+
+        return anchor as any;
+      }
+      return document.createElement(tag);
+    });
+
+    const mockClickEvent = new MouseEvent('click');
+    spyOn(mockClickEvent, 'stopPropagation');
+
+    component.downloadErrorEvents(mockClickEvent);
+
+    expect(mockClickEvent.stopPropagation).toHaveBeenCalled();
+    expect(createObjectURLSpy).toHaveBeenCalledWith(jasmine.any(Blob));
+    expect(clickedDownload).toMatch(/^sdux-error-events-\d+\.json$/);
+  });
+
+  it('should render download buttons in tab labels', async () => {
+    mockService.eventsSignal.set([mockEvent]);
+    fixture.detectChanges();
+    await flushVaultPipeline();
+
+    const buttons = fixture.nativeElement.querySelectorAll('.tab-download-btn');
+
+    expect(buttons.length).toBe(2);
+    expect(buttons[0].getAttribute('aria-label')).toBe('Download all events');
+    expect(buttons[1].getAttribute('aria-label')).toBe('Download error events');
+  });
+
+  it('should handle undefined events gracefully', () => {
+    mockService.eventsSignal.set(undefined as any);
+    fixture.detectChanges();
+
+    expect(component.totalEvents()).toBeUndefined();
+    expect(component.errorEvents()).toEqual([]);
+  });
 });
 
 describe('resolveExtensionVersion', () => {

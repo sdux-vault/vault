@@ -50,7 +50,71 @@ export const p250Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -299,7 +363,71 @@ export const p250Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -546,7 +674,71 @@ export const p250Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',

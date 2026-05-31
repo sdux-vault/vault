@@ -3,18 +3,19 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject
+  input,
+  signal
 } from '@angular/core';
-import { DevtoolsService } from '../../../services/devtools.service';
+import { EventShape } from '@sdux-vault/shared';
+import { DevtoolsPipelineEventDetailComponent } from '../../events/pipeline/detail/devtools-pipeline-event-detail.component';
 import { DevtoolsPipelineEventComponent } from '../../events/pipeline/devtools-pipeline-event.component';
 
 /**
  * Main DevTools panel for displaying the pipeline execution history.
  *
- * This component renders the ordered list of pipeline events emitted by
- * all FeatureCells, excluding DevTools-internal telemetry. It delegates
- * state sourcing to `VaultDevtoolsService` and exposes read-only computed
- * signals for template binding.
+ * Uses a master-detail layout: the left pane contains a virtual-scrolled
+ * list of fixed-height event rows; the right pane displays the full detail
+ * breakdown of the currently selected event.
  *
  * The panel itself contains no business logic; it is purely presentational
  * and updates reactively as the underlying event stream changes.
@@ -22,26 +23,30 @@ import { DevtoolsPipelineEventComponent } from '../../events/pipeline/devtools-p
 @Component({
   selector: 'sdux-devtools-main-pipeline-panel',
   standalone: true,
-  imports: [ScrollingModule, DevtoolsPipelineEventComponent],
+  imports: [
+    ScrollingModule,
+    DevtoolsPipelineEventComponent,
+    DevtoolsPipelineEventDetailComponent
+  ],
   templateUrl: './devtools-main-pipeline-panel.component.html',
   styleUrl: './devtools-main-pipeline-panel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DevtoolsMainPipelinePanelComponent {
-  /** Injected DevTools state provider. */
-  private devtools = inject(DevtoolsService);
+  /** Pipeline events to display, provided by the parent. */
+  readonly events = input.required<EventShape[]>();
 
   /**
-   * Reactive list of all pipeline events emitted by FeatureCells.
-   * Automatically updates as the DevTools service receives new telemetry.
+   * Reactive reversed list of pipeline events for display.
+   * Automatically updates as the input changes.
    */
-  readonly events = computed(() => [...this.devtools.events()].reverse());
+  readonly reversedEvents = computed(() => [...this.events()].reverse());
 
-  /** Total number of pipeline events emitted so far. */
-  readonly totalEvents = this.devtools.totalEvents;
+  /** Total number of pipeline events. */
+  readonly totalEvents = computed(() => this.events().length);
 
-  /** Tracks which event IDs have their details expanded. */
-  readonly expandedIds = new Set<string | number>();
+  /** The currently selected event for the detail panel. */
+  readonly selectedEvent = signal<EventShape | null>(null);
 
   /**
    * Track-by function for virtual scroll item identity.
@@ -55,16 +60,16 @@ export class DevtoolsMainPipelinePanelComponent {
   }
 
   /**
-   * Toggles the expanded state for a given event.
+   * Selects an event to display in the detail panel.
    *
-   * @param id - The event identifier.
-   * @param open - Whether the details are now open.
+   * @param event - The pipeline event to select.
    */
-  toggleExpanded(id: string | number, open: boolean): void {
-    if (open) {
-      this.expandedIds.add(id);
-    } else {
-      this.expandedIds.delete(id);
-    }
+  selectEvent(event: EventShape): void {
+    this.selectedEvent.set(event);
+  }
+
+  /** Closes the detail panel by clearing the selection. */
+  closeDetail(): void {
+    this.selectedEvent.set(null);
   }
 }

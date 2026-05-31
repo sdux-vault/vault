@@ -23,11 +23,11 @@ export interface Example {
  * Mirrors the stackblitz basic-filter-reducer-example with
  * filters and reducers applied at runtime.
  */
-@FeatureCell<Example[]>('demo-example-feature-cell-key')
+@FeatureCell<Example[]>('starwars-feature-cell-key')
 @Injectable({ providedIn: 'root' })
-export class DemoExampleService {
+export class StarWarsExampleService {
   /** Vault instance managing the `Example[]` state. */
-  readonly #vault = injectVault<Example[]>(DemoExampleService);
+  readonly #vault = injectVault<Example[]>(StarWarsExampleService);
 
   /** Internal signal controlling whether the reducer throws an error. */
   readonly #isErrorState = signal(false);
@@ -84,6 +84,18 @@ export class DemoExampleService {
   /** Resets the vault to its initial empty state. */
   reset(): void {
     this.#vault.reset();
+  }
+
+  /**
+   * Merges a single new example into the existing state array.
+   *
+   * @param entry - The example to append to the current state.
+   */
+  merge(entry: Example): void {
+    const current = this.#vault.state.value() ?? [];
+    this.#vault.mergeState({
+      value: [...current, entry]
+    });
   }
 
   /**

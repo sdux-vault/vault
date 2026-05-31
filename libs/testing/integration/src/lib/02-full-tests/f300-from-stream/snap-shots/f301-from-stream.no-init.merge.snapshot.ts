@@ -50,7 +50,71 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -129,7 +193,41 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -139,6 +237,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:merge',
     timestamp: 'ts-removed',
@@ -451,6 +550,10 @@ export const f301Snapshot = [
     cell: 'full-test',
     behaviorKey: 'key-removed',
     name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
@@ -459,6 +562,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
@@ -484,726 +588,13 @@ export const f301Snapshot = [
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     traceId: 'trace-id-removed'
   },
   {
@@ -1569,7 +960,41 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -1579,6 +1004,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:merge',
     timestamp: 'ts-removed',
@@ -1891,6 +1317,10 @@ export const f301Snapshot = [
     cell: 'full-test',
     behaviorKey: 'key-removed',
     name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
@@ -1899,6 +1329,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
@@ -1924,726 +1355,13 @@ export const f301Snapshot = [
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     traceId: 'trace-id-removed'
   },
   {
@@ -3009,7 +1727,41 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -3019,6 +1771,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:merge',
     timestamp: 'ts-removed',
@@ -3331,6 +2084,10 @@ export const f301Snapshot = [
     cell: 'full-test',
     behaviorKey: 'key-removed',
     name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
@@ -3339,6 +2096,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
@@ -3364,726 +2122,13 @@ export const f301Snapshot = [
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     traceId: 'trace-id-removed'
   },
   {
@@ -4449,7 +2494,41 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -4459,6 +2538,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:merge',
     timestamp: 'ts-removed',
@@ -4771,6 +2851,10 @@ export const f301Snapshot = [
     cell: 'full-test',
     behaviorKey: 'key-removed',
     name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
@@ -4779,6 +2863,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
@@ -4804,726 +2889,13 @@ export const f301Snapshot = [
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     traceId: 'trace-id-removed'
   },
   {
@@ -5889,7 +3261,41 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -5899,6 +3305,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:merge',
     timestamp: 'ts-removed',
@@ -6211,6 +3618,10 @@ export const f301Snapshot = [
     cell: 'full-test',
     behaviorKey: 'key-removed',
     name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
@@ -6219,6 +3630,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
@@ -6244,726 +3656,13 @@ export const f301Snapshot = [
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     traceId: 'trace-id-removed'
   },
   {
@@ -7329,7 +4028,41 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -7339,6 +4072,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:merge',
     timestamp: 'ts-removed',
@@ -7651,6 +4385,10 @@ export const f301Snapshot = [
     cell: 'full-test',
     behaviorKey: 'key-removed',
     name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
@@ -7659,6 +4397,7 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
@@ -7684,726 +4423,13 @@ export const f301Snapshot = [
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
     boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:merge',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     traceId: 'trace-id-removed'
   },
   {
@@ -8769,6 +4795,413 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'key-removed',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
@@ -9129,7 +5562,9370 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:start:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:start:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'stage:end:after-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:merge',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -9289,7 +15085,71 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -9449,7 +15309,71 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -9636,7 +15560,71 @@ export const f301Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',

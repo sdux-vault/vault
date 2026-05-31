@@ -50,7 +50,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -539,7 +603,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -659,7 +787,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -799,397 +991,10 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Error',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Error',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::FromPromise',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::FromPromise',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::FromStream',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::FromStream',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Observable',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Observable',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Promise',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Promise',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::State',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::State',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::ArrayMerge',
-    name: 'lifecycle:start:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::ArrayMerge',
-    name: 'lifecycle:end:reset',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -1199,117 +1004,7 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -1319,7 +1014,48 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -1719,7 +1455,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -1839,7 +1639,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -2239,7 +2103,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -2359,7 +2287,535 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Error',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Error',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::FromPromise',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::FromPromise',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::FromStream',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::FromStream',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Observable',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Observable',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Promise',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Promise',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::State',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::State',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::ArrayMerge',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::ArrayMerge',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -2479,7 +2935,255 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -2599,7 +3303,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -2719,117 +3487,10 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Promise',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Promise',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -2839,117 +3500,7 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -2959,7 +3510,48 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -3079,7 +3671,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -3199,7 +3855,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -3319,6 +4039,655 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Promise',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Promise',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+<<<<<<< HEAD
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Observable',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Observable',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+<<<<<<< HEAD
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
     behaviorKey: 'key-removed',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
@@ -3439,7 +4808,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -3559,117 +4992,10 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -3679,117 +5005,7 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Observable',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'SDUX::Behavior::Core::Observable',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -3799,7 +5015,48 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -3919,7 +5176,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -4039,7 +5360,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -4159,7 +5544,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -4279,7 +5728,431 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Observable',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Behavior::Core::Observable',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -4426,7 +6299,71 @@ export const p016Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-resolve.value',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-resolve.value',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',

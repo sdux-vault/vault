@@ -464,8 +464,8 @@
 .callout {
   border-left: 4px solid global.$sdux-primary-base;
   background-color: var(--sdux-surface-bg);
-  padding: global.$spacing-md;
-  margin: global.$spacing-md 0;
+  padding-left: global.$spacing-md;
+  margin: 0;
   border-radius: global.$border-radius-sm;
 
   .title {

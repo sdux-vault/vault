@@ -28,19 +28,60 @@
 
   @if (totalEvents()) {
     <mat-tab-group class="vault-tabs" animationDuration="200ms">
-      <mat-tab label="All Pipeline Events">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label">
+            All Events
+            <button
+              type="button"
+              class="tab-download-btn"
+              aria-label="Download all events"
+              matTooltip="Download all events"
+              (click)="downloadAllEvents($event)">
+              <svg
+                class="download-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                width="18"
+                height="18">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+              </svg>
+            </button>
+          </span>
+        </ng-template>
         <section class="vault-tab-content">
-          <sdux-devtools-main-pipeline-panel></sdux-devtools-main-pipeline-panel>
+          <sdux-devtools-main-pipeline-panel
+            [events]="events()"></sdux-devtools-main-pipeline-panel>
         </section>
       </mat-tab>
-      <mat-tab label="Pipeline Error Events">
-        <section class="vault-tab-content"></section>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label">
+            Error Events
+            <button
+              type="button"
+              class="tab-download-btn"
+              aria-label="Download error events"
+              matTooltip="Download error events"
+              (click)="downloadErrorEvents($event)">
+              <svg
+                class="download-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                width="18"
+                height="18">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+              </svg>
+            </button>
+          </span>
+        </ng-template>
+        <section class="vault-tab-content">
+          <sdux-devtools-main-pipeline-panel
+            [events]="errorEvents()"></sdux-devtools-main-pipeline-panel>
+        </section>
       </mat-tab>
-      <mat-tab label="Pipeline Warn Events">
-        <section class="vault-tab-content"></section>
-      </mat-tab>
-
-      <!-- add more tabs later -->
     </mat-tab-group>
   } @else {
     <section class="warning">

@@ -2,6 +2,24 @@
 @use 'index' as sdux;
 
 /* ----------------------------------------------
+   Material Icons (local font for Chrome extension)
+   ---------------------------------------------- */
+
+@font-face {
+  font-family: 'Material Icons';
+  src: url('/assets/fonts/material-icons/material-icons.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ----------------------------------------------
    Root Theme Variables
    ---------------------------------------------- */
 

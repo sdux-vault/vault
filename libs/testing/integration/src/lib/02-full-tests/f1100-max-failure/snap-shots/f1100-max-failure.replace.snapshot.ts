@@ -50,7 +50,91 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -279,6 +363,269 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:replace',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:start:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'lifecycle:notification:runtime-error',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-error',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-error',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:start:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:core-state',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:start:global-error',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'lifecycle:notification:revote',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+    name: 'conductor:notification:deny',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'lifecycle:end:global-error',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:failure',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+    name: 'controller:notification:restart-attempt',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+    name: 'lifecycle:notification:revote',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:vote',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:end:vote',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'key-removed',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
@@ -409,7 +756,91 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -489,7 +920,90 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -599,7 +1113,7 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'lifecycle:notification:revote',
     timestamp: 'ts-removed',
     type: 'lifecycle',
@@ -609,7 +1123,7 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -619,7 +1133,47 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -629,7 +1183,47 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
     name: 'conductor:notification:deny',
     timestamp: 'ts-removed',
     type: 'conductor',
@@ -659,7 +1253,7 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -669,7 +1263,7 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:notification:restart-attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -679,7 +1273,7 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'lifecycle:notification:revote',
     timestamp: 'ts-removed',
     type: 'lifecycle',
@@ -689,7 +1283,7 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -699,7 +1293,88 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -749,7 +1424,91 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -949,7 +1708,91 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -1169,7 +2012,91 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -1396,7 +2323,91 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::MaxFailures',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::ReplayGlobalError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',

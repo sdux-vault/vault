@@ -2,20 +2,14 @@
   <div
     class="event-row-header"
     [class.event-row-error]="!!event().error"
+    [class.event-row-selected]="selected()"
+    matTooltip="Click for more details"
     role="button"
     tabindex="0"
-    (click)="onToggle(!expanded())"
-    (keydown.enter)="onToggle(!expanded())"
-    (keydown.space)="onToggle(!expanded()); $event.preventDefault()">
+    (click)="selectEvent.emit(event())"
+    (keydown.enter)="selectEvent.emit(event())"
+    (keydown.space)="selectEvent.emit(event()); $event.preventDefault()">
     <div class="row-primary">
-      <!-- Chevron -->
-      <div
-        class="chevron"
-        [class.open]="expanded()"
-        [matTooltip]="expanded() ? 'Collapse details' : 'Expand details'">
-        &#9656;
-      </div>
-
       <div class="counter">
         {{ totalEvents() | number: '3.0' }}
       </div>
@@ -30,8 +24,9 @@
 
       <!-- Badge -->
       <div class="behavior-pills {{ event().type }}">
-        @for (segment of parseBehaviorKey(); track $index) {
-          <span class="pill">{{ segment }}</span>
+        <span class="pill">{{ event().type | uppercase }}</span>
+        @if (event().type === 'controller' || event().type === 'stage') {
+          <span class="pill">{{ behaviorName() }}</span>
         }
       </div>
 
@@ -67,65 +62,4 @@
       </div>
     </div>
   </div>
-
-  @if (expanded()) {
-    <div class="event-details">
-      <div class="detail-columns">
-        <div class="detail-block">
-          <h4>State</h4>
-          <ul class="kv">
-            <li><strong>id:</strong> {{ event().id }}</li>
-            <li><strong>traceId:</strong> {{ event().traceId ?? 'null' }}</li>
-            <li>
-              <strong>isLoading:</strong>
-              {{ event().state?.isLoading ? 'True' : 'False' }}
-            </li>
-            <li>
-              <strong>hasValue:</strong>
-              {{ event().state?.hasValue ? 'True' : 'False' }}
-            </li>
-            <li>
-              <strong>error:</strong>
-              {{
-                event().state?.error?.message
-                  ? event().state?.error?.message
-                  : 'null'
-              }}
-            </li>
-          </ul>
-        </div>
-
-        <div class="detail-block">
-          <h4>Event</h4>
-          <ul class="kv">
-            <li><strong>type:</strong> {{ event().type }}</li>
-            <li><strong>name:</strong> {{ event().name }}</li>
-            <li><strong>boundary:</strong> {{ event().boundary }}</li>
-            <li><strong>source:</strong> {{ event().source ?? 'null' }}</li>
-          </ul>
-        </div>
-      </div>
-
-      @if (event().state?.value) {
-        <div class="detail-block">
-          <h4>State Value</h4>
-          <pre><code>{{ event().state?.value | json }}</code></pre>
-        </div>
-      }
-
-      @if (event().payload) {
-        <div class="detail-block">
-          <h4>Payload</h4>
-          <pre><code>{{ event().payload | json }}</code></pre>
-        </div>
-      }
-
-      @if (event().error) {
-        <div class="detail-block error-block">
-          <h4>Error</h4>
-          <pre><code>{{ event().error | json }}</code></pre>
-        </div>
-      }
-    </div>
-  }
 }

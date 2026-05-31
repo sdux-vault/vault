@@ -11,7 +11,8 @@ import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { DEVTOOLS_LOGGING_KEY_CONSTANT } from '@sdux-vault/shared';
 import { DevtoolsService } from '../../src/app/services/devtools.service';
 import { EXTENSION_VERSION } from '../../src/app/splash-page/devtools-splash-page.component';
-import { DemoExampleService } from './demo-example.service';
+import { StarTrekExampleService } from './startrek/star-trek-example.service';
+import { StarWarsExampleService } from './starwars/star-wars-example.service';
 
 /**
  * Application configuration for the DevTools demo harness.
@@ -34,9 +35,19 @@ export const demoConfig: ApplicationConfig = {
     ),
 
     provideFeatureCell(
-      DemoExampleService,
+      StarWarsExampleService,
       {
-        key: 'demo-example-feature-cell-key',
+        key: 'starwars-feature-cell-key',
+        initialState: []
+      },
+      [],
+      [withDelayController]
+    ),
+
+    provideFeatureCell(
+      StarTrekExampleService,
+      {
+        key: 'startrek-feature-cell-key',
         initialState: []
       },
       [],

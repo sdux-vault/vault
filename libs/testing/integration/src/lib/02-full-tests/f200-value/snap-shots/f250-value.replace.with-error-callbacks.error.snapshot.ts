@@ -50,7 +50,95 @@ export const f250Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -149,7 +237,146 @@ export const f250Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      traceId: 'trace-id-removed',
+      outcome: 'abort'
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'key-removed',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      status: 'abort'
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'key-removed',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+<<<<<<< HEAD
+    behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abort',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -206,7 +433,95 @@ export const f250Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abort',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -263,7 +578,94 @@ export const f250Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abort',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -277,7 +679,7 @@ export const f250Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -300,7 +702,7 @@ export const f250Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -310,7 +712,7 @@ export const f250Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -320,7 +722,92 @@ export const f250Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -459,7 +946,13 @@ export const f250Snapshot = [
     state: {
       isLoading: false,
       value: '__VAULT_UNDEFINED__',
-      error: null,
+      error: {
+        message: 'this is a filter error',
+        details: 'raw-removed',
+        raw: 'raw-removed',
+        timestamp: 1704067201000,
+        featureCellKey: 'full-test-with-encrypted-error-callback'
+      },
       hasValue: false
     },
     type: 'stage',
@@ -629,7 +1122,95 @@ export const f250Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
+<<<<<<< HEAD
     behaviorKey: 'key-removed',
+=======
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'vault-conductor',
+>>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',

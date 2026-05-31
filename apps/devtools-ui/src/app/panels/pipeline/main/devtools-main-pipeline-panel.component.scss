@@ -3,23 +3,26 @@
 :host {
   display: block;
   height: 100%;
+  overflow: hidden;
 }
 
 .pipeline-panel {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 100%;
+  overflow: hidden;
   padding: 0;
   @include global.sdux-text(global.$sdux-text-primary);
 
   /* ----------------------------------------------
-     EVENT STREAM
+     EVENT STREAM (master list)
   ------------------------------------------------*/
   .event-stream {
     flex: 1;
     display: flex;
     flex-direction: column;
     min-height: 0;
+    min-width: 0;
 
     .event-list {
       flex: 1;
@@ -40,6 +43,75 @@
       &::-webkit-scrollbar-thumb {
         background-color: global.$sdux-surface-outline;
         border-radius: global.$border-radius-xs;
+      }
+    }
+  }
+
+  /* ----------------------------------------------
+     DETAIL PANE (right side)
+  ------------------------------------------------*/
+  .detail-pane {
+    width: 400px;
+    min-width: 400px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid global.$sdux-surface-outline;
+    margin-bottom: global.$spacing-2xl;
+    min-height: 0;
+
+    sdux-devtools-pipeline-event-detail {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+    }
+  }
+
+  .detail-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    .detail-empty-text {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-size: global.$font-size-sm;
+    }
+  }
+
+  @media (max-width: global.$breakpoint-md) {
+    flex-direction: column;
+    overflow: hidden;
+
+    .event-stream {
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+
+      .event-list {
+        height: 100%;
+        margin-bottom: 0;
+      }
+    }
+
+    &:has(.detail-pane) .event-stream {
+      height: 35%;
+    }
+
+    .detail-pane {
+      width: 100%;
+      min-width: 0;
+      flex: 0 0 calc(55% - 20px);
+      margin-top: global.$spacing-sm;
+      margin-bottom: 0;
+      border: 1px solid global.$sdux-surface-outline;
+      box-sizing: border-box;
+      overflow: hidden;
+
+      sdux-devtools-pipeline-event-detail {
+        height: 100%;
+        flex: none;
       }
     }
   }

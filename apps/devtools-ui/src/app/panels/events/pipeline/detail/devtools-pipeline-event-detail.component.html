@@ -1,0 +1,48 @@
+<div class="detail-panel">
+  <div class="detail-header">
+    <h3>Event Detail</h3>
+    <button
+      type="button"
+      class="close-btn"
+      aria-label="Close detail panel"
+      matTooltip="Close detail panel"
+      (click)="closeDetail.emit()">
+      &#10005;
+    </button>
+  </div>
+
+  <div class="detail-body">
+    <div class="detail-block">
+      <ul class="kv">
+        <li><strong>key:</strong> {{ event().behaviorKey }}</li>
+        <li><strong>type:</strong> {{ event().type }}</li>
+        <li><strong>boundary:</strong> {{ event().boundary }}</li>
+        <li><strong>event name:</strong> {{ event().name }}</li>
+        <li><strong>event id:</strong> {{ event().id }}</li>
+        <li><strong>trace id:</strong> {{ event().traceId ?? 'null' }}</li>
+        <li><strong>source:</strong> {{ event().source ?? 'N/A' }}</li>
+      </ul>
+    </div>
+
+    @if (event().state?.value) {
+      <div class="detail-block">
+        <h4>State Value</h4>
+        <pre><code>{{ event().state?.value | json }}</code></pre>
+      </div>
+    }
+
+    @if (event().payload) {
+      <div class="detail-block">
+        <h4>Payload</h4>
+        <pre><code>{{ event().payload | json }}</code></pre>
+      </div>
+    }
+
+    @if (event().error) {
+      <div class="detail-block error-block">
+        <h4>Error</h4>
+        <pre><code>{{ event().error | json }}</code></pre>
+      </div>
+    }
+  </div>
+</div>

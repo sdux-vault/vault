@@ -1,6 +1,6 @@
 <div class="pipeline-panel">
   <section class="event-stream">
-    @if (events()) {
+    @if (reversedEvents()) {
       <cdk-virtual-scroll-viewport
         itemSize="52"
         class="event-list"
@@ -8,7 +8,7 @@
         aria-label="Pipeline events">
         <div
           *cdkVirtualFor="
-            let event of events();
+            let event of reversedEvents();
             let i = index;
             trackBy: trackById
           "
@@ -16,12 +16,18 @@
           <sdux-devtools-pipeline-event
             [event]="event"
             [totalEvents]="totalEvents() - i"
-            [expanded]="expandedIds.has(event.id)"
-            (expandedChange)="
-              toggleExpanded(event.id, $event)
-            "></sdux-devtools-pipeline-event>
+            [selected]="selectedEvent()?.id === event.id"
+            (selectEvent)="selectEvent($event)"></sdux-devtools-pipeline-event>
         </div>
       </cdk-virtual-scroll-viewport>
     }
   </section>
+
+  @if (selectedEvent(); as selected) {
+    <aside class="detail-pane">
+      <sdux-devtools-pipeline-event-detail
+        [event]="selected"
+        (closeDetail)="closeDetail()"></sdux-devtools-pipeline-event-detail>
+    </aside>
+  }
 </div>
