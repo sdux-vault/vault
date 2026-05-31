@@ -1,0 +1,82 @@
+<header class="header">
+  <div class="title">
+    <div class="logo" matTooltip="SDuX Vault DevTools">
+      <img src="/assets/brand/brand-landscape-dark.svg" alt="SDuX Vault" />
+    </div>
+    <span class="subtitle">DevTools (v{{ version }})</span>
+  </div>
+
+  <div class="meta">
+    <span
+      class="event-count"
+      matTooltip="Total pipeline events captured"
+      aria-label="Total pipeline events captured">
+      {{ totalEvents() }} events
+    </span>
+    <button
+      type="button"
+      class="btn-clear"
+      matTooltip="Clear all events"
+      aria-label="Clear all events"
+      (click)="clearEvents()">
+      Clear
+    </button>
+  </div>
+</header>
+
+<mat-tab-group class="vault-tabs" animationDuration="200ms">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="tab-label">
+        All Events
+        <button
+          type="button"
+          class="tab-download-btn"
+          aria-label="Download all events"
+          matTooltip="Download all events"
+          (click)="downloadAllEvents($event)">
+          <svg
+            class="download-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            width="18"
+            height="18">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+          </svg>
+        </button>
+      </span>
+    </ng-template>
+    <section class="vault-tab-content">
+      <sdux-devtools-main-pipeline-panel
+        [events]="events()"></sdux-devtools-main-pipeline-panel>
+    </section>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="tab-label">
+        Error Events
+        <button
+          type="button"
+          class="tab-download-btn"
+          aria-label="Download error events"
+          matTooltip="Download error events"
+          (click)="downloadErrorEvents($event)">
+          <svg
+            class="download-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            width="18"
+            height="18">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+          </svg>
+        </button>
+      </span>
+    </ng-template>
+    <section class="vault-tab-content">
+      <sdux-devtools-main-pipeline-panel
+        [events]="errorEvents()"></sdux-devtools-main-pipeline-panel>
+    </section>
+  </mat-tab>
+</mat-tab-group>

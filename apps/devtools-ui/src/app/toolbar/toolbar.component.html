@@ -1,0 +1,34 @@
+<div class="toolbar">
+  <div class="toolbar-brand">
+    <img
+      class="toolbar-logo"
+      src="/assets/brand/brand-landscape-dark.svg"
+      alt="SDuX Vault"
+      matTooltip="SDuX Vault DevTools" />
+    <span class="toolbar-version">DevTools (v{{ version }})</span>
+  </div>
+
+  <button
+    type="button"
+    class="toolbar-menu-btn"
+    aria-label="Open menu"
+    matTooltip="Menu"
+    [matMenuTriggerFor]="toolbarMenu">
+    <svg
+      class="menu-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      width="24"
+      height="24">
+      <circle cx="12" cy="5" r="2" />
+      <circle cx="12" cy="12" r="2" />
+      <circle cx="12" cy="19" r="2" />
+    </svg>
+  </button>
+
+  <mat-menu #toolbarMenu="matMenu">
+    <a mat-menu-item routerLink="/">Home</a>
+    <a mat-menu-item routerLink="/events">Events</a>
+  </mat-menu>
+</div>

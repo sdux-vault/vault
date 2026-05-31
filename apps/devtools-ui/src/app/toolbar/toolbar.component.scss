@@ -1,0 +1,55 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: global.$spacing-sm;
+  padding-bottom: global.$spacing-sm;
+  border-bottom: 1px solid global.$sdux-surface-outline;
+
+  .toolbar-brand {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+
+    .toolbar-logo {
+      width: 120px;
+    }
+
+    .toolbar-version {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-size: global.$font-size-md;
+
+      @media (max-width: global.$breakpoint-md) {
+        display: none;
+      }
+    }
+  }
+
+  .toolbar-menu-btn {
+    background: transparent;
+    border: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      // exception: overrides Angular Material menu trigger specificity
+      background-color: global.$sdux-hover-background-color !important;
+    }
+
+    .menu-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

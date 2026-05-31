@@ -3,16 +3,18 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
+import { provideRouter, withHashLocation } from '@angular/router';
 import {
   withArrayPushMergeBehavior,
   withDelayController
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { DEVTOOLS_LOGGING_KEY_CONSTANT } from '@sdux-vault/shared';
+import { routes } from '../../src/app/devtools.app.routes';
 import { DevtoolsService } from '../../src/app/services/devtools.service';
 import { EXTENSION_VERSION } from '../../src/app/splash-page/devtools-splash-page.component';
-import { StarTrekExampleService } from './startrek/star-trek-example.service';
-import { StarWarsExampleService } from './starwars/star-wars-example.service';
+import { StarTrekExampleService } from './feature-cells/star-trek/star-trek-example.service';
+import { StarWarsExampleService } from './feature-cells/star-wars/star-wars-example.service';
 
 /**
  * Application configuration for the DevTools demo harness.
@@ -25,6 +27,8 @@ export const demoConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     { provide: EXTENSION_VERSION, useValue: '0.0.0-demo' },
+
+    provideRouter(routes, withHashLocation()),
 
     provideVault({ devMode: true, logLevel: 'error', bypassLicensing: true }),
 

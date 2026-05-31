@@ -1,8 +1,30 @@
-.router-container {
-  height: 100%;
-}
+@use 'global' as global;
 
 :host {
   display: block;
+  height: 100vh;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  padding: global.$spacing-md;
+
+  @include global.sdux-surface(global.$sdux-surface-mid);
+  @include global.sdux-text(global.$sdux-text-primary);
+}
+
+.toolbar-wrapper {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.router-container {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }

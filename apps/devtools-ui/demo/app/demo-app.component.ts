@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DevToolsSplashPageComponent } from '../../src/app/splash-page/devtools-splash-page.component';
-import { StarTrekComponent } from './startrek/star-trek.component';
-import { StarWarsComponent } from './starwars/star-wars.component';
+import { DevToolsApp } from '../../src/app/devtools/devtools.app.component';
+import { StarTrekComponent } from './feature-cells/star-trek/star-trek.component';
+import { StarWarsComponent } from './feature-cells/star-wars/star-wars.component';
 
 /**
  * Demo shell that hosts the DevTools splash page with a real FeatureCell.
@@ -9,7 +9,7 @@ import { StarWarsComponent } from './starwars/star-wars.component';
 @Component({
   selector: 'sdux-devtools-demo',
   standalone: true,
-  imports: [DevToolsSplashPageComponent, StarTrekComponent, StarWarsComponent],
+  imports: [DevToolsApp, StarTrekComponent, StarWarsComponent],
   templateUrl: './demo-app.component.html',
   styleUrl: './demo-app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

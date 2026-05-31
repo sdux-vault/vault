@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { EventsComponent } from './events/events.component';
 import { DevToolsSplashPageComponent } from './splash-page/devtools-splash-page.component';
 
 /**
@@ -16,6 +17,9 @@ import { DevToolsSplashPageComponent } from './splash-page/devtools-splash-page.
 export const routes: Routes = [
   /** Primary entry route for the DevTools splash interface. */
   { path: '', component: DevToolsSplashPageComponent },
+
+  /** Dedicated events route for the tabbed event viewer. */
+  { path: 'events', component: EventsComponent },
 
   /** Catch-all route that redirects invalid paths back to the root. */
   { path: '**', redirectTo: '' }

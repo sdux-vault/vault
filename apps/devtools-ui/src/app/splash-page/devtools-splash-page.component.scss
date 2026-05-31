@@ -2,76 +2,40 @@
 
 :host {
   display: block;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
 .vault-devtools {
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  padding: global.$spacing-md;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 
-  @include global.sdux-surface(global.$sdux-surface-mid);
-  @include global.sdux-text(global.$sdux-text-primary);
   border: none;
 
-  @media (max-width: global.$breakpoint-md) {
-    padding: global.$spacing-md global.$spacing-md 0;
-  }
-
   /* ----------------------------------------------
-     HEADER
+     WELCOME
   ------------------------------------------------*/
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: global.$spacing-md;
-    border-bottom: 1px solid global.$sdux-surface-outline;
+  .welcome {
+    text-align: center;
+    margin-bottom: global.$spacing-lg;
 
-    .title {
-      display: flex;
-      align-items: center;
-      gap: global.$spacing-sm;
-
-      .logo {
-        width: 120px;
-      }
-
-      .subtitle {
-        @include global.sdux-text(global.$sdux-text-secondary);
-        font-size: global.$font-size-md;
-
-        @media (max-width: global.$breakpoint-md) {
-          display: none;
-        }
-      }
+    .welcome-title {
+      margin: 0 0 global.$spacing-xs;
+      font-size: global.$font-size-2xl;
+      font-weight: 600;
     }
 
-    .meta {
-      display: flex;
-      align-items: center;
-      gap: global.$spacing-md;
-
-      .event-count {
-        @include global.sdux-text(global.$sdux-text-secondary);
-        font-size: global.$font-size-sm;
-      }
-
-      .btn-clear {
-        @include global.button-base(
-          global.$sdux-text-white,
-          transparent,
-          global.$sdux-surface-outline
-        );
-
-        &:hover {
-          // exception: overrides Angular Material button ripple specificity
-          background-color: global.$sdux-hover-background-color !important;
-        }
-      }
+    .welcome-subtitle {
+      margin: 0;
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-size: global.$font-size-sm;
+      line-height: 1.5;
     }
   }
 
@@ -84,86 +48,15 @@
     color: global.$sdux-text-black;
     padding: global.$spacing-sm global.$spacing-md;
     border-radius: global.$border-radius-sm;
-    margin-bottom: global.$spacing-md;
     font-size: global.$font-size-sm;
-  }
-
-  /* ----------------------------------------------
-     MATERIAL TAB GROUP
-  ------------------------------------------------*/
-  .vault-tabs {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-
-    /* tab header stays fixed */
-    // exception: ::ng-deep required to style Angular Material internal tab header
-    ::ng-deep .mat-mdc-tab-header {
-      background-color: global.$sdux-surface-dark;
-      border-bottom: 1px solid global.$sdux-surface-outline;
-    }
-
-    /* body wrapper must shrink + allow scroll */
-    // exception: ::ng-deep required to style Angular Material internal tab body wrapper
-    ::ng-deep .mat-mdc-tab-body-wrapper {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-    }
-
-    /* each tab body must stretch */
-    // exception: ::ng-deep required to override Angular Material's internal overflow: auto on tab body content
-    ::ng-deep .mat-mdc-tab-body {
-      flex: 1;
-      min-height: 0;
-
-      .mat-mdc-tab-body-content {
-        flex: 1;
-        min-height: 0;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-      }
-    }
-  }
-
-  /* ----------------------------------------------
-     TAB CONTENT → scrolling container
-  ------------------------------------------------*/
-  .vault-tab-content {
-    flex: 1;
-    min-height: 0;
-    height: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-
-    sdux-devtools-main-pipeline-panel {
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-    }
-
-    @media (max-width: global.$breakpoint-md) {
-      padding-right: global.$spacing-sm;
-    }
-
-    /* nice scrollbars */
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: global.$sdux-surface-outline;
-      border-radius: global.$border-radius-xs;
-    }
+    text-align: center;
+    margin-bottom: global.$spacing-lg;
   }
 
   .vault-empty {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
 
     .logo {
@@ -177,44 +70,4 @@
       }
     }
   }
-
-  .tab-label {
-    display: flex;
-    align-items: center;
-    gap: global.$spacing-sm;
-
-    .tab-download-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      vertical-align: middle;
-      background: none;
-      border: none;
-      color: global.$sdux-text-secondary;
-      cursor: pointer;
-      padding: global.$spacing-xs;
-      border-radius: global.$border-radius-xs;
-      line-height: 1;
-
-      mat-icon {
-        font-size: global.$font-size-md;
-        width: global.$font-size-md;
-        height: global.$font-size-md;
-      }
-
-      &:hover {
-        color: global.$sdux-text-white;
-        background-color: global.$sdux-surface-outline;
-      }
-    }
-  }
-}
-
-/* ----------------------------------------------
-   MATERIAL OVERRIDE: TAB BAR COLOR
-------------------------------------------------*/
-::ng-deep .mat-mdc-tab-label-container {
-  background-color: global.$sdux-surface-light;
-  border-top-left-radius: global.$border-radius-md;
-  border-top-right-radius: global.$border-radius-md;
 }

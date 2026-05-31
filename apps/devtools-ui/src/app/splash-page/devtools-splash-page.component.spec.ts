@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
-import { DevtoolsPipelineEventComponent } from '../panels/events/pipeline/devtools-pipeline-event.component';
-import { DevtoolsMainPipelinePanelComponent } from '../panels/pipeline/main/devtools-main-pipeline-panel.component';
+import { DevtoolsPipelineEventComponent } from '../events/panels/events/pipeline/devtools-pipeline-event.component';
+import { DevtoolsMainPipelinePanelComponent } from '../events/panels/pipeline/main/devtools-main-pipeline-panel.component';
 import { DevtoolsService } from '../services/devtools.service';
 import {
   DevToolsSplashPageComponent,
