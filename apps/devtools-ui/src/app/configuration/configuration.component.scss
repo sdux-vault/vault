@@ -1,0 +1,19 @@
+@use 'global' as global;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.configuration {
+  padding: global.$spacing-md;
+
+  .title {
+    @include global.sdux-text(global.$sdux-text-primary);
+    font-size: global.$font-size-lg;
+    margin: 0 0 global.$spacing-md;
+  }
+}

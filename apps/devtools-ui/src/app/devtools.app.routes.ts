@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ConfigurationComponent } from './configuration/configuration.component';
 import { EventsComponent } from './events/events.component';
 import { DevToolsSplashPageComponent } from './splash-page/devtools-splash-page.component';
 
@@ -20,6 +21,9 @@ export const routes: Routes = [
 
   /** Dedicated events route for the tabbed event viewer. */
   { path: 'events', component: EventsComponent },
+
+  /** Configuration route for managing Vault settings. */
+  { path: 'configuration', component: ConfigurationComponent },
 
   /** Catch-all route that redirects invalid paths back to the root. */
   { path: '**', redirectTo: '' }
