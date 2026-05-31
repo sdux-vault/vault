@@ -3,6 +3,7 @@
 :host {
   display: block;
   height: 100vh;
+  overflow: hidden;
 }
 
 .app-shell {
@@ -10,6 +11,7 @@
   flex-direction: column;
   height: 100%;
   padding: global.$spacing-md;
+  border-radius: 0 0 global.$border-radius-sm global.$border-radius-sm;
 
   @include global.sdux-surface(global.$sdux-surface-mid);
   @include global.sdux-text(global.$sdux-text-primary);

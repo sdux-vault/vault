@@ -43,19 +43,66 @@ export class EventsComponent {
   /** Currently selected cell filter. */
   readonly selectedCell = signal('all');
 
+  /** Currently selected event type filter. */
+  readonly selectedType = signal('all');
+
+  /** Currently selected behavior/controller key filter. */
+  readonly selectedKey = signal('all');
+
   /** Unique cell names derived from the current events. */
   readonly cellNames = computed(() => {
     const cells = this.events()?.map((e) => e.cell) ?? [];
     return [...new Set(cells)].sort();
   });
 
-  /** Events filtered by the selected cell. */
+  /** Unique event type names derived from events matching the selected cell. */
+  readonly typeNames = computed(() => {
+    const cell = this.selectedCell();
+    let result = this.events() ?? [];
+    if (cell !== 'all') {
+      result = result.filter((e) => e.cell === cell);
+    }
+    const types = result.map((e) => e.type);
+    return [...new Set(types)].sort();
+  });
+
+  /** Whether the key filter dropdown should be visible. */
+  readonly showKeyFilter = computed(() => {
+    const type = this.selectedType();
+    return type === 'stage' || type === 'controller';
+  });
+
+  /** Unique key names derived from events matching the selected cell and type. */
+  readonly keyNames = computed(() => {
+    const cell = this.selectedCell();
+    const type = this.selectedType();
+    let result = this.events() ?? [];
+    if (cell !== 'all') {
+      result = result.filter((e) => e.cell === cell);
+    }
+    if (type !== 'all') {
+      result = result.filter((e) => e.type === type);
+    }
+    const keys = result.map((e) => e.behaviorKey);
+    return [...new Set(keys)].sort();
+  });
+
+  /** Events filtered by the selected cell and type. */
   readonly filteredEvents = computed(() => {
     const cell = this.selectedCell();
-    if (cell === 'all') {
-      return this.events();
+    const type = this.selectedType();
+    const key = this.selectedKey();
+    let result = this.events();
+    if (cell !== 'all') {
+      result = result?.filter((e) => e.cell === cell) ?? [];
     }
-    return this.events()?.filter((e) => e.cell === cell) ?? [];
+    if (type !== 'all') {
+      result = result?.filter((e) => e.type === type) ?? [];
+    }
+    if (key !== 'all') {
+      result = result?.filter((e) => e.behaviorKey === key) ?? [];
+    }
+    return result;
   });
 
   /** Total number of pipeline events currently stored. */
@@ -68,7 +115,7 @@ export class EventsComponent {
 
   /** Human-readable total state size across all cells (latest event per cell). */
   readonly latestStateSize = computed(() => {
-    const events = this.filteredEvents();
+    const events = this.events();
     if (!events?.length) {
       return null;
     }
@@ -99,7 +146,22 @@ export class EventsComponent {
    */
   clearEvents(): void {
     this.selectedCell.set('all');
+    this.selectedType.set('all');
+    this.selectedKey.set('all');
     this.devtools.clearEvents();
+  }
+
+  /**
+   * Extracts the display name from a behavior or controller key.
+   * For keys like `SDUX::Behavior::Core::Value`, returns `Value`.
+   * For internal keys like `vault-conductor`, returns the full string.
+   *
+   * @param key - The full behavior or controller key.
+   * @returns The short display name.
+   */
+  displayKeyName(key: string): string {
+    const parts = key.split('::');
+    return parts.length > 1 ? parts[parts.length - 1] : key;
   }
 
   /**

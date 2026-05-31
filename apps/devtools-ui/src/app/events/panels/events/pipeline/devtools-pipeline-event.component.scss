@@ -53,12 +53,12 @@
 
     .row-spacer {
       display: block;
-      width: calc(global.$font-size-xl + 3rem);
+      width: 48px;
       flex-shrink: 0;
     }
 
     .cell {
-      min-width: 0;
+      min-width: 200px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -117,6 +117,7 @@
     @include global.sdux-text(global.$sdux-text-white);
     font-weight: global.$font-weight-medium;
     font-size: global.$font-size-md;
+    min-width: 200px;
   }
 
   .indicators {

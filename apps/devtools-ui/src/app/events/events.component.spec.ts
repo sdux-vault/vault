@@ -11,30 +11,30 @@ import { EventsComponent } from './events.component';
 
 const mockEvent: any = {
   id: 1,
-  type: 'enqueue',
-  behaviorKey: 'test-behavior',
+  type: 'stage',
+  behaviorKey: 'SDUX::Behavior::Core::Value',
   cell: 'alpha'
 };
 
 const mockEvent2: any = {
   id: 2,
-  type: 'enqueue',
-  behaviorKey: 'test-behavior-2',
+  type: 'controller',
+  behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
   cell: 'beta'
 };
 
 const mockEventWithError: any = {
   id: 3,
-  type: 'enqueue',
-  behaviorKey: 'test-behavior-3',
+  type: 'lifecycle',
+  behaviorKey: 'vault-orchestrator',
   cell: 'alpha',
   error: 'something went wrong'
 };
 
 const mockEventWithState: any = {
   id: 4,
-  type: 'enqueue',
-  behaviorKey: 'test-behavior-4',
+  type: 'stage',
+  behaviorKey: 'SDUX::Behavior::Core::Filter',
   cell: 'alpha',
   state: {
     hasValue: true,
@@ -46,8 +46,8 @@ const mockEventWithState: any = {
 
 const mockEventWithState2: any = {
   id: 5,
-  type: 'enqueue',
-  behaviorKey: 'test-behavior-5',
+  type: 'stage',
+  behaviorKey: 'SDUX::Behavior::Core::Value',
   cell: 'beta',
   state: {
     hasValue: true,
@@ -59,8 +59,8 @@ const mockEventWithState2: any = {
 
 const mockEventNoStateValue: any = {
   id: 6,
-  type: 'enqueue',
-  behaviorKey: 'test-behavior-6',
+  type: 'conductor',
+  behaviorKey: 'vault-conductor',
   cell: 'gamma',
   state: { hasValue: false, value: undefined, isLoading: true, error: null }
 };
@@ -173,6 +173,18 @@ describe('Component: Events', () => {
       component.clearEvents();
       expect(component.selectedCell()).toBe('all');
     });
+
+    it('should reset selectedType to "all"', () => {
+      component.selectedType.set('stage');
+      component.clearEvents();
+      expect(component.selectedType()).toBe('all');
+    });
+
+    it('should reset selectedKey to "all"', () => {
+      component.selectedKey.set('SDUX::Behavior::Core::Value');
+      component.clearEvents();
+      expect(component.selectedKey()).toBe('all');
+    });
   });
 
   describe('latestStateSize', () => {
@@ -204,13 +216,16 @@ describe('Component: Events', () => {
       expect(component.latestStateSize()).toBe(`${sizeAlpha + sizeBeta} B`);
     });
 
-    it('should only include the selected cell size when filtered', () => {
+    it('should show total state size regardless of cell filter', () => {
       mockService.eventsSignal.set([mockEventWithState, mockEventWithState2]);
       component.selectedCell.set('beta');
+      const sizeAlpha = new Blob([
+        JSON.stringify(mockEventWithState.state.value)
+      ]).size;
       const sizeBeta = new Blob([
         JSON.stringify(mockEventWithState2.state.value)
       ]).size;
-      expect(component.latestStateSize()).toBe(`${sizeBeta} B`);
+      expect(component.latestStateSize()).toBe(`${sizeAlpha + sizeBeta} B`);
     });
 
     it('should use the latest event per cell', () => {
@@ -239,6 +254,167 @@ describe('Component: Events', () => {
         JSON.stringify(mockEventWithState2.state.value)
       ]).size;
       expect(component.latestStateSize()).toBe(`${sizeBeta} B`);
+    });
+  });
+
+  describe('type filtering', () => {
+    beforeEach(() => {
+      mockService.eventsSignal.set([
+        mockEvent,
+        mockEvent2,
+        mockEventWithError,
+        mockEventWithState,
+        mockEventNoStateValue
+      ]);
+      fixture.detectChanges();
+    });
+
+    it('should default selectedType to "all"', () => {
+      expect(component.selectedType()).toBe('all');
+    });
+
+    it('should derive sorted unique type names from events', () => {
+      expect(component.typeNames()).toEqual([
+        'conductor',
+        'controller',
+        'lifecycle',
+        'stage'
+      ]);
+    });
+
+    it('should scope typeNames by selected cell', () => {
+      component.selectedCell.set('alpha');
+      expect(component.typeNames()).toEqual(['lifecycle', 'stage']);
+    });
+
+    it('should filter events by selected type', () => {
+      component.selectedType.set('stage');
+      expect(
+        component.filteredEvents()?.every((e: any) => e.type === 'stage')
+      ).toBeTrue();
+    });
+
+    it('should combine cell and type filters', () => {
+      component.selectedCell.set('alpha');
+      component.selectedType.set('stage');
+      const results = component.filteredEvents() ?? [];
+      expect(results.length).toBe(2);
+      expect(
+        results.every((e: any) => e.cell === 'alpha' && e.type === 'stage')
+      ).toBeTrue();
+    });
+
+    it('should return all events when type is "all"', () => {
+      component.selectedType.set('all');
+      expect(component.filteredEvents()?.length).toBe(5);
+    });
+  });
+
+  describe('key filtering', () => {
+    beforeEach(() => {
+      mockService.eventsSignal.set([
+        mockEvent,
+        mockEvent2,
+        mockEventWithState,
+        mockEventNoStateValue
+      ]);
+      fixture.detectChanges();
+    });
+
+    it('should default selectedKey to "all"', () => {
+      expect(component.selectedKey()).toBe('all');
+    });
+
+    it('should show key filter for stage type', () => {
+      component.selectedType.set('stage');
+      expect(component.showKeyFilter()).toBeTrue();
+    });
+
+    it('should show key filter for controller type', () => {
+      component.selectedType.set('controller');
+      expect(component.showKeyFilter()).toBeTrue();
+    });
+
+    it('should hide key filter for lifecycle type', () => {
+      component.selectedType.set('lifecycle');
+      expect(component.showKeyFilter()).toBeFalse();
+    });
+
+    it('should hide key filter for conductor type', () => {
+      component.selectedType.set('conductor');
+      expect(component.showKeyFilter()).toBeFalse();
+    });
+
+    it('should hide key filter when type is "all"', () => {
+      expect(component.showKeyFilter()).toBeFalse();
+    });
+
+    it('should derive sorted unique key names scoped by cell and type', () => {
+      component.selectedType.set('stage');
+      expect(component.keyNames()).toEqual([
+        'SDUX::Behavior::Core::Filter',
+        'SDUX::Behavior::Core::Value'
+      ]);
+    });
+
+    it('should scope keyNames by selected cell', () => {
+      component.selectedCell.set('alpha');
+      component.selectedType.set('stage');
+      expect(component.keyNames()).toEqual([
+        'SDUX::Behavior::Core::Filter',
+        'SDUX::Behavior::Core::Value'
+      ]);
+    });
+
+    it('should filter events by selected key', () => {
+      component.selectedType.set('stage');
+      component.selectedKey.set('SDUX::Behavior::Core::Value');
+      const results = component.filteredEvents() ?? [];
+      expect(results.length).toBe(1);
+      expect(results[0]).toBe(mockEvent);
+    });
+
+    it('should combine cell, type, and key filters', () => {
+      component.selectedCell.set('alpha');
+      component.selectedType.set('stage');
+      component.selectedKey.set('SDUX::Behavior::Core::Filter');
+      const results = component.filteredEvents() ?? [];
+      expect(results.length).toBe(1);
+      expect(results[0]).toBe(mockEventWithState);
+    });
+
+    it('should return all type-filtered events when key is "all"', () => {
+      component.selectedType.set('controller');
+      component.selectedKey.set('all');
+      const results = component.filteredEvents() ?? [];
+      expect(results.length).toBe(1);
+      expect(results[0]).toBe(mockEvent2);
+    });
+  });
+
+  describe('displayKeyName', () => {
+    it('should return the last segment of a behavior key', () => {
+      expect(component.displayKeyName('SDUX::Behavior::Core::Value')).toBe(
+        'Value'
+      );
+    });
+
+    it('should return the last segment of a controller key', () => {
+      expect(
+        component.displayKeyName('SDUX::Controller::Policy::CoreAbstain')
+      ).toBe('CoreAbstain');
+    });
+
+    it('should return the full string for internal keys', () => {
+      expect(component.displayKeyName('vault-conductor')).toBe(
+        'vault-conductor'
+      );
+    });
+
+    it('should return the full string for keys without separators', () => {
+      expect(component.displayKeyName('decision-engine')).toBe(
+        'decision-engine'
+      );
     });
   });
 });

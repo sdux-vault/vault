@@ -17,14 +17,28 @@
   align-items: center;
   margin-bottom: global.$spacing-md;
 
+  @media (max-width: global.$breakpoint-md) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: global.$spacing-sm;
+  }
+
   .title {
     display: flex;
     align-items: center;
     gap: global.$spacing-sm;
 
+    @media (max-width: global.$breakpoint-lg) {
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
     .cell-filter {
-      min-width: 250px;
-      width: fit-content;
+      width: 250px;
       @include global.sdux-text(global.$sdux-text-inverse);
       background-color: global.$sdux-surface-light;
       border: 1px solid global.$sdux-surface-outline;
@@ -47,9 +61,15 @@
     align-items: center;
     gap: global.$spacing-md;
 
+    @media (max-width: global.$breakpoint-md) {
+      justify-content: flex-end;
+    }
+
     .state-size {
       @include global.sdux-text(global.$sdux-text-secondary);
       font-size: global.$font-size-sm;
+      min-width: 80px;
+      text-align: right;
     }
 
     .event-count {

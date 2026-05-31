@@ -10,6 +10,30 @@
         <mat-option [value]="cell">{{ cell }}</mat-option>
       }
     </mat-select>
+    <mat-select
+      class="cell-filter"
+      [value]="selectedType()"
+      (selectionChange)="selectedType.set($event.value); selectedKey.set('all')"
+      aria-label="Filter by event type">
+      <mat-option value="all">All Types</mat-option>
+      @for (type of typeNames(); track type) {
+        <mat-option [value]="type">{{
+          type[0].toUpperCase() + type.slice(1)
+        }}</mat-option>
+      }
+    </mat-select>
+    @if (showKeyFilter()) {
+      <mat-select
+        class="cell-filter"
+        [value]="selectedKey()"
+        (selectionChange)="selectedKey.set($event.value)"
+        aria-label="Filter by key">
+        <mat-option value="all">All Keys</mat-option>
+        @for (key of keyNames(); track key) {
+          <mat-option [value]="key">{{ displayKeyName(key) }}</mat-option>
+        }
+      </mat-select>
+    }
   </div>
 
   <div class="meta">
