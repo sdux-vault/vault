@@ -1,0 +1,47 @@
+@use 'global' as global;
+
+.blog-back-link {
+  padding: global.$spacing-sm global.$spacing-md;
+
+  a {
+    @include global.a-link(var(--sdux-text-primary), var(--sdux-text-inverse));
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-medium;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.blog-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: global.$spacing-md;
+  padding: global.$spacing-sm global.$spacing-md;
+  color: var(--sdux-text-muted);
+  font-size: global.$font-size-sm;
+
+  .blog-date {
+    font-weight: global.$font-weight-medium;
+  }
+
+  .blog-pillar {
+    display: inline-block;
+    padding: global.$spacing-xs global.$spacing-sm;
+    font-size: global.$font-size-xs;
+    font-weight: global.$font-weight-semibold;
+    border-radius: global.$border-radius-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: global.$sdux-surface-light-accent;
+    color: global.$sdux-primary-dark;
+    border: 1px solid global.$sdux-primary-light;
+  }
+
+  .blog-reading-time {
+    color: var(--sdux-text-muted);
+  }
+}

@@ -19,8 +19,7 @@ import { StateInputType } from '../../types/state/state-input.type';
  * surface required to configure, initialize, and interact with a FeatureCell.
  */
 export interface FeatureCellBaseShape<T>
-  extends FeatureCellExtension<T>,
-    FeatureCellFluentApi<T> {
+  extends FeatureCellExtension<T>, FeatureCellFluentApi<T> {
   /**
    * Registers tap functions executed during the "after tap" stage.
    *

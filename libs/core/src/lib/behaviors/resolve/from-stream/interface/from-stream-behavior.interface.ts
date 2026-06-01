@@ -9,8 +9,9 @@ import { FromStreamOptions } from '../options/from-stream.options';
  * that enables streaming observable sources to participate in pipeline
  * execution through a FeatureCell instance.
  */
-export interface FromStreamBehaviorExtension
-  extends Partial<Record<string, BehaviorExtFunction>> {
+export interface FromStreamBehaviorExtension extends Partial<
+  Record<string, BehaviorExtFunction>
+> {
   [key: string]: BehaviorExtFunction | undefined;
 
   /**

@@ -158,9 +158,7 @@ export const vault = Vault({
               <ng-content select="[retrieve]">
                 <sdux-example-viewer-source [displayTabs]="false">
                   <sdux-example-viewer-tab
-                    [label]="
-                      'Example 1: Register a FeatureCell with initialState in Angular'
-                    ">
+                    [label]="'Example 1: Register a FeatureCell with initialState in Angular'">
                     <pre
                       class="code-inline"><code class="language-ts">{{`import { provideFeatureCell } from '@sdux-vault/angular';
                     
@@ -192,9 +190,7 @@ export const appConfig: ApplicationConfig = {
               <ng-content select="[retrieve]">
                 <sdux-example-viewer-source [displayTabs]="false">
                   <sdux-example-viewer-tab
-                    [label]="
-                      'Example 2: Register a FeatureCell with initialState in React'
-                    ">
+                    [label]="'Example 2: Register a FeatureCell with initialState in React'">
                     <pre
                       class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
 
@@ -227,9 +223,7 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
               <ng-content select="[retrieve]">
                 <sdux-example-viewer-source [displayTabs]="false">
                   <sdux-example-viewer-tab
-                    [label]="
-                      'Example 2: Register a FeatureCell with initialState in Vue'
-                    ">
+                    [label]="'Example 2: Register a FeatureCell with initialState in Vue'">
                     <pre
                       class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
 
@@ -296,9 +290,7 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
               <ng-content select="[retrieve]">
                 <sdux-example-viewer-source [displayTabs]="false">
                   <sdux-example-viewer-tab
-                    [label]="
-                      'Example 1: Initialize with initialize in Angular'
-                    ">
+                    [label]="'Example 1: Initialize with initialize in Angular'">
                     <pre
                       class="code-inline"><code class="language-ts">{{`import { @FeatureCell, injectVault } from '@sdux-vault/angular';
                     
@@ -460,9 +452,7 @@ export const employeeState = employeeCell.state;`}}</code></pre>
 
                 <sdux-example-viewer-source [displayTabs]="false">
                   <sdux-example-viewer-tab
-                    [label]="
-                      'Example 2: Angular Fluent configuration then initialize()'
-                    ">
+                    [label]="'Example 2: Angular Fluent configuration then initialize()'">
                     <pre
                       class="code-inline"><code class="language-ts">{{`this.vault.withStateCache!({
   ttl: CacheTTL.OneMinute,
@@ -498,9 +488,7 @@ export const employeeState = employeeCell.state;`}}</code></pre>
                 <h4>Example 2: React Fluent configuration then initialize()</h4>
                 <sdux-example-viewer-source [displayTabs]="false">
                   <sdux-example-viewer-tab
-                    [label]="
-                      'Example 2: React Fluent configuration then initialize()'
-                    ">
+                    [label]="'Example 2: React Fluent configuration then initialize()'">
                     <pre
                       class="code-inline"><code class="language-ts">{{`employeeCell.withStateCache!({
   ttl: CacheTTL.OneMinute,
@@ -536,9 +524,7 @@ export const employeeState = employeeCell.state;`}}</code></pre>
                 <h4>Example 2: Vue Fluent configuration then initialize()</h4>
                 <sdux-example-viewer-source [displayTabs]="false">
                   <sdux-example-viewer-tab
-                    [label]="
-                      'Example 2: Vue Fluent configuration then initialize()'
-                    ">
+                    [label]="'Example 2: Vue Fluent configuration then initialize()'">
                     <pre
                       class="code-inline"><code class="language-ts">{{`employeeCell.withStateCache!({
   ttl: CacheTTL.OneMinute,
@@ -746,9 +732,7 @@ export const employeeState = employeeCell.state;`}}</code></pre>
               <ng-content select="[retrieve]">
                 <sdux-example-viewer-source [displayTabs]="false">
                   <sdux-example-viewer-tab
-                    [label]="
-                      'Example 3: Loading Only Typescript / React / Vue'
-                    ">
+                    [label]="'Example 3: Loading Only Typescript / React / Vue'">
                     <pre
                       class="code-inline"><code class="language-ts">{{`load(): void {
   employeeCell.replaceState({
@@ -1075,9 +1059,7 @@ export const employeeState = employeeCell.state;`}}</code></pre>
               <ng-content select="[retrieve]">
                 <sdux-example-viewer-source [displayTabs]="false">
                   <sdux-example-viewer-tab
-                    [label]="
-                      'Example 1: Conditional Rendering Typescript / React'
-                    ">
+                    [label]="'Example 1: Conditional Rendering Typescript / React'">
                     <pre
                       class="code-inline"><code class="language-ts">{{`import { useEffect, useState } from 'react';
 import type { StateSnapshotShape } from '@sdux-vault/shared';

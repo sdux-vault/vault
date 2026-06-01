@@ -61,14 +61,20 @@
         The <sdux-brand-name [tm]="true" /> documentation is central in
         providing world-class support for our users.
       </p>
-
-      <p>
-        Our documentation is human-authored and architect-led. System design,
-        architectural interpretation, and technical accuracy originate from
-        direct source analysis. AI-assisted models help structure and refine
-        that knowledge at scale, with every page reviewed and approved by a
-        human prior to release.
-      </p>
+      @if (isDocs()) {
+        <p>
+          Our documentation is human-authored and architect-led. System design,
+          architectural interpretation, and technical accuracy originate from
+          direct source analysis. AI-assisted models help structure and refine
+          that knowledge at scale, with every page reviewed and approved by a
+          human prior to release.
+        </p>
+      } @else {
+        <div class="content-generation-notes">
+          Content Generation Notes: This blog post is AI-drafted from SDuX Vault
+          source documentation and reviewed by a human prior to publication.
+        </div>
+      }
     </div>
   </div>
 </section>

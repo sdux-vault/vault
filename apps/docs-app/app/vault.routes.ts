@@ -73,6 +73,10 @@ export const routes: Routes = [
       )
   },
   {
+    path: 'blog',
+    loadChildren: () => import('./blog/blog.routes').then((m) => m.blogRoutes)
+  },
+  {
     path: 'docs',
     children: [
       {
@@ -107,9 +111,9 @@ export const routes: Routes = [
       {
         path: 'global-error-handler',
         loadComponent: () =>
-          import(
-            './docs/global-error-handler/global-error-handler.component'
-          ).then((m) => m.GlobalErrorHandlerComponent)
+          import('./docs/global-error-handler/global-error-handler.component').then(
+            (m) => m.GlobalErrorHandlerComponent
+          )
       },
 
       {
@@ -137,30 +141,30 @@ export const routes: Routes = [
               {
                 path: 'what-is-an-addon',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/behaviors/what-is-an-addon/what-is-an-addon.pipeline.component'
-                  ).then((m) => m.PipelineWhatIsAnAddonComponent)
+                  import('./docs/pipeline/behaviors/what-is-an-addon/what-is-an-addon.pipeline.component').then(
+                    (m) => m.PipelineWhatIsAnAddonComponent
+                  )
               },
               {
                 path: 'how-to-build-an-addon',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/behaviors/how-to-build-an-addon/how-to-build-an-addon.pipeline.component'
-                  ).then((m) => m.PipelineHowToBuildAnAddonComponent)
+                  import('./docs/pipeline/behaviors/how-to-build-an-addon/how-to-build-an-addon.pipeline.component').then(
+                    (m) => m.PipelineHowToBuildAnAddonComponent
+                  )
               },
               {
                 path: ':category',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/behaviors/pipeline-behavior-landingpage.component'
-                  ).then((m) => m.PipelineBehaviorLandingComponent)
+                  import('./docs/pipeline/behaviors/pipeline-behavior-landingpage.component').then(
+                    (m) => m.PipelineBehaviorLandingComponent
+                  )
               },
               {
                 path: ':category/:type',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/behaviors/pipeline-behavior-landingpage.component'
-                  ).then((m) => m.PipelineBehaviorLandingComponent)
+                  import('./docs/pipeline/behaviors/pipeline-behavior-landingpage.component').then(
+                    (m) => m.PipelineBehaviorLandingComponent
+                  )
               }
             ]
           },
@@ -170,16 +174,16 @@ export const routes: Routes = [
               {
                 path: ':category',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/api/pipeline-api-landingpage.component'
-                  ).then((m) => m.PipelineApiLandingComponent)
+                  import('./docs/pipeline/api/pipeline-api-landingpage.component').then(
+                    (m) => m.PipelineApiLandingComponent
+                  )
               },
               {
                 path: ':category/:type',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/api/pipeline-api-landingpage.component'
-                  ).then((m) => m.PipelineApiLandingComponent)
+                  import('./docs/pipeline/api/pipeline-api-landingpage.component').then(
+                    (m) => m.PipelineApiLandingComponent
+                  )
               }
             ]
           },
@@ -189,30 +193,30 @@ export const routes: Routes = [
               {
                 path: 'what-is-a-behavior',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/behaviors/what-is-a-behavior/what-is-a-behavior.pipeline.component'
-                  ).then((m) => m.PipelineWhatIsABehaviorComponent)
+                  import('./docs/pipeline/behaviors/what-is-a-behavior/what-is-a-behavior.pipeline.component').then(
+                    (m) => m.PipelineWhatIsABehaviorComponent
+                  )
               },
               {
                 path: 'what-is-an-addon',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/behaviors/what-is-an-addon/what-is-an-addon.pipeline.component'
-                  ).then((m) => m.PipelineWhatIsAnAddonComponent)
+                  import('./docs/pipeline/behaviors/what-is-an-addon/what-is-an-addon.pipeline.component').then(
+                    (m) => m.PipelineWhatIsAnAddonComponent
+                  )
               },
               {
                 path: ':category',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/behaviors/pipeline-behavior-landingpage.component'
-                  ).then((m) => m.PipelineBehaviorLandingComponent)
+                  import('./docs/pipeline/behaviors/pipeline-behavior-landingpage.component').then(
+                    (m) => m.PipelineBehaviorLandingComponent
+                  )
               },
               {
                 path: ':category/:type',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/behaviors/pipeline-behavior-landingpage.component'
-                  ).then((m) => m.PipelineBehaviorLandingComponent)
+                  import('./docs/pipeline/behaviors/pipeline-behavior-landingpage.component').then(
+                    (m) => m.PipelineBehaviorLandingComponent
+                  )
               }
             ]
           },
@@ -230,23 +234,23 @@ export const routes: Routes = [
               {
                 path: '',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/controllers/what-is-a-controller/what-is-a-controller.pipeline.component'
-                  ).then((m) => m.PipelineWhatIsAControllerComponent)
+                  import('./docs/pipeline/controllers/what-is-a-controller/what-is-a-controller.pipeline.component').then(
+                    (m) => m.PipelineWhatIsAControllerComponent
+                  )
               },
               {
                 path: 'what-is-a-controller',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/controllers/what-is-a-controller/what-is-a-controller.pipeline.component'
-                  ).then((m) => m.PipelineWhatIsAControllerComponent)
+                  import('./docs/pipeline/controllers/what-is-a-controller/what-is-a-controller.pipeline.component').then(
+                    (m) => m.PipelineWhatIsAControllerComponent
+                  )
               },
               {
                 path: ':type',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/controllers/pipeline-controller-landingpage.component'
-                  ).then((m) => m.PipelineControllerLandingComponent)
+                  import('./docs/pipeline/controllers/pipeline-controller-landingpage.component').then(
+                    (m) => m.PipelineControllerLandingComponent
+                  )
               }
             ]
           },
@@ -254,9 +258,9 @@ export const routes: Routes = [
             path: 'isolation',
             data: { category: 'execution-guarantee' },
             loadComponent: () =>
-              import(
-                './docs/pipeline/isolation/pipeline-isolation.component'
-              ).then((m) => m.PipelineIsolationComponent)
+              import('./docs/pipeline/isolation/pipeline-isolation.component').then(
+                (m) => m.PipelineIsolationComponent
+              )
           },
           {
             path: 'execution-guarantee',
@@ -265,9 +269,9 @@ export const routes: Routes = [
               {
                 path: '',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/execution-guarantee/execution-guarantee.pipeline.component'
-                  ).then((m) => m.PipelineExecutionGuaranteeComponent)
+                  import('./docs/pipeline/execution-guarantee/execution-guarantee.pipeline.component').then(
+                    (m) => m.PipelineExecutionGuaranteeComponent
+                  )
               }
             ]
           },
@@ -278,25 +282,25 @@ export const routes: Routes = [
               {
                 path: '',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/extensions/pipeline-extension-landingpage.component'
-                  ).then((m) => m.PipelineExtensionsLandingComponent)
+                  import('./docs/pipeline/extensions/pipeline-extension-landingpage.component').then(
+                    (m) => m.PipelineExtensionsLandingComponent
+                  )
               },
               {
                 path: ':type',
                 loadComponent: () =>
-                  import(
-                    './docs/pipeline/extensions/pipeline-extension-landingpage.component'
-                  ).then((m) => m.PipelineExtensionsLandingComponent)
+                  import('./docs/pipeline/extensions/pipeline-extension-landingpage.component').then(
+                    (m) => m.PipelineExtensionsLandingComponent
+                  )
               }
             ]
           },
           {
             path: 'pipeline-architecture',
             loadComponent: () =>
-              import(
-                './docs/pipeline/behaviors/complete-pipeline-spec/complete-pipeline-spec.component'
-              ).then((m) => m.CompletePipelineSpecComponent)
+              import('./docs/pipeline/behaviors/complete-pipeline-spec/complete-pipeline-spec.component').then(
+                (m) => m.CompletePipelineSpecComponent
+              )
           }
         ]
       },
@@ -307,30 +311,30 @@ export const routes: Routes = [
           {
             path: 'abstracts/:type',
             loadComponent: () =>
-              import(
-                './docs/references/abstracts/references-abstracts.component'
-              ).then((m) => m.ReferencesAbstractsLandingPageComponent)
+              import('./docs/references/abstracts/references-abstracts.component').then(
+                (m) => m.ReferencesAbstractsLandingPageComponent
+              )
           },
           {
             path: 'behaviors/:type',
             loadComponent: () =>
-              import(
-                './docs/references/behaviors/references-behaviors.component'
-              ).then((m) => m.ReferencesBehaviorsLandingPageComponent)
+              import('./docs/references/behaviors/references-behaviors.component').then(
+                (m) => m.ReferencesBehaviorsLandingPageComponent
+              )
           },
           {
             path: 'classes/:type',
             loadComponent: () =>
-              import(
-                './docs/references/classes/references-classes.component'
-              ).then((m) => m.ReferencesClassesLandingPageComponent)
+              import('./docs/references/classes/references-classes.component').then(
+                (m) => m.ReferencesClassesLandingPageComponent
+              )
           },
           {
             path: 'config/:type',
             loadComponent: () =>
-              import(
-                './docs/references/config/references-config.component'
-              ).then((m) => m.ReferencesConfigLandingPageComponent)
+              import('./docs/references/config/references-config.component').then(
+                (m) => m.ReferencesConfigLandingPageComponent
+              )
           },
           {
             path: 'const/:type',
@@ -342,65 +346,65 @@ export const routes: Routes = [
           {
             path: 'contexts/:type',
             loadComponent: () =>
-              import(
-                './docs/references/contexts/references-contexts.component'
-              ).then((m) => m.ReferencesContextsLandingPageComponent)
+              import('./docs/references/contexts/references-contexts.component').then(
+                (m) => m.ReferencesContextsLandingPageComponent
+              )
           },
           {
             path: 'contracts/:type',
             loadComponent: () =>
-              import(
-                './docs/references/contracts/references-contracts.component'
-              ).then((m) => m.ReferencesContractsLandingPageComponent)
+              import('./docs/references/contracts/references-contracts.component').then(
+                (m) => m.ReferencesContractsLandingPageComponent
+              )
           },
           {
             path: 'controllers/:type',
             loadComponent: () =>
-              import(
-                './docs/references/controllers/references-controllers.component'
-              ).then((m) => m.ReferencesControllersLandingPageComponent)
+              import('./docs/references/controllers/references-controllers.component').then(
+                (m) => m.ReferencesControllersLandingPageComponent
+              )
           },
           {
             path: 'decorators/:type',
             loadComponent: () =>
-              import(
-                './docs/references/decorators/references-decorators.component'
-              ).then((m) => m.ReferencesDecoratorsLandingPageComponent)
+              import('./docs/references/decorators/references-decorators.component').then(
+                (m) => m.ReferencesDecoratorsLandingPageComponent
+              )
           },
           {
             path: 'functions/:type',
             loadComponent: () =>
-              import(
-                './docs/references/functions/references-functions.component'
-              ).then((m) => m.ReferencesFunctionsLandingPageComponent)
+              import('./docs/references/functions/references-functions.component').then(
+                (m) => m.ReferencesFunctionsLandingPageComponent
+              )
           },
           {
             path: 'interfaces/:type',
             loadComponent: () =>
-              import(
-                './docs/references/interfaces/references-interfaces.component'
-              ).then((m) => m.ReferencesInterfacesLandingPageComponent)
+              import('./docs/references/interfaces/references-interfaces.component').then(
+                (m) => m.ReferencesInterfacesLandingPageComponent
+              )
           },
           {
             path: 'options/:type',
             loadComponent: () =>
-              import(
-                './docs/references/options/references-options.component'
-              ).then((m) => m.ReferencesOptionsLandingPageComponent)
+              import('./docs/references/options/references-options.component').then(
+                (m) => m.ReferencesOptionsLandingPageComponent
+              )
           },
           {
             path: 'services/:type',
             loadComponent: () =>
-              import(
-                './docs/references/services/references-services.component'
-              ).then((m) => m.ReferencesServicesLandingPageComponent)
+              import('./docs/references/services/references-services.component').then(
+                (m) => m.ReferencesServicesLandingPageComponent
+              )
           },
           {
             path: 'shapes/:type',
             loadComponent: () =>
-              import(
-                './docs/references/shapes/references-shapes.component'
-              ).then((m) => m.ReferencesShapesLandingPageComponent)
+              import('./docs/references/shapes/references-shapes.component').then(
+                (m) => m.ReferencesShapesLandingPageComponent
+              )
           },
           {
             path: 'types/:type',

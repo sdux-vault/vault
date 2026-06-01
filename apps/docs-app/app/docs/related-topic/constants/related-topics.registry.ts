@@ -1,3 +1,4 @@
+import { RELATED_TOPICS_BLOGS_REGISTRY } from 'apps/docs-app/app/docs/related-topic/constants/related-topics.blogs.registry';
 import { RELATED_TOPICS_DEV_TOOLS_REGISTRY } from 'apps/docs-app/app/docs/related-topic/constants/related-topics.dev-tools.registry';
 import { RELATED_TOPICS_ENTITY_ACCESS_REGISTRY } from 'apps/docs-app/app/docs/related-topic/constants/related-topics.entity-access.registry';
 import { RELATED_TOPICS_SDUX_REGISTRY } from 'apps/docs-app/app/docs/related-topic/constants/related-topics.sdux.registry';
@@ -73,6 +74,8 @@ export const RELATED_TOPICS_REGISTRY: RelatedTopicRegistryShape = {
   },
 
   categories: {
+    blogs: RELATED_TOPICS_BLOGS_REGISTRY,
+
     default: {
       baseRoute: '/docs/pipeline/behaviors/errors',
       baseDisplay: '',

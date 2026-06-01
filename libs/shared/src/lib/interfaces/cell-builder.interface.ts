@@ -14,8 +14,7 @@ import { OperatorsBehaviorClassContract } from './behaviors/operator/operator-be
  * This interface exposes the fluent configuration surface for registering behaviors, callbacks, and operators prior to activation.
  */
 export interface CellBuilderContract<T>
-  extends FeatureCellExtension<T>,
-    FeatureCellFluentApi<T> {
+  extends FeatureCellExtension<T>, FeatureCellFluentApi<T> {
   /**
    * Registers functions executed during the "after tap" stage.
    *

@@ -10,9 +10,9 @@ import { vaultWarn } from '../../../utils/logger/logger.util';
  * Abstract base class for error callback behaviors that execute consumer-supplied
  * error handlers during the error stage of the Vault pipeline.
  */
-export abstract class AbstractErrorCallbackBehavior<T>
-  implements ErrorCallbackBehaviorContract<T>
-{
+export abstract class AbstractErrorCallbackBehavior<
+  T
+> implements ErrorCallbackBehaviorContract<T> {
   /** Indicates that this error behavior is critical and always executed. */
   readonly critical!: boolean;
 

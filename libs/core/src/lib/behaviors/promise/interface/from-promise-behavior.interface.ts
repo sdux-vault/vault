@@ -13,8 +13,9 @@ import {
  * resolution through the pipeline.
  *
  */
-export interface FromPromiseBehaviorExtension
-  extends Partial<Record<string, BehaviorExtFunction>> {
+export interface FromPromiseBehaviorExtension extends Partial<
+  Record<string, BehaviorExtFunction>
+> {
   [key: string]: BehaviorExtFunction | undefined;
 
   /**

@@ -11,9 +11,9 @@ import { vaultWarn } from '../../../utils/logger/logger.util';
  * This class defines the contract and lifecycle hooks required for error transformation behaviors.
  *
  */
-export abstract class AbstractErrorTransformBehavior<T>
-  implements ErrorTransformBehaviorContract<T>
-{
+export abstract class AbstractErrorTransformBehavior<
+  T
+> implements ErrorTransformBehaviorContract<T> {
   /**
    * Indicates that this error transform behavior is critical and always executed.
    */

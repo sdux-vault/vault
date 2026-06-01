@@ -9,80 +9,100 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: 'sdux-debug-widget-engine-contract',
   standalone: true,
   template: `<div class="docs-container">
-      <div class="header">
-        <h3>DebugWidgetEngineContract</h3>
+    <div class="header">
+      <h3>DebugWidgetEngineContract</h3>
+    </div>
+    <header class="docs-header">
+      <div class="lead">
+        Contract defining the capabilities of the debug widget engine.<br /><br />
       </div>
-      <header class="docs-header">
-        <div class="lead">Contract defining the capabilities of the debug widget engine.<br/><br/></div>
-        
-      </header>
-      <section class="section">
+    </header>
+    <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/dev-tools</strong> project.
+        Part of the <strong>@sdux-vault/dev-tools</strong> project.
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/dev-tools</code></pre>
+        <pre
+          class="code-inline"><code class="language-ts">npm install @sdux-vault/dev-tools</code></pre>
       </div>
     </section>
-<section class="section">
-        <div class="section-title">Methods</div>
-        <div class="section-body">
-          <table aria-label="Methods">
-            <thead>
-              <tr>
-                <th scope="col" class="column-300">Method</th>
-                <th scope="col" class="column-auto">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-          <td>
-            <strong>buildEventStats</strong>
-            
-            <p>inputs:</p>
-          <ul>
-           <li>events: <a href="/docs/references/shapes/debug-widget-event-shape">DebugWidgetEventShape</a>[]</li><li>longTasks?: literal type[]</li>
-          </ul>
-            <p>returns: <a href="/docs/references/shapes/debug-widget-event-stat-shape">DebugWidgetEventStatShape</a></p>
-          </td>
-          <td>
-            Builds aggregate statistics from a collection of debug events.<br/><br/>
-          </td>
-        </tr><tr>
-          <td>
-            <strong>getEnvironmentInfo</strong>
-            
-            
-            <p>returns: unknown</p>
-          </td>
-          <td>
-            Collects browser and runtime environment information.<br/><br/>
-          </td>
-        </tr><tr>
-          <td>
-            <strong>serializeRegistry</strong>
-            
-            
-            <p>returns: unknown | undefined</p>
-          </td>
-          <td>
-            Serializes the global <a href="/docs/references/functions/feature-cell">FeatureCell</a> registry into a dump-ready structure.<br/><br/>
-          </td>
-        </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
-    </div>`,
+    <section class="section">
+      <div class="section-title">Methods</div>
+      <div class="section-body">
+        <table aria-label="Methods">
+          <thead>
+            <tr>
+              <th scope="col" class="column-300">Method</th>
+              <th scope="col" class="column-auto">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>buildEventStats</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>
+                    events:
+                    <a href="/docs/references/shapes/debug-widget-event-shape"
+                      >DebugWidgetEventShape</a
+                    >[]
+                  </li>
+                  <li>longTasks?: literal type[]</li>
+                </ul>
+                <p>
+                  returns:
+                  <a
+                    href="/docs/references/shapes/debug-widget-event-stat-shape"
+                    >DebugWidgetEventStatShape</a
+                  >
+                </p>
+              </td>
+              <td>
+                Builds aggregate statistics from a collection of debug
+                events.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>getEnvironmentInfo</strong>
+
+                <p>returns: unknown</p>
+              </td>
+              <td>
+                Collects browser and runtime environment information.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>serializeRegistry</strong>
+
+                <p>returns: unknown | undefined</p>
+              </td>
+              <td>
+                Serializes the global
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                registry into a dump-ready structure.<br /><br />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-title">Documentation Generation Notes</div>
+      <div class="section-body">
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated
+          source code using @compodoc, with AI-assisted comments reviewed by a
+          human prior to publication.
+        </p>
+      </div>
+    </section>
+  </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
 })

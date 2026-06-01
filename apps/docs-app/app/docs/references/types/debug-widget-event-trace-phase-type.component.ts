@@ -9,26 +9,32 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: 'sdux-debug-widget-event-trace-phase-type',
   standalone: true,
   template: `<div class="docs-container">
-      <div class="header">
-        <h3>DebugWidgetEventTracePhaseType</h3>
-      </div>
-      <header class="docs-header">
-        <div class="lead">Union of valid trace phase values.<br/><br/></div>
-        
-      </header>
-      <section class="section">
+    <div class="header">
+      <h3>DebugWidgetEventTracePhaseType</h3>
+    </div>
+    <header class="docs-header">
+      <div class="lead">Union of valid trace phase values.<br /><br /></div>
+    </header>
+    <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/dev-tools</strong> project.
+        Part of the <strong>@sdux-vault/dev-tools</strong> project.
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/dev-tools</code></pre>
+        <pre
+          class="code-inline"><code class="language-ts">npm install @sdux-vault/dev-tools</code></pre>
       </div>
     </section>
-<section class="section">
+    <section class="section">
       <div class="section-title">Type Definition</div>
       <div class="section-body">
         <p>
-          <strong><a href="/docs/references/types/debug-widget-event-trace-phase-type">DebugWidgetEventTracePhaseType</a></strong> is a derived type alias.
+          <strong
+            ><a
+              href="/docs/references/types/debug-widget-event-trace-phase-type"
+              >DebugWidgetEventTracePhaseType</a
+            ></strong
+          >
+          is a derived type alias.
         </p>
         <p>
           Its definition is inferred from another symbol at compile time and
@@ -39,16 +45,17 @@ import { Component, ViewEncapsulation } from '@angular/core';
         </p>
       </div>
     </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
-    </div>`,
+    <section class="section">
+      <div class="section-title">Documentation Generation Notes</div>
+      <div class="section-body">
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated
+          source code using @compodoc, with AI-assisted comments reviewed by a
+          human prior to publication.
+        </p>
+      </div>
+    </section>
+  </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
 })

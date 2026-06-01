@@ -1,0 +1,37 @@
+@use 'global' as global;
+
+.blog-post-entry {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-md;
+  padding: global.$spacing-sm 0;
+  border-bottom: 1px solid var(--sdux-surface-outline);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  a {
+    @include global.a-link(var(--sdux-text-primary), var(--sdux-text-inverse));
+    font-weight: global.$font-weight-medium;
+    font-size: global.$font-size-md;
+  }
+
+  .blog-entry-date {
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-muted);
+  }
+
+  .blog-entry-pillar {
+    display: inline-block;
+    padding: global.$spacing-xs global.$spacing-sm;
+    font-size: global.$font-size-xs;
+    font-weight: global.$font-weight-semibold;
+    border-radius: global.$border-radius-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: global.$sdux-surface-light-accent;
+    color: global.$sdux-primary-dark;
+    border: 1px solid global.$sdux-primary-light;
+  }
+}

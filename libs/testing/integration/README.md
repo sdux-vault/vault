@@ -1016,27 +1016,27 @@ Test features are incremented by 10 in order to have plenty of space to add test
 | Faature            | Test Key                          | Resolve Type   | Incremental Replace | Incremental Merge | Reset | Reset$ | Destroy | Destroyed$ | State | Errors |
 | ------------------ | --------------------------------- | -------------- | ------------------- | ----------------- | ----- | ------ | ------- | ---------- | ----- | ------ |
 | Initial            |
-|                    | f10 – Init Utility Test           | InitialState   | ✅                  | ✅                | ✅    | ✅     | ✅️     | ✅         | ✅    | ✅     |
-|                    | f11 – Init Utility Test           | InitialState   | ✅                  | ✅                | ✅    | ✅     | ✅️     | ✅         | ✅    | ✅     |
-|                    | f12 – Init Utility Test           | InitialState   | ✅                  | ✅                | ✅    | ✅     | ✅️     | ✅         | ✅    | ✅     |
-|                    | f13 – Init Utility Test           | InitialState   | ✅                  | ✅                | ✅    | ✅     | ✅️     | ✅         | ✅    | ✅     |
+|                    | f10 – Init Utility Test           | InitialState   | ✅                  | ✅                | ✅    | ✅     | ✅️      | ✅         | ✅    | ✅     |
+|                    | f11 – Init Utility Test           | InitialState   | ✅                  | ✅                | ✅    | ✅     | ✅️      | ✅         | ✅    | ✅     |
+|                    | f12 – Init Utility Test           | InitialState   | ✅                  | ✅                | ✅    | ✅     | ✅️      | ✅         | ✅    | ✅     |
+|                    | f13 – Init Utility Test           | InitialState   | ✅                  | ✅                | ✅    | ✅     | ✅️      | ✅         | ✅    | ✅     |
 | State Side-effects |
-|                    | f20 – Value Side-effect Test      | Value          | ✅                  | ✅                | ✅    | ✅     | ✅️     | ✅         | ✅    | ✅     |
-|                    | f21 – Value Side-effect Test      | Observable     | ✅                  | ✅                | ✅    | ✅     | ✅️     | ✅         | ✅    | ✅     |
-|                    | f22 – Value Side-effect Test      | Stream         | ✅                  | ✅                | ✅    | ✅     | ✅️     | ✅         | ✅    | ✅     |
-|                    | f23 – Value Side-effect Test      | Promise        | ✅                  | ✅                | ✅    | ✅     | ✅️     | ✅         | ✅    | ✅     |
+|                    | f20 – Value Side-effect Test      | Value          | ✅                  | ✅                | ✅    | ✅     | ✅️      | ✅         | ✅    | ✅     |
+|                    | f21 – Value Side-effect Test      | Observable     | ✅                  | ✅                | ✅    | ✅     | ✅️      | ✅         | ✅    | ✅     |
+|                    | f22 – Value Side-effect Test      | Stream         | ✅                  | ✅                | ✅    | ✅     | ✅️      | ✅         | ✅    | ✅     |
+|                    | f23 – Value Side-effect Test      | Promise        | ✅                  | ✅                | ✅    | ✅     | ✅️      | ✅         | ✅    | ✅     |
 | fromStream         |
-|                    | f30 – fromStream Utility Test     | fromStream     | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️     | ⚠️         | ⚠️    | ⚠️     |
+|                    | f30 – fromStream Utility Test     | fromStream     | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️      | ⚠️         | ⚠️    | ⚠️     |
 | fromObservable     |
-|                    | f40 – fromObservable Utility Test | fromObservable | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️     | ⚠️         | ⚠️    | ⚠️     |
+|                    | f40 – fromObservable Utility Test | fromObservable | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️      | ⚠️         | ⚠️    | ⚠️     |
 | Observable         |
-|                    | f50 – Observable Utility Test     | fromObservable | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️     | ⚠️         | ⚠️    | ⚠️     |
+|                    | f50 – Observable Utility Test     | fromObservable | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️      | ⚠️         | ⚠️    | ⚠️     |
 | fromPromise        |
-|                    | f60 – fromPromise Utility Test    | fromStream     | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️     | ⚠️         | ⚠️    | ⚠️     |
+|                    | f60 – fromPromise Utility Test    | fromStream     | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️      | ⚠️         | ⚠️    | ⚠️     |
 | Promise            |
-|                    | f70 – PromiseUtility Test         | fromStream     | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️     | ⚠️         | ⚠️    | ⚠️     |
+|                    | f70 – PromiseUtility Test         | fromStream     | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️      | ⚠️         | ⚠️    | ⚠️     |
 | HttpResource       |
-|                    | f80 – HttpResource Utility Test   | HttpResource   | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️     | ⚠️         | ⚠️    | ⚠️     |
+|                    | f80 – HttpResource Utility Test   | HttpResource   | ⚠️                  | ⚠️                | ⚠️    | ⚠️     | ⚠️️      | ⚠️         | ⚠️    | ⚠️     |
 
 ---
 

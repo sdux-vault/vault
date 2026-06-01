@@ -177,4 +177,18 @@ describe('Component: PipelineRelatedTopics', () => {
       Object({ link: '/docs/b', display: 'b' })
     );
   });
+
+  // ---------------------------------------------------------------------------
+  // isDocs input
+  // ---------------------------------------------------------------------------
+
+  it('should default isDocs to true', () => {
+    expect(component.isDocs()).toBe(true);
+  });
+
+  it('should accept isDocs as false', () => {
+    fixture.componentRef.setInput('isDocs', false);
+    fixture.detectChanges();
+    expect(component.isDocs()).toBe(false);
+  });
 });

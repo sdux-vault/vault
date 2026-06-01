@@ -34,9 +34,9 @@ import {
   key: defineBehaviorKey('Addon', 'DistinctUntilChanged'),
   critical: true
 })
-abstract class withDistinctUntilChangedBehavior<T>
-  implements OperatorBehaviorContract<T>
-{
+abstract class withDistinctUntilChangedBehavior<
+  T
+> implements OperatorBehaviorContract<T> {
   /** Static metadata describing the behavior classification. */
   static readonly type: BehaviorType;
 

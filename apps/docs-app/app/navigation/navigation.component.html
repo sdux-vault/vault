@@ -130,6 +130,18 @@
 
         <mat-divider></mat-divider>
 
+        <div class="menu-content-container">
+          <a
+            mat-list-item
+            routerLink="/blog"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <div class="menu-content">Blog</div>
+          </a>
+        </div>
+
+        <mat-divider></mat-divider>
+
         <nav aria-label="Reference Guides">
           <mat-expansion-panel class="nav-expansion">
             <mat-expansion-panel-header>
