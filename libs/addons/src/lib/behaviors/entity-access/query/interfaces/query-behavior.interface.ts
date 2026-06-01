@@ -7,8 +7,9 @@ import { QueryBehaviorOptions } from '../options/query-behavior.options';
  * This interface describes the query-related API that becomes available on a
  * FeatureCell instance for synchronous entity lookups by identifier.
  */
-export interface QueryBehaviorExtension<TEntity>
-  extends Partial<Record<string, BehaviorExtFunction>> {
+export interface QueryBehaviorExtension<TEntity> extends Partial<
+  Record<string, BehaviorExtFunction>
+> {
   /**
    * Index signature supporting dynamic behavior extension bindings.
    */

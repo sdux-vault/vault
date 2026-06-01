@@ -31,9 +31,10 @@ import { FromStreamOptions } from './options/from-stream.options';
   critical: false,
   resolveType: ResolveTypes.Observable
 })
-export class withCoreFromStreamBehavior<T>
-  implements BehaviorContract<T, FromStreamBehaviorExtension>
-{
+export class withCoreFromStreamBehavior<T> implements BehaviorContract<
+  T,
+  FromStreamBehaviorExtension
+> {
   /** Extension function used to register the fromStream API on the FeatureCell. */
   static readonly extension = extendFromStream;
 

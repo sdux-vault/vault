@@ -12,9 +12,9 @@ import { safeStringify } from '../../utils/safe-stringify/safe-stringify.util';
  * Abstract base class for active controllers that react to external error
  * state changes and participate in pipeline admission voting.
  */
-export abstract class AbstractActiveController<T>
-  implements ControllerContract<T>
-{
+export abstract class AbstractActiveController<
+  T
+> implements ControllerContract<T> {
   /** Unique identifier for this controller instance. */
   readonly key: string;
 

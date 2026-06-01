@@ -9,24 +9,27 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: 'sdux-create-vault-error',
   standalone: true,
   template: `<div class="docs-container">
-      <div class="header">
-        <h3>createVaultError</h3>
+    <div class="header">
+      <h3>createVaultError</h3>
+    </div>
+    <header class="docs-header">
+      <div class="lead">
+        Normalizes any thrown error into a canonical
+        <a href="/docs/references/classes/vault-error">VaultError</a> structure.
+        This ensures that all errors—HTTP, runtime, string, or unknown— are
+        represented consistently throughout the Vault error pipeline.<br /><br />
       </div>
-      <header class="docs-header">
-        <div class="lead">Normalizes any thrown error into a canonical <a href="/docs/references/classes/vault-error">VaultError</a> structure.
-This ensures that all errors—HTTP, runtime, string, or unknown—
-are represented consistently throughout the Vault error pipeline.<br/><br/></div>
-        
-      </header>
-      <section class="section">
+    </header>
+    <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/shared</strong> project.
+        Part of the <strong>@sdux-vault/shared</strong> project.
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+        <pre
+          class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
       </div>
     </section>
-<section class="section">
+    <section class="section">
       <div class="section-title">API</div>
       <div class="section-body">
         <table aria-label="API">
@@ -38,37 +41,51 @@ are represented consistently throughout the Vault error pipeline.<br/><br/></div
           </thead>
           <tbody>
             <tr>
-      <td>
-        <p><strong><a href="/docs/references/functions/create-vault-error">createVaultError</a>(err, featureCellKey)</strong></p>
-        <p>inputs:</p>
-      <ul>
-        <li>err: unknown</li><li>featureCellKey: string</li>
-      </ul>
-        <p>returns:</p>
-        <ul>
-          <li><a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a></li>
-        </ul>
-      </td>
-      <td>
-        Normalizes any thrown error into a canonical <a href="/docs/references/classes/vault-error">VaultError</a> structure.
-This ensures that all errors—HTTP, runtime, string, or unknown—
-are represented consistently throughout the Vault error pipeline.<br/><br/>
-      </td>
-    </tr>
+              <td>
+                <p>
+                  <strong
+                    ><a href="/docs/references/functions/create-vault-error"
+                      >createVaultError</a
+                    >(err, featureCellKey)</strong
+                  >
+                </p>
+                <p>inputs:</p>
+                <ul>
+                  <li>err: unknown</li>
+                  <li>featureCellKey: string</li>
+                </ul>
+                <p>returns:</p>
+                <ul>
+                  <li>
+                    <a href="/docs/references/shapes/vault-error-shape"
+                      >VaultErrorShape</a
+                    >
+                  </li>
+                </ul>
+              </td>
+              <td>
+                Normalizes any thrown error into a canonical
+                <a href="/docs/references/classes/vault-error">VaultError</a>
+                structure. This ensures that all errors—HTTP, runtime, string,
+                or unknown— are represented consistently throughout the Vault
+                error pipeline.<br /><br />
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
     </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
-    </div>`,
+    <section class="section">
+      <div class="section-title">Documentation Generation Notes</div>
+      <div class="section-body">
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated
+          source code using @compodoc, with AI-assisted comments reviewed by a
+          human prior to publication.
+        </p>
+      </div>
+    </section>
+  </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
 })

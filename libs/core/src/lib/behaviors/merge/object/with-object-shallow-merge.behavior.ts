@@ -34,9 +34,9 @@ import { MergeConfig } from '@sdux-vault/shared';
   key: defineBehaviorKey('Core', 'ObjectMerge'),
   critical: true
 })
-export class withObjectShallowMergeBehavior<T>
-  implements MergeBehaviorContract<T>
-{
+export class withObjectShallowMergeBehavior<
+  T
+> implements MergeBehaviorContract<T> {
   /** Static metadata used for orchestrator behavior classification. */
   static readonly type: BehaviorType;
 

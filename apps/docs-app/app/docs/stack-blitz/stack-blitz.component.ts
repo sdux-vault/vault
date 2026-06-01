@@ -111,34 +111,20 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
   /* istanbul ignore next -- dynamic imports not available in Karma test bundle */
   readonly #projectImports: Record<string, () => Promise<unknown>> = {
     'angular/basic-filter-reducer-example': () =>
-      import(
-        '../../stackblitz/projects/angular/basic-filter-reducer-example.project'
-      ),
+      import('../../stackblitz/projects/angular/basic-filter-reducer-example.project'),
     'react/basic-filter-reducer-example': () =>
-      import(
-        '../../stackblitz/projects/react/basic-filter-reducer-example.project'
-      ),
+      import('../../stackblitz/projects/react/basic-filter-reducer-example.project'),
     'svelte/basic-filter-reducer-example': () =>
-      import(
-        '../../stackblitz/projects/svelte/basic-filter-reducer-example.project'
-      ),
+      import('../../stackblitz/projects/svelte/basic-filter-reducer-example.project'),
     'vue/basic-filter-reducer-example': () =>
-      import(
-        '../../stackblitz/projects/vue/basic-filter-reducer-example.project'
-      ),
+      import('../../stackblitz/projects/vue/basic-filter-reducer-example.project'),
 
     'angular/interceptor-delay-example': () =>
-      import(
-        '../../stackblitz/projects/angular/interceptor-delay-example.project'
-      ),
+      import('../../stackblitz/projects/angular/interceptor-delay-example.project'),
     'react/interceptor-delay-example': () =>
-      import(
-        '../../stackblitz/projects/react/interceptor-delay-example.project'
-      ),
+      import('../../stackblitz/projects/react/interceptor-delay-example.project'),
     'svelte/interceptor-delay-example': () =>
-      import(
-        '../../stackblitz/projects/svelte/interceptor-delay-example.project'
-      ),
+      import('../../stackblitz/projects/svelte/interceptor-delay-example.project'),
     'vue/interceptor-delay-example': () =>
       import('../../stackblitz/projects/vue/interceptor-delay-example.project'),
 

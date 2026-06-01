@@ -35,9 +35,10 @@ import { QueryBehaviorOptions } from './options/query-behavior.options';
   wantsConfig: true,
   configKey: 'withQuery'
 })
-export class withQueryBehavior<TState, TEntity>
-  implements BehaviorContract<TState, QueryBehaviorExtension<TEntity>>
-{
+export class withQueryBehavior<TState, TEntity> implements BehaviorContract<
+  TState,
+  QueryBehaviorExtension<TEntity>
+> {
   /** Extension function that registers the query API on the FeatureCell. */
   static readonly extension = extendQueryFunction;
 

@@ -10,8 +10,9 @@ import { LookupBehaviorOptions } from '../options/lookup-behavior.options';
  * operations exposed to consumers.
  *
  */
-export interface LookupBehaviorExtension<TEntity>
-  extends Partial<Record<string, BehaviorExtFunction>> {
+export interface LookupBehaviorExtension<TEntity> extends Partial<
+  Record<string, BehaviorExtFunction>
+> {
   /**
    * Index signature supporting dynamic behavior extension bindings.
    */

@@ -3,8 +3,9 @@ import { ControllerMessageTypes } from '../../types/controller/controller-messag
 import { ControllerMessageBaseShape } from './controller-message-base.shape';
 
 /** Message shape dispatched to controllers during a pipeline attempt. */
-export interface ControllerAttemptMessageShape<T>
-  extends ControllerMessageBaseShape {
+export interface ControllerAttemptMessageShape<
+  T
+> extends ControllerMessageBaseShape {
   /** Discriminant identifying this as an attempt message. */
   type: typeof ControllerMessageTypes.Attempt;
 

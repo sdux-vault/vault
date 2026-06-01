@@ -29,9 +29,9 @@ import { Subscription } from 'rxjs';
   key: defineBehaviorKey('Interceptor', 'GlobalErrorPause'),
   critical: false
 })
-export class withGlobalErrorPauseBehavior<T>
-  implements InterceptorBehaviorContract<T>
-{
+export class withGlobalErrorPauseBehavior<
+  T
+> implements InterceptorBehaviorContract<T> {
   /** Static type identifier used for pipeline classification. */
   static readonly type: BehaviorType;
 

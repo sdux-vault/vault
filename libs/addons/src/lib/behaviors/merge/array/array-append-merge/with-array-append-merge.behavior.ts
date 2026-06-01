@@ -33,9 +33,9 @@ import { MergeConfig } from '@sdux-vault/shared';
   key: defineBehaviorKey('Merge', 'ArrayAppend'),
   critical: true
 })
-export class withArrayAppendMergeBehavior<T>
-  implements MergeBehaviorContract<T>
-{
+export class withArrayAppendMergeBehavior<
+  T
+> implements MergeBehaviorContract<T> {
   /**
    * Static metadata assigned by the VaultBehavior decorator.
    */

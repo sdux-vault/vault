@@ -37,9 +37,9 @@ import {
   critical: false,
   resolveType: ResolveTypes.Observable
 })
-export class withCoreObservableBehavior<T>
-  implements ResolveBehaviorContract<T>
-{
+export class withCoreObservableBehavior<
+  T
+> implements ResolveBehaviorContract<T> {
   /** Static behavior type used for orchestrator classification. */
   static readonly type: BehaviorType;
 

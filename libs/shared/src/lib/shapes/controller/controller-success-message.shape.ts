@@ -3,8 +3,9 @@ import { ControllerMessageTypes } from '../../types/controller/controller-messag
 import { ControllerMessageBaseShape } from './controller-message-base.shape';
 
 /** Message shape dispatched to controllers when a pipeline operation succeeds. */
-export interface ControllerSuccessMessageShape<T>
-  extends ControllerMessageBaseShape {
+export interface ControllerSuccessMessageShape<
+  T
+> extends ControllerMessageBaseShape {
   /** Discriminant identifying this as a success message. */
   type: typeof ControllerMessageTypes.Success;
 

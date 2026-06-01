@@ -3,6 +3,8 @@ import { RelatedTopicCategoryShape } from './related-topic-category.shape';
 export interface RelatedTopicRegistryCategoryShape {
   /** Named global link groups */
 
+  blogs: RelatedTopicCategoryShape;
+
   controllers: RelatedTopicCategoryShape;
 
   default: RelatedTopicCategoryShape;

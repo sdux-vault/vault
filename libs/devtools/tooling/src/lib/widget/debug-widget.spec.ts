@@ -565,10 +565,13 @@ describe('DebugWidget', () => {
       it('should update session timer from interval callback', () => {
         let intervalCallback: any;
 
-        spyOn(window, 'setInterval').and.callFake((cb: any) => {
+        spyOn(window, 'setInterval').and.callFake(((
+          cb: any,
+          ..._args: any[]
+        ) => {
           intervalCallback = cb;
           return 123 as any;
-        });
+        }) as any);
 
         const timer = widget.shadowRoot!.getElementById('sessionTimer')!;
         spyOn(widget as any, 'getSessionTime').and.returnValue('0:01');

@@ -28,9 +28,9 @@ import { StepwiseFunction } from '../symbols/types/function/stepwise-function.ty
  * decision-making to a consumer-supplied callback and mapping responses into
  * pipeline-native control signals.
  */
-export abstract class StepwiseBehaviorAbstract<T>
-  implements StepwiseBehaviorContract<T>
-{
+export abstract class StepwiseBehaviorAbstract<
+  T
+> implements StepwiseBehaviorContract<T> {
   /**
    * Static behavior type identifier used for pipeline classification.
    */

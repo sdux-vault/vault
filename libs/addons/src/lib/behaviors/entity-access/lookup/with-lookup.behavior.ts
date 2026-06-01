@@ -40,9 +40,10 @@ import { LookupPendingShape } from './shapes/lookup-pending.shape';
   wantsConfig: true,
   configKey: 'withLookup'
 })
-export class withLookupBehavior<TState, TEntity>
-  implements BehaviorContract<TState, LookupBehaviorExtension<TEntity>>
-{
+export class withLookupBehavior<TState, TEntity> implements BehaviorContract<
+  TState,
+  LookupBehaviorExtension<TEntity>
+> {
   /**
    * Static extension function used to augment the FeatureCell API.
    */

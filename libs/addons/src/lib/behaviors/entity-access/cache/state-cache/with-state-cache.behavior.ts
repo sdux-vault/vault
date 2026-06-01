@@ -42,9 +42,10 @@ import { CacheTTL } from './types/cache-ttl.type';
   wantsConfig: true,
   configKey: 'withStateCache'
 })
-export class withStateCacheBehavior<TState, TEntity>
-  implements BehaviorContract<TState, StateCacheBehaviorExtension<TEntity>>
-{
+export class withStateCacheBehavior<
+  TState,
+  TEntity
+> implements BehaviorContract<TState, StateCacheBehaviorExtension<TEntity>> {
   /** Declares the feature cell extension function used to register cache APIs. */
   static readonly extensionCell = extendStateCacheFunction;
 

@@ -9,27 +9,34 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: 'sdux-cache-ttl-type',
   standalone: true,
   template: `<div class="docs-container">
-      <div class="header">
-        <h3>CacheTTLType</h3>
+    <div class="header">
+      <h3>CacheTTLType</h3>
+    </div>
+    <header class="docs-header">
+      <div class="lead">
+        Represents the set of allowed cache TTL values. This type constrains TTL
+        configuration to one of the predefined durations.<br /><br />
       </div>
-      <header class="docs-header">
-        <div class="lead">Represents the set of allowed cache TTL values.
-This type constrains TTL configuration to one of the predefined durations.<br/><br/></div>
-        
-      </header>
-      <section class="section">
+    </header>
+    <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/addons</strong> project.
+        Part of the <strong>@sdux-vault/addons</strong> project.
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+        <pre
+          class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
       </div>
     </section>
-<section class="section">
+    <section class="section">
       <div class="section-title">Type Definition</div>
       <div class="section-body">
         <p>
-          <strong><a href="/docs/references/types/cache-ttl-type">CacheTTLType</a></strong> is a derived type alias.
+          <strong
+            ><a href="/docs/references/types/cache-ttl-type"
+              >CacheTTLType</a
+            ></strong
+          >
+          is a derived type alias.
         </p>
         <p>
           Its definition is inferred from another symbol at compile time and
@@ -40,16 +47,17 @@ This type constrains TTL configuration to one of the predefined durations.<br/><
         </p>
       </div>
     </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
-    </div>`,
+    <section class="section">
+      <div class="section-title">Documentation Generation Notes</div>
+      <div class="section-body">
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated
+          source code using @compodoc, with AI-assisted comments reviewed by a
+          human prior to publication.
+        </p>
+      </div>
+    </section>
+  </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
 })

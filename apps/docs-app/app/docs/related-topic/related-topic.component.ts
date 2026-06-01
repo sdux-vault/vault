@@ -1,4 +1,4 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, input, ViewEncapsulation } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BrandNameComponent } from '@sdux-vault/ui/web-components';
@@ -17,6 +17,7 @@ import { RelatedTopicsService } from './services/related-topics.service';
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineRelatedTopicComponent {
+  readonly isDocs = input(true);
   route = inject(ActivatedRoute);
   relatedTopicsService = inject(RelatedTopicsService);
 

@@ -50,6 +50,66 @@ export const p241Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
@@ -176,9 +236,25 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     state: {
       isLoading: false,
-      value: '__VAULT_UNDEFINED__',
+      value: {
+        id: 'be-001',
+        firstName: 'Alice',
+        lastName: 'Wells',
+        role: 'Teller',
+        status: 'Active',
+        salary: 48000,
+        hireDate: '2018-03-12',
+        birthDate: '1992-07-22',
+        phoneNumber: '555-201-8899',
+        address: {
+          street: '101 Maple St',
+          city: 'Springfield',
+          state: 'IL',
+          zip: '62704'
+        }
+      },
       error: null,
-      hasValue: false
+      hasValue: true
     },
     type: 'stage',
     boundary: 'end',
@@ -264,6 +340,66 @@ export const p241Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
@@ -390,9 +526,25 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     state: {
       isLoading: false,
-      value: '__VAULT_UNDEFINED__',
+      value: {
+        id: 'be-001',
+        firstName: 'Alice',
+        lastName: 'Wells',
+        role: 'Teller',
+        status: 'Active',
+        salary: 48000,
+        hireDate: '2018-03-12',
+        birthDate: '1992-07-22',
+        phoneNumber: '555-201-8899',
+        address: {
+          street: '101 Maple St',
+          city: 'Springfield',
+          state: 'IL',
+          zip: '62704'
+        }
+      },
       error: null,
-      hasValue: false
+      hasValue: true
     },
     type: 'stage',
     boundary: 'end',

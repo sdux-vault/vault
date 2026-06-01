@@ -5,8 +5,9 @@ import { StateCacheBehaviorOptions } from '../options/state-cache-behavior.optio
 /**
  * Defines the extension surface added to a feature cell by the state cache behavior.
  */
-export interface StateCacheBehaviorExtension<TEntity>
-  extends Partial<Record<string, BehaviorExtFunction>> {
+export interface StateCacheBehaviorExtension<TEntity> extends Partial<
+  Record<string, BehaviorExtFunction>
+> {
   [key: string]: BehaviorExtFunction | undefined;
 
   /**

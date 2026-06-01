@@ -37,9 +37,10 @@ import { FromObservableBehaviorExtension } from './interface/from-observable-beh
   critical: false,
   resolveType: ResolveTypes.Observable
 })
-export class withCoreFromObservableBehavior<T>
-  implements BehaviorContract<T, FromObservableBehaviorExtension>
-{
+export class withCoreFromObservableBehavior<T> implements BehaviorContract<
+  T,
+  FromObservableBehaviorExtension
+> {
   /** Extension function used to attach observable APIs to the FeatureCell. */
   static readonly extension = extendFromObservable;
 

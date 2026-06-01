@@ -19,4 +19,9 @@
 .documentation {
   border-top: 1px solid var(--sdux-surface-outline);
   font-size: global.$font-size-sm;
+
+  .content-generation-notes {
+    margin-top: global.$spacing-lg;
+    font-size: global.$font-size-xs;
+  }
 }

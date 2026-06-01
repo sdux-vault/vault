@@ -30,9 +30,9 @@ import {
   key: defineBehaviorKey('Core', 'EmitState'),
   critical: true
 })
-export class withCoreEmitStateBehavior<T>
-  implements CoreEmitStateBehaviorContract<T>
-{
+export class withCoreEmitStateBehavior<
+  T
+> implements CoreEmitStateBehaviorContract<T> {
   /** Static behavior type used for pipeline classification. */
   static readonly type: BehaviorType;
 

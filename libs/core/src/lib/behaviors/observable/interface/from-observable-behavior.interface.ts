@@ -9,8 +9,9 @@ import { Observable } from 'rxjs';
  * `fromObservable` API that allows a FeatureCell to accept observable
  * sources and expose them as normalized vault state references.
  */
-export interface FromObservableBehaviorExtension
-  extends Partial<Record<string, BehaviorExtFunction>> {
+export interface FromObservableBehaviorExtension extends Partial<
+  Record<string, BehaviorExtFunction>
+> {
   [key: string]: BehaviorExtFunction | undefined;
 
   /**

@@ -40,9 +40,10 @@ import { FromPromiseBehaviorExtension } from './interface/from-promise-behavior.
   critical: false,
   resolveType: ResolveTypes.Promise
 })
-export class withCoreFromPromiseBehavior<T>
-  implements BehaviorContract<T, FromPromiseBehaviorExtension>
-{
+export class withCoreFromPromiseBehavior<T> implements BehaviorContract<
+  T,
+  FromPromiseBehaviorExtension
+> {
   /** Static behavior function used to extend the FeatureCell API. */
   static readonly extension = extendFromPromise;
 
