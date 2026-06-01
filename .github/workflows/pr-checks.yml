@@ -2,9 +2,9 @@ name: PR Checks
 
 on:
   pull_request:
-    branches-ignore:
-      - dev
+    branches:
       - main
+      - dev
 
 jobs:
   build-and-test:
@@ -49,5 +49,7 @@ jobs:
       - run: npm run test:coverage:integration
 
       - run: npm run test:tools
+
+      - run: npm run test:coverage:chrome-extension
 
       - run: npm run docs:coverage
