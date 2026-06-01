@@ -30,7 +30,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -40,7 +40,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -50,67 +50,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -139,7 +79,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -159,7 +99,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -169,7 +109,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -179,67 +119,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -389,7 +269,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'lifecycle:notification:abort',
     timestamp: 'ts-removed',
     type: 'lifecycle',
@@ -399,7 +279,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -409,7 +289,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:notification:restart-attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -456,7 +336,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -466,7 +346,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -476,67 +356,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -565,7 +385,7 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
     type: 'controller',

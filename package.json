@@ -154,7 +154,7 @@
     "@angular/material": "^21.2.12",
     "@angular/platform-browser": "^21.2.13",
     "@angular/router": "^21.2.13",
-    "@sdux-vault/engine": "^0.28.1",
+    "@sdux-vault/engine": "^0.28.0",
     "@stackblitz/sdk": "^1.11.0",
     "flexsearch": "^0.8.212",
     "prismjs": "^1.30.0",

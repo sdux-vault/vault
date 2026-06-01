@@ -21,7 +21,7 @@ export const p425Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-core-behavior-license',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -40,7 +40,7 @@ export const p425Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-core-behavior-license',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -77,7 +77,7 @@ export const p425Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-core-behavior-license',
-    behaviorKey: 'vault-conductor',
+    behaviorKey: 'key-removed',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',

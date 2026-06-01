@@ -7,8 +7,23 @@ import { DiagramDialogService } from './diagram.dialog.service';
 describe('Service: DiagramDialog', () => {
   let service: DiagramDialogService;
   let dialogSpy: jasmine.SpyObj<MatDialog>;
+  let originalInnerWidth: number;
+  let originalInnerHeight: number;
 
   beforeEach(() => {
+    originalInnerWidth = window.innerWidth;
+    originalInnerHeight = window.innerHeight;
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 1024
+    });
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      configurable: true,
+      value: 768
+    });
+
     dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
 
     TestBed.configureTestingModule({
@@ -22,6 +37,19 @@ describe('Service: DiagramDialog', () => {
     service = TestBed.inject(DiagramDialogService);
   });
 
+  afterEach(() => {
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: originalInnerWidth
+    });
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      configurable: true,
+      value: originalInnerHeight
+    });
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
@@ -32,8 +60,8 @@ describe('Service: DiagramDialog', () => {
     expect(dialogSpy.open).toHaveBeenCalledOnceWith(
       DiagramDisplayComponent,
       jasmine.objectContaining({
-        width: '605px',
-        height: '412px',
+        width: '819px',
+        height: '520px',
         maxWidth: '90vw',
         maxHeight: '90vh',
         data: Object({ image: 'diagrams/foo.svg', tooltip: undefined }),
@@ -77,8 +105,8 @@ describe('Service: DiagramDialog', () => {
 
     const config = dialogSpy.open.calls.mostRecent().args[1]! as any;
 
-    expect(config.width).toBe('605px');
-    expect(config.height).toBe('312px');
+    expect(config.width).toBe('819px');
+    expect(config.height).toBe('383px');
     expect(config.panelClass).toBe('sdux-diagram-dialog-panel');
     expect(config.data.image).toBe('diagrams/abc.svg');
   });
