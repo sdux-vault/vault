@@ -50,71 +50,7 @@ export const p241Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
-<<<<<<< HEAD
     behaviorKey: 'key-removed',
-=======
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'vault-conductor',
->>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -240,25 +176,9 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     state: {
       isLoading: false,
-      value: {
-        id: 'be-001',
-        firstName: 'Alice',
-        lastName: 'Wells',
-        role: 'Teller',
-        status: 'Active',
-        salary: 48000,
-        hireDate: '2018-03-12',
-        birthDate: '1992-07-22',
-        phoneNumber: '555-201-8899',
-        address: {
-          street: '101 Maple St',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62704'
-        }
-      },
+      value: '__VAULT_UNDEFINED__',
       error: null,
-      hasValue: true
+      hasValue: false
     },
     type: 'stage',
     boundary: 'end',
@@ -344,71 +264,7 @@ export const p241Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
-<<<<<<< HEAD
     behaviorKey: 'key-removed',
-=======
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'vault-conductor',
->>>>>>> 695ed58 (Added more love for the chrome-extension and started a docs page)
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -534,25 +390,9 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     state: {
       isLoading: false,
-      value: {
-        id: 'be-001',
-        firstName: 'Alice',
-        lastName: 'Wells',
-        role: 'Teller',
-        status: 'Active',
-        salary: 48000,
-        hireDate: '2018-03-12',
-        birthDate: '1992-07-22',
-        phoneNumber: '555-201-8899',
-        address: {
-          street: '101 Maple St',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62704'
-        }
-      },
+      value: '__VAULT_UNDEFINED__',
       error: null,
-      hasValue: true
+      hasValue: false
     },
     type: 'stage',
     boundary: 'end',
