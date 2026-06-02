@@ -16,6 +16,7 @@ describe('CLI: sitemap-url-miner', () => {
       [
         '<a routerLink="docs/pipeline/builder" routerLinkActive="active">Builder</a>',
         '<a routerLink="/docs/global-error-handler" routerLinkActive="active">Error</a>',
+        '<!-- <a routerLink="/docs/auto-vaulting/get" routerLinkActive="active">Auto Get</a> -->',
         '<a routerLink="/blog" routerLinkActive="active">Blog</a>'
       ].join('\n'),
       'utf-8'
@@ -61,6 +62,17 @@ describe('CLI: sitemap-url-miner', () => {
 
       expect(urls).toContain('/docs/pipeline/builder');
       expect(urls).not.toContain('docs/pipeline/builder');
+    });
+
+    it('should exclude routerLinks inside HTML comments', () => {
+      const miner = new SitemapUrlMiner({
+        navigationDir: fixturesDir,
+        supplementUrls: []
+      });
+
+      const urls = miner.mine();
+
+      expect(urls).not.toContain('/docs/auto-vaulting/get');
     });
 
     it('should merge supplement URLs', () => {

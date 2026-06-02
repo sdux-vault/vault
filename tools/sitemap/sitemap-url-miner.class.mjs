@@ -52,17 +52,18 @@ export class SitemapUrlMiner {
    */
   #extractRouterLinks(html) {
     const links = [];
+    const uncommented = html.replace(/<!--[\s\S]*?-->/g, '');
 
     const staticPattern = /routerLink="([^"]+)"/g;
     let match;
 
-    while ((match = staticPattern.exec(html)) !== null) {
+    while ((match = staticPattern.exec(uncommented)) !== null) {
       links.push(match[1]);
     }
 
     const boundPattern = /\[routerLink\]="'([^']+)'"/g;
 
-    while ((match = boundPattern.exec(html)) !== null) {
+    while ((match = boundPattern.exec(uncommented)) !== null) {
       links.push(match[1]);
     }
 
