@@ -4,6 +4,7 @@
     "example-generation/tests/**/*.spec.mjs",
     "documentation/**/tests/**/*.spec.mjs",
     "release/**/tests/**/*.spec.mjs",
+    "sitemap/**/tests/**/*.spec.mjs",
     "stackblitz/**/tests/**/*.spec.mjs"
   ],
   "helpers": [],

@@ -14,10 +14,12 @@ import { Component, ViewEncapsulation } from '@angular/core';
     </div>
     <header class="docs-header">
       <div class="lead">
-        Creates and registers a Feature Cell using the provided configuration
-        and optional behavior and controller contracts. This function produces a
-        Feature Cell instance keyed by the descriptor and registers it for later
-        resolution and usage.<br /><br />
+        Decorator factory that marks a class as a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> with
+        an associated state type. This function produces a class decorator that
+        attaches identifying metadata used to associate a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance with a unique key and a compile-time state type anchor.<br /><br />
       </div>
     </header>
     <section class="section">
@@ -46,34 +48,30 @@ import { Component, ViewEncapsulation } from '@angular/core';
                   <strong
                     ><a href="/docs/references/functions/feature-cell"
                       >FeatureCell</a
-                    >(descriptor, behaviors, controllers)</strong
+                    >(key)</strong
                   >
                 </p>
                 <p>inputs:</p>
                 <ul>
-                  <li>
-                    descriptor:
-                    <a href="/docs/references/config/feature-cell-config"
-                      >FeatureCellConfig</a
-                    >
-                  </li>
-                  <li>behaviors: unknown</li>
-                  <li>controllers: unknown</li>
+                  <li>key: string</li>
                 </ul>
                 <p>returns:</p>
                 <ul>
-                  <li>
-                    <a href="/docs/references/shapes/feature-cell-shape"
-                      >FeatureCellShape</a
-                    >&lt;T&gt;
-                  </li>
+                  <li>void</li>
                 </ul>
               </td>
               <td>
-                Creates and registers a Feature Cell using the provided
-                configuration and optional behavior and controller contracts.
-                This function produces a Feature Cell instance keyed by the
-                descriptor and registers it for later resolution and usage.<br /><br />
+                Decorator factory that marks a class as a
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                with an associated state type. This function produces a class
+                decorator that attaches identifying metadata used to associate a
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                instance with a unique key and a compile-time state type
+                anchor.<br /><br />
               </td>
             </tr>
           </tbody>

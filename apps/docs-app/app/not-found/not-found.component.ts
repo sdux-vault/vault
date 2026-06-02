@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import {
   CatchPhraseComponent,
@@ -28,6 +29,16 @@ import {
   styleUrls: ['./not-found.component.scss'],
   imports: [ImageComponent, RouterModule, CatchPhraseComponent]
 })
-export class NotFoundComponent {
+export class NotFoundComponent implements OnDestroy {
   catchPhrase = inject(CatchPhraseService);
+
+  #meta = inject(Meta);
+
+  constructor() {
+    this.#meta.addTag({ name: 'robots', content: 'noindex' });
+  }
+
+  ngOnDestroy(): void {
+    this.#meta.removeTag('name="robots"');
+  }
 }
