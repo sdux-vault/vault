@@ -21,4 +21,9 @@ npm run format:fix || {
   exit 1
 }
 
+npm run typecheck || {
+  printf "\n\nERROR: Typecheck issues were found in the committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
 echo "Pre-commit checks complete."
