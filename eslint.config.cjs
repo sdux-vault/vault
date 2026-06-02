@@ -18,8 +18,7 @@ module.exports = [
       '**/dist/**',
       '**/out-tsc/**',
       '**/documentation/**',
-      '**/tools/sitemap/sitemap-urls.mjs',
-      '**/apps/docs-app/prerender-routes.txt'
+      '**/tools/sitemap/sitemap-urls.mjs'
     ]
   },
 
