@@ -115,6 +115,7 @@ describe('CLI: sitemap-url-miner', () => {
 
   describe('write', () => {
     it('should generate a valid ESM module file', () => {
+      spyOn(console, 'info');
       const outputPath = path.join(
         __dirname,
         'artifacts',
@@ -126,6 +127,11 @@ describe('CLI: sitemap-url-miner', () => {
       });
 
       miner.write(outputPath);
+
+      expect(console.info).toHaveBeenCalledTimes(1);
+      expect(console.info).toHaveBeenCalledWith(
+        jasmine.stringContaining('Sitemap URL registry written to')
+      );
 
       const content = fs.readFileSync(outputPath, 'utf-8');
 

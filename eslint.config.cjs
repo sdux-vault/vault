@@ -11,12 +11,15 @@ const angularTemplateParser = require('@angular-eslint/template-parser');
 module.exports = [
   {
     ignores: [
+      '**/.angular/**',
       '**/coverage/*',
       '**/libs/testing/**',
       '**/app/docs/references/**',
       '**/dist/**',
       '**/out-tsc/**',
-      '**/documentation/**'
+      '**/documentation/**',
+      '**/tools/sitemap/sitemap-urls.mjs',
+      '**/apps/docs-app/prerender-routes.txt'
     ]
   },
 

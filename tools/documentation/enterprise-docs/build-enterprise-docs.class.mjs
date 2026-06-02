@@ -158,17 +158,17 @@ https://sdux.dev
   copyAssets() {
     console.info('\nCopying documentation assets');
 
-    const siteDist = path.join(this.DIST, 'webapp', 'browser');
+    const siteDist = path.join(this.DIST, 'docs-app', 'browser');
 
     this.copyDir(siteDist, this.ENTERPRISE_DIR);
 
     this.copyDir(
-      path.join(this.ROOT, 'src/assets/diagrams'),
+      path.join(this.ROOT, 'apps/docs-app/assets/diagrams'),
       path.join(this.ENTERPRISE_DIR, 'diagrams')
     );
 
     this.copyDir(
-      path.join(this.ROOT, 'src/assets/search-index'),
+      path.join(this.ROOT, 'apps/docs-app/assets/search-index'),
       path.join(this.ENTERPRISE_DIR, 'search-index')
     );
 

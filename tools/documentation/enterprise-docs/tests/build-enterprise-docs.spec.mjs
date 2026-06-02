@@ -116,7 +116,7 @@ describe('CLI: enterprise-docs-builder', () => {
       .withContext('existSyncCalls')
       .toEqual([
         'dist/enterprise-docs',
-        'webapp/browser',
+        'docs-app/browser',
         'assets/diagrams',
         'assets/search-index',
         'project/documentation',

@@ -58,12 +58,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                     >[]
                   </li>
                 </ul>
-                <p>
-                  returns:
-                  <a href="/docs/references/contracts/cell-builder-contract"
-                    >CellBuilderContract</a
-                  >&lt;T&gt;
-                </p>
+                <p>returns: unknown</p>
               </td>
               <td>
                 Registers tap functions executed during the &quot;after
@@ -82,12 +77,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                     >[]
                   </li>
                 </ul>
-                <p>
-                  returns:
-                  <a href="/docs/references/contracts/cell-builder-contract"
-                    >CellBuilderContract</a
-                  >&lt;T&gt;
-                </p>
+                <p>returns: unknown</p>
               </td>
               <td>
                 Registers tap functions executed during the &quot;before
@@ -120,12 +110,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                     >[]
                   </li>
                 </ul>
-                <p>
-                  returns:
-                  <a href="/docs/references/contracts/cell-builder-contract"
-                    >CellBuilderContract</a
-                  >&lt;T&gt;
-                </p>
+                <p>returns: unknown</p>
               </td>
               <td>
                 Registers emitState functions executed during the emitState
@@ -145,12 +130,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                     >[]
                   </li>
                 </ul>
-                <p>
-                  returns:
-                  <a href="/docs/references/contracts/cell-builder-contract"
-                    >CellBuilderContract</a
-                  >&lt;T&gt;
-                </p>
+                <p>returns: unknown</p>
               </td>
               <td>
                 Registers error functions to run during the error stage.<br /><br />
@@ -169,12 +149,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                     >[]
                   </li>
                 </ul>
-                <p>
-                  returns:
-                  <a href="/docs/references/contracts/cell-builder-contract"
-                    >CellBuilderContract</a
-                  >&lt;T&gt;
-                </p>
+                <p>returns: unknown</p>
               </td>
               <td>
                 Registers filter functions to run during the filter stage.<br /><br />
@@ -193,12 +168,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                     >
                   </li>
                 </ul>
-                <p>
-                  returns:
-                  <a href="/docs/references/contracts/cell-builder-contract"
-                    >CellBuilderContract</a
-                  >&lt;T&gt;
-                </p>
+                <p>returns: unknown</p>
               </td>
               <td>
                 Registers a deferred hydration source for the
@@ -210,13 +180,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
               <td>
                 <strong>initialize</strong>
 
-                <p>
-                  returns:
-                  <a href="/docs/references/contracts/cell-builder-contract"
-                    >CellBuilderContract</a
-                  >
-                  | void
-                </p>
+                <p>returns: unknown | void</p>
               </td>
               <td>
                 Finalizes builder configuration and activates the
@@ -238,12 +202,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                     >[]
                   </li>
                 </ul>
-                <p>
-                  returns:
-                  <a href="/docs/references/contracts/cell-builder-contract"
-                    >CellBuilderContract</a
-                  >&lt;T&gt;
-                </p>
+                <p>returns: unknown</p>
               </td>
               <td>
                 Registers interceptor behaviors executed prior to resolve.<br /><br />
@@ -284,12 +243,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                     >[]
                   </li>
                 </ul>
-                <p>
-                  returns:
-                  <a href="/docs/references/contracts/cell-builder-contract"
-                    >CellBuilderContract</a
-                  >&lt;T&gt;
-                </p>
+                <p>returns: unknown</p>
               </td>
               <td>
                 Registers operator behaviors executed before filters.<br /><br />
@@ -308,12 +262,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                     >[]
                   </li>
                 </ul>
-                <p>
-                  returns:
-                  <a href="/docs/references/contracts/cell-builder-contract"
-                    >CellBuilderContract</a
-                  >&lt;T&gt;
-                </p>
+                <p>returns: unknown</p>
               </td>
               <td>
                 Registers reducer functions executed during the reducer

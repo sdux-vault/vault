@@ -21,7 +21,7 @@ export interface CellBuilderContract<T>
    * @param afterTaps - Tap functions invoked after reducers.
    * @returns The same builder instance for fluent chaining.
    */
-  afterTaps(afterTaps: TapCallback<T>[]): this;
+  afterTaps(afterTaps: TapCallback<T>[]): CellBuilderContract<T>;
 
   /**
    * Registers functions executed during the "before tap" stage.
@@ -29,7 +29,7 @@ export interface CellBuilderContract<T>
    * @param beforeTaps - Tap functions invoked before reducers.
    * @returns The same builder instance for fluent chaining.
    */
-  beforeTaps(beforeTaps: TapCallback<T>[]): this;
+  beforeTaps(beforeTaps: TapCallback<T>[]): CellBuilderContract<T>;
 
   /**
    * Map of behavior configuration values keyed by behavior configuration identifiers.
@@ -41,7 +41,7 @@ export interface CellBuilderContract<T>
    * @param emitStates - EmitState callbacks invoked during state changes.
    * @returns The builder instance for fluent chaining.
    */
-  emitStates(emitStates: CoreEmitStateCallback<T>[]): this;
+  emitStates(emitStates: CoreEmitStateCallback<T>[]): CellBuilderContract<T>;
 
   /**
    * Registers error functions to run during the error stage.
@@ -49,7 +49,7 @@ export interface CellBuilderContract<T>
    * @param errors - Error functions that may block or transform values.
    * @returns The same builder instance for fluent chaining.
    */
-  errors(errors: VaultErrorCallback<T>[]): this;
+  errors(errors: VaultErrorCallback<T>[]): CellBuilderContract<T>;
 
   /**
    * Registers filter functions to run during the filter stage.
@@ -57,7 +57,7 @@ export interface CellBuilderContract<T>
    * @param filters - Filter functions that may block or transform values.
    * @returns The same builder instance for fluent chaining.
    */
-  filters(filters: FilterFunction<T>[]): this;
+  filters(filters: FilterFunction<T>[]): CellBuilderContract<T>;
 
   /**
    * Registers a deferred hydration source for the FeatureCell.
@@ -65,7 +65,7 @@ export interface CellBuilderContract<T>
    * @param incoming - Deferred value used to hydrate the cell state.
    * @returns The builder instance for fluent chaining.
    */
-  hydrate(incoming: DeferredType<T>): this;
+  hydrate(incoming: DeferredType<T>): CellBuilderContract<T>;
 
   /**
    * Finalizes the builder configuration and activates the FeatureCell.
@@ -78,7 +78,9 @@ export interface CellBuilderContract<T>
    * @param interceptors - Interceptor behavior classes.
    * @returns The same builder instance for fluent chaining.
    */
-  interceptors(interceptors: InterceptorBehaviorClassContract<T>[]): this;
+  interceptors(
+    interceptors: InterceptorBehaviorClassContract<T>[]
+  ): CellBuilderContract<T>;
 
   /**
    * Registers operator behaviors executed prior to filtering.
@@ -86,7 +88,9 @@ export interface CellBuilderContract<T>
    * @param operators - Operator behavior classes that may transform or block updates.
    * @returns The same builder instance for fluent chaining.
    */
-  operators(operators: OperatorsBehaviorClassContract<T>[]): this;
+  operators(
+    operators: OperatorsBehaviorClassContract<T>[]
+  ): CellBuilderContract<T>;
 
   /**
    * Registers a sequence of reducer functions to run during the reducer stage.
@@ -94,5 +98,5 @@ export interface CellBuilderContract<T>
    * @param reducers - Ordered reducer functions applied to the working state.
    * @returns The same builder instance for fluent chaining.
    */
-  reducers(reducers: ReducerFunction<T>[]): this;
+  reducers(reducers: ReducerFunction<T>[]): CellBuilderContract<T>;
 }
