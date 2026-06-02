@@ -42,9 +42,6 @@
           },
           "configurations": {
             "enterprise": {
-              "prerender": {
-                "routesFile": "apps/docs-app/prerender-routes.txt"
-              },
               "fileReplacements": [
                 {
                   "replace": "apps/docs-app/environments/environment.ts",
