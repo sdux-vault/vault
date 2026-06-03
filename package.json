@@ -97,7 +97,7 @@
     "prepare": "husky",
     "version": "node tools/release/release.update-version.mjs",
     "release:old": "node tools/release/release.mjs",
-    "release": "run-s lint lint:html test:tools docs:enterprise sitemap:generate",
+    "release": "run-s lint lint:html test:tools docs:enterprise sitemap:generate stackblitz:inline",
     "sitemap:create": "node tools/sitemap/generate-sitemap.mjs",
     "sitemap:generate": "run-s sitemap:mine sitemap:create",
     "sitemap:mine": "node tools/sitemap/mine-sitemap-urls.mjs",

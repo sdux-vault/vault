@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const debuggerExampleProject: Project = {
-  title: 'angular-debugger-example',
+export const replaceExampleProject: Project = {
+  title: 'angular-replace-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -59,7 +59,7 @@ export const debuggerExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "angular-debugger-example",
+  "name": "angular-replace-example",
   "version": "1.0.3",
   "private": true,
   "scripts": {
@@ -85,7 +85,6 @@ export const debuggerExampleProject: Project = {
 `,
     'src/app/app.config.ts': `import { ApplicationConfig } from '@angular/core';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
-import { InsightConfig } from '@sdux-vault/shared';
 import { ExampleService } from './example.service';
 
 /**
@@ -97,10 +96,7 @@ import { ExampleService } from './example.service';
 export const appConfig: ApplicationConfig = {
   providers: [
     // Creates the Vault runtime (state container + lifecycle)
-    provideVault({
-      logLevel: 'off',
-      devMode: true
-    }),
+    provideVault({ logLevel: 'off' }),
 
     // Define a FeatureCell (state + behaviors + controllers)
     provideFeatureCell(
@@ -113,21 +109,7 @@ export const appConfig: ApplicationConfig = {
         key: 'example-feature-cell-key',
 
         // Fallback Initial value for the state
-        initialState: [],
-
-        // Insights enable the debugger to capture runtime telemetry for this
-        // FeatureCell. Each flag controls what data the debugger records:
-        //
-        //   wantsErrors  — Capture error signals emitted during pipeline execution.
-        //   wantsPayload — Capture operation payloads for each pipeline event.
-        //   wantsState   — Capture full state snapshots (can produce large exports).
-        //
-        // At minimum, enable wantsErrors and wantsPayload for useful debug sessions.
-        insights: {
-          wantsErrors: true,
-          wantsPayload: true,
-          wantsState: false
-        } as InsightConfig
+        initialState: []
       },
 
       // Optional definition-time extensions
@@ -143,137 +125,23 @@ export const appConfig: ApplicationConfig = {
 `,
     'src/app/example.component.html': `<div class="example-container">
   <div class="header">
-    <div class="title">SDuX Vault Debugger Example</div>
+    <div class="title">SDuX Vault Replace Example</div>
     <div class="subtitle">
-      This example demonstrates the SDuX Vault built-in debugger — a floating
-      panel that captures pipeline execution traces. Record a session, trigger
-      state changes, then export logs or generate an AI diagnostic report.
+      This example demonstrates replaceState — the simplest way to update a
+      FeatureCell. The entire previous state is discarded and replaced with the
+      new value in a single atomic operation.
     </div>
   </div>
 
   <div class="section">
-    <div class="label">Debugger Flow</div>
-    <div class="flow-hint">Record → FeatureCell Activity → Stop → Download</div>
-  </div>
-
-  <div class="section column">
-    <div class="state-container">
-      <div class="label">1. Enable Dev Mode in Vault Definition</div>
-      <div class="hint">
-        The debugger is enabled via
-        <span class="emphasis">devMode: true</span> in the Vault configuration.
-        This example already has it enabled.
-      </div>
-      <div class="hint file">
-        <span class="emphasis">File:</span> app/app.config.ts
-      </div>
-      <textarea class="textarea" readonly>
-provideVault({
-  devMode: true,
-  logLevel: 'off'
-})
-      </textarea>
-    </div>
-
-    <div class="state-container">
-      <div class="label">2. Add insights to the FeatureCell Definition</div>
-      <div class="hint">
-        <span class="emphasis">Insights</span> provide additional context for
-        the debugger to capture during pipeline execution. This example already
-        has insights enabled.
-      </div>
-      <div class="hint file">
-        <span class="emphasis">File:</span> app/app.config.ts
-      </div>
-      <textarea class="textarea" readonly>
- provideFeatureCell(
-  ExampleService,
-  {
-    key: 'example-feature-cell-key',
-    initialState: [],
-    insights: {
-      wantsErrors: true,
-      wantsPayload: true,
-      wantsState: false
-    } as InsightConfig
-  }
-)
-      </textarea>
-    </div>
-  </div>
-
-  <div class="section column">
-    <div class="state-container">
-      <div class="label">3. Record a Session</div>
-      <div class="hint">
-        To record a FeatureCell session, click the "Record" button, then trigger
-        state changes by clicking "Load Sample State" in the UI. The debugger
-        captures each pipeline event, including filter and reducer executions,
-        state emissions, and any errors.
-      </div>
-      <div class="hint">
-        After finishing all state changes, click "Stop" to end the recording
-        session. You can then download the captured logs as a JSON file for
-        analysis or use the AI Assist feature to generate an automated
-        diagnostic report.
-      </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Control</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Record / Stop</td>
-            <td>Start or end a recording session</td>
-          </tr>
-          <tr>
-            <td>Event Count</td>
-            <td>Total captured pipeline events</td>
-          </tr>
-          <tr>
-            <td>Error Count</td>
-            <td>Captured error signals</td>
-          </tr>
-          <tr>
-            <td>Clear</td>
-            <td>Reset the current session</td>
-          </tr>
-          <tr>
-            <td>Download Logs</td>
-            <td>Export the debug dump (JSON)</td>
-          </tr>
-          <tr>
-            <td>AI Assist</td>
-            <td>Generate an AI diagnostic report</td>
-          </tr>
-          <tr>
-            <td>Create Issue</td>
-            <td>Generate a structured issue report</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="hint">
-      <strong>Note:</strong> This example uses a filter (removes "Han") and a
-      reducer (marks Jedi). See
-      <span class="emphasis">app/example.service.ts</span> for the pipeline
-      configuration.
-    </div>
+    <div class="label">FeatureCell Flow</div>
+    <div class="flow-hint">Input → Output</div>
   </div>
 
   <div class="section column">
     <div class="state-container">
       <div class="label">Input State</div>
-      <div class="hint">
-        Raw data before processing — click "Load Sample State" to trigger
-        pipeline activity
-      </div>
+      <div class="hint">Raw data before processing</div>
       <div class="hint file">
         <span class="emphasis">File:</span> app/example.component.ts
       </div>
@@ -282,21 +150,11 @@ provideVault({
 
     <div class="state-container data-row">
       <div class="label">FeatureCell State</div>
-      <div class="hint">
-        Final state after filters and reducers run — the debugger captures each
-        pipeline stage
-      </div>
+      <div class="hint">Final state</div>
       <div class="hint file">
         <span class="emphasis">File:</span> app/example.service.ts
       </div>
-      @if (state.isLoading()) {
-        <div class="status">Loading...</div>
-      } @else if (state.error()) {
-        <textarea class="data-textarea error" readonly
-          >{{ state.error() | json }}
-        </textarea>
-        <div class="hint state">This is a VaultError display</div>
-      } @else if (state.hasValue()) {
+      @if (state.hasValue()) {
         <textarea class="data-textarea" readonly
           >{{ state.value() | json }}
         </textarea>
@@ -314,7 +172,7 @@ provideVault({
         <textarea class="data-textarea" readonly> </textarea>
         <div class="hint state">
           <span class="emphasis">State:</span> cleared - pipeline has no active
-          value, error or loading status.
+          value for state.
         </div>
         <div class="hint file">
           <span class="emphasis">File:</span> app/app.config.ts &nbsp;
@@ -325,20 +183,12 @@ provideVault({
 
   <div class="section">
     <div class="actions">
-      <button type="button" class="sdux-button primary" (click)="loadSample()">
+      <button class="sdux-button primary" (click)="loadSample()">
         Load Sample State
       </button>
 
       <div class="secondary-actions">
-        <button type="button" class="sdux-button" (click)="resetState()">
-          Reset State
-        </button>
-        <button type="button" class="sdux-button" (click)="toggleLoading()">
-          Loading ({{ state.isLoading() }})
-        </button>
-        <button type="button" class="sdux-button" (click)="toggleError()">
-          Error ({{ hasError() }})
-        </button>
+        <button class="sdux-button" (click)="resetState()">Reset State</button>
       </div>
     </div>
   </div>
@@ -347,24 +197,24 @@ provideVault({
     <div class="label">Learn More</div>
     <div class="learn-more-links">
       <a
-        href="https://www.sdux-vault.com/docs/dev-tools/built-in-debugger"
+        href="https://www.sdux-vault.com/docs/pipeline/behaviors/state"
         target="_blank"
         rel="noopener noreferrer"
-        >Debugger</a
+        >State</a
       >
       <span class="separator">·</span>
       <a
-        href="https://www.sdux-vault.com/docs/pipeline/behaviors/filters"
+        href="https://www.sdux-vault.com/docs/pipeline/behaviors/state/updating"
         target="_blank"
         rel="noopener noreferrer"
-        >Filters</a
+        >Updating State</a
       >
       <span class="separator">·</span>
       <a
-        href="https://www.sdux-vault.com/docs/pipeline/behaviors/reducers"
+        href="https://www.sdux-vault.com/docs/pipeline/behaviors/merge"
         target="_blank"
         rel="noopener noreferrer"
-        >Reducers</a
+        >Merging State</a
       >
       <span class="separator">·</span>
       <a
@@ -380,7 +230,6 @@ provideVault({
     'src/app/example.component.scss': `\$gap: 0.75rem;
 \$padding: 1rem;
 \$data-height: 300px;
-\$data-row-height: 430px;
 \$text-area-height: 175px;
 \$border: 1px solid rgba(0, 0, 0, 0.08);
 \$radius: 8px;
@@ -413,6 +262,7 @@ provideVault({
     .subtitle {
       font-size: \$sub-title-font-size;
       color: \$text-muted;
+      max-width: 600px;
     }
   }
 
@@ -442,7 +292,7 @@ provideVault({
       min-width: 0;
 
       &.data-row {
-        height: \$data-row-height;
+        height: 430px;
       }
 
       .textarea,
@@ -469,36 +319,6 @@ provideVault({
 
       .textarea {
         height: \$text-area-height;
-      }
-
-      .data-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: \$text-area-font-size;
-        font-family: monospace;
-        background: #fafafa;
-        border: \$border;
-        border-radius: 6px;
-
-        th,
-        td {
-          padding: 0.4rem 0.75rem;
-          text-align: left;
-          border-bottom: \$border;
-        }
-
-        th {
-          font-weight: 600;
-          color: #555;
-        }
-
-        td {
-          color: #222;
-        }
-
-        tr:last-child td {
-          border-bottom: none;
-        }
       }
     }
 
@@ -603,7 +423,7 @@ provideVault({
 }
 `,
     'src/app/example.component.ts': `import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ExampleService } from './example.service';
 
 /**
@@ -636,11 +456,12 @@ export class ExampleComponent {
    *
    * Provides reactive access to:
    * - value()
-   * - isLoading()
-   * - error()
    * - hasValue()
    *
    * The template binds directly to these signals for rendering.
+   *
+   * Components may read from state,
+   * but must call service methods to modify it.
    */
   state = this.#exampleService.state;
 
@@ -659,12 +480,6 @@ export class ExampleComponent {
   /** Whether to display the active state hint. */
   readonly displayActiveStateHint = signal(true);
 
-  /** Whether the loading toggle is active. */
-  readonly isLoading = signal(false);
-
-  /** Whether the error state is currently set. */
-  readonly hasError = computed<boolean>(() => this.state.error() !== null);
-
   /**
    * Delegate a full state replacement to the FeatureCell service.
    *
@@ -682,9 +497,7 @@ export class ExampleComponent {
    */
   loadSample(): void {
     this.displayActiveStateHint.set(false);
-    this.activeStateHint.set(
-      'State updated with sample data after filters and reducers run.'
-    );
+    this.activeStateHint.set('State updated with sample data.');
     this.#exampleService.replace(this.sample);
   }
 
@@ -693,22 +506,6 @@ export class ExampleComponent {
    */
   resetState(): void {
     this.#exampleService.reset();
-  }
-
-  /**
-   * Toggles the loading flag and updates the service state.
-   */
-  toggleLoading(): void {
-    this.isLoading.update((loading) => !loading);
-    this.#exampleService.toggleLoading(this.isLoading());
-  }
-
-  /**
-   * Toggles the error state between an Error instance and null.
-   */
-  toggleError(): void {
-    const error = this.hasError() ? null : new Error('Example error message');
-    this.#exampleService.toggleError(error);
   }
 }
 `,
@@ -727,13 +524,6 @@ export interface Example {
 
   /** Last name of the character. */
   lastName: string;
-
-  /** Whether the character is a Jedi, set by the jediReducer. */
-  jedi?: boolean;
-
-  /** Whether the character is a Senator, set by the jediReducer. */
-  senator?: boolean;
-  // TODO - add more fields to demonstrate filter/reducer behavior
 }
 
 /**
@@ -779,37 +569,12 @@ export class ExampleService {
   readonly state = this.#vault.state;
 
   /**
-   * Reducer that marks Jedi and Senator roles on matching entries.
-   *
-   * @param examples - Current array of Example records.
-   * @returns The mutated array with role flags applied.
-   */
-  readonly #jediReducer = (examples: Example[]) => {
-    return examples.filter((example: Example) => {
-      if (example.id === 11) {
-        example.jedi = true;
-      }
-
-      example.senator = example.id === 38;
-
-      return example;
-    });
-  };
-
-  /**
    * Configures the Vault runtime pipeline with filters, reducers,
    * and finalizes the FeatureCell initialization.
    */
   constructor() {
     // Runtime pipeline configuration
     this.#vault
-      // Filters may block or allow updates to continue through the pipeline
-      .filters([
-        (examples: Example[]) =>
-          examples.filter((example) => example.name !== 'Han')
-      ])
-      // Reducers transform the working state
-      .reducers([this.#jediReducer])
       // Finalizes configuration and activates the FeatureCell pipeline.
       //
       // After initialize() is called:
@@ -838,30 +603,6 @@ export class ExampleService {
    */
   reset(): void {
     this.#vault.reset();
-  }
-
-  /**
-   * Toggles the loading flag on the current state.
-   *
-   * @param loading - Whether the state should indicate a loading status.
-   */
-  toggleLoading(loading: boolean): void {
-    this.#vault.replaceState({
-      loading,
-      value: this.state.value()
-    });
-  }
-
-  /**
-   * Toggles the error state on the current FeatureCell.
-   *
-   * @param error - The error to set, or null to clear.
-   */
-  toggleError(error: Error | null): void {
-    this.#vault.replaceState({
-      error: error,
-      value: this.state.value()
-    });
   }
 }
 `,

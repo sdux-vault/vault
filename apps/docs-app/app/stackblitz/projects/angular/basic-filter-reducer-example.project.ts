@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
 export const basicFilterReducerExampleProject: Project = {
-  title: 'angular-demo-1',
+  title: 'angular-basic-filter-reducer-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -59,7 +59,7 @@ export const basicFilterReducerExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "angular-demo-1",
+  "name": "angular-basic-filter-reducer-example",
   "version": "1.0.3",
   "private": true,
   "scripts": {
