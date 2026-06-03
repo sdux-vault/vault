@@ -3,7 +3,8 @@ import {
   Component,
   computed,
   input,
-  output
+  output,
+  signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BehaviorTypes } from '@sdux-vault/shared';
@@ -43,6 +44,22 @@ export class RegistryDetailComponent {
 
   /** Controller entities extracted from the registry cell. */
   readonly controllers = computed(() => this.cell().controllers ?? []);
+
+  /** Whether the behaviors section is expanded. */
+  readonly behaviorsExpanded = signal(true);
+
+  /** Whether the controllers section is expanded. */
+  readonly controllersExpanded = signal(true);
+
+  /** Behaviors sorted alphabetically by key. */
+  readonly sortedBehaviors = computed(() =>
+    [...this.behaviors()].sort((a, b) => a.key.localeCompare(b.key))
+  );
+
+  /** Controllers sorted alphabetically by key. */
+  readonly sortedControllers = computed(() =>
+    [...this.controllers()].sort((a, b) => a.key.localeCompare(b.key))
+  );
 
   /** Core controllers (CoreAbstain, CoreLicense, CoreError). */
   readonly coreControllers = computed(() => {
@@ -89,11 +106,11 @@ export class RegistryDetailComponent {
    * Extracts the Domain and Name segments from a Vault key.
    *
    * @param key - A key in the format `SDUX::<Kind>::<Domain>::<Name>`.
-   * @returns `<Domain>::<Name>`, or the full key if the format is unexpected.
+   * @returns `<Domain> <Name>`, or the full key if the format is unexpected.
    */
   vaultKeyDomainName(key: string): string {
     const parts = key.split('::');
-    return parts.length === 4 ? `${parts[2]}::${parts[3]}` : key;
+    return parts.length === 4 ? `${parts[2]} ${parts[3]}` : key;
   }
 
   /** Pipeline stage labels and their registered counts. */

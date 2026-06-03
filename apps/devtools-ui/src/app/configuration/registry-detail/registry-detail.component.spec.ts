@@ -176,9 +176,9 @@ describe('Component: RegistryDetail', () => {
   });
 
   describe('vaultKeyDomainName', () => {
-    it('should return Domain::Name from a valid key', () => {
+    it('should return Domain Name from a valid key', () => {
       expect(component.vaultKeyDomainName('SDUX::Behavior::Core::Value')).toBe(
-        'Core::Value'
+        'Core Value'
       );
     });
 
@@ -290,6 +290,32 @@ describe('Component: RegistryDetail', () => {
       component.closeDetail.subscribe(spy);
       component.closeDetail.emit();
       expect(spy).toHaveBeenCalled();
+    });
+  });
+
+  describe('sortedBehaviors', () => {
+    it('should return behaviors sorted alphabetically by key', () => {
+      const keys = component.sortedBehaviors().map((b) => b.key);
+      const sorted = [...keys].sort((a, b) => a.localeCompare(b));
+      expect(keys).toEqual(sorted);
+    });
+
+    it('should return empty array when no behaviors exist', () => {
+      fixture.componentRef.setInput('cell', { ...mockCell, behaviors: [] });
+      expect(component.sortedBehaviors()).toEqual([]);
+    });
+  });
+
+  describe('sortedControllers', () => {
+    it('should return controllers sorted alphabetically by key', () => {
+      const keys = component.sortedControllers().map((c) => c.key);
+      const sorted = [...keys].sort((a, b) => a.localeCompare(b));
+      expect(keys).toEqual(sorted);
+    });
+
+    it('should return empty array when no controllers exist', () => {
+      fixture.componentRef.setInput('cell', { ...mockCell, controllers: [] });
+      expect(component.sortedControllers()).toEqual([]);
     });
   });
 });

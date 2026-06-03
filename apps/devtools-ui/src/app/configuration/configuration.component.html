@@ -2,39 +2,66 @@
   <section class="configuration-content">
     <h2 class="title">Vault Configuration</h2>
 
-    @if (license(); as lic) {
-      <section class="section">
-        <h3 class="section-title">License</h3>
-        <table class="versions-table">
+    <section class="section">
+      <h3 class="section-title">FeatureCell Registry</h3>
+      @if (registry().length) {
+        <table class="registry-table">
+          <thead>
+            <tr>
+              <th class="column-200" matTooltip="Unique FeatureCell identifier">
+                Cell Key
+              </th>
+              <th
+                class="column-200"
+                matTooltip="Total behaviors registered (licensed count)">
+                Behaviors (Licensed)
+              </th>
+              <th
+                class="column-200"
+                matTooltip="Total controllers registered (licensed count)">
+                Controllers (Licensed)
+              </th>
+              <th
+                class="column-auto"
+                matTooltip="Fluent API callbacks wired to this cell">
+                Fluent APIs
+              </th>
+            </tr>
+          </thead>
           <tbody>
-            <tr>
-              <td class="column=200">Organization</td>
-              <td class="column-auto">{{ lic.organization }}</td>
-            </tr>
-            <tr>
-              <td class="column-200">Domain</td>
-              <td class="column-auto">{{ lic.domain }}</td>
-            </tr>
-            <tr>
-              <td class="column-200">Tier</td>
-              <td class="column-auto">{{ lic.licenseType }}</td>
-            </tr>
-            <tr>
-              <td class="column-200">Issued</td>
-              <td class="column-auto">{{ formatLicenseDate(lic.issuedAt) }}</td>
-            </tr>
-            <tr>
-              <td class="column-200">Expires</td>
-              <td class="column-auto">{{ formatLicenseDate(lic.expires) }}</td>
-            </tr>
-            <tr>
-              <td class="column-200">Verified</td>
-              <td class="column-auto">{{ lic.verified ? 'Yes' : 'No' }}</td>
-            </tr>
+            @for (cell of registry(); track $index) {
+              <tr
+                class="registry-row"
+                [class.selected]="selectedCell() === cell"
+                (click)="selectCell(cell)">
+                <td matTooltip="Inspect pipeline details">{{ cell.key }}</td>
+                <td
+                  matTooltip="{{ cell.behaviors.length }} behavior(s), {{
+                    behaviorLicenseCount(cell)
+                  }} requiring a license">
+                  {{ cell.behaviors.length }} ({{ behaviorLicenseCount(cell) }})
+                </td>
+                <td
+                  matTooltip="{{ cell.controllers.length }} controller(s), {{
+                    controllerLicenseCount(cell)
+                  }} requiring a license">
+                  {{ cell.controllers.length }} ({{
+                    controllerLicenseCount(cell)
+                  }})
+                </td>
+                <td
+                  [matTooltip]="fluentApisTooltip(cell)"
+                  matTooltipClass="fluent-apis-tooltip">
+                  {{ fluentApisCount(cell) }}
+                </td>
+              </tr>
+            }
           </tbody>
         </table>
-      </section>
-    }
+      } @else {
+        <p class="empty">No registry data available.</p>
+      }
+    </section>
 
     <section class="section">
       <h3 class="section-title">Package Versions</h3>
@@ -60,39 +87,46 @@
       }
     </section>
 
-    <section class="section">
-      <h3 class="section-title">FeatureCell Registry</h3>
-      @if (registry().length) {
-        <table class="registry-table">
-          <thead>
-            <tr>
-              <th class="column-200">Cell Key</th>
-              <th class="column-150">Behaviors/Licensed</th>
-              <th class="column-auto">Controllers/Licensed</th>
-            </tr>
-          </thead>
+    @if (license(); as lic) {
+      <section class="section">
+        <h3 class="section-title">License</h3>
+        <table class="versions-table">
           <tbody>
-            @for (cell of registry(); track $index) {
-              <tr
-                class="registry-row"
-                [class.selected]="selectedCell() === cell"
-                (click)="selectCell(cell)">
-                <td>{{ cell.key }}</td>
-                <td>
-                  {{ cell.behaviors.length }} / {{ behaviorLicenseCount(cell) }}
-                </td>
-                <td>
-                  {{ cell.controllers.length }} /
-                  {{ controllerLicenseCount(cell) }}
-                </td>
-              </tr>
-            }
+            <tr>
+              <td class="column-200">Organization</td>
+              <td class="column-auto">{{ lic.organization }}</td>
+            </tr>
+            <tr>
+              <td class="column-200">Domain</td>
+              <td class="column-auto">{{ lic.domain }}</td>
+            </tr>
+            <tr>
+              <td class="column-200">Tier</td>
+              <td class="column-auto">{{ lic.licenseType }}</td>
+            </tr>
+            <tr>
+              <td class="column-200">Issued</td>
+              <td class="column-auto">{{ formatLicenseDate(lic.issuedAt) }}</td>
+            </tr>
+            <tr>
+              <td class="column-200">Expires</td>
+              <td class="column-auto">{{ formatLicenseDate(lic.expires) }}</td>
+            </tr>
+            <tr>
+              <td class="column-200">Verified</td>
+              <td class="column-auto">{{ lic.verified ? 'Yes' : 'No' }}</td>
+            </tr>
           </tbody>
         </table>
-      } @else {
-        <p class="empty">No registry data available.</p>
-      }
-    </section>
+      </section>
+    } @else {
+      <section class="section">
+        <h3 class="section-title">License</h3>
+        <p class="free-license">
+          Free license — Chrome extension features are limited.
+        </p>
+      </section>
+    }
   </section>
 
   @if (selectedCell(); as cell) {

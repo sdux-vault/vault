@@ -2,7 +2,11 @@
   [title]="cellKey()"
   (closeDetail)="closeDetail.emit()">
   <section class="pipeline-section">
-    <h4 class="section-heading">Pipeline Flow</h4>
+    <h4
+      class="section-heading"
+      matTooltip="The complete data flow pipeline for this FeatureCell">
+      Pipeline Flow
+    </h4>
     <div class="pipeline-flow">
       <div class="pipeline-node pipeline-start">
         <span class="pipeline-label">Incoming Value</span>
@@ -24,7 +28,11 @@
             <span class="pipeline-arrow">&#9660;</span>
           </div>
           <div class="pipeline-node pipeline-start">
-            <span class="pipeline-label">Queue</span>
+            <span
+              class="pipeline-label"
+              matTooltip="Queue policy that controls how incoming values are buffered"
+              >Queue</span
+            >
           </div>
           <div class="pipeline-connector" aria-hidden="true">
             <span class="pipeline-arrow">&#9660;</span>
@@ -49,8 +57,11 @@
                       <span
                         class="pipeline-licensed"
                         [matTooltip]="'LicenseId: ' + controller.licenseId"
-                        >*</span
-                      >
+                        ><img
+                          src="assets/brand/vault-icon.png"
+                          alt="Licensed"
+                          class="vault-icon"
+                      /></span>
                     }
                   </div>
                   <span class="pipeline-count">{{
@@ -70,8 +81,11 @@
                     <span
                       class="pipeline-licensed"
                       [matTooltip]="'LicenseId: ' + controller.licenseId"
-                      >*</span
-                    >
+                      ><img
+                        src="assets/brand/vault-icon.png"
+                        alt="Licensed"
+                        class="vault-icon"
+                    /></span>
                   }
                 </div>
                 <span class="pipeline-count">{{
@@ -96,15 +110,18 @@
           label="Pre-Processing Layer"
           tooltip="Expand to see pre-processing interceptors">
           @for (stage of preResolveStages(); track stage.label) {
-            <div class="pipeline-connector" aria-hidden="true">
-              <span class="pipeline-arrow">&#9660;</span>
-            </div>
-            <div
-              class="pipeline-node"
-              [class.pipeline-active]="stage.count > 0">
-              <span class="pipeline-label">{{ stage.label }}</span>
-              <span class="pipeline-count">{{ stage.count }}</span>
-            </div>
+            @if (stage.count > 0) {
+              <div class="pipeline-connector" aria-hidden="true">
+                <span class="pipeline-arrow">&#9660;</span>
+              </div>
+              <div class="pipeline-node pipeline-active">
+                <span class="pipeline-label">{{ stage.label }}</span>
+                <span class="pipeline-count">{{ stage.count }}</span>
+              </div>
+            }
+          }
+          @if (!cell().fluentApis?.interceptors) {
+            <p class="pipeline-empty">No behaviors attached</p>
           }
         </sdux-devtools-pipeline-collapsible>
         <div class="pipeline-connector" aria-hidden="true">
@@ -131,8 +148,11 @@
                     <span
                       class="pipeline-licensed"
                       [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                      >*</span
-                    >
+                      ><img
+                        src="assets/brand/vault-icon.png"
+                        alt="Licensed"
+                        class="vault-icon"
+                    /></span>
                   }
                 </div>
                 <span class="pipeline-count">{{
@@ -145,7 +165,11 @@
             <span class="pipeline-arrow">&#9660;</span>
           </div>
           <div class="pipeline-node pipeline-start">
-            <span class="pipeline-label">Replace/Merge</span>
+            <span
+              class="pipeline-label"
+              matTooltip="Strategy for combining incoming values with the current state"
+              >Replace/Merge</span
+            >
           </div>
           @for (behavior of mergeBehaviors(); track behavior.key) {
             <div class="pipeline-connector" aria-hidden="true">
@@ -158,8 +182,11 @@
                   <span
                     class="pipeline-licensed"
                     [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                    >*</span
-                  >
+                    ><img
+                      src="assets/brand/vault-icon.png"
+                      alt="Licensed"
+                      class="vault-icon"
+                  /></span>
                 }
               </div>
               <span class="pipeline-count">{{
@@ -178,8 +205,11 @@
                   <span
                     class="pipeline-licensed"
                     [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                    >*</span
-                  >
+                    ><img
+                      src="assets/brand/vault-icon.png"
+                      alt="Licensed"
+                      class="vault-icon"
+                  /></span>
                 }
               </div>
               <span class="pipeline-count">{{
@@ -192,7 +222,11 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">Operators</span>
+              <span
+                class="pipeline-label"
+                matTooltip="RxJS-style operators applied to the value stream"
+                >Operators</span
+              >
               <span class="pipeline-count">{{
                 cell().fluentApis?.operators
               }}</span>
@@ -203,7 +237,11 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">Filters</span>
+              <span
+                class="pipeline-label"
+                matTooltip="Filter functions that gate whether values pass through"
+                >Filters</span
+              >
               <span class="pipeline-count">{{
                 cell().fluentApis?.filters
               }}</span>
@@ -220,8 +258,11 @@
                   <span
                     class="pipeline-licensed"
                     [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                    >*</span
-                  >
+                    ><img
+                      src="assets/brand/vault-icon.png"
+                      alt="Licensed"
+                      class="vault-icon"
+                  /></span>
                 }
               </div>
               <span class="pipeline-count">{{
@@ -234,7 +275,11 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">Before Taps</span>
+              <span
+                class="pipeline-label"
+                matTooltip="Side-effect callbacks invoked before the reducer runs"
+                >Before Taps</span
+              >
               <span class="pipeline-count">{{
                 cell().fluentApis?.beforeTaps
               }}</span>
@@ -245,7 +290,11 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">Reducers</span>
+              <span
+                class="pipeline-label"
+                matTooltip="Reducer functions that transform the state"
+                >Reducers</span
+              >
               <span class="pipeline-count">{{
                 cell().fluentApis?.reducers
               }}</span>
@@ -262,8 +311,11 @@
                   <span
                     class="pipeline-licensed"
                     [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                    >*</span
-                  >
+                    ><img
+                      src="assets/brand/vault-icon.png"
+                      alt="Licensed"
+                      class="vault-icon"
+                  /></span>
                 }
               </div>
               <span class="pipeline-count">{{
@@ -276,7 +328,11 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">After Taps</span>
+              <span
+                class="pipeline-label"
+                matTooltip="Side-effect callbacks invoked after the reducer runs"
+                >After Taps</span
+              >
               <span class="pipeline-count">{{
                 cell().fluentApis?.afterTaps
               }}</span>
@@ -301,8 +357,11 @@
                   <span
                     class="pipeline-licensed"
                     [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                    >*</span
-                  >
+                    ><img
+                      src="assets/brand/vault-icon.png"
+                      alt="Licensed"
+                      class="vault-icon"
+                  /></span>
                 }
               </div>
               <span class="pipeline-count">{{
@@ -321,14 +380,20 @@
                   <span
                     class="pipeline-licensed"
                     [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                    >*</span
-                  >
+                    ><img
+                      src="assets/brand/vault-icon.png"
+                      alt="Licensed"
+                      class="vault-icon"
+                  /></span>
                 }
               </div>
               <span class="pipeline-count">{{
                 vaultKeyDomain(behavior.key)
               }}</span>
             </div>
+          }
+          @if (!encryptBehaviors().length && !persistBehaviors().length) {
+            <p class="pipeline-empty">No behaviors attached</p>
           }
         </sdux-devtools-pipeline-collapsible>
         <div class="pipeline-connector" aria-hidden="true">
@@ -349,8 +414,11 @@
                   <span
                     class="pipeline-licensed"
                     [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                    >*</span
-                  >
+                    ><img
+                      src="assets/brand/vault-icon.png"
+                      alt="Licensed"
+                      class="vault-icon"
+                  /></span>
                 }
               </div>
               <span class="pipeline-count">{{
@@ -376,8 +444,11 @@
                       <span
                         class="pipeline-licensed"
                         [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                        >*</span
-                      >
+                        ><img
+                          src="assets/brand/vault-icon.png"
+                          alt="Licensed"
+                          class="vault-icon"
+                      /></span>
                     }
                   </div>
                   <span class="pipeline-count">{{
@@ -416,8 +487,11 @@
                       <span
                         class="pipeline-licensed"
                         [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                        >*</span
-                      >
+                        ><img
+                          src="assets/brand/vault-icon.png"
+                          alt="Licensed"
+                          class="vault-icon"
+                      /></span>
                     }
                   </div>
                   <span class="pipeline-count">{{
@@ -439,13 +513,27 @@
   </section>
 
   <section class="entity-section">
-    <h4 class="entity-title">
+    <h4
+      class="entity-title entity-toggle"
+      (click)="behaviorsExpanded.update((v) => !v)"
+      (keydown.enter)="behaviorsExpanded.update((v) => !v)"
+      (keydown.space)="behaviorsExpanded.update((v) => !v)"
+      tabindex="0"
+      role="button"
+      [attr.aria-expanded]="behaviorsExpanded()"
+      matTooltip="Behaviors registered on this FeatureCell">
       Behaviors
       <span class="entity-count">({{ behaviors().length }})</span>
+      <span
+        class="entity-chevron"
+        [class.entity-chevron-expanded]="behaviorsExpanded()"
+        aria-hidden="true"
+        >&#9656;</span
+      >
     </h4>
-    @if (behaviors().length) {
+    @if (behaviorsExpanded() && behaviors().length) {
       <ul class="entity-list">
-        @for (behavior of behaviors(); track behavior.key) {
+        @for (behavior of sortedBehaviors(); track behavior.key) {
           <li class="entity-item">
             <div class="entity-key" [matTooltip]="behavior.key">
               {{ vaultKeyDomainName(behavior.key) }}
@@ -453,27 +541,44 @@
                 <span
                   class="pipeline-licensed"
                   [matTooltip]="'LicenseId: ' + behavior.licenseId"
-                  >*</span
-                >
+                  ><img
+                    src="assets/brand/vault-icon.png"
+                    alt="Licensed"
+                    class="vault-icon"
+                /></span>
               }
             </div>
             <span class="entity-type">{{ behavior.type }}</span>
           </li>
         }
       </ul>
-    } @else {
+    } @else if (behaviorsExpanded()) {
       <p class="entity-empty">No behaviors registered.</p>
     }
   </section>
 
   <section class="entity-section">
-    <h4 class="entity-title">
+    <h4
+      class="entity-title entity-toggle"
+      (click)="controllersExpanded.update((v) => !v)"
+      (keydown.enter)="controllersExpanded.update((v) => !v)"
+      (keydown.space)="controllersExpanded.update((v) => !v)"
+      tabindex="0"
+      role="button"
+      [attr.aria-expanded]="controllersExpanded()"
+      matTooltip="Controllers registered on this FeatureCell">
       Controllers
       <span class="entity-count">({{ controllers().length }})</span>
+      <span
+        class="entity-chevron"
+        [class.entity-chevron-expanded]="controllersExpanded()"
+        aria-hidden="true"
+        >&#9656;</span
+      >
     </h4>
-    @if (controllers().length) {
+    @if (controllersExpanded() && controllers().length) {
       <ul class="entity-list">
-        @for (controller of controllers(); track controller.key) {
+        @for (controller of sortedControllers(); track controller.key) {
           <li class="entity-item">
             <div class="entity-key" [matTooltip]="controller.key">
               {{ vaultKeyDomainName(controller.key) }}
@@ -481,15 +586,18 @@
                 <span
                   class="pipeline-licensed"
                   [matTooltip]="'LicenseId: ' + controller.licenseId"
-                  >*</span
-                >
+                  ><img
+                    src="assets/brand/vault-icon.png"
+                    alt="Licensed"
+                    class="vault-icon"
+                /></span>
               }
             </div>
             <span class="entity-type">{{ controller.type }}</span>
           </li>
         }
       </ul>
-    } @else {
+    } @else if (controllersExpanded()) {
       <p class="entity-empty">No controllers registered.</p>
     }
   </section>

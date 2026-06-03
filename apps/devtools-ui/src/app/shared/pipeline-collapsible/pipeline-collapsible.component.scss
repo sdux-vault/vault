@@ -51,7 +51,7 @@ sdux-devtools-pipeline-collapsible {
 
   .pipeline-chevron {
     @include global.sdux-text(global.$sdux-text-secondary);
-    font-size: global.$font-size-xl;
+    font-size: global.$font-size-2xl;
     transition: transform 0.2s ease;
     display: inline-block;
   }

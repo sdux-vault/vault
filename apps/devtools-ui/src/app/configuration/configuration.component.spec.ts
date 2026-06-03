@@ -127,6 +127,23 @@ describe('Component: Configuration', () => {
       expect(component.registry().length).toBe(2);
       expect(component.registry()[0].key).toBe('alpha');
     });
+
+    it('should filter out the devtools logging cell', () => {
+      const devtoolsCell: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        key: 'vault::devtools::logging::feature::cell'
+      };
+      mockService.vaultConfig.set({
+        versions: {},
+        registry: [mockCell, devtoolsCell, mockCell2]
+      });
+      expect(component.registry().length).toBe(2);
+      expect(
+        component
+          .registry()
+          .some((c) => c.key === 'vault::devtools::logging::feature::cell')
+      ).toBeFalse();
+    });
   });
 
   describe('selectedCell', () => {
@@ -202,6 +219,235 @@ describe('Component: Configuration', () => {
     it('should format a numeric timestamp as MM/DD/YYYY', () => {
       const result = component.formatLicenseDate(1700000000000);
       expect(result).toMatch(/^\d{2}\/\d{2}\/\d{4}$/);
+    });
+  });
+
+  describe('fluentApisCount', () => {
+    it('should return 0 when fluentApis is null', () => {
+      expect(component.fluentApisCount(mockCell)).toBe(0);
+    });
+
+    it('should sum all fluent API callback counts', () => {
+      const cellWithApis: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        fluentApis: {
+          filters: 2,
+          reducers: 1,
+          beforeTaps: 3,
+          afterTaps: 1,
+          interceptors: 0,
+          operators: 1,
+          emitStateCallbacks: 2,
+          errorCallbacks: 1
+        }
+      };
+      expect(component.fluentApisCount(cellWithApis)).toBe(11);
+    });
+
+    it('should return 0 when all fluent API counts are zero', () => {
+      const cellWithZeros: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        fluentApis: {
+          filters: 0,
+          reducers: 0,
+          beforeTaps: 0,
+          afterTaps: 0,
+          interceptors: 0,
+          operators: 0,
+          emitStateCallbacks: 0,
+          errorCallbacks: 0
+        }
+      };
+      expect(component.fluentApisCount(cellWithZeros)).toBe(0);
+    });
+  });
+
+  describe('fluentApisTooltip', () => {
+    it('should return fallback message when fluentApis is null', () => {
+      expect(component.fluentApisTooltip(mockCell)).toBe(
+        'No fluent API callbacks registered'
+      );
+    });
+
+    it('should list only non-zero counts', () => {
+      const cell: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        fluentApis: {
+          filters: 2,
+          reducers: 0,
+          beforeTaps: 1,
+          afterTaps: 0,
+          interceptors: 0,
+          operators: 0,
+          emitStateCallbacks: 0,
+          errorCallbacks: 1
+        }
+      };
+      const result = component.fluentApisTooltip(cell);
+      expect(result).toContain('Filters: 2');
+      expect(result).toContain('Before Taps: 1');
+      expect(result).toContain('Error Handlers: 1');
+      expect(result).not.toContain('Reducers');
+    });
+
+    it('should return fallback when all counts are zero', () => {
+      const cell: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        fluentApis: {
+          filters: 0,
+          reducers: 0,
+          beforeTaps: 0,
+          afterTaps: 0,
+          interceptors: 0,
+          operators: 0,
+          emitStateCallbacks: 0,
+          errorCallbacks: 0
+        }
+      };
+      expect(component.fluentApisTooltip(cell)).toBe(
+        'No fluent API callbacks registered'
+      );
+    });
+
+    it('should include Reducers line when reducers is non-zero', () => {
+      const cell: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        fluentApis: {
+          filters: 0,
+          reducers: 3,
+          beforeTaps: 0,
+          afterTaps: 0,
+          interceptors: 0,
+          operators: 0,
+          emitStateCallbacks: 0,
+          errorCallbacks: 0
+        }
+      };
+      expect(component.fluentApisTooltip(cell)).toBe('Reducers: 3');
+    });
+
+    it('should include Interceptors line when interceptors is non-zero', () => {
+      const cell: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        fluentApis: {
+          filters: 0,
+          reducers: 0,
+          beforeTaps: 0,
+          afterTaps: 0,
+          interceptors: 5,
+          operators: 0,
+          emitStateCallbacks: 0,
+          errorCallbacks: 0
+        }
+      };
+      expect(component.fluentApisTooltip(cell)).toBe('Interceptors: 5');
+    });
+
+    it('should include Operators line when operators is non-zero', () => {
+      const cell: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        fluentApis: {
+          filters: 0,
+          reducers: 0,
+          beforeTaps: 0,
+          afterTaps: 0,
+          interceptors: 0,
+          operators: 4,
+          emitStateCallbacks: 0,
+          errorCallbacks: 0
+        }
+      };
+      expect(component.fluentApisTooltip(cell)).toBe('Operators: 4');
+    });
+
+    it('should include After Taps line when afterTaps is non-zero', () => {
+      const cell: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        fluentApis: {
+          filters: 0,
+          reducers: 0,
+          beforeTaps: 0,
+          afterTaps: 2,
+          interceptors: 0,
+          operators: 0,
+          emitStateCallbacks: 0,
+          errorCallbacks: 0
+        }
+      };
+      expect(component.fluentApisTooltip(cell)).toBe('After Taps: 2');
+    });
+
+    it('should include Emit States line when emitStateCallbacks is non-zero', () => {
+      const cell: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        fluentApis: {
+          filters: 0,
+          reducers: 0,
+          beforeTaps: 0,
+          afterTaps: 0,
+          interceptors: 0,
+          operators: 0,
+          emitStateCallbacks: 7,
+          errorCallbacks: 0
+        }
+      };
+      expect(component.fluentApisTooltip(cell)).toBe('Emit States: 7');
+    });
+
+    it('should include all lines when all counts are non-zero', () => {
+      const cell: VaultRegistrationSerializedShape = {
+        ...mockCell,
+        fluentApis: {
+          filters: 1,
+          reducers: 2,
+          beforeTaps: 3,
+          afterTaps: 4,
+          interceptors: 5,
+          operators: 6,
+          emitStateCallbacks: 7,
+          errorCallbacks: 8
+        }
+      };
+      const result = component.fluentApisTooltip(cell);
+      const lines = result.split('\n');
+      expect(lines.length).toBe(8);
+      expect(lines[0]).toBe('Filters: 1');
+      expect(lines[1]).toBe('Reducers: 2');
+      expect(lines[2]).toBe('Interceptors: 5');
+      expect(lines[3]).toBe('Operators: 6');
+      expect(lines[4]).toBe('Before Taps: 3');
+      expect(lines[5]).toBe('After Taps: 4');
+      expect(lines[6]).toBe('Emit States: 7');
+      expect(lines[7]).toBe('Error Handlers: 8');
+    });
+  });
+
+  describe('template rendering', () => {
+    it('should show free license message when no license is present', () => {
+      mockService.vaultConfig.set({ versions: {}, registry: null });
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      expect(el.querySelector('.free-license')?.textContent).toContain(
+        'Free license'
+      );
+    });
+
+    it('should not show free license message when license is present', () => {
+      mockService.vaultConfig.set({
+        versions: {},
+        registry: null,
+        license: {
+          organization: 'Acme',
+          domain: 'acme.com',
+          licenseType: 'enterprise' as const,
+          issuedAt: 1700000000000,
+          expires: 1800000000000,
+          verified: true
+        }
+      });
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      expect(el.querySelector('.free-license')).toBeNull();
     });
   });
 });

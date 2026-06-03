@@ -29,7 +29,8 @@
     {
       "resources": [
         "bridge/bridge-inject.js",
-        "assets/brand/brand-landscape-dark.svg"
+        "assets/brand/brand-landscape-dark.svg",
+        "assets/brand/vault-icon.png"
       ],
       "matches": ["<all_urls>"]
     }

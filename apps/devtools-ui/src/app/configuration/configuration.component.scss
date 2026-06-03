@@ -82,6 +82,11 @@
       font-size: global.$font-size-sm;
       font-style: italic;
     }
+
+    .free-license {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-size: global.$font-size-sm;
+    }
   }
 
   .detail-pane {

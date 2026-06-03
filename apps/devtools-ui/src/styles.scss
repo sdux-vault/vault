@@ -152,6 +152,11 @@ body {
   background: var(--surface-bg);
 }
 
+// exception: third-party Material tab override — no class-based alternative
 ::ng-deep .mat-mdc-tab-label-container {
   background-color: global.$sdux-text-primary !important;
+}
+
+.fluent-apis-tooltip {
+  white-space: pre-line;
 }

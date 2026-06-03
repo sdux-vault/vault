@@ -78,6 +78,14 @@
       }
     }
 
+    .pipeline-empty {
+      color: global.$sdux-text-black;
+      font-size: global.$font-size-sm;
+      font-style: italic;
+      text-align: center;
+      margin: global.$spacing-sm 0;
+    }
+
     .pipeline-node {
       display: flex;
       align-items: center;
@@ -91,6 +99,8 @@
       .pipeline-label {
         @include global.sdux-text(global.$sdux-text-secondary);
         font-size: global.$font-size-sm;
+        display: inline-flex;
+        align-items: center;
       }
 
       .pipeline-count {
@@ -99,10 +109,14 @@
       }
 
       .pipeline-licensed {
-        @include global.sdux-text(global.$sdux-warn-base);
-        font-size: global.$font-size-sm;
-        font-weight: global.$font-weight-bold;
         margin-left: global.$spacing-xs;
+        display: inline-flex;
+        align-items: center;
+
+        .vault-icon {
+          width: 20px;
+          height: 20px;
+        }
       }
 
       &.pipeline-active {
@@ -152,6 +166,26 @@
       @include global.sdux-text(global.$sdux-text-secondary);
       font-weight: global.$font-weight-regular;
       font-size: global.$font-size-sm;
+      margin-left: global.$spacing-sm;
+    }
+
+    &.entity-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .entity-chevron {
+      margin-left: auto;
+      font-size: global.$font-size-2xl;
+      @include global.sdux-text(global.$sdux-text-secondary);
+      transition: transform 0.2s ease;
+      display: inline-block;
+
+      &.entity-chevron-expanded {
+        transform: rotate(90deg);
+      }
     }
   }
 
@@ -192,4 +226,10 @@
     font-size: global.$font-size-sm;
     font-style: italic;
   }
+}
+
+.vault-icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
 }
