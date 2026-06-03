@@ -69,6 +69,27 @@ export class ConfigurationComponent {
     return config?.registry ?? [];
   });
 
+  /** Verified license payload from the Vault configuration signal. */
+  readonly license = computed(() => {
+    const config = this.insight.vaultConfig();
+    return config?.license ?? null;
+  });
+
+  /**
+   * Formats a license date value for display.
+   *
+   * @param value - A Unix-epoch millisecond timestamp or `'forever'`.
+   * @returns A human-readable date string.
+   */
+  formatLicenseDate(value: number | 'forever'): string {
+    if (value === 'forever') return 'Never';
+    return new Intl.DateTimeFormat('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    }).format(new Date(value));
+  }
+
   /** The currently selected FeatureCell for the detail panel. */
   readonly selectedCell = signal<VaultRegistrationSerializedShape | null>(null);
 
@@ -84,5 +105,15 @@ export class ConfigurationComponent {
   /** Closes the detail panel by clearing the selection. */
   closeDetail(): void {
     this.selectedCell.set(null);
+  }
+
+  /** Returns the count of behaviors requiring a license in the given cell. */
+  behaviorLicenseCount(cell: VaultRegistrationSerializedShape): number {
+    return cell.behaviors.filter((b) => b.needsLicense).length;
+  }
+
+  /** Returns the count of controllers requiring a license in the given cell. */
+  controllerLicenseCount(cell: VaultRegistrationSerializedShape): number {
+    return cell.controllers.filter((c) => c.needsLicense).length;
   }
 }

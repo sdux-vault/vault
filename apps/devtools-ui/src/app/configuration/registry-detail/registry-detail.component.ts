@@ -5,6 +5,7 @@ import {
   input,
   output
 } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BehaviorTypes } from '@sdux-vault/shared';
 import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
 import { DetailPaneComponent } from '../../shared/detail-pane/detail-pane.component';
@@ -21,7 +22,11 @@ import { PipelineCollapsibleComponent } from '../../shared/pipeline-collapsible/
 @Component({
   selector: 'sdux-devtools-registry-detail',
   standalone: true,
-  imports: [DetailPaneComponent, PipelineCollapsibleComponent],
+  imports: [
+    DetailPaneComponent,
+    PipelineCollapsibleComponent,
+    MatTooltipModule
+  ],
   templateUrl: './registry-detail.component.html',
   styleUrl: './registry-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -78,6 +83,17 @@ export class RegistryDetailComponent {
   vaultKeyDomain(key: string): string {
     const parts = key.split('::');
     return parts.length === 4 ? parts[2] : '';
+  }
+
+  /**
+   * Extracts the Domain and Name segments from a Vault key.
+   *
+   * @param key - A key in the format `SDUX::<Kind>::<Domain>::<Name>`.
+   * @returns `<Domain>::<Name>`, or the full key if the format is unexpected.
+   */
+  vaultKeyDomainName(key: string): string {
+    const parts = key.split('::');
+    return parts.length === 4 ? `${parts[2]}::${parts[3]}` : key;
   }
 
   /** Pipeline stage labels and their registered counts. */

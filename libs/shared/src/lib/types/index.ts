@@ -44,3 +44,7 @@ export type { FinalState } from './state/final-state.type';
 export { StateEmitTypes } from './state/state-emit.type';
 export type { StateEmitType } from './state/state-emit.type';
 export type { StateInputType } from './state/state-input.type';
+export { VaultLicensePayloadTypes } from './vault/vault-license-payload.type';
+export type { VaultLicensePayloadType } from './vault/vault-license-payload.type';
+export { VaultRegistrationLicenseStatusTypes } from './vault/vault-registration-license-status.type';
+export type { VaultRegistrationLicenseStatusType } from './vault/vault-registration-license-status.type';

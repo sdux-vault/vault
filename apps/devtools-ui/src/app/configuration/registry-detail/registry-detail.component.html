@@ -43,9 +43,16 @@
                   <span class="pipeline-arrow">&#9660;</span>
                 </div>
                 <div class="pipeline-node pipeline-active">
-                  <span class="pipeline-label">{{
-                    vaultKeyName(controller.key)
-                  }}</span>
+                  <div class="pipeline-label">
+                    {{ vaultKeyName(controller.key) }}
+                    @if (controller.needsLicense) {
+                      <span
+                        class="pipeline-licensed"
+                        [matTooltip]="'LicenseId: ' + controller.licenseId"
+                        >*</span
+                      >
+                    }
+                  </div>
                   <span class="pipeline-count">{{
                     vaultKeyDomain(controller.key)
                   }}</span>
@@ -57,9 +64,16 @@
                 <span class="pipeline-arrow">&#9660;</span>
               </div>
               <div class="pipeline-node pipeline-active">
-                <span class="pipeline-label">{{
-                  vaultKeyName(controller.key)
-                }}</span>
+                <div class="pipeline-label">
+                  {{ vaultKeyName(controller.key) }}
+                  @if (controller.needsLicense) {
+                    <span
+                      class="pipeline-licensed"
+                      [matTooltip]="'LicenseId: ' + controller.licenseId"
+                      >*</span
+                    >
+                  }
+                </div>
                 <span class="pipeline-count">{{
                   vaultKeyDomain(controller.key)
                 }}</span>
@@ -111,9 +125,16 @@
                 <span class="pipeline-arrow">&#9660;</span>
               </div>
               <div class="pipeline-node pipeline-active">
-                <span class="pipeline-label">{{
-                  vaultKeyName(behavior.key)
-                }}</span>
+                <div class="pipeline-label">
+                  {{ vaultKeyName(behavior.key) }}
+                  @if (behavior.needsLicense) {
+                    <span
+                      class="pipeline-licensed"
+                      [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                      >*</span
+                    >
+                  }
+                </div>
                 <span class="pipeline-count">{{
                   vaultKeyDomain(behavior.key)
                 }}</span>
@@ -131,9 +152,16 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">{{
-                vaultKeyName(behavior.key)
-              }}</span>
+              <div class="pipeline-label">
+                {{ vaultKeyName(behavior.key) }}
+                @if (behavior.needsLicense) {
+                  <span
+                    class="pipeline-licensed"
+                    [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                    >*</span
+                  >
+                }
+              </div>
               <span class="pipeline-count">{{
                 vaultKeyDomain(behavior.key)
               }}</span>
@@ -144,9 +172,16 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">{{
-                vaultKeyName(behavior.key)
-              }}</span>
+              <div class="pipeline-label">
+                {{ vaultKeyName(behavior.key) }}
+                @if (behavior.needsLicense) {
+                  <span
+                    class="pipeline-licensed"
+                    [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                    >*</span
+                  >
+                }
+              </div>
               <span class="pipeline-count">{{
                 vaultKeyDomain(behavior.key)
               }}</span>
@@ -179,9 +214,16 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">{{
-                vaultKeyName(behavior.key)
-              }}</span>
+              <div class="pipeline-label">
+                {{ vaultKeyName(behavior.key) }}
+                @if (behavior.needsLicense) {
+                  <span
+                    class="pipeline-licensed"
+                    [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                    >*</span
+                  >
+                }
+              </div>
               <span class="pipeline-count">{{
                 vaultKeyDomain(behavior.key)
               }}</span>
@@ -214,9 +256,16 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">{{
-                vaultKeyName(behavior.key)
-              }}</span>
+              <div class="pipeline-label">
+                {{ vaultKeyName(behavior.key) }}
+                @if (behavior.needsLicense) {
+                  <span
+                    class="pipeline-licensed"
+                    [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                    >*</span
+                  >
+                }
+              </div>
               <span class="pipeline-count">{{
                 vaultKeyDomain(behavior.key)
               }}</span>
@@ -246,9 +295,16 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">{{
-                vaultKeyName(behavior.key)
-              }}</span>
+              <div class="pipeline-label">
+                {{ vaultKeyName(behavior.key) }}
+                @if (behavior.needsLicense) {
+                  <span
+                    class="pipeline-licensed"
+                    [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                    >*</span
+                  >
+                }
+              </div>
               <span class="pipeline-count">{{
                 vaultKeyDomain(behavior.key)
               }}</span>
@@ -259,9 +315,16 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">{{
-                vaultKeyName(behavior.key)
-              }}</span>
+              <div class="pipeline-label">
+                {{ vaultKeyName(behavior.key) }}
+                @if (behavior.needsLicense) {
+                  <span
+                    class="pipeline-licensed"
+                    [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                    >*</span
+                  >
+                }
+              </div>
               <span class="pipeline-count">{{
                 vaultKeyDomain(behavior.key)
               }}</span>
@@ -280,9 +343,16 @@
               <span class="pipeline-arrow">&#9660;</span>
             </div>
             <div class="pipeline-node pipeline-active">
-              <span class="pipeline-label">{{
-                vaultKeyName(behavior.key)
-              }}</span>
+              <div class="pipeline-label">
+                {{ vaultKeyName(behavior.key) }}
+                @if (behavior.needsLicense) {
+                  <span
+                    class="pipeline-licensed"
+                    [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                    >*</span
+                  >
+                }
+              </div>
               <span class="pipeline-count">{{
                 vaultKeyDomain(behavior.key)
               }}</span>
@@ -300,9 +370,16 @@
                   <span class="pipeline-arrow">&#9660;</span>
                 </div>
                 <div class="pipeline-node pipeline-active">
-                  <span class="pipeline-label">{{
-                    vaultKeyName(behavior.key)
-                  }}</span>
+                  <div class="pipeline-label">
+                    {{ vaultKeyName(behavior.key) }}
+                    @if (behavior.needsLicense) {
+                      <span
+                        class="pipeline-licensed"
+                        [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                        >*</span
+                      >
+                    }
+                  </div>
                   <span class="pipeline-count">{{
                     vaultKeyDomain(behavior.key)
                   }}</span>
@@ -333,9 +410,16 @@
                   <span class="pipeline-arrow">&#9660;</span>
                 </div>
                 <div class="pipeline-node pipeline-active">
-                  <span class="pipeline-label">{{
-                    vaultKeyName(behavior.key)
-                  }}</span>
+                  <div class="pipeline-label">
+                    {{ vaultKeyName(behavior.key) }}
+                    @if (behavior.needsLicense) {
+                      <span
+                        class="pipeline-licensed"
+                        [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                        >*</span
+                      >
+                    }
+                  </div>
                   <span class="pipeline-count">{{
                     vaultKeyDomain(behavior.key)
                   }}</span>
@@ -363,7 +447,16 @@
       <ul class="entity-list">
         @for (behavior of behaviors(); track behavior.key) {
           <li class="entity-item">
-            <span class="entity-key">{{ behavior.key }}</span>
+            <div class="entity-key" [matTooltip]="behavior.key">
+              {{ vaultKeyDomainName(behavior.key) }}
+              @if (behavior.needsLicense) {
+                <span
+                  class="pipeline-licensed"
+                  [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                  >*</span
+                >
+              }
+            </div>
             <span class="entity-type">{{ behavior.type }}</span>
           </li>
         }
@@ -382,7 +475,16 @@
       <ul class="entity-list">
         @for (controller of controllers(); track controller.key) {
           <li class="entity-item">
-            <span class="entity-key">{{ controller.key }}</span>
+            <div class="entity-key" [matTooltip]="controller.key">
+              {{ vaultKeyDomainName(controller.key) }}
+              @if (controller.needsLicense) {
+                <span
+                  class="pipeline-licensed"
+                  [matTooltip]="'LicenseId: ' + controller.licenseId"
+                  >*</span
+                >
+              }
+            </div>
             <span class="entity-type">{{ controller.type }}</span>
           </li>
         }

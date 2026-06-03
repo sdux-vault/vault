@@ -2,6 +2,40 @@
   <section class="configuration-content">
     <h2 class="title">Vault Configuration</h2>
 
+    @if (license(); as lic) {
+      <section class="section">
+        <h3 class="section-title">License</h3>
+        <table class="versions-table">
+          <tbody>
+            <tr>
+              <td>Organization</td>
+              <td>{{ lic.organization }}</td>
+            </tr>
+            <tr>
+              <td>Domain</td>
+              <td>{{ lic.domain }}</td>
+            </tr>
+            <tr>
+              <td>Tier</td>
+              <td>{{ lic.licenseType }}</td>
+            </tr>
+            <tr>
+              <td>Issued</td>
+              <td>{{ formatLicenseDate(lic.issuedAt) }}</td>
+            </tr>
+            <tr>
+              <td>Expires</td>
+              <td>{{ formatLicenseDate(lic.expires) }}</td>
+            </tr>
+            <tr>
+              <td>Verified</td>
+              <td>{{ lic.verified ? 'Yes' : 'No' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    }
+
     <section class="section">
       <h3 class="section-title">Package Versions</h3>
       @if (versions().length) {
@@ -33,8 +67,8 @@
           <thead>
             <tr>
               <th>Cell Key</th>
-              <th>Behaviors</th>
-              <th>Controllers</th>
+              <th>Behaviors/Licenses</th>
+              <th>Controllers/Licenses</th>
             </tr>
           </thead>
           <tbody>
@@ -44,8 +78,13 @@
                 [class.selected]="selectedCell() === cell"
                 (click)="selectCell(cell)">
                 <td>{{ cell.key }}</td>
-                <td>{{ cell.behaviors.length }}</td>
-                <td>{{ cell.controllers.length }}</td>
+                <td>
+                  {{ cell.behaviors.length }} / {{ behaviorLicenseCount(cell) }}
+                </td>
+                <td>
+                  {{ cell.controllers.length }} /
+                  {{ controllerLicenseCount(cell) }}
+                </td>
               </tr>
             }
           </tbody>

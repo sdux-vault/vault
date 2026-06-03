@@ -17,6 +17,7 @@ export type { StateEmitSnapshotShape } from './state/state-emit-snapshot.shape';
 export type { StateInputShape } from './state/state-input.shape';
 export type { StateSnapshotShape } from './state/state-snapshot.shape';
 export type { VaultErrorShape } from './vault-error.shape';
+export type { VaultLicensePayloadShape } from './vault/vault-license-payload.shape';
 export type { VaultLicensingShape } from './vault/vault-licensing.shape';
 export type { VaultRegistrationEntityShape } from './vault/vault-registration.entity.shape';
 export type { VaultRegistrationFluentApiShape } from './vault/vault-registration.fluent-api.shape';

@@ -1,3 +1,4 @@
+import { VaultLicensePayloadShape } from '@sdux-vault/shared';
 import { VaultRegistrationSerializedShape } from './vault-registration-serialized.shape';
 
 /**
@@ -8,4 +9,6 @@ export interface VaultConfigMessageShape {
   versions: Record<string, string>;
   /** Serialized FeatureCell registry snapshot. */
   registry: VaultRegistrationSerializedShape[] | null;
+  /** Verified license payload, if available. */
+  license?: VaultLicensePayloadShape | null;
 }

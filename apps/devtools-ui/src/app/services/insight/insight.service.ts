@@ -182,7 +182,7 @@ export class InsightService {
       }
     }
 
-    this.#mergeConfig({ versions, registry });
+    this.#mergeConfig({ versions, registry, license: sdux.license ?? null });
   }
 
   /**
@@ -193,7 +193,8 @@ export class InsightService {
     const current = this.vaultConfig();
     this.vaultConfig.set({
       versions: { ...current?.versions, ...incoming.versions },
-      registry: incoming.registry ?? current?.registry ?? null
+      registry: incoming.registry ?? current?.registry ?? null,
+      license: incoming.license ?? current?.license ?? null
     });
   }
 }

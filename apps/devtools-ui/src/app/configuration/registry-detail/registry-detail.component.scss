@@ -98,6 +98,13 @@
         font-size: global.$font-size-xs;
       }
 
+      .pipeline-licensed {
+        @include global.sdux-text(global.$sdux-warn-base);
+        font-size: global.$font-size-sm;
+        font-weight: global.$font-weight-bold;
+        margin-left: global.$spacing-xs;
+      }
+
       &.pipeline-active {
         border-color: global.$sdux-primary-base;
         background-color: global.$sdux-surface-active;
