@@ -40,18 +40,26 @@
       </li>
     </ul>
 
-    <div class="note">Note</div>
-    <p>
-      <strong>replaceState()</strong> does not participate in the Merge stage
-      and does not use any Merge behavior. The resolved incoming value becomes
-      the candidate state directly before downstream operators, filters,
-      reducers, and taps execute.
-    </p>
+    <div class="callout callout-info">
+      <p>
+        <strong>replaceState()</strong> does not participate in the Merge stage
+        and does not use any Merge behavior. The resolved incoming value becomes
+        the candidate state directly before downstream operators, filters,
+        reducers, and taps execute.
+      </p>
+    </div>
 
     <h4>Learn More</h4>
     <a routerLink="/docs/pipeline/behaviors/state/with-core-state-behavior">
       <span class="menu-content sub-item">Core State Behavior</span>
     </a>
+
+    <p class="live-example-link">
+      Try it in StackBlitz:
+      <a routerLink="/docs/stackblitz" fragment="basic-filter-reducer"
+        >Filter &amp; Reducer Pipeline →</a
+      >
+    </p>
   </header>
 
   <!-- ====================================================== -->
@@ -262,6 +270,23 @@ employeeCell.replaceState([{ name: 'Alice', age: 25 }]);
       <p>
         <strong>replaceState()</strong> always performs full state replacement.
         No merge behavior participates in this operation.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Try It Live</div>
+
+    <div class="section-body">
+      <p>
+        A runnable StackBlitz example demonstrates filter and reducer behavior
+        across Angular, React, Vue, and Svelte — no local setup required.
+      </p>
+
+      <p>
+        <a routerLink="/docs/stackblitz" fragment="basic-filter-reducer"
+          >Open the Filter &amp; Reducer Pipeline example →</a
+        >
       </p>
     </div>
   </section>
