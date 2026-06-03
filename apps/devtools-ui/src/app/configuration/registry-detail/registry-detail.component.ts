@@ -8,6 +8,7 @@ import {
 import { BehaviorTypes } from '@sdux-vault/shared';
 import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
 import { DetailPaneComponent } from '../../shared/detail-pane/detail-pane.component';
+import { PipelineCollapsibleComponent } from '../../shared/pipeline-collapsible/pipeline-collapsible.component';
 
 /**
  * Detail panel displaying the behaviors and controllers registered
@@ -20,7 +21,7 @@ import { DetailPaneComponent } from '../../shared/detail-pane/detail-pane.compon
 @Component({
   selector: 'sdux-devtools-registry-detail',
   standalone: true,
-  imports: [DetailPaneComponent],
+  imports: [DetailPaneComponent, PipelineCollapsibleComponent],
   templateUrl: './registry-detail.component.html',
   styleUrl: './registry-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -37,6 +38,22 @@ export class RegistryDetailComponent {
 
   /** Controller entities extracted from the registry cell. */
   readonly controllers = computed(() => this.cell().controllers ?? []);
+
+  /** Core controllers (CoreAbstain, CoreLicense, CoreError). */
+  readonly coreControllers = computed(() => {
+    const coreNames = new Set(['CoreAbstain', 'CoreLicense', 'CoreError']);
+    return this.controllers().filter((controller) =>
+      coreNames.has(this.vaultKeyName(controller.key))
+    );
+  });
+
+  /** Non-core controllers. */
+  readonly nonCoreControllers = computed(() => {
+    const coreNames = new Set(['CoreAbstain', 'CoreLicense', 'CoreError']);
+    return this.controllers().filter(
+      (controller) => !coreNames.has(this.vaultKeyName(controller.key))
+    );
+  });
 
   /** Cell key extracted from the registry cell. */
   readonly cellKey = computed(() => this.cell().key ?? '');
@@ -71,42 +88,91 @@ export class RegistryDetailComponent {
 
   /** Behaviors with type "resolve". */
   readonly resolveBehaviors = computed(() =>
-    this.behaviors().filter((b) => b.type === BehaviorTypes.Resolve)
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.Resolve
+    )
+  );
+
+  /** Behaviors with type "fromObservable". */
+  readonly fromObservableBehaviors = computed(() =>
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.FromObservable
+    )
+  );
+
+  /** Behaviors with type "fromPromise". */
+  readonly fromPromiseBehaviors = computed(() =>
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.FromPromise
+    )
+  );
+
+  /** Behaviors with type "fromStream". */
+  readonly fromStreamBehaviors = computed(() =>
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.FromStream
+    )
   );
 
   /** Behaviors with type "merge". */
   readonly mergeBehaviors = computed(() =>
-    this.behaviors().filter((b) => b.type === BehaviorTypes.Merge)
+    this.behaviors().filter((behavior) => behavior.type === BehaviorTypes.Merge)
   );
 
   /** Behaviors with type "stepwiseResolve". */
   readonly stepwiseResolveBehaviors = computed(() =>
-    this.behaviors().filter((b) => b.type === BehaviorTypes.StepwiseResolve)
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.StepwiseResolve
+    )
   );
 
   /** Behaviors with type "stepwiseFilter". */
   readonly stepwiseFilterBehaviors = computed(() =>
-    this.behaviors().filter((b) => b.type === BehaviorTypes.StepwiseFilter)
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.StepwiseFilter
+    )
   );
 
   /** Behaviors with type "stepwiseReducer". */
   readonly stepwiseReducerBehaviors = computed(() =>
-    this.behaviors().filter((b) => b.type === BehaviorTypes.StepwiseReducer)
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.StepwiseReducer
+    )
   );
 
   /** Behaviors with type "encrypt". */
   readonly encryptBehaviors = computed(() =>
-    this.behaviors().filter((b) => b.type === BehaviorTypes.Encrypt)
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.Encrypt
+    )
   );
 
   /** Behaviors with type "persist". */
   readonly persistBehaviors = computed(() =>
-    this.behaviors().filter((b) => b.type === BehaviorTypes.Persist)
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.Persist
+    )
   );
 
   /** Behaviors with type "coreState". */
   readonly coreStateBehaviors = computed(() =>
-    this.behaviors().filter((b) => b.type === BehaviorTypes.CoreState)
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.CoreState
+    )
+  );
+
+  /** Behaviors with type "errorTransform". */
+  readonly errorTransformBehaviors = computed(() =>
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.ErrorTransform
+    )
+  );
+
+  /** Behaviors with type "extension". */
+  readonly extensionBehaviors = computed(() =>
+    this.behaviors().filter(
+      (behavior) => behavior.type === BehaviorTypes.Extension
+    )
   );
 
   /** Pipeline stages rendered after all behavior-type groups in the flow. */

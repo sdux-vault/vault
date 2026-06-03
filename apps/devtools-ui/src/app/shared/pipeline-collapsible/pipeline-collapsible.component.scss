@@ -1,0 +1,62 @@
+@use 'global' as global;
+
+sdux-devtools-pipeline-collapsible {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+  box-sizing: border-box;
+
+  .pipeline-collapsible-wrapper {
+    width: 100%;
+    padding: global.$spacing-xs global.$spacing-sm;
+    border: 1px solid global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+    background-color: global.$sdux-surface-lightish;
+  }
+
+  .pipeline-collapsible-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+
+    .pipeline-label {
+      @include global.sdux-text(
+        global.$sdux-text-primary,
+        global.$font-weight-semibold
+      );
+      font-size: global.$font-size-sm;
+      flex: 1;
+      text-align: center;
+    }
+  }
+
+  .pipeline-collapsible-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 global.$spacing-sm global.$spacing-xs;
+
+    .pipeline-node {
+      width: 100%;
+    }
+
+    sdux-devtools-pipeline-collapsible {
+      width: 100%;
+    }
+  }
+
+  .pipeline-chevron {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-size: global.$font-size-xl;
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+
+  .pipeline-chevron-expanded {
+    transform: rotate(90deg);
+  }
+}

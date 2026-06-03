@@ -2,6 +2,8 @@
  * Public API Surface of addons
  */
 
+import './lib/version/version.register';
+
 export * from './lib/behaviors/entity-access/cache/index';
 export * from './lib/behaviors/entity-access/lookup/index';
 export * from './lib/behaviors/entity-access/query/index';
@@ -12,4 +14,3 @@ export * from './lib/behaviors/stepwise/index';
 export * from './lib/controllers/index';
 export * from './lib/vault/encrypt/index';
 export * from './lib/vault/persist/index';
-import './lib/version/version.register';

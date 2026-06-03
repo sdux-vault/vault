@@ -21,7 +21,7 @@ export const p225Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-local-storage',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -40,7 +40,7 @@ export const p225Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-local-storage',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -77,7 +77,7 @@ export const p225Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-local-storage',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',

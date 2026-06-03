@@ -465,7 +465,8 @@
   border-left: 4px solid global.$sdux-primary-base;
   background-color: var(--sdux-surface-bg);
   padding-left: global.$spacing-md;
-  margin: 0;
+  margin-top: global.$spacing-md;
+  margin-bottom: global.$spacing-md;
   border-radius: global.$border-radius-sm;
 
   .title {

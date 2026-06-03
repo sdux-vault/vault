@@ -18,6 +18,55 @@
     align-items: center;
     gap: 0;
 
+    sdux-devtools-pipeline-collapsible {
+      width: 100%;
+
+      // exception: pierces encapsulation to style only the policy-layer's direct wrapper
+      &.policy-layer ::ng-deep > .pipeline-collapsible-wrapper {
+        background: #f2e9d8;
+
+        > .pipeline-collapsible-header > .pipeline-label {
+          color: global.$sdux-text-black;
+        }
+      }
+
+      // exception: pierces encapsulation to style only the pre-processing-layer's direct wrapper
+      &.pre-processing-layer ::ng-deep > .pipeline-collapsible-wrapper {
+        background: #f2e9d8;
+
+        > .pipeline-collapsible-header > .pipeline-label {
+          color: global.$sdux-text-black;
+        }
+      }
+
+      // exception: pierces encapsulation to style only the processing-layer's direct wrapper
+      &.processing-layer ::ng-deep > .pipeline-collapsible-wrapper {
+        background: #f2e9d8;
+
+        > .pipeline-collapsible-header > .pipeline-label {
+          color: global.$sdux-text-black;
+        }
+      }
+
+      // exception: pierces encapsulation to style only the output-layer's direct wrapper
+      &.output-layer ::ng-deep > .pipeline-collapsible-wrapper {
+        background: #f2e9d8;
+
+        > .pipeline-collapsible-header > .pipeline-label {
+          color: global.$sdux-text-black;
+        }
+      }
+
+      // exception: pierces encapsulation to style only the post-processing-layer's direct wrapper
+      &.post-processing-layer ::ng-deep > .pipeline-collapsible-wrapper {
+        background: #f2e9d8;
+
+        > .pipeline-collapsible-header > .pipeline-label {
+          color: global.$sdux-text-black;
+        }
+      }
+    }
+
     .pipeline-connector {
       display: flex;
       justify-content: center;

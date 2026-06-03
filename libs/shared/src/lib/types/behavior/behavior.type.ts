@@ -11,7 +11,6 @@
 export const BehaviorTypes = {
   CoreAfterTap: 'coreAfterTap',
   CoreBeforeTap: 'coreBeforeTap',
-  ReplayGlobalError: 'replayGlobalError',
   CoreError: 'coreError',
   CoreErrorCallback: 'coreErrorCallback',
   CoreState: 'coreState',

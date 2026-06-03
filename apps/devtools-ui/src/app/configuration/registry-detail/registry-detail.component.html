@@ -10,180 +10,346 @@
       <div class="pipeline-connector" aria-hidden="true">
         <span class="pipeline-arrow">&#9660;</span>
       </div>
-      <div class="pipeline-node pipeline-start">
-        <span class="pipeline-label">Conductor</span>
-      </div>
-      @for (c of controllers(); track c.key) {
+      <sdux-devtools-pipeline-collapsible
+        label="Conductor"
+        tooltip="Expand to see conductor internals">
         <div class="pipeline-connector" aria-hidden="true">
           <span class="pipeline-arrow">&#9660;</span>
         </div>
-        <div class="pipeline-node pipeline-active">
-          <span class="pipeline-label">{{ vaultKeyName(c.key) }}</span>
-          <span class="pipeline-count">{{ vaultKeyDomain(c.key) }}</span>
-        </div>
-      }
+        <sdux-devtools-pipeline-collapsible
+          class="policy-layer"
+          label="Policy Layer"
+          tooltip="Expand to see queue and controller policies">
+          <div class="pipeline-connector" aria-hidden="true">
+            <span class="pipeline-arrow">&#9660;</span>
+          </div>
+          <div class="pipeline-node pipeline-start">
+            <span class="pipeline-label">Queue</span>
+          </div>
+          <div class="pipeline-connector" aria-hidden="true">
+            <span class="pipeline-arrow">&#9660;</span>
+          </div>
+          <sdux-devtools-pipeline-collapsible
+            label="Controllers"
+            tooltip="Expand to see registered controllers">
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-collapsible
+              label="Core"
+              tooltip="Expand to see core controllers">
+              @for (controller of coreControllers(); track controller.key) {
+                <div class="pipeline-connector" aria-hidden="true">
+                  <span class="pipeline-arrow">&#9660;</span>
+                </div>
+                <div class="pipeline-node pipeline-active">
+                  <span class="pipeline-label">{{
+                    vaultKeyName(controller.key)
+                  }}</span>
+                  <span class="pipeline-count">{{
+                    vaultKeyDomain(controller.key)
+                  }}</span>
+                </div>
+              }
+            </sdux-devtools-pipeline-collapsible>
+            @for (controller of nonCoreControllers(); track controller.key) {
+              <div class="pipeline-connector" aria-hidden="true">
+                <span class="pipeline-arrow">&#9660;</span>
+              </div>
+              <div class="pipeline-node pipeline-active">
+                <span class="pipeline-label">{{
+                  vaultKeyName(controller.key)
+                }}</span>
+                <span class="pipeline-count">{{
+                  vaultKeyDomain(controller.key)
+                }}</span>
+              </div>
+            }
+          </sdux-devtools-pipeline-collapsible>
+        </sdux-devtools-pipeline-collapsible>
+      </sdux-devtools-pipeline-collapsible>
       <div class="pipeline-connector" aria-hidden="true">
         <span class="pipeline-arrow">&#9660;</span>
       </div>
-      <div class="pipeline-node pipeline-start">
-        <span class="pipeline-label">Orchestrator</span>
-      </div>
-      @for (stage of preResolveStages(); track stage.label) {
+      <sdux-devtools-pipeline-collapsible
+        label="Orchestrator"
+        tooltip="Expand to see orchestrator pipeline">
         <div class="pipeline-connector" aria-hidden="true">
           <span class="pipeline-arrow">&#9660;</span>
         </div>
-        <div class="pipeline-node" [class.pipeline-active]="stage.count > 0">
-          <span class="pipeline-label">{{ stage.label }}</span>
-          <span class="pipeline-count">{{ stage.count }}</span>
-        </div>
-      }
-      <div class="pipeline-connector" aria-hidden="true">
-        <span class="pipeline-arrow">&#9660;</span>
-      </div>
-      <div class="pipeline-node pipeline-start">
-        <span class="pipeline-label">Resolve</span>
-      </div>
-      @for (b of resolveBehaviors(); track b.key) {
+        <sdux-devtools-pipeline-collapsible
+          class="pre-processing-layer"
+          label="Pre-Processing Layer"
+          tooltip="Expand to see pre-processing interceptors">
+          @for (stage of preResolveStages(); track stage.label) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div
+              class="pipeline-node"
+              [class.pipeline-active]="stage.count > 0">
+              <span class="pipeline-label">{{ stage.label }}</span>
+              <span class="pipeline-count">{{ stage.count }}</span>
+            </div>
+          }
+        </sdux-devtools-pipeline-collapsible>
         <div class="pipeline-connector" aria-hidden="true">
           <span class="pipeline-arrow">&#9660;</span>
         </div>
-        <div class="pipeline-node pipeline-active">
-          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
-          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
-        </div>
-      }
-      @for (b of mergeBehaviors(); track b.key) {
+        <sdux-devtools-pipeline-collapsible
+          class="processing-layer"
+          label="Processing Layer"
+          tooltip="Expand to see processing pipeline">
+          <div class="pipeline-connector" aria-hidden="true">
+            <span class="pipeline-arrow">&#9660;</span>
+          </div>
+          <sdux-devtools-pipeline-collapsible
+            label="Resolve"
+            tooltip="Expand to see resolve behaviors">
+            @for (behavior of resolveBehaviors(); track behavior.key) {
+              <div class="pipeline-connector" aria-hidden="true">
+                <span class="pipeline-arrow">&#9660;</span>
+              </div>
+              <div class="pipeline-node pipeline-active">
+                <span class="pipeline-label">{{
+                  vaultKeyName(behavior.key)
+                }}</span>
+                <span class="pipeline-count">{{
+                  vaultKeyDomain(behavior.key)
+                }}</span>
+              </div>
+            }
+          </sdux-devtools-pipeline-collapsible>
+          <div class="pipeline-connector" aria-hidden="true">
+            <span class="pipeline-arrow">&#9660;</span>
+          </div>
+          <div class="pipeline-node pipeline-start">
+            <span class="pipeline-label">Replace/Merge</span>
+          </div>
+          @for (behavior of mergeBehaviors(); track behavior.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">{{
+                vaultKeyName(behavior.key)
+              }}</span>
+              <span class="pipeline-count">{{
+                vaultKeyDomain(behavior.key)
+              }}</span>
+            </div>
+          }
+          @for (behavior of stepwiseResolveBehaviors(); track behavior.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">{{
+                vaultKeyName(behavior.key)
+              }}</span>
+              <span class="pipeline-count">{{
+                vaultKeyDomain(behavior.key)
+              }}</span>
+            </div>
+          }
+          @if (cell().fluentApis?.operators) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">Operators</span>
+              <span class="pipeline-count">{{
+                cell().fluentApis?.operators
+              }}</span>
+            </div>
+          }
+          @if (cell().fluentApis?.filters) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">Filters</span>
+              <span class="pipeline-count">{{
+                cell().fluentApis?.filters
+              }}</span>
+            </div>
+          }
+          @for (behavior of stepwiseFilterBehaviors(); track behavior.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">{{
+                vaultKeyName(behavior.key)
+              }}</span>
+              <span class="pipeline-count">{{
+                vaultKeyDomain(behavior.key)
+              }}</span>
+            </div>
+          }
+          @if (cell().fluentApis?.beforeTaps) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">Before Taps</span>
+              <span class="pipeline-count">{{
+                cell().fluentApis?.beforeTaps
+              }}</span>
+            </div>
+          }
+          @if (cell().fluentApis?.reducers) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">Reducers</span>
+              <span class="pipeline-count">{{
+                cell().fluentApis?.reducers
+              }}</span>
+            </div>
+          }
+          @for (behavior of stepwiseReducerBehaviors(); track behavior.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">{{
+                vaultKeyName(behavior.key)
+              }}</span>
+              <span class="pipeline-count">{{
+                vaultKeyDomain(behavior.key)
+              }}</span>
+            </div>
+          }
+          @if (cell().fluentApis?.afterTaps) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">After Taps</span>
+              <span class="pipeline-count">{{
+                cell().fluentApis?.afterTaps
+              }}</span>
+            </div>
+          }
+        </sdux-devtools-pipeline-collapsible>
         <div class="pipeline-connector" aria-hidden="true">
           <span class="pipeline-arrow">&#9660;</span>
         </div>
-        <div class="pipeline-node pipeline-active">
-          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
-          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
-        </div>
-      }
-      @for (b of stepwiseResolveBehaviors(); track b.key) {
+        <sdux-devtools-pipeline-collapsible
+          class="output-layer"
+          label="Output Layer"
+          tooltip="Expand to see output behaviors">
+          @for (behavior of encryptBehaviors(); track behavior.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">{{
+                vaultKeyName(behavior.key)
+              }}</span>
+              <span class="pipeline-count">{{
+                vaultKeyDomain(behavior.key)
+              }}</span>
+            </div>
+          }
+          @for (behavior of persistBehaviors(); track behavior.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">{{
+                vaultKeyName(behavior.key)
+              }}</span>
+              <span class="pipeline-count">{{
+                vaultKeyDomain(behavior.key)
+              }}</span>
+            </div>
+          }
+        </sdux-devtools-pipeline-collapsible>
         <div class="pipeline-connector" aria-hidden="true">
           <span class="pipeline-arrow">&#9660;</span>
         </div>
-        <div class="pipeline-node pipeline-active">
-          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
-          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
-        </div>
-      }
-      <div class="pipeline-connector" aria-hidden="true">
-        <span class="pipeline-arrow">&#9660;</span>
-      </div>
-      <div
-        class="pipeline-node"
-        [class.pipeline-active]="cell().fluentApis?.operators">
-        <span class="pipeline-label">Operators</span>
-        <span class="pipeline-count">{{
-          cell().fluentApis?.operators ?? 0
-        }}</span>
-      </div>
-      <div class="pipeline-connector" aria-hidden="true">
-        <span class="pipeline-arrow">&#9660;</span>
-      </div>
-      <div
-        class="pipeline-node"
-        [class.pipeline-active]="cell().fluentApis?.filters">
-        <span class="pipeline-label">Filters</span>
-        <span class="pipeline-count">{{
-          cell().fluentApis?.filters ?? 0
-        }}</span>
-      </div>
-      @for (b of stepwiseFilterBehaviors(); track b.key) {
-        <div class="pipeline-connector" aria-hidden="true">
-          <span class="pipeline-arrow">&#9660;</span>
-        </div>
-        <div class="pipeline-node pipeline-active">
-          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
-          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
-        </div>
-      }
-      <div class="pipeline-connector" aria-hidden="true">
-        <span class="pipeline-arrow">&#9660;</span>
-      </div>
-      <div
-        class="pipeline-node"
-        [class.pipeline-active]="cell().fluentApis?.beforeTaps">
-        <span class="pipeline-label">Before Taps</span>
-        <span class="pipeline-count">{{
-          cell().fluentApis?.beforeTaps ?? 0
-        }}</span>
-      </div>
-      <div class="pipeline-connector" aria-hidden="true">
-        <span class="pipeline-arrow">&#9660;</span>
-      </div>
-      <div
-        class="pipeline-node"
-        [class.pipeline-active]="cell().fluentApis?.reducers">
-        <span class="pipeline-label">Reducers</span>
-        <span class="pipeline-count">{{
-          cell().fluentApis?.reducers ?? 0
-        }}</span>
-      </div>
-      @for (b of stepwiseReducerBehaviors(); track b.key) {
-        <div class="pipeline-connector" aria-hidden="true">
-          <span class="pipeline-arrow">&#9660;</span>
-        </div>
-        <div class="pipeline-node pipeline-active">
-          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
-          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
-        </div>
-      }
-      <div class="pipeline-connector" aria-hidden="true">
-        <span class="pipeline-arrow">&#9660;</span>
-      </div>
-      <div
-        class="pipeline-node"
-        [class.pipeline-active]="cell().fluentApis?.afterTaps">
-        <span class="pipeline-label">After Taps</span>
-        <span class="pipeline-count">{{
-          cell().fluentApis?.afterTaps ?? 0
-        }}</span>
-      </div>
-      @for (b of encryptBehaviors(); track b.key) {
-        <div class="pipeline-connector" aria-hidden="true">
-          <span class="pipeline-arrow">&#9660;</span>
-        </div>
-        <div class="pipeline-node pipeline-active">
-          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
-          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
-        </div>
-      }
-      @for (b of persistBehaviors(); track b.key) {
-        <div class="pipeline-connector" aria-hidden="true">
-          <span class="pipeline-arrow">&#9660;</span>
-        </div>
-        <div class="pipeline-node pipeline-active">
-          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
-          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
-        </div>
-      }
-      @for (b of coreStateBehaviors(); track b.key) {
-        <div class="pipeline-connector" aria-hidden="true">
-          <span class="pipeline-arrow">&#9660;</span>
-        </div>
-        <div class="pipeline-node pipeline-active">
-          <span class="pipeline-label">{{ vaultKeyName(b.key) }}</span>
-          <span class="pipeline-count">{{ vaultKeyDomain(b.key) }}</span>
-        </div>
-      }
-      @for (stage of postResolveStages(); track stage.label) {
-        <div class="pipeline-connector" aria-hidden="true">
-          <span class="pipeline-arrow">&#9660;</span>
-        </div>
-        <div class="pipeline-node" [class.pipeline-active]="stage.count > 0">
-          <span class="pipeline-label">{{ stage.label }}</span>
-          <span class="pipeline-count">{{ stage.count }}</span>
-        </div>
-      }
+        <sdux-devtools-pipeline-collapsible
+          class="post-processing-layer"
+          label="Post-Processing Layer"
+          tooltip="Expand to see post-processing pipeline">
+          @for (behavior of coreStateBehaviors(); track behavior.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <div class="pipeline-node pipeline-active">
+              <span class="pipeline-label">{{
+                vaultKeyName(behavior.key)
+              }}</span>
+              <span class="pipeline-count">{{
+                vaultKeyDomain(behavior.key)
+              }}</span>
+            </div>
+          }
+          @if (extensionBehaviors().length > 0) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-collapsible
+              label="Extensions"
+              tooltip="Expand to see extension behaviors">
+              @for (behavior of extensionBehaviors(); track behavior.key) {
+                <div class="pipeline-connector" aria-hidden="true">
+                  <span class="pipeline-arrow">&#9660;</span>
+                </div>
+                <div class="pipeline-node pipeline-active">
+                  <span class="pipeline-label">{{
+                    vaultKeyName(behavior.key)
+                  }}</span>
+                  <span class="pipeline-count">{{
+                    vaultKeyDomain(behavior.key)
+                  }}</span>
+                </div>
+              }
+            </sdux-devtools-pipeline-collapsible>
+          }
+          @for (stage of postResolveStages(); track stage.label) {
+            @if (stage.count > 0) {
+              <div class="pipeline-connector" aria-hidden="true">
+                <span class="pipeline-arrow">&#9660;</span>
+              </div>
+              <div class="pipeline-node pipeline-active">
+                <span class="pipeline-label">{{ stage.label }}</span>
+                <span class="pipeline-count">{{ stage.count }}</span>
+              </div>
+            }
+          }
+          @if (errorTransformBehaviors().length > 0) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-collapsible
+              label="ErrorTransform"
+              tooltip="Expand to see error transform behaviors">
+              @for (behavior of errorTransformBehaviors(); track behavior.key) {
+                <div class="pipeline-connector" aria-hidden="true">
+                  <span class="pipeline-arrow">&#9660;</span>
+                </div>
+                <div class="pipeline-node pipeline-active">
+                  <span class="pipeline-label">{{
+                    vaultKeyName(behavior.key)
+                  }}</span>
+                  <span class="pipeline-count">{{
+                    vaultKeyDomain(behavior.key)
+                  }}</span>
+                </div>
+              }
+            </sdux-devtools-pipeline-collapsible>
+          }
+        </sdux-devtools-pipeline-collapsible>
+      </sdux-devtools-pipeline-collapsible>
       <div class="pipeline-connector" aria-hidden="true">
         <span class="pipeline-arrow">&#9660;</span>
       </div>
       <div class="pipeline-node pipeline-end">
-        <span class="pipeline-label">State Updated</span>
+        <span class="pipeline-label">StateSnapshot</span>
       </div>
     </div>
   </section>
@@ -195,10 +361,10 @@
     </h4>
     @if (behaviors().length) {
       <ul class="entity-list">
-        @for (b of behaviors(); track b.key) {
+        @for (behavior of behaviors(); track behavior.key) {
           <li class="entity-item">
-            <span class="entity-key">{{ b.key }}</span>
-            <span class="entity-type">{{ b.type }}</span>
+            <span class="entity-key">{{ behavior.key }}</span>
+            <span class="entity-type">{{ behavior.type }}</span>
           </li>
         }
       </ul>
@@ -214,10 +380,10 @@
     </h4>
     @if (controllers().length) {
       <ul class="entity-list">
-        @for (c of controllers(); track c.key) {
+        @for (controller of controllers(); track controller.key) {
           <li class="entity-item">
-            <span class="entity-key">{{ c.key }}</span>
-            <span class="entity-type">{{ c.type }}</span>
+            <span class="entity-key">{{ controller.key }}</span>
+            <span class="entity-type">{{ controller.type }}</span>
           </li>
         }
       </ul>

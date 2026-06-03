@@ -50,6 +50,20 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
+                <strong>getRegistry?</strong>
+
+                <p class="type">type: function</p>
+              </td>
+              <td class="column-auto">
+                Returns a read-only snapshot of the
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                registry.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>vaultEventBus?</strong>
 
                 <p class="type">
@@ -76,6 +90,16 @@ import { Component, ViewEncapsulation } from '@angular/core';
               </td>
               <td class="column-auto">
                 Global Vault monitor instance.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
+                <strong>versions?</strong>
+
+                <p class="type">type: Record</p>
+              </td>
+              <td class="column-auto">
+                Registered package versions keyed by npm package name.<br /><br />
               </td>
             </tr>
           </tbody>

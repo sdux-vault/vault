@@ -65,6 +65,11 @@ export class StarWarsExampleService {
           }
         }
       ])
+      .setAes256Secret?.({
+        aes256Secret: 'my-super-secret-key',
+        salt: Uint8Array.from('vault::aes256::salt'),
+        iterations: 100_000
+      })
       .initialize();
   }
 

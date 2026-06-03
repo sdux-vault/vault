@@ -5,11 +5,16 @@ import {
 } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 import {
+  withAes256EncryptBehavior,
   withArrayPushMergeBehavior,
-  withDelayController
+  withDelayController,
+  withLocalStoragePersistBehavior,
+  withLookupBehavior,
+  withStepwiseController
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { DEVTOOLS_LOGGING_KEY_CONSTANT } from '@sdux-vault/shared';
+import { withTabSyncController } from '../../../../libs/core/src/public-api';
 import { routes } from '../../src/app/devtools.app.routes';
 import { DevtoolsService } from '../../src/app/services/devtools.service';
 import { EXTENSION_VERSION } from '../../src/app/splash-page/devtools-splash-page.component';
@@ -47,8 +52,12 @@ export const demoConfig: ApplicationConfig = {
         key: 'starwars-feature-cell-key',
         initialState: []
       },
-      [],
-      [withDelayController]
+      [
+        withLookupBehavior,
+        withLocalStoragePersistBehavior,
+        withAes256EncryptBehavior
+      ],
+      [withDelayController, withStepwiseController, withTabSyncController]
     ),
 
     provideFeatureCell(
@@ -58,7 +67,7 @@ export const demoConfig: ApplicationConfig = {
         initialState: []
       },
       [],
-      [withDelayController]
+      []
     )
   ]
 };

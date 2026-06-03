@@ -43,7 +43,6 @@ export class StarTrekExampleService {
    */
   constructor() {
     this.#vault
-      .withDelay?.({ millisecondDelay: 500 })
       .filters([
         (examples: Example[]) =>
           examples.filter((example) => example.name !== 'Wesley')

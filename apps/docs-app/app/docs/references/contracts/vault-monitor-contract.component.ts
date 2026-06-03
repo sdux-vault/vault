@@ -260,23 +260,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
-                <strong>endControllerAttempt</strong>
-
-                <p>inputs:</p>
-                <ul>
-                  <li>cell: string</li>
-                  <li>behaviorKey: string</li>
-                  <li>ctx: Readonly&gt;</li>
-                  <li>payload: unknown</li>
-                </ul>
-                <p>returns: void</p>
-              </td>
-              <td>
-                Signals the end of a controller attempt lifecycle event.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td>
                 <strong>endConductorVote</strong>
 
                 <p>inputs:</p>
@@ -299,6 +282,23 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
+                <strong>endControllerAttempt</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>cell: string</li>
+                  <li>behaviorKey: string</li>
+                  <li>ctx: Readonly&gt;</li>
+                  <li>payload: unknown</li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Signals the end of a controller attempt lifecycle event.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <strong>endControllerVote</strong>
 
                 <p>inputs:</p>
@@ -306,7 +306,12 @@ import { Component, ViewEncapsulation } from '@angular/core';
                   <li>cell: string</li>
                   <li>controllerKey: string</li>
                   <li>traceId: string</li>
-                  <li>vote: ControllerVote</li>
+                  <li>
+                    vote:
+                    <a href="/docs/references/types/controller-vote"
+                      >ControllerVote</a
+                    >
+                  </li>
                 </ul>
                 <p>returns: void</p>
               </td>
@@ -852,22 +857,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
-                <strong>startControllerAttempt</strong>
-
-                <p>inputs:</p>
-                <ul>
-                  <li>cell: string</li>
-                  <li>behaviorKey: string</li>
-                  <li>ctx: Readonly&gt;</li>
-                </ul>
-                <p>returns: void</p>
-              </td>
-              <td>
-                Signals the start of a controller attempt lifecycle event.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td>
                 <strong>startConductorVote</strong>
 
                 <p>inputs:</p>
@@ -880,6 +869,22 @@ import { Component, ViewEncapsulation } from '@angular/core';
               </td>
               <td>
                 Signals the start of the conductor vote aggregation phase.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>startControllerAttempt</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>cell: string</li>
+                  <li>behaviorKey: string</li>
+                  <li>ctx: Readonly&gt;</li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Signals the start of a controller attempt lifecycle event.<br /><br />
               </td>
             </tr>
             <tr>

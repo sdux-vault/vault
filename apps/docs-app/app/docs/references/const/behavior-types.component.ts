@@ -60,14 +60,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
-                <strong>ReplayGlobalError</strong>
-              </td>
-              <td class="column-auto">
-                <code>replayGlobalError</code>
-              </td>
-            </tr>
-            <tr>
-              <td class="column-300">
                 <strong>CoreError</strong>
               </td>
               <td class="column-auto">
