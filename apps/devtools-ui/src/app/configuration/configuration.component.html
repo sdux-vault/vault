@@ -8,28 +8,28 @@
         <table class="versions-table">
           <tbody>
             <tr>
-              <td>Organization</td>
-              <td>{{ lic.organization }}</td>
+              <td class="column=200">Organization</td>
+              <td class="column-auto">{{ lic.organization }}</td>
             </tr>
             <tr>
-              <td>Domain</td>
-              <td>{{ lic.domain }}</td>
+              <td class="column-200">Domain</td>
+              <td class="column-auto">{{ lic.domain }}</td>
             </tr>
             <tr>
-              <td>Tier</td>
-              <td>{{ lic.licenseType }}</td>
+              <td class="column-200">Tier</td>
+              <td class="column-auto">{{ lic.licenseType }}</td>
             </tr>
             <tr>
-              <td>Issued</td>
-              <td>{{ formatLicenseDate(lic.issuedAt) }}</td>
+              <td class="column-200">Issued</td>
+              <td class="column-auto">{{ formatLicenseDate(lic.issuedAt) }}</td>
             </tr>
             <tr>
-              <td>Expires</td>
-              <td>{{ formatLicenseDate(lic.expires) }}</td>
+              <td class="column-200">Expires</td>
+              <td class="column-auto">{{ formatLicenseDate(lic.expires) }}</td>
             </tr>
             <tr>
-              <td>Verified</td>
-              <td>{{ lic.verified ? 'Yes' : 'No' }}</td>
+              <td class="column-200">Verified</td>
+              <td class="column-auto">{{ lic.verified ? 'Yes' : 'No' }}</td>
             </tr>
           </tbody>
         </table>
@@ -42,8 +42,8 @@
         <table class="versions-table">
           <thead>
             <tr>
-              <th>Package</th>
-              <th>Version</th>
+              <th class="column-200">Package</th>
+              <th class="column-auto">Version</th>
             </tr>
           </thead>
           <tbody>
@@ -66,9 +66,9 @@
         <table class="registry-table">
           <thead>
             <tr>
-              <th>Cell Key</th>
-              <th>Behaviors/Licenses</th>
-              <th>Controllers/Licenses</th>
+              <th class="column-200">Cell Key</th>
+              <th class="column-150">Behaviors/Licensed</th>
+              <th class="column-auto">Controllers/Licensed</th>
             </tr>
           </thead>
           <tbody>
