@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
 export const interceptorDelayExampleProject: Project = {
-  title: 'angular-demo',
+  title: 'angular-interceptor-delay-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -59,7 +59,7 @@ export const interceptorDelayExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "angular-demo",
+  "name": "angular-interceptor-delay-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {

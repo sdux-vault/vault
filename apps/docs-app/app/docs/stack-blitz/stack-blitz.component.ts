@@ -37,10 +37,10 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
         'Core pipeline concepts — filters, reducers, and FeatureCell state. Start here to understand how data flows through the pipeline.',
       examples: [
         {
-          title: 'Filter & Reducer Pipeline',
-          id: 'basic-filter-reducer',
-          exampleName: 'basic-filter-reducer-example',
-          description: `Demonstrates how ${this.#brandName} processes state through a pipeline: input data flows through filters and reducers before becoming the final FeatureCell state. Choose your framework and launch the example directly in StackBlitz.`,
+          title: 'Replace State',
+          id: 'replace-state',
+          exampleName: 'replace-example',
+          description: `Demonstrates replaceState — the simplest way to update a FeatureCell. The entire previous state is discarded and replaced with the new value in a single atomic operation. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
             { name: 'React', key: 'react' },
@@ -56,6 +56,18 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
       description:
         'Pipeline controllers and interceptors — add timing, throttling, and orchestration to your state transitions.',
       examples: [
+        {
+          title: 'Filter & Reducer Pipeline',
+          id: 'basic-filter-reducer',
+          exampleName: 'basic-filter-reducer-example',
+          description: `Demonstrates how ${this.#brandName} processes state through a pipeline: input data flows through filters and reducers before becoming the final FeatureCell state. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
+        },
         {
           title: 'Delay Interceptor Pipeline',
           id: 'interceptor-delay',
@@ -110,6 +122,15 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
 
   /* istanbul ignore next -- dynamic imports not available in Karma test bundle */
   readonly #projectImports: Record<string, () => Promise<unknown>> = {
+    'angular/replace-example': () =>
+      import('../../stackblitz/projects/angular/replace-example.project'),
+    'react/replace-example': () =>
+      import('../../stackblitz/projects/react/replace-example.project'),
+    'svelte/replace-example': () =>
+      import('../../stackblitz/projects/svelte/replace-example.project'),
+    'vue/replace-example': () =>
+      import('../../stackblitz/projects/vue/replace-example.project'),
+
     'angular/basic-filter-reducer-example': () =>
       import('../../stackblitz/projects/angular/basic-filter-reducer-example.project'),
     'react/basic-filter-reducer-example': () =>

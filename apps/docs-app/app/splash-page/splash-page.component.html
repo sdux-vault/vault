@@ -631,6 +631,34 @@ it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">a
   &#123;
     key: 'example-feature-cell-key',
     initialState: [],
+  &#125;,
+  [],
+  []
+);
+
+cell.initialize();</code></pre>
+        </div>
+        <div class="stackblitz-card-info">
+          <h3 class="stackblitz-card-title">Replace State</h3>
+          <p class="stackblitz-card-desc">
+            New candidates flow through pipeline before committing state.
+          </p>
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="viewExamples('replace-state')">
+            View Examples
+          </button>
+        </div>
+      </article>
+
+      <article class="stackblitz-card">
+        <div class="stackblitz-card-preview">
+          <pre><code>const cell = FeatureCell(
+  ExampleService,
+  &#123;
+    key: 'example-feature-cell-key',
+    initialState: [],
   &#125;
 );
 
@@ -648,36 +676,6 @@ cell
             type="button"
             class="btn-primary"
             (click)="viewExamples('basic-filter-reducer')">
-            View Examples
-          </button>
-        </div>
-      </article>
-
-      <article class="stackblitz-card">
-        <div class="stackblitz-card-preview">
-          <pre><code>const cell = FeatureCell(
-  ExampleService,
-  &#123;
-    key: 'example-feature-cell-key',
-    initialState: [],
-  &#125;,
-  [],
-  [withDelayController]
-);
-
-cell.withDelay?.(&#123; 
-  millisecondDelay: 3_000
-&#125;).initialize();</code></pre>
-        </div>
-        <div class="stackblitz-card-info">
-          <h3 class="stackblitz-card-title">Delay Interceptor</h3>
-          <p class="stackblitz-card-desc">
-            State updates flow through a delay interceptor before committing.
-          </p>
-          <button
-            type="button"
-            class="btn-primary"
-            (click)="viewExamples('interceptor-delay')">
             View Examples
           </button>
         </div>

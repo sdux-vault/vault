@@ -43,11 +43,11 @@ describe('Component: StackBlitz Overview', () => {
           'Core pipeline concepts — filters, reducers, and FeatureCell state. Start here to understand how data flows through the pipeline.',
         examples: [
           {
-            title: 'Filter & Reducer Pipeline',
-            id: 'basic-filter-reducer',
-            exampleName: 'basic-filter-reducer-example',
+            title: 'Replace State',
+            id: 'replace-state',
+            exampleName: 'replace-example',
             description:
-              'Demonstrates how Mock BN processes state through a pipeline: input data flows through filters and reducers before becoming the final FeatureCell state. Choose your framework and launch the example directly in StackBlitz.',
+              'Demonstrates replaceState — the simplest way to update a FeatureCell. The entire previous state is discarded and replaced with the new value in a single atomic operation. Choose your framework and launch the example directly in StackBlitz.',
             languages
           }
         ]
@@ -58,6 +58,14 @@ describe('Component: StackBlitz Overview', () => {
         description:
           'Pipeline controllers and interceptors — add timing, throttling, and orchestration to your state transitions.',
         examples: [
+          {
+            title: 'Filter & Reducer Pipeline',
+            id: 'basic-filter-reducer',
+            exampleName: 'basic-filter-reducer-example',
+            description:
+              'Demonstrates how Mock BN processes state through a pipeline: input data flows through filters and reducers before becoming the final FeatureCell state. Choose your framework and launch the example directly in StackBlitz.',
+            languages
+          },
           {
             title: 'Delay Interceptor Pipeline',
             id: 'interceptor-delay',
