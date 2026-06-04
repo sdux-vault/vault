@@ -1,0 +1,314 @@
+import { JsonPipe, UpperCasePipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal
+} from '@angular/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { EventShape } from '@sdux-vault/shared';
+import { DevtoolsPipelineEventDetailComponent } from '../../events/panels/events/pipeline/detail/devtools-pipeline-event-detail.component';
+import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
+import type { TraceExecutionShape } from '../../shapes/trace';
+import { TraceExecutionStatuses } from '../../shapes/trace';
+import type { StageMetricShape } from '../../shapes/trace/stage-metric.shape';
+import { PipelineFlowComponent } from '../../shared/pipeline-flow/pipeline-flow.component';
+import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
+
+/**
+ * Trace Timeline component.
+ *
+ * Displays completed traces as horizontal timeline bars with summary
+ * statistics, an expandable event table per trace, and a stage waterfall
+ * visualization. Matches the DevTools UI design language used by the
+ * events pipeline panel and registry detail views.
+ */
+@Component({
+  selector: 'sdux-trace-detail-view',
+  standalone: true,
+  imports: [
+    JsonPipe,
+    UpperCasePipe,
+    MatSelectModule,
+    MatTabsModule,
+    MatTooltipModule,
+    PipelineFlowComponent,
+    ResetButtonComponent,
+    DevtoolsPipelineEventDetailComponent
+  ],
+  templateUrl: './trace-detail-view.component.html',
+  styleUrl: './trace-detail-view.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TraceDetailViewComponent {
+  /** Internal reference to the trace aggregate FeatureCell service. */
+  #aggregate = inject(DevtoolsAggregateService);
+
+  /** All completed traces from the aggregate service. */
+  readonly traces = this.#aggregate.traces;
+
+  /** Available cell keys for filtering. */
+  readonly cellKeys = computed(() => {
+    const keys = [...this.#aggregate.tracesByCellKey().keys()];
+    return keys.sort();
+  });
+
+  /** Currently selected cell filter ('all' = no filter). */
+  readonly selectedCell = signal<string>('all');
+
+  /** Currently expanded trace ID. */
+  readonly expandedTraceId = signal<string | null>(null);
+
+  /** Currently selected event for the detail panel. */
+  readonly selectedEvent = signal<EventShape | null>(null);
+
+  /** Cell key for the currently expanded trace. */
+  readonly expandedTraceCellKey = computed(() => {
+    const traceId = this.expandedTraceId();
+    if (!traceId) return null;
+    const trace = this.filteredTraces().find((t) => t.traceId === traceId);
+    return trace?.cellKey ?? null;
+  });
+
+  /** Traces filtered by selected cell, ordered by startedAt descending. */
+  readonly filteredTraces = computed(() => {
+    const cell = this.selectedCell();
+    let traces = this.traces();
+
+    if (cell !== 'all') {
+      traces = traces.filter((t) => t.cellKey === cell);
+    }
+
+    return [...traces].sort((a, b) => a.startedAt - b.startedAt);
+  });
+
+  /** Summary statistics for the current filter. */
+  readonly stats = computed(() => {
+    const traces = this.filteredTraces();
+    const total = traces.length;
+    const errors = traces.filter(
+      (t) => t.metrics.status === TraceExecutionStatuses.Failed
+    ).length;
+    const orphaned = traces.filter(
+      (t) => t.metrics.status === TraceExecutionStatuses.Orphaned
+    ).length;
+    const avgDuration =
+      total > 0
+        ? traces.reduce((sum, t) => sum + t.metrics.duration, 0) / total
+        : 0;
+
+    return { total, errors, orphaned, avgDuration };
+  });
+
+  /** Time window boundaries for the timeline bar visualization. */
+  readonly timeWindow = computed(() => {
+    const traces = this.filteredTraces();
+    if (traces.length === 0) return { min: 0, max: 1 };
+
+    const min = Math.min(...traces.map((t) => t.startedAt));
+    const max = Math.max(...traces.map((t) => t.finishedAt || t.startedAt));
+    const span = max - min || 1;
+
+    return { min, max: min + span };
+  });
+
+  /**
+   * Resolves a status label for display.
+   */
+  statusLabel(trace: TraceExecutionShape): string {
+    switch (trace.metrics.status) {
+      case TraceExecutionStatuses.Success:
+        return '✓';
+      case TraceExecutionStatuses.Failed:
+        return '✗';
+      case TraceExecutionStatuses.Denied:
+        return '⊘';
+      case TraceExecutionStatuses.Orphaned:
+        return '⚠';
+      case TraceExecutionStatuses.Aborted:
+        return '↺';
+      default:
+        return '?';
+    }
+  }
+
+  /**
+   * Resolves a CSS class for the trace status.
+   */
+  statusClass(trace: TraceExecutionShape): string {
+    switch (trace.metrics.status) {
+      case TraceExecutionStatuses.Success:
+        return 'status-success';
+      case TraceExecutionStatuses.Failed:
+        return 'status-failed';
+      case TraceExecutionStatuses.Denied:
+        return 'status-denied';
+      case TraceExecutionStatuses.Orphaned:
+        return 'status-orphaned';
+      case TraceExecutionStatuses.Aborted:
+        return 'status-aborted';
+      default:
+        return '';
+    }
+  }
+
+  /**
+   * Computes the left offset percentage for a trace bar in the timeline.
+   */
+  timelineLeft(trace: TraceExecutionShape): number {
+    const { min, max } = this.timeWindow();
+    return ((trace.startedAt - min) / (max - min)) * 100;
+  }
+
+  /**
+   * Computes the width percentage for a trace bar in the timeline.
+   */
+  timelineWidth(trace: TraceExecutionShape): number {
+    const { min, max } = this.timeWindow();
+    const duration = (trace.finishedAt || trace.startedAt) - trace.startedAt;
+    const width = (duration / (max - min)) * 100;
+    return Math.max(width, 0.5);
+  }
+
+  /**
+   * Computes waterfall bar left offset for a stage within its trace.
+   */
+  waterfallLeft(trace: TraceExecutionShape, stage: StageMetricShape): number {
+    if (trace.metrics.duration === 0) return 0;
+    return ((stage.startedAt - trace.startedAt) / trace.metrics.duration) * 100;
+  }
+
+  /**
+   * Computes waterfall bar width for a stage within its trace.
+   */
+  waterfallWidth(trace: TraceExecutionShape, stage: StageMetricShape): number {
+    if (trace.metrics.duration === 0) return 100;
+    const width = (stage.duration / trace.metrics.duration) * 100;
+    return Math.max(width, 0.5);
+  }
+
+  /**
+   * Toggles the expanded trace row.
+   */
+  toggleTrace(traceId: string): void {
+    this.expandedTraceId.set(
+      this.expandedTraceId() === traceId ? null : traceId
+    );
+  }
+
+  /**
+   * Selects a cell filter.
+   */
+  selectCell(cell: string): void {
+    this.selectedCell.set(cell);
+    this.expandedTraceId.set(null);
+  }
+
+  /**
+   * Computes the delta time from trace start for a given event.
+   */
+  deltaMs(
+    trace: TraceExecutionShape,
+    event: EventShape,
+    index: number
+  ): string {
+    if (index === 0) {
+      return '0.0';
+    }
+    const prev = trace.events[index - 1];
+    const delta = event.timestamp - prev.timestamp;
+    return delta.toFixed(1);
+  }
+
+  /**
+   * Computes the total elapsed time from trace start for a given event.
+   */
+  elapsedMs(trace: TraceExecutionShape, event: EventShape): string {
+    const elapsed = event.timestamp - trace.startedAt;
+    return elapsed.toFixed(1);
+  }
+
+  /**
+   * Extracts the behavior key from an event for display.
+   */
+  eventBehaviorKey(event: EventShape): string {
+    return event.behaviorKey ?? '';
+  }
+
+  /**
+   * Computes stage name occurrence counts for a trace.
+   */
+  stageCounts(trace: TraceExecutionShape): { name: string; count: number }[] {
+    const counts = new Map<string, number>();
+    for (const stage of trace.metrics.stages) {
+      counts.set(stage.name, (counts.get(stage.name) ?? 0) + 1);
+    }
+    return Array.from(counts, ([name, count]) => ({ name, count }));
+  }
+
+  /**
+   * Determines if an event carries a state snapshot.
+   */
+  hasState(event: EventShape): boolean {
+    return event.state?.hasValue === true;
+  }
+
+  /**
+   * Determines if an event carries a payload.
+   */
+  hasPayload(event: EventShape): boolean {
+    return event.payload !== undefined && event.payload !== null;
+  }
+
+  /**
+   * Determines if an event carries an error.
+   */
+  hasError(event: EventShape): boolean {
+    return event.error !== undefined && event.error !== null;
+  }
+
+  /**
+   * Determines if a stage is the slowest in the trace.
+   */
+  isSlowestStage(trace: TraceExecutionShape, stage: StageMetricShape): boolean {
+    return (
+      trace.metrics.stages.length > 1 &&
+      stage.duration === trace.metrics.slowestStage.duration &&
+      stage.name === trace.metrics.slowestStage.name
+    );
+  }
+
+  /**
+   * Selects an event to display in the detail panel.
+   */
+  selectEvent(event: EventShape): void {
+    this.selectedEvent.set(
+      this.selectedEvent()?.id === event.id ? null : event
+    );
+  }
+
+  /**
+   * Closes the event detail panel.
+   */
+  closeEventDetail(): void {
+    this.selectedEvent.set(null);
+  }
+
+  /**
+   * Finds and selects the start event matching a stage in a trace.
+   */
+  selectStageEvent(trace: TraceExecutionShape, stage: StageMetricShape): void {
+    const event = trace.events.find(
+      (e) =>
+        e.timestamp === stage.startedAt &&
+        e.behaviorKey === stage.behaviorKey &&
+        e.boundary === 'start'
+    );
+    if (event) {
+      this.selectEvent(event);
+    }
+  }
+}

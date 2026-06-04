@@ -42,6 +42,7 @@ import {
   MIXED_TRACE_2,
   ORPHAN_TRACE_EVENTS,
   ORPHAN_TRACE_EXPECTED,
+  RESET_TRACE_EVENTS,
   REVOTE_TRACE_EVENTS,
   REVOTE_TRACE_EXPECTED,
   VOTES_TRACE_EVENTS,
@@ -210,6 +211,37 @@ describe('Service: Devtools Aggregate', () => {
 
       expect(service.traces()).toEqual([]);
     });
+
+    it('should filter out reset lifecycle events', async () => {
+      for (const event of RESET_TRACE_EVENTS) {
+        bus.nextPipeline(event);
+      }
+      await vaultSettled(key);
+
+      expect(service.traces()).toEqual([]);
+    });
+
+    it('should not buffer events that lack a trace-initiating event', async () => {
+      bus.nextPipeline(
+        createEvent({
+          name: 'stage:start:core-state',
+          traceId: 'trace-stray',
+          type: 'stage',
+          boundary: 'start'
+        })
+      );
+      bus.nextPipeline(
+        createEvent({
+          name: 'stage:end:core-state',
+          traceId: 'trace-stray',
+          type: 'stage',
+          boundary: 'end'
+        })
+      );
+      await vaultSettled(key);
+
+      expect(service.traces()).toEqual([]);
+    });
   });
 
   describe('metrics computation', () => {
@@ -248,6 +280,17 @@ describe('Service: Devtools Aggregate', () => {
       expect(metrics.fastestStage).toEqual(
         COMPLETE_TRACE_EXPECTED.metrics.fastestStage
       );
+    });
+
+    it('should exclude attempt from slowest and fastest stage metrics', async () => {
+      for (const event of COMPLETE_TRACE_EVENTS) {
+        bus.nextPipeline(event);
+      }
+      await vaultSettled(key);
+
+      const metrics = service.traces()[0].metrics;
+      expect(metrics.slowestStage.name).not.toBe('attempt');
+      expect(metrics.fastestStage.name).not.toBe('attempt');
     });
 
     it('should detect revotes', async () => {
@@ -348,6 +391,17 @@ describe('Service: Devtools Aggregate', () => {
 
       expect(service.traces()).toEqual([ORPHAN_TRACE_EXPECTED]);
     });
+
+    it('should not orphan reset events after timeout', async () => {
+      for (const event of RESET_TRACE_EVENTS) {
+        bus.nextPipeline(event);
+      }
+      await vaultSettled(key);
+
+      jasmine.clock().tick(30_000);
+
+      expect(service.traces()).toEqual([]);
+    });
   });
 
   describe('clearTraces', () => {
@@ -363,6 +417,88 @@ describe('Service: Devtools Aggregate', () => {
       expect(service.traces()).toEqual([]);
       expect(service.totalTraces()).toBe(0);
     });
+
+    it('should verify totalTraces is zero after clearTraces', async () => {
+      for (const event of COMPLETE_TRACE_EVENTS) {
+        bus.nextPipeline(event);
+      }
+      await vaultSettled(key);
+      expect(service.totalTraces()).toBe(1);
+
+      service.clearTraces();
+      expect(service.totalTraces()).toBe(0);
+    });
+
+    it('should clear active orphan timers without committing', async () => {
+      bus.nextPipeline(
+        createEvent({
+          name: 'controller:start:attempt',
+          traceId: 'in-flight-trace'
+        })
+      );
+      await vaultSettled(key);
+
+      expect(service.traces()).toEqual([]);
+
+      service.clearTraces();
+      expect(service.traces()).toEqual([]);
+    });
+  });
+
+  describe('handleEvent edge cases', () => {
+    it('should discard non-initiating events with no existing buffer', async () => {
+      const stageEvent = createEvent({
+        name: 'stage:start:reducer',
+        traceId: 'orphan-trace'
+      });
+
+      bus.nextPipeline(stageEvent);
+      await vaultSettled(key);
+
+      expect(service.traces()).toEqual([]);
+    });
+
+    it('should handle commitOrphanedTrace when buffer is missing', () => {
+      (service as any).commitOrphanedTrace('nonexistent-trace');
+      expect(service.traces()).toEqual([]);
+    });
+
+    it('should handle commitOrphanedTrace when buffer is empty', () => {
+      (service as any).buffer.set('empty-trace', []);
+
+      (service as any).commitOrphanedTrace('empty-trace');
+      expect(service.traces()).toEqual([]);
+    });
+
+    it('should skip events with non-standard name format in stage matching', async () => {
+      bus.nextPipeline(
+        createEvent({
+          name: 'controller:start:attempt',
+          traceId: 'format-trace',
+          cell: 'cell-format'
+        })
+      );
+      bus.nextPipeline(
+        createEvent({
+          name: 'custom-event-no-colons',
+          traceId: 'format-trace',
+          cell: 'cell-format'
+        })
+      );
+      bus.nextPipeline(
+        createEvent({
+          name: 'controller:end:attempt',
+          traceId: 'format-trace',
+          cell: 'cell-format',
+          boundary: 'end'
+        })
+      );
+      await vaultSettled(key);
+
+      const trace = service.traces()[0];
+      expect(trace.traceId).toBe('format-trace');
+      expect(trace.metrics.eventCount).toBe(3);
+    });
   });
 
   describe('real-world artifact replay', () => {
@@ -374,7 +510,7 @@ describe('Service: Devtools Aggregate', () => {
 
       const traces = service.traces();
 
-      // 8 single-terminal success traces + 4 error traces with 3 terminals each = 20
+      // 8 single-terminal success traces + 4 error traces (1 each) = 12
       expect(traces.map((t) => t.traceId)).toEqual([
         '9338f067-5169-4282-86de-0985cd8bcb99',
         '7ea47d4c-aa8e-4a9f-bd82-719287b5ba3c',
@@ -383,18 +519,10 @@ describe('Service: Devtools Aggregate', () => {
         'dd760cb0-54ef-40b3-903e-e918ed45d203',
         'bf673fea-51f3-484a-ba58-d681227e007a',
         'b66e8d34-16c4-4faa-a53c-d365ae435505',
-        'b66e8d34-16c4-4faa-a53c-d365ae435505',
-        'b66e8d34-16c4-4faa-a53c-d365ae435505',
-        'daed122e-198f-4517-b60b-d18c9ba3aa45',
-        'daed122e-198f-4517-b60b-d18c9ba3aa45',
         'daed122e-198f-4517-b60b-d18c9ba3aa45',
         '0bd8a2fa-4d84-449e-9e68-ee759e31365b',
         'daa5fd95-e343-4711-a5bc-5c5cf2a89db5',
         '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-        '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-        '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-        'ec9f318d-8431-4794-b526-aba0a75bb279',
-        'ec9f318d-8431-4794-b526-aba0a75bb279',
         'ec9f318d-8431-4794-b526-aba0a75bb279'
       ]);
     });
@@ -417,10 +545,6 @@ describe('Service: Devtools Aggregate', () => {
         '3b3f838b-821d-4e1b-95ff-9226953b3ce3',
         'daa5fd95-e343-4711-a5bc-5c5cf2a89db5',
         '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-        '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-        '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-        'ec9f318d-8431-4794-b526-aba0a75bb279',
-        'ec9f318d-8431-4794-b526-aba0a75bb279',
         'ec9f318d-8431-4794-b526-aba0a75bb279'
       ]);
       expect(startrekTraces.map((t) => t.traceId)).toEqual([
@@ -428,10 +552,6 @@ describe('Service: Devtools Aggregate', () => {
         'dd760cb0-54ef-40b3-903e-e918ed45d203',
         'bf673fea-51f3-484a-ba58-d681227e007a',
         'b66e8d34-16c4-4faa-a53c-d365ae435505',
-        'b66e8d34-16c4-4faa-a53c-d365ae435505',
-        'b66e8d34-16c4-4faa-a53c-d365ae435505',
-        'daed122e-198f-4517-b60b-d18c9ba3aa45',
-        'daed122e-198f-4517-b60b-d18c9ba3aa45',
         'daed122e-198f-4517-b60b-d18c9ba3aa45',
         '0bd8a2fa-4d84-449e-9e68-ee759e31365b'
       ]);
@@ -446,15 +566,11 @@ describe('Service: Devtools Aggregate', () => {
       const failed = service
         .traces()
         .filter((t) => t.metrics.status === TraceExecutionStatuses.Failed);
-      // 4 error traces × 2 error terminals each (runtime-error + failure) = 8
+      // 4 error traces × 1 sub-trace each (committed at runtime-error only)
       expect(failed.map((t) => t.traceId)).toEqual([
         'b66e8d34-16c4-4faa-a53c-d365ae435505',
-        'b66e8d34-16c4-4faa-a53c-d365ae435505',
-        'daed122e-198f-4517-b60b-d18c9ba3aa45',
         'daed122e-198f-4517-b60b-d18c9ba3aa45',
         '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-        '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-        'ec9f318d-8431-4794-b526-aba0a75bb279',
         'ec9f318d-8431-4794-b526-aba0a75bb279'
       ]);
     });
@@ -468,7 +584,7 @@ describe('Service: Devtools Aggregate', () => {
       const success = service
         .traces()
         .filter((t) => t.metrics.status === TraceExecutionStatuses.Success);
-      // 8 normal success + 4 error traces whose 3rd terminal is controller:end:attempt = 12
+      // 8 normal success traces
       expect(success.map((t) => t.traceId)).toEqual([
         '9338f067-5169-4282-86de-0985cd8bcb99',
         '7ea47d4c-aa8e-4a9f-bd82-719287b5ba3c',
@@ -476,12 +592,8 @@ describe('Service: Devtools Aggregate', () => {
         '3b3f838b-821d-4e1b-95ff-9226953b3ce3',
         'dd760cb0-54ef-40b3-903e-e918ed45d203',
         'bf673fea-51f3-484a-ba58-d681227e007a',
-        'b66e8d34-16c4-4faa-a53c-d365ae435505',
-        'daed122e-198f-4517-b60b-d18c9ba3aa45',
         '0bd8a2fa-4d84-449e-9e68-ee759e31365b',
-        'daa5fd95-e343-4711-a5bc-5c5cf2a89db5',
-        '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-        'ec9f318d-8431-4794-b526-aba0a75bb279'
+        'daa5fd95-e343-4711-a5bc-5c5cf2a89db5'
       ]);
     });
 
@@ -544,7 +656,7 @@ describe('Service: Devtools Aggregate', () => {
       }
       await vaultSettled(key);
 
-      expect(service.totalTraces()).toBe(20);
+      expect(service.totalTraces()).toBe(12);
     });
   });
 });

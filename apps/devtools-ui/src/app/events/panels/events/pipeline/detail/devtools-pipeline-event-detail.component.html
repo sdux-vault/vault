@@ -24,10 +24,10 @@
       </ul>
     </div>
 
-    @if (event().state?.value) {
+    @if (event().state?.hasValue) {
       <div class="detail-block">
-        <h4>State Value</h4>
-        <pre><code>{{ event().state?.value | json }}</code></pre>
+        <h4>State</h4>
+        <pre><code>{{ event().state | json }}</code></pre>
       </div>
     }
 

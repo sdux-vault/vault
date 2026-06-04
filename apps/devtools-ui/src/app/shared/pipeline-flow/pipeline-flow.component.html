@@ -1,0 +1,345 @@
+<section class="pipeline-section">
+  <div class="pipeline-flow">
+    <div class="pipeline-node pipeline-start">
+      <span class="pipeline-label">Incoming Value</span>
+    </div>
+    <div class="pipeline-connector" aria-hidden="true">
+      <span class="pipeline-arrow">&#9660;</span>
+    </div>
+    <sdux-devtools-pipeline-collapsible
+      [initialExpanded]="isExpanded()"
+      label="Conductor"
+      [detail]="conductorDetail()"
+      [infoTooltip]="
+        trace()
+          ? 'Conductor duration reflects wall-clock time from attempt start to finish. Individual controller votes run concurrently, so their summed durations may exceed the conductor total.'
+          : ''
+      "
+      tooltip="Expand to see conductor internals">
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <sdux-devtools-pipeline-collapsible
+        [initialExpanded]="isExpanded()"
+        class="policy-layer"
+        label="Policy Layer"
+        [detail]="conductorDetail()"
+        tooltip="Expand to see queue and controller policies">
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <div class="pipeline-node pipeline-start">
+          <span
+            class="pipeline-label"
+            matTooltip="Queue policy that controls how incoming values are buffered"
+            >Queue</span
+          >
+          @if (trace()) {
+            <img
+              src="assets/icons/help-icon.png"
+              alt=""
+              class="pipeline-info-icon"
+              matTooltip="Queue uses FIFO ordering with negligible overhead that is not included in timing calculations." />
+          }
+        </div>
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <sdux-devtools-pipeline-collapsible
+          [initialExpanded]="isExpanded()"
+          label="Controllers"
+          [detail]="controllersDetail()"
+          tooltip="Expand to see registered controllers">
+          <div class="pipeline-connector" aria-hidden="true">
+            <span class="pipeline-arrow">&#9660;</span>
+          </div>
+          <sdux-devtools-pipeline-collapsible
+            [initialExpanded]="isExpanded()"
+            label="Core"
+            [detail]="coreControllersDetail()"
+            tooltip="Expand to see core controllers">
+            @for (controller of coreControllers(); track controller.key) {
+              <div class="pipeline-connector" aria-hidden="true">
+                <span class="pipeline-arrow">&#9660;</span>
+              </div>
+              <sdux-devtools-pipeline-node
+                [detail]="entityDetail(controller.key)"
+                [behavior]="controller" />
+            }
+          </sdux-devtools-pipeline-collapsible>
+          @for (controller of nonCoreControllers(); track controller.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [detail]="entityDetail(controller.key)"
+              [behavior]="controller" />
+          }
+          @if (hasRevoteDelay()) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              label="Revote Delay"
+              [detail]="revoteDelayDetail()"
+              infoTooltip="Async wait time between a controller deny and the revote. This is not CPU time — it is idle delay introduced by a controller (e.g. Delay, Throttle) before the conductor re-polls all controllers." />
+          }
+        </sdux-devtools-pipeline-collapsible>
+      </sdux-devtools-pipeline-collapsible>
+    </sdux-devtools-pipeline-collapsible>
+    <div class="pipeline-connector" aria-hidden="true">
+      <span class="pipeline-arrow">&#9660;</span>
+    </div>
+    <sdux-devtools-pipeline-collapsible
+      [initialExpanded]="isExpanded()"
+      label="Orchestrator"
+      [detail]="orchestratorDetail()"
+      tooltip="Expand to see orchestrator pipeline">
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <sdux-devtools-pipeline-collapsible
+        [initialExpanded]="isExpanded()"
+        class="pre-processing-layer"
+        label="Pre-Processing Layer"
+        [detail]="stageDetail('interceptor')"
+        tooltip="Expand to see pre-processing interceptors">
+        @for (stage of preResolveStages(); track stage.label) {
+          @if (stage.count > 0) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [label]="stage.label + ' (' + stage.count + ')'"
+              [detail]="stageDetail('interceptor')" />
+          }
+        }
+        @if (!cell()?.fluentApis?.interceptors) {
+          <p class="pipeline-empty">No behaviors attached</p>
+        }
+      </sdux-devtools-pipeline-collapsible>
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <sdux-devtools-pipeline-collapsible
+        [initialExpanded]="isExpanded()"
+        class="processing-layer"
+        label="Processing Layer"
+        [detail]="processingLayerDetail()"
+        tooltip="Expand to see processing pipeline">
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <sdux-devtools-pipeline-collapsible
+          [initialExpanded]="isExpanded()"
+          label="Resolve"
+          [detail]="resolveDetail()"
+          tooltip="Expand to see resolve behaviors">
+          @for (behavior of resolveBehaviors(); track behavior.key) {
+            @if (hasTraceDuration(behavior.key)) {
+              <div class="pipeline-connector" aria-hidden="true">
+                <span class="pipeline-arrow">&#9660;</span>
+              </div>
+              <sdux-devtools-pipeline-node
+                [detail]="entityDetail(behavior.key)"
+                [behavior]="behavior" />
+            }
+          }
+        </sdux-devtools-pipeline-collapsible>
+        <div class="pipeline-connector" aria-hidden="true">
+          <span class="pipeline-arrow">&#9660;</span>
+        </div>
+        <sdux-devtools-pipeline-collapsible
+          [initialExpanded]="isExpanded()"
+          [label]="mergeLabel()"
+          [detail]="replaceMergeDetail()"
+          tooltip="Strategy for combining incoming values with the current state">
+          @if (showMergeBehaviors()) {
+            @for (behavior of mergeBehaviors(); track behavior.key) {
+              <div class="pipeline-connector" aria-hidden="true">
+                <span class="pipeline-arrow">&#9660;</span>
+              </div>
+              <sdux-devtools-pipeline-node
+                [detail]="mergeEntityDetail(behavior.key)"
+                [behavior]="behavior" />
+            }
+          }
+          @for (behavior of stepwiseResolveBehaviors(); track behavior.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [detail]="entityDetail(behavior.key)"
+              [behavior]="behavior" />
+          }
+          @if (cell()?.fluentApis?.operators) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [label]="'Operators (' + cell()?.fluentApis?.operators + ')'"
+              [detail]="stageDetail('operator')"
+              tooltip="RxJS-style operators applied to the value stream" />
+          }
+          @if (cell()?.fluentApis?.filters) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [label]="'Filters (' + cell()?.fluentApis?.filters + ')'"
+              [detail]="stageDetail('filter')"
+              tooltip="Filter functions that gate whether values pass through" />
+          }
+          @for (behavior of stepwiseFilterBehaviors(); track behavior.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [detail]="entityDetail(behavior.key)"
+              [behavior]="behavior" />
+          }
+          @if (cell()?.fluentApis?.beforeTaps) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [label]="'Before Taps (' + cell()?.fluentApis?.beforeTaps + ')'"
+              [detail]="stageDetail('before-tap')"
+              tooltip="Side-effect callbacks invoked before the reducer runs" />
+          }
+          @if (cell()?.fluentApis?.reducers) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [label]="'Reducers (' + cell()?.fluentApis?.reducers + ')'"
+              [detail]="stageDetail('reducer')"
+              tooltip="Reducer functions that transform the state" />
+          }
+          @for (behavior of stepwiseReducerBehaviors(); track behavior.key) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [detail]="entityDetail(behavior.key)"
+              [behavior]="behavior" />
+          }
+          @if (cell()?.fluentApis?.afterTaps) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [label]="'After Taps (' + cell()?.fluentApis?.afterTaps + ')'"
+              [detail]="stageDetail('after-tap')"
+              tooltip="Side-effect callbacks invoked after the reducer runs" />
+          }
+        </sdux-devtools-pipeline-collapsible>
+      </sdux-devtools-pipeline-collapsible>
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <sdux-devtools-pipeline-collapsible
+        [initialExpanded]="isExpanded()"
+        class="output-layer"
+        label="Output Layer"
+        [detail]="outputLayerDetail()"
+        tooltip="Expand to see output behaviors">
+        @for (behavior of encryptBehaviors(); track behavior.key) {
+          <div class="pipeline-connector" aria-hidden="true">
+            <span class="pipeline-arrow">&#9660;</span>
+          </div>
+          <sdux-devtools-pipeline-node
+            [detail]="entityDetail(behavior.key)"
+            [behavior]="behavior" />
+        }
+        @for (behavior of persistBehaviors(); track behavior.key) {
+          <div class="pipeline-connector" aria-hidden="true">
+            <span class="pipeline-arrow">&#9660;</span>
+          </div>
+          <sdux-devtools-pipeline-node
+            [detail]="entityDetail(behavior.key)"
+            [behavior]="behavior" />
+        }
+        @if (!encryptBehaviors().length && !persistBehaviors().length) {
+          <p class="pipeline-empty">No behaviors attached</p>
+        }
+      </sdux-devtools-pipeline-collapsible>
+      <div class="pipeline-connector" aria-hidden="true">
+        <span class="pipeline-arrow">&#9660;</span>
+      </div>
+      <sdux-devtools-pipeline-collapsible
+        [initialExpanded]="isExpanded()"
+        class="post-processing-layer"
+        label="Post-Processing Layer"
+        [detail]="stageDetail('core-state')"
+        tooltip="Expand to see post-processing pipeline">
+        @for (behavior of coreStateBehaviors(); track behavior.key) {
+          <div class="pipeline-connector" aria-hidden="true">
+            <span class="pipeline-arrow">&#9660;</span>
+          </div>
+          <sdux-devtools-pipeline-node
+            [detail]="coreStateDetail(behavior.key)"
+            [behavior]="behavior" />
+        }
+        @if (extensionBehaviors().length > 0) {
+          <div class="pipeline-connector" aria-hidden="true">
+            <span class="pipeline-arrow">&#9660;</span>
+          </div>
+          <sdux-devtools-pipeline-collapsible
+            [initialExpanded]="isExpanded()"
+            label="Extensions"
+            tooltip="Expand to see extension behaviors"
+            infoTooltip="Extensions are a side-effect and not timed">
+            @for (behavior of extensionBehaviors(); track behavior.key) {
+              <div class="pipeline-connector" aria-hidden="true">
+                <span class="pipeline-arrow">&#9660;</span>
+              </div>
+              <sdux-devtools-pipeline-node
+                [detail]="extensionDetail(behavior.key)"
+                [behavior]="behavior" />
+            }
+          </sdux-devtools-pipeline-collapsible>
+        }
+        @for (stage of postResolveStages(); track stage.label) {
+          @if (stage.count > 0) {
+            <div class="pipeline-connector" aria-hidden="true">
+              <span class="pipeline-arrow">&#9660;</span>
+            </div>
+            <sdux-devtools-pipeline-node
+              [label]="stage.label + ' (' + stage.count + ')'"
+              [detail]="stageDetail(stage.stageName)" />
+          }
+        }
+        @if (errorTransformBehaviors().length > 0) {
+          <div class="pipeline-connector" aria-hidden="true">
+            <span class="pipeline-arrow">&#9660;</span>
+          </div>
+          <sdux-devtools-pipeline-collapsible
+            [initialExpanded]="isExpanded()"
+            label="ErrorTransform"
+            tooltip="Expand to see error transform behaviors">
+            @for (behavior of errorTransformBehaviors(); track behavior.key) {
+              <div class="pipeline-connector" aria-hidden="true">
+                <span class="pipeline-arrow">&#9660;</span>
+              </div>
+              <sdux-devtools-pipeline-node
+                [detail]="entityDetail(behavior.key)"
+                [behavior]="behavior" />
+            }
+          </sdux-devtools-pipeline-collapsible>
+        }
+      </sdux-devtools-pipeline-collapsible>
+    </sdux-devtools-pipeline-collapsible>
+    <div class="pipeline-connector" aria-hidden="true">
+      <span class="pipeline-arrow">&#9660;</span>
+    </div>
+    <div class="pipeline-node pipeline-end">
+      <span class="pipeline-label">StateSnapshot</span>
+      @if (trace(); as t) {
+        <span class="pipeline-count"
+          >~{{ t.metrics.duration.toFixed(1) }} ms</span
+        >
+      }
+    </div>
+  </div>
+</section>

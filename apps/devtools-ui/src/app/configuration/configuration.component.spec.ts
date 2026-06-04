@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { InsightService } from '../services/insight/insight.service';
+import { DevtoolsRegistryService } from '../services/registry/devtools-registry.service';
 import { VaultConfigMessageShape } from '../shapes/vault-config-message.shape';
 import { VaultRegistrationSerializedShape } from '../shapes/vault-registration-serialized.shape';
 import { ConfigurationComponent } from './configuration.component';
@@ -62,7 +63,8 @@ describe('Component: Configuration', () => {
       imports: [ConfigurationComponent],
       providers: [
         provideZonelessChangeDetection(),
-        { provide: InsightService, useValue: mockService }
+        { provide: InsightService, useValue: mockService },
+        DevtoolsRegistryService
       ]
     }).compileComponents();
 

@@ -30,7 +30,8 @@
       "resources": [
         "bridge/bridge-inject.js",
         "assets/brand/brand-landscape-dark.svg",
-        "assets/brand/vault-icon.png"
+        "assets/brand/vault-icon.png",
+        "assets/brand/help-icon.png"
       ],
       "matches": ["<all_urls>"]
     }

@@ -1,12 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
   signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { InsightService } from '../services/insight/insight.service';
+import { DevtoolsRegistryService } from '../services/registry/devtools-registry.service';
 import { VaultRegistrationSerializedShape } from '../shapes/vault-registration-serialized.shape';
 import { RegistryDetailComponent } from './registry-detail/registry-detail.component';
 
@@ -14,16 +13,15 @@ import { RegistryDetailComponent } from './registry-detail/registry-detail.compo
  * Configuration component displaying Vault runtime versions
  * and the FeatureCell registry within the DevTools UI.
  *
- * On construction the component reads the local `globalThis.sdux` namespace
- * via {@link InsightService.refreshLocalConfig} to populate an initial
- * snapshot. When running inside the Chrome extension the bridge may
- * subsequently merge additional data from the inspected page.
+ * On construction the component delegates registry, version, and license
+ * data retrieval to {@link DevtoolsRegistryService}, which reads the local
+ * `globalThis.sdux` namespace and maintains reactive signals.
  *
  * Clicking a FeatureCell row opens a detail panel on the right displaying
  * registered behaviors and controllers for that cell.
  *
  * The component is standalone and uses OnPush change detection driven
- * by the {@link InsightService.vaultConfig} signal.
+ * by the {@link DevtoolsRegistryService} signals.
  */
 @Component({
   selector: 'sdux-devtools-configuration',
@@ -34,49 +32,27 @@ import { RegistryDetailComponent } from './registry-detail/registry-detail.compo
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfigurationComponent {
-  /** InsightService providing the Vault configuration from the bridge. */
-  private readonly insight = inject(InsightService);
+  /** Registry service providing Vault configuration data. */
+  private readonly registryService = inject(DevtoolsRegistryService);
 
   /**
-   * Triggers an immediate local config read so that versions and
-   * registry data are available by the time the template renders.
-   */
-  constructor() {
-    this.insight.refreshLocalConfig();
-  }
-
-  /**
-   * Sorted package-version entries derived from the Vault configuration signal.
+   * Sorted package-version entries derived from the registry service.
    *
    * @returns An array of `[packageName, version]` tuples sorted alphabetically,
    *          or an empty array when no version data is available.
    */
-  readonly versions = computed(() => {
-    const config = this.insight.vaultConfig();
-    if (!config?.versions) return [];
-    return Object.entries(config.versions).sort(([a], [b]) =>
-      a.localeCompare(b)
-    );
-  });
+  readonly versions = this.registryService.versions;
 
   /**
-   * Serialized FeatureCell registry snapshot from the Vault configuration signal.
+   * Serialized FeatureCell registry snapshot from the registry service.
    *
    * @returns An array of serialized FeatureCell registration records,
    *          or an empty array when no registry data is available.
    */
-  readonly registry = computed(() => {
-    const config = this.insight.vaultConfig();
-    return (config?.registry ?? []).filter(
-      (cell) => cell.key !== 'vault::devtools::logging::feature::cell'
-    );
-  });
+  readonly registry = this.registryService.registry;
 
-  /** Verified license payload from the Vault configuration signal. */
-  readonly license = computed(() => {
-    const config = this.insight.vaultConfig();
-    return config?.license ?? null;
-  });
+  /** Verified license payload from the registry service. */
+  readonly license = this.registryService.license;
 
   /**
    * Formats a license date value for display.

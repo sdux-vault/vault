@@ -5,6 +5,7 @@ import {
   WritableSignal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DevtoolsAggregateService } from '../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../services/devtools-logging.service';
 import { EXTENSION_VERSION } from '../splash-page/devtools-splash-page.component';
 import { EventsComponent } from './events.component';
@@ -98,7 +99,13 @@ describe('Component: Events', () => {
       providers: [
         provideZonelessChangeDetection(),
         { provide: DevtoolsLoggingService, useValue: mockService },
-        { provide: EXTENSION_VERSION, useValue: '1.0.0' }
+        { provide: EXTENSION_VERSION, useValue: '1.0.0' },
+        {
+          provide: DevtoolsAggregateService,
+          useValue: jasmine.createSpyObj('DevtoolsAggregateService', [
+            'clearTraces'
+          ])
+        }
       ]
     }).compileComponents();
 
@@ -113,11 +120,6 @@ describe('Component: Events', () => {
 
   it('should display the total event count', () => {
     expect(component.totalEvents()).toBe(1);
-  });
-
-  it('should clear events', () => {
-    component.clearEvents();
-    expect(mockService.clearEvents).toHaveBeenCalled();
   });
 
   it('should filter error events', () => {
@@ -164,26 +166,6 @@ describe('Component: Events', () => {
     it('should update totalEvents based on filtered results', () => {
       component.selectedCell.set('beta');
       expect(component.totalEvents()).toBe(1);
-    });
-  });
-
-  describe('clearEvents', () => {
-    it('should reset selectedCell to "all"', () => {
-      component.selectedCell.set('alpha');
-      component.clearEvents();
-      expect(component.selectedCell()).toBe('all');
-    });
-
-    it('should reset selectedType to "all"', () => {
-      component.selectedType.set('stage');
-      component.clearEvents();
-      expect(component.selectedType()).toBe('all');
-    });
-
-    it('should reset selectedKey to "all"', () => {
-      component.selectedKey.set('SDUX::Behavior::Core::Value');
-      component.clearEvents();
-      expect(component.selectedKey()).toBe('all');
     });
   });
 
@@ -580,6 +562,20 @@ describe('Component: Events', () => {
       component.selectedKey.set('SDUX::Behavior::Core::Value');
 
       expect(component.filteredEvents()).toEqual([]);
+    });
+  });
+
+  describe('resetFilters', () => {
+    it('should reset all filter signals to all', () => {
+      component.selectedCell.set('vault::todos::cell');
+      component.selectedType.set('stage');
+      component.selectedKey.set('SDUX::Behavior::Core::Value');
+
+      component.resetFilters();
+
+      expect(component.selectedCell()).toBe('all');
+      expect(component.selectedType()).toBe('all');
+      expect(component.selectedKey()).toBe('all');
     });
   });
 });

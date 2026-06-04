@@ -6,7 +6,7 @@ import {
   DEVTOOLS_LOGGING_KEY_CONSTANT,
   EventShape
 } from '@sdux-vault/shared';
-import { filter } from 'rxjs';
+import { Observable, filter } from 'rxjs';
 import { InsightService } from './insight/insight.service';
 
 /**
@@ -50,8 +50,11 @@ export class DevtoolsLoggingService {
   constructor() {
     this.vault.initialize();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.vault.fromStream as (source$: any) => void)(
+    (
+      this.vault.fromStream as unknown as (
+        source$: Observable<EventShape>
+      ) => void
+    )(
       this.bus.pipeline$().pipe(
         filter(
           (event): event is EventShape =>

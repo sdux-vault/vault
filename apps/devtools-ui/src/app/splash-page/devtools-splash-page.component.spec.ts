@@ -8,6 +8,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
 import { DevtoolsPipelineEventComponent } from '../events/panels/events/pipeline/devtools-pipeline-event.component';
 import { DevtoolsMainPipelinePanelComponent } from '../events/panels/pipeline/main/devtools-main-pipeline-panel.component';
+import { DevtoolsAggregateService } from '../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../services/devtools-logging.service';
 import {
   DevToolsSplashPageComponent,
@@ -57,6 +58,7 @@ describe('Component: SplashPage', () => {
       ],
       providers: [
         { provide: DevtoolsLoggingService, useValue: mockService },
+        { provide: DevtoolsAggregateService, useValue: {} },
         { provide: EXTENSION_VERSION, useValue: '0.0.27' },
         provideZonelessChangeDetection()
       ]

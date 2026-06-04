@@ -43,6 +43,12 @@ describe('Component: PipelineCollapsible', () => {
     it('should default to collapsed', () => {
       expect(component.expanded()).toBe(false);
     });
+
+    it('should start expanded when initialExpanded is true', () => {
+      fixture.componentRef.setInput('initialExpanded', true);
+      fixture.detectChanges();
+      expect(component.expanded()).toBe(true);
+    });
   });
 
   describe('toggle', () => {

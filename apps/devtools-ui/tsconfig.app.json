@@ -25,6 +25,8 @@
   },
   "include": [
     "src/**/*.ts",
+    "../../libs/addons/src/**/*.ts",
+    "../../libs/core-extensions/angular/src/**/*.ts",
     "../../libs/devtools/tooling/src/**/*.ts",
     "../../libs/shared/src/**/*.ts"
   ],

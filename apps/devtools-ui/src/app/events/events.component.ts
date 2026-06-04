@@ -10,6 +10,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
 import { DevtoolsLoggingService } from '../services/devtools-logging.service';
+import { ResetButtonComponent } from '../shared/reset-button/reset-button.component';
 import { EXTENSION_VERSION } from '../splash-page/devtools-splash-page.component';
 import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devtools-main-pipeline-panel.component';
 
@@ -24,7 +25,8 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
     MatSelectModule,
     MatTabsModule,
     MatTooltipModule,
-    DevtoolsMainPipelinePanelComponent
+    DevtoolsMainPipelinePanelComponent,
+    ResetButtonComponent
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss',
@@ -142,13 +144,13 @@ export class EventsComponent {
   });
 
   /**
-   * Clears the current FeatureCell-backed pipeline event history.
+   * Resets local filter signals without clearing the FeatureCell
+   * (used alongside the shared reset button which handles cell clearing).
    */
-  clearEvents(): void {
+  resetFilters(): void {
     this.selectedCell.set('all');
     this.selectedType.set('all');
     this.selectedKey.set('all');
-    this.devtools.clearEvents();
   }
 
   /**

@@ -1,0 +1,20 @@
+<div class="pipeline-label" [matTooltip]="tooltip()">
+  {{ displayLabel() }}
+  @if (infoTooltip()) {
+    <img
+      src="assets/icons/help-icon.png"
+      alt=""
+      class="pipeline-info-icon"
+      [matTooltip]="infoTooltip()" />
+  }
+  @if (behavior()?.needsLicense) {
+    <span
+      class="pipeline-licensed"
+      [matTooltip]="'LicenseId: ' + behavior()?.licenseId"
+      ><img src="assets/brand/vault-icon.png" alt="Licensed" class="vault-icon"
+    /></span>
+  }
+</div>
+@if (detail()) {
+  <span class="pipeline-count">{{ detail() }}</span>
+}

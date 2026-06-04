@@ -39,11 +39,6 @@
 
     .cell-filter {
       width: 250px;
-      @include global.sdux-text(global.$sdux-text-inverse);
-      background-color: global.$sdux-surface-light;
-      border: 1px solid global.$sdux-surface-outline;
-      border-radius: global.$border-radius-sm;
-      padding: global.$spacing-xs global.$spacing-sm;
     }
 
     .subtitle {

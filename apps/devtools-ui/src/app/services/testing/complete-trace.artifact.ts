@@ -65,7 +65,7 @@ export const COMPLETE_TRACE_EXPECTED: TraceExecutionShape = {
     duration: 50,
     eventCount: 4,
     status: TraceExecutionStatuses.Success,
-    slowestStage: { name: 'attempt', duration: 50 },
+    slowestStage: { name: 'filter', duration: 10 },
     fastestStage: { name: 'filter', duration: 10 },
     stages: [
       {
@@ -288,8 +288,8 @@ export const REVOTE_TRACE_EXPECTED: TraceExecutionShape = {
     duration: 20,
     eventCount: 3,
     status: TraceExecutionStatuses.Success,
-    slowestStage: { name: 'attempt', duration: 20 },
-    fastestStage: { name: 'attempt', duration: 20 },
+    slowestStage: { name: 'none', duration: 0 },
+    fastestStage: { name: 'none', duration: 0 },
     stages: [
       {
         name: 'attempt',
@@ -367,8 +367,8 @@ export const VOTES_TRACE_EXPECTED: TraceExecutionShape = {
     duration: 20,
     eventCount: 4,
     status: TraceExecutionStatuses.Success,
-    slowestStage: { name: 'attempt', duration: 20 },
-    fastestStage: { name: 'attempt', duration: 20 },
+    slowestStage: { name: 'none', duration: 0 },
+    fastestStage: { name: 'none', duration: 0 },
     stages: [
       {
         name: 'attempt',
@@ -492,7 +492,7 @@ function createCellTrace(
       duration: totalDuration,
       eventCount: 4,
       status: TraceExecutionStatuses.Success,
-      slowestStage: { name: 'attempt', duration: totalDuration },
+      slowestStage: { name: 'filter', duration: filterDuration },
       fastestStage: { name: 'filter', duration: filterDuration },
       stages: [
         {
@@ -720,16 +720,14 @@ export const CELL_MIXED_AGGREGATE: CellAggregateShape = {
 /** Expected cell aggregate for starwars from the pipeline event artifact. */
 export const ARTIFACT_STARWARS_AGGREGATE: CellAggregateShape = {
   cellKey: 'starwars-feature-cell-key',
-  traceCount: 10,
-  averageDuration: 313.4,
-  minDuration: 1,
+  traceCount: 6,
+  averageDuration: 521,
+  minDuration: 509,
   maxDuration: 530,
-  errorCount: 4,
-  errorRate: 0.4,
+  errorCount: 2,
+  errorRate: 0.3333333333333333,
   errorTraceIds: [
     '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-    '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-    'ec9f318d-8431-4794-b526-aba0a75bb279',
     'ec9f318d-8431-4794-b526-aba0a75bb279'
   ]
 };
@@ -737,16 +735,14 @@ export const ARTIFACT_STARWARS_AGGREGATE: CellAggregateShape = {
 /** Expected cell aggregate for startrek from the pipeline event artifact. */
 export const ARTIFACT_STARTREK_AGGREGATE: CellAggregateShape = {
   cellKey: 'startrek-feature-cell-key',
-  traceCount: 10,
-  averageDuration: 8.2,
-  minDuration: 0,
+  traceCount: 6,
+  averageDuration: 12.5,
+  minDuration: 7,
   maxDuration: 18,
-  errorCount: 4,
-  errorRate: 0.4,
+  errorCount: 2,
+  errorRate: 0.3333333333333333,
   errorTraceIds: [
     'b66e8d34-16c4-4faa-a53c-d365ae435505',
-    'b66e8d34-16c4-4faa-a53c-d365ae435505',
-    'daed122e-198f-4517-b60b-d18c9ba3aa45',
     'daed122e-198f-4517-b60b-d18c9ba3aa45'
   ]
 };
@@ -813,44 +809,12 @@ export const ARTIFACT_TRACE_METRICS = [
     controllerVoteCount: 4
   },
   {
-    traceId: 'b66e8d34-16c4-4faa-a53c-d365ae435505',
-    duration: 3,
-    eventCount: 7,
-    status: TraceExecutionStatuses.Failed,
-    hadRevote: false,
-    controllerVoteCount: 0
-  },
-  {
-    traceId: 'b66e8d34-16c4-4faa-a53c-d365ae435505',
-    duration: 1,
-    eventCount: 2,
-    status: TraceExecutionStatuses.Success,
-    hadRevote: false,
-    controllerVoteCount: 0
-  },
-  {
     traceId: 'daed122e-198f-4517-b60b-d18c9ba3aa45',
     duration: 12,
     eventCount: 18,
     status: TraceExecutionStatuses.Failed,
     hadRevote: false,
     controllerVoteCount: 4
-  },
-  {
-    traceId: 'daed122e-198f-4517-b60b-d18c9ba3aa45',
-    duration: 3,
-    eventCount: 7,
-    status: TraceExecutionStatuses.Failed,
-    hadRevote: false,
-    controllerVoteCount: 0
-  },
-  {
-    traceId: 'daed122e-198f-4517-b60b-d18c9ba3aa45',
-    duration: 0,
-    eventCount: 2,
-    status: TraceExecutionStatuses.Success,
-    hadRevote: false,
-    controllerVoteCount: 0
   },
   {
     traceId: '0bd8a2fa-4d84-449e-9e68-ee759e31365b',
@@ -877,43 +841,62 @@ export const ARTIFACT_TRACE_METRICS = [
     controllerVoteCount: 14
   },
   {
-    traceId: '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-    duration: 3,
-    eventCount: 7,
-    status: TraceExecutionStatuses.Failed,
-    hadRevote: false,
-    controllerVoteCount: 0
-  },
-  {
-    traceId: '252fe24e-fe96-4d5b-9fbb-4ed338f09791',
-    duration: 1,
-    eventCount: 2,
-    status: TraceExecutionStatuses.Success,
-    hadRevote: false,
-    controllerVoteCount: 0
-  },
-  {
     traceId: 'ec9f318d-8431-4794-b526-aba0a75bb279',
     duration: 530,
     eventCount: 38,
     status: TraceExecutionStatuses.Failed,
     hadRevote: false,
     controllerVoteCount: 14
-  },
-  {
-    traceId: 'ec9f318d-8431-4794-b526-aba0a75bb279',
-    duration: 3,
-    eventCount: 7,
-    status: TraceExecutionStatuses.Failed,
-    hadRevote: false,
-    controllerVoteCount: 0
-  },
-  {
-    traceId: 'ec9f318d-8431-4794-b526-aba0a75bb279',
-    duration: 1,
-    eventCount: 2,
-    status: TraceExecutionStatuses.Success,
-    hadRevote: false,
-    controllerVoteCount: 0
   }
+];
+
+// ---------------------------------------------------------------------------
+// Reset event artifacts (should be filtered out, never buffered)
+// ---------------------------------------------------------------------------
+
+/**
+ * Reset lifecycle events that should be excluded from trace aggregation.
+ * These events have a traceId but never fire a terminal event.
+ */
+export const RESET_TRACE_EVENTS: EventShape[] = [
+  Object({
+    id: 'evt-reset-001',
+    cell: 'test-cell',
+    behaviorKey: 'behavior-key',
+    type: 'lifecycle',
+    boundary: 'start',
+    timestamp: 9000,
+    name: 'lifecycle:start:reset',
+    traceId: 'trace-reset'
+  }),
+  Object({
+    id: 'evt-reset-002',
+    cell: 'test-cell',
+    behaviorKey: 'behavior-key',
+    type: 'lifecycle',
+    boundary: 'end',
+    timestamp: 9001,
+    name: 'lifecycle:end:reset',
+    traceId: 'trace-reset'
+  }),
+  Object({
+    id: 'evt-reset-003',
+    cell: 'test-cell',
+    behaviorKey: 'other-behavior',
+    type: 'lifecycle',
+    boundary: 'start',
+    timestamp: 9002,
+    name: 'lifecycle:start:reset',
+    traceId: 'trace-reset'
+  }),
+  Object({
+    id: 'evt-reset-004',
+    cell: 'test-cell',
+    behaviorKey: 'other-behavior',
+    type: 'lifecycle',
+    boundary: 'end',
+    timestamp: 9003,
+    name: 'lifecycle:end:reset',
+    traceId: 'trace-reset'
+  })
 ];

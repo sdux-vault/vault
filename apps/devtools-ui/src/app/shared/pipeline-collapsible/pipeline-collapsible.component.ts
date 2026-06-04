@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   input,
   signal,
   ViewEncapsulation
@@ -24,11 +25,27 @@ export class PipelineCollapsibleComponent {
   /** Label displayed on the pipeline node. */
   readonly label = input.required<string>();
 
+  /** Optional detail text displayed after the label (e.g. duration). */
+  readonly detail = input<string>('');
+
   /** Tooltip text shown on hover. */
   readonly tooltip = input<string>('');
 
+  /** Optional info tooltip that shows a help icon with hover text. */
+  readonly infoTooltip = input<string>('');
+
+  /** Optional initial expanded state driven by the parent. */
+  readonly initialExpanded = input(false);
+
   /** Whether the section is currently expanded. */
   readonly expanded = signal(false);
+
+  /** Syncs the expanded state whenever the initialExpanded input changes. */
+  constructor() {
+    effect(() => {
+      this.expanded.set(this.initialExpanded());
+    });
+  }
 
   /** Toggles the expanded state. */
   toggle(): void {

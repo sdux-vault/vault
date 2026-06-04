@@ -132,7 +132,7 @@
   @if (selectedCell(); as cell) {
     <aside class="detail-pane">
       <sdux-devtools-registry-detail
-        [cell]="$any(cell)"
+        [cellKey]="cell.key"
         (closeDetail)="closeDetail()"></sdux-devtools-registry-detail>
     </aside>
   }

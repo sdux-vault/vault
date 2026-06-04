@@ -1,0 +1,18 @@
+@use 'global' as global;
+
+:host {
+  display: inline-block;
+}
+
+.btn-clear {
+  @include global.button-base(
+    global.$sdux-text-white,
+    transparent,
+    global.$sdux-surface-outline
+  );
+
+  &:hover {
+    // exception: overrides Angular Material button ripple specificity
+    background-color: global.$sdux-hover-background-color !important;
+  }
+}

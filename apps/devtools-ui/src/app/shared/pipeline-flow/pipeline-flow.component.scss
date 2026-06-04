@@ -1,0 +1,180 @@
+@use 'global' as global;
+
+.pipeline-section {
+  margin-bottom: global.$spacing-lg;
+
+  .section-heading {
+    @include global.sdux-text(
+      global.$sdux-text-primary,
+      global.$font-weight-semibold
+    );
+    font-size: global.$font-size-md;
+    margin: 0 0 global.$spacing-sm;
+  }
+
+  .pipeline-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+
+    sdux-devtools-pipeline-node {
+      width: 100%;
+    }
+
+    sdux-devtools-pipeline-collapsible {
+      width: 100%;
+
+      // exception: pierces encapsulation to style only the policy-layer's direct wrapper
+      &.policy-layer ::ng-deep > .pipeline-collapsible-wrapper {
+        background: #f2e9d8;
+
+        > .pipeline-collapsible-header .pipeline-label,
+        > .pipeline-collapsible-header .pipeline-count {
+          color: global.$sdux-text-black;
+        }
+      }
+
+      // exception: pierces encapsulation to style only the pre-processing-layer's direct wrapper
+      &.pre-processing-layer ::ng-deep > .pipeline-collapsible-wrapper {
+        background: #f2e9d8;
+
+        > .pipeline-collapsible-header .pipeline-label,
+        > .pipeline-collapsible-header .pipeline-count {
+          color: global.$sdux-text-black;
+        }
+      }
+
+      // exception: pierces encapsulation to style only the processing-layer's direct wrapper
+      &.processing-layer ::ng-deep > .pipeline-collapsible-wrapper {
+        background: #f2e9d8;
+
+        > .pipeline-collapsible-header .pipeline-label,
+        > .pipeline-collapsible-header .pipeline-count {
+          color: global.$sdux-text-black;
+        }
+      }
+
+      // exception: pierces encapsulation to style only the output-layer's direct wrapper
+      &.output-layer ::ng-deep > .pipeline-collapsible-wrapper {
+        background: #f2e9d8;
+
+        > .pipeline-collapsible-header .pipeline-label,
+        > .pipeline-collapsible-header .pipeline-count {
+          color: global.$sdux-text-black;
+        }
+      }
+
+      // exception: pierces encapsulation to style only the post-processing-layer's direct wrapper
+      &.post-processing-layer ::ng-deep > .pipeline-collapsible-wrapper {
+        background: #f2e9d8;
+
+        > .pipeline-collapsible-header .pipeline-label,
+        > .pipeline-collapsible-header .pipeline-count {
+          color: global.$sdux-text-black;
+        }
+      }
+    }
+
+    .pipeline-connector {
+      display: flex;
+      justify-content: center;
+
+      .pipeline-arrow {
+        @include global.sdux-text(global.$sdux-text-disabled);
+        font-size: global.$font-size-xs;
+        line-height: 1;
+      }
+    }
+
+    .pipeline-empty {
+      color: global.$sdux-text-black;
+      font-size: global.$font-size-sm;
+      font-style: italic;
+      text-align: center;
+      margin: global.$spacing-sm 0;
+    }
+
+    .pipeline-node {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: global.$spacing-xs global.$spacing-sm;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-sm;
+      background-color: global.$sdux-surface-mid;
+
+      .pipeline-label {
+        @include global.sdux-text(global.$sdux-text-secondary);
+        font-size: global.$font-size-sm;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .pipeline-count {
+        @include global.sdux-text(global.$sdux-text-disabled);
+        font-size: global.$font-size-xs;
+      }
+
+      .pipeline-licensed {
+        margin-left: global.$spacing-xs;
+        display: inline-flex;
+        align-items: center;
+
+        .vault-icon {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .pipeline-info-icon {
+        width: global.$font-size-sm;
+        height: global.$font-size-sm;
+        margin-left: global.$spacing-xs;
+        cursor: help;
+        opacity: 0.7;
+      }
+
+      &.pipeline-active {
+        border-color: global.$sdux-primary-base;
+        background-color: global.$sdux-surface-active;
+
+        .pipeline-label {
+          @include global.sdux-text(global.$sdux-text-primary);
+        }
+
+        .pipeline-count {
+          @include global.sdux-text(global.$sdux-primary-light);
+          font-weight: global.$font-weight-semibold;
+        }
+      }
+
+      &.pipeline-start,
+      &.pipeline-end {
+        justify-content: center;
+        background-color: global.$sdux-surface-lightish;
+        border-color: global.$sdux-surface-outline;
+
+        .pipeline-label {
+          @include global.sdux-text(
+            global.$sdux-text-primary,
+            global.$font-weight-semibold
+          );
+          font-size: global.$font-size-sm;
+        }
+
+        .pipeline-count {
+          @include global.sdux-text(global.$sdux-text-white);
+          margin-left: global.$spacing-sm;
+        }
+      }
+    }
+  }
+}
+
+.vault-icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}

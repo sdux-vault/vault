@@ -80,6 +80,13 @@ export class DevtoolsAggregateService {
   private readonly buffer = new Map<string, EventShape[]>();
 
   /**
+   * Set of traceIds that have already been committed.
+   * Used to discard post-commit events (e.g. `lifecycle:notification:finalize`)
+   * that arrive after the terminal event has already closed the trace.
+   */
+  private readonly committedTraces = new Set<string>();
+
+  /**
    * Timeout handles for orphan detection, keyed by traceId.
    */
   private readonly orphanTimers = new Map<
@@ -145,9 +152,7 @@ export class DevtoolsAggregateService {
    * to the pipeline event stream for trace buffering.
    */
   constructor() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.vault as any).withQuery?.({ idKey: 'traceId' });
-    this.vault.initialize();
+    this.vault.withQuery?.({ idKey: 'traceId' }).initialize();
 
     this.bus
       .pipeline$()
@@ -156,6 +161,10 @@ export class DevtoolsAggregateService {
           (event): event is EventShape =>
             !!event &&
             !!event.traceId &&
+            !event.name.includes(':reset') &&
+            event.name !== 'lifecycle:notification:finalize' &&
+            event.name !== 'lifecycle:notification:abort' &&
+            event.name !== 'controller:notification:restart-attempt' &&
             ![
               DEVTOOLS_LOGGING_KEY_CONSTANT,
               DEVTOOLS_AGGREGATE_KEY_CONSTANT
@@ -171,6 +180,7 @@ export class DevtoolsAggregateService {
    */
   clearTraces(): void {
     this.buffer.clear();
+    this.committedTraces.clear();
     for (const timer of this.orphanTimers.values()) {
       clearTimeout(timer);
     }
@@ -187,9 +197,21 @@ export class DevtoolsAggregateService {
    */
   private handleEvent(event: EventShape): void {
     const traceId = event.traceId!;
+    const isInitiating =
+      event.name.startsWith('controller:start:') ||
+      event.name === 'lifecycle:notification:revote';
+    const wasPreviouslyCommitted = this.committedTraces.has(traceId);
+
+    if (wasPreviouslyCommitted) {
+      this.committedTraces.delete(traceId);
+    }
+
     let events = this.buffer.get(traceId);
 
     if (!events) {
+      if (!isInitiating) {
+        return;
+      }
       events = [];
       this.buffer.set(traceId, events);
       this.startOrphanTimer(traceId);
@@ -217,6 +239,7 @@ export class DevtoolsAggregateService {
   ): void {
     this.clearOrphanTimer(traceId);
     this.buffer.delete(traceId);
+    this.committedTraces.add(traceId);
 
     const status = this.resolveStatus(terminalEvent);
     const metrics = this.computeMetrics(events, status);
@@ -296,19 +319,20 @@ export class DevtoolsAggregateService {
     status: TraceExecutionStatus
   ): TraceMetricsShape {
     const stages = this.matchStages(events);
+    const nonAttemptStages = stages.filter((s) => s.name !== 'attempt');
     const duration =
       events.length > 1
         ? events[events.length - 1].timestamp - events[0].timestamp
         : 0;
 
     const slowestStage =
-      stages.length > 0
-        ? stages.reduce((a, b) => (a.duration > b.duration ? a : b))
+      nonAttemptStages.length > 0
+        ? nonAttemptStages.reduce((a, b) => (a.duration > b.duration ? a : b))
         : { name: 'none', duration: 0 };
 
     const fastestStage =
-      stages.length > 0
-        ? stages.reduce((a, b) => (a.duration < b.duration ? a : b))
+      nonAttemptStages.length > 0
+        ? nonAttemptStages.reduce((a, b) => (a.duration < b.duration ? a : b))
         : { name: 'none', duration: 0 };
 
     return {

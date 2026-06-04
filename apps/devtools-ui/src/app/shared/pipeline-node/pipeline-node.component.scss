@@ -1,0 +1,45 @@
+@use 'global' as global;
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: global.$spacing-xs global.$spacing-sm;
+  border: 1px solid global.$sdux-primary-base;
+  border-radius: global.$border-radius-sm;
+  background-color: global.$sdux-surface-active;
+  box-sizing: border-box;
+}
+
+.pipeline-label {
+  @include global.sdux-text(global.$sdux-text-primary);
+  font-size: global.$font-size-sm;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pipeline-count {
+  @include global.sdux-text(global.$sdux-primary-light);
+  font-size: global.$font-size-xs;
+  font-weight: global.$font-weight-semibold;
+}
+
+.pipeline-licensed {
+  margin-left: global.$spacing-xs;
+  display: inline-flex;
+  align-items: center;
+
+  .vault-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.pipeline-info-icon {
+  width: global.$font-size-sm;
+  height: global.$font-size-sm;
+  margin-left: global.$spacing-xs;
+  cursor: help;
+  opacity: 0.7;
+}

@@ -45,14 +45,8 @@
         {{ latestStateSize() }}
       </span>
     }
-    <button
-      type="button"
-      class="btn-clear"
-      matTooltip="Clear all events"
-      aria-label="Clear all events"
-      (click)="clearEvents()">
-      Clear
-    </button>
+    <sdux-devtools-reset-button
+      (click)="resetFilters()"></sdux-devtools-reset-button>
   </div>
 </header>
 
