@@ -1,7 +1,11 @@
 import { DestroyRef, Injectable, computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
-import { DEVTOOLS_LOGGING_KEY_CONSTANT, EventShape } from '@sdux-vault/shared';
+import {
+  DEVTOOLS_AGGREGATE_KEY_CONSTANT,
+  DEVTOOLS_LOGGING_KEY_CONSTANT,
+  EventShape
+} from '@sdux-vault/shared';
 import { filter } from 'rxjs';
 import { InsightService } from './insight/insight.service';
 
@@ -13,11 +17,11 @@ import { InsightService } from './insight/insight.service';
  */
 @FeatureCell<EventShape[]>(DEVTOOLS_LOGGING_KEY_CONSTANT)
 @Injectable({ providedIn: 'root' })
-export class DevtoolsService {
+export class DevtoolsLoggingService {
   /**
    * Internal FeatureCell used to store pipeline event history.
    */
-  private readonly vault = injectVault<EventShape[]>(DevtoolsService);
+  private readonly vault = injectVault<EventShape[]>(DevtoolsLoggingService);
 
   /**
    * DevTools InsightService that exposes pipeline and queue observables.
@@ -51,7 +55,11 @@ export class DevtoolsService {
       this.bus.pipeline$().pipe(
         filter(
           (event): event is EventShape =>
-            !!event && event.cell !== DEVTOOLS_LOGGING_KEY_CONSTANT
+            !!event &&
+            ![
+              DEVTOOLS_LOGGING_KEY_CONSTANT,
+              DEVTOOLS_AGGREGATE_KEY_CONSTANT
+            ].includes(event.cell)
         ),
         takeUntilDestroyed(this.destroyRef)
       )

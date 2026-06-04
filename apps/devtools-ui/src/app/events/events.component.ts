@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
-import { DevtoolsService } from '../services/devtools.service';
+import { DevtoolsLoggingService } from '../services/devtools-logging.service';
 import { EXTENSION_VERSION } from '../splash-page/devtools-splash-page.component';
 import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devtools-main-pipeline-panel.component';
 
@@ -32,7 +32,7 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
 })
 export class EventsComponent {
   /** Internal service providing access to DevTools event streams. */
-  private devtools: DevtoolsService = inject(DevtoolsService);
+  private devtools: DevtoolsLoggingService = inject(DevtoolsLoggingService);
 
   /** Extension manifest version, resolved via injection token. */
   readonly version = inject(EXTENSION_VERSION);

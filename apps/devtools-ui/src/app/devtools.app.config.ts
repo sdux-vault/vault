@@ -5,11 +5,18 @@ import {
 } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 
-import { withArrayPushMergeBehavior } from '@sdux-vault/addons';
+import {
+  withArrayPushMergeBehavior,
+  withQueryBehavior
+} from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
-import { DEVTOOLS_LOGGING_KEY_CONSTANT } from '@sdux-vault/shared';
+import {
+  DEVTOOLS_AGGREGATE_KEY_CONSTANT,
+  DEVTOOLS_LOGGING_KEY_CONSTANT
+} from '@sdux-vault/shared';
 import { routes } from './devtools.app.routes';
-import { DevtoolsService } from './services/devtools.service';
+import { DevtoolsAggregateService } from './services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from './services/devtools-logging.service';
 
 /**
  * Root application configuration for the Vault DevTools application.
@@ -48,12 +55,21 @@ export const appConfig: ApplicationConfig = {
      * - behaviors: (none) — DevTools maintains its own telemetry pipeline
      */
     provideFeatureCell(
-      DevtoolsService,
+      DevtoolsLoggingService,
       {
         key: DEVTOOLS_LOGGING_KEY_CONSTANT,
         initialState: []
       },
       [withArrayPushMergeBehavior]
+    ),
+
+    provideFeatureCell(
+      DevtoolsAggregateService,
+      {
+        key: DEVTOOLS_AGGREGATE_KEY_CONSTANT,
+        initialState: []
+      },
+      [withArrayPushMergeBehavior, withQueryBehavior]
     )
   ]
 };

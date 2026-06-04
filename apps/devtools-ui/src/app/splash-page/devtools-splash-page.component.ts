@@ -6,7 +6,7 @@ import {
   InjectionToken
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DevtoolsService } from '../services/devtools.service';
+import { DevtoolsLoggingService } from '../services/devtools-logging.service';
 
 /**
  * Resolves the extension version from the Chrome manifest API.
@@ -51,7 +51,7 @@ export const EXTENSION_VERSION = new InjectionToken<string>(
 })
 export class DevToolsSplashPageComponent {
   /** Internal service providing access to DevTools event streams. */
-  private devtools = inject(DevtoolsService);
+  private devtools = inject(DevtoolsLoggingService);
 
   /** Extension manifest version, resolved via injection token. */
   readonly version = inject(EXTENSION_VERSION);

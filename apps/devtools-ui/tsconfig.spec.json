@@ -9,7 +9,15 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
-    "types": ["jasmine", "chrome"]
+    "types": ["jasmine", "chrome"],
+    "paths": {
+      "@sdux-vault/addons": ["libs/addons/src/public-api"],
+      "@sdux-vault/core": ["libs/core/src/public-api"],
+      "@sdux-vault/angular": ["libs/core-extensions/angular/src/public-api"],
+      "@sdux-vault/testing-utils": ["libs/testing/utils/src/public-api"],
+      "@sdux-vault/devtools-ui": ["apps/devtools-ui/src/public-api"],
+      "@sdux-vault/ui/web-components": ["libs/ui/web-components/src/public-api"]
+    }
   },
   "include": ["src/**/*.ts"],
   "references": [{ "path": "../../libs/testing/utils/tsconfig.lib.json" }]

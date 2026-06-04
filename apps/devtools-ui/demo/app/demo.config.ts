@@ -10,13 +10,18 @@ import {
   withDelayController,
   withLocalStoragePersistBehavior,
   withLookupBehavior,
+  withQueryBehavior,
   withStepwiseController
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
-import { DEVTOOLS_LOGGING_KEY_CONSTANT } from '@sdux-vault/shared';
+import {
+  DEVTOOLS_AGGREGATE_KEY_CONSTANT,
+  DEVTOOLS_LOGGING_KEY_CONSTANT
+} from '@sdux-vault/shared';
 import { withTabSyncController } from '../../../../libs/core/src/public-api';
 import { routes } from '../../src/app/devtools.app.routes';
-import { DevtoolsService } from '../../src/app/services/devtools.service';
+import { DevtoolsAggregateService } from '../../src/app/services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../../src/app/services/devtools-logging.service';
 import { EXTENSION_VERSION } from '../../src/app/splash-page/devtools-splash-page.component';
 import { StarTrekExampleService } from './feature-cells/star-trek/star-trek-example.service';
 import { StarWarsExampleService } from './feature-cells/star-wars/star-wars-example.service';
@@ -48,12 +53,21 @@ export const demoConfig: ApplicationConfig = {
     }),
 
     provideFeatureCell(
-      DevtoolsService,
+      DevtoolsLoggingService,
       {
         key: DEVTOOLS_LOGGING_KEY_CONSTANT,
         initialState: []
       },
       [withArrayPushMergeBehavior]
+    ),
+
+    provideFeatureCell(
+      DevtoolsAggregateService,
+      {
+        key: DEVTOOLS_AGGREGATE_KEY_CONSTANT,
+        initialState: []
+      },
+      [withArrayPushMergeBehavior, withQueryBehavior]
     ),
 
     provideFeatureCell(

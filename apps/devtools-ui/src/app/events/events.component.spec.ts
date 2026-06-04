@@ -5,7 +5,7 @@ import {
   WritableSignal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DevtoolsService } from '../services/devtools.service';
+import { DevtoolsLoggingService } from '../services/devtools-logging.service';
 import { EXTENSION_VERSION } from '../splash-page/devtools-splash-page.component';
 import { EventsComponent } from './events.component';
 
@@ -97,7 +97,7 @@ describe('Component: Events', () => {
       imports: [EventsComponent],
       providers: [
         provideZonelessChangeDetection(),
-        { provide: DevtoolsService, useValue: mockService },
+        { provide: DevtoolsLoggingService, useValue: mockService },
         { provide: EXTENSION_VERSION, useValue: '1.0.0' }
       ]
     }).compileComponents();
