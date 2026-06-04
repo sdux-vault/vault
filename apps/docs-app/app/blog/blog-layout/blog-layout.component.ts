@@ -27,7 +27,8 @@ export class BlogLayoutComponent extends PipelineRoutingDirective {
     TA: 'Technical Authority',
     ED: 'Educational Series',
     SP: 'Social Proof/Momentum',
-    CE: 'Community Engagement'
+    CE: 'Community Engagement',
+    RC: 'Redux Comparison'
   };
 
   readonly pillarLabel = computed(
