@@ -62,6 +62,7 @@
     "build:angular": "ng build angular",
     "build:core": "ng build core",
     "start:chrome": "ng serve devtools-demo --port 4250",
+    "start:chrome:prod": "ng serve devtools-demo --port 4250 --configuration production",
     "build:devtools": "ng build devtools",
     "build:devtools-ui": "ng build devtools-ui && npm run copy:devtools-ui",
     "copy:devtools-ui": "copyfiles -f dist/devtools-ui/browser/* apps/chrome-extension/panel",

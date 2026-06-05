@@ -1,0 +1,39 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+}
+
+.tab-description {
+  margin: global.$spacing-sm 0;
+  padding-left: global.$spacing-sm;
+  padding-right: global.$spacing-sm;
+  font-size: global.$font-size-md;
+  color: var(--sdux-text-disabled);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.pipeline-flow-container {
+  max-width: 400px;
+  margin: global.$spacing-xl auto 0;
+}
+
+.pipeline-empty {
+  padding: global.$spacing-md;
+  text-align: center;
+  color: var(--sdux-text-secondary);
+  font-size: global.$font-size-sm;
+}
+
+.upsell-notice {
+  padding: global.$spacing-md;
+  text-align: center;
+
+  .upsell-body {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-secondary);
+    line-height: 1.5;
+  }
+}

@@ -51,61 +51,10 @@
     </div>
   } @else {
     <!-- Timeline Visualization -->
-    <section class="timeline-section">
-      <div class="timeline-axis">
-        <span class="axis-label">TIME</span>
-        <span class="axis-line"></span>
-        <span class="axis-arrow">►</span>
-      </div>
-      <div class="timeline-rows">
-        @for (trace of filteredTraces(); track trace.traceId; let i = $index) {
-          <div
-            class="timeline-row"
-            [class.timeline-row-selected]="expandedTraceId() === trace.traceId"
-            role="button"
-            tabindex="0"
-            matTooltip="Trace ID: {{ trace.traceId }}"
-            (click)="toggleTrace(trace.traceId)"
-            (keydown.enter)="toggleTrace(trace.traceId)"
-            (keydown.space)="
-              toggleTrace(trace.traceId); $event.preventDefault()
-            ">
-            <span class="timeline-id">t{{ i + 1 }}</span>
-            <div class="timeline-track">
-              <div
-                class="timeline-bar"
-                [class]="statusClass(trace)"
-                [style.left.%]="timelineLeft(trace)"
-                [style.width.%]="timelineWidth(trace)"></div>
-            </div>
-            <span class="timeline-duration"
-              >{{ trace.metrics.duration.toFixed(1) }}ms</span
-            >
-            <span class="timeline-status" [class]="statusClass(trace)">{{
-              statusLabel(trace)
-            }}</span>
-          </div>
-        }
-      </div>
-      <footer class="status-legend">
-        <span class="status-success">✓ Success</span>
-        <span class="status-failed">✗ Failed</span>
-        <span class="status-denied">⊘ Denied</span>
-        <span class="status-orphaned">⚠ Orphaned</span>
-        <span class="status-aborted">↺ Aborted</span>
-        <span class="legend-separator"></span>
-        <span class="legend-indicator"
-          ><span class="indicator indicator-state">●</span> = state
-          snapshot</span
-        >
-        <span class="legend-indicator"
-          ><span class="indicator indicator-payload">◆</span> = payload</span
-        >
-        <span class="legend-indicator"
-          ><span class="indicator indicator-error">⚠</span> = error</span
-        >
-      </footer>
-    </section>
+    <sdux-trace-timeline
+      [traces]="filteredTraces()"
+      (traceToggled)="toggleTrace($event)">
+    </sdux-trace-timeline>
 
     <!-- Expanded Trace Detail -->
     @if (expandedTraceId(); as traceId) {
@@ -139,236 +88,23 @@
               <div class="trace-detail-content">
                 <!-- Stage Waterfall / Pipeline Flow Tabs -->
 
-                <div class="event-table-wrapper">
-                  <table class="event-table">
-                    <thead>
-                      <tr>
-                        <th
-                          class="col-index"
-                          matTooltip="Event sequence number">
-                          #
-                        </th>
-                        <th class="col-event" matTooltip="Pipeline event name">
-                          Event
-                        </th>
-                        <th
-                          class="col-boundary"
-                          matTooltip="Event boundary (start/end/notification)">
-                          Boundary
-                        </th>
-                        <th
-                          class="col-delta"
-                          matTooltip="Time delta from previous event">
-                          Δms
-                        </th>
-                        <th
-                          class="col-elapsed"
-                          matTooltip="Total elapsed time from trace start">
-                          Ems
-                        </th>
-                        <th
-                          class="col-state"
-                          matTooltip="State snapshot indicator">
-                          State
-                        </th>
-                        <th
-                          class="col-payload"
-                          matTooltip="Payload data indicator">
-                          Payload
-                        </th>
-                        <th class="col-error" matTooltip="Error indicator">
-                          Error
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @for (event of trace.events; track $index) {
-                        <tr
-                          [class.row-error]="hasError(event)"
-                          [class.row-selected]="
-                            selectedEvent()?.id === event.id
-                          "
-                          [matTooltip]="event.name + '\nEvent ID: ' + event.id"
-                          tabindex="0"
-                          role="row"
-                          (click)="selectEvent(event)"
-                          (keydown.enter)="selectEvent(event)">
-                          <td class="col-index">{{ $index + 1 }}</td>
-                          <td class="col-event">
-                            {{ eventDisplayName(event) }}
-                          </td>
-                          <td class="col-boundary">{{ event.boundary }}</td>
-                          <td class="col-delta">
-                            {{ deltaMs(trace, event, $index) }}
-                          </td>
-                          <td class="col-elapsed">
-                            {{ elapsedMs(trace, event) }}
-                          </td>
-                          <td class="col-state">
-                            @if (hasState(event)) {
-                              <span
-                                class="indicator indicator-state"
-                                matTooltip="State snapshot available"
-                                >●</span
-                              >
-                            }
-                          </td>
-                          <td class="col-payload">
-                            @if (hasPayload(event)) {
-                              <span
-                                class="indicator indicator-payload"
-                                matTooltip="Payload available"
-                                >◆</span
-                              >
-                            }
-                          </td>
-                          <td class="col-error">
-                            @if (hasError(event)) {
-                              <span
-                                class="indicator indicator-error"
-                                matTooltip="Error present"
-                                >⚠</span
-                              >
-                            }
-                          </td>
-                        </tr>
-                      }
-                    </tbody>
-                  </table>
-                </div>
+                <sdux-trace-event-table
+                  [trace]="trace"
+                  (eventSelected)="selectEvent($event)">
+                </sdux-trace-event-table>
 
                 <mat-tab-group>
                   <mat-tab label="Stage Waterfall">
-                    @if (isLicensed()) {
-                      @if (trace.metrics.stages.length > 0) {
-                        <p class="tab-description">
-                          The Stage Waterfall represents wall-clock timing for
-                          each stage. Each bar shows the real elapsed time from
-                          start to finish, including any inter-stage scheduling
-                          overhead. Concurrent stages such as controller votes
-                          appear as separate rows and may overlap in time.
-                        </p>
-                        <div class="waterfall-section">
-                          <div class="waterfall-rows">
-                            @for (
-                              stage of waterfallStages(trace);
-                              track $index
-                            ) {
-                              <div
-                                class="waterfall-row"
-                                [class.waterfall-row-revote]="
-                                  isRevoteDelay(stage)
-                                "
-                                tabindex="0"
-                                role="button"
-                                (click)="selectStageEvent(trace, stage)"
-                                (keydown.enter)="
-                                  selectStageEvent(trace, stage)
-                                ">
-                                <span class="waterfall-name">{{
-                                  stage.name
-                                }}</span>
-                                <div class="waterfall-track">
-                                  <div
-                                    class="waterfall-bar"
-                                    [class.waterfall-bar-slow]="
-                                      !isRevoteDelay(stage) &&
-                                      isSlowestStage(trace, stage)
-                                    "
-                                    [class.waterfall-bar-revote]="
-                                      isRevoteDelay(stage)
-                                    "
-                                    [style.left.%]="waterfallLeft(trace, stage)"
-                                    [style.width.%]="
-                                      waterfallWidth(trace, stage)
-                                    "></div>
-                                  @if (
-                                    !isRevoteDelay(stage) &&
-                                    isSlowestStage(trace, stage)
-                                  ) {
-                                    @if (isSlowOnRight(trace, stage)) {
-                                      <span
-                                        class="waterfall-slow-label waterfall-slow-right"
-                                        [style.left.%]="
-                                          waterfallLeft(trace, stage) +
-                                          waterfallWidth(trace, stage)
-                                        "
-                                        >← slow</span
-                                      >
-                                    } @else {
-                                      <span
-                                        class="waterfall-slow-label waterfall-slow-left"
-                                        [style.left.%]="
-                                          waterfallLeft(trace, stage)
-                                        "
-                                        >slow →</span
-                                      >
-                                    }
-                                  }
-                                </div>
-                                <span class="waterfall-duration"
-                                  >{{ stage.duration.toFixed(1) }}ms</span
-                                >
-                              </div>
-                            }
-                          </div>
-                        </div>
-                      } @else {
-                        <p class="pipeline-empty">
-                          No stage data available for this trace.
-                        </p>
-                      }
-                    } @else {
-                      <div class="upsell-notice">
-                        <p>
-                          Unlock detailed per-stage timing analysis with a
-                          <strong>Pro</strong> or
-                          <strong>Enterprise</strong> license.
-                        </p>
-                        <p class="upsell-body">
-                          Visualize execution bottlenecks, identify the slowest
-                          pipeline stages, and optimize your data flow with
-                          precision.
-                        </p>
-                      </div>
-                    }
+                    <sdux-trace-stage-waterfall
+                      [trace]="trace"
+                      (stageSelected)="selectEvent($event)">
+                    </sdux-trace-stage-waterfall>
                   </mat-tab>
                   <mat-tab label="Pipeline Flow">
-                    @if (isLicensed()) {
-                      <p class="tab-description">
-                        The Pipeline Flow represents the hierarchical structure
-                        of the data pipeline. Timing is the sum of each stage's
-                        individual execution. Because concurrent controller
-                        votes are summed independently, child totals may exceed
-                        a parent's wall-clock duration.
-                      </p>
-                      @if (expandedTraceCellKey(); as traceCellKey) {
-                        <div class="pipeline-flow-container">
-                          <sdux-devtools-pipeline-flow
-                            [cellKey]="traceCellKey"
-                            [trace]="trace">
-                          </sdux-devtools-pipeline-flow>
-                        </div>
-                      } @else {
-                        <p class="pipeline-empty">
-                          Registry data not available for this cell.
-                        </p>
-                      }
-                    } @else {
-                      <div class="upsell-notice">
-                        <p>
-                          Unlock the full pipeline architecture view with a
-                          <strong>Pro</strong> or
-                          <strong>Enterprise</strong> license.
-                        </p>
-
-                        <p class="upsell-body">
-                          Explore the hierarchical data flow, see per-behavior
-                          timing, and understand exactly how your state
-                          transforms from ingress to snapshot.
-                        </p>
-                      </div>
-                    }
+                    <sdux-trace-pipeline-flow-tab
+                      [trace]="trace"
+                      [cellKey]="expandedTraceCellKey()">
+                    </sdux-trace-pipeline-flow-tab>
                   </mat-tab>
                 </mat-tab-group>
 

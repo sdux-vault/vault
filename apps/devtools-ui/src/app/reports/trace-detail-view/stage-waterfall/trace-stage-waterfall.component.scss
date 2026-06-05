@@ -1,0 +1,113 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+}
+
+.waterfall-section {
+  padding-top: global.$spacing-md;
+}
+
+.waterfall-rows {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-xs;
+}
+
+.waterfall-row {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-sm;
+  padding: global.$spacing-xs;
+  border-radius: global.$border-radius-sm;
+  transition: background 0.15s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--sdux-surface-hover, rgba(255, 255, 255, 0.05));
+  }
+
+  &.waterfall-row-revote .waterfall-name {
+    font-style: italic;
+    opacity: 0.7;
+  }
+
+  .waterfall-name {
+    font-family: monospace;
+    font-size: global.$font-size-xs;
+    min-width: 80px;
+    color: var(--sdux-text-secondary);
+  }
+
+  .waterfall-track {
+    flex: 1;
+    height: 10px;
+    position: relative;
+    background: var(--sdux-surface-hover, rgb(255 255 255 / 3%));
+    border-radius: 2px;
+
+    .waterfall-bar {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      border-radius: 2px;
+      background: global.$sdux-primary-base;
+      min-width: 2px;
+
+      &.waterfall-bar-slow {
+        background: global.$sdux-warn-base;
+      }
+
+      &.waterfall-bar-revote {
+        background: global.$sdux-accent-base;
+        opacity: 0.6;
+      }
+    }
+
+    .waterfall-slow-label {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: global.$font-size-xs;
+      color: global.$sdux-warn-base;
+      white-space: nowrap;
+      pointer-events: none;
+
+      &.waterfall-slow-right {
+        margin-left: global.$spacing-xs;
+      }
+
+      &.waterfall-slow-left {
+        transform: translateX(-100%) translateY(-50%);
+        margin-left: -(global.$spacing-xs);
+      }
+    }
+  }
+
+  .waterfall-duration {
+    font-family: monospace;
+    font-size: global.$font-size-xs;
+    min-width: 50px;
+    text-align: right;
+    color: var(--sdux-text-primary);
+  }
+}
+
+.pipeline-empty {
+  padding: global.$spacing-md;
+  text-align: center;
+  color: var(--sdux-text-secondary);
+  font-size: global.$font-size-sm;
+}
+
+.upsell-notice {
+  padding: global.$spacing-md;
+  text-align: center;
+
+  .upsell-body {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-secondary);
+    line-height: 1.5;
+  }
+}

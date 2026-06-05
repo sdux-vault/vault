@@ -16,8 +16,11 @@ import { DevtoolsRegistryService } from '../../services/registry/devtools-regist
 import type { TraceExecutionShape } from '../../shapes/trace';
 import { TraceExecutionStatuses } from '../../shapes/trace';
 import type { StageMetricShape } from '../../shapes/trace/stage-metric.shape';
-import { PipelineFlowComponent } from '../../shared/pipeline-flow/pipeline-flow.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
+import { TraceEventTableComponent } from './event-table/trace-event-table.component';
+import { TracePipelineFlowTabComponent } from './pipeline-flow-tab/trace-pipeline-flow-tab.component';
+import { TraceStageWaterfallComponent } from './stage-waterfall/trace-stage-waterfall.component';
+import { TraceTimelineComponent } from './timeline/trace-timeline.component';
 
 /**
  * Trace Timeline component.
@@ -36,8 +39,11 @@ import { ResetButtonComponent } from '../../shared/reset-button/reset-button.com
     MatSelectModule,
     MatTabsModule,
     MatTooltipModule,
-    PipelineFlowComponent,
     ResetButtonComponent,
+    TraceEventTableComponent,
+    TracePipelineFlowTabComponent,
+    TraceStageWaterfallComponent,
+    TraceTimelineComponent,
     DevtoolsPipelineEventDetailComponent
   ],
   templateUrl: './trace-detail-view.component.html',

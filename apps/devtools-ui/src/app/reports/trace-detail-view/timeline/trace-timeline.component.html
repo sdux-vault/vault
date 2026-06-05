@@ -1,0 +1,52 @@
+<section class="timeline-section">
+  <div class="timeline-axis">
+    <span class="axis-label">TIME</span>
+    <span class="axis-line"></span>
+    <span class="axis-arrow">►</span>
+  </div>
+  <div class="timeline-rows">
+    @for (trace of traces(); track trace.traceId; let i = $index) {
+      <div
+        class="timeline-row"
+        [class.timeline-row-selected]="selectedTraceId() === trace.traceId"
+        role="button"
+        tabindex="0"
+        matTooltip="Trace ID: {{ trace.traceId }}"
+        (click)="toggleTrace(trace.traceId)"
+        (keydown.enter)="toggleTrace(trace.traceId)"
+        (keydown.space)="toggleTrace(trace.traceId); $event.preventDefault()">
+        <span class="timeline-id">t{{ i + 1 }}</span>
+        <div class="timeline-track">
+          <div
+            class="timeline-bar"
+            [class]="statusClass(trace)"
+            [style.left.%]="timelineLeft(trace)"
+            [style.width.%]="timelineWidth(trace)"></div>
+        </div>
+        <span class="timeline-duration"
+          >{{ trace.metrics.duration.toFixed(1) }}ms</span
+        >
+        <span class="timeline-status" [class]="statusClass(trace)">{{
+          statusLabel(trace)
+        }}</span>
+      </div>
+    }
+  </div>
+  <footer class="status-legend">
+    <span class="status-success">✓ Success</span>
+    <span class="status-failed">✗ Failed</span>
+    <span class="status-denied">⊘ Denied</span>
+    <span class="status-orphaned">⚠ Orphaned</span>
+    <span class="status-aborted">↺ Aborted</span>
+    <span class="legend-separator"></span>
+    <span class="legend-indicator"
+      ><span class="indicator indicator-state">●</span> = state snapshot</span
+    >
+    <span class="legend-indicator"
+      ><span class="indicator indicator-payload">◆</span> = payload</span
+    >
+    <span class="legend-indicator"
+      ><span class="indicator indicator-error">⚠</span> = error</span
+    >
+  </footer>
+</section>

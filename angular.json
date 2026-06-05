@@ -448,6 +448,16 @@
             }
           },
           "configurations": {
+            "production": {
+              "optimization": true,
+              "sourceMap": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/devtools-ui/demo/environments/environment.ts",
+                  "with": "apps/devtools-ui/demo/environments/environment.prod.ts"
+                }
+              ]
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -459,6 +469,9 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
+            "production": {
+              "buildTarget": "devtools-demo:build:production"
+            },
             "development": {
               "buildTarget": "devtools-demo:build:development"
             }

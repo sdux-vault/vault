@@ -19,6 +19,8 @@ docker/**/output
 snapshot-output.log
 logs
 
+apps/devtools-ui/demo/environments/environment.prod.ts
+
 
 projects/chrome-plugin/panel/index.html
 projects/chrome-plugin/panel/main.js

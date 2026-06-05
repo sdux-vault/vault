@@ -1,0 +1,117 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+}
+
+.event-table-wrapper {
+  overflow-x: auto;
+}
+
+.event-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: global.$font-size-xs;
+  font-family: monospace;
+  display: block;
+
+  thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-bottom: 1px solid global.$sdux-border-active;
+
+    th {
+      background: global.$sdux-surface-lightish;
+    }
+  }
+
+  tbody {
+    display: block;
+    height: 290px;
+    overflow-y: auto;
+
+    tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+  }
+
+  th,
+  td {
+    padding: global.$spacing-xs global.$spacing-sm;
+    text-align: left;
+    border-bottom: 1px solid var(--sdux-border-default, rgb(255 255 255 / 5%));
+  }
+
+  th {
+    color: var(--sdux-text-secondary);
+    font-weight: global.$font-weight-medium;
+    white-space: nowrap;
+  }
+
+  .col-index {
+    width: 30px;
+    text-align: right;
+    color: var(--sdux-text-secondary);
+  }
+
+  .col-event {
+    min-width: 220px;
+  }
+
+  .col-boundary {
+    width: 60px;
+  }
+
+  .col-delta {
+    width: 50px;
+    text-align: right;
+  }
+
+  .col-elapsed {
+    width: 50px;
+    text-align: right;
+  }
+
+  .col-state,
+  .col-payload,
+  .col-error {
+    width: 40px;
+    text-align: center;
+  }
+
+  .row-error {
+    background: rgb(255 0 0 / 5%);
+  }
+
+  .row-selected {
+    background: var(--sdux-surface-active, rgba(255, 255, 255, 0.1));
+  }
+
+  tbody tr {
+    transition: background 0.15s ease;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--sdux-surface-hover, rgba(255, 255, 255, 0.05));
+    }
+  }
+}
+
+.indicator {
+  cursor: default;
+}
+
+.indicator-state {
+  color: global.$sdux-success-base;
+}
+
+.indicator-payload {
+  color: global.$sdux-primary-base;
+}
+
+.indicator-error {
+  color: global.$sdux-accent-base;
+}
