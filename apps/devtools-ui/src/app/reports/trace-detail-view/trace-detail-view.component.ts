@@ -18,6 +18,7 @@ import { TraceExecutionStatuses } from '../../shapes/trace';
 import type { StageMetricShape } from '../../shapes/trace/stage-metric.shape';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
 import { TraceEventTableComponent } from './event-table/trace-event-table.component';
+import { TraceHotStageRankingComponent } from './hot-stage-ranking/trace-hot-stage-ranking.component';
 import { TracePipelineFlowTabComponent } from './pipeline-flow-tab/trace-pipeline-flow-tab.component';
 import { TraceStageWaterfallComponent } from './stage-waterfall/trace-stage-waterfall.component';
 import { TraceTimelineComponent } from './timeline/trace-timeline.component';
@@ -41,6 +42,7 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
     MatTooltipModule,
     ResetButtonComponent,
     TraceEventTableComponent,
+    TraceHotStageRankingComponent,
     TracePipelineFlowTabComponent,
     TraceStageWaterfallComponent,
     TraceTimelineComponent,

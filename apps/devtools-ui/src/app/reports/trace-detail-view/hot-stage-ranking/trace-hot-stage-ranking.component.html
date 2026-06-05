@@ -1,0 +1,166 @@
+@if (isLicensed()) {
+  <p class="tab-description">
+    The Hot Stage Ranking aggregates pipeline stage durations across all
+    filtered traces. Stages are grouped by name and ranked by total cumulative
+    time. Use this view to identify systemic bottlenecks.
+  </p>
+
+  <div class="view-toggle">
+    <button
+      type="button"
+      class="toggle-btn"
+      [class.toggle-active]="viewMode() === 'individual'"
+      (click)="setViewMode('individual')">
+      Individual
+    </button>
+    <button
+      type="button"
+      class="toggle-btn"
+      [class.toggle-active]="viewMode() === 'grouped'"
+      (click)="setViewMode('grouped')">
+      Grouped
+    </button>
+  </div>
+
+  @if (viewMode() === 'grouped') {
+    @if (rankings().length > 0) {
+      <div class="ranking-section">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th class="col-rank">Rank</th>
+              <th class="col-stage">Stage</th>
+              <th class="col-duration">Duration</th>
+              <th class="col-count">Count</th>
+              <th class="col-bar"></th>
+              <th class="col-pct">%</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (entry of rankings(); track entry.name; let i = $index) {
+              <tr [class.row-slowest]="i === 0 && rankings().length > 1">
+                <td class="col-rank">{{ i + 1 }}</td>
+                <td class="col-stage">{{ entry.name }}</td>
+                <td class="col-duration">
+                  {{ entry.totalDuration.toFixed(1) }}ms
+                </td>
+                <td class="col-count">×{{ entry.count }}</td>
+                <td class="col-bar">
+                  <div class="bar-track">
+                    <div
+                      class="bar-fill"
+                      [class.bar-fill-slowest]="
+                        i === 0 && rankings().length > 1
+                      "
+                      [style.width.%]="barWidth(entry)"></div>
+                  </div>
+                </td>
+                <td class="col-pct">{{ entry.percentage.toFixed(0) }}%</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <footer class="ranking-summary">
+          @if (slowest(); as s) {
+            <span class="summary-item"
+              ><strong>Slowest:</strong> {{ s.name }} ({{
+                s.totalDuration.toFixed(1)
+              }}ms)</span
+            >
+          }
+          @if (fastest(); as f) {
+            <span class="summary-item"
+              ><strong>Fastest:</strong> {{ f.name }} ({{
+                f.totalDuration.toFixed(1)
+              }}ms)</span
+            >
+          }
+          <span class="summary-item"
+            ><strong>Total processing:</strong> {{ grandTotal().toFixed(1) }}ms
+            across {{ uniqueStageCount() }} stages</span
+          >
+        </footer>
+      </div>
+    } @else {
+      <p class="ranking-empty">
+        No stage data available. Stages appear after traces complete with
+        pipeline processing.
+      </p>
+    }
+  } @else {
+    @if (individualRankings().length > 0) {
+      <div class="ranking-section">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th class="col-rank">Rank</th>
+              <th class="col-stage">Stage</th>
+              <th class="col-behavior">Behavior</th>
+              <th class="col-duration">Duration</th>
+              <th class="col-bar"></th>
+              <th class="col-pct">%</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (entry of individualRankings(); track $index; let i = $index) {
+              <tr
+                [class.row-slowest]="
+                  i === 0 && individualRankings().length > 1
+                ">
+                <td class="col-rank">{{ i + 1 }}</td>
+                <td class="col-stage">{{ entry.name }}</td>
+                <td class="col-behavior">
+                  {{ entry.behaviorKey }}
+                  <span class="behavior-trace">{{ entry.traceId }}</span>
+                </td>
+                <td class="col-duration">{{ entry.duration.toFixed(1) }}ms</td>
+                <td class="col-bar">
+                  <div class="bar-track">
+                    <div
+                      class="bar-fill"
+                      [class.bar-fill-slowest]="
+                        i === 0 && individualRankings().length > 1
+                      "
+                      [style.width.%]="barWidthIndividual(entry)"></div>
+                  </div>
+                </td>
+                <td class="col-pct">{{ entry.percentage.toFixed(0) }}%</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <footer class="ranking-summary">
+          @if (slowestIndividual(); as s) {
+            <span class="summary-item"
+              ><strong>Slowest:</strong> {{ s.name }}/{{ s.behaviorKey }} ({{
+                s.duration.toFixed(1)
+              }}ms)</span
+            >
+          }
+          <span class="summary-item"
+            ><strong>Total:</strong>
+            {{ individualRankings().length }} executions</span
+          >
+        </footer>
+      </div>
+    } @else {
+      <p class="ranking-empty">
+        No stage data available. Stages appear after traces complete with
+        pipeline processing.
+      </p>
+    }
+  }
+} @else {
+  <div class="upsell-notice">
+    <p>
+      Unlock aggregated stage performance analysis with a
+      <strong>Pro</strong> or <strong>Enterprise</strong> license.
+    </p>
+    <p class="upsell-body">
+      Identify systemic bottlenecks across all traces and see which pipeline
+      stages consume the most total processing time.
+    </p>
+  </div>
+}

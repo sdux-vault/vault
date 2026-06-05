@@ -4,6 +4,16 @@
   display: block;
 }
 
+.tab-description {
+  margin: global.$spacing-sm 0;
+  padding-left: global.$spacing-sm;
+  padding-right: global.$spacing-sm;
+  font-size: global.$font-size-md;
+  color: var(--sdux-text-disabled);
+  font-style: italic;
+  line-height: 1.4;
+}
+
 .waterfall-section {
   padding-top: global.$spacing-md;
 }

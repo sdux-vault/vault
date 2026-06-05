@@ -470,7 +470,8 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "devtools-demo:build:production"
+              "buildTarget": "devtools-demo:build:production",
+              "hmr": true
             },
             "development": {
               "buildTarget": "devtools-demo:build:development"

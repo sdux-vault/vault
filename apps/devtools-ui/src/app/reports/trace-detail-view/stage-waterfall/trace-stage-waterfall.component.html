@@ -1,4 +1,10 @@
 @if (isLicensed()) {
+  <p class="tab-description">
+    The Stage Waterfall represents wall-clock timing for each stage. Each bar
+    shows the real elapsed time from start to finish, including any inter-stage
+    scheduling overhead. Concurrent stages such as controller votes appear as
+    separate rows and may overlap in time.
+  </p>
   @if (trace().metrics.stages.length > 0) {
     <div class="waterfall-section">
       <div class="waterfall-rows">
