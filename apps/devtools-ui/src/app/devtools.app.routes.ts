@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { EventsComponent } from './events/events.component';
+import { HotStageRankingPageComponent } from './reports/hot-stage-ranking-page/hot-stage-ranking-page.component';
 import { TraceDetailViewComponent } from './reports/trace-detail-view/trace-detail-view.component';
 import { DevToolsSplashPageComponent } from './splash-page/devtools-splash-page.component';
 
@@ -25,6 +26,12 @@ export const routes: Routes = [
 
   /** Trace Detail View report — ordered event table per trace. */
   { path: 'reports/trace-detail', component: TraceDetailViewComponent },
+
+  /** Hot Stage Ranking report — aggregate stage duration analysis. */
+  {
+    path: 'reports/hot-stage-ranking',
+    component: HotStageRankingPageComponent
+  },
 
   /** Configuration route for managing Vault settings. */
   { path: 'configuration', component: ConfigurationComponent },
