@@ -5,7 +5,7 @@ import { EventShape } from '@sdux-vault/shared';
  * Contains 624 events across 16 traces from starwars and startrek feature cells.
  *
  * Trace summary:
- *   - 8 successful (controller:end:attempt)
+ *   - 8 successful (conductor:end:attempt)
  *   - 4 failed (lifecycle:notification:runtime-error)
  *   - 4 orphaned (no terminal event)
  *   - 2 cells: starwars-feature-cell-key, startrek-feature-cell-key
@@ -16,9 +16,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '38f9a554-f9be-43b2-9abc-d23088bf8c47',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527409408,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: '9338f067-5169-4282-86de-0985cd8bcb99'
   },
@@ -530,9 +530,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '8e1cedc1-1070-4ed3-9b06-bea5b2e7094f',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527409917,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -553,9 +553,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: 'dbc28b5f-4b83-4bbc-bcbd-eeb69b747ed0',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527411295,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: '7ea47d4c-aa8e-4a9f-bd82-719287b5ba3c'
   },
@@ -1153,9 +1153,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '6adad1c8-0b81-4c4b-ba2f-59eb54d7ea20',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527411806,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -1176,9 +1176,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '0fa2a544-4a48-4f15-a081-3fd1ae7841db',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527413506,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: 'd8c3b9e1-68f6-4bac-b658-ea8da0f00979'
   },
@@ -1419,9 +1419,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: 'a889b811-1e82-4c86-a18b-a20453d30f9d',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527413513,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -1820,9 +1820,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '8998b0e4-56c4-416c-b1cb-c1efbcc162ce',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527417550,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: '3b3f838b-821d-4e1b-95ff-9226953b3ce3'
   },
@@ -2445,9 +2445,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '47874251-c444-4980-b036-ecf16cf71d52',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527418070,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -2468,9 +2468,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '258a6087-7b86-4b0e-90bc-cafff51bb58f',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527419238,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: 'dd760cb0-54ef-40b3-903e-e918ed45d203'
   },
@@ -2708,9 +2708,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: 'b40118ad-b764-4682-961d-40c7ee99c8e7',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527419249,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -2731,9 +2731,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '74ff2712-e997-4e90-b61d-d3a26f10880b',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527419847,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: 'bf673fea-51f3-484a-ba58-d681227e007a'
   },
@@ -3054,9 +3054,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: 'e0519008-4754-490c-929d-962c361b03cb',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527419861,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -3077,9 +3077,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '64dd0ea0-429f-4284-8807-6dbacd0ee7dd',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527421737,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: 'b66e8d34-16c4-4faa-a53c-d365ae435505'
   },
@@ -3507,9 +3507,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '4e238717-7ee6-4e3d-8ed2-97c1acb26e5b',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527421755,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'failure'
@@ -3541,9 +3541,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: 'dd3b9a03-e4c7-4f01-8de7-8885c63f6c3e',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527423191,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: 'daed122e-198f-4517-b60b-d18c9ba3aa45'
   },
@@ -3992,9 +3992,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '0927b376-3d66-4b2e-af33-d8175286b4c4',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527423208,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'failure'
@@ -4026,9 +4026,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '579816f8-3212-43ea-9899-66a0191a4286',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527425186,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: '0bd8a2fa-4d84-449e-9e68-ee759e31365b'
   },
@@ -4413,9 +4413,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: 'cae59bb6-92e1-4365-8025-7d780017c8f5',
     cell: 'startrek-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527425204,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -4816,9 +4816,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '2613fc26-52fc-44d4-ad3c-16871b7aa0d0',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527428172,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: 'daa5fd95-e343-4711-a5bc-5c5cf2a89db5'
   },
@@ -5466,9 +5466,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '11d5d362-7096-4deb-8a06-2b4026d7d0f0',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527428701,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -5489,9 +5489,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '2012f855-7a74-4e2d-a130-089137741a45',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527430150,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: '252fe24e-fe96-4d5b-9fbb-4ed338f09791'
   },
@@ -6202,9 +6202,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: 'd580c16f-7d58-44e0-b01d-b2f68cddd269',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527430682,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'failure'
@@ -6716,9 +6716,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: '92948f13-6a47-41cf-85d0-ebd2a0e5f45d',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 1780527433271,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     traceId: 'ec9f318d-8431-4794-b526-aba0a75bb279'
   },
@@ -7259,9 +7259,9 @@ export const PIPELINE_EVENT_ARTIFACT: EventShape[] = [
     id: 'af4516de-95bb-4db1-bcd1-9f4e99a06532',
     cell: 'starwars-feature-cell-key',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 1780527433806,
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'failure'

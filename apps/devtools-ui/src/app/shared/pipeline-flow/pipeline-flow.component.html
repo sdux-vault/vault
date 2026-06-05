@@ -335,10 +335,8 @@
     </div>
     <div class="pipeline-node pipeline-end">
       <span class="pipeline-label">StateSnapshot</span>
-      @if (trace(); as t) {
-        <span class="pipeline-count"
-          >~{{ t.metrics.duration.toFixed(1) }} ms</span
-        >
+      @if (trace()) {
+        <span class="pipeline-count">{{ stateSnapshotDetail() }}</span>
       }
     </div>
   </div>

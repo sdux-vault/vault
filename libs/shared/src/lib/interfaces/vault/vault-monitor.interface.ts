@@ -830,27 +830,27 @@ export interface VaultMonitorContract {
   conductorLicenseDenied(cell: string, featureCellKey: string): void;
 
   /**
-   * Signals the start of a controller attempt lifecycle event.
+   * Signals the start of a conductor attempt lifecycle event.
    *
    * @param cell - The FeatureCell key.
    * @param behaviorKey - The behavior key.
    * @param ctx - The monitor context for this operation.
    */
-  startControllerAttempt<T>(
+  startConductorAttempt<T>(
     cell: string,
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>
   ): void;
 
   /**
-   * Signals the end of a controller attempt lifecycle event.
+   * Signals the end of a conductor attempt lifecycle event.
    *
    * @param cell - The FeatureCell key.
    * @param behaviorKey - The behavior key.
    * @param ctx - The monitor context for this operation.
    * @param payload - The attempt result payload.
    */
-  endControllerAttempt<T>(
+  endConductorAttempt<T>(
     cell: string,
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>,
@@ -858,14 +858,14 @@ export interface VaultMonitorContract {
   ): void;
 
   /**
-   * Records that a controller attempt was restarted.
+   * Records that a conductorattempt was restarted.
    *
    * @param cell - The FeatureCell key.
    * @param behaviorKey - The behavior key.
    * @param ctx - The monitor context for this operation.
    * @param payload - The restart reason.
    */
-  restartControllerAttempt<T>(
+  restartConductorAttempt<T>(
     cell: string,
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>,
@@ -961,6 +961,34 @@ export interface VaultMonitorContract {
     controllerKey: string,
     traceId: string,
     vote: ControllerVote
+  ): void;
+
+  /**
+   * Signals the start of a controller attempt lifecycle event.
+   *
+   * @param cell - The FeatureCell key.
+   * @param behaviorKey - The behavior key.
+   * @param ctx - The monitor context for this operation.
+   */
+  startControllerAttempt<T>(
+    cell: string,
+    behaviorKey: string,
+    ctx: Readonly<VaultMonitorContext<T>>
+  ): void;
+
+  /**
+   * Signals the end of a controller attempt lifecycle event.
+   *
+   * @param cell - The FeatureCell key.
+   * @param behaviorKey - The behavior key.
+   * @param ctx - The monitor context for this operation.
+   * @param payload - The attempt result payload.
+   */
+  endControllerAttempt<T>(
+    cell: string,
+    behaviorKey: string,
+    ctx: Readonly<VaultMonitorContext<T>>,
+    payload: unknown
   ): void;
 
   /**

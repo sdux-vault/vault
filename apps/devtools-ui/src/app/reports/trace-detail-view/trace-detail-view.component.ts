@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
 import { DevtoolsPipelineEventDetailComponent } from '../../events/panels/events/pipeline/detail/devtools-pipeline-event-detail.component';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
+import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import type { TraceExecutionShape } from '../../shapes/trace';
 import { TraceExecutionStatuses } from '../../shapes/trace';
 import type { StageMetricShape } from '../../shapes/trace/stage-metric.shape';
@@ -47,6 +48,12 @@ export class TraceDetailViewComponent {
   /** Internal reference to the trace aggregate FeatureCell service. */
   #aggregate = inject(DevtoolsAggregateService);
 
+  /** Registry service providing license state. */
+  #registry = inject(DevtoolsRegistryService);
+
+  /** Whether the current license enables pro/enterprise features. */
+  readonly isLicensed = this.#registry.isLicensed;
+
   /** All completed traces from the aggregate service. */
   readonly traces = this.#aggregate.traces;
 
@@ -64,6 +71,9 @@ export class TraceDetailViewComponent {
 
   /** Currently selected event for the detail panel. */
   readonly selectedEvent = signal<EventShape | null>(null);
+
+  /** Whether the raw trace data section is expanded. */
+  readonly rawTraceExpanded = signal(false);
 
   /** Cell key for the currently expanded trace. */
   readonly expandedTraceCellKey = computed(() => {
@@ -191,6 +201,77 @@ export class TraceDetailViewComponent {
   }
 
   /**
+   * Builds waterfall rows from trace stages plus synthetic revote-delay
+   * entries. Revote delays are inserted chronologically and excluded
+   * from slowest-stage highlighting.
+   */
+  waterfallStages(trace: TraceExecutionShape): StageMetricShape[] {
+    const revoteDelays: StageMetricShape[] = [];
+    let denyTimestamp: number | null = null;
+
+    for (const event of trace.events) {
+      if (event.name === 'conductor:notification:deny') {
+        denyTimestamp = event.timestamp;
+      } else if (
+        event.name === 'lifecycle:notification:revote' &&
+        denyTimestamp !== null
+      ) {
+        revoteDelays.push({
+          name: 'revote-delay',
+          behaviorKey: 'vault-conductor',
+          startedAt: denyTimestamp,
+          finishedAt: event.timestamp,
+          duration: event.timestamp - denyTimestamp,
+          type: 'lifecycle' as StageMetricShape['type']
+        });
+        denyTimestamp = null;
+      }
+    }
+
+    const eventIndex = new Map<string, number>();
+    trace.events.forEach((e, i) => eventIndex.set(e.id, i));
+
+    const sortByStart = (a: StageMetricShape, b: StageMetricShape): number => {
+      const timeDiff = a.startedAt - b.startedAt;
+      if (timeDiff !== 0) return timeDiff;
+      return (
+        (eventIndex.get(a.startEventId ?? '') ?? 0) -
+        (eventIndex.get(b.startEventId ?? '') ?? 0)
+      );
+    };
+
+    const allStages = [...trace.metrics.stages, ...revoteDelays];
+    const attempts: StageMetricShape[] = [];
+    const rest: StageMetricShape[] = [];
+    for (const stage of allStages) {
+      if (stage.name === 'attempt') {
+        attempts.push(stage);
+      } else {
+        rest.push(stage);
+      }
+    }
+    rest.sort(sortByStart);
+    return [...rest, ...attempts];
+  }
+
+  /**
+   * Determines if a stage is a synthetic revote-delay row.
+   */
+  isRevoteDelay(stage: StageMetricShape): boolean {
+    return stage.name === 'revote-delay';
+  }
+
+  /**
+   * Determines if the slow label should appear to the right of the bar.
+   * Returns true when the bar ends in the left half of the track.
+   */
+  isSlowOnRight(trace: TraceExecutionShape, stage: StageMetricShape): boolean {
+    return (
+      this.waterfallLeft(trace, stage) + this.waterfallWidth(trace, stage) <= 50
+    );
+  }
+
+  /**
    * Toggles the expanded trace row.
    */
   toggleTrace(traceId: string): void {
@@ -236,6 +317,18 @@ export class TraceDetailViewComponent {
    */
   eventBehaviorKey(event: EventShape): string {
     return event.behaviorKey ?? '';
+  }
+
+  /**
+   * Formats an event name for display by dropping the boundary segment.
+   * `stage:end:reducer` becomes `stage reducer`.
+   */
+  eventDisplayName(event: EventShape): string {
+    const parts = event.name.split(':');
+    if (parts.length >= 3) {
+      return `${parts[0]} ${parts.slice(2).join(':')}`;
+    }
+    return event.name;
   }
 
   /**
@@ -301,11 +394,19 @@ export class TraceDetailViewComponent {
    * Finds and selects the start event matching a stage in a trace.
    */
   selectStageEvent(trace: TraceExecutionShape, stage: StageMetricShape): void {
+    if (stage.startEventId) {
+      const event = trace.events.find((e) => e.id === stage.startEventId);
+      if (event) {
+        this.selectEvent(event);
+        return;
+      }
+    }
     const event = trace.events.find(
       (e) =>
         e.timestamp === stage.startedAt &&
         e.behaviorKey === stage.behaviorKey &&
-        e.boundary === 'start'
+        e.boundary === 'start' &&
+        e.name.endsWith(':' + stage.name)
     );
     if (event) {
       this.selectEvent(event);

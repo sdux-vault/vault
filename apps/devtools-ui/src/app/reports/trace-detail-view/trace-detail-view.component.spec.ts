@@ -41,11 +41,11 @@ describe('Component: TraceDetailView', () => {
           }
         } as any,
         {
-          name: 'controller:end:attempt',
+          name: 'conductor:end:attempt',
           timestamp: 1005,
           traceId: 'trace-1',
           cell: 'vault::todos::cell',
-          type: 'controller',
+          type: 'conductor',
           behaviorKey: 'addTodo'
         } as any
       ],

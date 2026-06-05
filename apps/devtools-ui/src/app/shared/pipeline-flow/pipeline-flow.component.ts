@@ -48,6 +48,43 @@ export class PipelineFlowComponent {
   readonly isExpanded = computed(() => !!this.trace());
 
   /**
+   * Total conductor processing time: sum of all controller-type
+   * stage durations (votes + attempt) plus revote delay.
+   */
+  readonly #conductorTotal = computed(() => {
+    const trace = this.trace();
+    if (!trace) return 0;
+
+    let total = 0;
+    for (const stage of trace.metrics.stages) {
+      if (stage.type === 'controller') {
+        total += stage.duration;
+      }
+    }
+
+    total += this.#revoteDelay();
+    return total;
+  });
+
+  /**
+   * Total orchestrator processing time: sum of all stage-type
+   * stage durations.
+   */
+  readonly #orchestratorTotal = computed(() => {
+    const trace = this.trace();
+    if (!trace) return 0;
+
+    let total = 0;
+    for (const stage of trace.metrics.stages) {
+      if (stage.type === 'stage') {
+        total += stage.duration;
+      }
+    }
+
+    return total;
+  });
+
+  /**
    * Map of behavior/controller keys to their total execution duration
    * in the current trace. Summed across all stages sharing the same key.
    */
@@ -223,63 +260,43 @@ export class PipelineFlowComponent {
   orchestratorDetail(): string {
     const trace = this.trace();
     if (!trace) return '';
-
-    let total = 0;
-    for (const stage of trace.metrics.stages) {
-      if (stage.type === 'stage') {
-        total += stage.duration;
-      }
-    }
-
-    return `~${total.toFixed(1)} ms`;
+    return `~${this.#orchestratorTotal().toFixed(1)} ms`;
   }
 
   /**
-   * Returns the conductor attempt duration when a trace is present.
+   * Returns the conductor attempt duration when a trace is present:
+   * sum of all controller attempt stage durations plus any revote delay.
    *
    * @returns Duration string (e.g. `"~513.0 ms"`) or an empty string.
    */
   conductorDetail(): string {
     const trace = this.trace();
     if (!trace) return '';
+    return `~${this.#conductorTotal().toFixed(1)} ms`;
+  }
 
-    let total = 0;
-    for (const stage of trace.metrics.stages) {
-      if (
-        stage.type === 'controller' &&
-        stage.behaviorKey === 'vault-conductor' &&
-        stage.name === 'attempt'
-      ) {
-        total += stage.duration;
-      }
-    }
-
+  /**
+   * Returns the total processing time: conductor + orchestrator.
+   *
+   * @returns Duration string (e.g. `"~520.0 ms"`) or an empty string.
+   */
+  stateSnapshotDetail(): string {
+    const trace = this.trace();
+    if (!trace) return '';
+    const total = this.#conductorTotal() + this.#orchestratorTotal();
     return `~${total.toFixed(1)} ms`;
   }
 
   /**
-   * Returns the combined duration of individual controller vote stages,
-   * excluding vault-conductor wrapper stages.
+   * Returns the controller attempt duration — the wall-clock time of
+   * the final successful voting phase (controller:start:attempt to
+   * controller:end:attempt). This matches the conductor detail since
+   * the controller attempt bracket defines the voting phase boundary.
    *
    * @returns Duration string (e.g. `"~3.0 ms"`) or an empty string.
    */
   controllersDetail(): string {
-    const trace = this.trace();
-    if (!trace) return '';
-
-    let total = 0;
-    for (const stage of trace.metrics.stages) {
-      if (
-        stage.type === 'controller' &&
-        stage.behaviorKey !== 'vault-conductor'
-      ) {
-        total += stage.duration;
-      }
-    }
-
-    total += this.#revoteDelay();
-
-    return `~${total.toFixed(1)} ms`;
+    return this.conductorDetail();
   }
 
   /**

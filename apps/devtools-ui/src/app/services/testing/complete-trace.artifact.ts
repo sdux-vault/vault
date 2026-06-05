@@ -14,10 +14,30 @@ export const COMPLETE_TRACE_EVENTS: EventShape[] = [
     id: 'evt-001',
     cell: 'test-cell',
     behaviorKey: 'behavior-key',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     timestamp: 1000,
+    name: 'conductor:start:attempt',
+    traceId: 'trace-1'
+  }),
+  Object({
+    id: 'evt-001a',
+    cell: 'test-cell',
+    behaviorKey: 'vault-conductor',
+    type: 'controller',
+    boundary: 'start',
+    timestamp: 1001,
     name: 'controller:start:attempt',
+    traceId: 'trace-1'
+  }),
+  Object({
+    id: 'evt-001b',
+    cell: 'test-cell',
+    behaviorKey: 'vault-conductor',
+    type: 'controller',
+    boundary: 'end',
+    timestamp: 1003,
+    name: 'controller:end:attempt',
     traceId: 'trace-1'
   }),
   Object({
@@ -44,10 +64,10 @@ export const COMPLETE_TRACE_EVENTS: EventShape[] = [
     id: 'evt-004',
     cell: 'test-cell',
     behaviorKey: 'behavior-key',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     timestamp: 1050,
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     traceId: 'trace-1'
   })
 ];
@@ -63,11 +83,22 @@ export const COMPLETE_TRACE_EXPECTED: TraceExecutionShape = {
   events: COMPLETE_TRACE_EVENTS,
   metrics: {
     duration: 50,
-    eventCount: 4,
+    eventCount: 6,
     status: TraceExecutionStatuses.Success,
     slowestStage: { name: 'filter', duration: 10 },
     fastestStage: { name: 'filter', duration: 10 },
     stages: [
+      {
+        name: 'attempt',
+        behaviorKey: 'vault-conductor',
+        startedAt: 1001,
+        finishedAt: 1003,
+        duration: 2,
+        type: 'controller',
+        startEventId: 'evt-001a',
+        payload: undefined,
+        error: undefined
+      },
       {
         name: 'filter',
         behaviorKey: 'behavior-key',
@@ -75,6 +106,7 @@ export const COMPLETE_TRACE_EXPECTED: TraceExecutionShape = {
         finishedAt: 1015,
         duration: 10,
         type: 'stage',
+        startEventId: 'evt-002',
         payload: undefined,
         error: undefined
       },
@@ -84,7 +116,8 @@ export const COMPLETE_TRACE_EXPECTED: TraceExecutionShape = {
         startedAt: 1000,
         finishedAt: 1050,
         duration: 50,
-        type: 'controller',
+        type: 'conductor',
+        startEventId: 'evt-001',
         payload: undefined,
         error: undefined
       }
@@ -103,10 +136,10 @@ export const DENIED_TRACE_EVENTS: EventShape[] = [
     id: 'evt-deny-001',
     cell: 'test-cell',
     behaviorKey: 'behavior-key',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     timestamp: 2000,
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     traceId: 'trace-deny'
   }),
   Object({
@@ -151,10 +184,10 @@ export const ABORTED_TRACE_EVENTS: EventShape[] = [
     id: 'evt-abort-001',
     cell: 'test-cell',
     behaviorKey: 'behavior-key',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     timestamp: 3000,
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     traceId: 'trace-abort'
   }),
   Object({
@@ -199,10 +232,10 @@ export const FAILED_TRACE_EVENTS: EventShape[] = [
     id: 'evt-fail-001',
     cell: 'test-cell',
     behaviorKey: 'behavior-key',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     timestamp: 4000,
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     traceId: 'trace-fail'
   }),
   Object({
@@ -247,9 +280,19 @@ export const REVOTE_TRACE_EVENTS: EventShape[] = [
     id: 'evt-revote-001',
     cell: 'test-cell',
     behaviorKey: 'behavior-key',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     timestamp: 5000,
+    name: 'conductor:start:attempt',
+    traceId: 'trace-revote'
+  }),
+  Object({
+    id: 'evt-revote-001a',
+    cell: 'test-cell',
+    behaviorKey: 'vault-conductor',
+    type: 'controller',
+    boundary: 'start',
+    timestamp: 5001,
     name: 'controller:start:attempt',
     traceId: 'trace-revote'
   }),
@@ -264,13 +307,23 @@ export const REVOTE_TRACE_EVENTS: EventShape[] = [
     traceId: 'trace-revote'
   }),
   Object({
+    id: 'evt-revote-002a',
+    cell: 'test-cell',
+    behaviorKey: 'vault-conductor',
+    type: 'controller',
+    boundary: 'end',
+    timestamp: 5018,
+    name: 'controller:end:attempt',
+    traceId: 'trace-revote'
+  }),
+  Object({
     id: 'evt-revote-003',
     cell: 'test-cell',
     behaviorKey: 'behavior-key',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     timestamp: 5020,
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     traceId: 'trace-revote'
   })
 ];
@@ -286,18 +339,30 @@ export const REVOTE_TRACE_EXPECTED: TraceExecutionShape = {
   events: REVOTE_TRACE_EVENTS,
   metrics: {
     duration: 20,
-    eventCount: 3,
+    eventCount: 5,
     status: TraceExecutionStatuses.Success,
     slowestStage: { name: 'none', duration: 0 },
     fastestStage: { name: 'none', duration: 0 },
     stages: [
       {
         name: 'attempt',
+        behaviorKey: 'vault-conductor',
+        startedAt: 5001,
+        finishedAt: 5018,
+        duration: 17,
+        type: 'controller',
+        startEventId: 'evt-revote-001a',
+        payload: undefined,
+        error: undefined
+      },
+      {
+        name: 'attempt',
         behaviorKey: 'behavior-key',
         startedAt: 5000,
         finishedAt: 5020,
         duration: 20,
-        type: 'controller',
+        type: 'conductor',
+        startEventId: 'evt-revote-001',
         payload: undefined,
         error: undefined
       }
@@ -316,9 +381,19 @@ export const VOTES_TRACE_EVENTS: EventShape[] = [
     id: 'evt-votes-001',
     cell: 'test-cell',
     behaviorKey: 'behavior-key',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     timestamp: 6000,
+    name: 'conductor:start:attempt',
+    traceId: 'trace-votes'
+  }),
+  Object({
+    id: 'evt-votes-001a',
+    cell: 'test-cell',
+    behaviorKey: 'vault-conductor',
+    type: 'controller',
+    boundary: 'start',
+    timestamp: 6001,
     name: 'controller:start:attempt',
     traceId: 'trace-votes'
   }),
@@ -343,13 +418,23 @@ export const VOTES_TRACE_EVENTS: EventShape[] = [
     traceId: 'trace-votes'
   }),
   Object({
+    id: 'evt-votes-003a',
+    cell: 'test-cell',
+    behaviorKey: 'vault-conductor',
+    type: 'controller',
+    boundary: 'end',
+    timestamp: 6018,
+    name: 'controller:end:attempt',
+    traceId: 'trace-votes'
+  }),
+  Object({
     id: 'evt-votes-004',
     cell: 'test-cell',
     behaviorKey: 'behavior-key',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     timestamp: 6020,
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     traceId: 'trace-votes'
   })
 ];
@@ -365,18 +450,30 @@ export const VOTES_TRACE_EXPECTED: TraceExecutionShape = {
   events: VOTES_TRACE_EVENTS,
   metrics: {
     duration: 20,
-    eventCount: 4,
+    eventCount: 6,
     status: TraceExecutionStatuses.Success,
     slowestStage: { name: 'none', duration: 0 },
     fastestStage: { name: 'none', duration: 0 },
     stages: [
       {
         name: 'attempt',
+        behaviorKey: 'vault-conductor',
+        startedAt: 6001,
+        finishedAt: 6018,
+        duration: 17,
+        type: 'controller',
+        startEventId: 'evt-votes-001a',
+        payload: undefined,
+        error: undefined
+      },
+      {
+        name: 'attempt',
         behaviorKey: 'behavior-key',
         startedAt: 6000,
         finishedAt: 6020,
         duration: 20,
-        type: 'controller',
+        type: 'conductor',
+        startEventId: 'evt-votes-001',
         payload: undefined,
         error: undefined
       }
@@ -395,10 +492,10 @@ export const ORPHAN_TRACE_EVENTS: EventShape[] = [
     id: 'evt-orphan-001',
     cell: 'test-cell',
     behaviorKey: 'behavior-key',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
     timestamp: 7000,
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     traceId: 'trace-orphan'
   })
 ];
@@ -439,15 +536,36 @@ function createCellTrace(
   totalDuration = 50
 ): { events: EventShape[]; expected: TraceExecutionShape } {
   const filterDuration = Math.round(totalDuration / 5);
+  const controllerDuration = Math.round(totalDuration / 10);
   const events: EventShape[] = [
     Object({
       id: `evt-${traceId}-001`,
       cell: cellKey,
       behaviorKey: 'behavior-key',
-      type: 'controller',
+      type: 'conductor',
       boundary: 'start',
       timestamp: baseTimestamp,
+      name: 'conductor:start:attempt',
+      traceId
+    }),
+    Object({
+      id: `evt-${traceId}-001a`,
+      cell: cellKey,
+      behaviorKey: 'vault-conductor',
+      type: 'controller',
+      boundary: 'start',
+      timestamp: baseTimestamp + 1,
       name: 'controller:start:attempt',
+      traceId
+    }),
+    Object({
+      id: `evt-${traceId}-001b`,
+      cell: cellKey,
+      behaviorKey: 'vault-conductor',
+      type: 'controller',
+      boundary: 'end',
+      timestamp: baseTimestamp + 1 + controllerDuration,
+      name: 'controller:end:attempt',
       traceId
     }),
     Object({
@@ -474,10 +592,10 @@ function createCellTrace(
       id: `evt-${traceId}-004`,
       cell: cellKey,
       behaviorKey: 'behavior-key',
-      type: 'controller',
+      type: 'conductor',
       boundary: 'end',
       timestamp: baseTimestamp + totalDuration,
-      name: 'controller:end:attempt',
+      name: 'conductor:end:attempt',
       traceId
     })
   ];
@@ -490,11 +608,22 @@ function createCellTrace(
     events,
     metrics: {
       duration: totalDuration,
-      eventCount: 4,
+      eventCount: 6,
       status: TraceExecutionStatuses.Success,
       slowestStage: { name: 'filter', duration: filterDuration },
       fastestStage: { name: 'filter', duration: filterDuration },
       stages: [
+        {
+          name: 'attempt',
+          behaviorKey: 'vault-conductor',
+          startedAt: baseTimestamp + 1,
+          finishedAt: baseTimestamp + 1 + controllerDuration,
+          duration: controllerDuration,
+          type: 'controller',
+          startEventId: `evt-${traceId}-001a`,
+          payload: undefined,
+          error: undefined
+        },
         {
           name: 'filter',
           behaviorKey: 'behavior-key',
@@ -502,6 +631,7 @@ function createCellTrace(
           finishedAt: baseTimestamp + 5 + filterDuration,
           duration: filterDuration,
           type: 'stage',
+          startEventId: `evt-${traceId}-002`,
           payload: undefined,
           error: undefined
         },
@@ -511,7 +641,8 @@ function createCellTrace(
           startedAt: baseTimestamp,
           finishedAt: baseTimestamp + totalDuration,
           duration: totalDuration,
-          type: 'controller',
+          type: 'conductor',
+          startEventId: `evt-${traceId}-001`,
           payload: undefined,
           error: undefined
         }

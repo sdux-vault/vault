@@ -111,6 +111,76 @@ describe('DevtoolsRegistryService', () => {
     });
   });
 
+  describe('isLicensed', () => {
+    it('should return false when no license', () => {
+      expect(service.isLicensed()).toBe(false);
+    });
+
+    it('should return true when license is verified', () => {
+      mockVaultConfig.set({
+        versions: {},
+        license: {
+          organization: 'Test',
+          domain: 'test.com',
+          licenseType: 'enterprise',
+          issuedAt: 1000,
+          expires: 2000 as number | 'forever',
+          verified: true
+        },
+        registry: null
+      });
+      expect(service.isLicensed()).toBe(true);
+    });
+
+    it('should return true for pro license', () => {
+      mockVaultConfig.set({
+        versions: {},
+        license: {
+          organization: 'Test',
+          domain: 'test.com',
+          licenseType: 'pro',
+          issuedAt: 1000,
+          expires: 2000 as number | 'forever',
+          verified: true
+        },
+        registry: null
+      });
+      expect(service.isLicensed()).toBe(true);
+    });
+
+    it('should return false when license is not verified', () => {
+      mockVaultConfig.set({
+        versions: {},
+        license: {
+          organization: 'Test',
+          domain: 'test.com',
+          licenseType: 'enterprise',
+          issuedAt: 1000,
+          expires: 2000 as number | 'forever',
+          verified: false
+        },
+        registry: null
+      });
+      expect(service.isLicensed()).toBe(false);
+    });
+
+    it('should return false for development license', () => {
+      mockVaultConfig.set({
+        versions: {},
+        license: {
+          organization: 'Test',
+          domain: 'test.com',
+          licenseType: 'development',
+          issuedAt: 1000,
+          expires: 2000 as number | 'forever',
+          verified: true
+        },
+        registry: null
+      });
+      expect(service.isLicensed()).toBe(false);
+    });
+  });
+
   describe('getCell', () => {
     it('should return null when cell not found', () => {
       expect(service.getCell('nonexistent')).toBeNull();

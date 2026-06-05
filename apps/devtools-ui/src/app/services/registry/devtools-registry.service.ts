@@ -1,5 +1,8 @@
 import { computed, inject, Injectable } from '@angular/core';
-import { DEVTOOLS_AGGREGATE_KEY_CONSTANT } from '../../../../../../libs/shared/src/lib/constants';
+import {
+  DEVTOOLS_AGGREGATE_KEY_CONSTANT,
+  VaultLicensePayloadTypes
+} from '@sdux-vault/shared';
 import { DEVTOOLS_LOGGING_KEY_CONSTANT } from '../../../../../../libs/shared/src/lib/constants/dev-tools/devtools-logging-key.constant';
 import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
 import { InsightService } from '../insight/insight.service';
@@ -62,6 +65,16 @@ export class DevtoolsRegistryService {
   readonly license = computed(() => {
     const config = this.#insight.vaultConfig();
     return config?.license ?? null;
+  });
+
+  /** Whether a verified pro or enterprise license is present. */
+  readonly isLicensed = computed(() => {
+    const license = this.license();
+    return (
+      license?.verified === true &&
+      (license.licenseType === VaultLicensePayloadTypes.Pro ||
+        license.licenseType === VaultLicensePayloadTypes.Enterprise)
+    );
   });
 
   /**

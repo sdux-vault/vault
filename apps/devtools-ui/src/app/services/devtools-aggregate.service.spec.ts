@@ -135,7 +135,7 @@ describe('Service: Devtools Aggregate', () => {
     it('should not commit until a terminal event fires', async () => {
       bus.nextPipeline(
         createEvent({
-          name: 'controller:start:attempt',
+          name: 'conductor:start:attempt',
           traceId: 'trace-1'
         })
       );
@@ -144,7 +144,7 @@ describe('Service: Devtools Aggregate', () => {
       expect(service.traces()).toEqual([]);
     });
 
-    it('should commit a trace on controller:end:attempt', async () => {
+    it('should commit a trace on conductor:end:attempt', async () => {
       for (const event of COMPLETE_TRACE_EVENTS) {
         bus.nextPipeline(event);
       }
@@ -473,7 +473,7 @@ describe('Service: Devtools Aggregate', () => {
     it('should skip events with non-standard name format in stage matching', async () => {
       bus.nextPipeline(
         createEvent({
-          name: 'controller:start:attempt',
+          name: 'conductor:start:attempt',
           traceId: 'format-trace',
           cell: 'cell-format'
         })
@@ -487,7 +487,7 @@ describe('Service: Devtools Aggregate', () => {
       );
       bus.nextPipeline(
         createEvent({
-          name: 'controller:end:attempt',
+          name: 'conductor:end:attempt',
           traceId: 'format-trace',
           cell: 'cell-format',
           boundary: 'end'

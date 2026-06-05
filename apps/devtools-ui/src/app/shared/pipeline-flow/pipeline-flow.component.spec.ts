@@ -405,6 +405,66 @@ describe('Component: PipelineFlow', () => {
     });
   });
 
+  describe('conductorDetail', () => {
+    it('should return empty string when no trace is provided', () => {
+      expect(component.conductorDetail()).toBe('');
+    });
+
+    it('should return summed controller-type stage durations', () => {
+      fixture.componentRef.setInput('trace', mockTrace);
+      fixture.detectChanges();
+      expect(component.conductorDetail()).toBe('~5.0 ms');
+    });
+
+    it('should include revote delay in total', () => {
+      fixture.componentRef.setInput('trace', {
+        ...mockTrace,
+        events: [
+          { name: 'conductor:notification:deny', timestamp: 1000 } as never,
+          { name: 'lifecycle:notification:revote', timestamp: 1500 } as never
+        ]
+      });
+      fixture.detectChanges();
+      expect(component.conductorDetail()).toBe('~505.0 ms');
+    });
+  });
+
+  describe('controllersDetail', () => {
+    it('should return empty string when no trace is provided', () => {
+      expect(component.controllersDetail()).toBe('');
+    });
+
+    it('should equal conductorDetail', () => {
+      fixture.componentRef.setInput('trace', mockTrace);
+      fixture.detectChanges();
+      expect(component.controllersDetail()).toBe(component.conductorDetail());
+    });
+  });
+
+  describe('stateSnapshotDetail', () => {
+    it('should return empty string when no trace is provided', () => {
+      expect(component.stateSnapshotDetail()).toBe('');
+    });
+
+    it('should return conductor + orchestrator total', () => {
+      fixture.componentRef.setInput('trace', mockTrace);
+      fixture.detectChanges();
+      expect(component.stateSnapshotDetail()).toBe('~57.0 ms');
+    });
+
+    it('should include revote delay in total', () => {
+      fixture.componentRef.setInput('trace', {
+        ...mockTrace,
+        events: [
+          { name: 'conductor:notification:deny', timestamp: 1000 } as never,
+          { name: 'lifecycle:notification:revote', timestamp: 1500 } as never
+        ]
+      });
+      fixture.detectChanges();
+      expect(component.stateSnapshotDetail()).toBe('~557.0 ms');
+    });
+  });
+
   describe('coreStateDetail', () => {
     it('should return domain when no trace is provided', () => {
       expect(component.coreStateDetail('SDUX::Behavior::Core::State')).toBe(

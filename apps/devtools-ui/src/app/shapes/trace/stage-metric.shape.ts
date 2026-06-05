@@ -23,6 +23,9 @@ export interface StageMetricShape {
   /** Event category that emitted this stage. */
   type: EventType;
 
+  /** ID of the start boundary event. */
+  startEventId?: string;
+
   /** Payload carried by the end boundary event, if any. */
   payload?: unknown;
 

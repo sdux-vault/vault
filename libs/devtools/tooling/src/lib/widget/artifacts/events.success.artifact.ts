@@ -4,7 +4,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: '004c15ca-1030-42eb-a639-8cbb74b2db66',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:start:attempt',
+    type: 'conductor:start:attempt',
     timestamp: 1772664194986,
     traceId: 'A5094',
     sequenceNumber: 1,
@@ -1860,7 +1860,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: '4e8fb155-b51c-4c81-abc2-e11df6b87090',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:end:attempt',
+    type: 'conductor:end:attempt',
     timestamp: 1772664194990,
     payload: {
       status: 'success'
@@ -1895,7 +1895,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: '6db1c13a-a458-455d-aa98-bfabd34d3c37',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:start:attempt',
+    type: 'conductor:start:attempt',
     timestamp: 1772664198141,
     traceId: 'A5094',
     sequenceNumber: 19,
@@ -3751,7 +3751,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: 'c466512d-421d-4888-aa4d-599d05922a00',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:end:attempt',
+    type: 'conductor:end:attempt',
     timestamp: 1772664198145,
     payload: {
       status: 'success'
@@ -3786,7 +3786,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: '72de585f-fca1-441b-9eea-2fb18f1fd417',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:start:attempt',
+    type: 'conductor:start:attempt',
     timestamp: 1772664198666,
     traceId: 'A5094',
     sequenceNumber: 37,
@@ -5642,7 +5642,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: 'd432b644-8761-4a18-b17f-c79cd74f8d49',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:end:attempt',
+    type: 'conductor:end:attempt',
     timestamp: 1772664198671,
     payload: {
       status: 'success'
@@ -5677,7 +5677,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: 'c0413499-2a10-4320-8a88-c37d7fc7b82a',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:start:attempt',
+    type: 'conductor:start:attempt',
     timestamp: 1772664200387,
     traceId: 'A5094',
     sequenceNumber: 55,
@@ -7533,7 +7533,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: '623d95cd-fbb2-41b3-bb96-a77eec24cf9b',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:end:attempt',
+    type: 'conductor:end:attempt',
     timestamp: 1772664200391,
     payload: {
       status: 'success'
@@ -7568,7 +7568,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: '336ad9da-e4c4-435c-bd59-cb0647ed9d6a',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:start:attempt',
+    type: 'conductor:start:attempt',
     timestamp: 1772664202110,
     traceId: 'A5094',
     sequenceNumber: 73,
@@ -9424,7 +9424,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: 'ae5c17c0-372e-4e94-96cb-4b8a66e9c7fd',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:end:attempt',
+    type: 'conductor:end:attempt',
     timestamp: 1772664202116,
     payload: {
       status: 'success'
@@ -9459,7 +9459,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: '1d597d46-7269-4e54-be05-20f5a370b5ca',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:start:attempt',
+    type: 'conductor:start:attempt',
     timestamp: 1772664203835,
     traceId: 'A5094',
     sequenceNumber: 91,
@@ -11315,7 +11315,7 @@ export const EVENTS_SUCCESS_ARTIFACTS = [
     id: 'afd05515-c53b-491b-abba-b99e303122a9',
     cell: 'pipeline-builder',
     behaviorKey: 'A5094',
-    type: 'controller:end:attempt',
+    type: 'conductor:end:attempt',
     timestamp: 1772664203839,
     payload: {
       status: 'success'

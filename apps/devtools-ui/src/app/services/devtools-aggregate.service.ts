@@ -25,7 +25,7 @@ import { InsightService } from './insight/insight.service';
  * and committed to the FeatureCell.
  */
 const TERMINAL_EVENTS = new Set([
-  'controller:end:attempt',
+  'conductor:end:attempt',
   'conductor:start:deny',
   'conductor:start:abort'
 ]);
@@ -198,6 +198,7 @@ export class DevtoolsAggregateService {
   private handleEvent(event: EventShape): void {
     const traceId = event.traceId!;
     const isInitiating =
+      event.name === 'conductor:start:attempt' ||
       event.name.startsWith('controller:start:') ||
       event.name === 'lifecycle:notification:revote';
     const wasPreviouslyCommitted = this.committedTraces.has(traceId);
@@ -390,6 +391,7 @@ export class DevtoolsAggregateService {
             finishedAt: event.timestamp,
             duration,
             type: event.type as (typeof EventTypes)[keyof typeof EventTypes],
+            startEventId: startEvent.id,
             payload: event.payload,
             error: event.error
           });
