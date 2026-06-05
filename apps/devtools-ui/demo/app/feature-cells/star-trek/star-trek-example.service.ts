@@ -64,6 +64,7 @@ export class StarTrekExampleService {
           }
         }
       ])
+      .withThrottle?.({ millisecondThrottle: 1_000 })
       .initialize();
   }
 
@@ -91,9 +92,10 @@ export class StarTrekExampleService {
    * @param entry - The example to append to the current state.
    */
   merge(entry: Example): void {
-    const current = this.#vault.state.value() ?? [];
     this.#vault.mergeState({
-      value: [...current, entry]
+      loading: false,
+      value: [entry],
+      error: null
     });
   }
 

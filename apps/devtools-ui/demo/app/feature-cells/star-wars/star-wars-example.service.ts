@@ -86,11 +86,6 @@ export class StarWarsExampleService {
     });
   }
 
-  /** Resets the vault to its initial empty state. */
-  reset(): void {
-    this.#vault.reset();
-  }
-
   /**
    * Merges a single new example into the existing state array.
    *
@@ -99,8 +94,15 @@ export class StarWarsExampleService {
   merge(entry: Example): void {
     const current = this.#vault.state.value() ?? [];
     this.#vault.mergeState({
-      value: [...current, entry]
+      loading: false,
+      value: [...current, entry],
+      error: null
     });
+  }
+
+  /** Resets the vault to its initial empty state. */
+  reset(): void {
+    this.#vault.reset();
   }
 
   /**

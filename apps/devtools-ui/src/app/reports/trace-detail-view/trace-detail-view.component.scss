@@ -187,8 +187,7 @@
       }
 
       &.status-aborted {
-        background: var(--sdux-text-secondary);
-        opacity: 0.6;
+        background: global.$sdux-warn-base;
       }
     }
   }
@@ -568,7 +567,7 @@
 }
 
 .status-aborted {
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-warn-base;
 }
 
 /* ─── DEBUG OUTPUT ─── */

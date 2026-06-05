@@ -1,5 +1,6 @@
 import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 import type { TraceExecutionShape } from '../../shapes/trace';
@@ -127,6 +128,12 @@ describe('Component: TraceDetailView', () => {
       providers: [
         provideZonelessChangeDetection(),
         { provide: DevtoolsAggregateService, useValue: aggregateMock },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: { queryParamMap: convertToParamMap({}) }
+          }
+        },
         {
           provide: DevtoolsLoggingService,
           useValue: jasmine.createSpyObj('DevtoolsLoggingService', [
@@ -568,6 +575,21 @@ describe('Component: TraceDetailView', () => {
           multiStageTrace.metrics.stages[0]
         )
       ).toBeFalse();
+    });
+  });
+
+  describe('query param cell filter', () => {
+    it('should auto-select cell from query param', async () => {
+      const route = TestBed.inject(ActivatedRoute);
+      (route.snapshot as any).queryParamMap = convertToParamMap({
+        cell: 'vault::todos::cell'
+      });
+
+      const f = TestBed.createComponent(TraceDetailViewComponent);
+      f.detectChanges();
+
+      expect(f.componentInstance.selectedCell()).toBe('vault::todos::cell');
+      expect(f.componentInstance.filteredTraces().length).toBe(1);
     });
   });
 });

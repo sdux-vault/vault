@@ -1,0 +1,84 @@
+<div class="cell-dashboard">
+  <h2 class="dashboard-title">Cell Dashboard</h2>
+
+  <div class="summary-cards">
+    <div class="card">
+      <span class="card-label">Feature Cells</span>
+      <span class="card-value">{{ cellCount() }}</span>
+    </div>
+    <div class="card">
+      <span class="card-label">Total Traces</span>
+      <span class="card-value">{{ totalTraces() }}</span>
+    </div>
+    <div class="card">
+      <span class="card-label">Avg Duration</span>
+      <span class="card-value">{{ avgDuration().toFixed(1) }} ms</span>
+    </div>
+    <div class="card">
+      <span class="card-label">Error Rate</span>
+      <span class="card-value" [class.card-value-warn]="errorRate() > 0">
+        {{ errorRate().toFixed(1) }}%
+      </span>
+    </div>
+    <div class="card">
+      <span class="card-label">Revote Rate</span>
+      <span class="card-value" [class.card-value-warn]="revoteRate() > 0">
+        {{ revoteRate().toFixed(1) }}%
+      </span>
+    </div>
+    <div class="card">
+      <span class="card-label">Licensed</span>
+      <span class="card-value">{{ isLicensed() ? '✓' : '✗' }}</span>
+    </div>
+  </div>
+
+  @if (rows().length > 0) {
+    <table class="cell-table">
+      <thead>
+        <tr>
+          <th class="col-cell">Cell</th>
+          <th class="col-traces">Traces</th>
+          <th class="col-avg">Avg ms</th>
+          <th class="col-errors">Errors</th>
+          <th class="col-revotes">Revotes</th>
+          <th class="col-status">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track row.cellKey) {
+          <tr class="cell-row" (click)="navigateToCell(row.cellKey)">
+            <td class="col-cell">{{ row.cellKey }}</td>
+            <td class="col-traces">{{ row.traceCount }}</td>
+            <td class="col-avg">{{ row.avgDuration.toFixed(1) }}</td>
+            <td class="col-errors" [class.cell-error]="row.errorCount > 0">
+              {{ row.errorCount }}
+            </td>
+            <td class="col-revotes" [class.cell-warn]="row.revoteCount > 0">
+              {{ row.revoteCount }}
+            </td>
+            <td class="col-status">
+              @switch (row.status) {
+                @case ('healthy') {
+                  <span class="status-healthy">✓</span>
+                }
+                @case ('warning') {
+                  <span class="status-warning">⚠</span>
+                }
+                @case ('error') {
+                  <span class="status-error">✗</span>
+                }
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <p class="cell-table-hint">Click a cell row to view its trace detail.</p>
+  } @else {
+    <p class="dashboard-empty">
+      No cells detected yet. Cells appear after a decorated &#64;FeatureCell
+      service is instantiated and traces complete.
+    </p>
+  }
+</div>

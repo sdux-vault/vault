@@ -1,12 +1,6 @@
 <div class="vault-devtools">
   @if (totalEvents()) {
-    <section class="welcome">
-      <h1 class="welcome-title">Welcome to SDuX Vault DevTools</h1>
-      <p class="welcome-subtitle">
-        Real-time pipeline visibility for your state management layer. Inspect
-        events, trace state mutations, and diagnose errors — all in one place.
-      </p>
-    </section>
+    <sdux-cell-dashboard></sdux-cell-dashboard>
   } @else {
     <section class="warning">
       Events only appear
@@ -24,12 +18,12 @@
         service to trigger events in your app.
       </p>
     </section>
+    <section class="vault-empty">
+      <img
+        class="logo"
+        src="/assets/brand/brand-landscape-dark.svg"
+        alt="SDuX Vault logo"
+        matTooltip="SDuX Vault" />
+    </section>
   }
-  <section class="vault-empty">
-    <img
-      class="logo"
-      src="/assets/brand/brand-landscape-dark.svg"
-      alt="SDuX Vault logo"
-      matTooltip="SDuX Vault" />
-  </section>
 </div>

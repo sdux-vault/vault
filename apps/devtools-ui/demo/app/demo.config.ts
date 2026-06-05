@@ -6,12 +6,14 @@ import {
 import { provideRouter, withHashLocation } from '@angular/router';
 import {
   withAes256EncryptBehavior,
+  withArrayAppendMergeBehavior,
   withArrayPushMergeBehavior,
   withDelayController,
   withLocalStoragePersistBehavior,
   withLookupBehavior,
   withQueryBehavior,
-  withStepwiseController
+  withStepwiseController,
+  withThrottleController
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import {
@@ -91,8 +93,8 @@ export const demoConfig: ApplicationConfig = {
         key: 'startrek-feature-cell-key',
         initialState: []
       },
-      [],
-      []
+      [withArrayAppendMergeBehavior],
+      [withThrottleController]
     )
   ]
 };

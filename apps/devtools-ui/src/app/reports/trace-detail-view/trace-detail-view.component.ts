@@ -4,11 +4,13 @@ import {
   Component,
   computed,
   inject,
+  OnInit,
   signal
 } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ActivatedRoute } from '@angular/router';
 import { EventShape } from '@sdux-vault/shared';
 import { DevtoolsPipelineEventDetailComponent } from '../../events/panels/events/pipeline/detail/devtools-pipeline-event-detail.component';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
@@ -52,12 +54,15 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
   styleUrl: './trace-detail-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TraceDetailViewComponent {
+export class TraceDetailViewComponent implements OnInit {
   /** Internal reference to the trace aggregate FeatureCell service. */
   #aggregate = inject(DevtoolsAggregateService);
 
   /** Registry service providing license state. */
   #registry = inject(DevtoolsRegistryService);
+
+  /** Activated route for reading query params. */
+  #route = inject(ActivatedRoute);
 
   /** Whether the current license enables pro/enterprise features. */
   readonly isLicensed = this.#registry.isLicensed;
@@ -286,6 +291,16 @@ export class TraceDetailViewComponent {
     this.expandedTraceId.set(
       this.expandedTraceId() === traceId ? null : traceId
     );
+  }
+
+  /**
+   * Reads the `cell` query param on init to auto-select the cell filter.
+   */
+  ngOnInit(): void {
+    const cell = this.#route.snapshot.queryParamMap.get('cell');
+    if (cell) {
+      this.selectedCell.set(cell);
+    }
   }
 
   /**

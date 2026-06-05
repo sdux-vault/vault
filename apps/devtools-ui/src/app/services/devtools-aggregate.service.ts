@@ -302,10 +302,32 @@ export class DevtoolsAggregateService {
     if (event.name === 'conductor:start:abort') {
       return TraceExecutionStatuses.Aborted;
     }
+    if (
+      event.name === 'conductor:end:attempt' &&
+      this.isAbortPayload(event.payload)
+    ) {
+      return TraceExecutionStatuses.Aborted;
+    }
     if (ERROR_EVENTS.has(event.name)) {
       return TraceExecutionStatuses.Failed;
     }
     return TraceExecutionStatuses.Success;
+  }
+
+  /**
+   * Type guard that checks whether a terminal event payload indicates
+   * an abort outcome from the conductor.
+   *
+   * @param payload - The event payload to inspect.
+   * @returns True when the payload carries `status: 'abort'`.
+   */
+  private isAbortPayload(payload: unknown): payload is { status: string } {
+    return (
+      typeof payload === 'object' &&
+      payload !== null &&
+      'status' in payload &&
+      (payload as { status: unknown }).status === 'abort'
+    );
   }
 
   /**

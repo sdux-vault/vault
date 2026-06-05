@@ -10,6 +10,7 @@ import { DevtoolsPipelineEventComponent } from '../events/panels/events/pipeline
 import { DevtoolsMainPipelinePanelComponent } from '../events/panels/pipeline/main/devtools-main-pipeline-panel.component';
 import { DevtoolsAggregateService } from '../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../services/devtools-logging.service';
+import { DevtoolsRegistryService } from '../services/registry/devtools-registry.service';
 import {
   DevToolsSplashPageComponent,
   EXTENSION_VERSION,
@@ -58,7 +59,17 @@ describe('Component: SplashPage', () => {
       ],
       providers: [
         { provide: DevtoolsLoggingService, useValue: mockService },
-        { provide: DevtoolsAggregateService, useValue: {} },
+        {
+          provide: DevtoolsAggregateService,
+          useValue: {
+            traces: signal([]),
+            tracesByCellKey: signal(new Map())
+          }
+        },
+        {
+          provide: DevtoolsRegistryService,
+          useValue: { isLicensed: signal(false) }
+        },
         { provide: EXTENSION_VERSION, useValue: '0.0.27' },
         provideZonelessChangeDetection()
       ]

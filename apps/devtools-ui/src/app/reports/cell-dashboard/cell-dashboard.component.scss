@@ -1,0 +1,133 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.cell-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+  padding: global.$spacing-md;
+}
+
+.dashboard-title {
+  margin: 0;
+  font-size: global.$font-size-lg;
+  font-weight: global.$font-weight-bold;
+  color: var(--sdux-text-primary);
+}
+
+.summary-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: global.$spacing-md;
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: global.$spacing-xs;
+    padding: global.$spacing-md global.$spacing-lg;
+    background: global.$sdux-surface-lightish;
+    border-radius: global.$border-radius-sm;
+    border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
+    min-width: 120px;
+
+    .card-label {
+      font-size: global.$font-size-xs;
+      color: var(--sdux-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-value {
+      font-size: global.$font-size-xl;
+      font-weight: global.$font-weight-bold;
+      color: var(--sdux-text-primary);
+    }
+
+    .card-value-warn {
+      color: global.$sdux-warn-dark;
+    }
+  }
+}
+
+.cell-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: global.$font-size-sm;
+  font-family: monospace;
+
+  th,
+  td {
+    padding: global.$spacing-sm global.$spacing-md;
+    text-align: left;
+    border-bottom: 1px solid var(--sdux-border-default, rgb(255 255 255 / 5%));
+  }
+
+  th {
+    color: var(--sdux-text-secondary);
+    font-weight: global.$font-weight-medium;
+    white-space: nowrap;
+  }
+
+  .col-cell {
+    min-width: 200px;
+  }
+
+  .col-traces,
+  .col-avg,
+  .col-errors,
+  .col-revotes,
+  .col-status {
+    text-align: center;
+    width: 80px;
+  }
+
+  .cell-error {
+    color: global.$sdux-accent-base;
+    font-weight: global.$font-weight-bold;
+  }
+
+  .cell-warn {
+    color: global.$sdux-warn-dark;
+    font-weight: global.$font-weight-bold;
+  }
+
+  .status-healthy {
+    color: global.$sdux-success-base;
+  }
+
+  .status-warning {
+    color: global.$sdux-warn-dark;
+  }
+
+  .status-error {
+    color: global.$sdux-accent-base;
+  }
+}
+
+.cell-row {
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: var(--sdux-surface-hover, rgb(255 255 255 / 5%));
+  }
+}
+
+.cell-table-hint {
+  margin: 0;
+  font-size: global.$font-size-xs;
+  color: var(--sdux-text-secondary);
+  text-align: center;
+}
+
+.dashboard-empty {
+  padding: global.$spacing-lg;
+  text-align: center;
+  color: var(--sdux-text-secondary);
+  font-size: global.$font-size-sm;
+}
