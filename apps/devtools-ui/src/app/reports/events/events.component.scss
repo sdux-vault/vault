@@ -163,31 +163,6 @@
   display: flex;
   align-items: center;
   gap: global.$spacing-sm;
-
-  .tab-download-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: middle;
-    background: none;
-    border: none;
-    color: global.$sdux-text-secondary;
-    cursor: pointer;
-    padding: global.$spacing-xs;
-    border-radius: global.$border-radius-xs;
-    line-height: 1;
-
-    mat-icon {
-      font-size: global.$font-size-md;
-      width: global.$font-size-md;
-      height: global.$font-size-md;
-    }
-
-    &:hover {
-      color: global.$sdux-text-white;
-      background-color: global.$sdux-surface-outline;
-    }
-  }
 }
 
 /* ----------------------------------------------

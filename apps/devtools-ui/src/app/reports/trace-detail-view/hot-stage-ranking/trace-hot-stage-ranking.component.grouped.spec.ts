@@ -103,10 +103,6 @@ describe('Component: TraceHotStageRanking (Grouped)', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('resolvedTraces', () => {
     it('should use traces input when provided', () => {
       expect(component.resolvedTraces()).toEqual(mockTraces);

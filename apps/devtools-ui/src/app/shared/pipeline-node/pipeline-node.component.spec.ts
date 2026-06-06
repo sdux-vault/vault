@@ -18,10 +18,6 @@ describe('Component: PipelineNode', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('displayLabel', () => {
     it('should render explicit label when provided', () => {
       fixture.componentRef.setInput('label', 'TestLabel');

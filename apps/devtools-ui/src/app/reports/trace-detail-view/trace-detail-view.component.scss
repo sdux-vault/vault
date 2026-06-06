@@ -72,8 +72,24 @@
       color: var(--sdux-text-secondary);
     }
 
+    &.stat-success .stat-value {
+      color: global.$sdux-success-base;
+    }
+
     &.stat-errors .stat-value {
       color: global.$sdux-accent-base;
+    }
+
+    &.stat-denied .stat-value {
+      color: global.$sdux-warn-base;
+    }
+
+    &.stat-aborted .stat-value {
+      color: global.$sdux-warn-base;
+    }
+
+    &.stat-orphaned .stat-value {
+      color: var(--sdux-text-secondary);
     }
   }
 }
@@ -174,7 +190,7 @@
         background: global.$sdux-success-base;
       }
 
-      &.status-failed {
+      &.status-error {
         background: global.$sdux-accent-base;
       }
 
@@ -243,17 +259,13 @@
     }
 
     .close-btn {
-      background: transparent;
-      border: none;
-      color: var(--sdux-text-secondary);
-      cursor: pointer;
+      @include global.sdux-icon-button(28px, transparent);
+      color: global.$sdux-primary-light;
       font-size: global.$font-size-md;
-      padding: global.$spacing-xs;
-      border-radius: global.$border-radius-sm;
 
       &:hover {
-        color: var(--sdux-text-primary);
-        background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+        background-color: global.$sdux-primary-base;
+        color: global.$sdux-text-white;
       }
     }
   }
@@ -554,7 +566,7 @@
   color: global.$sdux-success-base;
 }
 
-.status-failed {
+.status-error {
   color: global.$sdux-accent-base;
 }
 
@@ -591,9 +603,18 @@
   }
 
   .chevron {
-    display: inline-block;
-    font-size: 24px;
-    transition: transform 0.2s ease;
+    @include global.sdux-icon-button(28px, transparent);
+    color: global.$sdux-primary-light;
+    font-size: global.$font-size-lg;
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover {
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
+    }
 
     &.chevron-open {
       transform: rotate(90deg);

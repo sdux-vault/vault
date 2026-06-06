@@ -45,6 +45,38 @@
   }
 }
 
+.warning-notice {
+  margin: 0;
+  font-size: global.$font-size-sm;
+  color: global.$sdux-warn-base;
+  line-height: 1.5;
+  padding: global.$spacing-sm global.$spacing-md;
+  border-left: 3px solid global.$sdux-warn-base;
+  background: rgb(251 192 45 / 8%);
+  border-radius: global.$border-radius-sm;
+}
+
+.features {
+  font-size: global.$font-size-sm;
+  color: var(--sdux-text-secondary);
+
+  .features-heading {
+    margin: 0 0 global.$spacing-sm;
+    font-weight: global.$font-weight-medium;
+    color: var(--sdux-text-primary);
+  }
+
+  ul {
+    margin: 0;
+    padding-left: global.$spacing-lg;
+    list-style: disc;
+
+    li {
+      line-height: 1.6;
+    }
+  }
+}
+
 .file-input {
   display: none;
 }

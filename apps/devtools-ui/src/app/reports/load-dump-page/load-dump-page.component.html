@@ -10,6 +10,18 @@
       populating all views with the dump data.
     </p>
 
+    <div class="features">
+      <p class="features-heading">After loading, you will have access to:</p>
+      <ul>
+        <li>Full trace timeline with stage-by-stage execution breakdown</li>
+        <li>Controller voting decisions and arbitration outcomes</li>
+        <li>Behavior execution order and duration metrics</li>
+        <li>Pipeline flow visualization for each trace</li>
+        <li>AI-assisted debugging reports from execution data</li>
+        <li>Hot stage ranking analysis across all loaded traces</li>
+      </ul>
+    </div>
+
     <label class="file-label">
       <input
         type="file"
@@ -37,5 +49,11 @@
         View in Trace Detail →
       </button>
     </section>
+  } @else {
+    <div class="warning-notice">
+      Loading a dump file will <strong>replace</strong> all current traces and
+      events.
+      <p>All data from the current session will be lost.</p>
+    </div>
   }
 </div>

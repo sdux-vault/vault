@@ -59,10 +59,6 @@ describe('Component: TraceTimeline', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('timeWindow', () => {
     it('should compute min and max from traces', () => {
       const tw = component.timeWindow();

@@ -12,13 +12,14 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { EventShape } from '@sdux-vault/shared';
-import { DevtoolsPipelineEventDetailComponent } from '../../events/panels/events/pipeline/detail/devtools-pipeline-event-detail.component';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import type { TraceExecutionShape } from '../../shapes/trace';
 import { TraceExecutionStatuses } from '../../shapes/trace';
 import type { StageMetricShape } from '../../shapes/trace/stage-metric.shape';
+import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
+import { DevtoolsPipelineEventDetailComponent } from '../events/panels/events/pipeline/detail/devtools-pipeline-event-detail.component';
 import { TraceEventTableComponent } from './event-table/trace-event-table.component';
 import { TraceHotStageRankingComponent } from './hot-stage-ranking/trace-hot-stage-ranking.component';
 import { TracePipelineFlowTabComponent } from './pipeline-flow-tab/trace-pipeline-flow-tab.component';
@@ -43,6 +44,7 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
     MatTabsModule,
     MatTooltipModule,
     ResetButtonComponent,
+    ExportButtonComponent,
     TraceEventTableComponent,
     TraceHotStageRankingComponent,
     TracePipelineFlowTabComponent,
@@ -112,8 +114,17 @@ export class TraceDetailViewComponent implements OnInit {
   readonly stats = computed(() => {
     const traces = this.filteredTraces();
     const total = traces.length;
+    const success = traces.filter(
+      (t) => t.metrics.status === TraceExecutionStatuses.Success
+    ).length;
     const errors = traces.filter(
       (t) => t.metrics.status === TraceExecutionStatuses.Failed
+    ).length;
+    const denied = traces.filter(
+      (t) => t.metrics.status === TraceExecutionStatuses.Denied
+    ).length;
+    const aborted = traces.filter(
+      (t) => t.metrics.status === TraceExecutionStatuses.Aborted
     ).length;
     const orphaned = traces.filter(
       (t) => t.metrics.status === TraceExecutionStatuses.Orphaned
@@ -123,7 +134,7 @@ export class TraceDetailViewComponent implements OnInit {
         ? traces.reduce((sum, t) => sum + t.metrics.duration, 0) / total
         : 0;
 
-    return { total, errors, orphaned, avgDuration };
+    return { total, success, errors, denied, aborted, orphaned, avgDuration };
   });
 
   /** Time window boundaries for the timeline bar visualization. */
@@ -166,7 +177,7 @@ export class TraceDetailViewComponent implements OnInit {
       case TraceExecutionStatuses.Success:
         return 'status-success';
       case TraceExecutionStatuses.Failed:
-        return 'status-failed';
+        return 'status-error';
       case TraceExecutionStatuses.Denied:
         return 'status-denied';
       case TraceExecutionStatuses.Orphaned:

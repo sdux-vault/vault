@@ -9,9 +9,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
-import { DevtoolsLoggingService } from '../services/devtools-logging.service';
-import { ResetButtonComponent } from '../shared/reset-button/reset-button.component';
-import { EXTENSION_VERSION } from '../splash-page/devtools-splash-page.component';
+import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
+import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
+import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
+import { EXTENSION_VERSION } from '../../splash-page/devtools-splash-page.component';
 import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devtools-main-pipeline-panel.component';
 
 /**
@@ -26,6 +27,7 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
     MatTabsModule,
     MatTooltipModule,
     DevtoolsMainPipelinePanelComponent,
+    ExportButtonComponent,
     ResetButtonComponent
   ],
   templateUrl: './events.component.html',
@@ -174,43 +176,5 @@ export class EventsComponent {
    */
   capitalize(value: string): string {
     return value[0].toUpperCase() + value.slice(1);
-  }
-
-  /**
-   * Downloads all pipeline events as a JSON file.
-   *
-   * @param event - The DOM event to stop propagation on.
-   */
-  downloadAllEvents(event: Event): void {
-    event.stopPropagation();
-    this.downloadEvents(this.events(), 'all-events');
-  }
-
-  /**
-   * Downloads error pipeline events as a JSON file.
-   *
-   * @param event - The DOM event to stop propagation on.
-   */
-  downloadErrorEvents(event: Event): void {
-    event.stopPropagation();
-    this.downloadEvents(this.errorEvents(), 'error-events');
-  }
-
-  /**
-   * Downloads the provided events as a JSON file.
-   *
-   * @param events - The event array to serialize.
-   * @param filename - The base name for the downloaded file.
-   */
-  private downloadEvents(events: EventShape[], filename: string): void {
-    const blob = new Blob([JSON.stringify(events, null, 2)], {
-      type: 'application/json'
-    });
-
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `sdux-${filename}-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(a.href);
   }
 }

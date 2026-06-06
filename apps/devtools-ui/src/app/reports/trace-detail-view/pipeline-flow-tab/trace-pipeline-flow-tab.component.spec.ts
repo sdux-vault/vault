@@ -60,10 +60,6 @@ describe('Component: TracePipelineFlowTab', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('isLicensed', () => {
     it('should reflect the registry license state', () => {
       expect(component.isLicensed()).toBeTrue();

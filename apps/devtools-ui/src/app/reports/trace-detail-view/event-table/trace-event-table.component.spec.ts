@@ -77,10 +77,6 @@ describe('Component: TraceEventTable', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('deltaMs', () => {
     it('should return 0.0 for the first event', () => {
       expect(component.deltaMs(mockTrace.events[0], 0)).toBe('0.0');

@@ -76,7 +76,7 @@ export class TraceTimelineComponent {
       case TraceExecutionStatuses.Success:
         return 'status-success';
       case TraceExecutionStatuses.Failed:
-        return 'status-failed';
+        return 'status-error';
       case TraceExecutionStatuses.Denied:
         return 'status-denied';
       case TraceExecutionStatuses.Orphaned:

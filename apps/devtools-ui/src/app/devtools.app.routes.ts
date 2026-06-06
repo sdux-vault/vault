@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { ConfigurationComponent } from './configuration/configuration.component';
-import { EventsComponent } from './events/events.component';
+import { EventsComponent } from './reports/events/events.component';
 import { HotStageRankingPageComponent } from './reports/hot-stage-ranking-page/hot-stage-ranking-page.component';
 import { LoadDumpPageComponent } from './reports/load-dump-page/load-dump-page.component';
 import { TraceDetailViewComponent } from './reports/trace-detail-view/trace-detail-view.component';

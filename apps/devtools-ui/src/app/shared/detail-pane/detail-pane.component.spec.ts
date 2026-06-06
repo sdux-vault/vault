@@ -18,10 +18,6 @@ describe('Component: DetailPane', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should render the title', () => {
     const h3 = fixture.nativeElement.querySelector('h3');
     expect(h3.textContent.trim()).toBe('Test Title');

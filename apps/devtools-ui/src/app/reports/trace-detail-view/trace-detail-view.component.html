@@ -13,6 +13,11 @@
           <mat-option [value]="cell">{{ cell }}</mat-option>
         }
       </mat-select>
+      <sdux-export-button
+        [data]="filteredTraces()"
+        filename="traces"
+        [label]="'Download ' + selectedCell() + ' traces'">
+      </sdux-export-button>
     </div>
     <div class="meta">
       <sdux-devtools-reset-button
@@ -31,11 +36,23 @@
         <span class="stat-value">{{ stats().avgDuration.toFixed(1) }}ms</span>
         <span class="stat-label">Avg</span>
       </div>
+      <div class="stat stat-success">
+        <span class="stat-value">{{ stats().success }}</span>
+        <span class="stat-label">Success</span>
+      </div>
       <div class="stat stat-errors">
         <span class="stat-value">{{ stats().errors }}</span>
         <span class="stat-label">Errors</span>
       </div>
-      <div class="stat">
+      <div class="stat stat-denied">
+        <span class="stat-value">{{ stats().denied }}</span>
+        <span class="stat-label">Denied</span>
+      </div>
+      <div class="stat stat-aborted">
+        <span class="stat-value">{{ stats().aborted }}</span>
+        <span class="stat-label">Aborted</span>
+      </div>
+      <div class="stat stat-orphaned">
         <span class="stat-value">{{ stats().orphaned }}</span>
         <span class="stat-label">Orphaned</span>
       </div>

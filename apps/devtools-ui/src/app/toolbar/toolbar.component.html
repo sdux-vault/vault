@@ -30,13 +30,36 @@
   </button>
 
   <mat-menu #toolbarMenu="matMenu">
-    <a mat-menu-item routerLink="/">Home</a>
-    <a mat-menu-item routerLink="/events">Events</a>
-    <a mat-menu-item routerLink="/reports/trace-detail">Trace Detail</a>
-    <a mat-menu-item routerLink="/reports/hot-stage-ranking"
-      >Hot Stage Ranking</a
-    >
-    <a mat-menu-item routerLink="/reports/load-dump">Load Dump</a>
-    <a mat-menu-item routerLink="/configuration">Vault Configuration</a>
+    <a mat-menu-item routerLink="/">
+      <mat-icon class="icon">home</mat-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" mat-menu-item [matMenuTriggerFor]="reportsMenu">
+      <mat-icon class="icon">assessment</mat-icon>
+      <span>Reports</span>
+    </button>
+    <a mat-menu-item routerLink="/reports/load-dump">
+      <mat-icon class="icon">upload_file</mat-icon>
+      <span>Load Dump</span>
+    </a>
+    <a mat-menu-item routerLink="/configuration">
+      <mat-icon class="icon">settings</mat-icon>
+      <span>Vault Configuration</span>
+    </a>
+  </mat-menu>
+
+  <mat-menu #reportsMenu="matMenu">
+    <a mat-menu-item routerLink="/events">
+      <mat-icon class="icon">list_alt</mat-icon>
+      <span>Events</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/trace-detail">
+      <mat-icon class="icon">timeline</mat-icon>
+      <span>Trace Detail</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/hot-stage-ranking">
+      <mat-icon class="icon">leaderboard</mat-icon>
+      <span>Hot Stage Ranking</span>
+    </a>
   </mat-menu>
 </div>

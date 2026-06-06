@@ -132,10 +132,6 @@ describe('Component: CellDashboard', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('summary cards', () => {
     it('should compute cell count', () => {
       expect(component.cellCount()).toBe(2);

@@ -34,18 +34,13 @@
     }
 
     .close-btn {
-      background: none;
-      border: none;
-      color: global.$sdux-text-secondary;
+      @include global.sdux-icon-button(28px, transparent);
+      color: global.$sdux-primary-light;
       font-size: global.$font-size-md;
-      cursor: pointer;
-      padding: global.$spacing-xs;
-      border-radius: global.$border-radius-xs;
-      line-height: 1;
 
       &:hover {
+        background-color: global.$sdux-primary-base;
         color: global.$sdux-text-white;
-        background-color: global.$sdux-surface-outline;
       }
     }
   }

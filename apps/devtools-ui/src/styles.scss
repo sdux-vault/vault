@@ -17,6 +17,40 @@
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
+
+/* ----------------------------------------------
+   Mat Menu Item Overrides (CDK overlay)
+   ---------------------------------------------- */
+
+.mat-mdc-menu-item {
+  // exception: !important needed to override Angular Material's internal icon color specificity
+  .mat-icon {
+    color: global.$sdux-primary-base !important;
+    width: 25px;
+    height: 25px;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mdc-list-item__primary-text {
+    font-family: global.$sdux-font-family;
+    font-size: global.$font-size-sm;
+  }
 }
 
 /* ----------------------------------------------

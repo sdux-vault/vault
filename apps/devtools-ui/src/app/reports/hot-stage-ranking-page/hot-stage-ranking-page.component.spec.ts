@@ -126,10 +126,6 @@ describe('Component: HotStageRankingPage', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('cellKeys', () => {
     it('should return sorted cell keys from aggregate service', () => {
       expect(component.cellKeys()).toEqual([

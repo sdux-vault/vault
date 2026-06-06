@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
@@ -11,7 +12,7 @@ import { EXTENSION_VERSION } from '../splash-page/devtools-splash-page.component
 @Component({
   selector: 'sdux-toolbar',
   standalone: true,
-  imports: [MatMenuModule, MatTooltipModule, RouterLink],
+  imports: [MatIconModule, MatMenuModule, MatTooltipModule, RouterLink],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

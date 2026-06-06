@@ -55,22 +55,11 @@
     <ng-template mat-tab-label>
       <span class="tab-label">
         All Events ({{ totalEvents() }})
-        <button
-          type="button"
-          class="tab-download-btn"
-          aria-label="Download all events"
-          matTooltip="Download all events"
-          (click)="downloadAllEvents($event)">
-          <svg
-            class="download-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            width="18"
-            height="18">
-            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-          </svg>
-        </button>
+        <sdux-export-button
+          [data]="filteredEvents()"
+          filename="all-events"
+          label="Download all events">
+        </sdux-export-button>
       </span>
     </ng-template>
     <section class="vault-tab-content">
@@ -82,22 +71,11 @@
     <ng-template mat-tab-label>
       <span class="tab-label">
         Error Events ({{ errorEvents().length }})
-        <button
-          type="button"
-          class="tab-download-btn"
-          aria-label="Download error events"
-          matTooltip="Download error events"
-          (click)="downloadErrorEvents($event)">
-          <svg
-            class="download-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            width="18"
-            height="18">
-            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-          </svg>
-        </button>
+        <sdux-export-button
+          [data]="errorEvents()"
+          filename="error-events"
+          label="Download error events">
+        </sdux-export-button>
       </span>
     </ng-template>
     <section class="vault-tab-content">

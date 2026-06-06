@@ -89,7 +89,7 @@
         background: global.$sdux-success-base;
       }
 
-      &.status-failed {
+      &.status-error {
         background: global.$sdux-accent-base;
       }
 
@@ -149,7 +149,7 @@
   color: global.$sdux-success-base;
 }
 
-.status-failed {
+.status-error {
   color: global.$sdux-accent-base;
 }
 

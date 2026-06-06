@@ -110,10 +110,6 @@ describe('Component: TraceStageWaterfall', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('waterfallStages', () => {
     it('should return stages sorted by startedAt', () => {
       const stages = component.waterfallStages();

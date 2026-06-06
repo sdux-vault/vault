@@ -5,7 +5,10 @@ import {
   signal
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { EventShape } from '@sdux-vault/shared';
+import { ConfirmDialogService } from '../../services/confirm-dialog/confirm-dialog.service';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 
 /**
  * Page component for loading an exported debug dump file.
@@ -24,6 +27,12 @@ import { DevtoolsAggregateService } from '../../services/devtools-aggregate.serv
 export class LoadDumpPageComponent {
   /** Aggregate service that processes and stores trace data. */
   #aggregate = inject(DevtoolsAggregateService);
+
+  /** Logging service that stores raw pipeline event history. */
+  #logging = inject(DevtoolsLoggingService);
+
+  /** Confirmation dialog service for destructive action prompts. */
+  #confirmDialog = inject(ConfirmDialogService);
 
   /** Router for navigating after a successful load. */
   #router = inject(Router);
@@ -49,6 +58,29 @@ export class LoadDumpPageComponent {
     const file = input.files?.[0];
     if (!file) return;
 
+    this.#confirmDialog
+      .confirm({
+        title: 'Replace Current Data',
+        message:
+          'Loading a dump file will delete all current traces and events. This cannot be undone.',
+        confirmLabel: 'Load File',
+        cancelLabel: 'Cancel'
+      })
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.#loadFile(file);
+        } else {
+          input.value = '';
+        }
+      });
+  }
+
+  /**
+   * Reads and processes the selected dump file after user confirmation.
+   *
+   * @param file - The JSON dump file to load.
+   */
+  #loadFile(file: File): void {
     this.errorMessage.set('');
     this.loadedFileName.set('');
     this.loadedEventCount.set(0);
@@ -56,18 +88,39 @@ export class LoadDumpPageComponent {
     const reader = new FileReader();
     reader.onload = () => {
       try {
-        const dump = JSON.parse(reader.result as string);
+        const raw = JSON.parse(reader.result as string);
+        let events: EventShape[];
 
-        if (!dump || !Array.isArray(dump.events) || dump.events.length === 0) {
+        if (
+          Array.isArray(raw) &&
+          raw.length > 0 &&
+          raw[0].traceId &&
+          raw[0].events
+        ) {
+          // Trace export format (sdux-traces-*.json): flatten nested events
+          events = raw.flatMap(
+            (trace: { events: EventShape[] }) => trace.events
+          );
+        } else if (!Array.isArray(raw) && Array.isArray(raw?.events)) {
+          // Debug dump format (sdux-debug-*.json): extract top-level events
+          events = raw.events;
+        } else {
           this.errorMessage.set(
-            'Invalid dump file: missing or empty "events" array.'
+            'Unsupported file format. Expected a trace export or debug dump file.'
           );
           return;
         }
 
-        this.#aggregate.loadDumpEvents(dump.events);
+        if (events.length === 0) {
+          this.errorMessage.set('File contains no events.');
+          return;
+        }
+
+        this.#aggregate.clearTraces();
+        this.#logging.clearEvents();
+        this.#aggregate.loadDumpEvents(events);
         this.loadedFileName.set(file.name);
-        this.loadedEventCount.set(dump.events.length);
+        this.loadedEventCount.set(events.length);
       } catch {
         this.errorMessage.set('Failed to parse file. Ensure it is valid JSON.');
       }

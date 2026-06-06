@@ -39,17 +39,12 @@
   }
 
   .toolbar-menu-btn {
-    background: transparent;
-    border: none;
-    color: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    @include global.sdux-icon-button(36px, transparent);
+    color: global.$sdux-primary-light;
 
     &:hover {
-      // exception: overrides Angular Material menu trigger specificity
-      background-color: global.$sdux-hover-background-color !important;
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
     }
 
     .menu-icon {
