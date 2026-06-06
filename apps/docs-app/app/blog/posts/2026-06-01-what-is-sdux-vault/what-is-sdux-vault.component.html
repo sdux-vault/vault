@@ -1,3 +1,4 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
 <sdux-blog-layout
   title="What Is SDuX Vault? A Pipeline-Based State Engine for Every Framework"
   date="2026-06-01"
@@ -87,7 +88,8 @@
           (replaceState, mergeState) express intent without indirection.
         </li>
         <li>
-          <strong>Centralize ownership, not data</strong> — each FeatureCell
+          <strong>Centralize ownership, not data</strong> — each
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
           owns exactly one slice of state with a clear lifecycle.
         </li>
         <li>
@@ -122,7 +124,13 @@
             </td>
           </tr>
           <tr>
-            <td><strong>FeatureCell</strong></td>
+            <td>
+              <strong
+                ><a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                ></strong
+              >
+            </td>
             <td>
               A feature-scoped state container and the primary API surface. Owns
               one slice of state with explicit initialization, access, and
@@ -132,8 +140,10 @@
           <tr>
             <td><strong>State</strong></td>
             <td>
-              Immutable, feature-owned data managed by a FeatureCell. Updates
-              are deterministic, ordered transformations — not ad-hoc mutation.
+              Immutable, feature-owned data managed by a
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+              Updates are deterministic, ordered transformations — not ad-hoc
+              mutation.
             </td>
           </tr>
           <tr>

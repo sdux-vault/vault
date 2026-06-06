@@ -6,6 +6,11 @@ import { SitemapUrlMiner } from '../sitemap-url-miner.class.mjs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const fixturesDir = path.join(__dirname, 'artifacts', 'navigation-fixtures');
+const blogFixturePath = path.join(
+  __dirname,
+  'artifacts',
+  'blog-routes-fixture.ts'
+);
 
 describe('CLI: sitemap-url-miner', () => {
   beforeAll(() => {
@@ -30,10 +35,52 @@ describe('CLI: sitemap-url-miner', () => {
       ].join('\n'),
       'utf-8'
     );
+
+    fs.writeFileSync(
+      blogFixturePath,
+      [
+        "import { Routes } from '@angular/router';",
+        '',
+        'export const blogRoutes: Routes = [',
+        '  {',
+        "    path: '',",
+        '    loadComponent: () =>',
+        "      import('./blog-index/blog-index.component').then(",
+        '        (m) => m.BlogIndexComponent',
+        '      )',
+        '  },',
+        '  {',
+        "    path: 'welcome',",
+        "    data: { category: 'blogs', type: 'welcome' },",
+        '    loadComponent: () =>',
+        "      import('./posts/2026-06-01-welcome/welcome.component').then(",
+        '        (m) => m.BlogWelcomeComponent',
+        '      )',
+        '  },',
+        '  {',
+        "    path: 'mutation-bugs-eliminated',",
+        "    data: { category: 'blogs', type: 'mutation-bugs-eliminated' },",
+        '    loadComponent: () =>',
+        "      import('./posts/2026-06-06-mutation-bugs-eliminated/mutation-bugs-eliminated.component').then(",
+        '        (m) => m.BlogMutationBugsEliminatedComponent',
+        '      )',
+        '  }',
+        '  // Example:',
+        '  // {',
+        "  //   path: 'pipeline-anatomy',",
+        '  //   loadComponent: () =>',
+        "  //     import('./posts/2026-06-02-pipeline-anatomy/pipeline-anatomy.component')",
+        '  //       .then(m => m.BlogPipelineAnatomyComponent),',
+        '  // },',
+        '];'
+      ].join('\n'),
+      'utf-8'
+    );
   });
 
   afterAll(() => {
     fs.rmSync(fixturesDir, { recursive: true, force: true });
+    fs.rmSync(blogFixturePath, { force: true });
   });
 
   describe('mine', () => {
@@ -113,6 +160,70 @@ describe('CLI: sitemap-url-miner', () => {
     });
   });
 
+  describe('blogRoutesFile', () => {
+    it('should extract blog route paths and prefix with /blog/', () => {
+      const miner = new SitemapUrlMiner({
+        navigationDir: fixturesDir,
+        supplementUrls: [],
+        blogRoutesFile: blogFixturePath
+      });
+
+      const urls = miner.mine();
+
+      expect(urls).toContain('/blog/welcome');
+      expect(urls).toContain('/blog/mutation-bugs-eliminated');
+    });
+
+    it('should exclude empty path routes', () => {
+      const miner = new SitemapUrlMiner({
+        navigationDir: fixturesDir,
+        supplementUrls: [],
+        blogRoutesFile: blogFixturePath
+      });
+
+      const urls = miner.mine();
+
+      expect(urls).not.toContain('/blog/');
+    });
+
+    it('should exclude commented-out route paths', () => {
+      const miner = new SitemapUrlMiner({
+        navigationDir: fixturesDir,
+        supplementUrls: [],
+        blogRoutesFile: blogFixturePath
+      });
+
+      const urls = miner.mine();
+
+      expect(urls).not.toContain('/blog/pipeline-anatomy');
+    });
+
+    it('should deduplicate blog routes with supplement URLs', () => {
+      const miner = new SitemapUrlMiner({
+        navigationDir: fixturesDir,
+        supplementUrls: ['/blog/welcome'],
+        blogRoutesFile: blogFixturePath
+      });
+
+      const urls = miner.mine();
+      const count = urls.filter((u) => u === '/blog/welcome').length;
+
+      expect(count).toBe(1);
+    });
+
+    it('should produce no blog routes when blogRoutesFile is not provided', () => {
+      const miner = new SitemapUrlMiner({
+        navigationDir: fixturesDir,
+        supplementUrls: []
+      });
+
+      const urls = miner.mine();
+
+      expect(urls).not.toContain('/blog/welcome');
+      expect(urls).not.toContain('/blog/mutation-bugs-eliminated');
+    });
+  });
+
   describe('write', () => {
     it('should generate a valid ESM module file', () => {
       spyOn(console, 'info');
@@ -149,15 +260,14 @@ describe('CLI: sitemap-url-miner', () => {
         __dirname,
         '../../../apps/docs-app/app/navigation'
       );
+      const realBlogRoutes = path.resolve(
+        __dirname,
+        '../../../apps/docs-app/app/blog/blog.routes.ts'
+      );
       const miner = new SitemapUrlMiner({
         navigationDir: realNavDir,
-        supplementUrls: [
-          '/',
-          '/about',
-          '/contact',
-          '/blog/welcome',
-          '/blog/what-is-sdux-vault'
-        ]
+        supplementUrls: ['/', '/about', '/contact', '/blog'],
+        blogRoutesFile: realBlogRoutes
       });
 
       const urls = miner.mine();
@@ -168,6 +278,8 @@ describe('CLI: sitemap-url-miner', () => {
       expect(urls).toContain(
         '/docs/references/abstracts/abstract-active-controller'
       );
+      expect(urls).toContain('/blog/welcome');
+      expect(urls).toContain('/blog/mutation-bugs-eliminated');
     });
   });
 });

@@ -21,17 +21,21 @@ const outputPath = path.join(__dirname, 'sitemap-urls.mjs');
  * Pages that are not reachable through the sidenav navigation
  * but should appear in the sitemap.
  */
-const SUPPLEMENT_URLS = [
-  '/',
-  '/about',
-  '/contact',
-  '/blog/welcome',
-  '/blog/what-is-sdux-vault'
-];
+const SUPPLEMENT_URLS = ['/', '/about', '/contact', '/blog'];
+
+const blogRoutesFile = path.join(
+  projectRoot,
+  'apps',
+  'docs-app',
+  'app',
+  'blog',
+  'blog.routes.ts'
+);
 
 const miner = new SitemapUrlMiner({
   navigationDir,
-  supplementUrls: SUPPLEMENT_URLS
+  supplementUrls: SUPPLEMENT_URLS,
+  blogRoutesFile
 });
 
 miner.write(outputPath);

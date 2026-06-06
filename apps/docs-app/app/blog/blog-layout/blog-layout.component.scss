@@ -1,8 +1,13 @@
 @use 'global' as global;
 
-.blog-back-link {
+.blog-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: global.$spacing-sm global.$spacing-md;
+}
 
+.blog-back-link {
   a {
     @include global.a-link(var(--sdux-text-primary), var(--sdux-text-inverse));
     font-size: global.$font-size-sm;
@@ -18,9 +23,7 @@
 .blog-meta {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: global.$spacing-md;
-  padding: global.$spacing-sm global.$spacing-md;
   color: var(--sdux-text-muted);
   font-size: global.$font-size-sm;
 

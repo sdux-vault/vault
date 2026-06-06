@@ -18,6 +18,7 @@ const projectRoot = path.resolve(__dirname, '../../../');
 const typeIndexPath = path.join(__dirname, '..', 'artifacts/type-index.json');
 
 const rawSourceDirs = [
+  'apps/docs-app/app/blog/posts',
   'apps/docs-app/app/docs/common',
   'apps/docs-app/app/docs/dev-tools',
   'apps/docs-app/app/docs/global-error-handler',
