@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
-import { ConfigurationComponent } from './configuration/configuration.component';
 import { EventsComponent } from './reports/events/events.component';
 import { HotStageRankingPageComponent } from './reports/hot-stage-ranking-page/hot-stage-ranking-page.component';
 import { LoadDumpPageComponent } from './reports/load-dump-page/load-dump-page.component';
+import { StateDiffViewComponent } from './reports/state-diff-view/state-diff-view.component';
 import { TraceDetailViewComponent } from './reports/trace-detail-view/trace-detail-view.component';
+import { VaultOverviewComponent } from './reports/vault-overview/vault-overview.component';
 import { DevToolsSplashPageComponent } from './splash-page/devtools-splash-page.component';
 
 /**
@@ -34,11 +35,14 @@ export const routes: Routes = [
     component: HotStageRankingPageComponent
   },
 
+  /** State Diff View report — side-by-side pipeline candidate comparison. */
+  { path: 'reports/state-diff', component: StateDiffViewComponent },
+
   /** Load Dump — import exported debug dump files. */
   { path: 'reports/load-dump', component: LoadDumpPageComponent },
 
-  /** Configuration route for managing Vault settings. */
-  { path: 'configuration', component: ConfigurationComponent },
+  /** Vault Overview report — registry, versions, and license details. */
+  { path: 'reports/vault-overview', component: VaultOverviewComponent },
 
   /** Catch-all route that redirects invalid paths back to the root. */
   { path: '**', redirectTo: '' }

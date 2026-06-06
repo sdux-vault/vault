@@ -3,6 +3,7 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import process from 'process';
+import { VAULT_NOOP } from '@sdux-vault/shared';
 
 export class SnapshotGenerator {
   static START = 'SNAPSHOT_UPDATE_PAYLOAD_START::';
@@ -94,8 +95,18 @@ export class SnapshotGenerator {
   }
 
   buildSnapshotFile(exportName, snapshot) {
+    const UNDEFINED_SENTINEL = '"__UNDEFINED__"';
+    const json = JSON.stringify(
+      snapshot,
+      (key, value) => {
+        return key === 'candidate' && value === undefined
+          ? '__UNDEFINED__'
+          : value;
+      },
+      2
+    );
     return `// AUTO-GENERATED – DO NOT EDIT
-export const ${exportName} = ${JSON.stringify(snapshot, null, 2)};
+export const ${exportName} = ${restored};
 `;
   }
 }

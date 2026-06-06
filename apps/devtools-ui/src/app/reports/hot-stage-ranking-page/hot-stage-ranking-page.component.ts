@@ -7,7 +7,9 @@ import {
 } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
+import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
+import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
 import { TraceHotStageRankingComponent } from '../trace-detail-view/hot-stage-ranking/trace-hot-stage-ranking.component';
 
 /**
@@ -24,7 +26,8 @@ import { TraceHotStageRankingComponent } from '../trace-detail-view/hot-stage-ra
   imports: [
     MatSelectModule,
     ResetButtonComponent,
-    TraceHotStageRankingComponent
+    TraceHotStageRankingComponent,
+    UpsellNoticeComponent
   ],
   templateUrl: './hot-stage-ranking-page.component.html',
   styleUrl: './hot-stage-ranking-page.component.scss',
@@ -33,6 +36,12 @@ import { TraceHotStageRankingComponent } from '../trace-detail-view/hot-stage-ra
 export class HotStageRankingPageComponent {
   /** Aggregate service providing trace data. */
   #aggregate = inject(DevtoolsAggregateService);
+
+  /** Registry service providing license state. */
+  #registry = inject(DevtoolsRegistryService);
+
+  /** Whether the current license enables pro/enterprise features. */
+  readonly isLicensed = this.#registry.isLicensed;
 
   /** All completed traces from the aggregate service. */
   readonly traces = this.#aggregate.traces;

@@ -1,0 +1,33 @@
+@use 'global' as global;
+
+.upsell-notice {
+  padding: global.$spacing-md;
+  text-align: center;
+
+  .upsell-logo {
+    display: block;
+    margin: 0 auto global.$spacing-md;
+    max-width: 280px;
+    height: auto;
+  }
+
+  .upsell-body {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-secondary);
+    line-height: 1.5;
+  }
+
+  .upsell-cta {
+    margin-top: global.$spacing-md;
+    display: flex;
+    justify-content: center;
+
+    .cta-button {
+      min-width: 200px !important;
+      max-width: 250px !important;
+      width: auto !important;
+      text-decoration: none;
+    }
+  }
+}

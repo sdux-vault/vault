@@ -42,9 +42,14 @@
       <mat-icon class="icon">upload_file</mat-icon>
       <span>Load Dump</span>
     </a>
-    <a mat-menu-item routerLink="/configuration">
-      <mat-icon class="icon">settings</mat-icon>
-      <span>Vault Configuration</span>
+    <a
+      mat-menu-item
+      href="https://www.sdux-vault.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="View Documentation — opens in a new tab">
+      <mat-icon class="icon">menu_book</mat-icon>
+      <span>Documentation</span>
     </a>
   </mat-menu>
 
@@ -53,13 +58,24 @@
       <mat-icon class="icon">list_alt</mat-icon>
       <span>Events</span>
     </a>
+    <a mat-menu-item routerLink="/reports/hot-stage-ranking">
+      <mat-icon class="icon">leaderboard</mat-icon>
+      <span>Hot Stage Ranking</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/state-diff">
+      <mat-icon class="icon">compare_arrows</mat-icon>
+      <span>State Diff View</span>
+    </a>
     <a mat-menu-item routerLink="/reports/trace-detail">
       <mat-icon class="icon">timeline</mat-icon>
       <span>Trace Detail</span>
     </a>
-    <a mat-menu-item routerLink="/reports/hot-stage-ranking">
-      <mat-icon class="icon">leaderboard</mat-icon>
-      <span>Hot Stage Ranking</span>
+    <a mat-menu-item routerLink="/reports/vault-overview">
+      <img
+        src="assets/brand/vault-icon.png"
+        alt=""
+        class="icon menu-icon-img" />
+      <span>Vault Overview</span>
     </a>
   </mat-menu>
 </div>

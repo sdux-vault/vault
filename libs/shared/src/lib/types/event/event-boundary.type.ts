@@ -1,5 +1,6 @@
 /** Enumeration of event boundary positions within a lifecycle span. */
 export const EventBoundaryTypes = {
+  Candidate: 'candidate',
   End: 'end',
   Notification: 'notification',
   Start: 'start',

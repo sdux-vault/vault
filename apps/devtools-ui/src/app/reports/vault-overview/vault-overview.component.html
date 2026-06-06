@@ -1,6 +1,6 @@
-<div class="configuration-layout">
-  <section class="configuration-content">
-    <h2 class="title">Vault Configuration</h2>
+<div class="vault-overview-layout">
+  <section class="vault-overview-content">
+    <h2 class="title">Vault Overview</h2>
 
     <section class="section">
       <h3 class="section-title">FeatureCell Registry</h3>
@@ -63,70 +63,62 @@
       }
     </section>
 
-    <section class="section">
-      <h3 class="section-title">Package Versions</h3>
-      @if (versions().length) {
-        <table class="versions-table">
-          <thead>
-            <tr>
-              <th class="column-200">Package</th>
-              <th class="column-auto">Version</th>
-            </tr>
-          </thead>
-          <tbody>
+    <div class="info-cards">
+      <section class="info-card">
+        <h3 class="card-title">Package Versions</h3>
+        @if (versions().length) {
+          <dl class="card-list">
             @for (entry of versions(); track entry[0]) {
-              <tr>
-                <td>{{ entry[0] }}</td>
-                <td>{{ entry[1] }}</td>
-              </tr>
+              <div class="card-row">
+                <dt class="card-label">{{ entry[0] }}</dt>
+                <dd class="card-value">{{ entry[1] }}</dd>
+              </div>
             }
-          </tbody>
-        </table>
-      } @else {
-        <p class="empty">No version data available.</p>
-      }
-    </section>
+          </dl>
+        } @else {
+          <p class="empty">No version data available.</p>
+        }
+      </section>
 
-    @if (license(); as lic) {
-      <section class="section">
-        <h3 class="section-title">License</h3>
-        <table class="versions-table">
-          <tbody>
-            <tr>
-              <td class="column-200">Organization</td>
-              <td class="column-auto">{{ lic.organization }}</td>
-            </tr>
-            <tr>
-              <td class="column-200">Domain</td>
-              <td class="column-auto">{{ lic.domain }}</td>
-            </tr>
-            <tr>
-              <td class="column-200">Tier</td>
-              <td class="column-auto">{{ lic.licenseType }}</td>
-            </tr>
-            <tr>
-              <td class="column-200">Issued</td>
-              <td class="column-auto">{{ formatLicenseDate(lic.issuedAt) }}</td>
-            </tr>
-            <tr>
-              <td class="column-200">Expires</td>
-              <td class="column-auto">{{ formatLicenseDate(lic.expires) }}</td>
-            </tr>
-            <tr>
-              <td class="column-200">Verified</td>
-              <td class="column-auto">{{ lic.verified ? 'Yes' : 'No' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-    } @else {
-      <section class="section">
-        <h3 class="section-title">License</h3>
-        <p class="free-license">
-          Free license — Chrome extension features are limited.
-        </p>
-      </section>
-    }
+      @if (license(); as lic) {
+        <section class="info-card">
+          <h3 class="card-title">License</h3>
+          <dl class="card-list">
+            <div class="card-row">
+              <dt class="card-label">Organization</dt>
+              <dd class="card-value">{{ lic.organization }}</dd>
+            </div>
+            <div class="card-row">
+              <dt class="card-label">Domain</dt>
+              <dd class="card-value">{{ lic.domain }}</dd>
+            </div>
+            <div class="card-row">
+              <dt class="card-label">Tier</dt>
+              <dd class="card-value">{{ lic.licenseType }}</dd>
+            </div>
+            <div class="card-row">
+              <dt class="card-label">Issued</dt>
+              <dd class="card-value">{{ formatLicenseDate(lic.issuedAt) }}</dd>
+            </div>
+            <div class="card-row">
+              <dt class="card-label">Expires</dt>
+              <dd class="card-value">{{ formatLicenseDate(lic.expires) }}</dd>
+            </div>
+            <div class="card-row">
+              <dt class="card-label">Verified</dt>
+              <dd class="card-value">{{ lic.verified ? 'Yes' : 'No' }}</dd>
+            </div>
+          </dl>
+        </section>
+      } @else {
+        <section class="info-card">
+          <h3 class="card-title">License</h3>
+          <p class="free-license">
+            Free license — Chrome extension features are limited.
+          </p>
+        </section>
+      }
+    </div>
   </section>
 
   @if (selectedCell(); as cell) {

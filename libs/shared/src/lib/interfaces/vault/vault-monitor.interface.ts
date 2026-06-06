@@ -2,6 +2,7 @@ import type { InsightConfig } from '../../config/insight.config';
 import type { ControllerDecisionShape } from '../../shapes/controller/controller-decision.shape';
 import type { VaultErrorShape } from '../../shapes/vault-error.shape';
 import type { ControllerVote } from '../../types/controller/controller-vote.type';
+import type { PipelineStage } from '../../types/pipeline/pipeline-stage.type';
 import type { VaultMonitorContext } from '../../types/vault-monitor-context.type';
 
 /**
@@ -1004,6 +1005,30 @@ export interface VaultMonitorContract {
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>,
     error: unknown
+  ): void;
+
+  /* ------------------------------------------------------------------ */
+  /* Pipeline candidate (State Diff View)                                */
+  /* ------------------------------------------------------------------ */
+
+  /**
+   * Emits a pipeline candidate capturing the in-flight state value
+   * after a pipeline stage completes. These events are used exclusively
+   * by the State Diff View in DevTools and are not displayed in the
+   * standard trace detail timeline.
+   *
+   * @param cell - The FeatureCell key.
+   * @param behaviorKey - The behavior key.
+   * @param ctx - The monitor context for this operation.
+   * @param stage - The pipeline stage that just completed.
+   * @param value - The in-flight pipeline value after the stage.
+   */
+  pipelineCandidate<T>(
+    cell: string,
+    behaviorKey: string,
+    ctx: Readonly<VaultMonitorContext<T>>,
+    stage: PipelineStage,
+    value: T | undefined
   ): void;
 
   /* ------------------------------------------------------------------ */

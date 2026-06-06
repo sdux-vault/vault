@@ -6,10 +6,12 @@ import {
   DEVTOOLS_LOGGING_KEY_CONSTANT,
   EventBoundaryTypes,
   EventShape,
-  EventTypes
+  EventTypes,
+  PipelineStage
 } from '@sdux-vault/shared';
 import { filter } from 'rxjs';
 import type {
+  CandidateSnapshotShape,
   CellAggregateShape,
   StageMetricShape,
   TraceExecutionShape,
@@ -466,5 +468,31 @@ export class DevtoolsAggregateService {
       clearTimeout(timer);
       this.orphanTimers.delete(traceId);
     }
+  }
+
+  /**
+   * Extracts candidate snapshots from a trace execution for the State Diff View.
+   *
+   * Filters events to pipeline candidate boundaries and maps each to a
+   * CandidateSnapshotShape with the stage label, value, and sequence index.
+   *
+   * @param trace - The trace execution to extract candidates from.
+   * @returns Ordered array of candidate snapshots.
+   */
+  extractCandidates(trace: TraceExecutionShape): CandidateSnapshotShape[] {
+    return trace.events
+      .filter(
+        (event) =>
+          event.type === EventTypes.Pipeline &&
+          event.boundary === EventBoundaryTypes.Candidate
+      )
+      .map((event, index) => ({
+        stage: event.name.split(':').pop() as PipelineStage,
+        eventId: event.id,
+        behaviorKey: event.behaviorKey,
+        timestamp: event.timestamp,
+        sequenceIndex: index,
+        value: event.candidate
+      }));
   }
 }

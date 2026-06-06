@@ -1,0 +1,188 @@
+@if (isLicensed()) {
+  <div class="state-diff-page">
+    <!-- Header -->
+    <header class="header">
+      <div class="title">
+        <h2>State Diff View</h2>
+        <mat-select
+          class="cell-filter"
+          [value]="selectedCell()"
+          (selectionChange)="selectCell($any($event.value))"
+          aria-label="Filter by cell">
+          <mat-option value="all">All Cells</mat-option>
+          @for (cell of cellKeys(); track cell) {
+            <mat-option [value]="cell">{{ cell }}</mat-option>
+          }
+        </mat-select>
+        @if (filteredTraces().length > 0) {
+          <mat-select
+            class="cell-filter trace-filter"
+            [value]="selectedTraceId()"
+            (selectionChange)="selectTrace($any($event.value))"
+            placeholder="Select a trace..."
+            panelWidth="500px"
+            aria-label="Select trace">
+            @for (trace of filteredTraces(); track trace.traceId) {
+              <mat-option [value]="trace.traceId">
+                <span class="trace-option">
+                  <span class="trace-cell">{{ trace.cellKey }}</span>
+                  &nbsp;
+                  <span class="trace-label-tag">{{
+                    traceLabels().get(trace.traceId)
+                  }}</span>
+                  &nbsp;
+                  <span class="trace-id">{{ trace.traceId.slice(0, 8) }}</span>
+                </span>
+              </mat-option>
+            }
+          </mat-select>
+        }
+      </div>
+      <div class="meta">
+        <sdux-devtools-reset-button
+          (click)="selectCell('all')"></sdux-devtools-reset-button>
+      </div>
+    </header>
+
+    @if (filteredTraces().length === 0) {
+      <section class="empty-state">
+        <p>
+          No traces available. Trigger some pipeline activity or load a dump
+          file.
+        </p>
+      </section>
+    }
+
+    <!-- Trace Detail + Diff -->
+    @if (selectedTrace(); as trace) {
+      <section class="trace-banner">
+        <span class="trace-banner-row">
+          <span class="trace-label">Trace:</span>
+          <span class="trace-cell-key">{{ trace.cellKey }}</span>
+        </span>
+        <span class="trace-banner-row">
+          <span class="trace-short-id">{{ trace.traceId.slice(0, 8) }}</span>
+          <span [class]="'trace-status-badge ' + statusClass(trace)">
+            {{ statusLabel(trace) }}
+          </span>
+          <span class="trace-duration-badge">
+            {{ trace.metrics.duration.toFixed(1) }}ms
+          </span>
+        </span>
+      </section>
+
+      @if (candidates().length >= 2) {
+        <!-- Pair Navigation -->
+        <nav class="pair-nav">
+          <button
+            type="button"
+            class="nav-btn"
+            [disabled]="!hasPrevious()"
+            (click)="previousPair()"
+            aria-label="Previous pair">
+            ← Previous Pair
+          </button>
+          <span class="pair-counter">
+            Pair {{ beforeIndex() + 1 }} of {{ totalPairs() }}
+          </span>
+          <button
+            type="button"
+            class="nav-btn"
+            [disabled]="!hasNext()"
+            (click)="nextPair()"
+            aria-label="Next pair">
+            Next Pair →
+          </button>
+        </nav>
+
+        <!-- Diff Panel + Snapshot Table -->
+        <section class="diff-row">
+          <section class="diff-panel">
+            <div class="diff-column">
+              <div class="diff-header">
+                <span class="diff-header-title"
+                  >BEFORE: {{ beforeSnapshot()?.stage }}</span
+                >
+                <span class="diff-header-meta">
+                  seq #{{ (beforeSnapshot()?.sequenceIndex ?? 0) + 1 }}
+                  {{ beforeSnapshot() ? relativeTime(beforeSnapshot()!) : '' }}
+                </span>
+              </div>
+              <pre
+                class="diff-content">@for (line of beforeLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
+</span>}</pre>
+            </div>
+            <div class="diff-column">
+              <div class="diff-header">
+                <span class="diff-header-title"
+                  >AFTER: {{ afterSnapshot()?.stage }}</span
+                >
+                <span class="diff-header-meta">
+                  seq #{{ (afterSnapshot()?.sequenceIndex ?? 0) + 1 }}
+                  {{ afterSnapshot() ? relativeTime(afterSnapshot()!) : '' }}
+                </span>
+              </div>
+              <pre
+                class="diff-content">@for (line of afterLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
+</span>}</pre>
+            </div>
+          </section>
+
+          <!-- Snapshot Table -->
+          <section class="snapshot-table">
+            <div class="snapshot-table-header">
+              All State Snapshots in Trace ({{ candidates().length }})
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th class="col-indicator">#</th>
+                  <th class="col-event">Stage</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (snap of candidates(); track snap.eventId) {
+                  <tr
+                    class="snapshot-row"
+                    [class.selected]="
+                      snap.sequenceIndex === beforeIndex() ||
+                      snap.sequenceIndex === afterIndex()
+                    "
+                    (click)="selectSnapshot(snap.sequenceIndex)"
+                    matTooltip="Click to compare">
+                    <td class="col-indicator">
+                      @if (
+                        snap.sequenceIndex === beforeIndex() ||
+                        snap.sequenceIndex === afterIndex()
+                      ) {
+                        <span class="indicator">●</span>
+                      }
+                      {{ snap.sequenceIndex + 1 }}
+                    </td>
+                    <td class="col-event">{{ snap.stage }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+            <div class="snapshot-table-footer">
+              <span class="indicator">●</span> = currently selected pair
+              <span class="footer-hint">Click any row to compare</span>
+            </div>
+          </section>
+        </section>
+      } @else {
+        <section class="empty-state">
+          <p>
+            This trace has fewer than 2 candidate snapshots. Pipeline candidate
+            events are required for diff comparison.
+          </p>
+        </section>
+      }
+    }
+  </div>
+} @else {
+  <sdux-upsell-notice
+    headline="Unlock pipeline state diff analysis with a"
+    body="Compare before/after snapshots across pipeline stages to see exactly how state transforms through each step of the pipeline.">
+  </sdux-upsell-notice>
+}

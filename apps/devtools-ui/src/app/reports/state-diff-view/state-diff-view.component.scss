@@ -1,0 +1,500 @@
+@use 'global' as global;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.state-diff-page {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+  padding: global.$spacing-md;
+}
+
+/* ─── HEADER ─── */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-md;
+
+    h2 {
+      margin: 0;
+      font-size: global.$font-size-lg;
+      font-weight: global.$font-weight-bold;
+      color: var(--sdux-text-primary);
+    }
+
+    .cell-filter {
+      width: 250px;
+    }
+
+    .trace-filter {
+      width: 350px;
+    }
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+  }
+
+  @media (max-width: global.$breakpoint-md) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: global.$spacing-sm;
+
+    .title {
+      flex-wrap: wrap;
+      width: 100%;
+
+      .cell-filter,
+      .trace-filter {
+        width: 350px;
+      }
+    }
+
+    .meta {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}
+
+/* ─── TRACE SELECTOR (inline in header) ─── */
+
+.trace-option {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-sm;
+  font-size: global.$font-size-sm;
+}
+
+.trace-cell {
+  font-weight: global.$font-weight-medium;
+  color: global.$sdux-primary-light;
+}
+
+.trace-label-tag {
+  font-family: global.$sdux-code-font;
+  font-size: global.$font-size-xs;
+  font-weight: global.$font-weight-bold;
+  color: global.$sdux-primary-base;
+}
+
+.trace-id {
+  font-family: global.$sdux-code-font;
+  color: var(--sdux-text-secondary);
+}
+
+.trace-duration {
+  margin-left: auto;
+  font-family: global.$sdux-code-font;
+  color: var(--sdux-text-secondary);
+  font-size: global.$font-size-xs;
+}
+
+/* ─── TRACE BANNER ─── */
+
+.trace-banner {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-sm;
+  padding: global.$spacing-sm global.$spacing-md;
+  background: global.$sdux-surface-lightish;
+  border-radius: global.$border-radius-sm;
+  border-left: 3px solid global.$sdux-primary-base;
+
+  .trace-banner-row {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+  }
+
+  .trace-label {
+    font-weight: global.$font-weight-bold;
+    color: var(--sdux-text-primary);
+  }
+
+  .trace-cell-key {
+    font-weight: global.$font-weight-medium;
+    color: global.$sdux-primary-light;
+  }
+
+  .trace-short-id {
+    font-family: global.$sdux-code-font;
+    color: var(--sdux-text-secondary);
+    font-size: global.$font-size-sm;
+  }
+
+  .trace-status-badge {
+    font-weight: global.$font-weight-bold;
+    font-size: global.$font-size-sm;
+  }
+
+  .trace-duration-badge {
+    margin-left: auto;
+    font-family: global.$sdux-code-font;
+    color: var(--sdux-text-secondary);
+    font-size: global.$font-size-sm;
+  }
+
+  @media (max-width: global.$breakpoint-md) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .trace-banner-row:last-child {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .trace-duration-badge {
+      margin-left: 0;
+    }
+  }
+}
+
+/* ─── PAIR SELECTOR CARDS ─── */
+
+.pair-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: global.$spacing-md;
+
+  .pair-card {
+    padding: global.$spacing-sm global.$spacing-md;
+    border-radius: global.$border-radius-sm;
+    background: global.$sdux-surface-mid;
+    border: 1px solid global.$sdux-surface-outline;
+
+    .pair-card-header {
+      font-size: global.$font-size-xs;
+      font-weight: global.$font-weight-bold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: global.$spacing-xs;
+    }
+
+    .pair-card-stage {
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-sm;
+      color: var(--sdux-text-primary);
+      font-weight: global.$font-weight-medium;
+    }
+
+    .pair-card-behavior {
+      font-size: global.$font-size-xs;
+      color: var(--sdux-text-secondary);
+    }
+
+    .pair-card-meta {
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-xxs;
+      color: var(--sdux-text-secondary);
+      margin-top: global.$spacing-xs;
+    }
+  }
+
+  .pair-before {
+    border-left: 3px solid global.$sdux-warn-base;
+
+    .pair-card-header {
+      color: global.$sdux-warn-base;
+    }
+  }
+
+  .pair-after {
+    border-left: 3px solid global.$sdux-success-base;
+
+    .pair-card-header {
+      color: global.$sdux-success-base;
+    }
+  }
+}
+
+/* ─── PAIR NAVIGATION ─── */
+
+.pair-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: global.$spacing-md;
+
+  .nav-btn {
+    background: global.$sdux-surface-mid;
+    border: 1px solid global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+    color: global.$sdux-primary-light;
+    padding: global.$spacing-xs global.$spacing-md;
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-medium;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    &:hover:not(:disabled) {
+      background: global.$sdux-surface-lightish;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+
+  .pair-counter {
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-secondary);
+    font-family: global.$sdux-code-font;
+  }
+}
+
+/* ─── DIFF ROW (diff panel + snapshot table) ─── */
+
+.diff-row {
+  display: flex;
+  gap: global.$spacing-md;
+
+  .diff-panel {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .snapshot-table {
+    width: 250px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: global.$breakpoint-md) {
+    flex-direction: column;
+
+    .snapshot-table {
+      width: 100%;
+    }
+  }
+}
+
+/* ─── DIFF PANEL ─── */
+
+.diff-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid global.$sdux-surface-outline;
+  border-radius: global.$border-radius-sm;
+  overflow: hidden;
+
+  .diff-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    &:first-child {
+      border-right: 1px solid global.$sdux-surface-outline;
+    }
+  }
+
+  .diff-header {
+    display: flex;
+    flex-direction: column;
+    padding: global.$spacing-xs global.$spacing-md;
+    background: global.$sdux-surface-mid;
+    border-bottom: 1px solid global.$sdux-surface-outline;
+
+    .diff-header-title {
+      font-size: global.$font-size-xs;
+      font-weight: global.$font-weight-bold;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--sdux-text-primary);
+    }
+
+    .diff-header-meta {
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-xxs;
+      color: var(--sdux-text-secondary);
+    }
+  }
+
+  .diff-content {
+    margin: 0;
+    padding: global.$spacing-md;
+    background: global.$sdux-surface-darker;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    line-height: 1.6;
+    color: var(--sdux-text-primary);
+    overflow: auto;
+    white-space: pre;
+    flex: 1;
+    min-height: 120px;
+    max-height: 500px;
+
+    .diff-line-added {
+      display: block;
+      background: global.$sdux-success-dark;
+      color: global.$sdux-text-white;
+    }
+
+    .diff-line-removed {
+      display: block;
+      background: global.$sdux-accent-dark;
+      color: global.$sdux-text-white;
+    }
+  }
+}
+
+/* ─── SNAPSHOT TABLE ─── */
+
+.snapshot-table {
+  border: 1px solid global.$sdux-surface-outline;
+  border-radius: global.$border-radius-sm;
+  overflow: hidden;
+
+  .snapshot-table-header {
+    padding: global.$spacing-sm global.$spacing-md;
+    background: global.$sdux-surface-mid;
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-bold;
+    color: var(--sdux-text-primary);
+    border-bottom: 1px solid global.$sdux-surface-outline;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    tr {
+      background: global.$sdux-surface-lightish;
+    }
+
+    th {
+      padding: global.$spacing-xs global.$spacing-sm;
+      text-align: left;
+      font-size: global.$font-size-xs;
+      font-weight: global.$font-weight-bold;
+      color: var(--sdux-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid global.$sdux-surface-outline;
+    }
+  }
+
+  tbody {
+    .snapshot-row {
+      cursor: pointer;
+      transition: background-color 0.12s ease;
+
+      &:hover {
+        background: global.$sdux-hover-background-color;
+      }
+
+      &.selected {
+        background: global.$sdux-surface-active;
+        border-left: 2px solid global.$sdux-primary-base;
+      }
+
+      td {
+        padding: global.$spacing-xs global.$spacing-sm;
+        font-size: global.$font-size-sm;
+        color: var(--sdux-text-primary);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+    }
+
+    .col-indicator {
+      width: 50px;
+      text-align: center;
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-xs;
+    }
+
+    .col-event {
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-xs;
+    }
+
+    .col-behavior {
+      color: var(--sdux-text-secondary);
+      font-size: global.$font-size-xs;
+    }
+
+    .col-seq {
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-xs;
+      color: var(--sdux-text-secondary);
+      text-align: right;
+    }
+  }
+
+  .indicator {
+    color: global.$sdux-primary-base;
+    font-size: global.$font-size-sm;
+    margin-right: global.$spacing-xxs;
+  }
+
+  .snapshot-table-footer {
+    padding: global.$spacing-xs global.$spacing-md;
+    font-size: global.$font-size-xxs;
+    color: var(--sdux-text-secondary);
+    background: global.$sdux-surface-mid;
+    border-top: 1px solid global.$sdux-surface-outline;
+
+    .indicator {
+      color: global.$sdux-primary-base;
+    }
+
+    .footer-hint {
+      margin-left: global.$spacing-md;
+      font-style: italic;
+    }
+  }
+}
+
+/* ─── STATUS CLASSES ─── */
+
+.status-success {
+  color: global.$sdux-success-base;
+}
+
+.status-error {
+  color: global.$sdux-accent-base;
+}
+
+.status-denied {
+  color: global.$sdux-warn-base;
+}
+
+.status-orphaned {
+  color: global.$sdux-warn-dark;
+}
+
+.status-aborted {
+  color: var(--sdux-text-secondary);
+}
+
+.trace-status {
+  font-weight: global.$font-weight-bold;
+  font-size: global.$font-size-xs;
+}
+
+/* ─── EMPTY STATE ─── */
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: global.$spacing-xl;
+  color: var(--sdux-text-secondary);
+  font-size: global.$font-size-sm;
+  font-style: italic;
+}

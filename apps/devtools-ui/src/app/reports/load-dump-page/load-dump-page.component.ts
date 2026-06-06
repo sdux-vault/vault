@@ -9,6 +9,8 @@ import { EventShape } from '@sdux-vault/shared';
 import { ConfirmDialogService } from '../../services/confirm-dialog/confirm-dialog.service';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
+import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
 
 /**
  * Page component for loading an exported debug dump file.
@@ -20,6 +22,7 @@ import { DevtoolsLoggingService } from '../../services/devtools-logging.service'
 @Component({
   selector: 'sdux-load-dump-page',
   standalone: true,
+  imports: [UpsellNoticeComponent],
   templateUrl: './load-dump-page.component.html',
   styleUrl: './load-dump-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -30,6 +33,12 @@ export class LoadDumpPageComponent {
 
   /** Logging service that stores raw pipeline event history. */
   #logging = inject(DevtoolsLoggingService);
+
+  /** Registry service providing license state. */
+  #registry = inject(DevtoolsRegistryService);
+
+  /** Whether the current license enables pro/enterprise features. */
+  readonly isLicensed = this.#registry.isLicensed;
 
   /** Confirmation dialog service for destructive action prompts. */
   #confirmDialog = inject(ConfirmDialogService);

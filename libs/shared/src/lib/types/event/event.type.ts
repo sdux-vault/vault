@@ -3,6 +3,7 @@ export const EventTypes = {
   Conductor: 'conductor',
   Controller: 'controller',
   Lifecycle: 'lifecycle',
+  Pipeline: 'pipeline',
   Stage: 'stage',
   Unknown: 'unknown'
 } as const;

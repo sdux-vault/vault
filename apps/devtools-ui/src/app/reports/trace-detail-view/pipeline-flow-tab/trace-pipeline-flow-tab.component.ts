@@ -8,6 +8,7 @@ import {
 import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
 import type { TraceExecutionShape } from '../../../shapes/trace';
 import { PipelineFlowComponent } from '../../../shared/pipeline-flow/pipeline-flow.component';
+import { UpsellNoticeComponent } from '../../../shared/upsell-notice/upsell-notice.component';
 
 /**
  * Pipeline Flow tab wrapper component.
@@ -20,7 +21,7 @@ import { PipelineFlowComponent } from '../../../shared/pipeline-flow/pipeline-fl
 @Component({
   selector: 'sdux-trace-pipeline-flow-tab',
   standalone: true,
-  imports: [PipelineFlowComponent],
+  imports: [PipelineFlowComponent, UpsellNoticeComponent],
   templateUrl: './trace-pipeline-flow-tab.component.html',
   styleUrl: './trace-pipeline-flow-tab.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

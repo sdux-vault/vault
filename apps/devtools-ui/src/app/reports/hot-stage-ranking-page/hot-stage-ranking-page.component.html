@@ -1,24 +1,31 @@
-<div class="hot-stage-ranking-page">
-  <header class="header">
-    <div class="title">
-      <h2>Hot Stage Ranking</h2>
-      <mat-select
-        class="cell-filter"
-        [value]="selectedCell()"
-        (selectionChange)="selectCell($any($event.value))"
-        aria-label="Filter by cell">
-        <mat-option value="all">All Cells</mat-option>
-        @for (cell of cellKeys(); track cell) {
-          <mat-option [value]="cell">{{ cell }}</mat-option>
-        }
-      </mat-select>
-    </div>
-    <div class="meta">
-      <sdux-devtools-reset-button
-        (click)="selectCell('all')"></sdux-devtools-reset-button>
-    </div>
-  </header>
+@if (isLicensed()) {
+  <div class="hot-stage-ranking-page">
+    <header class="header">
+      <div class="title">
+        <h2>Hot Stage Ranking</h2>
+        <mat-select
+          class="cell-filter"
+          [value]="selectedCell()"
+          (selectionChange)="selectCell($any($event.value))"
+          aria-label="Filter by cell">
+          <mat-option value="all">All Cells</mat-option>
+          @for (cell of cellKeys(); track cell) {
+            <mat-option [value]="cell">{{ cell }}</mat-option>
+          }
+        </mat-select>
+      </div>
+      <div class="meta">
+        <sdux-devtools-reset-button
+          (click)="selectCell('all')"></sdux-devtools-reset-button>
+      </div>
+    </header>
 
-  <sdux-trace-hot-stage-ranking [traces]="filteredTraces()">
-  </sdux-trace-hot-stage-ranking>
-</div>
+    <sdux-trace-hot-stage-ranking [traces]="filteredTraces()">
+    </sdux-trace-hot-stage-ranking>
+  </div>
+} @else {
+  <sdux-upsell-notice
+    headline="Unlock aggregated stage performance analysis with a"
+    body="Identify systemic bottlenecks across all traces and see which pipeline stages consume the most total processing time.">
+  </sdux-upsell-notice>
+}

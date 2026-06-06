@@ -9,6 +9,7 @@ export type { ControllerFinalizeMessageShape } from './controller/controller-fin
 export type { ControllerMessageShape } from './controller/controller-message.shape';
 export type { ControllerMetaShape } from './controller/controller-meta.shape';
 export type { ControllerSuccessMessageShape } from './controller/controller-success-message.shape';
+export type { EventCandidateShape } from './event/event-candidate.shape';
 export type { EventShape } from './event/event.shape';
 export type { FeatureCellBaseShape } from './feature-cell/feature-cell.base.shape';
 export type { HttpResourceRefShape } from './http-resource-ref-shape.shape';

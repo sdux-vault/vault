@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { ConfirmDialogService } from '../../services/confirm-dialog/confirm-dialog.service';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
+import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { LoadDumpPageComponent } from './load-dump-page.component';
 
 describe('Component: LoadDumpPage', () => {
@@ -53,6 +54,10 @@ describe('Component: LoadDumpPage', () => {
         {
           provide: ConfirmDialogService,
           useValue: mockConfirmDialog
+        },
+        {
+          provide: DevtoolsRegistryService,
+          useValue: { isLicensed: signal(true) }
         }
       ]
     }).compileComponents();

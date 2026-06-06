@@ -5,13 +5,13 @@ import {
   signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DevtoolsRegistryService } from '../services/registry/devtools-registry.service';
-import { VaultRegistrationSerializedShape } from '../shapes/vault-registration-serialized.shape';
+import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
 import { RegistryDetailComponent } from './registry-detail/registry-detail.component';
 
 /**
- * Configuration component displaying Vault runtime versions
- * and the FeatureCell registry within the DevTools UI.
+ * Vault Overview component displaying Vault runtime versions,
+ * the FeatureCell registry, and license details within the DevTools UI.
  *
  * On construction the component delegates registry, version, and license
  * data retrieval to {@link DevtoolsRegistryService}, which reads the local
@@ -24,14 +24,14 @@ import { RegistryDetailComponent } from './registry-detail/registry-detail.compo
  * by the {@link DevtoolsRegistryService} signals.
  */
 @Component({
-  selector: 'sdux-devtools-configuration',
+  selector: 'sdux-vault-overview',
   standalone: true,
   imports: [MatTooltipModule, RegistryDetailComponent],
-  templateUrl: './configuration.component.html',
-  styleUrl: './configuration.component.scss',
+  templateUrl: './vault-overview.component.html',
+  styleUrl: './vault-overview.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ConfigurationComponent {
+export class VaultOverviewComponent {
   /** Registry service providing Vault configuration data. */
   private readonly registryService = inject(DevtoolsRegistryService);
 

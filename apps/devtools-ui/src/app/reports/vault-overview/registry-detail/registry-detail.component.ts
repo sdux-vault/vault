@@ -8,9 +8,9 @@ import {
   signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import { DetailPaneComponent } from '../../shared/detail-pane/detail-pane.component';
-import { PipelineFlowComponent } from '../../shared/pipeline-flow/pipeline-flow.component';
+import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
+import { DetailPaneComponent } from '../../../shared/detail-pane/detail-pane.component';
+import { PipelineFlowComponent } from '../../../shared/pipeline-flow/pipeline-flow.component';
 
 /**
  * Detail panel displaying the pipeline flow and the behaviors and

@@ -30,6 +30,7 @@
       "resources": [
         "bridge/bridge-inject.js",
         "assets/brand/brand-landscape-dark.svg",
+        "assets/brand/sdux-vault-landscape-dark.png",
         "assets/brand/vault-icon.png",
         "assets/brand/help-icon.png"
       ],

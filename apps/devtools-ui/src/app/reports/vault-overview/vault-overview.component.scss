@@ -8,14 +8,14 @@
   overflow: hidden;
 }
 
-.configuration-layout {
+.vault-overview-layout {
   display: flex;
   flex-direction: row;
   flex: 1;
   min-height: 0;
   overflow: hidden;
 
-  .configuration-content {
+  .vault-overview-content {
     flex: 1;
     min-width: 0;
     overflow: auto;
@@ -86,6 +86,66 @@
     .free-license {
       @include global.sdux-text(global.$sdux-text-secondary);
       font-size: global.$font-size-sm;
+    }
+
+    .info-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: global.$spacing-md;
+
+      @media (max-width: global.$breakpoint-md) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .info-card {
+      background: global.$sdux-surface-mid;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-md;
+      padding: global.$spacing-md;
+      display: flex;
+      flex-direction: column;
+
+      .card-title {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-size: global.$font-size-md;
+        font-weight: global.$font-weight-bold;
+        margin: 0 0 global.$spacing-sm;
+        padding-bottom: global.$spacing-xs;
+        border-bottom: 2px solid global.$sdux-primary-base;
+      }
+
+      .card-list {
+        margin: 0;
+        padding: 0;
+      }
+
+      .card-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: global.$spacing-xs 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      .card-label {
+        @include global.sdux-text(global.$sdux-text-secondary);
+        font-size: global.$font-size-sm;
+        font-weight: global.$font-weight-medium;
+        margin: 0;
+      }
+
+      .card-value {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-family: global.$sdux-code-font;
+        font-size: global.$font-size-sm;
+        margin: 0;
+        text-align: right;
+      }
     }
   }
 

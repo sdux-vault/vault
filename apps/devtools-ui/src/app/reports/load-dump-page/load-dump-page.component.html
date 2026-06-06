@@ -1,59 +1,66 @@
-<div class="load-dump-page">
-  <header class="header">
-    <h2>Load Debug Dump</h2>
-  </header>
+@if (isLicensed()) {
+  <div class="load-dump-page">
+    <header class="header">
+      <h2>Load Debug Dump</h2>
+    </header>
 
-  <section class="upload-section">
-    <p class="description">
-      Upload a <code>.json</code> debug dump file exported from SDuX Vault
-      DevTools. The events will be replayed through the trace pipeline,
-      populating all views with the dump data.
-    </p>
+    <section class="upload-section">
+      <p class="description">
+        Upload a <code>.json</code> debug dump file exported from SDuX Vault
+        DevTools. The events will be replayed through the trace pipeline,
+        populating all views with the dump data.
+      </p>
 
-    <div class="features">
-      <p class="features-heading">After loading, you will have access to:</p>
-      <ul>
-        <li>Full trace timeline with stage-by-stage execution breakdown</li>
-        <li>Controller voting decisions and arbitration outcomes</li>
-        <li>Behavior execution order and duration metrics</li>
-        <li>Pipeline flow visualization for each trace</li>
-        <li>AI-assisted debugging reports from execution data</li>
-        <li>Hot stage ranking analysis across all loaded traces</li>
-      </ul>
-    </div>
-
-    <label class="file-label">
-      <input
-        type="file"
-        accept=".json"
-        class="file-input"
-        (change)="onFileSelected($event)" />
-      <span class="file-button">Choose Dump File</span>
-    </label>
-  </section>
-
-  @if (errorMessage()) {
-    <div class="error-message">{{ errorMessage() }}</div>
-  }
-
-  @if (loadedFileName()) {
-    <section class="success-section">
-      <div class="success-message">
-        Loaded <strong>{{ loadedEventCount() }}</strong> events from
-        <strong>{{ loadedFileName() }}</strong>
+      <div class="features">
+        <p class="features-heading">After loading, you will have access to:</p>
+        <ul>
+          <li>Full trace timeline with stage-by-stage execution breakdown</li>
+          <li>Controller voting decisions and arbitration outcomes</li>
+          <li>Behavior execution order and duration metrics</li>
+          <li>Pipeline flow visualization for each trace</li>
+          <li>AI-assisted debugging reports from execution data</li>
+          <li>Hot stage ranking analysis across all loaded traces</li>
+        </ul>
       </div>
-      <button
-        type="button"
-        class="navigate-button"
-        (click)="navigateToTraceDetail()">
-        View in Trace Detail →
-      </button>
+
+      <label class="file-label">
+        <input
+          type="file"
+          accept=".json"
+          class="file-input"
+          (change)="onFileSelected($event)" />
+        <span class="file-button">Choose Dump File</span>
+      </label>
     </section>
-  } @else {
-    <div class="warning-notice">
-      Loading a dump file will <strong>replace</strong> all current traces and
-      events.
-      <p>All data from the current session will be lost.</p>
-    </div>
-  }
-</div>
+
+    @if (errorMessage()) {
+      <div class="error-message">{{ errorMessage() }}</div>
+    }
+
+    @if (loadedFileName()) {
+      <section class="success-section">
+        <div class="success-message">
+          Loaded <strong>{{ loadedEventCount() }}</strong> events from
+          <strong>{{ loadedFileName() }}</strong>
+        </div>
+        <button
+          type="button"
+          class="navigate-button"
+          (click)="navigateToTraceDetail()">
+          View in Trace Detail →
+        </button>
+      </section>
+    } @else {
+      <div class="warning-notice">
+        Loading a dump file will <strong>replace</strong> all current traces and
+        events.
+        <p>All data from the current session will be lost.</p>
+      </div>
+    }
+  </div>
+} @else {
+  <sdux-upsell-notice
+    headline="Unlock debug dump import with a"
+    body="Load exported debug dump files to replay traces and analyze pipeline execution offline with full DevTools reporting.">
+  </sdux-upsell-notice>
+}

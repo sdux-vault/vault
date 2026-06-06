@@ -156,15 +156,3 @@
   color: var(--sdux-text-secondary);
   font-size: global.$font-size-sm;
 }
-
-.upsell-notice {
-  padding: global.$spacing-md;
-  text-align: center;
-
-  .upsell-body {
-    margin: 0;
-    font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
-    line-height: 1.5;
-  }
-}

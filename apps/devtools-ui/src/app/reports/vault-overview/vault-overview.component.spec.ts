@@ -4,11 +4,11 @@ import {
   WritableSignal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InsightService } from '../services/insight/insight.service';
-import { DevtoolsRegistryService } from '../services/registry/devtools-registry.service';
-import { VaultConfigMessageShape } from '../shapes/vault-config-message.shape';
-import { VaultRegistrationSerializedShape } from '../shapes/vault-registration-serialized.shape';
-import { ConfigurationComponent } from './configuration.component';
+import { InsightService } from '../../services/insight/insight.service';
+import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { VaultConfigMessageShape } from '../../shapes/vault-config-message.shape';
+import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
+import { VaultOverviewComponent } from './vault-overview.component';
 
 const mockCell: VaultRegistrationSerializedShape = {
   key: 'alpha',
@@ -51,16 +51,16 @@ class MockInsightService {
   refreshLocalConfig = jasmine.createSpy('refreshLocalConfig');
 }
 
-describe('Component: Configuration', () => {
-  let fixture: ComponentFixture<ConfigurationComponent>;
-  let component: ConfigurationComponent;
+describe('Component: VaultOverview', () => {
+  let fixture: ComponentFixture<VaultOverviewComponent>;
+  let component: VaultOverviewComponent;
   let mockService: MockInsightService;
 
   beforeEach(async () => {
     mockService = new MockInsightService();
 
     await TestBed.configureTestingModule({
-      imports: [ConfigurationComponent],
+      imports: [VaultOverviewComponent],
       providers: [
         provideZonelessChangeDetection(),
         { provide: InsightService, useValue: mockService },
@@ -68,7 +68,7 @@ describe('Component: Configuration', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ConfigurationComponent);
+    fixture = TestBed.createComponent(VaultOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

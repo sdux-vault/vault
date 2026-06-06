@@ -33,6 +33,8 @@ export type { LogLevelType } from './logging/log-level.type';
 export { OperationTypes } from './operation.type';
 export type { OperationType } from './operation.type';
 export type { PipelinePersistValue } from './pipeline/pipeline-persist-value.type';
+export { PipelineStages } from './pipeline/pipeline-stage.type';
+export type { PipelineStage } from './pipeline/pipeline-stage.type';
 export type { PipelineUpstreamValue } from './pipeline/pipeline-upstream-value.type';
 export type { PipelineValue } from './pipeline/pipeline-value.type';
 export { ResolveTypes } from './resolve.type';
