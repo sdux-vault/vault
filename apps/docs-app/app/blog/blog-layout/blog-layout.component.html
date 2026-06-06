@@ -1,21 +1,23 @@
 <div class="docs-container">
-  <div class="blog-back-link">
-    <a routerLink="/blog">← All Posts</a>
+  <div class="blog-top-bar">
+    <div class="blog-back-link">
+      <a routerLink="/blog">← All Posts</a>
+    </div>
+
+    <div class="blog-meta">
+      <span class="blog-date">{{ date() }}</span>
+      <span
+        class="blog-pillar"
+        [attr.aria-label]="pillarLabel()"
+        [matTooltip]="pillarLabel()"
+        >{{ pillar() }}</span
+      >
+      <span class="blog-reading-time">{{ readingTime() }} min read</span>
+    </div>
   </div>
 
   <div class="header">
     <h3>{{ title() }}</h3>
-  </div>
-
-  <div class="blog-meta">
-    <span class="blog-date">{{ date() }}</span>
-    <span
-      class="blog-pillar"
-      [attr.aria-label]="pillarLabel()"
-      [matTooltip]="pillarLabel()"
-      >{{ pillar() }}</span
-    >
-    <span class="blog-reading-time">{{ readingTime() }} min read</span>
   </div>
 
   <ng-content />
