@@ -190,6 +190,24 @@ export class DevtoolsAggregateService {
   }
 
   /**
+   * Loads events from an exported debug dump file.
+   *
+   * Clears existing traces, then replays each event through the
+   * standard buffering and commit pipeline so the UI renders
+   * dump data identically to live data.
+   *
+   * @param events - Array of EventShape records from a dump file.
+   */
+  loadDumpEvents(events: EventShape[]): void {
+    this.clearTraces();
+    for (const event of events) {
+      if (event.traceId) {
+        this.handleEvent(event);
+      }
+    }
+  }
+
+  /**
    * Routes an incoming event to the appropriate buffer and checks
    * for terminal conditions.
    *
