@@ -8,14 +8,16 @@ declare -A ENV_MAP=(
   ["2"]="stop"
   ["3"]="restart"
   ["4"]="status"
+  ["5"]="configtest"
   ["start"]="start"
   ["stop"]="stop"
   ["restart"]="restart"
   ["status"]="status"
+  ["configtest"]="configtest"
 )
 
 # Ordered keys for display
-ORDERED_KEYS=("1" "2" "3" "4")
+ORDERED_KEYS=("1" "2" "3" "4" "5")
 
 # Generate a dynamic list of allowed keys for validation message
 get_valid_options() {
@@ -52,8 +54,12 @@ if [ -z "$COMMAND" ]; then
 fi
 
 # Take Action 
-sudo /opt/bitnami/ctlscript.sh $COMMAND apache
-sleep 2
-sudo pkill -f "/opt/bitnami/scripts/apache/$COMMAND.sh"
-printf "\n\nRunning Apache Processes\n\n"
-ps ax | grep apache
+if [ "$COMMAND" = "configtest" ]; then
+  sudo /opt/bitnami/apache/bin/apachectl configtest
+else
+  sudo /opt/bitnami/ctlscript.sh $COMMAND apache
+  sleep 2
+  sudo pkill -f "/opt/bitnami/scripts/apache/$COMMAND.sh"
+  printf "\n\nRunning Apache Processes\n\n"
+  ps ax | grep apache
+fi
