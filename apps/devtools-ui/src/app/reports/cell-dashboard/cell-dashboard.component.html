@@ -1,5 +1,7 @@
-<div class="cell-dashboard">
-  <h2 class="dashboard-title">Cell Dashboard</h2>
+<div class="report-page">
+  <header class="header">
+    <h2>Cell Dashboard</h2>
+  </header>
 
   <div class="summary-cards">
     <div class="card">
@@ -21,9 +23,9 @@
       </span>
     </div>
     <div class="card">
-      <span class="card-label">Revote Rate</span>
-      <span class="card-value" [class.card-value-warn]="revoteRate() > 0">
-        {{ revoteRate().toFixed(1) }}%
+      <span class="card-label">Denied Rate</span>
+      <span class="card-value" [class.card-value-warn]="deniedRate() > 0">
+        {{ deniedRate().toFixed(1) }}%
       </span>
     </div>
     <div class="card">
@@ -33,50 +35,63 @@
   </div>
 
   @if (rows().length > 0) {
-    <table class="cell-table">
-      <thead>
-        <tr>
-          <th class="col-cell">Cell</th>
-          <th class="col-traces">Traces</th>
-          <th class="col-avg">Avg ms</th>
-          <th class="col-errors">Errors</th>
-          <th class="col-revotes">Revotes</th>
-          <th class="col-status">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (row of rows(); track row.cellKey) {
-          <tr class="cell-row" (click)="navigateToCell(row.cellKey)">
-            <td class="col-cell">{{ row.cellKey }}</td>
-            <td class="col-traces">{{ row.traceCount }}</td>
-            <td class="col-avg">{{ row.avgDuration.toFixed(1) }}</td>
-            <td class="col-errors" [class.cell-error]="row.errorCount > 0">
-              {{ row.errorCount }}
-            </td>
-            <td class="col-revotes" [class.cell-warn]="row.revoteCount > 0">
-              {{ row.revoteCount }}
-            </td>
-            <td class="col-status">
-              @switch (row.status) {
-                @case ('healthy') {
-                  <span class="status-healthy">✓</span>
-                }
-                @case ('warning') {
-                  <span class="status-warning">⚠</span>
-                }
-                @case ('error') {
-                  <span class="status-error">✗</span>
-                }
+    <div class="cell-cards">
+      @for (row of rows(); track row.cellKey) {
+        <div
+          class="cell-card"
+          [class.cell-card-error]="row.status === 'error'"
+          [class.cell-card-warning]="row.status === 'warning'">
+          <div class="cell-card-header">
+            <span class="cell-card-key" [matTooltip]="row.cellKey">{{
+              row.cellKey
+            }}</span>
+            @switch (row.status) {
+              @case ('healthy') {
+                <span class="status-healthy">✓</span>
               }
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-
-    <p class="cell-table-hint">Click a cell row to view its trace detail.</p>
+              @case ('warning') {
+                <span class="status-warning">⚠</span>
+              }
+              @case ('error') {
+                <span class="status-error">✗</span>
+              }
+            }
+          </div>
+          <div class="cell-card-body">
+            <div class="cell-card-stat">
+              <span class="cell-card-stat-value">{{ row.traceCount }}</span>
+              <span class="cell-card-stat-label">Traces</span>
+            </div>
+            <div class="cell-card-stat">
+              <span class="cell-card-stat-value">{{
+                row.avgDuration.toFixed(1)
+              }}</span>
+              <span class="cell-card-stat-label">Avg ms</span>
+            </div>
+            <div class="cell-card-stat">
+              <span
+                class="cell-card-stat-value"
+                [class.cell-error]="row.errorCount > 0"
+                >{{ row.errorCount }}</span
+              >
+              <span class="cell-card-stat-label">Errors</span>
+            </div>
+          </div>
+          <div class="cell-card-footer">
+            <button
+              type="button"
+              class="cell-card-view-btn"
+              (click)="navigateToCell(row.cellKey)"
+              matTooltip="View trace detail for this cell"
+              aria-label="View trace detail for {{ row.cellKey }}">
+              View Traces →
+            </button>
+          </div>
+        </div>
+      }
+    </div>
   } @else {
-    <p class="dashboard-empty">
+    <p class="empty-state">
       No cells detected yet. Cells appear after a decorated &#64;FeatureCell
       service is instantiated and traces complete.
     </p>

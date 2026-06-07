@@ -1,128 +1,197 @@
-<div class="vault-overview-layout">
-  <section class="vault-overview-content">
-    <h2 class="title">Vault Overview</h2>
+<div class="report-page">
+  <header class="header">
+    <h2>Vault Overview</h2>
+  </header>
 
+  <section class="vault-overview-content">
     <div class="info-cards">
-      <section class="info-card">
-        <h3 class="card-title">Package Versions</h3>
-        @if (versions().length) {
-          <dl class="card-list">
-            @for (entry of versions(); track entry[0]) {
-              <div class="card-row">
-                <dt class="card-label">{{ entry[0] }}</dt>
-                <dd class="card-value">{{ entry[1] }}</dd>
-              </div>
-            }
-          </dl>
-        } @else {
-          <p class="empty">No version data available.</p>
+      <section
+        class="info-card"
+        [class.info-card-collapsed]="versionsCollapsed()">
+        <h3
+          class="card-title collapsible"
+          (click)="versionsCollapsed.set(!versionsCollapsed())"
+          matTooltip="Package version information">
+          Package Versions
+          <span
+            class="section-chevron"
+            [class.section-chevron-expanded]="!versionsCollapsed()"
+            aria-hidden="true"
+            >&#9656;</span
+          >
+        </h3>
+        @if (!versionsCollapsed()) {
+          @if (versions().length) {
+            <dl class="card-list">
+              @for (entry of versions(); track entry[0]) {
+                <div class="card-row">
+                  <dt class="card-label">{{ entry[0] }}</dt>
+                  <dd class="card-value">{{ entry[1] }}</dd>
+                </div>
+              }
+            </dl>
+          } @else {
+            <p class="empty">No version data available.</p>
+          }
         }
       </section>
 
       @if (license(); as lic) {
-        <section class="info-card">
-          <h3 class="card-title">License</h3>
-          <dl class="card-list">
-            <div class="card-row">
-              <dt class="card-label">Organization</dt>
-              <dd class="card-value">{{ lic.organization }}</dd>
-            </div>
-            <div class="card-row">
-              <dt class="card-label">Domain</dt>
-              <dd class="card-value">{{ lic.domain }}</dd>
-            </div>
-            <div class="card-row">
-              <dt class="card-label">Tier</dt>
-              <dd class="card-value">{{ lic.licenseType }}</dd>
-            </div>
-            <div class="card-row">
-              <dt class="card-label">Issued</dt>
-              <dd class="card-value">{{ formatLicenseDate(lic.issuedAt) }}</dd>
-            </div>
-            <div class="card-row">
-              <dt class="card-label">Expires</dt>
-              <dd class="card-value">{{ formatLicenseDate(lic.expires) }}</dd>
-            </div>
-            <div class="card-row">
-              <dt class="card-label">Verified</dt>
-              <dd class="card-value">{{ lic.verified ? 'Yes' : 'No' }}</dd>
-            </div>
-          </dl>
+        <section
+          class="info-card"
+          [class.info-card-collapsed]="licenseCollapsed()">
+          <h3
+            class="card-title collapsible"
+            (click)="licenseCollapsed.set(!licenseCollapsed())"
+            matTooltip="License details">
+            License
+            <span
+              class="section-chevron"
+              [class.section-chevron-expanded]="!licenseCollapsed()"
+              aria-hidden="true"
+              >&#9656;</span
+            >
+          </h3>
+          @if (!licenseCollapsed()) {
+            <dl class="card-list">
+              <div class="card-row">
+                <dt class="card-label">Organization</dt>
+                <dd class="card-value">{{ lic.organization }}</dd>
+              </div>
+              <div class="card-row">
+                <dt class="card-label">Domain</dt>
+                <dd class="card-value">{{ lic.domain }}</dd>
+              </div>
+              <div class="card-row">
+                <dt class="card-label">Tier</dt>
+                <dd class="card-value">{{ lic.licenseType }}</dd>
+              </div>
+              <div class="card-row">
+                <dt class="card-label">Issued</dt>
+                <dd class="card-value">
+                  {{ formatLicenseDate(lic.issuedAt) }}
+                </dd>
+              </div>
+              <div class="card-row">
+                <dt class="card-label">Expires</dt>
+                <dd class="card-value">
+                  {{ formatLicenseDate(lic.expires) }}
+                </dd>
+              </div>
+              <div class="card-row">
+                <dt class="card-label">Verified</dt>
+                <dd class="card-value">{{ lic.verified ? 'Yes' : 'No' }}</dd>
+              </div>
+            </dl>
+          }
         </section>
       } @else {
-        <section class="info-card">
-          <h3 class="card-title">License</h3>
-          <p class="free-license">
-            Free license — Chrome extension features are limited.
-          </p>
+        <section
+          class="info-card"
+          [class.info-card-collapsed]="licenseCollapsed()">
+          <h3
+            class="card-title collapsible"
+            (click)="licenseCollapsed.set(!licenseCollapsed())"
+            matTooltip="License details">
+            License
+            <span
+              class="section-chevron"
+              [class.section-chevron-expanded]="!licenseCollapsed()"
+              aria-hidden="true"
+              >&#9656;</span
+            >
+          </h3>
+          @if (!licenseCollapsed()) {
+            <p class="free-license">
+              Free license — Chrome extension features are limited.
+            </p>
+          }
         </section>
       }
     </div>
 
     <section class="section registry-section">
       <h3 class="section-title">FeatureCell Registry</h3>
-      @if (registry().length) {
-        <div class="cell-cards">
-          @for (cell of registry(); track $index) {
-            <div class="cell-card" [class.selected]="selectedCell() === cell">
-              <div class="cell-card-header">
-                <span class="cell-card-key" [matTooltip]="cell.key">{{
-                  cell.key
-                }}</span>
-              </div>
-              <div class="cell-card-body">
-                <div class="cell-card-stat">
-                  <span class="cell-card-stat-value">{{
-                    cell.behaviors.length
+      <div class="registry-body">
+        @if (registry().length) {
+          <div class="cell-cards">
+            @for (cell of registry(); track $index) {
+              <div
+                class="cell-card"
+                [class.selected]="selectedCell() === cell"
+                [class.cell-card-collapsed]="collapsedCells().has(cell.key)">
+                <div
+                  class="cell-card-header collapsible"
+                  (click)="toggleCellCollapsed(cell.key)">
+                  <span class="cell-card-key" [matTooltip]="cell.key">{{
+                    cell.key
                   }}</span>
-                  <span class="cell-card-stat-label">Behaviors</span>
-                  @if (behaviorLicenseCount(cell)) {
-                    <span class="cell-card-licensed"
-                      >{{ behaviorLicenseCount(cell) }} licensed</span
-                    >
-                  }
+                  <span
+                    class="section-chevron"
+                    [class.section-chevron-expanded]="
+                      !collapsedCells().has(cell.key)
+                    "
+                    aria-hidden="true"
+                    matTooltip="Toggle cell details"
+                    >&#9656;</span
+                  >
                 </div>
-                <div class="cell-card-stat">
-                  <span class="cell-card-stat-value">{{
-                    cell.controllers.length
-                  }}</span>
-                  <span class="cell-card-stat-label">Controllers</span>
-                  @if (controllerLicenseCount(cell)) {
-                    <span class="cell-card-licensed"
-                      >{{ controllerLicenseCount(cell) }} licensed</span
-                    >
-                  }
-                </div>
-                <div class="cell-card-stat">
-                  <span class="cell-card-stat-value">{{
-                    fluentApisCount(cell)
-                  }}</span>
-                  <span class="cell-card-stat-label">Fluent APIs</span>
+                @if (!collapsedCells().has(cell.key)) {
+                  <div class="cell-card-body">
+                    <div class="cell-card-stat">
+                      <span class="cell-card-stat-value">{{
+                        cell.behaviors.length
+                      }}</span>
+                      <span class="cell-card-stat-label">Behaviors</span>
+                      @if (behaviorLicenseCount(cell)) {
+                        <span class="cell-card-licensed"
+                          >{{ behaviorLicenseCount(cell) }} licensed</span
+                        >
+                      }
+                    </div>
+                    <div class="cell-card-stat">
+                      <span class="cell-card-stat-value">{{
+                        cell.controllers.length
+                      }}</span>
+                      <span class="cell-card-stat-label">Controllers</span>
+                      @if (controllerLicenseCount(cell)) {
+                        <span class="cell-card-licensed"
+                          >{{ controllerLicenseCount(cell) }} licensed</span
+                        >
+                      }
+                    </div>
+                    <div class="cell-card-stat">
+                      <span class="cell-card-stat-value">{{
+                        fluentApisCount(cell)
+                      }}</span>
+                      <span class="cell-card-stat-label">Fluent APIs</span>
+                    </div>
+                  </div>
+                }
+                <div class="cell-card-footer">
+                  <button
+                    type="button"
+                    class="cell-card-view-btn"
+                    (click)="selectCell(cell)"
+                    aria-label="View pipeline for {{ cell.key }}">
+                    View Pipeline
+                  </button>
                 </div>
               </div>
-              <div class="cell-card-footer">
-                <button
-                  type="button"
-                  class="cell-card-view-btn"
-                  (click)="selectCell(cell)"
-                  aria-label="View pipeline for {{ cell.key }}">
-                  View Pipeline
-                </button>
-              </div>
-            </div>
-          }
-        </div>
-      } @else {
-        <p class="empty">No registry data available.</p>
-      }
+            }
+          </div>
+        } @else {
+          <p class="empty">No registry data available.</p>
+        }
+
+        @if (selectedCell(); as cell) {
+          <aside class="detail-pane">
+            <sdux-devtools-registry-detail
+              [cellKey]="cell.key"
+              (closeDetail)="closeDetail()"></sdux-devtools-registry-detail>
+          </aside>
+        }
+      </div>
     </section>
   </section>
-
-  @if (selectedCell(); as cell) {
-    <aside class="detail-pane">
-      <sdux-devtools-registry-detail
-        [cellKey]="cell.key"
-        (closeDetail)="closeDetail()"></sdux-devtools-registry-detail>
-    </aside>
-  }
 </div>

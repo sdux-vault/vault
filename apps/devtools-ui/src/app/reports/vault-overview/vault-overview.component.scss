@@ -1,19 +1,51 @@
 @use 'global' as global;
+@use '../scss/reports-common';
 
-:host {
+.collapsible {
+  cursor: pointer;
+  user-select: none;
   display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
+  align-items: center;
 }
 
-.vault-overview-layout {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
+.section-chevron {
+  @include global.sdux-icon-button(28px, transparent);
+  margin-left: auto;
+  color: global.$sdux-primary-light;
+  font-size: global.$font-size-lg;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background-color: global.$sdux-primary-base;
+    color: global.$sdux-text-white;
+  }
+
+  &.section-chevron-expanded {
+    transform: rotate(90deg);
+  }
+}
+
+.report-page {
+  .registry-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    gap: global.$spacing-md;
+
+    &:has(.detail-pane) .cell-cards .cell-card {
+      box-sizing: border-box;
+    }
+
+    .cell-cards {
+      flex: 1;
+      min-width: 0;
+      overflow-y: auto;
+    }
+  }
 
   .vault-overview-content {
     flex: 1;
@@ -21,13 +53,6 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    padding: global.$spacing-md;
-
-    .title {
-      @include global.sdux-text(global.$sdux-text-primary);
-      font-size: global.$font-size-lg;
-      margin: 0 0 global.$spacing-md;
-    }
 
     .section {
       margin-bottom: global.$spacing-lg;
@@ -89,7 +114,8 @@
     .cell-cards {
       display: flex;
       flex-wrap: wrap;
-      // justify-content: space-between;
+      align-items: flex-start;
+      align-content: flex-start;
       gap: global.$spacing-md;
       flex: 1;
       overflow-y: auto;
@@ -98,11 +124,17 @@
 
     .cell-card {
       width: 265px;
-      height: 150px;
+      min-height: 165px;
+      display: flex;
+      flex-direction: column;
       background: global.$sdux-surface-mid;
       border: 1px solid global.$sdux-surface-outline;
       border-radius: global.$border-radius-md;
       padding: global.$spacing-md;
+
+      &.cell-card-collapsed {
+        min-height: 0;
+      }
 
       &.selected {
         border-color: global.$sdux-primary-base;
@@ -127,9 +159,12 @@
       }
 
       .cell-card-body {
+        min-height: 75px;
         display: flex;
         justify-content: space-between;
         gap: global.$spacing-sm;
+        padding-bottom: global.$spacing-sm;
+        border-bottom: 1px solid global.$sdux-surface-outline;
       }
 
       .cell-card-stat {
@@ -161,8 +196,6 @@
 
       .cell-card-footer {
         margin-top: global.$spacing-sm;
-        padding-top: global.$spacing-sm;
-        border-top: 1px solid global.$sdux-surface-outline;
         display: flex;
         justify-content: flex-end;
       }
@@ -191,6 +224,7 @@
     .info-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      align-items: start;
       gap: global.$spacing-md;
       margin-bottom: global.$spacing-lg;
 
@@ -206,6 +240,11 @@
       padding: global.$spacing-md;
       display: flex;
       flex-direction: column;
+      min-height: 230px;
+
+      &.info-card-collapsed {
+        min-height: 0;
+      }
 
       .card-title {
         @include global.sdux-text(global.$sdux-text-primary);
@@ -214,6 +253,11 @@
         margin: 0 0 global.$spacing-sm;
         padding-bottom: global.$spacing-xs;
         border-bottom: 2px solid global.$sdux-primary-base;
+
+        &.collapsible {
+          display: flex;
+          align-items: center;
+        }
       }
 
       .card-list {
@@ -249,38 +293,50 @@
       }
     }
   }
+}
 
-  .detail-pane {
-    width: 400px;
-    min-width: 400px;
-    flex-shrink: 0;
+.detail-pane {
+  width: 400px;
+  min-width: 400px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid global.$sdux-surface-outline;
+  min-height: 0;
+
+  sdux-devtools-registry-detail {
     display: flex;
     flex-direction: column;
-    border-left: 1px solid global.$sdux-surface-outline;
+    flex: 1;
     min-height: 0;
+  }
+}
 
-    sdux-devtools-registry-detail {
-      display: flex;
+@media (max-width: global.$breakpoint-md) {
+  .report-page {
+    .registry-body {
       flex-direction: column;
-      flex: 1;
-      min-height: 0;
+
+      &:has(.detail-pane) .cell-cards {
+        display: none;
+      }
+    }
+
+    .vault-overview-content {
+      flex: none;
+      overflow-y: auto;
+
+      .cell-card {
+        width: 100%;
+      }
     }
   }
 
-  @media (max-width: global.$breakpoint-md) {
-    flex-direction: column;
-
-    .configuration-content {
-      flex: none;
-      max-height: 50%;
-    }
-
-    .detail-pane {
-      width: 100%;
-      min-width: 0;
-      border-left: none;
-      border-top: 1px solid global.$sdux-surface-outline;
-      flex: 1;
-    }
+  .detail-pane {
+    width: 100%;
+    min-width: 0;
+    border-left: none;
+    border-top: 1px solid global.$sdux-surface-outline;
+    flex: 1;
   }
 }

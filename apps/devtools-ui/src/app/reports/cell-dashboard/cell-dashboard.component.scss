@@ -1,89 +1,133 @@
 @use 'global' as global;
 
-:host {
-  display: block;
-  width: 100%;
-}
+.report-page {
+  flex: 1;
+  min-height: 0;
 
-.cell-dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: global.$spacing-md;
-  padding: global.$spacing-md;
-}
+  .summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: global.$spacing-md;
 
-.dashboard-title {
-  margin: 0;
-  font-size: global.$font-size-lg;
-  font-weight: global.$font-weight-bold;
-  color: var(--sdux-text-primary);
-}
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: global.$spacing-xs;
+      padding: global.$spacing-md global.$spacing-lg;
+      background: global.$sdux-surface-lightish;
+      border-radius: global.$border-radius-sm;
+      border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
+      min-width: 120px;
 
-.summary-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: global.$spacing-md;
+      .card-label {
+        font-size: global.$font-size-xs;
+        color: var(--sdux-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
 
-  .card {
+      .card-value {
+        font-size: global.$font-size-xl;
+        font-weight: global.$font-weight-bold;
+        color: var(--sdux-text-primary);
+      }
+
+      .card-value-warn {
+        color: global.$sdux-warn-dark;
+      }
+    }
+  }
+
+  .cell-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: global.$spacing-md;
+    flex: 1;
+    overflow-y: auto;
+    align-content: start;
+  }
+
+  .cell-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: global.$spacing-xs;
-    padding: global.$spacing-md global.$spacing-lg;
-    background: global.$sdux-surface-lightish;
+    background: global.$sdux-surface-mid;
+    border: 1px solid global.$sdux-surface-outline;
     border-radius: global.$border-radius-sm;
-    border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
-    min-width: 120px;
+    padding: global.$spacing-md;
+    transition: border-color 0.15s ease;
 
-    .card-label {
-      font-size: global.$font-size-xs;
-      color: var(--sdux-text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    &:hover {
+      border-color: global.$sdux-primary-base;
     }
 
-    .card-value {
-      font-size: global.$font-size-xl;
+    &.cell-card-error {
+      border-left: 3px solid global.$sdux-accent-base;
+    }
+
+    &.cell-card-warning {
+      border-left: 3px solid global.$sdux-warn-dark;
+    }
+
+    .cell-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: global.$spacing-sm;
+    }
+
+    .cell-card-key {
+      font-weight: global.$font-weight-medium;
+      font-size: global.$font-size-sm;
+      color: var(--sdux-text-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
+    }
+
+    .cell-card-body {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: global.$spacing-sm;
+      margin-bottom: global.$spacing-sm;
+    }
+
+    .cell-card-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .cell-card-stat-value {
+      font-size: global.$font-size-md;
       font-weight: global.$font-weight-bold;
+      font-family: global.$sdux-code-font;
       color: var(--sdux-text-primary);
     }
 
-    .card-value-warn {
-      color: global.$sdux-warn-dark;
+    .cell-card-stat-label {
+      font-size: global.$font-size-xs;
+      color: var(--sdux-text-secondary);
     }
-  }
-}
 
-.cell-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: global.$font-size-sm;
-  font-family: monospace;
+    .cell-card-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: auto;
+      padding-top: global.$spacing-sm;
+      border-top: 1px solid global.$sdux-surface-outline;
+    }
 
-  th,
-  td {
-    padding: global.$spacing-sm global.$spacing-md;
-    text-align: left;
-    border-bottom: 1px solid var(--sdux-border-default, rgb(255 255 255 / 5%));
-  }
-
-  th {
-    color: var(--sdux-text-secondary);
-    font-weight: global.$font-weight-medium;
-    white-space: nowrap;
-  }
-
-  .col-cell {
-    min-width: 200px;
-  }
-
-  .col-traces,
-  .col-avg,
-  .col-errors,
-  .col-revotes,
-  .col-status {
-    text-align: center;
-    width: 80px;
+    .cell-card-view-btn {
+      @include global.button-base(
+        global.$sdux-text-white,
+        global.$sdux-primary-base,
+        global.$sdux-primary-dark
+      );
+      width: 150px;
+    }
   }
 
   .cell-error {
@@ -98,36 +142,30 @@
 
   .status-healthy {
     color: global.$sdux-success-base;
+    font-size: global.$font-size-md;
   }
 
   .status-warning {
     color: global.$sdux-warn-dark;
+    font-size: global.$font-size-md;
   }
 
   .status-error {
     color: global.$sdux-accent-base;
+    font-size: global.$font-size-md;
   }
-}
 
-.cell-row {
-  cursor: pointer;
-  transition: background 0.15s ease;
+  @media (max-width: global.$breakpoint-md) {
+    align-items: flex-start;
 
-  &:hover {
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 5%));
+    .summary-cards {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, auto);
+    }
+
+    .cell-cards {
+      grid-template-columns: 1fr;
+      width: 100%;
+    }
   }
-}
-
-.cell-table-hint {
-  margin: 0;
-  font-size: global.$font-size-xs;
-  color: var(--sdux-text-secondary);
-  text-align: center;
-}
-
-.dashboard-empty {
-  padding: global.$spacing-lg;
-  text-align: center;
-  color: var(--sdux-text-secondary);
-  font-size: global.$font-size-sm;
 }

@@ -4,7 +4,7 @@ import {
   computed,
   inject,
   input,
-  signal
+  model
 } from '@angular/core';
 import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
 import type { TraceExecutionShape } from '../../../shapes/trace';
@@ -89,7 +89,10 @@ export class TraceHotStageRankingComponent {
   });
 
   /** Current view mode toggle. */
-  readonly viewMode = signal<ViewMode>('grouped');
+  readonly viewMode = model<ViewMode>('grouped');
+
+  /** Whether the parent controls the view mode externally. */
+  readonly externalViewMode = input(false);
 
   /** Aggregated stage rankings sorted by total duration descending. */
   readonly rankings = computed<StageRankingEntry[]>(() => {

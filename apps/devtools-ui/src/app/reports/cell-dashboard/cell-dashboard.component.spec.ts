@@ -43,11 +43,11 @@ describe('Component: CellDashboard', () => {
       metrics: {
         duration: 6,
         eventCount: 2,
-        status: TraceExecutionStatuses.Success,
+        status: TraceExecutionStatuses.Denied,
         slowestStage: { name: 'reducer', duration: 3 },
         fastestStage: { name: 'reducer', duration: 3 },
         stages: [],
-        hadRevote: true,
+        hadRevote: false,
         controllerVoteCount: 1,
         usedLicensedFeatures: false
       }
@@ -149,8 +149,8 @@ describe('Component: CellDashboard', () => {
       expect(component.errorRate()).toBe(25);
     });
 
-    it('should compute revote rate as percentage', () => {
-      expect(component.revoteRate()).toBe(25);
+    it('should compute denied rate as percentage', () => {
+      expect(component.deniedRate()).toBe(25);
     });
 
     it('should reflect licensed state', () => {
@@ -171,7 +171,7 @@ describe('Component: CellDashboard', () => {
       expect(component.totalTraces()).toBe(0);
       expect(component.avgDuration()).toBe(0);
       expect(component.errorRate()).toBe(0);
-      expect(component.revoteRate()).toBe(0);
+      expect(component.deniedRate()).toBe(0);
     });
   });
 
@@ -183,7 +183,6 @@ describe('Component: CellDashboard', () => {
           traceCount: 2,
           avgDuration: 8,
           errorCount: 0,
-          revoteCount: 1,
           status: 'healthy'
         },
         {
@@ -191,7 +190,6 @@ describe('Component: CellDashboard', () => {
           traceCount: 2,
           avgDuration: 12,
           errorCount: 1,
-          revoteCount: 0,
           status: 'error'
         }
       ]);
@@ -293,9 +291,9 @@ describe('Component: CellDashboard', () => {
   });
 
   describe('template rendering', () => {
-    it('should render table rows when rows exist', () => {
-      const rows = fixture.nativeElement.querySelectorAll('.cell-row');
-      expect(rows.length).toBe(2);
+    it('should render cell cards when rows exist', () => {
+      const cards = fixture.nativeElement.querySelectorAll('.cell-card');
+      expect(cards.length).toBe(2);
     });
 
     it('should show empty message when tracesByCellKey is empty', () => {
@@ -310,7 +308,7 @@ describe('Component: CellDashboard', () => {
       ).set(new Map());
       fixture.detectChanges();
 
-      const empty = fixture.nativeElement.querySelector('.dashboard-empty');
+      const empty = fixture.nativeElement.querySelector('.empty-state');
       expect(empty).toBeTruthy();
       expect(empty.textContent).toContain('No cells detected yet');
     });
@@ -318,11 +316,6 @@ describe('Component: CellDashboard', () => {
     it('should apply cell-error class when errorCount > 0', () => {
       const errorCells = fixture.nativeElement.querySelectorAll('.cell-error');
       expect(errorCells.length).toBe(1);
-    });
-
-    it('should apply cell-warn class when revoteCount > 0', () => {
-      const warnCells = fixture.nativeElement.querySelectorAll('.cell-warn');
-      expect(warnCells.length).toBe(1);
     });
 
     it('should apply card-value-warn class when errorRate > 0', () => {
@@ -382,9 +375,9 @@ describe('Component: CellDashboard', () => {
       expect(warning).toBeTruthy();
     });
 
-    it('should navigate when clicking a cell row', () => {
-      const row = fixture.nativeElement.querySelector('.cell-row');
-      row.click();
+    it('should navigate when clicking a cell card button', () => {
+      const btn = fixture.nativeElement.querySelector('.cell-card-view-btn');
+      btn.click();
       expect(routerSpy.navigate).toHaveBeenCalled();
     });
 
@@ -437,10 +430,10 @@ describe('Component: CellDashboard', () => {
       expect(warnCards.length).toBe(0);
     });
 
-    it('should render table hint text', () => {
-      const hint = fixture.nativeElement.querySelector('.cell-table-hint');
-      expect(hint).toBeTruthy();
-      expect(hint.textContent).toContain('Click a cell row');
+    it('should render cell card key text', () => {
+      const key = fixture.nativeElement.querySelector('.cell-card-key');
+      expect(key).toBeTruthy();
+      expect(key.textContent).toBeTruthy();
     });
   });
 

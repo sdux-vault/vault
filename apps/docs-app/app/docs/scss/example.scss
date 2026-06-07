@@ -490,6 +490,10 @@
     border-left-color: global.$sdux-primary-base;
   }
 
+  &.callout-learn-more {
+    border-left-color: global.$sdux-success-base;
+  }
+
   &.callout-warning {
     border-left-color: global.$sdux-warn-base;
   }

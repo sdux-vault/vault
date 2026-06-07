@@ -1,5 +1,8 @@
-<header class="header">
-  <div class="title">
+<div class="report-page">
+  <header class="header">
+    <h2>Feature Cell Events</h2>
+  </header>
+  <div class="action-bar">
     <mat-select
       class="cell-filter"
       [value]="selectedCell()"
@@ -34,53 +37,55 @@
         }
       </mat-select>
     }
+
+    <div class="sdux-container-spacer"></div>
+
+    <div class="meta">
+      @if (latestStateSize()) {
+        <span
+          class="state-size"
+          matTooltip="Size of latest event state"
+          aria-label="Size of latest event state">
+          {{ latestStateSize() }}
+        </span>
+      }
+      <sdux-devtools-reset-button
+        (click)="resetFilters()"></sdux-devtools-reset-button>
+    </div>
   </div>
 
-  <div class="meta">
-    @if (latestStateSize()) {
-      <span
-        class="state-size"
-        matTooltip="Size of latest event state"
-        aria-label="Size of latest event state">
-        {{ latestStateSize() }}
-      </span>
-    }
-    <sdux-devtools-reset-button
-      (click)="resetFilters()"></sdux-devtools-reset-button>
-  </div>
-</header>
-
-<mat-tab-group class="vault-tabs" animationDuration="200ms">
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <span class="tab-label">
-        All Events ({{ totalEvents() }})
-        <sdux-export-button
-          [data]="filteredEvents()"
-          filename="all-events"
-          label="Download all events">
-        </sdux-export-button>
-      </span>
-    </ng-template>
-    <section class="vault-tab-content">
-      <sdux-devtools-main-pipeline-panel
-        [events]="filteredEvents()"></sdux-devtools-main-pipeline-panel>
-    </section>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <span class="tab-label">
-        Error Events ({{ errorEvents().length }})
-        <sdux-export-button
-          [data]="errorEvents()"
-          filename="error-events"
-          label="Download error events">
-        </sdux-export-button>
-      </span>
-    </ng-template>
-    <section class="vault-tab-content">
-      <sdux-devtools-main-pipeline-panel
-        [events]="errorEvents()"></sdux-devtools-main-pipeline-panel>
-    </section>
-  </mat-tab>
-</mat-tab-group>
+  <mat-tab-group class="vault-tabs" animationDuration="200ms">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="tab-label">
+          All Events ({{ totalEvents() }})
+          <sdux-export-button
+            [data]="filteredEvents()"
+            filename="all-events"
+            label="Download all events">
+          </sdux-export-button>
+        </span>
+      </ng-template>
+      <section class="vault-tab-content">
+        <sdux-devtools-main-pipeline-panel
+          [events]="filteredEvents()"></sdux-devtools-main-pipeline-panel>
+      </section>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="tab-label">
+          Error Events ({{ errorEvents().length }})
+          <sdux-export-button
+            [data]="errorEvents()"
+            filename="error-events"
+            label="Download error events">
+          </sdux-export-button>
+        </span>
+      </ng-template>
+      <section class="vault-tab-content">
+        <sdux-devtools-main-pipeline-panel
+          [events]="errorEvents()"></sdux-devtools-main-pipeline-panel>
+      </section>
+    </mat-tab>
+  </mat-tab-group>
+</div>

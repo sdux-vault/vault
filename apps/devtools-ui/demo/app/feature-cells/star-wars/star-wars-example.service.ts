@@ -92,9 +92,10 @@ export class StarWarsExampleService {
    * @param entry - The example to append to the current state.
    */
   merge(entry: Example): void {
+    const current = this.state.value() ?? [];
     this.#vault.mergeState({
       loading: false,
-      value: [entry],
+      value: [...current, entry],
       error: null
     });
   }

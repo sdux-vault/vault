@@ -794,17 +794,6 @@ describe('Component: TraceDetailView', () => {
     });
   });
 
-  describe('rawTraceExpanded', () => {
-    it('should default to false', () => {
-      expect(component.rawTraceExpanded()).toBeFalse();
-    });
-
-    it('should toggle', () => {
-      component.rawTraceExpanded.set(true);
-      expect(component.rawTraceExpanded()).toBeTrue();
-    });
-  });
-
   describe('hasPayload edge cases', () => {
     it('should return false for null payload', () => {
       expect(component.hasPayload({ payload: null } as any)).toBeFalse();

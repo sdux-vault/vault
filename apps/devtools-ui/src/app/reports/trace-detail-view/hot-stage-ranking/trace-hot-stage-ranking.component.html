@@ -5,22 +5,24 @@
     time. Use this view to identify systemic bottlenecks.
   </p>
 
-  <div class="view-toggle">
-    <button
-      type="button"
-      class="toggle-btn"
-      [class.toggle-active]="viewMode() === 'individual'"
-      (click)="setViewMode('individual')">
-      Individual
-    </button>
-    <button
-      type="button"
-      class="toggle-btn"
-      [class.toggle-active]="viewMode() === 'grouped'"
-      (click)="setViewMode('grouped')">
-      Grouped
-    </button>
-  </div>
+  @if (!externalViewMode()) {
+    <div class="view-toggle">
+      <button
+        type="button"
+        class="toggle-btn"
+        [class.toggle-active]="viewMode() === 'individual'"
+        (click)="setViewMode('individual')">
+        Individual
+      </button>
+      <button
+        type="button"
+        class="toggle-btn"
+        [class.toggle-active]="viewMode() === 'grouped'"
+        (click)="setViewMode('grouped')">
+        Grouped
+      </button>
+    </div>
+  }
 
   @if (viewMode() === 'grouped') {
     @if (rankings().length > 0) {

@@ -1,144 +1,125 @@
 @use 'global' as global;
+@use '../scss/reports-common';
 
-:host {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-}
-
-.load-dump-page {
-  display: flex;
-  flex-direction: column;
-  gap: global.$spacing-lg;
-  padding: global.$spacing-md;
+.report-page {
   max-width: 600px;
-}
 
-.header {
-  h2 {
+  .upload-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+  }
+
+  .description {
     margin: 0;
-    font-size: global.$font-size-lg;
-    font-weight: global.$font-weight-bold;
-    color: var(--sdux-text-primary);
-  }
-}
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-secondary);
+    line-height: 1.5;
 
-.upload-section {
-  display: flex;
-  flex-direction: column;
-  gap: global.$spacing-md;
-}
-
-.description {
-  margin: 0;
-  font-size: global.$font-size-sm;
-  color: var(--sdux-text-secondary);
-  line-height: 1.5;
-
-  code {
-    color: var(--sdux-text-primary);
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
-    padding: 0 global.$spacing-xs;
-    border-radius: global.$border-radius-sm;
-  }
-}
-
-.warning-notice {
-  margin: 0;
-  font-size: global.$font-size-sm;
-  color: global.$sdux-warn-base;
-  line-height: 1.5;
-  padding: global.$spacing-sm global.$spacing-md;
-  border-left: 3px solid global.$sdux-warn-base;
-  background: rgb(251 192 45 / 8%);
-  border-radius: global.$border-radius-sm;
-}
-
-.features {
-  font-size: global.$font-size-sm;
-  color: var(--sdux-text-secondary);
-
-  .features-heading {
-    margin: 0 0 global.$spacing-sm;
-    font-weight: global.$font-weight-medium;
-    color: var(--sdux-text-primary);
-  }
-
-  ul {
-    margin: 0;
-    padding-left: global.$spacing-lg;
-    list-style: disc;
-
-    li {
-      line-height: 1.6;
+    code {
+      color: var(--sdux-text-primary);
+      background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
+      padding: 0 global.$spacing-xs;
+      border-radius: global.$border-radius-sm;
     }
   }
-}
 
-.file-input {
-  display: none;
-}
-
-.file-label {
-  cursor: pointer;
-  display: inline-flex;
-  align-self: flex-start;
-}
-
-.file-button {
-  display: inline-block;
-  padding: global.$spacing-sm global.$spacing-md;
-  font-size: global.$font-size-sm;
-  font-weight: global.$font-weight-bold;
-  color: var(--sdux-text-primary);
-  background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
-  border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
-  border-radius: global.$border-radius-sm;
-  cursor: pointer;
-
-  &:hover {
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+  .warning-notice {
+    max-width: 400px;
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-warn-base;
+    line-height: 1.5;
+    padding: global.$spacing-sm global.$spacing-md;
+    border-left: 3px solid global.$sdux-warn-base;
+    background: rgb(251 192 45 / 8%);
+    border-radius: global.$border-radius-sm;
   }
-}
 
-.error-message {
-  padding: global.$spacing-sm global.$spacing-md;
-  font-size: global.$font-size-sm;
-  color: global.$sdux-accent-base;
-  background: rgb(255 0 0 / 8%);
-  border: 1px solid global.$sdux-accent-base;
-  border-radius: global.$border-radius-sm;
-}
+  .features {
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-secondary);
 
-.success-section {
-  display: flex;
-  flex-direction: column;
-  gap: global.$spacing-md;
-}
+    .features-heading {
+      margin: 0 0 global.$spacing-sm;
+      font-weight: global.$font-weight-medium;
+      color: var(--sdux-text-primary);
+    }
 
-.success-message {
-  padding: global.$spacing-sm global.$spacing-md;
-  font-size: global.$font-size-sm;
-  color: global.$sdux-success-base;
-  background: rgb(0 255 0 / 6%);
-  border: 1px solid global.$sdux-success-base;
-  border-radius: global.$border-radius-sm;
-}
+    ul {
+      margin: 0;
+      padding-left: global.$spacing-lg;
+      list-style: disc;
 
-.navigate-button {
-  align-self: flex-start;
-  padding: global.$spacing-sm global.$spacing-md;
-  font-size: global.$font-size-sm;
-  font-weight: global.$font-weight-bold;
-  color: var(--sdux-text-primary);
-  background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
-  border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
-  border-radius: global.$border-radius-sm;
-  cursor: pointer;
+      li {
+        line-height: 1.6;
+      }
+    }
+  }
 
-  &:hover {
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+  .file-input {
+    display: none;
+  }
+
+  .file-label {
+    cursor: pointer;
+    display: inline-flex;
+    align-self: flex-start;
+  }
+
+  .file-button {
+    display: inline-block;
+    padding: global.$spacing-sm global.$spacing-md;
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-bold;
+    color: var(--sdux-text-primary);
+    background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
+    border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
+    border-radius: global.$border-radius-sm;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+    }
+  }
+
+  .error-message {
+    padding: global.$spacing-sm global.$spacing-md;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-accent-base;
+    background: rgb(255 0 0 / 8%);
+    border: 1px solid global.$sdux-accent-base;
+    border-radius: global.$border-radius-sm;
+  }
+
+  .success-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+  }
+
+  .success-message {
+    padding: global.$spacing-sm global.$spacing-md;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-success-base;
+    background: rgb(0 255 0 / 6%);
+    border: 1px solid global.$sdux-success-base;
+    border-radius: global.$border-radius-sm;
+  }
+
+  .navigate-button {
+    align-self: flex-start;
+    padding: global.$spacing-sm global.$spacing-md;
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-bold;
+    color: var(--sdux-text-primary);
+    background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
+    border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
+    border-radius: global.$border-radius-sm;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+    }
   }
 }

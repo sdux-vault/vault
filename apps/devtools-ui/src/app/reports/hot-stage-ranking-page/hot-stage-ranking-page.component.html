@@ -1,26 +1,59 @@
 @if (isLicensed()) {
-  <div class="hot-stage-ranking-page">
+  <div class="report-page">
     <header class="header">
-      <div class="title">
-        <h2>Hot Stage Ranking</h2>
-        <mat-select
-          class="cell-filter"
-          [value]="selectedCell()"
-          (selectionChange)="selectCell($any($event.value))"
-          aria-label="Filter by cell">
-          <mat-option value="all">All Cells</mat-option>
-          @for (cell of cellKeys(); track cell) {
-            <mat-option [value]="cell">{{ cell }}</mat-option>
-          }
-        </mat-select>
-      </div>
+      <h2>Hot Stage Ranking</h2>
+    </header>
+    <div class="action-bar">
+      <mat-select
+        class="cell-filter"
+        [value]="selectedCell()"
+        (selectionChange)="selectCell($any($event.value))"
+        aria-label="Filter by cell">
+        <mat-option value="all">All Cells</mat-option>
+        @for (cell of cellKeys(); track cell) {
+          <mat-option [value]="cell">{{ cell }}</mat-option>
+        }
+      </mat-select>
+
+      <div class="sdux-container-spacer"></div>
+
       <div class="meta">
+        <div class="view-toggle">
+          <button
+            type="button"
+            class="toggle-btn"
+            [class.active]="viewMode() === 'individual'"
+            (click)="viewMode.set('individual')"
+            matTooltip="Show individual stage executions"
+            aria-label="Individual view">
+            Individual
+          </button>
+          <button
+            type="button"
+            class="toggle-btn"
+            [class.active]="viewMode() === 'grouped'"
+            (click)="viewMode.set('grouped')"
+            matTooltip="Show grouped stage rankings"
+            aria-label="Grouped view">
+            Grouped
+          </button>
+        </div>
+
+        <sdux-export-button
+          [data]="filteredTraces()"
+          filename="hot-stage-ranking"
+          [label]="'Download ' + selectedCell() + ' traces'">
+        </sdux-export-button>
+
         <sdux-devtools-reset-button
           (click)="selectCell('all')"></sdux-devtools-reset-button>
       </div>
-    </header>
+    </div>
 
-    <sdux-trace-hot-stage-ranking [traces]="filteredTraces()">
+    <sdux-trace-hot-stage-ranking
+      [traces]="filteredTraces()"
+      [(viewMode)]="viewMode"
+      [externalViewMode]="true">
     </sdux-trace-hot-stage-ranking>
   </div>
 } @else {

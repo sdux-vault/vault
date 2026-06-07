@@ -338,6 +338,26 @@ describe('Service: Snapshot Diff', () => {
     });
   });
 
+  describe('computeTableDiff with heterogeneous rows', () => {
+    it('should mark cell as unchanged when column is missing from current row but exists in other row', () => {
+      const before = [
+        { id: 1, name: 'Luke' },
+        { id: 2, name: 'Leia', rank: 'Senator' }
+      ];
+      const after = [
+        { id: 1, name: 'Luke', rank: 'Jedi' },
+        { id: 2, name: 'Leia', rank: 'Senator' }
+      ];
+
+      const result = service.computeTableDiff(before, after);
+
+      // 'rank' is in beforeColumns (union of all before row keys)
+      expect(result.beforeColumns).toContain('rank');
+      // Before row 0 doesn't have 'rank' but after row 0 does → unchanged
+      expect(result.beforeRows[0].cells['rank']).toBe('unchanged');
+    });
+  });
+
   describe('object value (key-value pairs)', () => {
     it('should convert objects to key-value rows', () => {
       const before = { count: 0, isLoading: false };

@@ -1,5 +1,5 @@
 @if (isLicensed()) {
-  <div class="load-dump-page">
+  <div class="report-page">
     <header class="header">
       <h2>Load Debug Dump</h2>
     </header>
@@ -28,8 +28,11 @@
           type="file"
           accept=".json"
           class="file-input"
+          aria-label="Choose a JSON debug dump file"
           (change)="onFileSelected($event)" />
-        <span class="file-button">Choose Dump File</span>
+        <span class="file-button" matTooltip="Select a .json dump file to load"
+          >Choose Dump File</span
+        >
       </label>
     </section>
 

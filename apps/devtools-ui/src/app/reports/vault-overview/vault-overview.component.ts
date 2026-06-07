@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
   signal
 } from '@angular/core';
@@ -28,7 +29,7 @@ import { RegistryDetailComponent } from './registry-detail/registry-detail.compo
   standalone: true,
   imports: [MatTooltipModule, RegistryDetailComponent],
   templateUrl: './vault-overview.component.html',
-  styleUrl: './vault-overview.component.scss',
+  styleUrls: ['../scss/reports-common.scss', './vault-overview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VaultOverviewComponent {
@@ -72,6 +73,51 @@ export class VaultOverviewComponent {
   /** The currently selected FeatureCell for the detail panel. */
   readonly selectedCell = signal<VaultRegistrationSerializedShape | null>(null);
 
+  /** Whether the viewport matches the mobile breakpoint. */
+  readonly #isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+  /** Whether the Package Versions section is collapsed. */
+  readonly versionsCollapsed = signal(this.#isMobile);
+
+  /** Whether the License section is collapsed. */
+  readonly licenseCollapsed = signal(this.#isMobile);
+
+  /** Set of cell keys whose cards are collapsed. */
+  readonly collapsedCells = signal(new Set<string>());
+
+  /**
+   * Initializes mobile-responsive collapse state.
+   *
+   * When the viewport matches the mobile breakpoint, creates an effect
+   * that collapses all FeatureCell cards once the registry loads.
+   */
+  constructor() {
+    if (this.#isMobile) {
+      effect(() => {
+        const cells = this.registry();
+        if (cells.length) {
+          this.collapsedCells.set(new Set(cells.map((c) => c.key)));
+        }
+      });
+    }
+  }
+
+  /**
+   * Toggles the collapsed state of a cell card.
+   *
+   * @param key - The FeatureCell key to toggle.
+   */
+  toggleCellCollapsed(key: string): void {
+    const current = this.collapsedCells();
+    const next = new Set(current);
+    if (next.has(key)) {
+      next.delete(key);
+    } else {
+      next.add(key);
+    }
+    this.collapsedCells.set(next);
+  }
+
   /**
    * Selects a FeatureCell to display in the detail panel.
    *
@@ -86,17 +132,32 @@ export class VaultOverviewComponent {
     this.selectedCell.set(null);
   }
 
-  /** Returns the count of behaviors requiring a license in the given cell. */
+  /**
+   * Returns the count of behaviors requiring a license in the given cell.
+   *
+   * @param cell - The serialized registry entry to inspect.
+   * @returns The number of behaviors with `needsLicense` set to `true`.
+   */
   behaviorLicenseCount(cell: VaultRegistrationSerializedShape): number {
     return cell.behaviors.filter((b) => b.needsLicense).length;
   }
 
-  /** Returns the count of controllers requiring a license in the given cell. */
+  /**
+   * Returns the count of controllers requiring a license in the given cell.
+   *
+   * @param cell - The serialized registry entry to inspect.
+   * @returns The number of controllers with `needsLicense` set to `true`.
+   */
   controllerLicenseCount(cell: VaultRegistrationSerializedShape): number {
     return cell.controllers.filter((c) => c.needsLicense).length;
   }
 
-  /** Returns the total fluent API callback count for the given cell. */
+  /**
+   * Returns the total fluent API callback count for the given cell.
+   *
+   * @param cell - The serialized registry entry to inspect.
+   * @returns The sum of all fluent API callback counts, or `0` if none are registered.
+   */
   fluentApisCount(cell: VaultRegistrationSerializedShape): number {
     const apis = cell.fluentApis;
     if (!apis) return 0;
@@ -112,7 +173,13 @@ export class VaultOverviewComponent {
     );
   }
 
-  /** Builds a multiline tooltip breaking down fluent API callback counts. */
+  /**
+   * Builds a multiline tooltip breaking down fluent API callback counts.
+   *
+   * @param cell - The serialized registry entry to inspect.
+   * @returns A newline-delimited summary of non-zero callback counts,
+   *          or a fallback message when none are registered.
+   */
   fluentApisTooltip(cell: VaultRegistrationSerializedShape): string {
     const apis = cell.fluentApis;
     if (!apis) return 'No fluent API callbacks registered';

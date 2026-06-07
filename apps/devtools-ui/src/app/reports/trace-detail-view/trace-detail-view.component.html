@@ -1,29 +1,33 @@
-<div class="trace-timeline-page">
+<div class="report-page">
   <!-- Header -->
   <header class="header">
-    <div class="title">
-      <h2>Trace Timeline</h2>
-      <mat-select
-        class="cell-filter"
-        [value]="selectedCell()"
-        (selectionChange)="selectCell($any($event.value))"
-        aria-label="Filter by cell">
-        <mat-option value="all">All Cells</mat-option>
-        @for (cell of cellKeys(); track cell) {
-          <mat-option [value]="cell">{{ cell }}</mat-option>
-        }
-      </mat-select>
+    <h2>Trace Timeline</h2>
+  </header>
+  <div class="action-bar">
+    <mat-select
+      class="cell-filter"
+      [value]="selectedCell()"
+      (selectionChange)="selectCell($any($event.value))"
+      aria-label="Filter by cell">
+      <mat-option value="all">All Cells</mat-option>
+      @for (cell of cellKeys(); track cell) {
+        <mat-option [value]="cell">{{ cell }}</mat-option>
+      }
+    </mat-select>
+
+    <div class="sdux-container-spacer"></div>
+
+    <div class="meta">
       <sdux-export-button
         [data]="filteredTraces()"
         filename="traces"
         [label]="'Download ' + selectedCell() + ' traces'">
       </sdux-export-button>
-    </div>
-    <div class="meta">
+
       <sdux-devtools-reset-button
         (click)="selectCell('all')"></sdux-devtools-reset-button>
     </div>
-  </header>
+  </div>
 
   <!-- Summary Stats -->
   @if (filteredTraces().length > 0) {
@@ -166,26 +170,4 @@
   }
 
   <!-- Status Legend -->
-
-  <!-- Raw trace data -->
-  <section class="debug-output">
-    <h4
-      class="debug-toggle"
-      tabindex="0"
-      role="button"
-      (click)="rawTraceExpanded.set(!rawTraceExpanded())"
-      (keydown.enter)="rawTraceExpanded.set(!rawTraceExpanded())">
-      Raw Trace Data
-      <span class="chevron" [class.chevron-open]="rawTraceExpanded()"
-        >&#9656;</span
-      >
-    </h4>
-    @if (rawTraceExpanded()) {
-      <textarea
-        readonly
-        class="debug-textarea"
-        rows="20"
-        [value]="filteredTraces() | json"></textarea>
-    }
-  </section>
 </div>

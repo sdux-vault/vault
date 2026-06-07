@@ -1,89 +1,12 @@
 @use 'global' as global;
+@use '../scss/reports-common';
 
-:host {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-}
-
-/* ----------------------------------------------
-   HEADER
-------------------------------------------------*/
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: global.$spacing-md;
-
-  @media (max-width: global.$breakpoint-md) {
-    flex-direction: column;
-    align-items: stretch;
-    gap: global.$spacing-sm;
-  }
-
-  .title {
-    display: flex;
-    align-items: center;
-    gap: global.$spacing-sm;
-
-    @media (max-width: global.$breakpoint-lg) {
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: global.$breakpoint-md) {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .cell-filter {
-      width: 250px;
-    }
-
-    .subtitle {
-      @include global.sdux-text(global.$sdux-text-secondary);
-      font-size: global.$font-size-md;
-
-      @media (max-width: global.$breakpoint-md) {
-        display: none;
-      }
-    }
-  }
-
-  .meta {
-    display: flex;
-    align-items: center;
-    gap: global.$spacing-md;
-
-    @media (max-width: global.$breakpoint-md) {
-      justify-content: flex-end;
-    }
-
-    .state-size {
-      @include global.sdux-text(global.$sdux-text-secondary);
-      font-size: global.$font-size-sm;
-      min-width: 80px;
-      text-align: right;
-    }
-
-    .event-count {
-      @include global.sdux-text(global.$sdux-text-secondary);
-      font-size: global.$font-size-sm;
-    }
-
-    .btn-clear {
-      @include global.button-base(
-        global.$sdux-text-white,
-        transparent,
-        global.$sdux-surface-outline
-      );
-
-      &:hover {
-        // exception: overrides Angular Material button ripple specificity
-        background-color: global.$sdux-hover-background-color !important;
-      }
-    }
+.report-page {
+  .state-size {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-size: global.$font-size-sm;
+    min-width: 80px;
+    text-align: right;
   }
 }
 

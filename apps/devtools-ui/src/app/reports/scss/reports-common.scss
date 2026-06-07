@@ -68,6 +68,7 @@
         transition: background-color 0.15s ease;
 
         &:hover {
+          @include global.sdux-text(global.$sdux-text-white);
           background-color: global.$sdux-surface-outline;
         }
 

@@ -31,7 +31,7 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
     ResetButtonComponent
   ],
   templateUrl: './events.component.html',
-  styleUrl: './events.component.scss',
+  styleUrls: ['../scss/reports-common.scss', './events.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EventsComponent {

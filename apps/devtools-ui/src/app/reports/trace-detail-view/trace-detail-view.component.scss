@@ -1,49 +1,5 @@
 @use 'global' as global;
-
-:host {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-}
-
-.trace-timeline-page {
-  display: flex;
-  flex-direction: column;
-  gap: global.$spacing-md;
-  padding: global.$spacing-md;
-}
-
-/* ─── HEADER ─── */
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  .title {
-    display: flex;
-    align-items: center;
-    gap: global.$spacing-md;
-
-    h2 {
-      margin: 0;
-      font-size: global.$font-size-lg;
-      font-weight: global.$font-weight-bold;
-      color: var(--sdux-text-primary);
-    }
-
-    .cell-filter {
-      width: 250px;
-    }
-  }
-
-  .meta {
-    display: flex;
-    align-items: center;
-  }
-}
+@use '../scss/reports-common';
 
 /* ─── SUMMARY STATS ─── */
 
@@ -92,15 +48,6 @@
       color: var(--sdux-text-secondary);
     }
   }
-}
-
-/* ─── EMPTY STATE ─── */
-
-.empty-state {
-  text-align: center;
-  padding: global.$spacing-xl;
-  color: var(--sdux-text-secondary);
-  font-size: global.$font-size-sm;
 }
 
 /* ─── TIMELINE ─── */

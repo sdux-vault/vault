@@ -4,6 +4,7 @@ import {
   inject,
   signal
 } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { EventShape } from '@sdux-vault/shared';
 import { ConfirmDialogService } from '../../services/confirm-dialog/confirm-dialog.service';
@@ -22,9 +23,9 @@ import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.
 @Component({
   selector: 'sdux-load-dump-page',
   standalone: true,
-  imports: [UpsellNoticeComponent],
+  imports: [MatTooltipModule, UpsellNoticeComponent],
   templateUrl: './load-dump-page.component.html',
-  styleUrl: './load-dump-page.component.scss',
+  styleUrls: ['../scss/reports-common.scss', './load-dump-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadDumpPageComponent {

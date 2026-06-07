@@ -4,7 +4,9 @@ import { RouterModule } from '@angular/router';
 import {
   DiagramComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  PackageNameComponent,
+  VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { StateInputTypeCommonComponent } from 'apps/docs-app/app/docs/common/state/state-input-type.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
@@ -21,8 +23,11 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     RouterModule,
     PipelineRelatedTopicComponent,
     DiagramComponent,
+    VaultBrandNameComponent,
+    PackageNameComponent,
     MatTabsModule,
-    StateInputTypeCommonComponent
+    StateInputTypeCommonComponent,
+    VaultBrandNameComponent
   ],
   templateUrl: './merge-state.method.component.html',
   styleUrls: ['../../../../../scss/example.scss'],

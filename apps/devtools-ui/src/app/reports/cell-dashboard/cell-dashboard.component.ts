@@ -4,6 +4,7 @@ import {
   computed,
   inject
 } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
@@ -25,9 +26,6 @@ interface CellDashboardRow {
   /** Number of failed/orphaned traces. */
   errorCount: number;
 
-  /** Number of traces that triggered a revote. */
-  revoteCount: number;
-
   /** Cell health status indicator. */
   status: 'healthy' | 'warning' | 'error';
 }
@@ -42,8 +40,9 @@ interface CellDashboardRow {
 @Component({
   selector: 'sdux-cell-dashboard',
   standalone: true,
+  imports: [MatTooltipModule],
   templateUrl: './cell-dashboard.component.html',
-  styleUrl: './cell-dashboard.component.scss',
+  styleUrls: ['../scss/reports-common.scss', './cell-dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CellDashboardComponent {
@@ -89,12 +88,14 @@ export class CellDashboardComponent {
     return (errors / traces.length) * 100;
   });
 
-  /** Revote rate as a percentage across all traces. */
-  readonly revoteRate = computed(() => {
+  /** Denied rate as a percentage across all traces. */
+  readonly deniedRate = computed(() => {
     const traces = this.traces();
     if (traces.length === 0) return 0;
-    const revotes = traces.filter((t) => t.metrics.hadRevote).length;
-    return (revotes / traces.length) * 100;
+    const denied = traces.filter(
+      (t) => t.metrics.status === TraceExecutionStatuses.Denied
+    ).length;
+    return (denied / traces.length) * 100;
   });
 
   /** Per-cell dashboard rows sorted by trace count descending. */
@@ -108,7 +109,6 @@ export class CellDashboardComponent {
           t.metrics.status === TraceExecutionStatuses.Failed ||
           t.metrics.status === TraceExecutionStatuses.Orphaned
       ).length;
-      const revoteCount = traces.filter((t) => t.metrics.hadRevote).length;
       const avgDuration =
         traces.length > 0
           ? traces.reduce((sum, t) => sum + t.metrics.duration, 0) /
@@ -125,7 +125,6 @@ export class CellDashboardComponent {
         traceCount: traces.length,
         avgDuration,
         errorCount,
-        revoteCount,
         status
       });
     }

@@ -424,9 +424,23 @@ describe('Component: VaultOverview', () => {
     });
   });
 
+  describe('toggleCellCollapsed', () => {
+    it('should add a key to collapsed set', () => {
+      component.toggleCellCollapsed('alpha');
+      expect(component.collapsedCells().has('alpha')).toBeTrue();
+    });
+
+    it('should remove a key that is already collapsed', () => {
+      component.toggleCellCollapsed('alpha');
+      component.toggleCellCollapsed('alpha');
+      expect(component.collapsedCells().has('alpha')).toBeFalse();
+    });
+  });
+
   describe('template rendering', () => {
     it('should show free license message when no license is present', () => {
       mockService.vaultConfig.set({ versions: {}, registry: null });
+      component.licenseCollapsed.set(false);
       fixture.detectChanges();
       const el = fixture.nativeElement as HTMLElement;
       expect(el.querySelector('.free-license')?.textContent).toContain(
@@ -451,5 +465,63 @@ describe('Component: VaultOverview', () => {
       const el = fixture.nativeElement as HTMLElement;
       expect(el.querySelector('.free-license')).toBeNull();
     });
+  });
+});
+
+describe('Component: VaultOverview (mobile)', () => {
+  let fixture: ComponentFixture<VaultOverviewComponent>;
+  let component: VaultOverviewComponent;
+  let mockService: MockInsightService;
+  let originalMatchMedia: typeof window.matchMedia;
+
+  beforeEach(async () => {
+    originalMatchMedia = window.matchMedia;
+    window.matchMedia = jasmine.createSpy('matchMedia').and.returnValue({
+      matches: true,
+      media: '(max-width: 768px)',
+      onchange: null,
+      addListener: jasmine.createSpy('addListener'),
+      removeListener: jasmine.createSpy('removeListener'),
+      addEventListener: jasmine.createSpy('addEventListener'),
+      removeEventListener: jasmine.createSpy('removeEventListener'),
+      dispatchEvent: jasmine.createSpy('dispatchEvent')
+    } as unknown as MediaQueryList);
+
+    mockService = new MockInsightService();
+
+    await TestBed.configureTestingModule({
+      imports: [VaultOverviewComponent],
+      providers: [
+        provideZonelessChangeDetection(),
+        { provide: InsightService, useValue: mockService },
+        DevtoolsRegistryService
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(VaultOverviewComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    window.matchMedia = originalMatchMedia;
+  });
+
+  it('should start with versionsCollapsed true on mobile', () => {
+    expect(component.versionsCollapsed()).toBeTrue();
+  });
+
+  it('should start with licenseCollapsed true on mobile', () => {
+    expect(component.licenseCollapsed()).toBeTrue();
+  });
+
+  it('should collapse all cells when registry loads on mobile', () => {
+    mockService.vaultConfig.set({
+      versions: {},
+      registry: [mockCell, mockCell2]
+    });
+    fixture.detectChanges();
+    expect(component.collapsedCells().has('alpha')).toBeTrue();
+    expect(component.collapsedCells().has('beta')).toBeTrue();
   });
 });

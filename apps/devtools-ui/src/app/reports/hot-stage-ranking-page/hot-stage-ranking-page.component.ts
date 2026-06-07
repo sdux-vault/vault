@@ -6,8 +6,10 @@ import {
   signal
 } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
 import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
 import { TraceHotStageRankingComponent } from '../trace-detail-view/hot-stage-ranking/trace-hot-stage-ranking.component';
@@ -25,12 +27,17 @@ import { TraceHotStageRankingComponent } from '../trace-detail-view/hot-stage-ra
   standalone: true,
   imports: [
     MatSelectModule,
+    MatTooltipModule,
+    ExportButtonComponent,
     ResetButtonComponent,
     TraceHotStageRankingComponent,
     UpsellNoticeComponent
   ],
   templateUrl: './hot-stage-ranking-page.component.html',
-  styleUrl: './hot-stage-ranking-page.component.scss',
+  styleUrls: [
+    '../scss/reports-common.scss',
+    './hot-stage-ranking-page.component.scss'
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HotStageRankingPageComponent {
@@ -54,6 +61,9 @@ export class HotStageRankingPageComponent {
 
   /** Currently selected cell filter ('all' = no filter). */
   readonly selectedCell = signal<string>('all');
+
+  /** View mode for the hot stage ranking child component. */
+  readonly viewMode = signal<'grouped' | 'individual'>('grouped');
 
   /** Traces filtered by selected cell. */
   readonly filteredTraces = computed(() => {

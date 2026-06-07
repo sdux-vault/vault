@@ -1,4 +1,4 @@
-import { JsonPipe, UpperCasePipe } from '@angular/common';
+import { UpperCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -38,7 +38,6 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
   selector: 'sdux-trace-detail-view',
   standalone: true,
   imports: [
-    JsonPipe,
     UpperCasePipe,
     MatSelectModule,
     MatTabsModule,
@@ -53,7 +52,10 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
     DevtoolsPipelineEventDetailComponent
   ],
   templateUrl: './trace-detail-view.component.html',
-  styleUrl: './trace-detail-view.component.scss',
+  styleUrls: [
+    '../scss/reports-common.scss',
+    './trace-detail-view.component.scss'
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TraceDetailViewComponent implements OnInit {
@@ -86,9 +88,6 @@ export class TraceDetailViewComponent implements OnInit {
 
   /** Currently selected event for the detail panel. */
   readonly selectedEvent = signal<EventShape | null>(null);
-
-  /** Whether the raw trace data section is expanded. */
-  readonly rawTraceExpanded = signal(false);
 
   /** Cell key for the currently expanded trace. */
   readonly expandedTraceCellKey = computed(() => {

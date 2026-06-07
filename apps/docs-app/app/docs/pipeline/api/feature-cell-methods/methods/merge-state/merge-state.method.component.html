@@ -39,20 +39,202 @@
       </li>
     </ul>
 
-    <div class="note">Note</div>
-    <p>
-      The structural outcome of <strong>mergeState()</strong> is determined
-      entirely by the active Merge behavior. By default, arrays are replaced. If
-      an object merge behavior is configured, objects are merged according to
-      that behavior’s strategy. Exactly one merge behavior must be active per
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The structural outcome of <strong>mergeState()</strong> is determined
+        entirely by the active Merge behavior. By default, arrays are replaced.
+        If an object merge behavior is configured, objects are merged according
+        to that behavior’s strategy. Exactly one merge behavior must be active
+        per <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      </p>
+    </div>
 
-    <h4>Learn More</h4>
-    <a routerLink="/docs/pipeline/behaviors/merge/with-array-merge-behavior">
-      <span class="menu-content sub-item">Merge Behaviors</span>
-    </a>
+    <div class="callout callout-learn-more">
+      <div class="title">Learn More</div>
+      <a routerLink="/docs/pipeline/behaviors/merge/with-array-merge-behavior">
+        <span class="menu-content sub-item">Merge Behaviors</span>
+      </a>
+    </div>
   </header>
+
+  <section class="section">
+    <div class="section-title">Best Practices</div>
+
+    <div class="section-body">
+      <h4>Avoid Pre-Computing State in Merge Payloads</h4>
+
+      <p>
+        A common anti-pattern when using Merge is reading the current State,
+        combining it with new data in consumer code, and passing the
+        pre-computed result to the <sdux-vault-brand-name /> as the merge
+        payload.
+      </p>
+
+      <div class="table-title">Anti-Pattern</div>
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Anti-Pattern'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`merge(entry: Example): void {
+  const current = this.state.value() ?? [];
+  this.#vault.mergeState({
+    loading: false,
+    value: [...current, entry],
+    error: null
+  });
+}
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Anti-Pattern'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`function merge(entry: Example): void {
+  const current = exampleCell.state.value ?? [];
+  exampleCell.mergeState({
+    loading: false,
+    value: [...current, entry],
+    error: null
+  });
+}
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Anti-Pattern'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`function merge(entry: Example): void {
+  const current = exampleCell.state.value ?? [];
+  exampleCell.mergeState({
+    loading: false,
+    value: [...current, entry],
+    error: null
+  });
+}
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <p>
+        This pattern reads State at call time and freezes the Snapshot into the
+        merge payload. When Controllers that govern execution timing are
+        attached to the FeatureCell — such as those that throttle, debounce, or
+        delay Pipeline execution — the State may change between the moment the
+        payload is constructed and the moment the Pipeline processes it. The
+        pre-computed payload then merges against a State that no longer matches
+        the Snapshot it was built from, producing incorrect results.
+      </p>
+
+      <p>
+        Instead, pass only the new data as the merge payload and delegate the
+        combination logic to a Merge Behavior.
+        <sdux-vault-brand-name /> provides purpose-built merge Behaviors through
+        the addons package that handle array accumulation, property merging, and
+        other common strategies. These Behaviors operate inside the Pipeline at
+        the correct execution point, ensuring they always merge against the
+        current resolved State.
+      </p>
+
+      <div class="table-title">Recommended Pattern</div>
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Recommended'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`merge(entry: Example): void {
+  this.#vault.mergeState({
+    loading: false,
+    value: [entry],
+    error: null
+  });
+}
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Recommended'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`function merge(entry: Example): void {
+  exampleCell.mergeState({
+    loading: false,
+    value: [entry],
+    error: null
+  });
+}
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Recommended'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`function merge(entry: Example): void {
+  exampleCell.mergeState({
+    loading: false,
+    value: [entry],
+    error: null
+  });
+}
+`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <p>
+        Selecting an appropriate merge Behavior from the
+        <sdux-package-name />/addons ensures that State combination occurs
+        deterministically within the Pipeline, regardless of which Controllers
+        are attached.
+      </p>
+
+      <div class="callout callout-learn-more">
+        <div class="title">Learn More</div>
+        <a routerLink="/docs/pipeline/behaviors/merge">
+          <span class="menu-content sub-item">All Merge Behaviors</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- ====================================================== -->
   <!-- DIAGRAMS -->
@@ -166,13 +348,15 @@
 
       <sdux-state-input-type-common />
 
-      <div class="note">Note</div>
-      <p>
-        All accepted input types are normalized during the Resolve stage before
-        reaching the Merge stage. Regardless of input form, the pipeline
-        ultimately operates on a resolved candidate value that is structurally
-        merged with the current committed state.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          All accepted input types are normalized during the Resolve stage
+          before reaching the Merge stage. Regardless of input form, the
+          pipeline ultimately operates on a resolved candidate value that is
+          structurally merged with the current committed state.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -288,15 +472,17 @@ employeeCell.mergeState([{ name: 'Alice' }]);
         </mat-tab-group>
       </div>
 
-      <div class="note">Note</div>
-      <p>
-        The structural outcome of <strong>mergeState()</strong> is determined
-        entirely by the active Merge behavior. By default, arrays are replaced.
-        If an object merge behavior is configured, object combination follows
-        that behavior’s defined strategy. Exactly one merge behavior must be
-        active per
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          The structural outcome of <strong>mergeState()</strong> is determined
+          entirely by the active Merge behavior. By default, arrays are
+          replaced. If an object merge behavior is configured, object
+          combination follows that behavior’s defined strategy. Exactly one
+          merge behavior must be active per
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </p>
+      </div>
     </div>
   </section>
 
