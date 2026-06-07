@@ -1,48 +1,79 @@
 @if (isLicensed()) {
-  <div class="state-diff-page">
+  <div class="report-page">
     <!-- Header -->
     <header class="header">
       <div class="title">
         <h2>State Diff View</h2>
-        <mat-select
-          class="cell-filter"
-          [value]="selectedCell()"
-          (selectionChange)="selectCell($any($event.value))"
-          aria-label="Filter by cell">
-          <mat-option value="all">All Cells</mat-option>
-          @for (cell of cellKeys(); track cell) {
-            <mat-option [value]="cell">{{ cell }}</mat-option>
-          }
-        </mat-select>
-        @if (filteredTraces().length > 0) {
-          <mat-select
-            class="cell-filter trace-filter"
-            [value]="selectedTraceId()"
-            (selectionChange)="selectTrace($any($event.value))"
-            placeholder="Select a trace..."
-            panelWidth="500px"
-            aria-label="Select trace">
-            @for (trace of filteredTraces(); track trace.traceId) {
-              <mat-option [value]="trace.traceId">
-                <span class="trace-option">
-                  <span class="trace-cell">{{ trace.cellKey }}</span>
-                  &nbsp;
-                  <span class="trace-label-tag">{{
-                    traceLabels().get(trace.traceId)
-                  }}</span>
-                  &nbsp;
-                  <span class="trace-id">{{ trace.traceId.slice(0, 8) }}</span>
-                </span>
-              </mat-option>
-            }
-          </mat-select>
-        }
       </div>
+    </header>
+    <div class="action-bar">
+      <mat-select
+        class="cell-filter"
+        [value]="selectedCell()"
+        (selectionChange)="selectCell($any($event.value))"
+        aria-label="Filter by cell">
+        <mat-option value="all">All Cells</mat-option>
+        @for (cell of cellKeys(); track cell) {
+          <mat-option [value]="cell">{{ cell }}</mat-option>
+        }
+      </mat-select>
+
+      <mat-select
+        class="cell-filter trace-filter"
+        [value]="selectedTraceId()"
+        (selectionChange)="selectTrace($any($event.value))"
+        placeholder="Select a trace..."
+        panelWidth="500px"
+        aria-label="Select trace">
+        @for (trace of filteredTraces(); track trace.traceId) {
+          <mat-option [value]="trace.traceId">
+            <span class="trace-option">
+              <span class="trace-cell">{{ trace.cellKey }}</span>
+              &nbsp;
+              <span class="trace-label-tag">{{
+                traceLabels().get(trace.traceId)
+              }}</span>
+              &nbsp;
+              <span class="trace-id">{{ trace.traceId.slice(0, 8) }}</span>
+            </span>
+          </mat-option>
+        }
+      </mat-select>
+
+      <div class="sdux-container-spacer"></div>
+
       <div class="meta">
+        <div class="view-toggle">
+          <button
+            type="button"
+            class="toggle-btn"
+            [class.active]="viewMode() === 'diff'"
+            (click)="viewMode.set('diff')"
+            matTooltip="Side-by-side diff view"
+            aria-label="Diff view">
+            Diff
+          </button>
+          <button
+            type="button"
+            class="toggle-btn"
+            [class.active]="viewMode() === 'table'"
+            (click)="viewMode.set('table')"
+            matTooltip="Tabular state view"
+            aria-label="Table view">
+            Table
+          </button>
+        </div>
+
+        <sdux-export-button
+          [data]="filteredTraces()"
+          filename="state-diff"
+          [label]="'Download ' + selectedCell() + ' traces'">
+        </sdux-export-button>
+
         <sdux-devtools-reset-button
           (click)="selectCell('all')"></sdux-devtools-reset-button>
       </div>
-    </header>
+    </div>
 
     @if (filteredTraces().length === 0) {
       <section class="empty-state">
@@ -79,6 +110,7 @@
             class="nav-btn"
             [disabled]="!hasPrevious()"
             (click)="previousPair()"
+            matTooltip="Navigate to previous snapshot pair"
             aria-label="Previous pair">
             ← Previous Pair
           </button>
@@ -90,86 +122,97 @@
             class="nav-btn"
             [disabled]="!hasNext()"
             (click)="nextPair()"
+            matTooltip="Navigate to next snapshot pair"
             aria-label="Next pair">
             Next Pair →
           </button>
         </nav>
 
-        <!-- Diff Panel + Snapshot Table -->
-        <section class="diff-row">
-          <section class="diff-panel">
-            <div class="diff-column">
-              <div class="diff-header">
-                <span class="diff-header-title"
-                  >BEFORE: {{ beforeSnapshot()?.stage }}</span
-                >
-                <span class="diff-header-meta">
-                  seq #{{ (beforeSnapshot()?.sequenceIndex ?? 0) + 1 }}
-                  {{ beforeSnapshot() ? relativeTime(beforeSnapshot()!) : '' }}
-                </span>
-              </div>
-              <pre
-                class="diff-content">@for (line of beforeLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
+        @if (viewMode() === 'diff') {
+          <!-- Diff Panel + Snapshot Table -->
+          <section class="diff-row">
+            <section class="diff-panel">
+              <div class="diff-column">
+                <div class="diff-header">
+                  <span class="diff-header-title"
+                    >BEFORE: {{ beforeSnapshot()?.stage }}</span
+                  >
+                  <span class="diff-header-meta">
+                    seq #{{ (beforeSnapshot()?.sequenceIndex ?? 0) + 1 }}
+                    {{
+                      beforeSnapshot() ? relativeTime(beforeSnapshot()!) : ''
+                    }}
+                  </span>
+                </div>
+                <pre
+                  class="diff-content">@for (line of beforeLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
 </span>}</pre>
-            </div>
-            <div class="diff-column">
-              <div class="diff-header">
-                <span class="diff-header-title"
-                  >AFTER: {{ afterSnapshot()?.stage }}</span
-                >
-                <span class="diff-header-meta">
-                  seq #{{ (afterSnapshot()?.sequenceIndex ?? 0) + 1 }}
-                  {{ afterSnapshot() ? relativeTime(afterSnapshot()!) : '' }}
-                </span>
               </div>
-              <pre
-                class="diff-content">@for (line of afterLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
+              <div class="diff-column">
+                <div class="diff-header">
+                  <span class="diff-header-title"
+                    >AFTER: {{ afterSnapshot()?.stage }}</span
+                  >
+                  <span class="diff-header-meta">
+                    seq #{{ (afterSnapshot()?.sequenceIndex ?? 0) + 1 }}
+                    {{ afterSnapshot() ? relativeTime(afterSnapshot()!) : '' }}
+                  </span>
+                </div>
+                <pre
+                  class="diff-content">@for (line of afterLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
 </span>}</pre>
-            </div>
-          </section>
+              </div>
+            </section>
 
-          <!-- Snapshot Table -->
-          <section class="snapshot-table">
-            <div class="snapshot-table-header">
-              All State Snapshots in Trace ({{ candidates().length }})
-            </div>
-            <table>
-              <thead>
-                <tr>
-                  <th class="col-indicator">#</th>
-                  <th class="col-event">Stage</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (snap of candidates(); track snap.eventId) {
-                  <tr
-                    class="snapshot-row"
-                    [class.selected]="
-                      snap.sequenceIndex === beforeIndex() ||
-                      snap.sequenceIndex === afterIndex()
-                    "
-                    (click)="selectSnapshot(snap.sequenceIndex)"
-                    matTooltip="Click to compare">
-                    <td class="col-indicator">
-                      @if (
+            <!-- Snapshot Table -->
+            <section class="snapshot-table">
+              <div class="snapshot-table-header">
+                All State Snapshots in Trace ({{ candidates().length }})
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th class="col-indicator">#</th>
+                    <th class="col-event">Stage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (snap of candidates(); track snap.eventId) {
+                    <tr
+                      class="snapshot-row"
+                      [class.selected]="
                         snap.sequenceIndex === beforeIndex() ||
                         snap.sequenceIndex === afterIndex()
-                      ) {
-                        <span class="indicator">●</span>
-                      }
-                      {{ snap.sequenceIndex + 1 }}
-                    </td>
-                    <td class="col-event">{{ snap.stage }}</td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-            <div class="snapshot-table-footer">
-              <span class="indicator">●</span> = currently selected pair
-              <span class="footer-hint">Click any row to compare</span>
-            </div>
+                      "
+                      (click)="selectSnapshot(snap.sequenceIndex)"
+                      matTooltip="Click to compare">
+                      <td class="col-indicator">
+                        @if (
+                          snap.sequenceIndex === beforeIndex() ||
+                          snap.sequenceIndex === afterIndex()
+                        ) {
+                          <span class="indicator">●</span>
+                        }
+                        {{ snap.sequenceIndex + 1 }}
+                      </td>
+                      <td class="col-event">{{ snap.stage }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+              <div class="snapshot-table-footer">
+                <span class="indicator">●</span> = currently selected pair
+                <span class="footer-hint">Click any row to compare</span>
+              </div>
+            </section>
           </section>
-        </section>
+        } @else {
+          <!-- Table View -->
+          <sdux-state-table-view
+            [before]="beforeSnapshot()"
+            [after]="afterSnapshot()">
+          </sdux-state-table-view>
+        }
       } @else {
         <section class="empty-state">
           <p>

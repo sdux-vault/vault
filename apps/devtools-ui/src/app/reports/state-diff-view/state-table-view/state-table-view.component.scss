@@ -1,0 +1,99 @@
+@use 'global' as global;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+}
+
+.state-table-container {
+  overflow-x: auto;
+}
+
+.table-heading {
+  @include global.sdux-text(global.$sdux-text-primary);
+  font-size: global.$font-size-sm;
+  font-weight: global.$font-weight-bold;
+  margin: 0 0 global.$spacing-xs;
+}
+
+.table-scroll-wrapper {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.state-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: global.$sdux-code-font;
+  font-size: global.$font-size-sm;
+
+  th,
+  td {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    text-align: left;
+    padding: global.$spacing-xs global.$spacing-sm;
+    border-bottom: 1px solid global.$sdux-surface-outline;
+    white-space: nowrap;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  th {
+    @include global.sdux-text(global.$sdux-text-primary);
+    font-weight: global.$font-weight-semibold;
+    position: sticky;
+    top: 0;
+    background: global.$sdux-surface-dark;
+  }
+
+  .col-status {
+    width: 24px;
+    text-align: center;
+    padding: global.$spacing-xs;
+  }
+
+  .cell-added {
+    background-color: global.$sdux-success-dark;
+    color: global.$sdux-text-white;
+  }
+
+  .cell-removed {
+    background-color: global.$sdux-accent-dark;
+    color: global.$sdux-text-white;
+    text-decoration: line-through;
+  }
+
+  .cell-modified {
+    background-color: global.$sdux-success-dark;
+    color: global.$sdux-text-white;
+  }
+}
+
+.status-indicator {
+  font-weight: global.$font-weight-bold;
+  font-size: global.$font-size-sm;
+
+  &.added {
+    color: #4caf50;
+  }
+
+  &.modified {
+    color: #ffc107;
+  }
+
+  &.removed {
+    color: #f44336;
+  }
+}
+
+.empty-table {
+  padding: global.$spacing-lg;
+  text-align: center;
+
+  p {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-size: global.$font-size-sm;
+  }
+}

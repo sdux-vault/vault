@@ -1,0 +1,93 @@
+@if (tableDiff().beforeRows.length > 0 || tableDiff().afterRows.length > 0) {
+  <!-- Before Table -->
+  <div class="state-table-container">
+    <h3 class="table-heading">BEFORE: {{ before()?.stage }}</h3>
+    <div class="table-scroll-wrapper">
+      <table class="state-table">
+        <thead>
+          <tr>
+            <th class="col-status"></th>
+            @for (col of tableDiff().beforeColumns; track col) {
+              <th>{{ col }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of tableDiff().beforeRows; track $index) {
+            <tr>
+              <td class="col-status">
+                @switch (row.status) {
+                  @case ('removed') {
+                    <span class="status-indicator removed" matTooltip="Removed"
+                      >-</span
+                    >
+                  }
+                  @case ('modified') {
+                    <span
+                      class="status-indicator modified"
+                      matTooltip="Modified"
+                      >~</span
+                    >
+                  }
+                }
+              </td>
+              @for (col of tableDiff().beforeColumns; track col) {
+                <td [class]="'cell-' + row.cells[col]">
+                  {{ formatCell(row.data[col]) }}
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- After Table -->
+  <div class="state-table-container">
+    <h3 class="table-heading">AFTER: {{ after()?.stage }}</h3>
+    <div class="table-scroll-wrapper">
+      <table class="state-table">
+        <thead>
+          <tr>
+            <th class="col-status"></th>
+            @for (col of tableDiff().afterColumns; track col) {
+              <th>{{ col }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of tableDiff().afterRows; track $index) {
+            <tr>
+              <td class="col-status">
+                @switch (row.status) {
+                  @case ('added') {
+                    <span class="status-indicator added" matTooltip="Added"
+                      >+</span
+                    >
+                  }
+                  @case ('modified') {
+                    <span
+                      class="status-indicator modified"
+                      matTooltip="Modified"
+                      >~</span
+                    >
+                  }
+                }
+              </td>
+              @for (col of tableDiff().afterColumns; track col) {
+                <td [class]="'cell-' + row.cells[col]">
+                  {{ formatCell(row.data[col]) }}
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+} @else {
+  <div class="empty-table">
+    <p>No tabular data available for this snapshot.</p>
+  </div>
+}

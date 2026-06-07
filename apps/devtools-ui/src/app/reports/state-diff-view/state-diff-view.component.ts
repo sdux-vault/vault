@@ -16,8 +16,10 @@ import type {
   TraceExecutionShape
 } from '../../shapes/trace';
 import { TraceExecutionStatuses } from '../../shapes/trace';
+import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
 import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
+import { StateTableViewComponent } from './state-table-view/state-table-view.component';
 
 /**
  * State Diff View report component.
@@ -33,11 +35,16 @@ import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.
   imports: [
     MatSelectModule,
     MatTooltipModule,
+    ExportButtonComponent,
     ResetButtonComponent,
+    StateTableViewComponent,
     UpsellNoticeComponent
   ],
   templateUrl: './state-diff-view.component.html',
-  styleUrl: './state-diff-view.component.scss',
+  styleUrls: [
+    '../scss/reports-common.scss',
+    './state-diff-view.component.scss'
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StateDiffViewComponent {
@@ -70,6 +77,9 @@ export class StateDiffViewComponent {
 
   /** Index of the "after" snapshot in the selected pair (0-based). */
   readonly afterIndex = signal<number>(1);
+
+  /** Active view mode for snapshot display ('diff' or 'table'). */
+  readonly viewMode = signal<'diff' | 'table'>('diff');
 
   /** Traces filtered by cell selection. */
   readonly filteredTraces = computed(() => {

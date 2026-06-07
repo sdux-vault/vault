@@ -564,12 +564,12 @@ describe('StateDiffViewComponent', () => {
       expect(component.afterIndex()).toBe(2);
     });
 
-    it('should hide trace-filter select when no filtered traces', () => {
+    it('should render trace-filter select even when no filtered traces', () => {
       mockAggregate.traces.set([]);
       mockAggregate.tracesByCellKey.set(new Map());
       fixture.detectChanges();
       const traceFilter = fixture.nativeElement.querySelector('.trace-filter');
-      expect(traceFilter).toBeNull();
+      expect(traceFilter).not.toBeNull();
     });
   });
 
