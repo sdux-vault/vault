@@ -88,7 +88,8 @@ describe('f201: Value - Merge with Encrypt and Cache Test', () => {
             insights: {
               wantsErrors: true,
               wantsPayload: true,
-              wantsState: true
+              wantsState: true,
+              wantsCandidates: true
             } as InsightConfig
           },
           [

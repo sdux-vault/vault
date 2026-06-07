@@ -77,7 +77,8 @@ describe('f202: Value - Replace Delay Test', () => {
             insights: {
               wantsErrors: true,
               wantsPayload: true,
-              wantsState: true
+              wantsState: true,
+              wantsCandidates: true
             } as InsightConfig
           },
           [withLocalStoragePersistBehavior, withStateCacheBehavior],

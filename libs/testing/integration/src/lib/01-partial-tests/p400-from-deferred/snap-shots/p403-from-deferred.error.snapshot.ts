@@ -214,7 +214,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -225,7 +224,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -236,7 +234,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -267,7 +264,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -428,7 +424,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -469,25 +464,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-001',
-        firstName: 'Alice',
-        lastName: 'Wells',
-        role: 'Teller',
-        status: 'Active',
-        salary: 48000,
-        hireDate: '2018-03-12',
-        birthDate: '1992-07-22',
-        phoneNumber: '555-201-8899',
-        address: {
-          street: '101 Maple St',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62704'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -498,25 +474,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-001',
-        firstName: 'Alice',
-        lastName: 'Wells',
-        role: 'Teller',
-        status: 'Active',
-        salary: 48000,
-        hireDate: '2018-03-12',
-        birthDate: '1992-07-22',
-        phoneNumber: '555-201-8899',
-        address: {
-          street: '101 Maple St',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62704'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -527,25 +484,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-001',
-        firstName: 'Alice',
-        lastName: 'Wells',
-        role: 'Teller',
-        status: 'Active',
-        salary: 48000,
-        hireDate: '2018-03-12',
-        birthDate: '1992-07-22',
-        phoneNumber: '555-201-8899',
-        address: {
-          street: '101 Maple St',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62704'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -576,25 +514,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-001',
-        firstName: 'Alice',
-        lastName: 'Wells',
-        role: 'Teller',
-        status: 'Active',
-        salary: 48000,
-        hireDate: '2018-03-12',
-        birthDate: '1992-07-22',
-        phoneNumber: '555-201-8899',
-        address: {
-          street: '101 Maple St',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62704'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -775,25 +694,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-001',
-        firstName: 'Alice',
-        lastName: 'Wells',
-        role: 'Teller',
-        status: 'Active',
-        salary: 48000,
-        hireDate: '2018-03-12',
-        birthDate: '1992-07-22',
-        phoneNumber: '555-201-8899',
-        address: {
-          street: '101 Maple St',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62704'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -834,25 +734,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -863,25 +744,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -892,25 +754,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -941,25 +784,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1216,7 +1040,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -1227,7 +1050,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -1238,7 +1060,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -1269,7 +1090,6 @@ export const p403Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {

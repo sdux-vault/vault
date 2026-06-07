@@ -260,6 +260,23 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
+                <strong>endConductorAttempt</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>cell: string</li>
+                  <li>behaviorKey: string</li>
+                  <li>ctx: Readonly&gt;</li>
+                  <li>payload: unknown</li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Signals the end of a conductor attempt lifecycle event.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <strong>endConductorVote</strong>
 
                 <p>inputs:</p>
@@ -734,6 +751,32 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
+                <strong>pipelineCandidate</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>cell: string</li>
+                  <li>behaviorKey: string</li>
+                  <li>ctx: Readonly&gt;</li>
+                  <li>
+                    stage:
+                    <a href="/docs/references/types/pipeline-stage"
+                      >PipelineStage</a
+                    >
+                  </li>
+                  <li>value: T | undefined</li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Emits a pipeline candidate capturing the in-flight state value
+                after a pipeline stage completes. These events are used
+                exclusively by the State Diff View in DevTools and are not
+                displayed in the standard trace detail timeline.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <strong>registerCell</strong>
 
                 <p>inputs:</p>
@@ -758,7 +801,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
-                <strong>restartControllerAttempt</strong>
+                <strong>restartConductorAttempt</strong>
 
                 <p>inputs:</p>
                 <ul>
@@ -770,7 +813,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p>returns: void</p>
               </td>
               <td>
-                Records that a controller attempt was restarted.<br /><br />
+                Records that a conductorattempt was restarted.<br /><br />
               </td>
             </tr>
             <tr>
@@ -853,6 +896,22 @@ import { Component, ViewEncapsulation } from '@angular/core';
               </td>
               <td>
                 Signals the start of a compute-merge lifecycle event.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>startConductorAttempt</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>cell: string</li>
+                  <li>behaviorKey: string</li>
+                  <li>ctx: Readonly&gt;</li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Signals the start of a conductor attempt lifecycle event.<br /><br />
               </td>
             </tr>
             <tr>

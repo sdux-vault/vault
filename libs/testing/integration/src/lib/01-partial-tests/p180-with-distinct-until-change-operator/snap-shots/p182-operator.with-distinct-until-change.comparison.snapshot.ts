@@ -334,12 +334,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -370,12 +364,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -386,12 +374,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -402,12 +384,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -438,12 +414,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -604,12 +574,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -650,12 +614,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -686,12 +644,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -752,12 +704,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -918,12 +864,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -964,12 +904,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Brian'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1000,12 +934,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Brian'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1066,12 +994,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1232,12 +1154,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '1',
-        name: 'Kai'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1278,12 +1194,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '2',
-        name: 'Brian'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1314,12 +1224,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '2',
-        name: 'Brian'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1350,12 +1254,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '2',
-        name: 'Brian'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1366,12 +1264,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '2',
-        name: 'Brian'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1382,12 +1274,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '2',
-        name: 'Brian'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1418,12 +1304,6 @@ export const p182Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: '2',
-        name: 'Brian'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {

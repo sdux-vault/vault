@@ -334,28 +334,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'E-001',
-      firstName: 'Sarah',
-      lastName: 'Kensington',
-      role: 'Teller',
-      status: 'Active',
-      salary: 52000,
-      hireDate: '2020-04-15',
-      birthDate: '1991-02-10',
-      address: {
-        street: '123 Maple St',
-        city: 'Riverside',
-        state: 'CA',
-        zip: '92501'
-      },
-      phoneNumber: '555-123-9876',
-      fullName: 'Sarah Kensington',
-      senior: false,
-      isLoanOfficer: false,
-      isSecurity: false,
-      isActive: true
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -386,28 +364,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'E-001',
-      firstName: 'Sarah',
-      lastName: 'Kensington',
-      role: 'Teller',
-      status: 'Active',
-      salary: 52000,
-      hireDate: '2020-04-15',
-      birthDate: '1991-02-10',
-      address: {
-        street: '123 Maple St',
-        city: 'Riverside',
-        state: 'CA',
-        zip: '92501'
-      },
-      phoneNumber: '555-123-9876',
-      fullName: 'Sarah Kensington',
-      senior: false,
-      isLoanOfficer: false,
-      isSecurity: false,
-      isActive: true
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -418,28 +374,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'E-001',
-      firstName: 'Sarah',
-      lastName: 'Kensington',
-      role: 'Teller',
-      status: 'Active',
-      salary: 52000,
-      hireDate: '2020-04-15',
-      birthDate: '1991-02-10',
-      address: {
-        street: '123 Maple St',
-        city: 'Riverside',
-        state: 'CA',
-        zip: '92501'
-      },
-      phoneNumber: '555-123-9876',
-      fullName: 'Sarah Kensington',
-      senior: false,
-      isLoanOfficer: false,
-      isSecurity: false,
-      isActive: true
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -450,28 +384,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'E-001',
-      firstName: 'Sarah',
-      lastName: 'Kensington',
-      role: 'Teller',
-      status: 'Active',
-      salary: 52000,
-      hireDate: '2020-04-15',
-      birthDate: '1991-02-10',
-      address: {
-        street: '123 Maple St',
-        city: 'Riverside',
-        state: 'CA',
-        zip: '92501'
-      },
-      phoneNumber: '555-123-9876',
-      fullName: 'Sarah Kensington',
-      senior: false,
-      isLoanOfficer: false,
-      isSecurity: false,
-      isActive: true
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -502,28 +414,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'E-001',
-      firstName: 'Sarah',
-      lastName: 'Kensington',
-      role: 'Teller',
-      status: 'Active',
-      salary: 52000,
-      hireDate: '2020-04-15',
-      birthDate: '1991-02-10',
-      address: {
-        street: '123 Maple St',
-        city: 'Riverside',
-        state: 'CA',
-        zip: '92501'
-      },
-      phoneNumber: '555-123-9876',
-      fullName: 'Sarah Kensington',
-      senior: false,
-      isLoanOfficer: false,
-      isSecurity: false,
-      isActive: true
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -684,28 +574,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'E-001',
-      firstName: 'Sarah',
-      lastName: 'Kensington',
-      role: 'Teller',
-      status: 'Active',
-      salary: 52000,
-      hireDate: '2020-04-15',
-      birthDate: '1991-02-10',
-      address: {
-        street: '123 Maple St',
-        city: 'Riverside',
-        state: 'CA',
-        zip: '92501'
-      },
-      phoneNumber: '555-123-9876',
-      fullName: 'Sarah Kensington',
-      senior: false,
-      isLoanOfficer: false,
-      isSecurity: false,
-      isActive: true
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -746,14 +614,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      status: 'Vacation',
-      salary: 54000,
-      address: {
-        street: '900 Oceanview Blvd'
-      },
-      phoneNumber: '555-777-8888'
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -784,28 +644,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'E-001',
-      firstName: 'Sarah',
-      lastName: 'Kensington',
-      role: 'Teller',
-      hireDate: '2020-04-15',
-      birthDate: '1991-02-10',
-      fullName: 'Sarah Kensington',
-      senior: false,
-      isLoanOfficer: false,
-      isSecurity: false,
-      isActive: true,
-      status: 'Vacation',
-      salary: 54000,
-      address: {
-        city: 'Riverside',
-        state: 'CA',
-        zip: '92501',
-        street: '900 Oceanview Blvd'
-      },
-      phoneNumber: '555-777-8888'
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -816,28 +654,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'E-001',
-      firstName: 'Sarah',
-      lastName: 'Kensington',
-      role: 'Teller',
-      hireDate: '2020-04-15',
-      birthDate: '1991-02-10',
-      fullName: 'Sarah Kensington',
-      senior: false,
-      isLoanOfficer: false,
-      isSecurity: false,
-      isActive: true,
-      status: 'Vacation',
-      salary: 54000,
-      address: {
-        city: 'Riverside',
-        state: 'CA',
-        zip: '92501',
-        street: '900 Oceanview Blvd'
-      },
-      phoneNumber: '555-777-8888'
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -848,28 +664,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'E-001',
-      firstName: 'Sarah',
-      lastName: 'Kensington',
-      role: 'Teller',
-      hireDate: '2020-04-15',
-      birthDate: '1991-02-10',
-      fullName: 'Sarah Kensington',
-      senior: false,
-      isLoanOfficer: false,
-      isSecurity: false,
-      isActive: true,
-      status: 'Vacation',
-      salary: 54000,
-      address: {
-        city: 'Riverside',
-        state: 'CA',
-        zip: '92501',
-        street: '900 Oceanview Blvd'
-      },
-      phoneNumber: '555-777-8888'
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -900,28 +694,6 @@ export const p150Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'E-001',
-      firstName: 'Sarah',
-      lastName: 'Kensington',
-      role: 'Teller',
-      hireDate: '2020-04-15',
-      birthDate: '1991-02-10',
-      fullName: 'Sarah Kensington',
-      senior: false,
-      isLoanOfficer: false,
-      isSecurity: false,
-      isActive: true,
-      status: 'Vacation',
-      salary: 54000,
-      address: {
-        city: 'Riverside',
-        state: 'CA',
-        zip: '92501',
-        street: '900 Oceanview Blvd'
-      },
-      phoneNumber: '555-777-8888'
-    },
     traceId: 'trace-id-removed'
   },
   {

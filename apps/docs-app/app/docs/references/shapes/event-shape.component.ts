@@ -65,6 +65,18 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
+                <strong>candidate?</strong>
+
+                <p class="type">type: T | undefined</p>
+              </td>
+              <td class="column-auto">
+                Optional in-flight pipeline candidate value captured after a
+                stage completes. Used exclusively by the State Diff View in
+                DevTools.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>cell</strong>
 
                 <p class="type">type: string</p>

@@ -64,6 +64,22 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
+                <strong>license?</strong>
+
+                <p class="type">
+                  type:
+                  <a href="/docs/references/shapes/vault-license-payload-shape"
+                    >VaultLicensePayloadShape</a
+                  >
+                </p>
+              </td>
+              <td class="column-auto">
+                Verified license payload, populated after successful token
+                verification.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>vaultEventBus?</strong>
 
                 <p class="type">

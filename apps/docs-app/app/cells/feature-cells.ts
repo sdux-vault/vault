@@ -19,7 +19,8 @@ export const PipelineProvideFeatureCell = provideFeatureCell(
     insights: {
       wantsErrors: true,
       wantsPayload: true,
-      wantsState: false
+      wantsState: false,
+      wantsCandidates: false
     } as InsightConfig
   },
   [

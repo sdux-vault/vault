@@ -25,6 +25,7 @@ import { DebugWidgetLongTasksShapeComponent } from './debug-widget-long-tasks-sh
 import { DebugWidgetRegistryShapeComponent } from './debug-widget-registry-shape.component';
 import { DebugWidgetTraceEventArgsShapeComponent } from './debug-widget-trace-event-args-shape.component';
 import { DebugWidgetTraceEventShapeComponent } from './debug-widget-trace-event-shape.component';
+import { EventCandidateShapeComponent } from './event-candidate-shape.component';
 import { EventShapeComponent } from './event-shape.component';
 import { FeatureCellBaseShapeComponent } from './feature-cell-base-shape.component';
 import { FeatureCellShapeComponent } from './feature-cell-shape.component';
@@ -36,6 +37,7 @@ import { StateInputShapeComponent } from './state-input-shape.component';
 import { StateSnapshotShapeComponent } from './state-snapshot-shape.component';
 import { StepwiseBehaviorDecisionShapeComponent } from './stepwise-behavior-decision-shape.component';
 import { VaultErrorShapeComponent } from './vault-error-shape.component';
+import { VaultLicensePayloadShapeComponent } from './vault-license-payload-shape.component';
 import { VaultLicensingShapeComponent } from './vault-licensing-shape.component';
 import { VaultRegistrationEntityShapeComponent } from './vault-registration-entity-shape.component';
 import { VaultRegistrationFluentApiShapeComponent } from './vault-registration-fluent-api-shape.component';
@@ -64,6 +66,7 @@ import { VaultRegistrationShapeComponent } from './vault-registration-shape.comp
     DebugWidgetRegistryShapeComponent,
     DebugWidgetTraceEventArgsShapeComponent,
     DebugWidgetTraceEventShapeComponent,
+    EventCandidateShapeComponent,
     EventShapeComponent,
     FeatureCellBaseShapeComponent,
     FeatureCellShapeComponent,
@@ -75,6 +78,7 @@ import { VaultRegistrationShapeComponent } from './vault-registration-shape.comp
     StateSnapshotShapeComponent,
     StepwiseBehaviorDecisionShapeComponent,
     VaultErrorShapeComponent,
+    VaultLicensePayloadShapeComponent,
     VaultLicensingShapeComponent,
     VaultRegistrationEntityShapeComponent,
     VaultRegistrationFluentApiShapeComponent,

@@ -334,7 +334,6 @@ export const f23Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: 'the value',
     traceId: 'trace-id-removed'
   },
   {
@@ -365,7 +364,6 @@ export const f23Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: 'the value',
     traceId: 'trace-id-removed'
   },
   {

@@ -214,7 +214,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -225,7 +224,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -236,7 +234,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -267,7 +264,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -428,7 +424,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -469,25 +464,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -518,25 +494,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -547,25 +504,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -576,25 +514,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -625,25 +544,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -804,25 +704,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -863,25 +744,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -912,25 +774,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -941,25 +784,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -970,25 +794,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1019,25 +824,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1198,25 +984,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1257,25 +1024,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1306,25 +1054,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1335,25 +1064,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1364,25 +1074,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1413,25 +1104,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1602,25 +1274,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1661,25 +1314,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1710,25 +1344,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1739,25 +1354,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1768,25 +1364,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1817,25 +1394,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1986,25 +1544,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: {
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -2045,25 +1584,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -2094,25 +1614,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -2123,25 +1624,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -2152,25 +1634,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -2201,25 +1664,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -2476,7 +1920,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -2487,7 +1930,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -2498,7 +1940,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -2529,7 +1970,6 @@ export const p272Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {

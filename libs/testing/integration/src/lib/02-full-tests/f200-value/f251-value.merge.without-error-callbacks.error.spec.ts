@@ -59,7 +59,8 @@ describe('f251: Value - Merge - Without ErrorCallbacks - Error Test', () => {
             insights: {
               wantsErrors: true,
               wantsPayload: true,
-              wantsState: true
+              wantsState: true,
+              wantsCandidates: true
             } as InsightConfig
           },
           [withLocalStoragePersistBehavior],

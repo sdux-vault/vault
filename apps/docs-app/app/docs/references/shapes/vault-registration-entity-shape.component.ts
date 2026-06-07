@@ -93,7 +93,13 @@ import { Component, ViewEncapsulation } from '@angular/core';
               <td class="column-300">
                 <strong>validLicense?</strong>
 
-                <p class="type">type: VaultRegistrationLicenseStatusType</p>
+                <p class="type">
+                  type:
+                  <a
+                    href="/docs/references/types/vault-registration-license-status-type"
+                    >VaultRegistrationLicenseStatusType</a
+                  >
+                </p>
               </td>
               <td class="column-auto">
                 Current license validation status for this entity.<br /><br />

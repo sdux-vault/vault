@@ -334,25 +334,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -383,25 +364,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -412,25 +374,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -441,25 +384,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -490,25 +414,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -669,25 +574,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -728,25 +614,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-003',
-        firstName: 'Carla',
-        lastName: 'Summers',
-        role: 'Owner',
-        status: 'Active',
-        salary: 185000,
-        hireDate: '2003-01-20',
-        birthDate: '1964-11-30',
-        phoneNumber: '555-732-1100',
-        address: {
-          street: '12 Oak Bend Dr',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60614'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -777,25 +644,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-003',
-        firstName: 'Carla',
-        lastName: 'Summers',
-        role: 'Owner',
-        status: 'Active',
-        salary: 185000,
-        hireDate: '2003-01-20',
-        birthDate: '1964-11-30',
-        phoneNumber: '555-732-1100',
-        address: {
-          street: '12 Oak Bend Dr',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60614'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -806,25 +654,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-003',
-        firstName: 'Carla',
-        lastName: 'Summers',
-        role: 'Owner',
-        status: 'Active',
-        salary: 185000,
-        hireDate: '2003-01-20',
-        birthDate: '1964-11-30',
-        phoneNumber: '555-732-1100',
-        address: {
-          street: '12 Oak Bend Dr',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60614'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -835,25 +664,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-003',
-        firstName: 'Carla',
-        lastName: 'Summers',
-        role: 'Owner',
-        status: 'Active',
-        salary: 185000,
-        hireDate: '2003-01-20',
-        birthDate: '1964-11-30',
-        phoneNumber: '555-732-1100',
-        address: {
-          street: '12 Oak Bend Dr',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60614'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -884,25 +694,6 @@ export const p011Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-003',
-        firstName: 'Carla',
-        lastName: 'Summers',
-        role: 'Owner',
-        status: 'Active',
-        salary: 185000,
-        hireDate: '2003-01-20',
-        birthDate: '1964-11-30',
-        phoneNumber: '555-732-1100',
-        address: {
-          street: '12 Oak Bend Dr',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60614'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {

@@ -374,25 +374,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -423,25 +404,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -452,25 +414,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -481,25 +424,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -530,25 +454,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1179,25 +1084,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1238,25 +1124,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-005',
-        firstName: 'Elena',
-        lastName: 'Reed',
-        role: 'Teller',
-        status: 'Active',
-        salary: 52000,
-        hireDate: '2021-11-01',
-        birthDate: '1998-09-05',
-        phoneNumber: '555-610-2099',
-        address: {
-          street: '233 Pinecrest Ln',
-          city: 'Naperville',
-          state: 'IL',
-          zip: '60540'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1287,25 +1154,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-005',
-        firstName: 'Elena',
-        lastName: 'Reed',
-        role: 'Teller',
-        status: 'Active',
-        salary: 52000,
-        hireDate: '2021-11-01',
-        birthDate: '1998-09-05',
-        phoneNumber: '555-610-2099',
-        address: {
-          street: '233 Pinecrest Ln',
-          city: 'Naperville',
-          state: 'IL',
-          zip: '60540'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1316,25 +1164,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-005',
-        firstName: 'Elena',
-        lastName: 'Reed',
-        role: 'Teller',
-        status: 'Active',
-        salary: 52000,
-        hireDate: '2021-11-01',
-        birthDate: '1998-09-05',
-        phoneNumber: '555-610-2099',
-        address: {
-          street: '233 Pinecrest Ln',
-          city: 'Naperville',
-          state: 'IL',
-          zip: '60540'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1345,25 +1174,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-005',
-        firstName: 'Elena',
-        lastName: 'Reed',
-        role: 'Teller',
-        status: 'Active',
-        salary: 52000,
-        hireDate: '2021-11-01',
-        birthDate: '1998-09-05',
-        phoneNumber: '555-610-2099',
-        address: {
-          street: '233 Pinecrest Ln',
-          city: 'Naperville',
-          state: 'IL',
-          zip: '60540'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1394,25 +1204,6 @@ export const p161Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-005',
-        firstName: 'Elena',
-        lastName: 'Reed',
-        role: 'Teller',
-        status: 'Active',
-        salary: 52000,
-        hireDate: '2021-11-01',
-        birthDate: '1998-09-05',
-        phoneNumber: '555-610-2099',
-        address: {
-          street: '233 Pinecrest Ln',
-          city: 'Naperville',
-          state: 'IL',
-          zip: '60540'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {

@@ -86,7 +86,8 @@ describe('f203: Value - Merge with Throttle Test', () => {
             insights: {
               wantsErrors: true,
               wantsPayload: true,
-              wantsState: true
+              wantsState: true,
+              wantsCandidates: true
             } as InsightConfig
           },
           [],

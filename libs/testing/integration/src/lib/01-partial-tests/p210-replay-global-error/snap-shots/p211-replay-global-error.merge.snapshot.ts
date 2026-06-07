@@ -394,7 +394,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -425,7 +424,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -436,7 +434,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -467,7 +464,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -648,7 +644,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -709,25 +704,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-001',
-        firstName: 'Alice',
-        lastName: 'Wells',
-        role: 'Teller',
-        status: 'Active',
-        salary: 48000,
-        hireDate: '2018-03-12',
-        birthDate: '1992-07-22',
-        phoneNumber: '555-201-8899',
-        address: {
-          street: '101 Maple St',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62704'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -758,25 +734,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-001',
-        firstName: 'Alice',
-        lastName: 'Wells',
-        role: 'Teller',
-        status: 'Active',
-        salary: 48000,
-        hireDate: '2018-03-12',
-        birthDate: '1992-07-22',
-        phoneNumber: '555-201-8899',
-        address: {
-          street: '101 Maple St',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62704'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1307,7 +1264,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [],
     traceId: 'trace-id-removed'
   },
   {
@@ -1368,25 +1324,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1417,25 +1354,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1466,25 +1384,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1495,25 +1394,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1544,25 +1424,6 @@ export const p211Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: {
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
-        }
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {

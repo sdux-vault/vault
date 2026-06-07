@@ -124,7 +124,7 @@ describe('Chrome Extension: bridge-inject.js', () => {
         wantsState: true,
         wantsPayload: true,
         wantsErrors: true,
-        wantsQueue: true
+        wantsCandidates: true
       });
     });
 

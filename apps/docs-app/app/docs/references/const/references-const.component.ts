@@ -31,6 +31,7 @@ import { EventTypesComponent } from './event-types.component';
 import { isTestEnvComponent } from './is-test-env.component';
 import { LogLevelTypesComponent } from './log-level-types.component';
 import { OperationTypesComponent } from './operation-types.component';
+import { PipelineStagesComponent } from './pipeline-stages.component';
 import { ResolveTypesComponent } from './resolve-types.component';
 import { StateEmitTypesComponent } from './state-emit-types.component';
 import { VAULT_CLEAR_STATEComponent } from './vault_clear_state.component';
@@ -40,6 +41,8 @@ import { VAULT_STOPComponent } from './vault_stop.component';
 import { VaultErrorKindTypesComponent } from './vault-error-kind-types.component';
 import { VaultErrorNameTypesComponent } from './vault-error-name-types.component';
 import { VaultErrorUsageKindTypesComponent } from './vault-error-usage-kind-types.component';
+import { VaultLicensePayloadTypesComponent } from './vault-license-payload-types.component';
+import { VaultRegistrationLicenseStatusTypesComponent } from './vault-registration-license-status-types.component';
 
 @Component({
   selector: 'sdux-references-const-splashpage',
@@ -70,6 +73,7 @@ import { VaultErrorUsageKindTypesComponent } from './vault-error-usage-kind-type
     isTestEnvComponent,
     LogLevelTypesComponent,
     OperationTypesComponent,
+    PipelineStagesComponent,
     ResolveTypesComponent,
     StateEmitTypesComponent,
     VAULT_CLEAR_STATEComponent,
@@ -78,7 +82,9 @@ import { VaultErrorUsageKindTypesComponent } from './vault-error-usage-kind-type
     VAULT_STOPComponent,
     VaultErrorKindTypesComponent,
     VaultErrorNameTypesComponent,
-    VaultErrorUsageKindTypesComponent
+    VaultErrorUsageKindTypesComponent,
+    VaultLicensePayloadTypesComponent,
+    VaultRegistrationLicenseStatusTypesComponent
   ],
   templateUrl: './references-const.component.html',
   styleUrls: ['../../scss/example.scss']

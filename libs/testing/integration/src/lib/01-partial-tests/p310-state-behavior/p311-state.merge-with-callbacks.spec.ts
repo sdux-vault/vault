@@ -32,7 +32,7 @@ describe('p311: State Service Merge with Emit State Callbacks Test', () => {
           key: 'partial-state-with-emit-callbacks',
           initialState: null,
           insights: {
-            wantsStates: true,
+            wantsState: true,
             wantsPayload: true
           } as any
         })

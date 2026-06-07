@@ -63,6 +63,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
+                <strong>Pipeline</strong>
+              </td>
+              <td class="column-auto">
+                <code>pipeline</code>
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>Stage</strong>
               </td>
               <td class="column-auto">

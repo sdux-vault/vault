@@ -24,10 +24,10 @@ provideVault({ logLevel: 'off', devMode: true })
 2. Enable **insights** in your FeatureCell.
 
 \`\`\`
-insights: { wantsErrors: true, wantsPayload: true, wantsState: true }
+insights: { wantsErrors: true, wantsPayload: true, wantsState: true, wantsCandidates: false }
 \`\`\`
 
-*(wantsState is optional if your state contains sensitive data)*
+*(wantsState and wantsCandidates are optional if your state contains sensitive data)*
 
 3. Open your application in the browser.
 

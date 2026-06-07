@@ -74,8 +74,8 @@
             id: 'dev-tools',
             wantsState: true,
             wantsPayload: true,
-            wantsErrors: true,
-            wantsQueue: true
+            wantsCandidates: true,
+            wantsErrors: true
           });
         }
       } catch (e) {

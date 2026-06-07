@@ -220,23 +220,6 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'be-001',
-      firstName: 'Alice',
-      lastName: 'Wells',
-      role: 'Teller',
-      status: 'Active',
-      salary: 48000,
-      hireDate: '2018-03-12',
-      birthDate: '1992-07-22',
-      phoneNumber: '555-201-8899',
-      address: {
-        street: '101 Maple St',
-        city: 'Springfield',
-        state: 'IL',
-        zip: '62704'
-      }
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -247,23 +230,6 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'be-001',
-      firstName: 'Alice',
-      lastName: 'Wells',
-      role: 'Teller',
-      status: 'Active',
-      salary: 48000,
-      hireDate: '2018-03-12',
-      birthDate: '1992-07-22',
-      phoneNumber: '555-201-8899',
-      address: {
-        street: '101 Maple St',
-        city: 'Springfield',
-        state: 'IL',
-        zip: '62704'
-      }
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -274,23 +240,6 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'be-001',
-      firstName: 'Alice',
-      lastName: 'Wells',
-      role: 'Teller',
-      status: 'Active',
-      salary: 48000,
-      hireDate: '2018-03-12',
-      birthDate: '1992-07-22',
-      phoneNumber: '555-201-8899',
-      address: {
-        street: '101 Maple St',
-        city: 'Springfield',
-        state: 'IL',
-        zip: '62704'
-      }
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -347,23 +296,6 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'be-001',
-      firstName: 'Alice',
-      lastName: 'Wells',
-      role: 'Teller',
-      status: 'Active',
-      salary: 48000,
-      hireDate: '2018-03-12',
-      birthDate: '1992-07-22',
-      phoneNumber: '555-201-8899',
-      address: {
-        street: '101 Maple St',
-        city: 'Springfield',
-        state: 'IL',
-        zip: '62704'
-      }
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -648,23 +580,6 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'be-001',
-      firstName: 'Alice',
-      lastName: 'Wells',
-      role: 'Teller',
-      status: 'Active',
-      salary: 48000,
-      hireDate: '2018-03-12',
-      birthDate: '1992-07-22',
-      phoneNumber: '555-201-8899',
-      address: {
-        street: '101 Maple St',
-        city: 'Springfield',
-        state: 'IL',
-        zip: '62704'
-      }
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -675,23 +590,6 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'be-001',
-      firstName: 'Alice',
-      lastName: 'Wells',
-      role: 'Teller',
-      status: 'Active',
-      salary: 48000,
-      hireDate: '2018-03-12',
-      birthDate: '1992-07-22',
-      phoneNumber: '555-201-8899',
-      address: {
-        street: '101 Maple St',
-        city: 'Springfield',
-        state: 'IL',
-        zip: '62704'
-      }
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -702,23 +600,6 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'be-001',
-      firstName: 'Alice',
-      lastName: 'Wells',
-      role: 'Teller',
-      status: 'Active',
-      salary: 48000,
-      hireDate: '2018-03-12',
-      birthDate: '1992-07-22',
-      phoneNumber: '555-201-8899',
-      address: {
-        street: '101 Maple St',
-        city: 'Springfield',
-        state: 'IL',
-        zip: '62704'
-      }
-    },
     traceId: 'trace-id-removed'
   },
   {
@@ -775,23 +656,6 @@ export const p241Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: {
-      id: 'be-001',
-      firstName: 'Alice',
-      lastName: 'Wells',
-      role: 'Teller',
-      status: 'Active',
-      salary: 48000,
-      hireDate: '2018-03-12',
-      birthDate: '1992-07-22',
-      phoneNumber: '555-201-8899',
-      address: {
-        street: '101 Maple St',
-        city: 'Springfield',
-        state: 'IL',
-        zip: '62704'
-      }
-    },
     traceId: 'trace-id-removed'
   },
   {

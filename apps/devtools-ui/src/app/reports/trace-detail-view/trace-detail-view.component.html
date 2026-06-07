@@ -80,11 +80,11 @@
           <section class="trace-detail-section">
             <div class="detail-header">
               <h3>
-                <span class="detail-status" [class]="statusClass(trace)">{{
+                <span [class]="'detail-status ' + statusClass(trace)">{{
                   statusLabel(trace)
                 }}</span>
                 Trace t{{ filteredTraces().indexOf(trace) + 1 }} —
-                <span class="detail-status-label" [class]="statusClass(trace)">
+                <span [class]="'detail-status-label ' + statusClass(trace)">
                   {{ trace.metrics.status | uppercase }}
                 </span>
                 — {{ trace.metrics.duration.toFixed(1) }}ms

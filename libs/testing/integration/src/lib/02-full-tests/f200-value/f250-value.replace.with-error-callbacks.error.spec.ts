@@ -56,7 +56,8 @@ describe('f202: Value - Replace - With ErrorCallbacks and encryption - Error Tes
             insights: {
               wantsErrors: true,
               wantsPayload: true,
-              wantsState: true
+              wantsState: true,
+              wantsCandidates: true
             } as InsightConfig
           },
           [withLocalStoragePersistBehavior, withAes256EncryptBehavior],

@@ -225,24 +225,6 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-999',
-        firstName: 'Victor',
-        lastName: 'Ramirez',
-        role: 'Manager',
-        status: 'Active',
-        salary: 120000,
-        hireDate: '2022-06-15',
-        birthDate: '1988-09-21',
-        address: {
-          city: 'New York',
-          state: 'NY',
-          zip: '10001'
-        },
-        phoneNumber: '(212) 555-9012'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -273,24 +255,6 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-999',
-        firstName: 'Victor',
-        lastName: 'Ramirez',
-        role: 'Manager',
-        status: 'Active',
-        salary: 120000,
-        hireDate: '2022-06-15',
-        birthDate: '1988-09-21',
-        address: {
-          city: 'New York',
-          state: 'NY',
-          zip: '10001'
-        },
-        phoneNumber: '(212) 555-9012'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -381,24 +345,6 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-999',
-        firstName: 'Victor',
-        lastName: 'Ramirez',
-        role: 'Manager',
-        status: 'Active',
-        salary: 120000,
-        hireDate: '2022-06-15',
-        birthDate: '1988-09-21',
-        address: {
-          city: 'New York',
-          state: 'NY',
-          zip: '10001'
-        },
-        phoneNumber: '(212) 555-9012'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -569,29 +515,6 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-999',
-        firstName: 'Victor',
-        lastName: 'Ramirez',
-        role: 'Manager',
-        status: 'Active',
-        salary: 120000,
-        hireDate: '2022-06-15',
-        birthDate: '1988-09-21',
-        address: {
-          city: 'New York',
-          state: 'NY',
-          zip: '10001'
-        },
-        phoneNumber: '(212) 555-9012',
-        senior: true,
-        fullName: 'Victor Ramirez',
-        isLoanOfficer: false,
-        isSecurity: false,
-        isActive: true
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -742,29 +665,6 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-999',
-        firstName: 'Victor',
-        lastName: 'Ramirez',
-        role: 'Manager',
-        status: 'Active',
-        salary: 120000,
-        hireDate: '2022-06-15',
-        birthDate: '1988-09-21',
-        address: {
-          city: 'New York',
-          state: 'NY',
-          zip: '10001'
-        },
-        phoneNumber: '(212) 555-9012',
-        senior: true,
-        fullName: 'Victor Ramirez',
-        isLoanOfficer: false,
-        isSecurity: false,
-        isActive: true
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1035,24 +935,6 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-999',
-        firstName: 'Victor',
-        lastName: 'Ramirez',
-        role: 'Manager',
-        status: 'Active',
-        salary: 120000,
-        hireDate: '2022-06-15',
-        birthDate: '1988-09-21',
-        address: {
-          city: 'New York',
-          state: 'NY',
-          zip: '10001'
-        },
-        phoneNumber: '(212) 555-9012'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1083,24 +965,6 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-999',
-        firstName: 'Victor',
-        lastName: 'Ramirez',
-        role: 'Manager',
-        status: 'Active',
-        salary: 120000,
-        hireDate: '2022-06-15',
-        birthDate: '1988-09-21',
-        address: {
-          city: 'New York',
-          state: 'NY',
-          zip: '10001'
-        },
-        phoneNumber: '(212) 555-9012'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1191,24 +1055,6 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-999',
-        firstName: 'Victor',
-        lastName: 'Ramirez',
-        role: 'Manager',
-        status: 'Active',
-        salary: 120000,
-        hireDate: '2022-06-15',
-        birthDate: '1988-09-21',
-        address: {
-          city: 'New York',
-          state: 'NY',
-          zip: '10001'
-        },
-        phoneNumber: '(212) 555-9012'
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1379,29 +1225,6 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-999',
-        firstName: 'Victor',
-        lastName: 'Ramirez',
-        role: 'Manager',
-        status: 'Active',
-        salary: 120000,
-        hireDate: '2022-06-15',
-        birthDate: '1988-09-21',
-        address: {
-          city: 'New York',
-          state: 'NY',
-          zip: '10001'
-        },
-        phoneNumber: '(212) 555-9012',
-        senior: true,
-        fullName: 'Victor Ramirez',
-        isLoanOfficer: false,
-        isSecurity: false,
-        isActive: true
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1552,29 +1375,6 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
-    candidate: [
-      {
-        id: 'be-999',
-        firstName: 'Victor',
-        lastName: 'Ramirez',
-        role: 'Manager',
-        status: 'Active',
-        salary: 120000,
-        hireDate: '2022-06-15',
-        birthDate: '1988-09-21',
-        address: {
-          city: 'New York',
-          state: 'NY',
-          zip: '10001'
-        },
-        phoneNumber: '(212) 555-9012',
-        senior: true,
-        fullName: 'Victor Ramirez',
-        isLoanOfficer: false,
-        isSecurity: false,
-        isActive: true
-      }
-    ],
     traceId: 'trace-id-removed'
   },
   {

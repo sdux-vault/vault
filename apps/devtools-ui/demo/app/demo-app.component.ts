@@ -33,6 +33,7 @@ export class DemoAppComponent {
       id: 'devtools-standalone',
       wantsState: true,
       wantsPayload: true,
+      wantsCandidates: true,
       wantsErrors: true
     });
   }

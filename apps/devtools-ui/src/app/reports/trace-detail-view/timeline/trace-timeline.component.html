@@ -18,15 +18,14 @@
         <span class="timeline-id">t{{ i + 1 }}</span>
         <div class="timeline-track">
           <div
-            class="timeline-bar"
-            [class]="statusClass(trace)"
+            [class]="'timeline-bar ' + statusClass(trace)"
             [style.left.%]="timelineLeft(trace)"
             [style.width.%]="timelineWidth(trace)"></div>
         </div>
         <span class="timeline-duration"
           >{{ trace.metrics.duration.toFixed(1) }}ms</span
         >
-        <span class="timeline-status" [class]="statusClass(trace)">{{
+        <span [class]="'timeline-status ' + statusClass(trace)">{{
           statusLabel(trace)
         }}</span>
       </div>

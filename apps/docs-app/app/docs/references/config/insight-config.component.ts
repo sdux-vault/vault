@@ -53,6 +53,19 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
+                <strong>wantsCandidates?</strong>
+
+                <p class="type">type: boolean</p>
+              </td>
+              <td class="column-auto">
+                Whether pipeline candidate snapshots should be included in
+                emitted insight events. Candidates capture the state value at
+                each pipeline stage boundary, enabling before/after diff
+                comparison across stages.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>wantsErrors?</strong>
 
                 <p class="type">type: boolean</p>

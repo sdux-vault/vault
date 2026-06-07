@@ -309,6 +309,17 @@
       "url": "/docs/references/const/operation-types"
     },
     {
+      "id": "const:PipelineStages",
+      "title": "PipelineStages",
+      "kind": "const",
+      "project": "shared",
+      "docLink": "const",
+      "relativePath": "libs/shared/src/lib/types/pipeline/pipeline-stage.type.ts",
+      "symbols": ["PipelineStages"],
+      "content": "PipelineStages PipelineStages const shared libs/shared/src/lib/types/pipeline/pipeline-stage.type.ts",
+      "url": "/docs/references/const/pipeline-stages"
+    },
+    {
       "id": "const:ResolveTypes",
       "title": "ResolveTypes",
       "kind": "const",
@@ -406,6 +417,28 @@
       "symbols": ["VaultErrorUsageKindTypes"],
       "content": "VaultErrorUsageKindTypes VaultErrorUsageKindTypes const shared libs/shared/src/lib/types/error/vault-error-usage-kind.type.ts",
       "url": "/docs/references/const/vault-error-usage-kind-types"
+    },
+    {
+      "id": "const:VaultLicensePayloadTypes",
+      "title": "VaultLicensePayloadTypes",
+      "kind": "const",
+      "project": "shared",
+      "docLink": "const",
+      "relativePath": "libs/shared/src/lib/types/vault/vault-license-payload.type.ts",
+      "symbols": ["VaultLicensePayloadTypes"],
+      "content": "VaultLicensePayloadTypes VaultLicensePayloadTypes const shared libs/shared/src/lib/types/vault/vault-license-payload.type.ts",
+      "url": "/docs/references/const/vault-license-payload-types"
+    },
+    {
+      "id": "const:VaultRegistrationLicenseStatusTypes",
+      "title": "VaultRegistrationLicenseStatusTypes",
+      "kind": "const",
+      "project": "shared",
+      "docLink": "const",
+      "relativePath": "libs/shared/src/lib/types/vault/vault-registration-license-status.type.ts",
+      "symbols": ["VaultRegistrationLicenseStatusTypes"],
+      "content": "VaultRegistrationLicenseStatusTypes VaultRegistrationLicenseStatusTypes const shared libs/shared/src/lib/types/vault/vault-registration-license-status.type.ts",
+      "url": "/docs/references/const/vault-registration-license-status-types"
     },
     {
       "id": "const:cryptoPlatform",
@@ -716,6 +749,17 @@
       "url": "/docs/references/types/pipeline-persist-value"
     },
     {
+      "id": "types:PipelineStage",
+      "title": "PipelineStage",
+      "kind": "type",
+      "project": "shared",
+      "docLink": "types",
+      "relativePath": "libs/shared/src/lib/types/pipeline/pipeline-stage.type.ts",
+      "symbols": ["PipelineStage"],
+      "content": "PipelineStage PipelineStage types shared libs/shared/src/lib/types/pipeline/pipeline-stage.type.ts",
+      "url": "/docs/references/types/pipeline-stage"
+    },
+    {
       "id": "types:PipelineUpstreamValue",
       "title": "PipelineUpstreamValue",
       "kind": "type",
@@ -846,6 +890,28 @@
       "symbols": ["VaultErrorUsageKindType"],
       "content": "VaultErrorUsageKindType VaultErrorUsageKindType types shared libs/shared/src/lib/types/error/vault-error-usage-kind.type.ts",
       "url": "/docs/references/types/vault-error-usage-kind-type"
+    },
+    {
+      "id": "types:VaultLicensePayloadType",
+      "title": "VaultLicensePayloadType",
+      "kind": "type",
+      "project": "shared",
+      "docLink": "types",
+      "relativePath": "libs/shared/src/lib/types/vault/vault-license-payload.type.ts",
+      "symbols": ["VaultLicensePayloadType"],
+      "content": "VaultLicensePayloadType VaultLicensePayloadType types shared libs/shared/src/lib/types/vault/vault-license-payload.type.ts",
+      "url": "/docs/references/types/vault-license-payload-type"
+    },
+    {
+      "id": "types:VaultRegistrationLicenseStatusType",
+      "title": "VaultRegistrationLicenseStatusType",
+      "kind": "type",
+      "project": "shared",
+      "docLink": "types",
+      "relativePath": "libs/shared/src/lib/types/vault/vault-registration-license-status.type.ts",
+      "symbols": ["VaultRegistrationLicenseStatusType"],
+      "content": "VaultRegistrationLicenseStatusType VaultRegistrationLicenseStatusType types shared libs/shared/src/lib/types/vault/vault-registration-license-status.type.ts",
+      "url": "/docs/references/types/vault-registration-license-status-type"
     },
     {
       "id": "behaviors:withAes256EncryptBehavior",
@@ -1376,6 +1442,17 @@
       "url": "/docs/references/shapes/debug-widget-trace-event-shape"
     },
     {
+      "id": "shapes:EventCandidateShape",
+      "title": "EventCandidateShape",
+      "kind": "interface",
+      "project": "shared",
+      "docLink": "shapes",
+      "relativePath": "libs/shared/src/lib/shapes/event/event-candidate.shape.ts",
+      "symbols": ["EventCandidateShape"],
+      "content": "EventCandidateShape EventCandidateShape shapes shared libs/shared/src/lib/shapes/event/event-candidate.shape.ts",
+      "url": "/docs/references/shapes/event-candidate-shape"
+    },
+    {
       "id": "shapes:EventShape",
       "title": "EventShape",
       "kind": "interface",
@@ -1495,6 +1572,17 @@
       "symbols": ["VaultErrorShape"],
       "content": "VaultErrorShape VaultErrorShape shapes shared libs/shared/src/lib/shapes/vault-error.shape.ts",
       "url": "/docs/references/shapes/vault-error-shape"
+    },
+    {
+      "id": "shapes:VaultLicensePayloadShape",
+      "title": "VaultLicensePayloadShape",
+      "kind": "interface",
+      "project": "shared",
+      "docLink": "shapes",
+      "relativePath": "libs/shared/src/lib/shapes/vault/vault-license-payload.shape.ts",
+      "symbols": ["VaultLicensePayloadShape"],
+      "content": "VaultLicensePayloadShape VaultLicensePayloadShape shapes shared libs/shared/src/lib/shapes/vault/vault-license-payload.shape.ts",
+      "url": "/docs/references/shapes/vault-license-payload-shape"
     },
     {
       "id": "shapes:VaultLicensingShape",
