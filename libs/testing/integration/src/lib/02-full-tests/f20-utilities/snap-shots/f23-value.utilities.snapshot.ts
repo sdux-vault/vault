@@ -31,6 +31,16 @@ export const f23Snapshot = [
     id: 'id-removed',
     cell: 'full-utility',
     behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -129,16 +139,6 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-utility',
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
@@ -150,10 +150,40 @@ export const f23Snapshot = [
     id: 'id-removed',
     cell: 'full-utility',
     behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:success',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
     type: 'lifecycle',
     boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
     traceId: 'trace-id-removed'
   },
   {
@@ -249,6 +279,26 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:pipeline-start',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
@@ -279,6 +329,17 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: 'the value',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
     behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
     name: 'stage:start:operator',
     timestamp: 'ts-removed',
@@ -294,6 +355,17 @@ export const f23Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:operator',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: 'the value',
     traceId: 'trace-id-removed'
   },
   {
@@ -400,9 +472,9 @@ export const f23Snapshot = [
     id: 'id-removed',
     cell: 'full-utility',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
   },
@@ -410,9 +482,9 @@ export const f23Snapshot = [
     id: 'id-removed',
     cell: 'full-utility',
     behaviorKey: 'vault-conductor',
-    name: 'controller:notification:restart-attempt',
+    name: 'conductor:notification:restart-attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'notification',
     traceId: 'trace-id-removed'
   },
@@ -452,6 +524,16 @@ export const f23Snapshot = [
     timestamp: 'ts-removed',
     type: 'lifecycle',
     boundary: 'notification'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
@@ -555,6 +637,16 @@ export const f23Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
@@ -566,9 +658,9 @@ export const f23Snapshot = [
     id: 'id-removed',
     cell: 'full-utility',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
   },

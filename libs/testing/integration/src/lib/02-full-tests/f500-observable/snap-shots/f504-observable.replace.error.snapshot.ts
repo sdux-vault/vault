@@ -31,6 +31,16 @@ export const f504Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -157,6 +167,19 @@ export const f504Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: true
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
     name: 'stage:start:load-persist',
     timestamp: 'ts-removed',
@@ -191,9 +214,9 @@ export const f504Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -214,141 +237,10 @@ export const f504Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:start:attempt',
+    name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-conductor',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Controller::Policy::Throttle',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: 'abstain',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: 'abstain',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Controller::Policy::CoreError',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: 'abstain',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Controller::Policy::Throttle',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: 'abort',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-conductor',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      traceId: 'trace-id-removed',
-      outcome: 'abort'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      status: 'abort'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
     traceId: 'trace-id-removed'
   },
   {
@@ -478,6 +370,19 @@ export const f504Snapshot = [
     type: 'controller',
     boundary: 'end',
     payload: {
+      decision: false
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'end',
+    payload: {
       status: 'abort'
     },
     traceId: 'trace-id-removed'
@@ -490,6 +395,16 @@ export const f504Snapshot = [
     timestamp: 'ts-removed',
     type: 'lifecycle',
     boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
     traceId: 'trace-id-removed'
   },
   {
@@ -619,6 +534,19 @@ export const f504Snapshot = [
     type: 'controller',
     boundary: 'end',
     payload: {
+      decision: false
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'end',
+    payload: {
       status: 'abort'
     },
     traceId: 'trace-id-removed'
@@ -631,6 +559,180 @@ export const f504Snapshot = [
     timestamp: 'ts-removed',
     type: 'lifecycle',
     boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::Throttle',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abort',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      traceId: 'trace-id-removed',
+      outcome: 'abort'
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: false
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'end',
+    payload: {
+      status: 'abort'
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'decision-engine',
+    name: 'lifecycle:notification:finalize',
+    timestamp: 'ts-removed',
+    type: 'lifecycle',
+    boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
     traceId: 'trace-id-removed'
   },
   {
@@ -749,6 +851,29 @@ export const f504Snapshot = [
       traceId: 'trace-id-removed',
       outcome: 'abstain'
     },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: true
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:pipeline-start',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -879,9 +1004,9 @@ export const f504Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'failure'
@@ -892,9 +1017,9 @@ export const f504Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:notification:restart-attempt',
+    name: 'conductor:notification:restart-attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'notification',
     payload: 'failure',
     traceId: 'trace-id-removed'
@@ -935,6 +1060,16 @@ export const f504Snapshot = [
     timestamp: 'ts-removed',
     type: 'lifecycle',
     boundary: 'notification'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
@@ -1066,6 +1201,19 @@ export const f504Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: true
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
     name: 'stage:start:load-persist',
     timestamp: 'ts-removed',
@@ -1100,9 +1248,9 @@ export const f504Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'

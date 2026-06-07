@@ -42,13 +42,12 @@ import { f202Snapshot } from './snap-shots/f202-value.delay.replace.snapshot';
  *************************************************/
 
 describe('f202: Value - Replace Delay Test', () => {
-  let key: string;
+  let key = 'full-test';
   let testService: FullTestService;
   let stopListening: () => void;
 
   const emitted: any[] = [];
-  const storageKey =
-    'vault::localstorage::full-test::SDUX::Behavior::Persist::LocalStorage';
+  const storageKey = `vault::localstorage::${key}::SDUX::Behavior::Persist::LocalStorage`;
 
   beforeAll(() => {
     jasmine.clock().install();
@@ -59,13 +58,10 @@ describe('f202: Value - Replace Delay Test', () => {
     jasmine.clock().uninstall();
   });
 
-  afterEach(() => {
-    stopListening();
-    clearLocalStorage(storageKey);
-  });
-
   beforeEach(async () => {
     clearLocalStorage(storageKey);
+    emitted.length = 0;
+
     await TestBed.configureTestingModule({
       providers: [
         provideVaultTesting({
@@ -76,7 +72,7 @@ describe('f202: Value - Replace Delay Test', () => {
         provideFeatureCell(
           FullTestService,
           {
-            key: 'full-test',
+            key,
             initialState: null,
             insights: {
               wantsErrors: true,
@@ -94,7 +90,12 @@ describe('f202: Value - Replace Delay Test', () => {
 
     testService = TestBed.inject(FullTestService);
     testService.initializeWithDelay();
-    key = testService.vault.key;
+  });
+
+  afterEach(() => {
+    stopListening();
+    clearLocalStorage(storageKey);
+    testService.clearGlobalErrors();
   });
 
   it('should replace through the entire pipe', async () => {

@@ -31,6 +31,16 @@ export const f107Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -132,6 +142,29 @@ export const f107Snapshot = [
     timestamp: 'ts-removed',
     type: 'lifecycle',
     boundary: 'end'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: true
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:pipeline-start',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
@@ -261,9 +294,9 @@ export const f107Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'failure'
@@ -274,9 +307,9 @@ export const f107Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:notification:restart-attempt',
+    name: 'conductor:notification:restart-attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'notification',
     payload: 'failure',
     traceId: 'trace-id-removed'
@@ -322,6 +355,16 @@ export const f107Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -423,6 +466,29 @@ export const f107Snapshot = [
     timestamp: 'ts-removed',
     type: 'lifecycle',
     boundary: 'end'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: true
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:pipeline-start',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
@@ -552,9 +618,9 @@ export const f107Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'failure'
@@ -565,9 +631,9 @@ export const f107Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:notification:restart-attempt',
+    name: 'conductor:notification:restart-attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'notification',
     payload: 'failure',
     traceId: 'trace-id-removed'

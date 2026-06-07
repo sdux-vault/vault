@@ -253,5 +253,54 @@ describe('Component: TraceHotStageRanking (Individual)', () => {
         component.barWidthIndividual(component.individualRankings()[3])
       ).toBeCloseTo(20, 1);
     });
+
+    it('should use fallback of 1 when slowestIndividual is null', () => {
+      fixture.componentRef.setInput('traces', []);
+      fixture.detectChanges();
+      const entry = {
+        name: 'test',
+        behaviorKey: 'bk',
+        traceId: 't1',
+        duration: 0,
+        percentage: 0
+      };
+      expect(component.barWidthIndividual(entry)).toBe(0);
+    });
+  });
+
+  describe('zero grandTotal in individual rankings', () => {
+    it('should return 0 percentage when all durations are 0', () => {
+      fixture.componentRef.setInput('traces', [
+        {
+          traceId: 't-zero',
+          cellKey: 'cell',
+          startedAt: 0,
+          finishedAt: 0,
+          events: [],
+          metrics: {
+            duration: 0,
+            eventCount: 0,
+            status: TraceExecutionStatuses.Success,
+            slowestStage: { name: 'none', duration: 0 },
+            fastestStage: { name: 'none', duration: 0 },
+            stages: [
+              {
+                name: 'reducer',
+                behaviorKey: 'bk',
+                startedAt: 0,
+                finishedAt: 0,
+                duration: 0,
+                type: 'stage'
+              }
+            ],
+            hadRevote: false,
+            controllerVoteCount: 0,
+            usedLicensedFeatures: false
+          }
+        }
+      ]);
+      fixture.detectChanges();
+      expect(component.individualRankings()[0].percentage).toBe(0);
+    });
   });
 });

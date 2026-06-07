@@ -316,4 +316,322 @@ describe('Component: TraceStageWaterfall', () => {
       expect(component.isLicensed()).toBeFalse();
     });
   });
+
+  describe('waterfallStages tiebreaker', () => {
+    it('should break ties by event index when startedAt is equal', () => {
+      const tieTrace: TraceExecutionShape = {
+        ...mockTrace,
+        events: [
+          { id: 'first', name: 'stage:start:reducer', timestamp: 1001 } as any,
+          { id: 'second', name: 'stage:start:effect', timestamp: 1001 } as any
+        ],
+        metrics: {
+          ...mockTrace.metrics,
+          stages: [
+            {
+              name: 'effect',
+              behaviorKey: 'bk',
+              startedAt: 1001,
+              finishedAt: 1005,
+              duration: 4,
+              type: 'stage',
+              startEventId: 'second'
+            },
+            {
+              name: 'reducer',
+              behaviorKey: 'bk',
+              startedAt: 1001,
+              finishedAt: 1004,
+              duration: 3,
+              type: 'stage',
+              startEventId: 'first'
+            }
+          ]
+        }
+      };
+
+      fixture.componentRef.setInput('trace', tieTrace);
+      fixture.detectChanges();
+
+      const stages = component.waterfallStages();
+      expect(stages[0].name).toBe('reducer');
+      expect(stages[1].name).toBe('effect');
+    });
+  });
+
+  describe('template rendering', () => {
+    it('should show upsell notice when not licensed', () => {
+      mockIsLicensed.set(false);
+      fixture.detectChanges();
+      const upsell = fixture.nativeElement.querySelector('sdux-upsell-notice');
+      expect(upsell).toBeTruthy();
+      expect(
+        fixture.nativeElement.querySelector('.waterfall-section')
+      ).toBeNull();
+    });
+
+    it('should show empty message when no stages exist', () => {
+      const noStages = {
+        ...mockTrace,
+        metrics: { ...mockTrace.metrics, stages: [] }
+      };
+      fixture.componentRef.setInput('trace', noStages);
+      fixture.detectChanges();
+      const empty = fixture.nativeElement.querySelector('.pipeline-empty');
+      expect(empty).toBeTruthy();
+      expect(empty.textContent).toContain('No stage data');
+    });
+
+    it('should render waterfall rows', () => {
+      const rows = fixture.nativeElement.querySelectorAll('.waterfall-row');
+      expect(rows.length).toBe(2);
+    });
+
+    it('should render slow label on the right for slowest stage in left half', () => {
+      // effect stage ends past 50%, so slow label is on left
+      // reducer is not slowest, so we need a trace where slowest is in left half
+      const leftSlowTrace = {
+        ...mockTrace,
+        metrics: {
+          ...mockTrace.metrics,
+          stages: [
+            {
+              name: 'reducer',
+              behaviorKey: 'addTodo',
+              startedAt: 1000,
+              finishedAt: 1002,
+              duration: 2,
+              type: 'stage',
+              startEventId: 'evt-1'
+            },
+            {
+              name: 'effect',
+              behaviorKey: 'addTodo',
+              startedAt: 1000,
+              finishedAt: 1001,
+              duration: 1,
+              type: 'stage',
+              startEventId: 'evt-3'
+            }
+          ],
+          slowestStage: { name: 'reducer', duration: 2 }
+        }
+      };
+      fixture.componentRef.setInput('trace', leftSlowTrace);
+      fixture.detectChanges();
+      const rightLabel = fixture.nativeElement.querySelector(
+        '.waterfall-slow-right'
+      );
+      expect(rightLabel).toBeTruthy();
+      expect(rightLabel.textContent).toContain('← slow');
+    });
+
+    it('should render slow label on the left for slowest stage past midpoint', () => {
+      const rightSlowTrace = {
+        ...mockTrace,
+        metrics: {
+          ...mockTrace.metrics,
+          stages: [
+            {
+              name: 'reducer',
+              behaviorKey: 'addTodo',
+              startedAt: 1001,
+              finishedAt: 1004,
+              duration: 3,
+              type: 'stage',
+              startEventId: 'evt-1'
+            },
+            {
+              name: 'effect',
+              behaviorKey: 'addTodo',
+              startedAt: 1005,
+              finishedAt: 1015,
+              duration: 10,
+              type: 'stage',
+              startEventId: 'evt-3'
+            }
+          ],
+          slowestStage: { name: 'effect', duration: 10 }
+        }
+      };
+      fixture.componentRef.setInput('trace', rightSlowTrace);
+      fixture.detectChanges();
+      const leftLabel = fixture.nativeElement.querySelector(
+        '.waterfall-slow-left'
+      );
+      expect(leftLabel).toBeTruthy();
+      expect(leftLabel.textContent).toContain('slow →');
+    });
+
+    it('should apply waterfall-row-revote class for revote-delay stages', () => {
+      const traceWithRevote = {
+        ...mockTrace,
+        events: [
+          ...mockTrace.events,
+          {
+            name: 'conductor:notification:deny',
+            timestamp: 1016,
+            traceId: 'trace-1',
+            id: 'evt-deny'
+          } as any,
+          {
+            name: 'lifecycle:notification:revote',
+            timestamp: 1018,
+            traceId: 'trace-1',
+            id: 'evt-revote'
+          } as any
+        ]
+      };
+      fixture.componentRef.setInput('trace', traceWithRevote);
+      fixture.detectChanges();
+      const revoteRow = fixture.nativeElement.querySelector(
+        '.waterfall-row-revote'
+      );
+      expect(revoteRow).toBeTruthy();
+    });
+
+    it('should apply waterfall-bar-revote class for revote-delay bars', () => {
+      const traceWithRevote = {
+        ...mockTrace,
+        events: [
+          ...mockTrace.events,
+          {
+            name: 'conductor:notification:deny',
+            timestamp: 1016,
+            traceId: 'trace-1',
+            id: 'evt-deny'
+          } as any,
+          {
+            name: 'lifecycle:notification:revote',
+            timestamp: 1018,
+            traceId: 'trace-1',
+            id: 'evt-revote'
+          } as any
+        ]
+      };
+      fixture.componentRef.setInput('trace', traceWithRevote);
+      fixture.detectChanges();
+      const revoteBar = fixture.nativeElement.querySelector(
+        '.waterfall-bar-revote'
+      );
+      expect(revoteBar).toBeTruthy();
+    });
+
+    it('should emit stageSelected on keydown.enter', () => {
+      spyOn(component.stageSelected, 'emit');
+      const row = fixture.nativeElement.querySelector('.waterfall-row');
+      row.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })
+      );
+      fixture.detectChanges();
+      expect(component.stageSelected.emit).toHaveBeenCalled();
+    });
+
+    it('should emit stageSelected on click', () => {
+      spyOn(component.stageSelected, 'emit');
+      const row = fixture.nativeElement.querySelector('.waterfall-row');
+      row.click();
+      expect(component.stageSelected.emit).toHaveBeenCalled();
+    });
+
+    it('should apply waterfall-bar-slow class for slowest stage', () => {
+      const bar = fixture.nativeElement.querySelector('.waterfall-bar-slow');
+      expect(bar).toBeTruthy();
+    });
+
+    it('should display stage duration text', () => {
+      const durations = fixture.nativeElement.querySelectorAll(
+        '.waterfall-duration'
+      );
+      expect(durations[0].textContent).toContain('3.0ms');
+      expect(durations[1].textContent).toContain('10.0ms');
+    });
+  });
+
+  describe('waterfallStages edge cases', () => {
+    it('should ignore revote event without preceding deny', () => {
+      const trace = {
+        ...mockTrace,
+        events: [
+          {
+            name: 'lifecycle:notification:revote',
+            timestamp: 1005,
+            traceId: 'trace-1',
+            id: 'revote-orphan'
+          } as any
+        ],
+        metrics: { ...mockTrace.metrics, stages: [] }
+      };
+      fixture.componentRef.setInput('trace', trace);
+      fixture.detectChanges();
+      const stages = component.waterfallStages();
+      expect(stages.find((s) => s.name === 'revote-delay')).toBeUndefined();
+    });
+
+    it('should ignore deny without following revote', () => {
+      const trace = {
+        ...mockTrace,
+        events: [
+          {
+            name: 'conductor:notification:deny',
+            timestamp: 1002,
+            traceId: 'trace-1',
+            id: 'deny-orphan'
+          } as any
+        ],
+        metrics: { ...mockTrace.metrics, stages: [] }
+      };
+      fixture.componentRef.setInput('trace', trace);
+      fixture.detectChanges();
+      const stages = component.waterfallStages();
+      expect(stages.find((s) => s.name === 'revote-delay')).toBeUndefined();
+    });
+
+    it('should handle stages with no startEventId in tiebreaker', () => {
+      const trace = {
+        ...mockTrace,
+        events: [],
+        metrics: {
+          ...mockTrace.metrics,
+          stages: [
+            {
+              name: 'effect',
+              behaviorKey: 'bk',
+              startedAt: 1001,
+              finishedAt: 1005,
+              duration: 4,
+              type: 'stage'
+            },
+            {
+              name: 'reducer',
+              behaviorKey: 'bk',
+              startedAt: 1001,
+              finishedAt: 1004,
+              duration: 3,
+              type: 'stage'
+            }
+          ]
+        }
+      } as TraceExecutionShape;
+      fixture.componentRef.setInput('trace', trace);
+      fixture.detectChanges();
+      const stages = component.waterfallStages();
+      expect(stages.length).toBe(2);
+    });
+  });
+
+  describe('selectStageEvent edge cases', () => {
+    it('should fall through to fallback when startEventId does not match', () => {
+      spyOn(component.stageSelected, 'emit');
+      const stage = {
+        ...mockTrace.metrics.stages[0],
+        startEventId: 'nonexistent'
+      };
+      component.selectStageEvent(stage);
+      // Falls through, finds via fallback matching
+      expect(component.stageSelected.emit).toHaveBeenCalledWith(
+        mockTrace.events[0]
+      );
+    });
+  });
 });

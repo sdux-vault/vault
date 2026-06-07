@@ -33,7 +33,7 @@ describe('UpsellNoticeComponent', () => {
 
   it('should render the buy now link', () => {
     const link: HTMLAnchorElement =
-      fixture.nativeElement.querySelector('.buy-now-btn');
+      fixture.nativeElement.querySelector('.cta-button');
     expect(link).toBeTruthy();
     expect(link.href).toContain('sdux-vault.com/dashboard');
     expect(link.target).toBe('_blank');

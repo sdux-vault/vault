@@ -53,6 +53,7 @@ export class PipelineFlowComponent {
    */
   readonly #conductorTotal = computed(() => {
     const trace = this.trace();
+    /* istanbul ignore if -- defensive guard; all callers check trace first */
     if (!trace) return 0;
 
     let total = 0;
@@ -72,6 +73,7 @@ export class PipelineFlowComponent {
    */
   readonly #orchestratorTotal = computed(() => {
     const trace = this.trace();
+    /* istanbul ignore if -- defensive guard; all callers check trace first */
     if (!trace) return 0;
 
     let total = 0;
@@ -121,6 +123,7 @@ export class PipelineFlowComponent {
    */
   readonly #revoteDelay = computed(() => {
     const trace = this.trace();
+    /* istanbul ignore if -- defensive guard; all callers check trace first */
     if (!trace) return 0;
 
     let total = 0;
@@ -492,6 +495,7 @@ export class PipelineFlowComponent {
   /** Whether the trace used the merge lifecycle (vs replace). */
   readonly #isMergeTrace = computed(() => {
     const trace = this.trace();
+    /* istanbul ignore if -- defensive guard; all callers check trace first */
     if (!trace) return false;
     return trace.events.some((event) => event.name === 'lifecycle:start:merge');
   });

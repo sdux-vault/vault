@@ -96,7 +96,7 @@ export class SnapshotGenerator {
 
   buildSnapshotFile(exportName, snapshot) {
     const UNDEFINED_SENTINEL = '"__UNDEFINED__"';
-    const json = JSON.stringify(
+    const restored = JSON.stringify(
       snapshot,
       (key, value) => {
         return key === 'candidate' && value === undefined

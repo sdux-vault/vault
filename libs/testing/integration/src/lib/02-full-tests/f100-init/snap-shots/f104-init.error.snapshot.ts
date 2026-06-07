@@ -31,6 +31,16 @@ export const f104Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -157,6 +167,19 @@ export const f104Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: true
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
     name: 'stage:start:load-persist',
     timestamp: 'ts-removed',
@@ -191,9 +214,9 @@ export const f104Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -241,6 +264,16 @@ export const f104Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -367,6 +400,19 @@ export const f104Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: true
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
     name: 'stage:start:load-persist',
     timestamp: 'ts-removed',
@@ -401,9 +447,9 @@ export const f104Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'

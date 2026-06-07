@@ -565,4 +565,238 @@ describe('Component: PipelineFlow', () => {
       expect(component.revoteDelayDetail()).toBe('~800.0 ms');
     });
   });
+
+  describe('mergeEntityDetail', () => {
+    it('should return domain when no trace is present', () => {
+      expect(component.mergeEntityDetail('SDUX::Behavior::Core::Value')).toBe(
+        'Core'
+      );
+    });
+
+    it('should return duration when compute-merge stage exists', () => {
+      fixture.componentRef.setInput('trace', {
+        ...mockTrace,
+        metrics: {
+          ...mockTrace.metrics,
+          stages: [
+            {
+              name: 'compute-merge',
+              behaviorKey: 'vault-orchestrator',
+              startedAt: 1010,
+              finishedAt: 1015,
+              duration: 5,
+              type: 'stage'
+            }
+          ]
+        }
+      });
+      fixture.detectChanges();
+      expect(component.mergeEntityDetail('SDUX::Behavior::Data::Combine')).toBe(
+        '~5.0 ms'
+      );
+    });
+
+    it('should return dash when trace exists but no compute-merge stage', () => {
+      fixture.componentRef.setInput('trace', mockTrace);
+      fixture.detectChanges();
+      expect(component.mergeEntityDetail('SDUX::Behavior::Data::Combine')).toBe(
+        '—'
+      );
+    });
+  });
+
+  describe('hasTraceDuration', () => {
+    it('should return true when no trace is present', () => {
+      expect(
+        component.hasTraceDuration('SDUX::Behavior::Core::Value')
+      ).toBeTrue();
+    });
+
+    it('should return true when behavior has a duration in trace', () => {
+      fixture.componentRef.setInput('trace', mockTrace);
+      fixture.detectChanges();
+      expect(
+        component.hasTraceDuration('SDUX::Behavior::Core::Value')
+      ).toBeTrue();
+    });
+
+    it('should return false when behavior has no duration in trace', () => {
+      fixture.componentRef.setInput('trace', mockTrace);
+      fixture.detectChanges();
+      expect(
+        component.hasTraceDuration('SDUX::Behavior::Http::Fetch')
+      ).toBeFalse();
+    });
+  });
+
+  describe('coreControllersDetail', () => {
+    it('should return empty string when no trace is present', () => {
+      expect(component.coreControllersDetail()).toBe('');
+    });
+
+    it('should return summed core controller durations', () => {
+      fixture.componentRef.setInput('trace', mockTrace);
+      fixture.detectChanges();
+      expect(component.coreControllersDetail()).toBe('~5.0 ms');
+    });
+  });
+
+  describe('processingLayerDetail', () => {
+    it('should return empty string when no trace is present', () => {
+      expect(component.processingLayerDetail()).toBe('');
+    });
+
+    it('should return summed processing stage durations', () => {
+      fixture.componentRef.setInput('trace', {
+        ...mockTrace,
+        metrics: {
+          ...mockTrace.metrics,
+          stages: [
+            {
+              name: 'resolve',
+              behaviorKey: 'bk',
+              startedAt: 1010,
+              finishedAt: 1015,
+              duration: 5,
+              type: 'stage'
+            },
+            {
+              name: 'filter',
+              behaviorKey: 'bk',
+              startedAt: 1015,
+              finishedAt: 1018,
+              duration: 3,
+              type: 'stage'
+            }
+          ]
+        }
+      });
+      fixture.detectChanges();
+      expect(component.processingLayerDetail()).toBe('~8.0 ms');
+    });
+  });
+
+  describe('resolveDetail', () => {
+    it('should return empty string when no trace is present', () => {
+      expect(component.resolveDetail()).toBe('');
+    });
+
+    it('should return resolve stage duration', () => {
+      fixture.componentRef.setInput('trace', mockTrace);
+      fixture.detectChanges();
+      expect(component.resolveDetail()).toBe('~50.0 ms');
+    });
+  });
+
+  describe('replaceMergeDetail', () => {
+    it('should return empty string when no trace is present', () => {
+      expect(component.replaceMergeDetail()).toBe('');
+    });
+
+    it('should return summed replace/merge durations', () => {
+      fixture.componentRef.setInput('trace', {
+        ...mockTrace,
+        metrics: {
+          ...mockTrace.metrics,
+          stages: [
+            {
+              name: 'filter',
+              behaviorKey: 'bk',
+              startedAt: 1010,
+              finishedAt: 1013,
+              duration: 3,
+              type: 'stage'
+            },
+            {
+              name: 'reducer',
+              behaviorKey: 'bk',
+              startedAt: 1013,
+              finishedAt: 1018,
+              duration: 5,
+              type: 'stage'
+            }
+          ]
+        }
+      });
+      fixture.detectChanges();
+      expect(component.replaceMergeDetail()).toBe('~8.0 ms');
+    });
+  });
+
+  describe('outputLayerDetail', () => {
+    it('should return empty string when no trace is present', () => {
+      expect(component.outputLayerDetail()).toBe('');
+    });
+
+    it('should return summed output stage durations', () => {
+      fixture.componentRef.setInput('trace', {
+        ...mockTrace,
+        metrics: {
+          ...mockTrace.metrics,
+          stages: [
+            {
+              name: 'encrypt',
+              behaviorKey: 'bk',
+              startedAt: 1010,
+              finishedAt: 1012,
+              duration: 2,
+              type: 'stage'
+            },
+            {
+              name: 'persist',
+              behaviorKey: 'bk',
+              startedAt: 1012,
+              finishedAt: 1015,
+              duration: 3,
+              type: 'stage'
+            }
+          ]
+        }
+      });
+      fixture.detectChanges();
+      expect(component.outputLayerDetail()).toBe('~5.0 ms');
+    });
+  });
+
+  describe('mergeLabel', () => {
+    it('should return Replace/Merge when no trace is present', () => {
+      expect(component.mergeLabel()).toBe('Replace/Merge');
+    });
+
+    it('should return Merge when trace has merge lifecycle', () => {
+      fixture.componentRef.setInput('trace', {
+        ...mockTrace,
+        events: [{ name: 'lifecycle:start:merge', timestamp: 1010 } as never]
+      });
+      fixture.detectChanges();
+      expect(component.mergeLabel()).toBe('Merge');
+    });
+
+    it('should return Replace when trace has no merge lifecycle', () => {
+      fixture.componentRef.setInput('trace', mockTrace);
+      fixture.detectChanges();
+      expect(component.mergeLabel()).toBe('Replace');
+    });
+  });
+
+  describe('showMergeBehaviors', () => {
+    it('should return true when no trace is present', () => {
+      expect(component.showMergeBehaviors()).toBeTrue();
+    });
+
+    it('should return true when trace has merge lifecycle', () => {
+      fixture.componentRef.setInput('trace', {
+        ...mockTrace,
+        events: [{ name: 'lifecycle:start:merge', timestamp: 1010 } as never]
+      });
+      fixture.detectChanges();
+      expect(component.showMergeBehaviors()).toBeTrue();
+    });
+
+    it('should return false when trace has no merge lifecycle', () => {
+      fixture.componentRef.setInput('trace', mockTrace);
+      fixture.detectChanges();
+      expect(component.showMergeBehaviors()).toBeFalse();
+    });
+  });
 });

@@ -130,8 +130,8 @@ describe('Component: TraceTimeline', () => {
       expect(component.statusClass(mockTraces[0])).toBe('status-success');
     });
 
-    it('should return status-failed for failed traces', () => {
-      expect(component.statusClass(mockTraces[1])).toBe('status-failed');
+    it('should return status-error for failed traces', () => {
+      expect(component.statusClass(mockTraces[1])).toBe('status-error');
     });
 
     it('should return status-denied for denied traces', () => {

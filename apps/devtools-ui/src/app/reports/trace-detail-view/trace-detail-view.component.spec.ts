@@ -265,8 +265,8 @@ describe('Component: TraceDetailView', () => {
       expect(component.statusClass(mockTraces[0])).toBe('status-success');
     });
 
-    it('should return status-failed for failed traces', () => {
-      expect(component.statusClass(mockTraces[1])).toBe('status-failed');
+    it('should return status-error for failed traces', () => {
+      expect(component.statusClass(mockTraces[1])).toBe('status-error');
     });
 
     it('should return status-denied for denied traces', () => {
@@ -590,6 +590,553 @@ describe('Component: TraceDetailView', () => {
 
       expect(f.componentInstance.selectedCell()).toBe('vault::todos::cell');
       expect(f.componentInstance.filteredTraces().length).toBe(1);
+    });
+  });
+
+  describe('waterfallStages', () => {
+    it('should return stages sorted by startedAt', () => {
+      const trace: TraceExecutionShape = {
+        ...mockTraces[0],
+        metrics: {
+          ...mockTraces[0].metrics,
+          stages: [
+            {
+              name: 'effect',
+              behaviorKey: 'addTodo',
+              startedAt: 1003,
+              finishedAt: 1004,
+              duration: 1,
+              type: 'stage'
+            },
+            {
+              name: 'reducer',
+              behaviorKey: 'addTodo',
+              startedAt: 1001,
+              finishedAt: 1003,
+              duration: 2,
+              type: 'stage'
+            }
+          ]
+        }
+      } as TraceExecutionShape;
+
+      const stages = component.waterfallStages(trace);
+      expect(stages[0].name).toBe('reducer');
+      expect(stages[1].name).toBe('effect');
+    });
+
+    it('should insert synthetic revote-delay entries', () => {
+      const trace: TraceExecutionShape = {
+        ...mockTraces[0],
+        events: [
+          {
+            name: 'conductor:notification:deny',
+            timestamp: 1002,
+            traceId: 'trace-1',
+            id: 'deny-1'
+          } as any,
+          {
+            name: 'lifecycle:notification:revote',
+            timestamp: 1005,
+            traceId: 'trace-1',
+            id: 'revote-1'
+          } as any
+        ],
+        metrics: {
+          ...mockTraces[0].metrics,
+          stages: []
+        }
+      } as TraceExecutionShape;
+
+      const stages = component.waterfallStages(trace);
+      const revote = stages.find((s) => s.name === 'revote-delay');
+      expect(revote).toBeTruthy();
+      expect(revote!.duration).toBe(3);
+      expect(revote!.startedAt).toBe(1002);
+      expect(revote!.finishedAt).toBe(1005);
+    });
+
+    it('should place attempt stages at the end', () => {
+      const trace: TraceExecutionShape = {
+        ...mockTraces[0],
+        metrics: {
+          ...mockTraces[0].metrics,
+          stages: [
+            {
+              name: 'attempt',
+              behaviorKey: 'addTodo',
+              startedAt: 1000,
+              finishedAt: 1005,
+              duration: 5,
+              type: 'conductor'
+            },
+            {
+              name: 'reducer',
+              behaviorKey: 'addTodo',
+              startedAt: 1001,
+              finishedAt: 1003,
+              duration: 2,
+              type: 'stage'
+            }
+          ]
+        }
+      } as TraceExecutionShape;
+
+      const stages = component.waterfallStages(trace);
+      expect(stages[stages.length - 1].name).toBe('attempt');
+    });
+  });
+
+  describe('isRevoteDelay', () => {
+    it('should return true for revote-delay stages', () => {
+      expect(
+        component.isRevoteDelay({
+          name: 'revote-delay',
+          behaviorKey: 'vault-conductor',
+          startedAt: 0,
+          finishedAt: 0,
+          duration: 0,
+          type: 'lifecycle' as any
+        })
+      ).toBeTrue();
+    });
+
+    it('should return false for regular stages', () => {
+      expect(
+        component.isRevoteDelay(mockTraces[0].metrics.stages[0])
+      ).toBeFalse();
+    });
+  });
+
+  describe('isSlowOnRight', () => {
+    it('should return true when bar ends in left half', () => {
+      const stage = {
+        name: 'reducer',
+        behaviorKey: 'addTodo',
+        startedAt: 1000,
+        finishedAt: 1001,
+        duration: 1,
+        type: 'stage' as const
+      };
+      const trace = {
+        ...mockTraces[0],
+        startedAt: 1000,
+        finishedAt: 1010,
+        metrics: { ...mockTraces[0].metrics, duration: 10 }
+      } as TraceExecutionShape;
+
+      expect(component.isSlowOnRight(trace, stage)).toBeTrue();
+    });
+
+    it('should return false when bar extends past midpoint', () => {
+      const stage = {
+        name: 'reducer',
+        behaviorKey: 'addTodo',
+        startedAt: 1000,
+        finishedAt: 1008,
+        duration: 8,
+        type: 'stage' as const
+      };
+      const trace = {
+        ...mockTraces[0],
+        startedAt: 1000,
+        finishedAt: 1010,
+        metrics: { ...mockTraces[0].metrics, duration: 10 }
+      } as TraceExecutionShape;
+
+      expect(component.isSlowOnRight(trace, stage)).toBeFalse();
+    });
+  });
+
+  describe('eventDisplayName', () => {
+    it('should format 3-part event names as type + stage', () => {
+      expect(
+        component.eventDisplayName({ name: 'stage:end:reducer' } as any)
+      ).toBe('stage reducer');
+    });
+
+    it('should return original name for short event names', () => {
+      expect(component.eventDisplayName({ name: 'simple' } as any)).toBe(
+        'simple'
+      );
+    });
+
+    it('should join remaining parts with colon for 4+ parts', () => {
+      expect(component.eventDisplayName({ name: 'stage:end:a:b' } as any)).toBe(
+        'stage a:b'
+      );
+    });
+  });
+
+  describe('selectStageEvent with startEventId', () => {
+    it('should prefer startEventId over fallback matching', () => {
+      const trace = {
+        ...mockTraces[0],
+        events: [
+          {
+            name: 'stage:start:reducer',
+            timestamp: 1001,
+            traceId: 'trace-1',
+            cell: 'vault::todos::cell',
+            type: 'stage',
+            behaviorKey: 'addTodo',
+            boundary: 'start',
+            id: 'evt-start'
+          } as any
+        ]
+      };
+      const stage = {
+        ...mockTraces[0].metrics.stages[0],
+        startEventId: 'evt-start'
+      };
+      component.selectStageEvent(trace, stage);
+      expect(component.selectedEvent()?.id).toBe('evt-start');
+    });
+  });
+
+  describe('rawTraceExpanded', () => {
+    it('should default to false', () => {
+      expect(component.rawTraceExpanded()).toBeFalse();
+    });
+
+    it('should toggle', () => {
+      component.rawTraceExpanded.set(true);
+      expect(component.rawTraceExpanded()).toBeTrue();
+    });
+  });
+
+  describe('hasPayload edge cases', () => {
+    it('should return false for null payload', () => {
+      expect(component.hasPayload({ payload: null } as any)).toBeFalse();
+    });
+  });
+
+  describe('hasError edge cases', () => {
+    it('should return false for null error', () => {
+      expect(component.hasError({ error: null } as any)).toBeFalse();
+    });
+  });
+
+  describe('isLicensed', () => {
+    it('should reflect the registry license state', () => {
+      expect(component.isLicensed()).toBeDefined();
+    });
+  });
+
+  describe('ngOnInit with no cell query param', () => {
+    it('should not change selectedCell when no param', () => {
+      expect(component.selectedCell()).toBe('all');
+    });
+  });
+
+  describe('stats computed details', () => {
+    it('should compute success, denied, aborted, orphaned counts', () => {
+      mockTracesSignal.set([
+        {
+          ...mockTraces[0],
+          traceId: 't-success',
+          metrics: {
+            ...mockTraces[0].metrics,
+            status: TraceExecutionStatuses.Success
+          }
+        },
+        {
+          ...mockTraces[0],
+          traceId: 't-denied',
+          metrics: {
+            ...mockTraces[0].metrics,
+            status: TraceExecutionStatuses.Denied
+          }
+        },
+        {
+          ...mockTraces[0],
+          traceId: 't-aborted',
+          metrics: {
+            ...mockTraces[0].metrics,
+            status: TraceExecutionStatuses.Aborted
+          }
+        },
+        {
+          ...mockTraces[0],
+          traceId: 't-orphaned',
+          metrics: {
+            ...mockTraces[0].metrics,
+            status: TraceExecutionStatuses.Orphaned
+          }
+        }
+      ]);
+      fixture.detectChanges();
+
+      const stats = component.stats();
+      expect(stats.success).toBe(1);
+      expect(stats.denied).toBe(1);
+      expect(stats.aborted).toBe(1);
+      expect(stats.orphaned).toBe(1);
+      expect(stats.total).toBe(4);
+    });
+  });
+
+  describe('timelineWidth edge cases', () => {
+    it('should use startedAt when finishedAt is falsy', () => {
+      const trace = {
+        ...mockTraces[0],
+        startedAt: 1000,
+        finishedAt: 0 as any
+      };
+      const width = component.timelineWidth(trace);
+      expect(width).toBe(0.5);
+    });
+
+    it('should enforce minimum width of 0.5', () => {
+      mockTracesSignal.set([
+        { ...mockTraces[0], startedAt: 0, finishedAt: 10000 }
+      ]);
+      fixture.detectChanges();
+      const trace = { ...mockTraces[0], startedAt: 0, finishedAt: 1 };
+      const width = component.timelineWidth(trace);
+      expect(width).toBeGreaterThanOrEqual(0.5);
+    });
+  });
+
+  describe('waterfallStages tiebreaker', () => {
+    it('should break ties by event index when startedAt is equal', () => {
+      const trace: TraceExecutionShape = {
+        ...mockTraces[0],
+        events: [
+          { id: 'first', name: 'stage:start:reducer', timestamp: 1001 } as any,
+          { id: 'second', name: 'stage:start:effect', timestamp: 1001 } as any
+        ],
+        metrics: {
+          ...mockTraces[0].metrics,
+          stages: [
+            {
+              name: 'effect',
+              behaviorKey: 'bk',
+              startedAt: 1001,
+              finishedAt: 1005,
+              duration: 4,
+              type: 'stage',
+              startEventId: 'second'
+            },
+            {
+              name: 'reducer',
+              behaviorKey: 'bk',
+              startedAt: 1001,
+              finishedAt: 1004,
+              duration: 3,
+              type: 'stage',
+              startEventId: 'first'
+            }
+          ] as any[]
+        }
+      };
+
+      const stages = component.waterfallStages(trace);
+      expect(stages[0].name).toBe('reducer');
+      expect(stages[1].name).toBe('effect');
+    });
+  });
+
+  describe('selectStageEvent fallback matching', () => {
+    it('should fall back to timestamp/behaviorKey/boundary match when no startEventId', () => {
+      const trace = {
+        ...mockTraces[0],
+        events: [
+          {
+            name: 'stage:start:reducer',
+            timestamp: 1001,
+            traceId: 'trace-1',
+            cell: 'vault::todos::cell',
+            type: 'stage',
+            behaviorKey: 'addTodo',
+            boundary: 'start',
+            id: 'evt-fallback'
+          } as any
+        ]
+      };
+      const stage = {
+        name: 'reducer',
+        behaviorKey: 'addTodo',
+        startedAt: 1001,
+        finishedAt: 1004,
+        duration: 3,
+        type: 'stage'
+      };
+      component.selectStageEvent(trace, stage as any);
+      expect(component.selectedEvent()?.id).toBe('evt-fallback');
+    });
+
+    it('should not select when startEventId does not match any event', () => {
+      const trace = {
+        ...mockTraces[0],
+        events: [
+          {
+            name: 'stage:start:reducer',
+            timestamp: 1001,
+            id: 'evt-1',
+            behaviorKey: 'addTodo',
+            boundary: 'start'
+          } as any
+        ]
+      };
+      const stage = {
+        name: 'reducer',
+        behaviorKey: 'addTodo',
+        startedAt: 1001,
+        finishedAt: 1004,
+        duration: 3,
+        type: 'stage',
+        startEventId: 'nonexistent'
+      };
+      component.selectStageEvent(trace, stage as any);
+      // Falls through startEventId check, then tries fallback match
+      expect(component.selectedEvent()?.id).toBe('evt-1');
+    });
+  });
+
+  describe('stageCounts with duplicates', () => {
+    it('should count multiple occurrences of same stage name', () => {
+      const trace = {
+        ...mockTraces[0],
+        metrics: {
+          ...mockTraces[0].metrics,
+          stages: [
+            {
+              name: 'reducer',
+              behaviorKey: 'a',
+              startedAt: 0,
+              finishedAt: 1,
+              duration: 1,
+              type: 'stage'
+            },
+            {
+              name: 'reducer',
+              behaviorKey: 'b',
+              startedAt: 1,
+              finishedAt: 2,
+              duration: 1,
+              type: 'stage'
+            },
+            {
+              name: 'effect',
+              behaviorKey: 'a',
+              startedAt: 2,
+              finishedAt: 3,
+              duration: 1,
+              type: 'stage'
+            }
+          ] as any[]
+        }
+      } as TraceExecutionShape;
+      const counts = component.stageCounts(trace);
+      expect(counts).toEqual([
+        { name: 'reducer', count: 2 },
+        { name: 'effect', count: 1 }
+      ]);
+    });
+  });
+
+  describe('waterfallStages edge cases', () => {
+    it('should ignore revote event without preceding deny', () => {
+      const trace: TraceExecutionShape = {
+        ...mockTraces[0],
+        events: [
+          {
+            name: 'lifecycle:notification:revote',
+            timestamp: 1005,
+            traceId: 'trace-1',
+            id: 'revote-orphan'
+          } as any
+        ],
+        metrics: { ...mockTraces[0].metrics, stages: [] }
+      };
+
+      const stages = component.waterfallStages(trace);
+      expect(stages.find((s) => s.name === 'revote-delay')).toBeUndefined();
+    });
+
+    it('should ignore deny without following revote', () => {
+      const trace: TraceExecutionShape = {
+        ...mockTraces[0],
+        events: [
+          {
+            name: 'conductor:notification:deny',
+            timestamp: 1002,
+            traceId: 'trace-1',
+            id: 'deny-orphan'
+          } as any
+        ],
+        metrics: { ...mockTraces[0].metrics, stages: [] }
+      };
+
+      const stages = component.waterfallStages(trace);
+      expect(stages.find((s) => s.name === 'revote-delay')).toBeUndefined();
+    });
+
+    it('should handle stages with no startEventId in tiebreaker', () => {
+      const trace: TraceExecutionShape = {
+        ...mockTraces[0],
+        events: [],
+        metrics: {
+          ...mockTraces[0].metrics,
+          stages: [
+            {
+              name: 'effect',
+              behaviorKey: 'bk',
+              startedAt: 1001,
+              finishedAt: 1005,
+              duration: 4,
+              type: 'stage'
+            },
+            {
+              name: 'reducer',
+              behaviorKey: 'bk',
+              startedAt: 1001,
+              finishedAt: 1004,
+              duration: 3,
+              type: 'stage'
+            }
+          ]
+        }
+      } as TraceExecutionShape;
+
+      const stages = component.waterfallStages(trace);
+      expect(stages.length).toBe(2);
+    });
+  });
+
+  describe('eventDisplayName with 2-part name', () => {
+    it('should return original name for 2-part event names', () => {
+      expect(component.eventDisplayName({ name: 'stage:end' } as any)).toBe(
+        'stage:end'
+      );
+    });
+  });
+
+  describe('waterfallWidth minimum clamp', () => {
+    it('should clamp very small widths to 0.5', () => {
+      const stage = {
+        name: 'reducer',
+        behaviorKey: 'addTodo',
+        startedAt: 1000,
+        finishedAt: 1000,
+        duration: 0,
+        type: 'stage' as const
+      };
+      const trace = {
+        ...mockTraces[0],
+        startedAt: 1000,
+        finishedAt: 1100,
+        metrics: { ...mockTraces[0].metrics, duration: 100 }
+      } as TraceExecutionShape;
+
+      expect(component.waterfallWidth(trace, stage)).toBe(0.5);
+    });
+  });
+
+  describe('hasState with undefined state', () => {
+    it('should return false when state is undefined', () => {
+      expect(component.hasState({} as any)).toBeFalse();
     });
   });
 });

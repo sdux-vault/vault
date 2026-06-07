@@ -171,6 +171,28 @@ describe('Service: Devtools Aggregate', () => {
       expect(service.traces()).toEqual([ABORTED_TRACE_EXPECTED]);
     });
 
+    it('should commit with aborted status on conductor:end:attempt with abort payload', async () => {
+      bus.nextPipeline(
+        createEvent({
+          name: 'conductor:start:attempt',
+          traceId: 'trace-abort-payload'
+        })
+      );
+      bus.nextPipeline(
+        createEvent({
+          name: 'conductor:end:attempt',
+          traceId: 'trace-abort-payload',
+          payload: { status: 'abort' }
+        })
+      );
+      await vaultSettled(key);
+
+      expect(service.traces().length).toBe(1);
+      expect(service.traces()[0].metrics.status).toBe(
+        TraceExecutionStatuses.Aborted
+      );
+    });
+
     it('should commit with failed status on error events', async () => {
       for (const event of FAILED_TRACE_EVENTS) {
         bus.nextPipeline(event);
@@ -657,6 +679,155 @@ describe('Service: Devtools Aggregate', () => {
       await vaultSettled(key);
 
       expect(service.totalTraces()).toBe(12);
+    });
+  });
+
+  describe('loadDumpEvents', () => {
+    it('should clear existing traces and replay events', async () => {
+      for (const event of COMPLETE_TRACE_EVENTS) {
+        bus.nextPipeline(event);
+      }
+      await vaultSettled(key);
+      expect(service.traces().length).toBe(1);
+
+      service.loadDumpEvents(DENIED_TRACE_EVENTS);
+      await vaultSettled(key);
+
+      expect(service.traces().length).toBe(1);
+      expect(service.traces()[0].metrics.status).toBe(
+        TraceExecutionStatuses.Denied
+      );
+    });
+
+    it('should skip events without traceId', async () => {
+      const eventsWithNull = [
+        Object({
+          id: 'no-trace',
+          cell: 'test-cell',
+          behaviorKey: 'bk',
+          type: 'conductor',
+          boundary: 'start',
+          timestamp: 1000,
+          name: 'conductor:start:attempt'
+        }),
+        ...COMPLETE_TRACE_EVENTS
+      ];
+
+      service.loadDumpEvents(eventsWithNull);
+      await vaultSettled(key);
+      await vaultSettled(key);
+
+      expect(service.traces().length).toBe(1);
+      expect(service.traces()[0].traceId).toBe('trace-1');
+    });
+  });
+
+  describe('extractCandidates', () => {
+    it('should extract pipeline candidate events from a trace', () => {
+      const trace = {
+        traceId: 'trace-cand',
+        cellKey: 'test-cell',
+        startedAt: 1000,
+        finishedAt: 1050,
+        events: [
+          Object({
+            id: 'e1',
+            cell: 'test-cell',
+            behaviorKey: 'bk',
+            type: 'pipeline',
+            boundary: 'candidate',
+            timestamp: 1010,
+            name: 'pipeline:candidate:filter',
+            traceId: 'trace-cand',
+            candidate: { count: 1 }
+          }),
+          Object({
+            id: 'e2',
+            cell: 'test-cell',
+            behaviorKey: 'bk',
+            type: 'stage',
+            boundary: 'start',
+            timestamp: 1015,
+            name: 'stage:start:reducer',
+            traceId: 'trace-cand'
+          }),
+          Object({
+            id: 'e3',
+            cell: 'test-cell',
+            behaviorKey: 'bk',
+            type: 'pipeline',
+            boundary: 'candidate',
+            timestamp: 1020,
+            name: 'pipeline:candidate:reducer',
+            traceId: 'trace-cand',
+            candidate: { count: 2 }
+          })
+        ],
+        metrics: {
+          duration: 50,
+          eventCount: 3,
+          status: TraceExecutionStatuses.Success,
+          slowestStage: { name: 'none', duration: 0 },
+          fastestStage: { name: 'none', duration: 0 },
+          stages: [],
+          hadRevote: false,
+          controllerVoteCount: 0,
+          usedLicensedFeatures: false
+        }
+      } as any;
+
+      const candidates = service.extractCandidates(trace);
+      expect(candidates.length).toBe(2);
+      expect(candidates[0]).toEqual({
+        stage: 'filter',
+        eventId: 'e1',
+        behaviorKey: 'bk',
+        timestamp: 1010,
+        sequenceIndex: 0,
+        value: { count: 1 }
+      });
+      expect(candidates[1]).toEqual({
+        stage: 'reducer',
+        eventId: 'e3',
+        behaviorKey: 'bk',
+        timestamp: 1020,
+        sequenceIndex: 1,
+        value: { count: 2 }
+      });
+    });
+
+    it('should return empty array when no candidate events exist', () => {
+      const trace = {
+        traceId: 'trace-no-cand',
+        cellKey: 'test-cell',
+        startedAt: 1000,
+        finishedAt: 1050,
+        events: [
+          Object({
+            id: 'e1',
+            cell: 'test-cell',
+            behaviorKey: 'bk',
+            type: 'stage',
+            boundary: 'start',
+            timestamp: 1010,
+            name: 'stage:start:filter',
+            traceId: 'trace-no-cand'
+          })
+        ],
+        metrics: {
+          duration: 50,
+          eventCount: 1,
+          status: TraceExecutionStatuses.Success,
+          slowestStage: { name: 'none', duration: 0 },
+          fastestStage: { name: 'none', duration: 0 },
+          stages: [],
+          hadRevote: false,
+          controllerVoteCount: 0,
+          usedLicensedFeatures: false
+        }
+      } as any;
+
+      expect(service.extractCandidates(trace)).toEqual([]);
     });
   });
 });

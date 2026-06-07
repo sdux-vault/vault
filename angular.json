@@ -394,6 +394,11 @@
               {
                 "glob": "**/*",
                 "input": "apps/devtools-ui/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "apps/devtools-ui/src/assets",
+                "output": "assets"
               }
             ],
             "styles": ["apps/devtools-ui/src/styles.scss"],

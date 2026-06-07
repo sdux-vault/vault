@@ -5,9 +5,9 @@ import {
   WritableSignal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DevtoolsAggregateService } from '../services/devtools-aggregate.service';
-import { DevtoolsLoggingService } from '../services/devtools-logging.service';
-import { EXTENSION_VERSION } from '../splash-page/devtools-splash-page.component';
+import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
+import { EXTENSION_VERSION } from '../../splash-page/devtools-splash-page.component';
 import { EventsComponent } from './events.component';
 
 const mockEvent: any = {

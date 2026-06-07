@@ -31,6 +31,16 @@ export const p243Snapshot = [
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -129,6 +139,16 @@ export const p243Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'SDUX::Behavior::Persist::CookieStorage',
     name: 'stage:start:load-persist',
     timestamp: 'ts-removed',
@@ -160,9 +180,9 @@ export const p243Snapshot = [
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
   },
@@ -174,6 +194,16 @@ export const p243Snapshot = [
     timestamp: 'ts-removed',
     type: 'lifecycle',
     boundary: 'notification',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
     traceId: 'trace-id-removed'
   },
   {
@@ -269,6 +299,26 @@ export const p243Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:pipeline-start',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
@@ -294,6 +344,87 @@ export const p243Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: {
+      id: 'be-001',
+      firstName: 'Alice',
+      lastName: 'Wells',
+      role: 'Teller',
+      status: 'Active',
+      salary: 48000,
+      hireDate: '2018-03-12',
+      birthDate: '1992-07-22',
+      phoneNumber: '555-201-8899',
+      address: {
+        street: '101 Maple St',
+        city: 'Springfield',
+        state: 'IL',
+        zip: '62704'
+      }
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: {
+      id: 'be-001',
+      firstName: 'Alice',
+      lastName: 'Wells',
+      role: 'Teller',
+      status: 'Active',
+      salary: 48000,
+      hireDate: '2018-03-12',
+      birthDate: '1992-07-22',
+      phoneNumber: '555-201-8899',
+      address: {
+        street: '101 Maple St',
+        city: 'Springfield',
+        state: 'IL',
+        zip: '62704'
+      }
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: {
+      id: 'be-001',
+      firstName: 'Alice',
+      lastName: 'Wells',
+      role: 'Teller',
+      status: 'Active',
+      salary: 48000,
+      hireDate: '2018-03-12',
+      birthDate: '1992-07-22',
+      phoneNumber: '555-201-8899',
+      address: {
+        street: '101 Maple St',
+        city: 'Springfield',
+        state: 'IL',
+        zip: '62704'
+      }
+    },
     traceId: 'trace-id-removed'
   },
   {
@@ -340,6 +471,33 @@ export const p243Snapshot = [
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:core-state',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: {
+      id: 'be-001',
+      firstName: 'Alice',
+      lastName: 'Wells',
+      role: 'Teller',
+      status: 'Active',
+      salary: 48000,
+      hireDate: '2018-03-12',
+      birthDate: '1992-07-22',
+      phoneNumber: '555-201-8899',
+      address: {
+        street: '101 Maple St',
+        city: 'Springfield',
+        state: 'IL',
+        zip: '62704'
+      }
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
     type: 'stage',
@@ -360,9 +518,9 @@ export const p243Snapshot = [
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
   },
@@ -786,6 +944,16 @@ export const p243Snapshot = [
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -884,6 +1052,16 @@ export const p243Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'SDUX::Behavior::Persist::CookieStorage',
     name: 'stage:start:load-persist',
     timestamp: 'ts-removed',
@@ -915,9 +1093,9 @@ export const p243Snapshot = [
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
   },

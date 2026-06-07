@@ -258,4 +258,52 @@ describe('Component: TraceHotStageRanking (Grouped)', () => {
       expect(component.isLicensed()).toBeFalse();
     });
   });
+
+  describe('zero grandTotal edge cases', () => {
+    it('should return 0 percentage when grandTotal is 0', () => {
+      fixture.componentRef.setInput('traces', [
+        {
+          traceId: 't-empty',
+          cellKey: 'cell',
+          startedAt: 0,
+          finishedAt: 0,
+          events: [],
+          metrics: {
+            duration: 0,
+            eventCount: 0,
+            status: TraceExecutionStatuses.Success,
+            slowestStage: { name: 'none', duration: 0 },
+            fastestStage: { name: 'none', duration: 0 },
+            stages: [
+              {
+                name: 'reducer',
+                behaviorKey: 'bk',
+                startedAt: 0,
+                finishedAt: 0,
+                duration: 0,
+                type: 'stage'
+              }
+            ],
+            hadRevote: false,
+            controllerVoteCount: 0,
+            usedLicensedFeatures: false
+          }
+        }
+      ]);
+      fixture.detectChanges();
+      expect(component.rankings()[0].percentage).toBe(0);
+    });
+
+    it('should use fallback of 1 in barWidth when slowest is null', () => {
+      fixture.componentRef.setInput('traces', []);
+      fixture.detectChanges();
+      const entry = {
+        name: 'test',
+        totalDuration: 0,
+        count: 0,
+        percentage: 0
+      };
+      expect(component.barWidth(entry)).toBe(0);
+    });
+  });
 });

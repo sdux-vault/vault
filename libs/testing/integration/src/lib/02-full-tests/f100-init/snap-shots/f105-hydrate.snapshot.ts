@@ -31,6 +31,16 @@ export const f105Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -157,6 +167,29 @@ export const f105Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: true
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:pipeline-start',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
@@ -187,6 +220,34 @@ export const f105Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: [
+      {
+        id: 'be-999',
+        firstName: 'Victor',
+        lastName: 'Ramirez',
+        role: 'Manager',
+        status: 'Active',
+        salary: 120000,
+        hireDate: '2022-06-15',
+        birthDate: '1988-09-21',
+        address: {
+          city: 'New York',
+          state: 'NY',
+          zip: '10001'
+        },
+        phoneNumber: '(212) 555-9012'
+      }
+    ],
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
     name: 'stage:start:operator',
     timestamp: 'ts-removed',
@@ -207,41 +268,29 @@ export const f105Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:operator',
     timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: [
+      {
+        id: 'be-999',
+        firstName: 'Victor',
+        lastName: 'Ramirez',
+        role: 'Manager',
+        status: 'Active',
+        salary: 120000,
+        hireDate: '2022-06-15',
+        birthDate: '1988-09-21',
+        address: {
+          city: 'New York',
+          state: 'NY',
+          zip: '10001'
+        },
+        phoneNumber: '(212) 555-9012'
+      }
+    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -282,6 +331,74 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: [
+      {
+        id: 'be-999',
+        firstName: 'Victor',
+        lastName: 'Ramirez',
+        role: 'Manager',
+        status: 'Active',
+        salary: 120000,
+        hireDate: '2022-06-15',
+        birthDate: '1988-09-21',
+        address: {
+          city: 'New York',
+          state: 'NY',
+          zip: '10001'
+        },
+        phoneNumber: '(212) 555-9012'
+      }
+    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -442,6 +559,39 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: [
+      {
+        id: 'be-999',
+        firstName: 'Victor',
+        lastName: 'Ramirez',
+        role: 'Manager',
+        status: 'Active',
+        salary: 120000,
+        hireDate: '2022-06-15',
+        birthDate: '1988-09-21',
+        address: {
+          city: 'New York',
+          state: 'NY',
+          zip: '10001'
+        },
+        phoneNumber: '(212) 555-9012',
+        senior: true,
+        fullName: 'Victor Ramirez',
+        isLoanOfficer: false,
+        isSecurity: false,
+        isActive: true
+      }
+    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -588,6 +738,39 @@ export const f105Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:core-state',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: [
+      {
+        id: 'be-999',
+        firstName: 'Victor',
+        lastName: 'Ramirez',
+        role: 'Manager',
+        status: 'Active',
+        salary: 120000,
+        hireDate: '2022-06-15',
+        birthDate: '1988-09-21',
+        address: {
+          city: 'New York',
+          state: 'NY',
+          zip: '10001'
+        },
+        phoneNumber: '(212) 555-9012',
+        senior: true,
+        fullName: 'Victor Ramirez',
+        isLoanOfficer: false,
+        isSecurity: false,
+        isActive: true
+      }
+    ],
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
     type: 'stage',
@@ -608,9 +791,9 @@ export const f105Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -658,6 +841,16 @@ export const f105Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
     type: 'controller',
@@ -784,6 +977,29 @@ export const f105Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: true
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:pipeline-start',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
@@ -814,6 +1030,34 @@ export const f105Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: [
+      {
+        id: 'be-999',
+        firstName: 'Victor',
+        lastName: 'Ramirez',
+        role: 'Manager',
+        status: 'Active',
+        salary: 120000,
+        hireDate: '2022-06-15',
+        birthDate: '1988-09-21',
+        address: {
+          city: 'New York',
+          state: 'NY',
+          zip: '10001'
+        },
+        phoneNumber: '(212) 555-9012'
+      }
+    ],
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
     name: 'stage:start:operator',
     timestamp: 'ts-removed',
@@ -834,41 +1078,29 @@ export const f105Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:operator',
     timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: [
+      {
+        id: 'be-999',
+        firstName: 'Victor',
+        lastName: 'Ramirez',
+        role: 'Manager',
+        status: 'Active',
+        salary: 120000,
+        hireDate: '2022-06-15',
+        birthDate: '1988-09-21',
+        address: {
+          city: 'New York',
+          state: 'NY',
+          zip: '10001'
+        },
+        phoneNumber: '(212) 555-9012'
+      }
+    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -909,6 +1141,74 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: [
+      {
+        id: 'be-999',
+        firstName: 'Victor',
+        lastName: 'Ramirez',
+        role: 'Manager',
+        status: 'Active',
+        salary: 120000,
+        hireDate: '2022-06-15',
+        birthDate: '1988-09-21',
+        address: {
+          city: 'New York',
+          state: 'NY',
+          zip: '10001'
+        },
+        phoneNumber: '(212) 555-9012'
+      }
+    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1069,6 +1369,39 @@ export const f105Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: [
+      {
+        id: 'be-999',
+        firstName: 'Victor',
+        lastName: 'Ramirez',
+        role: 'Manager',
+        status: 'Active',
+        salary: 120000,
+        hireDate: '2022-06-15',
+        birthDate: '1988-09-21',
+        address: {
+          city: 'New York',
+          state: 'NY',
+          zip: '10001'
+        },
+        phoneNumber: '(212) 555-9012',
+        senior: true,
+        fullName: 'Victor Ramirez',
+        isLoanOfficer: false,
+        isSecurity: false,
+        isActive: true
+      }
+    ],
     traceId: 'trace-id-removed'
   },
   {
@@ -1215,6 +1548,39 @@ export const f105Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:core-state',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    candidate: [
+      {
+        id: 'be-999',
+        firstName: 'Victor',
+        lastName: 'Ramirez',
+        role: 'Manager',
+        status: 'Active',
+        salary: 120000,
+        hireDate: '2022-06-15',
+        birthDate: '1988-09-21',
+        address: {
+          city: 'New York',
+          state: 'NY',
+          zip: '10001'
+        },
+        phoneNumber: '(212) 555-9012',
+        senior: true,
+        fullName: 'Victor Ramirez',
+        isLoanOfficer: false,
+        isSecurity: false,
+        isActive: true
+      }
+    ],
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
     type: 'stage',
@@ -1235,9 +1601,9 @@ export const f105Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-conductor',
-    name: 'controller:end:attempt',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'

@@ -1,6 +1,6 @@
 import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { ConfirmDialogService } from '../../services/confirm-dialog/confirm-dialog.service';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
@@ -324,6 +324,87 @@ describe('Component: LoadDumpPage', () => {
       setTimeout(() => {
         fixture.detectChanges();
         expect(component.errorMessage()).toContain('Unsupported file format');
+        resolve();
+      }, 50);
+    });
+  });
+
+  it('should navigate to trace detail view', () => {
+    const router = TestBed.inject(Router);
+    spyOn(router, 'navigate');
+    component.navigateToTraceDetail();
+    expect(router.navigate).toHaveBeenCalledWith(['/reports/trace-detail']);
+  });
+
+  it('should show error when debug dump events array is empty', () => {
+    const dump = JSON.stringify({ events: [] });
+    const file = new File([dump], 'empty-events.json', {
+      type: 'application/json'
+    });
+    const event = { target: { files: [file] } } as unknown as Event;
+
+    component.onFileSelected(event);
+
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        fixture.detectChanges();
+        expect(component.errorMessage()).toContain('File contains no events');
+        resolve();
+      }, 50);
+    });
+  });
+
+  it('should show warning notice when no file has been loaded', () => {
+    const warning = fixture.nativeElement.querySelector('.warning-notice');
+    expect(warning).toBeTruthy();
+    expect(warning.textContent).toContain('replace');
+  });
+
+  it('should show upsell notice when not licensed', async () => {
+    const registry = TestBed.inject(DevtoolsRegistryService);
+    (registry.isLicensed as ReturnType<typeof signal<boolean>>).set(false);
+    fixture.detectChanges();
+
+    const upsell = fixture.nativeElement.querySelector('sdux-upsell-notice');
+    expect(upsell).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.load-dump-page')).toBeNull();
+  });
+
+  it('should navigate when clicking the navigate button', () => {
+    const router = TestBed.inject(Router);
+    spyOn(router, 'navigate');
+
+    component.loadedFileName.set('dump.json');
+    component.loadedEventCount.set(5);
+    fixture.detectChanges();
+
+    const btn = fixture.nativeElement.querySelector('.navigate-button');
+    btn.click();
+    expect(router.navigate).toHaveBeenCalledWith(['/reports/trace-detail']);
+  });
+
+  it('should show error when trace export has entries with empty events', () => {
+    const traces = [
+      {
+        traceId: 'trace-1',
+        cellKey: 'test-cell',
+        startedAt: 1000,
+        finishedAt: 1010,
+        events: [],
+        metrics: { status: 'success', duration: 10 }
+      }
+    ];
+    const file = new File([JSON.stringify(traces)], 'empty-trace-events.json', {
+      type: 'application/json'
+    });
+    const event = { target: { files: [file] } } as unknown as Event;
+
+    component.onFileSelected(event);
+
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        fixture.detectChanges();
+        expect(component.errorMessage()).toContain('File contains no events');
         resolve();
       }, 50);
     });
