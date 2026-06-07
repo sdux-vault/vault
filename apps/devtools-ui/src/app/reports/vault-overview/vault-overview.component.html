@@ -2,67 +2,6 @@
   <section class="vault-overview-content">
     <h2 class="title">Vault Overview</h2>
 
-    <section class="section">
-      <h3 class="section-title">FeatureCell Registry</h3>
-      @if (registry().length) {
-        <table class="registry-table">
-          <thead>
-            <tr>
-              <th class="column-200" matTooltip="Unique FeatureCell identifier">
-                Cell Key
-              </th>
-              <th
-                class="column-200"
-                matTooltip="Total behaviors registered (licensed count)">
-                Behaviors (Licensed)
-              </th>
-              <th
-                class="column-200"
-                matTooltip="Total controllers registered (licensed count)">
-                Controllers (Licensed)
-              </th>
-              <th
-                class="column-auto"
-                matTooltip="Fluent API callbacks wired to this cell">
-                Fluent APIs
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (cell of registry(); track $index) {
-              <tr
-                class="registry-row"
-                [class.selected]="selectedCell() === cell"
-                (click)="selectCell(cell)">
-                <td matTooltip="Inspect pipeline details">{{ cell.key }}</td>
-                <td
-                  matTooltip="{{ cell.behaviors.length }} behavior(s), {{
-                    behaviorLicenseCount(cell)
-                  }} requiring a license">
-                  {{ cell.behaviors.length }} ({{ behaviorLicenseCount(cell) }})
-                </td>
-                <td
-                  matTooltip="{{ cell.controllers.length }} controller(s), {{
-                    controllerLicenseCount(cell)
-                  }} requiring a license">
-                  {{ cell.controllers.length }} ({{
-                    controllerLicenseCount(cell)
-                  }})
-                </td>
-                <td
-                  [matTooltip]="fluentApisTooltip(cell)"
-                  matTooltipClass="fluent-apis-tooltip">
-                  {{ fluentApisCount(cell) }}
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      } @else {
-        <p class="empty">No registry data available.</p>
-      }
-    </section>
-
     <div class="info-cards">
       <section class="info-card">
         <h3 class="card-title">Package Versions</h3>
@@ -119,6 +58,64 @@
         </section>
       }
     </div>
+
+    <section class="section registry-section">
+      <h3 class="section-title">FeatureCell Registry</h3>
+      @if (registry().length) {
+        <div class="cell-cards">
+          @for (cell of registry(); track $index) {
+            <div class="cell-card" [class.selected]="selectedCell() === cell">
+              <div class="cell-card-header">
+                <span class="cell-card-key" [matTooltip]="cell.key">{{
+                  cell.key
+                }}</span>
+              </div>
+              <div class="cell-card-body">
+                <div class="cell-card-stat">
+                  <span class="cell-card-stat-value">{{
+                    cell.behaviors.length
+                  }}</span>
+                  <span class="cell-card-stat-label">Behaviors</span>
+                  @if (behaviorLicenseCount(cell)) {
+                    <span class="cell-card-licensed"
+                      >{{ behaviorLicenseCount(cell) }} licensed</span
+                    >
+                  }
+                </div>
+                <div class="cell-card-stat">
+                  <span class="cell-card-stat-value">{{
+                    cell.controllers.length
+                  }}</span>
+                  <span class="cell-card-stat-label">Controllers</span>
+                  @if (controllerLicenseCount(cell)) {
+                    <span class="cell-card-licensed"
+                      >{{ controllerLicenseCount(cell) }} licensed</span
+                    >
+                  }
+                </div>
+                <div class="cell-card-stat">
+                  <span class="cell-card-stat-value">{{
+                    fluentApisCount(cell)
+                  }}</span>
+                  <span class="cell-card-stat-label">Fluent APIs</span>
+                </div>
+              </div>
+              <div class="cell-card-footer">
+                <button
+                  type="button"
+                  class="cell-card-view-btn"
+                  (click)="selectCell(cell)"
+                  aria-label="View pipeline for {{ cell.key }}">
+                  View Pipeline
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="empty">No registry data available.</p>
+      }
+    </section>
   </section>
 
   @if (selectedCell(); as cell) {
