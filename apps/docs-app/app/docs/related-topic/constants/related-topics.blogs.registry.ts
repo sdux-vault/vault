@@ -12,6 +12,10 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
 
   items: [
     {
+      link: '/blog/circuit-breaker-state-pipeline',
+      display: 'Circuit Breaker Pattern, Built Into Your State Pipeline'
+    },
+    {
       link: '/blog/pipeline-anatomy',
       display: 'Pipeline Anatomy — What Happens When You Update State'
     },

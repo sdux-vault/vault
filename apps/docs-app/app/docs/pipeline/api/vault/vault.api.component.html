@@ -37,27 +37,29 @@
       execution.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      <strong
-        >Vault initialization must precede
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        registration.</strong
-      >
-      The Vault runtime is required before any
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> may be
-      declared or initialized. Calling
-      <strong
-        ><a href="/docs/references/functions/feature-cell"
-          >FeatureCell</a
-        ></strong
-      >
-      prior to invoking
-      <strong><a href="/docs/references/functions/vault">Vault</a></strong> is
-      invalid and will result in a runtime error. This ordering guarantee
-      ensures that all FeatureCells execute within a fully prepared and
-      consistent global execution environment.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <strong
+          >Vault initialization must precede
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          registration.</strong
+        >
+        The Vault runtime is required before any
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> may be
+        declared or initialized. Calling
+        <strong
+          ><a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >
+        prior to invoking
+        <strong><a href="/docs/references/functions/vault">Vault</a></strong> is
+        invalid and will result in a runtime error. This ordering guarantee
+        ensures that all FeatureCells execute within a fully prepared and
+        consistent global execution environment.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->

@@ -461,44 +461,6 @@
   }
 }
 
-.callout {
-  border-left: 4px solid global.$sdux-primary-base;
-  background-color: var(--sdux-surface-bg);
-  padding-left: global.$spacing-md;
-  margin-top: global.$spacing-md;
-  margin-bottom: global.$spacing-md;
-  border-radius: global.$border-radius-sm;
-
-  .title {
-    font-size: global.$font-size-md;
-    font-weight: global.$font-weight-semibold;
-    margin-top: 0;
-    margin-bottom: global.$spacing-xs;
-  }
-
-  strong {
-    display: inline-block;
-    margin-bottom: global.$spacing-xs;
-    font-weight: global.$font-weight-semibold;
-  }
-
-  p {
-    margin: global.$spacing-xs 0 0;
-  }
-
-  &.callout-info {
-    border-left-color: global.$sdux-primary-base;
-  }
-
-  &.callout-learn-more {
-    border-left-color: global.$sdux-success-base;
-  }
-
-  &.callout-warning {
-    border-left-color: global.$sdux-warn-base;
-  }
-}
-
 .cta-button {
   min-width: 200px !important;
   max-width: 250px !important;
