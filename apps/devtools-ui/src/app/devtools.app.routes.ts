@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { EventsComponent } from './reports/events/events.component';
 import { HotStageRankingPageComponent } from './reports/hot-stage-ranking-page/hot-stage-ranking-page.component';
 import { LoadDumpPageComponent } from './reports/load-dump-page/load-dump-page.component';
+import { ReplayPageComponent } from './reports/replay-page/replay-page.component';
 import { StateDiffViewComponent } from './reports/state-diff-view/state-diff-view.component';
 import { TraceDetailViewComponent } from './reports/trace-detail-view/trace-detail-view.component';
 import { VaultOverviewComponent } from './reports/vault-overview/vault-overview.component';
@@ -40,6 +41,9 @@ export const routes: Routes = [
 
   /** Load Dump — import exported debug dump files. */
   { path: 'reports/load-dump', component: LoadDumpPageComponent },
+
+  /** Pipeline Replay — replay traces through live FeatureCell instances. */
+  { path: 'reports/replay', component: ReplayPageComponent },
 
   /** Vault Overview report — registry, versions, and license details. */
   { path: 'reports/vault-overview', component: VaultOverviewComponent },

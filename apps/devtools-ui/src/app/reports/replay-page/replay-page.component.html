@@ -1,0 +1,126 @@
+@if (isLicensed()) {
+  <div class="report-page">
+    <header class="header">
+      <h2>Pipeline Replay</h2>
+    </header>
+
+    <section class="action-bar">
+      <mat-select
+        class="cell-filter"
+        [value]="selectedCellKey()"
+        (selectionChange)="onCellKeyChange($event.value)"
+        aria-label="Filter by cell">
+        @for (key of cellKeys(); track key) {
+          <mat-option [value]="key">{{ key }}</mat-option>
+        }
+      </mat-select>
+
+      @if (selectedCellKey()) {
+        <mat-select
+          class="cell-filter trace-filter"
+          [value]="selectedTraceId()"
+          (selectionChange)="onTraceIdChange($event.value)"
+          aria-label="Select trace">
+          @for (trace of cellTraces(); track trace.traceId) {
+            <mat-option [value]="trace.traceId">
+              {{ trace.traceId | slice: 0 : 8 }} — {{ trace.metrics.status }}
+            </mat-option>
+          }
+        </mat-select>
+      }
+
+      <div class="sdux-container-spacer"></div>
+
+      <div class="meta">
+        <sdux-export-button
+          [data]="cellTraces()"
+          filename="replay-traces"
+          [label]="'Download ' + selectedCellKey() + ' traces'">
+        </sdux-export-button>
+      </div>
+    </section>
+
+    <section class="description-section">
+      <p class="description">
+        Replay a recorded trace through a live FeatureCell instance. Select a
+        cell and trace, then dispatch the resolved value through the original
+        pipeline method (<code>replaceState</code> or <code>mergeState</code>).
+      </p>
+      <p class="description">
+        Use this to verify fixes: change code, replay the trace, and compare the
+        result against the original dump.
+      </p>
+    </section>
+
+    @if (selectedTrace()) {
+      <section class="trace-summary">
+        <div class="summary-row">
+          <span class="label">Trace ID</span>
+          <span class="value">{{ selectedTrace()!.traceId }}</span>
+        </div>
+        <div class="summary-row">
+          <span class="label">Status</span>
+          <span
+            class="value"
+            [class.status-success]="
+              selectedTrace()!.metrics.status === 'success'
+            "
+            [class.status-error]="selectedTrace()!.metrics.status === 'failed'"
+            [class.status-denied]="
+              selectedTrace()!.metrics.status === 'denied'
+            ">
+            {{ selectedTrace()!.metrics.status }}
+          </span>
+        </div>
+        <div class="summary-row">
+          <span class="label">Duration</span>
+          <span class="value">{{ selectedTrace()!.metrics.duration }}ms</span>
+        </div>
+        <div class="summary-row">
+          <span class="label">Dispatch Method</span>
+          <span class="value method-badge">{{ dispatchMethod() }}State</span>
+        </div>
+        <div class="summary-row">
+          <span class="label">Events</span>
+          <span class="value">{{ selectedTrace()!.events.length }}</span>
+        </div>
+      </section>
+
+      @if (resolvedValue() !== undefined) {
+        <section class="resolved-value-section">
+          <h3>Resolved Value</h3>
+          <pre class="resolved-value">{{ resolvedValue() | json }}</pre>
+        </section>
+      }
+
+      <section class="replay-action">
+        <button
+          type="button"
+          class="replay-btn"
+          matTooltip="Dispatch the resolved value through the live cell"
+          (click)="replay()">
+          Replay Trace
+        </button>
+      </section>
+    }
+
+    @if (resultMessage()) {
+      <div
+        class="result-message"
+        [class.error]="resultIsError()"
+        [class.success]="!resultIsError()">
+        {{ resultMessage() }}
+      </div>
+    }
+
+    @if (!cellKeys().length) {
+      <div class="empty-state">
+        No traces loaded. Load a debug dump or record live traces first.
+      </div>
+    }
+  </div>
+} @else {
+  <sdux-upsell-notice
+    headline="Pipeline Replay"
+    body="Replay recorded traces through live FeatureCell instances to verify fixes and compare results." />
+}

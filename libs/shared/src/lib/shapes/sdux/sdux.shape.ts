@@ -39,4 +39,11 @@ export interface SDuXShape {
     injected?: boolean;
     aiAssistEnabled?: boolean;
   };
+
+  /**
+   * DevTools replay API for accessing live FeatureCell instances.
+   */
+  replay?: {
+    getCell: (key: string) => unknown;
+  };
 }

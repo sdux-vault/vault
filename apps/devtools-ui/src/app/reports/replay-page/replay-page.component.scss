@@ -1,0 +1,118 @@
+@use 'global' as global;
+@use '../scss/reports-common';
+
+.report-page {
+  .description-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+  }
+
+  .description {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-secondary);
+    line-height: 1.5;
+
+    code {
+      color: var(--sdux-text-primary);
+      background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
+      padding: 0 global.$spacing-xs;
+      border-radius: global.$border-radius-sm;
+    }
+  }
+
+  .trace-summary {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-xs;
+    padding: global.$spacing-md;
+    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    border-radius: global.$border-radius-sm;
+    border: 1px solid global.$sdux-surface-outline;
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: global.$font-size-sm;
+
+      .label {
+        color: var(--sdux-text-secondary);
+        font-weight: global.$font-weight-medium;
+      }
+
+      .value {
+        color: var(--sdux-text-primary);
+      }
+
+      .method-badge {
+        font-family: monospace;
+        font-weight: global.$font-weight-bold;
+        color: global.$sdux-primary-base;
+      }
+    }
+  }
+
+  .resolved-value-section {
+    h3 {
+      margin: 0 0 global.$spacing-xs;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-bold;
+      color: var(--sdux-text-primary);
+    }
+
+    .resolved-value {
+      margin: 0;
+      padding: global.$spacing-md;
+      background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+      border-radius: global.$border-radius-sm;
+      border: 1px solid global.$sdux-surface-outline;
+      font-family: monospace;
+      font-size: global.$font-size-xs;
+      color: var(--sdux-text-primary);
+      overflow-x: auto;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+  }
+
+  .replay-action {
+    display: flex;
+
+    .replay-btn {
+      font-family: global.$sdux-font-family;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-bold;
+      padding: global.$spacing-sm global.$spacing-lg;
+      border: none;
+      border-radius: global.$border-radius-sm;
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: global.$sdux-primary-dark;
+      }
+    }
+  }
+
+  .result-message {
+    padding: global.$spacing-sm global.$spacing-md;
+    border-radius: global.$border-radius-sm;
+    font-size: global.$font-size-sm;
+
+    &.success {
+      background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+      color: global.$sdux-success-base;
+      border: 1px solid global.$sdux-success-base;
+    }
+
+    &.error {
+      background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+      color: global.$sdux-accent-base;
+      border: 1px solid global.$sdux-accent-base;
+    }
+  }
+}
