@@ -286,13 +286,36 @@
               </div>
             </div>
 
-            <sdux-compare-timeline
-              [beforeLabel]="traceLabels().get(compareBeforeId()) ?? 'Before'"
-              [afterLabel]="traceLabels().get(compareAfterId()) ?? 'After'"
-              [beforeDuration]="compareBeforeDuration()"
-              [afterDuration]="compareAfterDuration()"
-              [beforeMarkers]="timelineBeforeMarkers()"
-              [afterMarkers]="timelineAfterMarkers()" />
+            @switch (timelineViewMode()) {
+              @case ('category-spans') {
+                <sdux-compare-timeline-spans />
+              }
+              @case ('elapsed-delta') {
+                <sdux-compare-timeline-delta />
+              }
+              @case ('waterfall') {
+                <sdux-compare-timeline-waterfall />
+              }
+              @default {
+                <sdux-compare-timeline
+                  [beforeLabel]="
+                    traceLabels().get(compareBeforeId()) ?? 'Before'
+                  "
+                  [afterLabel]="traceLabels().get(compareAfterId()) ?? 'After'"
+                  [beforeDuration]="compareBeforeDuration()"
+                  [afterDuration]="compareAfterDuration()"
+                  [beforeMarkers]="timelineBeforeMarkers()"
+                  [afterMarkers]="timelineAfterMarkers()"
+                  [beforeAllMarkers]="timelineBeforeAllMarkers()"
+                  [afterAllMarkers]="timelineAfterAllMarkers()"
+                  [beforeDiffMarkers]="timelineBeforeDiffMarkers()"
+                  [afterDiffMarkers]="timelineAfterDiffMarkers()"
+                  [beforeStateMarkers]="timelineBeforeStateMarkers()"
+                  [afterStateMarkers]="timelineAfterStateMarkers()"
+                  [beforeCategoryMarkers]="timelineBeforeCategoryMarkers()"
+                  [afterCategoryMarkers]="timelineAfterCategoryMarkers()" />
+              }
+            }
 
             <div class="diff-and-tables">
               <div class="diff-column-group">

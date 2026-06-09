@@ -196,7 +196,10 @@
       grid-template-rows: auto 1fr;
       gap: global.$spacing-md;
 
-      sdux-compare-timeline {
+      sdux-compare-timeline,
+      sdux-compare-timeline-spans,
+      sdux-compare-timeline-delta,
+      sdux-compare-timeline-waterfall {
         grid-column: 1 / -1;
       }
     }

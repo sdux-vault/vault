@@ -1,4 +1,4 @@
-<section class="compare-timeline">
+<section class="compare-timeline-delta">
   <header
     class="section-header"
     role="button"
@@ -10,7 +10,7 @@
     (keydown.space)="
       $event.preventDefault(); showTimeline.set(!showTimeline())
     ">
-    <h3>Timeline</h3>
+    <h3>Timeline — Elapsed Delta</h3>
     <span class="chevron" [class.expanded]="showTimeline()">›</span>
   </header>
   @if (showTimeline()) {
@@ -37,10 +37,16 @@
             </span>
           }
           <span class="stat-divider">·</span>
-          <span class="stat-label">{{ categoryCount() }} categories</span>
-          @if (viewMode() !== 'category-overview') {
+          <span class="stat-label faster-label"
+            >{{ fasterCount() }} faster</span
+          >
+          <span class="stat-divider">·</span>
+          <span class="stat-label slower-label"
+            >{{ slowerCount() }} slower</span
+          >
+          @if (sameCount() > 0) {
             <span class="stat-divider">·</span>
-            <span class="stat-label">{{ eventCount() }} events</span>
+            <span class="stat-label">{{ sameCount() }} same</span>
           }
         </div>
         <mat-select
@@ -61,60 +67,45 @@
         </mat-select>
       </div>
 
-      <div class="timeline-row">
-        <span class="timeline-label"> Before ({{ beforeLabel() }}) </span>
-        <div class="timeline-bar">
-          <div
-            class="timeline-track before-track"
-            [style.width.%]="beforeWidthPercent()"
-            [matTooltip]="'Before trace: ' + beforeDuration() + 'ms total'">
-            @for (marker of displayBeforeMarkers(); track $index) {
-              <span
-                class="timeline-marker"
+      <div class="delta-legend">
+        <span class="legend-slower"
+          >↑ {{ afterLabel() }} slower than {{ beforeLabel() }}</span
+        >
+        <span class="legend-center">— baseline —</span>
+        <span class="legend-faster"
+          >↓ {{ afterLabel() }} faster than {{ beforeLabel() }}</span
+        >
+      </div>
+
+      <div class="delta-row">
+        <span class="timeline-label">
+          {{ beforeLabel() }} vs {{ afterLabel() }}
+        </span>
+        <div class="delta-bar">
+          <div class="delta-track">
+            <div class="delta-center-line"></div>
+            @for (marker of deltaMarkers(); track $index) {
+              <div
+                class="delta-marker"
+                [class.slower]="marker.delta > 0"
+                [class.faster]="marker.delta < 0"
+                [class.same]="marker.delta === 0"
                 [style.left.%]="marker.position"
-                [matTooltip]="
-                  marker.eventName +
-                  ' at +' +
-                  marker.elapsed +
-                  'ms (first ' +
-                  marker.label +
-                  ' event)'
-                ">
-                <span class="marker-dot">●</span>
-                <span class="marker-label">{{ marker.label }}</span>
-              </span>
+                [style.height.%]="barHeight(marker)"
+                [class.above]="marker.delta >= 0"
+                [class.below]="marker.delta < 0"
+                [matTooltip]="markerTooltip(marker)">
+                <span class="delta-label">{{ marker.label }}</span>
+              </div>
             }
           </div>
-          <span class="timeline-duration"> {{ beforeDuration() }}ms </span>
         </div>
       </div>
 
-      <div class="timeline-row">
-        <span class="timeline-label"> After ({{ afterLabel() }}) </span>
-        <div class="timeline-bar">
-          <div
-            class="timeline-track after-track"
-            [style.width.%]="afterWidthPercent()"
-            [matTooltip]="'After trace: ' + afterDuration() + 'ms total'">
-            @for (marker of displayAfterMarkers(); track $index) {
-              <span
-                class="timeline-marker"
-                [style.left.%]="marker.position"
-                [matTooltip]="
-                  marker.eventName +
-                  ' at +' +
-                  marker.elapsed +
-                  'ms (first ' +
-                  marker.label +
-                  ' event)'
-                ">
-                <span class="marker-dot">●</span>
-                <span class="marker-label">{{ marker.label }}</span>
-              </span>
-            }
-          </div>
-          <span class="timeline-duration"> {{ afterDuration() }}ms </span>
-        </div>
+      <div class="delta-scale">
+        <span class="scale-label">+{{ maxAbsDelta() }}ms</span>
+        <span class="scale-label center">0ms</span>
+        <span class="scale-label">-{{ maxAbsDelta() }}ms</span>
       </div>
     </div>
   }

@@ -1,6 +1,9 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { diffJson, type Change } from 'diff';
 import type { TraceExecutionShape } from '../../shapes/trace';
+import type { TimelineDeltaMarkerShape } from './compare-timeline-delta/compare-timeline-delta.component';
+import type { TimelineSpanShape } from './compare-timeline-spans/compare-timeline-spans.component';
+import type { WaterfallCategoryShape } from './compare-timeline-waterfall/compare-timeline-waterfall.component';
 import type { TimelineMarkerShape } from './compare-timeline/compare-timeline.component';
 
 /**
@@ -130,6 +133,69 @@ export class CompareTraceService {
   /** Timeline markers for the "after" trace. */
   readonly timelineAfterMarkers = computed(() =>
     this.buildTimelineMarkers(this.compareAfterId())
+  );
+
+  /** All-events timeline markers for the "before" trace (every event, collision-spread). */
+  readonly timelineBeforeAllMarkers = computed(() =>
+    this.buildAllEventsMarkers(this.compareBeforeId())
+  );
+
+  /** All-events timeline markers for the "after" trace (every event, collision-spread). */
+  readonly timelineAfterAllMarkers = computed(() =>
+    this.buildAllEventsMarkers(this.compareAfterId())
+  );
+
+  /** Diff-only timeline markers for the "before" trace. */
+  readonly timelineBeforeDiffMarkers = computed(() =>
+    this.buildDiffOnlyMarkers(this.compareBeforeId(), this.compareAfterId())
+  );
+
+  /** Diff-only timeline markers for the "after" trace. */
+  readonly timelineAfterDiffMarkers = computed(() =>
+    this.buildDiffOnlyMarkers(this.compareAfterId(), this.compareBeforeId())
+  );
+
+  /** State-only timeline markers for the "before" trace. */
+  readonly timelineBeforeStateMarkers = computed(() =>
+    this.buildStateOnlyMarkers(this.compareBeforeId())
+  );
+
+  /** State-only timeline markers for the "after" trace. */
+  readonly timelineAfterStateMarkers = computed(() =>
+    this.buildStateOnlyMarkers(this.compareAfterId())
+  );
+
+  /** Category-filtered timeline markers for the "before" trace. */
+  readonly timelineBeforeCategoryMarkers = computed(() =>
+    this.buildCategoryFilteredMarkers(this.compareBeforeId())
+  );
+
+  /** Category-filtered timeline markers for the "after" trace. */
+  readonly timelineAfterCategoryMarkers = computed(() =>
+    this.buildCategoryFilteredMarkers(this.compareAfterId())
+  );
+
+  /** Category duration spans for the "before" trace. */
+  readonly timelineBeforeSpans = computed(() =>
+    this.buildCategorySpans(this.compareBeforeId())
+  );
+
+  /** Category duration spans for the "after" trace. */
+  readonly timelineAfterSpans = computed(() =>
+    this.buildCategorySpans(this.compareAfterId())
+  );
+
+  /** Active timeline view mode across all timeline components. */
+  readonly timelineViewMode = signal('category-overview');
+
+  /** Elapsed delta markers comparing corresponding events between traces. */
+  readonly timelineDeltaMarkers = computed(() =>
+    this.buildElapsedDeltaMarkers()
+  );
+
+  /** Waterfall categories with before/after events per category. */
+  readonly timelineWaterfallCategories = computed(() =>
+    this.buildWaterfallCategories()
   );
 
   /** Whether only differing events are shown. */
@@ -517,5 +583,323 @@ export class CompareTraceService {
       });
     }
     return markers;
+  }
+
+  /**
+   * Builds timeline markers for every event in a trace, applying
+   * collision spreading so overlapping markers are visually separated.
+   * Uses per-trace duration as 100% so each track fills its full width.
+   *
+   * @param traceId - The trace to extract markers from.
+   * @returns Array of marker objects for every event with spread positions.
+   */
+  buildAllEventsMarkers(traceId: string): TimelineMarkerShape[] {
+    if (!traceId) return [];
+    const trace = this.cellTraces().find((t) => t.traceId === traceId);
+    if (!trace || !trace.events.length) return [];
+    const traceDuration = Math.max(
+      trace.events[trace.events.length - 1].timestamp - trace.startedAt,
+      1
+    );
+    const markers: TimelineMarkerShape[] = trace.events.map((event) => {
+      const category = event.name.split(':')[0];
+      const elapsed = event.timestamp - trace.startedAt;
+      return {
+        label: category,
+        eventName: event.name,
+        position: (elapsed / traceDuration) * 100,
+        elapsed
+      };
+    });
+    return this.spreadOverlappingMarkers(markers);
+  }
+
+  /**
+   * Builds timeline markers for only the events that differ between
+   * two traces. Uses per-trace duration as 100%.
+   *
+   * @param traceId - The trace to build markers for.
+   * @param otherTraceId - The trace to compare against.
+   * @returns Markers for events at differing indices only.
+   */
+  buildDiffOnlyMarkers(
+    traceId: string,
+    otherTraceId: string
+  ): TimelineMarkerShape[] {
+    if (!traceId || !otherTraceId) return [];
+    const trace = this.cellTraces().find((t) => t.traceId === traceId);
+    const otherTrace = this.cellTraces().find(
+      (t) => t.traceId === otherTraceId
+    );
+    if (!trace?.events.length || !otherTrace) return [];
+    const diffIndices = new Set(this.differingIndices());
+    if (diffIndices.size === 0) return [];
+    const traceDuration = Math.max(
+      trace.events[trace.events.length - 1].timestamp - trace.startedAt,
+      1
+    );
+    const markers: TimelineMarkerShape[] = [];
+    for (let i = 0; i < trace.events.length; i++) {
+      if (!diffIndices.has(i)) continue;
+      const event = trace.events[i];
+      const category = event.name.split(':')[0];
+      const elapsed = event.timestamp - trace.startedAt;
+      markers.push({
+        label: category,
+        eventName: event.name,
+        position: (elapsed / traceDuration) * 100,
+        elapsed
+      });
+    }
+    return this.spreadOverlappingMarkers(markers);
+  }
+
+  /**
+   * Builds timeline markers for only events that carry a `state`
+   * attribute. Uses per-trace duration as 100%.
+   *
+   * @param traceId - The trace to build markers for.
+   * @returns Markers for state-bearing events only.
+   */
+  buildStateOnlyMarkers(traceId: string): TimelineMarkerShape[] {
+    if (!traceId) return [];
+    const trace = this.cellTraces().find((t) => t.traceId === traceId);
+    if (!trace?.events.length) return [];
+    const traceDuration = Math.max(
+      trace.events[trace.events.length - 1].timestamp - trace.startedAt,
+      1
+    );
+    const markers: TimelineMarkerShape[] = [];
+    for (const event of trace.events) {
+      if (!(event as unknown as Record<string, unknown>)['state']) continue;
+      const category = event.name.split(':')[0];
+      const elapsed = event.timestamp - trace.startedAt;
+      markers.push({
+        label: category,
+        eventName: event.name,
+        position: (elapsed / traceDuration) * 100,
+        elapsed
+      });
+    }
+    return this.spreadOverlappingMarkers(markers);
+  }
+
+  /**
+   * Builds timeline markers for only events whose category matches
+   * the active category filters. Uses per-trace duration as 100%.
+   * Returns an empty array when no category filters are active.
+   *
+   * @param traceId - The trace to build markers for.
+   * @returns Markers for category-matching events only.
+   */
+  buildCategoryFilteredMarkers(traceId: string): TimelineMarkerShape[] {
+    if (!traceId) return [];
+    const cats = this.categoryFilters();
+    if (cats.size === 0) return [];
+    const trace = this.cellTraces().find((t) => t.traceId === traceId);
+    if (!trace?.events.length) return [];
+    const traceDuration = Math.max(
+      trace.events[trace.events.length - 1].timestamp - trace.startedAt,
+      1
+    );
+    const markers: TimelineMarkerShape[] = [];
+    for (const event of trace.events) {
+      const category = event.name.split(':')[0];
+      if (!cats.has(category)) continue;
+      const elapsed = event.timestamp - trace.startedAt;
+      markers.push({
+        label: category,
+        eventName: event.name,
+        position: (elapsed / traceDuration) * 100,
+        elapsed
+      });
+    }
+    return this.spreadOverlappingMarkers(markers);
+  }
+
+  /**
+   * Builds category duration spans for a trace, computing the first
+   * and last event timestamp per category as horizontal bars.
+   * Uses per-trace duration as 100%.
+   *
+   * @param traceId - The trace to build spans for.
+   * @returns Array of span objects with start/end positions per category.
+   */
+  buildCategorySpans(traceId: string): TimelineSpanShape[] {
+    if (!traceId) return [];
+    const trace = this.cellTraces().find((t) => t.traceId === traceId);
+    if (!trace?.events.length) return [];
+    const traceDuration = Math.max(
+      trace.events[trace.events.length - 1].timestamp - trace.startedAt,
+      1
+    );
+    const categoryMap = new Map<
+      string,
+      { firstElapsed: number; lastElapsed: number; eventCount: number }
+    >();
+    for (const event of trace.events) {
+      const category = event.name.split(':')[0];
+      const elapsed = event.timestamp - trace.startedAt;
+      const existing = categoryMap.get(category);
+      if (existing) {
+        existing.lastElapsed = elapsed;
+        existing.eventCount++;
+      } else {
+        categoryMap.set(category, {
+          firstElapsed: elapsed,
+          lastElapsed: elapsed,
+          eventCount: 1
+        });
+      }
+    }
+    const spans: TimelineSpanShape[] = [];
+    for (const [category, data] of categoryMap) {
+      spans.push({
+        label: category,
+        startPosition: (data.firstElapsed / traceDuration) * 100,
+        endPosition: (data.lastElapsed / traceDuration) * 100,
+        startElapsed: data.firstElapsed,
+        endElapsed: data.lastElapsed,
+        duration: data.lastElapsed - data.firstElapsed,
+        eventCount: data.eventCount
+      });
+    }
+    return spans.sort((a, b) => a.startPosition - b.startPosition);
+  }
+
+  /**
+   * Builds elapsed delta markers by comparing corresponding events
+   * between the before and after traces. Each marker shows how much
+   * earlier or later the event fired in the after trace.
+   *
+   * @returns Array of delta markers positioned by event index.
+   */
+  buildElapsedDeltaMarkers(): TimelineDeltaMarkerShape[] {
+    const beforeId = this.compareBeforeId();
+    const afterId = this.compareAfterId();
+    if (!beforeId || !afterId) return [];
+    const beforeTrace = this.cellTraces().find((t) => t.traceId === beforeId);
+    const afterTrace = this.cellTraces().find((t) => t.traceId === afterId);
+    if (!beforeTrace?.events.length || !afterTrace?.events.length) return [];
+    const total = Math.min(beforeTrace.events.length, afterTrace.events.length);
+    const markers: TimelineDeltaMarkerShape[] = [];
+    let maxAbsDelta = 0;
+    const rawDeltas: {
+      category: string;
+      eventName: string;
+      beforeElapsed: number;
+      afterElapsed: number;
+      delta: number;
+    }[] = [];
+    for (let i = 0; i < total; i++) {
+      const bEvent = beforeTrace.events[i];
+      const aEvent = afterTrace.events[i];
+      const bElapsed = bEvent.timestamp - beforeTrace.startedAt;
+      const aElapsed = aEvent.timestamp - afterTrace.startedAt;
+      const delta = aElapsed - bElapsed;
+      const category = bEvent.name.split(':')[0];
+      rawDeltas.push({
+        category,
+        eventName: bEvent.name,
+        beforeElapsed: bElapsed,
+        afterElapsed: aElapsed,
+        delta
+      });
+      maxAbsDelta = Math.max(maxAbsDelta, Math.abs(delta));
+    }
+    if (maxAbsDelta === 0) maxAbsDelta = 1;
+    for (let i = 0; i < rawDeltas.length; i++) {
+      const d = rawDeltas[i];
+      markers.push({
+        label: d.category,
+        eventName: d.eventName,
+        position: (i / Math.max(total - 1, 1)) * 100,
+        delta: d.delta,
+        normalizedDelta: d.delta / maxAbsDelta,
+        beforeElapsed: d.beforeElapsed,
+        afterElapsed: d.afterElapsed
+      });
+    }
+    return markers;
+  }
+
+  /**
+   * Builds waterfall category rows with before and after event markers
+   * grouped by category. Each category gets one row with events from
+   * both traces plotted on a shared time scale.
+   *
+   * @returns Array of category rows with before/after markers.
+   */
+  buildWaterfallCategories(): WaterfallCategoryShape[] {
+    const beforeId = this.compareBeforeId();
+    const afterId = this.compareAfterId();
+    const maxDuration = this.timelineMaxDuration();
+    const categoryMap = new Map<
+      string,
+      { before: TimelineMarkerShape[]; after: TimelineMarkerShape[] }
+    >();
+    const addEvents = (traceId: string, side: 'before' | 'after'): void => {
+      if (!traceId) return;
+      const trace = this.cellTraces().find((t) => t.traceId === traceId);
+      if (!trace?.events.length) return;
+      for (const event of trace.events) {
+        const category = event.name.split(':')[0];
+        if (!categoryMap.has(category)) {
+          categoryMap.set(category, { before: [], after: [] });
+        }
+        const elapsed = event.timestamp - trace.startedAt;
+        categoryMap.get(category)![side].push({
+          label: category,
+          eventName: event.name,
+          position: (elapsed / maxDuration) * 100,
+          elapsed
+        });
+      }
+    };
+    addEvents(beforeId, 'before');
+    addEvents(afterId, 'after');
+    const categories: WaterfallCategoryShape[] = [];
+    for (const [label, data] of categoryMap) {
+      categories.push({
+        label,
+        beforeMarkers: data.before,
+        afterMarkers: data.after,
+        totalEvents: data.before.length + data.after.length
+      });
+    }
+    return categories.sort((a, b) => {
+      const aFirst = Math.min(
+        ...[...a.beforeMarkers, ...a.afterMarkers].map((m) => m.position)
+      );
+      const bFirst = Math.min(
+        ...[...b.beforeMarkers, ...b.afterMarkers].map((m) => m.position)
+      );
+      return aFirst - bFirst;
+    });
+  }
+
+  /**
+   * Spreads markers that overlap within a minimum gap threshold
+   * so they remain visually distinguishable on the timeline.
+   *
+   * @param markers - Unsorted markers to spread.
+   * @returns Markers with adjusted positions.
+   */
+  private spreadOverlappingMarkers(
+    markers: TimelineMarkerShape[]
+  ): TimelineMarkerShape[] {
+    if (markers.length <= 1) return markers;
+    const minGap = 2;
+    const sorted = [...markers].sort((a, b) => a.position - b.position);
+    for (let i = 1; i < sorted.length; i++) {
+      const prev = sorted[i - 1];
+      if (sorted[i].position - prev.position < minGap) {
+        sorted[i] = {
+          ...sorted[i],
+          position: Math.min(prev.position + minGap, 100)
+        };
+      }
+    }
+    return sorted;
   }
 }

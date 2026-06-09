@@ -1,4 +1,4 @@
-<section class="compare-timeline">
+<section class="compare-timeline-spans">
   <header
     class="section-header"
     role="button"
@@ -10,7 +10,7 @@
     (keydown.space)="
       $event.preventDefault(); showTimeline.set(!showTimeline())
     ">
-    <h3>Timeline</h3>
+    <h3>Timeline — Category Duration Spans</h3>
     <span class="chevron" [class.expanded]="showTimeline()">›</span>
   </header>
   @if (showTimeline()) {
@@ -38,10 +38,6 @@
           }
           <span class="stat-divider">·</span>
           <span class="stat-label">{{ categoryCount() }} categories</span>
-          @if (viewMode() !== 'category-overview') {
-            <span class="stat-divider">·</span>
-            <span class="stat-label">{{ eventCount() }} events</span>
-          }
         </div>
         <mat-select
           class="cell-filter"
@@ -68,21 +64,25 @@
             class="timeline-track before-track"
             [style.width.%]="beforeWidthPercent()"
             [matTooltip]="'Before trace: ' + beforeDuration() + 'ms total'">
-            @for (marker of displayBeforeMarkers(); track $index) {
-              <span
-                class="timeline-marker"
-                [style.left.%]="marker.position"
+            @for (span of beforeSpans(); track span.label) {
+              <div
+                class="category-span before-span"
+                [style.left.%]="span.startPosition"
+                [style.width.%]="spanWidth(span)"
                 [matTooltip]="
-                  marker.eventName +
-                  ' at +' +
-                  marker.elapsed +
-                  'ms (first ' +
-                  marker.label +
-                  ' event)'
+                  span.label +
+                  ': ' +
+                  span.duration +
+                  'ms (' +
+                  span.eventCount +
+                  ' events, +' +
+                  span.startElapsed +
+                  'ms → +' +
+                  span.endElapsed +
+                  'ms)'
                 ">
-                <span class="marker-dot">●</span>
-                <span class="marker-label">{{ marker.label }}</span>
-              </span>
+                <span class="span-label">{{ span.label }}</span>
+              </div>
             }
           </div>
           <span class="timeline-duration"> {{ beforeDuration() }}ms </span>
@@ -96,21 +96,25 @@
             class="timeline-track after-track"
             [style.width.%]="afterWidthPercent()"
             [matTooltip]="'After trace: ' + afterDuration() + 'ms total'">
-            @for (marker of displayAfterMarkers(); track $index) {
-              <span
-                class="timeline-marker"
-                [style.left.%]="marker.position"
+            @for (span of afterSpans(); track span.label) {
+              <div
+                class="category-span after-span"
+                [style.left.%]="span.startPosition"
+                [style.width.%]="spanWidth(span)"
                 [matTooltip]="
-                  marker.eventName +
-                  ' at +' +
-                  marker.elapsed +
-                  'ms (first ' +
-                  marker.label +
-                  ' event)'
+                  span.label +
+                  ': ' +
+                  span.duration +
+                  'ms (' +
+                  span.eventCount +
+                  ' events, +' +
+                  span.startElapsed +
+                  'ms → +' +
+                  span.endElapsed +
+                  'ms)'
                 ">
-                <span class="marker-dot">●</span>
-                <span class="marker-label">{{ marker.label }}</span>
-              </span>
+                <span class="span-label">{{ span.label }}</span>
+              </div>
             }
           </div>
           <span class="timeline-duration"> {{ afterDuration() }}ms </span>

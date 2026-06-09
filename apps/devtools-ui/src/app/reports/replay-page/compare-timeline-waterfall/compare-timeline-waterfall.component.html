@@ -1,4 +1,4 @@
-<section class="compare-timeline">
+<section class="compare-timeline-waterfall">
   <header
     class="section-header"
     role="button"
@@ -10,7 +10,7 @@
     (keydown.space)="
       $event.preventDefault(); showTimeline.set(!showTimeline())
     ">
-    <h3>Timeline</h3>
+    <h3>Timeline — Waterfall</h3>
     <span class="chevron" [class.expanded]="showTimeline()">›</span>
   </header>
   @if (showTimeline()) {
@@ -38,10 +38,8 @@
           }
           <span class="stat-divider">·</span>
           <span class="stat-label">{{ categoryCount() }} categories</span>
-          @if (viewMode() !== 'category-overview') {
-            <span class="stat-divider">·</span>
-            <span class="stat-label">{{ eventCount() }} events</span>
-          }
+          <span class="stat-divider">·</span>
+          <span class="stat-label">{{ totalEvents() }} events</span>
         </div>
         <mat-select
           class="cell-filter"
@@ -61,60 +59,60 @@
         </mat-select>
       </div>
 
-      <div class="timeline-row">
-        <span class="timeline-label"> Before ({{ beforeLabel() }}) </span>
-        <div class="timeline-bar">
-          <div
-            class="timeline-track before-track"
-            [style.width.%]="beforeWidthPercent()"
-            [matTooltip]="'Before trace: ' + beforeDuration() + 'ms total'">
-            @for (marker of displayBeforeMarkers(); track $index) {
-              <span
-                class="timeline-marker"
-                [style.left.%]="marker.position"
-                [matTooltip]="
-                  marker.eventName +
-                  ' at +' +
-                  marker.elapsed +
-                  'ms (first ' +
-                  marker.label +
-                  ' event)'
-                ">
-                <span class="marker-dot">●</span>
-                <span class="marker-label">{{ marker.label }}</span>
-              </span>
-            }
-          </div>
-          <span class="timeline-duration"> {{ beforeDuration() }}ms </span>
-        </div>
+      <div class="waterfall-legend">
+        <span class="legend-item before-legend"
+          >● {{ beforeLabel() }} (before)</span
+        >
+        <span class="legend-item after-legend"
+          >● {{ afterLabel() }} (after)</span
+        >
       </div>
 
-      <div class="timeline-row">
-        <span class="timeline-label"> After ({{ afterLabel() }}) </span>
-        <div class="timeline-bar">
-          <div
-            class="timeline-track after-track"
-            [style.width.%]="afterWidthPercent()"
-            [matTooltip]="'After trace: ' + afterDuration() + 'ms total'">
-            @for (marker of displayAfterMarkers(); track $index) {
+      @for (category of categories(); track category.label) {
+        <div class="waterfall-row">
+          <span
+            class="waterfall-label"
+            [matTooltip]="
+              category.label + ': ' + category.totalEvents + ' events'
+            ">
+            {{ category.label }}
+          </span>
+          <div class="waterfall-track">
+            @for (marker of category.beforeMarkers; track $index) {
               <span
-                class="timeline-marker"
+                class="waterfall-marker before-marker"
                 [style.left.%]="marker.position"
                 [matTooltip]="
+                  beforeLabel() +
+                  ': ' +
                   marker.eventName +
                   ' at +' +
                   marker.elapsed +
-                  'ms (first ' +
-                  marker.label +
-                  ' event)'
+                  'ms'
                 ">
-                <span class="marker-dot">●</span>
-                <span class="marker-label">{{ marker.label }}</span>
+              </span>
+            }
+            @for (marker of category.afterMarkers; track $index) {
+              <span
+                class="waterfall-marker after-marker"
+                [style.left.%]="marker.position"
+                [matTooltip]="
+                  afterLabel() +
+                  ': ' +
+                  marker.eventName +
+                  ' at +' +
+                  marker.elapsed +
+                  'ms'
+                ">
               </span>
             }
           </div>
-          <span class="timeline-duration"> {{ afterDuration() }}ms </span>
         </div>
+      }
+
+      <div class="waterfall-time-axis">
+        <span class="axis-label">0ms</span>
+        <span class="axis-label">{{ maxDuration() }}ms</span>
       </div>
     </div>
   }

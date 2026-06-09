@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, type WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CompareTraceService } from '../compare-trace.service';
 import {
   CompareTimelineComponent,
   type TimelineMarkerShape
@@ -15,8 +16,24 @@ import {
       [beforeDuration]="beforeDuration()"
       [afterDuration]="afterDuration()"
       [beforeMarkers]="beforeMarkers()"
-      [afterMarkers]="afterMarkers()" />
-  `
+      [afterMarkers]="afterMarkers()"
+      [beforeAllMarkers]="beforeAllMarkers()"
+      [afterAllMarkers]="afterAllMarkers()"
+      [beforeDiffMarkers]="beforeDiffMarkers()"
+      [afterDiffMarkers]="afterDiffMarkers()"
+      [beforeStateMarkers]="beforeStateMarkers()"
+      [afterStateMarkers]="afterStateMarkers()"
+      [beforeCategoryMarkers]="beforeCategoryMarkers()"
+      [afterCategoryMarkers]="afterCategoryMarkers()" />
+  `,
+  providers: [
+    {
+      provide: CompareTraceService,
+      useFactory: () => ({
+        timelineViewMode: signal('category-overview')
+      })
+    }
+  ]
 })
 class TestHostComponent {
   beforeLabel = signal('t1');
@@ -43,6 +60,70 @@ class TestHostComponent {
       eventName: 'lifecycle:start:merge',
       position: 1,
       elapsed: 5
+    }
+  ]);
+  beforeAllMarkers = signal<TimelineMarkerShape[]>([
+    {
+      label: 'all-before',
+      eventName: 'all:before:event',
+      position: 5,
+      elapsed: 25
+    }
+  ]);
+  afterAllMarkers = signal<TimelineMarkerShape[]>([
+    {
+      label: 'all-after',
+      eventName: 'all:after:event',
+      position: 3,
+      elapsed: 15
+    }
+  ]);
+  beforeDiffMarkers = signal<TimelineMarkerShape[]>([
+    {
+      label: 'diff-before',
+      eventName: 'diff:before:event',
+      position: 4,
+      elapsed: 20
+    }
+  ]);
+  afterDiffMarkers = signal<TimelineMarkerShape[]>([
+    {
+      label: 'diff-after',
+      eventName: 'diff:after:event',
+      position: 6,
+      elapsed: 30
+    }
+  ]);
+  beforeStateMarkers = signal<TimelineMarkerShape[]>([
+    {
+      label: 'state-before',
+      eventName: 'state:before:event',
+      position: 7,
+      elapsed: 35
+    }
+  ]);
+  afterStateMarkers = signal<TimelineMarkerShape[]>([
+    {
+      label: 'state-after',
+      eventName: 'state:after:event',
+      position: 8,
+      elapsed: 40
+    }
+  ]);
+  beforeCategoryMarkers = signal<TimelineMarkerShape[]>([
+    {
+      label: 'cat-before',
+      eventName: 'cat:before:event',
+      position: 10,
+      elapsed: 50
+    }
+  ]);
+  afterCategoryMarkers = signal<TimelineMarkerShape[]>([
+    {
+      label: 'cat-after',
+      eventName: 'cat:after:event',
+      position: 11,
+      elapsed: 55
     }
   ]);
 }
@@ -156,5 +237,140 @@ describe('CompareTimelineComponent', () => {
     fixture.detectChanges();
     const delta = el.querySelector('.summary-delta');
     expect(delta!.textContent!.trim()).toBe('');
+  });
+
+  describe('view mode switching', () => {
+    let viewMode: WritableSignal<string>;
+
+    beforeEach(() => {
+      const service = fixture.debugElement.injector.get(CompareTraceService);
+      viewMode = service.timelineViewMode as WritableSignal<string>;
+    });
+
+    it('should display all-events markers in all-events mode', () => {
+      viewMode.set('all-events');
+      fixture.detectChanges();
+      const beforeTrack = el.querySelector('.before-track');
+      const markers = beforeTrack!.querySelectorAll('.timeline-marker');
+      expect(markers.length).toBe(1);
+      expect(markers[0].querySelector('.marker-label')!.textContent).toContain(
+        'all-before'
+      );
+    });
+
+    it('should display diff-only markers in diff-only mode', () => {
+      viewMode.set('diff-only');
+      fixture.detectChanges();
+      const beforeTrack = el.querySelector('.before-track');
+      const markers = beforeTrack!.querySelectorAll('.timeline-marker');
+      expect(markers.length).toBe(1);
+      expect(markers[0].querySelector('.marker-label')!.textContent).toContain(
+        'diff-before'
+      );
+    });
+
+    it('should display state-only markers in state-only mode', () => {
+      viewMode.set('state-only');
+      fixture.detectChanges();
+      const afterTrack = el.querySelector('.after-track');
+      const markers = afterTrack!.querySelectorAll('.timeline-marker');
+      expect(markers.length).toBe(1);
+      expect(markers[0].querySelector('.marker-label')!.textContent).toContain(
+        'state-after'
+      );
+    });
+
+    it('should display category-filtered markers in category-filtered mode', () => {
+      viewMode.set('category-filtered');
+      fixture.detectChanges();
+      const beforeTrack = el.querySelector('.before-track');
+      const markers = beforeTrack!.querySelectorAll('.timeline-marker');
+      expect(markers.length).toBe(1);
+      expect(markers[0].querySelector('.marker-label')!.textContent).toContain(
+        'cat-before'
+      );
+    });
+
+    it('should use per-trace scaling (100% width) in non-overview modes', () => {
+      viewMode.set('all-events');
+      fixture.detectChanges();
+      const beforeTrack = el.querySelector('.before-track') as HTMLElement;
+      const afterTrack = el.querySelector('.after-track') as HTMLElement;
+      expect(beforeTrack.style.width).toBe('100%');
+      expect(afterTrack.style.width).toBe('100%');
+    });
+
+    it('should use proportional scaling in category-overview mode', () => {
+      viewMode.set('category-overview');
+      fixture.detectChanges();
+      const afterTrack = el.querySelector('.after-track') as HTMLElement;
+      expect(afterTrack.style.width).toBe('40%');
+    });
+  });
+
+  describe('percentChange', () => {
+    it('should show percentage decrease when after is shorter', () => {
+      const content = el.querySelector('.timeline-content')!;
+      const percentEl = content.querySelectorAll('.summary-delta');
+      const texts = Array.from(percentEl).map((e) => e.textContent!.trim());
+      expect(texts.some((t) => t.includes('↓') && t.includes('%'))).toBeTrue();
+    });
+
+    it('should show percentage increase when after is longer', () => {
+      host.beforeDuration.set(100);
+      host.afterDuration.set(300);
+      fixture.detectChanges();
+      const percentEls = el.querySelectorAll('.summary-delta');
+      const texts = Array.from(percentEls).map((e) => e.textContent!.trim());
+      expect(texts.some((t) => t.includes('↑') && t.includes('%'))).toBeTrue();
+    });
+
+    it('should show empty percent when durations are equal', () => {
+      host.beforeDuration.set(100);
+      host.afterDuration.set(100);
+      fixture.detectChanges();
+      const percentEls = el.querySelectorAll('.summary-delta');
+      const texts = Array.from(percentEls).map((e) => e.textContent!.trim());
+      expect(texts.every((t) => !t.includes('%'))).toBeTrue();
+    });
+
+    it('should show empty percent when before is zero', () => {
+      host.beforeDuration.set(0);
+      host.afterDuration.set(100);
+      fixture.detectChanges();
+      const percentEls = el.querySelectorAll('.summary-delta');
+      const texts = Array.from(percentEls).map((e) => e.textContent!.trim());
+      expect(texts.every((t) => !t.includes('%'))).toBeTrue();
+    });
+  });
+
+  describe('categoryCount and eventCount', () => {
+    it('should show category count in stats', () => {
+      const stats = el.querySelector('.timeline-stats')!.textContent;
+      expect(stats).toContain('2 categories');
+    });
+
+    it('should show event count in non-overview modes', () => {
+      const service = fixture.debugElement.injector.get(CompareTraceService);
+      (service.timelineViewMode as WritableSignal<string>).set('all-events');
+      fixture.detectChanges();
+      const stats = el.querySelector('.timeline-stats')!.textContent;
+      expect(stats).toContain('events');
+    });
+
+    it('should not show event count in category-overview mode', () => {
+      const stats = el.querySelector('.timeline-stats')!.textContent;
+      expect(stats).not.toContain('events');
+    });
+  });
+
+  describe('maxDuration', () => {
+    it('should use at least 1 as max duration', () => {
+      host.beforeDuration.set(0);
+      host.afterDuration.set(0);
+      fixture.detectChanges();
+      const beforeTrack = el.querySelector('.before-track') as HTMLElement;
+      expect(beforeTrack.style.width).toBe('0%');
+    });
   });
 });

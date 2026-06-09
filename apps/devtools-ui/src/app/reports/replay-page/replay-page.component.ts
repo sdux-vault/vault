@@ -22,6 +22,9 @@ import { ResetButtonComponent } from '../../shared/reset-button/reset-button.com
 import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
 import { DumpFilePickerComponent } from '../load-dump-page/dump-file-picker/dump-file-picker.component';
 import { StateTableViewComponent } from '../state-diff-view/state-table-view/state-table-view.component';
+import { CompareTimelineDeltaComponent } from './compare-timeline-delta/compare-timeline-delta.component';
+import { CompareTimelineSpansComponent } from './compare-timeline-spans/compare-timeline-spans.component';
+import { CompareTimelineWaterfallComponent } from './compare-timeline-waterfall/compare-timeline-waterfall.component';
 import { CompareTimelineComponent } from './compare-timeline/compare-timeline.component';
 import { CompareTraceService } from './compare-trace.service';
 
@@ -85,7 +88,10 @@ function extractResolvedValue(trace: TraceExecutionShape): unknown | undefined {
     ResetButtonComponent,
     UpsellNoticeComponent,
     StateTableViewComponent,
-    CompareTimelineComponent
+    CompareTimelineComponent,
+    CompareTimelineDeltaComponent,
+    CompareTimelineSpansComponent,
+    CompareTimelineWaterfallComponent
   ],
   providers: [CompareTraceService],
   templateUrl: './replay-page.component.html',
@@ -237,6 +243,35 @@ export class ReplayPageComponent {
 
   /** Timeline markers for the "after" trace. */
   readonly timelineAfterMarkers = this.compare.timelineAfterMarkers;
+
+  /** All-events timeline markers for the "before" trace. */
+  readonly timelineBeforeAllMarkers = this.compare.timelineBeforeAllMarkers;
+
+  /** All-events timeline markers for the "after" trace. */
+  readonly timelineAfterAllMarkers = this.compare.timelineAfterAllMarkers;
+
+  /** Diff-only timeline markers for the "before" trace. */
+  readonly timelineBeforeDiffMarkers = this.compare.timelineBeforeDiffMarkers;
+
+  /** Diff-only timeline markers for the "after" trace. */
+  readonly timelineAfterDiffMarkers = this.compare.timelineAfterDiffMarkers;
+
+  /** State-only timeline markers for the "before" trace. */
+  readonly timelineBeforeStateMarkers = this.compare.timelineBeforeStateMarkers;
+
+  /** State-only timeline markers for the "after" trace. */
+  readonly timelineAfterStateMarkers = this.compare.timelineAfterStateMarkers;
+
+  /** Category-filtered timeline markers for the "before" trace. */
+  readonly timelineBeforeCategoryMarkers =
+    this.compare.timelineBeforeCategoryMarkers;
+
+  /** Category-filtered timeline markers for the "after" trace. */
+  readonly timelineAfterCategoryMarkers =
+    this.compare.timelineAfterCategoryMarkers;
+
+  /** Active timeline view mode for component switching. */
+  readonly timelineViewMode = this.compare.timelineViewMode;
 
   /** Whether the diff-only filter is active. */
   readonly showOnlyDiffs = this.compare.showOnlyDiffs;

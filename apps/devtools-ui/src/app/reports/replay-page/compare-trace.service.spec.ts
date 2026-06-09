@@ -565,6 +565,18 @@ describe('CompareTraceService', () => {
       expect(service.compareDiffHunks()).toEqual([]);
     });
 
+    it('should diff when only before event is null', () => {
+      service.compareBeforeId.set('');
+      const hunks = service.compareDiffHunks();
+      expect(hunks.length).toBeGreaterThan(0);
+    });
+
+    it('should diff when only after event is null', () => {
+      service.compareAfterId.set('');
+      const hunks = service.compareDiffHunks();
+      expect(hunks.length).toBeGreaterThan(0);
+    });
+
     it('should build before lines', () => {
       const lines = service.compareBeforeLines();
       expect(lines.length).toBeGreaterThan(0);
@@ -720,6 +732,882 @@ describe('CompareTraceService', () => {
     it('should return 0 when no trace selected', () => {
       service.compareAfterId.set('');
       expect(service.compareAfterDuration()).toBe(0);
+    });
+
+    it('should fallback to 0 when trace has no metrics', () => {
+      const noMetricsTrace: TraceExecutionShape = {
+        traceId: 'no-metrics',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [],
+        metrics: undefined as any
+      };
+      service.cellTraces.set([noMetricsTrace]);
+      service.compareBeforeId.set('no-metrics');
+      service.compareAfterId.set('no-metrics');
+      expect(service.compareBeforeDuration()).toBe(0);
+      expect(service.compareAfterDuration()).toBe(0);
+    });
+  });
+
+  describe('buildAllEventsMarkers', () => {
+    beforeEach(() => {
+      service.compareBeforeId.set('abc-123-def-456');
+      service.compareAfterId.set('merge-trace-001');
+    });
+
+    it('should return markers for every event', () => {
+      const markers = service.timelineBeforeAllMarkers();
+      expect(markers.length).toBe(2);
+      expect(markers[0].eventName).toBe('lifecycle:start:replace');
+      expect(markers[1].eventName).toBe('pipeline:candidate:resolve');
+    });
+
+    it('should return empty when no trace selected', () => {
+      service.compareBeforeId.set('');
+      expect(service.timelineBeforeAllMarkers()).toEqual([]);
+    });
+
+    it('should return empty when trace not found', () => {
+      expect(service.buildAllEventsMarkers('nonexistent')).toEqual([]);
+    });
+
+    it('should return empty when trace has no events', () => {
+      const emptyTrace: TraceExecutionShape = {
+        traceId: 'empty-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 0,
+          eventCount: 0
+        } as any
+      };
+      service.cellTraces.set([emptyTrace]);
+      expect(service.buildAllEventsMarkers('empty-trace')).toEqual([]);
+    });
+
+    it('should spread overlapping markers', () => {
+      const tightTrace: TraceExecutionShape = {
+        traceId: 'tight-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1001,
+        events: [
+          { name: 'a:start', traceId: 'tight-trace', timestamp: 1000 } as any,
+          { name: 'b:start', traceId: 'tight-trace', timestamp: 1000 } as any,
+          { name: 'c:start', traceId: 'tight-trace', timestamp: 1000 } as any
+        ],
+        metrics: {
+          status: 'success',
+          duration: 1,
+          stageCount: 1,
+          eventCount: 3
+        } as any
+      };
+      service.cellTraces.set([tightTrace]);
+      service.compareBeforeId.set('tight-trace');
+      service.compareAfterId.set('tight-trace');
+      const markers = service.buildAllEventsMarkers('tight-trace');
+      expect(markers.length).toBe(3);
+      expect(markers[1].position).toBeGreaterThan(markers[0].position);
+      expect(markers[2].position).toBeGreaterThan(markers[1].position);
+    });
+
+    it('should clamp spread positions at 100%', () => {
+      const edgeTrace: TraceExecutionShape = {
+        traceId: 'edge-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1001,
+        events: [
+          { name: 'a:start', traceId: 'edge-trace', timestamp: 1001 } as any,
+          { name: 'b:start', traceId: 'edge-trace', timestamp: 1001 } as any,
+          { name: 'c:start', traceId: 'edge-trace', timestamp: 1001 } as any
+        ],
+        metrics: {
+          status: 'success',
+          duration: 1,
+          stageCount: 1,
+          eventCount: 3
+        } as any
+      };
+      service.cellTraces.set([edgeTrace]);
+      service.compareBeforeId.set('edge-trace');
+      service.compareAfterId.set('edge-trace');
+      const markers = service.buildAllEventsMarkers('edge-trace');
+      expect(markers.length).toBe(3);
+      for (const marker of markers) {
+        expect(marker.position).toBeLessThanOrEqual(100);
+      }
+    });
+
+    it('should compute timelineAfterAllMarkers', () => {
+      const markers = service.timelineAfterAllMarkers();
+      expect(markers.length).toBe(2);
+    });
+  });
+
+  describe('buildDiffOnlyMarkers', () => {
+    beforeEach(() => {
+      service.compareBeforeId.set('abc-123-def-456');
+      service.compareAfterId.set('merge-trace-001');
+    });
+
+    it('should return markers for differing events only', () => {
+      const markers = service.timelineBeforeDiffMarkers();
+      expect(markers.length).toBeGreaterThan(0);
+    });
+
+    it('should return empty when no before trace selected', () => {
+      expect(service.buildDiffOnlyMarkers('', 'merge-trace-001')).toEqual([]);
+    });
+
+    it('should return empty when no after trace selected', () => {
+      expect(service.buildDiffOnlyMarkers('abc-123-def-456', '')).toEqual([]);
+    });
+
+    it('should return empty when before trace has no events', () => {
+      const emptyTrace: TraceExecutionShape = {
+        traceId: 'empty-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 0,
+          eventCount: 0
+        } as any
+      };
+      service.cellTraces.set([emptyTrace, mockMergeTrace]);
+      expect(
+        service.buildDiffOnlyMarkers('empty-trace', 'merge-trace-001')
+      ).toEqual([]);
+    });
+
+    it('should return empty when no events differ', () => {
+      const identicalTrace1: TraceExecutionShape = {
+        traceId: 'id-1',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [{ name: 'lifecycle:start', timestamp: 1010 } as any],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 1
+        } as any
+      };
+      const identicalTrace2: TraceExecutionShape = {
+        traceId: 'id-2',
+        cellKey: 'employees',
+        startedAt: 2000,
+        finishedAt: 2100,
+        events: [{ name: 'lifecycle:start', timestamp: 2010 } as any],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 1
+        } as any
+      };
+      service.cellTraces.set([identicalTrace1, identicalTrace2]);
+      service.compareBeforeId.set('id-1');
+      service.compareAfterId.set('id-2');
+      expect(service.buildDiffOnlyMarkers('id-1', 'id-2')).toEqual([]);
+    });
+
+    it('should skip events that do not differ', () => {
+      const mixedTrace1: TraceExecutionShape = {
+        traceId: 'mix-1',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [
+          { name: 'lifecycle:start', timestamp: 1010 } as any,
+          { name: 'pipeline:resolve', timestamp: 1050, data: 'a' } as any
+        ],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 2
+        } as any
+      };
+      const mixedTrace2: TraceExecutionShape = {
+        traceId: 'mix-2',
+        cellKey: 'employees',
+        startedAt: 2000,
+        finishedAt: 2100,
+        events: [
+          { name: 'lifecycle:start', timestamp: 2010 } as any,
+          { name: 'pipeline:resolve', timestamp: 2050, data: 'b' } as any
+        ],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 2
+        } as any
+      };
+      service.cellTraces.set([mixedTrace1, mixedTrace2]);
+      service.compareBeforeId.set('mix-1');
+      service.compareAfterId.set('mix-2');
+      const markers = service.buildDiffOnlyMarkers('mix-1', 'mix-2');
+      expect(markers.length).toBe(1);
+      expect(markers[0].eventName).toBe('pipeline:resolve');
+    });
+
+    it('should compute timelineAfterDiffMarkers', () => {
+      const markers = service.timelineAfterDiffMarkers();
+      expect(markers.length).toBeGreaterThanOrEqual(0);
+    });
+  });
+
+  describe('buildStateOnlyMarkers', () => {
+    it('should return empty when no trace selected', () => {
+      expect(service.timelineBeforeStateMarkers()).toEqual([]);
+    });
+
+    it('should return empty when trace has no events', () => {
+      const emptyTrace: TraceExecutionShape = {
+        traceId: 'empty-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 0,
+          eventCount: 0
+        } as any
+      };
+      service.cellTraces.set([emptyTrace]);
+      expect(service.buildStateOnlyMarkers('empty-trace')).toEqual([]);
+    });
+
+    it('should return markers for events with state attribute', () => {
+      const stateTrace: TraceExecutionShape = {
+        traceId: 'state-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [
+          {
+            name: 'lifecycle:start',
+            timestamp: 1010,
+            state: { count: 1 }
+          } as any,
+          { name: 'pipeline:resolve', timestamp: 1020 } as any,
+          {
+            name: 'lifecycle:end',
+            timestamp: 1030,
+            state: { count: 2 }
+          } as any
+        ],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 3
+        } as any
+      };
+      service.cellTraces.set([stateTrace]);
+      service.compareBeforeId.set('state-trace');
+      service.compareAfterId.set('state-trace');
+      const markers = service.buildStateOnlyMarkers('state-trace');
+      expect(markers.length).toBe(2);
+      expect(markers[0].eventName).toBe('lifecycle:start');
+      expect(markers[1].eventName).toBe('lifecycle:end');
+    });
+
+    it('should compute timelineAfterStateMarkers', () => {
+      const markers = service.timelineAfterStateMarkers();
+      expect(markers.length).toBeGreaterThanOrEqual(0);
+    });
+  });
+
+  describe('buildCategoryFilteredMarkers', () => {
+    beforeEach(() => {
+      service.compareBeforeId.set('abc-123-def-456');
+      service.compareAfterId.set('merge-trace-001');
+    });
+
+    it('should return empty when no trace selected', () => {
+      service.toggleCategoryFilter('lifecycle');
+      expect(service.buildCategoryFilteredMarkers('')).toEqual([]);
+    });
+
+    it('should return empty when no category filters active', () => {
+      expect(service.timelineBeforeCategoryMarkers()).toEqual([]);
+    });
+
+    it('should return only matching category events', () => {
+      service.toggleCategoryFilter('lifecycle');
+      const markers = service.timelineBeforeCategoryMarkers();
+      expect(markers.length).toBe(1);
+      expect(markers[0].label).toBe('lifecycle');
+    });
+
+    it('should return empty when trace has no events', () => {
+      const emptyTrace: TraceExecutionShape = {
+        traceId: 'empty-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 0,
+          eventCount: 0
+        } as any
+      };
+      service.cellTraces.set([emptyTrace]);
+      service.toggleCategoryFilter('lifecycle');
+      expect(service.buildCategoryFilteredMarkers('empty-trace')).toEqual([]);
+    });
+
+    it('should compute timelineAfterCategoryMarkers', () => {
+      service.toggleCategoryFilter('lifecycle');
+      const markers = service.timelineAfterCategoryMarkers();
+      expect(markers.length).toBeGreaterThanOrEqual(0);
+    });
+  });
+
+  describe('buildCategorySpans', () => {
+    beforeEach(() => {
+      service.compareBeforeId.set('abc-123-def-456');
+      service.compareAfterId.set('merge-trace-001');
+    });
+
+    it('should return empty when no trace selected', () => {
+      expect(service.buildCategorySpans('')).toEqual([]);
+    });
+
+    it('should return empty when trace not found', () => {
+      expect(service.buildCategorySpans('nonexistent')).toEqual([]);
+    });
+
+    it('should return empty when trace has no events', () => {
+      const emptyTrace: TraceExecutionShape = {
+        traceId: 'empty-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 0,
+          eventCount: 0
+        } as any
+      };
+      service.cellTraces.set([emptyTrace]);
+      expect(service.buildCategorySpans('empty-trace')).toEqual([]);
+    });
+
+    it('should build spans with correct start/end positions', () => {
+      const spans = service.timelineBeforeSpans();
+      expect(spans.length).toBe(2);
+      const lifecycleSpan = spans.find((s) => s.label === 'lifecycle');
+      expect(lifecycleSpan).toBeTruthy();
+      expect(lifecycleSpan!.eventCount).toBe(1);
+      expect(lifecycleSpan!.startElapsed).toBe(10);
+    });
+
+    it('should compute duration across multiple events in same category', () => {
+      const multiTrace: TraceExecutionShape = {
+        traceId: 'multi-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [
+          { name: 'lifecycle:start', timestamp: 1010 } as any,
+          { name: 'lifecycle:middle', timestamp: 1030 } as any,
+          { name: 'lifecycle:end', timestamp: 1050 } as any,
+          { name: 'pipeline:resolve', timestamp: 1060 } as any
+        ],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 4
+        } as any
+      };
+      service.cellTraces.set([multiTrace]);
+      service.compareBeforeId.set('multi-trace');
+      service.compareAfterId.set('multi-trace');
+      const spans = service.buildCategorySpans('multi-trace');
+      const lifecycleSpan = spans.find((s) => s.label === 'lifecycle');
+      expect(lifecycleSpan!.eventCount).toBe(3);
+      expect(lifecycleSpan!.duration).toBe(40);
+      expect(lifecycleSpan!.startElapsed).toBe(10);
+      expect(lifecycleSpan!.endElapsed).toBe(50);
+    });
+
+    it('should sort spans by start position', () => {
+      const spans = service.timelineBeforeSpans();
+      for (let i = 1; i < spans.length; i++) {
+        expect(spans[i].startPosition).toBeGreaterThanOrEqual(
+          spans[i - 1].startPosition
+        );
+      }
+    });
+
+    it('should compute timelineAfterSpans', () => {
+      const spans = service.timelineAfterSpans();
+      expect(spans.length).toBeGreaterThanOrEqual(0);
+    });
+  });
+
+  describe('buildElapsedDeltaMarkers', () => {
+    beforeEach(() => {
+      service.compareBeforeId.set('abc-123-def-456');
+      service.compareAfterId.set('merge-trace-001');
+    });
+
+    it('should return delta markers for each event pair', () => {
+      const markers = service.timelineDeltaMarkers();
+      expect(markers.length).toBe(2);
+    });
+
+    it('should compute positive delta when after is slower', () => {
+      const markers = service.timelineDeltaMarkers();
+      const firstMarker = markers[0];
+      expect(firstMarker.label).toBe('lifecycle');
+      expect(firstMarker.beforeElapsed).toBeDefined();
+      expect(firstMarker.afterElapsed).toBeDefined();
+    });
+
+    it('should normalize deltas to -1..1 range', () => {
+      const markers = service.timelineDeltaMarkers();
+      for (const marker of markers) {
+        expect(Math.abs(marker.normalizedDelta)).toBeLessThanOrEqual(1);
+      }
+    });
+
+    it('should return empty when no before trace selected', () => {
+      service.compareBeforeId.set('');
+      expect(service.timelineDeltaMarkers()).toEqual([]);
+    });
+
+    it('should return empty when no after trace selected', () => {
+      service.compareAfterId.set('');
+      expect(service.timelineDeltaMarkers()).toEqual([]);
+    });
+
+    it('should return empty when before trace has no events', () => {
+      const emptyTrace: TraceExecutionShape = {
+        traceId: 'empty-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 0,
+          eventCount: 0
+        } as any
+      };
+      service.cellTraces.set([emptyTrace, mockMergeTrace]);
+      service.compareBeforeId.set('empty-trace');
+      expect(service.timelineDeltaMarkers()).toEqual([]);
+    });
+
+    it('should return empty when after trace has no events', () => {
+      const emptyTrace: TraceExecutionShape = {
+        traceId: 'empty-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 0,
+          eventCount: 0
+        } as any
+      };
+      service.cellTraces.set([mockTrace, emptyTrace]);
+      service.compareAfterId.set('empty-trace');
+      expect(service.timelineDeltaMarkers()).toEqual([]);
+    });
+
+    it('should handle zero deltas with maxAbsDelta of 1', () => {
+      const sameTrace1: TraceExecutionShape = {
+        traceId: 'same-1',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [{ name: 'lifecycle:start', timestamp: 1010 } as any],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 1
+        } as any
+      };
+      const sameTrace2: TraceExecutionShape = {
+        traceId: 'same-2',
+        cellKey: 'employees',
+        startedAt: 2000,
+        finishedAt: 2100,
+        events: [{ name: 'lifecycle:start', timestamp: 2010 } as any],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 1
+        } as any
+      };
+      service.cellTraces.set([sameTrace1, sameTrace2]);
+      service.compareBeforeId.set('same-1');
+      service.compareAfterId.set('same-2');
+      const markers = service.timelineDeltaMarkers();
+      expect(markers.length).toBe(1);
+      expect(markers[0].delta).toBe(0);
+      expect(markers[0].normalizedDelta).toBe(0);
+    });
+
+    it('should position markers evenly across the timeline', () => {
+      const markers = service.timelineDeltaMarkers();
+      expect(markers[0].position).toBe(0);
+      expect(markers[markers.length - 1].position).toBe(100);
+    });
+  });
+
+  describe('buildWaterfallCategories', () => {
+    beforeEach(() => {
+      service.compareBeforeId.set('abc-123-def-456');
+      service.compareAfterId.set('merge-trace-001');
+    });
+
+    it('should build categories from both traces', () => {
+      const categories = service.timelineWaterfallCategories();
+      expect(categories.length).toBe(2);
+    });
+
+    it('should have before and after markers per category', () => {
+      const categories = service.timelineWaterfallCategories();
+      const lifecycle = categories.find((c) => c.label === 'lifecycle');
+      expect(lifecycle).toBeTruthy();
+      expect(lifecycle!.beforeMarkers.length).toBe(1);
+      expect(lifecycle!.afterMarkers.length).toBe(1);
+    });
+
+    it('should compute totalEvents correctly', () => {
+      const categories = service.timelineWaterfallCategories();
+      for (const cat of categories) {
+        expect(cat.totalEvents).toBe(
+          cat.beforeMarkers.length + cat.afterMarkers.length
+        );
+      }
+    });
+
+    it('should sort categories by earliest marker position', () => {
+      const categories = service.timelineWaterfallCategories();
+      for (let i = 1; i < categories.length; i++) {
+        const prevFirst = Math.min(
+          ...[
+            ...categories[i - 1].beforeMarkers,
+            ...categories[i - 1].afterMarkers
+          ].map((m) => m.position)
+        );
+        const currFirst = Math.min(
+          ...[
+            ...categories[i].beforeMarkers,
+            ...categories[i].afterMarkers
+          ].map((m) => m.position)
+        );
+        expect(currFirst).toBeGreaterThanOrEqual(prevFirst);
+      }
+    });
+
+    it('should return empty when no traces selected', () => {
+      service.compareBeforeId.set('');
+      service.compareAfterId.set('');
+      expect(service.timelineWaterfallCategories()).toEqual([]);
+    });
+
+    it('should handle only before trace selected', () => {
+      service.compareAfterId.set('');
+      const categories = service.timelineWaterfallCategories();
+      expect(categories.length).toBe(2);
+      for (const cat of categories) {
+        expect(cat.afterMarkers.length).toBe(0);
+      }
+    });
+
+    it('should handle only after trace selected', () => {
+      service.compareBeforeId.set('');
+      const categories = service.timelineWaterfallCategories();
+      expect(categories.length).toBe(2);
+      for (const cat of categories) {
+        expect(cat.beforeMarkers.length).toBe(0);
+      }
+    });
+
+    it('should handle non-existent trace gracefully', () => {
+      service.compareBeforeId.set('nonexistent-id');
+      const categories = service.timelineWaterfallCategories();
+      expect(categories.length).toBeGreaterThanOrEqual(0);
+    });
+  });
+
+  describe('compareCategories edge cases', () => {
+    it('should skip events without a name property', () => {
+      const weirdTrace: TraceExecutionShape = {
+        traceId: 'weird-trace',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [
+          { name: 'lifecycle:start', timestamp: 1010 } as any,
+          { timestamp: 1020 } as any,
+          null as any
+        ],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 3
+        } as any
+      };
+      service.cellTraces.set([weirdTrace]);
+      service.compareBeforeId.set('weird-trace');
+      service.compareAfterId.set('weird-trace');
+      const cats = service.compareCategories();
+      expect(cats).toContain('lifecycle');
+      expect(cats.length).toBe(1);
+    });
+  });
+
+  describe('visibleIndices with state filter', () => {
+    it('should include events that have state attribute', () => {
+      const stateTrace: TraceExecutionShape = {
+        traceId: 'state-1',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [
+          {
+            name: 'lifecycle:start',
+            timestamp: 1010,
+            state: { x: 1 }
+          } as any,
+          { name: 'pipeline:resolve', timestamp: 1020 } as any
+        ],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 2
+        } as any
+      };
+      const stateTrace2: TraceExecutionShape = {
+        traceId: 'state-2',
+        cellKey: 'employees',
+        startedAt: 2000,
+        finishedAt: 2100,
+        events: [
+          {
+            name: 'lifecycle:start',
+            timestamp: 2010,
+            state: { x: 2 }
+          } as any,
+          { name: 'pipeline:resolve', timestamp: 2020 } as any
+        ],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 2
+        } as any
+      };
+      service.cellTraces.set([stateTrace, stateTrace2]);
+      service.compareBeforeId.set('state-1');
+      service.compareAfterId.set('state-2');
+      service.toggleStateFilter();
+      const indices = service.visibleIndices();
+      expect(indices).toEqual([0]);
+    });
+  });
+
+  describe('navigation with no visible indices and hasPrevious/hasNext', () => {
+    beforeEach(() => {
+      service.compareBeforeId.set('abc-123-def-456');
+      service.compareAfterId.set('merge-trace-001');
+    });
+
+    it('should report hasNext false when at last event', () => {
+      service.compareEventIndex.set(service.compareTotalEvents() - 1);
+      expect(service.compareHasNext()).toBeFalse();
+    });
+
+    it('should report hasPrevious false when at first event', () => {
+      service.compareEventIndex.set(0);
+      expect(service.compareHasPrevious()).toBeFalse();
+    });
+
+    it('should report hasPrevious true for visible indices', () => {
+      service.toggleDiffFilter();
+      const indices = service.visibleIndices();
+      if (indices.length > 1) {
+        service.compareEventIndex.set(indices[1]);
+        expect(service.compareHasPrevious()).toBeTrue();
+      }
+    });
+
+    it('should report hasNext true for visible indices', () => {
+      service.toggleDiffFilter();
+      const indices = service.visibleIndices();
+      if (indices.length > 1) {
+        service.compareEventIndex.set(indices[0]);
+        expect(service.compareHasNext()).toBeTrue();
+      }
+    });
+
+    it('should not navigate next when hasNext is false', () => {
+      service.compareEventIndex.set(1);
+      service.nextEvent();
+      expect(service.compareEventIndex()).toBe(1);
+    });
+
+    it('should not navigate previous when hasPrevious is false', () => {
+      service.compareEventIndex.set(0);
+      service.previousEvent();
+      expect(service.compareEventIndex()).toBe(0);
+    });
+  });
+
+  describe('compareBeforeEvents and compareAfterEvents edge cases', () => {
+    it('should return empty when trace ID does not match any trace', () => {
+      service.compareBeforeId.set('nonexistent-id');
+      expect(service.compareBeforeEvents()).toEqual([]);
+    });
+
+    it('should return empty when after trace ID does not match', () => {
+      service.compareAfterId.set('nonexistent-id');
+      expect(service.compareAfterEvents()).toEqual([]);
+    });
+
+    it('should fallback to empty array when trace has no events property', () => {
+      const noEventsTrace: TraceExecutionShape = {
+        traceId: 'no-events',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: undefined as any,
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 0
+        } as any
+      };
+      service.cellTraces.set([noEventsTrace]);
+      service.compareBeforeId.set('no-events');
+      service.compareAfterId.set('no-events');
+      expect(service.compareBeforeEvents()).toEqual([]);
+      expect(service.compareAfterEvents()).toEqual([]);
+    });
+  });
+
+  describe('stripNoiseFields edge cases', () => {
+    it('should return non-object values as-is', () => {
+      expect(service.stripNoiseFields(42)).toBe(42);
+      expect(service.stripNoiseFields('hello')).toBe('hello');
+      expect(service.stripNoiseFields(true)).toBe(true);
+    });
+
+    it('should not add elapsed when traceStartedAt is not provided', () => {
+      const result = service.stripNoiseFields({
+        timestamp: 1010,
+        name: 'test'
+      }) as Record<string, unknown>;
+      expect(result['elapsed']).toBeUndefined();
+      expect(result['timestamp']).toBeUndefined();
+    });
+
+    it('should not add delta when otherTimestamp is missing', () => {
+      const result = service.stripNoiseFields(
+        { timestamp: 1010 },
+        1000
+      ) as Record<string, unknown>;
+      expect(result['delta']).toBeUndefined();
+    });
+
+    it('should not add delta when otherTraceStartedAt is missing', () => {
+      const result = service.stripNoiseFields(
+        { timestamp: 1010 },
+        1000,
+        2010
+      ) as Record<string, unknown>;
+      expect(result['delta']).toBeUndefined();
+    });
+
+    it('should handle null payload', () => {
+      const result = service.stripNoiseFields({
+        timestamp: 1010,
+        payload: null
+      }) as Record<string, unknown>;
+      expect(result['payload']).toBeNull();
+    });
+  });
+
+  describe('timelineMaxDuration edge cases', () => {
+    it('should return at least 1 when no traces selected', () => {
+      expect(service.timelineMaxDuration()).toBe(1);
+    });
+  });
+
+  describe('visibleIndices with category filter and mismatched trace lengths', () => {
+    it('should fallback to empty category when event is undefined', () => {
+      const shortTrace: TraceExecutionShape = {
+        traceId: 'short',
+        cellKey: 'employees',
+        startedAt: 1000,
+        finishedAt: 1100,
+        events: [{ name: 'lifecycle:start', timestamp: 1010 } as any],
+        metrics: {
+          status: 'success',
+          duration: 100,
+          stageCount: 1,
+          eventCount: 1
+        } as any
+      };
+      const longTrace: TraceExecutionShape = {
+        traceId: 'long',
+        cellKey: 'employees',
+        startedAt: 2000,
+        finishedAt: 2200,
+        events: [
+          { name: 'lifecycle:start', timestamp: 2010 } as any,
+          { name: 'lifecycle:end', timestamp: 2020 } as any
+        ],
+        metrics: {
+          status: 'success',
+          duration: 200,
+          stageCount: 1,
+          eventCount: 2
+        } as any
+      };
+      service.cellTraces.set([shortTrace, longTrace]);
+      service.compareBeforeId.set('short');
+      service.compareAfterId.set('long');
+      service.toggleCategoryFilter('lifecycle');
+      const indices = service.visibleIndices();
+      expect(indices.length).toBeGreaterThan(0);
     });
   });
 });

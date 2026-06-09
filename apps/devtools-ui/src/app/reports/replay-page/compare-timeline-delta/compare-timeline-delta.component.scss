@@ -1,0 +1,205 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+}
+
+.compare-timeline-delta {
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    h3 {
+      margin: 0;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-bold;
+      color: var(--sdux-text-primary);
+    }
+
+    &:hover .chevron {
+      color: global.$sdux-primary-light;
+    }
+  }
+
+  .chevron {
+    font-size: global.$font-size-lg;
+    color: var(--sdux-text-secondary);
+    transition: transform 0.2s ease;
+    transform: rotate(0deg);
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+
+  .timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+    padding: global.$spacing-md;
+    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    border: 1px solid global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+  }
+
+  .timeline-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: global.$spacing-sm;
+
+    .cell-filter {
+      width: 200px;
+    }
+
+    .mat-mdc-option {
+      white-space: nowrap;
+    }
+  }
+
+  .timeline-stats {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    font-size: global.$font-size-sm;
+
+    .stat-label {
+      color: var(--sdux-text-secondary);
+      font-weight: global.$font-weight-medium;
+    }
+
+    .stat-divider {
+      color: var(--sdux-text-secondary);
+    }
+
+    .faster-label {
+      color: global.$sdux-success-base;
+      font-weight: global.$font-weight-bold;
+    }
+
+    .slower-label {
+      color: global.$sdux-accent-base;
+      font-weight: global.$font-weight-bold;
+    }
+
+    .faster {
+      color: global.$sdux-success-base;
+      font-weight: global.$font-weight-bold;
+    }
+
+    .slower {
+      color: global.$sdux-accent-base;
+      font-weight: global.$font-weight-bold;
+    }
+  }
+
+  .delta-legend {
+    display: flex;
+    justify-content: space-between;
+    font-size: global.$font-size-xs;
+    padding: 0 global.$spacing-md;
+    .legend-slower {
+      color: global.$sdux-accent-base;
+    }
+
+    .legend-center {
+      color: var(--sdux-text-secondary);
+    }
+
+    .legend-faster {
+      color: global.$sdux-success-base;
+    }
+  }
+
+  .delta-row {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-xs;
+  }
+
+  .timeline-label {
+    font-size: global.$font-size-xs;
+    font-weight: global.$font-weight-medium;
+    color: var(--sdux-text-secondary);
+    white-space: nowrap;
+  }
+
+  .delta-bar {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .delta-track {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+    padding: 0 global.$spacing-sm;
+    background: var(--sdux-surface-raised, rgb(255 255 255 / 2%));
+    border: 1px solid global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+  }
+
+  .delta-center-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--sdux-text-secondary);
+    opacity: 0.4;
+  }
+
+  .delta-marker {
+    position: absolute;
+    width: 6px;
+    transform: translateX(-50%);
+    border-radius: global.$border-radius-xs;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3px;
+
+    &.above {
+      bottom: 50%;
+    }
+
+    &.below {
+      top: 50%;
+    }
+
+    &.slower {
+      background: rgb(244 67 54 / 70%);
+      border: 1px solid global.$sdux-accent-base;
+    }
+
+    &.faster {
+      background: rgb(56 142 60 / 70%);
+      border: 1px solid global.$sdux-success-base;
+    }
+
+    &.same {
+      background: var(--sdux-text-secondary);
+      opacity: 0.3;
+    }
+  }
+
+  .delta-label {
+    display: none;
+  }
+
+  .delta-scale {
+    display: flex;
+    justify-content: space-between;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    color: var(--sdux-text-secondary);
+    padding: 0 global.$spacing-md;
+
+    .center {
+      font-weight: global.$font-weight-bold;
+    }
+  }
+}
