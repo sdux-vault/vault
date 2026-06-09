@@ -55,6 +55,14 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-08-circuit-breaker-state-pipeline/circuit-breaker-state-pipeline.component').then(
         (m) => m.BlogCircuitBreakerStatePipelineComponent
       )
+  },
+  {
+    path: 'one-engine-every-framework',
+    data: { category: 'blogs', type: 'one-engine-every-framework' },
+    loadComponent: () =>
+      import('./posts/2026-06-09-one-engine-every-framework/one-engine-every-framework.component').then(
+        (m) => m.BlogOneEngineEveryFrameworkComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

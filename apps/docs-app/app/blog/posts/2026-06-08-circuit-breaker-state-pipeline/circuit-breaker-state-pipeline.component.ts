@@ -85,7 +85,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             The controller is registered structurally when you define your
-            FeatureCell&#8482;. This determines that the cell participates in
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a
+            >&#8482;. This determines that the cell participates in
             failure-threshold enforcement at runtime. The failure limit itself
             is configured via the fluent API during initialization.
           </p>

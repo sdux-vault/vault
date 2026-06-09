@@ -1,5 +1,4 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
-
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
 <div class="docs-container">
   <div class="header">
@@ -140,11 +139,13 @@
       <p>
         This pattern reads State at call time and freezes the Snapshot into the
         merge payload. When Controllers that govern execution timing are
-        attached to the FeatureCell — such as those that throttle, debounce, or
-        delay Pipeline execution — the State may change between the moment the
-        payload is constructed and the moment the Pipeline processes it. The
-        pre-computed payload then merges against a State that no longer matches
-        the Snapshot it was built from, producing incorrect results.
+        attached to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> — such
+        as those that throttle, debounce, or delay Pipeline execution — the
+        State may change between the moment the payload is constructed and the
+        moment the Pipeline processes it. The pre-computed payload then merges
+        against a State that no longer matches the Snapshot it was built from,
+        producing incorrect results.
       </p>
 
       <p>

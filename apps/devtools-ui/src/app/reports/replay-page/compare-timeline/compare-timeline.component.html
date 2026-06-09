@@ -1,5 +1,15 @@
 <section class="compare-timeline">
-  <header class="section-header" (click)="showTimeline.set(!showTimeline())">
+  <header
+    class="section-header"
+    role="button"
+    tabindex="0"
+    [attr.aria-expanded]="showTimeline()"
+    aria-label="Toggle timeline"
+    (click)="showTimeline.set(!showTimeline())"
+    (keydown.enter)="showTimeline.set(!showTimeline())"
+    (keydown.space)="
+      $event.preventDefault(); showTimeline.set(!showTimeline())
+    ">
     <h3>Timeline</h3>
     <span class="chevron" [class.expanded]="showTimeline()">›</span>
   </header>

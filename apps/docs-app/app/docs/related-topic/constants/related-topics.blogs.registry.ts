@@ -12,6 +12,10 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
 
   items: [
     {
+      link: '/blog/one-engine-every-framework',
+      display: 'One State Engine. Every Framework.'
+    },
+    {
       link: '/blog/circuit-breaker-state-pipeline',
       display: 'Circuit Breaker Pattern, Built Into Your State Pipeline'
     },

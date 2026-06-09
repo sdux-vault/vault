@@ -80,6 +80,20 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
+                <strong>replay?</strong>
+
+                <p class="type">type: literal type</p>
+              </td>
+              <td class="column-auto">
+                DevTools replay API for accessing live
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                instances.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>vaultEventBus?</strong>
 
                 <p class="type">

@@ -93,7 +93,15 @@
       <section class="trace-summary-section">
         <header
           class="section-header"
-          (click)="showTraceSummary.set(!showTraceSummary())">
+          role="button"
+          tabindex="0"
+          [attr.aria-expanded]="showTraceSummary()"
+          aria-label="Toggle trace summary"
+          (click)="showTraceSummary.set(!showTraceSummary())"
+          (keydown.enter)="showTraceSummary.set(!showTraceSummary())"
+          (keydown.space)="
+            $event.preventDefault(); showTraceSummary.set(!showTraceSummary())
+          ">
           <h3>Trace Summary</h3>
           <span class="chevron" [class.expanded]="showTraceSummary()">›</span>
         </header>
@@ -143,7 +151,16 @@
         <section class="resolved-value-section">
           <header
             class="section-header"
-            (click)="showResolvedValue.set(!showResolvedValue())">
+            role="button"
+            tabindex="0"
+            [attr.aria-expanded]="showResolvedValue()"
+            aria-label="Toggle initial value"
+            (click)="showResolvedValue.set(!showResolvedValue())"
+            (keydown.enter)="showResolvedValue.set(!showResolvedValue())"
+            (keydown.space)="
+              $event.preventDefault();
+              showResolvedValue.set(!showResolvedValue())
+            ">
             <h3>Initial Value</h3>
             <span class="chevron" [class.expanded]="showResolvedValue()"
               >›</span
@@ -180,7 +197,15 @@
       <section class="compare-section">
         <header
           class="section-header"
-          (click)="showCompareTraces.set(!showCompareTraces())">
+          role="button"
+          tabindex="0"
+          [attr.aria-expanded]="showCompareTraces()"
+          aria-label="Toggle compare traces"
+          (click)="showCompareTraces.set(!showCompareTraces())"
+          (keydown.enter)="showCompareTraces.set(!showCompareTraces())"
+          (keydown.space)="
+            $event.preventDefault(); showCompareTraces.set(!showCompareTraces())
+          ">
           <h3>Compare Traces</h3>
           <span class="chevron" [class.expanded]="showCompareTraces()">›</span>
         </header>
