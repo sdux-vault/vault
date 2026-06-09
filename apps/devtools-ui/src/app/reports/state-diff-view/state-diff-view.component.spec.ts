@@ -501,7 +501,7 @@ describe('StateDiffViewComponent', () => {
 
     it('should render snapshot table rows', () => {
       const rows = fixture.nativeElement.querySelectorAll('.snapshot-row');
-      expect(rows.length).toBe(3);
+      expect(rows.length).toBe(6);
     });
 
     it('should mark selected snapshot rows', () => {
@@ -524,21 +524,21 @@ describe('StateDiffViewComponent', () => {
 
     it('should disable previous button at start', () => {
       const prevBtn = fixture.nativeElement.querySelector(
-        '.nav-btn[aria-label="Previous pair"]'
+        '.sdux-button[aria-label="Previous pair"]'
       );
       expect(prevBtn.disabled).toBeTrue();
     });
 
     it('should enable next button when hasNext', () => {
       const nextBtn = fixture.nativeElement.querySelector(
-        '.nav-btn[aria-label="Next pair"]'
+        '.sdux-button[aria-label="Next pair"]'
       );
       expect(nextBtn.disabled).toBeFalse();
     });
 
     it('should navigate via next button click', () => {
       const nextBtn = fixture.nativeElement.querySelector(
-        '.nav-btn[aria-label="Next pair"]'
+        '.sdux-button[aria-label="Next pair"]'
       );
       nextBtn.click();
       fixture.detectChanges();
@@ -550,7 +550,7 @@ describe('StateDiffViewComponent', () => {
       component.nextPair();
       fixture.detectChanges();
       const prevBtn = fixture.nativeElement.querySelector(
-        '.nav-btn[aria-label="Previous pair"]'
+        '.sdux-button[aria-label="Previous pair"]'
       );
       prevBtn.click();
       fixture.detectChanges();
@@ -697,23 +697,60 @@ describe('StateDiffViewComponent', () => {
     });
   });
 
-  describe('template snapshot-table-footer', () => {
-    it('should render footer with hint text', () => {
-      const footer = fixture.nativeElement.querySelector(
-        '.snapshot-table-footer'
+  describe('template snapshot-table-headers', () => {
+    it('should render before and after table headers with candidate count', () => {
+      const headers = fixture.nativeElement.querySelectorAll(
+        '.snapshot-table-header'
       );
-      expect(footer).toBeTruthy();
-      expect(footer.textContent).toContain('currently selected pair');
-      expect(footer.textContent).toContain('Click any row');
+      expect(headers.length).toBe(2);
+      expect(headers[0].textContent).toContain('Before Snapshot');
+      expect(headers[0].textContent).toContain('3');
+      expect(headers[1].textContent).toContain('After Snapshot');
+      expect(headers[1].textContent).toContain('3');
     });
   });
 
-  describe('template snapshot-table-header', () => {
-    it('should show candidate count', () => {
-      const header = fixture.nativeElement.querySelector(
-        '.snapshot-table-header'
-      );
-      expect(header.textContent).toContain('3');
+  describe('selectBeforeSnapshot', () => {
+    it('should set beforeIndex without changing afterIndex when less than afterIndex', () => {
+      component.nextPair();
+      // now before=1, after=2
+      component.selectBeforeSnapshot(0);
+      expect(component.beforeIndex()).toBe(0);
+      expect(component.afterIndex()).toBe(2);
+    });
+
+    it('should not change if index equals afterIndex', () => {
+      component.selectBeforeSnapshot(1);
+      expect(component.beforeIndex()).toBe(0);
+      expect(component.afterIndex()).toBe(1);
+    });
+
+    it('should swap when selecting index greater than afterIndex', () => {
+      component.selectBeforeSnapshot(2);
+      expect(component.beforeIndex()).toBe(1);
+      expect(component.afterIndex()).toBe(2);
+    });
+  });
+
+  describe('selectAfterSnapshot', () => {
+    it('should set afterIndex to the selected index', () => {
+      component.selectAfterSnapshot(2);
+      expect(component.afterIndex()).toBe(2);
+      expect(component.beforeIndex()).toBe(0);
+    });
+
+    it('should not change if index equals beforeIndex', () => {
+      component.selectAfterSnapshot(0);
+      expect(component.afterIndex()).toBe(1);
+      expect(component.beforeIndex()).toBe(0);
+    });
+
+    it('should swap when selecting index less than beforeIndex', () => {
+      component.nextPair();
+      // now before=1, after=2
+      component.selectAfterSnapshot(0);
+      expect(component.beforeIndex()).toBe(0);
+      expect(component.afterIndex()).toBe(1);
     });
   });
 });

@@ -41,27 +41,6 @@
       <div class="sdux-container-spacer"></div>
 
       <div class="meta">
-        <div class="view-toggle">
-          <button
-            type="button"
-            class="toggle-btn"
-            [class.active]="viewMode() === 'diff'"
-            (click)="viewMode.set('diff')"
-            matTooltip="Side-by-side diff view"
-            aria-label="Diff view">
-            Diff
-          </button>
-          <button
-            type="button"
-            class="toggle-btn"
-            [class.active]="viewMode() === 'table'"
-            (click)="viewMode.set('table')"
-            matTooltip="Tabular state view"
-            aria-label="Table view">
-            Table
-          </button>
-        </div>
-
         <sdux-export-button
           [data]="filteredTraces()"
           filename="state-diff"
@@ -101,116 +80,182 @@
       </section>
 
       @if (candidates().length >= 2) {
-        <!-- Pair Navigation -->
-        <nav class="pair-nav">
-          <button
-            type="button"
-            class="nav-btn"
-            [disabled]="!hasPrevious()"
-            (click)="previousPair()"
-            matTooltip="Navigate to previous snapshot pair"
-            aria-label="Previous pair">
-            ← Previous Pair
-          </button>
-          <span class="pair-counter">
-            Pair {{ beforeIndex() + 1 }} of {{ totalPairs() }}
-          </span>
-          <button
-            type="button"
-            class="nav-btn"
-            [disabled]="!hasNext()"
-            (click)="nextPair()"
-            matTooltip="Navigate to next snapshot pair"
-            aria-label="Next pair">
-            Next Pair →
-          </button>
-        </nav>
+        <div class="diff-and-tables">
+          <div class="diff-column-group">
+            <nav class="pair-nav">
+              <button
+                type="button"
+                class="sdux-button"
+                [disabled]="!hasPrevious()"
+                (click)="previousPair()"
+                matTooltip="Navigate to previous snapshot pair"
+                aria-label="Previous pair">
+                ← <span class="nav-label">Previous Pair</span>
+              </button>
+              <span class="pair-counter">
+                Pair {{ beforeIndex() + 1 }} of {{ totalPairs() }}
+              </span>
+              <button
+                type="button"
+                class="sdux-button"
+                [disabled]="!hasNext()"
+                (click)="nextPair()"
+                matTooltip="Navigate to next snapshot pair"
+                aria-label="Next pair">
+                <span class="nav-label">Next Pair</span> →
+              </button>
+            </nav>
 
-        @if (viewMode() === 'diff') {
-          <!-- Diff Panel + Snapshot Table -->
-          <section class="diff-row">
-            <section class="diff-panel">
-              <div class="diff-column">
-                <div class="diff-header">
-                  <span class="diff-header-title"
-                    >BEFORE: {{ beforeSnapshot()?.stage }}</span
-                  >
-                  <span class="diff-header-meta">
-                    seq #{{ (beforeSnapshot()?.sequenceIndex ?? 0) + 1 }}
-                    {{
-                      beforeSnapshot() ? relativeTime(beforeSnapshot()!) : ''
-                    }}
-                  </span>
-                </div>
-                <pre
-                  class="diff-content">@for (line of beforeLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
+            <div class="diff-panel">
+              @if (viewMode() === 'diff') {
+                <section class="diff-panel-view">
+                  <div class="diff-column">
+                    <div class="diff-header">
+                      <span class="diff-header-title"
+                        >BEFORE: {{ beforeSnapshot()?.stage }}</span
+                      >
+                      <span class="diff-header-meta">
+                        seq #{{ (beforeSnapshot()?.sequenceIndex ?? 0) + 1 }}
+                        {{
+                          beforeSnapshot()
+                            ? relativeTime(beforeSnapshot()!)
+                            : ''
+                        }}
+                      </span>
+                    </div>
+                    <pre
+                      class="diff-content">@for (line of beforeLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
 </span>}</pre>
-              </div>
-              <div class="diff-column">
-                <div class="diff-header">
-                  <span class="diff-header-title"
-                    >AFTER: {{ afterSnapshot()?.stage }}</span
-                  >
-                  <span class="diff-header-meta">
-                    seq #{{ (afterSnapshot()?.sequenceIndex ?? 0) + 1 }}
-                    {{ afterSnapshot() ? relativeTime(afterSnapshot()!) : '' }}
-                  </span>
-                </div>
-                <pre
-                  class="diff-content">@for (line of afterLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
+                  </div>
+                  <div class="diff-column">
+                    <div class="diff-header">
+                      <span class="diff-header-title"
+                        >AFTER: {{ afterSnapshot()?.stage }}</span
+                      >
+                      <span class="diff-header-meta">
+                        seq #{{ (afterSnapshot()?.sequenceIndex ?? 0) + 1 }}
+                        {{
+                          afterSnapshot() ? relativeTime(afterSnapshot()!) : ''
+                        }}
+                      </span>
+                    </div>
+                    <pre
+                      class="diff-content">@for (line of afterLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
 </span>}</pre>
-              </div>
-            </section>
+                  </div>
+                </section>
+              } @else {
+                <sdux-state-table-view
+                  [beforeLabel]="beforeSnapshot()?.stage ?? ''"
+                  [beforeValue]="beforeSnapshot()?.value"
+                  [afterLabel]="afterSnapshot()?.stage ?? ''"
+                  [afterValue]="afterSnapshot()?.value">
+                </sdux-state-table-view>
+              }
+            </div>
+          </div>
 
-            <!-- Snapshot Table -->
-            <section class="snapshot-table">
-              <div class="snapshot-table-header">
-                All State Snapshots in Trace ({{ candidates().length }})
+          <div class="tables-column-group">
+            <div class="view-toggle-container">
+              <div class="view-toggle">
+                <button
+                  type="button"
+                  class="toggle-btn"
+                  [class.active]="viewMode() === 'diff'"
+                  (click)="viewMode.set('diff')"
+                  matTooltip="Side-by-side diff view"
+                  aria-label="Diff view">
+                  Diff
+                </button>
+                <button
+                  type="button"
+                  class="toggle-btn"
+                  [class.active]="viewMode() === 'table'"
+                  (click)="viewMode.set('table')"
+                  matTooltip="Tabular state view"
+                  aria-label="Table view">
+                  Table
+                </button>
               </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th class="col-indicator">#</th>
-                    <th class="col-event">Stage</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @for (snap of candidates(); track snap.eventId) {
-                    <tr
-                      class="snapshot-row"
-                      [class.selected]="
-                        snap.sequenceIndex === beforeIndex() ||
-                        snap.sequenceIndex === afterIndex()
-                      "
-                      (click)="selectSnapshot(snap.sequenceIndex)"
-                      matTooltip="Click to compare">
-                      <td class="col-indicator">
-                        @if (
-                          snap.sequenceIndex === beforeIndex() ||
-                          snap.sequenceIndex === afterIndex()
-                        ) {
-                          <span class="indicator">●</span>
-                        }
-                        {{ snap.sequenceIndex + 1 }}
-                      </td>
-                      <td class="col-event">{{ snap.stage }}</td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
-              <div class="snapshot-table-footer">
-                <span class="indicator">●</span> = currently selected pair
-                <span class="footer-hint">Click any row to compare</span>
-              </div>
-            </section>
-          </section>
-        } @else {
-          <!-- Table View -->
-          <sdux-state-table-view
-            [before]="beforeSnapshot()"
-            [after]="afterSnapshot()">
-          </sdux-state-table-view>
-        }
+            </div>
+
+            <div class="compare-tables-container">
+              <section class="snapshot-table">
+                <div class="snapshot-table-header">
+                  Before Snapshot ({{ candidates().length }})
+                </div>
+                <div class="snapshot-table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="col-selected"></th>
+                        <th class="col-indicator">#</th>
+                        <th class="col-event">Stage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (snap of candidates(); track snap.eventId) {
+                        <tr
+                          class="snapshot-row"
+                          [class.selected]="
+                            snap.sequenceIndex === beforeIndex()
+                          "
+                          (click)="selectBeforeSnapshot(snap.sequenceIndex)"
+                          matTooltip="Select as before snapshot">
+                          <td class="col-selected">
+                            @if (snap.sequenceIndex === beforeIndex()) {
+                              <span class="indicator">●</span>
+                            }
+                          </td>
+                          <td class="col-indicator">
+                            {{ snap.sequenceIndex + 1 }}
+                          </td>
+                          <td class="col-event">{{ snap.stage }}</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <section class="snapshot-table">
+                <div class="snapshot-table-header">
+                  After Snapshot ({{ candidates().length }})
+                </div>
+                <div class="snapshot-table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="col-selected"></th>
+                        <th class="col-indicator">#</th>
+                        <th class="col-event">Stage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (snap of candidates(); track snap.eventId) {
+                        <tr
+                          class="snapshot-row"
+                          [class.selected]="snap.sequenceIndex === afterIndex()"
+                          (click)="selectAfterSnapshot(snap.sequenceIndex)"
+                          matTooltip="Select as after snapshot">
+                          <td class="col-selected">
+                            @if (snap.sequenceIndex === afterIndex()) {
+                              <span class="indicator">●</span>
+                            }
+                          </td>
+                          <td class="col-indicator">
+                            {{ snap.sequenceIndex + 1 }}
+                          </td>
+                          <td class="col-event">{{ snap.stage }}</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
       } @else {
         <section class="empty-state">
           <p>

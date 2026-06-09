@@ -1,0 +1,26 @@
+@use 'global' as global;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+}
+
+.file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.error-message {
+  padding: global.$spacing-sm global.$spacing-md;
+  font-size: global.$font-size-sm;
+  color: global.$sdux-accent-base;
+  background: rgb(255 0 0 / 8%);
+  border: 1px solid global.$sdux-accent-base;
+  border-radius: global.$border-radius-sm;
+}

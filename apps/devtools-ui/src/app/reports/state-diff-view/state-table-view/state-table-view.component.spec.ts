@@ -2,7 +2,6 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SnapshotDiffService } from '../../../services/snapshot-diff.service';
-import type { CandidateSnapshotShape } from '../../../shapes/trace';
 import { StateTableViewComponent } from './state-table-view.component';
 
 describe('StateTableViewComponent', () => {
@@ -10,20 +9,13 @@ describe('StateTableViewComponent', () => {
   let fixture: ComponentFixture<StateTableViewComponent>;
 
   /**
-   * Creates a minimal CandidateSnapshotShape for testing.
+   * Creates a minimal table input for testing.
    */
   function createSnapshot(
     value: unknown,
-    stage = 'resolve'
-  ): CandidateSnapshotShape {
-    return {
-      stage: stage as any,
-      eventId: crypto.randomUUID(),
-      behaviorKey: 'test-behavior',
-      timestamp: Date.now(),
-      sequenceIndex: 0,
-      value
-    };
+    label = 'resolve'
+  ): { label: string; value: unknown } {
+    return { label, value };
   }
 
   beforeEach(async () => {
@@ -34,18 +26,20 @@ describe('StateTableViewComponent', () => {
   });
 
   function createComponent(
-    before: CandidateSnapshotShape | null,
-    after: CandidateSnapshotShape | null
+    before: { label: string; value: unknown },
+    after: { label: string; value: unknown }
   ): void {
     fixture = TestBed.createComponent(StateTableViewComponent);
-    fixture.componentRef.setInput('before', before);
-    fixture.componentRef.setInput('after', after);
+    fixture.componentRef.setInput('beforeLabel', before.label);
+    fixture.componentRef.setInput('beforeValue', before.value);
+    fixture.componentRef.setInput('afterLabel', after.label);
+    fixture.componentRef.setInput('afterValue', after.value);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }
 
   it('should create', () => {
-    createComponent(null, createSnapshot([{ id: 1 }]));
+    createComponent(createSnapshot(undefined), createSnapshot([{ id: 1 }]));
     expect(component).toBeTruthy();
   });
 

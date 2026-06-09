@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SnapshotDiffService } from '../../../services/snapshot-diff.service';
-import type { CandidateSnapshotShape } from '../../../shapes/trace';
 
 /**
  * Renders before/after pipeline candidate snapshots as two stacked tables
@@ -34,18 +33,21 @@ export class StateTableViewComponent {
   /** Injected diff service for consistent before/after comparison. */
   readonly #diffService = inject(SnapshotDiffService);
 
-  /** The "before" snapshot for diff comparison. */
-  readonly before = input.required<CandidateSnapshotShape | null>();
+  /** Label for the "before" table heading. */
+  readonly beforeLabel = input.required<string>();
 
-  /** The "after" snapshot for diff comparison. */
-  readonly after = input.required<CandidateSnapshotShape | null>();
+  /** The "before" value for diff comparison. */
+  readonly beforeValue = input.required<unknown>();
+
+  /** Label for the "after" table heading. */
+  readonly afterLabel = input.required<string>();
+
+  /** The "after" value for diff comparison. */
+  readonly afterValue = input.required<unknown>();
 
   /** Computed table diff result from the service. */
   readonly tableDiff = computed(() =>
-    this.#diffService.computeTableDiff(
-      this.before()?.value,
-      this.after()?.value
-    )
+    this.#diffService.computeTableDiff(this.beforeValue(), this.afterValue())
   );
 
   /** Formats a cell value for display. */

@@ -23,22 +23,9 @@
         </ul>
       </div>
 
-      <label class="file-label">
-        <input
-          type="file"
-          accept=".json"
-          class="file-input"
-          aria-label="Choose a JSON debug dump file"
-          (change)="onFileSelected($event)" />
-        <span class="file-button" matTooltip="Select a .json dump file to load"
-          >Choose Dump File</span
-        >
-      </label>
+      <sdux-dump-file-picker (fileLoaded)="onFileLoaded($event)">
+      </sdux-dump-file-picker>
     </section>
-
-    @if (errorMessage()) {
-      <div class="error-message">{{ errorMessage() }}</div>
-    }
 
     @if (loadedFileName()) {
       <section class="success-section">

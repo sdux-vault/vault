@@ -245,6 +245,26 @@ export class StateDiffViewComponent {
     }
   }
 
+  /** Selects a specific snapshot as the "before" in the comparison. */
+  selectBeforeSnapshot(index: number): void {
+    if (index === this.afterIndex()) return;
+    this.beforeIndex.set(index);
+    if (index > this.afterIndex()) {
+      this.afterIndex.set(index);
+      this.beforeIndex.set(Math.max(0, index - 1));
+    }
+  }
+
+  /** Selects a specific snapshot as the "after" in the comparison. */
+  selectAfterSnapshot(index: number): void {
+    if (index === this.beforeIndex()) return;
+    this.afterIndex.set(index);
+    if (index < this.beforeIndex()) {
+      this.beforeIndex.set(index);
+      this.afterIndex.set(Math.min(this.candidates().length - 1, index + 1));
+    }
+  }
+
   /** Selects a specific snapshot row for comparison. */
   selectSnapshot(index: number): void {
     const other =

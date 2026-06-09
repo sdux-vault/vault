@@ -1,7 +1,7 @@
 @if (tableDiff().beforeRows.length > 0 || tableDiff().afterRows.length > 0) {
   <!-- Before Table -->
   <div class="state-table-container">
-    <h3 class="table-heading">BEFORE: {{ before()?.stage }}</h3>
+    <h3 class="table-heading">BEFORE: {{ beforeLabel() }}</h3>
     <div class="table-scroll-wrapper">
       <table class="state-table">
         <thead>
@@ -45,7 +45,7 @@
 
   <!-- After Table -->
   <div class="state-table-container">
-    <h3 class="table-heading">AFTER: {{ after()?.stage }}</h3>
+    <h3 class="table-heading">AFTER: {{ afterLabel() }}</h3>
     <div class="table-scroll-wrapper">
       <table class="state-table">
         <thead>

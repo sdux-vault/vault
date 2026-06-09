@@ -57,41 +57,6 @@
     }
   }
 
-  .file-input {
-    display: none;
-  }
-
-  .file-label {
-    cursor: pointer;
-    display: inline-flex;
-    align-self: flex-start;
-  }
-
-  .file-button {
-    display: inline-block;
-    padding: global.$spacing-sm global.$spacing-md;
-    font-size: global.$font-size-sm;
-    font-weight: global.$font-weight-bold;
-    color: var(--sdux-text-primary);
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
-    border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
-    border-radius: global.$border-radius-sm;
-    cursor: pointer;
-
-    &:hover {
-      background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
-    }
-  }
-
-  .error-message {
-    padding: global.$spacing-sm global.$spacing-md;
-    font-size: global.$font-size-sm;
-    color: global.$sdux-accent-base;
-    background: rgb(255 0 0 / 8%);
-    border: 1px solid global.$sdux-accent-base;
-    border-radius: global.$border-radius-sm;
-  }
-
   .success-section {
     display: flex;
     flex-direction: column;

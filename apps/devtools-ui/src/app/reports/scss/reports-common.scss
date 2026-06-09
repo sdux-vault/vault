@@ -50,35 +50,6 @@
       gap: global.$spacing-sm;
     }
 
-    .view-toggle {
-      display: flex;
-      border: 1px solid global.$sdux-surface-outline;
-      border-radius: global.$border-radius-sm;
-      overflow: hidden;
-
-      .toggle-btn {
-        @include global.sdux-text(global.$sdux-text-secondary);
-        font-family: global.$sdux-font-family;
-        font-size: global.$font-size-xs;
-        font-weight: global.$font-weight-medium;
-        padding: global.$spacing-xs global.$spacing-sm;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.15s ease;
-
-        &:hover {
-          @include global.sdux-text(global.$sdux-text-white);
-          background-color: global.$sdux-surface-outline;
-        }
-
-        &.active {
-          @include global.sdux-text(global.$sdux-text-white);
-          background-color: global.$sdux-primary-base;
-        }
-      }
-    }
-
     @media (max-width: global.$breakpoint-md) {
       flex-direction: column;
       align-items: flex-start;
@@ -97,6 +68,38 @@
       .meta {
         width: 100%;
         justify-content: flex-end;
+      }
+    }
+  }
+
+  .view-toggle {
+    display: flex;
+    border: 1px solid global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+    overflow: hidden;
+    width: 110px;
+
+    .toggle-btn {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-family: global.$sdux-font-family;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-semibold;
+      width: 55px;
+      height: global.$button-height;
+      padding: global.$spacing-xs global.$spacing-sm;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        @include global.sdux-text(global.$sdux-text-white);
+        background-color: global.$sdux-surface-outline;
+      }
+
+      &.active {
+        @include global.sdux-text(global.$sdux-text-white);
+        background-color: global.$sdux-primary-base;
       }
     }
   }
@@ -133,5 +136,378 @@
     color: var(--sdux-text-secondary);
     font-size: global.$font-size-sm;
     font-style: italic;
+  }
+
+  /* ─── TRACE SELECTOR ─── */
+
+  .trace-option {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    font-size: global.$font-size-sm;
+  }
+
+  .trace-cell {
+    font-weight: global.$font-weight-medium;
+    color: global.$sdux-primary-light;
+  }
+
+  .trace-label-tag {
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    font-weight: global.$font-weight-bold;
+    color: global.$sdux-primary-base;
+  }
+
+  .trace-id {
+    font-family: global.$sdux-code-font;
+    color: var(--sdux-text-secondary);
+  }
+
+  /* ─── PAIR NAVIGATION ─── */
+
+  .pair-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: global.$spacing-md;
+    height: 50px;
+
+    .pair-counter {
+      font-size: global.$font-size-sm;
+      color: var(--sdux-text-secondary);
+      font-family: global.$sdux-code-font;
+    }
+
+    .sdux-button {
+      width: 145px !important;
+      min-width: 145px !important;
+      max-width: 145px !important;
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      height: global.$button-height;
+
+      .nav-label {
+        display: none;
+      }
+
+      .sdux-button {
+        width: auto !important;
+        min-width: auto !important;
+        max-width: none !important;
+      }
+    }
+  }
+
+  /* ─── DIFF AND TABLES LAYOUT ─── */
+
+  .diff-and-tables {
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    grid-template-rows: 50px 400px;
+    gap: global.$spacing-sm;
+    grid-column: 1 / -1;
+
+    @media (max-width: global.$breakpoint-md) {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+
+      .tables-column-group {
+        order: -1;
+        grid-row: auto;
+      }
+
+      .diff-column-group {
+        grid-row: auto;
+      }
+    }
+  }
+
+  .diff-column-group {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+    min-width: 0;
+    grid-row: 1 / -1;
+  }
+
+  .tables-column-group {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+    min-width: 0;
+    grid-row: 1 / -1;
+  }
+
+  .view-toggle-container {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    align-items: center;
+  }
+
+  .skipped-separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: global.$spacing-xs global.$spacing-md;
+    font-size: global.$font-size-xs;
+    color: var(--sdux-text-secondary);
+    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    border: 1px dashed global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+    margin-bottom: global.$spacing-sm;
+  }
+
+  /* ─── DIFF PANEL ─── */
+
+  .diff-panel {
+    min-width: 0;
+    flex: 1;
+    min-height: 0;
+
+    .diff-panel-view {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-sm;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .diff-column {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+
+      &:first-child {
+        border-right: 1px solid global.$sdux-surface-outline;
+      }
+    }
+
+    .diff-content {
+      flex: 1;
+      overflow: auto;
+      min-height: 0;
+      margin: 0;
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      .diff-panel-view {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  .diff-header {
+    display: flex;
+    flex-direction: column;
+    padding: global.$spacing-xs global.$spacing-md;
+    background: global.$sdux-surface-mid;
+    border-bottom: 1px solid global.$sdux-surface-outline;
+
+    .diff-header-title {
+      font-size: global.$font-size-xs;
+      font-weight: global.$font-weight-bold;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--sdux-text-primary);
+    }
+
+    .diff-header-meta {
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-xxs;
+      color: var(--sdux-text-secondary);
+    }
+  }
+
+  .diff-content {
+    margin: 0;
+    padding: global.$spacing-md;
+    background: global.$sdux-surface-darker;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    line-height: 1.6;
+    color: var(--sdux-text-primary);
+    overflow: auto;
+    white-space: pre;
+    flex: 1;
+    height: 400px;
+    min-height: 400px;
+    max-height: 400px;
+
+    .diff-line-added {
+      display: block;
+      background: global.$sdux-success-dark;
+      color: global.$sdux-text-white;
+    }
+
+    .diff-line-removed {
+      display: block;
+      background: global.$sdux-accent-dark;
+      color: global.$sdux-text-white;
+    }
+  }
+
+  /* ─── COMPARE TABLES CONTAINER ─── */
+
+  .compare-tables-container {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+    min-width: 0;
+    flex: 1;
+    min-height: 0;
+
+    @media (max-width: global.$breakpoint-md) {
+      flex-direction: row;
+      max-height: 200px;
+    }
+  }
+
+  /* ─── SNAPSHOT TABLE ─── */
+
+  .snapshot-table {
+    border: 1px solid global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+
+    .snapshot-table-header {
+      padding: global.$spacing-xs global.$spacing-sm;
+      font-size: global.$font-size-xs;
+      font-weight: global.$font-weight-bold;
+      color: var(--sdux-text-primary);
+      background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+      border-bottom: 1px solid global.$sdux-surface-outline;
+      flex-shrink: 0;
+    }
+
+    .snapshot-table-scroll {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+    }
+
+    thead {
+      flex-shrink: 0;
+      display: block;
+      overflow-y: scroll;
+
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+    }
+
+    tbody {
+      flex: 1;
+      overflow-y: scroll;
+      min-height: 0;
+      display: block;
+
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+    }
+
+    th.col-selected,
+    td.col-selected {
+      width: 18px;
+      text-align: center;
+      padding-left: global.$spacing-xs;
+      padding-right: 0;
+    }
+
+    th.col-indicator,
+    td.col-indicator {
+      width: 18px;
+      text-align: left;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    th {
+      padding: global.$spacing-xs global.$spacing-sm;
+      font-size: global.$font-size-xs;
+      font-weight: global.$font-weight-medium;
+      color: var(--sdux-text-secondary);
+      text-align: left;
+      border-bottom: 1px solid global.$sdux-surface-outline;
+      background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    }
+
+    .snapshot-row {
+      cursor: pointer;
+
+      &:hover {
+        background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+      }
+
+      &.selected {
+        background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+        border-left: none;
+      }
+
+      td {
+        padding: global.$spacing-xs global.$spacing-sm;
+        font-size: global.$font-size-xs;
+        color: var(--sdux-text-primary);
+
+        &.col-selected {
+          width: 18px;
+          text-align: center;
+          padding-left: global.$spacing-xs;
+          padding-right: 0;
+        }
+
+        &.col-indicator {
+          width: 18px;
+          text-align: left;
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+    }
+
+    .indicator {
+      color: global.$sdux-success-base;
+    }
+
+    .snapshot-table-footer {
+      padding: global.$spacing-xs global.$spacing-md;
+      font-size: global.$font-size-xxs;
+      color: var(--sdux-text-secondary);
+      background: global.$sdux-surface-mid;
+      border-top: 1px solid global.$sdux-surface-outline;
+
+      .indicator {
+        color: global.$sdux-success-base;
+      }
+
+      .footer-hint {
+        margin-left: global.$spacing-md;
+        font-style: italic;
+      }
+    }
   }
 }

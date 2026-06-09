@@ -2,7 +2,41 @@
   <div class="report-page">
     <header class="header">
       <h2>Pipeline Replay</h2>
+      <button
+        type="button"
+        class="help-toggle"
+        (click)="showDescription.set(!showDescription())"
+        matTooltip="Toggle description"
+        aria-label="Toggle description">
+        <img
+          src="assets/icons/help-icon.png"
+          alt=""
+          class="help-icon"
+          aria-hidden="true" />
+      </button>
     </header>
+
+    @if (showDescription()) {
+      <section class="description-section">
+        <p class="description">
+          Replay a recorded trace through a live FeatureCell instance. Select a
+          cell and trace, then dispatch the resolved value through the original
+          pipeline method (<code>replaceState</code> or
+          <code>mergeState</code>).
+        </p>
+        <p class="description">
+          Use this to verify fixes: change code, replay the trace, and compare
+          the result against the original dump.
+        </p>
+        <p class="description">
+          Need to replay from a previous session?
+          <a routerLink="/reports/load-dump" class="description-link"
+            >Load a saved dump</a
+          >
+          to restore traces captured earlier.
+        </p>
+      </section>
+    }
 
     <section class="action-bar">
       <mat-select
@@ -20,10 +54,20 @@
           class="cell-filter trace-filter"
           [value]="selectedTraceId()"
           (selectionChange)="onTraceIdChange($event.value)"
+          placeholder="Select a trace..."
+          panelWidth="500px"
           aria-label="Select trace">
           @for (trace of cellTraces(); track trace.traceId) {
             <mat-option [value]="trace.traceId">
-              {{ trace.traceId | slice: 0 : 8 }} — {{ trace.metrics.status }}
+              <span class="trace-option">
+                <span class="trace-cell">{{ selectedCellKey() }}</span>
+                &nbsp;
+                <span class="trace-label-tag">{{
+                  traceLabels().get(trace.traceId)
+                }}</span>
+                &nbsp;
+                <span class="trace-id">{{ trace.traceId.slice(0, 8) }}</span>
+              </span>
             </mat-option>
           }
         </mat-select>
@@ -32,85 +76,394 @@
       <div class="sdux-container-spacer"></div>
 
       <div class="meta">
+        <sdux-dump-file-picker></sdux-dump-file-picker>
+
         <sdux-export-button
           [data]="cellTraces()"
           filename="replay-traces"
           [label]="'Download ' + selectedCellKey() + ' traces'">
         </sdux-export-button>
+
+        <sdux-devtools-reset-button
+          (click)="onCellKeyChange('')"></sdux-devtools-reset-button>
       </div>
     </section>
 
-    <section class="description-section">
-      <p class="description">
-        Replay a recorded trace through a live FeatureCell instance. Select a
-        cell and trace, then dispatch the resolved value through the original
-        pipeline method (<code>replaceState</code> or <code>mergeState</code>).
-      </p>
-      <p class="description">
-        Use this to verify fixes: change code, replay the trace, and compare the
-        result against the original dump.
-      </p>
-    </section>
-
     @if (selectedTrace()) {
-      <section class="trace-summary">
-        <div class="summary-row">
-          <span class="label">Trace ID</span>
-          <span class="value">{{ selectedTrace()!.traceId }}</span>
-        </div>
-        <div class="summary-row">
-          <span class="label">Status</span>
-          <span
-            class="value"
-            [class.status-success]="
-              selectedTrace()!.metrics.status === 'success'
-            "
-            [class.status-error]="selectedTrace()!.metrics.status === 'failed'"
-            [class.status-denied]="
-              selectedTrace()!.metrics.status === 'denied'
-            ">
-            {{ selectedTrace()!.metrics.status }}
-          </span>
-        </div>
-        <div class="summary-row">
-          <span class="label">Duration</span>
-          <span class="value">{{ selectedTrace()!.metrics.duration }}ms</span>
-        </div>
-        <div class="summary-row">
-          <span class="label">Dispatch Method</span>
-          <span class="value method-badge">{{ dispatchMethod() }}State</span>
-        </div>
-        <div class="summary-row">
-          <span class="label">Events</span>
-          <span class="value">{{ selectedTrace()!.events.length }}</span>
-        </div>
+      <section class="trace-summary-section">
+        <header
+          class="section-header"
+          (click)="showTraceSummary.set(!showTraceSummary())">
+          <h3>Trace Summary</h3>
+          <span class="chevron" [class.expanded]="showTraceSummary()">›</span>
+        </header>
+        @if (showTraceSummary()) {
+          <div class="trace-summary">
+            <div class="summary-row">
+              <span class="label">Trace ID</span>
+              <span class="value">{{ selectedTrace()!.traceId }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="label">Status</span>
+              <span
+                class="value"
+                [class.status-success]="
+                  selectedTrace()!.metrics.status === 'success'
+                "
+                [class.status-error]="
+                  selectedTrace()!.metrics.status === 'failed'
+                "
+                [class.status-denied]="
+                  selectedTrace()!.metrics.status === 'denied'
+                ">
+                {{ selectedTrace()!.metrics.status }}
+              </span>
+            </div>
+            <div class="summary-row">
+              <span class="label">Duration</span>
+              <span class="value"
+                >{{ selectedTrace()!.metrics.duration }}ms</span
+              >
+            </div>
+            <div class="summary-row">
+              <span class="label">Dispatch Method</span>
+              <span class="value method-badge"
+                >{{ dispatchMethod() }}State</span
+              >
+            </div>
+            <div class="summary-row">
+              <span class="label">Events</span>
+              <span class="value">{{ selectedTrace()!.events.length }}</span>
+            </div>
+          </div>
+        }
       </section>
 
       @if (resolvedValue() !== undefined) {
         <section class="resolved-value-section">
-          <h3>Resolved Value</h3>
-          <pre class="resolved-value">{{ resolvedValue() | json }}</pre>
+          <header
+            class="section-header"
+            (click)="showResolvedValue.set(!showResolvedValue())">
+            <h3>Initial Value</h3>
+            <span class="chevron" [class.expanded]="showResolvedValue()"
+              >›</span
+            >
+          </header>
+          @if (showResolvedValue()) {
+            <pre class="resolved-value">{{ resolvedValue() | json }}</pre>
+          }
         </section>
       }
 
       <section class="replay-action">
         <button
           type="button"
-          class="replay-btn"
+          class="sdux-button"
           matTooltip="Dispatch the resolved value through the live cell"
           (click)="replay()">
           Replay Trace
+          <mat-icon>replay</mat-icon>
         </button>
+        @if (resultMessage()) {
+          <div class="sdux-spacer-10"></div>
+          <div
+            class="result-message"
+            [class.error]="resultIsError()"
+            [class.success]="!resultIsError()">
+            {{ resultMessage() }}
+          </div>
+        }
       </section>
     }
 
-    @if (resultMessage()) {
-      <div
-        class="result-message"
-        [class.error]="resultIsError()"
-        [class.success]="!resultIsError()">
-        {{ resultMessage() }}
-      </div>
+    @if (cellTraces().length >= 2) {
+      <section class="compare-section">
+        <header
+          class="section-header"
+          (click)="showCompareTraces.set(!showCompareTraces())">
+          <h3>Compare Traces</h3>
+          <span class="chevron" [class.expanded]="showCompareTraces()">›</span>
+        </header>
+        @if (showCompareTraces() && compareTotalEvents() > 0) {
+          <div class="compare-grid">
+            <div class="compare-summary-group">
+              <div class="compare-summary">
+                <span class="summary-stat">
+                  {{ compareDifferingCount() }} of
+                  {{ compareTotalEvents() }} events differ
+                </span>
+                <span class="summary-divider">|</span>
+                <span class="summary-stat">
+                  Before: {{ compareBeforeDuration() }}ms
+                </span>
+                <span class="summary-divider">|</span>
+                <span class="summary-stat">
+                  After: {{ compareAfterDuration() }}ms
+                </span>
+                <span class="summary-divider">|</span>
+                <span
+                  class="summary-stat summary-delta"
+                  [class.faster]="
+                    compareAfterDuration() < compareBeforeDuration()
+                  "
+                  [class.slower]="
+                    compareAfterDuration() > compareBeforeDuration()
+                  ">
+                  {{ compareDurationDelta() }}
+                </span>
+                <span class="summary-divider">|</span>
+                <button
+                  type="button"
+                  class="filter-btn"
+                  [class.active]="showOnlyDiffs()"
+                  (click)="toggleDiffFilter()"
+                  [matTooltip]="
+                    showOnlyDiffs()
+                      ? 'Show all events'
+                      : 'Show only differing events'
+                  "
+                  aria-label="Toggle diff-only filter">
+                  Diffs Only
+                </button>
+              </div>
+
+              <div class="compare-filters">
+                @if (compareCategories().length > 1) {
+                  @for (cat of compareCategories(); track cat) {
+                    <button
+                      type="button"
+                      class="filter-btn"
+                      [class.active]="categoryFilters().has(cat)"
+                      (click)="toggleCategoryFilter(cat)"
+                      [matTooltip]="
+                        categoryFilters().has(cat)
+                          ? 'Remove ' + cat + ' filter'
+                          : 'Show only ' + cat + ' events'
+                      "
+                      [attr.aria-label]="'Toggle ' + cat + ' filter'">
+                      {{ cat }}
+                    </button>
+                  }
+                }
+                <button
+                  type="button"
+                  class="filter-btn"
+                  [class.active]="showOnlyState()"
+                  (click)="toggleStateFilter()"
+                  [matTooltip]="
+                    showOnlyState()
+                      ? 'Show all events'
+                      : 'Show only events with state'
+                  "
+                  aria-label="Toggle state filter">
+                  state
+                </button>
+              </div>
+            </div>
+
+            <sdux-compare-timeline
+              [beforeLabel]="traceLabels().get(compareBeforeId()) ?? 'Before'"
+              [afterLabel]="traceLabels().get(compareAfterId()) ?? 'After'"
+              [beforeDuration]="compareBeforeDuration()"
+              [afterDuration]="compareAfterDuration()"
+              [beforeMarkers]="timelineBeforeMarkers()"
+              [afterMarkers]="timelineAfterMarkers()" />
+
+            <div class="diff-and-tables">
+              <div class="diff-column-group">
+                <nav class="pair-nav">
+                  <button
+                    type="button"
+                    class="sdux-button"
+                    [disabled]="!compareHasPrevious()"
+                    (click)="previousEvent()"
+                    matTooltip="Navigate to previous event"
+                    aria-label="Previous event">
+                    ← <span class="nav-label">Previous Event</span>
+                  </button>
+                  <span class="pair-counter">
+                    Event {{ compareEventIndex() + 1 }} of
+                    {{ compareTotalEvents() }}
+                  </span>
+                  <button
+                    type="button"
+                    class="sdux-button"
+                    [disabled]="!compareHasNext()"
+                    (click)="nextEvent()"
+                    matTooltip="Navigate to next event"
+                    aria-label="Next event">
+                    <span class="nav-label">Next Event</span> →
+                  </button>
+                </nav>
+
+                <div class="diff-panel">
+                  @if (skippedBeforeCurrentCount() > 0) {
+                    <div class="skipped-separator">
+                      {{ skippedBeforeCurrentCount() }}
+                      {{
+                        skippedBeforeCurrentCount() === 1 ? 'event' : 'events'
+                      }}
+                      skipped
+                    </div>
+                  }
+                  @if (viewMode() === 'diff') {
+                    <section class="diff-panel-view">
+                      <div class="diff-column">
+                        <div class="diff-header">
+                          <span class="diff-header-title">
+                            BEFORE:
+                            {{
+                              traceLabels().get(compareBeforeId()) ?? 'Before'
+                            }}
+                            — Event {{ compareEventIndex() + 1 }}
+                          </span>
+                        </div>
+                        <pre
+                          class="diff-content">@for (line of compareBeforeLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
+</span>}</pre>
+                      </div>
+                      <div class="diff-column">
+                        <div class="diff-header">
+                          <span class="diff-header-title">
+                            AFTER:
+                            {{ traceLabels().get(compareAfterId()) ?? 'After' }}
+                            — Event {{ compareEventIndex() + 1 }}
+                          </span>
+                        </div>
+                        <pre
+                          class="diff-content">@for (line of compareAfterLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
+</span>}</pre>
+                      </div>
+                    </section>
+                  } @else {
+                    <sdux-state-table-view
+                      [beforeLabel]="
+                        (traceLabels().get(compareBeforeId()) ?? 'Before') +
+                        ' — Event ' +
+                        (compareEventIndex() + 1)
+                      "
+                      [beforeValue]="currentBeforeEvent()"
+                      [afterLabel]="
+                        (traceLabels().get(compareAfterId()) ?? 'After') +
+                        ' — Event ' +
+                        (compareEventIndex() + 1)
+                      "
+                      [afterValue]="currentAfterEvent()">
+                    </sdux-state-table-view>
+                  }
+                </div>
+              </div>
+
+              <div class="tables-column-group">
+                <div class="view-toggle-container">
+                  <div class="view-toggle">
+                    <button
+                      type="button"
+                      class="toggle-btn"
+                      [class.active]="viewMode() === 'diff'"
+                      (click)="viewMode.set('diff')"
+                      matTooltip="Side-by-side diff view"
+                      aria-label="Diff view">
+                      Diff
+                    </button>
+                    <button
+                      type="button"
+                      class="toggle-btn"
+                      [class.active]="viewMode() === 'table'"
+                      (click)="viewMode.set('table')"
+                      matTooltip="Tabular state view"
+                      aria-label="Table view">
+                      Table
+                    </button>
+                  </div>
+                </div>
+
+                <div class="compare-tables-container">
+                  <section class="snapshot-table">
+                    <div class="snapshot-table-header">
+                      Before Trace ({{ cellTraces().length }})
+                    </div>
+                    <div class="snapshot-table-scroll">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th class="col-selected"></th>
+                            <th class="col-indicator">#</th>
+                            <th class="col-event">Trace</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @for (trace of cellTraces(); track trace.traceId) {
+                            <tr
+                              class="snapshot-row"
+                              [class.selected]="
+                                trace.traceId === compareBeforeId()
+                              "
+                              (click)="selectBeforeTrace(trace.traceId)"
+                              matTooltip="Select as before trace">
+                              <td class="col-selected">
+                                @if (trace.traceId === compareBeforeId()) {
+                                  <span class="indicator">●</span>
+                                }
+                              </td>
+                              <td class="col-indicator">
+                                {{ traceLabels().get(trace.traceId) }}
+                              </td>
+                              <td class="col-event">
+                                {{ trace.traceId.slice(0, 8) }}
+                              </td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="snapshot-table">
+                    <div class="snapshot-table-header">
+                      After Trace ({{ cellTraces().length }})
+                    </div>
+                    <div class="snapshot-table-scroll">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th class="col-selected"></th>
+                            <th class="col-indicator">#</th>
+                            <th class="col-event">Trace</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @for (trace of cellTraces(); track trace.traceId) {
+                            <tr
+                              class="snapshot-row"
+                              [class.selected]="
+                                trace.traceId === compareAfterId()
+                              "
+                              (click)="selectAfterTrace(trace.traceId)"
+                              matTooltip="Select as after trace">
+                              <td class="col-selected">
+                                @if (trace.traceId === compareAfterId()) {
+                                  <span class="indicator">●</span>
+                                }
+                              </td>
+                              <td class="col-indicator">
+                                {{ traceLabels().get(trace.traceId) }}
+                              </td>
+                              <td class="col-event">
+                                {{ trace.traceId.slice(0, 8) }}
+                              </td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </section>
     }
 
     @if (!cellKeys().length) {

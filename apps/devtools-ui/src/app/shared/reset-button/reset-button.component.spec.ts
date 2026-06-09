@@ -33,7 +33,7 @@ describe('Component: ResetButton', () => {
   });
 
   it('should render a Clear button', () => {
-    const button = fixture.nativeElement.querySelector('.btn-clear');
+    const button = fixture.nativeElement.querySelector('.sdux-button');
     expect(button).toBeTruthy();
     expect(button.textContent.trim()).toBe('Clear');
   });
@@ -50,7 +50,7 @@ describe('Component: ResetButton', () => {
 
   it('should call both services when button is clicked', () => {
     const button: HTMLButtonElement =
-      fixture.nativeElement.querySelector('.btn-clear');
+      fixture.nativeElement.querySelector('.sdux-button');
     button.click();
 
     expect(loggingMock.clearEvents).toHaveBeenCalledTimes(1);

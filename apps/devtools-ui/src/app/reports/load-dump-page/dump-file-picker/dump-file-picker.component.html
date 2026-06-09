@@ -1,0 +1,20 @@
+<input
+  #fileInput
+  type="file"
+  accept=".json"
+  class="file-input"
+  aria-hidden="true"
+  tabindex="-1"
+  (change)="onFileSelected($event)" />
+<button
+  type="button"
+  class="sdux-button"
+  matTooltip="Select a .json dump file to import"
+  aria-label="Importa JSON debug dump file"
+  (click)="fileInput.click()">
+  Import Dump File
+</button>
+
+@if (errorMessage()) {
+  <div class="error-message">{{ errorMessage() }}</div>
+}

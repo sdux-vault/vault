@@ -1,0 +1,74 @@
+<section class="compare-timeline">
+  <header class="section-header" (click)="showTimeline.set(!showTimeline())">
+    <h3>Timeline</h3>
+    <span class="chevron" [class.expanded]="showTimeline()">›</span>
+  </header>
+  @if (showTimeline()) {
+    <div class="timeline-content">
+      <div class="timeline-row">
+        <span class="timeline-label"> Before ({{ beforeLabel() }}) </span>
+        <div class="timeline-bar">
+          <div
+            class="timeline-track before-track"
+            [style.width.%]="beforeWidthPercent()"
+            [matTooltip]="'Before trace: ' + beforeDuration() + 'ms total'">
+            @for (marker of beforeMarkers(); track marker.label) {
+              <span
+                class="timeline-marker"
+                [style.left.%]="marker.position"
+                [matTooltip]="
+                  marker.eventName +
+                  ' at +' +
+                  marker.elapsed +
+                  'ms (first ' +
+                  marker.label +
+                  ' event)'
+                ">
+                <span class="marker-dot">●</span>
+                <span class="marker-label">{{ marker.label }}</span>
+              </span>
+            }
+          </div>
+          <span class="timeline-duration"> {{ beforeDuration() }}ms </span>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <span class="timeline-label"> After ({{ afterLabel() }}) </span>
+        <div class="timeline-bar">
+          <div
+            class="timeline-track after-track"
+            [style.width.%]="afterWidthPercent()"
+            [matTooltip]="'After trace: ' + afterDuration() + 'ms total'">
+            @for (marker of afterMarkers(); track marker.label) {
+              <span
+                class="timeline-marker"
+                [style.left.%]="marker.position"
+                [matTooltip]="
+                  marker.eventName +
+                  ' at +' +
+                  marker.elapsed +
+                  'ms (first ' +
+                  marker.label +
+                  ' event)'
+                ">
+                <span class="marker-dot">●</span>
+                <span class="marker-label">{{ marker.label }}</span>
+              </span>
+            }
+          </div>
+          <span class="timeline-duration"> {{ afterDuration() }}ms </span>
+        </div>
+      </div>
+
+      <div class="timeline-delta">
+        <span
+          class="summary-delta"
+          [class.faster]="afterDuration() < beforeDuration()"
+          [class.slower]="afterDuration() > beforeDuration()">
+          {{ durationDelta() }}
+        </span>
+      </div>
+    </div>
+  }
+</section>

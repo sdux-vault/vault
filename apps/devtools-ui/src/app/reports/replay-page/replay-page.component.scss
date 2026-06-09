@@ -2,6 +2,67 @@
 @use '../scss/reports-common';
 
 .report-page {
+  /* ─── SECTION HEADER WITH CHEVRON ─── */
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    h3 {
+      margin: 0;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-bold;
+      color: var(--sdux-text-primary);
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-md;
+    }
+
+    &:hover .chevron {
+      color: global.$sdux-primary-light;
+    }
+  }
+
+  .chevron {
+    font-size: global.$font-size-lg;
+    color: var(--sdux-text-secondary);
+    transition: transform 0.2s ease;
+    transform: rotate(0deg);
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+
+  /* ─── HELP TOGGLE ─── */
+
+  .help-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: global.$spacing-xs;
+    margin-left: global.$spacing-sm;
+    display: flex;
+    align-items: center;
+  }
+
+  .help-icon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  /* ─── TRACE SELECTOR ─── */
+
   .description-section {
     display: flex;
     flex-direction: column;
@@ -20,6 +81,18 @@
       padding: 0 global.$spacing-xs;
       border-radius: global.$border-radius-sm;
     }
+
+    .description-link {
+      @include global.a-link(
+        global.$sdux-primary-light,
+        global.$sdux-text-primary
+      );
+    }
+  }
+
+  .trace-summary-section {
+    display: flex;
+    flex-direction: column;
   }
 
   .trace-summary {
@@ -79,40 +152,141 @@
 
   .replay-action {
     display: flex;
+    justify-content: space-between;
 
-    .replay-btn {
-      font-family: global.$sdux-font-family;
-      font-size: global.$font-size-sm;
-      font-weight: global.$font-weight-bold;
-      padding: global.$spacing-sm global.$spacing-lg;
-      border: none;
+    .result-message {
+      padding: global.$spacing-sm global.$spacing-md;
       border-radius: global.$border-radius-sm;
-      background-color: global.$sdux-primary-base;
-      color: global.$sdux-text-white;
-      cursor: pointer;
-      transition: background-color 0.15s ease;
+      font-size: global.$font-size-sm;
 
-      &:hover {
-        background-color: global.$sdux-primary-dark;
+      &.success {
+        background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+        color: global.$sdux-success-base;
+        border: 1px solid global.$sdux-success-base;
+      }
+
+      &.error {
+        background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+        color: global.$sdux-accent-base;
+        border: 1px solid global.$sdux-accent-base;
+      }
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      .sdux-button {
+        width: 140px !important;
+        min-width: 140px !important;
+        max-width: 140px !important;
+      }
+
+      .result-message {
+        font-size: global.$font-size-xs;
+        padding: global.$spacing-xs global.$spacing-sm;
       }
     }
   }
 
-  .result-message {
-    padding: global.$spacing-sm global.$spacing-md;
-    border-radius: global.$border-radius-sm;
-    font-size: global.$font-size-sm;
+  .compare-section {
+    display: flex;
+    flex-direction: column;
 
-    &.success {
-      background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
-      color: global.$sdux-success-base;
-      border: 1px solid global.$sdux-success-base;
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 250px;
+      grid-template-rows: auto 1fr;
+      gap: global.$spacing-md;
+
+      sdux-compare-timeline {
+        grid-column: 1 / -1;
+      }
     }
 
-    &.error {
+    .compare-summary-group {
+      grid-column: 1 / -1;
       background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
-      color: global.$sdux-accent-base;
-      border: 1px solid global.$sdux-accent-base;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-sm;
+
+      .filter-btn {
+        width: 75px;
+        padding: global.$spacing-xs global.$spacing-sm;
+        font-size: global.$font-size-xs;
+        font-weight: global.$font-weight-medium;
+        color: var(--sdux-text-secondary);
+        background: transparent;
+        border: 1px solid global.$sdux-surface-outline;
+        border-radius: global.$border-radius-sm;
+        cursor: pointer;
+        white-space: nowrap;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease,
+          border-color 0.2s ease;
+
+        &:hover {
+          background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+        }
+
+        &.active {
+          color: global.$sdux-text-white;
+          background: global.$sdux-primary-base;
+          border-color: global.$sdux-primary-base;
+        }
+      }
+
+      .compare-summary {
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-sm;
+        padding: global.$spacing-sm global.$spacing-md;
+        font-size: global.$font-size-sm;
+        color: var(--sdux-text-secondary);
+
+        .summary-divider {
+          color: global.$sdux-surface-outline;
+        }
+
+        .summary-stat {
+          white-space: nowrap;
+        }
+
+        .summary-delta {
+          font-weight: global.$font-weight-bold;
+
+          &.faster {
+            color: global.$sdux-success-base;
+          }
+
+          &.slower {
+            color: global.$sdux-accent-base;
+          }
+        }
+      }
+
+      .compare-filters {
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-sm;
+        padding: 0 global.$spacing-md global.$spacing-sm;
+      }
+
+      @media (max-width: global.$breakpoint-md) {
+        .compare-summary {
+          flex-wrap: wrap;
+
+          .summary-divider {
+            display: none;
+          }
+        }
+
+        .compare-filters {
+          flex-wrap: wrap;
+
+          .filter-btn {
+            flex: 0 0 calc(33.333% - #{global.$spacing-sm});
+          }
+        }
+      }
     }
   }
 }
