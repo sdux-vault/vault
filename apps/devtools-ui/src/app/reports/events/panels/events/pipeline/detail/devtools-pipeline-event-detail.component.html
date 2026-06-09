@@ -24,6 +24,14 @@
       </ul>
     </div>
 
+    @if (event().candidate !== undefined) {
+      <div class="detail-block">
+        <h4>Candidate</h4>
+        <!-- trust: candidate is internal pipeline data, not user-generated -->
+        <pre><code>{{ event().candidate | json }}</code></pre>
+      </div>
+    }
+
     @if (event().state?.hasValue) {
       <div class="detail-block">
         <h4>State</h4>

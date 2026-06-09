@@ -58,7 +58,8 @@
   }
 
   .col-event {
-    min-width: 220px;
+    width: 220px;
+    white-space: nowrap;
   }
 
   .col-boundary {
@@ -114,4 +115,50 @@
 
 .indicator-error {
   color: global.$sdux-accent-base;
+}
+
+.short-label {
+  display: none;
+}
+
+@media (max-width: global.$breakpoint-md) {
+  .full-label {
+    display: none;
+  }
+
+  .short-label {
+    display: inline;
+  }
+
+  .event-table-wrapper {
+    max-height: 330px;
+    overflow-y: auto;
+  }
+
+  .event-table {
+    min-width: 500px;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    thead {
+      display: table-header-group;
+    }
+
+    tbody {
+      display: table-row-group;
+      height: auto;
+      overflow-y: visible;
+
+      tr {
+        display: table-row;
+      }
+    }
+  }
 }

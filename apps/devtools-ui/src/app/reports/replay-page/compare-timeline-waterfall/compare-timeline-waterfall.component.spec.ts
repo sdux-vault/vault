@@ -85,6 +85,9 @@ describe('CompareTimelineWaterfallComponent', () => {
             compareAfterDuration: signal(200),
             compareDurationDelta: signal('-300ms faster'),
             timelineMaxDuration: signal(500),
+            timelineZoom: signal(1),
+            timelineTickPercent: signal(20),
+            timelineTickInterval: signal(100),
             timelineWaterfallCategories: signal(mockCategories)
           }
         }
@@ -107,7 +110,7 @@ describe('CompareTimelineWaterfallComponent', () => {
   });
 
   it('should display before and after durations in stats', () => {
-    const stats = el.querySelector('.timeline-stats')!.textContent;
+    const stats = el.querySelector('.timeline-toolbar')!.textContent;
     expect(stats).toContain('Before: 500ms');
     expect(stats).toContain('After: 200ms');
   });
@@ -124,12 +127,12 @@ describe('CompareTimelineWaterfallComponent', () => {
   });
 
   it('should display category count', () => {
-    const stats = el.querySelector('.timeline-stats')!.textContent;
+    const stats = el.querySelector('.timeline-toolbar')!.textContent;
     expect(stats).toContain('2 categories');
   });
 
   it('should display total event count', () => {
-    const stats = el.querySelector('.timeline-stats')!.textContent;
+    const stats = el.querySelector('.timeline-toolbar')!.textContent;
     expect(stats).toContain('5 events');
   });
 
@@ -263,6 +266,56 @@ describe('CompareTimelineWaterfallComponent', () => {
         'unknown-id'
       );
       expect(component.afterLabel()).toBe('After');
+    });
+  });
+
+  describe('showHelp', () => {
+    it('should default to false', () => {
+      expect(component.showHelp()).toBeFalse();
+    });
+
+    it('should toggle to true', () => {
+      component.showHelp.set(true);
+      expect(component.showHelp()).toBeTrue();
+    });
+  });
+
+  describe('tickMarks', () => {
+    it('should generate marks at tick interval', () => {
+      const marks = component.tickMarks();
+      expect(marks.length).toBeGreaterThan(0);
+      expect(marks[0].ms).toBe(100);
+      expect(marks[0].position).toBe(20);
+    });
+
+    it('should drop last mark when too close to end', () => {
+      const service = TestBed.inject(CompareTraceService);
+      (service.timelineMaxDuration as ReturnType<typeof signal<number>>).set(
+        105
+      );
+      const marks = component.tickMarks();
+      expect(marks.length).toBe(0);
+    });
+
+    it('should keep last mark when not too close to end', () => {
+      const service = TestBed.inject(CompareTraceService);
+      (service.timelineMaxDuration as ReturnType<typeof signal<number>>).set(
+        1000
+      );
+      const marks = component.tickMarks();
+      const lastMark = marks[marks.length - 1];
+      expect(lastMark.ms).toBe(900);
+      expect(lastMark.position).toBe(90);
+    });
+
+    it('should use zoom-aware interval', () => {
+      const service = TestBed.inject(CompareTraceService);
+      (service.timelineTickInterval as ReturnType<typeof signal<number>>).set(
+        50
+      );
+      const marks = component.tickMarks();
+      expect(marks[0].ms).toBe(50);
+      expect(marks[1].ms).toBe(100);
     });
   });
 });

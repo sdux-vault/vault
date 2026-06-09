@@ -5,9 +5,10 @@ import {
   inject,
   signal
 } from '@angular/core';
-import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CompareTraceService } from '../compare-trace.service';
+import { TimelineViewModeSelectComponent } from '../timeline-view-mode-select/timeline-view-mode-select.component';
+import { TimelineZoomControlComponent } from '../timeline-zoom-control/timeline-zoom-control.component';
 
 /**
  * Describes a delta marker on the elapsed-delta timeline,
@@ -42,7 +43,11 @@ export interface TimelineDeltaMarkerShape {
 @Component({
   selector: 'sdux-compare-timeline-delta',
   standalone: true,
-  imports: [MatTooltipModule, MatSelectModule],
+  imports: [
+    MatTooltipModule,
+    TimelineViewModeSelectComponent,
+    TimelineZoomControlComponent
+  ],
   templateUrl: './compare-timeline-delta.component.html',
   styleUrl: './compare-timeline-delta.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -51,8 +56,8 @@ export class CompareTimelineDeltaComponent {
   /** Injected comparison service. */
   readonly #compare = inject(CompareTraceService);
 
-  /** Active timeline view mode (shared with service). */
-  readonly viewMode = this.#compare.timelineViewMode;
+  /** Whether the help section is visible. */
+  readonly showHelp = signal(false);
 
   /** Whether the timeline section is expanded. */
   readonly showTimeline = signal(true);
@@ -80,6 +85,18 @@ export class CompareTimelineDeltaComponent {
 
   /** Delta markers for the elapsed-delta view. */
   readonly deltaMarkers = this.#compare.timelineDeltaMarkers;
+
+  /** Maximum duration across both traces. */
+  readonly maxDuration = this.#compare.timelineMaxDuration;
+
+  /** Zoom multiplier for track width. */
+  readonly zoom = this.#compare.timelineZoom;
+
+  /** Tick line interval as a percentage. */
+  readonly tickPercent = this.#compare.timelineTickPercent;
+
+  /** Tick interval in ms (zoom-aware). */
+  readonly tickInterval = this.#compare.timelineTickInterval;
 
   /** Percentage change between before and after durations. */
   readonly percentChange = computed(() => {
@@ -113,6 +130,23 @@ export class CompareTimelineDeltaComponent {
   readonly sameCount = computed(
     () => this.deltaMarkers().filter((m) => m.delta === 0).length
   );
+
+  /** Total marker count. */
+  readonly markerCount = computed(() => this.deltaMarkers().length);
+
+  /** Tick marks at zoom-aware intervals with their percentage position (drops last if too close to end). */
+  readonly tickMarks = computed(() => {
+    const max = this.maxDuration();
+    const interval = this.tickInterval();
+    const marks: { ms: number; position: number }[] = [];
+    for (let ms = interval; ms < max; ms += interval) {
+      marks.push({ ms, position: (ms / max) * 100 });
+    }
+    if (marks.length && marks[marks.length - 1].position > 95) {
+      marks.pop();
+    }
+    return marks;
+  });
 
   /**
    * Computes the visual height of a delta bar as a percentage

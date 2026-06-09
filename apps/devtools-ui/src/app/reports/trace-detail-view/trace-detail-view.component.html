@@ -32,33 +32,39 @@
   <!-- Summary Stats -->
   @if (filteredTraces().length > 0) {
     <section class="summary-stats">
-      <div class="stat">
-        <span class="stat-value">{{ stats().total }}</span>
-        <span class="stat-label">Traces</span>
+      <div class="stat-group">
+        <div class="stat">
+          <span class="stat-value">{{ stats().total }}</span>
+          <span class="stat-label">Traces</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{{ stats().avgDuration.toFixed(1) }}ms</span>
+          <span class="stat-label">Avg</span>
+        </div>
       </div>
-      <div class="stat">
-        <span class="stat-value">{{ stats().avgDuration.toFixed(1) }}ms</span>
-        <span class="stat-label">Avg</span>
+      <div class="stat-group">
+        <div class="stat stat-success">
+          <span class="stat-value">{{ stats().success }}</span>
+          <span class="stat-label">Success</span>
+        </div>
+        <div class="stat stat-errors">
+          <span class="stat-value">{{ stats().errors }}</span>
+          <span class="stat-label">Errors</span>
+        </div>
+        <div class="stat stat-denied">
+          <span class="stat-value">{{ stats().denied }}</span>
+          <span class="stat-label">Denied</span>
+        </div>
       </div>
-      <div class="stat stat-success">
-        <span class="stat-value">{{ stats().success }}</span>
-        <span class="stat-label">Success</span>
-      </div>
-      <div class="stat stat-errors">
-        <span class="stat-value">{{ stats().errors }}</span>
-        <span class="stat-label">Errors</span>
-      </div>
-      <div class="stat stat-denied">
-        <span class="stat-value">{{ stats().denied }}</span>
-        <span class="stat-label">Denied</span>
-      </div>
-      <div class="stat stat-aborted">
-        <span class="stat-value">{{ stats().aborted }}</span>
-        <span class="stat-label">Aborted</span>
-      </div>
-      <div class="stat stat-orphaned">
-        <span class="stat-value">{{ stats().orphaned }}</span>
-        <span class="stat-label">Orphaned</span>
+      <div class="stat-group">
+        <div class="stat stat-aborted">
+          <span class="stat-value">{{ stats().aborted }}</span>
+          <span class="stat-label">Aborted</span>
+        </div>
+        <div class="stat stat-orphaned">
+          <span class="stat-value">{{ stats().orphaned }}</span>
+          <span class="stat-label">Orphaned</span>
+        </div>
       </div>
     </section>
   }
@@ -83,10 +89,10 @@
         @if (trace.traceId === traceId) {
           <section class="trace-detail-section">
             <div class="detail-header">
+              <span [class]="'detail-status ' + statusClass(trace)">{{
+                statusLabel(trace)
+              }}</span>
               <h3>
-                <span [class]="'detail-status ' + statusClass(trace)">{{
-                  statusLabel(trace)
-                }}</span>
                 Trace t{{ filteredTraces().indexOf(trace) + 1 }} —
                 <span [class]="'detail-status-label ' + statusClass(trace)">
                   {{ trace.metrics.status | uppercase }}

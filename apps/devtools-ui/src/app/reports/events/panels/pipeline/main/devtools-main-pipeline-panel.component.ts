@@ -3,7 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
+  inject,
   input,
+  OnInit,
   signal
 } from '@angular/core';
 import { EventShape } from '@sdux-vault/shared';
@@ -32,9 +35,34 @@ import { DevtoolsPipelineEventComponent } from '../../events/pipeline/devtools-p
   styleUrl: './devtools-main-pipeline-panel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DevtoolsMainPipelinePanelComponent {
+export class DevtoolsMainPipelinePanelComponent implements OnInit {
+  /** Destroy reference used to clean up the media query listener. */
+  readonly #destroyRef = inject(DestroyRef);
+
   /** Pipeline events to display, provided by the parent. */
   readonly events = input.required<EventShape[]>();
+
+  /** Virtual scroll item size — 92px in mobile, 40px in desktop. */
+  readonly itemSize = signal(40);
+
+  /**
+   * Initializes the responsive item-size listener.
+   *
+   * Reads the current viewport width via a `matchMedia` query and
+   * registers a change handler that updates `itemSize` whenever the
+   * viewport crosses the 768px breakpoint. The listener is removed
+   * automatically when the component is destroyed.
+   */
+  ngOnInit(): void {
+    const mql = window.matchMedia('(max-width: 768px)');
+    this.itemSize.set(mql.matches ? 92 : 40);
+    const handler = (e: MediaQueryListEvent) =>
+      this.itemSize.set(e.matches ? 92 : 40);
+    mql.addEventListener('change', handler);
+    this.#destroyRef.onDestroy(() =>
+      mql.removeEventListener('change', handler)
+    );
+  }
 
   /**
    * Reactive reversed list of pipeline events for display.

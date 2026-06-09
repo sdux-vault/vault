@@ -123,6 +123,9 @@ export class ReplayPageComponent {
   /** Whether the compare traces section is expanded. */
   readonly showCompareTraces = signal(true);
 
+  /** Whether the compare traces help section is visible. */
+  readonly showCompareHelp = signal(false);
+
   /** View mode for compare traces: diff or table. */
   readonly viewMode = signal<'diff' | 'table'>('diff');
 

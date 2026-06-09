@@ -5,10 +5,11 @@ import {
   inject,
   signal
 } from '@angular/core';
-import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import type { TimelineMarkerShape } from '../compare-timeline/compare-timeline.component';
 import { CompareTraceService } from '../compare-trace.service';
+import { TimelineViewModeSelectComponent } from '../timeline-view-mode-select/timeline-view-mode-select.component';
+import { TimelineZoomControlComponent } from '../timeline-zoom-control/timeline-zoom-control.component';
 
 /**
  * Describes a single category row in the waterfall view,
@@ -36,17 +37,21 @@ export interface WaterfallCategoryShape {
 @Component({
   selector: 'sdux-compare-timeline-waterfall',
   standalone: true,
-  imports: [MatTooltipModule, MatSelectModule],
+  imports: [
+    MatTooltipModule,
+    TimelineViewModeSelectComponent,
+    TimelineZoomControlComponent
+  ],
   templateUrl: './compare-timeline-waterfall.component.html',
   styleUrl: './compare-timeline-waterfall.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompareTimelineWaterfallComponent {
+  /** Whether the help section is visible. */
+  readonly showHelp = signal(false);
+
   /** Injected comparison service. */
   readonly #compare = inject(CompareTraceService);
-
-  /** Active timeline view mode (shared with service). */
-  readonly viewMode = this.#compare.timelineViewMode;
 
   /** Whether the timeline section is expanded. */
   readonly showTimeline = signal(true);
@@ -75,6 +80,15 @@ export class CompareTimelineWaterfallComponent {
   /** Maximum duration across both traces. */
   readonly maxDuration = this.#compare.timelineMaxDuration;
 
+  /** Zoom multiplier for track width. */
+  readonly zoom = this.#compare.timelineZoom;
+
+  /** Tick line interval as a percentage (100ms per tick on shared scale). */
+  readonly tickPercent = this.#compare.timelineTickPercent;
+
+  /** Tick interval in ms (zoom-aware). */
+  readonly tickInterval = this.#compare.timelineTickInterval;
+
   /** Waterfall category rows. */
   readonly categories = this.#compare.timelineWaterfallCategories;
 
@@ -95,5 +109,19 @@ export class CompareTimelineWaterfallComponent {
     let total = 0;
     for (const cat of this.categories()) total += cat.totalEvents;
     return total;
+  });
+
+  /** Tick marks at zoom-aware intervals with their percentage position (drops last if too close to end). */
+  readonly tickMarks = computed(() => {
+    const max = this.maxDuration();
+    const interval = this.tickInterval();
+    const marks: { ms: number; position: number }[] = [];
+    for (let ms = interval; ms < max; ms += interval) {
+      marks.push({ ms, position: (ms / max) * 100 });
+    }
+    if (marks.length && marks[marks.length - 1].position > 95) {
+      marks.pop();
+    }
+    return marks;
   });
 }

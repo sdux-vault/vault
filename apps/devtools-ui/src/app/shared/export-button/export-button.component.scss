@@ -6,10 +6,9 @@
 
 .export-btn {
   @include global.sdux-icon-button(28px, transparent);
-  color: global.$sdux-primary-light;
-
-  &:hover {
-    background-color: global.$sdux-primary-base;
-    color: global.$sdux-text-white;
-  }
+  color: global.$sdux-text-white;
+  border: 1px solid global.$sdux-surface-outline;
+  border-radius: global.$border-radius-sm;
+  height: global.$button-height;
+  background-color: global.$sdux-primary-base;
 }

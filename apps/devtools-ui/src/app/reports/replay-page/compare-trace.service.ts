@@ -188,6 +188,22 @@ export class CompareTraceService {
   /** Active timeline view mode across all timeline components. */
   readonly timelineViewMode = signal('category-overview');
 
+  /** Zoom multiplier for timeline tracks (1 = no zoom, max 6). */
+  readonly timelineZoom = signal(1);
+
+  /** Tick interval in ms, adapting to zoom level. */
+  readonly timelineTickInterval = computed(() => {
+    const zoom = this.timelineZoom();
+    if (zoom >= 4) return 25;
+    if (zoom >= 2) return 50;
+    return 100;
+  });
+
+  /** Tick interval as a percentage of the shared time scale. */
+  readonly timelineTickPercent = computed(
+    () => (this.timelineTickInterval() / this.timelineMaxDuration()) * 100
+  );
+
   /** Elapsed delta markers comparing corresponding events between traces. */
   readonly timelineDeltaMarkers = computed(() =>
     this.buildElapsedDeltaMarkers()

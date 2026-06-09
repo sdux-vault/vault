@@ -10,6 +10,11 @@
   background: global.$sdux-surface-lightish;
   border-radius: global.$border-radius-sm;
 
+  .stat-group {
+    display: flex;
+    gap: global.$spacing-lg;
+  }
+
   .stat {
     display: flex;
     flex-direction: column;
@@ -180,18 +185,19 @@
 
   .detail-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: global.$spacing-sm;
+
+    .detail-status {
+      flex-shrink: 0;
+    }
 
     h3 {
       margin: 0;
+      flex: 1;
       font-size: global.$font-size-sm;
       font-weight: global.$font-weight-bold;
       color: var(--sdux-text-primary);
-
-      .detail-status {
-        margin-right: global.$spacing-xs;
-      }
 
       .detail-status-label {
         font-weight: global.$font-weight-bold;
@@ -621,5 +627,34 @@
   .mdc-tab:focus .mdc-tab__text-label {
     /* !important: override Material's inline label color for active/hover/focus states */
     color: global.$sdux-text-white !important;
+  }
+}
+
+@media (max-width: global.$breakpoint-md) {
+  .summary-stats {
+    flex-wrap: wrap;
+  }
+
+  .trace-detail-body {
+    flex-direction: column;
+
+    &:has(.event-detail-pane) .trace-detail-content {
+      display: none;
+    }
+  }
+
+  .event-detail-pane {
+    width: 100%;
+    min-width: 0;
+    border-left: none;
+  }
+
+  .detail-trace-id {
+    display: block;
+    margin-left: 0 !important; /* !important: override nested h3 .detail-trace-id margin */
+  }
+
+  .tab-description {
+    display: none;
   }
 }

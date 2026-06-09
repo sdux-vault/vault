@@ -1610,4 +1610,46 @@ describe('CompareTraceService', () => {
       expect(indices.length).toBeGreaterThan(0);
     });
   });
+
+  describe('timelineZoom', () => {
+    it('should default to 1', () => {
+      expect(service.timelineZoom()).toBe(1);
+    });
+
+    it('should accept a new zoom value', () => {
+      service.timelineZoom.set(3);
+      expect(service.timelineZoom()).toBe(3);
+    });
+  });
+
+  describe('timelineTickInterval', () => {
+    it('should return 100 at zoom 1', () => {
+      expect(service.timelineTickInterval()).toBe(100);
+    });
+
+    it('should return 50 at zoom 2', () => {
+      service.timelineZoom.set(2);
+      expect(service.timelineTickInterval()).toBe(50);
+    });
+
+    it('should return 25 at zoom 4', () => {
+      service.timelineZoom.set(4);
+      expect(service.timelineTickInterval()).toBe(25);
+    });
+  });
+
+  describe('timelineTickPercent', () => {
+    it('should compute tick interval as percentage of max duration', () => {
+      service.compareBeforeId.set('abc-123-def-456');
+      service.compareAfterId.set('merge-trace-001');
+      expect(service.timelineTickPercent()).toBe((100 / 500) * 100);
+    });
+
+    it('should adapt to zoom level', () => {
+      service.compareBeforeId.set('abc-123-def-456');
+      service.compareAfterId.set('merge-trace-001');
+      service.timelineZoom.set(2);
+      expect(service.timelineTickPercent()).toBe((50 / 500) * 100);
+    });
+  });
 });

@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   gap: global.$spacing-md;
-  padding: global.$spacing-md;
+  padding-bottom: global.$spacing-2xl;
 
   /* ─── HEADER ─── */
 
@@ -55,14 +55,14 @@
       align-items: flex-start;
       gap: global.$spacing-sm;
 
+      .cell-filter,
+      .trace-filter {
+        width: calc(100% - #{global.$spacing-md});
+      }
+
       .title {
         flex-wrap: wrap;
         width: 100%;
-
-        .cell-filter,
-        .trace-filter {
-          width: 350px;
-        }
       }
 
       .meta {
@@ -74,31 +74,56 @@
 
   .view-toggle {
     display: flex;
-    border: 1px solid global.$sdux-surface-outline;
-    border-radius: global.$border-radius-sm;
-    overflow: hidden;
     width: 110px;
 
     .toggle-btn {
-      @include global.sdux-text(global.$sdux-text-secondary);
+      @include global.sdux-text(
+        global.$sdux-text-secondary,
+        global.$font-weight-semibold
+      );
       font-family: global.$sdux-font-family;
       font-size: global.$font-size-sm;
-      font-weight: global.$font-weight-semibold;
       width: 55px;
       height: global.$button-height;
       padding: global.$spacing-xs global.$spacing-sm;
       background: transparent;
-      border: none;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: 0;
       cursor: pointer;
-      transition: background-color 0.15s ease;
+
+      &:first-child {
+        border-radius: global.$border-radius-sm 0 0 global.$border-radius-sm;
+      }
+
+      &:last-child {
+        border-radius: 0 global.$border-radius-sm global.$border-radius-sm 0;
+      }
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
 
       &:hover {
-        @include global.sdux-text(global.$sdux-text-white);
+        @include global.sdux-text(
+          global.$sdux-text-white,
+          global.$font-weight-semibold
+        );
         background-color: global.$sdux-surface-outline;
+        transform: translateY(-2px);
+        box-shadow: global.$sdux-shadow-hover;
+      }
+
+      &:active {
+        transform: scale(0.97);
+        box-shadow: global.$sdux-shadow-active;
       }
 
       &.active {
-        @include global.sdux-text(global.$sdux-text-white);
+        @include global.sdux-text(
+          global.$sdux-text-white,
+          global.$font-weight-semibold
+        );
         background-color: global.$sdux-primary-base;
       }
     }

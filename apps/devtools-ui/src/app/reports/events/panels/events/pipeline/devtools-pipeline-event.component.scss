@@ -6,55 +6,53 @@
   background-color: global.$sdux-surface-lightish;
   border-radius: global.$border-radius-sm;
   padding: global.$spacing-xs global.$spacing-sm;
-  margin-bottom: global.$spacing-xs;
+  height: 40px;
+  box-sizing: border-box;
+
+  @media (max-width: global.$breakpoint-md) {
+    height: 92px;
+  }
 }
 
 .event-row-header {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: global.$spacing-sm;
   cursor: pointer;
 
-  .row-primary,
-  .row-secondary {
-    display: flex;
-    align-items: center;
-    gap: global.$spacing-md;
-  }
-
-  .row-primary {
+  .counter {
     flex-shrink: 0;
   }
 
-  .row-secondary {
+  .row-details {
     flex: 1;
     min-width: 0;
-
-    .indicators-ts {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-    }
   }
 
-  .row-spacer {
-    display: none;
+  .row-primary {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-md;
+    flex-wrap: wrap;
+  }
+
+  .indicators-ts {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
   }
 
   @media (max-width: global.$breakpoint-md) {
-    flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
 
-    .row-primary,
-    .row-secondary {
-      width: 100%;
+    .row-primary {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: global.$spacing-xs;
     }
 
-    .row-spacer {
-      display: block;
-      width: 48px;
-      flex-shrink: 0;
+    .indicators-ts {
+      margin-left: 0;
     }
 
     .cell {
@@ -103,6 +101,10 @@
     }
     &.conductor .pill {
       background-color: global.$sdux-accent-base;
+    }
+    &.pipeline .pill {
+      background-color: global.$sdux-primary-light;
+      color: global.$sdux-text-black;
     }
   }
 

@@ -90,87 +90,89 @@
     </section>
 
     @if (selectedTrace()) {
-      <section class="trace-summary-section">
-        <header
-          class="section-header"
-          role="button"
-          tabindex="0"
-          [attr.aria-expanded]="showTraceSummary()"
-          aria-label="Toggle trace summary"
-          (click)="showTraceSummary.set(!showTraceSummary())"
-          (keydown.enter)="showTraceSummary.set(!showTraceSummary())"
-          (keydown.space)="
-            $event.preventDefault(); showTraceSummary.set(!showTraceSummary())
-          ">
-          <h3>Trace Summary</h3>
-          <span class="chevron" [class.expanded]="showTraceSummary()">›</span>
-        </header>
-        @if (showTraceSummary()) {
-          <div class="trace-summary">
-            <div class="summary-row">
-              <span class="label">Trace ID</span>
-              <span class="value">{{ selectedTrace()!.traceId }}</span>
-            </div>
-            <div class="summary-row">
-              <span class="label">Status</span>
-              <span
-                class="value"
-                [class.status-success]="
-                  selectedTrace()!.metrics.status === 'success'
-                "
-                [class.status-error]="
-                  selectedTrace()!.metrics.status === 'failed'
-                "
-                [class.status-denied]="
-                  selectedTrace()!.metrics.status === 'denied'
-                ">
-                {{ selectedTrace()!.metrics.status }}
-              </span>
-            </div>
-            <div class="summary-row">
-              <span class="label">Duration</span>
-              <span class="value"
-                >{{ selectedTrace()!.metrics.duration }}ms</span
+      <div class="trace-details-row">
+        @if (resolvedValue() !== undefined) {
+          <section class="resolved-value-section">
+            <header
+              class="section-header"
+              role="button"
+              tabindex="0"
+              [attr.aria-expanded]="showResolvedValue()"
+              aria-label="Toggle initial value"
+              (click)="showResolvedValue.set(!showResolvedValue())"
+              (keydown.enter)="showResolvedValue.set(!showResolvedValue())"
+              (keydown.space)="
+                $event.preventDefault();
+                showResolvedValue.set(!showResolvedValue())
+              ">
+              <h3>Initial Value</h3>
+              <span class="chevron" [class.expanded]="showResolvedValue()"
+                >›</span
               >
-            </div>
-            <div class="summary-row">
-              <span class="label">Dispatch Method</span>
-              <span class="value method-badge"
-                >{{ dispatchMethod() }}State</span
-              >
-            </div>
-            <div class="summary-row">
-              <span class="label">Events</span>
-              <span class="value">{{ selectedTrace()!.events.length }}</span>
-            </div>
-          </div>
+            </header>
+            @if (showResolvedValue()) {
+              <pre class="resolved-value">{{ resolvedValue() | json }}</pre>
+            }
+          </section>
         }
-      </section>
 
-      @if (resolvedValue() !== undefined) {
-        <section class="resolved-value-section">
+        <section class="trace-summary-section">
           <header
             class="section-header"
             role="button"
             tabindex="0"
-            [attr.aria-expanded]="showResolvedValue()"
-            aria-label="Toggle initial value"
-            (click)="showResolvedValue.set(!showResolvedValue())"
-            (keydown.enter)="showResolvedValue.set(!showResolvedValue())"
+            [attr.aria-expanded]="showTraceSummary()"
+            aria-label="Toggle trace summary"
+            (click)="showTraceSummary.set(!showTraceSummary())"
+            (keydown.enter)="showTraceSummary.set(!showTraceSummary())"
             (keydown.space)="
-              $event.preventDefault();
-              showResolvedValue.set(!showResolvedValue())
+              $event.preventDefault(); showTraceSummary.set(!showTraceSummary())
             ">
-            <h3>Initial Value</h3>
-            <span class="chevron" [class.expanded]="showResolvedValue()"
-              >›</span
-            >
+            <h3>Trace Summary</h3>
+            <span class="chevron" [class.expanded]="showTraceSummary()">›</span>
           </header>
-          @if (showResolvedValue()) {
-            <pre class="resolved-value">{{ resolvedValue() | json }}</pre>
+          @if (showTraceSummary()) {
+            <div class="trace-summary">
+              <div class="summary-row">
+                <span class="label">Trace ID</span>
+                <span class="value">{{ selectedTrace()!.traceId }}</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Status</span>
+                <span
+                  class="value"
+                  [class.status-success]="
+                    selectedTrace()!.metrics.status === 'success'
+                  "
+                  [class.status-error]="
+                    selectedTrace()!.metrics.status === 'failed'
+                  "
+                  [class.status-denied]="
+                    selectedTrace()!.metrics.status === 'denied'
+                  ">
+                  {{ selectedTrace()!.metrics.status }}
+                </span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Duration</span>
+                <span class="value"
+                  >{{ selectedTrace()!.metrics.duration }}ms</span
+                >
+              </div>
+              <div class="summary-row">
+                <span class="label">Dispatch Method</span>
+                <span class="value method-badge"
+                  >{{ dispatchMethod() }}State</span
+                >
+              </div>
+              <div class="summary-row">
+                <span class="label">Events</span>
+                <span class="value">{{ selectedTrace()!.events.length }}</span>
+              </div>
+            </div>
           }
         </section>
-      }
+      </div>
 
       <section class="replay-action">
         <button
@@ -206,9 +208,69 @@
           (keydown.space)="
             $event.preventDefault(); showCompareTraces.set(!showCompareTraces())
           ">
-          <h3>Compare Traces</h3>
+          <div class="title-group">
+            <h3>Compare Traces</h3>
+            @if (showCompareTraces()) {
+              <button
+                type="button"
+                class="help-toggle"
+                (click)="
+                  $event.stopPropagation();
+                  showCompareHelp.set(!showCompareHelp())
+                "
+                matTooltip="Toggle help"
+                aria-label="Toggle compare traces help">
+                <img
+                  src="assets/icons/help-icon.png"
+                  alt=""
+                  class="help-icon"
+                  aria-hidden="true" />
+              </button>
+            }
+          </div>
           <span class="chevron" [class.expanded]="showCompareTraces()">›</span>
         </header>
+        @if (showCompareTraces() && showCompareHelp()) {
+          <section class="help-section">
+            <p class="help-text">
+              Compare Traces shows a side-by-side diff of two trace executions
+              through the same pipeline. Use it to verify that a code change
+              produced the expected result or to pinpoint where behavior
+              diverged.
+            </p>
+            <p class="help-text"><strong>Summary bar</strong></p>
+            <ul class="help-list">
+              <li>
+                <strong>X of Y events differ</strong> — how many events changed
+                between the before and after traces out of the total.
+              </li>
+              <li>
+                <strong>Before / After duration</strong> — total pipeline
+                execution time for each trace in milliseconds.
+              </li>
+              <li>
+                <strong>Duration delta</strong> — the speed difference (e.g.
+                "−300ms faster" or "+50ms slower"), highlighted green for faster
+                and red for slower.
+              </li>
+            </ul>
+            <p class="help-text"><strong>Filters</strong></p>
+            <ul class="help-list">
+              <li>
+                <strong>Diffs Only</strong> — hide matching events and show only
+                the ones that changed between traces.
+              </li>
+              <li>
+                <strong>Category buttons</strong> (lifecycle, controller, etc.)
+                — show only events belonging to that category.
+              </li>
+              <li>
+                <strong>state</strong> — show only events that carry a state
+                snapshot, useful for isolating state transitions.
+              </li>
+            </ul>
+          </section>
+        }
         @if (showCompareTraces() && compareTotalEvents() > 0) {
           <div class="compare-grid">
             <div class="compare-summary-group">

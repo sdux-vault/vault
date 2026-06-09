@@ -1,0 +1,50 @@
+@use 'global' as global;
+
+:host {
+  display: inline-flex;
+}
+
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-xs;
+}
+
+.zoom-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid global.$sdux-surface-outline;
+  border-radius: global.$border-radius-xs;
+  background: transparent;
+  color: var(--sdux-text-secondary);
+  cursor: pointer;
+  transition: color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    color: var(--sdux-text-primary);
+    border-color: var(--sdux-text-secondary);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  mat-icon {
+    font-size: global.$font-size-md;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.zoom-label {
+  font-family: global.$sdux-code-font;
+  font-size: global.$font-size-xs;
+  color: var(--sdux-text-secondary);
+  min-width: 36px;
+  text-align: center;
+}

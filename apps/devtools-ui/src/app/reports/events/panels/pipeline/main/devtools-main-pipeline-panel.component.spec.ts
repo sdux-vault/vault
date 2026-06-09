@@ -97,4 +97,48 @@ describe('Component: DevtoolsPanel', () => {
   it('should have no selected event by default', () => {
     expect(component.selectedEvent()).toBeNull();
   });
+
+  describe('itemSize', () => {
+    it('should set itemSize based on viewport width', () => {
+      const mql = window.matchMedia('(max-width: 768px)');
+      const expected = mql.matches ? 92 : 40;
+      expect(component.itemSize()).toBe(expected);
+    });
+
+    it('should set 92 when media query matches mobile', () => {
+      const listeners: ((e: MediaQueryListEvent) => void)[] = [];
+      spyOn(window, 'matchMedia').and.returnValue({
+        matches: true,
+        addEventListener: (_: string, fn: (e: MediaQueryListEvent) => void) =>
+          listeners.push(fn),
+        removeEventListener: () => {}
+      } as unknown as MediaQueryList);
+
+      const f2 = TestBed.createComponent(DevtoolsMainPipelinePanelComponent);
+      f2.componentRef.setInput('events', [mockEvent]);
+      f2.detectChanges();
+      expect(f2.componentInstance.itemSize()).toBe(92);
+    });
+
+    it('should set 40 when media query does not match', () => {
+      const listeners: ((e: MediaQueryListEvent) => void)[] = [];
+      spyOn(window, 'matchMedia').and.returnValue({
+        matches: false,
+        addEventListener: (_: string, fn: (e: MediaQueryListEvent) => void) =>
+          listeners.push(fn),
+        removeEventListener: () => {}
+      } as unknown as MediaQueryList);
+
+      const f2 = TestBed.createComponent(DevtoolsMainPipelinePanelComponent);
+      f2.componentRef.setInput('events', [mockEvent]);
+      f2.detectChanges();
+      expect(f2.componentInstance.itemSize()).toBe(40);
+
+      listeners[0]({ matches: true } as MediaQueryListEvent);
+      expect(f2.componentInstance.itemSize()).toBe(92);
+
+      listeners[0]({ matches: false } as MediaQueryListEvent);
+      expect(f2.componentInstance.itemSize()).toBe(40);
+    });
+  });
 });

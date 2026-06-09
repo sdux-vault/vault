@@ -5,9 +5,10 @@ import {
   inject,
   signal
 } from '@angular/core';
-import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CompareTraceService } from '../compare-trace.service';
+import { TimelineViewModeSelectComponent } from '../timeline-view-mode-select/timeline-view-mode-select.component';
+import { TimelineZoomControlComponent } from '../timeline-zoom-control/timeline-zoom-control.component';
 
 /**
  * Describes a horizontal span for a single category on a
@@ -40,7 +41,11 @@ export interface TimelineSpanShape {
 @Component({
   selector: 'sdux-compare-timeline-spans',
   standalone: true,
-  imports: [MatTooltipModule, MatSelectModule],
+  imports: [
+    MatTooltipModule,
+    TimelineViewModeSelectComponent,
+    TimelineZoomControlComponent
+  ],
   templateUrl: './compare-timeline-spans.component.html',
   styleUrl: './compare-timeline-spans.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -49,8 +54,8 @@ export class CompareTimelineSpansComponent {
   /** Injected comparison service. */
   readonly #compare = inject(CompareTraceService);
 
-  /** Active timeline view mode (shared with service). */
-  readonly viewMode = this.#compare.timelineViewMode;
+  /** Whether the help section is visible. */
+  readonly showHelp = signal(false);
 
   /** Whether the timeline section is expanded. */
   readonly showTimeline = signal(true);
@@ -84,6 +89,24 @@ export class CompareTimelineSpansComponent {
 
   /** Maximum duration across both traces. */
   readonly maxDuration = this.#compare.timelineMaxDuration;
+
+  /** Zoom multiplier for track width. */
+  readonly zoom = this.#compare.timelineZoom;
+
+  /** Tick interval in ms (zoom-aware). */
+  readonly tickInterval = this.#compare.timelineTickInterval;
+
+  /** Tick line interval for the "before" track (per-trace duration). */
+  readonly beforeTickPercent = computed(() => {
+    const interval = this.tickInterval();
+    return (interval / Math.max(this.beforeDuration(), 1)) * 100;
+  });
+
+  /** Tick line interval for the "after" track (per-trace duration). */
+  readonly afterTickPercent = computed(() => {
+    const interval = this.tickInterval();
+    return (interval / Math.max(this.afterDuration(), 1)) * 100;
+  });
 
   /** Percentage change between before and after durations. */
   readonly percentChange = computed(() => {
@@ -119,4 +142,18 @@ export class CompareTimelineSpansComponent {
     const width = span.endPosition - span.startPosition;
     return Math.max(width, 1);
   }
+
+  /** Tick marks at zoom-aware intervals (drops last if too close to end). */
+  readonly tickMarks = computed(() => {
+    const max = this.maxDuration();
+    const interval = this.tickInterval();
+    const marks: { ms: number; position: number }[] = [];
+    for (let ms = interval; ms < max; ms += interval) {
+      marks.push({ ms, position: (ms / max) * 100 });
+    }
+    if (marks.length && marks[marks.length - 1].position > 95) {
+      marks.pop();
+    }
+    return marks;
+  });
 }

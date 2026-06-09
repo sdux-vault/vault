@@ -1,7 +1,17 @@
 @use 'global' as global;
+@use '../../scss/reports-common';
 
 :host {
   display: block;
+}
+
+.report-page .view-toggle {
+  margin-left: auto;
+  width: 170px;
+
+  .toggle-btn {
+    width: 85px;
+  }
 }
 
 .tab-description {
@@ -14,43 +24,24 @@
   line-height: 1.4;
 }
 
-.view-toggle {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0;
-  margin-bottom: global.$spacing-sm;
+@media (max-width: global.$breakpoint-md) {
+  .tab-description {
+    display: none;
+  }
 
-  .toggle-btn {
-    background: transparent;
-    border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 15%));
-    color: var(--sdux-text-secondary);
-    padding: global.$spacing-xs global.$spacing-md;
-    font-size: global.$font-size-xs;
-    cursor: pointer;
-
-    &:first-child {
-      border-radius: global.$border-radius-sm 0 0 global.$border-radius-sm;
-    }
-
-    &:last-child {
-      border-radius: 0 global.$border-radius-sm global.$border-radius-sm 0;
-      border-left: none;
-    }
-
-    &.toggle-active {
-      background: var(--sdux-primary, #{global.$sdux-primary-base});
-      color: var(--sdux-text-primary);
-      border-color: var(--sdux-primary, #{global.$sdux-primary-base});
-    }
+  .report-page .view-toggle {
+    margin-top: global.$spacing-sm;
   }
 }
 
 .ranking-section {
   padding-top: global.$spacing-md;
+  overflow-x: auto;
 }
 
 .ranking-table {
   width: 100%;
+  min-width: 500px;
   border-collapse: collapse;
   font-size: global.$font-size-xs;
   font-family: monospace;

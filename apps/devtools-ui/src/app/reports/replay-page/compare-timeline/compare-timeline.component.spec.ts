@@ -30,7 +30,10 @@ import {
     {
       provide: CompareTraceService,
       useFactory: () => ({
-        timelineViewMode: signal('category-overview')
+        timelineViewMode: signal('category-overview'),
+        timelineZoom: signal(1),
+        timelineTickPercent: signal(20),
+        timelineTickInterval: signal(100)
       })
     }
   ]
@@ -346,7 +349,7 @@ describe('CompareTimelineComponent', () => {
 
   describe('categoryCount and eventCount', () => {
     it('should show category count in stats', () => {
-      const stats = el.querySelector('.timeline-stats')!.textContent;
+      const stats = el.querySelector('.timeline-toolbar')!.textContent;
       expect(stats).toContain('2 categories');
     });
 
@@ -354,12 +357,12 @@ describe('CompareTimelineComponent', () => {
       const service = fixture.debugElement.injector.get(CompareTraceService);
       (service.timelineViewMode as WritableSignal<string>).set('all-events');
       fixture.detectChanges();
-      const stats = el.querySelector('.timeline-stats')!.textContent;
+      const stats = el.querySelector('.timeline-toolbar')!.textContent;
       expect(stats).toContain('events');
     });
 
     it('should not show event count in category-overview mode', () => {
-      const stats = el.querySelector('.timeline-stats')!.textContent;
+      const stats = el.querySelector('.timeline-toolbar')!.textContent;
       expect(stats).not.toContain('events');
     });
   });
@@ -371,6 +374,37 @@ describe('CompareTimelineComponent', () => {
       fixture.detectChanges();
       const beforeTrack = el.querySelector('.before-track') as HTMLElement;
       expect(beforeTrack.style.width).toBe('0%');
+    });
+  });
+
+  describe('showHelp', () => {
+    it('should default to false', () => {
+      const component = fixture.debugElement.children[0].componentInstance;
+      expect(component.showHelp()).toBeFalse();
+    });
+
+    it('should toggle to true', () => {
+      const component = fixture.debugElement.children[0].componentInstance;
+      component.showHelp.set(true);
+      expect(component.showHelp()).toBeTrue();
+    });
+  });
+
+  describe('tickMarks', () => {
+    it('should generate marks at tick interval', () => {
+      const component = fixture.debugElement.children[0].componentInstance;
+      const marks = component.tickMarks();
+      expect(marks.length).toBeGreaterThan(0);
+      expect(marks[0].ms).toBe(100);
+    });
+
+    it('should drop last mark when too close to end', () => {
+      host.beforeDuration.set(105);
+      host.afterDuration.set(50);
+      fixture.detectChanges();
+      const component = fixture.debugElement.children[0].componentInstance;
+      const marks = component.tickMarks();
+      expect(marks.length).toBe(0);
     });
   });
 });

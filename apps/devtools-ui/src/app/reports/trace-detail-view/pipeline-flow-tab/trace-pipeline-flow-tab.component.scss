@@ -25,3 +25,9 @@
   color: var(--sdux-text-secondary);
   font-size: global.$font-size-sm;
 }
+
+@media (max-width: global.$breakpoint-md) {
+  .tab-description {
+    display: none;
+  }
+}

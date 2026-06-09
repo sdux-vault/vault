@@ -14,6 +14,12 @@
   line-height: 1.4;
 }
 
+@media (max-width: global.$breakpoint-md) {
+  .tab-description {
+    display: none;
+  }
+}
+
 .waterfall-section {
   padding-top: global.$spacing-md;
 }

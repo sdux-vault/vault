@@ -1,0 +1,20 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+
+  .cell-filter {
+    width: 230px;
+    font-size: global.$font-size-md;
+  }
+
+  .mat-mdc-option {
+    white-space: nowrap;
+  }
+
+  @media (width <= global.$breakpoint-md) {
+    .cell-filter {
+      width: 180px;
+    }
+  }
+}

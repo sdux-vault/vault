@@ -6,9 +6,10 @@ import {
   input,
   signal
 } from '@angular/core';
-import { MatOption, MatSelect } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CompareTraceService } from '../compare-trace.service';
+import { TimelineViewModeSelectComponent } from '../timeline-view-mode-select/timeline-view-mode-select.component';
+import { TimelineZoomControlComponent } from '../timeline-zoom-control/timeline-zoom-control.component';
 
 /**
  * Describes the position and identity of a single category marker
@@ -32,7 +33,11 @@ export interface TimelineMarkerShape {
 @Component({
   selector: 'sdux-compare-timeline',
   standalone: true,
-  imports: [MatTooltipModule, MatSelect, MatOption],
+  imports: [
+    MatTooltipModule,
+    TimelineViewModeSelectComponent,
+    TimelineZoomControlComponent
+  ],
   templateUrl: './compare-timeline.component.html',
   styleUrl: './compare-timeline.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -40,6 +45,9 @@ export interface TimelineMarkerShape {
 export class CompareTimelineComponent {
   /** Injected comparison service for shared view mode. */
   readonly #compare = inject(CompareTraceService);
+
+  /** Whether the help section is visible. */
+  readonly showHelp = signal(false);
 
   /** Label for the "before" trace row. */
   readonly beforeLabel = input.required<string>();
@@ -89,6 +97,31 @@ export class CompareTimelineComponent {
   /** Active timeline view mode (shared with service). */
   readonly viewMode = this.#compare.timelineViewMode;
 
+  /** Display label for the current view mode. */
+  readonly viewModeLabel = computed(() => {
+    switch (this.viewMode()) {
+      case 'all-events':
+        return 'All Events';
+      case 'diff-only':
+        return 'Diff-Only Events';
+      case 'state-only':
+        return 'State Events Only';
+      case 'category-filtered':
+        return 'Category Filtered';
+      default:
+        return 'Category Overview';
+    }
+  });
+
+  /** Zoom multiplier for track width. */
+  readonly zoom = this.#compare.timelineZoom;
+
+  /** Tick line interval as a percentage. */
+  readonly tickPercent = this.#compare.timelineTickPercent;
+
+  /** Tick interval in ms (zoom-aware). */
+  readonly tickInterval = this.#compare.timelineTickInterval;
+
   /** Markers to display for the "before" track based on view mode. */
   readonly displayBeforeMarkers = computed(() => {
     const mode = this.viewMode();
@@ -133,6 +166,22 @@ export class CompareTimelineComponent {
       : (this.afterDuration() / this.maxDuration()) * 100
   );
 
+  /** Tick line interval percentage for the "before" track. */
+  readonly beforeTickPercent = computed(() => {
+    const interval = this.tickInterval();
+    return this.isPerTraceScale()
+      ? (interval / Math.max(this.beforeDuration(), 1)) * 100
+      : (interval / this.maxDuration()) * 100;
+  });
+
+  /** Tick line interval percentage for the "after" track. */
+  readonly afterTickPercent = computed(() => {
+    const interval = this.tickInterval();
+    return this.isPerTraceScale()
+      ? (interval / Math.max(this.afterDuration(), 1)) * 100
+      : (interval / this.maxDuration()) * 100;
+  });
+
   /** Duration delta label between the two traces. */
   readonly durationDelta = computed(() => {
     const before = this.beforeDuration();
@@ -167,4 +216,18 @@ export class CompareTimelineComponent {
   readonly eventCount = computed(
     () => this.displayBeforeMarkers().length + this.displayAfterMarkers().length
   );
+
+  /** Tick marks at zoom-aware intervals (drops last if too close to end). */
+  readonly tickMarks = computed(() => {
+    const max = this.maxDuration();
+    const interval = this.tickInterval();
+    const marks: { ms: number; position: number }[] = [];
+    for (let ms = interval; ms < max; ms += interval) {
+      marks.push({ ms, position: (ms / max) * 100 });
+    }
+    if (marks.length && marks[marks.length - 1].position > 95) {
+      marks.pop();
+    }
+    return marks;
+  });
 }

@@ -60,7 +60,11 @@ describe('CompareTimelineDeltaComponent', () => {
             compareBeforeDuration: signal(500),
             compareAfterDuration: signal(200),
             compareDurationDelta: signal('-300ms faster'),
-            timelineDeltaMarkers: signal(mockMarkers)
+            timelineDeltaMarkers: signal(mockMarkers),
+            timelineMaxDuration: signal(500),
+            timelineZoom: signal(1),
+            timelineTickPercent: signal(20),
+            timelineTickInterval: signal(100)
           }
         }
       ]
@@ -82,30 +86,19 @@ describe('CompareTimelineDeltaComponent', () => {
   });
 
   it('should display before and after durations in stats', () => {
-    const stats = el.querySelector('.timeline-stats')!.textContent;
+    const stats = el.querySelector('.timeline-toolbar')!.textContent;
     expect(stats).toContain('Before: 500ms');
     expect(stats).toContain('After: 200ms');
   });
 
-  it('should display duration delta', () => {
-    const delta = el.querySelector('.summary-delta');
-    expect(delta!.textContent).toContain('faster');
-  });
-
-  it('should display percent change', () => {
-    const deltas = el.querySelectorAll('.summary-delta');
-    const texts = Array.from(deltas).map((d) => d.textContent!.trim());
-    expect(texts.some((t) => t.includes('↓') && t.includes('%'))).toBeTrue();
-  });
-
   it('should display faster and slower counts', () => {
-    const stats = el.querySelector('.timeline-stats')!.textContent;
+    const stats = el.querySelector('.timeline-toolbar')!.textContent;
     expect(stats).toContain('1 faster');
     expect(stats).toContain('1 slower');
   });
 
   it('should display same count when greater than zero', () => {
-    const stats = el.querySelector('.timeline-stats')!.textContent;
+    const stats = el.querySelector('.timeline-toolbar')!.textContent;
     expect(stats).toContain('1 same');
   });
 
@@ -115,10 +108,10 @@ describe('CompareTimelineDeltaComponent', () => {
     expect(legend).toContain('t2 faster than t1');
   });
 
-  it('should display timeline label with both trace names', () => {
-    const label = el.querySelector('.timeline-label');
-    expect(label!.textContent).toContain('t1');
-    expect(label!.textContent).toContain('t2');
+  it('should display y-axis scale labels', () => {
+    const yAxis = el.querySelector('.delta-y-axis');
+    expect(yAxis).toBeTruthy();
+    expect(yAxis!.textContent).toContain('+30ms');
   });
 
   it('should render delta markers', () => {
@@ -143,8 +136,8 @@ describe('CompareTimelineDeltaComponent', () => {
     expect(markers[2].classList).toContain('same');
   });
 
-  it('should display max absolute delta in scale', () => {
-    const scale = el.querySelector('.delta-scale')!.textContent;
+  it('should display delta scale on y-axis', () => {
+    const scale = el.querySelector('.delta-y-axis')!.textContent;
     expect(scale).toContain('+30ms');
     expect(scale).toContain('-30ms');
     expect(scale).toContain('0ms');
@@ -275,8 +268,65 @@ describe('CompareTimelineDeltaComponent', () => {
         >
       ).set([mockMarkers[0], mockMarkers[1]]);
       fixture.detectChanges();
-      const stats = el.querySelector('.timeline-stats')!.textContent;
+      const stats = el.querySelector('.timeline-toolbar')!.textContent;
       expect(stats).not.toContain('same');
+    });
+  });
+
+  describe('showHelp', () => {
+    it('should default to false', () => {
+      expect(component.showHelp()).toBeFalse();
+    });
+
+    it('should toggle to true', () => {
+      component.showHelp.set(true);
+      fixture.detectChanges();
+      expect(el.querySelector('.help-section')).toBeTruthy();
+    });
+  });
+
+  describe('markerCount', () => {
+    it('should return total marker count', () => {
+      expect(component.markerCount()).toBe(3);
+    });
+  });
+
+  describe('tickMarks', () => {
+    it('should generate marks at tick interval', () => {
+      const marks = component.tickMarks();
+      expect(marks.length).toBeGreaterThan(0);
+      expect(marks[0].ms).toBe(100);
+      expect(marks[0].position).toBe(20);
+    });
+
+    it('should drop last mark when too close to end', () => {
+      const service = TestBed.inject(CompareTraceService);
+      (service.timelineMaxDuration as ReturnType<typeof signal<number>>).set(
+        105
+      );
+      const marks = component.tickMarks();
+      expect(marks.length).toBe(0);
+    });
+
+    it('should keep last mark when not too close to end', () => {
+      const service = TestBed.inject(CompareTraceService);
+      (service.timelineMaxDuration as ReturnType<typeof signal<number>>).set(
+        1000
+      );
+      const marks = component.tickMarks();
+      const lastMark = marks[marks.length - 1];
+      expect(lastMark.ms).toBe(900);
+      expect(lastMark.position).toBe(90);
+    });
+
+    it('should use zoom-aware interval', () => {
+      const service = TestBed.inject(CompareTraceService);
+      (service.timelineTickInterval as ReturnType<typeof signal<number>>).set(
+        50
+      );
+      const marks = component.tickMarks();
+      expect(marks[0].ms).toBe(50);
+      expect(marks[1].ms).toBe(100);
     });
   });
 });

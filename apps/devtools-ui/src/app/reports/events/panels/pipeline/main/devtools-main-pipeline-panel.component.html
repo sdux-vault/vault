@@ -2,7 +2,7 @@
   <section class="event-stream">
     @if (reversedEvents()) {
       <cdk-virtual-scroll-viewport
-        itemSize="52"
+        [itemSize]="itemSize()"
         class="event-list"
         role="log"
         aria-label="Pipeline events">
