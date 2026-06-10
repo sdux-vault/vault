@@ -1,6 +1,99 @@
 @use 'global' as global;
 @use '../scss/reports-common';
 
+.title-group {
+  display: flex;
+  align-items: center;
+}
+
+.help-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: global.$spacing-xs;
+  margin-left: global.$spacing-sm;
+  display: flex;
+  align-items: center;
+}
+
+.help-icon {
+  width: global.$font-size-sm;
+  height: global.$font-size-sm;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.registry-header-actions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: global.$spacing-xs;
+
+  .section-chevron {
+    margin-left: 0;
+  }
+}
+
+.registry-search {
+  display: flex;
+  align-items: center;
+  background-color: global.$sdux-surface-dark;
+  border: 1px solid global.$sdux-surface-outline;
+  border-radius: global.$border-radius-sm;
+  overflow: hidden;
+
+  .registry-search-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: global.$sdux-text-white;
+    font-size: global.$font-size-sm;
+    padding: global.$spacing-xs global.$spacing-sm;
+    width: 120px;
+
+    &::placeholder {
+      color: global.$sdux-text-secondary;
+    }
+  }
+
+  .registry-search-btn {
+    @include global.sdux-icon-button(26px, transparent);
+    color: global.$sdux-primary-light;
+    flex-shrink: 0;
+
+    mat-icon {
+      font-size: global.$font-size-md;
+      width: global.$font-size-md;
+      height: global.$font-size-md;
+    }
+
+    &:hover {
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
+    }
+  }
+}
+
+.help-section {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-sm;
+  padding: global.$spacing-md;
+  background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+  border-radius: global.$border-radius-sm;
+  border: 1px solid global.$sdux-surface-outline;
+}
+
+.help-text {
+  margin: 0;
+  font-size: global.$font-size-sm;
+  color: var(--sdux-text-secondary);
+  line-height: 1.5;
+}
+
 .collapsible {
   cursor: pointer;
   user-select: none;
@@ -62,12 +155,19 @@
         min-height: 0;
         display: flex;
         flex-direction: column;
+        gap: global.$spacing-sm;
+
+        .registry-header {
+          display: flex;
+          align-items: center;
+        }
       }
 
       .section-title {
         @include global.sdux-text(global.$sdux-text-primary);
-        font-size: global.$font-size-md;
-        margin: 0 0 global.$spacing-sm;
+        font-size: global.$font-size-sm;
+        font-weight: global.$font-weight-bold;
+        margin: 0;
       }
     }
 
@@ -123,8 +223,10 @@
     }
 
     .cell-card {
-      width: 265px;
-      min-height: 165px;
+      flex: 0 0 300px;
+      max-width: 300px;
+      min-height: 145px;
+      border: 1px solid blue;
       display: flex;
       flex-direction: column;
       background: global.$sdux-surface-mid;
@@ -159,12 +261,33 @@
       }
 
       .cell-card-body {
-        min-height: 75px;
+        display: flex;
+        flex-direction: column;
+        gap: global.$spacing-sm;
+      }
+
+      .cell-card-row-top {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         gap: global.$spacing-sm;
-        padding-bottom: global.$spacing-sm;
-        border-bottom: 1px solid global.$sdux-surface-outline;
+        min-height: 70px;
+
+        .cell-card-stat {
+          height: 60px;
+        }
+      }
+
+      .cell-card-row-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: global.$spacing-sm;
+        min-height: 50px;
+
+        .cell-card-stat {
+          height: 40px;
+        }
       }
 
       .cell-card-stat {
@@ -313,10 +436,25 @@
 }
 
 @media (max-width: global.$breakpoint-md) {
-  .report-page {
-    .registry-body {
-      flex-direction: column;
+  .registry-header {
+    flex-wrap: wrap;
 
+    .section-title,
+    .help-toggle {
+      order: 0;
+    }
+
+    .registry-header-actions {
+      order: 1;
+      width: 100%;
+      justify-content: flex-end;
+      margin-left: 0;
+      margin-top: global.$spacing-xs;
+    }
+  }
+
+  .report-page {
+    .registry-section {
       &:has(.detail-pane) .cell-cards {
         display: none;
       }
@@ -327,6 +465,8 @@
       overflow-y: auto;
 
       .cell-card {
+        flex: 1 1 auto;
+        max-width: none;
         width: 100%;
       }
     }

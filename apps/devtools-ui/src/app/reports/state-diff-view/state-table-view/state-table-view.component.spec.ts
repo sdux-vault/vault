@@ -185,4 +185,33 @@ describe('StateTableViewComponent', () => {
     expect(component.formatCell(true)).toBe('true');
     expect(component.formatCell({ a: 1 })).toBe('{"a":1}');
   });
+
+  it('should filter unchanged rows when showChangedOnly is true', () => {
+    const before = createSnapshot([
+      { id: 1, name: 'Luke' },
+      { id: 2, name: 'Leia' }
+    ]);
+    const after = createSnapshot([
+      { id: 1, name: 'Luke' },
+      { id: 2, name: 'Leia Organa' }
+    ]);
+    fixture = TestBed.createComponent(StateTableViewComponent);
+    fixture.componentRef.setInput('beforeLabel', before.label);
+    fixture.componentRef.setInput('beforeValue', before.value);
+    fixture.componentRef.setInput('afterLabel', after.label);
+    fixture.componentRef.setInput('afterValue', after.value);
+    fixture.componentRef.setInput('showChangedOnly', true);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const diff = component.tableDiff();
+    const unchangedBefore = diff.beforeRows.filter(
+      (r) => r.status === 'unchanged'
+    );
+    const unchangedAfter = diff.afterRows.filter(
+      (r) => r.status === 'unchanged'
+    );
+    expect(unchangedBefore.length).toBe(0);
+    expect(unchangedAfter.length).toBe(0);
+  });
 });

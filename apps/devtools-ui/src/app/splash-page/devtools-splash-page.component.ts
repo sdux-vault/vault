@@ -6,7 +6,7 @@ import {
   InjectionToken
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CellDashboardComponent } from '../reports/cell-dashboard/cell-dashboard.component';
+import { VaultOverviewComponent } from '../reports/vault-overview/vault-overview.component';
 import { DevtoolsAggregateService } from '../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../services/devtools-logging.service';
 import { DevtoolsRegistryService } from '../services/registry/devtools-registry.service';
@@ -47,9 +47,12 @@ export const EXTENSION_VERSION = new InjectionToken<string>(
 @Component({
   selector: 'sdux-devtools-splash-page',
   standalone: true,
-  imports: [MatTooltipModule, CellDashboardComponent],
+  imports: [MatTooltipModule, VaultOverviewComponent],
   templateUrl: './devtools-splash-page.component.html',
-  styleUrl: './devtools-splash-page.component.scss',
+  styleUrls: [
+    '../reports/scss/reports-common.scss',
+    './devtools-splash-page.component.scss'
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DevToolsSplashPageComponent {

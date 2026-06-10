@@ -51,10 +51,162 @@ describe('Component: DumpFilePicker', () => {
     expect(input.getAttribute('accept')).toBe('.json');
   });
 
-  it('should render the Choose Dump File button', () => {
+  it('should render the Choose Dump File button when showButton is true', () => {
+    fixture.componentRef.setInput('showButton', true);
+    fixture.detectChanges();
     const button = fixture.nativeElement.querySelector('.sdux-button');
     expect(button).toBeTruthy();
     expect(button.textContent).toContain('Import Dump File');
+  });
+
+  it('should not render the button by default', () => {
+    const button = fixture.nativeElement.querySelector('.sdux-button');
+    expect(button).toBeNull();
+  });
+
+  it('should render the dropzone', () => {
+    const dropzone = fixture.nativeElement.querySelector('.dropzone');
+    expect(dropzone).toBeTruthy();
+    expect(dropzone.textContent).toContain('Drop .json dump file here');
+    expect(dropzone.textContent).toContain('or click to browse');
+  });
+
+  it('should set dropzone-active class on dragover', () => {
+    const dropzone = fixture.nativeElement.querySelector('.dropzone');
+    const dragEvent = new Event('dragover', { bubbles: true });
+    Object.defineProperty(dragEvent, 'preventDefault', {
+      value: jasmine.createSpy('preventDefault')
+    });
+    Object.defineProperty(dragEvent, 'stopPropagation', {
+      value: jasmine.createSpy('stopPropagation')
+    });
+
+    dropzone.dispatchEvent(dragEvent);
+    fixture.detectChanges();
+
+    expect(dropzone.classList).toContain('dropzone-active');
+  });
+
+  it('should remove dropzone-active class on dragleave', () => {
+    component.isDragOver.set(true);
+    fixture.detectChanges();
+
+    const dropzone = fixture.nativeElement.querySelector('.dropzone');
+    dropzone.dispatchEvent(new Event('dragleave', { bubbles: true }));
+    fixture.detectChanges();
+
+    expect(dropzone.classList).not.toContain('dropzone-active');
+  });
+
+  it('should show error when dropping a non-JSON file', () => {
+    const dropzone = fixture.nativeElement.querySelector('.dropzone');
+    const file = new File(['hello'], 'test.txt', { type: 'text/plain' });
+    const dropEvent = new Event('drop', { bubbles: true }) as DragEvent;
+    Object.defineProperty(dropEvent, 'preventDefault', {
+      value: jasmine.createSpy('preventDefault')
+    });
+    Object.defineProperty(dropEvent, 'stopPropagation', {
+      value: jasmine.createSpy('stopPropagation')
+    });
+    Object.defineProperty(dropEvent, 'dataTransfer', {
+      value: { files: [file] }
+    });
+
+    dropzone.dispatchEvent(dropEvent);
+    fixture.detectChanges();
+
+    expect(component.errorMessage()).toContain('Only .json files are accepted');
+  });
+
+  it('should process dropped JSON file', () => {
+    const dump = JSON.stringify({
+      events: [
+        {
+          id: 'e1',
+          cell: 'test-cell',
+          behaviorKey: 'vault-conductor',
+          name: 'conductor:start:attempt',
+          timestamp: 1000,
+          type: 'conductor',
+          boundary: 'start',
+          traceId: 'trace-1'
+        }
+      ]
+    });
+    const file = new File([dump], 'drop-test.json', {
+      type: 'application/json'
+    });
+    const dropEvent = new Event('drop', { bubbles: true }) as DragEvent;
+    Object.defineProperty(dropEvent, 'preventDefault', {
+      value: jasmine.createSpy('preventDefault')
+    });
+    Object.defineProperty(dropEvent, 'stopPropagation', {
+      value: jasmine.createSpy('stopPropagation')
+    });
+    Object.defineProperty(dropEvent, 'dataTransfer', {
+      value: { files: [file] }
+    });
+
+    const dropzone = fixture.nativeElement.querySelector('.dropzone');
+    dropzone.dispatchEvent(dropEvent);
+
+    expect(mockConfirmDialog.confirm).toHaveBeenCalled();
+
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        fixture.detectChanges();
+        resolve();
+      }, 50);
+    });
+  });
+
+  it('should do nothing when drop has no files', () => {
+    const dropEvent = new Event('drop', { bubbles: true }) as DragEvent;
+    Object.defineProperty(dropEvent, 'preventDefault', {
+      value: jasmine.createSpy('preventDefault')
+    });
+    Object.defineProperty(dropEvent, 'stopPropagation', {
+      value: jasmine.createSpy('stopPropagation')
+    });
+    Object.defineProperty(dropEvent, 'dataTransfer', { value: { files: [] } });
+
+    const dropzone = fixture.nativeElement.querySelector('.dropzone');
+    dropzone.dispatchEvent(dropEvent);
+
+    expect(mockConfirmDialog.confirm).not.toHaveBeenCalled();
+  });
+
+  it('should display file size after loading a file', () => {
+    const dump = JSON.stringify({
+      events: [
+        {
+          id: 'e1',
+          cell: 'test-cell',
+          behaviorKey: 'vault-conductor',
+          name: 'conductor:start:attempt',
+          timestamp: 1000,
+          type: 'conductor',
+          boundary: 'start',
+          traceId: 'trace-1'
+        }
+      ]
+    });
+    const file = new File([dump], 'size-test.json', {
+      type: 'application/json'
+    });
+    const event = { target: { files: [file] } } as unknown as Event;
+
+    component.onFileSelected(event);
+
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        fixture.detectChanges();
+        const sizeEl = fixture.nativeElement.querySelector('.file-size');
+        expect(sizeEl).toBeTruthy();
+        expect(sizeEl.textContent).toMatch(/\d+(\.\d+)?\s*(B|KB|MB)/);
+        resolve();
+      }, 50);
+    });
   });
 
   it('should not show error message initially', () => {
@@ -319,6 +471,72 @@ describe('Component: DumpFilePicker', () => {
           fileName: 'sdux-traces-123.json',
           eventCount: 2
         });
+        resolve();
+      }, 50);
+    });
+  });
+
+  it('should format file size as KB for files >= 1024 bytes', () => {
+    const padding = 'x'.repeat(2048);
+    const dump = JSON.stringify({
+      events: [
+        {
+          id: 'e1',
+          cell: 'test-cell',
+          behaviorKey: 'vault-conductor',
+          name: 'conductor:start:attempt',
+          timestamp: 1000,
+          type: 'conductor',
+          boundary: 'start',
+          traceId: 'trace-1',
+          padding
+        }
+      ]
+    });
+    const file = new File([dump], 'kb-test.json', {
+      type: 'application/json'
+    });
+    const event = { target: { files: [file] } } as unknown as Event;
+
+    component.onFileSelected(event);
+
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        fixture.detectChanges();
+        expect(component.fileSize()).toMatch(/\d+\.\d+\s*KB/);
+        resolve();
+      }, 50);
+    });
+  });
+
+  it('should format file size as MB for files >= 1048576 bytes', () => {
+    const padding = 'x'.repeat(1_100_000);
+    const dump = JSON.stringify({
+      events: [
+        {
+          id: 'e1',
+          cell: 'test-cell',
+          behaviorKey: 'vault-conductor',
+          name: 'conductor:start:attempt',
+          timestamp: 1000,
+          type: 'conductor',
+          boundary: 'start',
+          traceId: 'trace-1',
+          padding
+        }
+      ]
+    });
+    const file = new File([dump], 'mb-test.json', {
+      type: 'application/json'
+    });
+    const event = { target: { files: [file] } } as unknown as Event;
+
+    component.onFileSelected(event);
+
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        fixture.detectChanges();
+        expect(component.fileSize()).toMatch(/\d+\.\d+\s*MB/);
         resolve();
       }, 50);
     });

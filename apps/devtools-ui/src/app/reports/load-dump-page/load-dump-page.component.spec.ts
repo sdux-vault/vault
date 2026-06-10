@@ -70,7 +70,9 @@ describe('Component: LoadDumpPage', () => {
     component.onFileLoaded({ fileName: 'dump.json', eventCount: 10 });
     fixture.detectChanges();
 
-    const btn = fixture.nativeElement.querySelector('.navigate-button');
+    const btn = fixture.nativeElement.querySelector(
+      '.success-section .sdux-button'
+    );
     expect(btn).toBeTruthy();
     expect(btn.textContent).toContain('Trace Detail');
   });
@@ -89,7 +91,9 @@ describe('Component: LoadDumpPage', () => {
     component.onFileLoaded({ fileName: 'dump.json', eventCount: 5 });
     fixture.detectChanges();
 
-    const btn = fixture.nativeElement.querySelector('.navigate-button');
+    const btn = fixture.nativeElement.querySelector(
+      '.success-section .sdux-button'
+    );
     btn.click();
     expect(router.navigate).toHaveBeenCalledWith(['/reports/trace-detail']);
   });

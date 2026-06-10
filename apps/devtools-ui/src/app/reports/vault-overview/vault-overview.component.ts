@@ -1,12 +1,20 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
+  DestroyRef,
   effect,
   inject,
+  OnInit,
   signal
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { TraceExecutionStatuses } from '../../shapes/trace';
 import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
 import { RegistryDetailComponent } from './registry-detail/registry-detail.component';
 
@@ -27,14 +35,40 @@ import { RegistryDetailComponent } from './registry-detail/registry-detail.compo
 @Component({
   selector: 'sdux-vault-overview',
   standalone: true,
-  imports: [MatTooltipModule, RegistryDetailComponent],
+  imports: [
+    FormsModule,
+    MatIconModule,
+    MatTooltipModule,
+    RegistryDetailComponent
+  ],
   templateUrl: './vault-overview.component.html',
   styleUrls: ['../scss/reports-common.scss', './vault-overview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VaultOverviewComponent {
+export class VaultOverviewComponent implements OnInit {
+  /** Whether the page-level help section is visible. */
+  readonly showHelp = signal(false);
+
+  /** Whether the registry help section is visible. */
+  readonly showRegistryHelp = signal(false);
+
+  /** Whether the registry cards section is expanded. */
+  readonly showRegistryCards = signal(true);
+
+  /** Current search term for filtering registry cells. */
+  readonly registrySearchTerm = signal('');
+
+  /** Subject driving debounced search updates. */
+  readonly registrySearchTerm$ = new Subject<string>();
+
+  /** Destroy ref for automatic subscription cleanup. */
+  readonly #destroyRef = inject(DestroyRef);
+
   /** Registry service providing Vault configuration data. */
   private readonly registryService = inject(DevtoolsRegistryService);
+
+  /** Aggregate service providing trace data per cell. */
+  readonly #aggregate = inject(DevtoolsAggregateService);
 
   /**
    * Sorted package-version entries derived from the registry service.
@@ -52,8 +86,63 @@ export class VaultOverviewComponent {
    */
   readonly registry = this.registryService.registry;
 
+  /**
+   * Debounced search term applied to the registry filter.
+   *
+   * Updated via the `registrySearchTerm$` subject after a 300 ms
+   * debounce window to avoid filtering on every keystroke.
+   */
+  readonly #appliedSearchTerm = signal('');
+
+  /**
+   * Registry entries filtered by the applied search term.
+   *
+   * Matches against the cell key (case-insensitive).
+   */
+  readonly filteredRegistry = computed(() => {
+    const term = this.#appliedSearchTerm().trim().toLowerCase();
+    const cells = this.registry();
+    if (!term) return cells;
+    return cells.filter((cell) => cell.key.toLowerCase().includes(term));
+  });
+
   /** Verified license payload from the registry service. */
   readonly license = this.registryService.license;
+
+  /**
+   * Per-cell trace statistics: trace count, average duration, and error count.
+   *
+   * @returns A map keyed by cell key containing trace count, average duration
+   *          in milliseconds, and error count for each registered cell.
+   */
+  readonly cellStats = computed(() => {
+    const cellMap = this.#aggregate.tracesByCellKey();
+    const stats = new Map<
+      string,
+      { traceCount: number; avgDuration: number; errorCount: number }
+    >();
+
+    for (const [cellKey, traces] of cellMap) {
+      const errorCount = traces.filter(
+        (t) =>
+          t.metrics.status === TraceExecutionStatuses.Failed ||
+          t.metrics.status === TraceExecutionStatuses.Orphaned
+      ).length;
+      const avgDuration =
+        traces.length > 0
+          ? traces.reduce((sum, t) => sum + t.metrics.duration, 0) /
+            traces.length
+          : 0;
+
+      stats.set(cellKey, {
+        traceCount: traces.length,
+        avgDuration,
+        errorCount
+      });
+    }
+
+    return stats;
+  });
 
   /**
    * Formats a license date value for display.
@@ -84,6 +173,26 @@ export class VaultOverviewComponent {
 
   /** Set of cell keys whose cards are collapsed. */
   readonly collapsedCells = signal(new Set<string>());
+
+  /**
+   * Subscribes to the debounced registry search term stream.
+   *
+   * Pipes `registrySearchTerm$` through a 300 ms debounce window and
+   * distinct-until-changed filter, updating `#appliedSearchTerm` on
+   * each emission. The subscription is torn down when the component
+   * is destroyed via {@link DestroyRef}.
+   */
+  ngOnInit(): void {
+    const destroy$ = new Subject<void>();
+    this.#destroyRef.onDestroy(() => {
+      destroy$.next();
+      destroy$.complete();
+    });
+
+    this.registrySearchTerm$
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(destroy$))
+      .subscribe((term) => this.#appliedSearchTerm.set(term));
+  }
 
   /**
    * Initializes mobile-responsive collapse state.
@@ -130,6 +239,12 @@ export class VaultOverviewComponent {
   /** Closes the detail panel by clearing the selection. */
   closeDetail(): void {
     this.selectedCell.set(null);
+  }
+
+  /** Clears the registry search filter. */
+  clearRegistrySearch(): void {
+    this.registrySearchTerm.set('');
+    this.#appliedSearchTerm.set('');
   }
 
   /**

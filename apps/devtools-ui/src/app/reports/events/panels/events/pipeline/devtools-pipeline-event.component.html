@@ -10,13 +10,13 @@
     (keydown.enter)="selectEvent.emit(event())"
     (keydown.space)="selectEvent.emit(event()); $event.preventDefault()">
     <div class="counter">
-      {{ totalEvents() | number: '3.0' }}
+      {{ totalEvents() }}
     </div>
 
     <div class="row-details">
       <div class="row-primary">
-        <!-- Cell name -->
-        <div class="cell">{{ event().cell }}</div>
+        <!-- Behavior key -->
+        <div class="cell">{{ displayKey() }}</div>
 
         <!-- Badge -->
         <div class="behavior-pills {{ event().type }}">

@@ -3,7 +3,8 @@ import {
   Component,
   computed,
   inject,
-  input
+  input,
+  output
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SnapshotDiffService } from '../../../services/snapshot-diff.service';
@@ -45,10 +46,37 @@ export class StateTableViewComponent {
   /** The "after" value for diff comparison. */
   readonly afterValue = input.required<unknown>();
 
-  /** Computed table diff result from the service. */
-  readonly tableDiff = computed(() =>
+  /** Whether to show only changed rows. */
+  readonly showChangedOnly = input(false);
+
+  /** Emits when the user toggles the changed-only filter. */
+  readonly toggleChangedOnly = output<void>();
+
+  /** Computed unfiltered table diff result from the service. */
+  readonly #rawDiff = computed(() =>
     this.#diffService.computeTableDiff(this.beforeValue(), this.afterValue())
   );
+
+  /** Whether the unfiltered diff has displayable data. */
+  readonly hasData = computed(() => {
+    const diff = this.#rawDiff();
+    return (
+      (diff.beforeRows.length > 0 || diff.afterRows.length > 0) &&
+      (diff.beforeColumns.length > 0 || diff.afterColumns.length > 0)
+    );
+  });
+
+  /** Computed table diff result, filtered when showChangedOnly is active. */
+  readonly tableDiff = computed(() => {
+    const diff = this.#rawDiff();
+    if (!this.showChangedOnly()) return diff;
+
+    return {
+      ...diff,
+      beforeRows: diff.beforeRows.filter((r) => r.status !== 'unchanged'),
+      afterRows: diff.afterRows.filter((r) => r.status !== 'unchanged')
+    };
+  });
 
   /** Formats a cell value for display. */
   formatCell(value: unknown): string {

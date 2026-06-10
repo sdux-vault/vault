@@ -5,6 +5,7 @@ import {
   WritableSignal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestScheduler } from 'rxjs/testing';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 import { EXTENSION_VERSION } from '../../splash-page/devtools-splash-page.component';
@@ -29,7 +30,7 @@ const mockEventWithError: any = {
   type: 'lifecycle',
   behaviorKey: 'vault-orchestrator',
   cell: 'alpha',
-  error: 'something went wrong'
+  error: { message: 'something went wrong' }
 };
 
 const mockEventWithState: any = {
@@ -90,8 +91,13 @@ describe('Component: Events', () => {
   let fixture: ComponentFixture<EventsComponent>;
   let component: EventsComponent;
   let mockService: MockNgVaultDevtoolsService;
+  let scheduler: TestScheduler;
 
   beforeEach(async () => {
+    scheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
+
     mockService = new MockNgVaultDevtoolsService();
 
     await TestBed.configureTestingModule({
@@ -132,16 +138,16 @@ describe('Component: Events', () => {
       fixture.detectChanges();
     });
 
-    it('should default selectedCell to "all"', () => {
-      expect(component.selectedCell()).toBe('all');
+    it('should default selectedCell to the first cell', () => {
+      expect(component.selectedCell()).toBe('alpha');
     });
 
     it('should derive sorted unique cell names from events', () => {
       expect(component.cellNames()).toEqual(['alpha', 'beta']);
     });
 
-    it('should return all events when selectedCell is "all"', () => {
-      expect(component.filteredEvents()?.length).toBe(3);
+    it('should return events for the selected cell', () => {
+      expect(component.filteredEvents()?.length).toBe(2);
     });
 
     it('should filter events by selected cell', () => {
@@ -256,12 +262,7 @@ describe('Component: Events', () => {
     });
 
     it('should derive sorted unique type names from events', () => {
-      expect(component.typeNames()).toEqual([
-        'conductor',
-        'controller',
-        'lifecycle',
-        'stage'
-      ]);
+      expect(component.typeNames()).toEqual(['lifecycle', 'stage']);
     });
 
     it('should scope typeNames by selected cell', () => {
@@ -286,9 +287,9 @@ describe('Component: Events', () => {
       ).toBeTrue();
     });
 
-    it('should return all events when type is "all"', () => {
+    it('should return all cell events when type is "all"', () => {
       component.selectedType.set('all');
-      expect(component.filteredEvents()?.length).toBe(5);
+      expect(component.filteredEvents()?.length).toBe(3);
     });
   });
 
@@ -366,6 +367,7 @@ describe('Component: Events', () => {
     });
 
     it('should return all type-filtered events when key is "all"', () => {
+      component.selectedCell.set('beta');
       component.selectedType.set('controller');
       component.selectedKey.set('all');
       const results = component.filteredEvents() ?? [];
@@ -453,7 +455,7 @@ describe('Component: Events', () => {
       expect(component.cellNames()).toEqual([]);
       expect(component.typeNames()).toEqual([]);
       expect(component.keyNames()).toEqual([]);
-      expect(component.filteredEvents()).toBeNull();
+      expect(component.filteredEvents()).toEqual([]);
       expect(component.errorEvents()).toEqual([]);
     });
 
@@ -466,6 +468,7 @@ describe('Component: Events', () => {
 
     it('should handle null events with active type filter', () => {
       mockService.eventsSignal.set(null as any);
+      component.selectedCell.set('');
       component.selectedType.set('stage');
 
       expect(component.filteredEvents()).toEqual([]);
@@ -473,23 +476,155 @@ describe('Component: Events', () => {
 
     it('should handle null events with active key filter', () => {
       mockService.eventsSignal.set(null as any);
+      component.selectedCell.set('');
       component.selectedKey.set('SDUX::Behavior::Core::Value');
 
       expect(component.filteredEvents()).toEqual([]);
     });
+
+    it('should handle null events with active search filter', () => {
+      scheduler.run(({ flush }) => {
+        mockService.eventsSignal.set(null as any);
+        component.selectedCell.set('');
+        component.eventSearchTerm$.next('test');
+        flush();
+
+        expect(component.filteredEvents()).toEqual([]);
+      });
+    });
+  });
+
+  describe('errorEvents', () => {
+    it('should return events with errors', () => {
+      mockService.eventsSignal.set([
+        mockEvent,
+        mockEventWithError,
+        mockEventWithState
+      ]);
+      fixture.detectChanges();
+
+      expect(component.errorEvents().length).toBe(1);
+      expect(component.errorEvents()[0]).toBe(mockEventWithError);
+    });
+
+    it('should return empty array when no filtered events have errors', () => {
+      mockService.eventsSignal.set([mockEvent]);
+      fixture.detectChanges();
+
+      expect(component.errorEvents()).toEqual([]);
+    });
+
+    it('should return empty array when filteredEvents is null', () => {
+      mockService.eventsSignal.set(null as any);
+      component.selectedCell.set('');
+
+      expect(component.errorEvents()).toEqual([]);
+    });
   });
 
   describe('resetFilters', () => {
-    it('should reset all filter signals to all', () => {
+    it('should reset all filter signals to first cell', () => {
       component.selectedCell.set('vault::todos::cell');
       component.selectedType.set('stage');
       component.selectedKey.set('SDUX::Behavior::Core::Value');
+      component.eventSearchTerm.set('search');
 
       component.resetFilters();
 
-      expect(component.selectedCell()).toBe('all');
+      expect(component.selectedCell()).toBe('alpha');
       expect(component.selectedType()).toBe('all');
       expect(component.selectedKey()).toBe('all');
+      expect(component.eventSearchTerm()).toBe('');
+    });
+
+    it('should set cell to empty string when no cells available', () => {
+      mockService.eventsSignal.set([]);
+      fixture.detectChanges();
+
+      component.resetFilters();
+
+      expect(component.selectedCell()).toBe('');
+    });
+  });
+
+  describe('event search filtering', () => {
+    beforeEach(() => {
+      mockService.eventsSignal.set([
+        mockEvent,
+        mockEventWithError,
+        mockEventWithState
+      ]);
+      fixture.detectChanges();
+    });
+
+    it('should filter by behaviorKey when search is applied', () => {
+      scheduler.run(({ flush }) => {
+        component.eventSearchTerm$.next('Filter');
+        flush();
+        fixture.detectChanges();
+
+        const results = component.filteredEvents()!;
+        expect(
+          results.every((e: any) =>
+            e.behaviorKey.toLowerCase().includes('filter')
+          )
+        ).toBeTrue();
+      });
+    });
+
+    it('should filter by error message when search is applied', () => {
+      scheduler.run(({ flush }) => {
+        component.eventSearchTerm$.next('wrong');
+        flush();
+        fixture.detectChanges();
+
+        const results = component.filteredEvents()!;
+        expect(results.length).toBeGreaterThan(0);
+        expect(
+          results.every((e: any) =>
+            e.error?.message?.toLowerCase().includes('wrong')
+          )
+        ).toBeTrue();
+      });
+    });
+
+    it('should filter by cell name when search is applied', () => {
+      scheduler.run(({ flush }) => {
+        component.eventSearchTerm$.next('alpha');
+        flush();
+        fixture.detectChanges();
+
+        const results = component.filteredEvents()!;
+        expect(results.length).toBeGreaterThan(0);
+      });
+    });
+
+    it('should filter by type when search is applied', () => {
+      scheduler.run(({ flush }) => {
+        component.eventSearchTerm$.next('stage');
+        flush();
+        fixture.detectChanges();
+
+        const results = component.filteredEvents()!;
+        expect(results.length).toBeGreaterThan(0);
+      });
+    });
+
+    it('should clear search term and applied term via clearEventSearch', () => {
+      scheduler.run(({ flush }) => {
+        component.eventSearchTerm$.next('test');
+        flush();
+        component.clearEventSearch();
+
+        expect(component.eventSearchTerm()).toBe('');
+        expect(component.filteredEvents()!.length).toBe(3);
+      });
+    });
+  });
+
+  describe('jumpToLatest', () => {
+    it('should not throw when no panels exist', () => {
+      expect(() => component.jumpToLatest()).not.toThrow();
     });
   });
 });

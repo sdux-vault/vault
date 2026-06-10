@@ -10,11 +10,38 @@
   overflow-x: auto;
 }
 
+.table-heading-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: global.$spacing-xs;
+}
+
 .table-heading {
   @include global.sdux-text(global.$sdux-text-primary);
   font-size: global.$font-size-sm;
   font-weight: global.$font-weight-bold;
-  margin: 0 0 global.$spacing-xs;
+  margin: 0;
+}
+
+.delta-toggle {
+  margin-left: auto;
+  background: none;
+  border: none;
+  padding: global.$spacing-xxs global.$spacing-xs;
+  font-size: global.$font-size-sm;
+  font-weight: global.$font-weight-bold;
+  color: var(--sdux-text-secondary);
+  cursor: pointer;
+  line-height: 1;
+
+  &:hover {
+    background: global.$sdux-surface-lightish;
+  }
+
+  &.active {
+    color: global.$sdux-primary-base;
+    background: rgb(25 118 210 / 8%);
+  }
 }
 
 .table-scroll-wrapper {
@@ -34,10 +61,9 @@
     text-align: left;
     padding: global.$spacing-xs global.$spacing-sm;
     border-bottom: 1px solid global.$sdux-surface-outline;
-    white-space: nowrap;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-width: 400px;
   }
 
   th {
@@ -76,15 +102,15 @@
   font-size: global.$font-size-sm;
 
   &.added {
-    color: #4caf50;
+    color: global.$sdux-success-light;
   }
 
   &.modified {
-    color: #ffc107;
+    color: global.$sdux-warn-base;
   }
 
   &.removed {
-    color: #f44336;
+    color: global.$sdux-accent-base;
   }
 }
 
@@ -95,5 +121,11 @@
   p {
     @include global.sdux-text(global.$sdux-text-secondary);
     font-size: global.$font-size-sm;
+  }
+
+  .empty-hint {
+    margin-top: global.$spacing-xs;
+    font-size: global.$font-size-xs;
+    opacity: 0.7;
   }
 }

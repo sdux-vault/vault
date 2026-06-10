@@ -69,6 +69,9 @@ export class StateDiffViewComponent {
   /** Currently selected cell filter ('all' = no filter). */
   readonly selectedCell = signal<string>('all');
 
+  /** Whether the help description section is visible. */
+  readonly showDescription = signal(false);
+
   /** Currently selected trace ID. */
   readonly selectedTraceId = signal<string | null>(null);
 
@@ -80,6 +83,48 @@ export class StateDiffViewComponent {
 
   /** Active view mode for snapshot display ('diff' or 'table'). */
   readonly viewMode = signal<'diff' | 'table'>('diff');
+
+  /** Whether to show only changed keys/lines in the diff and table views. */
+  readonly showChangedOnly = signal(false);
+
+  /** Whether the mutation graph section is expanded. */
+  readonly showMutationGraph = signal(true);
+
+  /** Whether the mutation graph help text is visible. */
+  readonly showMutationGraphHelp = signal(false);
+
+  /**
+   * Computes the state mutation graph data from candidates.
+   * Computes the state mutation graph from the selected trace's candidates.
+   * Each row is a candidate pair; each column is a pipeline stage.
+   * A dot indicates the candidate value changed in that pair comparison.
+   */
+  readonly mutationGraph = computed(() => {
+    const list = this.candidates();
+    if (list.length < 2)
+      return {
+        stages: [] as string[],
+        rows: [] as { label: string; pairIndex: number; cells: boolean[] }[]
+      };
+
+    const stages: string[] = list.map((c) => c.stage);
+    const rows: { label: string; pairIndex: number; cells: boolean[] }[] = [];
+
+    for (let i = 1; i < list.length; i++) {
+      const previous = list[i - 1].value;
+      const current = list[i].value;
+      const mutated = JSON.stringify(previous) !== JSON.stringify(current);
+
+      const cells = stages.map((_, idx) => idx === i && mutated);
+      rows.push({
+        label: `${list[i - 1].stage} → ${list[i].stage}`,
+        pairIndex: i - 1,
+        cells
+      });
+    }
+
+    return { stages, rows };
+  });
 
   /** Traces filtered by cell selection. */
   readonly filteredTraces = computed(() => {
@@ -159,12 +204,12 @@ export class StateDiffViewComponent {
 
   /** Lines for the BEFORE diff panel (removed + unchanged). */
   readonly beforeLines = computed(() =>
-    this.#buildLines(this.diffHunks(), 'before')
+    this.#buildLines(this.diffHunks(), 'before', this.showChangedOnly())
   );
 
   /** Lines for the AFTER diff panel (added + unchanged). */
   readonly afterLines = computed(() =>
-    this.#buildLines(this.diffHunks(), 'after')
+    this.#buildLines(this.diffHunks(), 'after', this.showChangedOnly())
   );
 
   /** Whether previous pair navigation is available. */
@@ -245,6 +290,12 @@ export class StateDiffViewComponent {
     }
   }
 
+  /** Navigates directly to a specific pair by index (from the mutation graph). */
+  navigateToPair(pairIndex: number): void {
+    this.beforeIndex.set(pairIndex);
+    this.afterIndex.set(pairIndex + 1);
+  }
+
   /** Selects a specific snapshot as the "before" in the comparison. */
   selectBeforeSnapshot(index: number): void {
     if (index === this.afterIndex()) return;
@@ -301,12 +352,14 @@ export class StateDiffViewComponent {
    */
   #buildLines(
     hunks: Change[],
-    side: 'before' | 'after'
+    side: 'before' | 'after',
+    changedOnly: boolean
   ): { text: string; cssClass: string }[] {
     const lines: { text: string; cssClass: string }[] = [];
     for (const hunk of hunks) {
       if (side === 'before' && hunk.added) continue;
       if (side === 'after' && hunk.removed) continue;
+      if (changedOnly && !hunk.added && !hunk.removed) continue;
 
       const cssClass = hunk.added
         ? 'diff-line-added'

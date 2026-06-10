@@ -4,8 +4,11 @@ import {
   WritableSignal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestScheduler } from 'rxjs/testing';
+import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { InsightService } from '../../services/insight/insight.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { TraceExecutionShape } from '../../shapes/trace/trace-execution.shape';
 import { VaultConfigMessageShape } from '../../shapes/vault-config-message.shape';
 import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
 import { VaultOverviewComponent } from './vault-overview.component';
@@ -55,8 +58,13 @@ describe('Component: VaultOverview', () => {
   let fixture: ComponentFixture<VaultOverviewComponent>;
   let component: VaultOverviewComponent;
   let mockService: MockInsightService;
+  let scheduler: TestScheduler;
 
   beforeEach(async () => {
+    scheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
+
     mockService = new MockInsightService();
 
     await TestBed.configureTestingModule({
@@ -64,6 +72,12 @@ describe('Component: VaultOverview', () => {
       providers: [
         provideZonelessChangeDetection(),
         { provide: InsightService, useValue: mockService },
+        {
+          provide: DevtoolsAggregateService,
+          useValue: {
+            tracesByCellKey: signal(new Map<string, TraceExecutionShape[]>())
+          }
+        },
         DevtoolsRegistryService
       ]
     }).compileComponents();
@@ -466,6 +480,120 @@ describe('Component: VaultOverview', () => {
       expect(el.querySelector('.free-license')).toBeNull();
     });
   });
+
+  describe('filteredRegistry', () => {
+    beforeEach(() => {
+      mockService.vaultConfig.set({
+        versions: {},
+        registry: [mockCell, mockCell2]
+      });
+      fixture.detectChanges();
+    });
+
+    it('should return all cells when search term is empty', () => {
+      expect(component.filteredRegistry().length).toBe(2);
+    });
+
+    it('should filter cells by key when search term is applied', () => {
+      scheduler.run(({ flush }) => {
+        component.registrySearchTerm$.next('alpha');
+        flush();
+        fixture.detectChanges();
+
+        expect(component.filteredRegistry().length).toBe(1);
+        expect(component.filteredRegistry()[0].key).toBe('alpha');
+      });
+    });
+  });
+
+  describe('clearRegistrySearch', () => {
+    it('should clear search term', () => {
+      component.registrySearchTerm.set('test');
+      component.clearRegistrySearch();
+      expect(component.registrySearchTerm()).toBe('');
+    });
+  });
+
+  describe('cellStats', () => {
+    it('should return empty map when no traces exist', () => {
+      expect(component.cellStats().size).toBe(0);
+    });
+
+    it('should compute stats from traces', () => {
+      const mockTraces = new Map<string, TraceExecutionShape[]>();
+      mockTraces.set('alpha', [
+        {
+          traceId: 'trace-1',
+          cellKey: 'alpha',
+          events: [],
+          metrics: {
+            duration: 100,
+            eventCount: 5,
+            status: 'success',
+            slowestStage: { name: 'stage1', duration: 50 },
+            fastestStage: { name: 'stage1', duration: 50 },
+            stages: [],
+            hadRevote: false,
+            controllerVoteCount: 1,
+            usedLicensedFeatures: false
+          }
+        } as any,
+        {
+          traceId: 'trace-2',
+          cellKey: 'alpha',
+          events: [],
+          metrics: {
+            duration: 200,
+            eventCount: 3,
+            status: 'failed',
+            slowestStage: { name: 'stage1', duration: 100 },
+            fastestStage: { name: 'stage1', duration: 100 },
+            stages: [],
+            hadRevote: false,
+            controllerVoteCount: 0,
+            usedLicensedFeatures: false
+          }
+        } as any
+      ]);
+
+      const aggregate = TestBed.inject(DevtoolsAggregateService) as unknown as {
+        tracesByCellKey: WritableSignal<Map<string, TraceExecutionShape[]>>;
+      };
+      aggregate.tracesByCellKey.set(mockTraces);
+      fixture.detectChanges();
+
+      const stats = component.cellStats();
+      expect(stats.size).toBe(1);
+      const alphaStats = stats.get('alpha')!;
+      expect(alphaStats.traceCount).toBe(2);
+      expect(alphaStats.avgDuration).toBe(150);
+      expect(alphaStats.errorCount).toBe(1);
+    });
+
+    it('should return zero avgDuration for empty traces array', () => {
+      const mockTraces = new Map<string, TraceExecutionShape[]>();
+      mockTraces.set('alpha', []);
+
+      const aggregate = TestBed.inject(DevtoolsAggregateService) as unknown as {
+        tracesByCellKey: WritableSignal<Map<string, TraceExecutionShape[]>>;
+      };
+      aggregate.tracesByCellKey.set(mockTraces);
+      fixture.detectChanges();
+
+      const stats = component.cellStats();
+      expect(stats.size).toBe(1);
+      const alphaStats = stats.get('alpha')!;
+      expect(alphaStats.traceCount).toBe(0);
+      expect(alphaStats.avgDuration).toBe(0);
+      expect(alphaStats.errorCount).toBe(0);
+    });
+  });
+
+  describe('ngOnInit debounce', () => {
+    it('should set up the search term subscription', () => {
+      expect(component.registrySearchTerm$).toBeTruthy();
+    });
+  });
 });
 
 describe('Component: VaultOverview (mobile)', () => {
@@ -494,6 +622,12 @@ describe('Component: VaultOverview (mobile)', () => {
       providers: [
         provideZonelessChangeDetection(),
         { provide: InsightService, useValue: mockService },
+        {
+          provide: DevtoolsAggregateService,
+          useValue: {
+            tracesByCellKey: signal(new Map<string, TraceExecutionShape[]>())
+          }
+        },
         DevtoolsRegistryService
       ]
     }).compileComponents();

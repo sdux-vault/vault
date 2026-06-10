@@ -68,7 +68,12 @@ describe('Component: SplashPage', () => {
         },
         {
           provide: DevtoolsRegistryService,
-          useValue: { isLicensed: signal(false) }
+          useValue: {
+            isLicensed: signal(false),
+            registry: signal([]),
+            versions: signal([]),
+            license: signal(null)
+          }
         },
         { provide: EXTENSION_VERSION, useValue: '0.0.27' },
         provideZonelessChangeDetection()

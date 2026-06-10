@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  input,
   output,
   signal
 } from '@angular/core';
@@ -42,11 +43,62 @@ export class DumpFilePickerComponent {
   /** Confirmation dialog service for destructive action prompts. */
   #confirmDialog = inject(ConfirmDialogService);
 
+  /** Whether to show the drag-and-drop dropzone. */
+  readonly showDropzone = input(true);
+
+  /** Whether to show the import button. */
+  readonly showButton = input(false);
+
   /** User-facing error message when the file is invalid. */
   readonly errorMessage = signal<string>('');
 
+  /** Whether a file is being dragged over the dropzone. */
+  readonly isDragOver = signal(false);
+
+  /** Formatted file size of the last loaded file. */
+  readonly fileSize = signal<string>('');
+
   /** Emits after a file is successfully loaded. */
   readonly fileLoaded = output<DumpFileLoadedEvent>();
+
+  /**
+   * Handles the dragover event on the dropzone.
+   * Prevents the default browser behavior and sets the drag state.
+   *
+   * @param event - The native drag event.
+   */
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver.set(true);
+  }
+
+  /** Resets the drag state when the file leaves the dropzone. */
+  onDragLeave(): void {
+    this.isDragOver.set(false);
+  }
+
+  /**
+   * Handles the drop event on the dropzone.
+   * Extracts the dropped file and processes it.
+   *
+   * @param event - The native drag event.
+   */
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver.set(false);
+
+    const file = event.dataTransfer?.files[0];
+    if (!file) return;
+
+    if (!file.name.endsWith('.json')) {
+      this.errorMessage.set('Only .json files are accepted.');
+      return;
+    }
+
+    this.#confirmAndLoad(file);
+  }
 
   /**
    * Handles the file input change event.
@@ -59,6 +111,16 @@ export class DumpFilePickerComponent {
     const file = input.files?.[0];
     if (!file) return;
 
+    this.#confirmAndLoad(file, input);
+  }
+
+  /**
+   * Shows a confirmation dialog and loads the file if confirmed.
+   *
+   * @param file - The JSON dump file to load.
+   * @param input - Optional input element to reset on cancel.
+   */
+  #confirmAndLoad(file: File, input?: HTMLInputElement): void {
     this.#confirmDialog
       .confirm({
         title: 'Replace Current Data',
@@ -70,7 +132,7 @@ export class DumpFilePickerComponent {
       .subscribe((confirmed) => {
         if (confirmed) {
           this.#loadFile(file);
-        } else {
+        } else if (input) {
           input.value = '';
         }
       });
@@ -83,6 +145,7 @@ export class DumpFilePickerComponent {
    */
   #loadFile(file: File): void {
     this.errorMessage.set('');
+    this.fileSize.set(this.#formatFileSize(file.size));
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -125,5 +188,17 @@ export class DumpFilePickerComponent {
       }
     };
     reader.readAsText(file);
+  }
+
+  /**
+   * Formats a byte count into a human-readable file size string.
+   *
+   * @param bytes - The file size in bytes.
+   * @returns A formatted string (e.g., "1.2 MB", "340 KB", "512 B").
+   */
+  #formatFileSize(bytes: number): string {
+    if (bytes >= 1_048_576) return (bytes / 1_048_576).toFixed(1) + ' MB';
+    if (bytes >= 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return bytes + ' B';
   }
 }

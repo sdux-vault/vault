@@ -37,9 +37,9 @@ describe('Component: DevtoolsPipelineEvent', () => {
   it('should render collapsed header content by default', () => {
     const text = fixture.nativeElement.textContent;
 
-    expect(text).toContain('test-cell');
+    expect(text).toContain('Test Behavior');
     expect(text).toContain('TEST-BEHAVIOR');
-    expect(text).toContain('003');
+    expect(text).toContain('3');
   });
 
   it('should emit selectEvent when row is clicked', () => {

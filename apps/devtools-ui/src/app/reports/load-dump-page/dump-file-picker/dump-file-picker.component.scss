@@ -6,6 +6,49 @@
   gap: global.$spacing-md;
 }
 
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: global.$spacing-xs;
+  padding: global.$spacing-2xl global.$spacing-md;
+  border: 2px dashed global.$sdux-surface-outline;
+  border-radius: global.$border-radius-sm;
+  background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: global.$sdux-primary-base;
+    background: rgb(255 255 255 / 6%);
+    outline: none;
+  }
+
+  &.dropzone-active {
+    border-color: global.$sdux-primary-base;
+    background: rgb(25 118 210 / 10%);
+  }
+}
+
+.dropzone-icon {
+  font-size: global.$font-size-xl;
+}
+
+.dropzone-label {
+  font-size: global.$font-size-sm;
+  font-weight: global.$font-weight-medium;
+  color: var(--sdux-text-primary);
+}
+
+.dropzone-sublabel {
+  font-size: global.$font-size-xs;
+  color: var(--sdux-text-secondary);
+}
+
 .file-input {
   position: absolute;
   width: 1px;
@@ -14,6 +57,16 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+.sdux-button {
+  width: 150px;
+}
+
+.file-size {
+  font-size: global.$font-size-xs;
+  color: var(--sdux-text-secondary);
+  font-family: global.$sdux-code-font;
 }
 
 .error-message {

@@ -2,6 +2,41 @@
 @use '../scss/reports-common';
 
 .report-page {
+  /* ─── HELP TOGGLE ─── */
+
+  .help-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: global.$spacing-xs;
+    margin-left: global.$spacing-sm;
+    display: flex;
+    align-items: center;
+  }
+
+  .help-icon {
+    width: global.$font-size-sm;
+    height: global.$font-size-sm;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .description-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+  }
+
+  .description {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-secondary);
+    line-height: 1.5;
+  }
+
   /* ─── TRACE DURATION (unique to state-diff) ─── */
 
   .trace-duration {
@@ -69,6 +104,87 @@
         margin-left: 0;
       }
     }
+  }
+
+  /* ─── MUTATION GRAPH ─── */
+
+  .mutation-graph-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+
+      h3 {
+        margin: 0;
+        font-size: global.$font-size-sm;
+        font-weight: global.$font-weight-bold;
+        color: var(--sdux-text-primary);
+      }
+    }
+
+    .title-group {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-sm;
+    }
+  }
+
+  .mutation-graph-scroll {
+    overflow-x: auto;
+  }
+
+  .mutation-graph-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: global.$font-size-xs;
+
+    th,
+    td {
+      padding: global.$spacing-xs global.$spacing-sm;
+      border: 1px solid global.$sdux-surface-outline;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    th {
+      background: global.$sdux-surface-lightish;
+      font-weight: global.$font-weight-semibold;
+      color: var(--sdux-text-primary);
+      font-size: global.$font-size-xs;
+    }
+
+    .col-key {
+      text-align: left;
+      font-family: global.$sdux-code-font;
+      font-weight: global.$font-weight-medium;
+      color: var(--sdux-text-primary);
+    }
+
+    .col-stage {
+      min-width: 80px;
+    }
+
+    .mutated {
+      background: rgb(25 118 210 / 8%);
+    }
+  }
+
+  .graph-row {
+    cursor: pointer;
+
+    &:hover {
+      background: var(--sdux-surface-hover, rgb(255 255 255 / 5%));
+    }
+  }
+
+  .mutation-dot {
+    color: global.$sdux-primary-base;
+    font-size: global.$font-size-md;
   }
 
   /* ─── PAIR SELECTOR CARDS ─── */
@@ -153,5 +269,39 @@
   .trace-status {
     font-weight: global.$font-weight-bold;
     font-size: global.$font-size-xs;
+  }
+
+  /* ─── DELTA TOGGLE ─── */
+
+  .diff-header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .delta-toggle {
+    margin-left: auto;
+    background: none;
+    border: none;
+    padding: global.$spacing-xxs global.$spacing-xs;
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-bold;
+    color: var(--sdux-text-secondary);
+    cursor: pointer;
+    line-height: 1;
+
+    &:hover {
+      background: global.$sdux-surface-lightish;
+    }
+
+    &.active {
+      color: global.$sdux-primary-base;
+      background: rgb(25 118 210 / 8%);
+    }
+  }
+
+  .diff-column .empty-table {
+    font-size: global.$font-size-xs;
+    padding: global.$spacing-md;
   }
 }

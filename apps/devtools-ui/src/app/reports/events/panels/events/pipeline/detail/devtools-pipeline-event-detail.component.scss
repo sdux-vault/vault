@@ -43,6 +43,20 @@
         color: global.$sdux-text-white;
       }
     }
+
+    .back-btn {
+      display: none;
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      .back-btn {
+        display: flex;
+      }
+
+      .dismiss-btn {
+        display: none;
+      }
+    }
   }
 
   .detail-body {

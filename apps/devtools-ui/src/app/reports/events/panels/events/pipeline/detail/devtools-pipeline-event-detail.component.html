@@ -3,7 +3,15 @@
     <h3>Event Detail</h3>
     <button
       type="button"
-      class="close-btn"
+      class="close-btn back-btn"
+      aria-label="Back to list"
+      matTooltip="Back to list"
+      (click)="closeDetail.emit()">
+      &#8592;
+    </button>
+    <button
+      type="button"
+      class="close-btn dismiss-btn"
       aria-label="Close detail panel"
       matTooltip="Close detail panel"
       (click)="closeDetail.emit()">

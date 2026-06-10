@@ -1,20 +1,52 @@
-<input
-  #fileInput
-  type="file"
-  accept=".json"
-  class="file-input"
-  aria-hidden="true"
-  tabindex="-1"
-  (change)="onFileSelected($event)" />
-<button
-  type="button"
-  class="sdux-button"
-  matTooltip="Select a .json dump file to import"
-  aria-label="Importa JSON debug dump file"
-  (click)="fileInput.click()">
-  Import Dump File
-</button>
+@if (showDropzone()) {
+  <div
+    class="dropzone"
+    [class.dropzone-active]="isDragOver()"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave()"
+    (drop)="onDrop($event)"
+    role="button"
+    tabindex="0"
+    aria-label="Drop a JSON debug dump file here or click to browse"
+    (click)="fileInput.click()"
+    (keydown.enter)="fileInput.click()">
+    <input
+      #fileInput
+      type="file"
+      accept=".json"
+      class="file-input"
+      aria-hidden="true"
+      tabindex="-1"
+      (change)="onFileSelected($event)" />
+    <span class="dropzone-icon" aria-hidden="true">📂</span>
+    <span class="dropzone-label">Drop .json dump file here</span>
+    <span class="dropzone-sublabel">or click to browse</span>
+  </div>
+}
+
+@if (showButton()) {
+  <input
+    #fileInput
+    type="file"
+    accept=".json"
+    class="file-input"
+    aria-hidden="true"
+    tabindex="-1"
+    (change)="onFileSelected($event)" />
+  <button
+    type="button"
+    class="sdux-button"
+    matTooltip="Select a .json dump file to import"
+    aria-label="Import a JSON debug dump file"
+    (click)="fileInput.click()">
+    Import Dump File
+  </button>
+}
+
+@if (fileSize()) {
+  <div class="file-size" aria-label="File size">{{ fileSize() }}</div>
+}
 
 @if (errorMessage()) {
-  <div class="error-message">{{ errorMessage() }}</div>
+  <div class="error-message" role="alert">{{ errorMessage() }}</div>
 }

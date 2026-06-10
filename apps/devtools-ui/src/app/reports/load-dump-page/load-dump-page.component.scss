@@ -72,19 +72,7 @@
     border-radius: global.$border-radius-sm;
   }
 
-  .navigate-button {
+  .sdux-button {
     align-self: flex-start;
-    padding: global.$spacing-sm global.$spacing-md;
-    font-size: global.$font-size-sm;
-    font-weight: global.$font-weight-bold;
-    color: var(--sdux-text-primary);
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
-    border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
-    border-radius: global.$border-radius-sm;
-    cursor: pointer;
-
-    &:hover {
-      background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
-    }
   }
 }

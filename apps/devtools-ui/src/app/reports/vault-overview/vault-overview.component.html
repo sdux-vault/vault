@@ -1,7 +1,31 @@
 <div class="report-page">
   <header class="header">
-    <h2>Vault Overview</h2>
+    <div class="title-group">
+      <h2>Vault Overview</h2>
+      <button
+        type="button"
+        class="help-toggle"
+        (click)="showHelp.set(!showHelp())"
+        matTooltip="Toggle help"
+        aria-label="Toggle vault overview help">
+        <img
+          src="assets/icons/help-icon.png"
+          alt=""
+          class="help-icon"
+          aria-hidden="true" />
+      </button>
+    </div>
   </header>
+  @if (showHelp()) {
+    <section class="help-section">
+      <p class="help-text">
+        The Vault Overview displays runtime package versions, license details,
+        and the FeatureCell registry. Each registry card shows behavior,
+        controller, and Fluent API counts along with trace statistics. Click
+        <strong>View Pipeline</strong> to inspect a cell's registered pipeline.
+      </p>
+    </section>
+  }
 
   <section class="vault-overview-content">
     <div class="info-cards">
@@ -132,81 +156,200 @@
     </div>
 
     <section class="section registry-section">
-      <h3 class="section-title">FeatureCell Registry</h3>
-      <div class="registry-body">
+      <div
+        class="registry-header collapsible"
+        role="button"
+        tabindex="0"
+        [attr.aria-expanded]="showRegistryCards()"
+        (click)="showRegistryCards.set(!showRegistryCards())"
+        (keydown.enter)="showRegistryCards.set(!showRegistryCards())"
+        (keydown.space)="
+          $event.preventDefault(); showRegistryCards.set(!showRegistryCards())
+        ">
+        <h3 class="section-title">FeatureCell Registry</h3>
+        <button
+          type="button"
+          class="help-toggle"
+          (click)="
+            $event.stopPropagation(); showRegistryHelp.set(!showRegistryHelp())
+          "
+          matTooltip="Toggle registry help"
+          aria-label="Toggle registry help">
+          <img
+            src="assets/icons/help-icon.png"
+            alt=""
+            class="help-icon"
+            aria-hidden="true" />
+        </button>
+        <div class="registry-header-actions">
+          <div class="registry-search" (click)="$event.stopPropagation()">
+            <input
+              type="text"
+              class="registry-search-input"
+              placeholder="Filter cells"
+              aria-label="Filter registry cells"
+              [ngModel]="registrySearchTerm()"
+              (ngModelChange)="
+                registrySearchTerm.set($event); registrySearchTerm$.next($event)
+              " />
+            <button
+              type="button"
+              class="registry-search-btn"
+              [attr.aria-label]="
+                registrySearchTerm() ? 'Clear filter' : 'Filter cells'
+              "
+              [matTooltip]="
+                registrySearchTerm() ? 'Clear filter' : 'Filter cells'
+              "
+              (click)="registrySearchTerm() ? clearRegistrySearch() : null">
+              <mat-icon>{{
+                registrySearchTerm() ? 'close' : 'search'
+              }}</mat-icon>
+            </button>
+          </div>
+          <span
+            class="section-chevron"
+            [class.section-chevron-expanded]="showRegistryCards()"
+            aria-hidden="true"
+            >&#9656;</span
+          >
+        </div>
+      </div>
+
+      @if (showRegistryHelp()) {
+        <section class="help-section">
+          <p class="help-text">
+            Each card represents a registered FeatureCell. The first row shows
+            the number of Behaviors, Controllers, and Fluent APIs attached to
+            the cell. The second row shows live trace statistics — total traces
+            executed, average duration in milliseconds, and error count.
+          </p>
+        </section>
+      }
+
+      @if (showRegistryCards()) {
         @if (registry().length) {
           <div class="cell-cards">
-            @for (cell of registry(); track $index) {
-              <div
-                class="cell-card"
-                [class.selected]="selectedCell() === cell"
-                [class.cell-card-collapsed]="collapsedCells().has(cell.key)">
+            @for (_ of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track $index) {
+              @for (cell of filteredRegistry(); track $index) {
                 <div
-                  class="cell-card-header collapsible"
-                  role="button"
-                  tabindex="0"
-                  [attr.aria-expanded]="!collapsedCells().has(cell.key)"
-                  [attr.aria-label]="'Toggle details for ' + cell.key"
-                  (click)="toggleCellCollapsed(cell.key)"
-                  (keydown.enter)="toggleCellCollapsed(cell.key)"
-                  (keydown.space)="
-                    $event.preventDefault(); toggleCellCollapsed(cell.key)
-                  ">
-                  <span class="cell-card-key" [matTooltip]="cell.key">{{
-                    cell.key
-                  }}</span>
-                  <span
-                    class="section-chevron"
-                    [class.section-chevron-expanded]="
-                      !collapsedCells().has(cell.key)
-                    "
-                    aria-hidden="true"
-                    matTooltip="Toggle cell details"
-                    >&#9656;</span
-                  >
-                </div>
-                @if (!collapsedCells().has(cell.key)) {
-                  <div class="cell-card-body">
-                    <div class="cell-card-stat">
-                      <span class="cell-card-stat-value">{{
-                        cell.behaviors.length
-                      }}</span>
-                      <span class="cell-card-stat-label">Behaviors</span>
-                      @if (behaviorLicenseCount(cell)) {
-                        <span class="cell-card-licensed"
-                          >{{ behaviorLicenseCount(cell) }} licensed</span
-                        >
-                      }
-                    </div>
-                    <div class="cell-card-stat">
-                      <span class="cell-card-stat-value">{{
-                        cell.controllers.length
-                      }}</span>
-                      <span class="cell-card-stat-label">Controllers</span>
-                      @if (controllerLicenseCount(cell)) {
-                        <span class="cell-card-licensed"
-                          >{{ controllerLicenseCount(cell) }} licensed</span
-                        >
-                      }
-                    </div>
-                    <div class="cell-card-stat">
-                      <span class="cell-card-stat-value">{{
-                        fluentApisCount(cell)
-                      }}</span>
-                      <span class="cell-card-stat-label">Fluent APIs</span>
-                    </div>
+                  class="cell-card"
+                  [class.selected]="selectedCell() === cell"
+                  [class.cell-card-collapsed]="collapsedCells().has(cell.key)">
+                  <div
+                    class="cell-card-header collapsible"
+                    role="button"
+                    tabindex="0"
+                    [attr.aria-expanded]="!collapsedCells().has(cell.key)"
+                    [attr.aria-label]="'Toggle details for ' + cell.key"
+                    (click)="toggleCellCollapsed(cell.key)"
+                    (keydown.enter)="toggleCellCollapsed(cell.key)"
+                    (keydown.space)="
+                      $event.preventDefault(); toggleCellCollapsed(cell.key)
+                    ">
+                    <span class="cell-card-key" [matTooltip]="cell.key">{{
+                      cell.key
+                    }}</span>
+                    <span
+                      class="section-chevron"
+                      [class.section-chevron-expanded]="
+                        !collapsedCells().has(cell.key)
+                      "
+                      aria-hidden="true"
+                      matTooltip="Toggle cell details"
+                      >&#9656;</span
+                    >
                   </div>
-                }
-                <div class="cell-card-footer">
-                  <button
-                    type="button"
-                    class="cell-card-view-btn"
-                    (click)="selectCell(cell)"
-                    aria-label="View pipeline for {{ cell.key }}">
-                    View Pipeline
-                  </button>
+                  @if (!collapsedCells().has(cell.key)) {
+                    <div class="cell-card-body">
+                      <div class="cell-card-row-top">
+                        <div class="cell-card-stat">
+                          <span class="cell-card-stat-value">{{
+                            cell.behaviors.length
+                          }}</span>
+                          <span class="cell-card-stat-label">Behaviors</span>
+                          @if (behaviorLicenseCount(cell)) {
+                            <span
+                              class="cell-card-licensed"
+                              matTooltip="Behaviors covered by a registered license"
+                              >{{ behaviorLicenseCount(cell) }} licensed</span
+                            >
+                          }
+                        </div>
+                        <div class="cell-card-stat">
+                          <span class="cell-card-stat-value">{{
+                            cell.controllers.length
+                          }}</span>
+                          <span class="cell-card-stat-label">Controllers</span>
+                          @if (controllerLicenseCount(cell)) {
+                            <span
+                              class="cell-card-licensed"
+                              matTooltip="Controllers covered by a registered license"
+                              >{{ controllerLicenseCount(cell) }} licensed</span
+                            >
+                          }
+                        </div>
+                        <div class="cell-card-stat">
+                          <span class="cell-card-stat-value">{{
+                            fluentApisCount(cell)
+                          }}</span>
+                          <span
+                            class="cell-card-stat-label"
+                            matTooltip="Chainable API extensions registered on this cell"
+                            >Fluent APIs</span
+                          >
+                        </div>
+                      </div>
+                      <div class="cell-card-row-bottom">
+                        @if (cellStats().get(cell.key); as stats) {
+                          <div class="cell-card-stat">
+                            <span class="cell-card-stat-value">{{
+                              stats.traceCount
+                            }}</span>
+                            <span class="cell-card-stat-label">Traces</span>
+                          </div>
+                          <div class="cell-card-stat">
+                            <span class="cell-card-stat-value">{{
+                              stats.avgDuration.toFixed(1)
+                            }}</span>
+                            <span class="cell-card-stat-label">Avg ms</span>
+                          </div>
+                          <div class="cell-card-stat">
+                            <span
+                              class="cell-card-stat-value"
+                              [class.cell-error]="stats.errorCount > 0"
+                              >{{ stats.errorCount }}</span
+                            >
+                            <span class="cell-card-stat-label">Errors</span>
+                          </div>
+                        } @else {
+                          <div class="cell-card-stat">
+                            <span class="cell-card-stat-value">0</span>
+                            <span class="cell-card-stat-label">Traces</span>
+                          </div>
+                          <div class="cell-card-stat">
+                            <span class="cell-card-stat-value">0</span>
+                            <span class="cell-card-stat-label">Avg ms</span>
+                          </div>
+                          <div class="cell-card-stat">
+                            <span class="cell-card-stat-value">0</span>
+                            <span class="cell-card-stat-label">Errors</span>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  }
+                  <div class="cell-card-footer">
+                    <button
+                      type="button"
+                      class="cell-card-view-btn"
+                      (click)="selectCell(cell)"
+                      aria-label="View pipeline for {{ cell.key }}">
+                      View Pipeline
+                    </button>
+                  </div>
                 </div>
-              </div>
+              }
             }
           </div>
         } @else {
@@ -220,7 +363,7 @@
               (closeDetail)="closeDetail()"></sdux-devtools-registry-detail>
           </aside>
         }
-      </div>
+      }
     </section>
   </section>
 </div>

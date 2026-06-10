@@ -76,7 +76,9 @@
       <div class="sdux-container-spacer"></div>
 
       <div class="meta">
-        <sdux-dump-file-picker></sdux-dump-file-picker>
+        <sdux-dump-file-picker
+          [showDropzone]="false"
+          [showButton]="true"></sdux-dump-file-picker>
 
         <sdux-export-button
           [data]="cellTraces()"

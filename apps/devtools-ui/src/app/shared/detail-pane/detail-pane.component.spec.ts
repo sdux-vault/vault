@@ -26,7 +26,7 @@ describe('Component: DetailPane', () => {
   it('should have a close button with aria-label', () => {
     const btn = fixture.nativeElement.querySelector('.close-btn');
     expect(btn).toBeTruthy();
-    expect(btn.getAttribute('aria-label')).toBe('Close detail panel');
+    expect(btn.getAttribute('aria-label')).toBe('Back to list');
     expect(btn.getAttribute('type')).toBe('button');
   });
 

@@ -8,10 +8,6 @@
   padding: global.$spacing-xs global.$spacing-sm;
   height: 40px;
   box-sizing: border-box;
-
-  @media (max-width: global.$breakpoint-md) {
-    height: 92px;
-  }
 }
 
 .event-row-header {
@@ -22,6 +18,12 @@
 
   .counter {
     flex-shrink: 0;
+    min-width: 28px;
+    text-align: right;
+
+    @media (max-width: global.$breakpoint-md) {
+      min-width: 2rem;
+    }
   }
 
   .row-details {
@@ -34,6 +36,10 @@
     align-items: center;
     gap: global.$spacing-md;
     flex-wrap: wrap;
+
+    .cell {
+      min-width: 300px;
+    }
   }
 
   .indicators-ts {
@@ -43,29 +49,29 @@
   }
 
   @media (max-width: global.$breakpoint-md) {
-    align-items: flex-start;
-
     .row-primary {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: global.$spacing-xs;
+      flex-wrap: nowrap;
+
+      .cell {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
 
     .indicators-ts {
-      margin-left: 0;
-    }
-
-    .cell {
-      min-width: 200px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      flex-shrink: 0;
     }
   }
 
   .behavior-pills {
     display: flex;
     gap: 2px;
+
+    @media (max-width: global.$breakpoint-md) {
+      display: none;
+    }
 
     .pill {
       @include global.sdux-text(
@@ -112,14 +118,17 @@
     @include global.sdux-text(global.$sdux-text-primary);
     font-size: global.$font-size-sm;
     width: 3rem;
-    text-align: left;
+    text-align: right;
+
+    @media (max-width: global.$breakpoint-md) {
+      width: 2rem;
+    }
   }
 
   .cell {
     @include global.sdux-text(global.$sdux-text-white);
     font-weight: global.$font-weight-medium;
     font-size: global.$font-size-md;
-    min-width: 200px;
   }
 
   .indicators {

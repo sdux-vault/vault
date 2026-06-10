@@ -89,4 +89,24 @@ export class DevtoolsPipelineEventComponent {
     }
     return raw.replace(/^VAULT-/i, '').toUpperCase();
   }
+
+  /**
+   * Formats the behavior key for display in the event row.
+   *
+   * For canonical keys (`a::b::c::d`), returns `c d`.
+   * For hyphenated keys (`a-b`), returns `A B` with each word capitalized.
+   *
+   * @returns The formatted display key.
+   */
+  displayKey(): string {
+    const raw = this.event().behaviorKey;
+    if (raw.includes('::')) {
+      const parts = raw.split('::');
+      return parts.slice(-2).join(' ');
+    }
+    return raw
+      .split('-')
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+  }
 }

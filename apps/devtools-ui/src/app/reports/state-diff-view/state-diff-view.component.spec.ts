@@ -753,4 +753,146 @@ describe('StateDiffViewComponent', () => {
       expect(component.afterIndex()).toBe(1);
     });
   });
+
+  describe('State Mutation Graph', () => {
+    it('should compute mutation graph from candidates', () => {
+      const graph = component.mutationGraph();
+      expect(graph.stages).toEqual(['reducer', 'effect', 'interceptor']);
+      expect(graph.rows.length).toBe(2);
+    });
+
+    it('should place dot in the after-stage column when value changed', () => {
+      const graph = component.mutationGraph();
+      // Pair 1 (reducer→effect): changed, dot at index 1 (effect)
+      expect(graph.rows[0].cells).toEqual([false, true, false]);
+      // Pair 2 (effect→interceptor): changed, dot at index 2 (interceptor)
+      expect(graph.rows[1].cells).toEqual([false, false, true]);
+    });
+
+    it('should use stage transition as row label', () => {
+      const graph = component.mutationGraph();
+      expect(graph.rows[0].label).toBe('reducer → effect');
+      expect(graph.rows[1].label).toBe('effect → interceptor');
+    });
+
+    it('should include pairIndex for navigation', () => {
+      const graph = component.mutationGraph();
+      expect(graph.rows[0].pairIndex).toBe(0);
+      expect(graph.rows[1].pairIndex).toBe(1);
+    });
+
+    it('should navigate to pair on navigateToPair', () => {
+      component.navigateToPair(1);
+      expect(component.beforeIndex()).toBe(1);
+      expect(component.afterIndex()).toBe(2);
+    });
+
+    it('should return empty graph when fewer than 2 candidates', () => {
+      mockAggregate.extractCandidates.and.returnValue([mockCandidates[0]]);
+      component.selectTrace('trace-2');
+      fixture.detectChanges();
+      const graph = component.mutationGraph();
+      expect(graph.rows.length).toBe(0);
+    });
+
+    it('should toggle mutation graph visibility', () => {
+      expect(component.showMutationGraph()).toBe(true);
+      component.showMutationGraph.set(false);
+      expect(component.showMutationGraph()).toBe(false);
+    });
+
+    it('should toggle mutation graph help', () => {
+      expect(component.showMutationGraphHelp()).toBe(false);
+      component.showMutationGraphHelp.set(true);
+      expect(component.showMutationGraphHelp()).toBe(true);
+    });
+
+    it('should render mutation graph section when expanded', () => {
+      component.showMutationGraph.set(true);
+      fixture.detectChanges();
+      const table = fixture.nativeElement.querySelector(
+        '.mutation-graph-table'
+      );
+      expect(table).toBeTruthy();
+    });
+
+    it('should render correct number of stage columns', () => {
+      component.showMutationGraph.set(true);
+      fixture.detectChanges();
+      const headers = fixture.nativeElement.querySelectorAll(
+        '.mutation-graph-table th.col-stage'
+      );
+      expect(headers.length).toBe(3);
+    });
+
+    it('should render mutation dots only in mutated stage columns', () => {
+      component.showMutationGraph.set(true);
+      fixture.detectChanges();
+      const dots = fixture.nativeElement.querySelectorAll('.mutation-dot');
+      // 2 pairs, each with 1 dot = 2 dots total
+      expect(dots.length).toBe(2);
+    });
+
+    it('should render help section when help is toggled', () => {
+      component.showMutationGraph.set(true);
+      component.showMutationGraphHelp.set(true);
+      fixture.detectChanges();
+      const helpSection = fixture.nativeElement.querySelector(
+        '.mutation-graph-section .help-section'
+      );
+      expect(helpSection).toBeTruthy();
+    });
+
+    it('should show no dot when pair values are identical', () => {
+      mockAggregate.extractCandidates.and.returnValue([
+        { ...mockCandidates[0], value: { count: 1 } },
+        { ...mockCandidates[1], value: { count: 1 } }
+      ]);
+      component.selectTrace('trace-2');
+      fixture.detectChanges();
+      const graph = component.mutationGraph();
+      expect(graph.rows[0].cells).toEqual([false, false]);
+    });
+  });
+
+  describe('Show Changed Only (Delta Filter)', () => {
+    it('should default to false', () => {
+      expect(component.showChangedOnly()).toBe(false);
+    });
+
+    it('should toggle the filter', () => {
+      component.showChangedOnly.set(true);
+      expect(component.showChangedOnly()).toBe(true);
+    });
+
+    it('should include all lines when disabled', () => {
+      const before = component.beforeLines();
+      // With count 0 → 1, should have both changed and unchanged content
+      expect(before.length).toBeGreaterThan(0);
+    });
+
+    it('should exclude unchanged lines when enabled', () => {
+      const allBefore = component.beforeLines();
+      component.showChangedOnly.set(true);
+      const filteredBefore = component.beforeLines();
+      expect(filteredBefore.length).toBeLessThanOrEqual(allBefore.length);
+      // All filtered lines should be changed (have a cssClass)
+      for (const line of filteredBefore) {
+        expect(line.cssClass).not.toBe('');
+      }
+    });
+
+    it('should render delta toggle buttons in diff view', () => {
+      fixture.detectChanges();
+      const buttons = fixture.nativeElement.querySelectorAll('.delta-toggle');
+      expect(buttons.length).toBe(2);
+    });
+
+    it('should mark delta button as active when filter is on', () => {
+      component.showChangedOnly.set(true);
+      fixture.detectChanges();
+      const buttons = fixture.nativeElement.querySelectorAll('.delta-toggle');
+      expect(buttons[0].classList).toContain('active');
+    });
+  });
 });

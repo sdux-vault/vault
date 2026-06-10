@@ -2,13 +2,19 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
+  effect,
   inject,
-  signal
+  signal,
+  viewChildren
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
@@ -23,6 +29,8 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
   selector: 'sdux-events',
   standalone: true,
   imports: [
+    FormsModule,
+    MatIconModule,
     MatSelectModule,
     MatTabsModule,
     MatTooltipModule,
@@ -44,8 +52,23 @@ export class EventsComponent {
   /** Reactive list of pipeline events used to populate the UI. */
   readonly events = computed(() => this.devtools.events());
 
+  /** Whether the help section is visible. */
+  readonly showHelp = signal(false);
+
+  /** Current search term for filtering events. */
+  readonly eventSearchTerm = signal('');
+
+  /** Subject driving debounced search updates. */
+  readonly eventSearchTerm$ = new Subject<string>();
+
+  /** Debounced search term applied to the event filter. */
+  readonly #appliedSearchTerm = signal('');
+
+  /** References to pipeline panel children for scroll control. */
+  readonly panels = viewChildren(DevtoolsMainPipelinePanelComponent);
+
   /** Currently selected cell filter. */
-  readonly selectedCell = signal('all');
+  readonly selectedCell = signal('');
 
   /** Currently selected event type filter. */
   readonly selectedType = signal('all');
@@ -59,11 +82,37 @@ export class EventsComponent {
     return [...new Set(cells)].sort();
   });
 
+  /**
+   * Auto-selects the first available cell when no cell is selected.
+   *
+   * Runs whenever the cell names list changes. If the current selection
+   * is empty or no longer present in the list, defaults to the first cell.
+   */
+  constructor() {
+    effect(() => {
+      const names = this.cellNames();
+      const current = this.selectedCell();
+      if (names.length && (!current || !names.includes(current))) {
+        this.selectedCell.set(names[0]);
+      }
+    });
+
+    const destroy$ = new Subject<void>();
+    inject(DestroyRef).onDestroy(() => {
+      destroy$.next();
+      destroy$.complete();
+    });
+
+    this.eventSearchTerm$
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(destroy$))
+      .subscribe((term) => this.#appliedSearchTerm.set(term));
+  }
+
   /** Unique event type names derived from events matching the selected cell. */
   readonly typeNames = computed((): string[] => {
     const cell = this.selectedCell();
     let result = this.events() ?? [];
-    if (cell !== 'all') {
+    if (cell) {
       result = result.filter((e) => e.cell === cell);
     }
     const types = result.map((e) => e.type);
@@ -81,7 +130,7 @@ export class EventsComponent {
     const cell = this.selectedCell();
     const type = this.selectedType();
     let result = this.events() ?? [];
-    if (cell !== 'all') {
+    if (cell) {
       result = result.filter((e) => e.cell === cell);
     }
     if (type !== 'all') {
@@ -91,13 +140,14 @@ export class EventsComponent {
     return [...new Set(keys)].sort();
   });
 
-  /** Events filtered by the selected cell and type. */
+  /** Events filtered by the selected cell, type, key, and search term. */
   readonly filteredEvents = computed(() => {
     const cell = this.selectedCell();
     const type = this.selectedType();
     const key = this.selectedKey();
+    const search = this.#appliedSearchTerm().trim().toLowerCase();
     let result = this.events();
-    if (cell !== 'all') {
+    if (cell) {
       result = result?.filter((e) => e.cell === cell) ?? [];
     }
     if (type !== 'all') {
@@ -105,6 +155,16 @@ export class EventsComponent {
     }
     if (key !== 'all') {
       result = result?.filter((e) => e.behaviorKey === key) ?? [];
+    }
+    if (search) {
+      result =
+        result?.filter(
+          (e) =>
+            e.behaviorKey.toLowerCase().includes(search) ||
+            e.cell.toLowerCase().includes(search) ||
+            e.type.toLowerCase().includes(search) ||
+            (e.error?.message?.toLowerCase().includes(search) ?? false)
+        ) ?? [];
     }
     return result;
   });
@@ -150,9 +210,21 @@ export class EventsComponent {
    * (used alongside the shared reset button which handles cell clearing).
    */
   resetFilters(): void {
-    this.selectedCell.set('all');
+    this.selectedCell.set(this.cellNames()[0] ?? '');
     this.selectedType.set('all');
     this.selectedKey.set('all');
+    this.clearEventSearch();
+  }
+
+  /** Clears the event search filter. */
+  clearEventSearch(): void {
+    this.eventSearchTerm.set('');
+    this.#appliedSearchTerm.set('');
+  }
+
+  /** Scrolls all visible pipeline panels to the latest event. */
+  jumpToLatest(): void {
+    this.panels().forEach((panel) => panel.scrollToTop());
   }
 
   /**

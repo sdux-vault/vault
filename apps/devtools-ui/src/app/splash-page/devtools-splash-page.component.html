@@ -1,7 +1,9 @@
-<div class="vault-devtools">
-  @if (totalEvents()) {
-    <sdux-cell-dashboard></sdux-cell-dashboard>
-  } @else {
+@if (totalEvents()) {
+  <div class="report-page">
+    <sdux-vault-overview></sdux-vault-overview>
+  </div>
+} @else {
+  <div class="vault-devtools">
     <section class="warning">
       Events only appear
       <strong
@@ -25,5 +27,5 @@
         alt="SDuX Vault logo"
         matTooltip="SDuX Vault" />
     </section>
-  }
-</div>
+  </div>
+}
