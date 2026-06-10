@@ -12,6 +12,10 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
 
   items: [
     {
+      link: '/blog/ai-assisted-debugging',
+      display: 'AI-Assisted Debugging Reports'
+    },
+    {
       link: '/blog/one-engine-every-framework',
       display: 'One State Engine. Every Framework.'
     },
