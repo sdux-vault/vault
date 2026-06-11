@@ -71,6 +71,14 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-10-ai-assisted-debugging/ai-assisted-debugging.component').then(
         (m) => m.BlogAiAssistedDebuggingComponent
       )
+  },
+  {
+    path: 'testing-state-3-steps',
+    data: { category: 'blogs', type: 'testing-state-3-steps' },
+    loadComponent: () =>
+      import('./posts/2026-06-11-testing-state-3-steps/testing-state-3-steps.component').then(
+        (m) => m.BlogTestingState3StepsComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

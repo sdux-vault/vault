@@ -12,6 +12,10 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
 
   items: [
     {
+      link: '/blog/testing-state-3-steps',
+      display: "Testing State Is 3 Steps. That's It."
+    },
+    {
       link: '/blog/ai-assisted-debugging',
       display: 'AI-Assisted Debugging Reports'
     },
