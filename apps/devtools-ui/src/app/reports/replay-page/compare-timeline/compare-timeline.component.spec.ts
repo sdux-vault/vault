@@ -1,140 +1,147 @@
 import { Component, signal, type WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CompareTraceService } from '../compare-trace.service';
+import { CompareTraceService } from '../service/compare-trace.service';
 import {
   CompareTimelineComponent,
   type TimelineMarkerShape
 } from './compare-timeline.component';
 
+const beforeMarkers: TimelineMarkerShape[] = [
+  {
+    label: 'lifecycle',
+    eventName: 'lifecycle:start:replace',
+    position: 2,
+    elapsed: 10
+  },
+  {
+    label: 'pipeline',
+    eventName: 'pipeline:candidate:resolve',
+    position: 9,
+    elapsed: 45
+  }
+];
+
+const afterMarkers: TimelineMarkerShape[] = [
+  {
+    label: 'lifecycle',
+    eventName: 'lifecycle:start:merge',
+    position: 1,
+    elapsed: 5
+  }
+];
+
+const beforeAllMarkers: TimelineMarkerShape[] = [
+  {
+    label: 'all-before',
+    eventName: 'all:before:event',
+    position: 5,
+    elapsed: 25
+  }
+];
+
+const afterAllMarkers: TimelineMarkerShape[] = [
+  {
+    label: 'all-after',
+    eventName: 'all:after:event',
+    position: 3,
+    elapsed: 15
+  }
+];
+
+const beforeDiffMarkers: TimelineMarkerShape[] = [
+  {
+    label: 'diff-before',
+    eventName: 'diff:before:event',
+    position: 4,
+    elapsed: 20
+  }
+];
+
+const afterDiffMarkers: TimelineMarkerShape[] = [
+  {
+    label: 'diff-after',
+    eventName: 'diff:after:event',
+    position: 6,
+    elapsed: 30
+  }
+];
+
+const beforeStateMarkers: TimelineMarkerShape[] = [
+  {
+    label: 'state-before',
+    eventName: 'state:before:event',
+    position: 7,
+    elapsed: 35
+  }
+];
+
+const afterStateMarkers: TimelineMarkerShape[] = [
+  {
+    label: 'state-after',
+    eventName: 'state:after:event',
+    position: 8,
+    elapsed: 40
+  }
+];
+
+const beforeCategoryMarkers: TimelineMarkerShape[] = [
+  {
+    label: 'cat-before',
+    eventName: 'cat:before:event',
+    position: 10,
+    elapsed: 50
+  }
+];
+
+const afterCategoryMarkers: TimelineMarkerShape[] = [
+  {
+    label: 'cat-after',
+    eventName: 'cat:after:event',
+    position: 11,
+    elapsed: 55
+  }
+];
+
+function buildMockService() {
+  return {
+    compareBeforeLabel: signal('t1'),
+    compareAfterLabel: signal('t2'),
+    compareBeforeDuration: signal(500),
+    compareAfterDuration: signal(200),
+    timelineBeforeMarkers: signal(beforeMarkers),
+    timelineAfterMarkers: signal(afterMarkers),
+    timelineBeforeAllMarkers: signal(beforeAllMarkers),
+    timelineAfterAllMarkers: signal(afterAllMarkers),
+    timelineBeforeDiffMarkers: signal(beforeDiffMarkers),
+    timelineAfterDiffMarkers: signal(afterDiffMarkers),
+    timelineBeforeStateMarkers: signal(beforeStateMarkers),
+    timelineAfterStateMarkers: signal(afterStateMarkers),
+    timelineBeforeCategoryMarkers: signal(beforeCategoryMarkers),
+    timelineAfterCategoryMarkers: signal(afterCategoryMarkers),
+    timelineViewMode: signal('category-overview'),
+    timelineZoom: signal(1),
+    timelineTickPercent: signal(20),
+    timelineTickInterval: signal(100)
+  };
+}
+
 @Component({
   standalone: true,
   imports: [CompareTimelineComponent],
-  template: `
-    <sdux-compare-timeline
-      [beforeLabel]="beforeLabel()"
-      [afterLabel]="afterLabel()"
-      [beforeDuration]="beforeDuration()"
-      [afterDuration]="afterDuration()"
-      [beforeMarkers]="beforeMarkers()"
-      [afterMarkers]="afterMarkers()"
-      [beforeAllMarkers]="beforeAllMarkers()"
-      [afterAllMarkers]="afterAllMarkers()"
-      [beforeDiffMarkers]="beforeDiffMarkers()"
-      [afterDiffMarkers]="afterDiffMarkers()"
-      [beforeStateMarkers]="beforeStateMarkers()"
-      [afterStateMarkers]="afterStateMarkers()"
-      [beforeCategoryMarkers]="beforeCategoryMarkers()"
-      [afterCategoryMarkers]="afterCategoryMarkers()" />
-  `,
+  template: `<sdux-compare-timeline />`,
   providers: [
     {
       provide: CompareTraceService,
-      useFactory: () => ({
-        timelineViewMode: signal('category-overview'),
-        timelineZoom: signal(1),
-        timelineTickPercent: signal(20),
-        timelineTickInterval: signal(100)
-      })
+      useFactory: buildMockService
     }
   ]
 })
-class TestHostComponent {
-  beforeLabel = signal('t1');
-  afterLabel = signal('t2');
-  beforeDuration = signal(500);
-  afterDuration = signal(200);
-  beforeMarkers = signal<TimelineMarkerShape[]>([
-    {
-      label: 'lifecycle',
-      eventName: 'lifecycle:start:replace',
-      position: 2,
-      elapsed: 10
-    },
-    {
-      label: 'pipeline',
-      eventName: 'pipeline:candidate:resolve',
-      position: 9,
-      elapsed: 45
-    }
-  ]);
-  afterMarkers = signal<TimelineMarkerShape[]>([
-    {
-      label: 'lifecycle',
-      eventName: 'lifecycle:start:merge',
-      position: 1,
-      elapsed: 5
-    }
-  ]);
-  beforeAllMarkers = signal<TimelineMarkerShape[]>([
-    {
-      label: 'all-before',
-      eventName: 'all:before:event',
-      position: 5,
-      elapsed: 25
-    }
-  ]);
-  afterAllMarkers = signal<TimelineMarkerShape[]>([
-    {
-      label: 'all-after',
-      eventName: 'all:after:event',
-      position: 3,
-      elapsed: 15
-    }
-  ]);
-  beforeDiffMarkers = signal<TimelineMarkerShape[]>([
-    {
-      label: 'diff-before',
-      eventName: 'diff:before:event',
-      position: 4,
-      elapsed: 20
-    }
-  ]);
-  afterDiffMarkers = signal<TimelineMarkerShape[]>([
-    {
-      label: 'diff-after',
-      eventName: 'diff:after:event',
-      position: 6,
-      elapsed: 30
-    }
-  ]);
-  beforeStateMarkers = signal<TimelineMarkerShape[]>([
-    {
-      label: 'state-before',
-      eventName: 'state:before:event',
-      position: 7,
-      elapsed: 35
-    }
-  ]);
-  afterStateMarkers = signal<TimelineMarkerShape[]>([
-    {
-      label: 'state-after',
-      eventName: 'state:after:event',
-      position: 8,
-      elapsed: 40
-    }
-  ]);
-  beforeCategoryMarkers = signal<TimelineMarkerShape[]>([
-    {
-      label: 'cat-before',
-      eventName: 'cat:before:event',
-      position: 10,
-      elapsed: 50
-    }
-  ]);
-  afterCategoryMarkers = signal<TimelineMarkerShape[]>([
-    {
-      label: 'cat-after',
-      eventName: 'cat:after:event',
-      position: 11,
-      elapsed: 55
-    }
-  ]);
-}
+class TestHostComponent {}
 
 describe('CompareTimelineComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
-  let host: TestHostComponent;
   let el: HTMLElement;
+  let service: ReturnType<typeof buildMockService>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -142,9 +149,11 @@ describe('CompareTimelineComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
-    host = fixture.componentInstance;
     fixture.detectChanges();
     el = fixture.nativeElement;
+    service = fixture.debugElement.children[0].injector.get(
+      CompareTraceService
+    ) as unknown as ReturnType<typeof buildMockService>;
   });
 
   it('should create the component', () => {
@@ -183,8 +192,8 @@ describe('CompareTimelineComponent', () => {
   });
 
   it('should show delta as slower when after is longer', () => {
-    host.beforeDuration.set(100);
-    host.afterDuration.set(300);
+    service.compareBeforeDuration.set(100);
+    service.compareAfterDuration.set(300);
     fixture.detectChanges();
     const delta = el.querySelector('.summary-delta');
     expect(delta!.textContent).toContain('slower');
@@ -192,8 +201,8 @@ describe('CompareTimelineComponent', () => {
   });
 
   it('should show same speed when durations are equal', () => {
-    host.beforeDuration.set(100);
-    host.afterDuration.set(100);
+    service.compareBeforeDuration.set(100);
+    service.compareAfterDuration.set(100);
     fixture.detectChanges();
     const delta = el.querySelector('.summary-delta');
     expect(delta!.textContent).toContain('same speed');
@@ -235,8 +244,8 @@ describe('CompareTimelineComponent', () => {
   });
 
   it('should return empty string when both durations are zero', () => {
-    host.beforeDuration.set(0);
-    host.afterDuration.set(0);
+    service.compareBeforeDuration.set(0);
+    service.compareAfterDuration.set(0);
     fixture.detectChanges();
     const delta = el.querySelector('.summary-delta');
     expect(delta!.textContent!.trim()).toBe('');
@@ -246,7 +255,6 @@ describe('CompareTimelineComponent', () => {
     let viewMode: WritableSignal<string>;
 
     beforeEach(() => {
-      const service = fixture.debugElement.injector.get(CompareTraceService);
       viewMode = service.timelineViewMode as WritableSignal<string>;
     });
 
@@ -320,8 +328,8 @@ describe('CompareTimelineComponent', () => {
     });
 
     it('should show percentage increase when after is longer', () => {
-      host.beforeDuration.set(100);
-      host.afterDuration.set(300);
+      service.compareBeforeDuration.set(100);
+      service.compareAfterDuration.set(300);
       fixture.detectChanges();
       const percentEls = el.querySelectorAll('.summary-delta');
       const texts = Array.from(percentEls).map((e) => e.textContent!.trim());
@@ -329,8 +337,8 @@ describe('CompareTimelineComponent', () => {
     });
 
     it('should show empty percent when durations are equal', () => {
-      host.beforeDuration.set(100);
-      host.afterDuration.set(100);
+      service.compareBeforeDuration.set(100);
+      service.compareAfterDuration.set(100);
       fixture.detectChanges();
       const percentEls = el.querySelectorAll('.summary-delta');
       const texts = Array.from(percentEls).map((e) => e.textContent!.trim());
@@ -338,8 +346,8 @@ describe('CompareTimelineComponent', () => {
     });
 
     it('should show empty percent when before is zero', () => {
-      host.beforeDuration.set(0);
-      host.afterDuration.set(100);
+      service.compareBeforeDuration.set(0);
+      service.compareAfterDuration.set(100);
       fixture.detectChanges();
       const percentEls = el.querySelectorAll('.summary-delta');
       const texts = Array.from(percentEls).map((e) => e.textContent!.trim());
@@ -354,7 +362,6 @@ describe('CompareTimelineComponent', () => {
     });
 
     it('should show event count in non-overview modes', () => {
-      const service = fixture.debugElement.injector.get(CompareTraceService);
       (service.timelineViewMode as WritableSignal<string>).set('all-events');
       fixture.detectChanges();
       const stats = el.querySelector('.timeline-toolbar')!.textContent;
@@ -369,8 +376,8 @@ describe('CompareTimelineComponent', () => {
 
   describe('maxDuration', () => {
     it('should use at least 1 as max duration', () => {
-      host.beforeDuration.set(0);
-      host.afterDuration.set(0);
+      service.compareBeforeDuration.set(0);
+      service.compareAfterDuration.set(0);
       fixture.detectChanges();
       const beforeTrack = el.querySelector('.before-track') as HTMLElement;
       expect(beforeTrack.style.width).toBe('0%');
@@ -399,8 +406,8 @@ describe('CompareTimelineComponent', () => {
     });
 
     it('should drop last mark when too close to end', () => {
-      host.beforeDuration.set(105);
-      host.afterDuration.set(50);
+      service.compareBeforeDuration.set(105);
+      service.compareAfterDuration.set(50);
       fixture.detectChanges();
       const component = fixture.debugElement.children[0].componentInstance;
       const marks = component.tickMarks();

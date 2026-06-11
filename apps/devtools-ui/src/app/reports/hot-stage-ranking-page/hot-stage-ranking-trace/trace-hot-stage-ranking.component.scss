@@ -46,6 +46,27 @@
   font-size: global.$font-size-xs;
   font-family: monospace;
 
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--sdux-surface-default, #1e1e1e);
+  }
+
+  tbody {
+    display: block;
+    max-height: calc(100vh - 350px);
+    min-height: 200px;
+    overflow-y: auto;
+  }
+
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
   th,
   td {
     padding: global.$spacing-xs global.$spacing-sm;
@@ -66,7 +87,7 @@
   }
 
   .col-stage {
-    min-width: 100px;
+    width: 100px;
   }
 
   .col-duration {
@@ -81,7 +102,7 @@
   }
 
   .col-bar {
-    width: 40%;
+    width: auto;
     padding-right: global.$spacing-md;
   }
 
@@ -92,7 +113,7 @@
   }
 
   .col-behavior {
-    min-width: 80px;
+    width: 300px;
     color: var(--sdux-text-secondary);
 
     .behavior-trace {

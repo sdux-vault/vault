@@ -170,7 +170,7 @@
     }
 
     .mutated {
-      background: rgb(25 118 210 / 8%);
+      background: color-mix(in srgb, global.$sdux-primary-base 8%, transparent);
     }
   }
 
@@ -296,7 +296,7 @@
 
     &.active {
       color: global.$sdux-primary-base;
-      background: rgb(25 118 210 / 8%);
+      background: color-mix(in srgb, global.$sdux-primary-base 8%, transparent);
     }
   }
 

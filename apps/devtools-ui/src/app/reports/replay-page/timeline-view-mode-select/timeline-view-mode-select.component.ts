@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatOption, MatSelect } from '@angular/material/select';
-import { CompareTraceService } from '../compare-trace.service';
+import { CompareTraceService } from '../service/compare-trace.service';
 
 /**
  * Reusable dropdown for selecting the active timeline view mode.

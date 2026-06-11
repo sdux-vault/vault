@@ -5,6 +5,7 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -230,7 +231,7 @@
   .diff-and-tables {
     display: grid;
     grid-template-columns: 1fr 250px;
-    grid-template-rows: 50px 400px;
+    grid-template-rows: 50px minmax(400px, auto);
     gap: global.$spacing-sm;
     grid-column: 1 / -1;
 

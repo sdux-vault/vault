@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import type { TraceExecutionShape } from '../../shapes/trace';
+import type { TraceExecutionShape } from '../../../shapes/trace';
 import { CompareTraceService } from './compare-trace.service';
 
 describe('CompareTraceService', () => {

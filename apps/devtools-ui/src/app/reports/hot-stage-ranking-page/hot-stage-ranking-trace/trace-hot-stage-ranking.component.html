@@ -11,6 +11,8 @@
           type="button"
           class="toggle-btn"
           [class.active]="viewMode() === 'individual'"
+          [attr.aria-pressed]="viewMode() === 'individual'"
+          aria-label="Individual view"
           (click)="setViewMode('individual')">
           Individual
         </button>
@@ -18,6 +20,8 @@
           type="button"
           class="toggle-btn"
           [class.active]="viewMode() === 'grouped'"
+          [attr.aria-pressed]="viewMode() === 'grouped'"
+          aria-label="Grouped view"
           (click)="setViewMode('grouped')">
           Grouped
         </button>
@@ -27,15 +31,40 @@
     @if (viewMode() === 'grouped') {
       @if (rankings().length > 0) {
         <div class="ranking-section">
-          <table class="ranking-table">
+          <table class="ranking-table" aria-label="Grouped stage rankings">
             <thead>
               <tr>
-                <th class="col-rank">Rank</th>
-                <th class="col-stage">Stage</th>
-                <th class="col-duration">Duration</th>
-                <th class="col-count">Count</th>
-                <th class="col-bar"></th>
-                <th class="col-pct">%</th>
+                <th
+                  scope="col"
+                  class="col-rank"
+                  matTooltip="Position by total duration">
+                  Rank
+                </th>
+                <th
+                  scope="col"
+                  class="col-stage"
+                  matTooltip="Pipeline stage name">
+                  Stage
+                </th>
+                <th
+                  scope="col"
+                  class="col-duration"
+                  matTooltip="Total accumulated duration">
+                  Duration
+                </th>
+                <th
+                  scope="col"
+                  class="col-count"
+                  matTooltip="Number of executions">
+                  Count
+                </th>
+                <th scope="col" class="col-bar" aria-label="Duration bar"></th>
+                <th
+                  scope="col"
+                  class="col-pct"
+                  matTooltip="Percentage of total processing time">
+                  %
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -63,7 +92,7 @@
             </tbody>
           </table>
 
-          <footer class="ranking-summary">
+          <footer class="ranking-summary" role="status">
             @if (slowest(); as s) {
               <span class="summary-item"
                 ><strong>Slowest:</strong> {{ s.name }} ({{
@@ -94,15 +123,40 @@
     } @else {
       @if (individualRankings().length > 0) {
         <div class="ranking-section">
-          <table class="ranking-table">
+          <table class="ranking-table" aria-label="Individual stage rankings">
             <thead>
               <tr>
-                <th class="col-rank">Rank</th>
-                <th class="col-stage">Stage</th>
-                <th class="col-behavior">Behavior</th>
-                <th class="col-duration">Duration</th>
-                <th class="col-bar"></th>
-                <th class="col-pct">%</th>
+                <th
+                  scope="col"
+                  class="col-rank"
+                  matTooltip="Position by duration">
+                  Rank
+                </th>
+                <th
+                  scope="col"
+                  class="col-stage"
+                  matTooltip="Pipeline stage name">
+                  Stage
+                </th>
+                <th
+                  scope="col"
+                  class="col-behavior"
+                  matTooltip="Behavior key and trace ID">
+                  Behavior
+                </th>
+                <th
+                  scope="col"
+                  class="col-duration"
+                  matTooltip="Execution duration">
+                  Duration
+                </th>
+                <th scope="col" class="col-bar" aria-label="Duration bar"></th>
+                <th
+                  scope="col"
+                  class="col-pct"
+                  matTooltip="Percentage of total processing time">
+                  %
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -119,7 +173,9 @@
                   <td class="col-stage">{{ entry.name }}</td>
                   <td class="col-behavior">
                     {{ entry.behaviorKey }}
-                    <span class="behavior-trace">{{ entry.traceId }}</span>
+                    <span class="behavior-trace" [matTooltip]="entry.traceId">{{
+                      entry.traceId.slice(0, 8)
+                    }}</span>
                   </td>
                   <td class="col-duration">
                     {{ entry.duration.toFixed(1) }}ms
@@ -140,7 +196,7 @@
             </tbody>
           </table>
 
-          <footer class="ranking-summary">
+          <footer class="ranking-summary" role="status">
             @if (slowestIndividual(); as s) {
               <span class="summary-item"
                 ><strong>Slowest:</strong> {{ s.name }}/{{ s.behaviorKey }} ({{

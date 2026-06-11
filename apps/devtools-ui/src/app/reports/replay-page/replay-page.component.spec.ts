@@ -1991,11 +1991,11 @@ describe('Component: ReplayPage', () => {
     });
 
     it('should compute timelineMaxDuration as the greater of both durations', () => {
-      expect(component.timelineMaxDuration()).toBe(500);
+      expect(component.compare.timelineMaxDuration()).toBe(500);
     });
 
     it('should build before timeline markers with correct positions', () => {
-      const markers = component.timelineBeforeMarkers();
+      const markers = component.compare.timelineBeforeMarkers();
       expect(markers.length).toBe(2);
       expect(markers[0].label).toBe('lifecycle');
       expect(markers[0].eventName).toBe('lifecycle:start:replace');
@@ -2008,7 +2008,7 @@ describe('Component: ReplayPage', () => {
     });
 
     it('should build after timeline markers with correct positions', () => {
-      const markers = component.timelineAfterMarkers();
+      const markers = component.compare.timelineAfterMarkers();
       expect(markers.length).toBe(2);
       expect(markers[0].label).toBe('lifecycle');
       expect(markers[0].eventName).toBe('lifecycle:start:merge');
@@ -2021,14 +2021,14 @@ describe('Component: ReplayPage', () => {
     });
 
     it('should deduplicate categories keeping only the first occurrence', () => {
-      const markers = component.timelineBeforeMarkers();
-      const labels = markers.map((m) => m.label);
+      const markers = component.compare.timelineBeforeMarkers();
+      const labels = markers.map((m: { label: string }) => m.label);
       expect(new Set(labels).size).toBe(labels.length);
     });
 
     it('should return empty markers when no trace is selected', () => {
       component.compareBeforeId.set('');
-      expect(component.timelineBeforeMarkers()).toEqual([]);
+      expect(component.compare.timelineBeforeMarkers()).toEqual([]);
     });
   });
 });

@@ -7,6 +7,7 @@ import {
   OnInit,
   signal
 } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -39,6 +40,7 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
   standalone: true,
   imports: [
     UpperCasePipe,
+    MatIconModule,
     MatSelectModule,
     MatTabsModule,
     MatTooltipModule,
@@ -82,6 +84,9 @@ export class TraceDetailViewComponent implements OnInit {
 
   /** Currently selected cell filter ('all' = no filter). */
   readonly selectedCell = signal<string>('all');
+
+  /** Whether the help description is visible. */
+  readonly showHelp = signal(false);
 
   /** Currently expanded trace ID. */
   readonly expandedTraceId = signal<string | null>(null);

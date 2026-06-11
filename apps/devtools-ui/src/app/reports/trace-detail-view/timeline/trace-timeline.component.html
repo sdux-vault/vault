@@ -11,7 +11,7 @@
         [class.timeline-row-selected]="selectedTraceId() === trace.traceId"
         role="button"
         tabindex="0"
-        matTooltip="Trace ID: {{ trace.traceId }}"
+        matTooltip="Trace ID: {{ trace.traceId.slice(0, 8) }}"
         (click)="toggleTrace(trace.traceId)"
         (keydown.enter)="toggleTrace(trace.traceId)"
         (keydown.space)="toggleTrace(trace.traceId); $event.preventDefault()">

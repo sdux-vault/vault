@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CompareTraceService } from '../compare-trace.service';
+import { CompareTraceService } from '../service/compare-trace.service';
 
 /** Predefined zoom levels for the timeline tracks. */
 const ZOOM_LEVELS = [1, 1.5, 2, 3, 4, 6] as const;

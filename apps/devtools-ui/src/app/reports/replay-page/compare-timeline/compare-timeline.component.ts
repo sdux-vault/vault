@@ -3,11 +3,10 @@ import {
   Component,
   computed,
   inject,
-  input,
   signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CompareTraceService } from '../compare-trace.service';
+import { CompareTraceService } from '../service/compare-trace.service';
 import { TimelineViewModeSelectComponent } from '../timeline-view-mode-select/timeline-view-mode-select.component';
 import { TimelineZoomControlComponent } from '../timeline-zoom-control/timeline-zoom-control.component';
 
@@ -43,53 +42,53 @@ export interface TimelineMarkerShape {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompareTimelineComponent {
-  /** Injected comparison service for shared view mode. */
+  /** Injected comparison service for shared state. */
   readonly #compare = inject(CompareTraceService);
 
   /** Whether the help section is visible. */
   readonly showHelp = signal(false);
 
   /** Label for the "before" trace row. */
-  readonly beforeLabel = input.required<string>();
+  readonly beforeLabel = this.#compare.compareBeforeLabel;
 
   /** Label for the "after" trace row. */
-  readonly afterLabel = input.required<string>();
+  readonly afterLabel = this.#compare.compareAfterLabel;
 
   /** Duration of the "before" trace in milliseconds. */
-  readonly beforeDuration = input.required<number>();
+  readonly beforeDuration = this.#compare.compareBeforeDuration;
 
   /** Duration of the "after" trace in milliseconds. */
-  readonly afterDuration = input.required<number>();
+  readonly afterDuration = this.#compare.compareAfterDuration;
 
   /** Timeline markers for the "before" trace. */
-  readonly beforeMarkers = input.required<TimelineMarkerShape[]>();
+  readonly beforeMarkers = this.#compare.timelineBeforeMarkers;
 
   /** Timeline markers for the "after" trace. */
-  readonly afterMarkers = input.required<TimelineMarkerShape[]>();
+  readonly afterMarkers = this.#compare.timelineAfterMarkers;
 
   /** All-events timeline markers for the "before" trace. */
-  readonly beforeAllMarkers = input.required<TimelineMarkerShape[]>();
+  readonly beforeAllMarkers = this.#compare.timelineBeforeAllMarkers;
 
   /** All-events timeline markers for the "after" trace. */
-  readonly afterAllMarkers = input.required<TimelineMarkerShape[]>();
+  readonly afterAllMarkers = this.#compare.timelineAfterAllMarkers;
 
   /** Diff-only timeline markers for the "before" trace. */
-  readonly beforeDiffMarkers = input.required<TimelineMarkerShape[]>();
+  readonly beforeDiffMarkers = this.#compare.timelineBeforeDiffMarkers;
 
   /** Diff-only timeline markers for the "after" trace. */
-  readonly afterDiffMarkers = input.required<TimelineMarkerShape[]>();
+  readonly afterDiffMarkers = this.#compare.timelineAfterDiffMarkers;
 
   /** State-only timeline markers for the "before" trace. */
-  readonly beforeStateMarkers = input.required<TimelineMarkerShape[]>();
+  readonly beforeStateMarkers = this.#compare.timelineBeforeStateMarkers;
 
   /** State-only timeline markers for the "after" trace. */
-  readonly afterStateMarkers = input.required<TimelineMarkerShape[]>();
+  readonly afterStateMarkers = this.#compare.timelineAfterStateMarkers;
 
   /** Category-filtered timeline markers for the "before" trace. */
-  readonly beforeCategoryMarkers = input.required<TimelineMarkerShape[]>();
+  readonly beforeCategoryMarkers = this.#compare.timelineBeforeCategoryMarkers;
 
   /** Category-filtered timeline markers for the "after" trace. */
-  readonly afterCategoryMarkers = input.required<TimelineMarkerShape[]>();
+  readonly afterCategoryMarkers = this.#compare.timelineAfterCategoryMarkers;
 
   /** Whether the timeline section is expanded. */
   readonly showTimeline = signal(true);

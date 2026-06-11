@@ -1,10 +1,10 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { diffJson, type Change } from 'diff';
-import type { TraceExecutionShape } from '../../shapes/trace';
-import type { TimelineDeltaMarkerShape } from './compare-timeline-delta/compare-timeline-delta.component';
-import type { TimelineSpanShape } from './compare-timeline-spans/compare-timeline-spans.component';
-import type { WaterfallCategoryShape } from './compare-timeline-waterfall/compare-timeline-waterfall.component';
-import type { TimelineMarkerShape } from './compare-timeline/compare-timeline.component';
+import type { TraceExecutionShape } from '../../../shapes/trace';
+import type { TimelineDeltaMarkerShape } from '../compare-timeline-delta/compare-timeline-delta.component';
+import type { TimelineSpanShape } from '../compare-timeline-spans/compare-timeline-spans.component';
+import type { WaterfallCategoryShape } from '../compare-timeline-waterfall/compare-timeline-waterfall.component';
+import type { TimelineMarkerShape } from '../compare-timeline/compare-timeline.component';
 
 /**
  * Service that owns all trace-comparison state: trace selection,
@@ -123,6 +123,16 @@ export class CompareTraceService {
   /** Maximum duration across both compared traces (shared time scale). */
   readonly timelineMaxDuration = computed(() =>
     Math.max(this.compareBeforeDuration(), this.compareAfterDuration(), 1)
+  );
+
+  /** Display label for the "before" trace. */
+  readonly compareBeforeLabel = computed(
+    () => this.traceLabels().get(this.compareBeforeId()) ?? 'Before'
+  );
+
+  /** Display label for the "after" trace. */
+  readonly compareAfterLabel = computed(
+    () => this.traceLabels().get(this.compareAfterId()) ?? 'After'
   );
 
   /** Timeline markers for the "before" trace. */

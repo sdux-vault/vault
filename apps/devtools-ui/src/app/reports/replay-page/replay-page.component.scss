@@ -10,6 +10,10 @@
     justify-content: space-between;
     cursor: pointer;
 
+    &.vspacer {
+      margin-top: global.$spacing-md;
+    }
+
     h3 {
       margin: 0;
       font-size: global.$font-size-sm;

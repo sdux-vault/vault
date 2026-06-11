@@ -6,6 +6,7 @@ import {
   input,
   model
 } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
 import type { TraceExecutionShape } from '../../../shapes/trace';
 import { UpsellNoticeComponent } from '../../../shared/upsell-notice/upsell-notice.component';
@@ -63,7 +64,7 @@ type ViewMode = 'grouped' | 'individual';
 @Component({
   selector: 'sdux-trace-hot-stage-ranking',
   standalone: true,
-  imports: [UpsellNoticeComponent],
+  imports: [UpsellNoticeComponent, MatTooltipModule],
   templateUrl: './trace-hot-stage-ranking.component.html',
   styleUrl: './trace-hot-stage-ranking.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

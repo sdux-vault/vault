@@ -1,7 +1,7 @@
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import type { TimelineMarkerShape } from '../compare-timeline/compare-timeline.component';
-import { CompareTraceService } from '../compare-trace.service';
+import { CompareTraceService } from '../service/compare-trace.service';
 import {
   CompareTimelineWaterfallComponent,
   type WaterfallCategoryShape

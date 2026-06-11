@@ -26,7 +26,7 @@ import { CompareTimelineDeltaComponent } from './compare-timeline-delta/compare-
 import { CompareTimelineSpansComponent } from './compare-timeline-spans/compare-timeline-spans.component';
 import { CompareTimelineWaterfallComponent } from './compare-timeline-waterfall/compare-timeline-waterfall.component';
 import { CompareTimelineComponent } from './compare-timeline/compare-timeline.component';
-import { CompareTraceService } from './compare-trace.service';
+import { CompareTraceService } from './service/compare-trace.service';
 
 /**
  * Determines whether a trace used replaceState or mergeState by
@@ -239,40 +239,6 @@ export class ReplayPageComponent {
   readonly compareDurationDelta = this.compare.compareDurationDelta;
 
   /** Maximum duration across both traces for time scale. */
-  readonly timelineMaxDuration = this.compare.timelineMaxDuration;
-
-  /** Timeline markers for the "before" trace. */
-  readonly timelineBeforeMarkers = this.compare.timelineBeforeMarkers;
-
-  /** Timeline markers for the "after" trace. */
-  readonly timelineAfterMarkers = this.compare.timelineAfterMarkers;
-
-  /** All-events timeline markers for the "before" trace. */
-  readonly timelineBeforeAllMarkers = this.compare.timelineBeforeAllMarkers;
-
-  /** All-events timeline markers for the "after" trace. */
-  readonly timelineAfterAllMarkers = this.compare.timelineAfterAllMarkers;
-
-  /** Diff-only timeline markers for the "before" trace. */
-  readonly timelineBeforeDiffMarkers = this.compare.timelineBeforeDiffMarkers;
-
-  /** Diff-only timeline markers for the "after" trace. */
-  readonly timelineAfterDiffMarkers = this.compare.timelineAfterDiffMarkers;
-
-  /** State-only timeline markers for the "before" trace. */
-  readonly timelineBeforeStateMarkers = this.compare.timelineBeforeStateMarkers;
-
-  /** State-only timeline markers for the "after" trace. */
-  readonly timelineAfterStateMarkers = this.compare.timelineAfterStateMarkers;
-
-  /** Category-filtered timeline markers for the "before" trace. */
-  readonly timelineBeforeCategoryMarkers =
-    this.compare.timelineBeforeCategoryMarkers;
-
-  /** Category-filtered timeline markers for the "after" trace. */
-  readonly timelineAfterCategoryMarkers =
-    this.compare.timelineAfterCategoryMarkers;
-
   /** Active timeline view mode for component switching. */
   readonly timelineViewMode = this.compare.timelineViewMode;
 

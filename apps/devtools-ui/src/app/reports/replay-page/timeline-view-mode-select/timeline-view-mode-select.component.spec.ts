@@ -1,6 +1,6 @@
 import { signal, type WritableSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { CompareTraceService } from '../compare-trace.service';
+import { CompareTraceService } from '../service/compare-trace.service';
 import { TimelineViewModeSelectComponent } from './timeline-view-mode-select.component';
 
 describe('TimelineViewModeSelectComponent', () => {
