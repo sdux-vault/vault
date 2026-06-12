@@ -44,8 +44,10 @@ Top-level:
 - highResolution
 - runtime
 - navigation
+- environment
 - registry
 - registry.licenseSummary
+- registry.totalFeatureCells
 - licenseSummary
 - versions
 
@@ -244,6 +246,7 @@ Examples:
 
 - registry.featureCells
 - registry.licenseSummary
+- registry.totalFeatureCells
 
 Rules:
 
@@ -336,6 +339,16 @@ If no critical diagnostic signals are present, summarize overall system health i
 ---
 
 #### Global Event Metrics
+
+Use pre-computed stats fields when available:
+
+- stats.totalEvents
+- stats.firstEventTimestamp
+- stats.lastEventTimestamp
+- stats.totalDurationMs
+- stats.errorEvents
+
+Only derive these values from raw events if the stats fields are missing.
 
 | Metric              | Value |
 | ------------------- | ----- |
@@ -1760,7 +1773,15 @@ Deadlocks may indicate:
 
 #### Latency Observations
 
-Use stats.traces and stats.computeVsIdle if present.
+Use stats.traces, stats.computeVsIdle, and stats.maxIdleGapMs if present.
+
+If stats.maxIdleGapMs exists:
+
+| Metric              | Value                  |
+| ------------------- | ---------------------- |
+| Max Idle Gap (ms)    | stats.maxIdleGapMs     |
+
+Use this metric to assess whether large gaps between traces indicate user interaction pauses or scheduling delays.
 
 If stats.computeVsIdle is undefined:
 
