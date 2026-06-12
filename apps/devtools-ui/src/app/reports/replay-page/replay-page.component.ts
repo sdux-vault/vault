@@ -21,6 +21,7 @@ import { CollapsibleSectionComponent } from '../../shared/collapsible-section/co
 import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
+import { LeftRightNavigationDirective } from '../../shared/shortcuts/left-right-navigation/left-right-navigation.directive';
 import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
 import { DumpFilePickerComponent } from '../load-dump-page/dump-file-picker/dump-file-picker.component';
 import { StateTableViewComponent } from '../state-diff-view/state-table-view/state-table-view.component';
@@ -89,6 +90,7 @@ function extractResolvedValue(trace: TraceExecutionShape): unknown | undefined {
     ExportButtonComponent,
     CollapsibleSectionComponent,
     HelpToggleComponent,
+    LeftRightNavigationDirective,
     ResetButtonComponent,
     UpsellNoticeComponent,
     StateTableViewComponent,

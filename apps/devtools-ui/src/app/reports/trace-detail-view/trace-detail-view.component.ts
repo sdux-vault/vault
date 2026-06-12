@@ -21,6 +21,7 @@ import type { StageMetricShape } from '../../shapes/trace/stage-metric.shape';
 import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
+import { EscapeCloseDirective } from '../../shared/shortcuts/escape-close/escape-close.directive';
 import { DevtoolsPipelineEventDetailComponent } from '../events/panels/events/pipeline/detail/devtools-pipeline-event-detail.component';
 import { TraceHotStageRankingComponent } from '../hot-stage-ranking-page/hot-stage-ranking-trace/trace-hot-stage-ranking.component';
 import { TraceEventTableComponent } from './event-table/trace-event-table.component';
@@ -45,6 +46,7 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
     MatSelectModule,
     MatTabsModule,
     MatTooltipModule,
+    EscapeCloseDirective,
     ResetButtonComponent,
     ExportButtonComponent,
     HelpToggleComponent,

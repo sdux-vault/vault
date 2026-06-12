@@ -316,7 +316,11 @@
                 </div>
               </div>
 
-              <div class="diff-and-tables">
+              <div
+                class="diff-and-tables"
+                sduxLeftRightNavigation
+                (previous)="previousEvent()"
+                (next)="nextEvent()">
                 <div class="diff-column-group">
                   <nav class="pair-nav">
                     <button

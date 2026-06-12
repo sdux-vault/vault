@@ -110,6 +110,13 @@
     flex-direction: column;
     flex: 1;
     min-width: 0;
+
+    h3 {
+      margin: 0;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-bold;
+      color: var(--sdux-text-primary);
+    }
   }
 
   .trace-summary {

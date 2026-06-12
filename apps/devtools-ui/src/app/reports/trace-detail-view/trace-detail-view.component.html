@@ -97,7 +97,10 @@
     @if (expandedTraceId(); as traceId) {
       @for (trace of filteredTraces(); track trace.traceId) {
         @if (trace.traceId === traceId) {
-          <section class="trace-detail-section">
+          <section
+            class="trace-detail-section"
+            sduxEscapeClose
+            (escapeClose)="toggleTrace(traceId)">
             <div class="detail-header">
               <span [class]="'detail-status ' + statusClass(trace)">{{
                 statusLabel(trace)

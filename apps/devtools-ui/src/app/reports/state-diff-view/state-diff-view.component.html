@@ -161,7 +161,11 @@
       }
 
       @if (candidates().length >= 2) {
-        <div class="diff-and-tables">
+        <div
+          class="diff-and-tables"
+          sduxLeftRightNavigation
+          (previous)="previousPair()"
+          (next)="nextPair()">
           <div class="diff-column-group">
             <nav class="pair-nav">
               <button

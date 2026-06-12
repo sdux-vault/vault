@@ -5,6 +5,7 @@ import {
   output
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EscapeCloseDirective } from '../shortcuts/escape-close/escape-close.directive';
 
 /**
  * Reusable detail-pane wrapper providing a header with a title and close
@@ -19,7 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'sdux-devtools-detail-pane',
   standalone: true,
-  imports: [MatTooltipModule],
+  imports: [EscapeCloseDirective, MatTooltipModule],
   templateUrl: './detail-pane.component.html',
   styleUrl: './detail-pane.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
