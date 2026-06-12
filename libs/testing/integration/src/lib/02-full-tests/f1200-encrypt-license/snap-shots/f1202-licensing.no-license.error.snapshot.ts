@@ -6,6 +6,7 @@ export const f1202Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -15,6 +16,7 @@ export const f1202Snapshot = [
     behaviorKey: 'full-test::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -24,6 +26,7 @@ export const f1202Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:notification:runtime-error',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   }

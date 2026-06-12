@@ -6,6 +6,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -15,6 +16,7 @@ export const p311Snapshot = [
     behaviorKey: 'partial-state-with-emit-callbacks::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -24,6 +26,7 @@ export const p311Snapshot = [
     behaviorKey: 'partial-state-with-emit-callbacks::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -33,6 +36,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -43,6 +47,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -53,6 +58,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -63,6 +69,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -73,6 +80,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -83,6 +91,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -93,6 +102,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -104,6 +114,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -115,6 +126,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -126,6 +138,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -140,6 +153,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -149,6 +163,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -162,6 +177,7 @@ export const p311Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -172,6 +188,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -185,6 +202,7 @@ export const p311Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -195,6 +213,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -205,6 +224,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -215,6 +235,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -225,6 +246,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -235,6 +257,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -245,6 +268,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -255,6 +279,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -266,6 +291,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -277,6 +303,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -288,6 +315,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -302,6 +330,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -315,6 +344,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:pipeline-start',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -325,6 +355,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:merge',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -335,6 +366,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:start:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -345,6 +377,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -355,6 +388,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     state: {
       isLoading: false,
       value: '__VAULT_UNDEFINED__',
@@ -371,6 +405,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:compute-merge',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -381,6 +416,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:compute-merge',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -391,6 +427,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:compute-merge',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     state: {
       isLoading: false,
       value: '__VAULT_UNDEFINED__',
@@ -407,6 +444,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:merge',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     state: {
       isLoading: false,
       value: '__VAULT_UNDEFINED__',
@@ -423,6 +461,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -433,6 +472,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -443,6 +483,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-emit-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -453,6 +494,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-emit-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     state: {
       isLoading: false,
       value: [
@@ -623,6 +665,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     state: {
       isLoading: false,
       value: [
@@ -793,6 +836,7 @@ export const p311Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -803,6 +847,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -816,6 +861,7 @@ export const p311Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -826,6 +872,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -835,6 +882,7 @@ export const p311Snapshot = [
     behaviorKey: 'partial-state-with-emit-callbacks::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -844,6 +892,7 @@ export const p311Snapshot = [
     behaviorKey: 'partial-state-with-emit-callbacks::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -853,6 +902,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -863,6 +913,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -873,6 +924,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -883,6 +935,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -893,6 +946,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -903,6 +957,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -913,6 +968,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -924,6 +980,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -935,6 +992,7 @@ export const p311Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -946,6 +1004,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -960,6 +1019,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -969,6 +1029,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -982,6 +1043,7 @@ export const p311Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -992,6 +1054,7 @@ export const p311Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -1005,6 +1068,7 @@ export const p311Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'

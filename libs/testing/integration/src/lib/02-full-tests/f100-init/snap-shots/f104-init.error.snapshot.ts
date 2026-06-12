@@ -6,6 +6,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -15,6 +16,7 @@ export const f104Snapshot = [
     behaviorKey: 'full-test::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -24,6 +26,7 @@ export const f104Snapshot = [
     behaviorKey: 'full-test::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -33,6 +36,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -43,6 +47,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -53,6 +58,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -63,6 +69,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -73,6 +80,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -83,6 +91,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -93,6 +102,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::Throttle',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -103,6 +113,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -114,6 +125,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -125,6 +137,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -136,6 +149,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::Throttle',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -147,6 +161,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -161,6 +176,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -170,6 +186,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -183,6 +200,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
     name: 'stage:start:load-persist',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -193,6 +211,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
     name: 'stage:end:load-persist',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     payload: {
@@ -206,6 +225,7 @@ export const f104Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -216,6 +236,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -229,6 +250,7 @@ export const f104Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -239,6 +261,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -248,6 +271,7 @@ export const f104Snapshot = [
     behaviorKey: 'full-test::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -257,6 +281,7 @@ export const f104Snapshot = [
     behaviorKey: 'full-test::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -266,6 +291,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -276,6 +302,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -286,6 +313,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -296,6 +324,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -306,6 +335,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -316,6 +346,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -326,6 +357,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::Throttle',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -336,6 +368,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -347,6 +380,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -358,6 +392,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -369,6 +404,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::Throttle',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -380,6 +416,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -394,6 +431,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -403,6 +441,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -416,6 +455,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
     name: 'stage:start:load-persist',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -426,6 +466,7 @@ export const f104Snapshot = [
     behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
     name: 'stage:end:load-persist',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     payload: {
@@ -439,6 +480,7 @@ export const f104Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -449,6 +491,7 @@ export const f104Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -462,6 +505,7 @@ export const f104Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'

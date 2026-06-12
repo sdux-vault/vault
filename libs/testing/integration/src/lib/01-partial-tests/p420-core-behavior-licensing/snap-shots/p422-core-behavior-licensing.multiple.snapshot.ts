@@ -6,6 +6,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -15,6 +16,7 @@ export const p422Snapshot = [
     behaviorKey: 'partial-core-behavior-license::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -24,6 +26,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -34,6 +37,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -43,6 +47,7 @@ export const p422Snapshot = [
     behaviorKey: 'partial-core-behavior-license::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -52,6 +57,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -62,6 +68,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -72,6 +79,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -82,6 +90,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -92,6 +101,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -102,6 +112,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -112,6 +123,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -122,6 +134,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -132,6 +145,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -142,6 +156,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -152,6 +167,7 @@ export const p422Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -162,6 +178,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -172,6 +189,7 @@ export const p422Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -182,6 +200,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -192,6 +211,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -202,6 +222,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -212,6 +233,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -222,6 +244,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -232,6 +255,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -242,6 +266,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -252,6 +277,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -262,6 +288,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -272,6 +299,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -282,6 +310,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -292,6 +321,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:pipeline-start',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -302,6 +332,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -312,6 +343,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:start:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -322,6 +354,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -332,6 +365,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -342,6 +376,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Behavior::Custom::Noop',
     name: 'stage:start:operator',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -352,6 +387,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:operator',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -362,6 +398,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Behavior::Custom::Noop',
     name: 'stage:end:operator',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -372,6 +409,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -382,6 +420,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -392,6 +431,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -402,6 +442,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -412,6 +453,7 @@ export const p422Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -422,6 +464,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -432,6 +475,7 @@ export const p422Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -442,6 +486,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -452,6 +497,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -462,6 +508,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -472,6 +519,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -482,6 +530,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -492,6 +541,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -502,6 +552,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -512,6 +563,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -522,6 +574,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -532,6 +585,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -542,6 +596,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -552,6 +607,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:pipeline-start',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -562,6 +618,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -572,6 +629,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:start:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -582,6 +640,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -592,6 +651,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -602,6 +662,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Behavior::Custom::Noop',
     name: 'stage:start:operator',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -612,6 +673,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:operator',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -622,6 +684,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Behavior::Custom::Noop',
     name: 'stage:end:operator',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -632,6 +695,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -642,6 +706,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -652,6 +717,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -662,6 +728,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -672,6 +739,7 @@ export const p422Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -682,6 +750,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -692,6 +761,7 @@ export const p422Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -702,6 +772,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -711,6 +782,7 @@ export const p422Snapshot = [
     behaviorKey: 'partial-core-behavior-license::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -720,6 +792,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -730,6 +803,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -739,6 +813,7 @@ export const p422Snapshot = [
     behaviorKey: 'partial-core-behavior-license::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -748,6 +823,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -758,6 +834,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -768,6 +845,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -778,6 +856,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -788,6 +867,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -798,6 +878,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -808,6 +889,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -818,6 +900,7 @@ export const p422Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -828,6 +911,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -838,6 +922,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -848,6 +933,7 @@ export const p422Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -858,6 +944,7 @@ export const p422Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -868,6 +955,7 @@ export const p422Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'

@@ -6,6 +6,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -15,6 +16,7 @@ export const p290Snapshot = [
     behaviorKey: 'partial-interceptor.global-error-pause::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -24,6 +26,7 @@ export const p290Snapshot = [
     behaviorKey: 'partial-interceptor.global-error-pause::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -33,6 +36,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -43,6 +47,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -53,6 +58,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -63,6 +69,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -73,6 +80,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -83,6 +91,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -93,6 +102,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -104,6 +114,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -115,6 +126,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -126,6 +138,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -140,6 +153,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -149,6 +163,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -162,6 +177,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -172,6 +188,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -185,6 +202,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -195,6 +213,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -205,6 +224,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -215,6 +235,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -225,6 +246,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -235,6 +257,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -245,6 +268,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -255,6 +279,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -266,6 +291,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -277,6 +303,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -288,6 +315,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -302,6 +330,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -315,6 +344,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:pipeline-start',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -325,6 +355,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -335,6 +366,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Interceptor::GlobalErrorPause',
     name: 'stage:start:interceptor',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -345,6 +377,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Interceptor::GlobalErrorPause',
     name: 'stage:end:interceptor',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -355,6 +388,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:start:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -365,6 +399,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -375,6 +410,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -385,6 +421,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:start:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -395,6 +432,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -405,6 +443,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:end:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -415,6 +454,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -425,6 +465,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -435,6 +476,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -445,6 +487,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -455,6 +498,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -465,6 +509,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -478,6 +523,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -488,6 +534,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -498,6 +545,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -508,6 +556,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -518,6 +567,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -528,6 +578,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -538,6 +589,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -548,6 +600,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -559,6 +612,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -570,6 +624,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -581,6 +636,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -595,6 +651,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -608,6 +665,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:pipeline-start',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -618,6 +676,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:merge',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -628,6 +687,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Interceptor::GlobalErrorPause',
     name: 'stage:start:interceptor',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -638,6 +698,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Interceptor::GlobalErrorPause',
     name: 'stage:end:interceptor',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -648,6 +709,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:start:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -658,6 +720,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -668,6 +731,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -678,6 +742,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:compute-merge',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -688,6 +753,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:compute-merge',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -698,6 +764,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:compute-merge',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -708,6 +775,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:start:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -718,6 +786,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'lifecycle:notification:runtime-error',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     error: {
@@ -735,6 +804,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-error',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -745,6 +815,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-error',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -755,6 +826,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -765,6 +837,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -775,6 +848,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:global-error',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -785,6 +859,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:global-error',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -795,6 +870,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:failure',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     error: {
@@ -812,6 +888,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'lifecycle:notification:abort',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -822,6 +899,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -835,6 +913,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:notification:restart-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'notification',
     payload: 'failure',
@@ -846,6 +925,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -856,6 +936,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -866,6 +947,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -876,6 +958,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -886,6 +969,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -896,6 +980,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -906,6 +991,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -916,6 +1002,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -927,6 +1014,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -938,6 +1026,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -949,6 +1038,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -963,6 +1053,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -976,6 +1067,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:pipeline-start',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -986,6 +1078,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -996,6 +1089,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Interceptor::GlobalErrorPause',
     name: 'stage:start:interceptor',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1006,6 +1100,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Interceptor::GlobalErrorPause',
     name: 'stage:end:interceptor',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     payload: {
@@ -1019,6 +1114,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     payload: {
@@ -1032,6 +1128,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1042,6 +1139,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -1052,6 +1150,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -1062,6 +1161,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -1072,6 +1172,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -1085,6 +1186,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -1095,6 +1197,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1105,6 +1208,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1115,6 +1219,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1125,6 +1230,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1135,6 +1241,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1145,6 +1252,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1155,6 +1263,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -1166,6 +1275,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -1177,6 +1287,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -1188,6 +1299,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -1202,6 +1314,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -1215,6 +1328,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:pipeline-start',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -1225,6 +1339,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1235,6 +1350,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Interceptor::GlobalErrorPause',
     name: 'stage:start:interceptor',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1245,6 +1361,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Interceptor::GlobalErrorPause',
     name: 'stage:end:interceptor',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     payload: {
@@ -1258,6 +1375,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     payload: {
@@ -1271,6 +1389,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1281,6 +1400,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -1291,6 +1411,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -1301,6 +1422,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -1311,6 +1433,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -1324,6 +1447,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -1334,6 +1458,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1344,6 +1469,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1354,6 +1480,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1364,6 +1491,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1374,6 +1502,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1384,6 +1513,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1394,6 +1524,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -1405,6 +1536,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -1416,6 +1548,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -1427,6 +1560,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -1441,6 +1575,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -1454,6 +1589,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:pipeline-start',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -1464,6 +1600,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1474,6 +1611,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Interceptor::GlobalErrorPause',
     name: 'stage:start:interceptor',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1484,6 +1622,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Interceptor::GlobalErrorPause',
     name: 'stage:end:interceptor',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -1494,6 +1633,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:start:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1504,6 +1644,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -1514,6 +1655,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -1524,6 +1666,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:start:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1534,6 +1677,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -1544,6 +1688,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:end:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -1554,6 +1699,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -1564,6 +1710,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1574,6 +1721,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'pipeline',
     boundary: 'candidate',
     traceId: 'trace-id-removed'
@@ -1584,6 +1732,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -1594,6 +1743,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -1604,6 +1754,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -1617,6 +1768,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -1627,6 +1779,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -1636,6 +1789,7 @@ export const p290Snapshot = [
     behaviorKey: 'partial-interceptor.global-error-pause::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -1645,6 +1799,7 @@ export const p290Snapshot = [
     behaviorKey: 'partial-interceptor.global-error-pause::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -1654,6 +1809,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1664,6 +1820,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1674,6 +1831,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1684,6 +1842,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1694,6 +1853,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1704,6 +1864,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -1714,6 +1875,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -1725,6 +1887,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -1736,6 +1899,7 @@ export const p290Snapshot = [
     behaviorKey: 'SDUX::Controller::Policy::CoreError',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: 'abstain',
@@ -1747,6 +1911,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -1761,6 +1926,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -1770,6 +1936,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'controller:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -1783,6 +1950,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -1793,6 +1961,7 @@ export const p290Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'end',
     payload: {
@@ -1806,6 +1975,7 @@ export const p290Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'

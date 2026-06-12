@@ -6,6 +6,7 @@ export const p234Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -15,6 +16,7 @@ export const p234Snapshot = [
     behaviorKey: 'partial-persist.with-session-storage::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -24,6 +26,7 @@ export const p234Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -34,6 +37,7 @@ export const p234Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -43,6 +47,7 @@ export const p234Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -53,6 +58,7 @@ export const p234Snapshot = [
     behaviorKey: 'partial-persist.with-session-storage::license',
     name: 'lifecycle:notification:license-denied',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -62,6 +68,7 @@ export const p234Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -71,6 +78,7 @@ export const p234Snapshot = [
     behaviorKey: 'partial-persist.with-session-storage::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -80,6 +88,7 @@ export const p234Snapshot = [
     behaviorKey: 'vault-conductor',
     name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -90,6 +99,7 @@ export const p234Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -99,6 +109,7 @@ export const p234Snapshot = [
     behaviorKey: 'partial-persist.with-session-storage::license',
     name: 'lifecycle:notification:license-denied',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   }
