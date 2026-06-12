@@ -2,30 +2,17 @@
   <header class="header">
     <div class="title-group">
       <h2>Feature Cell Events</h2>
-      <button
-        type="button"
-        class="help-toggle"
-        (click)="showHelp.set(!showHelp())"
-        matTooltip="Toggle help"
-        aria-label="Toggle events help">
-        <img
-          src="assets/icons/help-icon.png"
-          alt=""
-          class="help-icon"
-          aria-hidden="true" />
-      </button>
+      <sdux-help-toggle ariaLabel="Toggle events help">
+        <p class="help-text">
+          The Feature Cell Events view displays a real-time log of every
+          pipeline event emitted by the selected FeatureCell. Filter by cell,
+          event type, or behavior key to narrow the stream. Click any event row
+          to inspect its full detail including state, payload, and error
+          information.
+        </p>
+      </sdux-help-toggle>
     </div>
   </header>
-  @if (showHelp()) {
-    <section class="help-section">
-      <p class="help-text">
-        The Feature Cell Events view displays a real-time log of every pipeline
-        event emitted by the selected FeatureCell. Filter by cell, event type,
-        or behavior key to narrow the stream. Click any event row to inspect its
-        full detail including state, payload, and error information.
-      </p>
-    </section>
-  }
   <div class="action-bar">
     <mat-select
       class="cell-filter"

@@ -10,6 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
+import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
 import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
 import { TraceHotStageRankingComponent } from './hot-stage-ranking-trace/trace-hot-stage-ranking.component';
@@ -29,6 +30,7 @@ import { TraceHotStageRankingComponent } from './hot-stage-ranking-trace/trace-h
     MatSelectModule,
     MatTooltipModule,
     ExportButtonComponent,
+    HelpToggleComponent,
     ResetButtonComponent,
     TraceHotStageRankingComponent,
     UpsellNoticeComponent
@@ -41,9 +43,6 @@ import { TraceHotStageRankingComponent } from './hot-stage-ranking-trace/trace-h
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HotStageRankingPageComponent {
-  /** Whether the help section is visible. */
-  readonly showHelp = signal(false);
-
   /** Aggregate service providing trace data. */
   #aggregate = inject(DevtoolsAggregateService);
 

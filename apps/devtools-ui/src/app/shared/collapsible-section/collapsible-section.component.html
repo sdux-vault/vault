@@ -1,0 +1,21 @@
+<div
+  class="collapsible-header"
+  role="button"
+  tabindex="0"
+  [attr.aria-expanded]="expanded()"
+  [attr.aria-label]="ariaLabel()"
+  (click)="toggle()"
+  (keydown.enter)="toggle()"
+  (keydown.space)="$event.preventDefault(); toggle()">
+  <ng-content select="[header]" />
+  <mat-icon
+    class="chevron"
+    [class.expanded]="expanded()"
+    aria-hidden="true"
+    matTooltip="Toggle section details"
+    >chevron_right</mat-icon
+  >
+</div>
+@if (expanded()) {
+  <ng-content />
+}

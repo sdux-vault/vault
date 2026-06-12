@@ -16,6 +16,8 @@ import { DevtoolsAggregateService } from '../../services/devtools-aggregate.serv
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { TraceExecutionStatuses } from '../../shapes/trace';
 import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
+import { CollapsibleSectionComponent } from '../../shared/collapsible-section/collapsible-section.component';
+import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
 import { RegistryDetailComponent } from './registry-detail/registry-detail.component';
 
 /**
@@ -39,6 +41,8 @@ import { RegistryDetailComponent } from './registry-detail/registry-detail.compo
     FormsModule,
     MatIconModule,
     MatTooltipModule,
+    CollapsibleSectionComponent,
+    HelpToggleComponent,
     RegistryDetailComponent
   ],
   templateUrl: './vault-overview.component.html',
@@ -46,12 +50,6 @@ import { RegistryDetailComponent } from './registry-detail/registry-detail.compo
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VaultOverviewComponent implements OnInit {
-  /** Whether the page-level help section is visible. */
-  readonly showHelp = signal(false);
-
-  /** Whether the registry help section is visible. */
-  readonly showRegistryHelp = signal(false);
-
   /** Whether the registry cards section is expanded. */
   readonly showRegistryCards = signal(true);
 
@@ -165,11 +163,11 @@ export class VaultOverviewComponent implements OnInit {
   /** Whether the viewport matches the mobile breakpoint. */
   readonly #isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-  /** Whether the Package Versions section is collapsed. */
-  readonly versionsCollapsed = signal(this.#isMobile);
+  /** Whether the Package Versions section is expanded. */
+  readonly versionsExpanded = signal(!this.#isMobile);
 
-  /** Whether the License section is collapsed. */
-  readonly licenseCollapsed = signal(this.#isMobile);
+  /** Whether the License section is expanded. */
+  readonly licenseExpanded = signal(!this.#isMobile);
 
   /** Set of cell keys whose cards are collapsed. */
   readonly collapsedCells = signal(new Set<string>());

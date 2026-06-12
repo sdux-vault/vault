@@ -105,7 +105,7 @@ describe('CompareTimelineWaterfallComponent', () => {
   });
 
   it('should display the section header', () => {
-    const header = el.querySelector('.section-header h3');
+    const header = el.querySelector('.collapsible-header h3');
     expect(header!.textContent).toContain('Waterfall');
   });
 
@@ -171,7 +171,7 @@ describe('CompareTimelineWaterfallComponent', () => {
 
   it('should toggle visibility when header is clicked', () => {
     expect(el.querySelector('.timeline-content')).toBeTruthy();
-    const header = el.querySelector('.section-header') as HTMLElement;
+    const header = el.querySelector('.collapsible-header') as HTMLElement;
     header.click();
     fixture.detectChanges();
     expect(el.querySelector('.timeline-content')).toBeNull();
@@ -266,17 +266,6 @@ describe('CompareTimelineWaterfallComponent', () => {
         'unknown-id'
       );
       expect(component.afterLabel()).toBe('After');
-    });
-  });
-
-  describe('showHelp', () => {
-    it('should default to false', () => {
-      expect(component.showHelp()).toBeFalse();
-    });
-
-    it('should toggle to true', () => {
-      component.showHelp.set(true);
-      expect(component.showHelp()).toBeTrue();
     });
   });
 

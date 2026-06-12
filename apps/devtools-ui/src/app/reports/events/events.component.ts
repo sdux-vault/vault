@@ -17,6 +17,7 @@ import { EventShape } from '@sdux-vault/shared';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
+import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
 import { EXTENSION_VERSION } from '../../splash-page/devtools-splash-page.component';
 import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devtools-main-pipeline-panel.component';
@@ -36,6 +37,7 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
     MatTooltipModule,
     DevtoolsMainPipelinePanelComponent,
     ExportButtonComponent,
+    HelpToggleComponent,
     ResetButtonComponent
   ],
   templateUrl: './events.component.html',
@@ -51,9 +53,6 @@ export class EventsComponent {
 
   /** Reactive list of pipeline events used to populate the UI. */
   readonly events = computed(() => this.devtools.events());
-
-  /** Whether the help section is visible. */
-  readonly showHelp = signal(false);
 
   /** Current search term for filtering events. */
   readonly eventSearchTerm = signal('');

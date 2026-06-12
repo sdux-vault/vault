@@ -2,56 +2,30 @@
   <header class="header">
     <div class="title-group">
       <h2>Vault Overview</h2>
-      <button
-        type="button"
-        class="help-toggle"
-        (click)="showHelp.set(!showHelp())"
-        matTooltip="Toggle help"
-        aria-label="Toggle vault overview help">
-        <img
-          src="assets/icons/help-icon.png"
-          alt=""
-          class="help-icon"
-          aria-hidden="true" />
-      </button>
+      <sdux-help-toggle ariaLabel="Toggle vault overview help">
+        <p class="help-text">
+          The Vault Overview displays runtime package versions, license details,
+          and the FeatureCell registry. Each registry card shows behavior,
+          controller, and Fluent API counts along with trace statistics. Click
+          <strong>View Pipeline</strong> to inspect a cell's registered
+          pipeline.
+        </p>
+      </sdux-help-toggle>
     </div>
   </header>
-  @if (showHelp()) {
-    <section class="help-section">
-      <p class="help-text">
-        The Vault Overview displays runtime package versions, license details,
-        and the FeatureCell registry. Each registry card shows behavior,
-        controller, and Fluent API counts along with trace statistics. Click
-        <strong>View Pipeline</strong> to inspect a cell's registered pipeline.
-      </p>
-    </section>
-  }
 
   <section class="vault-overview-content">
     <div class="info-cards">
-      <section
-        class="info-card"
-        [class.info-card-collapsed]="versionsCollapsed()">
-        <h3
-          class="card-title collapsible"
-          role="button"
-          tabindex="0"
-          [attr.aria-expanded]="!versionsCollapsed()"
-          (click)="versionsCollapsed.set(!versionsCollapsed())"
-          (keydown.enter)="versionsCollapsed.set(!versionsCollapsed())"
-          (keydown.space)="
-            $event.preventDefault(); versionsCollapsed.set(!versionsCollapsed())
-          "
-          matTooltip="Package version information">
-          Package Versions
-          <span
-            class="section-chevron"
-            [class.section-chevron-expanded]="!versionsCollapsed()"
-            aria-hidden="true"
-            >&#9656;</span
-          >
-        </h3>
-        @if (!versionsCollapsed()) {
+      <section class="info-card">
+        <sdux-collapsible-section
+          ariaLabel="Toggle package versions"
+          [(expanded)]="versionsExpanded">
+          <h3
+            header
+            class="card-title"
+            matTooltip="Package version information">
+            Package Versions
+          </h3>
           @if (versions().length) {
             <dl class="card-list">
               @for (entry of versions(); track entry[0]) {
@@ -64,33 +38,17 @@
           } @else {
             <p class="empty">No version data available.</p>
           }
-        }
+        </sdux-collapsible-section>
       </section>
 
       @if (license(); as lic) {
-        <section
-          class="info-card"
-          [class.info-card-collapsed]="licenseCollapsed()">
-          <h3
-            class="card-title collapsible"
-            role="button"
-            tabindex="0"
-            [attr.aria-expanded]="!licenseCollapsed()"
-            (click)="licenseCollapsed.set(!licenseCollapsed())"
-            (keydown.enter)="licenseCollapsed.set(!licenseCollapsed())"
-            (keydown.space)="
-              $event.preventDefault(); licenseCollapsed.set(!licenseCollapsed())
-            "
-            matTooltip="License details">
-            License
-            <span
-              class="section-chevron"
-              [class.section-chevron-expanded]="!licenseCollapsed()"
-              aria-hidden="true"
-              >&#9656;</span
-            >
-          </h3>
-          @if (!licenseCollapsed()) {
+        <section class="info-card">
+          <sdux-collapsible-section
+            ariaLabel="Toggle license details"
+            [(expanded)]="licenseExpanded">
+            <h3 header class="card-title" matTooltip="License details">
+              License
+            </h3>
             <dl class="card-list">
               <div class="card-row">
                 <dt class="card-label">Organization</dt>
@@ -121,116 +79,71 @@
                 <dd class="card-value">{{ lic.verified ? 'Yes' : 'No' }}</dd>
               </div>
             </dl>
-          }
+          </sdux-collapsible-section>
         </section>
       } @else {
-        <section
-          class="info-card"
-          [class.info-card-collapsed]="licenseCollapsed()">
-          <h3
-            class="card-title collapsible"
-            role="button"
-            tabindex="0"
-            [attr.aria-expanded]="!licenseCollapsed()"
-            (click)="licenseCollapsed.set(!licenseCollapsed())"
-            (keydown.enter)="licenseCollapsed.set(!licenseCollapsed())"
-            (keydown.space)="
-              $event.preventDefault(); licenseCollapsed.set(!licenseCollapsed())
-            "
-            matTooltip="License details">
-            License
-            <span
-              class="section-chevron"
-              [class.section-chevron-expanded]="!licenseCollapsed()"
-              aria-hidden="true"
-              >&#9656;</span
-            >
-          </h3>
-          @if (!licenseCollapsed()) {
+        <section class="info-card">
+          <sdux-collapsible-section
+            ariaLabel="Toggle license details"
+            [(expanded)]="licenseExpanded">
+            <h3 header class="card-title" matTooltip="License details">
+              License
+            </h3>
             <p class="free-license">
               Free license — Chrome extension features are limited.
             </p>
-          }
+          </sdux-collapsible-section>
         </section>
       }
     </div>
 
     <section class="section registry-section">
-      <div
-        class="registry-header collapsible"
-        role="button"
-        tabindex="0"
-        [attr.aria-expanded]="showRegistryCards()"
-        (click)="showRegistryCards.set(!showRegistryCards())"
-        (keydown.enter)="showRegistryCards.set(!showRegistryCards())"
-        (keydown.space)="
-          $event.preventDefault(); showRegistryCards.set(!showRegistryCards())
-        ">
-        <h3 class="section-title">FeatureCell Registry</h3>
-        <button
-          type="button"
-          class="help-toggle"
-          (click)="
-            $event.stopPropagation(); showRegistryHelp.set(!showRegistryHelp())
-          "
-          matTooltip="Toggle registry help"
-          aria-label="Toggle registry help">
-          <img
-            src="assets/icons/help-icon.png"
-            alt=""
-            class="help-icon"
-            aria-hidden="true" />
-        </button>
-        <div class="registry-header-actions">
-          <div class="registry-search" (click)="$event.stopPropagation()">
-            <input
-              type="text"
-              class="registry-search-input"
-              placeholder="Filter cells"
-              aria-label="Filter registry cells"
-              [ngModel]="registrySearchTerm()"
-              (ngModelChange)="
-                registrySearchTerm.set($event); registrySearchTerm$.next($event)
-              " />
-            <button
-              type="button"
-              class="registry-search-btn"
-              [attr.aria-label]="
-                registrySearchTerm() ? 'Clear filter' : 'Filter cells'
-              "
-              [matTooltip]="
-                registrySearchTerm() ? 'Clear filter' : 'Filter cells'
-              "
-              (click)="registrySearchTerm() ? clearRegistrySearch() : null">
-              <mat-icon>{{
-                registrySearchTerm() ? 'close' : 'search'
-              }}</mat-icon>
-            </button>
+      <sdux-collapsible-section
+        ariaLabel="Toggle registry"
+        [(expanded)]="showRegistryCards">
+        <div header class="registry-header">
+          <h3 class="section-title">FeatureCell Registry</h3>
+          <sdux-help-toggle ariaLabel="Toggle registry help">
+            <p class="help-text">
+              Each card represents a registered FeatureCell. The first row shows
+              the number of Behaviors, Controllers, and Fluent APIs attached to
+              the cell. The second row shows live trace statistics — total
+              traces executed, average duration in milliseconds, and error
+              count.
+            </p>
+          </sdux-help-toggle>
+          <div class="registry-header-actions">
+            <div class="registry-search" (click)="$event.stopPropagation()">
+              <input
+                type="text"
+                class="registry-search-input"
+                placeholder="Filter cells"
+                aria-label="Filter registry cells"
+                [ngModel]="registrySearchTerm()"
+                (ngModelChange)="
+                  registrySearchTerm.set($event);
+                  registrySearchTerm$.next($event)
+                " />
+              <button
+                type="button"
+                class="registry-search-btn"
+                [attr.aria-label]="
+                  registrySearchTerm() ? 'Clear filter' : 'Filter cells'
+                "
+                [matTooltip]="
+                  registrySearchTerm() ? 'Clear filter' : 'Filter cells'
+                "
+                (click)="registrySearchTerm() ? clearRegistrySearch() : null">
+                <mat-icon>{{
+                  registrySearchTerm() ? 'close' : 'search'
+                }}</mat-icon>
+              </button>
+            </div>
           </div>
-          <span
-            class="section-chevron"
-            [class.section-chevron-expanded]="showRegistryCards()"
-            aria-hidden="true"
-            >&#9656;</span
-          >
         </div>
-      </div>
-
-      @if (showRegistryHelp()) {
-        <section class="help-section">
-          <p class="help-text">
-            Each card represents a registered FeatureCell. The first row shows
-            the number of Behaviors, Controllers, and Fluent APIs attached to
-            the cell. The second row shows live trace statistics — total traces
-            executed, average duration in milliseconds, and error count.
-          </p>
-        </section>
-      }
-
-      @if (showRegistryCards()) {
-        @if (registry().length) {
-          <div class="cell-cards">
-            @for (_ of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track $index) {
+        <div class="registry-body">
+          @if (registry().length) {
+            <div class="cell-cards">
               @for (cell of filteredRegistry(); track $index) {
                 <div
                   class="cell-card"
@@ -250,14 +163,14 @@
                     <span class="cell-card-key" [matTooltip]="cell.key">{{
                       cell.key
                     }}</span>
-                    <span
+                    <mat-icon
                       class="section-chevron"
                       [class.section-chevron-expanded]="
                         !collapsedCells().has(cell.key)
                       "
                       aria-hidden="true"
                       matTooltip="Toggle cell details"
-                      >&#9656;</span
+                      >chevron_right</mat-icon
                     >
                   </div>
                   @if (!collapsedCells().has(cell.key)) {
@@ -350,20 +263,20 @@
                   </div>
                 </div>
               }
-            }
-          </div>
-        } @else {
-          <p class="empty">No registry data available.</p>
-        }
+            </div>
+          } @else {
+            <p class="empty">No registry data available.</p>
+          }
 
-        @if (selectedCell(); as cell) {
-          <aside class="detail-pane">
-            <sdux-devtools-registry-detail
-              [cellKey]="cell.key"
-              (closeDetail)="closeDetail()"></sdux-devtools-registry-detail>
-          </aside>
-        }
-      }
+          @if (selectedCell(); as cell) {
+            <aside class="detail-pane">
+              <sdux-devtools-registry-detail
+                [cellKey]="cell.key"
+                (closeDetail)="closeDetail()"></sdux-devtools-registry-detail>
+            </aside>
+          }
+        </div>
+      </sdux-collapsible-section>
     </section>
   </section>
 </div>

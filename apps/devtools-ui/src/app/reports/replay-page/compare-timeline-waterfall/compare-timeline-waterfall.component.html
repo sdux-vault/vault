@@ -1,67 +1,42 @@
 <section class="compare-timeline-waterfall">
-  <header
-    class="section-header"
-    role="button"
-    tabindex="0"
-    [attr.aria-expanded]="showTimeline()"
-    aria-label="Toggle timeline"
-    (click)="showTimeline.set(!showTimeline())"
-    (keydown.enter)="showTimeline.set(!showTimeline())"
-    (keydown.space)="
-      $event.preventDefault(); showTimeline.set(!showTimeline())
-    ">
-    <div class="title-group">
+  <sdux-collapsible-section
+    ariaLabel="Toggle timeline"
+    [(expanded)]="showTimeline">
+    <div header class="title-group">
       <h3>Timeline — Waterfall</h3>
       @if (showTimeline()) {
-        <button
-          type="button"
-          class="help-toggle"
-          (click)="$event.stopPropagation(); showHelp.set(!showHelp())"
-          matTooltip="Toggle help"
-          aria-label="Toggle waterfall help">
-          <img
-            src="assets/icons/help-icon.png"
-            alt=""
-            class="help-icon"
-            aria-hidden="true" />
-        </button>
+        <sdux-help-toggle ariaLabel="Toggle waterfall help">
+          <p class="help-text">
+            The waterfall timeline plots every event from both traces on a
+            shared time scale, grouped by category. Each row represents one
+            event category (e.g. lifecycle, controller, stage).
+          </p>
+          <p class="help-text">
+            <span class="help-marker before-marker"></span> markers are events
+            from the <em>before</em> trace;
+            <span class="help-marker after-marker"></span> markers are from the
+            <em>after</em> trace. Hover any marker to see the event name and
+            elapsed time.
+          </p>
+          <p class="help-text">
+            Vertical tick lines mark 100ms intervals (50ms at 2× zoom, 25ms at
+            4× zoom). Use the zoom controls to magnify the timeline and reveal
+            finer detail.
+          </p>
+          <p class="help-text">
+            Use the <strong>view mode</strong> dropdown to filter which events
+            are displayed — for example, show only diff events, state events, or
+            a specific category.
+          </p>
+          <p class="help-text">
+            Use this view to spot which categories shifted in timing after a
+            code change. If a category's markers moved later on the after trace,
+            investigate that area for regressions. Conversely, markers that
+            moved earlier confirm a performance improvement in that category.
+          </p>
+        </sdux-help-toggle>
       }
     </div>
-    <span class="chevron" [class.expanded]="showTimeline()">›</span>
-  </header>
-  @if (showTimeline()) {
-    @if (showHelp()) {
-      <section class="help-section">
-        <p class="help-text">
-          The waterfall timeline plots every event from both traces on a shared
-          time scale, grouped by category. Each row represents one event
-          category (e.g. lifecycle, controller, stage).
-        </p>
-        <p class="help-text">
-          <span class="help-marker before-marker"></span> markers are events
-          from the <em>before</em> trace;
-          <span class="help-marker after-marker"></span> markers are from the
-          <em>after</em> trace. Hover any marker to see the event name and
-          elapsed time.
-        </p>
-        <p class="help-text">
-          Vertical tick lines mark 100ms intervals (50ms at 2× zoom, 25ms at 4×
-          zoom). Use the zoom controls to magnify the timeline and reveal finer
-          detail.
-        </p>
-        <p class="help-text">
-          Use the <strong>view mode</strong> dropdown to filter which events are
-          displayed — for example, show only diff events, state events, or a
-          specific category.
-        </p>
-        <p class="help-text">
-          Use this view to spot which categories shifted in timing after a code
-          change. If a category's markers moved later on the after trace,
-          investigate that area for regressions. Conversely, markers that moved
-          earlier confirm a performance improvement in that category.
-        </p>
-      </section>
-    }
     <div class="timeline-content">
       <div class="timeline-toolbar">
         <div class="toolbar-row durations-row">
@@ -166,5 +141,5 @@
         </div>
       </div>
     </div>
-  }
+  </sdux-collapsible-section>
 </section>

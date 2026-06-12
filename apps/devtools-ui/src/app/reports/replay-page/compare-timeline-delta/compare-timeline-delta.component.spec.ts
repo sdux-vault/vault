@@ -81,7 +81,7 @@ describe('CompareTimelineDeltaComponent', () => {
   });
 
   it('should display the section header', () => {
-    const header = el.querySelector('.section-header h3');
+    const header = el.querySelector('.collapsible-header h3');
     expect(header!.textContent).toContain('Elapsed Delta');
   });
 
@@ -145,7 +145,7 @@ describe('CompareTimelineDeltaComponent', () => {
 
   it('should toggle visibility when header is clicked', () => {
     expect(el.querySelector('.timeline-content')).toBeTruthy();
-    const header = el.querySelector('.section-header') as HTMLElement;
+    const header = el.querySelector('.collapsible-header') as HTMLElement;
     header.click();
     fixture.detectChanges();
     expect(el.querySelector('.timeline-content')).toBeNull();
@@ -270,18 +270,6 @@ describe('CompareTimelineDeltaComponent', () => {
       fixture.detectChanges();
       const stats = el.querySelector('.timeline-toolbar')!.textContent;
       expect(stats).not.toContain('same');
-    });
-  });
-
-  describe('showHelp', () => {
-    it('should default to false', () => {
-      expect(component.showHelp()).toBeFalse();
-    });
-
-    it('should toggle to true', () => {
-      component.showHelp.set(true);
-      fixture.detectChanges();
-      expect(el.querySelector('.help-section')).toBeTruthy();
     });
   });
 

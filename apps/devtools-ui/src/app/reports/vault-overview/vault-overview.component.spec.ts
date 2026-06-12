@@ -454,7 +454,7 @@ describe('Component: VaultOverview', () => {
   describe('template rendering', () => {
     it('should show free license message when no license is present', () => {
       mockService.vaultConfig.set({ versions: {}, registry: null });
-      component.licenseCollapsed.set(false);
+      component.licenseExpanded.set(true);
       fixture.detectChanges();
       const el = fixture.nativeElement as HTMLElement;
       expect(el.querySelector('.free-license')?.textContent).toContain(
@@ -641,12 +641,12 @@ describe('Component: VaultOverview (mobile)', () => {
     window.matchMedia = originalMatchMedia;
   });
 
-  it('should start with versionsCollapsed true on mobile', () => {
-    expect(component.versionsCollapsed()).toBeTrue();
+  it('should start with versionsExpanded false on mobile', () => {
+    expect(component.versionsExpanded()).toBeFalse();
   });
 
-  it('should start with licenseCollapsed true on mobile', () => {
-    expect(component.licenseCollapsed()).toBeTrue();
+  it('should start with licenseExpanded false on mobile', () => {
+    expect(component.licenseExpanded()).toBeFalse();
   });
 
   it('should collapse all cells when registry loads on mobile', () => {

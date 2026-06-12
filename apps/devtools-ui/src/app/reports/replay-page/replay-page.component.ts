@@ -17,7 +17,9 @@ import { SDuXShape } from '@sdux-vault/shared';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import type { TraceExecutionShape } from '../../shapes/trace';
+import { CollapsibleSectionComponent } from '../../shared/collapsible-section/collapsible-section.component';
 import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
+import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
 import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
 import { DumpFilePickerComponent } from '../load-dump-page/dump-file-picker/dump-file-picker.component';
@@ -85,6 +87,8 @@ function extractResolvedValue(trace: TraceExecutionShape): unknown | undefined {
     RouterLink,
     DumpFilePickerComponent,
     ExportButtonComponent,
+    CollapsibleSectionComponent,
+    HelpToggleComponent,
     ResetButtonComponent,
     UpsellNoticeComponent,
     StateTableViewComponent,
@@ -122,9 +126,6 @@ export class ReplayPageComponent {
 
   /** Whether the compare traces section is expanded. */
   readonly showCompareTraces = signal(true);
-
-  /** Whether the compare traces help section is visible. */
-  readonly showCompareHelp = signal(false);
 
   /** View mode for compare traces: diff or table. */
   readonly viewMode = signal<'diff' | 'table'>('diff');

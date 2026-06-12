@@ -3,22 +3,7 @@
     <!-- Header -->
     <header class="header">
       <h2>State Diff View</h2>
-      <button
-        type="button"
-        class="help-toggle"
-        (click)="showDescription.set(!showDescription())"
-        matTooltip="Toggle description"
-        aria-label="Toggle description">
-        <img
-          src="assets/icons/help-icon.png"
-          alt=""
-          class="help-icon"
-          aria-hidden="true" />
-      </button>
-    </header>
-
-    @if (showDescription()) {
-      <section class="description-section">
+      <sdux-help-toggle ariaLabel="Toggle description">
         <p class="description">
           Compare before and after state snapshots across pipeline stages.
           Select a trace, then step through snapshot pairs to see exactly how
@@ -28,8 +13,8 @@
           Use the side-by-side diff to identify unintended mutations, or switch
           to table view for a structured key-by-key comparison.
         </p>
-      </section>
-    }
+      </sdux-help-toggle>
+    </header>
 
     <div class="action-bar">
       <mat-select
@@ -108,67 +93,34 @@
 
       @if (mutationGraph().rows.length > 0) {
         <section class="mutation-graph-section">
-          <header
-            class="section-header"
-            role="button"
-            tabindex="0"
-            [attr.aria-expanded]="showMutationGraph()"
-            aria-label="Toggle state mutation graph"
-            (click)="showMutationGraph.set(!showMutationGraph())"
-            (keydown.enter)="showMutationGraph.set(!showMutationGraph())"
-            (keydown.space)="
-              $event.preventDefault();
-              showMutationGraph.set(!showMutationGraph())
-            ">
-            <div class="title-group">
+          <sdux-collapsible-section
+            ariaLabel="Toggle state mutation graph"
+            [(expanded)]="showMutationGraph">
+            <div header class="title-group">
               <h3>State Mutation Graph</h3>
-              <button
-                type="button"
-                class="help-toggle"
-                (click)="
-                  $event.stopPropagation();
-                  showMutationGraphHelp.set(!showMutationGraphHelp())
-                "
-                matTooltip="Toggle help"
-                aria-label="Toggle mutation graph help">
-                <img
-                  src="assets/icons/help-icon.png"
-                  alt=""
-                  class="help-icon"
-                  aria-hidden="true" />
-              </button>
+              <sdux-help-toggle ariaLabel="Toggle mutation graph help">
+                <p class="help-text">
+                  The State Mutation Graph shows which pipeline stages produced
+                  mutations for each candidate pair. Each row is a pair
+                  comparison; each column is a pipeline stage.
+                </p>
+                <ul class="help-list">
+                  <li>
+                    <strong class="mutation-dot">●</strong> indicates the
+                    candidate value changed between the before and after
+                    snapshots.
+                  </li>
+                  <li>
+                    Scan a <strong>row</strong> to see which stage produced the
+                    mutation for that pair.
+                  </li>
+                  <li>
+                    Scan a <strong>column</strong> top-to-bottom to see how
+                    often a particular stage produces mutations.
+                  </li>
+                </ul>
+              </sdux-help-toggle>
             </div>
-            <span class="chevron" [class.expanded]="showMutationGraph()"
-              >›</span
-            >
-          </header>
-
-          @if (showMutationGraphHelp()) {
-            <section class="help-section">
-              <p class="help-text">
-                The State Mutation Graph shows which pipeline stages produced
-                mutations for each candidate pair. Each row is a pair
-                comparison; each column is a pipeline stage.
-              </p>
-              <ul class="help-list">
-                <li>
-                  <strong class="mutation-dot">●</strong> indicates the
-                  candidate value changed between the before and after
-                  snapshots.
-                </li>
-                <li>
-                  Scan a <strong>row</strong> to see which stage produced the
-                  mutation for that pair.
-                </li>
-                <li>
-                  Scan a <strong>column</strong> top-to-bottom to see how often
-                  a particular stage produces mutations.
-                </li>
-              </ul>
-            </section>
-          }
-
-          @if (showMutationGraph()) {
             <div class="mutation-graph-scroll">
               <table class="mutation-graph-table">
                 <thead>
@@ -204,7 +156,7 @@
                 </tbody>
               </table>
             </div>
-          }
+          </sdux-collapsible-section>
         </section>
       }
 

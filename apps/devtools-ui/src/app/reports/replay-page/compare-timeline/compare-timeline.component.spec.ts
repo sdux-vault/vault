@@ -210,7 +210,7 @@ describe('CompareTimelineComponent', () => {
 
   it('should toggle visibility when header is clicked', () => {
     expect(el.querySelector('.timeline-content')).toBeTruthy();
-    const header = el.querySelector('.section-header') as HTMLElement;
+    const header = el.querySelector('.collapsible-header') as HTMLElement;
     header.click();
     fixture.detectChanges();
     expect(el.querySelector('.timeline-content')).toBeNull();
@@ -381,19 +381,6 @@ describe('CompareTimelineComponent', () => {
       fixture.detectChanges();
       const beforeTrack = el.querySelector('.before-track') as HTMLElement;
       expect(beforeTrack.style.width).toBe('0%');
-    });
-  });
-
-  describe('showHelp', () => {
-    it('should default to false', () => {
-      const component = fixture.debugElement.children[0].componentInstance;
-      expect(component.showHelp()).toBeFalse();
-    });
-
-    it('should toggle to true', () => {
-      const component = fixture.debugElement.children[0].componentInstance;
-      component.showHelp.set(true);
-      expect(component.showHelp()).toBeTrue();
     });
   });
 

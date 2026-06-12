@@ -801,12 +801,6 @@ describe('StateDiffViewComponent', () => {
       expect(component.showMutationGraph()).toBe(false);
     });
 
-    it('should toggle mutation graph help', () => {
-      expect(component.showMutationGraphHelp()).toBe(false);
-      component.showMutationGraphHelp.set(true);
-      expect(component.showMutationGraphHelp()).toBe(true);
-    });
-
     it('should render mutation graph section when expanded', () => {
       component.showMutationGraph.set(true);
       fixture.detectChanges();
@@ -831,16 +825,6 @@ describe('StateDiffViewComponent', () => {
       const dots = fixture.nativeElement.querySelectorAll('.mutation-dot');
       // 2 pairs, each with 1 dot = 2 dots total
       expect(dots.length).toBe(2);
-    });
-
-    it('should render help section when help is toggled', () => {
-      component.showMutationGraph.set(true);
-      component.showMutationGraphHelp.set(true);
-      fixture.detectChanges();
-      const helpSection = fixture.nativeElement.querySelector(
-        '.mutation-graph-section .help-section'
-      );
-      expect(helpSection).toBeTruthy();
     });
 
     it('should show no dot when pair values are identical', () => {

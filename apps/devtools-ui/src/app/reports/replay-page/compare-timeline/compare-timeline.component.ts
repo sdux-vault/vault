@@ -6,6 +6,8 @@ import {
   signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CollapsibleSectionComponent } from '../../../shared/collapsible-section/collapsible-section.component';
+import { HelpToggleComponent } from '../../../shared/help-toggle/help-toggle.component';
 import { CompareTraceService } from '../service/compare-trace.service';
 import { TimelineViewModeSelectComponent } from '../timeline-view-mode-select/timeline-view-mode-select.component';
 import { TimelineZoomControlComponent } from '../timeline-zoom-control/timeline-zoom-control.component';
@@ -34,6 +36,8 @@ export interface TimelineMarkerShape {
   standalone: true,
   imports: [
     MatTooltipModule,
+    CollapsibleSectionComponent,
+    HelpToggleComponent,
     TimelineViewModeSelectComponent,
     TimelineZoomControlComponent
   ],
@@ -44,9 +48,6 @@ export interface TimelineMarkerShape {
 export class CompareTimelineComponent {
   /** Injected comparison service for shared state. */
   readonly #compare = inject(CompareTraceService);
-
-  /** Whether the help section is visible. */
-  readonly showHelp = signal(false);
 
   /** Label for the "before" trace row. */
   readonly beforeLabel = this.#compare.compareBeforeLabel;

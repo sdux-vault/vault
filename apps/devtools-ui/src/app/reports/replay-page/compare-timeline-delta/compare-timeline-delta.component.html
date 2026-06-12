@@ -1,61 +1,36 @@
 <section class="compare-timeline-delta">
-  <header
-    class="section-header"
-    role="button"
-    tabindex="0"
-    [attr.aria-expanded]="showTimeline()"
-    aria-label="Toggle timeline"
-    (click)="showTimeline.set(!showTimeline())"
-    (keydown.enter)="showTimeline.set(!showTimeline())"
-    (keydown.space)="
-      $event.preventDefault(); showTimeline.set(!showTimeline())
-    ">
-    <div class="title-group">
+  <sdux-collapsible-section
+    ariaLabel="Toggle timeline"
+    [(expanded)]="showTimeline">
+    <div header class="title-group">
       <h3>Timeline — Elapsed Delta</h3>
       @if (showTimeline()) {
-        <button
-          type="button"
-          class="help-toggle"
-          (click)="$event.stopPropagation(); showHelp.set(!showHelp())"
-          matTooltip="Toggle help"
-          aria-label="Toggle elapsed delta help">
-          <img
-            src="assets/icons/help-icon.png"
-            alt=""
-            class="help-icon"
-            aria-hidden="true" />
-        </button>
+        <sdux-help-toggle ariaLabel="Toggle elapsed delta help">
+          <p class="help-text">
+            The elapsed delta timeline plots the timing difference for each
+            event between the before and after traces. Each vertical bar
+            represents one matched event — bars above the center line indicate
+            the after trace was
+            <em>slower</em>; bars below indicate it was <em>faster</em>.
+          </p>
+          <p class="help-text">
+            <span class="help-marker slower-marker"></span> markers indicate the
+            after trace took longer (regression);
+            <span class="help-marker faster-marker"></span> markers indicate
+            improvement.
+          </p>
+          <p class="help-text">
+            Vertical tick lines mark time intervals on the shared scale. Use the
+            zoom controls to magnify the timeline and reveal finer detail.
+          </p>
+          <p class="help-text">
+            Use the <strong>view mode</strong> dropdown to filter which events
+            are displayed — for example, show only diff events, state events, or
+            a specific category.
+          </p>
+        </sdux-help-toggle>
       }
     </div>
-    <span class="chevron" [class.expanded]="showTimeline()">›</span>
-  </header>
-  @if (showTimeline()) {
-    @if (showHelp()) {
-      <section class="help-section">
-        <p class="help-text">
-          The elapsed delta timeline plots the timing difference for each event
-          between the before and after traces. Each vertical bar represents one
-          matched event — bars above the center line indicate the after trace
-          was
-          <em>slower</em>; bars below indicate it was <em>faster</em>.
-        </p>
-        <p class="help-text">
-          <span class="help-marker slower-marker"></span> markers indicate the
-          after trace took longer (regression);
-          <span class="help-marker faster-marker"></span> markers indicate
-          improvement.
-        </p>
-        <p class="help-text">
-          Vertical tick lines mark time intervals on the shared scale. Use the
-          zoom controls to magnify the timeline and reveal finer detail.
-        </p>
-        <p class="help-text">
-          Use the <strong>view mode</strong> dropdown to filter which events are
-          displayed — for example, show only diff events, state events, or a
-          specific category.
-        </p>
-      </section>
-    }
     <div class="timeline-content">
       <div class="timeline-toolbar">
         <div class="toolbar-row durations-row">
@@ -136,5 +111,5 @@
         </div>
       </div>
     </div>
-  }
+  </sdux-collapsible-section>
 </section>

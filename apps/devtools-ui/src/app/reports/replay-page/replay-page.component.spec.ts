@@ -565,18 +565,6 @@ describe('Component: ReplayPage', () => {
     expect(component.showCompareTraces()).toBeTrue();
   });
 
-  it('should default showCompareHelp to false', () => {
-    expect(component.showCompareHelp()).toBeFalse();
-  });
-
-  it('should toggle showCompareHelp', () => {
-    component.showCompareHelp.set(true);
-    expect(component.showCompareHelp()).toBeTrue();
-
-    component.showCompareHelp.set(false);
-    expect(component.showCompareHelp()).toBeFalse();
-  });
-
   it('should navigate to previous event', () => {
     component.onCellKeyChange('employees');
     component.compareBeforeId.set('abc-123-def-456');

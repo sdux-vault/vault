@@ -1,0 +1,18 @@
+<button
+  type="button"
+  class="help-toggle"
+  (click)="$event.stopPropagation(); toggle()"
+  matTooltip="Toggle help"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-expanded]="open()">
+  <img
+    src="assets/icons/help-icon.png"
+    alt=""
+    class="help-icon"
+    aria-hidden="true" />
+</button>
+@if (open()) {
+  <section class="help-section">
+    <ng-content />
+  </section>
+}

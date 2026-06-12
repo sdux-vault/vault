@@ -16,7 +16,9 @@ import type {
   TraceExecutionShape
 } from '../../shapes/trace';
 import { TraceExecutionStatuses } from '../../shapes/trace';
+import { CollapsibleSectionComponent } from '../../shared/collapsible-section/collapsible-section.component';
 import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
+import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
 import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
 import { StateTableViewComponent } from './state-table-view/state-table-view.component';
@@ -35,7 +37,9 @@ import { StateTableViewComponent } from './state-table-view/state-table-view.com
   imports: [
     MatSelectModule,
     MatTooltipModule,
+    CollapsibleSectionComponent,
     ExportButtonComponent,
+    HelpToggleComponent,
     ResetButtonComponent,
     StateTableViewComponent,
     UpsellNoticeComponent
@@ -69,9 +73,6 @@ export class StateDiffViewComponent {
   /** Currently selected cell filter ('all' = no filter). */
   readonly selectedCell = signal<string>('all');
 
-  /** Whether the help description section is visible. */
-  readonly showDescription = signal(false);
-
   /** Currently selected trace ID. */
   readonly selectedTraceId = signal<string | null>(null);
 
@@ -89,9 +90,6 @@ export class StateDiffViewComponent {
 
   /** Whether the mutation graph section is expanded. */
   readonly showMutationGraph = signal(true);
-
-  /** Whether the mutation graph help text is visible. */
-  readonly showMutationGraphHelp = signal(false);
 
   /**
    * Computes the state mutation graph data from candidates.

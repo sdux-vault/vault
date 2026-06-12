@@ -1,54 +1,29 @@
 <section class="compare-timeline-spans">
-  <header
-    class="section-header"
-    role="button"
-    tabindex="0"
-    [attr.aria-expanded]="showTimeline()"
-    aria-label="Toggle timeline"
-    (click)="showTimeline.set(!showTimeline())"
-    (keydown.enter)="showTimeline.set(!showTimeline())"
-    (keydown.space)="
-      $event.preventDefault(); showTimeline.set(!showTimeline())
-    ">
-    <div class="title-group">
+  <sdux-collapsible-section
+    ariaLabel="Toggle timeline"
+    [(expanded)]="showTimeline">
+    <div header class="title-group">
       <h3>Timeline — Category Duration Spans</h3>
       @if (showTimeline()) {
-        <button
-          type="button"
-          class="help-toggle"
-          (click)="$event.stopPropagation(); showHelp.set(!showHelp())"
-          matTooltip="Toggle help"
-          aria-label="Toggle spans help">
-          <img
-            src="assets/icons/help-icon.png"
-            alt=""
-            class="help-icon"
-            aria-hidden="true" />
-        </button>
+        <sdux-help-toggle ariaLabel="Toggle spans help">
+          <p class="help-text">
+            The category duration spans timeline shows how long each event
+            category took from its first to its last event. Each colored bar
+            represents the time window a category was active during the trace.
+          </p>
+          <p class="help-text">
+            Compare the width and position of spans between before and after
+            traces to see which categories grew, shrank, or shifted in timing. A
+            wider span means the category took longer; a shifted span means it
+            started or ended at a different point.
+          </p>
+          <p class="help-text">
+            Use <strong>zoom</strong> to magnify the timeline and reveal finer
+            detail. Tick lines adapt to the zoom level.
+          </p>
+        </sdux-help-toggle>
       }
     </div>
-    <span class="chevron" [class.expanded]="showTimeline()">›</span>
-  </header>
-  @if (showTimeline()) {
-    @if (showHelp()) {
-      <section class="help-section">
-        <p class="help-text">
-          The category duration spans timeline shows how long each event
-          category took from its first to its last event. Each colored bar
-          represents the time window a category was active during the trace.
-        </p>
-        <p class="help-text">
-          Compare the width and position of spans between before and after
-          traces to see which categories grew, shrank, or shifted in timing. A
-          wider span means the category took longer; a shifted span means it
-          started or ended at a different point.
-        </p>
-        <p class="help-text">
-          Use <strong>zoom</strong> to magnify the timeline and reveal finer
-          detail. Tick lines adapt to the zoom level.
-        </p>
-      </section>
-    }
     <div class="timeline-content">
       <div class="timeline-toolbar">
         <div class="toolbar-row durations-row">
@@ -164,5 +139,5 @@
         </div>
       </div>
     </div>
-  }
+  </sdux-collapsible-section>
 </section>

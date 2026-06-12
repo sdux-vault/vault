@@ -19,6 +19,7 @@ import type { TraceExecutionShape } from '../../shapes/trace';
 import { TraceExecutionStatuses } from '../../shapes/trace';
 import type { StageMetricShape } from '../../shapes/trace/stage-metric.shape';
 import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
+import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
 import { DevtoolsPipelineEventDetailComponent } from '../events/panels/events/pipeline/detail/devtools-pipeline-event-detail.component';
 import { TraceHotStageRankingComponent } from '../hot-stage-ranking-page/hot-stage-ranking-trace/trace-hot-stage-ranking.component';
@@ -46,6 +47,7 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
     MatTooltipModule,
     ResetButtonComponent,
     ExportButtonComponent,
+    HelpToggleComponent,
     TraceEventTableComponent,
     TraceHotStageRankingComponent,
     TracePipelineFlowTabComponent,
@@ -84,9 +86,6 @@ export class TraceDetailViewComponent implements OnInit {
 
   /** Currently selected cell filter ('all' = no filter). */
   readonly selectedCell = signal<string>('all');
-
-  /** Whether the help description is visible. */
-  readonly showHelp = signal(false);
 
   /** Currently expanded trace ID. */
   readonly expandedTraceId = signal<string | null>(null);

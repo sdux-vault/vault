@@ -3,29 +3,15 @@
     <header class="header">
       <div class="title-group">
         <h2>Hot Stage Ranking</h2>
-        <button
-          type="button"
-          class="help-toggle"
-          (click)="showHelp.set(!showHelp())"
-          matTooltip="Toggle help"
-          aria-label="Toggle hot stage ranking help">
-          <img
-            src="assets/icons/help-icon.png"
-            alt=""
-            class="help-icon"
-            aria-hidden="true" />
-        </button>
+        <sdux-help-toggle ariaLabel="Toggle hot stage ranking help">
+          <p class="help-text">
+            The Hot Stage Ranking aggregates pipeline stage durations across all
+            filtered traces. Stages are grouped by name and ranked by total
+            cumulative time. Use this view to identify systemic bottlenecks.
+          </p>
+        </sdux-help-toggle>
       </div>
     </header>
-    @if (showHelp()) {
-      <section class="help-section">
-        <p class="help-text">
-          The Hot Stage Ranking aggregates pipeline stage durations across all
-          filtered traces. Stages are grouped by name and ranked by total
-          cumulative time. Use this view to identify systemic bottlenecks.
-        </p>
-      </section>
-    }
     <div class="action-bar">
       <mat-select
         class="cell-filter"

@@ -6,6 +6,8 @@ import {
   signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CollapsibleSectionComponent } from '../../../shared/collapsible-section/collapsible-section.component';
+import { HelpToggleComponent } from '../../../shared/help-toggle/help-toggle.component';
 import type { TimelineMarkerShape } from '../compare-timeline/compare-timeline.component';
 import { CompareTraceService } from '../service/compare-trace.service';
 import { TimelineViewModeSelectComponent } from '../timeline-view-mode-select/timeline-view-mode-select.component';
@@ -39,6 +41,8 @@ export interface WaterfallCategoryShape {
   standalone: true,
   imports: [
     MatTooltipModule,
+    CollapsibleSectionComponent,
+    HelpToggleComponent,
     TimelineViewModeSelectComponent,
     TimelineZoomControlComponent
   ],
@@ -47,9 +51,6 @@ export interface WaterfallCategoryShape {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompareTimelineWaterfallComponent {
-  /** Whether the help section is visible. */
-  readonly showHelp = signal(false);
-
   /** Injected comparison service. */
   readonly #compare = inject(CompareTraceService);
 

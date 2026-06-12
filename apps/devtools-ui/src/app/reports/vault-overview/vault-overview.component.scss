@@ -105,7 +105,6 @@
   @include global.sdux-icon-button(28px, transparent);
   margin-left: auto;
   color: global.$sdux-primary-light;
-  font-size: global.$font-size-lg;
   transition:
     transform 0.2s ease,
     background-color 0.2s ease,
@@ -160,6 +159,7 @@
         .registry-header {
           display: flex;
           align-items: center;
+          flex: 1;
         }
       }
 
@@ -365,22 +365,22 @@
       flex-direction: column;
       min-height: 230px;
 
-      &.info-card-collapsed {
+      &:has(sdux-collapsible-section [aria-expanded='false']) {
         min-height: 0;
+      }
+
+      // ::ng-deep required to style .collapsible-header inside sdux-collapsible-section's encapsulated template
+      ::ng-deep .collapsible-header {
+        margin-bottom: global.$spacing-sm;
+        padding-bottom: global.$spacing-xs;
+        border-bottom: 2px solid global.$sdux-primary-base;
       }
 
       .card-title {
         @include global.sdux-text(global.$sdux-text-primary);
         font-size: global.$font-size-md;
         font-weight: global.$font-weight-bold;
-        margin: 0 0 global.$spacing-sm;
-        padding-bottom: global.$spacing-xs;
-        border-bottom: 2px solid global.$sdux-primary-base;
-
-        &.collapsible {
-          display: flex;
-          align-items: center;
-        }
+        margin: 0;
       }
 
       .card-list {

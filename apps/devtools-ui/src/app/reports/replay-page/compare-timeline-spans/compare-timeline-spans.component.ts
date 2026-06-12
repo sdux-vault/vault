@@ -6,6 +6,8 @@ import {
   signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CollapsibleSectionComponent } from '../../../shared/collapsible-section/collapsible-section.component';
+import { HelpToggleComponent } from '../../../shared/help-toggle/help-toggle.component';
 import { CompareTraceService } from '../service/compare-trace.service';
 import { TimelineViewModeSelectComponent } from '../timeline-view-mode-select/timeline-view-mode-select.component';
 import { TimelineZoomControlComponent } from '../timeline-zoom-control/timeline-zoom-control.component';
@@ -43,6 +45,8 @@ export interface TimelineSpanShape {
   standalone: true,
   imports: [
     MatTooltipModule,
+    CollapsibleSectionComponent,
+    HelpToggleComponent,
     TimelineViewModeSelectComponent,
     TimelineZoomControlComponent
   ],
@@ -53,9 +57,6 @@ export interface TimelineSpanShape {
 export class CompareTimelineSpansComponent {
   /** Injected comparison service. */
   readonly #compare = inject(CompareTraceService);
-
-  /** Whether the help section is visible. */
-  readonly showHelp = signal(false);
 
   /** Whether the timeline section is expanded. */
   readonly showTimeline = signal(true);

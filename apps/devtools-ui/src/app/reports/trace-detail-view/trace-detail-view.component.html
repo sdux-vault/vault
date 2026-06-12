@@ -3,30 +3,16 @@
   <header class="header">
     <div class="title-group">
       <h2>Trace Timeline</h2>
-      <button
-        type="button"
-        class="help-toggle"
-        (click)="showHelp.set(!showHelp())"
-        matTooltip="Toggle help"
-        aria-label="Toggle trace timeline help">
-        <img
-          src="assets/icons/help-icon.png"
-          alt=""
-          class="help-icon"
-          aria-hidden="true" />
-      </button>
+      <sdux-help-toggle ariaLabel="Toggle trace timeline help">
+        <p class="help-text">
+          The Trace Timeline shows a chronological view of all dispatched
+          traces. Each trace represents a complete behavioral pipeline
+          execution. Use the cell filter to narrow results and expand individual
+          traces to inspect stage details.
+        </p>
+      </sdux-help-toggle>
     </div>
   </header>
-  @if (showHelp()) {
-    <section class="help-section">
-      <p class="help-text">
-        The Trace Timeline shows a chronological view of all dispatched traces.
-        Each trace represents a complete behavioral pipeline execution. Use the
-        cell filter to narrow results and expand individual traces to inspect
-        stage details.
-      </p>
-    </section>
-  }
   <div class="action-bar">
     <mat-select
       class="cell-filter"
