@@ -15,6 +15,15 @@
     @include global.a-link(var(--sdux-text-primary), var(--sdux-text-inverse));
     font-weight: global.$font-weight-medium;
     font-size: global.$font-size-md;
+    flex: 1;
+  }
+
+  .blog-entry-meta {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    margin-left: auto;
+    white-space: nowrap;
   }
 
   .blog-entry-date {
@@ -22,16 +31,8 @@
     color: var(--sdux-text-muted);
   }
 
-  .blog-entry-pillar {
-    display: inline-block;
-    padding: global.$spacing-xs global.$spacing-sm;
-    font-size: global.$font-size-xs;
-    font-weight: global.$font-weight-semibold;
-    border-radius: global.$border-radius-xs;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    background: global.$sdux-surface-light-accent;
-    color: global.$sdux-primary-dark;
-    border: 1px solid global.$sdux-primary-light;
+  .blog-entry-reading-time {
+    font-size: global.$font-size-sm;
+    color: var(--sdux-text-muted);
   }
 }

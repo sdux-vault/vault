@@ -79,6 +79,22 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-11-testing-state-3-steps/testing-state-3-steps.component').then(
         (m) => m.BlogTestingState3StepsComponent
       )
+  },
+  {
+    path: 'controllers-dont-touch-your-data',
+    data: { category: 'blogs', type: 'controllers-dont-touch-your-data' },
+    loadComponent: () =>
+      import('./posts/2026-06-12-controllers-dont-touch-your-data/controllers-dont-touch-your-data.component').then(
+        (m) => m.BlogControllersDontTouchYourDataComponent
+      )
+  },
+  {
+    path: 'tab-sync-state',
+    data: { category: 'blogs', type: 'tab-sync-state' },
+    loadComponent: () =>
+      import('./posts/2026-06-12-tab-sync-state/tab-sync-state.component').then(
+        (m) => m.BlogTabSyncStateComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

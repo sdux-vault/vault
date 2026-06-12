@@ -27,7 +27,6 @@ class TestHostComponent {
 
 describe('Component: BlogLayout', () => {
   let fixture: ComponentFixture<TestHostComponent>;
-  let host: TestHostComponent;
   let el: HTMLElement;
 
   beforeEach(async () => {
@@ -37,7 +36,6 @@ describe('Component: BlogLayout', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
-    host = fixture.componentInstance;
     fixture.detectChanges();
     el = fixture.nativeElement;
   });
@@ -48,10 +46,6 @@ describe('Component: BlogLayout', () => {
 
   it('should render the date', () => {
     expect(el.querySelector('.blog-date')?.textContent).toEqual('2026-06-04');
-  });
-
-  it('should render the pillar code', () => {
-    expect(el.querySelector('.blog-pillar')?.textContent?.trim()).toEqual('TA');
   });
 
   it('should render the reading time', () => {
@@ -70,35 +64,5 @@ describe('Component: BlogLayout', () => {
     const link = el.querySelector('.blog-back-link a') as HTMLAnchorElement;
     expect(link).toBeTruthy();
     expect(link.textContent).toContain('All Posts');
-  });
-
-  describe('pillarLabel', () => {
-    const cases: [string, string][] = [
-      ['TA', 'Technical Authority'],
-      ['ED', 'Educational Series'],
-      ['SP', 'Social Proof/Momentum'],
-      ['CE', 'Community Engagement'],
-      ['RC', 'Redux Comparison']
-    ];
-
-    cases.forEach(([code, label]) => {
-      it(`should resolve "${code}" to "${label}"`, () => {
-        host.pillar = code;
-        fixture.changeDetectorRef.markForCheck();
-        fixture.detectChanges();
-
-        const pillarEl = el.querySelector('.blog-pillar');
-        expect(pillarEl?.getAttribute('aria-label')).toEqual(label);
-      });
-    });
-
-    it('should fall back to the raw pillar code for unknown codes', () => {
-      host.pillar = 'ZZ';
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
-
-      const pillarEl = el.querySelector('.blog-pillar');
-      expect(pillarEl?.getAttribute('aria-label')).toEqual('ZZ');
-    });
   });
 });

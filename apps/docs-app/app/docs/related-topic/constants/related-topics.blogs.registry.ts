@@ -46,6 +46,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
     {
       link: '/blog/what-is-sdux-vault',
       display: 'What Is SDuX Vault?'
+    },
+    {
+      link: '/blog/controllers-dont-touch-your-data',
+      display: "Controllers Don't Touch Your Data"
+    },
+    {
+      link: '/blog/tab-sync-state',
+      display: 'Open a New Tab. State Is Already There.'
     }
   ]
 };
