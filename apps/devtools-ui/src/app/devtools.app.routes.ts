@@ -6,6 +6,7 @@ import { LoadDumpPageComponent } from './reports/load-dump-page/load-dump-page.c
 import { ReplayPageComponent } from './reports/replay-page/replay-page.component';
 import { StateDiffViewComponent } from './reports/state-diff-view/state-diff-view.component';
 import { TraceDetailViewComponent } from './reports/trace-detail-view/trace-detail-view.component';
+import { TraceExportPageComponent } from './reports/trace-export-page/trace-export-page.component';
 import { VaultOverviewComponent } from './reports/vault-overview/vault-overview.component';
 import { DevToolsSplashPageComponent } from './splash-page/devtools-splash-page.component';
 
@@ -53,6 +54,12 @@ export const routes: Routes = [
   {
     path: 'reports/extension-inspector',
     component: ExtensionInspectorComponent
+  },
+
+  /** Chrome Trace Export — download pipeline traces as Chrome flame charts. */
+  {
+    path: 'reports/trace-export',
+    component: TraceExportPageComponent
   },
 
   /** Catch-all route that redirects invalid paths back to the root. */

@@ -117,42 +117,6 @@
 /* ----------------------------------------------
    MATERIAL TAB GROUP
 ------------------------------------------------*/
-.vault-tabs {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-
-  /* tab header stays fixed */
-  // exception: ::ng-deep required to style Angular Material internal tab header
-  ::ng-deep .mat-mdc-tab-header {
-    background-color: global.$sdux-surface-dark;
-    border-bottom: 1px solid global.$sdux-surface-outline;
-  }
-
-  /* body wrapper must shrink + allow scroll */
-  // exception: ::ng-deep required to style Angular Material internal tab body wrapper
-  ::ng-deep .mat-mdc-tab-body-wrapper {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-  }
-
-  /* each tab body must stretch */
-  // exception: ::ng-deep required to override Angular Material's internal overflow: auto on tab body content
-  ::ng-deep .mat-mdc-tab-body {
-    flex: 1;
-    min-height: 0;
-
-    .mat-mdc-tab-body-content {
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-  }
-}
 
 /* ----------------------------------------------
    TAB CONTENT → scrolling container

@@ -7,9 +7,6 @@ export interface DebugWidgetEventShape extends EventShape {
   /** Trace identifier linking related pipeline events. */
   traceId?: string;
 
-  /** High-resolution monotonic timestamp in milliseconds. */
-  monotonicTimestamp?: number;
-
   /** Monotonically increasing sequence number for event ordering. */
   sequenceNumber?: number;
   /** Duration of the current pipeline stage in milliseconds. */

@@ -1,0 +1,134 @@
+@if (isLicensed()) {
+  <div class="report-page">
+    <header class="header">
+      <h2>Chrome Trace Export</h2>
+      <sdux-help-toggle ariaLabel="Toggle export help">
+        <p class="description">
+          Export recorded pipeline events as a Chrome Trace Timeline file. The
+          exported <code>.json</code> file can be loaded into Chrome DevTools to
+          visualize pipeline execution as an interactive flame chart.
+        </p>
+      </sdux-help-toggle>
+    </header>
+
+    <div class="action-bar">
+      @if (hasEvents()) {
+        <div class="summary-stats">
+          <strong>{{ eventCount() }}</strong> events across
+          <strong>{{ traceCount() }}</strong>
+          {{ traceCount() === 1 ? 'trace' : 'traces' }} ready to export
+        </div>
+      }
+      <div class="sdux-container-spacer"></div>
+      <div class="meta">
+        <sdux-devtools-reset-button></sdux-devtools-reset-button>
+      </div>
+    </div>
+
+    <section class="export-section">
+      <mat-tab-group animationDuration="200ms">
+        <mat-tab label="Perfetto (recommended)">
+          <div class="tab-panel">
+            <ol>
+              <li>
+                Click <strong>Download Trace</strong> below to export the file
+              </li>
+              <li>
+                Open
+                <a
+                  href="https://ui.perfetto.dev/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >ui.perfetto.dev</a
+                >
+              </li>
+              <li>Drag and drop the downloaded <code>.json</code> file</li>
+              <li>
+                Explore the flame chart — each pipeline stage appears as a timed
+                span
+              </li>
+            </ol>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Chrome DevTools Performance">
+          <div class="tab-panel">
+            <ol>
+              <li>
+                Click <strong>Download Trace</strong> below to export the file
+              </li>
+              <li>Open Chrome DevTools (<strong>F12</strong>)</li>
+              <li>Go to the <strong>Performance</strong> tab</li>
+              <li>
+                Click the <strong>↑ Load profile</strong> button (upload icon)
+              </li>
+              <li>Select the downloaded <code>.json</code> file</li>
+            </ol>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="chrome://tracing">
+          <div class="tab-panel">
+            <ol>
+              <li>Navigate to <strong>chrome://chrome-urls</strong></li>
+              <li>
+                Click the
+                <strong>Enable internal debugging pages</strong> button
+              </li>
+              <li>Navigate to <strong>chrome://tracing</strong></li>
+              <li>
+                Click <strong>Load</strong> and select the downloaded file
+              </li>
+            </ol>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+      @if (hasEvents()) {
+        <div class="features">
+          <p class="features-heading">What you'll see:</p>
+          <ul>
+            <li>Pipeline stage execution ordering and durations</li>
+            <li>Behavior and controller timing per trace</li>
+            <li>Trace fan-out across FeatureCell pipelines</li>
+            <li>Stage-level bottleneck identification</li>
+          </ul>
+        </div>
+
+        <div class="button-group">
+          <button
+            type="button"
+            class="sdux-button"
+            matTooltip="Export with original timing — best for raw analysis"
+            aria-label="Download Chrome trace timeline file"
+            (click)="downloadTrace()">
+            Download Trace
+          </button>
+          <button
+            type="button"
+            class="sdux-button"
+            matTooltip="Export with 1000x amplified timing — best for visual flame charts"
+            aria-label="Download Chrome trace timeline file with x1000 time scale"
+            (click)="downloadTrace(1000)">
+            Download Trace (x1000)
+          </button>
+        </div>
+        <p class="export-hint">
+          Pipeline events execute in sub-millisecond intervals. The
+          <strong>x1000</strong> export amplifies timing gaps so individual
+          stages are clearly visible in the flame chart.
+        </p>
+      } @else {
+        <div class="warning-notice">
+          No events recorded yet. Interact with your application to generate
+          pipeline events, then return here to export the trace.
+        </div>
+      }
+    </section>
+  </div>
+} @else {
+  <sdux-upsell-notice
+    headline="Unlock Chrome trace export with a"
+    body="Export pipeline execution traces as Chrome-compatible flame charts for deep performance analysis and stage-level bottleneck identification.">
+  </sdux-upsell-notice>
+}
