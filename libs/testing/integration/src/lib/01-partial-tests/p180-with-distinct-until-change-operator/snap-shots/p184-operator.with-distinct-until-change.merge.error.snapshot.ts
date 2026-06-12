@@ -319,21 +319,21 @@ export const p184Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-operator-with-distinct-until-changed',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-operator-with-distinct-until-changed',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-operator-with-distinct-until-changed',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -349,16 +349,6 @@ export const p184Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-operator-with-distinct-until-changed',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-operator-with-distinct-until-changed',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:operator',
     timestamp: 'ts-removed',
@@ -369,21 +359,11 @@ export const p184Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-operator-with-distinct-until-changed',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:filter',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-operator-with-distinct-until-changed',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -599,21 +579,21 @@ export const p184Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-operator-with-distinct-until-changed',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-operator-with-distinct-until-changed',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-operator-with-distinct-until-changed',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -630,20 +610,20 @@ export const p184Snapshot = [
     id: 'id-removed',
     cell: 'partial-operator-with-distinct-until-changed',
     behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
+    name: 'pipeline:candidate:compute-merge',
     timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
     cell: 'partial-operator-with-distinct-until-changed',
     behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:compute-merge',
+    name: 'stage:end:compute-merge',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -919,21 +899,21 @@ export const p184Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-operator-with-distinct-until-changed',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-operator-with-distinct-until-changed',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-operator-with-distinct-until-changed',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -950,20 +930,20 @@ export const p184Snapshot = [
     id: 'id-removed',
     cell: 'partial-operator-with-distinct-until-changed',
     behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
+    name: 'pipeline:candidate:compute-merge',
     timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
     cell: 'partial-operator-with-distinct-until-changed',
     behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:compute-merge',
+    name: 'stage:end:compute-merge',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {

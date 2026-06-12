@@ -319,16 +319,6 @@ export const p191Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
@@ -339,18 +329,8 @@ export const p191Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
@@ -364,56 +344,6 @@ export const p191Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -429,11 +359,101 @@ export const p191Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
     behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
+    name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -649,21 +669,21 @@ export const p191Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -680,16 +700,6 @@ export const p191Snapshot = [
     id: 'id-removed',
     cell: 'partial-filters',
     behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:compute-merge',
     timestamp: 'ts-removed',
     type: 'pipeline',
@@ -699,18 +709,8 @@ export const p191Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
+    behaviorKey: 'vault-orchestrator',
+    name: 'stage:end:compute-merge',
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
@@ -724,56 +724,6 @@ export const p191Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-filters',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -789,11 +739,101 @@ export const p191Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
     behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
+    name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:start:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-filters',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {

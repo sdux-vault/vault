@@ -209,16 +209,6 @@ export const p251Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-with-before-tap',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
@@ -229,28 +219,8 @@ export const p251Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:filter',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-with-before-tap',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-with-before-tap',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
@@ -299,11 +269,21 @@ export const p251Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -532,16 +512,6 @@ export const p251Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-with-before-tap',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
@@ -552,11 +522,11 @@ export const p251Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:filter',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -936,16 +906,6 @@ export const p251Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-with-before-tap',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
@@ -956,28 +916,8 @@ export const p251Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:filter',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-with-before-tap',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-with-before-tap',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
@@ -1026,11 +966,21 @@ export const p251Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-with-before-tap',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:start:before-tap',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-with-before-tap',
+    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
+    name: 'stage:end:before-tap',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {

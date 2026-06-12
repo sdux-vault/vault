@@ -199,6 +199,16 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-observable',
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
@@ -209,31 +219,11 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:resolve',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-observable',
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:start:filter',
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-observable',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -249,11 +239,11 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -469,21 +459,21 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'SDUX::Behavior::Core::Observable',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-observable',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-observable',
+    behaviorKey: 'SDUX::Behavior::Core::Observable',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -499,16 +489,6 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-observable',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
@@ -519,11 +499,11 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -739,21 +719,21 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'SDUX::Behavior::Core::Observable',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-observable',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-observable',
+    behaviorKey: 'SDUX::Behavior::Core::Observable',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -769,16 +749,6 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-observable',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
@@ -789,11 +759,11 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -1009,21 +979,21 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'SDUX::Behavior::Core::Observable',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-observable',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-observable',
+    behaviorKey: 'SDUX::Behavior::Core::Observable',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -1039,16 +1009,6 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-observable',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
@@ -1059,11 +1019,11 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -1335,21 +1295,21 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-observable',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-observable',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -1365,16 +1325,6 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-observable',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
@@ -1385,11 +1335,11 @@ export const p032Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-observable',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {

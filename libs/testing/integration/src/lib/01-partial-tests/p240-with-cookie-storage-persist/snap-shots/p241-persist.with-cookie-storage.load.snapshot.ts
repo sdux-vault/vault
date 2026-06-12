@@ -199,6 +199,16 @@ export const p241Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
@@ -210,36 +220,6 @@ export const p241Snapshot = [
     },
     type: 'stage',
     boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:resolve',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:filter',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -559,6 +539,16 @@ export const p241Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-cookie-storage',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-cookie-storage',
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
@@ -570,36 +560,6 @@ export const p241Snapshot = [
     },
     type: 'stage',
     boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:resolve',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:filter',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-persist.with-cookie-storage',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {

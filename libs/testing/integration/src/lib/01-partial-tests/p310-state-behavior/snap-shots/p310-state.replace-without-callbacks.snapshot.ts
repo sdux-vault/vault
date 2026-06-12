@@ -342,6 +342,16 @@ export const p310Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-state-with-emit-callbacks',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-state-with-emit-callbacks',
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
@@ -353,36 +363,6 @@ export const p310Snapshot = [
     },
     type: 'stage',
     boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-state-with-emit-callbacks',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:resolve',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-state-with-emit-callbacks',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:filter',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-state-with-emit-callbacks',
-    behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:reducer',
-    timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {

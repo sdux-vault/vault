@@ -219,21 +219,21 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -249,16 +249,6 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
@@ -269,18 +259,8 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
@@ -294,36 +274,6 @@ export const f1100Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -334,6 +284,76 @@ export const f1100Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:start:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:start:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -569,21 +589,21 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -989,21 +1009,21 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -1559,21 +1579,21 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -1589,16 +1609,6 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
@@ -1609,18 +1619,8 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
@@ -1634,36 +1634,6 @@ export const f1100Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -1674,6 +1644,76 @@ export const f1100Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:start:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:start:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -1909,21 +1949,21 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -1940,20 +1980,20 @@ export const f1100Snapshot = [
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
+    name: 'pipeline:candidate:compute-merge',
     timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
     cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:compute-merge',
+    name: 'stage:end:compute-merge',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -1969,16 +2009,6 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
@@ -1989,18 +2019,8 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
@@ -2014,36 +2034,6 @@ export const f1100Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -2054,6 +2044,76 @@ export const f1100Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:start:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:start:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -2289,21 +2349,21 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -2319,16 +2379,6 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
@@ -2339,18 +2389,8 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
@@ -2364,36 +2404,6 @@ export const f1100Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -2404,6 +2414,76 @@ export const f1100Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:start:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:start:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -2695,21 +2775,21 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -2725,16 +2805,6 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:filter',
     timestamp: 'ts-removed',
@@ -2745,18 +2815,8 @@ export const f1100Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
+    behaviorKey: 'SDUX::Behavior::Core::Filter',
+    name: 'stage:end:filter',
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'end',
@@ -2770,36 +2830,6 @@ export const f1100Snapshot = [
     timestamp: 'ts-removed',
     type: 'stage',
     boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -2810,6 +2840,76 @@ export const f1100Snapshot = [
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:start:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:start:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Behavior::Core::Reducer',
+    name: 'stage:end:reducer',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {

@@ -899,21 +899,21 @@ export const f502Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
-    behaviorKey: 'SDUX::Behavior::Core::Observable',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test-with-encrypted-error-callback',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Behavior::Core::Observable',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -929,21 +929,21 @@ export const f502Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test-with-encrypted-error-callback',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test-with-encrypted-error-callback',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:operator',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test-with-encrypted-error-callback',
+    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
+    name: 'stage:end:operator',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {

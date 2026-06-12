@@ -342,21 +342,21 @@ export const p283Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-error-with-callbacks',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-error-with-callbacks',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-error-with-callbacks',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -373,20 +373,20 @@ export const p283Snapshot = [
     id: 'id-removed',
     cell: 'partial-error-with-callbacks',
     behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
+    name: 'pipeline:candidate:compute-merge',
     timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
     cell: 'partial-error-with-callbacks',
     behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:compute-merge',
+    name: 'stage:end:compute-merge',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -710,21 +710,21 @@ export const p283Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-error-with-callbacks',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'partial-error-with-callbacks',
     behaviorKey: 'vault-orchestrator',
     name: 'pipeline:candidate:resolve',
     timestamp: 'ts-removed',
     type: 'pipeline',
     boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-error-with-callbacks',
+    behaviorKey: 'SDUX::Behavior::Core::Value',
+    name: 'stage:end:resolve',
+    timestamp: 'ts-removed',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
@@ -741,20 +741,20 @@ export const p283Snapshot = [
     id: 'id-removed',
     cell: 'partial-error-with-callbacks',
     behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:compute-merge',
+    name: 'pipeline:candidate:compute-merge',
     timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
     cell: 'partial-error-with-callbacks',
     behaviorKey: 'vault-orchestrator',
-    name: 'pipeline:candidate:compute-merge',
+    name: 'stage:end:compute-merge',
     timestamp: 'ts-removed',
-    type: 'pipeline',
-    boundary: 'candidate',
+    type: 'stage',
+    boundary: 'end',
     traceId: 'trace-id-removed'
   },
   {
