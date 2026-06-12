@@ -5,7 +5,9 @@ import {
   inject,
   signal
 } from '@angular/core';
-import { Example, StarWarsExampleService } from './star-wars-example.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { StarWarsService } from './service/star-wars.service';
+import { StarWarsShape } from './shape/star-wars.shape';
 
 /**
  * Displays the FeatureCell state and provides action buttons to
@@ -14,14 +16,14 @@ import { Example, StarWarsExampleService } from './star-wars-example.service';
 @Component({
   selector: 'sdux-star-wars',
   standalone: true,
-  imports: [JsonPipe],
+  imports: [JsonPipe, MatTooltipModule],
   templateUrl: './star-wars.component.html',
   styleUrl: './star-wars.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StarWarsComponent {
   /** Injected FeatureCell service backing the demo state. */
-  readonly #example = inject(StarWarsExampleService);
+  readonly #example = inject(StarWarsService);
 
   /** Reactive state signal exposed from the FeatureCell. */
   readonly state = this.#example.state;
@@ -31,19 +33,19 @@ export class StarWarsComponent {
   readonly hasError = this.#example.hasError;
 
   /** Seed data used to populate the FeatureCell on demand. */
-  readonly #sample: Example[] = [
+  readonly #sample: StarWarsShape[] = [
     { id: 11, name: 'Luke', lastName: 'Skywalker' },
     { id: 38, name: 'Leia', lastName: 'Organa' },
     { id: 9, name: 'Han', lastName: 'Solo' }
   ];
 
   /** Pool of additional characters added one per click after the initial load. */
-  readonly #extras: Example[] = [
+  readonly #extras: StarWarsShape[] = [
+    { id: 5, name: 'Darth', lastName: 'Vader', sith: true },
+    { id: 8, name: 'Yoda', lastName: '' },
     { id: 4, name: 'Obi-Wan', lastName: 'Kenobi' },
-    { id: 5, name: 'Darth', lastName: 'Vader' },
     { id: 6, name: 'Padmé', lastName: 'Amidala' },
     { id: 7, name: 'Mace', lastName: 'Windu' },
-    { id: 8, name: 'Yoda', lastName: '' },
     { id: 10, name: 'Ahsoka', lastName: 'Tano' },
     { id: 12, name: 'Din', lastName: 'Djarin' }
   ];

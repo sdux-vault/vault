@@ -1,25 +1,14 @@
-import { signal, type WritableSignal } from '@angular/core';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { CompareTraceService } from '../service/compare-trace.service';
 import { TimelineZoomControlComponent } from './timeline-zoom-control.component';
 
 describe('TimelineZoomControlComponent', () => {
   let component: TimelineZoomControlComponent;
-  let zoomSignal: WritableSignal<number>;
 
   beforeEach(async () => {
-    zoomSignal = signal(1);
-
     await TestBed.configureTestingModule({
       imports: [TimelineZoomControlComponent],
-      providers: [
-        {
-          provide: CompareTraceService,
-          useValue: {
-            timelineZoom: zoomSignal
-          }
-        }
-      ]
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     component = TestBed.createComponent(
@@ -31,7 +20,7 @@ describe('TimelineZoomControlComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should expose zoom from CompareTraceService', () => {
+  it('should default zoom to 1', () => {
     expect(component.zoom()).toBe(1);
   });
 
@@ -67,21 +56,21 @@ describe('TimelineZoomControlComponent', () => {
   });
 
   it('should not zoom in beyond maximum', () => {
-    zoomSignal.set(6);
+    component.zoom.set(6);
     expect(component.canZoomIn()).toBeFalse();
     component.zoomIn();
     expect(component.zoom()).toBe(6);
   });
 
-  it('should show zoom label as percentage', () => {
-    expect(component.zoomLabel()).toBe('100%');
+  it('should show zoom label as multiplier', () => {
+    expect(component.zoomLabel()).toBe('1×');
     component.zoomIn();
-    expect(component.zoomLabel()).toBe('150%');
+    expect(component.zoomLabel()).toBe('1.5×');
   });
 
-  it('should reach maximum zoom level of 600%', () => {
+  it('should reach maximum zoom level of 6×', () => {
     for (let i = 0; i < 10; i++) component.zoomIn();
     expect(component.zoom()).toBe(6);
-    expect(component.zoomLabel()).toBe('600%');
+    expect(component.zoomLabel()).toBe('6×');
   });
 });

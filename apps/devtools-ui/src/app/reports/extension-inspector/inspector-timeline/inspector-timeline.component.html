@@ -1,0 +1,124 @@
+<sdux-collapsible-section
+  ariaLabel="Toggle timeline"
+  [(expanded)]="showTimeline">
+  <div header class="title-group">
+    <h3>Execution Timeline</h3>
+    @if (showTimeline()) {
+      <sdux-help-toggle ariaLabel="Toggle timeline help">
+        <p class="help-text">
+          Each row represents one trace execution. The track width reflects the
+          trace's total duration relative to the longest trace. The highlighted
+          span shows where the selected extension key ran within that trace.
+        </p>
+        <p class="help-text">
+          Use <strong>zoom</strong> to magnify the timeline and reveal finer
+          detail. Tick lines adapt to the zoom level.
+        </p>
+      </sdux-help-toggle>
+    }
+  </div>
+  <div class="timeline-content">
+    <div class="timeline-toolbar">
+      <div class="toolbar-row">
+        <span class="stat-label">
+          {{ inspector.timelineRows().length }} traces
+        </span>
+        <span class="stat-divider">·</span>
+        <span class="stat-label">
+          Max {{ inspector.timelineMaxDuration() }}ms
+        </span>
+      </div>
+      <sdux-timeline-zoom-control [(zoom)]="inspector.timelineZoom" />
+    </div>
+
+    <div class="timeline-scroll-container">
+      <div
+        class="timeline-zoom-area"
+        [style.width.%]="100 * inspector.timelineZoom()">
+        @for (row of inspector.timelineRows(); track row.traceId) {
+          <div
+            class="timeline-row"
+            [class.selected]="isSelected(row.traceId)"
+            (click)="selectRow(row.traceId)"
+            matTooltip="Click to inspect this execution">
+            <span class="timeline-label">{{ row.traceLabel }}</span>
+            <div class="timeline-bar">
+              <div
+                class="timeline-track"
+                [style.width.%]="row.trackWidthPercent"
+                [style.--tick-pct.%]="inspector.timelineTickPercent()"
+                [matTooltip]="
+                  row.traceLabel + ': ' + row.traceDuration + 'ms total'
+                ">
+                <div
+                  class="key-span"
+                  [style.left.%]="
+                    (row.startPercent / row.trackWidthPercent) * 100
+                  "
+                  [style.width.%]="
+                    (row.widthPercent / row.trackWidthPercent) * 100
+                  "
+                  [matTooltip]="
+                    inspector.selectedKey() +
+                    ': ' +
+                    row.keyDuration.toFixed(1) +
+                    'ms (' +
+                    (row.traceDuration > 0
+                      ? ((row.keyDuration / row.traceDuration) * 100).toFixed(1)
+                      : '0') +
+                    '% of trace)'
+                  "></div>
+              </div>
+              <span class="timeline-duration">{{ row.traceDuration }}ms</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <h4 class="filtered-heading">Filtered: {{ inspector.selectedKey() }}</h4>
+  <div class="timeline-content">
+    <div class="timeline-toolbar">
+      <div class="toolbar-row">
+        <span class="stat-label">
+          {{ inspector.filteredTimelineRows().length }} traces
+        </span>
+        <span class="stat-divider">·</span>
+        <span class="stat-label">
+          Max {{ inspector.filteredMaxDuration().toFixed(1) }}ms
+        </span>
+      </div>
+    </div>
+
+    <div class="timeline-scroll-container">
+      <div
+        class="timeline-zoom-area"
+        [style.width.%]="100 * inspector.timelineZoom()">
+        @for (row of inspector.filteredTimelineRows(); track row.traceId) {
+          <div
+            class="timeline-row"
+            [class.selected]="isSelected(row.traceId)"
+            (click)="selectRow(row.traceId)"
+            matTooltip="{{ row.traceLabel }}: {{
+              row.keyDuration.toFixed(1)
+            }}ms — click to inspect">
+            <span class="timeline-label">{{ row.traceLabel }}</span>
+            <div class="timeline-bar">
+              <div
+                class="timeline-track key-track"
+                [style.width.%]="row.trackWidthPercent"
+                [style.--tick-pct.%]="inspector.filteredTickPercent()"
+                [matTooltip]="
+                  row.traceLabel + ': ' + row.keyDuration.toFixed(1) + 'ms'
+                "></div>
+              <span class="timeline-duration"
+                >{{ row.keyDuration.toFixed(1) }}ms</span
+              >
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</sdux-collapsible-section>

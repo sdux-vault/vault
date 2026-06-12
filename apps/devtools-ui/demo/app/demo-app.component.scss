@@ -1,3 +1,5 @@
+@use 'global' as global;
+
 .demo-app {
   display: flex;
   flex-direction: column;
@@ -36,6 +38,9 @@
   }
 }
 
+.warning {
+  color: global.$sdux-accent-base;
+}
 .demo-devtools-frame {
   flex: 1;
   min-height: 0;

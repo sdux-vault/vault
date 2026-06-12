@@ -38,10 +38,10 @@
       <mat-icon class="icon">assessment</mat-icon>
       <span>Reports</span>
     </button>
-    <a mat-menu-item routerLink="/reports/load-dump">
-      <mat-icon class="icon">upload_file</mat-icon>
-      <span>Load Dump</span>
-    </a>
+    <button type="button" mat-menu-item [matMenuTriggerFor]="debugToolsMenu">
+      <mat-icon class="icon">bug_report</mat-icon>
+      <span>Debug Tools</span>
+    </button>
     <a
       mat-menu-item
       href="https://www.sdux-vault.com"
@@ -80,6 +80,17 @@
         alt=""
         class="icon menu-icon-img" />
       <span>Vault Overview</span>
+    </a>
+  </mat-menu>
+
+  <mat-menu #debugToolsMenu="matMenu">
+    <a mat-menu-item routerLink="/reports/extension-inspector">
+      <mat-icon class="icon">tune</mat-icon>
+      <span>Extension Inspector</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/load-dump">
+      <mat-icon class="icon">upload_file</mat-icon>
+      <span>Load Dump</span>
     </a>
   </mat-menu>
 </div>

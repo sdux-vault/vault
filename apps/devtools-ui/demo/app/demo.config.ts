@@ -27,7 +27,7 @@ import { DevtoolsLoggingService } from '../../src/app/services/devtools-logging.
 import { EXTENSION_VERSION } from '../../src/app/splash-page/devtools-splash-page.component';
 import { environment } from '../environments/environment';
 import { StarTrekExampleService } from './feature-cells/star-trek/star-trek-example.service';
-import { StarWarsExampleService } from './feature-cells/star-wars/star-wars-example.service';
+import { StarWarsService } from './feature-cells/star-wars/service/star-wars.service';
 
 /**
  * Application configuration for the DevTools demo harness.
@@ -74,7 +74,7 @@ export const demoConfig: ApplicationConfig = {
     ),
 
     provideFeatureCell(
-      StarWarsExampleService,
+      StarWarsService,
       {
         key: 'starwars-feature-cell-key',
         initialState: []

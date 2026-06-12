@@ -8,9 +8,9 @@ import {
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CollapsibleSectionComponent } from '../../../shared/collapsible-section/collapsible-section.component';
 import { HelpToggleComponent } from '../../../shared/help-toggle/help-toggle.component';
+import { TimelineZoomControlComponent } from '../../../shared/timeline-zoom-control/timeline-zoom-control.component';
 import { CompareTraceService } from '../service/compare-trace.service';
 import { TimelineViewModeSelectComponent } from '../timeline-view-mode-select/timeline-view-mode-select.component';
-import { TimelineZoomControlComponent } from '../timeline-zoom-control/timeline-zoom-control.component';
 
 /**
  * Describes the position and identity of a single category marker

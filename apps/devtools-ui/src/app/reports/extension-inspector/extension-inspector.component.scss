@@ -1,0 +1,171 @@
+@use 'global' as global;
+
+.extension-filter {
+  margin-left: global.$spacing-sm;
+}
+
+.summary-stats {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-lg;
+  padding: global.$spacing-sm global.$spacing-md;
+  background: global.$sdux-surface-lightish;
+  border-radius: global.$border-radius-sm;
+
+  .stat-group {
+    display: flex;
+    gap: global.$spacing-lg;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+
+    .stat-value {
+      font-size: global.$font-size-md;
+      font-weight: global.$font-weight-bold;
+      font-family: monospace;
+      color: var(--sdux-text-primary);
+    }
+
+    .stat-label {
+      font-size: global.$font-size-xs;
+      color: var(--sdux-text-secondary);
+    }
+  }
+}
+
+.title-group {
+  display: flex;
+  align-items: center;
+  margin-top: global.$spacing-md;
+
+  h3 {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-bold;
+    color: var(--sdux-text-primary);
+  }
+}
+
+.state-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+
+  .pair-nav {
+    .sdux-button {
+      width: 165px !important; // unavoidable: overrides shared .pair-nav button width
+      min-width: 165px !important; // unavoidable: overrides shared .pair-nav button width
+      max-width: 165px !important; // unavoidable: overrides shared .pair-nav button width
+    }
+  }
+}
+
+.no-state {
+  margin: 0;
+  font-size: global.$font-size-sm;
+  color: var(--sdux-text-secondary);
+  font-style: italic;
+}
+
+.view-details-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.inspector-layout {
+  display: flex;
+  flex-direction: row;
+  gap: global.$spacing-md;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.inspector-content {
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.detail-pane {
+  width: 400px;
+  min-width: 400px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid global.$sdux-surface-outline;
+  border-radius: global.$border-radius-sm;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+
+  sdux-devtools-detail-pane {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+.section-heading {
+  font-size: global.$font-size-sm;
+  font-weight: global.$font-weight-bold;
+  color: var(--sdux-text-primary);
+  margin: global.$spacing-md 0 global.$spacing-xs;
+}
+
+@media (max-width: global.$breakpoint-md) {
+  .extension-filter {
+    margin-left: 0;
+  }
+
+  .summary-stats {
+    flex-direction: column;
+    align-items: stretch;
+
+    .stat-group {
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: center;
+
+      .stat {
+        width: calc(33.333% - #{global.$spacing-lg} * 2 / 3);
+      }
+    }
+
+    .view-details-btn {
+      align-self: center;
+    }
+  }
+
+  .inspector-layout {
+    flex-direction: column;
+    overflow: hidden;
+
+    &:has(.detail-pane) .inspector-content {
+      display: none;
+    }
+    .state-navigation {
+      .pair-nav {
+        .sdux-button {
+          width: 65px !important; // unavoidable: overrides shared .pair-nav button width
+          min-width: 65px !important; // unavoidable: overrides shared .pair-nav button width
+          max-width: 65px !important; // unavoidable: overrides shared .pair-nav button width
+        }
+      }
+    }
+  }
+
+  .detail-pane {
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+    border-left: none;
+    border-top: 1px solid global.$sdux-surface-outline;
+  }
+}

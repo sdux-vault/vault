@@ -106,7 +106,6 @@
                 statusLabel(trace)
               }}</span>
               <h3>
-                Trace t{{ filteredTraces().indexOf(trace) + 1 }} —
                 <span [class]="'detail-status-label ' + statusClass(trace)">
                   {{ trace.metrics.status | uppercase }}
                 </span>

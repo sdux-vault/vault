@@ -1,21 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
-
-/**
- * Shape representing a single example entity in the FeatureCell state.
- */
-export interface Example {
-  /** Unique numeric identifier. */
-  id: number;
-  /** First name of the entity. */
-  name: string;
-  /** Last name of the entity. */
-  lastName: string;
-  /** Whether the entity is a Jedi; assigned by the reducer. */
-  jedi?: boolean;
-  /** Whether the entity is a senator; assigned by the reducer. */
-  senator?: boolean;
-}
+import { StarWarsShape } from '../shape/star-wars.shape';
 
 /**
  * FeatureCell service for the demo harness.
@@ -23,11 +8,11 @@ export interface Example {
  * Mirrors the stackblitz basic-filter-reducer-example with
  * filters and reducers applied at runtime.
  */
-@FeatureCell<Example[]>('starwars-feature-cell-key')
+@FeatureCell<StarWarsShape[]>('starwars-feature-cell-key')
 @Injectable({ providedIn: 'root' })
-export class StarWarsExampleService {
-  /** Vault instance managing the `Example[]` state. */
-  readonly #vault = injectVault<Example[]>(StarWarsExampleService);
+export class StarWarsService {
+  /** Vault instance managing the `StarWarsShape[]` state. */
+  readonly #vault = injectVault<StarWarsShape[]>(StarWarsService);
 
   /** Internal signal controlling whether the reducer throws an error. */
   readonly #isErrorState = signal(false);
@@ -45,20 +30,34 @@ export class StarWarsExampleService {
     this.#vault
       .withDelay?.({ millisecondDelay: 500 })
       .filters([
-        (examples: Example[]) =>
-          examples.filter((example) => example.name !== 'Han')
+        (examples: StarWarsShape[]) =>
+          examples.filter((example) => example.name !== 'Han'),
+        (examples: StarWarsShape[]) =>
+          examples.filter((example) => example.lastName !== '')
       ])
       .reducers([
-        (examples: Example[]) => {
+        (examples: StarWarsShape[]) => {
           if (this.#isErrorState()) {
             throw new Error('Example error triggered');
           } else {
             return examples.map((example) => {
-              if (example.id === 11) {
+              if ([11, 5, 4, 7, 10, 11].includes(example.id)) {
                 return { ...example, jedi: true };
               }
-              if (example.id === 38) {
+              if (example.id === 38 || example.id === 6) {
                 return { ...example, senator: true };
+              }
+              return example;
+            });
+          }
+        },
+        (examples: StarWarsShape[]) => {
+          if (this.#isErrorState()) {
+            throw new Error('Example error triggered');
+          } else {
+            return examples.map((example) => {
+              if (example.sith) {
+                return { ...example, previousName: 'Anakin Skywalker' };
               }
               return example;
             });
@@ -78,7 +77,7 @@ export class StarWarsExampleService {
    *
    * @param input - Array of examples to set as the new state value.
    */
-  replace(input: Example[]): void {
+  replace(input: StarWarsShape[]): void {
     this.#vault.replaceState({
       loading: false,
       value: input,
@@ -91,7 +90,7 @@ export class StarWarsExampleService {
    *
    * @param entry - The example to append to the current state.
    */
-  merge(entry: Example): void {
+  merge(entry: StarWarsShape): void {
     const current = this.state.value() ?? [];
     this.#vault.mergeState({
       loading: false,

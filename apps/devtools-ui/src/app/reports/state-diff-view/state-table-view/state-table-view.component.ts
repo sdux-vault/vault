@@ -4,8 +4,10 @@ import {
   computed,
   inject,
   input,
-  output
+  output,
+  signal
 } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SnapshotDiffService } from '../../../services/snapshot-diff.service';
 
@@ -25,7 +27,7 @@ import { SnapshotDiffService } from '../../../services/snapshot-diff.service';
 @Component({
   selector: 'sdux-state-table-view',
   standalone: true,
-  imports: [MatTooltipModule],
+  imports: [MatIconModule, MatTooltipModule],
   templateUrl: './state-table-view.component.html',
   styleUrl: './state-table-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -49,8 +51,17 @@ export class StateTableViewComponent {
   /** Whether to show only changed rows. */
   readonly showChangedOnly = input(false);
 
+  /** When true, renders only the before table (no after table). */
+  readonly singleTable = input(false);
+
+  /** When true, renders only the after table (no before table). */
+  readonly afterOnly = input(false);
+
   /** Emits when the user toggles the changed-only filter. */
   readonly toggleChangedOnly = output<void>();
+
+  /** Whether the table body is collapsed. */
+  readonly collapsed = signal(false);
 
   /** Computed unfiltered table diff result from the service. */
   readonly #rawDiff = computed(() =>
@@ -75,6 +86,25 @@ export class StateTableViewComponent {
       ...diff,
       beforeRows: diff.beforeRows.filter((r) => r.status !== 'unchanged'),
       afterRows: diff.afterRows.filter((r) => r.status !== 'unchanged')
+    };
+  });
+
+  /**
+   * After-only table diff: merges removed rows from before into the after
+   * table so they appear with removed styling when the before table is hidden.
+   */
+  readonly afterOnlyDiff = computed(() => {
+    const diff = this.tableDiff();
+    if (!this.afterOnly()) return diff;
+
+    const removedRows = diff.beforeRows.filter((r) => r.status === 'removed');
+    const allColumns = new Set([...diff.afterColumns, ...diff.beforeColumns]);
+    const mergedColumns = Array.from(allColumns);
+
+    return {
+      ...diff,
+      afterColumns: mergedColumns,
+      afterRows: [...diff.afterRows, ...removedRows]
     };
   });
 

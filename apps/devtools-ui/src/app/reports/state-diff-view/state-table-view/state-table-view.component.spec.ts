@@ -214,4 +214,176 @@ describe('StateTableViewComponent', () => {
     expect(unchangedBefore.length).toBe(0);
     expect(unchangedAfter.length).toBe(0);
   });
+
+  describe('singleTable mode', () => {
+    it('should render only the before table when singleTable is true', () => {
+      const before = createSnapshot([{ id: 1, name: 'Luke' }], 'filter');
+      const after = createSnapshot([{ id: 1, name: 'Han' }], 'reducer');
+      fixture = TestBed.createComponent(StateTableViewComponent);
+      fixture.componentRef.setInput('beforeLabel', before.label);
+      fixture.componentRef.setInput('beforeValue', before.value);
+      fixture.componentRef.setInput('afterLabel', after.label);
+      fixture.componentRef.setInput('afterValue', after.value);
+      fixture.componentRef.setInput('singleTable', true);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      const containers = fixture.nativeElement.querySelectorAll(
+        '.state-table-container'
+      );
+      expect(containers.length).toBe(1);
+
+      const heading = containers[0].querySelector('.table-heading');
+      expect(heading.textContent.trim()).toBe('filter');
+    });
+  });
+
+  describe('afterOnly mode', () => {
+    it('should render only the after table when afterOnly is true', () => {
+      const before = createSnapshot([{ id: 1, name: 'Luke' }], 'filter');
+      const after = createSnapshot([{ id: 1, name: 'Han' }], 'reducer');
+      fixture = TestBed.createComponent(StateTableViewComponent);
+      fixture.componentRef.setInput('beforeLabel', before.label);
+      fixture.componentRef.setInput('beforeValue', before.value);
+      fixture.componentRef.setInput('afterLabel', after.label);
+      fixture.componentRef.setInput('afterValue', after.value);
+      fixture.componentRef.setInput('afterOnly', true);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      const containers = fixture.nativeElement.querySelectorAll(
+        '.state-table-container'
+      );
+      expect(containers.length).toBe(1);
+
+      const heading = containers[0].querySelector('.table-heading');
+      expect(heading.textContent.trim()).toBe('reducer');
+    });
+
+    it('should merge removed rows into the after table', () => {
+      const before = createSnapshot(
+        [
+          { id: 1, name: 'Luke' },
+          { id: 2, name: 'Han' }
+        ],
+        'filter'
+      );
+      const after = createSnapshot([{ id: 1, name: 'Luke' }], 'reducer');
+      fixture = TestBed.createComponent(StateTableViewComponent);
+      fixture.componentRef.setInput('beforeLabel', before.label);
+      fixture.componentRef.setInput('beforeValue', before.value);
+      fixture.componentRef.setInput('afterLabel', after.label);
+      fixture.componentRef.setInput('afterValue', after.value);
+      fixture.componentRef.setInput('afterOnly', true);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      const diff = component.afterOnlyDiff();
+      expect(diff.afterRows.length).toBe(2);
+      const removedRows = diff.afterRows.filter((r) => r.status === 'removed');
+      expect(removedRows.length).toBe(1);
+
+      const indicators = fixture.nativeElement.querySelectorAll(
+        '.status-indicator.removed'
+      );
+      expect(indicators.length).toBe(1);
+    });
+  });
+
+  describe('collapsed toggle', () => {
+    it('should hide table body when collapsed', () => {
+      const before = createSnapshot([{ id: 1, name: 'Luke' }], 'filter');
+      const after = createSnapshot([{ id: 1, name: 'Han' }], 'reducer');
+      createComponent(before, after);
+
+      expect(
+        fixture.nativeElement.querySelectorAll('.state-table').length
+      ).toBe(2);
+
+      component.collapsed.set(true);
+      fixture.detectChanges();
+
+      expect(
+        fixture.nativeElement.querySelectorAll('.state-table').length
+      ).toBe(0);
+    });
+
+    it('should toggle collapsed via the collapse button', () => {
+      const before = createSnapshot([{ id: 1, name: 'Luke' }], 'filter');
+      const after = createSnapshot([{ id: 1, name: 'Han' }], 'reducer');
+      createComponent(before, after);
+
+      const collapseBtn =
+        fixture.nativeElement.querySelector('.collapse-toggle');
+      collapseBtn.click();
+      fixture.detectChanges();
+
+      expect(component.collapsed()).toBe(true);
+      expect(
+        fixture.nativeElement.querySelectorAll('.state-table').length
+      ).toBe(0);
+    });
+  });
+
+  describe('empty state', () => {
+    it('should hide the diff view hint when afterOnly is true', () => {
+      fixture = TestBed.createComponent(StateTableViewComponent);
+      fixture.componentRef.setInput('beforeLabel', 'filter');
+      fixture.componentRef.setInput('beforeValue', null);
+      fixture.componentRef.setInput('afterLabel', 'reducer');
+      fixture.componentRef.setInput('afterValue', null);
+      fixture.componentRef.setInput('afterOnly', true);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('.empty-hint')).toBeNull();
+    });
+
+    it('should hide the diff view hint when singleTable is true', () => {
+      fixture = TestBed.createComponent(StateTableViewComponent);
+      fixture.componentRef.setInput('beforeLabel', 'filter');
+      fixture.componentRef.setInput('beforeValue', null);
+      fixture.componentRef.setInput('afterLabel', 'reducer');
+      fixture.componentRef.setInput('afterValue', null);
+      fixture.componentRef.setInput('singleTable', true);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('.empty-hint')).toBeNull();
+    });
+
+    it('should show the diff view hint in default mode', () => {
+      createComponent(createSnapshot(null), createSnapshot(null));
+
+      expect(fixture.nativeElement.querySelector('.empty-hint')).toBeTruthy();
+    });
+
+    it('should show afterLabel in empty state when afterOnly is true', () => {
+      fixture = TestBed.createComponent(StateTableViewComponent);
+      fixture.componentRef.setInput('beforeLabel', 'filter');
+      fixture.componentRef.setInput('beforeValue', null);
+      fixture.componentRef.setInput('afterLabel', 'reducer');
+      fixture.componentRef.setInput('afterValue', null);
+      fixture.componentRef.setInput('afterOnly', true);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      const heading = fixture.nativeElement.querySelector('.table-heading');
+      expect(heading.textContent.trim()).toBe('reducer');
+    });
+
+    it('should show beforeLabel in empty state when singleTable is true', () => {
+      fixture = TestBed.createComponent(StateTableViewComponent);
+      fixture.componentRef.setInput('beforeLabel', 'filter');
+      fixture.componentRef.setInput('beforeValue', null);
+      fixture.componentRef.setInput('afterLabel', 'reducer');
+      fixture.componentRef.setInput('afterValue', null);
+      fixture.componentRef.setInput('singleTable', true);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      const heading = fixture.nativeElement.querySelector('.table-heading');
+      expect(heading.textContent.trim()).toBe('filter');
+    });
+  });
 });
