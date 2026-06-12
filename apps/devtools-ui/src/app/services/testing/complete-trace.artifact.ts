@@ -2,8 +2,8 @@ import type { EventShape } from '@sdux-vault/shared';
 import type {
   CellAggregateShape,
   TraceExecutionShape
-} from '../../shapes/trace';
-import { TraceExecutionStatuses } from '../../shapes/trace';
+} from '../../shared/shapes/trace';
+import { TraceExecutionStatuses } from '../../shared/shapes/trace';
 
 /**
  * Deterministic events for a single successful trace.

@@ -6,9 +6,9 @@ import {
   input
 } from '@angular/core';
 import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
-import type { TraceExecutionShape } from '../../../shapes/trace';
-import { PipelineFlowComponent } from '../../../shared/pipeline-flow/pipeline-flow.component';
-import { UpsellNoticeComponent } from '../../../shared/upsell-notice/upsell-notice.component';
+import { PipelineFlowComponent } from '../../../shared/components/pipeline-flow/pipeline-flow.component';
+import { UpsellNoticeComponent } from '../../../shared/components/upsell-notice/upsell-notice.component';
+import type { TraceExecutionShape } from '../../../shared/shapes/trace';
 
 /**
  * Pipeline Flow tab wrapper component.

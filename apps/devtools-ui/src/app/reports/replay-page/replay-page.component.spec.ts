@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import type { TraceExecutionShape } from '../../shapes/trace';
+import type { TraceExecutionShape } from '../../shared/shapes/trace';
 import { ReplayPageComponent } from './replay-page.component';
 
 describe('Component: ReplayPage', () => {

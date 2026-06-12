@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { map, Observable } from 'rxjs';
-import { ConfirmDialogData } from '../../shapes/confirm-dialog/confirm-dialog-data.shape';
-import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogData } from '../../shared/shapes/confirm-dialog/confirm-dialog-data.shape';
 
 /**
  * Injectable service that opens a confirmation dialog and returns

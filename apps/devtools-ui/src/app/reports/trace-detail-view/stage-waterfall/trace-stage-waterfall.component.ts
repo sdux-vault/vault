@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { EventShape } from '@sdux-vault/shared';
 import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
-import type { TraceExecutionShape } from '../../../shapes/trace';
-import type { StageMetricShape } from '../../../shapes/trace/stage-metric.shape';
-import { UpsellNoticeComponent } from '../../../shared/upsell-notice/upsell-notice.component';
+import { UpsellNoticeComponent } from '../../../shared/components/upsell-notice/upsell-notice.component';
+import type { TraceExecutionShape } from '../../../shared/shapes/trace';
+import type { StageMetricShape } from '../../../shared/shapes/trace/stage-metric.shape';
 
 /**
  * Stage Waterfall visualization component.

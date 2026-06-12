@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
-import type { TraceExecutionShape } from '../../../shapes/trace';
+import type { TraceExecutionShape } from '../../../shared/shapes/trace';
 
 /**
  * Trace Event Table component.

@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
-import type { TraceExecutionShape } from '../../../shapes/trace';
-import { UpsellNoticeComponent } from '../../../shared/upsell-notice/upsell-notice.component';
+import { UpsellNoticeComponent } from '../../../shared/components/upsell-notice/upsell-notice.component';
+import type { TraceExecutionShape } from '../../../shared/shapes/trace';
 
 /**
  * Shape representing an aggregated stage ranking entry.

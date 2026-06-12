@@ -5,7 +5,7 @@ import {
   VaultRegistrationEntityShape
 } from '@sdux-vault/shared';
 import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
-import { VaultRegistrationSerializedShape } from '../../../shapes/vault-registration-serialized.shape';
+import { VaultRegistrationSerializedShape } from '../../../shared/shapes/vault-registration-serialized.shape';
 import { RegistryDetailComponent } from './registry-detail.component';
 
 function entity(

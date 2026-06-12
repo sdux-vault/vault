@@ -1,9 +1,9 @@
 import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
-import type { TraceExecutionShape } from '../../../shapes/trace';
-import { TraceExecutionStatuses } from '../../../shapes/trace';
-import type { StageMetricShape } from '../../../shapes/trace/stage-metric.shape';
+import type { TraceExecutionShape } from '../../../shared/shapes/trace';
+import { TraceExecutionStatuses } from '../../../shared/shapes/trace';
+import type { StageMetricShape } from '../../../shared/shapes/trace/stage-metric.shape';
 import { TraceStageWaterfallComponent } from './trace-stage-waterfall.component';
 
 describe('Component: TraceStageWaterfall', () => {

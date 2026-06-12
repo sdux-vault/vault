@@ -17,8 +17,8 @@ import type {
   TraceExecutionShape,
   TraceExecutionStatus,
   TraceMetricsShape
-} from '../shapes/trace';
-import { TraceExecutionStatuses } from '../shapes/trace';
+} from '../shared/shapes/trace';
+import { TraceExecutionStatuses } from '../shared/shapes/trace';
 import { InsightService } from './insight/insight.service';
 
 /**

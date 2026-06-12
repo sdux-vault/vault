@@ -4,7 +4,7 @@ import {
   BehaviorTypes,
   VaultRegistrationEntityShape
 } from '@sdux-vault/shared';
-import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
 import type { TraceExecutionShape } from '../../shapes/trace';
 import { TraceExecutionStatuses } from '../../shapes/trace';
 import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';

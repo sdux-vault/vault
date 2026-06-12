@@ -6,9 +6,9 @@ import {
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CollapsibleSectionComponent } from '../../../shared/collapsible-section/collapsible-section.component';
-import { HelpToggleComponent } from '../../../shared/help-toggle/help-toggle.component';
-import { TimelineZoomControlComponent } from '../../../shared/timeline-zoom-control/timeline-zoom-control.component';
+import { CollapsibleSectionComponent } from '../../../shared/components/collapsible-section/collapsible-section.component';
+import { HelpToggleComponent } from '../../../shared/components/help-toggle/help-toggle.component';
+import { TimelineZoomControlComponent } from '../../../shared/components/timeline-zoom-control/timeline-zoom-control.component';
 import { ExtensionInspectorService } from '../service/extension-inspector.service';
 
 /**

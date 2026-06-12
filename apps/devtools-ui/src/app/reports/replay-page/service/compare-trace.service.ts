@@ -1,6 +1,6 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { diffJson, type Change } from 'diff';
-import type { TraceExecutionShape } from '../../../shapes/trace';
+import type { TraceExecutionShape } from '../../../shared/shapes/trace';
 import type { TimelineDeltaMarkerShape } from '../compare-timeline-delta/compare-timeline-delta.component';
 import type { TimelineSpanShape } from '../compare-timeline-spans/compare-timeline-spans.component';
 import type { WaterfallCategoryShape } from '../compare-timeline-waterfall/compare-timeline-waterfall.component';

@@ -4,8 +4,8 @@ import { Subject } from 'rxjs';
 import { EventBus } from '@sdux-vault/devtools';
 import type { EventShape, VaultRegistrationShape } from '@sdux-vault/shared';
 
-import { VaultConfigMessageShape } from '../../shapes/vault-config-message.shape';
-import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
+import { VaultConfigMessageShape } from '../../shared/shapes/vault-config-message.shape';
+import { VaultRegistrationSerializedShape } from '../../shared/shapes/vault-registration-serialized.shape';
 
 /**
  * Provides a unified observable interface for Vault pipeline events sourced from

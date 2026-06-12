@@ -6,9 +6,7 @@ import {
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-/** Predefined zoom levels for timeline tracks. */
-const ZOOM_LEVELS = [1, 1.5, 2, 3, 4, 6] as const;
+import { ZOOM_LEVELS } from '../../constants/zoom.constant';
 
 /**
  * Renders zoom-in / zoom-out icon buttons that step through
@@ -28,7 +26,7 @@ export class TimelineZoomControlComponent {
 
   /** Current zoom level index within the predefined steps. */
   readonly #zoomIndex = computed(() =>
-    ZOOM_LEVELS.indexOf(this.zoom() as (typeof ZOOM_LEVELS)[number])
+    ZOOM_LEVELS.findIndex((z) => z.value === this.zoom())
   );
 
   /** Whether zoom-out (minus) is disabled (already at 1×). */
@@ -40,13 +38,15 @@ export class TimelineZoomControlComponent {
   );
 
   /** Human-readable zoom label. */
-  readonly zoomLabel = computed(() => `${this.zoom()}×`);
+  readonly zoomLabel = computed(
+    () => ZOOM_LEVELS[this.#zoomIndex()]?.label ?? `${this.zoom() * 100}%`
+  );
 
   /** Step one level out (wider view, less zoom). */
   zoomOut(): void {
     const idx = this.#zoomIndex();
     if (idx > 0) {
-      this.zoom.set(ZOOM_LEVELS[idx - 1]);
+      this.zoom.set(ZOOM_LEVELS[idx - 1].value);
     }
   }
 
@@ -54,7 +54,7 @@ export class TimelineZoomControlComponent {
   zoomIn(): void {
     const idx = this.#zoomIndex();
     if (idx < ZOOM_LEVELS.length - 1) {
-      this.zoom.set(ZOOM_LEVELS[idx + 1]);
+      this.zoom.set(ZOOM_LEVELS[idx + 1].value);
     }
   }
 }

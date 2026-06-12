@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
+import { UpsellNoticeComponent } from '../../shared/components/upsell-notice/upsell-notice.component';
 import {
   DumpFilePickerComponent,
   type DumpFileLoadedEvent

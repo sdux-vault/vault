@@ -11,17 +11,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { diffJson, type Change } from 'diff';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
+import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
+import { ResetButtonComponent } from '../../shared/components/reset-button/reset-button.component';
+import { UpsellNoticeComponent } from '../../shared/components/upsell-notice/upsell-notice.component';
+import { LeftRightNavigationDirective } from '../../shared/directives/left-right-navigation/left-right-navigation.directive';
 import type {
   CandidateSnapshotShape,
   TraceExecutionShape
-} from '../../shapes/trace';
-import { TraceExecutionStatuses } from '../../shapes/trace';
-import { CollapsibleSectionComponent } from '../../shared/collapsible-section/collapsible-section.component';
-import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
-import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
-import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
-import { LeftRightNavigationDirective } from '../../shared/shortcuts/left-right-navigation/left-right-navigation.directive';
-import { UpsellNoticeComponent } from '../../shared/upsell-notice/upsell-notice.component';
+} from '../../shared/shapes/trace';
+import { TraceExecutionStatuses } from '../../shared/shapes/trace';
 import { StateTableViewComponent } from './state-table-view/state-table-view.component';
 
 /**

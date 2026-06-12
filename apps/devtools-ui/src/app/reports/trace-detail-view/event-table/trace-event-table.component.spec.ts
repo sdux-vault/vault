@@ -1,7 +1,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import type { TraceExecutionShape } from '../../../shapes/trace';
-import { TraceExecutionStatuses } from '../../../shapes/trace';
+import type { TraceExecutionShape } from '../../../shared/shapes/trace';
+import { TraceExecutionStatuses } from '../../../shared/shapes/trace';
 import { TraceEventTableComponent } from './trace-event-table.component';
 
 describe('Component: TraceEventTable', () => {

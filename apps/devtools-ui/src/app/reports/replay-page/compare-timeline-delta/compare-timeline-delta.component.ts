@@ -6,9 +6,9 @@ import {
   signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CollapsibleSectionComponent } from '../../../shared/collapsible-section/collapsible-section.component';
-import { HelpToggleComponent } from '../../../shared/help-toggle/help-toggle.component';
-import { TimelineZoomControlComponent } from '../../../shared/timeline-zoom-control/timeline-zoom-control.component';
+import { CollapsibleSectionComponent } from '../../../shared/components/collapsible-section/collapsible-section.component';
+import { HelpToggleComponent } from '../../../shared/components/help-toggle/help-toggle.component';
+import { TimelineZoomControlComponent } from '../../../shared/components/timeline-zoom-control/timeline-zoom-control.component';
 import { CompareTraceService } from '../service/compare-trace.service';
 import { TimelineViewModeSelectComponent } from '../timeline-view-mode-select/timeline-view-mode-select.component';
 

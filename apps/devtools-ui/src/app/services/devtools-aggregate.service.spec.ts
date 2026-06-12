@@ -11,7 +11,7 @@ import {
   DEVTOOLS_AGGREGATE_KEY_CONSTANT,
   EventShape
 } from '@sdux-vault/shared';
-import { TraceExecutionStatuses } from '../shapes/trace';
+import { TraceExecutionStatuses } from '../shared/shapes/trace';
 import { DevtoolsAggregateService } from './devtools-aggregate.service';
 import { InsightService } from './insight/insight.service';
 import {

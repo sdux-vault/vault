@@ -1,6 +1,6 @@
 import { computed, Injectable, signal } from '@angular/core';
 import type { EventShape } from '@sdux-vault/shared';
-import type { TraceExecutionShape } from '../../../shapes/trace';
+import type { TraceExecutionShape } from '../../../shared/shapes/trace';
 
 /**
  * Shape for a single marker on the inspector timeline.

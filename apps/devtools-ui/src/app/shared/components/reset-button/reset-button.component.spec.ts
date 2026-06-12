@@ -1,7 +1,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
-import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
+import { DevtoolsAggregateService } from '../../../services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../../../services/devtools-logging.service';
 import { ResetButtonComponent } from './reset-button.component';
 
 describe('Component: ResetButton', () => {

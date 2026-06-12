@@ -56,21 +56,26 @@ describe('TimelineZoomControlComponent', () => {
   });
 
   it('should not zoom in beyond maximum', () => {
-    component.zoom.set(6);
+    component.zoom.set(10);
     expect(component.canZoomIn()).toBeFalse();
     component.zoomIn();
-    expect(component.zoom()).toBe(6);
+    expect(component.zoom()).toBe(10);
   });
 
-  it('should show zoom label as multiplier', () => {
-    expect(component.zoomLabel()).toBe('1×');
+  it('should show zoom label as percentage', () => {
+    expect(component.zoomLabel()).toBe('100%');
     component.zoomIn();
-    expect(component.zoomLabel()).toBe('1.5×');
+    expect(component.zoomLabel()).toBe('150%');
   });
 
-  it('should reach maximum zoom level of 6×', () => {
+  it('should reach maximum zoom level of 1000%', () => {
     for (let i = 0; i < 10; i++) component.zoomIn();
-    expect(component.zoom()).toBe(6);
-    expect(component.zoomLabel()).toBe('6×');
+    expect(component.zoom()).toBe(10);
+    expect(component.zoomLabel()).toBe('1000%');
+  });
+
+  it('should fallback to computed percentage for unknown zoom value', () => {
+    component.zoom.set(5);
+    expect(component.zoomLabel()).toBe('500%');
   });
 });

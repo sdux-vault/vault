@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
-import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
+import { DevtoolsAggregateService } from '../../../services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../../../services/devtools-logging.service';
 
 /**
  * Shared reset button that clears both the logging and aggregate

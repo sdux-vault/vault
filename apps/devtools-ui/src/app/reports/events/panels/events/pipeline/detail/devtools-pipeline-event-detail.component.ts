@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
-import { EscapeCloseDirective } from '../../../../../../shared/shortcuts/escape-close/escape-close.directive';
+import { EscapeCloseDirective } from '../../../../../../shared/directives/escape-close/escape-close.directive';
 
 /**
  * Detail panel for displaying the full breakdown of a single pipeline event.

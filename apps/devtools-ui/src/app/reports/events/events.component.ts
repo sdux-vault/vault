@@ -16,9 +16,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
-import { ExportButtonComponent } from '../../shared/export-button/export-button.component';
-import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
-import { ResetButtonComponent } from '../../shared/reset-button/reset-button.component';
+import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
+import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
+import { ResetButtonComponent } from '../../shared/components/reset-button/reset-button.component';
 import { EXTENSION_VERSION } from '../../splash-page/devtools-splash-page.component';
 import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devtools-main-pipeline-panel.component';
 

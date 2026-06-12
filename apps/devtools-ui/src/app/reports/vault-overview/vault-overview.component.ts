@@ -14,10 +14,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import { TraceExecutionStatuses } from '../../shapes/trace';
-import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
-import { CollapsibleSectionComponent } from '../../shared/collapsible-section/collapsible-section.component';
-import { HelpToggleComponent } from '../../shared/help-toggle/help-toggle.component';
+import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
+import { TraceExecutionStatuses } from '../../shared/shapes/trace';
+import { VaultRegistrationSerializedShape } from '../../shared/shapes/vault-registration-serialized.shape';
 import { RegistryDetailComponent } from './registry-detail/registry-detail.component';
 
 /**

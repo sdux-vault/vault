@@ -1,7 +1,7 @@
 import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { VaultLicensePayloadShape } from '@sdux-vault/shared';
-import { VaultConfigMessageShape } from '../../shapes/vault-config-message.shape';
+import { VaultConfigMessageShape } from '../../shared/shapes/vault-config-message.shape';
 import { InsightService } from '../insight/insight.service';
 import { DevtoolsRegistryService } from './devtools-registry.service';
 

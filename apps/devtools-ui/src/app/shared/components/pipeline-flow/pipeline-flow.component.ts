@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BehaviorTypes } from '@sdux-vault/shared';
-import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
+import { PipelineCollapsibleComponent } from '../../components/pipeline-collapsible/pipeline-collapsible.component';
 import type { TraceExecutionShape } from '../../shapes/trace';
-import { PipelineCollapsibleComponent } from '../pipeline-collapsible/pipeline-collapsible.component';
 import { PipelineNodeComponent } from '../pipeline-node/pipeline-node.component';
 
 /**

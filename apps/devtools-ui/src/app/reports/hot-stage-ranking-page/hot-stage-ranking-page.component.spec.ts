@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import type { TraceExecutionShape } from '../../shapes/trace';
-import { TraceExecutionStatuses } from '../../shapes/trace';
+import type { TraceExecutionShape } from '../../shared/shapes/trace';
+import { TraceExecutionStatuses } from '../../shared/shapes/trace';
 import { HotStageRankingPageComponent } from './hot-stage-ranking-page.component';
 
 describe('Component: HotStageRankingPage', () => {

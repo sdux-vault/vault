@@ -7,8 +7,8 @@ import {
   signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import type { TraceExecutionShape } from '../../../shapes/trace';
-import { TraceExecutionStatuses } from '../../../shapes/trace';
+import type { TraceExecutionShape } from '../../../shared/shapes/trace';
+import { TraceExecutionStatuses } from '../../../shared/shapes/trace';
 
 /**
  * Trace Timeline visualization component.

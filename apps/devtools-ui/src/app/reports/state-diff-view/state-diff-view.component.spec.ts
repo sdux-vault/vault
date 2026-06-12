@@ -8,8 +8,8 @@ import { DevtoolsRegistryService } from '../../services/registry/devtools-regist
 import type {
   CandidateSnapshotShape,
   TraceExecutionShape
-} from '../../shapes/trace';
-import { TraceExecutionStatuses } from '../../shapes/trace';
+} from '../../shared/shapes/trace';
+import { TraceExecutionStatuses } from '../../shared/shapes/trace';
 import { StateDiffViewComponent } from './state-diff-view.component';
 
 describe('StateDiffViewComponent', () => {

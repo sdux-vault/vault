@@ -1,8 +1,8 @@
 import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
-import type { TraceExecutionShape } from '../../../shapes/trace';
-import { TraceExecutionStatuses } from '../../../shapes/trace';
+import type { TraceExecutionShape } from '../../../shared/shapes/trace';
+import { TraceExecutionStatuses } from '../../../shared/shapes/trace';
 import { TraceHotStageRankingComponent } from './trace-hot-stage-ranking.component';
 
 describe('Component: TraceHotStageRanking (Grouped)', () => {

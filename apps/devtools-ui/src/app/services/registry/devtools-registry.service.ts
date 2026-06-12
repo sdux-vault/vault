@@ -4,7 +4,7 @@ import {
   VaultLicensePayloadTypes
 } from '@sdux-vault/shared';
 import { DEVTOOLS_LOGGING_KEY_CONSTANT } from '../../../../../../libs/shared/src/lib/constants/dev-tools/devtools-logging-key.constant';
-import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
+import { VaultRegistrationSerializedShape } from '../../shared/shapes/vault-registration-serialized.shape';
 import { InsightService } from '../insight/insight.service';
 
 /**

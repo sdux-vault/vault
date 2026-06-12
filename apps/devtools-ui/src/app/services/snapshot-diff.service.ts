@@ -3,7 +3,7 @@ import type {
   CellDiffStatus,
   TableDiffResultShape,
   TableDiffRowShape
-} from '../shapes/trace';
+} from '../shared/shapes/trace';
 
 /**
  * Computes row-level and cell-level diffs between two snapshot values

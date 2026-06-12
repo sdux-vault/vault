@@ -8,9 +8,9 @@ import { TestScheduler } from 'rxjs/testing';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { InsightService } from '../../services/insight/insight.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import { TraceExecutionShape } from '../../shapes/trace/trace-execution.shape';
-import { VaultConfigMessageShape } from '../../shapes/vault-config-message.shape';
-import { VaultRegistrationSerializedShape } from '../../shapes/vault-registration-serialized.shape';
+import { TraceExecutionShape } from '../../shared/shapes/trace/trace-execution.shape';
+import { VaultConfigMessageShape } from '../../shared/shapes/vault-config-message.shape';
+import { VaultRegistrationSerializedShape } from '../../shared/shapes/vault-registration-serialized.shape';
 import { VaultOverviewComponent } from './vault-overview.component';
 
 const mockCell: VaultRegistrationSerializedShape = {
