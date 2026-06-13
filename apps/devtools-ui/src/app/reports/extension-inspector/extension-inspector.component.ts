@@ -12,7 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import type { EventShape } from '@sdux-vault/shared';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { HeaderSectionComponent } from '../../shared/components/header-section/header-section.component';
 import { DetailPaneComponent } from '../../shared/components/detail-pane/detail-pane.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { EventDetailComponent } from '../../shared/components/event-detail/event-detail.component';
@@ -40,7 +40,7 @@ import { ExtensionInspectorService } from './service/extension-inspector.service
     MatIconModule,
     MatSelectModule,
     MatTooltipModule,
-    CollapsibleSectionComponent,
+    HeaderSectionComponent,
     EmptyStateComponent,
     DetailPaneComponent,
     EventDetailComponent,

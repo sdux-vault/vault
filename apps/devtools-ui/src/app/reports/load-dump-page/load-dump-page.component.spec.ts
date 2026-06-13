@@ -23,12 +23,16 @@ describe('Component: LoadDumpPage', () => {
           useValue: {
             loadDumpEvents: jasmine.createSpy('loadDumpEvents'),
             clearTraces: jasmine.createSpy('clearTraces'),
-            traces: signal([])
+            traces: signal([]),
+            totalTraces: () => 0
           }
         },
         {
           provide: DevtoolsLoggingService,
-          useValue: { clearEvents: jasmine.createSpy('clearEvents') }
+          useValue: {
+            clearEvents: jasmine.createSpy('clearEvents'),
+            totalEvents: () => 0
+          }
         },
         {
           provide: ConfirmDialogService,

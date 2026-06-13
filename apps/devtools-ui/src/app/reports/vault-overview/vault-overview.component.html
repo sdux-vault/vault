@@ -1,5 +1,5 @@
 <div class="report-page">
-  <sdux-collapsible-section
+  <sdux-header-section
     [showChevron]="false"
     ariaLabel="Toggle vault overview help">
     <sdux-help-toggle header ariaLabel="Toggle vault overview help">
@@ -11,12 +11,12 @@
         <strong>View Pipeline</strong> to inspect a cell's registered pipeline.
       </p>
     </sdux-help-toggle>
-  </sdux-collapsible-section>
+  </sdux-header-section>
 
   <section class="vault-overview-content">
     <div class="info-cards">
       <section class="info-card">
-        <sdux-collapsible-section
+        <sdux-header-section
           ariaLabel="Toggle package versions"
           [(expanded)]="versionsExpanded">
           <h3
@@ -37,12 +37,12 @@
           } @else {
             <p class="empty">No version data available.</p>
           }
-        </sdux-collapsible-section>
+        </sdux-header-section>
       </section>
 
       @if (license(); as lic) {
         <section class="info-card">
-          <sdux-collapsible-section
+          <sdux-header-section
             ariaLabel="Toggle license details"
             [(expanded)]="licenseExpanded">
             <h3 header class="card-title" matTooltip="License details">
@@ -78,11 +78,11 @@
                 <dd class="card-value">{{ lic.verified ? 'Yes' : 'No' }}</dd>
               </div>
             </dl>
-          </sdux-collapsible-section>
+          </sdux-header-section>
         </section>
       } @else {
         <section class="info-card">
-          <sdux-collapsible-section
+          <sdux-header-section
             ariaLabel="Toggle license details"
             [(expanded)]="licenseExpanded">
             <h3 header class="card-title" matTooltip="License details">
@@ -91,13 +91,13 @@
             <p class="free-license">
               Free license — Chrome extension features are limited.
             </p>
-          </sdux-collapsible-section>
+          </sdux-header-section>
         </section>
       }
     </div>
 
     <section class="section registry-section">
-      <sdux-collapsible-section
+      <sdux-header-section
         ariaLabel="Toggle registry"
         [(expanded)]="showRegistryCards">
         <sdux-help-toggle header ariaLabel="Toggle registry help">
@@ -275,7 +275,7 @@
             </aside>
           }
         </div>
-      </sdux-collapsible-section>
+      </sdux-header-section>
     </section>
   </section>
 </div>

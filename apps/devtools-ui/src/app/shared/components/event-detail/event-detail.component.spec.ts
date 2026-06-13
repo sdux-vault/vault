@@ -132,8 +132,16 @@ describe('Component: EventDetail', () => {
     });
 
     it('should format gigabytes', () => {
-      const value = 'x'.repeat(1024 * 1024 * 1024 + 100);
-      const result = fixture.componentInstance.formatSize(value);
+      const originalBlob = globalThis.Blob;
+      globalThis.Blob = class MockBlob {
+        readonly size: number;
+        constructor() {
+          this.size = 1024 * 1024 * 1024 + 100;
+        }
+      } as unknown as typeof Blob;
+
+      const result = fixture.componentInstance.formatSize('x');
+      globalThis.Blob = originalBlob;
 
       expect(result).toMatch(/^\d+\.\d GB$/);
     });

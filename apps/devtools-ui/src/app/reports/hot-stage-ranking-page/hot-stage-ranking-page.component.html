@@ -1,6 +1,6 @@
 @if (isLicensed()) {
   <div class="report-page">
-    <sdux-collapsible-section
+    <sdux-header-section
       [showChevron]="false"
       ariaLabel="Toggle hot stage ranking help">
       <sdux-help-toggle header ariaLabel="Toggle hot stage ranking help">
@@ -11,7 +11,7 @@
           cumulative time. Use this view to identify systemic bottlenecks.
         </p>
       </sdux-help-toggle>
-    </sdux-collapsible-section>
+    </sdux-header-section>
     <div class="action-bar">
       <mat-select
         class="cell-filter"

@@ -24,7 +24,7 @@ describe('Component: AiAssistPage', () => {
         provideZonelessChangeDetection(),
         {
           provide: DevtoolsAggregateService,
-          useValue: {}
+          useValue: { totalTraces: () => 0 }
         },
         {
           provide: DevtoolsRegistryService,
@@ -113,6 +113,33 @@ describe('Component: AiAssistPage', () => {
       const spy = spyOn(document, 'createElement').and.callThrough();
       component.downloadDump();
       expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('should create and download dump when events exist', () => {
+      mockEvents.set([
+        {
+          id: '1',
+          cell: 'test',
+          name: 'stage:start:resolve',
+          type: 'stage',
+          boundary: 'start',
+          behaviorKey: 'test',
+          timestamp: 1,
+          traceId: 'trace-1'
+        } as EventShape
+      ]);
+
+      const anchor = document.createElement('a');
+      spyOn(anchor, 'click');
+      spyOn(document, 'createElement').and.returnValue(anchor);
+      spyOn(URL, 'createObjectURL').and.returnValue('blob:mock');
+      spyOn(URL, 'revokeObjectURL');
+
+      component.downloadDump();
+
+      expect(URL.createObjectURL).toHaveBeenCalled();
+      expect(anchor.click).toHaveBeenCalled();
+      expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:mock');
     });
   });
 });

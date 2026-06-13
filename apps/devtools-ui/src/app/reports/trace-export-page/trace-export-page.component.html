@@ -1,8 +1,6 @@
 @if (isLicensed()) {
   <div class="report-page">
-    <sdux-collapsible-section
-      [showChevron]="false"
-      ariaLabel="Toggle export help">
+    <sdux-header-section [showChevron]="false" ariaLabel="Toggle export help">
       <sdux-help-toggle header ariaLabel="Toggle export help">
         <h2 helpHeading>Chrome Trace Export</h2>
         <p class="description">
@@ -11,7 +9,7 @@
           visualize pipeline execution as an interactive flame chart.
         </p>
       </sdux-help-toggle>
-    </sdux-collapsible-section>
+    </sdux-header-section>
 
     <div class="action-bar">
       @if (hasEvents()) {

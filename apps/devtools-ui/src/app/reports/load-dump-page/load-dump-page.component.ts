@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { HeaderSectionComponent } from '../../shared/components/header-section/header-section.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
 import { UpsellNoticeComponent } from '../../shared/components/upsell-notice/upsell-notice.component';
 import {
@@ -25,7 +25,7 @@ import {
   selector: 'sdux-load-dump-page',
   standalone: true,
   imports: [
-    CollapsibleSectionComponent,
+    HeaderSectionComponent,
     DumpFilePickerComponent,
     HelpToggleComponent,
     UpsellNoticeComponent

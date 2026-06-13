@@ -12,7 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { diffJson, type Change } from 'diff';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { HeaderSectionComponent } from '../../shared/components/header-section/header-section.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
@@ -41,7 +41,7 @@ import { StateTableViewComponent } from './state-table-view/state-table-view.com
     MatIconModule,
     MatSelectModule,
     MatTooltipModule,
-    CollapsibleSectionComponent,
+    HeaderSectionComponent,
     EmptyStateComponent,
     ExportButtonComponent,
     HelpToggleComponent,

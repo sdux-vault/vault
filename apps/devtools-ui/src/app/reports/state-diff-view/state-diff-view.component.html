@@ -1,9 +1,7 @@
 @if (isLicensed()) {
   <div class="report-page">
     <!-- Header -->
-    <sdux-collapsible-section
-      [showChevron]="false"
-      ariaLabel="Toggle description">
+    <sdux-header-section [showChevron]="false" ariaLabel="Toggle description">
       <sdux-help-toggle header ariaLabel="Toggle description">
         <h2 helpHeading>State Diff View</h2>
         <p class="description">
@@ -16,7 +14,7 @@
           to table view for a structured key-by-key comparison.
         </p>
       </sdux-help-toggle>
-    </sdux-collapsible-section>
+    </sdux-header-section>
 
     <div class="action-bar">
       <mat-select
@@ -92,7 +90,7 @@
 
       @if (mutationGraph().rows.length > 0) {
         <section class="mutation-graph-section">
-          <sdux-collapsible-section
+          <sdux-header-section
             ariaLabel="Toggle state mutation graph"
             [(expanded)]="showMutationGraph">
             <sdux-help-toggle header ariaLabel="Toggle mutation graph help">
@@ -153,7 +151,7 @@
                 </tbody>
               </table>
             </div>
-          </sdux-collapsible-section>
+          </sdux-header-section>
         </section>
       }
 
@@ -379,7 +377,10 @@
           </div>
         </div>
       } @else {
-        <sdux-empty-state icon="compare"></sdux-empty-state>
+        <sdux-empty-state
+          [selfAware]="false"
+          icon="compare"
+          message="Select a cell with fewer than 2 state candidates to compare"></sdux-empty-state>
       }
     }
   </div>

@@ -6,7 +6,7 @@ import {
   signal
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CollapsibleSectionComponent } from '../../../shared/components/collapsible-section/collapsible-section.component';
+import { HeaderSectionComponent } from '../../../shared/components/header-section/header-section.component';
 import { HelpToggleComponent } from '../../../shared/components/help-toggle/help-toggle.component';
 import { TimelineZoomControlComponent } from '../../../shared/components/timeline-zoom-control/timeline-zoom-control.component';
 import { CompareTraceService } from '../service/compare-trace.service';
@@ -45,7 +45,7 @@ export interface TimelineSpanShape {
   standalone: true,
   imports: [
     MatTooltipModule,
-    CollapsibleSectionComponent,
+    HeaderSectionComponent,
     HelpToggleComponent,
     TimelineViewModeSelectComponent,
     TimelineZoomControlComponent

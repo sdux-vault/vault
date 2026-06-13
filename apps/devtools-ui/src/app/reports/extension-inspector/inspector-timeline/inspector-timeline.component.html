@@ -1,6 +1,4 @@
-<sdux-collapsible-section
-  ariaLabel="Toggle timeline"
-  [(expanded)]="showTimeline">
+<sdux-header-section ariaLabel="Toggle timeline" [(expanded)]="showTimeline">
   <div header class="title-group">
     <h3>Execution Timeline</h3>
     @if (showTimeline()) {
@@ -121,4 +119,4 @@
       </div>
     </div>
   </div>
-</sdux-collapsible-section>
+</sdux-header-section>

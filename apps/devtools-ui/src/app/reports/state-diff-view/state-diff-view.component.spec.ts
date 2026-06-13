@@ -89,6 +89,7 @@ describe('StateDiffViewComponent', () => {
       typeof signal<Map<string, TraceExecutionShape[]>>
     >;
     extractCandidates: jasmine.Spy;
+    totalTraces: () => number;
   };
 
   beforeEach(async () => {
@@ -101,7 +102,8 @@ describe('StateDiffViewComponent', () => {
       tracesByCellKey: signal(cellMap),
       extractCandidates: jasmine
         .createSpy('extractCandidates')
-        .and.returnValue(mockCandidates)
+        .and.returnValue(mockCandidates),
+      totalTraces: () => 0
     };
 
     await TestBed.configureTestingModule({
@@ -110,7 +112,7 @@ describe('StateDiffViewComponent', () => {
         { provide: DevtoolsAggregateService, useValue: mockAggregate },
         {
           provide: DevtoolsLoggingService,
-          useValue: { clearEvents: () => {} }
+          useValue: { clearEvents: () => {}, totalEvents: () => 0 }
         },
         {
           provide: DevtoolsRegistryService,
@@ -469,7 +471,7 @@ describe('StateDiffViewComponent', () => {
 
       const empty = fixture.nativeElement.querySelector('.empty-state');
       expect(empty).toBeTruthy();
-      expect(empty.textContent).toContain('No traces available');
+      expect(empty.textContent).toContain('No data available yet');
     });
 
     it('should show empty state when fewer than 2 candidates', () => {
@@ -564,12 +566,12 @@ describe('StateDiffViewComponent', () => {
       expect(component.afterIndex()).toBe(2);
     });
 
-    it('should render trace-filter select even when no filtered traces', () => {
+    it('should hide trace-filter select when no filtered traces', () => {
       mockAggregate.traces.set([]);
       mockAggregate.tracesByCellKey.set(new Map());
       fixture.detectChanges();
       const traceFilter = fixture.nativeElement.querySelector('.trace-filter');
-      expect(traceFilter).not.toBeNull();
+      expect(traceFilter).toBeNull();
     });
   });
 

@@ -24,7 +24,7 @@ describe('Component: TraceExportPage', () => {
         provideZonelessChangeDetection(),
         {
           provide: DevtoolsAggregateService,
-          useValue: {}
+          useValue: { totalTraces: () => 0 }
         },
         {
           provide: DevtoolsRegistryService,

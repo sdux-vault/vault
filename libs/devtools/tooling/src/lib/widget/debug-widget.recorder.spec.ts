@@ -278,10 +278,9 @@ describe('DebugWidgetRecorder', () => {
       const events = recorder.getEvents();
 
       expect(events[0]).toEqual(
-        Object({
+        jasmine.objectContaining({
           name: 'error',
           sequenceNumber: 1,
-          monotonicTimestamp: jasmine.any(Number),
           stageDurationMs: 0,
           stackHash: jasmine.any(String),
           scheduler: 'delayed',

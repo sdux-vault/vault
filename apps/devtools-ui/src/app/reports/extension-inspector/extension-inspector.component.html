@@ -1,6 +1,6 @@
 @if (isLicensed()) {
   <div class="report-page">
-    <sdux-collapsible-section
+    <sdux-header-section
       [showChevron]="false"
       ariaLabel="Toggle extension inspector help">
       <sdux-help-toggle header ariaLabel="Toggle extension inspector help">
@@ -15,7 +15,7 @@
           traces?" by filtering all pipeline data to a single key.
         </p>
       </sdux-help-toggle>
-    </sdux-collapsible-section>
+    </sdux-header-section>
 
     <section class="action-bar">
       <mat-select
@@ -109,7 +109,7 @@
           <sdux-inspector-timeline />
 
           @if (inspector.selectedExecution(); as exec) {
-            <sdux-collapsible-section
+            <sdux-header-section
               ariaLabel="Toggle candidate snapshots"
               [(expanded)]="stateExpanded">
               <h3 header>Candidate Snapshots</h3>
@@ -171,7 +171,7 @@
                   </p>
                 }
               </div>
-            </sdux-collapsible-section>
+            </sdux-header-section>
           }
         </div>
 

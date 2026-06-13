@@ -120,7 +120,8 @@ describe('Component: TraceDetailView', () => {
     mockTracesSignal = signal(mockTraces);
     const aggregateMock = {
       traces: mockTracesSignal,
-      tracesByCellKey: signal(mockTracesByCellKey)
+      tracesByCellKey: signal(mockTracesByCellKey),
+      totalTraces: () => 0
     };
 
     await TestBed.configureTestingModule({
@@ -136,9 +137,10 @@ describe('Component: TraceDetailView', () => {
         },
         {
           provide: DevtoolsLoggingService,
-          useValue: jasmine.createSpyObj('DevtoolsLoggingService', [
-            'clearEvents'
-          ])
+          useValue: {
+            ...jasmine.createSpyObj('DevtoolsLoggingService', ['clearEvents']),
+            totalEvents: () => 0
+          }
         }
       ]
     }).compileComponents();

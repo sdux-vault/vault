@@ -167,7 +167,8 @@ describe('Component: ReplayPage', () => {
                   value: e.candidate
                 }));
               return candidates;
-            }
+            },
+            totalTraces: () => 0
           }
         },
         {
@@ -176,7 +177,7 @@ describe('Component: ReplayPage', () => {
         },
         {
           provide: DevtoolsLoggingService,
-          useValue: { clearEvents: () => {} }
+          useValue: { clearEvents: () => {}, totalEvents: () => 0 }
         },
         {
           provide: InsightService,
@@ -400,12 +401,17 @@ describe('Component: ReplayPage', () => {
           provide: DevtoolsAggregateService,
           useValue: {
             traces: signal([]),
-            tracesByCellKey: signal(new Map())
+            tracesByCellKey: signal(new Map()),
+            totalTraces: () => 0
           }
         },
         {
           provide: DevtoolsRegistryService,
           useValue: { isLicensed: signal(false) }
+        },
+        {
+          provide: DevtoolsLoggingService,
+          useValue: { totalEvents: () => 0 }
         }
       ]
     }).compileComponents();
@@ -476,6 +482,7 @@ describe('Component: ReplayPage', () => {
 
   it('should return empty array for compareBeforeEvents when no trace selected', () => {
     component.onCellKeyChange('employees');
+    component.compareBeforeId.set('');
     expect(component.compareBeforeEvents()).toEqual([]);
   });
 
@@ -986,6 +993,8 @@ describe('Component: ReplayPage', () => {
 
   it('should return 0 duration when no trace is selected', () => {
     component.onCellKeyChange('employees');
+    component.compareBeforeId.set('');
+    component.compareAfterId.set('');
     expect(component.compareBeforeDuration()).toBe(0);
     expect(component.compareAfterDuration()).toBe(0);
   });

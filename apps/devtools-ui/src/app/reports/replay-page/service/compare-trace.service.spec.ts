@@ -75,6 +75,16 @@ describe('CompareTraceService', () => {
       expect(labels.get('abc-123-def-456')).toBe('t1');
       expect(labels.get('merge-trace-001')).toBe('t2');
     });
+
+    it('should fall back to Before when before ID has no label', () => {
+      service.compareBeforeId.set('unknown-id');
+      expect(service.compareBeforeLabel()).toBe('Before');
+    });
+
+    it('should fall back to After when after ID has no label', () => {
+      service.compareAfterId.set('unknown-id');
+      expect(service.compareAfterLabel()).toBe('After');
+    });
   });
 
   describe('trace selection', () => {

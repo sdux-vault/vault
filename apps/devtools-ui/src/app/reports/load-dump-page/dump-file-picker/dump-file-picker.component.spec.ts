@@ -13,18 +13,21 @@ describe('Component: DumpFilePicker', () => {
     loadDumpEvents: jasmine.Spy;
     clearTraces: jasmine.Spy;
     traces: ReturnType<typeof signal<never[]>>;
+    totalTraces: () => number;
   };
-  let mockLogging: { clearEvents: jasmine.Spy };
+  let mockLogging: { clearEvents: jasmine.Spy; totalEvents: () => number };
   let mockConfirmDialog: { confirm: jasmine.Spy };
 
   beforeEach(async () => {
     mockAggregate = {
       loadDumpEvents: jasmine.createSpy('loadDumpEvents'),
       clearTraces: jasmine.createSpy('clearTraces'),
-      traces: signal([])
+      traces: signal([]),
+      totalTraces: () => 0
     };
     mockLogging = {
-      clearEvents: jasmine.createSpy('clearEvents')
+      clearEvents: jasmine.createSpy('clearEvents'),
+      totalEvents: () => 0
     };
     mockConfirmDialog = {
       confirm: jasmine.createSpy('confirm').and.returnValue(of(true))

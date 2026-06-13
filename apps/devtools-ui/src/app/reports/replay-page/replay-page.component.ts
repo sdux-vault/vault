@@ -16,7 +16,7 @@ import { RouterLink } from '@angular/router';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { InsightService } from '../../services/insight/insight.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { HeaderSectionComponent } from '../../shared/components/header-section/header-section.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
@@ -90,7 +90,7 @@ function extractResolvedValue(trace: TraceExecutionShape): unknown | undefined {
     DumpFilePickerComponent,
     EmptyStateComponent,
     ExportButtonComponent,
-    CollapsibleSectionComponent,
+    HeaderSectionComponent,
     HelpToggleComponent,
     LeftRightNavigationDirective,
     ResetButtonComponent,

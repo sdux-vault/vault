@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CollapsibleSectionComponent } from './collapsible-section.component';
+import { HeaderSectionComponent } from './header-section.component';
 
 @Component({
   standalone: true,
-  imports: [CollapsibleSectionComponent],
+  imports: [HeaderSectionComponent],
   template: `
-    <sdux-collapsible-section ariaLabel="Toggle test section">
+    <sdux-header-section ariaLabel="Toggle test section">
       <h3 header>Test Title</h3>
       <p class="body-content">Body content</p>
-    </sdux-collapsible-section>
+    </sdux-header-section>
   `
 })
 class TestHostComponent {}
 
-describe('CollapsibleSectionComponent', () => {
+describe('HeaderSectionComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let el: HTMLElement;
 
@@ -29,7 +29,7 @@ describe('CollapsibleSectionComponent', () => {
   });
 
   it('should create', () => {
-    expect(el.querySelector('sdux-collapsible-section')).toBeTruthy();
+    expect(el.querySelector('sdux-header-section')).toBeTruthy();
   });
 
   it('should render header content', () => {

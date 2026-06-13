@@ -17,7 +17,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
-import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { HeaderSectionComponent } from '../../shared/components/header-section/header-section.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
@@ -33,7 +33,7 @@ import { EventContainerComponent } from './event-container/event-container.compo
   selector: 'sdux-events',
   standalone: true,
   imports: [
-    CollapsibleSectionComponent,
+    HeaderSectionComponent,
     EmptyStateComponent,
     FormsModule,
     MatButtonModule,

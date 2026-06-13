@@ -121,6 +121,27 @@ describe('InsightService', () => {
         expect(result.message).toContain('Pipeline error');
       });
 
+      it('should stringify non-Error throw values', async () => {
+        const mockCell = {
+          replaceState: jasmine.createSpy('replaceState').and.callFake(() => {
+            throw 'string error';
+          }),
+          mergeState: jasmine.createSpy('mergeState')
+        };
+        (globalThis as any).sdux = {
+          replay: { getCell: () => mockCell }
+        };
+
+        const result = await service.replayCell(
+          'my-cell',
+          [{ id: 1 }],
+          'replace'
+        );
+
+        expect(result.success).toBeFalse();
+        expect(result.message).toContain('string error');
+      });
+
       it('should return error when getCell returns undefined', async () => {
         (globalThis as any).sdux = {
           replay: { getCell: () => undefined }
@@ -396,6 +417,70 @@ describe('InsightService', () => {
       );
 
       jasmine.clock().uninstall();
+    });
+
+    describe('replayCell via extension', () => {
+      let evalSpy: jasmine.Spy;
+
+      beforeEach(() => {
+        (globalThis as any).chrome.devtools = {
+          inspectedWindow: {
+            eval: jasmine.createSpy('eval')
+          }
+        };
+        evalSpy = (globalThis as any).chrome.devtools.inspectedWindow.eval;
+      });
+
+      it('should resolve with success result', async () => {
+        const result = { success: true, message: 'OK' };
+        evalSpy.and.callFake(
+          (
+            _expr: string,
+            cb: (result: unknown, exceptionInfo: unknown) => void
+          ) => cb(result, undefined)
+        );
+
+        const response = await service.replayCell(
+          'test-cell',
+          { value: 1 },
+          'replace'
+        );
+        expect(response).toEqual(result);
+      });
+
+      it('should resolve with error when exceptionInfo is present', async () => {
+        evalSpy.and.callFake(
+          (
+            _expr: string,
+            cb: (result: unknown, exceptionInfo: unknown) => void
+          ) => cb(undefined, { value: 'eval error' })
+        );
+
+        const response = await service.replayCell(
+          'test-cell',
+          { value: 1 },
+          'merge'
+        );
+        expect(response.success).toBeFalse();
+        expect(response.message).toContain('eval error');
+      });
+
+      it('should handle exceptionInfo without value', async () => {
+        evalSpy.and.callFake(
+          (
+            _expr: string,
+            cb: (result: unknown, exceptionInfo: unknown) => void
+          ) => cb(undefined, {})
+        );
+
+        const response = await service.replayCell(
+          'test-cell',
+          { value: 1 },
+          'replace'
+        );
+        expect(response.success).toBeFalse();
+        expect(response.message).toContain('Unknown error');
+      });
     });
   });
 });

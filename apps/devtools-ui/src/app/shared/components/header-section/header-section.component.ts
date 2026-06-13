@@ -8,19 +8,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 /**
- * Reusable collapsible section with keyboard-accessible toggle.
+ * Reusable header section with keyboard-accessible toggle.
  * Projects header content via `[header]` slot and body content
  * via default `<ng-content />`.
  */
 @Component({
-  selector: 'sdux-collapsible-section',
+  selector: 'sdux-header-section',
   standalone: true,
   imports: [MatIconModule, MatTooltipModule],
-  templateUrl: './collapsible-section.component.html',
-  styleUrl: './collapsible-section.component.scss',
+  templateUrl: './header-section.component.html',
+  styleUrl: './header-section.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CollapsibleSectionComponent {
+export class HeaderSectionComponent {
   /** Accessible label for the toggle region. */
   readonly ariaLabel = input('Toggle section');
 

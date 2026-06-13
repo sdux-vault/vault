@@ -104,7 +104,8 @@ describe('Component: HotStageRankingPage', () => {
           provide: DevtoolsAggregateService,
           useValue: {
             traces: mockTracesSignal,
-            tracesByCellKey: signal(mockTracesByCellKey)
+            tracesByCellKey: signal(mockTracesByCellKey),
+            totalTraces: () => 0
           }
         },
         {
@@ -113,9 +114,10 @@ describe('Component: HotStageRankingPage', () => {
         },
         {
           provide: DevtoolsLoggingService,
-          useValue: jasmine.createSpyObj('DevtoolsLoggingService', [
-            'clearEvents'
-          ])
+          useValue: {
+            ...jasmine.createSpyObj('DevtoolsLoggingService', ['clearEvents']),
+            totalEvents: () => 0
+          }
         }
       ]
     }).compileComponents();

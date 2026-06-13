@@ -6,6 +6,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestScheduler } from 'rxjs/testing';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 import { InsightService } from '../../services/insight/insight.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { TraceExecutionShape } from '../../shared/shapes/trace/trace-execution.shape';
@@ -75,8 +76,13 @@ describe('Component: VaultOverview', () => {
         {
           provide: DevtoolsAggregateService,
           useValue: {
-            tracesByCellKey: signal(new Map<string, TraceExecutionShape[]>())
+            tracesByCellKey: signal(new Map<string, TraceExecutionShape[]>()),
+            totalTraces: () => 0
           }
+        },
+        {
+          provide: DevtoolsLoggingService,
+          useValue: { totalEvents: () => 0 }
         },
         DevtoolsRegistryService
       ]
@@ -625,8 +631,13 @@ describe('Component: VaultOverview (mobile)', () => {
         {
           provide: DevtoolsAggregateService,
           useValue: {
-            tracesByCellKey: signal(new Map<string, TraceExecutionShape[]>())
+            tracesByCellKey: signal(new Map<string, TraceExecutionShape[]>()),
+            totalTraces: () => 0
           }
+        },
+        {
+          provide: DevtoolsLoggingService,
+          useValue: { totalEvents: () => 0 }
         },
         DevtoolsRegistryService
       ]

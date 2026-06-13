@@ -63,7 +63,8 @@ describe('Component: SplashPage', () => {
           provide: DevtoolsAggregateService,
           useValue: {
             traces: signal([]),
-            tracesByCellKey: signal(new Map())
+            tracesByCellKey: signal(new Map()),
+            totalTraces: () => 0
           }
         },
         {

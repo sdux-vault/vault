@@ -280,11 +280,11 @@
       flex-direction: column;
       min-height: 245px;
 
-      &:has(sdux-collapsible-section [aria-expanded='false']) {
+      &:has(sdux-header-section [aria-expanded='false']) {
         min-height: 0;
       }
 
-      // ::ng-deep required to style .collapsible-header inside sdux-collapsible-section's encapsulated template
+      // ::ng-deep required to style .collapsible-header inside sdux-header-section's encapsulated template
       ::ng-deep .collapsible-header {
         margin-bottom: global.$spacing-sm;
         padding-bottom: global.$spacing-xs;
