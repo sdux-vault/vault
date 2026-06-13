@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
-import { DevtoolsPipelineEventComponent } from '../reports/events/panels/events/pipeline/devtools-pipeline-event.component';
+import { DevtoolsPipelineEventComponent } from '../reports/events/panels/events/devtools-pipeline-event.component';
 import { DevtoolsMainPipelinePanelComponent } from '../reports/events/panels/pipeline/main/devtools-main-pipeline-panel.component';
 import { DevtoolsAggregateService } from '../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../services/devtools-logging.service';
@@ -23,7 +23,7 @@ const mockEvent: any = {
   behaviorKey: 'test-behavior'
 };
 
-class MockNgVaultDevtoolsService {
+class MockDevtoolsService {
   eventsSignal: WritableSignal<any[]> = signal([mockEvent]);
   totalEventsSignal = computed(() => this.eventsSignal().length);
 
@@ -46,10 +46,10 @@ class MockNgVaultDevtoolsService {
 describe('Component: SplashPage', () => {
   let fixture: ComponentFixture<DevToolsSplashPageComponent>;
   let component: DevToolsSplashPageComponent;
-  let mockService: MockNgVaultDevtoolsService;
+  let mockService: MockDevtoolsService;
 
   beforeEach(async () => {
-    mockService = new MockNgVaultDevtoolsService();
+    mockService = new MockDevtoolsService();
 
     await TestBed.configureTestingModule({
       imports: [

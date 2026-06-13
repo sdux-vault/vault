@@ -1,6 +1,8 @@
 <div class="report-page">
-  <header class="header">
-    <sdux-help-toggle ariaLabel="Toggle vault overview help">
+  <sdux-collapsible-section
+    [showChevron]="false"
+    ariaLabel="Toggle vault overview help">
+    <sdux-help-toggle header ariaLabel="Toggle vault overview help">
       <h2 helpHeading>Vault Overview</h2>
       <p class="help-text">
         The Vault Overview displays runtime package versions, license details,
@@ -9,7 +11,7 @@
         <strong>View Pipeline</strong> to inspect a cell's registered pipeline.
       </p>
     </sdux-help-toggle>
-  </header>
+  </sdux-collapsible-section>
 
   <section class="vault-overview-content">
     <div class="info-cards">

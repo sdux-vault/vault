@@ -1,15 +1,32 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DevtoolsAggregateService } from '../../../services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../../../services/devtools-logging.service';
 import { ExportButtonComponent } from './export-button.component';
 
 describe('Component: ExportButton', () => {
   let fixture: ComponentFixture<ExportButtonComponent>;
   let component: ExportButtonComponent;
+  const totalEvents = signal(5);
+  const totalTraces = signal(3);
 
   beforeEach(async () => {
+    totalEvents.set(5);
+    totalTraces.set(3);
+
     await TestBed.configureTestingModule({
       imports: [ExportButtonComponent],
-      providers: [provideZonelessChangeDetection()]
+      providers: [
+        provideZonelessChangeDetection(),
+        {
+          provide: DevtoolsLoggingService,
+          useValue: { totalEvents, clearEvents: () => {} }
+        },
+        {
+          provide: DevtoolsAggregateService,
+          useValue: { totalTraces, clearTraces: () => {} }
+        }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ExportButtonComponent);
@@ -22,6 +39,14 @@ describe('Component: ExportButton', () => {
   it('should render a download button', () => {
     const btn = fixture.nativeElement.querySelector('button');
     expect(btn).toBeTruthy();
+  });
+
+  it('should hide the button when no events or traces exist globally', () => {
+    totalEvents.set(0);
+    totalTraces.set(0);
+    fixture.detectChanges();
+    const btn = fixture.nativeElement.querySelector('button');
+    expect(btn).toBeNull();
   });
 
   it('should use the label input for aria-label', () => {

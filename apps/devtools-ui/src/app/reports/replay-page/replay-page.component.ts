@@ -120,9 +120,6 @@ export class ReplayPageComponent {
   /** Whether the current license enables pro/enterprise features. */
   readonly isLicensed = this.#registry.isLicensed;
 
-  /** Whether the description section is visible. */
-  readonly showDescription = signal(false);
-
   /** Whether the trace summary section is expanded. */
   readonly showTraceSummary = signal(true);
 
@@ -160,7 +157,17 @@ export class ReplayPageComponent {
 
   /** Keep the comparison service in sync whenever cellTraces changes. */
   readonly #syncTraces = effect(() => {
-    this.compare.cellTraces.set(this.cellTraces());
+    const traces = this.cellTraces();
+    this.compare.cellTraces.set(traces);
+
+    if (traces.length >= 2) {
+      if (!this.compare.compareBeforeId()) {
+        this.compare.compareBeforeId.set(traces[0].traceId);
+      }
+      if (!this.compare.compareAfterId()) {
+        this.compare.compareAfterId.set(traces[1].traceId);
+      }
+    }
   });
 
   /** Timer handle for auto-dismissing the result message. */

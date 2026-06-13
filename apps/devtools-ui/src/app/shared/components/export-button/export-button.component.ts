@@ -1,5 +1,13 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input
+} from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DevtoolsAggregateService } from '../../../services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../../../services/devtools-logging.service';
 
 /**
  * Reusable download button that serializes arbitrary data to a JSON
@@ -24,6 +32,17 @@ export class ExportButtonComponent {
 
   /** Tooltip and aria-label text for the button. */
   readonly label = input<string>('Download');
+
+  /** Internal reference to the pipeline event logging FeatureCell service. */
+  #logging = inject(DevtoolsLoggingService);
+
+  /** Internal reference to the trace aggregate FeatureCell service. */
+  #aggregate = inject(DevtoolsAggregateService);
+
+  /** Whether any events or traces exist globally. */
+  readonly hasData = computed(
+    () => this.#logging.totalEvents() > 0 || this.#aggregate.totalTraces() > 0
+  );
 
   /**
    * Serializes the data input to JSON, creates a Blob download,

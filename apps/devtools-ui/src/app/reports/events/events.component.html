@@ -1,18 +1,17 @@
 <div class="report-page">
-  <header class="header">
-    <div class="title-group">
-      <h2>Feature Cell Events</h2>
-      <sdux-help-toggle ariaLabel="Toggle events help">
-        <p class="help-text">
-          The Feature Cell Events view displays a real-time log of every
-          pipeline event emitted by the selected FeatureCell. Filter by cell,
-          event type, or behavior key to narrow the stream. Click any event row
-          to inspect its full detail including state, payload, and error
-          information.
-        </p>
-      </sdux-help-toggle>
-    </div>
-  </header>
+  <sdux-collapsible-section
+    [showChevron]="false"
+    ariaLabel="Toggle events help">
+    <sdux-help-toggle header ariaLabel="Toggle events help">
+      <h2 helpHeading>Feature Cell Events</h2>
+      <p class="help-text">
+        The Feature Cell Events view displays a real-time log of every pipeline
+        event emitted by the selected FeatureCell. Filter by cell, event type,
+        or behavior key to narrow the stream. Click any event row to inspect its
+        full detail including state, payload, and error information.
+      </p>
+    </sdux-help-toggle>
+  </sdux-collapsible-section>
   <div class="action-bar">
     <mat-select
       class="cell-filter"
@@ -23,64 +22,69 @@
         <mat-option [value]="cell">{{ cell }}</mat-option>
       }
     </mat-select>
-    <mat-select
-      class="cell-filter"
-      [value]="selectedType()"
-      (selectionChange)="
-        selectedType.set($any($event.value)); selectedKey.set('all')
-      "
-      aria-label="Filter by event type">
-      <mat-option value="all">All Types</mat-option>
-      @for (type of typeNames(); track type) {
-        <mat-option [value]="type">{{ capitalize(type) }}</mat-option>
-      }
-    </mat-select>
-    @if (showKeyFilter()) {
+    @if (events().length) {
       <mat-select
         class="cell-filter"
-        [value]="selectedKey()"
-        (selectionChange)="selectedKey.set($any($event.value))"
-        aria-label="Filter by key">
-        <mat-option value="all">All Keys</mat-option>
-        @for (key of keyNames(); track key) {
-          <mat-option [value]="key">{{ displayKeyName(key) }}</mat-option>
+        [value]="selectedType()"
+        (selectionChange)="
+          selectedType.set($any($event.value)); selectedKey.set('all')
+        "
+        aria-label="Filter by event type">
+        <mat-option value="all">All Types</mat-option>
+        @for (type of typeNames(); track type) {
+          <mat-option [value]="type">{{ capitalize(type) }}</mat-option>
         }
       </mat-select>
+      @if (showKeyFilter()) {
+        <mat-select
+          class="cell-filter"
+          [value]="selectedKey()"
+          (selectionChange)="selectedKey.set($any($event.value))"
+          aria-label="Filter by key">
+          <mat-option value="all">All Keys</mat-option>
+          @for (key of keyNames(); track key) {
+            <mat-option [value]="key">{{ displayKeyName(key) }}</mat-option>
+          }
+        </mat-select>
+      } @else {
+        <mat-select
+          class="cell-filter"
+          [disabled]="true"
+          value="all"
+          aria-label="Filter by key">
+          <mat-option value="all">All Keys</mat-option>
+        </mat-select>
+      }
+
+      <mat-form-field
+        class="cell-filter event-search"
+        appearance="outline"
+        (click)="$event.stopPropagation()">
+        <input
+          matInput
+          placeholder="Search events"
+          aria-label="Search events"
+          [ngModel]="eventSearchTerm()"
+          (ngModelChange)="
+            eventSearchTerm.set($event); eventSearchTerm$.next($event)
+          " />
+        <button
+          type="button"
+          matSuffix
+          mat-icon-button
+          [attr.aria-label]="
+            eventSearchTerm() ? 'Clear search' : 'Search events'
+          "
+          [matTooltip]="eventSearchTerm() ? 'Clear search' : 'Search events'"
+          (click)="eventSearchTerm() ? clearEventSearch() : null">
+          <mat-icon>{{ eventSearchTerm() ? 'close' : 'search' }}</mat-icon>
+        </button>
+      </mat-form-field>
     }
 
-    <mat-form-field
-      class="cell-filter event-search"
-      appearance="outline"
-      (click)="$event.stopPropagation()">
-      <input
-        matInput
-        placeholder="Search events"
-        aria-label="Search events"
-        [ngModel]="eventSearchTerm()"
-        (ngModelChange)="
-          eventSearchTerm.set($event); eventSearchTerm$.next($event)
-        " />
-      <button
-        type="button"
-        matSuffix
-        mat-icon-button
-        [attr.aria-label]="eventSearchTerm() ? 'Clear search' : 'Search events'"
-        [matTooltip]="eventSearchTerm() ? 'Clear search' : 'Search events'"
-        (click)="eventSearchTerm() ? clearEventSearch() : null">
-        <mat-icon>{{ eventSearchTerm() ? 'close' : 'search' }}</mat-icon>
-      </button>
-    </mat-form-field>
+    <div class="sdux-container-spacer"></div>
 
     <div class="meta">
-      @if (latestStateSize()) {
-        <span
-          class="state-size"
-          matTooltip="Serialized size of the most recent event state snapshot"
-          aria-label="State size">
-          <span class="state-size-label">State:</span>
-          {{ latestStateSize() }}
-        </span>
-      }
       <sdux-export-button
         [data]="filteredEvents()"
         filename="all-events"
@@ -91,26 +95,36 @@
     </div>
   </div>
 
-  <mat-tab-group class="vault-tabs" animationDuration="200ms">
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <span class="tab-label"> All Events ({{ totalEvents() }}) </span>
-      </ng-template>
-      <section class="vault-tab-content">
-        <sdux-devtools-main-pipeline-panel
-          [events]="filteredEvents()"></sdux-devtools-main-pipeline-panel>
-      </section>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <span class="tab-label">
-          Error Events ({{ errorEvents().length }})
-        </span>
-      </ng-template>
-      <section class="vault-tab-content">
-        <sdux-devtools-main-pipeline-panel
-          [events]="errorEvents()"></sdux-devtools-main-pipeline-panel>
-      </section>
-    </mat-tab>
-  </mat-tab-group>
+  @if (events().length) {
+    <mat-tab-group class="vault-tabs" animationDuration="200ms">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label"> All Events ({{ totalEvents() }}) </span>
+        </ng-template>
+        <section class="vault-tab-content">
+          <sdux-devtools-main-pipeline-panel
+            [events]="filteredEvents()"></sdux-devtools-main-pipeline-panel>
+        </section>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label">
+            Error Events ({{ errorEvents().length }})
+          </span>
+        </ng-template>
+        <section class="vault-tab-content">
+          <sdux-devtools-main-pipeline-panel
+            [events]="errorEvents()"></sdux-devtools-main-pipeline-panel>
+        </section>
+      </mat-tab>
+    </mat-tab-group>
+  } @else {
+    <div class="empty-state">
+      <span class="empty-state-icon" aria-hidden="true">&#9881;</span>
+      <p class="empty-state-text">
+        No pipeline events recorded yet. Interact with your application to
+        generate FeatureCell events.
+      </p>
+    </div>
+  }
 </div>

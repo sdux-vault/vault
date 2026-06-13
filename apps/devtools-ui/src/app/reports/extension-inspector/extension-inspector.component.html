@@ -1,7 +1,9 @@
 @if (isLicensed()) {
   <div class="report-page">
-    <header class="header">
-      <sdux-help-toggle ariaLabel="Toggle extension inspector help">
+    <sdux-collapsible-section
+      [showChevron]="false"
+      ariaLabel="Toggle extension inspector help">
+      <sdux-help-toggle header ariaLabel="Toggle extension inspector help">
         <h2 helpHeading>Extension Inspector</h2>
         <p class="help-text">
           Inspect how a specific controller or behavior performs across all
@@ -13,7 +15,7 @@
           traces?" by filtering all pipeline data to a single key.
         </p>
       </sdux-help-toggle>
-    </header>
+    </sdux-collapsible-section>
 
     <section class="action-bar">
       <mat-select
@@ -184,7 +186,7 @@
               <sdux-devtools-pipeline-flow [cellKey]="selectedCellKey()" />
 
               @for (event of inspector.candidateEvents(); track event.id) {
-                <sdux-devtools-pipeline-event-detail
+                <sdux-event-detail
                   [event]="event"
                   (closeDetail)="closeDetail()" />
               }

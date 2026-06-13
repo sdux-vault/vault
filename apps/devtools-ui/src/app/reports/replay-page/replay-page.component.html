@@ -1,23 +1,10 @@
 @if (isLicensed()) {
   <div class="report-page">
-    <header class="header">
-      <h2>Pipeline Replay</h2>
-      <button
-        type="button"
-        class="help-toggle"
-        (click)="showDescription.set(!showDescription())"
-        matTooltip="Toggle description"
-        aria-label="Toggle description">
-        <img
-          src="assets/icons/help-icon.png"
-          alt=""
-          class="help-icon"
-          aria-hidden="true" />
-      </button>
-    </header>
-
-    @if (showDescription()) {
-      <section class="description-section">
+    <sdux-collapsible-section
+      [showChevron]="false"
+      ariaLabel="Toggle description">
+      <sdux-help-toggle header ariaLabel="Toggle description">
+        <h2 helpHeading>Pipeline Replay</h2>
         <p class="description">
           Replay a recorded trace through a live FeatureCell instance. Select a
           cell and trace, then dispatch the resolved value through the original
@@ -35,8 +22,8 @@
           >
           to restore traces captured earlier.
         </p>
-      </section>
-    }
+      </sdux-help-toggle>
+    </sdux-collapsible-section>
 
     <section class="action-bar">
       <mat-select
@@ -169,6 +156,14 @@
             {{ resultMessage() }}
           </div>
         }
+      </section>
+    } @else if (cellKeys().length) {
+      <section class="empty-state">
+        <mat-icon class="empty-state-icon">manage_search</mat-icon>
+        <p class="empty-state-text">
+          Select a trace from the dropdown above to inspect its execution
+          details and replay it through the live pipeline.
+        </p>
       </section>
     }
 
@@ -547,7 +542,11 @@
 
     @if (!cellKeys().length) {
       <div class="empty-state">
-        No traces loaded. Load a debug dump or record live traces first.
+        <mat-icon class="empty-state-icon">manage_search</mat-icon>
+        <p class="empty-state-text">
+          No traces available. Trigger some pipeline activity or load a dump
+          file.
+        </p>
       </div>
     }
   </div>

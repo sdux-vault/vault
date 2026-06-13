@@ -10,13 +10,15 @@
   <div class="header-content">
     <ng-content select="[header]" />
   </div>
-  <mat-icon
-    class="chevron"
-    [class.expanded]="expanded()"
-    aria-hidden="true"
-    matTooltip="Toggle section details"
-    >chevron_right</mat-icon
-  >
+  @if (showChevron()) {
+    <mat-icon
+      class="chevron"
+      [class.expanded]="expanded()"
+      aria-hidden="true"
+      matTooltip="Toggle section details"
+      >chevron_right</mat-icon
+    >
+  }
 </div>
 @if (expanded()) {
   <ng-content />

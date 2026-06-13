@@ -29,6 +29,20 @@
         <li><strong>event id:</strong> {{ event().id }}</li>
         <li><strong>trace id:</strong> {{ event().traceId ?? 'null' }}</li>
         <li><strong>source:</strong> {{ event().source ?? 'N/A' }}</li>
+        @if (event().candidate !== undefined) {
+          <li>
+            <strong>candidate size:</strong>
+            {{ formatSize(event().candidate) }}
+          </li>
+        }
+        @if (event().state?.hasValue) {
+          <li><strong>state size:</strong> {{ formatSize(event().state) }}</li>
+        }
+        @if (event().payload) {
+          <li>
+            <strong>payload size:</strong> {{ formatSize(event().payload) }}
+          </li>
+        }
       </ul>
     </div>
 

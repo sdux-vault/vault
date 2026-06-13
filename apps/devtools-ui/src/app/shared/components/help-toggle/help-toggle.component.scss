@@ -9,11 +9,10 @@
 
 .help-header {
   display: flex;
-  align-items: baseline;
+  height: 40px;
 
   .help-heading-row {
     display: flex;
-    align-items: baseline;
 
     ::ng-deep {
       /* exception: projected heading needs encapsulation-piercing styles */

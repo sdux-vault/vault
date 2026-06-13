@@ -22,7 +22,7 @@ describe('Util: defineBehaviorKey', () => {
 });
 
 describe('validateBehaviorKey', () => {
-  it('should accept valid NgVault keys', () => {
+  it('should accept valid Vault keys', () => {
     const validKeys = [
       'SDUX::Behavior::Core::Value',
       'SDUX::Behavior::Persistence::LocalStorage',
@@ -38,7 +38,7 @@ describe('validateBehaviorKey', () => {
     });
   });
 
-  it('should reject keys missing the NgVault prefix', () => {
+  it('should reject keys missing the Vault prefix', () => {
     expect(validateBehaviorKey('Vault::Core::Resolve')).toBeFalse();
   });
 

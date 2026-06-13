@@ -10,9 +10,10 @@ import {
   signal,
   viewChild
 } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
-import { DevtoolsPipelineEventDetailComponent } from '../../events/pipeline/detail/devtools-pipeline-event-detail.component';
-import { DevtoolsPipelineEventComponent } from '../../events/pipeline/devtools-pipeline-event.component';
+import { EventDetailComponent } from '../../../../../shared/components/event-detail/event-detail.component';
+import { DevtoolsPipelineEventComponent } from '../../events/devtools-pipeline-event.component';
 
 /**
  * Main DevTools panel for displaying the pipeline execution history.
@@ -29,8 +30,9 @@ import { DevtoolsPipelineEventComponent } from '../../events/pipeline/devtools-p
   standalone: true,
   imports: [
     ScrollingModule,
+    MatTooltipModule,
     DevtoolsPipelineEventComponent,
-    DevtoolsPipelineEventDetailComponent
+    EventDetailComponent
   ],
   templateUrl: './devtools-main-pipeline-panel.component.html',
   styleUrl: './devtools-main-pipeline-panel.component.scss',

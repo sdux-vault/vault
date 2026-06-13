@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject
+} from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DevtoolsAggregateService } from '../../../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../../../services/devtools-logging.service';
@@ -22,6 +27,11 @@ export class ResetButtonComponent {
 
   /** Internal reference to the trace aggregate FeatureCell service. */
   #aggregate = inject(DevtoolsAggregateService);
+
+  /** Whether any events or traces exist. */
+  readonly hasData = computed(
+    () => this.#logging.totalEvents() > 0 || this.#aggregate.totalTraces() > 0
+  );
 
   /**
    * Clears all stored events and traces from both FeatureCells.

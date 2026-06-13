@@ -1,16 +1,19 @@
 @if (isLicensed()) {
   <div class="report-page">
-    <header class="header">
-      <h2>Load Debug Dump</h2>
-    </header>
+    <sdux-collapsible-section
+      [showChevron]="false"
+      ariaLabel="Toggle load dump help">
+      <sdux-help-toggle header ariaLabel="Toggle load dump help">
+        <h2 helpHeading>Load Debug Dump</h2>
+        <p class="description">
+          Upload a <code>.json</code> debug dump file exported from SDuX Vault
+          DevTools. The events will be replayed through the trace pipeline,
+          populating all views with the dump data.
+        </p>
+      </sdux-help-toggle>
+    </sdux-collapsible-section>
 
     <section class="upload-section">
-      <p class="description">
-        Upload a <code>.json</code> debug dump file exported from SDuX Vault
-        DevTools. The events will be replayed through the trace pipeline,
-        populating all views with the dump data.
-      </p>
-
       <div class="features">
         <p class="features-heading">After loading, you will have access to:</p>
         <ul>

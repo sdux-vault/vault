@@ -1,7 +1,9 @@
 @if (isLicensed()) {
   <div class="report-page">
-    <header class="header">
-      <sdux-help-toggle ariaLabel="Toggle export help">
+    <sdux-collapsible-section
+      [showChevron]="false"
+      ariaLabel="Toggle export help">
+      <sdux-help-toggle header ariaLabel="Toggle export help">
         <h2 helpHeading>Chrome Trace Export</h2>
         <p class="description">
           Export recorded pipeline events as a Chrome Trace Timeline file. The
@@ -9,7 +11,7 @@
           visualize pipeline execution as an interactive flame chart.
         </p>
       </sdux-help-toggle>
-    </header>
+    </sdux-collapsible-section>
 
     <div class="action-bar">
       @if (hasEvents()) {

@@ -1,9 +1,9 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DevtoolsPipelineEventDetailComponent } from './devtools-pipeline-event-detail.component';
+import { EventDetailComponent } from './event-detail.component';
 
-describe('Component: DevtoolsPipelineEventDetail', () => {
-  let fixture: ComponentFixture<DevtoolsPipelineEventDetailComponent>;
+describe('Component: EventDetail', () => {
+  let fixture: ComponentFixture<EventDetailComponent>;
 
   const mockEvent: any = {
     id: 'evt-1',
@@ -22,16 +22,17 @@ describe('Component: DevtoolsPipelineEventDetail', () => {
       error: null
     },
     payload: { action: 'test' },
+    candidate: { approved: true, votes: 3 },
     error: null
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [DevtoolsPipelineEventDetailComponent],
+      imports: [EventDetailComponent],
       providers: [provideZonelessChangeDetection()]
     });
 
-    fixture = TestBed.createComponent(DevtoolsPipelineEventDetailComponent);
+    fixture = TestBed.createComponent(EventDetailComponent);
     fixture.componentRef.setInput('event', mockEvent);
     fixture.detectChanges();
   });
@@ -109,5 +110,86 @@ describe('Component: DevtoolsPipelineEventDetail', () => {
     const text = fixture.nativeElement.textContent;
 
     expect(text).toContain('source: N/A');
+  });
+
+  describe('formatSize', () => {
+    it('should format bytes', () => {
+      expect(fixture.componentInstance.formatSize('hi')).toBe('4 B');
+    });
+
+    it('should format kilobytes', () => {
+      const value = 'x'.repeat(1500);
+      const result = fixture.componentInstance.formatSize(value);
+
+      expect(result).toMatch(/^\d+\.\d KB$/);
+    });
+
+    it('should format megabytes', () => {
+      const value = 'x'.repeat(1024 * 1024 + 100);
+      const result = fixture.componentInstance.formatSize(value);
+
+      expect(result).toMatch(/^\d+\.\d MB$/);
+    });
+
+    it('should format gigabytes', () => {
+      const value = 'x'.repeat(1024 * 1024 * 1024 + 100);
+      const result = fixture.componentInstance.formatSize(value);
+
+      expect(result).toMatch(/^\d+\.\d GB$/);
+    });
+  });
+
+  it('should display state size when state has value', () => {
+    const text = fixture.nativeElement.textContent;
+
+    expect(text).toContain('state size:');
+  });
+
+  it('should display payload size when payload exists', () => {
+    const text = fixture.nativeElement.textContent;
+
+    expect(text).toContain('payload size:');
+  });
+
+  it('should not display state size when state has no value', () => {
+    fixture.componentRef.setInput('event', {
+      ...mockEvent,
+      state: { hasValue: false }
+    });
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+
+    expect(text).not.toContain('state size:');
+  });
+
+  it('should not display payload size when payload is absent', () => {
+    fixture.componentRef.setInput('event', {
+      ...mockEvent,
+      payload: undefined
+    });
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+
+    expect(text).not.toContain('payload size:');
+  });
+
+  it('should display candidate size when candidate exists', () => {
+    const text = fixture.nativeElement.textContent;
+
+    expect(text).toContain('candidate size:');
+  });
+
+  it('should not display candidate size when candidate is undefined', () => {
+    fixture.componentRef.setInput('event', {
+      ...mockEvent,
+      candidate: undefined
+    });
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+
+    expect(text).not.toContain('candidate size:');
   });
 });

@@ -1,5 +1,28 @@
 <div class="pipeline-panel">
   <section class="event-stream">
+    <div class="table-header" role="row" aria-label="Event table header">
+      <span
+        class="th-counter"
+        matTooltip="Event number"
+        aria-label="Event number"
+        >#</span
+      >
+      <span class="th-key" matTooltip="Behavior key" aria-label="Behavior key"
+        >Key</span
+      >
+      <span class="th-type" matTooltip="Event type" aria-label="Event type"
+        >Type</span
+      >
+      <span class="th-indicators-group">
+        <span matTooltip="State" aria-label="State">S</span>
+        <span matTooltip="Payload" aria-label="Payload">P</span>
+        <span matTooltip="Error" aria-label="Error">E</span>
+        <span matTooltip="Candidate" aria-label="Candidate">C</span>
+      </span>
+      <span class="th-ts" matTooltip="Timestamp" aria-label="Timestamp"
+        >Time</span
+      >
+    </div>
     @if (reversedEvents()) {
       <cdk-virtual-scroll-viewport
         [itemSize]="itemSize()"
@@ -25,9 +48,9 @@
 
   @if (selectedEvent(); as selected) {
     <aside class="detail-pane">
-      <sdux-devtools-pipeline-event-detail
+      <sdux-event-detail
         [event]="selected"
-        (closeDetail)="closeDetail()"></sdux-devtools-pipeline-event-detail>
+        (closeDetail)="closeDetail()"></sdux-event-detail>
     </aside>
   }
 </div>

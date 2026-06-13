@@ -1,8 +1,10 @@
 @if (isLicensed()) {
   <div class="report-page">
     <!-- Header -->
-    <header class="header">
-      <sdux-help-toggle ariaLabel="Toggle description">
+    <sdux-collapsible-section
+      [showChevron]="false"
+      ariaLabel="Toggle description">
+      <sdux-help-toggle header ariaLabel="Toggle description">
         <h2 helpHeading>State Diff View</h2>
         <p class="description">
           Compare before and after state snapshots across pipeline stages.
@@ -14,7 +16,7 @@
           to table view for a structured key-by-key comparison.
         </p>
       </sdux-help-toggle>
-    </header>
+    </sdux-collapsible-section>
 
     <div class="action-bar">
       <mat-select
@@ -66,7 +68,8 @@
 
     @if (filteredTraces().length === 0) {
       <section class="empty-state">
-        <p>
+        <mat-icon class="empty-state-icon">manage_search</mat-icon>
+        <p class="empty-state-text">
           No traces available. Trigger some pipeline activity or load a dump
           file.
         </p>
@@ -381,7 +384,8 @@
         </div>
       } @else {
         <section class="empty-state">
-          <p>
+          <mat-icon class="empty-state-icon">compare</mat-icon>
+          <p class="empty-state-text">
             This trace has fewer than 2 candidate snapshots. Pipeline candidate
             events are required for diff comparison.
           </p>

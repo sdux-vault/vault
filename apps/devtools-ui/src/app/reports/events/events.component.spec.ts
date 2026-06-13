@@ -46,19 +46,6 @@ const mockEventWithState: any = {
   }
 };
 
-const mockEventWithState2: any = {
-  id: 5,
-  type: 'stage',
-  behaviorKey: 'SDUX::Behavior::Core::Value',
-  cell: 'beta',
-  state: {
-    hasValue: true,
-    value: [{ id: 1, name: 'Jean-Luc', lastName: 'Picard', captain: true }],
-    isLoading: false,
-    error: null
-  }
-};
-
 const mockEventNoStateValue: any = {
   id: 6,
   type: 'conductor',
@@ -67,7 +54,7 @@ const mockEventNoStateValue: any = {
   state: { hasValue: false, value: undefined, isLoading: true, error: null }
 };
 
-class MockNgVaultDevtoolsService {
+class MockDevtoolsService {
   eventsSignal: WritableSignal<any[]> = signal([mockEvent]);
   totalEventsSignal = computed(() => this.eventsSignal().length);
 
@@ -90,7 +77,7 @@ class MockNgVaultDevtoolsService {
 describe('Component: Events', () => {
   let fixture: ComponentFixture<EventsComponent>;
   let component: EventsComponent;
-  let mockService: MockNgVaultDevtoolsService;
+  let mockService: MockDevtoolsService;
   let scheduler: TestScheduler;
 
   beforeEach(async () => {
@@ -98,7 +85,7 @@ describe('Component: Events', () => {
       expect(actual).toEqual(expected);
     });
 
-    mockService = new MockNgVaultDevtoolsService();
+    mockService = new MockDevtoolsService();
 
     await TestBed.configureTestingModule({
       imports: [EventsComponent],
@@ -108,9 +95,10 @@ describe('Component: Events', () => {
         { provide: EXTENSION_VERSION, useValue: '1.0.0' },
         {
           provide: DevtoolsAggregateService,
-          useValue: jasmine.createSpyObj('DevtoolsAggregateService', [
-            'clearTraces'
-          ])
+          useValue: {
+            clearTraces: jasmine.createSpy('clearTraces'),
+            totalTraces: () => 0
+          }
         }
       ]
     }).compileComponents();
@@ -172,76 +160,6 @@ describe('Component: Events', () => {
     it('should update totalEvents based on filtered results', () => {
       component.selectedCell.set('beta');
       expect(component.totalEvents()).toBe(1);
-    });
-  });
-
-  describe('latestStateSize', () => {
-    it('should return null when there are no events', () => {
-      mockService.eventsSignal.set([]);
-      expect(component.latestStateSize()).toBeNull();
-    });
-
-    it('should return null when no events have state with hasValue', () => {
-      mockService.eventsSignal.set([mockEvent, mockEventNoStateValue]);
-      expect(component.latestStateSize()).toBeNull();
-    });
-
-    it('should return the size of the latest event state value', () => {
-      mockService.eventsSignal.set([mockEventWithState]);
-      const size = new Blob([JSON.stringify(mockEventWithState.state.value)])
-        .size;
-      expect(component.latestStateSize()).toBe(`${size} B`);
-    });
-
-    it('should sum sizes across cells when viewing all', () => {
-      mockService.eventsSignal.set([mockEventWithState, mockEventWithState2]);
-      const sizeAlpha = new Blob([
-        JSON.stringify(mockEventWithState.state.value)
-      ]).size;
-      const sizeBeta = new Blob([
-        JSON.stringify(mockEventWithState2.state.value)
-      ]).size;
-      expect(component.latestStateSize()).toBe(`${sizeAlpha + sizeBeta} B`);
-    });
-
-    it('should show total state size regardless of cell filter', () => {
-      mockService.eventsSignal.set([mockEventWithState, mockEventWithState2]);
-      component.selectedCell.set('beta');
-      const sizeAlpha = new Blob([
-        JSON.stringify(mockEventWithState.state.value)
-      ]).size;
-      const sizeBeta = new Blob([
-        JSON.stringify(mockEventWithState2.state.value)
-      ]).size;
-      expect(component.latestStateSize()).toBe(`${sizeAlpha + sizeBeta} B`);
-    });
-
-    it('should use the latest event per cell', () => {
-      const olderEvent: any = {
-        ...mockEventWithState,
-        id: 99,
-        state: {
-          hasValue: true,
-          value: [{ id: 1 }],
-          isLoading: false,
-          error: null
-        }
-      };
-      mockService.eventsSignal.set([olderEvent, mockEventWithState]);
-      const size = new Blob([JSON.stringify(mockEventWithState.state.value)])
-        .size;
-      expect(component.latestStateSize()).toBe(`${size} B`);
-    });
-
-    it('should skip events without hasValue when calculating size', () => {
-      mockService.eventsSignal.set([
-        mockEventNoStateValue,
-        mockEventWithState2
-      ]);
-      const sizeBeta = new Blob([
-        JSON.stringify(mockEventWithState2.state.value)
-      ]).size;
-      expect(component.latestStateSize()).toBe(`${sizeBeta} B`);
     });
   });
 
@@ -413,38 +331,6 @@ describe('Component: Events', () => {
 
     it('should handle single character strings', () => {
       expect(component.capitalize('a')).toBe('A');
-    });
-  });
-
-  describe('latestStateSize', () => {
-    it('should return KB when size is between 1024 and 1048576 bytes', () => {
-      const largeValue = 'x'.repeat(2048);
-      mockService.eventsSignal.set([
-        {
-          ...mockEvent,
-          cell: 'alpha',
-          state: { hasValue: true, value: largeValue }
-        }
-      ]);
-      fixture.detectChanges();
-
-      const result = component.latestStateSize();
-      expect(result).toMatch(/KB$/);
-    });
-
-    it('should return MB when size exceeds 1048576 bytes', () => {
-      const hugeValue = 'x'.repeat(1_100_000);
-      mockService.eventsSignal.set([
-        {
-          ...mockEvent,
-          cell: 'alpha',
-          state: { hasValue: true, value: hugeValue }
-        }
-      ]);
-      fixture.detectChanges();
-
-      const result = component.latestStateSize();
-      expect(result).toMatch(/MB$/);
     });
   });
 

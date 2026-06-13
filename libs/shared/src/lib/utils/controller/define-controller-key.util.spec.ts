@@ -22,7 +22,7 @@ describe('Util: defineControllerKey', () => {
 });
 
 describe('validateControllerKey', () => {
-  it('should accept valid NgVault keys', () => {
+  it('should accept valid Vault keys', () => {
     const validKeys = [
       'SDUX::Controller::Core::Value',
       'SDUX::Controller::Persistence::LocalStorage',
@@ -38,7 +38,7 @@ describe('validateControllerKey', () => {
     });
   });
 
-  it('should reject keys missing the NgVault prefix', () => {
+  it('should reject keys missing the Vault prefix', () => {
     expect(validateControllerKey('Vault::Core::Resolve')).toBeFalse();
   });
 

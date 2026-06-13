@@ -28,7 +28,7 @@
 
         <div class="indicators-ts">
           <div class="indicators">
-            @if (event().state?.hasValue || event().type === 'pipeline') {
+            @if (event().state?.hasValue) {
               <span class="icon active" matTooltip="State" aria-hidden="true"
                 >&#9679;</span
               >
@@ -45,6 +45,16 @@
             @if (event().error) {
               <span class="icon error" matTooltip="Error" aria-hidden="true"
                 >&#9888;</span
+              >
+            } @else {
+              <span class="icon-spacer" aria-hidden="true"></span>
+            }
+            @if (event().candidate) {
+              <span
+                class="icon candidate"
+                matTooltip="Candidate"
+                aria-hidden="true"
+                >&#9670;</span
               >
             } @else {
               <span class="icon-spacer" aria-hidden="true"></span>

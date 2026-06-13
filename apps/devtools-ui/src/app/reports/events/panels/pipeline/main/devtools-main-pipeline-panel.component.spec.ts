@@ -1,7 +1,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DevtoolsPipelineEventDetailComponent } from '../../events/pipeline/detail/devtools-pipeline-event-detail.component';
-import { DevtoolsPipelineEventComponent } from '../../events/pipeline/devtools-pipeline-event.component';
+import { EventDetailComponent } from '../../../../../shared/components/event-detail/event-detail.component';
+import { DevtoolsPipelineEventComponent } from '../../events/devtools-pipeline-event.component';
 import { DevtoolsMainPipelinePanelComponent } from './devtools-main-pipeline-panel.component';
 
 const mockEvent: any = {
@@ -27,7 +27,7 @@ describe('Component: DevtoolsPanel', () => {
       imports: [
         DevtoolsMainPipelinePanelComponent,
         DevtoolsPipelineEventComponent,
-        DevtoolsPipelineEventDetailComponent
+        EventDetailComponent
       ],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();

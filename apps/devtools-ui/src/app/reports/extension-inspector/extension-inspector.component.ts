@@ -14,13 +14,13 @@ import { DevtoolsAggregateService } from '../../services/devtools-aggregate.serv
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
 import { DetailPaneComponent } from '../../shared/components/detail-pane/detail-pane.component';
+import { EventDetailComponent } from '../../shared/components/event-detail/event-detail.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
 import { PipelineFlowComponent } from '../../shared/components/pipeline-flow/pipeline-flow.component';
 import { ResetButtonComponent } from '../../shared/components/reset-button/reset-button.component';
 import { UpsellNoticeComponent } from '../../shared/components/upsell-notice/upsell-notice.component';
 import { LeftRightNavigationDirective } from '../../shared/directives/left-right-navigation/left-right-navigation.directive';
-import { DevtoolsPipelineEventDetailComponent } from '../events/panels/events/pipeline/detail/devtools-pipeline-event-detail.component';
 import { StateTableViewComponent } from '../state-diff-view/state-table-view/state-table-view.component';
 import { InspectorTimelineComponent } from './inspector-timeline/inspector-timeline.component';
 import { ExtensionInspectorService } from './service/extension-inspector.service';
@@ -41,7 +41,7 @@ import { ExtensionInspectorService } from './service/extension-inspector.service
     MatTooltipModule,
     CollapsibleSectionComponent,
     DetailPaneComponent,
-    DevtoolsPipelineEventDetailComponent,
+    EventDetailComponent,
     ExportButtonComponent,
     HelpToggleComponent,
     InspectorTimelineComponent,

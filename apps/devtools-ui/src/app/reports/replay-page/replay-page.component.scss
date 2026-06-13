@@ -1,6 +1,8 @@
 @use 'global' as global;
 @use '../scss/reports-common';
 
+$trace-detail-height: 200px;
+
 .report-page {
   /* ─── SECTION HEADER WITH CHEVRON ─── */
 
@@ -97,7 +99,7 @@
   .trace-details-row {
     display: flex;
     gap: global.$spacing-md;
-    align-items: flex-start;
+    align-items: stretch;
 
     @media (max-width: global.$breakpoint-md) {
       flex-direction: column-reverse;
@@ -127,6 +129,8 @@
     background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
     border-radius: global.$border-radius-sm;
     border: 1px solid global.$sdux-surface-outline;
+    height: $trace-detail-height;
+    overflow-y: auto;
 
     .summary-row {
       display: flex;
@@ -172,7 +176,7 @@
       font-size: global.$font-size-xs;
       color: var(--sdux-text-primary);
       overflow-x: auto;
-      max-height: 300px;
+      height: $trace-detail-height;
       overflow-y: auto;
     }
   }

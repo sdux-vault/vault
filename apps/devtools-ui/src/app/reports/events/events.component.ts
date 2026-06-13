@@ -15,9 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { EventShape } from '@sdux-vault/shared';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
+import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/components/reset-button/reset-button.component';
@@ -32,6 +32,7 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
   selector: 'sdux-events',
   standalone: true,
   imports: [
+    CollapsibleSectionComponent,
     FormsModule,
     MatButtonModule,
     MatIconModule,
@@ -181,32 +182,6 @@ export class EventsComponent {
   );
 
   /** Human-readable total state size across all cells (latest event per cell). */
-  readonly latestStateSize = computed(() => {
-    const events = this.events();
-    if (!events?.length) {
-      return null;
-    }
-    const latestByCell = new Map<string, EventShape>();
-    for (const e of events) {
-      if (e.state?.hasValue) {
-        latestByCell.set(e.cell, e);
-      }
-    }
-    if (!latestByCell.size) {
-      return null;
-    }
-    let totalBytes = 0;
-    for (const e of latestByCell.values()) {
-      totalBytes += new Blob([JSON.stringify(e.state!.value)]).size;
-    }
-    if (totalBytes < 1024) {
-      return `${totalBytes} B`;
-    }
-    if (totalBytes < 1048576) {
-      return `${(totalBytes / 1024).toFixed(1)} KB`;
-    }
-    return `${(totalBytes / 1048576).toFixed(1)} MB`;
-  });
 
   /**
    * Resets local filter signals without clearing the FeatureCell

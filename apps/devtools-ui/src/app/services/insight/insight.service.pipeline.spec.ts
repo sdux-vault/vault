@@ -5,7 +5,7 @@ import { DevMode, EventShape } from '@sdux-vault/shared';
 import { take } from 'rxjs';
 import { InsightService } from './insight.service';
 
-describe('Service: NgVaultInsightService - Pipeline', () => {
+describe('Service: VaultInsight - Pipeline', () => {
   let bus: EventBusContract;
   const received: EventShape[] = [];
   let hook: InsightService;

@@ -1,4 +1,4 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DevtoolsAggregateService } from '../../../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../../../services/devtools-logging.service';
@@ -10,13 +10,22 @@ describe('Component: ResetButton', () => {
   let loggingMock: jasmine.SpyObj<DevtoolsLoggingService>;
   let aggregateMock: jasmine.SpyObj<DevtoolsAggregateService>;
 
+  const totalEvents = signal(5);
+  const totalTraces = signal(3);
+
   beforeEach(async () => {
-    loggingMock = jasmine.createSpyObj('DevtoolsLoggingService', [
-      'clearEvents'
-    ]);
-    aggregateMock = jasmine.createSpyObj('DevtoolsAggregateService', [
-      'clearTraces'
-    ]);
+    totalEvents.set(5);
+    totalTraces.set(3);
+    loggingMock = jasmine.createSpyObj(
+      'DevtoolsLoggingService',
+      ['clearEvents'],
+      { totalEvents }
+    );
+    aggregateMock = jasmine.createSpyObj(
+      'DevtoolsAggregateService',
+      ['clearTraces'],
+      { totalTraces }
+    );
 
     await TestBed.configureTestingModule({
       imports: [ResetButtonComponent],
@@ -55,5 +64,13 @@ describe('Component: ResetButton', () => {
 
     expect(loggingMock.clearEvents).toHaveBeenCalledTimes(1);
     expect(aggregateMock.clearTraces).toHaveBeenCalledTimes(1);
+  });
+
+  it('should hide the button when no events or traces exist', () => {
+    totalEvents.set(0);
+    totalTraces.set(0);
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector('.sdux-button');
+    expect(button).toBeNull();
   });
 });

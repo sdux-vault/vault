@@ -1,7 +1,9 @@
 @if (isLicensed()) {
   <div class="report-page">
-    <header class="header">
-      <sdux-help-toggle ariaLabel="Toggle hot stage ranking help">
+    <sdux-collapsible-section
+      [showChevron]="false"
+      ariaLabel="Toggle hot stage ranking help">
+      <sdux-help-toggle header ariaLabel="Toggle hot stage ranking help">
         <h2 helpHeading>Hot Stage Ranking</h2>
         <p class="help-text">
           The Hot Stage Ranking aggregates pipeline stage durations across all
@@ -9,7 +11,7 @@
           cumulative time. Use this view to identify systemic bottlenecks.
         </p>
       </sdux-help-toggle>
-    </header>
+    </sdux-collapsible-section>
     <div class="action-bar">
       <mat-select
         class="cell-filter"

@@ -24,10 +24,71 @@
     min-height: 0;
     min-width: 0;
 
+    .table-header {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-md;
+      padding: global.$spacing-xs global.$spacing-sm;
+      border-bottom: 1px solid global.$sdux-surface-outline;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-semibold;
+      color: global.$sdux-text-secondary;
+      flex-shrink: 0;
+
+      .th-counter {
+        width: 3rem;
+        text-align: right;
+        flex-shrink: 0;
+
+        @media (max-width: global.$breakpoint-md) {
+          width: 2rem;
+        }
+      }
+
+      .th-key {
+        width: 200px;
+        min-width: 0;
+
+        @media (max-width: global.$breakpoint-md) {
+          min-width: 0;
+        }
+      }
+
+      .th-type {
+        width: 120px;
+        flex-shrink: 0;
+        text-align: left;
+
+        @media (max-width: global.$breakpoint-md) {
+          display: none;
+        }
+      }
+
+      .th-indicators-group {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-xs;
+        flex-shrink: 0;
+
+        span {
+          display: inline-block;
+          width: 1em;
+          text-align: center;
+        }
+      }
+
+      .th-ts {
+        width: 90px;
+        text-align: left;
+        flex-shrink: 0;
+      }
+    }
+
     .event-list {
       flex: 1;
       min-height: 0;
-      height: 100%;
+      height: calc(100% - 32px);
       overscroll-behavior: contain;
       margin-bottom: global.$spacing-2xl;
 
@@ -60,7 +121,7 @@
     margin-bottom: global.$spacing-2xl;
     min-height: 0;
 
-    sdux-devtools-pipeline-event-detail {
+    sdux-event-detail {
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -109,7 +170,7 @@
       box-sizing: border-box;
       overflow: hidden;
 
-      sdux-devtools-pipeline-event-detail {
+      sdux-event-detail {
         height: 100%;
         flex: none;
       }

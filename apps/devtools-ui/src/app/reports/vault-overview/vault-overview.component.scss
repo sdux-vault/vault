@@ -278,7 +278,7 @@
       padding: global.$spacing-md;
       display: flex;
       flex-direction: column;
-      min-height: 230px;
+      min-height: 245px;
 
       &:has(sdux-collapsible-section [aria-expanded='false']) {
         min-height: 0;
@@ -361,8 +361,6 @@
 
     .help-actions {
       width: 100%;
-      margin-top: global.$spacing-sm;
-      margin-bottom: global.$spacing-sm;
 
       [helpactions] {
         width: 100%;

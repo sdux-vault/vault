@@ -15,6 +15,8 @@ import { ActivatedRoute } from '@angular/router';
 import { EventShape } from '@sdux-vault/shared';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { EventDetailComponent } from '../../shared/components/event-detail/event-detail.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/components/reset-button/reset-button.component';
@@ -22,7 +24,6 @@ import { EscapeCloseDirective } from '../../shared/directives/escape-close/escap
 import type { TraceExecutionShape } from '../../shared/shapes/trace';
 import { TraceExecutionStatuses } from '../../shared/shapes/trace';
 import type { StageMetricShape } from '../../shared/shapes/trace/stage-metric.shape';
-import { DevtoolsPipelineEventDetailComponent } from '../events/panels/events/pipeline/detail/devtools-pipeline-event-detail.component';
 import { TraceHotStageRankingComponent } from '../hot-stage-ranking-page/hot-stage-ranking-trace/trace-hot-stage-ranking.component';
 import { TraceEventTableComponent } from './event-table/trace-event-table.component';
 import { TracePipelineFlowTabComponent } from './pipeline-flow-tab/trace-pipeline-flow-tab.component';
@@ -41,6 +42,7 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
   selector: 'sdux-trace-detail-view',
   standalone: true,
   imports: [
+    CollapsibleSectionComponent,
     UpperCasePipe,
     MatIconModule,
     MatSelectModule,
@@ -55,7 +57,7 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
     TracePipelineFlowTabComponent,
     TraceStageWaterfallComponent,
     TraceTimelineComponent,
-    DevtoolsPipelineEventDetailComponent
+    EventDetailComponent
   ],
   templateUrl: './trace-detail-view.component.html',
   styleUrls: [

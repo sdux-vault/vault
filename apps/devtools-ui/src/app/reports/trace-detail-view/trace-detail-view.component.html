@@ -1,18 +1,18 @@
 <div class="report-page">
   <!-- Header -->
-  <header class="header">
-    <div class="title-group">
-      <h2>Trace Timeline</h2>
-      <sdux-help-toggle ariaLabel="Toggle trace timeline help">
-        <p class="help-text">
-          The Trace Timeline shows a chronological view of all dispatched
-          traces. Each trace represents a complete behavioral pipeline
-          execution. Use the cell filter to narrow results and expand individual
-          traces to inspect stage details.
-        </p>
-      </sdux-help-toggle>
-    </div>
-  </header>
+  <sdux-collapsible-section
+    [showChevron]="false"
+    ariaLabel="Toggle trace timeline help">
+    <sdux-help-toggle header ariaLabel="Toggle trace timeline help">
+      <h2 helpHeading>Trace Timeline</h2>
+      <p class="description">
+        The Trace Timeline shows a chronological view of all dispatched traces.
+        Each trace represents a complete behavioral pipeline execution. Use the
+        cell filter to narrow results and expand individual traces to inspect
+        stage details.
+      </p>
+    </sdux-help-toggle>
+  </sdux-collapsible-section>
   <div class="action-bar">
     <mat-select
       class="cell-filter"
@@ -81,9 +81,9 @@
 
   @if (filteredTraces().length === 0) {
     <div class="empty-state">
-      <p>
-        No traces captured yet. Traces appear after a FeatureCell dispatches an
-        action.
+      <mat-icon class="empty-state-icon">manage_search</mat-icon>
+      <p class="empty-state-text">
+        No traces available. Trigger some pipeline activity or load a dump file.
       </p>
     </div>
   } @else {
@@ -176,11 +176,9 @@
               <!-- Event Detail Panel -->
               @if (selectedEvent(); as selected) {
                 <aside class="event-detail-pane">
-                  <sdux-devtools-pipeline-event-detail
+                  <sdux-event-detail
                     [event]="selected"
-                    (closeDetail)="
-                      closeEventDetail()
-                    "></sdux-devtools-pipeline-event-detail>
+                    (closeDetail)="closeEventDetail()"></sdux-event-detail>
                 </aside>
               }
             </div>

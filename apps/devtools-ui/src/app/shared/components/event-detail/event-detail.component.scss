@@ -75,16 +75,6 @@
     }
   }
 
-  .detail-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: global.$spacing-md;
-
-    @media (max-width: global.$breakpoint-md) {
-      grid-template-columns: 1fr;
-    }
-  }
-
   .detail-block {
     margin-bottom: global.$spacing-md;
 

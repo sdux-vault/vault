@@ -157,12 +157,29 @@
 
   .empty-state {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: global.$spacing-xl;
+    padding: global.$spacing-xl global.$spacing-lg;
     color: var(--sdux-text-secondary);
     font-size: global.$font-size-sm;
-    font-style: italic;
+    text-align: center;
+
+    .empty-state-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      margin-bottom: global.$spacing-md;
+      color: global.$sdux-primary-light;
+      opacity: 0.6;
+    }
+
+    .empty-state-text {
+      margin: 0;
+      font-size: global.$font-size-sm;
+      line-height: 1.6;
+      max-width: 500px;
+    }
   }
 
   /* ─── TRACE SELECTOR ─── */

@@ -1,7 +1,9 @@
 @if (isLicensed()) {
   <div class="report-page">
-    <header class="header">
-      <sdux-help-toggle ariaLabel="Toggle AI assist help">
+    <sdux-collapsible-section
+      [showChevron]="false"
+      ariaLabel="Toggle AI assist help">
+      <sdux-help-toggle header ariaLabel="Toggle AI assist help">
         <h2 helpHeading>AI Assist Export</h2>
         <p class="description">
           Export a structured debug dump and an AI-assisted analysis prompt.
@@ -9,7 +11,7 @@
           pipeline performance report.
         </p>
       </sdux-help-toggle>
-    </header>
+    </sdux-collapsible-section>
 
     <div class="action-bar">
       @if (hasEvents()) {

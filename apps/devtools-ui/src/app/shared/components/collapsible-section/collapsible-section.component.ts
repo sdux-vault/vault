@@ -27,6 +27,9 @@ export class CollapsibleSectionComponent {
   /** Whether the section body is visible. Two-way bindable. */
   readonly expanded = model(true);
 
+  /** Whether to display the chevron icon. */
+  readonly showChevron = input(true);
+
   /** Toggles the expanded state. */
   toggle(): void {
     this.expanded.update((v) => !v);

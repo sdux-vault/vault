@@ -12,6 +12,7 @@ import {
 } from '@sdux-vault/devtools';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
+import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/components/reset-button/reset-button.component';
 import { UpsellNoticeComponent } from '../../shared/components/upsell-notice/upsell-notice.component';
@@ -27,6 +28,7 @@ import { UpsellNoticeComponent } from '../../shared/components/upsell-notice/ups
   selector: 'sdux-ai-assist-page',
   standalone: true,
   imports: [
+    CollapsibleSectionComponent,
     HelpToggleComponent,
     MatTooltipModule,
     ResetButtonComponent,
