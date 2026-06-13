@@ -1,8 +1,8 @@
 @if (isLicensed()) {
   <div class="report-page">
     <header class="header">
-      <h2>Chrome Trace Export</h2>
       <sdux-help-toggle ariaLabel="Toggle export help">
+        <h2 helpHeading>Chrome Trace Export</h2>
         <p class="description">
           Export recorded pipeline events as a Chrome Trace Timeline file. The
           exported <code>.json</code> file can be loaded into Chrome DevTools to
@@ -119,7 +119,7 @@
           stages are clearly visible in the flame chart.
         </p>
       } @else {
-        <div class="warning-notice">
+        <div class="warning-notice" role="status" aria-live="polite">
           No events recorded yet. Interact with your application to generate
           pipeline events, then return here to export the trace.
         </div>

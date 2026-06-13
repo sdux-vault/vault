@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AiAssistPageComponent } from './reports/ai-assist-page/ai-assist-page.component';
 import { EventsComponent } from './reports/events/events.component';
 import { ExtensionInspectorComponent } from './reports/extension-inspector/extension-inspector.component';
 import { HotStageRankingPageComponent } from './reports/hot-stage-ranking-page/hot-stage-ranking-page.component';
@@ -28,6 +29,9 @@ export const routes: Routes = [
 
   /** Dedicated events route for the tabbed event viewer. */
   { path: 'events', component: EventsComponent },
+
+  /** AI Assist — export debug dump and AI analysis prompt. */
+  { path: 'reports/ai-assist', component: AiAssistPageComponent },
 
   /** Trace Detail View report — ordered event table per trace. */
   { path: 'reports/trace-detail', component: TraceDetailViewComponent },

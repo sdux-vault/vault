@@ -1,0 +1,88 @@
+@if (isLicensed()) {
+  <div class="report-page">
+    <header class="header">
+      <sdux-help-toggle ariaLabel="Toggle AI assist help">
+        <h2 helpHeading>AI Assist Export</h2>
+        <p class="description">
+          Export a structured debug dump and an AI-assisted analysis prompt.
+          Upload both files to your preferred AI model for a comprehensive
+          pipeline performance report.
+        </p>
+      </sdux-help-toggle>
+    </header>
+
+    <div class="action-bar">
+      @if (hasEvents()) {
+        <div class="summary-stats">
+          <strong>{{ eventCount() }}</strong> events across
+          <strong>{{ traceCount() }}</strong>
+          {{ traceCount() === 1 ? 'trace' : 'traces' }} ready to export
+        </div>
+      }
+      <div class="sdux-container-spacer"></div>
+      <div class="meta">
+        <sdux-devtools-reset-button></sdux-devtools-reset-button>
+      </div>
+    </div>
+
+    <section class="export-section">
+      @if (hasEvents()) {
+        <div class="features">
+          <p class="features-heading">How to use:</p>
+          <ol>
+            <li>Download both files below</li>
+            <li>
+              Open your preferred AI model (ChatGPT, Claude, Gemini, etc.)
+            </li>
+            <li>Upload the <strong>AI Assist prompt</strong> file first</li>
+            <li>
+              Attach the <strong>Debug Dump</strong> JSON file alongside it
+            </li>
+            <li>Submit — the AI will produce a structured analysis report</li>
+          </ol>
+        </div>
+
+        <div class="button-group">
+          <button
+            type="button"
+            class="sdux-button"
+            matTooltip="Download the AI analysis prompt template"
+            aria-label="Download AI assist prompt file"
+            (click)="downloadAiAssist()">
+            Download AI Assist Prompt
+          </button>
+          <button
+            type="button"
+            class="sdux-button"
+            matTooltip="Download the debug dump JSON for AI analysis"
+            aria-label="Download debug dump file"
+            (click)="downloadDump()">
+            Download Debug Dump
+          </button>
+        </div>
+        <div class="export-hint">
+          <ul>
+            <li>
+              The <strong>AI Assist prompt</strong> contains structured analysis
+              instructions.
+            </li>
+            <li>
+              The <strong>Debug Dump</strong> contains the raw pipeline events,
+              stats, and registry data for the AI to analyze.
+            </li>
+          </ul>
+        </div>
+      } @else {
+        <div class="warning-notice" role="status" aria-live="polite">
+          No events recorded yet. Interact with your application to generate
+          pipeline events, then return here to export.
+        </div>
+      }
+    </section>
+  </div>
+} @else {
+  <sdux-upsell-notice
+    headline="Unlock AI-assisted analysis with a"
+    body="Export pipeline diagnostics with a structured AI prompt for automated performance analysis, bottleneck detection, and architectural insights.">
+  </sdux-upsell-notice>
+}

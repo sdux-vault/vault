@@ -1,20 +1,18 @@
 @if (isLicensed()) {
   <div class="report-page">
     <header class="header">
-      <div class="title-group">
-        <h2>Extension Inspector</h2>
-        <sdux-help-toggle ariaLabel="Toggle extension inspector help">
-          <p class="help-text">
-            Inspect how a specific controller or behavior performs across all
-            recorded traces. Select a cell and extension key to see execution
-            count, duration statistics, and per-trace breakdowns.
-          </p>
-          <p class="help-text">
-            Use this view to answer: "How is my controller performing across
-            traces?" by filtering all pipeline data to a single key.
-          </p>
-        </sdux-help-toggle>
-      </div>
+      <sdux-help-toggle ariaLabel="Toggle extension inspector help">
+        <h2 helpHeading>Extension Inspector</h2>
+        <p class="help-text">
+          Inspect how a specific controller or behavior performs across all
+          recorded traces. Select a cell and extension key to see execution
+          count, duration statistics, and per-trace breakdowns.
+        </p>
+        <p class="help-text">
+          Use this view to answer: "How is my controller performing across
+          traces?" by filtering all pipeline data to a single key.
+        </p>
+      </sdux-help-toggle>
     </header>
 
     <section class="action-bar">

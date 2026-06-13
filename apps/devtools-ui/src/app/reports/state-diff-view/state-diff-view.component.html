@@ -2,8 +2,8 @@
   <div class="report-page">
     <!-- Header -->
     <header class="header">
-      <h2>State Diff View</h2>
       <sdux-help-toggle ariaLabel="Toggle description">
+        <h2 helpHeading>State Diff View</h2>
         <p class="description">
           Compare before and after state snapshots across pipeline stages.
           Select a trace, then step through snapshot pairs to see exactly how
@@ -97,8 +97,8 @@
             ariaLabel="Toggle state mutation graph"
             [(expanded)]="showMutationGraph">
             <div header class="title-group">
-              <h3>State Mutation Graph</h3>
               <sdux-help-toggle ariaLabel="Toggle mutation graph help">
+                <h3 helpHeading>State Mutation Graph</h3>
                 <p class="help-text">
                   The State Mutation Graph shows which pipeline stages produced
                   mutations for each candidate pair. Each row is a pair

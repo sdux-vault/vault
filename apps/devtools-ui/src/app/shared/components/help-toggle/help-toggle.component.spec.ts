@@ -7,6 +7,7 @@ import { HelpToggleComponent } from './help-toggle.component';
   imports: [HelpToggleComponent],
   template: `
     <sdux-help-toggle ariaLabel="Toggle test help">
+      <h3 helpHeading>Test Heading</h3>
       <p class="help-text">Test help content</p>
     </sdux-help-toggle>
   `

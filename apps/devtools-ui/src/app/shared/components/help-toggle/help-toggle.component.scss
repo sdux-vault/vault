@@ -1,7 +1,13 @@
 @use 'global' as global;
 
 :host {
-  display: contents;
+  display: flex;
+  flex-direction: column;
+}
+
+.help-header {
+  display: flex;
+  align-items: center;
 }
 
 .help-toggle {

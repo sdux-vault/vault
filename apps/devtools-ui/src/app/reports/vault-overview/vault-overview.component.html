@@ -1,17 +1,14 @@
 <div class="report-page">
   <header class="header">
-    <div class="title-group">
-      <h2>Vault Overview</h2>
-      <sdux-help-toggle ariaLabel="Toggle vault overview help">
-        <p class="help-text">
-          The Vault Overview displays runtime package versions, license details,
-          and the FeatureCell registry. Each registry card shows behavior,
-          controller, and Fluent API counts along with trace statistics. Click
-          <strong>View Pipeline</strong> to inspect a cell's registered
-          pipeline.
-        </p>
-      </sdux-help-toggle>
-    </div>
+    <sdux-help-toggle ariaLabel="Toggle vault overview help">
+      <h2 helpHeading>Vault Overview</h2>
+      <p class="help-text">
+        The Vault Overview displays runtime package versions, license details,
+        and the FeatureCell registry. Each registry card shows behavior,
+        controller, and Fluent API counts along with trace statistics. Click
+        <strong>View Pipeline</strong> to inspect a cell's registered pipeline.
+      </p>
+    </sdux-help-toggle>
   </header>
 
   <section class="vault-overview-content">
@@ -102,13 +99,13 @@
         ariaLabel="Toggle registry"
         [(expanded)]="showRegistryCards">
         <div header class="registry-header">
-          <h3 class="section-title">FeatureCell Registry</h3>
           <sdux-help-toggle ariaLabel="Toggle registry help">
+            <h3 helpHeading class="section-title">FeatureCell Registry</h3>
             <p class="help-text">
-              Each card represents a registered FeatureCell. The first row shows
-              the number of Behaviors, Controllers, and Fluent APIs attached to
-              the cell. The second row shows live trace statistics — total
-              traces executed, average duration in milliseconds, and error
+              > Each card represents a registered FeatureCell. The first row
+              shows the number of Behaviors, Controllers, and Fluent APIs
+              attached to the cell. The second row shows live trace statistics —
+              total traces executed, average duration in milliseconds, and error
               count.
             </p>
           </sdux-help-toggle>
