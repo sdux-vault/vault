@@ -98,22 +98,15 @@
       <sdux-collapsible-section
         ariaLabel="Toggle registry"
         [(expanded)]="showRegistryCards">
-        <div header class="registry-header">
-          <sdux-help-toggle ariaLabel="Toggle registry help">
-            <h3 helpHeading class="section-title">FeatureCell Registry</h3>
-            <p class="help-text">
-              > Each card represents a registered FeatureCell. The first row
-              shows the number of Behaviors, Controllers, and Fluent APIs
-              attached to the cell. The second row shows live trace statistics —
-              total traces executed, average duration in milliseconds, and error
-              count.
-            </p>
-          </sdux-help-toggle>
-          <div class="registry-header-actions">
-            <div class="registry-search" (click)="$event.stopPropagation()">
+        <sdux-help-toggle header ariaLabel="Toggle registry help">
+          <h3 helpHeading>FeatureCell Registry</h3>
+          <div helpActions>
+            <mat-form-field
+              class="cell-filter registry-search"
+              appearance="outline"
+              (click)="$event.stopPropagation()">
               <input
-                type="text"
-                class="registry-search-input"
+                matInput
                 placeholder="Filter cells"
                 aria-label="Filter registry cells"
                 [ngModel]="registrySearchTerm()"
@@ -123,7 +116,8 @@
                 " />
               <button
                 type="button"
-                class="registry-search-btn"
+                matSuffix
+                mat-icon-button
                 [attr.aria-label]="
                   registrySearchTerm() ? 'Clear filter' : 'Filter cells'
                 "
@@ -135,9 +129,15 @@
                   registrySearchTerm() ? 'close' : 'search'
                 }}</mat-icon>
               </button>
-            </div>
+            </mat-form-field>
           </div>
-        </div>
+          <p class="help-text">
+            > Each card represents a registered FeatureCell. The first row shows
+            the number of Behaviors, Controllers, and Fluent APIs attached to
+            the cell. The second row shows live trace statistics — total traces
+            executed, average duration in milliseconds, and error count.
+          </p>
+        </sdux-help-toggle>
         <div class="registry-body">
           @if (registry().length) {
             <div class="cell-cards">

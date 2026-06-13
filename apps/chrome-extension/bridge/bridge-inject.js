@@ -142,7 +142,11 @@
       {
         source: 'vault-devtools',
         type: 'VAULT_CONFIG',
-        config: { versions: versions, registry: registry }
+        config: {
+          versions: versions,
+          registry: registry,
+          license: window?.sdux?.license ?? null
+        }
       },
       '*'
     );

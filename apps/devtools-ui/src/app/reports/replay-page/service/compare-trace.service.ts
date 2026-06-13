@@ -362,14 +362,17 @@ export class CompareTraceService {
     return diffJson(before ?? {}, after ?? {});
   });
 
+  /** Whether to show only changed keys/lines in the diff and table views. */
+  readonly showChangedOnly = signal(false);
+
   /** Lines for the BEFORE diff panel. */
   readonly compareBeforeLines = computed(() =>
-    this.buildLines(this.compareDiffHunks(), 'before')
+    this.buildLines(this.compareDiffHunks(), 'before', this.showChangedOnly())
   );
 
   /** Lines for the AFTER diff panel. */
   readonly compareAfterLines = computed(() =>
-    this.buildLines(this.compareDiffHunks(), 'after')
+    this.buildLines(this.compareDiffHunks(), 'after', this.showChangedOnly())
   );
 
   /**
@@ -510,12 +513,14 @@ export class CompareTraceService {
    */
   buildLines(
     hunks: Change[],
-    side: 'before' | 'after'
+    side: 'before' | 'after',
+    changedOnly = false
   ): { text: string; cssClass: string }[] {
     const lines: { text: string; cssClass: string }[] = [];
     for (const hunk of hunks) {
       if (side === 'before' && hunk.added) continue;
       if (side === 'after' && hunk.removed) continue;
+      if (changedOnly && !hunk.added && !hunk.removed) continue;
 
       const cssClass = hunk.added
         ? 'diff-line-added'

@@ -4,15 +4,15 @@
 .report-page {
   /* ─── SECTION HEADER WITH CHEVRON ─── */
 
+  .vspacer {
+    margin-top: global.$spacing-md;
+  }
+
   .section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-
-    &.vspacer {
-      margin-top: global.$spacing-md;
-    }
 
     h3 {
       margin: 0;
@@ -320,11 +320,6 @@
     }
   }
 
-  .title-group {
-    display: flex;
-    align-items: center;
-  }
-
   .help-section {
     display: flex;
     flex-direction: column;
@@ -352,6 +347,40 @@
 
     li {
       margin-bottom: global.$spacing-xs;
+    }
+  }
+
+  /* ─── DELTA TOGGLE ─── */
+
+  .diff-header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .diff-header-meta {
+    width: 100%;
+    order: 3;
+  }
+
+  .delta-toggle {
+    @include global.sdux-icon-button(28px, transparent);
+    margin-left: auto;
+    order: 2;
+    align-self: flex-start;
+    color: global.$sdux-primary-light;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover {
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
+    }
+
+    &.active {
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
     }
   }
 }

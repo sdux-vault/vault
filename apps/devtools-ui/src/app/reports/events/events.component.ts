@@ -9,7 +9,9 @@ import {
   viewChildren
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -31,7 +33,9 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
   standalone: true,
   imports: [
     FormsModule,
+    MatButtonModule,
     MatIconModule,
+    MatInputModule,
     MatSelectModule,
     MatTabsModule,
     MatTooltipModule,

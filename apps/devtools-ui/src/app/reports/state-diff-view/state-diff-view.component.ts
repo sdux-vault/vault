@@ -6,6 +6,7 @@ import {
   inject,
   signal
 } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { diffJson, type Change } from 'diff';
@@ -36,6 +37,7 @@ import { StateTableViewComponent } from './state-table-view/state-table-view.com
   selector: 'sdux-state-diff-view',
   standalone: true,
   imports: [
+    MatIconModule,
     MatSelectModule,
     MatTooltipModule,
     CollapsibleSectionComponent,

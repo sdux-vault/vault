@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SDuX Vault DevTools",
-  "version": "0.0.50",
+  "version": "0.0.73",
   "description": "Developer tools panel for inspecting SDuX Vault state and events.",
 
   "devtools_page": "devtools/devtools.html",
@@ -30,6 +30,7 @@
       "resources": [
         "bridge/bridge-inject.js",
         "assets/brand/brand-landscape-dark.svg",
+        "assets/brand/sdux-vault-chrome-devtools-dark.svg",
         "assets/brand/sdux-vault-landscape-dark.png",
         "assets/brand/vault-icon.png",
         "assets/brand/help-icon.png"

@@ -6,15 +6,20 @@
 
 .collapsible-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
   cursor: pointer;
   margin-bottom: global.$spacing-sm;
+
+  .header-content {
+    flex: 1;
+    min-width: 0;
+  }
 }
 
 .chevron {
   @include global.sdux-icon-button(28px, transparent);
-  margin-left: auto;
+  flex-shrink: 0;
+  margin-left: global.$spacing-md;
   color: global.$sdux-primary-light;
   transition:
     transform 0.2s ease,

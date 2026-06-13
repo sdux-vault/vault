@@ -7,7 +7,9 @@
   (click)="toggle()"
   (keydown.enter)="toggle()"
   (keydown.space)="$event.preventDefault(); toggle()">
-  <ng-content select="[header]" />
+  <div class="header-content">
+    <ng-content select="[header]" />
+  </div>
   <mat-icon
     class="chevron"
     [class.expanded]="expanded()"

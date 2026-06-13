@@ -194,51 +194,46 @@
           class="vspacer"
           ariaLabel="Toggle compare traces"
           [(expanded)]="showCompareTraces">
-          <div header class="title-group">
-            <h3>Compare Traces</h3>
-            @if (compareSection.expanded()) {
-              <sdux-help-toggle ariaLabel="Toggle compare traces help">
-                <p class="help-text">
-                  Compare Traces shows a side-by-side diff of two trace
-                  executions through the same pipeline. Use it to verify that a
-                  code change produced the expected result or to pinpoint where
-                  behavior diverged.
-                </p>
-                <p class="help-text"><strong>Summary bar</strong></p>
-                <ul class="help-list">
-                  <li>
-                    <strong>X of Y events differ</strong> — how many events
-                    changed between the before and after traces out of the
-                    total.
-                  </li>
-                  <li>
-                    <strong>Before / After duration</strong> — total pipeline
-                    execution time for each trace in milliseconds.
-                  </li>
-                  <li>
-                    <strong>Duration delta</strong> — the speed difference (e.g.
-                    "−300ms faster" or "+50ms slower"), highlighted green for
-                    faster and red for slower.
-                  </li>
-                </ul>
-                <p class="help-text"><strong>Filters</strong></p>
-                <ul class="help-list">
-                  <li>
-                    <strong>Diffs Only</strong> — hide matching events and show
-                    only the ones that changed between traces.
-                  </li>
-                  <li>
-                    <strong>Category buttons</strong> (lifecycle, controller,
-                    etc.) — show only events belonging to that category.
-                  </li>
-                  <li>
-                    <strong>state</strong> — show only events that carry a state
-                    snapshot, useful for isolating state transitions.
-                  </li>
-                </ul>
-              </sdux-help-toggle>
-            }
-          </div>
+          <sdux-help-toggle header ariaLabel="Toggle compare traces help">
+            <h3 helpHeading>Compare Traces</h3>
+            <p class="help-text">
+              Compare Traces shows a side-by-side diff of two trace executions
+              through the same pipeline. Use it to verify that a code change
+              produced the expected result or to pinpoint where behavior
+              diverged.
+            </p>
+            <p class="help-text"><strong>Summary bar</strong></p>
+            <ul class="help-list">
+              <li>
+                <strong>X of Y events differ</strong> — how many events changed
+                between the before and after traces out of the total.
+              </li>
+              <li>
+                <strong>Before / After duration</strong> — total pipeline
+                execution time for each trace in milliseconds.
+              </li>
+              <li>
+                <strong>Duration delta</strong> — the speed difference (e.g.
+                "−300ms faster" or "+50ms slower"), highlighted green for faster
+                and red for slower.
+              </li>
+            </ul>
+            <p class="help-text"><strong>Filters</strong></p>
+            <ul class="help-list">
+              <li>
+                <strong>Diffs Only</strong> — hide matching events and show only
+                the ones that changed between traces.
+              </li>
+              <li>
+                <strong>Category buttons</strong> (lifecycle, controller, etc.)
+                — show only events belonging to that category.
+              </li>
+              <li>
+                <strong>state</strong> — show only events that carry a state
+                snapshot, useful for isolating state transitions.
+              </li>
+            </ul>
+          </sdux-help-toggle>
           @if (compareTotalEvents() > 0) {
             <div class="compare-grid">
               <div class="compare-summary-group">
@@ -368,6 +363,19 @@
                               }}
                               — Event {{ compareEventIndex() + 1 }}
                             </span>
+                            <button
+                              type="button"
+                              class="delta-toggle"
+                              [class.active]="showChangedOnly()"
+                              (click)="showChangedOnly.set(!showChangedOnly())"
+                              [matTooltip]="
+                                showChangedOnly()
+                                  ? 'Show All Keys'
+                                  : 'Show Only Changed Keys'
+                              "
+                              aria-label="Toggle show only changed keys">
+                              <mat-icon>compare_arrows</mat-icon>
+                            </button>
                           </div>
                           <pre
                             class="diff-content">@for (line of compareBeforeLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
@@ -382,6 +390,19 @@
                               }}
                               — Event {{ compareEventIndex() + 1 }}
                             </span>
+                            <button
+                              type="button"
+                              class="delta-toggle"
+                              [class.active]="showChangedOnly()"
+                              (click)="showChangedOnly.set(!showChangedOnly())"
+                              [matTooltip]="
+                                showChangedOnly()
+                                  ? 'Show All Keys'
+                                  : 'Show Only Changed Keys'
+                              "
+                              aria-label="Toggle show only changed keys">
+                              <mat-icon>compare_arrows</mat-icon>
+                            </button>
                           </div>
                           <pre
                             class="diff-content">@for (line of compareAfterLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
@@ -401,7 +422,11 @@
                           ' — Event ' +
                           (compareEventIndex() + 1)
                         "
-                        [afterValue]="currentAfterEvent()">
+                        [afterValue]="currentAfterEvent()"
+                        [showChangedOnly]="showChangedOnly()"
+                        (toggleChangedOnly)="
+                          showChangedOnly.set(!showChangedOnly())
+                        ">
                       </sdux-state-table-view>
                     }
                   </div>

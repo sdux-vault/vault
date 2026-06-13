@@ -643,6 +643,35 @@ describe('CompareTraceService', () => {
         { text: 'b', cssClass: '' }
       ]);
     });
+
+    it('should filter unchanged hunks when changedOnly is true', () => {
+      const lines = service.buildLines(
+        [
+          { value: 'unchanged', added: false, removed: false, count: 1 },
+          { value: 'removed', added: false, removed: true, count: 1 }
+        ],
+        'before',
+        true
+      );
+      expect(lines).toEqual([
+        { text: 'removed', cssClass: 'diff-line-removed' }
+      ]);
+    });
+
+    it('should include unchanged hunks when changedOnly is false', () => {
+      const lines = service.buildLines(
+        [
+          { value: 'unchanged', added: false, removed: false, count: 1 },
+          { value: 'removed', added: false, removed: true, count: 1 }
+        ],
+        'before',
+        false
+      );
+      expect(lines).toEqual([
+        { text: 'unchanged', cssClass: '' },
+        { text: 'removed', cssClass: 'diff-line-removed' }
+      ]);
+    });
   });
 
   describe('jumpToNearestVisible', () => {

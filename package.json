@@ -65,7 +65,7 @@
     "start:chrome:prod": "ng serve devtools-demo --port 4250 --configuration production",
     "build:devtools": "ng build devtools",
     "build:devtools-ui": "ng build devtools-ui && npm run copy:devtools-ui",
-    "copy:devtools-ui": "copyfiles -f dist/devtools-ui/browser/* apps/chrome-extension/panel",
+    "copy:devtools-ui": "copyfiles -f dist/devtools-ui/browser/* apps/chrome-extension/panel && copyfiles -u 3 'dist/devtools-ui/browser/assets/**/*' apps/chrome-extension/panel && copyfiles -u 3 'dist/devtools-ui/browser/media/*' apps/chrome-extension/panel",
     "build:testing-utils": "ng build testing-utils",
     "build:integration:tests": "node libs/testing/integration/integration-build.script.mjs",
     "build:readmes": "node tools/readme-generation/readme-builder.mjs",

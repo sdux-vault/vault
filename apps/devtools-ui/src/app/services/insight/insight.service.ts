@@ -197,4 +197,115 @@ export class InsightService {
       license: incoming.license ?? current?.license ?? null
     });
   }
+
+  /**
+   * Replays a trace value through a live FeatureCell instance.
+   *
+   * In extension mode, uses `chrome.devtools.inspectedWindow.eval()` to
+   * execute the replay command in the inspected page's context.
+   * In standalone mode, calls `globalThis.sdux.replay.getCell()` directly.
+   *
+   * @param cellKey - The FeatureCell key to replay through.
+   * @param value - The resolved value to dispatch.
+   * @param method - The dispatch method ('replace' or 'merge').
+   * @returns A promise resolving to a result with success/error info.
+   */
+  replayCell(
+    cellKey: string,
+    value: unknown,
+    method: 'replace' | 'merge'
+  ): Promise<{ success: boolean; message: string }> {
+    if (this.isChromeExtension) {
+      return this.#replayCellViaExtension(cellKey, value, method);
+    }
+    return this.#replayCellLocal(cellKey, value, method);
+  }
+
+  /**
+   * Executes replay in the inspected page context via
+   * chrome.devtools.inspectedWindow.eval().
+   */
+  #replayCellViaExtension(
+    cellKey: string,
+    value: unknown,
+    method: 'replace' | 'merge'
+  ): Promise<{ success: boolean; message: string }> {
+    const serializedValue = JSON.stringify(value);
+    const fnName = method === 'merge' ? 'mergeState' : 'replaceState';
+
+    const expression = `
+      (function() {
+        try {
+          var cell = globalThis.sdux && globalThis.sdux.replay &&
+            globalThis.sdux.replay.getCell(${JSON.stringify(cellKey)});
+          if (!cell) {
+            return { success: false, message: 'No live cell found for "' +
+              ${JSON.stringify(cellKey)} +
+              '". Ensure the application is running with DevMode enabled.' };
+          }
+          cell.${fnName}(${serializedValue});
+          return { success: true, message: 'Replayed via ${fnName} to "' +
+            ${JSON.stringify(cellKey)} + '" successfully.' };
+        } catch (e) {
+          return { success: false, message: 'Replay failed: ' +
+            (e && e.message ? e.message : String(e)) };
+        }
+      })();
+    `;
+
+    return new Promise((resolve) => {
+      chrome.devtools.inspectedWindow.eval(
+        expression,
+        (result: unknown, exceptionInfo: unknown) => {
+          if (exceptionInfo) {
+            const info = exceptionInfo as { value?: string };
+            resolve({
+              success: false,
+              message: `Replay eval failed: ${info.value ?? 'Unknown error'}`
+            });
+          } else {
+            resolve(result as { success: boolean; message: string });
+          }
+        }
+      );
+    });
+  }
+
+  /**
+   * Executes replay directly via globalThis.sdux in standalone mode.
+   */
+  #replayCellLocal(
+    cellKey: string,
+    value: unknown,
+    method: 'replace' | 'merge'
+  ): Promise<{ success: boolean; message: string }> {
+    const sdux = globalThis.sdux;
+    const cell = sdux?.replay?.getCell(cellKey) as
+      | { mergeState: (v: unknown) => void; replaceState: (v: unknown) => void }
+      | undefined;
+
+    if (!cell) {
+      return Promise.resolve({
+        success: false,
+        message: `No live cell found for "${cellKey}". Ensure the application is running with DevMode enabled.`
+      });
+    }
+
+    try {
+      if (method === 'merge') {
+        cell.mergeState(value);
+      } else {
+        cell.replaceState(value);
+      }
+      return Promise.resolve({
+        success: true,
+        message: `Replayed via ${method}State to "${cellKey}" successfully.`
+      });
+    } catch (error: unknown) {
+      return Promise.resolve({
+        success: false,
+        message: `Replay failed: ${error instanceof Error ? error.message : String(error)}`
+      });
+    }
+  }
 }

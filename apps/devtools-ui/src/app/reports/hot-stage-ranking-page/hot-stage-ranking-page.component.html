@@ -1,16 +1,14 @@
 @if (isLicensed()) {
   <div class="report-page">
     <header class="header">
-      <div class="title-group">
-        <h2>Hot Stage Ranking</h2>
-        <sdux-help-toggle ariaLabel="Toggle hot stage ranking help">
-          <p class="help-text">
-            The Hot Stage Ranking aggregates pipeline stage durations across all
-            filtered traces. Stages are grouped by name and ranked by total
-            cumulative time. Use this view to identify systemic bottlenecks.
-          </p>
-        </sdux-help-toggle>
-      </div>
+      <sdux-help-toggle ariaLabel="Toggle hot stage ranking help">
+        <h2 helpHeading>Hot Stage Ranking</h2>
+        <p class="help-text">
+          The Hot Stage Ranking aggregates pipeline stage durations across all
+          filtered traces. Stages are grouped by name and ranked by total
+          cumulative time. Use this view to identify systemic bottlenecks.
+        </p>
+      </sdux-help-toggle>
     </header>
     <div class="action-bar">
       <mat-select

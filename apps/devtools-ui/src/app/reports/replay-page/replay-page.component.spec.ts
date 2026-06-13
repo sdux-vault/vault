@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
+import { InsightService } from '../../services/insight/insight.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import type { TraceExecutionShape } from '../../shared/shapes/trace';
 import { ReplayPageComponent } from './replay-page.component';
@@ -14,6 +15,10 @@ describe('Component: ReplayPage', () => {
   let mockTracesByCellKey: ReturnType<
     typeof signal<Map<string, TraceExecutionShape[]>>
   >;
+  let mockInsightService: {
+    replayCell: jasmine.Spy;
+    isChromeExtension: boolean;
+  };
 
   const mockTrace: TraceExecutionShape = {
     traceId: 'abc-123-def-456',
@@ -127,6 +132,15 @@ describe('Component: ReplayPage', () => {
       ])
     );
 
+    mockInsightService = {
+      replayCell: jasmine
+        .createSpy('replayCell')
+        .and.returnValue(
+          Promise.resolve({ success: true, message: 'Replayed successfully.' })
+        ),
+      isChromeExtension: false
+    };
+
     await TestBed.configureTestingModule({
       imports: [ReplayPageComponent],
       providers: [
@@ -163,6 +177,10 @@ describe('Component: ReplayPage', () => {
         {
           provide: DevtoolsLoggingService,
           useValue: { clearEvents: () => {} }
+        },
+        {
+          provide: InsightService,
+          useValue: mockInsightService
         }
       ]
     }).compileComponents();
@@ -204,105 +222,107 @@ describe('Component: ReplayPage', () => {
     expect(component.resolvedValue()).toEqual([{ id: 1, name: 'Luke' }]);
   });
 
-  it('should show error when replaying without a live cell', () => {
+  it('should show error when replaying without a live cell', async () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('abc-123-def-456');
 
-    (globalThis as any).sdux = undefined;
+    mockInsightService.replayCell.and.returnValue(
+      Promise.resolve({
+        success: false,
+        message:
+          'No live cell found for "employees". Ensure the application is running with DevMode enabled.'
+      })
+    );
 
-    component.replay();
+    await component.replay();
 
     expect(component.resultIsError()).toBeTrue();
     expect(component.resultMessage()).toContain('No live cell found');
   });
 
-  it('should call replaceState on the live cell when replaying a replace trace', () => {
+  it('should call replaceState on the live cell when replaying a replace trace', async () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('abc-123-def-456');
 
-    const mockCell = {
-      replaceState: jasmine.createSpy('replaceState'),
-      mergeState: jasmine.createSpy('mergeState')
-    };
+    mockInsightService.replayCell.and.returnValue(
+      Promise.resolve({
+        success: true,
+        message: 'Replayed via replaceState to "employees" successfully.'
+      })
+    );
 
-    (globalThis as any).sdux = {
-      replay: { getCell: () => mockCell }
-    };
+    await component.replay();
 
-    component.replay();
-
-    expect(mockCell.replaceState).toHaveBeenCalledWith([
-      { id: 1, name: 'Luke' }
-    ]);
-    expect(mockCell.mergeState).not.toHaveBeenCalled();
+    expect(mockInsightService.replayCell).toHaveBeenCalledWith(
+      'employees',
+      [{ id: 1, name: 'Luke' }],
+      'replace'
+    );
     expect(component.resultIsError()).toBeFalse();
     expect(component.resultMessage()).toContain('replaceState');
   });
 
-  it('should call mergeState on the live cell when replaying a merge trace', () => {
+  it('should call mergeState on the live cell when replaying a merge trace', async () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('merge-trace-001');
 
-    const mockCell = {
-      replaceState: jasmine.createSpy('replaceState'),
-      mergeState: jasmine.createSpy('mergeState')
-    };
+    mockInsightService.replayCell.and.returnValue(
+      Promise.resolve({
+        success: true,
+        message: 'Replayed via mergeState to "employees" successfully.'
+      })
+    );
 
-    (globalThis as any).sdux = {
-      replay: { getCell: () => mockCell }
-    };
+    await component.replay();
 
-    component.replay();
-
-    expect(mockCell.mergeState).toHaveBeenCalledWith({ name: 'updated' });
-    expect(mockCell.replaceState).not.toHaveBeenCalled();
+    expect(mockInsightService.replayCell).toHaveBeenCalledWith(
+      'employees',
+      { name: 'updated' },
+      'merge'
+    );
     expect(component.resultIsError()).toBeFalse();
     expect(component.resultMessage()).toContain('mergeState');
   });
 
-  it('should show error when replay throws', () => {
+  it('should show error when replay throws', async () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('abc-123-def-456');
 
-    const mockCell = {
-      replaceState: jasmine
-        .createSpy('replaceState')
-        .and.throwError('Pipeline error'),
-      mergeState: jasmine.createSpy('mergeState')
-    };
+    mockInsightService.replayCell.and.returnValue(
+      Promise.resolve({
+        success: false,
+        message: 'Replay failed: Pipeline error'
+      })
+    );
 
-    (globalThis as any).sdux = {
-      replay: { getCell: () => mockCell }
-    };
-
-    component.replay();
+    await component.replay();
 
     expect(component.resultIsError()).toBeTrue();
     expect(component.resultMessage()).toContain('Pipeline error');
   });
 
-  it('should show error when replaying without selection', () => {
-    component.replay();
+  it('should show error when replaying without selection', async () => {
+    await component.replay();
     expect(component.resultIsError()).toBeTrue();
     expect(component.resultMessage()).toContain('Missing cell key');
   });
 
-  it('should clear result message on cell key change', () => {
+  it('should clear result message on cell key change', async () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('abc-123-def-456');
-    component.replay();
+    await component.replay();
     expect(component.resultMessage()).toBeTruthy();
 
     component.onCellKeyChange('employees');
     expect(component.resultMessage()).toBe('');
   });
 
-  it('should auto-dismiss result message after 5 seconds', () => {
+  it('should auto-dismiss result message after 5 seconds', async () => {
     jasmine.clock().install();
     try {
       component.onCellKeyChange('employees');
       component.onTraceIdChange('abc-123-def-456');
-      component.replay();
+      await component.replay();
       expect(component.resultMessage()).toBeTruthy();
       TestBed.flushEffects();
 
@@ -344,22 +364,18 @@ describe('Component: ReplayPage', () => {
     expect(component.cellTraces()).toEqual([]);
   });
 
-  it('should show error with stringified non-Error when replay throws a primitive', () => {
+  it('should show error with stringified non-Error when replay throws a primitive', async () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('abc-123-def-456');
 
-    const mockCell = {
-      replaceState: jasmine.createSpy('replaceState').and.callFake(() => {
-        throw 'raw string error';
-      }),
-      mergeState: jasmine.createSpy('mergeState')
-    };
+    mockInsightService.replayCell.and.returnValue(
+      Promise.resolve({
+        success: false,
+        message: 'Replay failed: raw string error'
+      })
+    );
 
-    (globalThis as any).sdux = {
-      replay: { getCell: () => mockCell }
-    };
-
-    component.replay();
+    await component.replay();
 
     expect(component.resultIsError()).toBeTrue();
     expect(component.resultMessage()).toContain('raw string error');
@@ -407,33 +423,29 @@ describe('Component: ReplayPage', () => {
     expect(component.showResolvedValue()).toBeTrue();
   });
 
-  it('should collapse trace summary and resolved value on successful replay', () => {
+  it('should collapse trace summary and resolved value on successful replay', async () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('abc-123-def-456');
 
-    const mockCell = {
-      replaceState: jasmine.createSpy('replaceState'),
-      mergeState: jasmine.createSpy('mergeState')
-    };
-
-    (globalThis as any).sdux = {
-      replay: { getCell: () => mockCell }
-    };
-
-    component.replay();
+    await component.replay();
 
     expect(component.showTraceSummary()).toBeFalse();
     expect(component.showResolvedValue()).toBeFalse();
     expect(component.showCompareTraces()).toBeTrue();
   });
 
-  it('should not collapse sections on failed replay', () => {
+  it('should not collapse sections on failed replay', async () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('abc-123-def-456');
 
-    (globalThis as any).sdux = undefined;
+    mockInsightService.replayCell.and.returnValue(
+      Promise.resolve({
+        success: false,
+        message: 'No live cell found for "employees".'
+      })
+    );
 
-    component.replay();
+    await component.replay();
 
     expect(component.showTraceSummary()).toBeTrue();
     expect(component.showResolvedValue()).toBeTrue();
@@ -505,17 +517,12 @@ describe('Component: ReplayPage', () => {
     expect(event['delta']).toBe('-5ms');
   });
 
-  it('should expand sections and clear result on trace change', () => {
+  it('should expand sections and clear result on trace change', async () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('abc-123-def-456');
 
     // Simulate successful replay which collapses sections
-    const mockCell = {
-      replaceState: jasmine.createSpy('replaceState'),
-      mergeState: jasmine.createSpy('mergeState')
-    };
-    (globalThis as any).sdux = { replay: { getCell: () => mockCell } };
-    component.replay();
+    await component.replay();
 
     expect(component.showTraceSummary()).toBeFalse();
     expect(component.showResolvedValue()).toBeFalse();
@@ -531,17 +538,11 @@ describe('Component: ReplayPage', () => {
     expect(component.showCompareTraces()).toBeFalse();
   });
 
-  it('should set compareBeforeId to selectedTraceId on successful replay', () => {
+  it('should set compareBeforeId to selectedTraceId on successful replay', async () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('abc-123-def-456');
 
-    const mockCell = {
-      replaceState: jasmine.createSpy('replaceState'),
-      mergeState: jasmine.createSpy('mergeState')
-    };
-    (globalThis as any).sdux = { replay: { getCell: () => mockCell } };
-
-    component.replay();
+    await component.replay();
 
     expect(component.compareBeforeId()).toBe('abc-123-def-456');
   });

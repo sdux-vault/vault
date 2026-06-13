@@ -5,27 +5,35 @@
 } @else {
   <div class="vault-devtools">
     <section class="warning">
-      Events only appear
-      <strong
-        >after this panel opens and a decorated &#64;FeatureCell service is
-        instantiated.</strong
-      >.
-      <p>
-        FeatureCells are lazyloaded and only activated when the service is
-        instantiated. The DevTools
-        <strong>will only</strong> connect once an &#64;FeatureCell is active.
-      </p>
-      <p>
-        Click on a route with a component using an injected &#64;FeatureCell
-        service to trigger events in your app.
-      </p>
+      No events captured yet — this panel was opened after your app loaded.
+      Refresh the page so the Vault can connect.
+    </section>
+    <section class="instructions">
+      <ul>
+        <li>
+          Open this DevTools panel <strong>before</strong> the Vault
+          instantiates so the extension can connect and begin capturing events.
+        </li>
+        <li>
+          Not seeing events? Refresh the page to re-instantiate the Vault and
+          establish the connection.
+        </li>
+        <li>
+          The DevTools <strong>only</strong> connect once a FeatureCell is
+          active.
+        </li>
+        <li>
+          Navigate to a route whose component injects an FeatureCell service to
+          start generating events.
+        </li>
+      </ul>
     </section>
     <section class="vault-empty">
       <img
         class="logo"
-        src="/assets/brand/brand-landscape-dark.svg"
-        alt="SDuX Vault logo"
-        matTooltip="SDuX Vault" />
+        src="assets/brand/sdux-vault-chrome-devtools-dark.svg"
+        alt="SDuX Vault Chrome DevTools"
+        matTooltip="SDuX Vault Chrome DevTools" />
     </section>
   </div>
 }

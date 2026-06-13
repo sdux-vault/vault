@@ -84,6 +84,7 @@
     padding: global.$spacing-xs global.$spacing-sm;
     border-bottom: 1px solid global.$sdux-surface-outline;
     white-space: nowrap;
+    min-width: 120px;
   }
 
   th {
@@ -96,6 +97,7 @@
 
   .col-status {
     width: 24px;
+    min-width: 24px;
     text-align: center;
     padding: global.$spacing-xs;
   }

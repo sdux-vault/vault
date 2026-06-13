@@ -96,31 +96,29 @@
           <sdux-collapsible-section
             ariaLabel="Toggle state mutation graph"
             [(expanded)]="showMutationGraph">
-            <div header class="title-group">
-              <sdux-help-toggle ariaLabel="Toggle mutation graph help">
-                <h3 helpHeading>State Mutation Graph</h3>
-                <p class="help-text">
-                  The State Mutation Graph shows which pipeline stages produced
-                  mutations for each candidate pair. Each row is a pair
-                  comparison; each column is a pipeline stage.
-                </p>
-                <ul class="help-list">
-                  <li>
-                    <strong class="mutation-dot">●</strong> indicates the
-                    candidate value changed between the before and after
-                    snapshots.
-                  </li>
-                  <li>
-                    Scan a <strong>row</strong> to see which stage produced the
-                    mutation for that pair.
-                  </li>
-                  <li>
-                    Scan a <strong>column</strong> top-to-bottom to see how
-                    often a particular stage produces mutations.
-                  </li>
-                </ul>
-              </sdux-help-toggle>
-            </div>
+            <sdux-help-toggle header ariaLabel="Toggle mutation graph help">
+              <h3 helpHeading>State Mutation Graph</h3>
+              <p class="help-text">
+                The State Mutation Graph shows which pipeline stages produced
+                mutations for each candidate pair. Each row is a pair
+                comparison; each column is a pipeline stage.
+              </p>
+              <ul class="help-list">
+                <li>
+                  <strong class="mutation-dot">●</strong> indicates the
+                  candidate value changed between the before and after
+                  snapshots.
+                </li>
+                <li>
+                  Scan a <strong>row</strong> to see which stage produced the
+                  mutation for that pair.
+                </li>
+                <li>
+                  Scan a <strong>column</strong> top-to-bottom to see how often
+                  a particular stage produces mutations.
+                </li>
+              </ul>
+            </sdux-help-toggle>
             <div class="mutation-graph-scroll">
               <table class="mutation-graph-table">
                 <thead>
@@ -218,7 +216,7 @@
                             : 'Show Only Changed Keys'
                         "
                         aria-label="Toggle show only changed keys">
-                        Δ
+                        <mat-icon>compare_arrows</mat-icon>
                       </button>
                     </div>
                     @if (beforeLines().length > 0) {
@@ -253,7 +251,7 @@
                             : 'Show Only Changed Keys'
                         "
                         aria-label="Toggle show only changed keys">
-                        Δ
+                        <mat-icon>compare_arrows</mat-icon>
                       </button>
                     </div>
                     @if (afterLines().length > 0) {

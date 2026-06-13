@@ -3,21 +3,59 @@
 :host {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-width: 0;
 }
 
 .help-header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
+
+  .help-heading-row {
+    display: flex;
+    align-items: baseline;
+
+    ::ng-deep {
+      /* exception: projected heading needs encapsulation-piercing styles */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 0;
+        font-weight: global.$font-weight-bold;
+        color: var(--sdux-text-primary);
+      }
+
+      h2 {
+        font-size: global.$font-size-md;
+      }
+
+      h3 {
+        font-size: global.$font-size-sm;
+      }
+    }
+  }
+
+  .help-spacer {
+    flex: 1;
+  }
+
+  .help-actions {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+  }
 }
 
 .help-toggle {
   background: none;
   border: none;
   cursor: pointer;
-  padding: global.$spacing-xs;
+  padding: 0 global.$spacing-xs;
   margin-left: global.$spacing-sm;
   display: flex;
-  align-items: center;
 }
 
 .help-icon {
@@ -35,6 +73,8 @@
   flex-direction: column;
   gap: global.$spacing-sm;
   padding: global.$spacing-md;
+  margin-top: global.$spacing-md;
+  margin-bottom: global.$spacing-md;
   background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
   border-radius: global.$border-radius-sm;
   border: 1px solid global.$sdux-surface-outline;

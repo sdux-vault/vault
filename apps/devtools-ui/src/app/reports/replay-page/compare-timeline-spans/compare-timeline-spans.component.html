@@ -2,28 +2,24 @@
   <sdux-collapsible-section
     ariaLabel="Toggle timeline"
     [(expanded)]="showTimeline">
-    <div header class="title-group">
-      <h3>Timeline — Category Duration Spans</h3>
-      @if (showTimeline()) {
-        <sdux-help-toggle ariaLabel="Toggle spans help">
-          <p class="help-text">
-            The category duration spans timeline shows how long each event
-            category took from its first to its last event. Each colored bar
-            represents the time window a category was active during the trace.
-          </p>
-          <p class="help-text">
-            Compare the width and position of spans between before and after
-            traces to see which categories grew, shrank, or shifted in timing. A
-            wider span means the category took longer; a shifted span means it
-            started or ended at a different point.
-          </p>
-          <p class="help-text">
-            Use <strong>zoom</strong> to magnify the timeline and reveal finer
-            detail. Tick lines adapt to the zoom level.
-          </p>
-        </sdux-help-toggle>
-      }
-    </div>
+    <sdux-help-toggle header ariaLabel="Toggle spans help">
+      <h3 helpHeading>Timeline — Category Duration Spans</h3>
+      <p class="help-text">
+        The category duration spans timeline shows how long each event category
+        took from its first to its last event. Each colored bar represents the
+        time window a category was active during the trace.
+      </p>
+      <p class="help-text">
+        Compare the width and position of spans between before and after traces
+        to see which categories grew, shrank, or shifted in timing. A wider span
+        means the category took longer; a shifted span means it started or ended
+        at a different point.
+      </p>
+      <p class="help-text">
+        Use <strong>zoom</strong> to magnify the timeline and reveal finer
+        detail. Tick lines adapt to the zoom level.
+      </p>
+    </sdux-help-toggle>
     <div class="timeline-content">
       <div class="timeline-toolbar">
         <div class="toolbar-row durations-row">

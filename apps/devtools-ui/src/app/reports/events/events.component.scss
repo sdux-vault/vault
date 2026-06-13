@@ -1,7 +1,15 @@
 @use 'global' as global;
 @use '../scss/reports-common';
 
+:host {
+  overflow-y: hidden;
+}
+
 .report-page {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+
   .state-size {
     @include global.sdux-text(global.$sdux-text-secondary);
     font-size: global.$font-size-sm;
@@ -58,46 +66,6 @@
   line-height: 1.5;
 }
 
-.event-search {
-  display: flex;
-  align-items: center;
-  background-color: global.$sdux-surface-dark;
-  border: 1px solid global.$sdux-surface-outline;
-  border-radius: global.$border-radius-sm;
-  overflow: hidden;
-
-  .event-search-input {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: global.$sdux-text-white;
-    font-size: global.$font-size-sm;
-    padding: global.$spacing-xs global.$spacing-sm;
-    width: 120px;
-
-    &::placeholder {
-      color: global.$sdux-text-secondary;
-    }
-  }
-
-  .event-search-btn {
-    @include global.sdux-icon-button(26px, transparent);
-    color: global.$sdux-primary-light;
-    flex-shrink: 0;
-
-    mat-icon {
-      font-size: global.$font-size-md;
-      width: global.$font-size-md;
-      height: global.$font-size-md;
-    }
-
-    &:hover {
-      background-color: global.$sdux-primary-base;
-      color: global.$sdux-text-white;
-    }
-  }
-}
-
 .jump-latest-btn {
   @include global.sdux-icon-button(28px, transparent);
   color: global.$sdux-primary-light;
@@ -114,8 +82,24 @@
   }
 }
 
+.action-bar {
+  .event-search {
+    flex: 1;
+  }
+
+  @media (max-width: global.$breakpoint-md) {
+    .event-search {
+      width: 100%;
+      flex: none;
+    }
+
+    .meta {
+      order: 4;
+    }
+  }
+}
+
 /* ----------------------------------------------
-   MATERIAL TAB GROUP
 ------------------------------------------------*/
 
 /* ----------------------------------------------

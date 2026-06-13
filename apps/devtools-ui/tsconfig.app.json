@@ -30,9 +30,5 @@
     "../../libs/devtools/tooling/src/**/*.ts",
     "../../libs/shared/src/**/*.ts"
   ],
-  "exclude": [
-    "src/**/*.spec.ts",
-    "../../libs/devtools/tooling/src/**/*.spec.ts",
-    "../../libs/shared/src/**/*.spec.ts"
-  ]
+  "exclude": ["src/**/*.spec.ts", "../../libs/**/*.spec.ts"]
 }

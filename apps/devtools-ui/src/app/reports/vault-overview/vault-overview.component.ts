@@ -9,7 +9,9 @@ import {
   signal
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
@@ -39,7 +41,9 @@ import { RegistryDetailComponent } from './registry-detail/registry-detail.compo
   standalone: true,
   imports: [
     FormsModule,
+    MatButtonModule,
     MatIconModule,
+    MatInputModule,
     MatTooltipModule,
     CollapsibleSectionComponent,
     HelpToggleComponent,

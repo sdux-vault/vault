@@ -2,45 +2,41 @@
   <sdux-collapsible-section
     ariaLabel="Toggle timeline"
     [(expanded)]="showTimeline">
-    <div header class="title-group">
-      <h3>Timeline — {{ viewModeLabel() }}</h3>
-      @if (showTimeline()) {
-        <sdux-help-toggle ariaLabel="Toggle timeline help">
-          <p class="help-text">
-            This timeline compares the before and after traces side by side. In
-            <strong>Category Overview</strong> mode, markers show the first
-            event per category on a shared time scale. Other modes show
-            individual events on per-trace scales.
-          </p>
-          <ul class="help-list">
-            <li>
-              <strong>Category Overview</strong> — first event per category,
-              shared time scale (track widths reflect relative duration).
-            </li>
-            <li>
-              <strong>All Events</strong> — every event from both traces,
-              per-trace scale.
-            </li>
-            <li>
-              <strong>Diff-Only Events</strong> — only events that differ
-              between traces.
-            </li>
-            <li>
-              <strong>State Events Only</strong> — only events carrying a state
-              snapshot.
-            </li>
-            <li>
-              <strong>Category Filtered</strong> — events for the currently
-              selected category filter.
-            </li>
-          </ul>
-          <p class="help-text">
-            Use <strong>zoom</strong> to magnify the timeline and reveal finer
-            detail. Tick lines adapt to the zoom level (100ms → 50ms → 25ms).
-          </p>
-        </sdux-help-toggle>
-      }
-    </div>
+    <sdux-help-toggle header ariaLabel="Toggle timeline help">
+      <h3 helpHeading>Timeline — {{ viewModeLabel() }}</h3>
+      <p class="help-text">
+        This timeline compares the before and after traces side by side. In
+        <strong>Category Overview</strong> mode, markers show the first event
+        per category on a shared time scale. Other modes show individual events
+        on per-trace scales.
+      </p>
+      <ul class="help-list">
+        <li>
+          <strong>Category Overview</strong> — first event per category, shared
+          time scale (track widths reflect relative duration).
+        </li>
+        <li>
+          <strong>All Events</strong> — every event from both traces, per-trace
+          scale.
+        </li>
+        <li>
+          <strong>Diff-Only Events</strong> — only events that differ between
+          traces.
+        </li>
+        <li>
+          <strong>State Events Only</strong> — only events carrying a state
+          snapshot.
+        </li>
+        <li>
+          <strong>Category Filtered</strong> — events for the currently selected
+          category filter.
+        </li>
+      </ul>
+      <p class="help-text">
+        Use <strong>zoom</strong> to magnify the timeline and reveal finer
+        detail. Tick lines adapt to the zoom level (100ms → 50ms → 25ms).
+      </p>
+    </sdux-help-toggle>
     <div class="timeline-content">
       <div class="timeline-toolbar">
         <div class="toolbar-row durations-row">

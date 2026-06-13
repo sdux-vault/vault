@@ -1,80 +1,8 @@
 @use 'global' as global;
 @use '../scss/reports-common';
 
-.title-group {
-  display: flex;
-  align-items: center;
-}
-
-.help-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: global.$spacing-xs;
-  margin-left: global.$spacing-sm;
-  display: flex;
-  align-items: center;
-}
-
-.help-icon {
-  width: global.$font-size-sm;
-  height: global.$font-size-sm;
-  opacity: 0.7;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-.registry-header-actions {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  gap: global.$spacing-xs;
-
-  .section-chevron {
-    margin-left: 0;
-  }
-}
-
 .registry-search {
-  display: flex;
-  align-items: center;
-  background-color: global.$sdux-surface-dark;
-  border: 1px solid global.$sdux-surface-outline;
-  border-radius: global.$border-radius-sm;
-  overflow: hidden;
-
-  .registry-search-input {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: global.$sdux-text-white;
-    font-size: global.$font-size-sm;
-    padding: global.$spacing-xs global.$spacing-sm;
-    width: 120px;
-
-    &::placeholder {
-      color: global.$sdux-text-secondary;
-    }
-  }
-
-  .registry-search-btn {
-    @include global.sdux-icon-button(26px, transparent);
-    color: global.$sdux-primary-light;
-    flex-shrink: 0;
-
-    mat-icon {
-      font-size: global.$font-size-md;
-      width: global.$font-size-md;
-      height: global.$font-size-md;
-    }
-
-    &:hover {
-      background-color: global.$sdux-primary-base;
-      color: global.$sdux-text-white;
-    }
-  }
+  width: 250px;
 }
 
 .help-section {
@@ -155,19 +83,6 @@
         display: flex;
         flex-direction: column;
         gap: global.$spacing-sm;
-
-        .registry-header {
-          display: flex;
-          align-items: center;
-          flex: 1;
-        }
-      }
-
-      .section-title {
-        @include global.sdux-text(global.$sdux-text-primary);
-        font-size: global.$font-size-sm;
-        font-weight: global.$font-weight-bold;
-        margin: 0;
       }
     }
 
@@ -436,20 +351,26 @@
 }
 
 @media (max-width: global.$breakpoint-md) {
-  .registry-header {
+  // exception: must pierce help-toggle encapsulation for mobile layout
+  sdux-help-toggle ::ng-deep .help-header {
     flex-wrap: wrap;
 
-    .section-title,
-    .help-toggle {
-      order: 0;
+    .help-heading-row {
+      width: 100%;
     }
 
-    .registry-header-actions {
-      order: 1;
+    .help-actions {
       width: 100%;
-      justify-content: flex-end;
-      margin-left: 0;
-      margin-top: global.$spacing-xs;
+      margin-top: global.$spacing-sm;
+      margin-bottom: global.$spacing-sm;
+
+      [helpactions] {
+        width: 100%;
+      }
+
+      .registry-search {
+        width: 100%;
+      }
     }
   }
 
@@ -473,10 +394,12 @@
   }
 
   .detail-pane {
-    width: 100%;
+    width: calc(100% - #{global.$spacing-xs});
     min-width: 0;
-    border-left: none;
+    margin-left: global.$spacing-xs;
     border-top: 1px solid global.$sdux-surface-outline;
     flex: 1;
+    overflow-x: hidden;
+    box-sizing: border-box;
   }
 }

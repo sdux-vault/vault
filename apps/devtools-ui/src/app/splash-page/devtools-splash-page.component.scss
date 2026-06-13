@@ -19,27 +19,6 @@
   border: none;
 
   /* ----------------------------------------------
-     WELCOME
-  ------------------------------------------------*/
-  .welcome {
-    text-align: center;
-    margin-bottom: global.$spacing-lg;
-
-    .welcome-title {
-      margin: 0 0 global.$spacing-xs;
-      font-size: global.$font-size-2xl;
-      font-weight: 600;
-    }
-
-    .welcome-subtitle {
-      margin: 0;
-      @include global.sdux-text(global.$sdux-text-secondary);
-      font-size: global.$font-size-sm;
-      line-height: 1.5;
-    }
-  }
-
-  /* ----------------------------------------------
      WARNING
   ------------------------------------------------*/
   .warning {
@@ -50,6 +29,16 @@
     border-radius: global.$border-radius-sm;
     font-size: global.$font-size-sm;
     text-align: center;
+    margin-top: global.$spacing-xl;
+    margin-bottom: global.$spacing-lg;
+  }
+
+  .instructions {
+    color: global.$sdux-text-white;
+    border: 1px solid global.$sdux-primary-base;
+    border-radius: global.$border-radius-sm;
+    padding: global.$spacing-sm global.$spacing-md;
+    width: fit-content;
     margin-bottom: global.$spacing-lg;
   }
 
@@ -60,7 +49,8 @@
     text-align: center;
 
     .logo {
-      width: 200px;
+      width: 400px;
+      max-width: 100%;
       height: auto;
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
       transition: opacity 0.25s ease;

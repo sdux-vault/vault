@@ -7,7 +7,7 @@
 
 @font-face {
   font-family: 'Material Icons';
-  src: url('/assets/fonts/material-icons/material-icons.woff2') format('woff2');
+  src: url('assets/fonts/material-icons/material-icons.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -196,16 +196,77 @@ body {
 }
 
 /* ----------------------------------------------
-   Global mat-select .cell-filter styling
+   Global mat-select / mat-form-field .cell-filter styling
    ---------------------------------------------- */
 
 .cell-filter {
   width: 250px;
   @include global.sdux-text(global.$sdux-text-inverse);
   background-color: global.$sdux-surface-light;
-  border: 1px solid global.$sdux-surface-outline;
   border-radius: global.$border-radius-sm;
+  box-sizing: border-box;
+}
+
+// Material outlined form-field overrides for .cell-filter
+.cell-filter.mat-mdc-form-field {
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-outlined-outline-color: #{global.$sdux-text-black};
+  --mat-form-field-outlined-hover-outline-color: #{global.$sdux-text-black};
+  --mat-form-field-outlined-focus-outline-color: #{global.$sdux-primary-base};
+  --mat-form-field-outlined-input-text-color: #{global.$sdux-text-inverse};
+  --mat-form-field-outlined-input-text-placeholder-color: #{global.$sdux-text-secondary};
+  --mat-form-field-trailing-icon-color: #{global.$sdux-primary-base};
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .mat-mdc-form-field-icon-suffix {
+    padding: 0;
+    right: 6px;
+
+    .mat-mdc-icon-button {
+      --mdc-icon-button-state-layer-size: 24px;
+      --mdc-icon-button-icon-size: 18px;
+      --mat-icon-button-touch-target-size: 24px;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .mat-mdc-button-persistent-ripple {
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
+      }
+
+      .mat-focus-indicator {
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
+      }
+    }
+  }
+
+  .mat-mdc-text-field-wrapper {
+    max-height: 40px;
+  }
+}
+
+// mat-select .cell-filter keeps its original inline styling
+.cell-filter.mat-mdc-select {
+  border: 1px solid global.$sdux-surface-outline;
   padding: global.$spacing-xs global.$spacing-sm;
+  height: global.$button-height;
 }
 
 /* ----------------------------------------------

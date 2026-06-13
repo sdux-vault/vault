@@ -126,12 +126,6 @@
         color: var(--sdux-text-primary);
       }
     }
-
-    .title-group {
-      display: flex;
-      align-items: center;
-      gap: global.$spacing-sm;
-    }
   }
 
   .mutation-graph-scroll {
@@ -279,24 +273,29 @@
     align-items: center;
   }
 
+  .diff-header-meta {
+    width: 100%;
+    order: 3;
+  }
+
   .delta-toggle {
+    @include global.sdux-icon-button(28px, transparent);
     margin-left: auto;
-    background: none;
-    border: none;
-    padding: global.$spacing-xxs global.$spacing-xs;
-    font-size: global.$font-size-sm;
-    font-weight: global.$font-weight-bold;
-    color: var(--sdux-text-secondary);
-    cursor: pointer;
-    line-height: 1;
+    order: 2;
+    align-self: flex-start;
+    color: global.$sdux-primary-light;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
 
     &:hover {
-      background: global.$sdux-surface-lightish;
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
     }
 
     &.active {
-      color: global.$sdux-primary-base;
-      background: color-mix(in srgb, global.$sdux-primary-base 8%, transparent);
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
     }
   }
 

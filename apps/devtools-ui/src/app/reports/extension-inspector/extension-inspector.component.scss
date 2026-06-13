@@ -37,17 +37,7 @@
   }
 }
 
-.title-group {
-  display: flex;
-  align-items: center;
-  margin-top: global.$spacing-md;
-
-  h3 {
-    margin: 0;
-    font-size: global.$font-size-sm;
-    font-weight: global.$font-weight-bold;
-    color: var(--sdux-text-primary);
-  }
+.inspector-layout {
 }
 
 .state-navigation {

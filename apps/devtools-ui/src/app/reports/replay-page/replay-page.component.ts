@@ -13,8 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
-import { SDuXShape } from '@sdux-vault/shared';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
+import { InsightService } from '../../services/insight/insight.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
@@ -107,6 +107,9 @@ function extractResolvedValue(trace: TraceExecutionShape): unknown | undefined {
 export class ReplayPageComponent {
   /** Aggregate service providing trace data. */
   #aggregate = inject(DevtoolsAggregateService);
+
+  /** Insight service for replaying traces through the bridge. */
+  #insight = inject(InsightService);
 
   /** Registry service providing license state. */
   #registry = inject(DevtoolsRegistryService);
@@ -281,6 +284,9 @@ export class ReplayPageComponent {
   /** Rendered diff lines for the "after" side. */
   readonly compareAfterLines = this.compare.compareAfterLines;
 
+  /** Whether to show only changed keys in diff and table views. */
+  readonly showChangedOnly = this.compare.showChangedOnly;
+
   // ─── Delegated methods ───
 
   /** Toggles the diff-only event filter. */
@@ -371,7 +377,7 @@ export class ReplayPageComponent {
   /**
    * Replays the selected trace through the live FeatureCell instance.
    */
-  replay(): void {
+  async replay(): Promise<void> {
     const cellKey = this.selectedCellKey();
     const value = this.resolvedValue();
     const method = this.dispatchMethod();
@@ -384,40 +390,17 @@ export class ReplayPageComponent {
       return;
     }
 
-    const sdux: SDuXShape | undefined = globalThis.sdux;
-    const cell = sdux?.replay?.getCell(cellKey) as
-      | { mergeState: (v: unknown) => void; replaceState: (v: unknown) => void }
-      | undefined;
+    const result = await this.#insight.replayCell(cellKey, value, method);
 
-    if (!cell) {
-      this.resultIsError.set(true);
-      this.resultMessage.set(
-        `No live cell found for "${cellKey}". Ensure the application is running with DevMode enabled.`
-      );
-      return;
-    }
+    this.resultIsError.set(!result.success);
+    this.resultMessage.set(result.message);
 
-    try {
-      if (method === 'merge') {
-        cell.mergeState(value);
-      } else {
-        cell.replaceState(value);
-      }
-
-      this.resultIsError.set(false);
-      this.resultMessage.set(
-        `Replayed via ${method}State to "${cellKey}" successfully.`
-      );
+    if (result.success) {
       this.showTraceSummary.set(false);
       this.showResolvedValue.set(false);
       this.showCompareTraces.set(true);
       this.compareBeforeId.set(this.selectedTraceId());
       this.compareEventIndex.set(0);
-    } catch (error: unknown) {
-      this.resultIsError.set(true);
-      this.resultMessage.set(
-        `Replay failed: ${error instanceof Error ? error.message : String(error)}`
-      );
     }
   }
 

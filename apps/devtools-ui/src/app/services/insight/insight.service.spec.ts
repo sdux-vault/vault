@@ -50,6 +50,89 @@ describe('InsightService', () => {
       cleanup();
     });
 
+    describe('replayCell (local mode)', () => {
+      it('should return error when no live cell is found', async () => {
+        (globalThis as any).sdux = undefined;
+        const result = await service.replayCell('my-cell', { a: 1 }, 'replace');
+        expect(result.success).toBeFalse();
+        expect(result.message).toContain('No live cell found');
+      });
+
+      it('should call replaceState on the cell', async () => {
+        const mockCell = {
+          replaceState: jasmine.createSpy('replaceState'),
+          mergeState: jasmine.createSpy('mergeState')
+        };
+        (globalThis as any).sdux = {
+          replay: { getCell: () => mockCell }
+        };
+
+        const result = await service.replayCell(
+          'my-cell',
+          [{ id: 1 }],
+          'replace'
+        );
+
+        expect(mockCell.replaceState).toHaveBeenCalledWith([{ id: 1 }]);
+        expect(mockCell.mergeState).not.toHaveBeenCalled();
+        expect(result.success).toBeTrue();
+        expect(result.message).toContain('replaceState');
+      });
+
+      it('should call mergeState on the cell', async () => {
+        const mockCell = {
+          replaceState: jasmine.createSpy('replaceState'),
+          mergeState: jasmine.createSpy('mergeState')
+        };
+        (globalThis as any).sdux = {
+          replay: { getCell: () => mockCell }
+        };
+
+        const result = await service.replayCell(
+          'my-cell',
+          { name: 'test' },
+          'merge'
+        );
+
+        expect(mockCell.mergeState).toHaveBeenCalledWith({ name: 'test' });
+        expect(mockCell.replaceState).not.toHaveBeenCalled();
+        expect(result.success).toBeTrue();
+        expect(result.message).toContain('mergeState');
+      });
+
+      it('should return error when cell throws', async () => {
+        const mockCell = {
+          replaceState: jasmine
+            .createSpy('replaceState')
+            .and.throwError('Pipeline error'),
+          mergeState: jasmine.createSpy('mergeState')
+        };
+        (globalThis as any).sdux = {
+          replay: { getCell: () => mockCell }
+        };
+
+        const result = await service.replayCell(
+          'my-cell',
+          [{ id: 1 }],
+          'replace'
+        );
+
+        expect(result.success).toBeFalse();
+        expect(result.message).toContain('Pipeline error');
+      });
+
+      it('should return error when getCell returns undefined', async () => {
+        (globalThis as any).sdux = {
+          replay: { getCell: () => undefined }
+        };
+
+        const result = await service.replayCell('missing-cell', {}, 'replace');
+
+        expect(result.success).toBeFalse();
+        expect(result.message).toContain('No live cell found');
+      });
+    });
+
     it('should initialize vaultConfig as null', () => {
       expect(service.vaultConfig()).toBeNull();
     });

@@ -48,30 +48,30 @@
       </mat-select>
     }
 
-    <div class="sdux-container-spacer"></div>
+    <mat-form-field
+      class="cell-filter event-search"
+      appearance="outline"
+      (click)="$event.stopPropagation()">
+      <input
+        matInput
+        placeholder="Search events"
+        aria-label="Search events"
+        [ngModel]="eventSearchTerm()"
+        (ngModelChange)="
+          eventSearchTerm.set($event); eventSearchTerm$.next($event)
+        " />
+      <button
+        type="button"
+        matSuffix
+        mat-icon-button
+        [attr.aria-label]="eventSearchTerm() ? 'Clear search' : 'Search events'"
+        [matTooltip]="eventSearchTerm() ? 'Clear search' : 'Search events'"
+        (click)="eventSearchTerm() ? clearEventSearch() : null">
+        <mat-icon>{{ eventSearchTerm() ? 'close' : 'search' }}</mat-icon>
+      </button>
+    </mat-form-field>
 
     <div class="meta">
-      <div class="event-search">
-        <input
-          type="text"
-          class="event-search-input"
-          placeholder="Search events"
-          aria-label="Search events"
-          [ngModel]="eventSearchTerm()"
-          (ngModelChange)="
-            eventSearchTerm.set($event); eventSearchTerm$.next($event)
-          " />
-        <button
-          type="button"
-          class="event-search-btn"
-          [attr.aria-label]="
-            eventSearchTerm() ? 'Clear search' : 'Search events'
-          "
-          [matTooltip]="eventSearchTerm() ? 'Clear search' : 'Search events'"
-          (click)="eventSearchTerm() ? clearEventSearch() : null">
-          <mat-icon>{{ eventSearchTerm() ? 'close' : 'search' }}</mat-icon>
-        </button>
-      </div>
       @if (latestStateSize()) {
         <span
           class="state-size"
