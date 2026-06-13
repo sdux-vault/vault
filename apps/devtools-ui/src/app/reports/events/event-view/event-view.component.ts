@@ -21,14 +21,14 @@ import { EventShape } from '@sdux-vault/shared';
  * higher-level DevTools panels such as event history lists or inspectors.
  */
 @Component({
-  selector: 'sdux-devtools-pipeline-event',
+  selector: 'sdux-event-view',
   standalone: true,
   imports: [CommonModule, MatTooltipModule],
-  templateUrl: './devtools-pipeline-event.component.html',
-  styleUrl: './devtools-pipeline-event.component.scss',
+  templateUrl: './event-view.component.html',
+  styleUrl: './event-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DevtoolsPipelineEventComponent {
+export class EventViewComponent {
   /**
    * The pipeline event instance to be displayed. This input is required and
    * represents a single telemetry record emitted by the ngSDuX pipeline

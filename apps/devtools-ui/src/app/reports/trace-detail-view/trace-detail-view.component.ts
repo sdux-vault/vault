@@ -16,6 +16,7 @@ import { EventShape } from '@sdux-vault/shared';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { EventDetailComponent } from '../../shared/components/event-detail/event-detail.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
@@ -43,6 +44,7 @@ import { TraceTimelineComponent } from './timeline/trace-timeline.component';
   standalone: true,
   imports: [
     CollapsibleSectionComponent,
+    EmptyStateComponent,
     UpperCasePipe,
     MatIconModule,
     MatSelectModule,

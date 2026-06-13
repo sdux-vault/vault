@@ -6,13 +6,35 @@
 
 .collapsible-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   cursor: pointer;
   margin-bottom: global.$spacing-sm;
 
   .header-content {
     flex: 1;
     min-width: 0;
+
+    ::ng-deep {
+      /* exception: projected headings need encapsulation-piercing styles */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 0;
+        font-weight: global.$font-weight-bold;
+        color: var(--sdux-text-primary);
+      }
+
+      h2 {
+        font-size: global.$font-size-md;
+      }
+
+      h3 {
+        font-size: global.$font-size-md;
+      }
+    }
   }
 }
 

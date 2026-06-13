@@ -1,10 +1,10 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import type { EventShape } from '@sdux-vault/shared';
-import { DevtoolsPipelineEventComponent } from './devtools-pipeline-event.component';
+import { EventViewComponent } from './event-view.component';
 
 describe('Component: DevtoolsPipelineEvent', () => {
-  let fixture: ComponentFixture<DevtoolsPipelineEventComponent>;
+  let fixture: ComponentFixture<EventViewComponent>;
 
   const mockEvent: any = {
     id: 'evt-1',
@@ -22,11 +22,11 @@ describe('Component: DevtoolsPipelineEvent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [DevtoolsPipelineEventComponent],
+      imports: [EventViewComponent],
       providers: [provideZonelessChangeDetection()]
     });
 
-    fixture = TestBed.createComponent(DevtoolsPipelineEventComponent);
+    fixture = TestBed.createComponent(EventViewComponent);
 
     fixture.componentRef.setInput('event', mockEvent);
     fixture.componentRef.setInput('totalEvents', 3);

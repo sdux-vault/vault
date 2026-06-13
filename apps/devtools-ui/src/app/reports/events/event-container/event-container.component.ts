@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventShape } from '@sdux-vault/shared';
-import { EventDetailComponent } from '../../../../../shared/components/event-detail/event-detail.component';
-import { DevtoolsPipelineEventComponent } from '../../events/devtools-pipeline-event.component';
+import { EventDetailComponent } from '../../../shared/components/event-detail/event-detail.component';
+import { EventViewComponent } from '../event-view/event-view.component';
 
 /**
  * Main DevTools panel for displaying the pipeline execution history.
@@ -26,19 +26,19 @@ import { DevtoolsPipelineEventComponent } from '../../events/devtools-pipeline-e
  * and updates reactively as the underlying event stream changes.
  */
 @Component({
-  selector: 'sdux-devtools-main-pipeline-panel',
+  selector: 'sdux-event-container',
   standalone: true,
   imports: [
     ScrollingModule,
     MatTooltipModule,
-    DevtoolsPipelineEventComponent,
+    EventViewComponent,
     EventDetailComponent
   ],
-  templateUrl: './devtools-main-pipeline-panel.component.html',
-  styleUrl: './devtools-main-pipeline-panel.component.scss',
+  templateUrl: './event-container.component.html',
+  styleUrl: './event-container.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DevtoolsMainPipelinePanelComponent {
+export class EventContainerComponent {
   /** Reference to the virtual scroll viewport for programmatic scrolling. */
   readonly viewport = viewChild(CdkVirtualScrollViewport);
 

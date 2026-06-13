@@ -14,6 +14,7 @@ import { DevtoolsAggregateService } from '../../services/devtools-aggregate.serv
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
 import { DetailPaneComponent } from '../../shared/components/detail-pane/detail-pane.component';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { EventDetailComponent } from '../../shared/components/event-detail/event-detail.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
@@ -40,6 +41,7 @@ import { ExtensionInspectorService } from './service/extension-inspector.service
     MatSelectModule,
     MatTooltipModule,
     CollapsibleSectionComponent,
+    EmptyStateComponent,
     DetailPaneComponent,
     EventDetailComponent,
     ExportButtonComponent,

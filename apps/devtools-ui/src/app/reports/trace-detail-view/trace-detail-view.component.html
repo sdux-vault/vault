@@ -80,12 +80,7 @@
   }
 
   @if (filteredTraces().length === 0) {
-    <div class="empty-state">
-      <mat-icon class="empty-state-icon">manage_search</mat-icon>
-      <p class="empty-state-text">
-        No traces available. Trigger some pipeline activity or load a dump file.
-      </p>
-    </div>
+    <sdux-empty-state></sdux-empty-state>
   } @else {
     <!-- Timeline Visualization -->
     <sdux-trace-timeline

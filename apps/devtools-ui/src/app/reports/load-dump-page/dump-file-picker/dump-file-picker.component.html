@@ -43,7 +43,7 @@
   </button>
 }
 
-@if (fileSize()) {
+@if (fileSize() && !showButton()) {
   <div class="file-size" aria-label="File size">{{ fileSize() }}</div>
 }
 

@@ -13,6 +13,7 @@ import {
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/components/reset-button/reset-button.component';
 import { UpsellNoticeComponent } from '../../shared/components/upsell-notice/upsell-notice.component';
@@ -29,6 +30,7 @@ import { UpsellNoticeComponent } from '../../shared/components/upsell-notice/ups
   standalone: true,
   imports: [
     CollapsibleSectionComponent,
+    EmptyStateComponent,
     HelpToggleComponent,
     MatTooltipModule,
     ResetButtonComponent,

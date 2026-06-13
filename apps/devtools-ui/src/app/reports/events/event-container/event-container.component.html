@@ -36,11 +36,11 @@
             trackBy: trackById
           "
           class="event-row">
-          <sdux-devtools-pipeline-event
+          <sdux-event-view
             [event]="event"
             [totalEvents]="totalEvents() - i"
             [selected]="selectedEvent()?.id === event.id"
-            (selectEvent)="selectEvent($event)"></sdux-devtools-pipeline-event>
+            (selectEvent)="selectEvent($event)"></sdux-event-view>
         </div>
       </cdk-virtual-scroll-viewport>
     }

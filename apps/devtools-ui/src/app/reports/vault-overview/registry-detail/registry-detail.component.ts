@@ -7,6 +7,7 @@ import {
   output,
   signal
 } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DevtoolsRegistryService } from '../../../services/registry/devtools-registry.service';
 import { DetailPaneComponent } from '../../../shared/components/detail-pane/detail-pane.component';
@@ -24,7 +25,12 @@ import { PipelineFlowComponent } from '../../../shared/components/pipeline-flow/
 @Component({
   selector: 'sdux-devtools-registry-detail',
   standalone: true,
-  imports: [DetailPaneComponent, PipelineFlowComponent, MatTooltipModule],
+  imports: [
+    DetailPaneComponent,
+    PipelineFlowComponent,
+    MatIconModule,
+    MatTooltipModule
+  ],
   templateUrl: './registry-detail.component.html',
   styleUrl: './registry-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

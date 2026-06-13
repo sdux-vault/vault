@@ -16,6 +16,10 @@
   padding-bottom: global.$spacing-2xl;
   margin-right: global.$spacing-sm;
 
+  sdux-collapsible-section {
+    margin-bottom: 0;
+  }
+
   /* ─── HEADER ─── */
 
   .header {

@@ -1,8 +1,8 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EventDetailComponent } from '../../../../../shared/components/event-detail/event-detail.component';
-import { DevtoolsPipelineEventComponent } from '../../events/devtools-pipeline-event.component';
-import { DevtoolsMainPipelinePanelComponent } from './devtools-main-pipeline-panel.component';
+import { EventDetailComponent } from '../../../shared/components/event-detail/event-detail.component';
+import { EventViewComponent } from '../event-view/event-view.component';
+import { EventContainerComponent } from './event-container.component';
 
 const mockEvent: any = {
   id: 1,
@@ -11,8 +11,8 @@ const mockEvent: any = {
 };
 
 describe('Component: DevtoolsPanel', () => {
-  let fixture: ComponentFixture<DevtoolsMainPipelinePanelComponent>;
-  let component: DevtoolsMainPipelinePanelComponent;
+  let fixture: ComponentFixture<EventContainerComponent>;
+  let component: EventContainerComponent;
   let mockEvent2: any;
   let mockEvent3: any;
 
@@ -25,14 +25,14 @@ describe('Component: DevtoolsPanel', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        DevtoolsMainPipelinePanelComponent,
-        DevtoolsPipelineEventComponent,
+        EventContainerComponent,
+        EventViewComponent,
         EventDetailComponent
       ],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DevtoolsMainPipelinePanelComponent);
+    fixture = TestBed.createComponent(EventContainerComponent);
     fixture.componentRef.setInput('events', [mockEvent]);
     component = fixture.componentInstance;
     fixture.detectChanges();

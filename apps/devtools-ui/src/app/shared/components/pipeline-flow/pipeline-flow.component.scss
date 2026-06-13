@@ -19,7 +19,7 @@
     gap: 0;
 
     sdux-devtools-pipeline-node {
-      width: 100%;
+      width: 304px;
     }
 
     sdux-devtools-pipeline-collapsible {
@@ -79,6 +79,7 @@
     .pipeline-connector {
       display: flex;
       justify-content: center;
+      margin: global.$spacing-xs 0;
 
       .pipeline-arrow {
         @include global.sdux-text(global.$sdux-text-disabled);

@@ -9,10 +9,11 @@
 
 .help-header {
   display: flex;
-  height: 40px;
+  align-items: center;
 
   .help-heading-row {
     display: flex;
+    align-items: center;
 
     ::ng-deep {
       /* exception: projected heading needs encapsulation-piercing styles */
@@ -28,11 +29,11 @@
       }
 
       h2 {
-        font-size: global.$font-size-md;
+        font-size: global.$font-size-xl;
       }
 
       h3 {
-        font-size: global.$font-size-sm;
+        font-size: global.$font-size-md;
       }
     }
   }

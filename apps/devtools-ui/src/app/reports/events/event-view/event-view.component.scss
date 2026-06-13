@@ -55,8 +55,7 @@
         @include global.sdux-text(global.$sdux-text-white);
         font-weight: global.$font-weight-medium;
         font-size: global.$font-size-md;
-        width: 200px;
-        min-width: 0;
+        min-width: 175px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -136,7 +135,7 @@
           .icon,
           .icon-spacer {
             display: inline-block;
-            width: 1em;
+            width: 0.6em;
             font-size: global.$font-size-md;
             text-align: center;
           }
@@ -166,7 +165,7 @@
           @include global.sdux-text(global.$sdux-text-primary);
           font-size: global.$font-size-xs;
           white-space: nowrap;
-          width: 90px;
+          width: 80px;
           flex-shrink: 0;
         }
       }

@@ -18,11 +18,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
 import { CollapsibleSectionComponent } from '../../shared/components/collapsible-section/collapsible-section.component';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/components/reset-button/reset-button.component';
 import { EXTENSION_VERSION } from '../../splash-page/devtools-splash-page.component';
-import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devtools-main-pipeline-panel.component';
+import { EventContainerComponent } from './event-container/event-container.component';
 
 /**
  * Events component displaying the tabbed event viewer with header,
@@ -33,6 +34,7 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
   standalone: true,
   imports: [
     CollapsibleSectionComponent,
+    EmptyStateComponent,
     FormsModule,
     MatButtonModule,
     MatIconModule,
@@ -40,7 +42,7 @@ import { DevtoolsMainPipelinePanelComponent } from './panels/pipeline/main/devto
     MatSelectModule,
     MatTabsModule,
     MatTooltipModule,
-    DevtoolsMainPipelinePanelComponent,
+    EventContainerComponent,
     ExportButtonComponent,
     HelpToggleComponent,
     ResetButtonComponent
@@ -69,7 +71,7 @@ export class EventsComponent {
   readonly #appliedSearchTerm = signal('');
 
   /** References to pipeline panel children for scroll control. */
-  readonly panels = viewChildren(DevtoolsMainPipelinePanelComponent);
+  readonly panels = viewChildren(EventContainerComponent);
 
   /** Currently selected cell filter. */
   readonly selectedCell = signal('');

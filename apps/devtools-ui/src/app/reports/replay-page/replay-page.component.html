@@ -78,7 +78,11 @@
       </div>
     </section>
 
-    @if (selectedTrace()) {
+    @if (selectedCellKey() && !selectedTrace()) {
+      <sdux-empty-state
+        [selfAware]="false"
+        message="Select a trace from the dropdown to begin replay" />
+    } @else if (selectedTrace()) {
       <div class="trace-details-row">
         @if (resolvedValue() !== undefined) {
           <section class="resolved-value-section">
@@ -158,13 +162,7 @@
         }
       </section>
     } @else if (cellKeys().length) {
-      <section class="empty-state">
-        <mat-icon class="empty-state-icon">manage_search</mat-icon>
-        <p class="empty-state-text">
-          Select a trace from the dropdown above to inspect its execution
-          details and replay it through the live pipeline.
-        </p>
-      </section>
+      <sdux-empty-state></sdux-empty-state>
     }
 
     @if (cellTraces().length >= 2) {
@@ -538,16 +536,15 @@
           }
         </sdux-collapsible-section>
       </section>
+    } @else if (selectedTrace()) {
+      <sdux-empty-state
+        [selfAware]="false"
+        icon="compare_arrows"
+        message="Replay a second trace to unlock side-by-side comparison" />
     }
 
     @if (!cellKeys().length) {
-      <div class="empty-state">
-        <mat-icon class="empty-state-icon">manage_search</mat-icon>
-        <p class="empty-state-text">
-          No traces available. Trigger some pipeline activity or load a dump
-          file.
-        </p>
-      </div>
+      <sdux-empty-state></sdux-empty-state>
     }
   </div>
 } @else {

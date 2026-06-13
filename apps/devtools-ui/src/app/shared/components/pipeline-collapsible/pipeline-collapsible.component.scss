@@ -19,7 +19,8 @@ sdux-devtools-pipeline-collapsible {
   .pipeline-collapsible-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    position: relative;
     cursor: pointer;
     user-select: none;
 
@@ -79,8 +80,9 @@ sdux-devtools-pipeline-collapsible {
 
   .pipeline-chevron {
     @include global.sdux-icon-button(28px, transparent);
+    position: absolute;
+    right: 0;
     color: global.$sdux-primary-light;
-    font-size: global.$font-size-lg;
     transition:
       transform 0.2s ease,
       background-color 0.2s ease,

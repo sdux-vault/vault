@@ -28,65 +28,65 @@
     </div>
 
     <section class="export-section">
-      <mat-tab-group animationDuration="200ms">
-        <mat-tab label="Perfetto (recommended)">
-          <div class="tab-panel">
-            <ol>
-              <li>
-                Click <strong>Download Trace</strong> below to export the file
-              </li>
-              <li>
-                Open
-                <a
-                  href="https://ui.perfetto.dev/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >ui.perfetto.dev</a
-                >
-              </li>
-              <li>Drag and drop the downloaded <code>.json</code> file</li>
-              <li>
-                Explore the flame chart — each pipeline stage appears as a timed
-                span
-              </li>
-            </ol>
-          </div>
-        </mat-tab>
-
-        <mat-tab label="Chrome DevTools Performance">
-          <div class="tab-panel">
-            <ol>
-              <li>
-                Click <strong>Download Trace</strong> below to export the file
-              </li>
-              <li>Open Chrome DevTools (<strong>F12</strong>)</li>
-              <li>Go to the <strong>Performance</strong> tab</li>
-              <li>
-                Click the <strong>↑ Load profile</strong> button (upload icon)
-              </li>
-              <li>Select the downloaded <code>.json</code> file</li>
-            </ol>
-          </div>
-        </mat-tab>
-
-        <mat-tab label="chrome://tracing">
-          <div class="tab-panel">
-            <ol>
-              <li>Navigate to <strong>chrome://chrome-urls</strong></li>
-              <li>
-                Click the
-                <strong>Enable internal debugging pages</strong> button
-              </li>
-              <li>Navigate to <strong>chrome://tracing</strong></li>
-              <li>
-                Click <strong>Load</strong> and select the downloaded file
-              </li>
-            </ol>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
-
       @if (hasEvents()) {
+        <mat-tab-group animationDuration="200ms">
+          <mat-tab label="Perfetto (recommended)">
+            <div class="tab-panel">
+              <ol>
+                <li>
+                  Click <strong>Download Trace</strong> below to export the file
+                </li>
+                <li>
+                  Open
+                  <a
+                    href="https://ui.perfetto.dev/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >ui.perfetto.dev</a
+                  >
+                </li>
+                <li>Drag and drop the downloaded <code>.json</code> file</li>
+                <li>
+                  Explore the flame chart — each pipeline stage appears as a
+                  timed span
+                </li>
+              </ol>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Chrome DevTools Performance">
+            <div class="tab-panel">
+              <ol>
+                <li>
+                  Click <strong>Download Trace</strong> below to export the file
+                </li>
+                <li>Open Chrome DevTools (<strong>F12</strong>)</li>
+                <li>Go to the <strong>Performance</strong> tab</li>
+                <li>
+                  Click the <strong>↑ Load profile</strong> button (upload icon)
+                </li>
+                <li>Select the downloaded <code>.json</code> file</li>
+              </ol>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="chrome://tracing">
+            <div class="tab-panel">
+              <ol>
+                <li>Navigate to <strong>chrome://chrome-urls</strong></li>
+                <li>
+                  Click the
+                  <strong>Enable internal debugging pages</strong> button
+                </li>
+                <li>Navigate to <strong>chrome://tracing</strong></li>
+                <li>
+                  Click <strong>Load</strong> and select the downloaded file
+                </li>
+              </ol>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
         <div class="features">
           <p class="features-heading">What you'll see:</p>
           <ul>
@@ -121,10 +121,7 @@
           stages are clearly visible in the flame chart.
         </p>
       } @else {
-        <div class="warning-notice" role="status" aria-live="polite">
-          No events recorded yet. Interact with your application to generate
-          pipeline events, then return here to export the trace.
-        </div>
+        <sdux-empty-state></sdux-empty-state>
       }
     </section>
   </div>

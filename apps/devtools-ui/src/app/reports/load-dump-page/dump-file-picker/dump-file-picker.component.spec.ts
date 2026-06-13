@@ -213,6 +213,15 @@ describe('Component: DumpFilePicker', () => {
     expect(fixture.nativeElement.querySelector('.error-message')).toBeNull();
   });
 
+  it('should not display file size when in button mode', () => {
+    fixture.componentRef.setInput('showButton', true);
+    fixture.componentRef.setInput('showDropzone', false);
+    component.fileSize.set('1.5 KB');
+    fixture.detectChanges();
+    const sizeEl = fixture.nativeElement.querySelector('.file-size');
+    expect(sizeEl).toBeNull();
+  });
+
   it('should do nothing when no file is selected', () => {
     const event = { target: { files: [] } } as unknown as Event;
     component.onFileSelected(event);

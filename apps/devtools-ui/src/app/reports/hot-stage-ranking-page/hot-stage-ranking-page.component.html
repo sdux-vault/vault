@@ -27,26 +27,28 @@
       <div class="sdux-container-spacer"></div>
 
       <div class="meta">
-        <div class="view-toggle">
-          <button
-            type="button"
-            class="toggle-btn"
-            [class.active]="viewMode() === 'individual'"
-            (click)="viewMode.set('individual')"
-            matTooltip="Show individual stage executions"
-            aria-label="Individual view">
-            Individual
-          </button>
-          <button
-            type="button"
-            class="toggle-btn"
-            [class.active]="viewMode() === 'grouped'"
-            (click)="viewMode.set('grouped')"
-            matTooltip="Show grouped stage rankings"
-            aria-label="Grouped view">
-            Grouped
-          </button>
-        </div>
+        @if (traces().length) {
+          <div class="view-toggle">
+            <button
+              type="button"
+              class="toggle-btn"
+              [class.active]="viewMode() === 'individual'"
+              (click)="viewMode.set('individual')"
+              matTooltip="Show individual stage executions"
+              aria-label="Individual view">
+              Individual
+            </button>
+            <button
+              type="button"
+              class="toggle-btn"
+              [class.active]="viewMode() === 'grouped'"
+              (click)="viewMode.set('grouped')"
+              matTooltip="Show grouped stage rankings"
+              aria-label="Grouped view">
+              Grouped
+            </button>
+          </div>
+        }
 
         <sdux-export-button
           [data]="filteredTraces()"
@@ -59,11 +61,15 @@
       </div>
     </div>
 
-    <sdux-trace-hot-stage-ranking
-      [traces]="filteredTraces()"
-      [(viewMode)]="viewMode"
-      [externalViewMode]="true">
-    </sdux-trace-hot-stage-ranking>
+    @if (traces().length) {
+      <sdux-trace-hot-stage-ranking
+        [traces]="filteredTraces()"
+        [(viewMode)]="viewMode"
+        [externalViewMode]="true">
+      </sdux-trace-hot-stage-ranking>
+    } @else {
+      <sdux-empty-state></sdux-empty-state>
+    }
   </div>
 } @else {
   <sdux-upsell-notice

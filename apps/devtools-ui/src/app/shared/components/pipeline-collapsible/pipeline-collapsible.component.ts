@@ -6,6 +6,7 @@ import {
   signal,
   ViewEncapsulation
 } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 /**
@@ -15,7 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'sdux-devtools-pipeline-collapsible',
   standalone: true,
-  imports: [MatTooltipModule],
+  imports: [MatIconModule, MatTooltipModule],
   templateUrl: './pipeline-collapsible.component.html',
   styleUrl: './pipeline-collapsible.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

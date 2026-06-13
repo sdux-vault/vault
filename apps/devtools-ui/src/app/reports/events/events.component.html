@@ -102,8 +102,8 @@
           <span class="tab-label"> All Events ({{ totalEvents() }}) </span>
         </ng-template>
         <section class="vault-tab-content">
-          <sdux-devtools-main-pipeline-panel
-            [events]="filteredEvents()"></sdux-devtools-main-pipeline-panel>
+          <sdux-event-container
+            [events]="filteredEvents()"></sdux-event-container>
         </section>
       </mat-tab>
       <mat-tab>
@@ -113,18 +113,11 @@
           </span>
         </ng-template>
         <section class="vault-tab-content">
-          <sdux-devtools-main-pipeline-panel
-            [events]="errorEvents()"></sdux-devtools-main-pipeline-panel>
+          <sdux-event-container [events]="errorEvents()"></sdux-event-container>
         </section>
       </mat-tab>
     </mat-tab-group>
   } @else {
-    <div class="empty-state">
-      <span class="empty-state-icon" aria-hidden="true">&#9881;</span>
-      <p class="empty-state-text">
-        No pipeline events recorded yet. Interact with your application to
-        generate FeatureCell events.
-      </p>
-    </div>
+    <sdux-empty-state></sdux-empty-state>
   }
 </div>

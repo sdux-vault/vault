@@ -30,27 +30,29 @@
         }
       </mat-select>
 
-      <mat-select
-        class="cell-filter trace-filter"
-        [value]="selectedTraceId()"
-        (selectionChange)="selectTrace($any($event.value))"
-        placeholder="Select a trace..."
-        panelWidth="500px"
-        aria-label="Select trace">
-        @for (trace of filteredTraces(); track trace.traceId) {
-          <mat-option [value]="trace.traceId">
-            <span class="trace-option">
-              <span class="trace-cell">{{ trace.cellKey }}</span>
-              &nbsp;
-              <span class="trace-label-tag">{{
-                traceLabels().get(trace.traceId)
-              }}</span>
-              &nbsp;
-              <span class="trace-id">{{ trace.traceId.slice(0, 8) }}</span>
-            </span>
-          </mat-option>
-        }
-      </mat-select>
+      @if (filteredTraces().length) {
+        <mat-select
+          class="cell-filter trace-filter"
+          [value]="selectedTraceId()"
+          (selectionChange)="selectTrace($any($event.value))"
+          placeholder="Select a trace..."
+          panelWidth="500px"
+          aria-label="Select trace">
+          @for (trace of filteredTraces(); track trace.traceId) {
+            <mat-option [value]="trace.traceId">
+              <span class="trace-option">
+                <span class="trace-cell">{{ trace.cellKey }}</span>
+                &nbsp;
+                <span class="trace-label-tag">{{
+                  traceLabels().get(trace.traceId)
+                }}</span>
+                &nbsp;
+                <span class="trace-id">{{ trace.traceId.slice(0, 8) }}</span>
+              </span>
+            </mat-option>
+          }
+        </mat-select>
+      }
 
       <div class="sdux-container-spacer"></div>
 
@@ -67,13 +69,7 @@
     </div>
 
     @if (filteredTraces().length === 0) {
-      <section class="empty-state">
-        <mat-icon class="empty-state-icon">manage_search</mat-icon>
-        <p class="empty-state-text">
-          No traces available. Trigger some pipeline activity or load a dump
-          file.
-        </p>
-      </section>
+      <sdux-empty-state></sdux-empty-state>
     }
 
     <!-- Trace Detail + Diff -->
@@ -383,13 +379,7 @@
           </div>
         </div>
       } @else {
-        <section class="empty-state">
-          <mat-icon class="empty-state-icon">compare</mat-icon>
-          <p class="empty-state-text">
-            This trace has fewer than 2 candidate snapshots. Pipeline candidate
-            events are required for diff comparison.
-          </p>
-        </section>
+        <sdux-empty-state icon="compare"></sdux-empty-state>
       }
     }
   </div>

@@ -46,8 +46,7 @@
       }
 
       .th-key {
-        width: 200px;
-        min-width: 0;
+        min-width: 175px;
 
         @media (max-width: global.$breakpoint-md) {
           min-width: 0;
@@ -73,13 +72,13 @@
 
         span {
           display: inline-block;
-          width: 1em;
+          width: 0.6em;
           text-align: center;
         }
       }
 
       .th-ts {
-        width: 90px;
+        width: 80px;
         text-align: left;
         flex-shrink: 0;
       }
@@ -120,12 +119,14 @@
     border-left: 1px solid global.$sdux-surface-outline;
     margin-bottom: global.$spacing-2xl;
     min-height: 0;
+    height: calc(100% - 32px);
 
     sdux-event-detail {
       display: flex;
       flex-direction: column;
       flex: 1;
       min-height: 0;
+      overflow: hidden;
     }
   }
 

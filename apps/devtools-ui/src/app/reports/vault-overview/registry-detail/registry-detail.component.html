@@ -21,11 +21,11 @@
       matTooltip="Behaviors registered on this FeatureCell">
       Behaviors
       <span class="entity-count">({{ behaviors().length }})</span>
-      <span
+      <mat-icon
         class="entity-chevron"
         [class.entity-chevron-expanded]="behaviorsExpanded()"
         aria-hidden="true"
-        >&#9656;</span
+        >chevron_right</mat-icon
       >
     </h4>
     @if (behaviorsExpanded() && behaviors().length) {
@@ -66,11 +66,11 @@
       matTooltip="Controllers registered on this FeatureCell">
       Controllers
       <span class="entity-count">({{ controllers().length }})</span>
-      <span
+      <mat-icon
         class="entity-chevron"
         [class.entity-chevron-expanded]="controllersExpanded()"
         aria-hidden="true"
-        >&#9656;</span
+        >chevron_right</mat-icon
       >
     </h4>
     @if (controllersExpanded() && controllers().length) {

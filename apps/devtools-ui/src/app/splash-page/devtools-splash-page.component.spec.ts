@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
-import { DevtoolsPipelineEventComponent } from '../reports/events/panels/events/devtools-pipeline-event.component';
-import { DevtoolsMainPipelinePanelComponent } from '../reports/events/panels/pipeline/main/devtools-main-pipeline-panel.component';
+import { EventContainerComponent } from '../reports/events/event-container/event-container.component';
+import { EventViewComponent } from '../reports/events/event-view/event-view.component';
 import { DevtoolsAggregateService } from '../services/devtools-aggregate.service';
 import { DevtoolsLoggingService } from '../services/devtools-logging.service';
 import { DevtoolsRegistryService } from '../services/registry/devtools-registry.service';
@@ -54,8 +54,8 @@ describe('Component: SplashPage', () => {
     await TestBed.configureTestingModule({
       imports: [
         DevToolsSplashPageComponent,
-        DevtoolsMainPipelinePanelComponent,
-        DevtoolsPipelineEventComponent
+        EventContainerComponent,
+        EventViewComponent
       ],
       providers: [
         { provide: DevtoolsLoggingService, useValue: mockService },
