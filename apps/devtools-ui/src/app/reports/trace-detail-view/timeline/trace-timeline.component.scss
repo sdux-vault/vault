@@ -19,7 +19,7 @@
   gap: global.$spacing-sm;
   margin-bottom: global.$spacing-sm;
   font-size: global.$font-size-xs;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   flex-shrink: 0;
 
   .axis-label {
@@ -30,7 +30,7 @@
   .axis-line {
     flex: 1;
     height: 1px;
-    background: var(--sdux-border-default, rgb(255 255 255 / 15%));
+    background: global.$sdux-border-default-lg;
   }
 
   .axis-arrow {
@@ -56,18 +56,18 @@
   white-space: nowrap;
 
   &:hover {
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 5%));
+    background: global.$sdux-surface-hover;
   }
 
   &.timeline-row-selected {
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 8%));
-    border: 1px solid var(--sdux-primary, #{global.$sdux-primary-base});
+    background: global.$sdux-surface-hover-md;
+    border: 1px solid global.$sdux-primary-base;
   }
 
   .timeline-id {
     font-family: monospace;
     font-size: global.$font-size-xs;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     min-width: 24px;
   }
 
@@ -75,7 +75,7 @@
     flex: 1;
     height: 14px;
     position: relative;
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 3%));
+    background: global.$sdux-surface-hover-sm;
     border-radius: 2px;
 
     .timeline-bar {
@@ -98,7 +98,7 @@
       }
 
       &.status-orphaned {
-        background: var(--sdux-text-secondary);
+        background: global.$sdux-text-secondary;
       }
 
       &.status-aborted {
@@ -112,7 +112,7 @@
     font-size: global.$font-size-xs;
     min-width: 55px;
     text-align: right;
-    color: var(--sdux-text-primary);
+    color: global.$sdux-text-primary;
   }
 
   .timeline-status {
@@ -129,13 +129,13 @@
   flex-wrap: wrap;
   gap: global.$spacing-md;
   font-size: global.$font-size-xs;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   padding-top: global.$spacing-sm;
-  border-top: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
+  border-top: 1px solid global.$sdux-border-default;
 
   .legend-separator {
     width: 1px;
-    background: var(--sdux-border-default, rgb(255 255 255 / 10%));
+    background: global.$sdux-border-default;
   }
 
   .legend-indicator {
@@ -158,7 +158,7 @@
 }
 
 .status-orphaned {
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
 }
 
 .status-aborted {

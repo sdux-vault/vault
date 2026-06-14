@@ -11,18 +11,18 @@
   .description {
     margin: 0;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.5;
   }
 
   .features {
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
 
     .features-heading {
       margin: 0 0 global.$spacing-sm;
       font-weight: global.$font-weight-medium;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
 
     ol {
@@ -55,13 +55,13 @@
     gap: global.$spacing-xs;
     padding: global.$spacing-xs global.$spacing-md;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     background: global.$sdux-surface-lightish;
     border-radius: global.$border-radius-sm;
 
     strong {
       font-family: monospace;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
   }
 
@@ -77,7 +77,7 @@
   .export-hint {
     margin: 0;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.5;
     width: fit-content;
     padding: global.$spacing-sm global.$spacing-md;
@@ -85,7 +85,7 @@
     border-radius: global.$border-radius-sm;
 
     strong {
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
   }
 }

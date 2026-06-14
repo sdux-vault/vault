@@ -96,6 +96,9 @@ describe('Service: VaultInsight - Pipeline', () => {
               postMessage() {}
             };
           }
+        },
+        devtools: {
+          inspectedWindow: { tabId: 42 }
         }
       };
 

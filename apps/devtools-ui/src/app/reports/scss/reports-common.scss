@@ -30,7 +30,7 @@
       margin: 0;
       font-size: global.$font-size-lg;
       font-weight: global.$font-weight-bold;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
   }
 
@@ -154,7 +154,7 @@
   }
 
   .status-aborted {
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 
   /* ─── EMPTY STATE ─── */
@@ -165,7 +165,7 @@
     justify-content: center;
     align-items: center;
     padding: global.$spacing-xl global.$spacing-lg;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     font-size: global.$font-size-sm;
     text-align: center;
 
@@ -209,7 +209,7 @@
 
   .trace-id {
     font-family: global.$sdux-code-font;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 
   /* ─── PAIR NAVIGATION ─── */
@@ -223,14 +223,14 @@
 
     .pair-counter {
       font-size: global.$font-size-sm;
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
       font-family: global.$sdux-code-font;
     }
 
     .sdux-button {
-      width: 145px !important;
-      min-width: 145px !important;
-      max-width: 145px !important;
+      width: 145px !important; // !important: override Material default button sizing for nav layout
+      min-width: 145px !important; // !important: override Material default button sizing for nav layout
+      max-width: 145px !important; // !important: override Material default button sizing for nav layout
     }
 
     @media (max-width: global.$breakpoint-md) {
@@ -241,9 +241,9 @@
       }
 
       .sdux-button {
-        width: auto !important;
-        min-width: auto !important;
-        max-width: none !important;
+        width: auto !important; // !important: override local 145px for responsive mode
+        min-width: auto !important; // !important: override local 145px for responsive mode
+        max-width: none !important; // !important: override local 145px for responsive mode
       }
     }
   }
@@ -301,8 +301,8 @@
     justify-content: center;
     padding: global.$spacing-xs global.$spacing-md;
     font-size: global.$font-size-xs;
-    color: var(--sdux-text-secondary);
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    color: global.$sdux-text-secondary;
+    background: global.$sdux-surface-raised;
     border: 1px dashed global.$sdux-surface-outline;
     border-radius: global.$border-radius-sm;
     margin-bottom: global.$spacing-sm;
@@ -360,13 +360,13 @@
       font-weight: global.$font-weight-bold;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
 
     .diff-header-meta {
       font-family: global.$sdux-code-font;
       font-size: global.$font-size-xxs;
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
     }
   }
 
@@ -377,7 +377,7 @@
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-xs;
     line-height: 1.6;
-    color: var(--sdux-text-primary);
+    color: global.$sdux-text-primary;
     overflow: auto;
     white-space: pre;
     flex: 1;
@@ -428,8 +428,8 @@
       padding: global.$spacing-xs global.$spacing-sm;
       font-size: global.$font-size-xs;
       font-weight: global.$font-weight-bold;
-      color: var(--sdux-text-primary);
-      background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+      color: global.$sdux-text-primary;
+      background: global.$sdux-surface-raised;
       border-bottom: 1px solid global.$sdux-surface-outline;
       flex-shrink: 0;
     }
@@ -498,28 +498,28 @@
       padding: global.$spacing-xs global.$spacing-sm;
       font-size: global.$font-size-xs;
       font-weight: global.$font-weight-medium;
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
       text-align: left;
       border-bottom: 1px solid global.$sdux-surface-outline;
-      background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+      background: global.$sdux-surface-raised;
     }
 
     .snapshot-row {
       cursor: pointer;
 
       &:hover {
-        background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+        background: global.$sdux-surface-hover-lg;
       }
 
       &.selected {
-        background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+        background: global.$sdux-surface-hover-lg;
         border-left: none;
       }
 
       td {
         padding: global.$spacing-xs global.$spacing-sm;
         font-size: global.$font-size-xs;
-        color: var(--sdux-text-primary);
+        color: global.$sdux-text-primary;
 
         &.col-selected {
           width: 18px;
@@ -544,7 +544,7 @@
     .snapshot-table-footer {
       padding: global.$spacing-xs global.$spacing-md;
       font-size: global.$font-size-xxs;
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
       background: global.$sdux-surface-mid;
       border-top: 1px solid global.$sdux-surface-outline;
 

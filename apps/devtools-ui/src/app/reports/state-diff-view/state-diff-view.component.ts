@@ -117,7 +117,9 @@ export class StateDiffViewComponent {
     for (let i = 1; i < list.length; i++) {
       const previous = list[i - 1].value;
       const current = list[i].value;
-      const mutated = JSON.stringify(previous) !== JSON.stringify(current);
+      const mutated =
+        previous !== current &&
+        JSON.stringify(previous) !== JSON.stringify(current);
 
       const cells = stages.map((_, idx) => idx === i && mutated);
       rows.push({

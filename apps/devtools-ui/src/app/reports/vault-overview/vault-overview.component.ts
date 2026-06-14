@@ -8,12 +8,13 @@ import {
   OnInit,
   signal
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
 import { HeaderSectionComponent } from '../../shared/components/header-section/header-section.component';
@@ -165,7 +166,7 @@ export class VaultOverviewComponent implements OnInit {
   readonly selectedCell = signal<VaultRegistrationSerializedShape | null>(null);
 
   /** Whether the viewport matches the mobile breakpoint. */
-  readonly #isMobile = window.matchMedia('(max-width: 768px)').matches;
+  readonly #isMobile = window.matchMedia('(max-width: 48rem)').matches; // matches global.$breakpoint-md (768px)
 
   /** Whether the Package Versions section is expanded. */
   readonly versionsExpanded = signal(!this.#isMobile);
@@ -185,14 +186,12 @@ export class VaultOverviewComponent implements OnInit {
    * is destroyed via {@link DestroyRef}.
    */
   ngOnInit(): void {
-    const destroy$ = new Subject<void>();
-    this.#destroyRef.onDestroy(() => {
-      destroy$.next();
-      destroy$.complete();
-    });
-
     this.registrySearchTerm$
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(destroy$))
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.#destroyRef)
+      )
       .subscribe((term) => this.#appliedSearchTerm.set(term));
   }
 

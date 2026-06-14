@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   effect,
   inject,
   signal
@@ -12,7 +13,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterLink } from '@angular/router';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { InsightService } from '../../services/insight/insight.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
@@ -89,7 +89,6 @@ function extractResolvedValue(trace: TraceExecutionShape): unknown | undefined {
     MatIconModule,
     MatSelectModule,
     MatTooltipModule,
-    RouterLink,
     DumpFilePickerComponent,
     EmptyStateComponent,
     ExportButtonComponent,
@@ -189,6 +188,11 @@ export class ReplayPageComponent {
 
   /** Timer handle for auto-dismissing the result message. */
   #dismissTimer: ReturnType<typeof setTimeout> | undefined;
+
+  /** Clears the dismiss timer when the component is destroyed. */
+  readonly #cleanupTimer = inject(DestroyRef).onDestroy(() =>
+    clearTimeout(this.#dismissTimer)
+  );
 
   /** Clears and restarts the result message auto-dismiss countdown. */
   readonly #autoDismissResult = effect(() => {

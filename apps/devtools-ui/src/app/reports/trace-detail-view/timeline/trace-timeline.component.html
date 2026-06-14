@@ -4,13 +4,21 @@
     <span class="axis-line"></span>
     <span class="axis-arrow">►</span>
   </div>
-  <div class="timeline-rows">
+  <div class="timeline-rows" role="list" aria-label="Trace timeline">
     @for (trace of traces(); track trace.traceId; let i = $index) {
       <div
         class="timeline-row"
         [class.timeline-row-selected]="selectedTraceId() === trace.traceId"
-        role="button"
+        role="listitem"
         tabindex="0"
+        [attr.aria-label]="
+          'Trace ' +
+          (i + 1) +
+          ': ' +
+          trace.metrics.duration.toFixed(1) +
+          'ms, ' +
+          statusLabel(trace)
+        "
         matTooltip="Trace ID: {{ trace.traceId.slice(0, 8) }}"
         (click)="toggleTrace(trace.traceId)"
         (keydown.enter)="toggleTrace(trace.traceId)"

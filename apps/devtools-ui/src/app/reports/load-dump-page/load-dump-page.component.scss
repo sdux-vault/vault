@@ -13,12 +13,12 @@
   .description {
     margin: 0;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.5;
 
     code {
-      color: var(--sdux-text-primary);
-      background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
+      color: global.$sdux-text-primary;
+      background: global.$sdux-surface-raised-md;
       padding: 0 global.$spacing-xs;
       border-radius: global.$border-radius-sm;
     }
@@ -38,12 +38,12 @@
 
   .features {
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
 
     .features-heading {
       margin: 0 0 global.$spacing-sm;
       font-weight: global.$font-weight-medium;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
 
     ul {

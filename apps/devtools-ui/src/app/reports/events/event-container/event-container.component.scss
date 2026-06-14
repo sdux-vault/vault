@@ -120,6 +120,7 @@
     margin-bottom: global.$spacing-2xl;
     min-height: 0;
     height: calc(100% - 32px);
+    overflow: hidden;
 
     sdux-event-detail {
       display: flex;

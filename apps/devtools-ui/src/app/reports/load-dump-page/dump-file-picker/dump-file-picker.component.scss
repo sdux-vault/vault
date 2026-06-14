@@ -15,7 +15,7 @@
   padding: global.$spacing-2xl global.$spacing-md;
   border: 2px dashed global.$sdux-surface-outline;
   border-radius: global.$border-radius-sm;
-  background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+  background: global.$sdux-surface-raised;
   cursor: pointer;
   transition:
     border-color 0.2s ease,
@@ -41,12 +41,12 @@
 .dropzone-label {
   font-size: global.$font-size-sm;
   font-weight: global.$font-weight-medium;
-  color: var(--sdux-text-primary);
+  color: global.$sdux-text-primary;
 }
 
 .dropzone-sublabel {
   font-size: global.$font-size-xs;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
 }
 
 .file-input {
@@ -65,7 +65,7 @@
 
 .file-size {
   font-size: global.$font-size-xs;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   font-family: global.$sdux-code-font;
 }
 

@@ -14,7 +14,7 @@
   .upsell-body {
     margin: 0;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.5;
   }
 
@@ -24,9 +24,9 @@
     justify-content: center;
 
     .cta-button {
-      min-width: 200px !important;
-      max-width: 250px !important;
-      width: auto !important;
+      min-width: 200px !important; // !important: override Material default button sizing
+      max-width: 250px !important; // !important: override Material default button sizing
+      width: auto !important; // !important: override Material default button sizing
       text-decoration: none;
     }
   }

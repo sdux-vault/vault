@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   padding: global.$spacing-xl global.$spacing-lg;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   font-size: global.$font-size-sm;
   text-align: center;
 

@@ -301,6 +301,7 @@ describe('InsightService', () => {
 
     beforeEach(() => {
       mockPort = {
+        postMessage: jasmine.createSpy('postMessage'),
         onMessage: {
           addListener: (cb: any) => {
             messageListener = cb;
@@ -317,6 +318,10 @@ describe('InsightService', () => {
         .createSpy('connect')
         .and.returnValue(mockPort);
 
+      (globalThis as any).chrome.devtools = {
+        inspectedWindow: { tabId: 42 }
+      };
+
       TestBed.configureTestingModule({
         providers: [InsightService, provideZonelessChangeDetection()]
       });
@@ -330,6 +335,13 @@ describe('InsightService', () => {
     it('should connect a port on construction', () => {
       expect((globalThis as any).chrome.runtime.connect).toHaveBeenCalledWith({
         name: 'vault-devtools'
+      });
+    });
+
+    it('should send VAULT_INIT with tabId after connecting', () => {
+      expect(mockPort.postMessage).toHaveBeenCalledWith({
+        type: 'VAULT_INIT',
+        tabId: 42
       });
     });
 

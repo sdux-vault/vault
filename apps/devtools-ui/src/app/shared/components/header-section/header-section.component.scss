@@ -29,19 +29,19 @@
       h6 {
         margin: 0;
         font-weight: global.$font-weight-bold;
-        color: var(--sdux-text-primary);
+        color: global.$sdux-text-primary;
       }
 
       h2 {
-        font-size: global.$font-size-xl !important;
+        font-size: global.$font-size-xl !important; // !important: override projected heading size inside ng-deep
       }
 
       h3 {
-        font-size: global.$font-size-lg !important;
+        font-size: global.$font-size-lg !important; // !important: override projected heading size inside ng-deep
       }
 
       h4 {
-        font-size: global.$font-size-md !important;
+        font-size: global.$font-size-md !important; // !important: override projected heading size inside ng-deep
       }
     }
   }

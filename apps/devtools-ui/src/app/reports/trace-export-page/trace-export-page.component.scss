@@ -11,12 +11,12 @@
   .description {
     margin: 0;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.5;
 
     code {
-      color: var(--sdux-text-primary);
-      background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
+      color: global.$sdux-text-primary;
+      background: global.$sdux-surface-raised-md;
       padding: 0 global.$spacing-xs;
       border-radius: global.$border-radius-sm;
     }
@@ -24,12 +24,12 @@
 
   .features {
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
 
     .features-heading {
       margin: 0 0 global.$spacing-sm;
       font-weight: global.$font-weight-medium;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
 
     ol,
@@ -60,7 +60,7 @@
 
   .tab-panel {
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     padding: global.$spacing-md 0;
 
     ol {
@@ -81,8 +81,8 @@
     }
 
     code {
-      color: var(--sdux-text-primary);
-      background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
+      color: global.$sdux-text-primary;
+      background: global.$sdux-surface-raised-md;
       padding: 0 global.$spacing-xs;
       border-radius: global.$border-radius-sm;
     }
@@ -116,13 +116,13 @@
     gap: global.$spacing-xs;
     padding: global.$spacing-xs global.$spacing-md;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     background: global.$sdux-surface-lightish;
     border-radius: global.$border-radius-sm;
 
     strong {
       font-family: monospace;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
   }
 
@@ -138,11 +138,11 @@
   .export-hint {
     margin: 0;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.5;
 
     strong {
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
   }
 }

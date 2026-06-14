@@ -15,7 +15,7 @@
       margin: 0;
       font-size: global.$font-size-sm;
       font-weight: global.$font-weight-bold;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
 
     &:hover .chevron {
@@ -25,7 +25,7 @@
 
   .chevron {
     font-size: global.$font-size-lg;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     transition: transform 0.2s ease;
     transform: rotate(0deg);
 
@@ -60,7 +60,7 @@
     gap: global.$spacing-sm;
     padding: global.$spacing-md;
     margin-bottom: global.$spacing-md;
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    background: global.$sdux-surface-raised;
     border-radius: global.$border-radius-sm;
     border: 1px solid global.$sdux-surface-outline;
   }
@@ -68,7 +68,7 @@
   .help-text {
     margin: 0;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.5;
   }
 
@@ -76,7 +76,7 @@
     margin: 0;
     padding-left: global.$spacing-lg;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.6;
 
     li {
@@ -89,7 +89,7 @@
     flex-direction: column;
     gap: global.$spacing-sm;
     padding: global.$spacing-md;
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    background: global.$sdux-surface-raised;
     border: 1px solid global.$sdux-surface-outline;
     border-radius: global.$border-radius-sm;
     overflow: hidden;
@@ -115,12 +115,12 @@
 
     .stat-label {
       font-size: global.$font-size-sm;
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
       font-weight: global.$font-weight-medium;
     }
 
     .stat-divider {
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
     }
 
     .summary-delta {
@@ -172,14 +172,14 @@
     flex-shrink: 0;
     font-size: global.$font-size-xs;
     font-weight: global.$font-weight-medium;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     position: sticky;
     left: 0;
     z-index: 1;
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    background: global.$sdux-surface-raised;
   }
 
   .timeline-bar {
@@ -243,7 +243,7 @@
   .marker-dot {
     font-size: 10px;
     line-height: 1;
-    color: var(--sdux-text-primary);
+    color: global.$sdux-text-primary;
   }
 
   .before-track .marker-dot {
@@ -256,14 +256,14 @@
 
   .marker-label {
     font-size: 9px;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     white-space: nowrap;
   }
 
   .timeline-duration {
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-xs;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     white-space: nowrap;
     flex-shrink: 0;
   }
@@ -273,7 +273,7 @@
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-xs;
     line-height: 1;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     padding-top: global.$spacing-xs;
     padding-bottom: global.$spacing-xs;
     margin-left: calc(100px + global.$spacing-md);
@@ -284,7 +284,7 @@
   .axis-label {
     position: absolute;
     top: global.$spacing-xs;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     transform: translateX(-50%);
     white-space: nowrap;
 

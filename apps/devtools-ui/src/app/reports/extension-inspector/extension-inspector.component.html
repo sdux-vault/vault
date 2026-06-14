@@ -23,6 +23,10 @@
             Detail view with pipeline flow and candidate snapshot inspection
           </li>
           <li>Export extension data as structured JSON</li>
+          <li>
+            <strong>Keyboard:</strong> press <kbd>j</kbd> or <kbd>←</kbd> for
+            previous execution, <kbd>l</kbd> or <kbd>→</kbd> for next.
+          </li>
         </ul>
       </sdux-help-toggle>
     </sdux-header-section>
@@ -138,7 +142,7 @@
                     aria-label="Previous execution">
                     ← <span class="nav-label">Previous Execution</span>
                   </button>
-                  <span class="pair-counter">
+                  <span class="pair-counter" aria-live="polite">
                     Execution {{ inspector.selectedExecutionIndex() + 1 }} of
                     {{ inspector.executionCount() }}
                   </span>

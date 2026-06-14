@@ -18,16 +18,27 @@ export interface Example {
 }
 
 /**
+ * Object-shaped state keyed by character ID.
+ * Used with withObjectDeepMergeBehavior to demonstrate deep merge
+ * behavior with nested objects containing arrays.
+ */
+export interface StarTrekState {
+  /** Characters keyed by string ID. */
+  [id: string]: Example;
+}
+
+/**
  * FeatureCell service for the Star Trek demo harness.
  *
- * Mirrors the Star Wars example with Star Trek characters,
- * filters and reducers applied at runtime.
+ * Uses withObjectDeepMergeBehavior to demonstrate how deep merge
+ * handles nested object structures. Arrays within the state are
+ * replaced (not appended) during merge operations.
  */
-@FeatureCell<Example[]>('startrek-feature-cell-key')
+@FeatureCell<StarTrekState>('startrek-feature-cell-key')
 @Injectable({ providedIn: 'root' })
 export class StarTrekExampleService {
-  /** Vault instance managing the `Example[]` state. */
-  readonly #vault = injectVault<Example[]>(StarTrekExampleService);
+  /** Vault instance managing the `StarTrekState` state. */
+  readonly #vault = injectVault<StarTrekState>(StarTrekExampleService);
 
   /** Internal signal controlling whether the reducer throws an error. */
   readonly #isErrorState = signal(false);
@@ -38,30 +49,28 @@ export class StarTrekExampleService {
   readonly state = this.#vault.state;
 
   /**
-   * Configures the vault pipeline with filters and reducers, then
+   * Configures the vault pipeline with reducers, then
    * initializes the FeatureCell.
    */
   constructor() {
     this.#vault
-      .filters([
-        (examples: Example[]) =>
-          examples.filter((example) => example.name !== 'Wesley')
-      ])
       .reducers([
-        (examples: Example[]) => {
+        (state: StarTrekState) => {
           if (this.#isErrorState()) {
             throw new Error('Example error triggered');
-          } else {
-            return examples.map((example) => {
-              if (example.id === 1) {
-                return { ...example, captain: true };
-              }
-              if (example.id === 3) {
-                return { ...example, commander: true };
-              }
-              return example;
-            });
           }
+          const result: StarTrekState = {};
+          for (const [id, entry] of Object.entries(state)) {
+            if (entry.name === 'Wesley') continue;
+            if (entry.id === 1) {
+              result[id] = { ...entry, captain: true };
+            } else if (entry.id === 3) {
+              result[id] = { ...entry, commander: true };
+            } else {
+              result[id] = entry;
+            }
+          }
+          return result;
         }
       ])
       .withThrottle?.({ millisecondThrottle: 1_000 })
@@ -69,14 +78,18 @@ export class StarTrekExampleService {
   }
 
   /**
-   * Replaces the vault state with the provided example array.
+   * Replaces the vault state with the provided examples as an object map.
    *
-   * @param input - Array of examples to set as the new state value.
+   * @param input - Array of examples to convert and set as the new state.
    */
   replace(input: Example[]): void {
+    const value: StarTrekState = {};
+    for (const entry of input) {
+      value[String(entry.id)] = entry;
+    }
     this.#vault.replaceState({
       loading: false,
-      value: input,
+      value,
       error: null
     });
   }
@@ -87,14 +100,14 @@ export class StarTrekExampleService {
   }
 
   /**
-   * Merges a single new example into the existing state array.
+   * Deep-merges a single new example into the existing state object.
    *
-   * @param entry - The example to append to the current state.
+   * @param entry - The example to merge into the current state.
    */
   merge(entry: Example): void {
     this.#vault.mergeState({
       loading: false,
-      value: [entry],
+      value: { [String(entry.id)]: entry },
       error: null
     });
   }

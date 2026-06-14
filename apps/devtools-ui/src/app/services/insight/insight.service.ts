@@ -103,6 +103,11 @@ export class InsightService {
   #connectPort(): void {
     this.#port = chrome.runtime.connect({ name: 'vault-devtools' });
 
+    this.#port.postMessage({
+      type: 'VAULT_INIT',
+      tabId: chrome.devtools.inspectedWindow.tabId
+    });
+
     this.#port.onMessage.addListener(
       (msg: { type?: string; event?: unknown; config?: unknown }) => {
         if (!msg?.type) return;

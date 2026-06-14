@@ -77,6 +77,23 @@ $sdux-surface-light: #ffffff;
 $sdux-surface-light-mid: #f1f5f9;
 
 // ===========================================
+// Overlay Surface Tokens (semi-transparent)
+// ===========================================
+$sdux-surface-raised-sm: rgb(255 255 255 / 2%);
+$sdux-surface-raised: rgb(255 255 255 / 4%);
+$sdux-surface-raised-md: rgb(255 255 255 / 6%);
+$sdux-surface-raised-lg: rgb(255 255 255 / 8%);
+$sdux-surface-hover-sm: rgb(255 255 255 / 3%);
+$sdux-surface-hover: rgb(255 255 255 / 5%);
+$sdux-surface-hover-md: rgb(255 255 255 / 8%);
+$sdux-surface-hover-lg: rgb(255 255 255 / 10%);
+$sdux-surface-overlay-active: rgba(255, 255, 255, 0.1);
+$sdux-surface-default: #1e1e1e;
+$sdux-border-default-sm: rgb(255 255 255 / 5%);
+$sdux-border-default: rgb(255 255 255 / 10%);
+$sdux-border-default-lg: rgb(255 255 255 / 15%);
+
+// ===========================================
 // Dark Mode Semantic Surfaces
 // ===========================================
 

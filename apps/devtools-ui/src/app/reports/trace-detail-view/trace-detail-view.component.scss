@@ -33,7 +33,7 @@
   flex-direction: column;
   gap: global.$spacing-sm;
   padding: global.$spacing-md;
-  background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+  background: global.$sdux-surface-raised;
   border-radius: global.$border-radius-sm;
   border: 1px solid global.$sdux-surface-outline;
 }
@@ -41,7 +41,7 @@
 .help-text {
   margin: 0;
   font-size: global.$font-size-sm;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   line-height: 1.5;
 }
 
@@ -69,12 +69,12 @@
       font-size: global.$font-size-md;
       font-weight: global.$font-weight-bold;
       font-family: monospace;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
 
     .stat-label {
       font-size: global.$font-size-xs;
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
     }
 
     &.stat-success .stat-value {
@@ -94,7 +94,7 @@
     }
 
     &.stat-orphaned .stat-value {
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
     }
   }
 }
@@ -116,7 +116,7 @@
   gap: global.$spacing-sm;
   margin-bottom: global.$spacing-sm;
   font-size: global.$font-size-xs;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   flex-shrink: 0;
 
   .axis-label {
@@ -127,7 +127,7 @@
   .axis-line {
     flex: 1;
     height: 1px;
-    background: var(--sdux-border-default, rgb(255 255 255 / 15%));
+    background: global.$sdux-border-default-lg;
   }
 
   .axis-arrow {
@@ -153,18 +153,18 @@
   white-space: nowrap;
 
   &:hover {
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 5%));
+    background: global.$sdux-surface-hover;
   }
 
   &.timeline-row-selected {
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 8%));
-    border: 1px solid var(--sdux-primary, #{global.$sdux-primary-base});
+    background: global.$sdux-surface-hover-md;
+    border: 1px solid global.$sdux-primary-base;
   }
 
   .timeline-id {
     font-family: monospace;
     font-size: global.$font-size-xs;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     min-width: 24px;
   }
 
@@ -172,7 +172,7 @@
     flex: 1;
     height: 14px;
     position: relative;
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 3%));
+    background: global.$sdux-surface-hover-sm;
     border-radius: 2px;
 
     .timeline-bar {
@@ -195,7 +195,7 @@
       }
 
       &.status-orphaned {
-        background: var(--sdux-text-secondary);
+        background: global.$sdux-text-secondary;
       }
 
       &.status-aborted {
@@ -209,7 +209,7 @@
     font-size: global.$font-size-xs;
     min-width: 55px;
     text-align: right;
-    color: var(--sdux-text-primary);
+    color: global.$sdux-text-primary;
   }
 
   .timeline-status {
@@ -224,7 +224,7 @@
 .trace-detail-section {
   background: global.$sdux-surface-lightish;
   border-radius: global.$border-radius-sm;
-  border: 1px solid var(--sdux-primary, #{global.$sdux-primary-base});
+  border: 1px solid global.$sdux-primary-base;
   padding: global.$spacing-md;
 
   .detail-header {
@@ -241,7 +241,7 @@
       flex: 1;
       font-size: global.$font-size-sm;
       font-weight: global.$font-weight-bold;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
 
       .detail-status-label {
         font-weight: global.$font-weight-bold;
@@ -251,7 +251,7 @@
         margin-left: global.$spacing-sm;
         font-size: global.$font-size-xs;
         font-weight: global.$font-weight-regular;
-        color: var(--sdux-text-disabled);
+        color: global.$sdux-text-disabled;
       }
     }
 
@@ -310,11 +310,11 @@
     td {
       padding: global.$spacing-xs global.$spacing-sm;
       text-align: left;
-      border-bottom: 1px solid var(--sdux-border-default, rgb(255 255 255 / 5%));
+      border-bottom: 1px solid global.$sdux-border-default-sm;
     }
 
     th {
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
       font-weight: global.$font-weight-medium;
       white-space: nowrap;
     }
@@ -322,7 +322,7 @@
     .col-index {
       width: 30px;
       text-align: right;
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
     }
 
     .col-event {
@@ -355,7 +355,7 @@
     }
 
     .row-selected {
-      background: var(--sdux-surface-active, rgba(255, 255, 255, 0.1));
+      background: global.$sdux-surface-overlay-active;
     }
 
     tbody tr {
@@ -363,7 +363,7 @@
       cursor: pointer;
 
       &:hover {
-        background: var(--sdux-surface-hover, rgba(255, 255, 255, 0.05));
+        background: global.$sdux-surface-hover;
       }
     }
   }
@@ -393,7 +393,7 @@
     margin: 0 0 global.$spacing-sm;
     font-size: global.$font-size-xs;
     font-weight: global.$font-weight-bold;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 }
 
@@ -413,7 +413,7 @@
   cursor: pointer;
 
   &:hover {
-    background: var(--sdux-surface-hover, rgba(255, 255, 255, 0.05));
+    background: global.$sdux-surface-hover;
   }
 
   &.waterfall-row-revote .waterfall-name {
@@ -425,14 +425,14 @@
     font-family: monospace;
     font-size: global.$font-size-xs;
     min-width: 80px;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 
   .waterfall-track {
     flex: 1;
     height: 10px;
     position: relative;
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 3%));
+    background: global.$sdux-surface-hover-sm;
     border-radius: 2px;
 
     .waterfall-bar {
@@ -478,7 +478,7 @@
     font-size: global.$font-size-xs;
     min-width: 50px;
     text-align: right;
-    color: var(--sdux-text-primary);
+    color: global.$sdux-text-primary;
   }
 }
 
@@ -489,7 +489,7 @@
   padding-left: global.$spacing-sm;
   padding-right: global.$spacing-sm;
   font-size: global.$font-size-md;
-  color: var(--sdux-text-disabled);
+  color: global.$sdux-text-disabled;
   font-style: italic;
   line-height: 1.4;
 }
@@ -503,7 +503,7 @@
     margin: global.$spacing-sm 0 0;
     font-size: global.$font-size-sm;
     font-weight: global.$font-weight-bold;
-    color: var(--sdux-text-primary);
+    color: global.$sdux-text-primary;
   }
 
   .trace-meta-container {
@@ -513,11 +513,11 @@
     gap: global.$spacing-sm;
 
     .meta-badge {
-      background: var(--sdux-surface-hover, rgb(255 255 255 / 8%));
+      background: global.$sdux-surface-hover-md;
       border-radius: global.$border-radius-sm;
       padding: 2px global.$spacing-xs;
       font-size: global.$font-size-xs;
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
     }
   }
 }
@@ -529,13 +529,13 @@
   flex-wrap: wrap;
   gap: global.$spacing-md;
   font-size: global.$font-size-xs;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   padding-top: global.$spacing-sm;
-  border-top: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
+  border-top: 1px solid global.$sdux-border-default;
 
   .legend-separator {
     width: 1px;
-    background: var(--sdux-border-default, rgb(255 255 255 / 10%));
+    background: global.$sdux-border-default;
   }
 
   .legend-indicator {
@@ -558,7 +558,7 @@
 }
 
 .status-orphaned {
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
 }
 
 .status-aborted {
@@ -574,7 +574,7 @@
     margin: 0 0 global.$spacing-sm;
     font-size: global.$font-size-xs;
     font-weight: global.$font-weight-bold;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
 
     &.debug-toggle {
       cursor: pointer;
@@ -609,8 +609,8 @@
     font-family: monospace;
     font-size: global.$font-size-xs;
     background: global.$sdux-surface-lightish;
-    color: var(--sdux-text-primary);
-    border: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
+    color: global.$sdux-text-primary;
+    border: 1px solid global.$sdux-border-default;
     border-radius: global.$border-radius-sm;
     padding: global.$spacing-sm;
     resize: vertical;
@@ -623,7 +623,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  border-left: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
+  border-left: 1px solid global.$sdux-border-default;
   min-height: 0;
 
   sdux-event-detail {

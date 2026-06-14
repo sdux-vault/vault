@@ -244,6 +244,11 @@
                   <strong>state</strong> — show only events that carry a state
                   snapshot, useful for isolating state transitions.
                 </li>
+                <li>
+                  <strong>Keyboard:</strong> press <kbd>j</kbd> or
+                  <kbd>←</kbd> for previous event, <kbd>l</kbd> or
+                  <kbd>→</kbd> for next.
+                </li>
               </ul>
             </sdux-help-toggle>
             <div class="compare-grid">
@@ -338,7 +343,7 @@
                       aria-label="Previous event">
                       ← <span class="nav-label">Previous Event</span>
                     </button>
-                    <span class="pair-counter">
+                    <span class="pair-counter" aria-live="polite">
                       Event {{ compareEventIndex() + 1 }} of
                       {{ compareTotalEvents() }}
                     </span>

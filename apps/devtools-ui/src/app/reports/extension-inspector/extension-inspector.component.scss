@@ -27,12 +27,12 @@
       font-size: global.$font-size-md;
       font-weight: global.$font-weight-bold;
       font-family: monospace;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
 
     .stat-label {
       font-size: global.$font-size-xs;
-      color: var(--sdux-text-secondary);
+      color: global.$sdux-text-secondary;
     }
   }
 }
@@ -57,7 +57,7 @@
 .no-state {
   margin: 0;
   font-size: global.$font-size-sm;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   font-style: italic;
 }
 
@@ -105,7 +105,7 @@
 .section-heading {
   font-size: global.$font-size-sm;
   font-weight: global.$font-weight-bold;
-  color: var(--sdux-text-primary);
+  color: global.$sdux-text-primary;
   margin: global.$spacing-md 0 global.$spacing-xs;
 }
 

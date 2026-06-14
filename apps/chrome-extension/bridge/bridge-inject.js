@@ -93,7 +93,7 @@
               type: 'VAULT_PIPELINE_EVENT',
               event
             },
-            '*'
+            window.location.origin
           );
         });
       }
@@ -148,7 +148,7 @@
           license: window?.sdux?.license ?? null
         }
       },
-      '*'
+      window.location.origin
     );
   }
 

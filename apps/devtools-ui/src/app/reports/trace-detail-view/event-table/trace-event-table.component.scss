@@ -41,11 +41,11 @@
   td {
     padding: global.$spacing-xs global.$spacing-sm;
     text-align: left;
-    border-bottom: 1px solid var(--sdux-border-default, rgb(255 255 255 / 5%));
+    border-bottom: 1px solid global.$sdux-border-default-sm;
   }
 
   th {
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     font-weight: global.$font-weight-medium;
     white-space: nowrap;
   }
@@ -53,7 +53,7 @@
   .col-index {
     width: 30px;
     text-align: right;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 
   .col-event {
@@ -87,7 +87,7 @@
   }
 
   .row-selected {
-    background: var(--sdux-surface-active, rgba(255, 255, 255, 0.1));
+    background: global.$sdux-surface-overlay-active;
   }
 
   tbody tr {
@@ -95,7 +95,7 @@
     cursor: pointer;
 
     &:hover {
-      background: var(--sdux-surface-hover, rgba(255, 255, 255, 0.05));
+      background: global.$sdux-surface-hover;
     }
   }
 }

@@ -34,7 +34,7 @@
   flex-direction: column;
   gap: global.$spacing-sm;
   padding: global.$spacing-md;
-  background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+  background: global.$sdux-surface-raised;
   border-radius: global.$border-radius-sm;
   border: 1px solid global.$sdux-surface-outline;
 }
@@ -42,6 +42,6 @@
 .help-text {
   margin: 0;
   font-size: global.$font-size-sm;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   line-height: 1.5;
 }

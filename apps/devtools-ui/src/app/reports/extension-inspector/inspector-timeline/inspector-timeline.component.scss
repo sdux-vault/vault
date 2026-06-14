@@ -12,7 +12,7 @@
     margin: 0;
     font-size: global.$font-size-sm;
     font-weight: global.$font-weight-bold;
-    color: var(--sdux-text-primary);
+    color: global.$sdux-text-primary;
   }
 }
 
@@ -21,7 +21,7 @@
   flex-direction: column;
   gap: global.$spacing-sm;
   padding: global.$spacing-md;
-  background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+  background: global.$sdux-surface-raised;
   border: 1px solid global.$sdux-surface-outline;
   border-radius: global.$border-radius-sm;
   overflow-x: auto;
@@ -62,12 +62,12 @@
 
   .stat-label {
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     font-weight: global.$font-weight-medium;
   }
 
   .stat-divider {
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 
   sdux-timeline-zoom-control {
@@ -112,14 +112,14 @@
   flex-shrink: 0;
   font-size: global.$font-size-xs;
   font-weight: global.$font-weight-medium;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   position: sticky;
   left: 0;
   z-index: 1;
-  background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+  background: global.$sdux-surface-raised;
 }
 
 .timeline-bar {
@@ -176,7 +176,7 @@
 .timeline-duration {
   font-family: global.$sdux-code-font;
   font-size: global.$font-size-xs;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -185,7 +185,7 @@
   margin: global.$spacing-md 0 global.$spacing-sm;
   font-size: global.$font-size-sm;
   font-weight: global.$font-weight-bold;
-  color: var(--sdux-text-primary);
+  color: global.$sdux-text-primary;
 }
 
 .key-track {

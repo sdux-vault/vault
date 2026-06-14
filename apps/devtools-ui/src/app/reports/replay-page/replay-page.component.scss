@@ -10,7 +10,7 @@ $trace-detail-height: 200px;
     margin: 0;
     font-weight: global.$font-weight-bold;
     font-size: global.$font-size-md;
-    color: var(--sdux-text-primary);
+    color: global.$sdux-text-primary;
   }
 
   .vspacer {
@@ -27,7 +27,7 @@ $trace-detail-height: 200px;
       margin: 0;
       font-size: global.$font-size-md;
       font-weight: global.$font-weight-bold;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
 
     .header-controls {
@@ -43,7 +43,7 @@ $trace-detail-height: 200px;
 
   .chevron {
     font-size: global.$font-size-lg;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     transition: transform 0.2s ease;
     transform: rotate(0deg);
 
@@ -85,12 +85,12 @@ $trace-detail-height: 200px;
   .description {
     margin: 0;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.5;
 
     code {
-      color: var(--sdux-text-primary);
-      background: var(--sdux-surface-raised, rgb(255 255 255 / 6%));
+      color: global.$sdux-text-primary;
+      background: global.$sdux-surface-raised-md;
       padding: 0 global.$spacing-xs;
       border-radius: global.$border-radius-sm;
     }
@@ -124,7 +124,7 @@ $trace-detail-height: 200px;
       margin: 0;
       font-size: global.$font-size-md;
       font-weight: global.$font-weight-bold;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
   }
 
@@ -133,7 +133,7 @@ $trace-detail-height: 200px;
     flex-direction: column;
     gap: global.$spacing-xs;
     padding: global.$spacing-md;
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    background: global.$sdux-surface-raised;
     border-radius: global.$border-radius-sm;
     border: 1px solid global.$sdux-surface-outline;
     height: $trace-detail-height;
@@ -146,12 +146,12 @@ $trace-detail-height: 200px;
       font-size: global.$font-size-sm;
 
       .label {
-        color: var(--sdux-text-secondary);
+        color: global.$sdux-text-secondary;
         font-weight: global.$font-weight-medium;
       }
 
       .value {
-        color: var(--sdux-text-primary);
+        color: global.$sdux-text-primary;
       }
 
       .method-badge {
@@ -170,18 +170,18 @@ $trace-detail-height: 200px;
       margin: 0 0 global.$spacing-xs;
       font-size: global.$font-size-md;
       font-weight: global.$font-weight-bold;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
 
     .resolved-value {
       margin: 0;
       padding: global.$spacing-md;
-      background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+      background: global.$sdux-surface-raised;
       border-radius: global.$border-radius-sm;
       border: 1px solid global.$sdux-surface-outline;
       font-family: monospace;
       font-size: global.$font-size-xs;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
       overflow-x: auto;
       height: $trace-detail-height;
       overflow-y: auto;
@@ -199,13 +199,13 @@ $trace-detail-height: 200px;
       font-size: global.$font-size-sm;
 
       &.success {
-        background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+        background: global.$sdux-surface-raised;
         color: global.$sdux-success-base;
         border: 1px solid global.$sdux-success-base;
       }
 
       &.error {
-        background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+        background: global.$sdux-surface-raised;
         color: global.$sdux-accent-base;
         border: 1px solid global.$sdux-accent-base;
       }
@@ -213,9 +213,9 @@ $trace-detail-height: 200px;
 
     @media (max-width: global.$breakpoint-md) {
       .sdux-button {
-        width: 140px !important;
-        min-width: 140px !important;
-        max-width: 140px !important;
+        width: 140px !important; // !important: override Material default button sizing for nav layout
+        min-width: 140px !important; // !important: override Material default button sizing for nav layout
+        max-width: 140px !important; // !important: override Material default button sizing for nav layout
       }
 
       .result-message {
@@ -245,7 +245,7 @@ $trace-detail-height: 200px;
 
     .compare-summary-group {
       grid-column: 1 / -1;
-      background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+      background: global.$sdux-surface-raised;
       border: 1px solid global.$sdux-surface-outline;
       border-radius: global.$border-radius-sm;
 
@@ -254,7 +254,7 @@ $trace-detail-height: 200px;
         padding: global.$spacing-xs global.$spacing-sm;
         font-size: global.$font-size-xs;
         font-weight: global.$font-weight-medium;
-        color: var(--sdux-text-secondary);
+        color: global.$sdux-text-secondary;
         background: transparent;
         border: 1px solid global.$sdux-surface-outline;
         border-radius: global.$border-radius-sm;
@@ -266,7 +266,7 @@ $trace-detail-height: 200px;
           border-color 0.2s ease;
 
         &:hover {
-          background: var(--sdux-surface-hover, rgb(255 255 255 / 10%));
+          background: global.$sdux-surface-hover-lg;
         }
 
         &.active {
@@ -282,7 +282,7 @@ $trace-detail-height: 200px;
         gap: global.$spacing-sm;
         padding: global.$spacing-sm global.$spacing-md;
         font-size: global.$font-size-sm;
-        color: var(--sdux-text-secondary);
+        color: global.$sdux-text-secondary;
 
         .summary-divider {
           color: global.$sdux-surface-outline;
@@ -338,7 +338,7 @@ $trace-detail-height: 200px;
     gap: global.$spacing-sm;
     padding: global.$spacing-md;
     margin-bottom: global.$spacing-md;
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    background: global.$sdux-surface-raised;
     border-radius: global.$border-radius-sm;
     border: 1px solid global.$sdux-surface-outline;
   }
@@ -346,7 +346,7 @@ $trace-detail-height: 200px;
   .help-text {
     margin: 0;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.5;
   }
 
@@ -354,7 +354,7 @@ $trace-detail-height: 200px;
     margin: 0;
     padding-left: global.$spacing-lg;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.6;
 
     li {

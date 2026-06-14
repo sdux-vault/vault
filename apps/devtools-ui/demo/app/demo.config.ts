@@ -6,11 +6,11 @@ import {
 import { provideRouter, withHashLocation } from '@angular/router';
 import {
   withAes256EncryptBehavior,
-  withArrayAppendMergeBehavior,
   withArrayPushMergeBehavior,
   withDelayController,
   withLocalStoragePersistBehavior,
   withLookupBehavior,
+  withObjectDeepMergeBehavior,
   withQueryBehavior,
   withStepwiseController,
   withThrottleController
@@ -91,9 +91,9 @@ export const demoConfig: ApplicationConfig = {
       StarTrekExampleService,
       {
         key: 'startrek-feature-cell-key',
-        initialState: []
+        initialState: {}
       },
-      [withArrayAppendMergeBehavior],
+      [withObjectDeepMergeBehavior],
       [withThrottleController]
     )
   ]

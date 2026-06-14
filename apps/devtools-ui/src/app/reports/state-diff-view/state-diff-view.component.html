@@ -15,6 +15,10 @@
           <li>State mutation graph showing which stages produced mutations</li>
           <li>Filter by cell and select specific traces for analysis</li>
           <li>Export trace data as structured JSON</li>
+          <li>
+            <strong>Keyboard:</strong> press <kbd>j</kbd> or <kbd>←</kbd> for
+            previous pair, <kbd>l</kbd> or <kbd>→</kbd> for next.
+          </li>
         </ul>
       </sdux-help-toggle>
     </sdux-header-section>
@@ -175,7 +179,7 @@
                 aria-label="Previous pair">
                 ← <span class="nav-label">Previous Pair</span>
               </button>
-              <span class="pair-counter">
+              <span class="pair-counter" aria-live="polite">
                 Pair {{ beforeIndex() + 1 }} of {{ totalPairs() }}
               </span>
               <button

@@ -9,7 +9,7 @@
   padding-left: global.$spacing-sm;
   padding-right: global.$spacing-sm;
   font-size: global.$font-size-md;
-  color: var(--sdux-text-disabled);
+  color: global.$sdux-text-disabled;
   font-style: italic;
   line-height: 1.4;
 }
@@ -40,7 +40,7 @@
   cursor: pointer;
 
   &:hover {
-    background: var(--sdux-surface-hover, rgba(255, 255, 255, 0.05));
+    background: global.$sdux-surface-hover;
   }
 
   &.waterfall-row-revote .waterfall-name {
@@ -52,14 +52,14 @@
     font-family: monospace;
     font-size: global.$font-size-xs;
     min-width: 80px;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 
   .waterfall-track {
     flex: 1;
     height: 10px;
     position: relative;
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 3%));
+    background: global.$sdux-surface-hover-sm;
     border-radius: 2px;
 
     .waterfall-bar {
@@ -105,13 +105,13 @@
     font-size: global.$font-size-xs;
     min-width: 50px;
     text-align: right;
-    color: var(--sdux-text-primary);
+    color: global.$sdux-text-primary;
   }
 }
 
 .pipeline-empty {
   padding: global.$spacing-md;
   text-align: center;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   font-size: global.$font-size-sm;
 }

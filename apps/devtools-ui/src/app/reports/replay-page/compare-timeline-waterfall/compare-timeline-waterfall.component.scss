@@ -15,7 +15,7 @@
       margin: 0;
       font-size: global.$font-size-sm;
       font-weight: global.$font-weight-bold;
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-primary;
     }
 
     &:hover .chevron {
@@ -25,7 +25,7 @@
 
   .chevron {
     font-size: global.$font-size-lg;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     transition: transform 0.2s ease;
     transform: rotate(0deg);
 
@@ -39,7 +39,7 @@
     flex-direction: column;
     gap: global.$spacing-xs;
     padding: global.$spacing-md;
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    background: global.$sdux-surface-raised;
     border: 1px solid global.$sdux-surface-outline;
     border-radius: global.$border-radius-sm;
     overflow: hidden;
@@ -66,12 +66,12 @@
   }
 
   .stat-label {
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     font-weight: global.$font-weight-medium;
   }
 
   .stat-divider {
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 
   .summary-delta {
@@ -141,14 +141,14 @@
     flex-shrink: 0;
     font-size: global.$font-size-xs;
     font-weight: global.$font-weight-medium;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     position: sticky;
     left: 0;
     z-index: 1;
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    background: global.$sdux-surface-raised;
   }
 
   .waterfall-track {
@@ -162,7 +162,7 @@
         transparent 1px,
         transparent var(--tick-pct, 20%)
       ),
-      var(--sdux-surface-raised, rgb(255 255 255 / 2%));
+      global.$sdux-surface-raised-sm;
     border-radius: global.$border-radius-xs;
     min-width: 0;
     padding-inline: 6px;
@@ -200,7 +200,7 @@
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-xs;
     line-height: 1;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     padding-top: global.$spacing-xs;
     padding-bottom: global.$spacing-xs;
     margin-left: calc(80px + global.$spacing-md);
@@ -211,7 +211,7 @@
   .axis-label {
     position: absolute;
     top: global.$spacing-xs;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     transform: translateX(-50%);
     white-space: nowrap;
 
@@ -250,7 +250,7 @@
     gap: global.$spacing-sm;
     padding: global.$spacing-md;
     margin-bottom: global.$spacing-md;
-    background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+    background: global.$sdux-surface-raised;
     border-radius: global.$border-radius-sm;
     border: 1px solid global.$sdux-surface-outline;
   }
@@ -258,7 +258,7 @@
   .help-text {
     margin: 0;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     line-height: 1.5;
   }
 

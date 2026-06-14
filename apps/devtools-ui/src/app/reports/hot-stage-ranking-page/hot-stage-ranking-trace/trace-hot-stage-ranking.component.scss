@@ -19,7 +19,7 @@
   padding-left: global.$spacing-sm;
   padding-right: global.$spacing-sm;
   font-size: global.$font-size-md;
-  color: var(--sdux-text-disabled);
+  color: global.$sdux-text-disabled;
   font-style: italic;
   line-height: 1.4;
 }
@@ -50,7 +50,7 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    background: var(--sdux-surface-default, #1e1e1e);
+    background: global.$sdux-surface-default;
   }
 
   tbody {
@@ -71,11 +71,11 @@
   td {
     padding: global.$spacing-xs global.$spacing-sm;
     text-align: left;
-    border-bottom: 1px solid var(--sdux-border-default, rgb(255 255 255 / 5%));
+    border-bottom: 1px solid global.$sdux-border-default-sm;
   }
 
   th {
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
     font-weight: global.$font-weight-medium;
     white-space: nowrap;
   }
@@ -83,7 +83,7 @@
   .col-rank {
     width: 40px;
     text-align: right;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 
   .col-stage {
@@ -98,7 +98,7 @@
   .col-count {
     width: 50px;
     text-align: right;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 
   .col-bar {
@@ -109,23 +109,23 @@
   .col-pct {
     width: 45px;
     text-align: right;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
   }
 
   .col-behavior {
     width: 300px;
-    color: var(--sdux-text-secondary);
+    color: global.$sdux-text-secondary;
 
     .behavior-trace {
       display: block;
       font-size: global.$font-size-xs;
-      color: var(--sdux-text-disabled);
+      color: global.$sdux-text-disabled;
     }
   }
 
   .bar-track {
     height: 10px;
-    background: var(--sdux-surface-hover, rgb(255 255 255 / 3%));
+    background: global.$sdux-surface-hover-sm;
     border-radius: 2px;
     position: relative;
 
@@ -156,7 +156,7 @@
   flex-wrap: wrap;
   gap: global.$spacing-md;
   padding-top: global.$spacing-sm;
-  border-top: 1px solid var(--sdux-border-default, rgb(255 255 255 / 10%));
+  border-top: 1px solid global.$sdux-border-default;
   margin-top: global.$spacing-sm;
   font-size: global.$font-size-xs;
   color: white;
@@ -165,6 +165,6 @@
 .ranking-empty {
   padding: global.$spacing-md;
   text-align: center;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   font-size: global.$font-size-sm;
 }

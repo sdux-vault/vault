@@ -2,12 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  DestroyRef,
   effect,
   inject,
   signal,
   viewChildren
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,11 +15,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { DevtoolsLoggingService } from '../../services/devtools-logging.service';
-import { HeaderSectionComponent } from '../../shared/components/header-section/header-section.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
+import { HeaderSectionComponent } from '../../shared/components/header-section/header-section.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/components/reset-button/reset-button.component';
 import { EXTENSION_VERSION } from '../../splash-page/devtools-splash-page.component';
@@ -103,14 +103,8 @@ export class EventsComponent {
       }
     });
 
-    const destroy$ = new Subject<void>();
-    inject(DestroyRef).onDestroy(() => {
-      destroy$.next();
-      destroy$.complete();
-    });
-
     this.eventSearchTerm$
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(destroy$))
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed())
       .subscribe((term) => this.#appliedSearchTerm.set(term));
   }
 

@@ -9,7 +9,7 @@
   padding-left: global.$spacing-sm;
   padding-right: global.$spacing-sm;
   font-size: global.$font-size-md;
-  color: var(--sdux-text-disabled);
+  color: global.$sdux-text-disabled;
   font-style: italic;
   line-height: 1.4;
 }
@@ -22,7 +22,7 @@
 .pipeline-empty {
   padding: global.$spacing-md;
   text-align: center;
-  color: var(--sdux-text-secondary);
+  color: global.$sdux-text-secondary;
   font-size: global.$font-size-sm;
 }
 
