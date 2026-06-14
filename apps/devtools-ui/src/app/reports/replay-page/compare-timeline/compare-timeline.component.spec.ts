@@ -210,7 +210,7 @@ describe('CompareTimelineComponent', () => {
 
   it('should toggle visibility when header is clicked', () => {
     expect(el.querySelector('.timeline-content')).toBeTruthy();
-    const header = el.querySelector('.collapsible-header') as HTMLElement;
+    const header = el.querySelector('.header-section') as HTMLElement;
     header.click();
     fixture.detectChanges();
     expect(el.querySelector('.timeline-content')).toBeNull();

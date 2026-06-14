@@ -284,8 +284,8 @@
         min-height: 0;
       }
 
-      // ::ng-deep required to style .collapsible-header inside sdux-header-section's encapsulated template
-      ::ng-deep .collapsible-header {
+      // ::ng-deep required to style .header-section inside sdux-header-section's encapsulated template
+      ::ng-deep .header-section {
         margin-bottom: global.$spacing-sm;
         padding-bottom: global.$spacing-xs;
         border-bottom: 2px solid global.$sdux-primary-base;

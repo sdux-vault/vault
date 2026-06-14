@@ -4,11 +4,16 @@
   display: block;
 }
 
-.collapsible-header {
+.header-section {
   display: flex;
   align-items: center;
   cursor: pointer;
   margin-bottom: global.$spacing-sm;
+  border-bottom: 2px solid transparent;
+
+  &.collapsed {
+    border-bottom-color: global.$sdux-primary-base;
+  }
 
   .header-content {
     flex: 1;
@@ -28,11 +33,15 @@
       }
 
       h2 {
-        font-size: global.$font-size-md;
+        font-size: global.$font-size-xl !important;
       }
 
       h3 {
-        font-size: global.$font-size-md;
+        font-size: global.$font-size-lg !important;
+      }
+
+      h4 {
+        font-size: global.$font-size-md !important;
       }
     }
   }

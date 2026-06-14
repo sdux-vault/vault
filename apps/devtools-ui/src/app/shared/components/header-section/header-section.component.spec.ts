@@ -37,13 +37,13 @@ describe('HeaderSectionComponent', () => {
   });
 
   it('should default to expanded', () => {
-    const header = el.querySelector('.collapsible-header')!;
+    const header = el.querySelector('.header-section')!;
     expect(header.getAttribute('aria-expanded')).toBe('true');
     expect(el.querySelector('.body-content')).toBeTruthy();
   });
 
   it('should collapse on click', () => {
-    const header = el.querySelector('.collapsible-header') as HTMLElement;
+    const header = el.querySelector('.header-section') as HTMLElement;
     header.click();
     fixture.detectChanges();
     expect(header.getAttribute('aria-expanded')).toBe('false');
@@ -51,7 +51,7 @@ describe('HeaderSectionComponent', () => {
   });
 
   it('should expand again on second click', () => {
-    const header = el.querySelector('.collapsible-header') as HTMLElement;
+    const header = el.querySelector('.header-section') as HTMLElement;
     header.click();
     fixture.detectChanges();
     header.click();
@@ -60,7 +60,7 @@ describe('HeaderSectionComponent', () => {
   });
 
   it('should set correct aria-label', () => {
-    const header = el.querySelector('.collapsible-header')!;
+    const header = el.querySelector('.header-section')!;
     expect(header.getAttribute('aria-label')).toBe('Toggle test section');
   });
 
@@ -70,7 +70,7 @@ describe('HeaderSectionComponent', () => {
   });
 
   it('should toggle on Enter key', () => {
-    const header = el.querySelector('.collapsible-header') as HTMLElement;
+    const header = el.querySelector('.header-section') as HTMLElement;
     header.dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })
     );

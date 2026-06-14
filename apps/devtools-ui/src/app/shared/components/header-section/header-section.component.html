@@ -1,5 +1,6 @@
 <div
-  class="collapsible-header"
+  class="header-section"
+  [class.collapsed]="!expanded()"
   role="button"
   tabindex="0"
   [attr.aria-expanded]="expanded()"

@@ -6,6 +6,13 @@ $trace-detail-height: 200px;
 .report-page {
   /* ─── SECTION HEADER WITH CHEVRON ─── */
 
+  .header-content {
+    margin: 0;
+    font-weight: global.$font-weight-bold;
+    font-size: global.$font-size-md;
+    color: var(--sdux-text-primary);
+  }
+
   .vspacer {
     margin-top: global.$spacing-md;
   }
@@ -184,6 +191,7 @@ $trace-detail-height: 200px;
   .replay-action {
     display: flex;
     justify-content: space-between;
+    margin-top: global.$spacing-sm;
 
     .result-message {
       padding: global.$spacing-sm global.$spacing-md;

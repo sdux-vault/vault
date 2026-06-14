@@ -424,9 +424,84 @@ describe('Component: ReplayPage', () => {
     expect(upsell).toBeTruthy();
   });
 
-  it('should default showTraceSummary and showResolvedValue to true', () => {
-    expect(component.showTraceSummary()).toBeTrue();
-    expect(component.showResolvedValue()).toBeTrue();
+  describe('template state guards', () => {
+    it('state 2: isEmpty should be true when no cell keys exist', () => {
+      mockTracesByCellKey.set(new Map());
+      expect(component.isEmpty()).toBeTrue();
+    });
+
+    it('state 2: isEmpty should be false when cell keys exist', () => {
+      expect(component.isEmpty()).toBeFalse();
+    });
+
+    it('state 3: hasCellKey should be false when no cell selected', () => {
+      component.onCellKeyChange('');
+      expect(component.hasCellKey()).toBeFalse();
+    });
+
+    it('state 3: hasCellKey should be true when a cell is selected', () => {
+      component.onCellKeyChange('employees');
+      expect(component.hasCellKey()).toBeTrue();
+    });
+
+    it('state 4: isAwaitingTrace should be true when cell selected but no trace', () => {
+      component.onCellKeyChange('employees');
+      expect(component.isAwaitingTrace()).toBeTrue();
+    });
+
+    it('state 4: isAwaitingTrace should be false when trace is selected', () => {
+      component.onCellKeyChange('employees');
+      component.onTraceIdChange('abc-123-def-456');
+      expect(component.isAwaitingTrace()).toBeFalse();
+    });
+
+    it('state 5: hasTrace should be false by default', () => {
+      expect(component.hasTrace()).toBeFalse();
+    });
+
+    it('state 5: hasTrace should be true when a trace is selected', () => {
+      component.onCellKeyChange('employees');
+      component.onTraceIdChange('abc-123-def-456');
+      expect(component.hasTrace()).toBeTrue();
+    });
+
+    it('state 6: isComparable should be false with fewer than 2 traces', () => {
+      component.onCellKeyChange('');
+      expect(component.isComparable()).toBeFalse();
+    });
+
+    it('state 6: isComparable should be true with 2 or more traces', () => {
+      component.onCellKeyChange('employees');
+      expect(component.isComparable()).toBeTrue();
+    });
+
+    it('state 7: isAwaitingComparison should be false by default', () => {
+      expect(component.isAwaitingComparison()).toBeFalse();
+    });
+
+    it('state 7: isAwaitingComparison should be true when trace selected but fewer than 2 traces', () => {
+      mockTracesByCellKey.set(
+        new Map([
+          [
+            'solo',
+            [
+              {
+                traceId: 'only-trace',
+                events: [{ id: '1', traceId: 'only-trace' }],
+                metrics: { status: 'success', duration: 10 }
+              }
+            ]
+          ]
+        ]) as any
+      );
+      component.onCellKeyChange('solo');
+      component.onTraceIdChange('only-trace');
+      expect(component.isAwaitingComparison()).toBeTrue();
+    });
+  });
+
+  it('should default showReplay to true', () => {
+    expect(component.showReplay()).toBeTrue();
   });
 
   it('should collapse trace summary and resolved value on successful replay', async () => {
@@ -435,8 +510,7 @@ describe('Component: ReplayPage', () => {
 
     await component.replay();
 
-    expect(component.showTraceSummary()).toBeFalse();
-    expect(component.showResolvedValue()).toBeFalse();
+    expect(component.showReplay()).toBeFalse();
     expect(component.showCompareTraces()).toBeTrue();
   });
 
@@ -453,8 +527,7 @@ describe('Component: ReplayPage', () => {
 
     await component.replay();
 
-    expect(component.showTraceSummary()).toBeTrue();
-    expect(component.showResolvedValue()).toBeTrue();
+    expect(component.showReplay()).toBeTrue();
   });
 
   it('should generate trace labels as t1, t2, etc.', () => {
@@ -531,18 +604,15 @@ describe('Component: ReplayPage', () => {
     // Simulate successful replay which collapses sections
     await component.replay();
 
-    expect(component.showTraceSummary()).toBeFalse();
-    expect(component.showResolvedValue()).toBeFalse();
+    expect(component.showReplay()).toBeFalse();
     expect(component.resultMessage()).toBeTruthy();
 
     // Change trace — should reopen and clear message
     component.onTraceIdChange('merge-trace-001');
 
-    expect(component.showTraceSummary()).toBeTrue();
-    expect(component.showResolvedValue()).toBeTrue();
+    expect(component.showReplay()).toBeTrue();
     expect(component.resultMessage()).toBe('');
     expect(component.resultIsError()).toBeFalse();
-    expect(component.showCompareTraces()).toBeFalse();
   });
 
   it('should set compareBeforeId to selectedTraceId on successful replay', async () => {
@@ -558,11 +628,11 @@ describe('Component: ReplayPage', () => {
     expect(component.showCompareTraces()).toBeTrue();
   });
 
-  it('should collapse compare traces on trace change', () => {
+  it('should keep showCompareTraces open on trace change', () => {
     component.onCellKeyChange('employees');
     component.onTraceIdChange('abc-123-def-456');
 
-    expect(component.showCompareTraces()).toBeFalse();
+    expect(component.showCompareTraces()).toBeTrue();
   });
 
   it('should toggle showCompareTraces', () => {
@@ -2027,6 +2097,41 @@ describe('Component: ReplayPage', () => {
     it('should return empty markers when no trace is selected', () => {
       component.compareBeforeId.set('');
       expect(component.compare.timelineBeforeMarkers()).toEqual([]);
+    });
+  });
+
+  describe('onFileLoaded', () => {
+    it('should auto-select the first cell key via effect', () => {
+      component.onCellKeyChange('');
+      component.onFileLoaded({ fileName: 'dump.json', eventCount: 5 });
+      fixture.detectChanges();
+      expect(component.selectedCellKey()).toBe('employees');
+    });
+
+    it('should auto-select the first trace via effect', () => {
+      component.onCellKeyChange('');
+      component.onFileLoaded({ fileName: 'dump.json', eventCount: 5 });
+      fixture.detectChanges();
+      expect(component.selectedTraceId()).toBe('abc-123-def-456');
+    });
+
+    it('should open the replay section via effect', () => {
+      component.showReplay.set(false);
+      component.onCellKeyChange('');
+      component.onFileLoaded({ fileName: 'dump.json', eventCount: 5 });
+      fixture.detectChanges();
+      expect(component.showReplay()).toBeTrue();
+    });
+
+    it('should clear resultMessage and resultIsError', async () => {
+      component.onCellKeyChange('employees');
+      component.onTraceIdChange('abc-123-def-456');
+      await component.replay();
+      expect(component.resultMessage()).toBeTruthy();
+
+      component.onFileLoaded({ fileName: 'dump.json', eventCount: 5 });
+      expect(component.resultMessage()).toBe('');
+      expect(component.resultIsError()).toBeFalse();
     });
   });
 });

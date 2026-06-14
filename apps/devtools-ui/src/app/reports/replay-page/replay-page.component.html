@@ -1,3 +1,4 @@
+<!-- if state 1 -->
 @if (isLicensed()) {
   <div class="report-page">
     <sdux-header-section [showChevron]="false" ariaLabel="Toggle description">
@@ -34,7 +35,8 @@
         }
       </mat-select>
 
-      @if (selectedCellKey()) {
+      <!-- if state 3 -->
+      @if (hasCellKey()) {
         <mat-select
           class="cell-filter trace-filter"
           [value]="selectedTraceId()"
@@ -63,7 +65,8 @@
       <div class="meta">
         <sdux-dump-file-picker
           [showDropzone]="false"
-          [showButton]="true"></sdux-dump-file-picker>
+          [showButton]="true"
+          (fileLoaded)="onFileLoaded($event)"></sdux-dump-file-picker>
 
         <sdux-export-button
           [data]="cellTraces()"
@@ -76,28 +79,34 @@
       </div>
     </section>
 
-    @if (selectedCellKey() && !selectedTrace()) {
+    <!-- if state 4 -->
+    @if (isAwaitingTrace()) {
       <sdux-empty-state
         [selfAware]="false"
         message="Select a trace from the dropdown to begin replay" />
-    } @else if (selectedTrace()) {
-      <div class="trace-details-row">
-        @if (resolvedValue() !== undefined) {
-          <section class="resolved-value-section">
-            <sdux-header-section
-              ariaLabel="Toggle initial value"
-              [(expanded)]="showResolvedValue">
-              <h3 header>Initial Value</h3>
-              <pre class="resolved-value">{{ resolvedValue() | json }}</pre>
-            </sdux-header-section>
-          </section>
-        }
+    } @else if (hasTrace()) {
+      <!-- if state 5 -->
+      <sdux-header-section
+        ariaLabel="Toggle replay details"
+        [(expanded)]="showReplay">
+        <sdux-help-toggle header ariaLabel="Toggle replay help">
+          <h3 helpHeading>Replay</h3>
+          <p class="help-text">
+            Review the initial resolved value and trace summary for the selected
+            trace, then dispatch it through the live pipeline. After replaying,
+            check the result message to confirm whether the replay succeeded or
+            failed.
+          </p>
+        </sdux-help-toggle>
 
-        <section class="trace-summary-section">
-          <sdux-header-section
-            ariaLabel="Toggle trace summary"
-            [(expanded)]="showTraceSummary">
-            <h3 header>Trace Summary</h3>
+        <div class="trace-details-row">
+          <section class="resolved-value-section">
+            <h4 class="header-content">Initial Value</h4>
+            <pre class="resolved-value">{{ resolvedValue() | json }}</pre>
+          </section>
+
+          <section class="trace-summary-section">
+            <h4 class="header-content">Trace Summary</h4>
             <div class="trace-summary">
               <div class="summary-row">
                 <span class="label">Trace ID</span>
@@ -136,96 +145,107 @@
                 <span class="value">{{ selectedTrace()!.events.length }}</span>
               </div>
             </div>
-          </sdux-header-section>
-        </section>
-      </div>
+          </section>
+        </div>
 
-      <section class="replay-action">
-        <button
-          type="button"
-          class="sdux-button"
-          matTooltip="Dispatch the resolved value through the live cell"
-          (click)="replay()">
-          Replay Trace
-          <mat-icon>replay</mat-icon>
-        </button>
-        @if (resultMessage()) {
-          <div class="sdux-spacer-10"></div>
-          <div
-            class="result-message"
-            [class.error]="resultIsError()"
-            [class.success]="!resultIsError()">
-            {{ resultMessage() }}
-          </div>
-        }
-      </section>
-    } @else if (cellKeys().length) {
-      <sdux-empty-state></sdux-empty-state>
+        <section class="replay-action">
+          <button
+            type="button"
+            class="sdux-button"
+            matTooltip="Dispatch the resolved value through the live cell"
+            (click)="replay()">
+            Replay Trace
+            <mat-icon>replay</mat-icon>
+          </button>
+          @if (resultMessage()) {
+            <div class="sdux-spacer-10"></div>
+            <div
+              class="result-message"
+              [class.error]="resultIsError()"
+              [class.success]="!resultIsError()">
+              {{ resultMessage() }}
+            </div>
+          }
+        </section>
+      </sdux-header-section>
     }
 
-    @if (cellTraces().length >= 2) {
+    <!-- if state 6 -->
+    @if (isComparable()) {
       <section class="compare-section">
-        @switch (timelineViewMode()) {
-          @case ('category-spans') {
-            <sdux-compare-timeline-spans />
-          }
-          @case ('elapsed-delta') {
-            <sdux-compare-timeline-delta />
-          }
-          @case ('waterfall') {
-            <sdux-compare-timeline-waterfall />
-          }
-          @default {
-            <sdux-compare-timeline />
-          }
-        }
-
         <sdux-header-section
-          #compareSection
-          class="vspacer"
-          ariaLabel="Toggle compare traces"
-          [(expanded)]="showCompareTraces">
-          <sdux-help-toggle header ariaLabel="Toggle compare traces help">
-            <h3 helpHeading>Compare Traces</h3>
+          ariaLabel="Toggle analyze section"
+          [(expanded)]="showCompare">
+          <sdux-help-toggle header ariaLabel="Toggle analyze help">
+            <h3 helpHeading>Analyze</h3>
             <p class="help-text">
-              Compare Traces shows a side-by-side diff of two trace executions
-              through the same pipeline. Use it to verify that a code change
-              produced the expected result or to pinpoint where behavior
+              Compare two trace executions side by side. The timeline visualizes
+              event timing across both traces, and the traces section below
+              shows a detailed event-by-event diff to pinpoint where behavior
               diverged.
             </p>
-            <p class="help-text"><strong>Summary bar</strong></p>
-            <ul class="help-list">
-              <li>
-                <strong>X of Y events differ</strong> — how many events changed
-                between the before and after traces out of the total.
-              </li>
-              <li>
-                <strong>Before / After duration</strong> — total pipeline
-                execution time for each trace in milliseconds.
-              </li>
-              <li>
-                <strong>Duration delta</strong> — the speed difference (e.g.
-                "−300ms faster" or "+50ms slower"), highlighted green for faster
-                and red for slower.
-              </li>
-            </ul>
-            <p class="help-text"><strong>Filters</strong></p>
-            <ul class="help-list">
-              <li>
-                <strong>Diffs Only</strong> — hide matching events and show only
-                the ones that changed between traces.
-              </li>
-              <li>
-                <strong>Category buttons</strong> (lifecycle, controller, etc.)
-                — show only events belonging to that category.
-              </li>
-              <li>
-                <strong>state</strong> — show only events that carry a state
-                snapshot, useful for isolating state transitions.
-              </li>
-            </ul>
           </sdux-help-toggle>
-          @if (compareTotalEvents() > 0) {
+
+          @switch (timelineViewMode()) {
+            @case ('category-spans') {
+              <sdux-compare-timeline-spans />
+            }
+            @case ('elapsed-delta') {
+              <sdux-compare-timeline-delta />
+            }
+            @case ('waterfall') {
+              <sdux-compare-timeline-waterfall />
+            }
+            @default {
+              <sdux-compare-timeline />
+            }
+          }
+
+          <sdux-header-section
+            #compareSection
+            class="vspacer"
+            ariaLabel="Toggle traces"
+            [(expanded)]="showCompareTraces">
+            <sdux-help-toggle header ariaLabel="Toggle traces help">
+              <h4 helpHeading>Traces</h4>
+              <p class="help-text">
+                Compare Traces shows a side-by-side diff of two trace executions
+                through the same pipeline. Use it to verify that a code change
+                produced the expected result or to pinpoint where behavior
+                diverged.
+              </p>
+              <p class="help-text"><strong>Summary bar</strong></p>
+              <ul class="help-list">
+                <li>
+                  <strong>X of Y events differ</strong> — how many events
+                  changed between the before and after traces out of the total.
+                </li>
+                <li>
+                  <strong>Before / After duration</strong> — total pipeline
+                  execution time for each trace in milliseconds.
+                </li>
+                <li>
+                  <strong>Duration delta</strong> — the speed difference (e.g.
+                  "−300ms faster" or "+50ms slower"), highlighted green for
+                  faster and red for slower.
+                </li>
+              </ul>
+              <p class="help-text"><strong>Filters</strong></p>
+              <ul class="help-list">
+                <li>
+                  <strong>Diffs Only</strong> — hide matching events and show
+                  only the ones that changed between traces.
+                </li>
+                <li>
+                  <strong>Category buttons</strong> (lifecycle, controller,
+                  etc.) — show only events belonging to that category.
+                </li>
+                <li>
+                  <strong>state</strong> — show only events that carry a state
+                  snapshot, useful for isolating state transitions.
+                </li>
+              </ul>
+            </sdux-help-toggle>
             <div class="compare-grid">
               <div class="compare-summary-group">
                 <div class="compare-summary">
@@ -531,17 +551,19 @@
                 </div>
               </div>
             </div>
-          }
+          </sdux-header-section>
         </sdux-header-section>
       </section>
-    } @else if (selectedTrace()) {
+      <!-- if state 7 -->
+    } @else if (isAwaitingComparison()) {
       <sdux-empty-state
         [selfAware]="false"
         icon="compare_arrows"
         message="Replay a second trace to unlock side-by-side comparison" />
     }
 
-    @if (!cellKeys().length) {
+    <!-- if state 2 -->
+    @if (isEmpty()) {
       <sdux-empty-state></sdux-empty-state>
     }
   </div>

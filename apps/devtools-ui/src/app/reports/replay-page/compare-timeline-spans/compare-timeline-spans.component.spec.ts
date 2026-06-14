@@ -84,7 +84,7 @@ describe('CompareTimelineSpansComponent', () => {
   });
 
   it('should display the section header', () => {
-    const header = el.querySelector('.collapsible-header h3');
+    const header = el.querySelector('.header-section h4');
     expect(header!.textContent).toContain('Category Duration Spans');
   });
 
@@ -151,7 +151,7 @@ describe('CompareTimelineSpansComponent', () => {
 
   it('should toggle visibility when header is clicked', () => {
     expect(el.querySelector('.timeline-content')).toBeTruthy();
-    const header = el.querySelector('.collapsible-header') as HTMLElement;
+    const header = el.querySelector('.header-section') as HTMLElement;
     header.click();
     fixture.detectChanges();
     expect(el.querySelector('.timeline-content')).toBeNull();

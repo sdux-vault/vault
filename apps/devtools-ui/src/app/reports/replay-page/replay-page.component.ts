@@ -16,15 +16,18 @@ import { RouterLink } from '@angular/router';
 import { DevtoolsAggregateService } from '../../services/devtools-aggregate.service';
 import { InsightService } from '../../services/insight/insight.service';
 import { DevtoolsRegistryService } from '../../services/registry/devtools-registry.service';
-import { HeaderSectionComponent } from '../../shared/components/header-section/header-section.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { ExportButtonComponent } from '../../shared/components/export-button/export-button.component';
+import { HeaderSectionComponent } from '../../shared/components/header-section/header-section.component';
 import { HelpToggleComponent } from '../../shared/components/help-toggle/help-toggle.component';
 import { ResetButtonComponent } from '../../shared/components/reset-button/reset-button.component';
 import { UpsellNoticeComponent } from '../../shared/components/upsell-notice/upsell-notice.component';
 import { LeftRightNavigationDirective } from '../../shared/directives/left-right-navigation/left-right-navigation.directive';
 import type { TraceExecutionShape } from '../../shared/shapes/trace';
-import { DumpFilePickerComponent } from '../load-dump-page/dump-file-picker/dump-file-picker.component';
+import {
+  DumpFileLoadedEvent,
+  DumpFilePickerComponent
+} from '../load-dump-page/dump-file-picker/dump-file-picker.component';
 import { StateTableViewComponent } from '../state-diff-view/state-table-view/state-table-view.component';
 import { CompareTimelineDeltaComponent } from './compare-timeline-delta/compare-timeline-delta.component';
 import { CompareTimelineSpansComponent } from './compare-timeline-spans/compare-timeline-spans.component';
@@ -122,11 +125,11 @@ export class ReplayPageComponent {
   /** Whether the current license enables pro/enterprise features. */
   readonly isLicensed = this.#registry.isLicensed;
 
-  /** Whether the trace summary section is expanded. */
-  readonly showTraceSummary = signal(true);
+  /** Whether the replay details section is expanded. */
+  readonly showReplay = signal(true);
 
-  /** Whether the resolved value section is expanded. */
-  readonly showResolvedValue = signal(true);
+  /** Whether the compare section is expanded. */
+  readonly showCompare = signal(true);
 
   /** Whether the compare traces section is expanded. */
   readonly showCompareTraces = signal(true);
@@ -149,11 +152,23 @@ export class ReplayPageComponent {
     return this.#aggregate.tracesByCellKey().get(key) ?? [];
   });
 
+  /** Whether the next auto-select should also pick the first trace. */
+  #autoSelectTrace = false;
+
   /** Auto-select the first cell key when traces become available. */
   readonly #autoSelectCellKey = effect(() => {
     const keys = this.cellKeys();
     if (keys.length > 0 && !this.selectedCellKey()) {
       this.selectedCellKey.set(keys[0]);
+    }
+  });
+
+  /** Auto-select the first trace after a file load populates cellTraces. */
+  readonly #autoSelectFirstTrace = effect(() => {
+    const traces = this.cellTraces();
+    if (this.#autoSelectTrace && traces.length > 0) {
+      this.#autoSelectTrace = false;
+      this.onTraceIdChange(traces[0].traceId);
     }
   });
 
@@ -210,6 +225,30 @@ export class ReplayPageComponent {
     if (!trace) return undefined;
     return extractResolvedValue(trace);
   });
+
+  // ─── Template state guards (2–7) ───
+
+  /** State 2: no pipeline data available yet. */
+  readonly isEmpty = computed(() => !this.cellKeys().length);
+
+  /** State 3: a cell key is selected, enabling the trace dropdown. */
+  readonly hasCellKey = computed(() => !!this.selectedCellKey());
+
+  /** State 4: a cell is selected but no trace has been picked yet. */
+  readonly isAwaitingTrace = computed(
+    () => !!this.selectedCellKey() && !this.selectedTrace()
+  );
+
+  /** State 5: a trace is selected and replay details are available. */
+  readonly hasTrace = computed(() => !!this.selectedTrace());
+
+  /** State 6: two or more traces exist, enabling side-by-side comparison. */
+  readonly isComparable = computed(() => this.cellTraces().length >= 2);
+
+  /** State 7: a trace is selected but fewer than two traces exist for comparison. */
+  readonly isAwaitingComparison = computed(
+    () => !!this.selectedTrace() && this.cellTraces().length < 2
+  );
 
   /** Result message after replay attempt. */
   readonly resultMessage = signal<string>('');
@@ -370,6 +409,21 @@ export class ReplayPageComponent {
   }
 
   /**
+   * Handles a successful dump file load by resetting state and
+   * auto-selecting the first cell key and trace.
+   *
+   * @param _event - The load result containing file name and event count.
+   */
+  onFileLoaded(_event: DumpFileLoadedEvent): void {
+    this.selectedCellKey.set('');
+    this.selectedTraceId.set('');
+    this.resultMessage.set('');
+    this.resultIsError.set(false);
+    this.compare.resetFilters();
+    this.#autoSelectTrace = true;
+  }
+
+  /**
    * Handles trace ID selection changes.
    *
    * @param traceId - The selected trace ID.
@@ -378,9 +432,7 @@ export class ReplayPageComponent {
     this.selectedTraceId.set(traceId);
     this.resultMessage.set('');
     this.resultIsError.set(false);
-    this.showTraceSummary.set(true);
-    this.showResolvedValue.set(true);
-    this.showCompareTraces.set(false);
+    this.showReplay.set(true);
   }
 
   /**
@@ -405,8 +457,7 @@ export class ReplayPageComponent {
     this.resultMessage.set(result.message);
 
     if (result.success) {
-      this.showTraceSummary.set(false);
-      this.showResolvedValue.set(false);
+      this.showReplay.set(false);
       this.showCompareTraces.set(true);
       this.compareBeforeId.set(this.selectedTraceId());
       this.compareEventIndex.set(0);

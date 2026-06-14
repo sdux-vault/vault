@@ -97,22 +97,6 @@ export class CompareTimelineComponent {
   /** Active timeline view mode (shared with service). */
   readonly viewMode = this.#compare.timelineViewMode;
 
-  /** Display label for the current view mode. */
-  readonly viewModeLabel = computed(() => {
-    switch (this.viewMode()) {
-      case 'all-events':
-        return 'All Events';
-      case 'diff-only':
-        return 'Diff-Only Events';
-      case 'state-only':
-        return 'State Events Only';
-      case 'category-filtered':
-        return 'Category Filtered';
-      default:
-        return 'Category Overview';
-    }
-  });
-
   /** Zoom multiplier for track width. */
   readonly zoom = this.#compare.timelineZoom;
 

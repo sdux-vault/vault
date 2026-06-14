@@ -104,7 +104,14 @@ describe('Component: AiAssistPage', () => {
 
   describe('downloadAiAssist', () => {
     it('should not throw when called', () => {
+      const anchor = document.createElement('a');
+      spyOn(anchor, 'click');
+      spyOn(document, 'createElement').and.returnValue(anchor);
+      spyOn(URL, 'createObjectURL').and.returnValue('blob:mock');
+      spyOn(URL, 'revokeObjectURL');
+
       expect(() => component.downloadAiAssist()).not.toThrow();
+      expect(anchor.click).toHaveBeenCalled();
     });
   });
 
