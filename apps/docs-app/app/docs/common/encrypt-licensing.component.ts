@@ -72,7 +72,7 @@ import {
           requirements demand them.
         </p>
 
-        <a href="/sdux-vault">Learn how to license Vault</a>
+        <a href="/sdux/vault">Learn how to license Vault</a>
       </div>
     </section>
   `,

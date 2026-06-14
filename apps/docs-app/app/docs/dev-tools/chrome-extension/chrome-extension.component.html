@@ -1,8 +1,8 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
 
-<div class="docs-container" id="top">
+<div class="docs-container">
   <div class="header">
-    <h3><sdux-brand-name [tm]="true" /> Chrome Extension</h3>
+    <h3><sdux-brand-name [tm]="true" /> Chrome DevTools Extension</h3>
   </div>
 
   <!-- ====================================================== -->
@@ -10,123 +10,676 @@
   <!-- ====================================================== -->
   <header class="docs-header">
     <p class="lead">
-      <sdux-brand-name /> includes a chrome-extension that captures
-      deterministic execution traces of the Vault pipeline for individual
-      <sdux-feature-cell [tm]="true" /> instances. The debugger records pipeline
-      activity, controller decisions, lifecycle transitions, and error events
+      <sdux-brand-name [tm]="true" /> includes a Chrome DevTools Extension that
+      provides a dedicated DevTools panel for inspecting
+      <sdux-feature-cell [tm]="true" /> pipeline execution directly within
+      Chrome Developer Tools. The extension captures deterministic execution
+      traces, controller decisions, lifecycle transitions, and error events
       during application execution.
+    </p>
+
+    <p>
+      When enabled, the extension appears as a panel inside Chrome DevTools.
+      From this panel engineers can inspect recorded pipeline activity, view
+      state diffs, analyze hot stage rankings, replay pipeline executions,
+      export diagnostic traces, and generate AI-assisted debugging reports.
+    </p>
+
+    <p>
+      The extension does not alter pipeline behavior. It operates as a passive
+      observer that consumes telemetry produced by the Vault Monitor during
+      pipeline execution.
+    </p>
+
+    <div class="callout callout-info">
+      <p>
+        The extension reconstructs execution traces by listening to Insight
+        events emitted by
+        <sdux-feature-cell /> instances during pipeline execution. Each recorded
+        event represents a stage execution boundary, a lifecycle transition, a
+        conductor decision, a controller vote, or a runtime error signal
+        occurring within the pipeline.
+      </p>
+
+      <p>
+        By aggregating these events into deterministic traces, the extension
+        allows engineers to inspect pipeline behavior, analyze performance, and
+        reproduce runtime conditions outside of the running application.
+      </p>
+    </div>
+
+    <p>
+      For a deeper explanation of how runtime events are captured and monitored,
+      see
+      <a routerLink="/docs/dev-tools/vault-monitor">Vault Monitor</a>.
     </p>
   </header>
 
-  <section class="section" id="dimensions">
+  <section class="section">
+    <div class="section-title">Installing the Extension</div>
+
+    <div class="section-body">
+      <p>
+        The <sdux-brand-name /> Chrome DevTools Extension is available from the
+        Chrome Web Store. Installation requires Google Chrome or any
+        Chromium-based browser that supports Chrome extensions.
+      </p>
+
+      <ol>
+        <li>
+          Open the
+          <strong><sdux-brand-name /> Chrome DevTools Extension</strong>
+          listing in the Chrome Web Store.
+        </li>
+        <li>
+          Select <strong>Add to Chrome</strong> and confirm the installation
+          when prompted.
+        </li>
+        <li>
+          Open Chrome DevTools in any application running
+          <sdux-brand-name /> with development mode enabled.
+        </li>
+        <li>
+          Locate the <strong><sdux-vault-brand-name /></strong> panel tab in the
+          DevTools toolbar.
+        </li>
+      </ol>
+
+      <p>
+        Once installed, the extension automatically detects applications running
+        <sdux-brand-name /> with development mode enabled. No additional
+        configuration is required beyond enabling development mode in the
+        application runtime.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="enabling-the-extension">
+    <div class="section-title">Enabling the Extension</div>
+
+    <div class="section-body">
+      <p>
+        The Chrome DevTools Extension requires the <sdux-brand-name /> runtime
+        to be initialized with development mode enabled. When development mode
+        is active, the Vault Monitor exposes a global runtime handle that the
+        extension bridge uses to connect and begin receiving pipeline telemetry.
+      </p>
+
+      <p>
+        To enable the extension, configure the Vault runtime with
+        <code>devMode: true</code>.
+      </p>
+
+      <div class="sdux-tab-container">
+        <mat-tab-group
+          animationDuration="200ms"
+          mat-stretch-tabs="false"
+          class="sdux-tabs"
+          [selectedIndex]="0">
+          <mat-tab label="Angular">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({
+      devMode: true,
+    })
+  ]
+};`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="React">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`Vault({
+  devMode: true,
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+          <mat-tab label="Vue">
+            <div class="tab-panel">
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Vault Initialization'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// main.ts
+Vault({
+  devMode: true,
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        When the extension connects, its bridge script automatically activates
+        global insights on the Vault Monitor with full telemetry enabled. The
+        bridge enables the following insight attributes:
+      </p>
+
+      <ul>
+        <li>
+          <strong>wantsState</strong> — captures full state snapshots for each
+          pipeline event.
+        </li>
+        <li>
+          <strong>wantsPayload</strong> — captures payload data passed through
+          pipeline stages.
+        </li>
+        <li>
+          <strong>wantsCandidates</strong> — captures in-flight candidate values
+          at each stage boundary.
+        </li>
+        <li>
+          <strong>wantsErrors</strong> — captures error objects emitted during
+          pipeline execution.
+        </li>
+      </ul>
+
+      <p>
+        These attributes are activated globally by the extension bridge and do
+        not need to be configured manually. Individual
+        <sdux-feature-cell /> insight configurations are not required when using
+        the Chrome DevTools Extension — the bridge overrides per-cell settings
+        to ensure complete telemetry capture across all active cells.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">When to Use the Extension</div>
+
+    <div class="section-body">
+      <p>
+        The Chrome DevTools Extension is designed to help engineers inspect
+        runtime behavior inside the <sdux-vault-brand-name /> pipeline. It is
+        particularly useful when investigating complex execution flows,
+        performance characteristics, or controller decision outcomes.
+      </p>
+
+      <ul>
+        <li>Investigating unexpected pipeline behavior.</li>
+        <li>
+          Tracing lifecycle transitions across <sdux-feature-cell /> instances.
+        </li>
+        <li>Identifying performance bottlenecks in pipeline stages.</li>
+        <li>Comparing state before and after pipeline execution.</li>
+        <li>Debugging controller and conductor voting outcomes.</li>
+        <li>Replaying recorded pipeline executions for analysis.</li>
+        <li>Ranking hot stages to locate execution pressure.</li>
+        <li>Generating AI-assisted diagnostic reports for issue tracking.</li>
+      </ul>
+
+      <p>
+        Because the <sdux-brand-name /> pipeline is deterministic, identical
+        inputs produce identical execution traces on every run. This means that
+        a trace captured during one session can be reliably compared against
+        traces from subsequent sessions — stage ordering, controller votes, and
+        lifecycle transitions remain consistent. Engineers can reproduce and
+        analyze pipeline behavior with confidence that observed differences
+        reflect actual changes in application logic rather than runtime
+        variability.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="section-title">Dimensions</div>
 
     <div class="section-body">
       <p>
-        For best results, open the Chrome DevTools panel with the following
-        minimum dimensions:
+        The extension is designed for the Chrome DevTools panel, which can vary
+        in size depending on docking position and screen resolution. For best
+        results, ensure the DevTools panel meets the following minimum
+        dimensions:
       </p>
 
       <ul>
         <li>
           <strong>Width:</strong> 768px &mdash; below this threshold the
-          extension switches to a narrow (stacked) layout.
+          extension switches to a narrow layout where action bars, diff panels,
+          and comparison tables stack vertically instead of side by side.
         </li>
         <li>
-          <strong>Height:</strong> 500px &mdash; ensures the event list and
-          detail panel are both visible without clipping.
+          <strong>Height:</strong> 500px &mdash; ensures report content, diff
+          views, and event tables are visible without clipping. Diff panels use
+          a fixed 400px content height, and the remaining space accommodates the
+          toolbar and navigation controls.
         </li>
       </ul>
+
+      <p>
+        The narrow layout remains fully functional at smaller widths. All report
+        views adapt to the available space by reorganizing their content into a
+        single-column flow.
+      </p>
     </div>
   </section>
 
-  <section class="section" id="quick-start">
-    <div class="section-title-navigation">
-      <div class="section-title">TL;DR</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="top">↑ top</a>
-      </div>
+  <!-- ====================================================== -->
+  <!-- REPORTS -->
+  <!-- ====================================================== -->
+
+  <section class="section">
+    <div class="section-title">Reports</div>
+
+    <div class="section-body">
+      <p>
+        The Chrome DevTools Extension organizes pipeline telemetry into
+        specialized report views. Each report presents a different perspective
+        on the captured execution data — from high-level registry summaries to
+        granular stage-by-stage trace analysis.
+      </p>
     </div>
 
-    <div class="section-body"></div>
+    <div class="section-body">
+      <h4>Vault Overview</h4>
+      <p>
+        The Vault Overview report displays runtime package versions, license
+        details, and the complete <sdux-feature-cell /> registry for the
+        inspected application. Each registry card summarizes the behaviors,
+        controllers, and fluent APIs attached to a cell, along with live trace
+        statistics including total traces executed, average duration, and error
+        count.
+      </p>
+
+      <p>
+        This report is useful for verifying that the expected
+        <sdux-feature-cell /> instances are registered, confirming license
+        status, and identifying cells with elevated error rates or unusually
+        long average execution times. Selecting a cell opens a detail panel
+        showing the full list of registered behaviors and controllers for that
+        pipeline.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <h4>Feature Cell Events</h4>
+
+      <p>
+        The Feature Cell Events report displays a real-time log of every
+        pipeline event emitted by the inspected application. Events are
+        organized into two tabs — all events and error events — and can be
+        filtered by cell, event type, behavior key, or free-text search.
+        Selecting any event row reveals its full detail including state
+        snapshot, payload data, and error information.
+      </p>
+
+      <p>
+        This report is useful for observing pipeline activity as it happens,
+        isolating error events across <sdux-feature-cell /> instances, and
+        verifying that expected lifecycle transitions and controller decisions
+        are occurring during application execution. Events can be exported as
+        structured JSON for offline analysis.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <h4>Hot Stage Ranking</h4>
+
+      <p>
+        The Hot Stage Ranking report aggregates pipeline stage durations across
+        all captured traces and ranks stages by total cumulative execution time.
+        Stages can be viewed individually or grouped by name to reveal which
+        pipeline stages consume the most processing time across the application.
+        Results can be filtered by cell to scope the analysis to a single
+        <sdux-feature-cell /> instance.
+      </p>
+
+      <p>
+        This report is useful for identifying systemic performance bottlenecks
+        that may not be visible in individual trace inspections. By ranking
+        stages across all traces, engineers can locate execution pressure points
+        and prioritize optimization efforts on the stages that contribute the
+        most to overall pipeline duration.
+      </p>
+
+      <p class="pro-badge">
+        Hot Stage Ranking requires a
+        <a routerLink="." fragment="pro-license-required">Pro License</a>.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <h4>Pipeline Replay</h4>
+
+      <p>
+        The Pipeline Replay report dispatches a previously recorded trace
+        through a live <sdux-feature-cell /> pipeline. Engineers select a cell
+        and trace, review the original resolved value and trace summary, then
+        replay the value through the same dispatch method used in the original
+        execution. After replay, the report compares the original and replayed
+        traces side by side with timeline visualizations and event-by-event
+        diffs.
+      </p>
+
+      <p>
+        This report is useful for verifying that a code change produces the
+        expected pipeline outcome. By replaying a trace before and after a fix,
+        engineers can confirm whether behavior improved, regressed, or remained
+        unchanged. Previously saved debug dumps can be loaded to replay traces
+        from earlier sessions.
+      </p>
+
+      <p class="pro-badge">
+        Pipeline Replay requires a
+        <a routerLink="." fragment="pro-license-required">Pro License</a>.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <h4>State Diff</h4>
+
+      <p>
+        The State Diff report compares before and after state snapshots across
+        pipeline stages within a single trace. Engineers select a cell and
+        trace, then step through snapshot pairs to see exactly how state
+        transforms at each stage boundary. A state mutation graph highlights
+        which stages produced mutations for each candidate pair.
+      </p>
+
+      <p>
+        This report is useful for identifying unintended state mutations,
+        verifying that specific pipeline stages are transforming state as
+        expected, and understanding the cumulative effect of stage-by-stage
+        processing within a single pipeline execution. Both a side-by-side diff
+        view and a structured table view are available.
+      </p>
+
+      <p class="pro-badge">
+        State Diff requires a
+        <a routerLink="." fragment="pro-license-required">Pro License</a>.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <h4>Trace Details</h4>
+
+      <p>
+        The Trace Detail report displays completed pipeline traces as horizontal
+        timeline bars with summary statistics for total traces, average
+        duration, and outcome counts including success, error, denied, aborted,
+        and orphaned traces. Expanding a trace reveals tabbed detail views for
+        the event table, stage waterfall, pipeline flow, and hot stage ranking
+        for that individual execution.
+      </p>
+
+      <p>
+        This report is useful for understanding how pipeline executions
+        distribute over time, identifying traces that ended in error or denial,
+        and drilling into a specific trace to inspect stage-by-stage timing,
+        controller voting outcomes, and event metadata. Trace data can be
+        filtered by cell and exported as structured JSON.
+      </p>
+
+      <p class="pro-badge">
+        Trace Details requires a
+        <a routerLink="." fragment="pro-license-required">Pro License</a>.
+      </p>
+    </div>
   </section>
 
-  <section class="section" id="when-to-use">
-    <div class="section-title-navigation">
-      <div class="section-title">When to Use the Extension</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="top">↑ top</a>
-      </div>
+  <section class="section">
+    <div class="section-title">Debug Tools</div>
+
+    <div class="section-body">
+      <p>
+        The debug tools provide utilities for inspecting, exporting, and
+        managing the internal state of the extension itself. These tools help
+        engineers troubleshoot unexpected behavior, capture snapshots for
+        offline analysis, and verify that the extension is operating correctly
+        within the current page context.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <h4>AI Assist</h4>
+
+      <p>
+        The AI Assist tool exports a structured debug dump and an AI-assisted
+        analysis prompt. Engineers download both files and upload them to a
+        preferred AI model — such as ChatGPT, Claude, or Gemini — to receive a
+        comprehensive pipeline performance report with bottleneck detection and
+        architectural insights.
+      </p>
+
+      <p>
+        This tool is useful for generating automated analysis of pipeline
+        behavior without manually inspecting individual traces. The exported
+        debug dump contains raw pipeline events, statistics, and registry data
+        that the AI model uses to produce a structured diagnostic report.
+      </p>
+
+      <p class="pro-badge">
+        AI Assist requires a
+        <a routerLink="." fragment="pro-license-required">Pro License</a>.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <h4>Extension Inspector</h4>
+
+      <p>
+        The Extension Inspector filters all recorded pipeline data to a single
+        controller or behavior key. Engineers select a cell and extension key to
+        view execution count, duration statistics (average, minimum, and
+        maximum), and the percentage of total trace time consumed by that
+        extension. A per-trace breakdown shows how the selected key performed
+        across every recorded execution.
+      </p>
+
+      <p>
+        This tool is useful for answering targeted performance questions about a
+        specific controller or behavior — identifying whether it is consistently
+        slow, how its duration varies across traces, and how much of the overall
+        pipeline time it consumes. A detail view provides pipeline flow and
+        candidate snapshot inspection for the selected extension.
+      </p>
+
+      <p class="pro-badge">
+        Extension Inspector requires a
+        <a routerLink="." fragment="pro-license-required">Pro License</a>.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <h4>Load Dump</h4>
+
+      <p>
+        The Load Dump tool imports a previously exported debug dump JSON file
+        and replays the events through the trace pipeline. After loading, all
+        DevTools views are populated with the dump data, giving engineers full
+        access to trace timeline, controller voting decisions, behavior metrics,
+        pipeline flow visualization, and hot stage ranking analysis.
+      </p>
+
+      <p>
+        This tool is useful for offline analysis of pipeline executions captured
+        in another environment. Engineers can share dump files across teams,
+        load them into their own DevTools instance, and inspect the full
+        execution history without needing access to the original application.
+        Loading a dump replaces all current session data.
+      </p>
+
+      <p class="pro-badge">
+        Load Dump requires a
+        <a routerLink="." fragment="pro-license-required">Pro License</a>.
+      </p>
+    </div>
+
+    <div class="section-body">
+      <h4>Trace Export</h4>
+
+      <p>
+        The Trace Export tool exports recorded pipeline events as a Chrome Trace
+        Timeline JSON file. The exported file can be loaded into Perfetto, the
+        Chrome DevTools Performance tab, or chrome://tracing to visualize
+        pipeline execution as an interactive flame chart with stage-level timing
+        spans.
+      </p>
+
+      <p>
+        This tool is useful for analyzing pipeline stage execution ordering,
+        identifying stage-level bottlenecks, and visualizing trace fan-out
+        across <sdux-feature-cell /> pipelines. Engineers can share trace files
+        with teammates or load them into familiar profiling tools for deeper
+        investigation of behavior and controller timing.
+      </p>
+
+      <p class="pro-badge">
+        Trace Export requires a
+        <a routerLink="." fragment="pro-license-required">Pro License</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title" id="pro-license-required">
+      Pro License Required
     </div>
 
     <div class="section-body">
       <p>
-        The Chrome Extension is designed to help engineers inspect runtime
-        behavior inside the Vault pipeline. It is particularly useful when
-        investigating complex execution flows or performance issues.
+        Pro-tier reports and debug tools are part of the
+        <a routerLink="/sdux/vault" fragment="pro"><sdux-vault-brand-name /></a>
+        offering and are designed for applications that require deep visibility
+        into pipeline execution, stage-level performance, and state
+        transformation behavior. To use these tools, a valid
+        <sdux-vault-brand-name /> license is required.
+      </p>
+
+      <p>
+        This licensing boundary reflects the role advanced diagnostics play in
+        the SDuX ecosystem. Pro reports are not convenience utilities; they are
+        engineering-grade instruments responsible for surfacing execution
+        bottlenecks, validating controller voting outcomes, and providing
+        structured data for offline analysis and AI-assisted debugging.
+      </p>
+
+      <p>
+        By placing advanced diagnostics within the licensed Vault layer, SDuX
+        ensures that applications relying on deep pipeline observability benefit
+        from:
       </p>
 
       <ul>
-        <li>Investigating unexpected pipeline behavior.</li>
-        <li>Tracing lifecycle transitions across FeatureCells.</li>
-        <li>Identifying performance bottlenecks in pipeline stages.</li>
-        <li>Debugging controller policy conflicts.</li>
-        <li>Generating diagnostic reports for issue tracking.</li>
+        <li>
+          Stage-level execution profiling with flame chart and timeline
+          visualization
+        </li>
+        <li>
+          State diff analysis for verifying mutations across pipeline stages
+        </li>
+        <li>
+          Extension-scoped performance inspection for individual controllers and
+          behaviors
+        </li>
+        <li>
+          Structured export formats compatible with Perfetto, Chrome DevTools,
+          and AI models
+        </li>
+        <li>
+          Debug dump import and replay for offline and cross-team collaboration
+        </li>
+      </ul>
+
+      <p>
+        The free-tier reports — Vault Overview and
+        <sdux-feature-cell /> Events — continue to provide essential pipeline
+        monitoring without a license. When deeper analysis is needed — such as
+        tracing state mutations, ranking hot stages, replaying pipeline
+        executions, or generating AI-assisted diagnostic reports — the Vault
+        license unlocks a comprehensive debugging toolkit without compromising
+        the simplicity or predictability of <sdux-feature-cell /> development.
+      </p>
+
+      <p>
+        This approach allows the Chrome DevTools Extension to remain useful and
+        accessible for everyday pipeline monitoring, while providing a clear
+        upgrade path to production-grade diagnostic capabilities when
+        application complexity demands them.
+      </p>
+
+      <div class="callout callout-warning">
+        <strong>Ready to Upgrade?</strong>
+        <p>
+          Unlock encrypted persistence, advanced DevTools, telemetry, and the
+          full plugin system — one payment, lifetime access.
+        </p>
+        <p>
+          <a routerLink="/dashboard" class="sdux-button cta-button"
+            >Purchase Pro License</a
+          >
+        </p>
+        <p>
+          Don't have an account yet?
+          <a routerLink="/signup">Sign up</a> — it only takes a moment.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Troubleshooting</div>
+
+    <div class="section-body">
+      <p>
+        If the Chrome DevTools Extension is not displaying pipeline events,
+        check the following common issues.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Development mode is not enabled.</strong> The extension
+          requires the Vault runtime to be initialized with
+          <code>devMode: true</code>. Without development mode, the Vault
+          Monitor does not expose the global runtime handle that the extension
+          bridge uses to connect. Verify that your Vault configuration includes
+          <code>devMode: true</code> as described in the
+          <a routerLink="." fragment="enabling-the-extension"
+            >Enabling the Extension</a
+          >
+          section.
+        </li>
+        <li>
+          <strong
+            >The DevTools panel was opened after the application loaded.</strong
+          >
+          The extension bridge connects when the Vault instantiates. If the
+          DevTools panel is opened after the application has already
+          initialized, the bridge misses the connection window. Refresh the
+          webpage to re-instantiate the Vault and establish the connection.
+        </li>
+        <li>
+          <strong>No active <sdux-feature-cell /> on the current page.</strong>
+          The extension only captures events when a <sdux-feature-cell /> is
+          active and processing pipeline interactions. Navigate to a route whose
+          component injects a <sdux-feature-cell /> service to begin generating
+          events.
+        </li>
       </ul>
     </div>
-  </section>
-
-  <!-- ====================================================== -->
-  <!-- TABLE OF CONTENTS -->
-  <!-- ====================================================== -->
-  <section class="section" id="toc">
-    <div class="section-title-navigation">
-      <div class="section-title">How to use this page</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="top">↑ top</a>
-      </div>
-    </div>
-
-    <div class="section-body">
-      <div class="toc-container">
-        <ul class="toc">
-          <li>
-            <a [routerLink]="[]" fragment="extension-ui">Extension UI</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====================================================== -->
-  <!-- DIAGRAM -->
-  <!-- ====================================================== -->
-  <section class="diagram-section" id="extension-ui">
-    <div class="section-title-navigation">
-      <div class="section-title">Extension UI</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="toc">↑ top</a>
-      </div>
-    </div>
-    <div class="section-body">
-      <sdux-diagram
-        image="diagrams/12.0/12.0-sdux-debugger-panel-ui.svg"
-        [tooltip]="'Extension Panel UI'"></sdux-diagram>
-    </div>
-  </section>
-
-  <!-- ====================================================== -->
-  <!-- ENABLING -->
-  <!-- ====================================================== -->
-  <section class="section" id="enabling-extension">
-    <div class="section-title-navigation">
-      <div class="section-title">Enabling the Extension</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="toc">↑ top</a>
-      </div>
-    </div>
-
-    <div class="section-body"></div>
   </section>
 
   <!-- ====================================================== -->

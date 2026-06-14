@@ -6,10 +6,16 @@
       <sdux-help-toggle header ariaLabel="Toggle hot stage ranking help">
         <h2 helpHeading>Hot Stage Ranking</h2>
         <p class="help-text">
-          The Hot Stage Ranking aggregates pipeline stage durations across all
-          filtered traces. Stages are grouped by name and ranked by total
-          cumulative time. Use this view to identify systemic bottlenecks.
+          Aggregates pipeline stage durations across all filtered traces and
+          ranks them by total cumulative execution time.
         </p>
+        <ul>
+          <li>Stages ranked by total cumulative duration across all traces</li>
+          <li>Individual view showing each stage execution separately</li>
+          <li>Grouped view combining stages by name for aggregate analysis</li>
+          <li>Filter by cell to scope ranking to a single FeatureCell</li>
+          <li>Export ranking data as structured JSON</li>
+        </ul>
       </sdux-help-toggle>
     </sdux-header-section>
     <div class="action-bar">

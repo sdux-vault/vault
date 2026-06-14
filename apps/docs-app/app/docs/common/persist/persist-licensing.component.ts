@@ -67,7 +67,11 @@ import {
           <a href="/docs/references/functions/feature-cell">FeatureCell</a>
           state without any storage side effects.
         </p>
-        <a href="/sdux-vault">Learn how to license Vault</a>
+        <a
+          href="/sdux/
+        vault"
+          >Learn how to license Vault</a
+        >
       </div>
     </section>
   `,

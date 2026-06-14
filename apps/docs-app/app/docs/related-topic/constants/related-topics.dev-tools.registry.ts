@@ -25,8 +25,8 @@ export const RELATED_TOPICS_DEV_TOOLS_REGISTRY: RelatedTopicCategoryShape = {
         'Debug pipeline execution with the built-in console debugger in SDuX Vault.'
     },
     {
-      link: '/docs/dev-tools/chrome-extension',
-      display: 'Chrome Extension',
+      link: '/docs/dev-tools/chrome-devtools-extension',
+      display: 'Chrome DevTools Extension',
       title: 'Chrome Extension for SDuX Vault — Browser DevTools Integration',
       description:
         'Inspect and debug SDuX Vault state and pipelines using the Chrome DevTools extension.'

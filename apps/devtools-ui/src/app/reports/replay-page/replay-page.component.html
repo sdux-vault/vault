@@ -5,22 +5,22 @@
       <sdux-help-toggle header ariaLabel="Toggle description">
         <h2 helpHeading>Pipeline Replay</h2>
         <p class="description">
-          Replay a recorded trace through a live FeatureCell instance. Select a
-          cell and trace, then dispatch the resolved value through the original
-          pipeline method (<code>replaceState</code> or
-          <code>mergeState</code>).
+          Replay a recorded trace through a live <code>FeatureCell</code>
+          pipeline to verify code changes.
         </p>
-        <p class="description">
-          Use this to verify fixes: change code, replay the trace, and compare
-          the result against the original dump.
-        </p>
-        <p class="description">
-          Need to replay from a previous session?
-          <a routerLink="/reports/load-dump" class="description-link"
-            >Load a saved dump</a
-          >
-          to restore traces captured earlier.
-        </p>
+        <ul>
+          <li>Select a cell and trace to review the original resolved value</li>
+          <li>
+            Dispatch the value through the live pipeline using the original
+            method
+          </li>
+          <li>Compare original and replayed traces side by side</li>
+          <li>Timeline visualization and event-by-event diff for analysis</li>
+          <li>
+            Load saved debug dumps to replay traces from previous sessions
+          </li>
+          <li>Export replay traces as structured JSON</li>
+        </ul>
       </sdux-help-toggle>
     </sdux-header-section>
 

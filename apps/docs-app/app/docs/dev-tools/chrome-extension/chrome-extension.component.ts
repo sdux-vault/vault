@@ -3,8 +3,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
-  DiagramComponent,
-  FeatureCellBrandNameComponent
+  ExampleViewerSourceComponent,
+  ExampleViewerTabComponent,
+  FeatureCellBrandNameComponent,
+  ImageComponent,
+  VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic.component';
 
@@ -16,8 +19,12 @@ import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic
     BrandNameComponent,
     RouterModule,
     MatTabsModule,
-    DiagramComponent,
-    FeatureCellBrandNameComponent
+    ExampleViewerSourceComponent,
+    ExampleViewerTabComponent,
+    FeatureCellBrandNameComponent,
+    ImageComponent,
+    VaultBrandNameComponent,
+    BrandNameComponent
   ],
   templateUrl: './chrome-extension.component.html',
   styleUrls: ['../../scss/example.scss']

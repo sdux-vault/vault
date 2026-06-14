@@ -68,4 +68,18 @@ describe('HelpToggleComponent', () => {
     fixture.detectChanges();
     expect(el.querySelector('.help-section')).toBeNull();
   });
+
+  it('should close help section when close button is clicked', () => {
+    const toggle = el.querySelector('.help-toggle') as HTMLButtonElement;
+    toggle.click();
+    fixture.detectChanges();
+    expect(el.querySelector('.help-section')).toBeTruthy();
+
+    const close = el.querySelector('.help-close') as HTMLButtonElement;
+    expect(close).toBeTruthy();
+    expect(close.getAttribute('aria-label')).toBe('Close help');
+    close.click();
+    fixture.detectChanges();
+    expect(el.querySelector('.help-section')).toBeNull();
+  });
 });

@@ -5,14 +5,17 @@
       <sdux-help-toggle header ariaLabel="Toggle description">
         <h2 helpHeading>State Diff View</h2>
         <p class="description">
-          Compare before and after state snapshots across pipeline stages.
-          Select a trace, then step through snapshot pairs to see exactly how
-          state transforms at each stage of the pipeline.
+          Compare before and after state snapshots across pipeline stages within
+          a single trace.
         </p>
-        <p class="description">
-          Use the side-by-side diff to identify unintended mutations, or switch
-          to table view for a structured key-by-key comparison.
-        </p>
+        <ul>
+          <li>Step through snapshot pairs at each stage boundary</li>
+          <li>Side-by-side diff view highlighting added and removed values</li>
+          <li>Table view for structured key-by-key comparison</li>
+          <li>State mutation graph showing which stages produced mutations</li>
+          <li>Filter by cell and select specific traces for analysis</li>
+          <li>Export trace data as structured JSON</li>
+        </ul>
       </sdux-help-toggle>
     </sdux-header-section>
 

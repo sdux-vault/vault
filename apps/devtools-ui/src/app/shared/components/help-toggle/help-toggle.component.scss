@@ -69,15 +69,44 @@
 }
 
 .help-section {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   gap: global.$spacing-sm;
   padding: global.$spacing-md;
-  margin-top: global.$spacing-md;
-  margin-bottom: global.$spacing-md;
-  background: var(--sdux-surface-raised, rgb(255 255 255 / 4%));
+  padding-top: global.$spacing-lg;
+  margin-top: global.$spacing-xs;
+  background: global.$sdux-surface-mid;
   border-radius: global.$border-radius-sm;
   border: 1px solid global.$sdux-surface-outline;
+  box-shadow: global.$sdux-shadow-hover;
+}
+
+.help-overlay-anchor {
+  position: relative;
+}
+
+.help-close {
+  position: absolute;
+  top: global.$spacing-xs;
+  right: global.$spacing-xs;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--sdux-text-secondary);
+  font-size: global.$font-size-md;
+  line-height: 1;
+  padding: global.$spacing-xs;
+  border-radius: global.$border-radius-sm;
+
+  &:hover {
+    color: var(--sdux-text-primary);
+    background: var(--sdux-surface-raised, rgb(255 255 255 / 8%));
+  }
 }
 
 ::ng-deep .help-text {

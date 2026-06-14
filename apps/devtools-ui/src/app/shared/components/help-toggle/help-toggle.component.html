@@ -21,7 +21,17 @@
   </div>
 </div>
 @if (open()) {
-  <section class="help-section">
-    <ng-content />
-  </section>
+  <div class="help-overlay-anchor">
+    <section class="help-section">
+      <button
+        type="button"
+        class="help-close"
+        (click)="$event.stopPropagation(); toggle()"
+        matTooltip="Close help"
+        aria-label="Close help">
+        ✕
+      </button>
+      <ng-content />
+    </section>
+  </div>
 }

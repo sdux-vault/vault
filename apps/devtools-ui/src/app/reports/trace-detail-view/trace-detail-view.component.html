@@ -2,15 +2,30 @@
   <!-- Header -->
   <sdux-header-section
     [showChevron]="false"
-    ariaLabel="Toggle trace timeline help">
-    <sdux-help-toggle header ariaLabel="Toggle trace timeline help">
-      <h2 helpHeading>Trace Timeline</h2>
+    ariaLabel="Toggle trace detail help">
+    <sdux-help-toggle header ariaLabel="Toggle trace detail help">
+      <h2 helpHeading>Trace Detail</h2>
       <p class="description">
-        The Trace Timeline shows a chronological view of all dispatched traces.
-        Each trace represents a complete behavioral pipeline execution. Use the
-        cell filter to narrow results and expand individual traces to inspect
-        stage details.
+        Chronological view of all completed pipeline traces with expandable
+        detail views.
       </p>
+      <ul>
+        <li>Timeline bars showing trace duration and execution status</li>
+        <li>
+          Summary statistics — total traces, average duration, outcome counts
+        </li>
+        <li>
+          Filter by cell to isolate specific <code>FeatureCell</code> traces
+        </li>
+        <li>
+          Expand any trace to inspect events, stage waterfall, pipeline flow,
+          and hot stage ranking
+        </li>
+        <li>
+          Event detail panel for inspecting state, payload, and error data
+        </li>
+        <li>Export filtered traces as structured JSON</li>
+      </ul>
     </sdux-help-toggle>
   </sdux-header-section>
   <div class="action-bar">

@@ -4,10 +4,20 @@
       <sdux-help-toggle header ariaLabel="Toggle export help">
         <h2 helpHeading>Chrome Trace Export</h2>
         <p class="description">
-          Export recorded pipeline events as a Chrome Trace Timeline file. The
-          exported <code>.json</code> file can be loaded into Chrome DevTools to
-          visualize pipeline execution as an interactive flame chart.
+          Export recorded pipeline events as a Chrome Trace Timeline file for
+          visualization in external profiling tools.
         </p>
+        <ul>
+          <li>Export events as a standard Chrome Trace JSON format</li>
+          <li>
+            Load into Perfetto, Chrome DevTools Performance tab, or
+            chrome://tracing
+          </li>
+          <li>Visualize pipeline execution as an interactive flame chart</li>
+          <li>Inspect stage execution ordering and durations</li>
+          <li>Identify stage-level bottlenecks across traces</li>
+          <li>View trace fan-out across feature cell pipelines</li>
+        </ul>
       </sdux-help-toggle>
     </sdux-header-section>
 

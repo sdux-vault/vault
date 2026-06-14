@@ -6,14 +6,24 @@
       <sdux-help-toggle header ariaLabel="Toggle extension inspector help">
         <h2 helpHeading>Extension Inspector</h2>
         <p class="help-text">
-          Inspect how a specific controller or behavior performs across all
-          recorded traces. Select a cell and extension key to see execution
-          count, duration statistics, and per-trace breakdowns.
+          Filter all recorded pipeline data to a single controller or behavior
+          key for targeted performance analysis.
         </p>
-        <p class="help-text">
-          Use this view to answer: "How is my controller performing across
-          traces?" by filtering all pipeline data to a single key.
-        </p>
+        <ul>
+          <li>
+            Select a cell and extension key to isolate a single controller or
+            behavior
+          </li>
+          <li>View execution count, average, minimum, and maximum duration</li>
+          <li>
+            See percentage of total trace time consumed by the selected key
+          </li>
+          <li>Per-trace breakdown of every recorded execution</li>
+          <li>
+            Detail view with pipeline flow and candidate snapshot inspection
+          </li>
+          <li>Export extension data as structured JSON</li>
+        </ul>
       </sdux-help-toggle>
     </sdux-header-section>
 
