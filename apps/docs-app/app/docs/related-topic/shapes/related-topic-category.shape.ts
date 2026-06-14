@@ -9,6 +9,12 @@ export interface RelatedTopicCategoryShape {
   /** Display name for the category root */
   baseDisplay: string;
 
+  /** SEO page title for the category root */
+  title?: string;
+
+  /** SEO meta description for the category root */
+  description?: string;
+
   /** Names of global groups to include */
   globals?: RelatedTopicGlobalKey[];
 

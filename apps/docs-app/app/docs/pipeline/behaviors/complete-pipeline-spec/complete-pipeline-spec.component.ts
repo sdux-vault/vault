@@ -4,11 +4,17 @@ import {
   BrandNameComponent,
   DiagramComponent
 } from '@sdux-vault/ui/web-components';
+import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 
 @Component({
   selector: 'sdux-full-pipeline-spec',
   standalone: true,
-  imports: [RouterModule, DiagramComponent, BrandNameComponent],
+  imports: [
+    RouterModule,
+    DiagramComponent,
+    BrandNameComponent,
+    PipelineRelatedTopicComponent
+  ],
   templateUrl: './complete-pipeline-spec.component.html',
   styleUrls: ['../../../scss/example.scss']
 })

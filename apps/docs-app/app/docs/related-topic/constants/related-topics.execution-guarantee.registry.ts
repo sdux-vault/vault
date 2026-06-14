@@ -4,6 +4,9 @@ export const RELATED_TOPICS_EXECUTION_GUARANTEE_REGISTRY: RelatedTopicCategorySh
   {
     baseRoute: '/docs/pipeline/execution-guarantee',
     baseDisplay: 'Execution Guarantee',
+    title: 'Execution Guarantees in SDuX Vault — Reliable State Transitions',
+    description:
+      'Understand how SDuX Vault guarantees consistent pipeline execution and isolates state transitions.',
 
     // Reuse existing global groups
     globals: ['core'],
@@ -16,11 +19,19 @@ export const RELATED_TOPICS_EXECUTION_GUARANTEE_REGISTRY: RelatedTopicCategorySh
     items: [
       {
         link: '/docs/pipeline/execution-guarantee',
-        display: 'Pipeline Execution Guarantees (queueMicrotask)'
+        display: 'Pipeline Execution Guarantees (queueMicrotask)',
+        title:
+          'Pipeline Execution Guarantees in SDuX Vault — queueMicrotask Scheduling',
+        description:
+          'Understand how SDuX Vault uses queueMicrotask to guarantee consistent pipeline execution ordering.'
       },
       {
         link: '/docs/pipeline/isolation',
-        display: 'Pipeline Isolation'
+        display: 'Pipeline Isolation',
+        title:
+          'Pipeline Isolation in SDuX Vault — Independent Execution Contexts',
+        description:
+          'Learn how SDuX Vault isolates pipeline executions to prevent cross-contamination between state transitions.'
       }
     ]
   };

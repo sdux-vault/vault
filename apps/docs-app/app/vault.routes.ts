@@ -140,6 +140,7 @@ export const routes: Routes = [
             children: [
               {
                 path: 'what-is-an-addon',
+                data: { category: 'pipeline-overview' },
                 loadComponent: () =>
                   import('./docs/pipeline/behaviors/what-is-an-addon/what-is-an-addon.pipeline.component').then(
                     (m) => m.PipelineWhatIsAnAddonComponent
@@ -147,6 +148,7 @@ export const routes: Routes = [
               },
               {
                 path: 'how-to-build-an-addon',
+                data: { category: 'pipeline-overview' },
                 loadComponent: () =>
                   import('./docs/pipeline/behaviors/how-to-build-an-addon/how-to-build-an-addon.pipeline.component').then(
                     (m) => m.PipelineHowToBuildAnAddonComponent
@@ -192,16 +194,10 @@ export const routes: Routes = [
             children: [
               {
                 path: 'what-is-a-behavior',
+                data: { category: 'pipeline-overview' },
                 loadComponent: () =>
                   import('./docs/pipeline/behaviors/what-is-a-behavior/what-is-a-behavior.pipeline.component').then(
                     (m) => m.PipelineWhatIsABehaviorComponent
-                  )
-              },
-              {
-                path: 'what-is-an-addon',
-                loadComponent: () =>
-                  import('./docs/pipeline/behaviors/what-is-an-addon/what-is-an-addon.pipeline.component').then(
-                    (m) => m.PipelineWhatIsAnAddonComponent
                   )
               },
               {
@@ -297,6 +293,7 @@ export const routes: Routes = [
           },
           {
             path: 'pipeline-architecture',
+            data: { category: 'pipeline-overview' },
             loadComponent: () =>
               import('./docs/pipeline/behaviors/complete-pipeline-spec/complete-pipeline-spec.component').then(
                 (m) => m.CompletePipelineSpecComponent

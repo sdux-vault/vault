@@ -3,6 +3,9 @@ import { RelatedTopicCategoryShape } from 'apps/docs-app/app/docs/related-topic/
 export const RELATED_TOPICS_OPERATORS_REGISTRY: RelatedTopicCategoryShape = {
   baseRoute: '/docs/pipeline/behaviors/operators',
   baseDisplay: 'Core Operator Behavior',
+  title: 'Operator Behaviors in SDuX Vault — Stream Processing',
+  description:
+    'Apply operator behaviors like distinct-until-changed to control state emission in SDuX Vault.',
 
   // Reuse existing global groups
   globals: ['core'],
@@ -15,7 +18,11 @@ export const RELATED_TOPICS_OPERATORS_REGISTRY: RelatedTopicCategoryShape = {
   items: [
     {
       link: '/docs/pipeline/behaviors/operators/with-distinct-until-changed-behavior',
-      display: 'Distinct Until Changed Behavior'
+      display: 'Distinct Until Changed Behavior',
+      title:
+        'Distinct Until Changed in SDuX Vault — Duplicate Emission Prevention',
+      description:
+        'Prevent duplicate state emissions by skipping unchanged values using withDistinctUntilChangedBehavior in SDuX Vault.'
     }
   ]
 };
