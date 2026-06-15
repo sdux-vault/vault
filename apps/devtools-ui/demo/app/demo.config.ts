@@ -39,7 +39,7 @@ export const demoConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    { provide: EXTENSION_VERSION, useValue: '0.0.0-demo' },
+    { provide: EXTENSION_VERSION, useValue: '1.0.0-demo' },
 
     provideRouter(routes, withHashLocation()),
 
