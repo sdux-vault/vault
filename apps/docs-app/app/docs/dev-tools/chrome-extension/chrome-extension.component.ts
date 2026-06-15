@@ -6,7 +6,6 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  ImageComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic.component';
@@ -22,7 +21,6 @@ import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     FeatureCellBrandNameComponent,
-    ImageComponent,
     VaultBrandNameComponent,
     BrandNameComponent
   ],
