@@ -171,7 +171,9 @@ export class ReleaseManager {
 
   push() {
     console.info('\nPushing changes + tags...');
-    this.exec('HUSKY=0 git push --follow-tags');
+    this.exec(
+      'git push --no-verify --follow-tags --set-upstream origin $(git branch --show-current)'
+    );
   }
 
   buildDependencies() {

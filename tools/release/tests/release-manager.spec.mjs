@@ -142,7 +142,7 @@ describe('CLI: release-manager', () => {
       'git add libs/shared/package.json libs/shared/version.ts',
       'git commit -m "chore(shared): release version bump"',
       'git tag shared@1.2.4',
-      'HUSKY=0 git push --follow-tags',
+      'git push --no-verify --follow-tags --set-upstream origin $(git branch --show-current)',
       'npm run build:shared',
       'cd /repo/dist/shared && npm pack'
     ]);
@@ -188,7 +188,7 @@ describe('CLI: release-manager', () => {
       'git tag shared@1.2.4',
       '⚠️  [dry-run] command not executed',
       'Pushing changes + tags...',
-      'HUSKY=0 git push --follow-tags',
+      'git push --no-verify --follow-tags --set-upstream origin $(git branch --show-current)',
       '⚠️  [dry-run] command not executed',
       'Building @sdux-vault/shared...',
       'npm run build:shared',

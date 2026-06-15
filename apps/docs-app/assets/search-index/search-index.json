@@ -1871,6 +1871,17 @@
       "url": "/docs/references/functions/vault-error-service"
     },
     {
+      "id": "functions:createDebugDump",
+      "title": "createDebugDump",
+      "kind": "function",
+      "project": "dev-tools",
+      "docLink": "functions",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "symbols": ["createDebugDump"],
+      "content": "createDebugDump createDebugDump functions dev-tools libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "url": "/docs/references/functions/create-debug-dump"
+    },
+    {
       "id": "functions:createVaultError",
       "title": "createVaultError",
       "kind": "function",
@@ -1913,6 +1924,50 @@
       "symbols": ["defineVaultKey"],
       "content": "defineVaultKey defineVaultKey functions shared libs/shared/src/lib/utils/behavior/define-behavior-key.util.ts",
       "url": "/docs/references/functions/define-vault-key"
+    },
+    {
+      "id": "functions:downloadAiAssistFile",
+      "title": "downloadAiAssistFile",
+      "kind": "function",
+      "project": "dev-tools",
+      "docLink": "functions",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "symbols": ["downloadAiAssistFile"],
+      "content": "downloadAiAssistFile downloadAiAssistFile functions dev-tools libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "url": "/docs/references/functions/download-ai-assist-file"
+    },
+    {
+      "id": "functions:downloadDebugDump",
+      "title": "downloadDebugDump",
+      "kind": "function",
+      "project": "dev-tools",
+      "docLink": "functions",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "symbols": ["downloadDebugDump"],
+      "content": "downloadDebugDump downloadDebugDump functions dev-tools libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "url": "/docs/references/functions/download-debug-dump"
+    },
+    {
+      "id": "functions:downloadTraceDump",
+      "title": "downloadTraceDump",
+      "kind": "function",
+      "project": "dev-tools",
+      "docLink": "functions",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "symbols": ["downloadTraceDump"],
+      "content": "downloadTraceDump downloadTraceDump functions dev-tools libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "url": "/docs/references/functions/download-trace-dump"
+    },
+    {
+      "id": "functions:exportTrace",
+      "title": "exportTrace",
+      "kind": "function",
+      "project": "dev-tools",
+      "docLink": "functions",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.trace.ts",
+      "symbols": ["exportTrace"],
+      "content": "exportTrace exportTrace functions dev-tools libs/devtools/tooling/src/lib/widget/downloads/debug-widget.trace.ts",
+      "url": "/docs/references/functions/export-trace"
     },
     {
       "id": "functions:getVaultLogLevel",
@@ -2089,6 +2144,17 @@
       "symbols": ["registerVersion"],
       "content": "registerVersion registerVersion functions shared libs/shared/src/lib/utils/version/version.register.ts",
       "url": "/docs/references/functions/register-version"
+    },
+    {
+      "id": "functions:reportGithubIssue",
+      "title": "reportGithubIssue",
+      "kind": "function",
+      "project": "dev-tools",
+      "docLink": "functions",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "symbols": ["reportGithubIssue"],
+      "content": "reportGithubIssue reportGithubIssue functions dev-tools libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "url": "/docs/references/functions/report-github-issue"
     },
     {
       "id": "functions:safeStringify",

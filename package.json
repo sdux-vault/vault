@@ -1,6 +1,10 @@
 {
   "name": "@sdux-vault/vault",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=11.0.0"
+  },
   "description": "SDuX — a framework-agnostic, deterministic state management system built around a reactive pipeline, enabling predictable, composable, and extensible state at scale.",
   "author": {
     "name": "SDuX Vault",
@@ -158,7 +162,7 @@
     "@angular/material": "^21.2.12",
     "@angular/platform-browser": "^21.2.13",
     "@angular/router": "^21.2.13",
-    "@sdux-vault/engine": "^0.28.2",
+    "@sdux-vault/engine": "^1.0.0",
     "@stackblitz/sdk": "^1.11.0",
     "diff": "^9.0.0",
     "flexsearch": "^0.8.212",

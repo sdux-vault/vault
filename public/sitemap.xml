@@ -16,12 +16,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/ai-assisted-debugging</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/atomic-deterministic-updates</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/circuit-breaker-state-pipeline</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/controllers-dont-touch-your-data</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -37,6 +47,16 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/pipeline-anatomy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/tab-sync-state</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/testing-state-3-steps</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -57,6 +77,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/dev-tools/built-in-debugger</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/dev-tools/chrome-devtools-extension</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1231,6 +1256,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/references/functions/create-debug-dump</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/references/functions/create-vault-error</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1251,7 +1281,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/references/functions/download-ai-assist-file</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/functions/download-debug-dump</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/functions/download-trace-dump</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/references/functions/event-bus</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/functions/export-trace</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1337,6 +1387,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/references/functions/register-version</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/functions/report-github-issue</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -1376,6 +1376,14 @@
       "relativePath": "libs/shared/src/lib/services/error/vault-error.service.ts",
       "docLink": "functions"
     },
+    "createDebugDump": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "createDebugDump",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "docLink": "functions"
+    },
     "createVaultError": {
       "kind": "function",
       "docKind": "function",
@@ -1406,6 +1414,38 @@
       "name": "defineVaultKey",
       "project": "shared",
       "relativePath": "libs/shared/src/lib/utils/behavior/define-behavior-key.util.ts",
+      "docLink": "functions"
+    },
+    "downloadAiAssistFile": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "downloadAiAssistFile",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "docLink": "functions"
+    },
+    "downloadDebugDump": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "downloadDebugDump",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "docLink": "functions"
+    },
+    "downloadTraceDump": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "downloadTraceDump",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "docLink": "functions"
+    },
+    "exportTrace": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "exportTrace",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.trace.ts",
       "docLink": "functions"
     },
     "getVaultLogLevel": {
@@ -1534,6 +1574,14 @@
       "name": "registerVersion",
       "project": "shared",
       "relativePath": "libs/shared/src/lib/utils/version/version.register.ts",
+      "docLink": "functions"
+    },
+    "reportGithubIssue": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "reportGithubIssue",
+      "project": "dev-tools",
+      "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
       "docLink": "functions"
     },
     "safeStringify": {

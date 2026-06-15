@@ -3,6 +3,10 @@ AUTO-GENERATED DOCUMENTATION COMPONENT
 Tools/documentation/menu-generator
 -->
 @switch (type) {
+  @case ('create-debug-dump') {
+    <sdux-create-debug-dump />
+  }
+
   @case ('create-vault-error') {
     <sdux-create-vault-error />
   }
@@ -19,8 +23,24 @@ Tools/documentation/menu-generator
     <sdux-define-vault-key />
   }
 
+  @case ('download-ai-assist-file') {
+    <sdux-download-ai-assist-file />
+  }
+
+  @case ('download-debug-dump') {
+    <sdux-download-debug-dump />
+  }
+
+  @case ('download-trace-dump') {
+    <sdux-download-trace-dump />
+  }
+
   @case ('event-bus') {
     <sdux-event-bus />
+  }
+
+  @case ('export-trace') {
+    <sdux-export-trace />
   }
 
   @case ('feature-cell') {
@@ -89,6 +109,10 @@ Tools/documentation/menu-generator
 
   @case ('register-version') {
     <sdux-register-version />
+  }
+
+  @case ('report-github-issue') {
+    <sdux-report-github-issue />
   }
 
   @case ('safe-stringify') {

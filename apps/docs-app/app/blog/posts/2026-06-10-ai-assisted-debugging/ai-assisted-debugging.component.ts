@@ -52,7 +52,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             When enabled, the built-in debugger attaches to the Vault runtime as
             a passive observer. It records pipeline activity for individual
-            FeatureCell&#8482; instances, capturing:
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a
+            >&#8482; instances, capturing:
           </p>
           <ul>
             <li>Pipeline stage timings for every execution trace</li>
@@ -69,7 +70,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </p>
           <div class="callout callout-info">
             <strong>Key takeaway:</strong> The debugger reconstructs execution
-            traces by listening to Insight events emitted by FeatureCell
+            traces by listening to Insight events emitted by
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             instances during Vault pipeline execution. Each recorded event
             represents a lifecycle transition, controller action, or runtime
             signal occurring within the pipeline.
