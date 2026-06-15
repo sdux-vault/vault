@@ -38,6 +38,9 @@
             class="timeline-row"
             [class.selected]="isSelected(row.traceId)"
             (click)="selectRow(row.traceId)"
+            (keydown.enter)="selectRow(row.traceId)"
+            tabindex="0"
+            role="button"
             matTooltip="Click to inspect this execution">
             <span class="timeline-label">{{ row.traceLabel }}</span>
             <div class="timeline-bar">
@@ -98,6 +101,9 @@
             class="timeline-row"
             [class.selected]="isSelected(row.traceId)"
             (click)="selectRow(row.traceId)"
+            (keydown.enter)="selectRow(row.traceId)"
+            tabindex="0"
+            role="button"
             matTooltip="{{ row.traceLabel }}: {{
               row.keyDuration.toFixed(1)
             }}ms — click to inspect">
