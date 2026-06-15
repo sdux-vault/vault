@@ -1,0 +1,73 @@
+@if (isLicensed()) {
+  <div class="report-page">
+    <sdux-header-section
+      [showChevron]="false"
+      ariaLabel="Toggle load dump help">
+      <sdux-help-toggle header ariaLabel="Toggle load dump help">
+        <h2 helpHeading>Load Debug Dump</h2>
+        <p class="description">
+          Import a previously exported debug dump file to replay traces and
+          analyze pipeline execution offline.
+        </p>
+        <ul>
+          <li>Upload a <code>.json</code> debug dump exported from DevTools</li>
+          <li>
+            Events are replayed through the trace pipeline, populating all views
+          </li>
+          <li>
+            Access trace timeline, pipeline flow, and hot stage ranking from
+            loaded data
+          </li>
+          <li>
+            Inspect controller voting decisions and behavior duration metrics
+          </li>
+          <li>Share dump files across teams for collaborative debugging</li>
+          <li>Loading a dump replaces all current session data</li>
+        </ul>
+      </sdux-help-toggle>
+    </sdux-header-section>
+
+    <section class="upload-section">
+      <div class="features">
+        <p class="features-heading">After loading, you will have access to:</p>
+        <ul>
+          <li>Full trace timeline with stage-by-stage execution breakdown</li>
+          <li>Controller voting decisions and arbitration outcomes</li>
+          <li>Behavior execution order and duration metrics</li>
+          <li>Pipeline flow visualization for each trace</li>
+          <li>AI-assisted debugging reports from execution data</li>
+          <li>Hot stage ranking analysis across all loaded traces</li>
+        </ul>
+      </div>
+
+      <sdux-dump-file-picker (fileLoaded)="onFileLoaded($event)">
+      </sdux-dump-file-picker>
+    </section>
+
+    @if (loadedFileName()) {
+      <section class="success-section">
+        <div class="success-message">
+          Loaded <strong>{{ loadedEventCount() }}</strong> events from
+          <strong>{{ loadedFileName() }}</strong>
+        </div>
+        <button
+          type="button"
+          class="sdux-button"
+          (click)="navigateToTraceDetail()">
+          View in Trace Detail →
+        </button>
+      </section>
+    } @else {
+      <div class="warning-notice">
+        Loading a dump file will <strong>replace</strong> all current traces and
+        events.
+        <p>All data from the current session will be lost.</p>
+      </div>
+    }
+  </div>
+} @else {
+  <sdux-upsell-notice
+    headline="Unlock debug dump import with a"
+    body="Load exported debug dump files to replay traces and analyze pipeline execution offline with full DevTools reporting.">
+  </sdux-upsell-notice>
+}

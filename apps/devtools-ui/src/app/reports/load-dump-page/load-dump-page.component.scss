@@ -1,0 +1,78 @@
+@use 'global' as global;
+@use '../scss/reports-common';
+
+.report-page {
+  max-width: 600px;
+
+  .upload-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+  }
+
+  .description {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+    line-height: 1.5;
+
+    code {
+      color: global.$sdux-text-primary;
+      background: global.$sdux-surface-raised-md;
+      padding: 0 global.$spacing-xs;
+      border-radius: global.$border-radius-sm;
+    }
+  }
+
+  .warning-notice {
+    max-width: 400px;
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-warn-base;
+    line-height: 1.5;
+    padding: global.$spacing-sm global.$spacing-md;
+    border-left: 3px solid global.$sdux-warn-base;
+    background: rgb(251 192 45 / 8%);
+    border-radius: global.$border-radius-sm;
+  }
+
+  .features {
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+
+    .features-heading {
+      margin: 0 0 global.$spacing-sm;
+      font-weight: global.$font-weight-medium;
+      color: global.$sdux-text-primary;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: global.$spacing-lg;
+      list-style: disc;
+
+      li {
+        line-height: 1.6;
+      }
+    }
+  }
+
+  .success-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+  }
+
+  .success-message {
+    padding: global.$spacing-sm global.$spacing-md;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-success-base;
+    background: rgb(0 255 0 / 6%);
+    border: 1px solid global.$sdux-success-base;
+    border-radius: global.$border-radius-sm;
+  }
+
+  .sdux-button {
+    align-self: flex-start;
+  }
+}

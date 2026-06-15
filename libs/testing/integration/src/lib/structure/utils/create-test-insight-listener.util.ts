@@ -8,6 +8,7 @@ export const createTestInsightListener = (emitted: any[]) => {
   const sub = eventBus.pipeline$().subscribe((event: any) => {
     event.id = 'id-removed';
     event.timestamp = 'ts-removed';
+    event.monotonicTimestamp = 'mts-removed';
     if (event.traceId !== undefined) {
       event.traceId = 'trace-id-removed';
     }

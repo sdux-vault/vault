@@ -1,0 +1,399 @@
+@if (isLicensed()) {
+  <div class="report-page">
+    <!-- Header -->
+    <sdux-header-section [showChevron]="false" ariaLabel="Toggle description">
+      <sdux-help-toggle header ariaLabel="Toggle description">
+        <h2 helpHeading>State Diff View</h2>
+        <p class="description">
+          Compare before and after state snapshots across pipeline stages within
+          a single trace.
+        </p>
+        <ul>
+          <li>Step through snapshot pairs at each stage boundary</li>
+          <li>Side-by-side diff view highlighting added and removed values</li>
+          <li>Table view for structured key-by-key comparison</li>
+          <li>State mutation graph showing which stages produced mutations</li>
+          <li>Filter by cell and select specific traces for analysis</li>
+          <li>Export trace data as structured JSON</li>
+          <li>
+            <strong>Keyboard:</strong> press <kbd>j</kbd> or <kbd>←</kbd> for
+            previous pair, <kbd>l</kbd> or <kbd>→</kbd> for next.
+          </li>
+        </ul>
+      </sdux-help-toggle>
+    </sdux-header-section>
+
+    <div class="action-bar">
+      <mat-select
+        class="cell-filter"
+        [value]="selectedCell()"
+        (selectionChange)="selectCell($any($event.value))"
+        aria-label="Filter by cell">
+        <mat-option value="all">All Cells</mat-option>
+        @for (cell of cellKeys(); track cell) {
+          <mat-option [value]="cell">{{ cell }}</mat-option>
+        }
+      </mat-select>
+
+      @if (filteredTraces().length) {
+        <mat-select
+          class="cell-filter trace-filter"
+          [value]="selectedTraceId()"
+          (selectionChange)="selectTrace($any($event.value))"
+          placeholder="Select a trace..."
+          panelWidth="500px"
+          aria-label="Select trace">
+          @for (trace of filteredTraces(); track trace.traceId) {
+            <mat-option [value]="trace.traceId">
+              <span class="trace-option">
+                <span class="trace-cell">{{ trace.cellKey }}</span>
+                &nbsp;
+                <span class="trace-label-tag">{{
+                  traceLabels().get(trace.traceId)
+                }}</span>
+                &nbsp;
+                <span class="trace-id">{{ trace.traceId.slice(0, 8) }}</span>
+              </span>
+            </mat-option>
+          }
+        </mat-select>
+      }
+
+      <div class="sdux-container-spacer"></div>
+
+      <div class="meta">
+        <sdux-export-button
+          [data]="filteredTraces()"
+          filename="state-diff"
+          [label]="'Download ' + selectedCell() + ' traces'">
+        </sdux-export-button>
+
+        <sdux-devtools-reset-button
+          (click)="selectCell('all')"></sdux-devtools-reset-button>
+      </div>
+    </div>
+
+    @if (filteredTraces().length === 0) {
+      <sdux-empty-state></sdux-empty-state>
+    }
+
+    <!-- Trace Detail + Diff -->
+    @if (selectedTrace(); as trace) {
+      <section class="trace-banner">
+        <span class="trace-banner-row">
+          <span class="trace-label">Trace:</span>
+          <span class="trace-cell-key">{{ trace.cellKey }}</span>
+        </span>
+        <span class="trace-banner-row">
+          <span class="trace-short-id">{{ trace.traceId.slice(0, 8) }}</span>
+          <span [class]="'trace-status-badge ' + statusClass(trace)">
+            {{ statusLabel(trace) }}
+          </span>
+          <span class="trace-duration-badge">
+            {{ trace.metrics.duration.toFixed(1) }}ms
+          </span>
+        </span>
+      </section>
+
+      @if (mutationGraph().rows.length > 0) {
+        <section class="mutation-graph-section">
+          <sdux-header-section
+            ariaLabel="Toggle state mutation graph"
+            [(expanded)]="showMutationGraph">
+            <sdux-help-toggle header ariaLabel="Toggle mutation graph help">
+              <h3 helpHeading>State Mutation Graph</h3>
+              <p class="help-text">
+                The State Mutation Graph shows which pipeline stages produced
+                mutations for each candidate pair. Each row is a pair
+                comparison; each column is a pipeline stage.
+              </p>
+              <ul class="help-list">
+                <li>
+                  <strong class="mutation-dot">●</strong> indicates the
+                  candidate value changed between the before and after
+                  snapshots.
+                </li>
+                <li>
+                  Scan a <strong>row</strong> to see which stage produced the
+                  mutation for that pair.
+                </li>
+                <li>
+                  Scan a <strong>column</strong> top-to-bottom to see how often
+                  a particular stage produces mutations.
+                </li>
+              </ul>
+            </sdux-help-toggle>
+            <div class="mutation-graph-scroll">
+              <table class="mutation-graph-table">
+                <thead>
+                  <tr>
+                    <th class="col-key">Pair</th>
+                    @for (stage of mutationGraph().stages; track $index) {
+                      <th class="col-stage">{{ stage }}</th>
+                    }
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (
+                    row of mutationGraph().rows;
+                    track row.label;
+                    let i = $index
+                  ) {
+                    <tr
+                      class="graph-row"
+                      matTooltip="Click to see diff"
+                      (click)="navigateToPair(row.pairIndex)">
+                      <td class="col-key">{{ row.label }}</td>
+                      @for (mutated of row.cells; track $index) {
+                        <td class="col-stage" [class.mutated]="mutated">
+                          @if (mutated) {
+                            <span class="mutation-dot" aria-label="Mutated"
+                              >●</span
+                            >
+                          }
+                        </td>
+                      }
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </sdux-header-section>
+        </section>
+      }
+
+      @if (candidates().length >= 2) {
+        <div
+          class="diff-and-tables"
+          sduxLeftRightNavigation
+          (previous)="previousPair()"
+          (next)="nextPair()">
+          <div class="diff-column-group">
+            <nav class="pair-nav">
+              <button
+                type="button"
+                class="sdux-button"
+                [disabled]="!hasPrevious()"
+                (click)="previousPair()"
+                matTooltip="Navigate to previous snapshot pair"
+                aria-label="Previous pair">
+                ← <span class="nav-label">Previous Pair</span>
+              </button>
+              <span class="pair-counter" aria-live="polite">
+                Pair {{ beforeIndex() + 1 }} of {{ totalPairs() }}
+              </span>
+              <button
+                type="button"
+                class="sdux-button"
+                [disabled]="!hasNext()"
+                (click)="nextPair()"
+                matTooltip="Navigate to next snapshot pair"
+                aria-label="Next pair">
+                <span class="nav-label">Next Pair</span> →
+              </button>
+            </nav>
+
+            <div class="diff-panel">
+              @if (viewMode() === 'diff') {
+                <section class="diff-panel-view">
+                  <div class="diff-column">
+                    <div class="diff-header">
+                      <span class="diff-header-title"
+                        >BEFORE: {{ beforeSnapshot()?.stage }}</span
+                      >
+                      <span class="diff-header-meta">
+                        seq #{{ (beforeSnapshot()?.sequenceIndex ?? 0) + 1 }}
+                        {{
+                          beforeSnapshot()
+                            ? relativeTime(beforeSnapshot()!)
+                            : ''
+                        }}
+                      </span>
+                      <button
+                        type="button"
+                        class="delta-toggle"
+                        [class.active]="showChangedOnly()"
+                        (click)="showChangedOnly.set(!showChangedOnly())"
+                        [matTooltip]="
+                          showChangedOnly()
+                            ? 'Show All Keys'
+                            : 'Show Only Changed Keys'
+                        "
+                        aria-label="Toggle show only changed keys">
+                        <mat-icon>compare_arrows</mat-icon>
+                      </button>
+                    </div>
+                    @if (beforeLines().length > 0) {
+                      <pre
+                        class="diff-content">@for (line of beforeLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
+</span>}</pre>
+                    } @else {
+                      <div class="empty-table">
+                        <p>No changes in this pair.</p>
+                      </div>
+                    }
+                  </div>
+                  <div class="diff-column">
+                    <div class="diff-header">
+                      <span class="diff-header-title"
+                        >AFTER: {{ afterSnapshot()?.stage }}</span
+                      >
+                      <span class="diff-header-meta">
+                        seq #{{ (afterSnapshot()?.sequenceIndex ?? 0) + 1 }}
+                        {{
+                          afterSnapshot() ? relativeTime(afterSnapshot()!) : ''
+                        }}
+                      </span>
+                      <button
+                        type="button"
+                        class="delta-toggle"
+                        [class.active]="showChangedOnly()"
+                        (click)="showChangedOnly.set(!showChangedOnly())"
+                        [matTooltip]="
+                          showChangedOnly()
+                            ? 'Show All Keys'
+                            : 'Show Only Changed Keys'
+                        "
+                        aria-label="Toggle show only changed keys">
+                        <mat-icon>compare_arrows</mat-icon>
+                      </button>
+                    </div>
+                    @if (afterLines().length > 0) {
+                      <pre
+                        class="diff-content">@for (line of afterLines(); track $index) {<span [class]="line.cssClass">{{ line.text }}
+</span>}</pre>
+                    } @else {
+                      <div class="empty-table">
+                        <p>No changes in this pair.</p>
+                      </div>
+                    }
+                  </div>
+                </section>
+              } @else {
+                <sdux-state-table-view
+                  [beforeLabel]="beforeSnapshot()?.stage ?? ''"
+                  [beforeValue]="beforeSnapshot()?.value"
+                  [afterLabel]="afterSnapshot()?.stage ?? ''"
+                  [afterValue]="afterSnapshot()?.value"
+                  [showChangedOnly]="showChangedOnly()"
+                  (toggleChangedOnly)="showChangedOnly.set(!showChangedOnly())">
+                </sdux-state-table-view>
+              }
+            </div>
+          </div>
+
+          <div class="tables-column-group">
+            <div class="view-toggle-container">
+              <div class="view-toggle">
+                <button
+                  type="button"
+                  class="toggle-btn"
+                  [class.active]="viewMode() === 'diff'"
+                  (click)="viewMode.set('diff')"
+                  matTooltip="Side-by-side diff view"
+                  aria-label="Diff view">
+                  Diff
+                </button>
+                <button
+                  type="button"
+                  class="toggle-btn"
+                  [class.active]="viewMode() === 'table'"
+                  (click)="viewMode.set('table')"
+                  matTooltip="Tabular state view"
+                  aria-label="Table view">
+                  Table
+                </button>
+              </div>
+            </div>
+
+            <div class="compare-tables-container">
+              <section class="snapshot-table">
+                <div class="snapshot-table-header">
+                  Before Snapshot ({{ candidates().length }})
+                </div>
+                <div class="snapshot-table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="col-selected"></th>
+                        <th class="col-indicator">#</th>
+                        <th class="col-event">Stage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (snap of candidates(); track snap.eventId) {
+                        <tr
+                          class="snapshot-row"
+                          [class.selected]="
+                            snap.sequenceIndex === beforeIndex()
+                          "
+                          (click)="selectBeforeSnapshot(snap.sequenceIndex)"
+                          matTooltip="Select as before snapshot">
+                          <td class="col-selected">
+                            @if (snap.sequenceIndex === beforeIndex()) {
+                              <span class="indicator">●</span>
+                            }
+                          </td>
+                          <td class="col-indicator">
+                            {{ snap.sequenceIndex + 1 }}
+                          </td>
+                          <td class="col-event">{{ snap.stage }}</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <section class="snapshot-table">
+                <div class="snapshot-table-header">
+                  After Snapshot ({{ candidates().length }})
+                </div>
+                <div class="snapshot-table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="col-selected"></th>
+                        <th class="col-indicator">#</th>
+                        <th class="col-event">Stage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (snap of candidates(); track snap.eventId) {
+                        <tr
+                          class="snapshot-row"
+                          [class.selected]="snap.sequenceIndex === afterIndex()"
+                          (click)="selectAfterSnapshot(snap.sequenceIndex)"
+                          matTooltip="Select as after snapshot">
+                          <td class="col-selected">
+                            @if (snap.sequenceIndex === afterIndex()) {
+                              <span class="indicator">●</span>
+                            }
+                          </td>
+                          <td class="col-indicator">
+                            {{ snap.sequenceIndex + 1 }}
+                          </td>
+                          <td class="col-event">{{ snap.stage }}</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <sdux-empty-state
+          [selfAware]="false"
+          icon="compare"
+          message="Select a cell with fewer than 2 state candidates to compare"></sdux-empty-state>
+      }
+    }
+  </div>
+} @else {
+  <sdux-upsell-notice
+    headline="Unlock pipeline state diff analysis with a"
+    body="Compare before/after snapshots across pipeline stages to see exactly how state transforms through each step of the pipeline.">
+  </sdux-upsell-notice>
+}

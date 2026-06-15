@@ -41,41 +41,44 @@
       </strong>
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      The Max Failures Controller governs failure tolerance, not execution
-      timing or value admission. It intervenes only when a failure is reported
-      and does not affect successful executions or traces that have not exceeded
-      their configured limit.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The Max Failures Controller governs failure tolerance, not execution
+        timing or value admission. It intervenes only when a failure is reported
+        and does not affect successful executions or traces that have not
+        exceeded their configured limit.
+      </p>
 
-    <p>
-      For applications that surface failures through a global Vault error, it is
-      recommended to use the
-      <strong
-        ><a
-          href="/docs/pipeline/controllers/with-replay-global-error-controller"
-          >withReplayGlobalErrorController</a
-        ></strong
-      >
-      in conjunction with the Max Failures Controller. While Max Failures
-      enforces deterministic trace termination once the configured threshold is
-      exceeded, Replay Global Error coordinates controlled replay and recovery
-      once the global error state is explicitly cleared. Together, they provide
-      bounded failure tolerance with deterministic recovery semantics.
-    </p>
+      <p>
+        For applications that surface failures through a global Vault error, it
+        is recommended to use the
+        <strong
+          ><a
+            href="/docs/pipeline/controllers/with-replay-global-error-controller"
+            >withReplayGlobalErrorController</a
+          ></strong
+        >
+        in conjunction with the Max Failures Controller. While Max Failures
+        enforces deterministic trace termination once the configured threshold
+        is exceeded, Replay Global Error coordinates controlled replay and
+        recovery once the global error state is explicitly cleared. Together,
+        they provide bounded failure tolerance with deterministic recovery
+        semantics.
+      </p>
 
-    <p>
-      The Max Failures Controller should be applied deliberately. Once pipeline
-      execution begins, the pipeline itself is synchronous and deterministic. In
-      most cases, a failure represents a terminal condition for that execution
-      trace. Retrying without an external state change or asynchronous side
-      effect—such as a network request or external system dependency—will
-      typically reproduce the same failure deterministically. This controller is
-      therefore most appropriate when failures may resolve due to external
-      conditions. Ensure a clear business justification exists before
-      introducing failure-based retry tolerance.
-    </p>
+      <p>
+        The Max Failures Controller should be applied deliberately. Once
+        pipeline execution begins, the pipeline itself is synchronous and
+        deterministic. In most cases, a failure represents a terminal condition
+        for that execution trace. Retrying without an external state change or
+        asynchronous side effect—such as a network request or external system
+        dependency—will typically reproduce the same failure deterministically.
+        This controller is therefore most appropriate when failures may resolve
+        due to external conditions. Ensure a clear business justification exists
+        before introducing failure-based retry tolerance.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -198,8 +201,10 @@
 
       <p>
         Once attached, failure limits are configured using the fluent API during
-        initialization via
-        <code>.withMaxFailures(&lt;WithMaxFailureControllerOptions&gt;)</code>.
+        initialization via withMaxFailures(&lt;<a
+          href="/docs/references/options/with-max-failure-controller-options"
+          >WithMaxFailureControllerOptions</a
+        >&gt;).
       </p>
 
       <div class="sdux-tab-container">
@@ -231,6 +236,7 @@ export const appConfig: ApplicationConfig = {
         // Optional add-on behaviors
       ],
       [
+        // Optional add-on controllers 
         // Attach the Max Failures Controller structurally
         withMaxFailuresController
       ]
@@ -249,7 +255,10 @@ export const appConfig: ApplicationConfig = {
                 <sdux-example-viewer-tab
                   [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
                   <pre
-                    class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+                    class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
+Vault();
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
   {
     key: 'employees',
     initialState: [],
@@ -258,6 +267,7 @@ export const appConfig: ApplicationConfig = {
     // Optional add-on behaviors
   ],
   [
+    // Optional add-on controllers
     // Attach the Max Failures Controller structurally
     withMaxFailuresController
   ]
@@ -274,7 +284,10 @@ export const appConfig: ApplicationConfig = {
                 <sdux-example-viewer-tab
                   [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
                   <pre
-                    class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+                    class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
+Vault();
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
   {
     key: 'employees',
     initialState: [],
@@ -283,6 +296,7 @@ export const appConfig: ApplicationConfig = {
     // Optional add-on behaviors
   ],
   [
+    // Optional add-on controllers
     // Attach the Max Failures Controller structurally
     withMaxFailuresController
   ]
@@ -341,7 +355,8 @@ export const appConfig: ApplicationConfig = {
               <sdux-example-viewer-source [displayTabs]="false">
                 <sdux-example-viewer-tab
                   [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
-                  <pre class="code-inline"><code class="language-ts">{{`
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// Define a FeatureCell with typed state and a unique store key
 @FeatureCell&lt;Employee[]>('employees')
 @Injectable({
   providedIn: 'root'
@@ -350,7 +365,7 @@ export class EmployeeService {
   private readonly vault = injectVault&lt;Employee[]>(EmployeeService);
 
   constructor() {
-    // Apply max failure configuration during initialization
+    // Set the failure threshold to 3 and activate the cell
     this.vault
       .withMaxFailures({
         maxFailures: 3
@@ -370,7 +385,11 @@ export class EmployeeService {
               <sdux-example-viewer-source [displayTabs]="false">
                 <sdux-example-viewer-tab
                   [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
-                  <pre class="code-inline"><code class="language-ts">{{`
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
+Vault();
+
+// Define a FeatureCell with typed state and a unique store key
 export const employeeCell = FeatureCell&lt;Employee[]>(
   {
     key: 'employees',
@@ -380,11 +399,13 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
     // Optional add-on behaviors
   ],
   [
+    // Optional add-on controllers 
+    // Register the Max Failures controller to cap consecutive pipeline failures
     withMaxFailuresController
   ]
 );
 
-// Apply max failure configuration during initialization
+// Set the failure threshold to 3 and activate the cell
 employeeCell
   .withMaxFailures({
     maxFailures: 3
@@ -402,7 +423,11 @@ employeeCell
               <sdux-example-viewer-source [displayTabs]="false">
                 <sdux-example-viewer-tab
                   [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
-                  <pre class="code-inline"><code class="language-ts">{{`
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
+Vault();
+
+// Define a FeatureCell with typed state and a unique store key
 export const employeeCell = FeatureCell&lt;Employee[]>(
   {
     key: 'employees',
@@ -412,11 +437,13 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
     // Optional add-on behaviors
   ],
   [
+    // Optional add-on controllers 
+    // Register the Max Failures controller to cap consecutive pipeline failures
     withMaxFailuresController
   ]
 );
 
-// Apply max failure configuration during initialization
+// Set the failure threshold to 3 and activate the cell
 employeeCell
   .withMaxFailures({
     maxFailures: 3

@@ -14,8 +14,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
     </div>
     <header class="docs-header">
       <div class="lead">
-        Registers a package version on the global SDuX debug widget when dev
-        mode is active.<br /><br />
+        Registers a package version on the global SDuX namespace.<br /><br />
       </div>
     </header>
     <section class="section">
@@ -54,8 +53,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 </ul>
               </td>
               <td>
-                Registers a package version on the global SDuX debug widget when
-                dev mode is active.<br /><br />
+                Registers a package version on the global SDuX namespace.<br /><br />
               </td>
             </tr>
           </tbody>

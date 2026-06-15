@@ -166,7 +166,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="diagram-section">
     <div class="section-title">Pipeline</div>
 
     <div class="section-body">
@@ -176,7 +176,6 @@
         deterministic regardless of which Add-ons are enabled.
       </p>
 
-      <h3>Simplified Execution Flow</h3>
       <sdux-diagram
         image="diagrams/2.1/2.1-execution-flow.svg"
         [tooltip]="'Execution Flow'" />
@@ -229,32 +228,6 @@ employeeCell
   <!-- ====================================================== -->
   <!-- RELATED TOPICS -->
   <!-- ====================================================== -->
-  <section class="section">
-    <div class="section-title">Related Topics</div>
-    <div class="section-body">
-      <ul>
-        <li>
-          <a routerLink="/docs/diagrams"><sdux-brand-name /> Diagrams</a>
-        </li>
-        <li>
-          <a routerLink="/docs/pipeline/behaviors/lookup/with-lookup-behavior"
-            >Lookup Behavior</a
-          >
-        </li>
-        <li>
-          <a routerLink="/docs/pipelines">The <sdux-brand-name /> Pipeline</a>
-        </li>
-        <li>
-          <a routerLink="/docs/pipeline/controllers/what-is-a-controller"
-            >What is a Controller?</a
-          >
-        </li>
-        <li>
-          <a routerLink="/docs/pipeline/controllers/what-is-a-behavior"
-            >What is a Behavior?</a
-          >
-        </li>
-      </ul>
-    </div>
-  </section>
+
+  <sdux-pipeline-related-topics />
 </div>

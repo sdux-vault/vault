@@ -71,6 +71,8 @@ describe('f201: Value - Merge with Encrypt and Cache Test', () => {
 
   beforeEach(async () => {
     clearLocalStorage(storageKey);
+    emitted.length = 0;
+
     await TestBed.configureTestingModule({
       providers: [
         provideVaultTesting({
@@ -86,7 +88,8 @@ describe('f201: Value - Merge with Encrypt and Cache Test', () => {
             insights: {
               wantsErrors: true,
               wantsPayload: true,
-              wantsState: true
+              wantsState: true,
+              wantsCandidates: true
             } as InsightConfig
           },
           [
@@ -111,6 +114,7 @@ describe('f201: Value - Merge with Encrypt and Cache Test', () => {
   afterEach(() => {
     stopListening();
     stateSubscription.unsubscribe();
+    testService.clearGlobalErrors();
   });
 
   it('should merge through the entire pipe', async () => {

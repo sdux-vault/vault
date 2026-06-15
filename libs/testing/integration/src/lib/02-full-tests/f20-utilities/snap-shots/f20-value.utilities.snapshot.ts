@@ -6,6 +6,7 @@ export const f20Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -15,6 +16,7 @@ export const f20Snapshot = [
     behaviorKey: 'full-utility::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -24,15 +26,28 @@ export const f20Snapshot = [
     behaviorKey: 'full-utility::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -40,9 +55,10 @@ export const f20Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -50,9 +66,76 @@ export const f20Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -63,8 +146,20 @@ export const f20Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
@@ -72,6 +167,7 @@ export const f20Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -79,10 +175,11 @@ export const f20Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
   },
@@ -92,6 +189,7 @@ export const f20Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -102,6 +200,7 @@ export const f20Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -112,6 +211,7 @@ export const f20Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -122,6 +222,7 @@ export const f20Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -132,6 +233,7 @@ export const f20Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -139,9 +241,21 @@ export const f20Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -149,9 +263,10 @@ export const f20Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -159,9 +274,87 @@ export const f20Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -170,8 +363,20 @@ export const f20Snapshot = [
     id: 'id-removed',
     cell: 'full-utility',
     behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:pipeline-start',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -182,8 +387,20 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:start:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -192,6 +409,7 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -202,8 +420,20 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
     name: 'stage:start:operator',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:operator',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -212,6 +442,7 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
     name: 'stage:end:operator',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -222,8 +453,20 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:start:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -232,6 +475,7 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:end:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -242,8 +486,20 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:start:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -252,6 +508,7 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:end:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -262,8 +519,20 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:start:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -272,6 +541,7 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:end:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -282,8 +552,20 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:start:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:filter',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -292,6 +574,7 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Filter',
     name: 'stage:end:filter',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -302,8 +585,20 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Reducer',
     name: 'stage:start:reducer',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -312,6 +607,7 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Reducer',
     name: 'stage:end:reducer',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -322,8 +618,20 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Reducer',
     name: 'stage:start:reducer',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -332,6 +640,7 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Reducer',
     name: 'stage:end:reducer',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -342,8 +651,20 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Reducer',
     name: 'stage:start:reducer',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:reducer',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -352,6 +673,7 @@ export const f20Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Reducer',
     name: 'stage:end:reducer',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -362,6 +684,7 @@ export const f20Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -372,6 +695,7 @@ export const f20Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -380,8 +704,20 @@ export const f20Snapshot = [
     id: 'id-removed',
     cell: 'full-utility',
     behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:core-state',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -392,6 +728,7 @@ export const f20Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -399,10 +736,11 @@ export const f20Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
   },
@@ -412,6 +750,7 @@ export const f20Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -422,6 +761,7 @@ export const f20Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -432,6 +772,7 @@ export const f20Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -442,6 +783,7 @@ export const f20Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -451,6 +793,7 @@ export const f20Snapshot = [
     behaviorKey: 'full-utility::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -460,15 +803,28 @@ export const f20Snapshot = [
     behaviorKey: 'full-utility::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -476,9 +832,10 @@ export const f20Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -486,9 +843,76 @@ export const f20Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -499,8 +923,20 @@ export const f20Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
@@ -508,6 +944,7 @@ export const f20Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -515,10 +952,11 @@ export const f20Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
   },
@@ -528,6 +966,7 @@ export const f20Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'

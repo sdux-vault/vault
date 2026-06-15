@@ -260,6 +260,45 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
+                <strong>endConductorAttempt</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>cell: string</li>
+                  <li>behaviorKey: string</li>
+                  <li>ctx: Readonly&gt;</li>
+                  <li>payload: unknown</li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Signals the end of a conductor attempt lifecycle event.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>endConductorVote</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>cell: string</li>
+                  <li>behaviorKey: string</li>
+                  <li>ctx: Readonly&gt;</li>
+                  <li>
+                    payload:
+                    <a href="/docs/references/shapes/controller-decision-shape"
+                      >ControllerDecisionShape</a
+                    >
+                  </li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Signals the end of the conductor vote aggregation phase.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <strong>endControllerAttempt</strong>
 
                 <p>inputs:</p>
@@ -282,19 +321,20 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p>inputs:</p>
                 <ul>
                   <li>cell: string</li>
-                  <li>behaviorKey: string</li>
-                  <li>ctx: Readonly&gt;</li>
+                  <li>controllerKey: string</li>
+                  <li>traceId: string</li>
                   <li>
-                    payload:
-                    <a href="/docs/references/shapes/controller-decision-shape"
-                      >ControllerDecisionShape</a
+                    vote:
+                    <a href="/docs/references/types/controller-vote"
+                      >ControllerVote</a
                     >
                   </li>
                 </ul>
                 <p>returns: void</p>
               </td>
               <td>
-                Signals the end of a controller vote lifecycle event.<br /><br />
+                Signals the end of an individual controller vote during attempt
+                evaluation.<br /><br />
               </td>
             </tr>
             <tr>
@@ -711,6 +751,32 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
+                <strong>pipelineCandidate</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>cell: string</li>
+                  <li>behaviorKey: string</li>
+                  <li>ctx: Readonly&gt;</li>
+                  <li>
+                    stage:
+                    <a href="/docs/references/types/pipeline-stage"
+                      >PipelineStage</a
+                    >
+                  </li>
+                  <li>value: T | undefined</li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Emits a pipeline candidate capturing the in-flight state value
+                after a pipeline stage completes. These events are used
+                exclusively by the State Diff View in DevTools and are not
+                displayed in the standard trace detail timeline.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <strong>registerCell</strong>
 
                 <p>inputs:</p>
@@ -735,7 +801,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
-                <strong>restartControllerAttempt</strong>
+                <strong>restartConductorAttempt</strong>
 
                 <p>inputs:</p>
                 <ul>
@@ -747,7 +813,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p>returns: void</p>
               </td>
               <td>
-                Records that a controller attempt was restarted.<br /><br />
+                Records that a conductorattempt was restarted.<br /><br />
               </td>
             </tr>
             <tr>
@@ -834,6 +900,38 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
+                <strong>startConductorAttempt</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>cell: string</li>
+                  <li>behaviorKey: string</li>
+                  <li>ctx: Readonly&gt;</li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Signals the start of a conductor attempt lifecycle event.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>startConductorVote</strong>
+
+                <p>inputs:</p>
+                <ul>
+                  <li>cell: string</li>
+                  <li>behaviorKey: string</li>
+                  <li>ctx: Readonly&gt;</li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Signals the start of the conductor vote aggregation phase.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <strong>startControllerAttempt</strong>
 
                 <p>inputs:</p>
@@ -855,13 +953,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p>inputs:</p>
                 <ul>
                   <li>cell: string</li>
-                  <li>behaviorKey: string</li>
-                  <li>ctx: Readonly&gt;</li>
+                  <li>controllerKey: string</li>
+                  <li>traceId: string</li>
                 </ul>
                 <p>returns: void</p>
               </td>
               <td>
-                Signals the start of a controller vote lifecycle event.<br /><br />
+                Signals the start of an individual controller vote during
+                attempt evaluation.<br /><br />
               </td>
             </tr>
             <tr>

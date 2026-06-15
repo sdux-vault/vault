@@ -59,6 +59,7 @@ describe('f200: Value - Replace Test', () => {
   afterEach(() => {
     stopListening();
     clearLocalStorage(storageKey);
+    testService.clearGlobalErrors();
   });
 
   beforeEach(async () => {

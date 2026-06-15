@@ -1,0 +1,21 @@
+@if (isLicensed()) {
+  <p class="tab-description">
+    The Pipeline Flow represents the hierarchical structure of the data
+    pipeline. Timing is the sum of each stage's individual execution. Because
+    concurrent controller votes are summed independently, child totals may
+    exceed a parent's wall-clock duration.
+  </p>
+  @if (resolvedCellKey(); as traceCellKey) {
+    <div class="pipeline-flow-container">
+      <sdux-devtools-pipeline-flow [cellKey]="traceCellKey" [trace]="trace()">
+      </sdux-devtools-pipeline-flow>
+    </div>
+  } @else {
+    <p class="pipeline-empty">Registry data not available for this cell.</p>
+  }
+} @else {
+  <sdux-upsell-notice
+    headline="Unlock the full pipeline architecture view with a"
+    body="Explore the hierarchical data flow, see per-behavior timing, and understand exactly how your state transforms from ingress to snapshot.">
+  </sdux-upsell-notice>
+}

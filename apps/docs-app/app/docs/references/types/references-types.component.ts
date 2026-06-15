@@ -36,6 +36,7 @@ import { InterceptorStateTypeComponent } from './interceptor-state-type.componen
 import { LogLevelTypeComponent } from './log-level-type.component';
 import { OperationTypeComponent } from './operation-type.component';
 import { PipelinePersistValueComponent } from './pipeline-persist-value.component';
+import { PipelineStageComponent } from './pipeline-stage.component';
 import { PipelineUpstreamValueComponent } from './pipeline-upstream-value.component';
 import { PipelineValueComponent } from './pipeline-value.component';
 import { ReducerFunctionComponent } from './reducer-function.component';
@@ -48,6 +49,8 @@ import { VaultErrorCallbackComponent } from './vault-error-callback.component';
 import { VaultErrorKindTypeComponent } from './vault-error-kind-type.component';
 import { VaultErrorNameTypeComponent } from './vault-error-name-type.component';
 import { VaultErrorUsageKindTypeComponent } from './vault-error-usage-kind-type.component';
+import { VaultLicensePayloadTypeComponent } from './vault-license-payload-type.component';
+import { VaultRegistrationLicenseStatusTypeComponent } from './vault-registration-license-status-type.component';
 
 @Component({
   selector: 'sdux-references-types-splashpage',
@@ -83,6 +86,7 @@ import { VaultErrorUsageKindTypeComponent } from './vault-error-usage-kind-type.
     LogLevelTypeComponent,
     OperationTypeComponent,
     PipelinePersistValueComponent,
+    PipelineStageComponent,
     PipelineUpstreamValueComponent,
     PipelineValueComponent,
     ReducerFunctionComponent,
@@ -94,7 +98,9 @@ import { VaultErrorUsageKindTypeComponent } from './vault-error-usage-kind-type.
     VaultErrorCallbackComponent,
     VaultErrorKindTypeComponent,
     VaultErrorNameTypeComponent,
-    VaultErrorUsageKindTypeComponent
+    VaultErrorUsageKindTypeComponent,
+    VaultLicensePayloadTypeComponent,
+    VaultRegistrationLicenseStatusTypeComponent
   ],
   templateUrl: './references-types.component.html',
   styleUrls: ['../../scss/example.scss']

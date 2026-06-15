@@ -1,0 +1,38 @@
+<div class="demo-state-panels">
+  <div class="state-container">
+    <div class="label">Star Wars FeatureCell State</div>
+    <div class="hint">Final state after filters and reducers run</div>
+    @if (state.isLoading()) {
+      <div class="status">Loading...</div>
+    } @else if (state.error()) {
+      <textarea class="data-textarea error" readonly>{{
+        state.error() | json
+      }}</textarea>
+    } @else if (state.hasValue()) {
+      <textarea class="data-textarea" readonly>{{
+        state.value() | json
+      }}</textarea>
+    } @else {
+      <textarea class="data-textarea" readonly>No state</textarea>
+    }
+  </div>
+</div>
+
+<div class="demo-actions">
+  <button
+    type="button"
+    class="demo-btn primary"
+    (click)="loadSample()"
+    matTooltip="Don't click too fast">
+    Load Sample State
+  </button>
+  <button type="button" class="demo-btn" (click)="resetState()">
+    Reset State
+  </button>
+  <button type="button" class="demo-btn" (click)="toggleLoading()">
+    Loading ({{ isLoading() }})
+  </button>
+  <button type="button" class="demo-btn" (click)="toggleError()">
+    Error ({{ hasError() }})
+  </button>
+</div>

@@ -1,5 +1,4 @@
-import { Component, computed, input, ViewEncapsulation } from '@angular/core';
-import { MatTooltip } from '@angular/material/tooltip';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PipelineRoutingDirective } from '../../docs/pipeline/directives/pipeline-routing.directive';
 import { PipelineRelatedTopicComponent } from '../../docs/related-topic/related-topic.component';
@@ -12,7 +11,7 @@ import { PipelineRelatedTopicComponent } from '../../docs/related-topic/related-
 @Component({
   selector: 'sdux-blog-layout',
   standalone: true,
-  imports: [RouterLink, MatTooltip, PipelineRelatedTopicComponent],
+  imports: [RouterLink, PipelineRelatedTopicComponent],
   templateUrl: './blog-layout.component.html',
   styleUrls: ['./blog-layout.component.scss', '../../docs/scss/example.scss'],
   encapsulation: ViewEncapsulation.None
@@ -22,15 +21,4 @@ export class BlogLayoutComponent extends PipelineRoutingDirective {
   readonly date = input.required<string>();
   readonly pillar = input.required<string>();
   readonly readingTime = input.required<string>();
-
-  readonly #pillarLabels: Record<string, string> = {
-    TA: 'Technical Authority',
-    ED: 'Educational Series',
-    SP: 'Social Proof/Momentum',
-    CE: 'Community Engagement'
-  };
-
-  readonly pillarLabel = computed(
-    () => this.#pillarLabels[this.pillar()] ?? this.pillar()
-  );
 }

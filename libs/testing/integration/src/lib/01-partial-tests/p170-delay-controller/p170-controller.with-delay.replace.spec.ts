@@ -174,7 +174,7 @@ describe('p170: Controller - Delay Test - Replace', () => {
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toBeNull();
 
-    jasmine.clock().tick(1_000);
+    jasmine.clock().tick(10_000);
     await vaultSettled(key);
 
     // Assert — both withDelay applied in order

@@ -5,10 +5,11 @@ import {
   inject,
   InjectionToken
 } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DevtoolsMainPipelinePanelComponent } from '../panels/pipeline/main/devtools-main-pipeline-panel.component';
-import { DevtoolsService } from '../services/devtools.service';
+import { VaultOverviewComponent } from '../reports/vault-overview/vault-overview.component';
+import { DevtoolsAggregateService } from '../services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../services/devtools-logging.service';
+import { DevtoolsRegistryService } from '../services/registry/devtools-registry.service';
 
 /**
  * Resolves the extension version from the Chrome manifest API.
@@ -32,7 +33,7 @@ export const EXTENSION_VERSION = new InjectionToken<string>(
 );
 
 /**
- * Root splash-page component for the ngSDuX DevTools application.
+ * Root splash-page component for the SDuX Vault DevTools application.
  *
  * This component renders the primary tabbed interface for viewing
  * pipeline and queue events emitted by the Vault instrumentation layer.
@@ -46,32 +47,35 @@ export const EXTENSION_VERSION = new InjectionToken<string>(
 @Component({
   selector: 'sdux-devtools-splash-page',
   standalone: true,
-  imports: [
-    MatTabsModule,
-    MatTooltipModule,
-    DevtoolsMainPipelinePanelComponent
-  ],
+  imports: [MatTooltipModule, VaultOverviewComponent],
   templateUrl: './devtools-splash-page.component.html',
-  styleUrl: './devtools-splash-page.component.scss',
+  styleUrls: [
+    '../reports/scss/reports-common.scss',
+    './devtools-splash-page.component.scss'
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DevToolsSplashPageComponent {
   /** Internal service providing access to DevTools event streams. */
-  private devtools = inject(DevtoolsService);
+  private devtools = inject(DevtoolsLoggingService);
 
   /** Extension manifest version, resolved via injection token. */
   readonly version = inject(EXTENSION_VERSION);
+
+  /**
+   * Eagerly injects the aggregate service so it begins buffering
+   * pipeline events from application start.
+   */
+  constructor() {
+    // Eagerly instantiate aggregate service so it buffers from app start.
+    inject(DevtoolsAggregateService);
+    // Eagerly instantiate registry service so config is available immediately.
+    inject(DevtoolsRegistryService);
+  }
 
   /** Reactive list of pipeline events used to populate the UI. */
   readonly events = computed(() => this.devtools.events());
 
   /** Total number of pipeline events currently stored. */
   readonly totalEvents = computed(() => this.events()?.length);
-
-  /**
-   * Clears the current FeatureCell-backed pipeline event history.
-   */
-  clearEvents(): void {
-    this.devtools.clearEvents();
-  }
 }

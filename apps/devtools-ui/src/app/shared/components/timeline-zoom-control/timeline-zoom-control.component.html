@@ -1,0 +1,23 @@
+<div class="zoom-controls">
+  <button
+    type="button"
+    class="zoom-button"
+    [disabled]="!canZoomOut()"
+    (click)="zoomOut()"
+    aria-label="Zoom out"
+    matTooltip="Zoom out">
+    <mat-icon>remove</mat-icon>
+  </button>
+  <span class="zoom-label" [matTooltip]="'Current zoom: ' + zoomLabel()">
+    {{ zoomLabel() }}
+  </span>
+  <button
+    type="button"
+    class="zoom-button"
+    [disabled]="!canZoomIn()"
+    (click)="zoomIn()"
+    aria-label="Zoom in"
+    matTooltip="Zoom in">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,72 @@
+@if (event()) {
+  <div
+    class="event-row-header"
+    [class.event-row-error]="!!event().error"
+    [class.event-row-selected]="selected()"
+    matTooltip="Click for more details"
+    role="button"
+    tabindex="0"
+    (click)="selectEvent.emit(event())"
+    (keydown.enter)="selectEvent.emit(event())"
+    (keydown.space)="selectEvent.emit(event()); $event.preventDefault()">
+    <div class="counter">
+      {{ totalEvents() }}
+    </div>
+
+    <div class="row-details">
+      <div class="row-primary">
+        <!-- Behavior key -->
+        <div class="cell">{{ displayKey() }}</div>
+
+        <!-- Badge -->
+        <div class="behavior-pills {{ event().type }}">
+          <span class="pill">{{ event().type | uppercase }}</span>
+          @if (event().type === 'controller' || event().type === 'stage') {
+            <span class="pill">{{ behaviorName() }}</span>
+          }
+        </div>
+
+        <div class="indicators-ts">
+          <div class="indicators">
+            @if (event().state?.hasValue) {
+              <span class="icon active" matTooltip="State" aria-hidden="true"
+                >&#9679;</span
+              >
+            } @else {
+              <span class="icon-spacer" aria-hidden="true"></span>
+            }
+            @if (event().payload) {
+              <span class="icon payload" matTooltip="Payload" aria-hidden="true"
+                >&#9998;</span
+              >
+            } @else {
+              <span class="icon-spacer" aria-hidden="true"></span>
+            }
+            @if (event().error) {
+              <span class="icon error" matTooltip="Error" aria-hidden="true"
+                >&#9888;</span
+              >
+            } @else {
+              <span class="icon-spacer" aria-hidden="true"></span>
+            }
+            @if (event().candidate) {
+              <span
+                class="icon candidate"
+                matTooltip="Candidate"
+                aria-hidden="true"
+                >&#9670;</span
+              >
+            } @else {
+              <span class="icon-spacer" aria-hidden="true"></span>
+            }
+          </div>
+
+          <!-- Time -->
+          <div class="ts">
+            {{ event().timestamp | date: 'HH:mm:ss.SSS' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

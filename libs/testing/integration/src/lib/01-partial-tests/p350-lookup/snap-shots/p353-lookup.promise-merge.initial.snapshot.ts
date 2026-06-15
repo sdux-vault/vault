@@ -6,6 +6,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -15,6 +16,7 @@ export const p353Snapshot = [
     behaviorKey: 'partial-lookup::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -24,15 +26,28 @@ export const p353Snapshot = [
     behaviorKey: 'partial-lookup::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
   {
     id: 'id-removed',
     cell: 'partial-lookup',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -40,9 +55,10 @@ export const p353Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-lookup',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -50,9 +66,76 @@ export const p353Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-lookup',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -63,8 +146,20 @@ export const p353Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
@@ -72,6 +167,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:set-initial-value',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -82,6 +178,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:set-initial-value',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -90,8 +187,20 @@ export const p353Snapshot = [
     id: 'id-removed',
     cell: 'partial-lookup',
     behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:pipeline-start',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -102,8 +211,20 @@ export const p353Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:start:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -112,6 +233,7 @@ export const p353Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -122,6 +244,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -132,6 +255,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -140,8 +264,20 @@ export const p353Snapshot = [
     id: 'id-removed',
     cell: 'partial-lookup',
     behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:core-state',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -152,6 +288,7 @@ export const p353Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -159,10 +296,11 @@ export const p353Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-lookup',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
   },
@@ -172,6 +310,7 @@ export const p353Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -182,6 +321,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -192,6 +332,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -202,6 +343,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -211,6 +353,7 @@ export const p353Snapshot = [
     behaviorKey: 'partial-lookup::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -220,15 +363,28 @@ export const p353Snapshot = [
     behaviorKey: 'partial-lookup::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
   {
     id: 'id-removed',
     cell: 'partial-lookup',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -236,9 +392,10 @@ export const p353Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-lookup',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -246,9 +403,76 @@ export const p353Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-lookup',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -259,8 +483,20 @@ export const p353Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
   },
   {
     id: 'id-removed',
@@ -268,6 +504,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:set-initial-value',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -278,6 +515,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:set-initial-value',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -286,8 +524,20 @@ export const p353Snapshot = [
     id: 'id-removed',
     cell: 'partial-lookup',
     behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:pipeline-start',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:start:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -298,8 +548,20 @@ export const p353Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:start:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:resolve',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
@@ -308,6 +570,7 @@ export const p353Snapshot = [
     behaviorKey: 'SDUX::Behavior::Core::Value',
     name: 'stage:end:resolve',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -318,6 +581,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'lifecycle:end:replace',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -328,6 +592,7 @@ export const p353Snapshot = [
     behaviorKey: 'vault-orchestrator',
     name: 'stage:start:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -336,8 +601,20 @@ export const p353Snapshot = [
     id: 'id-removed',
     cell: 'partial-lookup',
     behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:core-state',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-lookup',
+    behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     traceId: 'trace-id-removed'
@@ -348,6 +625,7 @@ export const p353Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -355,10 +633,11 @@ export const p353Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-lookup',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
     boundary: 'end',
     traceId: 'trace-id-removed'
   },
@@ -368,6 +647,7 @@ export const p353Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'

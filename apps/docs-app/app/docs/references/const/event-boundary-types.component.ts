@@ -39,6 +39,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
           <tbody>
             <tr>
               <td class="column-300">
+                <strong>Candidate</strong>
+              </td>
+              <td class="column-auto">
+                <code>candidate</code>
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>End</strong>
               </td>
               <td class="column-auto">

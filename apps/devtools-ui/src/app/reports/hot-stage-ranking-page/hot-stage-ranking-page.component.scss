@@ -1,0 +1,47 @@
+@use '../scss/reports-common';
+@use 'global' as global;
+
+.report-page .view-toggle {
+  width: 170px;
+
+  .toggle-btn {
+    width: 85px;
+  }
+}
+
+.help-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: global.$spacing-xs;
+  margin-left: global.$spacing-sm;
+  display: flex;
+  align-items: center;
+}
+
+.help-icon {
+  width: global.$font-size-sm;
+  height: global.$font-size-sm;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.help-section {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-sm;
+  padding: global.$spacing-md;
+  background: global.$sdux-surface-raised;
+  border-radius: global.$border-radius-sm;
+  border: 1px solid global.$sdux-surface-outline;
+}
+
+.help-text {
+  margin: 0;
+  font-size: global.$font-size-sm;
+  color: global.$sdux-text-secondary;
+  line-height: 1.5;
+}

@@ -3,15 +3,31 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
+import { provideRouter, withHashLocation } from '@angular/router';
 import {
+  withAes256EncryptBehavior,
   withArrayPushMergeBehavior,
-  withDelayController
+  withDelayController,
+  withLocalStoragePersistBehavior,
+  withLookupBehavior,
+  withObjectDeepMergeBehavior,
+  withQueryBehavior,
+  withStepwiseController,
+  withThrottleController
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
-import { DEVTOOLS_LOGGING_KEY_CONSTANT } from '@sdux-vault/shared';
-import { DevtoolsService } from '../../src/app/services/devtools.service';
+import {
+  DEVTOOLS_AGGREGATE_KEY_CONSTANT,
+  DEVTOOLS_LOGGING_KEY_CONSTANT
+} from '@sdux-vault/shared';
+import { withTabSyncController } from '../../../../libs/core/src/public-api';
+import { routes } from '../../src/app/devtools.app.routes';
+import { DevtoolsAggregateService } from '../../src/app/services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../../src/app/services/devtools-logging.service';
 import { EXTENSION_VERSION } from '../../src/app/splash-page/devtools-splash-page.component';
-import { DemoExampleService } from './demo-example.service';
+import { environment } from '../environments/environment';
+import { StarTrekExampleService } from './feature-cells/star-trek/star-trek-example.service';
+import { StarWarsService } from './feature-cells/star-wars/service/star-wars.service';
 
 /**
  * Application configuration for the DevTools demo harness.
@@ -25,22 +41,60 @@ export const demoConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     { provide: EXTENSION_VERSION, useValue: '0.0.0-demo' },
 
-    provideVault({ devMode: true, logLevel: 'error', bypassLicensing: true }),
+    provideRouter(routes, withHashLocation()),
+
+    provideVault({
+      devMode: true,
+      logLevel: 'error',
+      bypassLicensing: false,
+      licenses: [
+        Object({
+          licenseId: environment.licenseId,
+          payload: environment.licensePayload
+        })
+      ]
+    }),
 
     provideFeatureCell(
-      DevtoolsService,
-      { key: DEVTOOLS_LOGGING_KEY_CONSTANT, initialState: [] },
+      DevtoolsLoggingService,
+      {
+        key: DEVTOOLS_LOGGING_KEY_CONSTANT,
+        initialState: []
+      },
       [withArrayPushMergeBehavior]
     ),
 
     provideFeatureCell(
-      DemoExampleService,
+      DevtoolsAggregateService,
       {
-        key: 'demo-example-feature-cell-key',
+        key: DEVTOOLS_AGGREGATE_KEY_CONSTANT,
         initialState: []
       },
-      [],
-      [withDelayController]
+      [withArrayPushMergeBehavior, withQueryBehavior]
+    ),
+
+    provideFeatureCell(
+      StarWarsService,
+      {
+        key: 'starwars-feature-cell-key',
+        initialState: []
+      },
+      [
+        withLookupBehavior,
+        withLocalStoragePersistBehavior,
+        withAes256EncryptBehavior
+      ],
+      [withDelayController, withStepwiseController, withTabSyncController]
+    ),
+
+    provideFeatureCell(
+      StarTrekExampleService,
+      {
+        key: 'startrek-feature-cell-key',
+        initialState: {}
+      },
+      [withObjectDeepMergeBehavior],
+      [withThrottleController]
     )
   ]
 };

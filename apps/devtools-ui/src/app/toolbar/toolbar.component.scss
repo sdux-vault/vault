@@ -1,0 +1,62 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: global.$spacing-sm;
+  padding-bottom: global.$spacing-sm;
+  border-bottom: 1px solid global.$sdux-surface-outline;
+
+  .toolbar-brand {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+
+    .toolbar-logo-link {
+      display: flex;
+      text-decoration: none;
+    }
+
+    .toolbar-logo {
+      width: 120px;
+    }
+
+    .toolbar-version {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-size: global.$font-size-md;
+
+      @media (max-width: global.$breakpoint-md) {
+        display: none;
+      }
+    }
+  }
+
+  .toolbar-menu-btn {
+    @include global.sdux-icon-button(36px, transparent);
+    color: global.$sdux-primary-light;
+
+    &:hover {
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
+    }
+
+    .menu-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.menu-icon-img {
+  width: 24px;
+  height: 24px;
+  margin-right: global.$spacing-md;
+  vertical-align: middle;
+}

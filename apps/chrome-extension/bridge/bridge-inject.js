@@ -74,8 +74,8 @@
             id: 'dev-tools',
             wantsState: true,
             wantsPayload: true,
-            wantsErrors: true,
-            wantsQueue: true
+            wantsCandidates: true,
+            wantsErrors: true
           });
         }
       } catch (e) {
@@ -93,11 +93,63 @@
               type: 'VAULT_PIPELINE_EVENT',
               event
             },
-            '*'
+            window.location.origin
           );
         });
       }
+
+      //
+      // VAULT CONFIG (versions + registry)
+      //
+      forwardVaultConfig();
     }
+  }
+
+  /**
+   * Reads versions and registry from the global SDuX namespace and
+   * forwards them to the DevTools panel via postMessage.
+   */
+  function forwardVaultConfig() {
+    var versions = window?.sdux?.versions ?? {};
+    var registry = null;
+
+    if (typeof window?.sdux?.getRegistry === 'function') {
+      try {
+        var raw = window.sdux.getRegistry();
+        if (raw) {
+          registry = Array.from(raw.entries()).map(function (entry) {
+            var cell = entry[1];
+            return {
+              key: cell.key,
+              behaviorsRegistered: !!cell.behaviorsRegistered,
+              controllersRegistered: !!cell.controllersRegistered,
+              fluentApis: cell.fluentApis ?? null,
+              behaviors: cell.behaviors
+                ? Array.from(cell.behaviors.values())
+                : [],
+              controllers: cell.controllers
+                ? Array.from(cell.controllers.values())
+                : []
+            };
+          });
+        }
+      } catch (e) {
+        console.error('[Vault DevTools] Failed to serialize registry:', e);
+      }
+    }
+
+    window.postMessage(
+      {
+        source: 'vault-devtools',
+        type: 'VAULT_CONFIG',
+        config: {
+          versions: versions,
+          registry: registry,
+          license: window?.sdux?.license ?? null
+        }
+      },
+      window.location.origin
+    );
   }
 
   /**

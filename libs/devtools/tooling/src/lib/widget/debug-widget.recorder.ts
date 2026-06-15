@@ -161,7 +161,6 @@ export class DebugWidgetRecorder {
       ...event,
 
       sequenceNumber: ++this.sequence,
-      monotonicTimestamp: monotonic,
       stageDurationMs,
       stackHash,
       scheduler,

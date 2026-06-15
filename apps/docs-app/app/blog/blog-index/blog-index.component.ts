@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { MatTooltip } from '@angular/material/tooltip';
+import { BLOG_ENTRIES } from './constants/blog-entries.constant';
 
 /**
  * Blog index page listing all published blog posts.
@@ -8,9 +8,13 @@ import { MatTooltip } from '@angular/material/tooltip';
 @Component({
   selector: 'sdux-blog-index',
   standalone: true,
-  imports: [RouterLink, MatTooltip],
+  imports: [RouterLink],
   templateUrl: './blog-index.component.html',
   styleUrls: ['./blog-index.component.scss', '../../docs/scss/example.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class BlogIndexComponent {}
+export class BlogIndexComponent {
+  readonly entries = [...BLOG_ENTRIES].sort((a, b) =>
+    b.date.localeCompare(a.date)
+  );
+}

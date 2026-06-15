@@ -43,6 +43,8 @@ export interface RelatedTopicRegistryCategoryShape {
 
   persist: RelatedTopicCategoryShape;
 
+  'pipeline-overview': RelatedTopicCategoryShape;
+
   'provide-feature-cell': RelatedTopicCategoryShape;
 
   'provide-vault': RelatedTopicCategoryShape;

@@ -1,0 +1,219 @@
+@if (isLicensed()) {
+  <div class="report-page">
+    <sdux-header-section
+      [showChevron]="false"
+      ariaLabel="Toggle extension inspector help">
+      <sdux-help-toggle header ariaLabel="Toggle extension inspector help">
+        <h2 helpHeading>Extension Inspector</h2>
+        <p class="help-text">
+          Filter all recorded pipeline data to a single controller or behavior
+          key for targeted performance analysis.
+        </p>
+        <ul>
+          <li>
+            Select a cell and extension key to isolate a single controller or
+            behavior
+          </li>
+          <li>View execution count, average, minimum, and maximum duration</li>
+          <li>
+            See percentage of total trace time consumed by the selected key
+          </li>
+          <li>Per-trace breakdown of every recorded execution</li>
+          <li>
+            Detail view with pipeline flow and candidate snapshot inspection
+          </li>
+          <li>Export extension data as structured JSON</li>
+          <li>
+            <strong>Keyboard:</strong> press <kbd>j</kbd> or <kbd>←</kbd> for
+            previous execution, <kbd>l</kbd> or <kbd>→</kbd> for next.
+          </li>
+        </ul>
+      </sdux-help-toggle>
+    </sdux-header-section>
+
+    <section class="action-bar">
+      <mat-select
+        class="cell-filter"
+        [value]="selectedCellKey()"
+        (selectionChange)="onCellKeyChange($event.value)"
+        aria-label="Filter by cell">
+        @for (key of cellKeys(); track key) {
+          <mat-option [value]="key">{{ key }}</mat-option>
+        }
+      </mat-select>
+
+      @if (selectedCellKey()) {
+        <mat-select
+          class="cell-filter extension-filter"
+          [value]="inspector.selectedKey()"
+          (selectionChange)="onKeyChange($event.value)"
+          placeholder="Select an extension..."
+          aria-label="Select extension key">
+          @for (key of inspector.extensionKeys(); track key) {
+            <mat-option [value]="key">{{ formatKey(key) }}</mat-option>
+          }
+        </mat-select>
+      }
+
+      <div class="sdux-container-spacer"></div>
+
+      <div class="meta">
+        <sdux-export-button
+          [data]="inspector.keyDurations()"
+          filename="extension-inspector"
+          [label]="
+            'Download ' + (inspector.selectedKey() || 'extension') + ' data'
+          ">
+        </sdux-export-button>
+
+        <sdux-devtools-reset-button
+          (click)="reset()"></sdux-devtools-reset-button>
+      </div>
+    </section>
+
+    <sdux-empty-state></sdux-empty-state>
+
+    @if (inspector.selectedKey()) {
+      <section class="summary-stats">
+        <div class="stat-group">
+          <div class="stat">
+            <span class="stat-value">{{ inspector.executionCount() }}</span>
+            <span class="stat-label">Executions</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value"
+              >{{ inspector.avgDuration().toFixed(1) }}ms</span
+            >
+            <span class="stat-label">Avg Duration</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value"
+              >{{ inspector.minDuration().toFixed(1) }}ms</span
+            >
+            <span class="stat-label">Min Duration</span>
+          </div>
+        </div>
+        <div class="stat-group">
+          <div class="stat">
+            <span class="stat-value"
+              >{{ inspector.maxDuration().toFixed(1) }}ms</span
+            >
+            <span class="stat-label">Max Duration</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value"
+              >{{ inspector.avgTracePercent().toFixed(1) }}%</span
+            >
+            <span class="stat-label">Avg Trace %</span>
+          </div>
+          <div class="stat">
+            <button
+              type="button"
+              class="view-details-btn sdux-button"
+              (click)="openDetail()"
+              matTooltip="View pipeline flow and event details">
+              View Details
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div class="inspector-layout">
+        <div class="inspector-content">
+          <sdux-inspector-timeline />
+
+          @if (inspector.selectedExecution(); as exec) {
+            <sdux-header-section
+              ariaLabel="Toggle candidate snapshots"
+              [(expanded)]="stateExpanded">
+              <h3 header>Candidate Snapshots</h3>
+              <div
+                class="state-navigation"
+                sduxLeftRightNavigation
+                (previous)="inspector.previousExecution()"
+                (next)="inspector.nextExecution()">
+                <nav class="pair-nav">
+                  <button
+                    type="button"
+                    class="sdux-button"
+                    [disabled]="!inspector.hasPreviousExecution()"
+                    (click)="inspector.previousExecution()"
+                    matTooltip="Navigate to previous execution"
+                    aria-label="Previous execution">
+                    ← <span class="nav-label">Previous Execution</span>
+                  </button>
+                  <span class="pair-counter" aria-live="polite">
+                    Execution {{ inspector.selectedExecutionIndex() + 1 }} of
+                    {{ inspector.executionCount() }}
+                  </span>
+                  <button
+                    type="button"
+                    class="sdux-button"
+                    [disabled]="!inspector.hasNextExecution()"
+                    (click)="inspector.nextExecution()"
+                    matTooltip="Navigate to next execution"
+                    aria-label="Next execution">
+                    <span class="nav-label">Next Execution</span> →
+                  </button>
+                </nav>
+
+                @if (candidateTableConfigs().length > 0) {
+                  @for (config of candidateTableConfigs(); track $index) {
+                    @if (config.standalone) {
+                      <sdux-state-table-view
+                        [beforeLabel]="config.label"
+                        [beforeValue]="config.beforeValue"
+                        afterLabel=""
+                        [afterValue]="config.afterValue"
+                        [singleTable]="true" />
+                    } @else {
+                      <sdux-state-table-view
+                        beforeLabel=""
+                        [beforeValue]="config.beforeValue"
+                        [afterLabel]="config.label"
+                        [afterValue]="config.afterValue"
+                        [afterOnly]="true"
+                        [showChangedOnly]="showChangedOnly()"
+                        (toggleChangedOnly)="
+                          showChangedOnly.set(!showChangedOnly())
+                        " />
+                    }
+                  }
+                } @else {
+                  <p class="no-state">
+                    No candidate snapshots available for this execution.
+                  </p>
+                }
+              </div>
+            </sdux-header-section>
+          }
+        </div>
+
+        @if (showDetail()) {
+          <aside class="detail-pane">
+            <sdux-devtools-detail-pane
+              [title]="
+                formatKey(inspector.selectedKey()) +
+                ' — Execution ' +
+                (inspector.selectedExecutionIndex() + 1)
+              "
+              (closeDetail)="closeDetail()">
+              <h4 class="section-heading">Pipeline Flow</h4>
+              <sdux-devtools-pipeline-flow [cellKey]="selectedCellKey()" />
+
+              @for (event of inspector.candidateEvents(); track event.id) {
+                <sdux-event-detail
+                  [event]="event"
+                  (closeDetail)="closeDetail()" />
+              }
+            </sdux-devtools-detail-pane>
+          </aside>
+        }
+      </div>
+    }
+  </div>
+} @else {
+  <sdux-upsell-notice
+    headline="Extension Inspector"
+    body="Inspect how your custom controllers and behaviors perform across all recorded traces with duration statistics and state comparison." />
+}

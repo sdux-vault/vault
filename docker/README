@@ -6,6 +6,7 @@ sudo /opt/bitnami/ctlscript.sh stop apache;
 sudo certbot certonly --standalone --expand \
   -d sdux-vault.com \
   -d www.sdux-vault.com \
+  -d go.sdux-vault.com \
   -d api.sdux-vault.com \
   -d backup.sdux-vault.com \
   -d api.backup.sdux-vault.com \

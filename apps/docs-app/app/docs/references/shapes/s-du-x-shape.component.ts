@@ -50,6 +50,50 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
+                <strong>getRegistry?</strong>
+
+                <p class="type">type: function</p>
+              </td>
+              <td class="column-auto">
+                Returns a read-only snapshot of the
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                registry.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
+                <strong>license?</strong>
+
+                <p class="type">
+                  type:
+                  <a href="/docs/references/shapes/vault-license-payload-shape"
+                    >VaultLicensePayloadShape</a
+                  >
+                </p>
+              </td>
+              <td class="column-auto">
+                Verified license payload, populated after successful token
+                verification.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
+                <strong>replay?</strong>
+
+                <p class="type">type: literal type</p>
+              </td>
+              <td class="column-auto">
+                DevTools replay API for accessing live
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                instances.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>vaultEventBus?</strong>
 
                 <p class="type">
@@ -76,6 +120,16 @@ import { Component, ViewEncapsulation } from '@angular/core';
               </td>
               <td class="column-auto">
                 Global Vault monitor instance.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
+                <strong>versions?</strong>
+
+                <p class="type">type: Record</p>
+              </td>
+              <td class="column-auto">
+                Registered package versions keyed by npm package name.<br /><br />
               </td>
             </tr>
           </tbody>

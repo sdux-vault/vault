@@ -1,0 +1,561 @@
+@use 'global' as global;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.report-page {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+  padding-bottom: global.$spacing-2xl;
+  margin-right: global.$spacing-sm;
+
+  sdux-header-section {
+    margin-bottom: 0;
+  }
+
+  /* ─── HEADER ─── */
+
+  .header {
+    display: flex;
+    align-items: center;
+
+    h2 {
+      margin: 0;
+      font-size: global.$font-size-lg;
+      font-weight: global.$font-weight-bold;
+      color: global.$sdux-text-primary;
+    }
+  }
+
+  /* ─── ACTION BAR ─── */
+
+  .action-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: global.$spacing-sm;
+
+    .cell-filter {
+      width: 250px;
+    }
+
+    .trace-filter {
+      width: 250px;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-sm;
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: global.$spacing-sm;
+
+      .cell-filter,
+      .trace-filter {
+        width: calc(100% - #{global.$spacing-md});
+      }
+
+      .title {
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .meta {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .view-toggle {
+    display: flex;
+    width: 110px;
+
+    .toggle-btn {
+      @include global.sdux-text(
+        global.$sdux-text-secondary,
+        global.$font-weight-semibold
+      );
+      font-family: global.$sdux-font-family;
+      font-size: global.$font-size-sm;
+      width: 55px;
+      height: global.$button-height;
+      padding: global.$spacing-xs global.$spacing-sm;
+      background: transparent;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: 0;
+      cursor: pointer;
+
+      &:first-child {
+        border-radius: global.$border-radius-sm 0 0 global.$border-radius-sm;
+      }
+
+      &:last-child {
+        border-radius: 0 global.$border-radius-sm global.$border-radius-sm 0;
+      }
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+
+      &:hover {
+        @include global.sdux-text(
+          global.$sdux-text-white,
+          global.$font-weight-semibold
+        );
+        background-color: global.$sdux-surface-outline;
+        transform: translateY(-2px);
+        box-shadow: global.$sdux-shadow-hover;
+      }
+
+      &:active {
+        transform: scale(0.97);
+        box-shadow: global.$sdux-shadow-active;
+      }
+
+      &.active {
+        @include global.sdux-text(
+          global.$sdux-text-white,
+          global.$font-weight-semibold
+        );
+        background-color: global.$sdux-primary-base;
+      }
+    }
+  }
+
+  /* ─── STATUS CLASSES ─── */
+
+  .status-success {
+    color: global.$sdux-success-base;
+  }
+
+  .status-error {
+    color: global.$sdux-accent-base;
+  }
+
+  .status-denied {
+    color: global.$sdux-warn-base;
+  }
+
+  .status-orphaned {
+    color: global.$sdux-warn-dark;
+  }
+
+  .status-aborted {
+    color: global.$sdux-text-secondary;
+  }
+
+  /* ─── EMPTY STATE ─── */
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: global.$spacing-xl global.$spacing-lg;
+    color: global.$sdux-text-secondary;
+    font-size: global.$font-size-sm;
+    text-align: center;
+
+    .empty-state-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      margin-bottom: global.$spacing-md;
+      color: global.$sdux-primary-light;
+      opacity: 0.6;
+    }
+
+    .empty-state-text {
+      margin: 0;
+      font-size: global.$font-size-sm;
+      line-height: 1.6;
+      max-width: 500px;
+    }
+  }
+
+  /* ─── TRACE SELECTOR ─── */
+
+  .trace-option {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    font-size: global.$font-size-sm;
+  }
+
+  .trace-cell {
+    font-weight: global.$font-weight-medium;
+    color: global.$sdux-primary-light;
+  }
+
+  .trace-label-tag {
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    font-weight: global.$font-weight-bold;
+    color: global.$sdux-primary-base;
+  }
+
+  .trace-id {
+    font-family: global.$sdux-code-font;
+    color: global.$sdux-text-secondary;
+  }
+
+  /* ─── PAIR NAVIGATION ─── */
+
+  .pair-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: global.$spacing-md;
+    height: 50px;
+
+    .pair-counter {
+      font-size: global.$font-size-sm;
+      color: global.$sdux-text-secondary;
+      font-family: global.$sdux-code-font;
+    }
+
+    .sdux-button {
+      width: 145px !important; // !important: override Material default button sizing for nav layout
+      min-width: 145px !important; // !important: override Material default button sizing for nav layout
+      max-width: 145px !important; // !important: override Material default button sizing for nav layout
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      height: global.$button-height;
+
+      .nav-label {
+        display: none;
+      }
+
+      .sdux-button {
+        width: auto !important; // !important: override local 145px for responsive mode
+        min-width: auto !important; // !important: override local 145px for responsive mode
+        max-width: none !important; // !important: override local 145px for responsive mode
+      }
+    }
+  }
+
+  /* ─── DIFF AND TABLES LAYOUT ─── */
+
+  .diff-and-tables {
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    grid-template-rows: 50px minmax(400px, auto);
+    gap: global.$spacing-sm;
+    grid-column: 1 / -1;
+
+    @media (max-width: global.$breakpoint-md) {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+
+      .tables-column-group {
+        order: -1;
+        grid-row: auto;
+      }
+
+      .diff-column-group {
+        grid-row: auto;
+      }
+    }
+  }
+
+  .diff-column-group {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+    min-width: 0;
+    grid-row: 1 / -1;
+  }
+
+  .tables-column-group {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+    min-width: 0;
+    grid-row: 1 / -1;
+  }
+
+  .view-toggle-container {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    align-items: center;
+  }
+
+  .skipped-separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: global.$spacing-xs global.$spacing-md;
+    font-size: global.$font-size-xs;
+    color: global.$sdux-text-secondary;
+    background: global.$sdux-surface-raised;
+    border: 1px dashed global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+    margin-bottom: global.$spacing-sm;
+  }
+
+  /* ─── DIFF PANEL ─── */
+
+  .diff-panel {
+    min-width: 0;
+    flex: 1;
+    min-height: 0;
+
+    .diff-panel-view {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-sm;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .diff-column {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+
+      &:first-child {
+        border-right: 1px solid global.$sdux-surface-outline;
+      }
+    }
+
+    .diff-content {
+      flex: 1;
+      overflow: auto;
+      min-height: 0;
+      margin: 0;
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      .diff-panel-view {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  .diff-header {
+    display: flex;
+    flex-direction: column;
+    padding: global.$spacing-xs global.$spacing-md;
+    background: global.$sdux-surface-mid;
+    border-bottom: 1px solid global.$sdux-surface-outline;
+
+    .diff-header-title {
+      font-size: global.$font-size-xs;
+      font-weight: global.$font-weight-bold;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: global.$sdux-text-primary;
+    }
+
+    .diff-header-meta {
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-xxs;
+      color: global.$sdux-text-secondary;
+    }
+  }
+
+  .diff-content {
+    margin: 0;
+    padding: global.$spacing-md;
+    background: global.$sdux-surface-darker;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    line-height: 1.6;
+    color: global.$sdux-text-primary;
+    overflow: auto;
+    white-space: pre;
+    flex: 1;
+    height: 400px;
+    min-height: 400px;
+    max-height: 400px;
+
+    .diff-line-added {
+      display: block;
+      background: global.$sdux-success-dark;
+      color: global.$sdux-text-white;
+    }
+
+    .diff-line-removed {
+      display: block;
+      background: global.$sdux-accent-dark;
+      color: global.$sdux-text-white;
+    }
+  }
+
+  /* ─── COMPARE TABLES CONTAINER ─── */
+
+  .compare-tables-container {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+    min-width: 0;
+    flex: 1;
+    min-height: 0;
+
+    @media (max-width: global.$breakpoint-md) {
+      flex-direction: row;
+      max-height: 200px;
+    }
+  }
+
+  /* ─── SNAPSHOT TABLE ─── */
+
+  .snapshot-table {
+    border: 1px solid global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+
+    .snapshot-table-header {
+      padding: global.$spacing-xs global.$spacing-sm;
+      font-size: global.$font-size-xs;
+      font-weight: global.$font-weight-bold;
+      color: global.$sdux-text-primary;
+      background: global.$sdux-surface-raised;
+      border-bottom: 1px solid global.$sdux-surface-outline;
+      flex-shrink: 0;
+    }
+
+    .snapshot-table-scroll {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+    }
+
+    thead {
+      flex-shrink: 0;
+      display: block;
+      overflow-y: scroll;
+
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+    }
+
+    tbody {
+      flex: 1;
+      overflow-y: scroll;
+      min-height: 0;
+      display: block;
+
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+    }
+
+    th.col-selected,
+    td.col-selected {
+      width: 18px;
+      text-align: center;
+      padding-left: global.$spacing-xs;
+      padding-right: 0;
+    }
+
+    th.col-indicator,
+    td.col-indicator {
+      width: 18px;
+      text-align: left;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    th {
+      padding: global.$spacing-xs global.$spacing-sm;
+      font-size: global.$font-size-xs;
+      font-weight: global.$font-weight-medium;
+      color: global.$sdux-text-secondary;
+      text-align: left;
+      border-bottom: 1px solid global.$sdux-surface-outline;
+      background: global.$sdux-surface-raised;
+    }
+
+    .snapshot-row {
+      cursor: pointer;
+
+      &:hover {
+        background: global.$sdux-surface-hover-lg;
+      }
+
+      &.selected {
+        background: global.$sdux-surface-hover-lg;
+        border-left: none;
+      }
+
+      td {
+        padding: global.$spacing-xs global.$spacing-sm;
+        font-size: global.$font-size-xs;
+        color: global.$sdux-text-primary;
+
+        &.col-selected {
+          width: 18px;
+          text-align: center;
+          padding-left: global.$spacing-xs;
+          padding-right: 0;
+        }
+
+        &.col-indicator {
+          width: 18px;
+          text-align: left;
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+    }
+
+    .indicator {
+      color: global.$sdux-success-base;
+    }
+
+    .snapshot-table-footer {
+      padding: global.$spacing-xs global.$spacing-md;
+      font-size: global.$font-size-xxs;
+      color: global.$sdux-text-secondary;
+      background: global.$sdux-surface-mid;
+      border-top: 1px solid global.$sdux-surface-outline;
+
+      .indicator {
+        color: global.$sdux-success-base;
+      }
+
+      .footer-hint {
+        margin-left: global.$spacing-md;
+        font-style: italic;
+      }
+    }
+  }
+}

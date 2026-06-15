@@ -1,0 +1,101 @@
+<sdux-devtools-detail-pane
+  [title]="cellKey()"
+  (closeDetail)="closeDetail.emit()">
+  <h4
+    class="section-heading"
+    matTooltip="The complete data flow pipeline for this FeatureCell">
+    Pipeline Flow
+  </h4>
+  <sdux-devtools-pipeline-flow
+    [cellKey]="cellKey()"></sdux-devtools-pipeline-flow>
+
+  <section class="entity-section">
+    <h4
+      class="entity-title entity-toggle"
+      (click)="behaviorsExpanded.update((v) => !v)"
+      (keydown.enter)="behaviorsExpanded.update((v) => !v)"
+      (keydown.space)="behaviorsExpanded.update((v) => !v)"
+      tabindex="0"
+      role="button"
+      [attr.aria-expanded]="behaviorsExpanded()"
+      matTooltip="Behaviors registered on this FeatureCell">
+      Behaviors
+      <span class="entity-count">({{ behaviors().length }})</span>
+      <mat-icon
+        class="entity-chevron"
+        [class.entity-chevron-expanded]="behaviorsExpanded()"
+        aria-hidden="true"
+        >chevron_right</mat-icon
+      >
+    </h4>
+    @if (behaviorsExpanded() && behaviors().length) {
+      <ul class="entity-list">
+        @for (behavior of sortedBehaviors(); track behavior.key) {
+          <li class="entity-item">
+            <div class="entity-key" [matTooltip]="behavior.key">
+              {{ vaultKeyDomainName(behavior.key) }}
+              @if (behavior.needsLicense) {
+                <span
+                  class="pipeline-licensed"
+                  [matTooltip]="'LicenseId: ' + behavior.licenseId"
+                  ><img
+                    src="assets/brand/vault-icon.png"
+                    alt="Licensed"
+                    class="vault-icon"
+                /></span>
+              }
+            </div>
+            <span class="entity-type">{{ behavior.type }}</span>
+          </li>
+        }
+      </ul>
+    } @else if (behaviorsExpanded()) {
+      <p class="entity-empty">No behaviors registered.</p>
+    }
+  </section>
+
+  <section class="entity-section">
+    <h4
+      class="entity-title entity-toggle"
+      (click)="controllersExpanded.update((v) => !v)"
+      (keydown.enter)="controllersExpanded.update((v) => !v)"
+      (keydown.space)="controllersExpanded.update((v) => !v)"
+      tabindex="0"
+      role="button"
+      [attr.aria-expanded]="controllersExpanded()"
+      matTooltip="Controllers registered on this FeatureCell">
+      Controllers
+      <span class="entity-count">({{ controllers().length }})</span>
+      <mat-icon
+        class="entity-chevron"
+        [class.entity-chevron-expanded]="controllersExpanded()"
+        aria-hidden="true"
+        >chevron_right</mat-icon
+      >
+    </h4>
+    @if (controllersExpanded() && controllers().length) {
+      <ul class="entity-list">
+        @for (controller of sortedControllers(); track controller.key) {
+          <li class="entity-item">
+            <div class="entity-key" [matTooltip]="controller.key">
+              {{ vaultKeyDomainName(controller.key) }}
+              @if (controller.needsLicense) {
+                <span
+                  class="pipeline-licensed"
+                  [matTooltip]="'LicenseId: ' + controller.licenseId"
+                  ><img
+                    src="assets/brand/vault-icon.png"
+                    alt="Licensed"
+                    class="vault-icon"
+                /></span>
+              }
+            </div>
+            <span class="entity-type">{{ controller.type }}</span>
+          </li>
+        }
+      </ul>
+    } @else if (controllersExpanded()) {
+      <p class="entity-empty">No controllers registered.</p>
+    }
+  </section>
+</sdux-devtools-detail-pane>

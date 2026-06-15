@@ -1,0 +1,62 @@
+@if (isLicensed()) {
+  <p class="tab-description">
+    The Stage Waterfall represents wall-clock timing for each stage. Each bar
+    shows the real elapsed time from start to finish, including any inter-stage
+    scheduling overhead. Concurrent stages such as controller votes appear as
+    separate rows and may overlap in time.
+  </p>
+  @if (trace().metrics.stages.length > 0) {
+    <div class="waterfall-section">
+      <div class="waterfall-rows">
+        @for (stage of waterfallStages(); track $index) {
+          <div
+            class="waterfall-row"
+            [class.waterfall-row-revote]="isRevoteDelay(stage)"
+            tabindex="0"
+            role="button"
+            (click)="selectStageEvent(stage)"
+            (keydown.enter)="selectStageEvent(stage)">
+            <span class="waterfall-name">{{ stage.name }}</span>
+            <div class="waterfall-track">
+              <div
+                class="waterfall-bar"
+                [class.waterfall-bar-slow]="
+                  !isRevoteDelay(stage) && isSlowestStage(stage)
+                "
+                [class.waterfall-bar-revote]="isRevoteDelay(stage)"
+                [style.left.%]="waterfallLeft(stage)"
+                [style.width.%]="waterfallWidth(stage)"></div>
+              @if (!isRevoteDelay(stage) && isSlowestStage(stage)) {
+                @if (isSlowOnRight(stage)) {
+                  <span
+                    class="waterfall-slow-label waterfall-slow-right"
+                    [style.left.%]="
+                      waterfallLeft(stage) + waterfallWidth(stage)
+                    "
+                    >← slow</span
+                  >
+                } @else {
+                  <span
+                    class="waterfall-slow-label waterfall-slow-left"
+                    [style.left.%]="waterfallLeft(stage)"
+                    >slow →</span
+                  >
+                }
+              }
+            </div>
+            <span class="waterfall-duration"
+              >{{ stage.duration.toFixed(1) }}ms</span
+            >
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <p class="pipeline-empty">No stage data available for this trace.</p>
+  }
+} @else {
+  <sdux-upsell-notice
+    headline="Unlock detailed per-stage timing analysis with a"
+    body="Visualize execution bottlenecks, identify the slowest pipeline stages, and optimize your data flow with precision.">
+  </sdux-upsell-notice>
+}

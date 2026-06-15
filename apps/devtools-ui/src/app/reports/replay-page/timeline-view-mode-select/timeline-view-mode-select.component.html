@@ -1,0 +1,15 @@
+<mat-select
+  class="cell-filter"
+  [value]="viewMode()"
+  (selectionChange)="viewMode.set($event.value)"
+  panelWidth="280px"
+  aria-label="Timeline view mode">
+  <mat-option value="all-events">All Events</mat-option>
+  <mat-option value="category-spans">Category Duration Spans</mat-option>
+  <mat-option value="category-filtered">Category Filtered</mat-option>
+  <mat-option value="category-overview">Category Overview</mat-option>
+  <mat-option value="diff-only">Diff-Only Events</mat-option>
+  <mat-option value="elapsed-delta">Elapsed Delta</mat-option>
+  <mat-option value="state-only">State Events Only</mat-option>
+  <mat-option value="waterfall">Waterfall</mat-option>
+</mat-select>

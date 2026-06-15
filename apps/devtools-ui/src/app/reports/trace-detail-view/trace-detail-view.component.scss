@@ -1,0 +1,704 @@
+@use 'global' as global;
+@use '../scss/reports-common';
+
+/* ─── HELP ICON ─── */
+
+.title-group {
+  display: flex;
+  align-items: center;
+}
+
+.help-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: global.$spacing-xs;
+  margin-left: global.$spacing-sm;
+  display: flex;
+  align-items: center;
+}
+
+.help-icon {
+  width: global.$font-size-sm;
+  height: global.$font-size-sm;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.help-section {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-sm;
+  padding: global.$spacing-md;
+  background: global.$sdux-surface-raised;
+  border-radius: global.$border-radius-sm;
+  border: 1px solid global.$sdux-surface-outline;
+}
+
+.help-text {
+  margin: 0;
+  font-size: global.$font-size-sm;
+  color: global.$sdux-text-secondary;
+  line-height: 1.5;
+}
+
+/* ─── SUMMARY STATS ─── */
+
+.summary-stats {
+  display: flex;
+  gap: global.$spacing-lg;
+  padding: global.$spacing-sm global.$spacing-md;
+  background: global.$sdux-surface-lightish;
+  border-radius: global.$border-radius-sm;
+
+  .stat-group {
+    display: flex;
+    gap: global.$spacing-lg;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+
+    .stat-value {
+      font-size: global.$font-size-md;
+      font-weight: global.$font-weight-bold;
+      font-family: monospace;
+      color: global.$sdux-text-primary;
+    }
+
+    .stat-label {
+      font-size: global.$font-size-xs;
+      color: global.$sdux-text-secondary;
+    }
+
+    &.stat-success .stat-value {
+      color: global.$sdux-success-base;
+    }
+
+    &.stat-errors .stat-value {
+      color: global.$sdux-accent-base;
+    }
+
+    &.stat-denied .stat-value {
+      color: global.$sdux-warn-base;
+    }
+
+    &.stat-aborted .stat-value {
+      color: global.$sdux-warn-base;
+    }
+
+    &.stat-orphaned .stat-value {
+      color: global.$sdux-text-secondary;
+    }
+  }
+}
+
+/* ─── TIMELINE ─── */
+
+.timeline-section {
+  background: global.$sdux-surface-lightish;
+  border-radius: global.$border-radius-sm;
+  padding: global.$spacing-md;
+  max-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-axis {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-sm;
+  margin-bottom: global.$spacing-sm;
+  font-size: global.$font-size-xs;
+  color: global.$sdux-text-secondary;
+  flex-shrink: 0;
+
+  .axis-label {
+    font-weight: global.$font-weight-bold;
+    letter-spacing: 0.05em;
+  }
+
+  .axis-line {
+    flex: 1;
+    height: 1px;
+    background: global.$sdux-border-default-lg;
+  }
+
+  .axis-arrow {
+    font-size: global.$font-size-sm;
+  }
+}
+
+.timeline-rows {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-xs;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.timeline-row {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-sm;
+  padding: global.$spacing-xs global.$spacing-sm;
+  border-radius: global.$border-radius-sm;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    background: global.$sdux-surface-hover;
+  }
+
+  &.timeline-row-selected {
+    background: global.$sdux-surface-hover-md;
+    border: 1px solid global.$sdux-primary-base;
+  }
+
+  .timeline-id {
+    font-family: monospace;
+    font-size: global.$font-size-xs;
+    color: global.$sdux-text-secondary;
+    min-width: 24px;
+  }
+
+  .timeline-track {
+    flex: 1;
+    height: 14px;
+    position: relative;
+    background: global.$sdux-surface-hover-sm;
+    border-radius: 2px;
+
+    .timeline-bar {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      border-radius: 2px;
+      min-width: 2px;
+
+      &.status-success {
+        background: global.$sdux-success-base;
+      }
+
+      &.status-error {
+        background: global.$sdux-accent-base;
+      }
+
+      &.status-denied {
+        background: global.$sdux-warn-base;
+      }
+
+      &.status-orphaned {
+        background: global.$sdux-text-secondary;
+      }
+
+      &.status-aborted {
+        background: global.$sdux-warn-base;
+      }
+    }
+  }
+
+  .timeline-duration {
+    font-family: monospace;
+    font-size: global.$font-size-xs;
+    min-width: 55px;
+    text-align: right;
+    color: global.$sdux-text-primary;
+  }
+
+  .timeline-status {
+    font-weight: global.$font-weight-bold;
+    min-width: 14px;
+    text-align: center;
+  }
+}
+
+/* ─── TRACE DETAIL ─── */
+
+.trace-detail-section {
+  background: global.$sdux-surface-lightish;
+  border-radius: global.$border-radius-sm;
+  border: 1px solid global.$sdux-primary-base;
+  padding: global.$spacing-md;
+
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+
+    .detail-status {
+      flex-shrink: 0;
+    }
+
+    h3 {
+      margin: 0;
+      flex: 1;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-bold;
+      color: global.$sdux-text-primary;
+
+      .detail-status-label {
+        font-weight: global.$font-weight-bold;
+      }
+
+      .detail-trace-id {
+        margin-left: global.$spacing-sm;
+        font-size: global.$font-size-xs;
+        font-weight: global.$font-weight-regular;
+        color: global.$sdux-text-disabled;
+      }
+    }
+
+    .close-btn {
+      @include global.sdux-icon-button(28px, transparent);
+      color: global.$sdux-primary-light;
+      font-size: global.$font-size-md;
+
+      &:hover {
+        background-color: global.$sdux-primary-base;
+        color: global.$sdux-text-white;
+      }
+    }
+  }
+}
+
+/* ─── EVENT TABLE ─── */
+
+.event-table-wrapper {
+  margin-bottom: global.$spacing-sm;
+  border-bottom: 1px solid global.$sdux-border-active;
+  flex-shrink: 0;
+
+  .event-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: global.$font-size-xs;
+    font-family: monospace;
+    display: block;
+
+    thead {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+      border-bottom: 1px solid global.$sdux-border-active;
+
+      th {
+        background: global.$sdux-surface-lightish;
+      }
+    }
+
+    tbody {
+      display: block;
+      height: 290px;
+      overflow-y: auto;
+
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+    }
+
+    th,
+    td {
+      padding: global.$spacing-xs global.$spacing-sm;
+      text-align: left;
+      border-bottom: 1px solid global.$sdux-border-default-sm;
+    }
+
+    th {
+      color: global.$sdux-text-secondary;
+      font-weight: global.$font-weight-medium;
+      white-space: nowrap;
+    }
+
+    .col-index {
+      width: 30px;
+      text-align: right;
+      color: global.$sdux-text-secondary;
+    }
+
+    .col-event {
+      min-width: 220px;
+    }
+
+    .col-boundary {
+      width: 60px;
+    }
+
+    .col-delta {
+      width: 50px;
+      text-align: right;
+    }
+
+    .col-elapsed {
+      width: 50px;
+      text-align: right;
+    }
+
+    .col-state,
+    .col-payload,
+    .col-error {
+      width: 40px;
+      text-align: center;
+    }
+
+    .row-error {
+      background: rgb(255 0 0 / 5%);
+    }
+
+    .row-selected {
+      background: global.$sdux-surface-overlay-active;
+    }
+
+    tbody tr {
+      transition: background 0.15s ease;
+      cursor: pointer;
+
+      &:hover {
+        background: global.$sdux-surface-hover;
+      }
+    }
+  }
+}
+.indicator {
+  cursor: default;
+}
+
+.indicator-state {
+  color: global.$sdux-success-base;
+}
+
+.indicator-payload {
+  color: global.$sdux-primary-base;
+}
+
+.indicator-error {
+  color: global.$sdux-accent-base;
+}
+
+/* ─── STAGE WATERFALL ─── */
+
+.waterfall-section {
+  padding-top: global.$spacing-md;
+
+  h4 {
+    margin: 0 0 global.$spacing-sm;
+    font-size: global.$font-size-xs;
+    font-weight: global.$font-weight-bold;
+    color: global.$sdux-text-secondary;
+  }
+}
+
+.waterfall-rows {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-xs;
+}
+
+.waterfall-row {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-sm;
+  padding: global.$spacing-xs;
+  border-radius: global.$border-radius-sm;
+  transition: background 0.15s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: global.$sdux-surface-hover;
+  }
+
+  &.waterfall-row-revote .waterfall-name {
+    font-style: italic;
+    opacity: 0.7;
+  }
+
+  .waterfall-name {
+    font-family: monospace;
+    font-size: global.$font-size-xs;
+    min-width: 80px;
+    color: global.$sdux-text-secondary;
+  }
+
+  .waterfall-track {
+    flex: 1;
+    height: 10px;
+    position: relative;
+    background: global.$sdux-surface-hover-sm;
+    border-radius: 2px;
+
+    .waterfall-bar {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      border-radius: 2px;
+      background: global.$sdux-primary-base;
+      min-width: 2px;
+
+      &.waterfall-bar-slow {
+        background: global.$sdux-warn-base;
+      }
+
+      &.waterfall-bar-revote {
+        background: global.$sdux-accent-base;
+        opacity: 0.6;
+      }
+    }
+
+    .waterfall-slow-label {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: global.$font-size-xs;
+      color: global.$sdux-warn-base;
+      white-space: nowrap;
+      pointer-events: none;
+
+      &.waterfall-slow-right {
+        margin-left: global.$spacing-xs;
+      }
+
+      &.waterfall-slow-left {
+        transform: translateX(-100%) translateY(-50%);
+        margin-left: -(global.$spacing-xs);
+      }
+    }
+  }
+
+  .waterfall-duration {
+    font-family: monospace;
+    font-size: global.$font-size-xs;
+    min-width: 50px;
+    text-align: right;
+    color: global.$sdux-text-primary;
+  }
+}
+
+/* ─── TAB DESCRIPTION ─── */
+
+.tab-description {
+  margin: global.$spacing-sm 0;
+  padding-left: global.$spacing-sm;
+  padding-right: global.$spacing-sm;
+  font-size: global.$font-size-md;
+  color: global.$sdux-text-disabled;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ─── TRACE META ─── */
+
+.trace-meta {
+  border-top: 1px solid global.$sdux-border-active;
+
+  .trace-meta-header {
+    margin: global.$spacing-sm 0 0;
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-bold;
+    color: global.$sdux-text-primary;
+  }
+
+  .trace-meta-container {
+    margin-top: global.$spacing-sm;
+    display: flex;
+    flex-wrap: wrap;
+    gap: global.$spacing-sm;
+
+    .meta-badge {
+      background: global.$sdux-surface-hover-md;
+      border-radius: global.$border-radius-sm;
+      padding: 2px global.$spacing-xs;
+      font-size: global.$font-size-xs;
+      color: global.$sdux-text-secondary;
+    }
+  }
+}
+
+/* ─── STATUS LEGEND ─── */
+
+.status-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: global.$spacing-md;
+  font-size: global.$font-size-xs;
+  color: global.$sdux-text-secondary;
+  padding-top: global.$spacing-sm;
+  border-top: 1px solid global.$sdux-border-default;
+
+  .legend-separator {
+    width: 1px;
+    background: global.$sdux-border-default;
+  }
+
+  .legend-indicator {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-xs;
+  }
+}
+
+.status-success {
+  color: global.$sdux-success-base;
+}
+
+.status-error {
+  color: global.$sdux-accent-base;
+}
+
+.status-denied {
+  color: global.$sdux-warn-base;
+}
+
+.status-orphaned {
+  color: global.$sdux-text-secondary;
+}
+
+.status-aborted {
+  color: global.$sdux-warn-base;
+}
+
+/* ─── DEBUG OUTPUT ─── */
+
+.debug-output {
+  margin-top: global.$spacing-md;
+
+  h4 {
+    margin: 0 0 global.$spacing-sm;
+    font-size: global.$font-size-xs;
+    font-weight: global.$font-weight-bold;
+    color: global.$sdux-text-secondary;
+
+    &.debug-toggle {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .chevron {
+    @include global.sdux-icon-button(28px, transparent);
+    color: global.$sdux-primary-light;
+    font-size: global.$font-size-lg;
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover {
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
+    }
+
+    &.chevron-open {
+      transform: rotate(90deg);
+    }
+  }
+
+  .debug-textarea {
+    width: 100%;
+    font-family: monospace;
+    font-size: global.$font-size-xs;
+    background: global.$sdux-surface-lightish;
+    color: global.$sdux-text-primary;
+    border: 1px solid global.$sdux-border-default;
+    border-radius: global.$border-radius-sm;
+    padding: global.$spacing-sm;
+    resize: vertical;
+  }
+}
+
+.event-detail-pane {
+  width: 400px;
+  min-width: 400px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid global.$sdux-border-default;
+  min-height: 0;
+
+  sdux-event-detail {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+.trace-detail-body {
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+}
+
+.trace-detail-content {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.pipeline-flow-container {
+  max-width: 400px;
+  margin: global.$spacing-xl auto 0;
+}
+
+/* ─── MATERIAL TAB OVERRIDES ─── */
+
+// exception: pierces encapsulation to override Material tab label colors for dark chrome extension background
+::ng-deep {
+  .mat-mdc-tab-header,
+  .mat-mdc-tab {
+    /* !important: override Material's inline tab background for dark extension */
+    background-color: global.$sdux-surface-mid !important;
+  }
+
+  .mdc-tab__text-label {
+    /* !important: override Material's inline label color for dark extension */
+    color: global.$sdux-primary-light !important;
+  }
+
+  .mdc-tab--active .mdc-tab__text-label,
+  .mdc-tab:hover .mdc-tab__text-label,
+  .mdc-tab:focus .mdc-tab__text-label {
+    /* !important: override Material's inline label color for active/hover/focus states */
+    color: global.$sdux-text-white !important;
+  }
+}
+
+@media (max-width: global.$breakpoint-md) {
+  .summary-stats {
+    flex-wrap: wrap;
+  }
+
+  .trace-detail-body {
+    flex-direction: column;
+
+    &:has(.event-detail-pane) .trace-detail-content {
+      display: none;
+    }
+  }
+
+  .event-detail-pane {
+    width: 100%;
+    min-width: 0;
+    border-left: none;
+  }
+
+  .detail-trace-id {
+    display: block;
+    margin-left: 0 !important; /* !important: override nested h3 .detail-trace-id margin */
+  }
+
+  .tab-description {
+    display: none;
+  }
+}

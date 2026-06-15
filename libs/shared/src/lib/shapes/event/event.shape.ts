@@ -68,4 +68,16 @@ export interface EventShape<T = any> {
    * Optional source identifier provided by the event origin.
    */
   source?: string;
+
+  /**
+   * Optional in-flight pipeline candidate value captured after a stage completes.
+   * Used exclusively by the State Diff View in DevTools.
+   */
+  candidate?: T | undefined;
+
+  /**
+   * High-resolution monotonic timestamp captured via performance.now().
+   * Used for precise trace timing in DevTools and Chrome Trace Export.
+   */
+  monotonicTimestamp?: number;
 }

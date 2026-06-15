@@ -1,6 +1,8 @@
 import type { InsightConfig } from '../../config/insight.config';
 import type { ControllerDecisionShape } from '../../shapes/controller/controller-decision.shape';
 import type { VaultErrorShape } from '../../shapes/vault-error.shape';
+import type { ControllerVote } from '../../types/controller/controller-vote.type';
+import type { PipelineStage } from '../../types/pipeline/pipeline-stage.type';
 import type { VaultMonitorContext } from '../../types/vault-monitor-context.type';
 
 /**
@@ -829,27 +831,27 @@ export interface VaultMonitorContract {
   conductorLicenseDenied(cell: string, featureCellKey: string): void;
 
   /**
-   * Signals the start of a controller attempt lifecycle event.
+   * Signals the start of a conductor attempt lifecycle event.
    *
    * @param cell - The FeatureCell key.
    * @param behaviorKey - The behavior key.
    * @param ctx - The monitor context for this operation.
    */
-  startControllerAttempt<T>(
+  startConductorAttempt<T>(
     cell: string,
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>
   ): void;
 
   /**
-   * Signals the end of a controller attempt lifecycle event.
+   * Signals the end of a conductor attempt lifecycle event.
    *
    * @param cell - The FeatureCell key.
    * @param behaviorKey - The behavior key.
    * @param ctx - The monitor context for this operation.
    * @param payload - The attempt result payload.
    */
-  endControllerAttempt<T>(
+  endConductorAttempt<T>(
     cell: string,
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>,
@@ -857,14 +859,14 @@ export interface VaultMonitorContract {
   ): void;
 
   /**
-   * Records that a controller attempt was restarted.
+   * Records that a conductorattempt was restarted.
    *
    * @param cell - The FeatureCell key.
    * @param behaviorKey - The behavior key.
    * @param ctx - The monitor context for this operation.
    * @param payload - The restart reason.
    */
-  restartControllerAttempt<T>(
+  restartConductorAttempt<T>(
     cell: string,
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>,
@@ -907,31 +909,87 @@ export interface VaultMonitorContract {
   ): void;
 
   /**
-   * Signals the start of a controller vote lifecycle event.
+   * Signals the start of the conductor vote aggregation phase.
    *
    * @param cell - The FeatureCell key.
    * @param behaviorKey - The behavior key.
    * @param ctx - The monitor context for this operation.
    */
-  startControllerVote<T>(
+  startConductorVote<T>(
     cell: string,
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>
   ): void;
 
   /**
-   * Signals the end of a controller vote lifecycle event.
+   * Signals the end of the conductor vote aggregation phase.
    *
    * @param cell - The FeatureCell key.
    * @param behaviorKey - The behavior key.
    * @param ctx - The monitor context for this operation.
    * @param payload - The controller decision result.
    */
-  endControllerVote<T>(
+  endConductorVote<T>(
     cell: string,
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>,
     payload: ControllerDecisionShape
+  ): void;
+
+  /**
+   * Signals the start of an individual controller vote during attempt evaluation.
+   *
+   * @param cell - The FeatureCell key.
+   * @param controllerKey - The key of the controller being evaluated.
+   * @param traceId - The trace identifier for the current attempt.
+   */
+  startControllerVote(
+    cell: string,
+    controllerKey: string,
+    traceId: string
+  ): void;
+
+  /**
+   * Signals the end of an individual controller vote during attempt evaluation.
+   *
+   * @param cell - The FeatureCell key.
+   * @param controllerKey - The key of the controller that voted.
+   * @param traceId - The trace identifier for the current attempt.
+   * @param vote - The resolved controller vote.
+   */
+  endControllerVote(
+    cell: string,
+    controllerKey: string,
+    traceId: string,
+    vote: ControllerVote
+  ): void;
+
+  /**
+   * Signals the start of a controller attempt lifecycle event.
+   *
+   * @param cell - The FeatureCell key.
+   * @param behaviorKey - The behavior key.
+   * @param ctx - The monitor context for this operation.
+   */
+  startControllerAttempt<T>(
+    cell: string,
+    behaviorKey: string,
+    ctx: Readonly<VaultMonitorContext<T>>
+  ): void;
+
+  /**
+   * Signals the end of a controller attempt lifecycle event.
+   *
+   * @param cell - The FeatureCell key.
+   * @param behaviorKey - The behavior key.
+   * @param ctx - The monitor context for this operation.
+   * @param payload - The attempt result payload.
+   */
+  endControllerAttempt<T>(
+    cell: string,
+    behaviorKey: string,
+    ctx: Readonly<VaultMonitorContext<T>>,
+    payload: unknown
   ): void;
 
   /**
@@ -947,6 +1005,30 @@ export interface VaultMonitorContract {
     behaviorKey: string,
     ctx: Readonly<VaultMonitorContext<T>>,
     error: unknown
+  ): void;
+
+  /* ------------------------------------------------------------------ */
+  /* Pipeline candidate (State Diff View)                                */
+  /* ------------------------------------------------------------------ */
+
+  /**
+   * Emits a pipeline candidate capturing the in-flight state value
+   * after a pipeline stage completes. These events are used exclusively
+   * by the State Diff View in DevTools and are not displayed in the
+   * standard trace detail timeline.
+   *
+   * @param cell - The FeatureCell key.
+   * @param behaviorKey - The behavior key.
+   * @param ctx - The monitor context for this operation.
+   * @param stage - The pipeline stage that just completed.
+   * @param value - The in-flight pipeline value after the stage.
+   */
+  pipelineCandidate<T>(
+    cell: string,
+    behaviorKey: string,
+    ctx: Readonly<VaultMonitorContext<T>>,
+    stage: PipelineStage,
+    value: T | undefined
   ): void;
 
   /* ------------------------------------------------------------------ */

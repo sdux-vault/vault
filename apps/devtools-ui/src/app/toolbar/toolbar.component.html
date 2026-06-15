@@ -1,0 +1,104 @@
+<div class="toolbar">
+  <div class="toolbar-brand">
+    <a routerLink="/" class="toolbar-logo-link">
+      <img
+        class="toolbar-logo"
+        src="/assets/brand/brand-landscape-dark.svg"
+        alt="SDuX Vault"
+        matTooltip="SDuX Vault DevTools" />
+    </a>
+    <span class="toolbar-version">DevTools (v{{ version }})</span>
+  </div>
+
+  <button
+    type="button"
+    class="toolbar-menu-btn"
+    aria-label="Open menu"
+    matTooltip="Menu"
+    [matMenuTriggerFor]="toolbarMenu">
+    <svg
+      class="menu-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      width="24"
+      height="24">
+      <circle cx="12" cy="5" r="2" />
+      <circle cx="12" cy="12" r="2" />
+      <circle cx="12" cy="19" r="2" />
+    </svg>
+  </button>
+
+  <mat-menu #toolbarMenu="matMenu">
+    <a mat-menu-item routerLink="/">
+      <mat-icon class="icon">home</mat-icon>
+      <span>Home</span>
+    </a>
+    <button type="button" mat-menu-item [matMenuTriggerFor]="reportsMenu">
+      <mat-icon class="icon">assessment</mat-icon>
+      <span>Reports</span>
+    </button>
+    <button type="button" mat-menu-item [matMenuTriggerFor]="debugToolsMenu">
+      <mat-icon class="icon">bug_report</mat-icon>
+      <span>Debug Tools</span>
+    </button>
+    <a
+      mat-menu-item
+      href="https://www.sdux-vault.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="View Documentation — opens in a new tab">
+      <mat-icon class="icon">menu_book</mat-icon>
+      <span>Documentation</span>
+    </a>
+  </mat-menu>
+
+  <mat-menu #reportsMenu="matMenu">
+    <a mat-menu-item routerLink="/events">
+      <mat-icon class="icon">list_alt</mat-icon>
+      <span>Events</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/hot-stage-ranking">
+      <mat-icon class="icon">leaderboard</mat-icon>
+      <span>Hot Stage Ranking</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/replay">
+      <mat-icon class="icon">replay</mat-icon>
+      <span>Pipeline Replay</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/state-diff">
+      <mat-icon class="icon">compare_arrows</mat-icon>
+      <span>State Diff View</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/trace-detail">
+      <mat-icon class="icon">timeline</mat-icon>
+      <span>Trace Detail</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/vault-overview">
+      <img
+        src="assets/brand/vault-icon.png"
+        alt=""
+        class="icon menu-icon-img" />
+      <span>Vault Overview</span>
+    </a>
+  </mat-menu>
+
+  <mat-menu #debugToolsMenu="matMenu">
+    <a mat-menu-item routerLink="/reports/ai-assist">
+      <mat-icon class="icon">psychology</mat-icon>
+      <span>AI Assist</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/extension-inspector">
+      <mat-icon class="icon">tune</mat-icon>
+      <span>Extension Inspector</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/load-dump">
+      <mat-icon class="icon">upload_file</mat-icon>
+      <span>Load Dump</span>
+    </a>
+    <a mat-menu-item routerLink="/reports/trace-export">
+      <mat-icon class="icon">local_fire_department</mat-icon>
+      <span>Trace Export</span>
+    </a>
+  </mat-menu>
+</div>

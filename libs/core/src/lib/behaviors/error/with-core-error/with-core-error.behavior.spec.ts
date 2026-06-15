@@ -64,8 +64,13 @@ describe('Behavior: withCoreError', () => {
     // Should not reuse references
     expect(result1).not.toBe(result2);
 
-    // But they will be identical in value
-    expect(result1).toEqual(result2);
+    // But they will be identical in value (timestamp may differ by a ms)
+    expect(result1).toEqual(
+      jasmine.objectContaining({
+        ...result2,
+        timestamp: jasmine.any(Number)
+      })
+    );
   });
 
   // ------------------------------------------------------------------------------------------

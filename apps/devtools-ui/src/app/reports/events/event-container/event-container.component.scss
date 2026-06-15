@@ -1,0 +1,254 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+.pipeline-panel {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+  @include global.sdux-text(global.$sdux-text-primary);
+
+  /* ----------------------------------------------
+     EVENT STREAM (master list)
+  ------------------------------------------------*/
+  .event-stream {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+
+    .table-header {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-md;
+      padding: global.$spacing-xs global.$spacing-sm;
+      border-bottom: 1px solid global.$sdux-surface-outline;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-semibold;
+      color: global.$sdux-text-secondary;
+      flex-shrink: 0;
+
+      .th-counter {
+        width: 3rem;
+        text-align: right;
+        flex-shrink: 0;
+
+        @media (max-width: global.$breakpoint-md) {
+          width: 2rem;
+        }
+      }
+
+      .th-key {
+        min-width: 175px;
+
+        @media (max-width: global.$breakpoint-md) {
+          min-width: 0;
+        }
+      }
+
+      .th-type {
+        width: 120px;
+        flex-shrink: 0;
+        text-align: left;
+
+        @media (max-width: global.$breakpoint-md) {
+          display: none;
+        }
+      }
+
+      .th-indicators-group {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-xs;
+        flex-shrink: 0;
+
+        span {
+          display: inline-block;
+          width: 0.6em;
+          text-align: center;
+        }
+      }
+
+      .th-ts {
+        width: 80px;
+        text-align: left;
+        flex-shrink: 0;
+      }
+    }
+
+    .event-list {
+      flex: 1;
+      min-height: 0;
+      height: calc(100% - 32px);
+      overscroll-behavior: contain;
+      margin-bottom: global.$spacing-2xl;
+
+      .cdk-virtual-scroll-content-wrapper {
+        padding-bottom: global.$spacing-xl;
+      }
+
+      // Optional nice scrollbars
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: global.$sdux-surface-outline;
+        border-radius: global.$border-radius-xs;
+      }
+    }
+  }
+
+  /* ----------------------------------------------
+     DETAIL PANE (right side)
+  ------------------------------------------------*/
+  .detail-pane {
+    width: 400px;
+    min-width: 400px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid global.$sdux-surface-outline;
+    margin-bottom: global.$spacing-2xl;
+    min-height: 0;
+    height: calc(100% - 32px);
+    overflow: hidden;
+
+    sdux-event-detail {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+  }
+
+  .detail-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    .detail-empty-text {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-size: global.$font-size-sm;
+    }
+  }
+
+  @media (max-width: global.$breakpoint-md) {
+    flex-direction: column;
+    overflow: hidden;
+
+    .event-stream {
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+
+      .event-list {
+        height: 100%;
+        margin-bottom: 0;
+      }
+    }
+
+    &:has(.detail-pane) .event-stream {
+      display: none;
+    }
+
+    .detail-pane {
+      width: 100%;
+      min-width: 0;
+      flex: 1;
+      margin-top: 0;
+      margin-bottom: 0;
+      border: 1px solid global.$sdux-surface-outline;
+      box-sizing: border-box;
+      overflow: hidden;
+
+      sdux-event-detail {
+        height: 100%;
+        flex: none;
+      }
+    }
+  }
+
+  /* ----------------------------------------------
+     EVENT ROW
+  ------------------------------------------------*/
+  .event-row {
+    display: block;
+    padding: global.$spacing-sm 0;
+    border-bottom: 1px solid global.$sdux-surface-outline;
+
+    &:hover {
+      background-color: global.$sdux-hover-background-color;
+    }
+  }
+  /* ----------------------------------------------
+     DETAILS (STATE, PAYLOAD, ERROR)
+  ------------------------------------------------*/
+  .event-details {
+    grid-column: 1 / -1;
+    margin-top: global.$spacing-xs;
+    padding-left: global.$spacing-sm;
+
+    summary {
+      cursor: pointer;
+      @include global.sdux-text(global.$sdux-primary-base);
+      font-size: global.$font-size-sm;
+      margin-bottom: global.$spacing-xs;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .detail-block {
+      margin-bottom: global.$spacing-md;
+
+      h4 {
+        @include global.sdux-text(
+          global.$sdux-text-primary,
+          global.$font-weight-semibold
+        );
+        font-size: global.$font-size-md;
+        margin-bottom: global.$spacing-xs;
+      }
+
+      .kv {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 global.$spacing-xs 0;
+
+        li {
+          margin-bottom: global.$spacing-xs;
+          font-size: global.$font-size-sm;
+        }
+      }
+
+      pre {
+        background-color: global.$sdux-surface-dark;
+        border: 1px solid global.$sdux-surface-outline;
+        border-radius: global.$border-radius-sm;
+        padding: global.$spacing-sm;
+        font-size: global.$font-size-xs;
+        overflow-x: auto;
+        color: global.$sdux-text-primary;
+      }
+    }
+
+    .error-block {
+      pre {
+        background-color: global.$sdux-accent-dark;
+        border-color: global.$sdux-accent-light;
+      }
+    }
+  }
+}

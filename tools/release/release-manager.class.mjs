@@ -133,8 +133,21 @@ export class ReleaseManager {
 
     const pkgPath = this.packagePath;
 
-    // bump version
-    this.exec(`cd ${pkgPath} && npm version ${this.type} --no-git-tag-version`);
+    // bump version (preserves prerelease suffix like -beta, -rc, etc.)
+    const pkgJsonPath = path.join(pkgPath, 'package.json');
+    const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
+    const [semver, suffix] = pkg.version.split('-', 2);
+    const [major, minor, patch] = semver.split('.').map(Number);
+
+    const bumped =
+      this.type === 'major'
+        ? `${major + 1}.0.0`
+        : this.type === 'minor'
+          ? `${major}.${minor + 1}.0`
+          : `${major}.${minor}.${patch + 1}`;
+
+    pkg.version = suffix ? `${bumped}-${suffix}` : bumped;
+    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2) + '\n');
 
     const versionReleasePath = this.packageVersion();
 
@@ -152,18 +165,13 @@ export class ReleaseManager {
 
     this.exec(`git commit -m "chore(${libName}): release version bump"`);
 
-    // read version
-    const pkg = JSON.parse(
-      fs.readFileSync(path.join(pkgPath, 'package.json'), 'utf-8')
-    );
-
     // tag
     this.exec(`git tag ${libName}@${pkg.version}`);
   }
 
   push() {
     console.info('\nPushing changes + tags...');
-    this.exec('git push --follow-tags');
+    this.exec('HUSKY=0 git push --follow-tags');
   }
 
   buildDependencies() {

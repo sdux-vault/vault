@@ -58,6 +58,18 @@ import { Component, ViewEncapsulation } from '@angular/core';
             Indicates whether error information is included in insight events.
           </td>
         </tr>
+
+        <tr>
+          <td>
+            wantsCandidates?: boolean
+            <p>optional</p>
+          </td>
+          <td>
+            Indicates whether pipeline candidate snapshots are included in
+            insight events. Candidates capture the state value at each pipeline
+            stage boundary, enabling before/after diff comparison across stages.
+          </td>
+        </tr>
       </tbody>
     </table>
   `,

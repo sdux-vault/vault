@@ -612,15 +612,17 @@ const exampleCell = FeatureCell<Example[]>({
   // Insights enable the debugger to capture runtime telemetry for this
   // FeatureCell. Each flag controls what data the debugger records:
   //
-  //   wantsErrors  — Capture error signals emitted during pipeline execution.
-  //   wantsPayload — Capture operation payloads for each pipeline event.
-  //   wantsState   — Capture full state snapshots (can produce large exports).
+  //   wantsErrors     — Capture error signals emitted during pipeline execution.
+  //   wantsPayload    — Capture operation payloads for each pipeline event.
+  //   wantsState      — Capture full state snapshots (can produce large exports).
+  //   wantsCandidates — Capture pipeline candidate snapshots for state diff analysis.
   //
   // At minimum, enable wantsErrors and wantsPayload for useful debug sessions.
   insights: {
     wantsErrors: true,
     wantsPayload: true,
-    wantsState: false
+    wantsState: false,
+    wantsCandidates: true
   } as InsightConfig
 });
 

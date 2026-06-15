@@ -1,0 +1,129 @@
+@use 'global' as global;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.detail-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background-color: global.$sdux-surface-dark;
+
+  .detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: global.$spacing-sm global.$spacing-md;
+    border-bottom: 1px solid global.$sdux-surface-outline;
+    flex-shrink: 0;
+
+    h3 {
+      @include global.sdux-text(
+        global.$sdux-text-white,
+        global.$font-weight-semibold
+      );
+      font-size: global.$font-size-md;
+      margin: 0;
+    }
+
+    .close-btn {
+      @include global.sdux-icon-button(28px, transparent);
+      color: global.$sdux-primary-light;
+      font-size: global.$font-size-md;
+
+      &:hover {
+        background-color: global.$sdux-primary-base;
+        color: global.$sdux-text-white;
+      }
+    }
+
+    .back-btn {
+      display: none;
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      .back-btn {
+        display: flex;
+      }
+
+      .dismiss-btn {
+        display: none;
+      }
+    }
+  }
+
+  .detail-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: global.$spacing-md;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: global.$sdux-surface-outline;
+      border-radius: global.$border-radius-xs;
+    }
+  }
+
+  .detail-block {
+    margin-bottom: global.$spacing-md;
+
+    h4 {
+      @include global.sdux-text(
+        global.$sdux-text-primary,
+        global.$font-weight-semibold
+      );
+      font-size: global.$font-size-md;
+      margin-bottom: global.$spacing-xs;
+    }
+
+    .kv {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 global.$spacing-xs 0;
+
+      li {
+        margin-bottom: global.$spacing-xs;
+        font-size: global.$font-size-sm;
+      }
+    }
+
+    pre {
+      background-color: global.$sdux-surface-lightish;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-sm;
+      padding: global.$spacing-sm;
+      font-size: global.$font-size-xs;
+      white-space: pre-wrap;
+      word-break: break-all;
+      overflow-wrap: break-word;
+      color: global.$sdux-text-primary;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: global.$sdux-surface-outline;
+        border-radius: global.$border-radius-xs;
+      }
+    }
+  }
+
+  .error-block {
+    pre {
+      background-color: global.$sdux-accent-dark;
+      border-color: global.$sdux-accent-light;
+    }
+  }
+}

@@ -17,6 +17,11 @@ describe('Chrome Extension: bridge-inject.js', () => {
     // bridge-inject.js uses `window` which doesn't exist in Node
     if (!globalThis.window) globalThis.window = globalThis;
 
+    // bridge-inject.js uses window.location.origin for postMessage target
+    if (!globalThis.location) {
+      globalThis.location = { origin: 'http://localhost' };
+    }
+
     originalPostMessage = globalThis.postMessage;
     globalThis.postMessage = (...args) => postMessageCalls.push(args);
 
@@ -124,7 +129,7 @@ describe('Chrome Extension: bridge-inject.js', () => {
         wantsState: true,
         wantsPayload: true,
         wantsErrors: true,
-        wantsQueue: true
+        wantsCandidates: true
       });
     });
 
@@ -150,13 +155,16 @@ describe('Chrome Extension: bridge-inject.js', () => {
       const event = { cell: 'test', type: 'stage:start', timestamp: 123 };
       bus._emit(event);
 
-      expect(postMessageCalls.length).toBe(1);
-      expect(postMessageCalls[0][0]).toEqual({
+      const pipelineMsg = postMessageCalls.find(
+        (c) => c[0].type === 'VAULT_PIPELINE_EVENT'
+      );
+      expect(pipelineMsg).toBeDefined();
+      expect(pipelineMsg[0]).toEqual({
         source: 'vault-devtools',
         type: 'VAULT_PIPELINE_EVENT',
         event
       });
-      expect(postMessageCalls[0][1]).toBe('*');
+      expect(pipelineMsg[1]).toBe('http://localhost');
     });
 
     it('should retry when vault globals are not yet available', () => {

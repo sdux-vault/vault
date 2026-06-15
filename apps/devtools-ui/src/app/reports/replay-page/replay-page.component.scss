@@ -1,0 +1,398 @@
+@use 'global' as global;
+@use '../scss/reports-common';
+
+$trace-detail-height: 200px;
+
+.report-page {
+  /* ─── SECTION HEADER WITH CHEVRON ─── */
+
+  .header-content {
+    margin: 0;
+    font-weight: global.$font-weight-bold;
+    font-size: global.$font-size-md;
+    color: global.$sdux-text-primary;
+  }
+
+  .vspacer {
+    margin-top: global.$spacing-md;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    h3 {
+      margin: 0;
+      font-size: global.$font-size-md;
+      font-weight: global.$font-weight-bold;
+      color: global.$sdux-text-primary;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-md;
+    }
+
+    &:hover .chevron {
+      color: global.$sdux-primary-light;
+    }
+  }
+
+  .chevron {
+    font-size: global.$font-size-lg;
+    color: global.$sdux-text-secondary;
+    transition: transform 0.2s ease;
+    transform: rotate(0deg);
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+
+  /* ─── HELP TOGGLE ─── */
+
+  .help-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: global.$spacing-xs;
+    margin-left: global.$spacing-sm;
+    display: flex;
+    align-items: center;
+  }
+
+  .help-icon {
+    width: global.$font-size-sm;
+    height: global.$font-size-sm;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  /* ─── TRACE SELECTOR ─── */
+
+  .description-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+  }
+
+  .description {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+    line-height: 1.5;
+
+    code {
+      color: global.$sdux-text-primary;
+      background: global.$sdux-surface-raised-md;
+      padding: 0 global.$spacing-xs;
+      border-radius: global.$border-radius-sm;
+    }
+
+    .description-link {
+      @include global.a-link(
+        global.$sdux-primary-light,
+        global.$sdux-text-primary
+      );
+    }
+  }
+
+  .trace-details-row {
+    display: flex;
+    gap: global.$spacing-md;
+    align-items: stretch;
+
+    @media (max-width: global.$breakpoint-md) {
+      flex-direction: column-reverse;
+      align-items: stretch;
+    }
+  }
+
+  .trace-summary-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+
+    h3 {
+      margin: 0;
+      font-size: global.$font-size-md;
+      font-weight: global.$font-weight-bold;
+      color: global.$sdux-text-primary;
+    }
+  }
+
+  .trace-summary {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-xs;
+    padding: global.$spacing-md;
+    background: global.$sdux-surface-raised;
+    border-radius: global.$border-radius-sm;
+    border: 1px solid global.$sdux-surface-outline;
+    height: $trace-detail-height;
+    overflow-y: auto;
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: global.$font-size-sm;
+
+      .label {
+        color: global.$sdux-text-secondary;
+        font-weight: global.$font-weight-medium;
+      }
+
+      .value {
+        color: global.$sdux-text-primary;
+      }
+
+      .method-badge {
+        font-family: monospace;
+        font-weight: global.$font-weight-bold;
+        color: global.$sdux-primary-base;
+      }
+    }
+  }
+
+  .resolved-value-section {
+    flex: 1;
+    min-width: 0;
+
+    h3 {
+      margin: 0 0 global.$spacing-xs;
+      font-size: global.$font-size-md;
+      font-weight: global.$font-weight-bold;
+      color: global.$sdux-text-primary;
+    }
+
+    .resolved-value {
+      margin: 0;
+      padding: global.$spacing-md;
+      background: global.$sdux-surface-raised;
+      border-radius: global.$border-radius-sm;
+      border: 1px solid global.$sdux-surface-outline;
+      font-family: monospace;
+      font-size: global.$font-size-xs;
+      color: global.$sdux-text-primary;
+      overflow-x: auto;
+      height: $trace-detail-height;
+      overflow-y: auto;
+    }
+  }
+
+  .replay-action {
+    display: flex;
+    justify-content: space-between;
+    margin-top: global.$spacing-sm;
+
+    .result-message {
+      padding: global.$spacing-sm global.$spacing-md;
+      border-radius: global.$border-radius-sm;
+      font-size: global.$font-size-sm;
+
+      &.success {
+        background: global.$sdux-surface-raised;
+        color: global.$sdux-success-base;
+        border: 1px solid global.$sdux-success-base;
+      }
+
+      &.error {
+        background: global.$sdux-surface-raised;
+        color: global.$sdux-accent-base;
+        border: 1px solid global.$sdux-accent-base;
+      }
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      .sdux-button {
+        width: 140px !important; // !important: override Material default button sizing for nav layout
+        min-width: 140px !important; // !important: override Material default button sizing for nav layout
+        max-width: 140px !important; // !important: override Material default button sizing for nav layout
+      }
+
+      .result-message {
+        font-size: global.$font-size-xs;
+        padding: global.$spacing-xs global.$spacing-sm;
+      }
+    }
+  }
+
+  .compare-section {
+    display: flex;
+    flex-direction: column;
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 250px;
+      grid-template-rows: auto 1fr;
+      gap: global.$spacing-md;
+
+      sdux-compare-timeline,
+      sdux-compare-timeline-spans,
+      sdux-compare-timeline-delta,
+      sdux-compare-timeline-waterfall {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .compare-summary-group {
+      grid-column: 1 / -1;
+      background: global.$sdux-surface-raised;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-sm;
+
+      .filter-btn {
+        width: 75px;
+        padding: global.$spacing-xs global.$spacing-sm;
+        font-size: global.$font-size-xs;
+        font-weight: global.$font-weight-medium;
+        color: global.$sdux-text-secondary;
+        background: transparent;
+        border: 1px solid global.$sdux-surface-outline;
+        border-radius: global.$border-radius-sm;
+        cursor: pointer;
+        white-space: nowrap;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease,
+          border-color 0.2s ease;
+
+        &:hover {
+          background: global.$sdux-surface-hover-lg;
+        }
+
+        &.active {
+          color: global.$sdux-text-white;
+          background: global.$sdux-primary-base;
+          border-color: global.$sdux-primary-base;
+        }
+      }
+
+      .compare-summary {
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-sm;
+        padding: global.$spacing-sm global.$spacing-md;
+        font-size: global.$font-size-sm;
+        color: global.$sdux-text-secondary;
+
+        .summary-divider {
+          color: global.$sdux-surface-outline;
+        }
+
+        .summary-stat {
+          white-space: nowrap;
+        }
+
+        .summary-delta {
+          font-weight: global.$font-weight-bold;
+
+          &.faster {
+            color: global.$sdux-success-base;
+          }
+
+          &.slower {
+            color: global.$sdux-accent-base;
+          }
+        }
+      }
+
+      .compare-filters {
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-sm;
+        padding: 0 global.$spacing-md global.$spacing-sm;
+      }
+
+      @media (max-width: global.$breakpoint-md) {
+        .compare-summary {
+          flex-wrap: wrap;
+
+          .summary-divider {
+            display: none;
+          }
+        }
+
+        .compare-filters {
+          flex-wrap: wrap;
+
+          .filter-btn {
+            flex: 0 0 calc(33.333% - #{global.$spacing-sm});
+          }
+        }
+      }
+    }
+  }
+
+  .help-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+    padding: global.$spacing-md;
+    margin-bottom: global.$spacing-md;
+    background: global.$sdux-surface-raised;
+    border-radius: global.$border-radius-sm;
+    border: 1px solid global.$sdux-surface-outline;
+  }
+
+  .help-text {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+    line-height: 1.5;
+  }
+
+  .help-list {
+    margin: 0;
+    padding-left: global.$spacing-lg;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+    line-height: 1.6;
+
+    li {
+      margin-bottom: global.$spacing-xs;
+    }
+  }
+
+  /* ─── DELTA TOGGLE ─── */
+
+  .diff-header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .diff-header-meta {
+    width: 100%;
+    order: 3;
+  }
+
+  .delta-toggle {
+    @include global.sdux-icon-button(28px, transparent);
+    margin-left: auto;
+    order: 2;
+    align-self: flex-start;
+    color: global.$sdux-primary-light;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover {
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
+    }
+
+    &.active {
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
+    }
+  }
+}

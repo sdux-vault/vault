@@ -1,0 +1,37 @@
+<div class="help-header">
+  <div class="help-heading-row">
+    <ng-content select="[helpHeading]" />
+    <button
+      type="button"
+      class="help-toggle"
+      (click)="$event.stopPropagation(); toggle()"
+      matTooltip="Toggle help"
+      [attr.aria-label]="ariaLabel()"
+      [attr.aria-expanded]="open()">
+      <img
+        src="assets/icons/help-icon.png"
+        alt=""
+        class="help-icon"
+        aria-hidden="true" />
+    </button>
+  </div>
+  <span class="help-spacer"></span>
+  <div class="help-actions">
+    <ng-content select="[helpActions]" />
+  </div>
+</div>
+@if (open()) {
+  <div class="help-overlay-anchor">
+    <section class="help-section">
+      <button
+        type="button"
+        class="help-close"
+        (click)="$event.stopPropagation(); toggle()"
+        matTooltip="Close help"
+        aria-label="Close help">
+        ✕
+      </button>
+      <ng-content />
+    </section>
+  </div>
+}

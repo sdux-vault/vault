@@ -19,12 +19,12 @@ describe('debug-wiget.engine', () => {
     registryArtifacts.length = 0;
 
     (globalThis as any).sdux = {
+      getRegistry: (): any => {
+        return registryArtifacts.shift();
+      },
       debugWidget: {
         versions: {
           '@sdux-vault/test': '1.0.0'
-        },
-        getRegistry: (): any => {
-          return registryArtifacts.shift();
         }
       }
     };

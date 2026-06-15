@@ -1,0 +1,203 @@
+@if (hasData()) {
+  <!-- Before Table -->
+  @if (!afterOnly()) {
+    <div class="state-table-container">
+      <div class="table-heading-row">
+        <h3 class="table-heading">
+          @if (singleTable()) {
+            {{ beforeLabel() }}
+          } @else {
+            BEFORE: {{ beforeLabel() }}
+          }
+        </h3>
+        <button
+          type="button"
+          class="delta-toggle"
+          [class.active]="showChangedOnly()"
+          (click)="toggleChangedOnly.emit()"
+          [matTooltip]="
+            showChangedOnly() ? 'Show All Keys' : 'Show Only Changed Keys'
+          "
+          aria-label="Toggle show only changed rows">
+          <mat-icon>compare_arrows</mat-icon>
+        </button>
+        <button
+          type="button"
+          class="collapse-toggle"
+          (click)="collapsed.set(!collapsed())"
+          [matTooltip]="collapsed() ? 'Expand table' : 'Collapse table'"
+          aria-label="Toggle table visibility">
+          <mat-icon [class.expanded]="!collapsed()">chevron_right</mat-icon>
+        </button>
+      </div>
+      @if (!collapsed()) {
+        @if (
+          tableDiff().beforeColumns.length > 0 &&
+          tableDiff().beforeRows.length > 0
+        ) {
+          <div class="table-scroll-wrapper">
+            <table class="state-table">
+              <thead>
+                <tr>
+                  <th class="col-status"></th>
+                  @for (col of tableDiff().beforeColumns; track col) {
+                    <th>{{ col }}</th>
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                @for (row of tableDiff().beforeRows; track $index) {
+                  <tr>
+                    <td class="col-status">
+                      @switch (row.status) {
+                        @case ('removed') {
+                          <span
+                            class="status-indicator removed"
+                            matTooltip="Removed"
+                            >-</span
+                          >
+                        }
+                        @case ('modified') {
+                          <span
+                            class="status-indicator modified"
+                            matTooltip="Modified"
+                            >~</span
+                          >
+                        }
+                      }
+                    </td>
+                    @for (col of tableDiff().beforeColumns; track col) {
+                      <td [class]="'cell-' + row.cells[col]">
+                        {{ formatCell(row.data[col]) }}
+                      </td>
+                    }
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <div class="empty-table">
+            <p>No changes in this pair.</p>
+          </div>
+        }
+      }
+    </div>
+  }
+
+  <!-- After Table -->
+  @if (!singleTable()) {
+    <div class="state-table-container">
+      <div class="table-heading-row">
+        <h3 class="table-heading">
+          @if (afterOnly()) {
+            {{ afterLabel() }}
+          } @else {
+            AFTER: {{ afterLabel() }}
+          }
+        </h3>
+        <button
+          type="button"
+          class="delta-toggle"
+          [class.active]="showChangedOnly()"
+          (click)="toggleChangedOnly.emit()"
+          [matTooltip]="
+            showChangedOnly() ? 'Show All Keys' : 'Show Only Changed Keys'
+          "
+          aria-label="Toggle show only changed rows">
+          <mat-icon>compare_arrows</mat-icon>
+        </button>
+        <button
+          type="button"
+          class="collapse-toggle"
+          (click)="collapsed.set(!collapsed())"
+          [matTooltip]="collapsed() ? 'Expand table' : 'Collapse table'"
+          aria-label="Toggle table visibility">
+          <mat-icon [class.expanded]="!collapsed()">chevron_right</mat-icon>
+        </button>
+      </div>
+      @if (!collapsed()) {
+        @if (
+          afterOnlyDiff().afterColumns.length > 0 &&
+          afterOnlyDiff().afterRows.length > 0
+        ) {
+          <div class="table-scroll-wrapper">
+            <table class="state-table">
+              <thead>
+                <tr>
+                  <th class="col-status"></th>
+                  @for (col of afterOnlyDiff().afterColumns; track col) {
+                    <th>{{ col }}</th>
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                @for (row of afterOnlyDiff().afterRows; track $index) {
+                  <tr>
+                    <td class="col-status">
+                      @switch (row.status) {
+                        @case ('added') {
+                          <span
+                            class="status-indicator added"
+                            matTooltip="Added"
+                            >+</span
+                          >
+                        }
+                        @case ('modified') {
+                          <span
+                            class="status-indicator modified"
+                            matTooltip="Modified"
+                            >~</span
+                          >
+                        }
+                        @case ('removed') {
+                          <span
+                            class="status-indicator removed"
+                            matTooltip="Removed"
+                            >-</span
+                          >
+                        }
+                      }
+                    </td>
+                    @for (col of afterOnlyDiff().afterColumns; track col) {
+                      <td [class]="'cell-' + (row.cells[col] || 'unchanged')">
+                        {{ formatCell(row.data[col]) }}
+                      </td>
+                    }
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <div class="empty-table">
+            <p>No changes in this pair.</p>
+          </div>
+        }
+      }
+    </div>
+  }
+} @else {
+  <div class="state-table-container">
+    <div class="table-heading-row">
+      <h3 class="table-heading">
+        @if (afterOnly()) {
+          {{ afterLabel() }}
+        } @else if (singleTable()) {
+          {{ beforeLabel() }}
+        } @else {
+          {{ beforeLabel() }}
+        }
+      </h3>
+    </div>
+    <div class="empty-table">
+      <p>
+        No state properties to display — the snapshot contains an empty or
+        non-tabular value.
+      </p>
+      @if (!afterOnly() && !singleTable()) {
+        <p class="empty-hint">Switch to Diff view to see the raw value.</p>
+      }
+    </div>
+  </div>
+}

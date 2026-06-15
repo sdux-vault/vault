@@ -6,6 +6,7 @@ export const p438Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -15,16 +16,18 @@ export const p438Snapshot = [
     behaviorKey: 'partial-tab-sync::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
   {
     id: 'id-removed',
     cell: 'partial-tab-sync',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
   },
@@ -34,16 +37,18 @@ export const p438Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
   {
     id: 'id-removed',
     cell: 'partial-tab-sync',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
   },
@@ -53,6 +58,7 @@ export const p438Snapshot = [
     behaviorKey: 'partial-tab-sync::license',
     name: 'lifecycle:notification:license-denied',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -62,6 +68,7 @@ export const p438Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -71,16 +78,18 @@ export const p438Snapshot = [
     behaviorKey: 'partial-tab-sync::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
   {
     id: 'id-removed',
     cell: 'partial-tab-sync',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
     boundary: 'start',
     traceId: 'trace-id-removed'
   },
@@ -90,6 +99,7 @@ export const p438Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
@@ -99,6 +109,7 @@ export const p438Snapshot = [
     behaviorKey: 'partial-tab-sync::license',
     name: 'lifecycle:notification:license-denied',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   }

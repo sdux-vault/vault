@@ -6,6 +6,7 @@ import {
   ExampleViewerTabComponent,
   PackageNameComponent
 } from '@sdux-vault/ui/web-components';
+import { PipelineRelatedTopicComponent } from '../../../related-topic/related-topic.component';
 
 /**
  * The pipeline what is a behavior documentation
@@ -18,7 +19,8 @@ import {
     DiagramComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    PipelineRelatedTopicComponent
   ],
   templateUrl: 'what-is-a-behavior.pipeline.component.html',
   styleUrls: ['../../../scss/example.scss'],

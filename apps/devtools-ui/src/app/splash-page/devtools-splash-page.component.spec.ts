@@ -6,9 +6,11 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
-import { DevtoolsPipelineEventComponent } from '../panels/events/pipeline/devtools-pipeline-event.component';
-import { DevtoolsMainPipelinePanelComponent } from '../panels/pipeline/main/devtools-main-pipeline-panel.component';
-import { DevtoolsService } from '../services/devtools.service';
+import { EventContainerComponent } from '../reports/events/event-container/event-container.component';
+import { EventViewComponent } from '../reports/events/event-view/event-view.component';
+import { DevtoolsAggregateService } from '../services/devtools-aggregate.service';
+import { DevtoolsLoggingService } from '../services/devtools-logging.service';
+import { DevtoolsRegistryService } from '../services/registry/devtools-registry.service';
 import {
   DevToolsSplashPageComponent,
   EXTENSION_VERSION,
@@ -21,7 +23,7 @@ const mockEvent: any = {
   behaviorKey: 'test-behavior'
 };
 
-class MockNgVaultDevtoolsService {
+class MockDevtoolsService {
   eventsSignal: WritableSignal<any[]> = signal([mockEvent]);
   totalEventsSignal = computed(() => this.eventsSignal().length);
 
@@ -44,19 +46,36 @@ class MockNgVaultDevtoolsService {
 describe('Component: SplashPage', () => {
   let fixture: ComponentFixture<DevToolsSplashPageComponent>;
   let component: DevToolsSplashPageComponent;
-  let mockService: MockNgVaultDevtoolsService;
+  let mockService: MockDevtoolsService;
 
   beforeEach(async () => {
-    mockService = new MockNgVaultDevtoolsService();
+    mockService = new MockDevtoolsService();
 
     await TestBed.configureTestingModule({
       imports: [
         DevToolsSplashPageComponent,
-        DevtoolsMainPipelinePanelComponent,
-        DevtoolsPipelineEventComponent
+        EventContainerComponent,
+        EventViewComponent
       ],
       providers: [
-        { provide: DevtoolsService, useValue: mockService },
+        { provide: DevtoolsLoggingService, useValue: mockService },
+        {
+          provide: DevtoolsAggregateService,
+          useValue: {
+            traces: signal([]),
+            tracesByCellKey: signal(new Map()),
+            totalTraces: () => 0
+          }
+        },
+        {
+          provide: DevtoolsRegistryService,
+          useValue: {
+            isLicensed: signal(false),
+            registry: signal([]),
+            versions: signal([]),
+            license: signal(null)
+          }
+        },
         { provide: EXTENSION_VERSION, useValue: '0.0.27' },
         provideZonelessChangeDetection()
       ]
@@ -76,27 +95,19 @@ describe('Component: SplashPage', () => {
     expect(component.totalEvents()).toBe(1);
   });
 
-  it('should reflect cleared events after clearEvents()', async () => {
-    mockService.eventsSignal.set([mockEvent]);
-    await flushVaultPipeline();
-
-    expect(component.events()).toEqual([
-      Object({ id: 1, type: 'enqueue', behaviorKey: 'test-behavior' })
-    ]);
-
-    component.clearEvents();
-    await flushVaultPipeline();
-
-    expect(component.events()).toEqual([]);
-    expect(component.totalEvents()).toBe(0);
-  });
-
   it('should render template without pipe errors', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
   });
 
   it('should use the injected extension version', () => {
     expect(component.version).toBe('0.0.27');
+  });
+
+  it('should handle undefined events gracefully', () => {
+    mockService.eventsSignal.set(undefined as any);
+    fixture.detectChanges();
+
+    expect(component.totalEvents()).toBeUndefined();
   });
 });
 

@@ -1,0 +1,171 @@
+@use 'global' as global;
+@use '../scss/reports-common';
+
+.report-page {
+  .export-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+  }
+
+  .description {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+    line-height: 1.5;
+
+    code {
+      color: global.$sdux-text-primary;
+      background: global.$sdux-surface-raised-md;
+      padding: 0 global.$spacing-xs;
+      border-radius: global.$border-radius-sm;
+    }
+  }
+
+  .features {
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+
+    .features-heading {
+      margin: 0 0 global.$spacing-sm;
+      font-weight: global.$font-weight-medium;
+      color: global.$sdux-text-primary;
+    }
+
+    ol,
+    ul {
+      margin: 0;
+      padding-left: global.$spacing-lg;
+
+      li {
+        line-height: 1.6;
+      }
+    }
+
+    ol {
+      list-style: decimal;
+    }
+
+    ul {
+      list-style: disc;
+    }
+
+    a {
+      @include global.a-link(
+        global.$sdux-primary-base,
+        global.$sdux-text-inverse
+      );
+    }
+  }
+
+  .tab-panel {
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+    padding: global.$spacing-md 0;
+
+    ol {
+      margin: 0;
+      padding-left: global.$spacing-lg;
+      list-style: decimal;
+
+      li {
+        line-height: 1.6;
+      }
+    }
+
+    a {
+      @include global.a-link(
+        global.$sdux-primary-base,
+        global.$sdux-text-inverse
+      );
+    }
+
+    code {
+      color: global.$sdux-text-primary;
+      background: global.$sdux-surface-raised-md;
+      padding: 0 global.$spacing-xs;
+      border-radius: global.$border-radius-sm;
+    }
+  }
+
+  .event-count {
+    padding: global.$spacing-sm global.$spacing-md;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-success-base;
+    background: rgb(0 255 0 / 6%);
+    border: 1px solid global.$sdux-success-base;
+    border-radius: global.$border-radius-sm;
+  }
+
+  .warning-notice {
+    max-width: 400px;
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-warn-base;
+    line-height: 1.5;
+    padding: global.$spacing-sm global.$spacing-md;
+    border-left: 3px solid global.$sdux-warn-base;
+    background: rgb(251 192 45 / 8%);
+    border-radius: global.$border-radius-sm;
+  }
+
+  .summary-stats {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    gap: global.$spacing-xs;
+    padding: global.$spacing-xs global.$spacing-md;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+    background: global.$sdux-surface-lightish;
+    border-radius: global.$border-radius-sm;
+
+    strong {
+      font-family: monospace;
+      color: global.$sdux-text-primary;
+    }
+  }
+
+  .sdux-button {
+    align-self: flex-start;
+  }
+
+  .button-group {
+    display: flex;
+    gap: global.$spacing-sm;
+  }
+
+  .export-hint {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+    line-height: 1.5;
+
+    strong {
+      color: global.$sdux-text-primary;
+    }
+  }
+}
+
+/* ─── MATERIAL TAB OVERRIDES ─── */
+
+// exception: pierces encapsulation to override Material tab label colors for dark chrome extension background
+::ng-deep {
+  .mat-mdc-tab-header,
+  .mat-mdc-tab {
+    /* !important: override Material's inline tab background for dark extension */
+    background-color: global.$sdux-surface-mid !important;
+  }
+
+  .mdc-tab__text-label {
+    /* !important: override Material's inline label color for dark extension */
+    color: global.$sdux-primary-light !important;
+  }
+
+  .mdc-tab--active .mdc-tab__text-label,
+  .mdc-tab:hover .mdc-tab__text-label,
+  .mdc-tab:focus .mdc-tab__text-label {
+    /* !important: override Material's inline label color for active/hover/focus states */
+    color: global.$sdux-text-white !important;
+  }
+}

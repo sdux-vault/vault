@@ -25,4 +25,11 @@ export interface InsightConfig {
    * Whether error information should be included in emitted insight events.
    */
   wantsErrors?: boolean;
+
+  /**
+   * Whether pipeline candidate snapshots should be included in emitted
+   * insight events. Candidates capture the state value at each pipeline
+   * stage boundary, enabling before/after diff comparison across stages.
+   */
+  wantsCandidates?: boolean;
 }

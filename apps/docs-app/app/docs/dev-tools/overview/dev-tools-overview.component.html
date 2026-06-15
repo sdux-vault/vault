@@ -18,9 +18,9 @@
     </p>
 
     <p>
-      The DevTools ecosystem is composed of three core components: the built-in
-      debugger, the Vault Monitor telemetry system, and the Event Bus used to
-      deliver runtime events to development tooling.
+      The DevTools ecosystem is composed of four core components: the built-in
+      debugger, the Chrome Extension, the Vault Monitor telemetry system, and
+      the Event Bus used to deliver runtime events to development tooling.
     </p>
   </header>
 
@@ -53,6 +53,35 @@
       <p>
         <a routerLink="/docs/dev-tools/built-in-debugger"
           >Read the Built-in Debugger documentation →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CHROME EXTENSION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Chrome Extension</div>
+
+    <div class="section-body">
+      <p>
+        The <sdux-brand-name /> Chrome Extension provides a dedicated DevTools
+        panel for inspecting Pipeline execution directly within Chrome Developer
+        Tools. The extension consumes the same telemetry produced by the Vault
+        Monitor and presents it through interactive report views.
+      </p>
+
+      <p>
+        Reports include trace timelines, State diff comparison, hot stage
+        ranking, Pipeline replay, extension inspection, and AI-assisted
+        diagnostics. Each report view includes inline help that describes its
+        purpose and usage.
+      </p>
+
+      <p>
+        <a routerLink="/docs/dev-tools/chrome-devtools-extension"
+          >Read the Chrome Devtools Extension documentation →</a
         >
       </p>
     </div>

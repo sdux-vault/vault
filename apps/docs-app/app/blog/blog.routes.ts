@@ -47,6 +47,54 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-06-pipeline-anatomy/pipeline-anatomy.component').then(
         (m) => m.BlogPipelineAnatomyComponent
       )
+  },
+  {
+    path: 'circuit-breaker-state-pipeline',
+    data: { category: 'blogs', type: 'circuit-breaker-state-pipeline' },
+    loadComponent: () =>
+      import('./posts/2026-06-08-circuit-breaker-state-pipeline/circuit-breaker-state-pipeline.component').then(
+        (m) => m.BlogCircuitBreakerStatePipelineComponent
+      )
+  },
+  {
+    path: 'one-engine-every-framework',
+    data: { category: 'blogs', type: 'one-engine-every-framework' },
+    loadComponent: () =>
+      import('./posts/2026-06-09-one-engine-every-framework/one-engine-every-framework.component').then(
+        (m) => m.BlogOneEngineEveryFrameworkComponent
+      )
+  },
+  {
+    path: 'ai-assisted-debugging',
+    data: { category: 'blogs', type: 'ai-assisted-debugging' },
+    loadComponent: () =>
+      import('./posts/2026-06-10-ai-assisted-debugging/ai-assisted-debugging.component').then(
+        (m) => m.BlogAiAssistedDebuggingComponent
+      )
+  },
+  {
+    path: 'testing-state-3-steps',
+    data: { category: 'blogs', type: 'testing-state-3-steps' },
+    loadComponent: () =>
+      import('./posts/2026-06-11-testing-state-3-steps/testing-state-3-steps.component').then(
+        (m) => m.BlogTestingState3StepsComponent
+      )
+  },
+  {
+    path: 'controllers-dont-touch-your-data',
+    data: { category: 'blogs', type: 'controllers-dont-touch-your-data' },
+    loadComponent: () =>
+      import('./posts/2026-06-12-controllers-dont-touch-your-data/controllers-dont-touch-your-data.component').then(
+        (m) => m.BlogControllersDontTouchYourDataComponent
+      )
+  },
+  {
+    path: 'tab-sync-state',
+    data: { category: 'blogs', type: 'tab-sync-state' },
+    loadComponent: () =>
+      import('./posts/2026-06-12-tab-sync-state/tab-sync-state.component').then(
+        (m) => m.BlogTabSyncStateComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

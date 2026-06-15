@@ -46,7 +46,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p class="type">type: string</p>
               </td>
               <td class="column-auto">
-                Secret value used as the basis for AES-256 encryption.<br /><br />
+                Secret value used as the basis for AES-256 encryption. Must be a
+                non-empty string.<br /><br />
               </td>
             </tr>
             <tr>
@@ -56,7 +57,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p class="type">type: number</p>
               </td>
               <td class="column-auto">
-                Number of iterations used during key derivation.<br /><br />
+                Number of PBKDF2 iterations used during key derivation. Must be
+                an integer between 100,000 and 5,000,000.<br /><br />
               </td>
             </tr>
             <tr>
@@ -66,7 +68,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p class="type">type: Uint8Array</p>
               </td>
               <td class="column-auto">
-                Salt value applied during key derivation.<br /><br />
+                Salt value applied during PBKDF2 key derivation. Must be a
+                Uint8Array of at least 16 bytes.<br /><br />
               </td>
             </tr>
           </tbody>

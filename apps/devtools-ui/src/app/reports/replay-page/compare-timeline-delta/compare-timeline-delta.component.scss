@@ -1,0 +1,317 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+}
+
+.compare-timeline-delta {
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    h3 {
+      margin: 0;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-bold;
+      color: global.$sdux-text-primary;
+    }
+
+    &:hover .chevron {
+      color: global.$sdux-primary-light;
+    }
+  }
+
+  .chevron {
+    font-size: global.$font-size-lg;
+    color: global.$sdux-text-secondary;
+    transition: transform 0.2s ease;
+    transform: rotate(0deg);
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+
+  .timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-xs;
+    padding: global.$spacing-md;
+    background: global.$sdux-surface-raised;
+    border: 1px solid global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  .timeline-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: global.$spacing-sm;
+    margin-bottom: global.$spacing-sm;
+    font-size: global.$font-size-sm;
+  }
+
+  .toolbar-row {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+  }
+
+  .controls-row {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .stat-label {
+    color: global.$sdux-text-secondary;
+    font-weight: global.$font-weight-medium;
+  }
+
+  .stat-divider {
+    color: global.$sdux-text-secondary;
+  }
+
+  .summary-delta {
+    &.faster {
+      color: global.$sdux-success-base;
+      font-weight: global.$font-weight-bold;
+    }
+
+    &.slower {
+      color: global.$sdux-accent-base;
+      font-weight: global.$font-weight-bold;
+    }
+  }
+
+  .faster-label {
+    color: global.$sdux-success-base;
+    font-weight: global.$font-weight-bold;
+  }
+
+  .slower-label {
+    color: global.$sdux-accent-base;
+    font-weight: global.$font-weight-bold;
+  }
+
+  @media (width <= global.$breakpoint-md) {
+    .timeline-toolbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .controls-row {
+      margin-left: 0;
+    }
+  }
+
+  .delta-legend {
+    display: flex;
+    justify-content: space-between;
+    font-size: global.$font-size-xs;
+    padding: 0 global.$spacing-md;
+
+    .legend-slower {
+      color: global.$sdux-accent-base;
+    }
+
+    .legend-center {
+      color: global.$sdux-text-secondary;
+    }
+
+    .legend-faster {
+      color: global.$sdux-success-base;
+    }
+  }
+
+  .delta-scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .delta-zoom-area {
+    min-width: 100%;
+  }
+
+  .delta-row {
+    display: flex;
+    align-items: stretch;
+    gap: global.$spacing-md;
+  }
+
+  .delta-y-axis {
+    width: 60px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    color: global.$sdux-text-secondary;
+    white-space: nowrap;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: global.$sdux-surface-raised;
+    padding-right: global.$spacing-xs;
+
+    .scale-center {
+      font-weight: global.$font-weight-bold;
+    }
+  }
+
+  .delta-bar {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .delta-track {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+    padding: 0 6px;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgb(255 255 255 / 8%) 0,
+        rgb(255 255 255 / 8%) 1px,
+        transparent 1px,
+        transparent var(--tick-pct, 20%)
+      ),
+      global.$sdux-surface-raised-sm;
+    border: 1px solid global.$sdux-surface-outline;
+    border-radius: global.$border-radius-sm;
+  }
+
+  .delta-center-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: global.$sdux-text-secondary;
+    opacity: 0.4;
+  }
+
+  .delta-marker {
+    position: absolute;
+    width: 6px;
+    transform: translateX(-50%);
+    border-radius: global.$border-radius-xs;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3px;
+
+    &.above {
+      bottom: 50%;
+    }
+
+    &.below {
+      top: 50%;
+    }
+
+    &.slower {
+      background: rgb(244 67 54 / 70%);
+      border: 1px solid global.$sdux-accent-base;
+    }
+
+    &.faster {
+      background: rgb(56 142 60 / 70%);
+      border: 1px solid global.$sdux-success-base;
+    }
+
+    &.same {
+      background: global.$sdux-text-secondary;
+      opacity: 0.3;
+    }
+  }
+
+  .delta-time-axis {
+    position: relative;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    line-height: 1;
+    color: global.$sdux-text-secondary;
+    padding-top: global.$spacing-xs;
+    padding-bottom: global.$spacing-xs;
+    margin-left: calc(60px + global.$spacing-md);
+    border-top: 1px solid global.$sdux-surface-outline;
+    min-height: calc(global.$font-size-xs + global.$spacing-xs);
+  }
+
+  .axis-label {
+    position: absolute;
+    top: global.$spacing-xs;
+    color: global.$sdux-text-secondary;
+    transform: translateX(-50%);
+    white-space: nowrap;
+
+    &:first-child {
+      transform: none;
+    }
+
+    &:last-child {
+      transform: none;
+    }
+  }
+
+  .help-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: global.$spacing-xs;
+    margin-left: global.$spacing-sm;
+    display: flex;
+    align-items: center;
+  }
+
+  .help-icon {
+    width: global.$font-size-sm;
+    height: global.$font-size-sm;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .help-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+    padding: global.$spacing-md;
+    margin-bottom: global.$spacing-md;
+    background: global.$sdux-surface-raised;
+    border-radius: global.$border-radius-sm;
+    border: 1px solid global.$sdux-surface-outline;
+  }
+
+  .help-text {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+    line-height: 1.5;
+  }
+
+  .help-marker {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    vertical-align: middle;
+
+    &.slower-marker {
+      background: global.$sdux-accent-base;
+    }
+
+    &.faster-marker {
+      background: global.$sdux-success-base;
+    }
+  }
+}

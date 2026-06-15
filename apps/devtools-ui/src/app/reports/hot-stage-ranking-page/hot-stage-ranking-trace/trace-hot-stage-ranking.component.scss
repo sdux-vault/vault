@@ -1,0 +1,170 @@
+@use 'global' as global;
+@use '../../scss/reports-common';
+
+:host {
+  display: block;
+}
+
+.report-page .view-toggle {
+  margin-left: auto;
+  width: 170px;
+
+  .toggle-btn {
+    width: 85px;
+  }
+}
+
+.tab-description {
+  margin: global.$spacing-sm 0;
+  padding-left: global.$spacing-sm;
+  padding-right: global.$spacing-sm;
+  font-size: global.$font-size-md;
+  color: global.$sdux-text-disabled;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+@media (max-width: global.$breakpoint-md) {
+  .tab-description {
+    display: none;
+  }
+
+  .report-page .view-toggle {
+    margin-top: global.$spacing-sm;
+  }
+}
+
+.ranking-section {
+  padding-top: global.$spacing-md;
+  overflow-x: auto;
+}
+
+.ranking-table {
+  width: 100%;
+  min-width: 500px;
+  border-collapse: collapse;
+  font-size: global.$font-size-xs;
+  font-family: monospace;
+
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: global.$sdux-surface-default;
+  }
+
+  tbody {
+    display: block;
+    max-height: calc(100vh - 350px);
+    min-height: 200px;
+    overflow-y: auto;
+  }
+
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    padding: global.$spacing-xs global.$spacing-sm;
+    text-align: left;
+    border-bottom: 1px solid global.$sdux-border-default-sm;
+  }
+
+  th {
+    color: global.$sdux-text-secondary;
+    font-weight: global.$font-weight-medium;
+    white-space: nowrap;
+  }
+
+  .col-rank {
+    width: 40px;
+    text-align: right;
+    color: global.$sdux-text-secondary;
+  }
+
+  .col-stage {
+    width: 100px;
+  }
+
+  .col-duration {
+    width: 70px;
+    text-align: right;
+  }
+
+  .col-count {
+    width: 50px;
+    text-align: right;
+    color: global.$sdux-text-secondary;
+  }
+
+  .col-bar {
+    width: auto;
+    padding-right: global.$spacing-md;
+  }
+
+  .col-pct {
+    width: 45px;
+    text-align: right;
+    color: global.$sdux-text-secondary;
+  }
+
+  .col-behavior {
+    width: 300px;
+    color: global.$sdux-text-secondary;
+
+    .behavior-trace {
+      display: block;
+      font-size: global.$font-size-xs;
+      color: global.$sdux-text-disabled;
+    }
+  }
+
+  .bar-track {
+    height: 10px;
+    background: global.$sdux-surface-hover-sm;
+    border-radius: 2px;
+    position: relative;
+
+    .bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 2px;
+      background: global.$sdux-primary-base;
+      min-width: 2px;
+
+      &.bar-fill-slowest {
+        background: global.$sdux-warn-base;
+      }
+    }
+  }
+
+  .row-slowest {
+    td {
+      color: global.$sdux-warn-base;
+    }
+  }
+}
+
+.ranking-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: global.$spacing-md;
+  padding-top: global.$spacing-sm;
+  border-top: 1px solid global.$sdux-border-default;
+  margin-top: global.$spacing-sm;
+  font-size: global.$font-size-xs;
+  color: white;
+}
+
+.ranking-empty {
+  padding: global.$spacing-md;
+  text-align: center;
+  color: global.$sdux-text-secondary;
+  font-size: global.$font-size-sm;
+}

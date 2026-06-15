@@ -1,0 +1,91 @@
+@use 'global' as global;
+
+.entity-section {
+  margin-bottom: global.$spacing-lg;
+
+  .entity-title {
+    @include global.sdux-text(
+      global.$sdux-text-primary,
+      global.$font-weight-semibold
+    );
+    font-size: global.$font-size-md;
+    margin: 0 0 global.$spacing-sm;
+
+    .entity-count {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-weight: global.$font-weight-regular;
+      font-size: global.$font-size-sm;
+      margin-left: global.$spacing-sm;
+    }
+
+    &.entity-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .entity-chevron {
+      @include global.sdux-icon-button(28px, transparent);
+      margin-left: auto;
+      color: global.$sdux-primary-light;
+      transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+
+      &:hover {
+        background-color: global.$sdux-primary-base;
+        color: global.$sdux-text-white;
+      }
+
+      &.entity-chevron-expanded {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .entity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .entity-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: global.$spacing-xs global.$spacing-sm;
+      border-bottom: 1px solid global.$sdux-surface-outline;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .entity-key {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-size: global.$font-size-sm;
+        word-break: break-all;
+        flex: 1;
+        margin-right: global.$spacing-sm;
+      }
+
+      .entity-type {
+        @include global.sdux-text(global.$sdux-text-secondary);
+        font-size: global.$font-size-xs;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .entity-empty {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-size: global.$font-size-sm;
+    font-style: italic;
+  }
+}
+
+.vault-icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}

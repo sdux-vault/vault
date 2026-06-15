@@ -2,8 +2,11 @@ import { RelatedTopicCategoryShape } from 'apps/docs-app/app/docs/related-topic/
 
 export const RELATED_TOPICS_PROVIDE_VAULT_REGISTRY: RelatedTopicCategoryShape =
   {
-    baseRoute: '/docs/pipeline/api/provide-vault',
+    baseRoute: '/docs/pipeline/apis/provide-vault',
     baseDisplay: 'Vault Initialization',
+    title: 'provideVault in SDuX Vault — Angular Vault Registration',
+    description:
+      'Register a root Vault with Angular dependency injection using provideVault in SDuX Vault.',
 
     // Same global scope as other API pages
     globals: ['core'],
@@ -15,12 +18,19 @@ export const RELATED_TOPICS_PROVIDE_VAULT_REGISTRY: RelatedTopicCategoryShape =
 
     items: [
       {
-        link: '/docs/pipeline/api/provide-feature-cell',
-        display: 'Create a FeatureCell'
+        link: '/docs/pipeline/apis/provide-feature-cell',
+        display: 'Create a FeatureCell',
+        title:
+          'provideFeatureCell in SDuX Vault — Angular FeatureCell Registration',
+        description:
+          'Register a FeatureCell with Angular dependency injection using provideFeatureCell in SDuX Vault.'
       },
       {
-        link: '/docs/pipeline/api/at-feature-cell',
-        display: 'Decorate an Angular Service with @FeatureCell'
+        link: '/docs/pipeline/apis/at-feature-cell',
+        display: 'Decorate an Angular Service with @FeatureCell',
+        title: '@FeatureCell Decorator in SDuX Vault — Angular Service Binding',
+        description:
+          'Bind an Angular injectable service to a SDuX Vault FeatureCell using the @FeatureCell decorator.'
       }
     ]
   };

@@ -16,7 +16,7 @@ describe('Chrome Extension: devtools.js', () => {
     loadScript('devtools/devtools.js');
 
     expect(chrome.devtools.panels.create).toHaveBeenCalledWith(
-      'Vault',
+      'SDuX Vault',
       '../icons/brand-128.png',
       'panel/panel.html'
     );

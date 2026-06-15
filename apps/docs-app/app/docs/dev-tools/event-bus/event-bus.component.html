@@ -57,21 +57,24 @@
         behavior.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        The Event Bus intentionally allows developers to emit custom events into
-        the pipeline stream. This flexibility enables advanced diagnostics,
-        analytics, and custom DevTools integrations. Because these events may be
-        synthetic, developers should avoid emitting events that could interfere
-        with or misrepresent actual Vault pipeline behavior.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          The Event Bus intentionally allows developers to emit custom events
+          into the pipeline stream. This flexibility enables advanced
+          diagnostics, analytics, and custom DevTools integrations. Because
+          these events may be synthetic, developers should avoid emitting events
+          that could interfere with or misrepresent actual Vault pipeline
+          behavior.
+        </p>
 
-      <p>
-        In practice, pipeline events emitted by the Vault runtime represent
-        authoritative execution signals, while custom tooling may optionally
-        emit additional diagnostic events for debugging or instrumentation
-        purposes.
-      </p>
+        <p>
+          In practice, pipeline events emitted by the Vault runtime represent
+          authoritative execution signals, while custom tooling may optionally
+          emit additional diagnostic events for debugging or instrumentation
+          purposes.
+        </p>
+      </div>
     </div>
   </section>
 

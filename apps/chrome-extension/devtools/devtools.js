@@ -10,7 +10,7 @@
  * occurs in this script beyond the creation of the panel.
  */
 chrome.devtools.panels.create(
-  'Vault',
+  'SDuX Vault',
   '../icons/brand-128.png',
   'panel/panel.html'
 );

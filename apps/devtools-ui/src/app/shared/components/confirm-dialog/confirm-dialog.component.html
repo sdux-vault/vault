@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<mat-dialog-content>
+  <p>{{ data.message }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button type="button" class="sdux-button-secondary" (click)="cancel()">
+    {{ data.cancelLabel ?? 'Cancel' }}
+  </button>
+  <button type="button" class="sdux-button-warn" (click)="confirm()">
+    {{ data.confirmLabel ?? 'OK' }}
+  </button>
+</mat-dialog-actions>

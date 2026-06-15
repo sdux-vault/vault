@@ -1,0 +1,79 @@
+@use 'global' as global;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: global.$spacing-xs;
+  padding: global.$spacing-2xl global.$spacing-md;
+  border: 2px dashed global.$sdux-surface-outline;
+  border-radius: global.$border-radius-sm;
+  background: global.$sdux-surface-raised;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: global.$sdux-primary-base;
+    background: rgb(255 255 255 / 6%);
+    outline: none;
+  }
+
+  &.dropzone-active {
+    border-color: global.$sdux-primary-base;
+    background: rgb(25 118 210 / 10%);
+  }
+}
+
+.dropzone-icon {
+  font-size: global.$font-size-xl;
+}
+
+.dropzone-label {
+  font-size: global.$font-size-sm;
+  font-weight: global.$font-weight-medium;
+  color: global.$sdux-text-primary;
+}
+
+.dropzone-sublabel {
+  font-size: global.$font-size-xs;
+  color: global.$sdux-text-secondary;
+}
+
+.file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sdux-button {
+  width: 150px;
+}
+
+.file-size {
+  font-size: global.$font-size-xs;
+  color: global.$sdux-text-secondary;
+  font-family: global.$sdux-code-font;
+}
+
+.error-message {
+  padding: global.$spacing-sm global.$spacing-md;
+  font-size: global.$font-size-sm;
+  color: global.$sdux-accent-base;
+  background: rgb(255 0 0 / 8%);
+  border: 1px solid global.$sdux-accent-base;
+  border-radius: global.$border-radius-sm;
+}

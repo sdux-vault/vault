@@ -2,6 +2,58 @@
 @use 'index' as sdux;
 
 /* ----------------------------------------------
+   Material Icons (local font for Chrome extension)
+   ---------------------------------------------- */
+
+@font-face {
+  font-family: 'Material Icons';
+  src: url('assets/fonts/material-icons/material-icons.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
+
+/* ----------------------------------------------
+   Mat Menu Item Overrides (CDK overlay)
+   ---------------------------------------------- */
+
+.mat-mdc-menu-item {
+  // exception: !important needed to override Angular Material's internal icon color specificity
+  .mat-icon {
+    color: global.$sdux-primary-base !important;
+    width: 25px;
+    height: 25px;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mdc-list-item__primary-text {
+    font-family: global.$sdux-font-family;
+    font-size: global.$font-size-sm;
+  }
+}
+
+/* ----------------------------------------------
    Root Theme Variables
    ---------------------------------------------- */
 
@@ -134,6 +186,123 @@ body {
   background: var(--surface-bg);
 }
 
-::ng-deep .mat-mdc-tab-label-container {
+// exception: third-party Material tab override — no class-based alternative
+.mat-mdc-tab-label-container {
   background-color: global.$sdux-text-primary !important;
+}
+
+.fluent-apis-tooltip {
+  white-space: pre-line;
+}
+
+/* ----------------------------------------------
+   Global mat-select / mat-form-field .cell-filter styling
+   ---------------------------------------------- */
+
+.cell-filter {
+  width: 250px;
+  @include global.sdux-text(global.$sdux-text-inverse);
+  background-color: global.$sdux-surface-light;
+  border-radius: global.$border-radius-sm;
+  box-sizing: border-box;
+}
+
+// Material outlined form-field overrides for .cell-filter
+.cell-filter.mat-mdc-form-field {
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-outlined-outline-color: #{global.$sdux-text-black};
+  --mat-form-field-outlined-hover-outline-color: #{global.$sdux-text-black};
+  --mat-form-field-outlined-focus-outline-color: #{global.$sdux-primary-base};
+  --mat-form-field-outlined-input-text-color: #{global.$sdux-text-inverse};
+  --mat-form-field-outlined-input-text-placeholder-color: #{global.$sdux-text-secondary};
+  --mat-form-field-trailing-icon-color: #{global.$sdux-primary-base};
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .mat-mdc-form-field-icon-suffix {
+    padding: 0;
+    right: 6px;
+
+    .mat-mdc-icon-button {
+      --mdc-icon-button-state-layer-size: 24px;
+      --mdc-icon-button-icon-size: 18px;
+      --mat-icon-button-touch-target-size: 24px;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .mat-mdc-button-persistent-ripple {
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
+      }
+
+      .mat-focus-indicator {
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
+      }
+    }
+  }
+
+  .mat-mdc-text-field-wrapper {
+    max-height: 40px;
+  }
+}
+
+// mat-select .cell-filter keeps its original inline styling
+.cell-filter.mat-mdc-select {
+  border: 1px solid global.$sdux-surface-outline;
+  padding: global.$spacing-xs global.$spacing-sm;
+  height: global.$button-height;
+}
+
+/* ----------------------------------------------
+   Global vault-tabs styling
+   ---------------------------------------------- */
+
+.vault-tabs {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+
+  /* tab header stays fixed */
+  .mat-mdc-tab-header {
+    background-color: global.$sdux-surface-dark;
+    border-bottom: 1px solid global.$sdux-surface-outline;
+  }
+
+  /* body wrapper must shrink + allow scroll */
+  .mat-mdc-tab-body-wrapper {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+  }
+
+  /* each tab body must stretch */
+  .mat-mdc-tab-body {
+    flex: 1;
+    min-height: 0;
+
+    .mat-mdc-tab-body-content {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }

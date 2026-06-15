@@ -91,6 +91,26 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
+                <strong>interceptors</strong>
+
+                <p class="type">type: number</p>
+              </td>
+              <td class="column-auto">
+                Number of registered interceptor classes.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
+                <strong>operators</strong>
+
+                <p class="type">type: number</p>
+              </td>
+              <td class="column-auto">
+                Number of registered operator classes.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>reducers</strong>
 
                 <p class="type">type: number</p>

@@ -1,0 +1,85 @@
+@if (isLicensed()) {
+  <div class="report-page">
+    <sdux-header-section
+      [showChevron]="false"
+      ariaLabel="Toggle hot stage ranking help">
+      <sdux-help-toggle header ariaLabel="Toggle hot stage ranking help">
+        <h2 helpHeading>Hot Stage Ranking</h2>
+        <p class="help-text">
+          Aggregates pipeline stage durations across all filtered traces and
+          ranks them by total cumulative execution time.
+        </p>
+        <ul>
+          <li>Stages ranked by total cumulative duration across all traces</li>
+          <li>Individual view showing each stage execution separately</li>
+          <li>Grouped view combining stages by name for aggregate analysis</li>
+          <li>Filter by cell to scope ranking to a single FeatureCell</li>
+          <li>Export ranking data as structured JSON</li>
+        </ul>
+      </sdux-help-toggle>
+    </sdux-header-section>
+    <div class="action-bar">
+      <mat-select
+        class="cell-filter"
+        [value]="selectedCell()"
+        (selectionChange)="selectCell($any($event.value))"
+        aria-label="Filter by cell">
+        <mat-option value="all">All Cells</mat-option>
+        @for (cell of cellKeys(); track cell) {
+          <mat-option [value]="cell">{{ cell }}</mat-option>
+        }
+      </mat-select>
+
+      <div class="sdux-container-spacer"></div>
+
+      <div class="meta">
+        @if (traces().length) {
+          <div class="view-toggle">
+            <button
+              type="button"
+              class="toggle-btn"
+              [class.active]="viewMode() === 'individual'"
+              (click)="viewMode.set('individual')"
+              matTooltip="Show individual stage executions"
+              aria-label="Individual view">
+              Individual
+            </button>
+            <button
+              type="button"
+              class="toggle-btn"
+              [class.active]="viewMode() === 'grouped'"
+              (click)="viewMode.set('grouped')"
+              matTooltip="Show grouped stage rankings"
+              aria-label="Grouped view">
+              Grouped
+            </button>
+          </div>
+        }
+
+        <sdux-export-button
+          [data]="filteredTraces()"
+          filename="hot-stage-ranking"
+          [label]="'Download ' + selectedCell() + ' traces'">
+        </sdux-export-button>
+
+        <sdux-devtools-reset-button
+          (click)="selectCell('all')"></sdux-devtools-reset-button>
+      </div>
+    </div>
+
+    @if (traces().length) {
+      <sdux-trace-hot-stage-ranking
+        [traces]="filteredTraces()"
+        [(viewMode)]="viewMode"
+        [externalViewMode]="true">
+      </sdux-trace-hot-stage-ranking>
+    } @else {
+      <sdux-empty-state></sdux-empty-state>
+    }
+  </div>
+} @else {
+  <sdux-upsell-notice
+    headline="Unlock aggregated stage performance analysis with a"
+    body="Identify systemic bottlenecks across all traces and see which pipeline stages consume the most total processing time.">
+  </sdux-upsell-notice>
+}

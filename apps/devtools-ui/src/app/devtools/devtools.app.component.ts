@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 /**
  * Root application component for the ngSDuX DevTools app.
@@ -10,7 +11,7 @@ import { RouterOutlet } from '@angular/router';
  */
 @Component({
   selector: 'sdux-devtools-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ToolbarComponent],
   templateUrl: './devtools.app.component.html',
   styleUrl: './devtools.app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

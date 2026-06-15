@@ -22,60 +22,12 @@
       >
     </a>
 
-    <mat-expansion-panel class="nav-expansion" [expanded]="false">
-      <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header"
-          >Chrome DevTools Extension</span
-        >
-      </mat-expansion-panel-header>
-
-      <div class="sub-menu">
-        <a mat-list-item>
-          <span class="menu-content">Coming Soon</span>
-        </a>
-      </div>
-
-      <!-- <div class="sub-menu">
-        <a mat-list-item routerLink="/docs/dev-tools/installation" routerLinkActive="active" (click)="closeSidenav()">
-          <span class="menu-content">Installation</span>
-        </a>
-
-        <a
-          mat-list-item
-          routerLink="/docs/dev-tools/event-pipeline-viewer"
-          routerLinkActive="active"
-          (click)="closeSidenav()">
-          <span class="menu-content">Event Pipeline Viewer</span>
-        </a>
-
-        <a
-          mat-list-item
-          routerLink="/docs/dev-tools/feature-cell-tree"
-          routerLinkActive="active"
-          (click)="closeSidenav()">
-          <span class="menu-content">FeatureCell Tree</span>
-        </a>
-
-        <a mat-list-item routerLink="/docs/dev-tools/time-travel" routerLinkActive="active" (click)="closeSidenav()">
-          <span class="menu-content">Time Travel</span>
-        </a>
-
-        <a
-          mat-list-item
-          routerLink="/docs/dev-tools/troubleshooting"
-          routerLinkActive="active"
-          (click)="closeSidenav()">
-          <span class="menu-content">Troubleshooting</span>
-        </a>
-      </div> -->
-    </mat-expansion-panel>
-
     <a
       mat-list-item
-      routerLink="/docs/dev-tools/event-bus"
+      routerLink="/docs/dev-tools/chrome-devtools-extension"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <span class="menu-content sub-item">Event Bus</span>
+      <span class="menu-content sub-item">Chrome DevTools Extension</span>
     </a>
 
     <a
@@ -84,6 +36,14 @@
       routerLinkActive="active"
       (click)="closeSidenav()">
       <span class="menu-content sub-item">Custom Devtools API</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/dev-tools/event-bus"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Event Bus</span>
     </a>
 
     <a

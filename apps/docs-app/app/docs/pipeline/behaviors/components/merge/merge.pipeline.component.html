@@ -96,13 +96,16 @@
         prevent ambiguous or conflicting state combination rules.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        The Merge stage is entered exclusively through explicit state-update
-        APIs. Pipeline executions that invoke merge semantics are initiated via
-        the <strong>mergeState</strong> method, which supply the incoming value
-        and optional merge configuration used by the active Merge behavior.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          The Merge stage is entered exclusively through explicit state-update
+          APIs. Pipeline executions that invoke merge semantics are initiated
+          via the <strong>mergeState</strong> method, which supply the incoming
+          value and optional merge configuration used by the active Merge
+          behavior.
+        </p>
+      </div>
     </div>
   </section>
 

@@ -1,0 +1,137 @@
+<section class="compare-timeline-spans">
+  <sdux-header-section ariaLabel="Toggle timeline" [(expanded)]="showTimeline">
+    <sdux-help-toggle header ariaLabel="Toggle spans help">
+      <h4 helpHeading>Timeline — Category Duration Spans</h4>
+      <p class="help-text">
+        The category duration spans timeline shows how long each event category
+        took from its first to its last event. Each colored bar represents the
+        time window a category was active during the trace.
+      </p>
+      <p class="help-text">
+        Compare the width and position of spans between before and after traces
+        to see which categories grew, shrank, or shifted in timing. A wider span
+        means the category took longer; a shifted span means it started or ended
+        at a different point.
+      </p>
+      <p class="help-text">
+        Use <strong>zoom</strong> to magnify the timeline and reveal finer
+        detail. Tick lines adapt to the zoom level.
+      </p>
+    </sdux-help-toggle>
+    <div class="timeline-content">
+      <div class="timeline-toolbar">
+        <div class="toolbar-row durations-row">
+          <span class="stat-label">Before: {{ beforeDuration() }}ms</span>
+          <span class="stat-divider">·</span>
+          <span class="stat-label">After: {{ afterDuration() }}ms</span>
+        </div>
+        <div class="toolbar-row delta-row">
+          <span
+            class="summary-delta"
+            [class.faster]="afterDuration() < beforeDuration()"
+            [class.slower]="afterDuration() > beforeDuration()">
+            {{ durationDelta() }}
+          </span>
+          @if (percentChange()) {
+            <span class="stat-divider">·</span>
+            <span
+              class="summary-delta"
+              [class.faster]="afterDuration() < beforeDuration()"
+              [class.slower]="afterDuration() > beforeDuration()">
+              {{ percentChange() }}
+            </span>
+          }
+        </div>
+        <div class="toolbar-row counts-row">
+          <span class="stat-label">{{ categoryCount() }} categories</span>
+        </div>
+        <div class="toolbar-row controls-row">
+          <sdux-timeline-zoom-control [(zoom)]="zoom" />
+          <sdux-timeline-view-mode-select />
+        </div>
+      </div>
+
+      <div class="timeline-scroll-container">
+        <div class="timeline-zoom-area" [style.width.%]="100 * zoom()">
+          <div class="timeline-row">
+            <span class="timeline-label"> Before ({{ beforeLabel() }}) </span>
+            <div class="timeline-bar">
+              <div
+                class="timeline-track before-track"
+                [style.width.%]="beforeWidthPercent()"
+                [style.--tick-pct.%]="beforeTickPercent()"
+                [matTooltip]="'Before trace: ' + beforeDuration() + 'ms total'">
+                @for (span of beforeSpans(); track span.label) {
+                  <div
+                    class="category-span before-span"
+                    [style.left.%]="span.startPosition"
+                    [style.width.%]="spanWidth(span)"
+                    [matTooltip]="
+                      span.label +
+                      ': ' +
+                      span.duration +
+                      'ms (' +
+                      span.eventCount +
+                      ' events, +' +
+                      span.startElapsed +
+                      'ms → +' +
+                      span.endElapsed +
+                      'ms)'
+                    ">
+                    <span class="span-label">{{ span.label }}</span>
+                  </div>
+                }
+              </div>
+              <span class="timeline-duration"> {{ beforeDuration() }}ms </span>
+            </div>
+          </div>
+
+          <div class="timeline-row">
+            <span class="timeline-label"> After ({{ afterLabel() }}) </span>
+            <div class="timeline-bar">
+              <div
+                class="timeline-track after-track"
+                [style.width.%]="afterWidthPercent()"
+                [style.--tick-pct.%]="afterTickPercent()"
+                [matTooltip]="'After trace: ' + afterDuration() + 'ms total'">
+                @for (span of afterSpans(); track span.label) {
+                  <div
+                    class="category-span after-span"
+                    [style.left.%]="span.startPosition"
+                    [style.width.%]="spanWidth(span)"
+                    [matTooltip]="
+                      span.label +
+                      ': ' +
+                      span.duration +
+                      'ms (' +
+                      span.eventCount +
+                      ' events, +' +
+                      span.startElapsed +
+                      'ms → +' +
+                      span.endElapsed +
+                      'ms)'
+                    ">
+                    <span class="span-label">{{ span.label }}</span>
+                  </div>
+                }
+              </div>
+              <span class="timeline-duration"> {{ afterDuration() }}ms </span>
+            </div>
+          </div>
+
+          <div class="timeline-time-axis">
+            <span class="axis-label" style="left: 0">0ms</span>
+            @for (tick of tickMarks(); track tick.ms) {
+              <span class="axis-label" [style.left.%]="tick.position">
+                {{ tick.ms }}ms
+              </span>
+            }
+            <span class="axis-label" style="right: 0; left: auto">
+              {{ maxDuration() }}ms
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sdux-header-section>
+</section>

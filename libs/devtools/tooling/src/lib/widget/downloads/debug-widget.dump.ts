@@ -136,7 +136,7 @@ export function createDebugDump(
     events,
     stats,
 
-    versions: globalThis?.sdux?.debugWidget?.versions ?? {},
+    versions: globalThis?.sdux?.versions ?? {},
     registry
   };
 }

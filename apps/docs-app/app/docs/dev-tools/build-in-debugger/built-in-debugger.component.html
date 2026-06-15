@@ -29,21 +29,21 @@
       observer that records runtime signals emitted by the execution engine.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      The debugger reconstructs execution traces by listening to Insight events
-      emitted by
-      <sdux-feature-cell /> instances during Vault pipeline execution. Each
-      recorded event represents a lifecycle transition, controller action, or
-      runtime signal occurring within the pipeline.
-    </p>
+    <div class="callout callout-info">
+      <p>
+        The debugger reconstructs execution traces by listening to Insight
+        events emitted by
+        <sdux-feature-cell /> instances during Vault pipeline execution. Each
+        recorded event represents a lifecycle transition, controller action, or
+        runtime signal occurring within the pipeline.
+      </p>
 
-    <p>
-      By aggregating these events into deterministic traces, the debugger allows
-      engineers to inspect pipeline behavior, analyze performance, and reproduce
-      runtime conditions outside of the running application.
-    </p>
-
+      <p>
+        By aggregating these events into deterministic traces, the debugger
+        allows engineers to inspect pipeline behavior, analyze performance, and
+        reproduce runtime conditions outside of the running application.
+      </p>
+    </div>
     <p>
       For a deeper explanation of how runtime events are captured and monitored,
       see
@@ -87,12 +87,13 @@
         </li>
       </ol>
 
-      <div class="note">Note</div>
-      <p>
-        In most cases the workflow is simple: enable dev mode, record a session,
-        reproduce the issue, download the debug dump, and analyze it with AI
-        Assist.
-      </p>
+      <div class="callout callout-info">
+        <p>
+          In most cases the workflow is simple: enable dev mode, record a
+          session, reproduce the issue, download the debug dump, and analyze it
+          with AI Assist.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -442,22 +443,24 @@ export const appConfig: ApplicationConfig = {
         pipeline execution or affect application behavior.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Typical debug exports are relatively small, often ranging between 50–100
-        KB when recording standard pipeline activity. However, when
-        <code>wantsState</code> is enabled, the debugger records full
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
-        snapshots for each relevant event. Because state objects can be large
-        and may change frequently during execution, exported debug dumps can
-        grow quickly and may reach 10–20 MB depending on application behavior.
-      </p>
+      <div class="callout callout-warning">
+        <p>
+          Typical debug exports are relatively small, often ranging between
+          50–100 KB when recording standard pipeline activity. However, when
+          <code>wantsState</code> is enabled, the debugger records full
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          state snapshots for each relevant event. Because state objects can be
+          large and may change frequently during execution, exported debug dumps
+          can grow quickly and may reach 10–20 MB depending on application
+          behavior.
+        </p>
 
-      <p>
-        This additional detail can be extremely valuable when diagnosing complex
-        issues, but it is recommended to enable state recording only when deeper
-        inspection of application state is required.
-      </p>
+        <p>
+          This additional detail can be extremely valuable when diagnosing
+          complex issues, but it is recommended to enable state recording only
+          when deeper inspection of application state is required.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -834,28 +837,29 @@ export const appConfig: ApplicationConfig = {
         <li><strong>Meta</strong> — Llama 3.1 (large context variants)</li>
       </ul>
 
-      <div class="note">Note</div>
-      <p>
-        In most cases the workflow is simple: enable dev mode, record a session,
-        reproduce the issue, download the debug dump, and analyze it with AI
-        Assist.
-      </p>
+      <div class="callout callout-info">
+        <p>
+          In most cases the workflow is simple: enable dev mode, record a
+          session, reproduce the issue, download the debug dump, and analyze it
+          with AI Assist.
+        </p>
 
-      <div class="note">How To</div>
-      <ul>
-        <li>
-          Locate the <strong>AI Assist</strong> button in the debugger panel.
-        </li>
-        <li>
-          Select the button to download the recorded debug dump and AI analysis
-          prompt.
-        </li>
-        <li>Upload the debug dump JSON file to an AI model.</li>
-        <li>
-          Submit the provided analysis prompt alongside the uploaded file.
-        </li>
-        <li>Review the generated diagnostic report.</li>
-      </ul>
+        <div class="note">How To</div>
+        <ul>
+          <li>
+            Locate the <strong>AI Assist</strong> button in the debugger panel.
+          </li>
+          <li>
+            Select the button to download the recorded debug dump and AI
+            analysis prompt.
+          </li>
+          <li>Upload the debug dump JSON file to an AI model.</li>
+          <li>
+            Submit the provided analysis prompt alongside the uploaded file.
+          </li>
+          <li>Review the generated diagnostic report.</li>
+        </ul>
+      </div>
     </div>
 
     <div class="section-body" id="trace-exports">
@@ -1237,51 +1241,54 @@ export const appConfig: ApplicationConfig = {
         behavior more effectively.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        When submitting issue reports, certain diagnostic signals are required
-        to help maintainers reproduce and analyze the reported behavior. Error
-        and payload telemetry provide critical context about pipeline failures
-        and controller activity. State snapshots may optionally be included but
-        should be enabled only when appropriate, as state data can contain
-        sensitive application information.
-      </p>
+      <div class="callout callout-info">
+        <p>
+          When submitting issue reports, certain diagnostic signals are required
+          to help maintainers reproduce and analyze the reported behavior. Error
+          and payload telemetry provide critical context about pipeline failures
+          and controller activity. State snapshots may optionally be included
+          but should be enabled only when appropriate, as state data can contain
+          sensitive application information.
+        </p>
 
-      <ul>
-        <li>
-          <strong>wantsErrors</strong> — Required. Ensures error events are
-          included in the diagnostic report.
-        </li>
-        <li>
-          <strong>wantsPayload</strong> — Required. Captures operation payloads
-          needed to understand event context.
-        </li>
-        <li>
-          <strong>wantsState</strong> — Optional. Includes
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          state snapshots and may contain sensitive data.
-        </li>
-      </ul>
+        <ul>
+          <li>
+            <strong>wantsErrors</strong> — Required. Ensures error events are
+            included in the diagnostic report.
+          </li>
+          <li>
+            <strong>wantsPayload</strong> — Required. Captures operation
+            payloads needed to understand event context.
+          </li>
+          <li>
+            <strong>wantsState</strong> — Optional. Includes
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            state snapshots and may contain sensitive data.
+          </li>
+        </ul>
 
-      <div class="table-title">How To</div>
+        <div class="table-title">How To</div>
 
-      <ul>
-        <li>
-          Locate the <strong>Create Issue</strong> button in the debugger panel.
-        </li>
-        <li>
-          Select the button to generate an issue report for the current session.
-        </li>
-        <li>
-          The debugger will prepare a diagnostic dump and redirect you to
-          GitHub.
-        </li>
-        <li>Attach the generated report to the issue submission.</li>
-        <li>
-          Provide a brief description of the observed behavior before
-          submitting.
-        </li>
-      </ul>
+        <ul>
+          <li>
+            Locate the <strong>Create Issue</strong> button in the debugger
+            panel.
+          </li>
+          <li>
+            Select the button to generate an issue report for the current
+            session.
+          </li>
+          <li>
+            The debugger will prepare a diagnostic dump and redirect you to
+            GitHub.
+          </li>
+          <li>Attach the generated report to the issue submission.</li>
+          <li>
+            Provide a brief description of the observed behavior before
+            submitting.
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -1320,13 +1327,14 @@ export const appConfig: ApplicationConfig = {
         aggregated statistics generated from the recorded event stream.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        For automated analysis, use the
-        <a [routerLink]="[]" fragment="ai-assist">AI Assist</a> feature. It
-        generates a structured diagnostic report from the exported dump without
-        requiring manual inspection.
-      </p>
+      <div class="callout callout-info">
+        <p>
+          For automated analysis, use the
+          <a [routerLink]="[]" fragment="ai-assist">AI Assist</a> feature. It
+          generates a structured diagnostic report from the exported dump
+          without requiring manual inspection.
+        </p>
+      </div>
     </div>
   </section>
 

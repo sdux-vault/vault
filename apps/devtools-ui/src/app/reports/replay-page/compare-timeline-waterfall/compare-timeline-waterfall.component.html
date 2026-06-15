@@ -1,0 +1,139 @@
+<section class="compare-timeline-waterfall">
+  <sdux-header-section ariaLabel="Toggle timeline" [(expanded)]="showTimeline">
+    <sdux-help-toggle header ariaLabel="Toggle waterfall help">
+      <h4 helpHeading>Timeline — Waterfall</h4>
+      <p class="help-text">
+        The waterfall timeline plots every event from both traces on a shared
+        time scale, grouped by category. Each row represents one event category
+        (e.g. lifecycle, controller, stage).
+      </p>
+      <p class="help-text">
+        <span class="help-marker before-marker"></span> markers are events from
+        the <em>before</em> trace;
+        <span class="help-marker after-marker"></span> markers are from the
+        <em>after</em> trace. Hover any marker to see the event name and elapsed
+        time.
+      </p>
+      <p class="help-text">
+        Vertical tick lines mark 100ms intervals (50ms at 2× zoom, 25ms at 4×
+        zoom). Use the zoom controls to magnify the timeline and reveal finer
+        detail.
+      </p>
+      <p class="help-text">
+        Use the <strong>view mode</strong> dropdown to filter which events are
+        displayed — for example, show only diff events, state events, or a
+        specific category.
+      </p>
+      <p class="help-text">
+        Use this view to spot which categories shifted in timing after a code
+        change. If a category's markers moved later on the after trace,
+        investigate that area for regressions. Conversely, markers that moved
+        earlier confirm a performance improvement in that category.
+      </p>
+    </sdux-help-toggle>
+    <div class="timeline-content">
+      <div class="timeline-toolbar">
+        <div class="toolbar-row durations-row">
+          <span class="stat-label">Before: {{ beforeDuration() }}ms</span>
+          <span class="stat-divider">·</span>
+          <span class="stat-label">After: {{ afterDuration() }}ms</span>
+        </div>
+        <div class="toolbar-row delta-row">
+          <span
+            class="summary-delta"
+            [class.faster]="afterDuration() < beforeDuration()"
+            [class.slower]="afterDuration() > beforeDuration()">
+            {{ durationDelta() }}
+          </span>
+          @if (percentChange()) {
+            <span class="stat-divider">·</span>
+            <span
+              class="summary-delta"
+              [class.faster]="afterDuration() < beforeDuration()"
+              [class.slower]="afterDuration() > beforeDuration()">
+              {{ percentChange() }}
+            </span>
+          }
+        </div>
+        <div class="toolbar-row counts-row">
+          <span class="stat-label">{{ categoryCount() }} categories</span>
+          <span class="stat-divider">·</span>
+          <span class="stat-label">{{ totalEvents() }} events</span>
+        </div>
+        <div class="toolbar-row controls-row">
+          <sdux-timeline-zoom-control [(zoom)]="zoom" />
+          <sdux-timeline-view-mode-select />
+        </div>
+      </div>
+
+      <div class="waterfall-legend">
+        <span class="legend-item before-legend"
+          >● {{ beforeLabel() }} (before)</span
+        >
+        <span class="legend-item after-legend"
+          >● {{ afterLabel() }} (after)</span
+        >
+      </div>
+
+      <div class="waterfall-scroll-container">
+        <div class="waterfall-zoom-area" [style.width.%]="100 * zoom()">
+          @for (category of categories(); track category.label) {
+            <div class="waterfall-row">
+              <span
+                class="waterfall-label"
+                [matTooltip]="
+                  category.label + ': ' + category.totalEvents + ' events'
+                ">
+                {{ category.label }}
+              </span>
+              <div class="waterfall-track" [style.--tick-pct.%]="tickPercent()">
+                <div class="waterfall-marker-area">
+                  @for (marker of category.beforeMarkers; track $index) {
+                    <span
+                      class="waterfall-marker before-marker"
+                      [style.left.%]="marker.position"
+                      [matTooltip]="
+                        beforeLabel() +
+                        ': ' +
+                        marker.eventName +
+                        ' at +' +
+                        marker.elapsed +
+                        'ms'
+                      ">
+                    </span>
+                  }
+                  @for (marker of category.afterMarkers; track $index) {
+                    <span
+                      class="waterfall-marker after-marker"
+                      [style.left.%]="marker.position"
+                      [matTooltip]="
+                        afterLabel() +
+                        ': ' +
+                        marker.eventName +
+                        ' at +' +
+                        marker.elapsed +
+                        'ms'
+                      ">
+                    </span>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="waterfall-time-axis">
+            <span class="axis-label" style="left: 0">0ms</span>
+            @for (tick of tickMarks(); track tick.ms) {
+              <span class="axis-label" [style.left.%]="tick.position">
+                {{ tick.ms }}ms
+              </span>
+            }
+            <span class="axis-label" style="right: 0; left: auto">
+              {{ maxDuration() }}ms
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sdux-header-section>
+</section>

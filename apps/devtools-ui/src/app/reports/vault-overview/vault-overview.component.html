@@ -1,0 +1,291 @@
+<div class="report-page">
+  <sdux-header-section
+    [showChevron]="false"
+    ariaLabel="Toggle vault overview help">
+    <sdux-help-toggle header ariaLabel="Toggle vault overview help">
+      <h2 helpHeading>Vault Overview</h2>
+      <p class="help-text">
+        Displays runtime package versions, license details, and the FeatureCell
+        registry for the inspected application.
+      </p>
+      <ul>
+        <li>Package version information for all registered SDuX modules</li>
+        <li>License organization, tier, domain, and verification status</li>
+        <li>
+          Registry cards showing behavior, controller, and Fluent API counts
+        </li>
+        <li>Live trace statistics — total traces, average duration, errors</li>
+        <li>
+          Pipeline detail view for inspecting a cell's registered behaviors
+        </li>
+        <li>Search filter to locate specific cells by key name</li>
+      </ul>
+    </sdux-help-toggle>
+  </sdux-header-section>
+
+  <section class="vault-overview-content">
+    <div class="info-cards">
+      <section class="info-card">
+        <sdux-header-section
+          ariaLabel="Toggle package versions"
+          [(expanded)]="versionsExpanded">
+          <h3
+            header
+            class="card-title"
+            matTooltip="Package version information">
+            Package Versions
+          </h3>
+          @if (versions().length) {
+            <dl class="card-list">
+              @for (entry of versions(); track entry[0]) {
+                <div class="card-row">
+                  <dt class="card-label">{{ entry[0] }}</dt>
+                  <dd class="card-value">{{ entry[1] }}</dd>
+                </div>
+              }
+            </dl>
+          } @else {
+            <p class="empty">No version data available.</p>
+          }
+        </sdux-header-section>
+      </section>
+
+      @if (license(); as lic) {
+        <section class="info-card">
+          <sdux-header-section
+            ariaLabel="Toggle license details"
+            [(expanded)]="licenseExpanded">
+            <h3 header class="card-title" matTooltip="License details">
+              License
+            </h3>
+            <dl class="card-list">
+              <div class="card-row">
+                <dt class="card-label">Organization</dt>
+                <dd class="card-value">{{ lic.organization }}</dd>
+              </div>
+              <div class="card-row">
+                <dt class="card-label">Domain</dt>
+                <dd class="card-value">{{ lic.domain }}</dd>
+              </div>
+              <div class="card-row">
+                <dt class="card-label">Tier</dt>
+                <dd class="card-value">{{ lic.licenseType }}</dd>
+              </div>
+              <div class="card-row">
+                <dt class="card-label">Issued</dt>
+                <dd class="card-value">
+                  {{ formatLicenseDate(lic.issuedAt) }}
+                </dd>
+              </div>
+              <div class="card-row">
+                <dt class="card-label">Expires</dt>
+                <dd class="card-value">
+                  {{ formatLicenseDate(lic.expires) }}
+                </dd>
+              </div>
+              <div class="card-row">
+                <dt class="card-label">Verified</dt>
+                <dd class="card-value">{{ lic.verified ? 'Yes' : 'No' }}</dd>
+              </div>
+            </dl>
+          </sdux-header-section>
+        </section>
+      } @else {
+        <section class="info-card">
+          <sdux-header-section
+            ariaLabel="Toggle license details"
+            [(expanded)]="licenseExpanded">
+            <h3 header class="card-title" matTooltip="License details">
+              License
+            </h3>
+            <p class="free-license">
+              Free license — Chrome extension features are limited.
+            </p>
+          </sdux-header-section>
+        </section>
+      }
+    </div>
+
+    <section class="section registry-section">
+      <sdux-header-section
+        ariaLabel="Toggle registry"
+        [(expanded)]="showRegistryCards">
+        <sdux-help-toggle header ariaLabel="Toggle registry help">
+          <h3 helpHeading>FeatureCell Registry</h3>
+          <div helpActions>
+            <mat-form-field
+              class="cell-filter registry-search"
+              appearance="outline"
+              (click)="$event.stopPropagation()">
+              <input
+                matInput
+                placeholder="Filter cells"
+                aria-label="Filter registry cells"
+                [ngModel]="registrySearchTerm()"
+                (ngModelChange)="
+                  registrySearchTerm.set($event);
+                  registrySearchTerm$.next($event)
+                " />
+              <button
+                type="button"
+                matSuffix
+                mat-icon-button
+                [attr.aria-label]="
+                  registrySearchTerm() ? 'Clear filter' : 'Filter cells'
+                "
+                [matTooltip]="
+                  registrySearchTerm() ? 'Clear filter' : 'Filter cells'
+                "
+                (click)="registrySearchTerm() ? clearRegistrySearch() : null">
+                <mat-icon>{{
+                  registrySearchTerm() ? 'close' : 'search'
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <p class="help-text">
+            > Each card represents a registered FeatureCell. The first row shows
+            the number of Behaviors, Controllers, and Fluent APIs attached to
+            the cell. The second row shows live trace statistics — total traces
+            executed, average duration in milliseconds, and error count.
+          </p>
+        </sdux-help-toggle>
+        <div class="registry-body">
+          @if (registry().length) {
+            <div class="cell-cards">
+              @for (cell of filteredRegistry(); track $index) {
+                <div
+                  class="cell-card"
+                  [class.selected]="selectedCell() === cell"
+                  [class.cell-card-collapsed]="collapsedCells().has(cell.key)">
+                  <div
+                    class="cell-card-header collapsible"
+                    role="button"
+                    tabindex="0"
+                    [attr.aria-expanded]="!collapsedCells().has(cell.key)"
+                    [attr.aria-label]="'Toggle details for ' + cell.key"
+                    (click)="toggleCellCollapsed(cell.key)"
+                    (keydown.enter)="toggleCellCollapsed(cell.key)"
+                    (keydown.space)="
+                      $event.preventDefault(); toggleCellCollapsed(cell.key)
+                    ">
+                    <span class="cell-card-key" [matTooltip]="cell.key">{{
+                      cell.key
+                    }}</span>
+                    <mat-icon
+                      class="section-chevron"
+                      [class.section-chevron-expanded]="
+                        !collapsedCells().has(cell.key)
+                      "
+                      aria-hidden="true"
+                      matTooltip="Toggle cell details"
+                      >chevron_right</mat-icon
+                    >
+                  </div>
+                  @if (!collapsedCells().has(cell.key)) {
+                    <div class="cell-card-body">
+                      <div class="cell-card-row-top">
+                        <div class="cell-card-stat">
+                          <span class="cell-card-stat-value">{{
+                            cell.behaviors.length
+                          }}</span>
+                          <span class="cell-card-stat-label">Behaviors</span>
+                          @if (behaviorLicenseCount(cell)) {
+                            <span
+                              class="cell-card-licensed"
+                              matTooltip="Behaviors covered by a registered license"
+                              >{{ behaviorLicenseCount(cell) }} licensed</span
+                            >
+                          }
+                        </div>
+                        <div class="cell-card-stat">
+                          <span class="cell-card-stat-value">{{
+                            cell.controllers.length
+                          }}</span>
+                          <span class="cell-card-stat-label">Controllers</span>
+                          @if (controllerLicenseCount(cell)) {
+                            <span
+                              class="cell-card-licensed"
+                              matTooltip="Controllers covered by a registered license"
+                              >{{ controllerLicenseCount(cell) }} licensed</span
+                            >
+                          }
+                        </div>
+                        <div class="cell-card-stat">
+                          <span class="cell-card-stat-value">{{
+                            fluentApisCount(cell)
+                          }}</span>
+                          <span
+                            class="cell-card-stat-label"
+                            matTooltip="Chainable API extensions registered on this cell"
+                            >Fluent APIs</span
+                          >
+                        </div>
+                      </div>
+                      <div class="cell-card-row-bottom">
+                        @if (cellStats().get(cell.key); as stats) {
+                          <div class="cell-card-stat">
+                            <span class="cell-card-stat-value">{{
+                              stats.traceCount
+                            }}</span>
+                            <span class="cell-card-stat-label">Traces</span>
+                          </div>
+                          <div class="cell-card-stat">
+                            <span class="cell-card-stat-value">{{
+                              stats.avgDuration.toFixed(1)
+                            }}</span>
+                            <span class="cell-card-stat-label">Avg ms</span>
+                          </div>
+                          <div class="cell-card-stat">
+                            <span
+                              class="cell-card-stat-value"
+                              [class.cell-error]="stats.errorCount > 0"
+                              >{{ stats.errorCount }}</span
+                            >
+                            <span class="cell-card-stat-label">Errors</span>
+                          </div>
+                        } @else {
+                          <div class="cell-card-stat">
+                            <span class="cell-card-stat-value">0</span>
+                            <span class="cell-card-stat-label">Traces</span>
+                          </div>
+                          <div class="cell-card-stat">
+                            <span class="cell-card-stat-value">0</span>
+                            <span class="cell-card-stat-label">Avg ms</span>
+                          </div>
+                          <div class="cell-card-stat">
+                            <span class="cell-card-stat-value">0</span>
+                            <span class="cell-card-stat-label">Errors</span>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  }
+                  <div class="cell-card-footer">
+                    <button
+                      type="button"
+                      class="cell-card-view-btn"
+                      (click)="selectCell(cell)"
+                      aria-label="View pipeline for {{ cell.key }}">
+                      View Pipeline
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <p class="empty">No registry data available.</p>
+          }
+
+          @if (selectedCell(); as cell) {
+            <aside class="detail-pane">
+              <sdux-devtools-registry-detail
+                [cellKey]="cell.key"
+                (closeDetail)="closeDetail()"></sdux-devtools-registry-detail>
+            </aside>
+          }
+        </div>
+      </sdux-header-section>
+    </section>
+  </section>
+</div>

@@ -11,10 +11,9 @@ function encodeUndefined(obj: any): any {
   if (Array.isArray(obj)) return obj.map(encodeUndefined);
   if (obj && typeof obj === 'object') {
     return Object.fromEntries(
-      Object.entries(obj).map(([k, v]) => [
-        k,
-        v === undefined ? UNDEFINED : encodeUndefined(v)
-      ])
+      Object.entries(obj)
+        .filter(([, v]) => typeof v !== 'symbol')
+        .map(([k, v]) => [k, v === undefined ? UNDEFINED : encodeUndefined(v)])
     );
   }
   return obj;
@@ -35,9 +34,22 @@ function decodeUndefined(obj: any): any {
 }
 
 //eslint-disable-next-line
+function stripSymbols(obj: any): any {
+  if (Array.isArray(obj)) return obj.map(stripSymbols);
+  if (obj && typeof obj === 'object') {
+    return Object.fromEntries(
+      Object.entries(obj)
+        .filter(([, v]) => typeof v !== 'symbol')
+        .map(([k, v]) => [k, stripSymbols(v)])
+    );
+  }
+  return obj;
+}
+
+//eslint-disable-next-line
 export function expectMonitorSnapshot(actual: any[], expected: any[]) {
   // const normalized = normalizeMonitorEvents(actual);
-  const normalized = actual;
+  const normalized = stripSymbols(actual);
   const decodedExpected = decodeUndefined(expected);
 
   if (isUpdateSnapshotsEnabled()) {

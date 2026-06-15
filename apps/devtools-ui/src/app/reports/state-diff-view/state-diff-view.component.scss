@@ -1,0 +1,306 @@
+@use 'global' as global;
+@use '../scss/reports-common';
+
+.report-page {
+  /* ─── HELP TOGGLE ─── */
+
+  .help-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: global.$spacing-xs;
+    margin-left: global.$spacing-sm;
+    display: flex;
+    align-items: center;
+  }
+
+  .help-icon {
+    width: global.$font-size-sm;
+    height: global.$font-size-sm;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .description-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+  }
+
+  .description {
+    margin: 0;
+    font-size: global.$font-size-sm;
+    color: global.$sdux-text-secondary;
+    line-height: 1.5;
+  }
+
+  /* ─── TRACE DURATION (unique to state-diff) ─── */
+
+  .trace-duration {
+    margin-left: auto;
+    font-family: global.$sdux-code-font;
+    color: global.$sdux-text-secondary;
+    font-size: global.$font-size-xs;
+  }
+
+  /* ─── TRACE BANNER ─── */
+
+  .trace-banner {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    padding: global.$spacing-sm global.$spacing-md;
+    background: global.$sdux-surface-lightish;
+    border-radius: global.$border-radius-sm;
+    border-left: 3px solid global.$sdux-primary-base;
+
+    .trace-banner-row {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-sm;
+    }
+
+    .trace-label {
+      font-weight: global.$font-weight-bold;
+      color: global.$sdux-text-primary;
+    }
+
+    .trace-cell-key {
+      font-weight: global.$font-weight-medium;
+      color: global.$sdux-primary-light;
+    }
+
+    .trace-short-id {
+      font-family: global.$sdux-code-font;
+      color: global.$sdux-text-secondary;
+      font-size: global.$font-size-sm;
+    }
+
+    .trace-status-badge {
+      font-weight: global.$font-weight-bold;
+      font-size: global.$font-size-sm;
+    }
+
+    .trace-duration-badge {
+      margin-left: auto;
+      font-family: global.$sdux-code-font;
+      color: global.$sdux-text-secondary;
+      font-size: global.$font-size-sm;
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .trace-banner-row:last-child {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .trace-duration-badge {
+        margin-left: 0;
+      }
+    }
+  }
+
+  /* ─── MUTATION GRAPH ─── */
+
+  .mutation-graph-section {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+
+      h3 {
+        margin: 0;
+        font-size: global.$font-size-sm;
+        font-weight: global.$font-weight-bold;
+        color: global.$sdux-text-primary;
+      }
+    }
+  }
+
+  .mutation-graph-scroll {
+    overflow-x: auto;
+  }
+
+  .mutation-graph-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: global.$font-size-xs;
+
+    th,
+    td {
+      padding: global.$spacing-xs global.$spacing-sm;
+      border: 1px solid global.$sdux-surface-outline;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    th {
+      background: global.$sdux-surface-lightish;
+      font-weight: global.$font-weight-semibold;
+      color: global.$sdux-text-primary;
+      font-size: global.$font-size-xs;
+    }
+
+    .col-key {
+      text-align: left;
+      font-family: global.$sdux-code-font;
+      font-weight: global.$font-weight-medium;
+      color: global.$sdux-text-primary;
+    }
+
+    .col-stage {
+      min-width: 80px;
+    }
+
+    .mutated {
+      background: color-mix(in srgb, global.$sdux-primary-base 8%, transparent);
+    }
+  }
+
+  .graph-row {
+    cursor: pointer;
+
+    &:hover {
+      background: global.$sdux-surface-hover;
+    }
+  }
+
+  .mutation-dot {
+    color: global.$sdux-primary-base;
+    font-size: global.$font-size-md;
+  }
+
+  /* ─── PAIR SELECTOR CARDS ─── */
+
+  .pair-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: global.$spacing-md;
+
+    .pair-card {
+      padding: global.$spacing-sm global.$spacing-md;
+      border-radius: global.$border-radius-sm;
+      background: global.$sdux-surface-mid;
+      border: 1px solid global.$sdux-surface-outline;
+
+      .pair-card-header {
+        font-size: global.$font-size-xs;
+        font-weight: global.$font-weight-bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: global.$spacing-xs;
+      }
+
+      .pair-card-stage {
+        font-family: global.$sdux-code-font;
+        font-size: global.$font-size-sm;
+        color: global.$sdux-text-primary;
+        font-weight: global.$font-weight-medium;
+      }
+
+      .pair-card-behavior {
+        font-size: global.$font-size-xs;
+        color: global.$sdux-text-secondary;
+      }
+
+      .pair-card-meta {
+        font-family: global.$sdux-code-font;
+        font-size: global.$font-size-xxs;
+        color: global.$sdux-text-secondary;
+        margin-top: global.$spacing-xs;
+      }
+    }
+
+    .pair-before {
+      border-left: 3px solid global.$sdux-warn-base;
+
+      .pair-card-header {
+        color: global.$sdux-warn-base;
+      }
+    }
+
+    .pair-after {
+      border-left: 3px solid global.$sdux-success-base;
+
+      .pair-card-header {
+        color: global.$sdux-success-base;
+      }
+    }
+  }
+
+  /* ─── COMPARE GRID ─── */
+
+  .pair-nav {
+    .sdux-button {
+      /* Override shared 145px to fit "Previous Pair" / "Next Pair" labels */
+      width: 135px !important; // unavoidable: overrides shared .pair-nav button width
+      min-width: 135px !important; // unavoidable: overrides shared .pair-nav button width
+      max-width: 135px !important; // unavoidable: overrides shared .pair-nav button width
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      .sdux-button {
+        width: auto !important; // unavoidable: overrides local 135px for media mode
+        min-width: auto !important; // unavoidable: overrides local 135px for media mode
+        max-width: none !important; // unavoidable: overrides local 135px for media mode
+      }
+    }
+  }
+
+  /* ─── TRACE STATUS ─── */
+
+  .trace-status {
+    font-weight: global.$font-weight-bold;
+    font-size: global.$font-size-xs;
+  }
+
+  /* ─── DELTA TOGGLE ─── */
+
+  .diff-header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .diff-header-meta {
+    width: 100%;
+    order: 3;
+  }
+
+  .delta-toggle {
+    @include global.sdux-icon-button(28px, transparent);
+    margin-left: auto;
+    order: 2;
+    align-self: flex-start;
+    color: global.$sdux-primary-light;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover {
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
+    }
+
+    &.active {
+      background-color: global.$sdux-primary-base;
+      color: global.$sdux-text-white;
+    }
+  }
+
+  .diff-column .empty-table {
+    font-size: global.$font-size-xs;
+    padding: global.$spacing-md;
+  }
+}

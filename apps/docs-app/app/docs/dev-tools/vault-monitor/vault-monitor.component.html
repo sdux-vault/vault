@@ -221,17 +221,6 @@ Vault({
           </tr>
 
           <tr>
-            <td><strong>State</strong></td>
-            <td>
-              Events that produce or emit a state snapshot during pipeline
-              execution.
-            </td>
-            <td>Required</td>
-            <td>Optional</td>
-            <td>No</td>
-          </tr>
-
-          <tr>
             <td><strong>Error</strong></td>
             <td>
               Events representing runtime failures, warnings, or controller
@@ -240,6 +229,17 @@ Vault({
             <td>Required</td>
             <td>Optional</td>
             <td>Required</td>
+          </tr>
+
+          <tr>
+            <td><strong>State</strong></td>
+            <td>
+              Events that produce or emit a state snapshot during pipeline
+              execution.
+            </td>
+            <td>Required</td>
+            <td>Optional</td>
+            <td>No</td>
           </tr>
         </tbody>
       </table>
@@ -267,21 +267,13 @@ Vault({
 
         <tbody>
           <tr>
-            <td><strong>Stage</strong></td>
+            <td><strong>Conductor</strong></td>
             <td>
-              Events produced by pipeline processing stages such as resolve,
-              reducer, operator, or filter.
+              Events describing orchestration decisions made by the Vault
+              conductor, including dispatch, revotes, aborts, and license
+              checks.
             </td>
-            <td><code>stage:start:resolve</code></td>
-          </tr>
-
-          <tr>
-            <td><strong>Lifecycle</strong></td>
-            <td>
-              Core runtime lifecycle operations including initialization, state
-              emission, error transformation, and internal runtime boundaries.
-            </td>
-            <td><code>lifecycle:end:initialized</code></td>
+            <td><code>conductor:start:dispatch</code></td>
           </tr>
 
           <tr>
@@ -294,13 +286,31 @@ Vault({
           </tr>
 
           <tr>
-            <td><strong>Conductor</strong></td>
+            <td><strong>Lifecycle</strong></td>
             <td>
-              Events describing orchestration decisions made by the Vault
-              conductor, including dispatch, revotes, aborts, and license
-              checks.
+              Core runtime lifecycle operations including initialization, state
+              emission, error transformation, and internal runtime boundaries.
             </td>
-            <td><code>conductor:start:dispatch</code></td>
+            <td><code>lifecycle:end:initialized</code></td>
+          </tr>
+
+          <tr>
+            <td><strong>Pipeline</strong></td>
+            <td>
+              Events capturing in-flight candidate values after a pipeline stage
+              completes. Used by DevTools to inspect intermediate state
+              transitions.
+            </td>
+            <td><code>pipeline:candidate:resolve</code></td>
+          </tr>
+
+          <tr>
+            <td><strong>Stage</strong></td>
+            <td>
+              Events produced by pipeline processing stages such as resolve,
+              reducer, operator, or filter.
+            </td>
+            <td><code>stage:start:resolve</code></td>
           </tr>
         </tbody>
       </table>

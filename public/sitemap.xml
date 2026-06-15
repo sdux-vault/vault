@@ -21,7 +21,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/circuit-breaker-state-pipeline</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/mutation-bugs-eliminated</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/one-engine-every-framework</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -941,6 +951,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/references/const/pipeline-stages</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/references/const/resolve-types</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -982,6 +997,16 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/references/const/vault-error-usage-kind-types</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/const/vault-license-payload-types</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/const/vault-registration-license-status-types</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1491,6 +1516,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/references/shapes/event-candidate-shape</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/references/shapes/event-shape</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1542,6 +1572,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/references/shapes/vault-error-shape</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/shapes/vault-license-payload-shape</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1696,6 +1731,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/references/types/pipeline-stage</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/references/types/pipeline-upstream-value</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1752,6 +1792,16 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/references/types/vault-error-usage-kind-type</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/types/vault-license-payload-type</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/types/vault-registration-license-status-type</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

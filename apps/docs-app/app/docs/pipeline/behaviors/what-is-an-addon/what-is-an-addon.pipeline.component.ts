@@ -7,6 +7,7 @@ import {
   ExampleViewerTabComponent,
   PackageNameComponent
 } from '@sdux-vault/ui/web-components';
+import { PipelineRelatedTopicComponent } from '../../../related-topic/related-topic.component';
 
 /**
  * The pipeline what is an addon documentation
@@ -21,7 +22,8 @@ import {
     ExampleViewerTabComponent,
     RouterModule,
     PackageNameComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    PipelineRelatedTopicComponent
   ],
   templateUrl: './what-is-an-addon.pipeline.component.html',
   styleUrls: ['../../../scss/example.scss'],

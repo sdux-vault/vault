@@ -39,21 +39,48 @@
       decryption occur only at the persistence boundary.
     </p>
 
-    <h4>Critical Behavior</h4>
-    <p>
-      AES-256 Encrypt is a <em>critical</em> behavior. Misconfiguration, missing
-      cryptographic support, or invalid encrypted envelopes result in immediate
-      errors. This guarantees that encrypted state is never silently corrupted,
-      downgraded, or misinterpreted.
-    </p>
+    <div class="callout callout-warning">
+      <div class="title">Critical Behavior</div>
+      <p>
+        AES-256 Encrypt is a <em>critical</em> behavior. Misconfiguration,
+        missing cryptographic support, or invalid encrypted envelopes result in
+        immediate errors. This guarantees that encrypted state is never silently
+        corrupted, downgraded, or misinterpreted.
+      </p>
+    </div>
 
-    <h4>Asynchronous Execution</h4>
-    <p>
-      Encryption and decryption execute asynchronously. Key material is derived
-      lazily using PBKDF2 and cached per behavior instance. The pipeline awaits
-      completion to preserve strict execution order and ensure deterministic
-      behavior.
-    </p>
+    <div class="callout callout-warning">
+      <div class="title">Salt Persistence Requirement</div>
+      <p>
+        When AES-256 encryption is paired with a persist behavior, the salt
+        supplied to <code>setAes256Secret()</code>
+        <strong>must remain identical across application restarts</strong>. A
+        different salt derives a different encryption key, causing previously
+        persisted ciphertext to fail integrity verification during decryption.
+      </p>
+      <p>
+        <code>generateSalt()</code> produces a new random value on every
+        invocation. If called inline during construction, a fresh salt is
+        created each time the application starts—making it impossible to decrypt
+        data encrypted in a prior session.
+      </p>
+      <p>
+        For persistent encryption, generate the salt once and store it in a
+        durable location (e.g., a server-side configuration endpoint,
+        environment variable, or a dedicated storage key). Retrieve and reuse
+        the same salt on every initialization.
+      </p>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="title">Asynchronous Execution</div>
+      <p>
+        Encryption and decryption execute asynchronously. Key material is
+        derived lazily using PBKDF2 and cached per behavior instance. The
+        pipeline awaits completion to preserve strict execution order and ensure
+        deterministic behavior.
+      </p>
+    </div>
   </header>
 
   <section class="section">
@@ -82,7 +109,7 @@
       </p>
 
       <div class="callout callout-warning">
-        <strong>Integrity Protection</strong>
+        <div class="title">Integrity Protection</div>
         <p>
           If authentication fails, the behavior throws a
           <a href="/docs/references/classes/vault-encryption-integrity-error"
@@ -400,6 +427,7 @@ export const appConfig: ApplicationConfig = {
 import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
+import { ENCRYPTION_SALT } from './encryption.config';
 
 @FeatureCell&lt;Employee[]&gt;('employees')
 @Injectable({ providedIn: 'root' })
@@ -411,7 +439,9 @@ export class EmployeeService {
       setAes256Secret(
         {
           aes256Secret: 'my-str0ng-password',
-          salt: this.vault.generateSalt(),
+          // Salt must be stable across sessions when using persistence.
+          // Generate once, then store and reuse.
+          salt: ENCRYPTION_SALT,
           iterations: 250_000
         }
       )
@@ -544,11 +574,15 @@ Error: [vault] AES256Encrypt behavior requires configuration via setAes256Secret
                 <sdux-example-viewer-tab
                   [label]="'Example 2: Configure AES-256'">
                   <pre
-                    class="code-inline"><code class="language-ts">{{`employeeCell
+                    class="code-inline"><code class="language-ts">{{`import { ENCRYPTION_SALT } from './encryption.config';
+
+employeeCell
   .setAes256Secret(
     {
       aes256Secret: 'my-str0ng-password',
-      salt: employeeCell.generateSalt(),
+      // Salt must be stable across sessions when using persistence.
+      // Generate once, then store and reuse.
+      salt: ENCRYPTION_SALT,
       iterations: 250_000
     }
   )
@@ -681,10 +715,14 @@ Error: [vault] AES256Encrypt behavior requires configuration via setAes256Secret
                 <sdux-example-viewer-tab
                   [label]="'Example 2: Configure AES-256'">
                   <pre
-                    class="code-inline"><code class="language-ts">{{`employeeCell
+                    class="code-inline"><code class="language-ts">{{`import { ENCRYPTION_SALT } from './encryption.config';
+
+employeeCell
   .setAes256Secret({
     aes256Secret: 'my-str0ng-password',
-    salt: employeeCell.generateSalt(),
+    // Salt must be stable across sessions when using persistence.
+    // Generate once, then store and reuse.
+    salt: ENCRYPTION_SALT,
     iterations: 250_000
   })
   .initialize();`}}</code></pre>

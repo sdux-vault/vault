@@ -52,12 +52,11 @@ describe('f203: Value - Merge with Throttle Test', () => {
   let testService: FullTestService;
   let stopListening: () => void;
 
+  const key = 'full-test';
   const emitted: any[] = [];
-  const storageKey =
-    'vault::localstorage::full-test::SDUX::Behavior::Persist::LocalStorage';
+  const storageKey = `vault::localstorage::${key}::SDUX::Behavior::Persist::LocalStorage`;
   const globalStates: any[] = [];
   let stateSubscription: any;
-  let key: string;
 
   beforeAll(() => {
     jasmine.clock().install();
@@ -70,6 +69,8 @@ describe('f203: Value - Merge with Throttle Test', () => {
 
   beforeEach(async () => {
     clearLocalStorage(storageKey);
+    emitted.length = 0;
+
     await TestBed.configureTestingModule({
       providers: [
         provideVaultTesting({
@@ -80,12 +81,13 @@ describe('f203: Value - Merge with Throttle Test', () => {
         provideFeatureCell(
           FullTestService,
           {
-            key: 'full-test',
+            key,
             initialState: null,
             insights: {
               wantsErrors: true,
               wantsPayload: true,
-              wantsState: true
+              wantsState: true,
+              wantsCandidates: true
             } as InsightConfig
           },
           [],
@@ -99,8 +101,6 @@ describe('f203: Value - Merge with Throttle Test', () => {
     testService = TestBed.inject(FullTestService);
     testService.initializeWithThrottle();
 
-    key = 'full-test';
-
     stateSubscription = testService.vault.state$
       .pipe(tap((state) => globalStates.push(state)))
       .subscribe();
@@ -109,6 +109,7 @@ describe('f203: Value - Merge with Throttle Test', () => {
   afterEach(() => {
     stopListening();
     stateSubscription.unsubscribe();
+    testService.clearGlobalErrors();
   });
 
   it('should merge through the entire pipe', async () => {

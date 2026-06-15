@@ -1,0 +1,18 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+}
+
+h2 {
+  color: global.$sdux-text-white;
+}
+
+mat-dialog-content {
+  color: global.$sdux-text-secondary;
+}
+
+mat-dialog-actions {
+  gap: global.$spacing-md;
+  padding-top: global.$spacing-md;
+}

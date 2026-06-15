@@ -1,5 +1,6 @@
 import { EventBusContract } from '../../interfaces/event/event-bus.interface';
 import { VaultMonitorContract } from '../../interfaces/vault/vault-monitor.interface';
+import { VaultLicensePayloadShape } from '../../shapes/vault/vault-license-payload.shape';
 import { VaultRegistrationShape } from '../../shapes/vault/vault-registration.shape';
 
 /**
@@ -17,12 +18,32 @@ export interface SDuXShape {
   vaultEventBus?: EventBusContract;
 
   /**
+   * Registered package versions keyed by npm package name.
+   */
+  versions?: Record<string, string>;
+
+  /**
+   * Returns a read-only snapshot of the FeatureCell registry.
+   */
+  getRegistry?: () => ReadonlyMap<string, VaultRegistrationShape>;
+
+  /**
+   * Verified license payload, populated after successful token verification.
+   */
+  license?: VaultLicensePayloadShape;
+
+  /**
    * Optional debug widget configuration for devtools integration.
    */
   debugWidget?: {
-    versions?: Record<string, string>;
     injected?: boolean;
     aiAssistEnabled?: boolean;
-    getRegistry?: () => ReadonlyMap<string, VaultRegistrationShape>;
+  };
+
+  /**
+   * DevTools replay API for accessing live FeatureCell instances.
+   */
+  replay?: {
+    getCell: (key: string) => unknown;
   };
 }

@@ -31,19 +31,6 @@
     font-weight: global.$font-weight-medium;
   }
 
-  .blog-pillar {
-    display: inline-block;
-    padding: global.$spacing-xs global.$spacing-sm;
-    font-size: global.$font-size-xs;
-    font-weight: global.$font-weight-semibold;
-    border-radius: global.$border-radius-xs;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    background: global.$sdux-surface-light-accent;
-    color: global.$sdux-primary-dark;
-    border: 1px solid global.$sdux-primary-light;
-  }
-
   .blog-reading-time {
     color: var(--sdux-text-muted);
   }

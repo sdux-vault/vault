@@ -226,6 +226,14 @@
       "relativePath": "libs/shared/src/lib/types/operation.type.ts",
       "docLink": "const"
     },
+    "PipelineStages": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "PipelineStages",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/pipeline/pipeline-stage.type.ts",
+      "docLink": "const"
+    },
     "ResolveTypes": {
       "kind": "const",
       "docKind": "constant",
@@ -296,6 +304,22 @@
       "name": "VaultErrorUsageKindTypes",
       "project": "shared",
       "relativePath": "libs/shared/src/lib/types/error/vault-error-usage-kind.type.ts",
+      "docLink": "const"
+    },
+    "VaultLicensePayloadTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "VaultLicensePayloadTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/vault/vault-license-payload.type.ts",
+      "docLink": "const"
+    },
+    "VaultRegistrationLicenseStatusTypes": {
+      "kind": "const",
+      "docKind": "constant",
+      "name": "VaultRegistrationLicenseStatusTypes",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/vault/vault-registration-license-status.type.ts",
       "docLink": "const"
     },
     "cryptoPlatform": {
@@ -524,6 +548,14 @@
       "relativePath": "libs/shared/src/lib/types/pipeline/pipeline-persist-value.type.ts",
       "docLink": "types"
     },
+    "PipelineStage": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "PipelineStage",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/pipeline/pipeline-stage.type.ts",
+      "docLink": "types"
+    },
     "PipelineUpstreamValue": {
       "kind": "type",
       "docKind": "type",
@@ -618,6 +650,22 @@
       "name": "VaultErrorUsageKindType",
       "project": "shared",
       "relativePath": "libs/shared/src/lib/types/error/vault-error-usage-kind.type.ts",
+      "docLink": "types"
+    },
+    "VaultLicensePayloadType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "VaultLicensePayloadType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/vault/vault-license-payload.type.ts",
+      "docLink": "types"
+    },
+    "VaultRegistrationLicenseStatusType": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "VaultRegistrationLicenseStatusType",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/types/vault/vault-registration-license-status.type.ts",
       "docLink": "types"
     }
   },
@@ -1008,6 +1056,14 @@
       "relativePath": "libs/devtools/tooling/src/lib/shapes/debug-widget-trace-event.shape.ts",
       "docLink": "shapes"
     },
+    "EventCandidateShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "EventCandidateShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/event/event-candidate.shape.ts",
+      "docLink": "shapes"
+    },
     "EventShape": {
       "kind": "interface",
       "docKind": "shape",
@@ -1094,6 +1150,14 @@
       "name": "VaultErrorShape",
       "project": "shared",
       "relativePath": "libs/shared/src/lib/shapes/vault-error.shape.ts",
+      "docLink": "shapes"
+    },
+    "VaultLicensePayloadShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "VaultLicensePayloadShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/vault/vault-license-payload.shape.ts",
       "docLink": "shapes"
     },
     "VaultLicensingShape": {

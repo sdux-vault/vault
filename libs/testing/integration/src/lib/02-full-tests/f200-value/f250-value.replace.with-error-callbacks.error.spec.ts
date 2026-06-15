@@ -23,8 +23,7 @@ describe('f202: Value - Replace - With ErrorCallbacks and encryption - Error Tes
   let stopListening: () => void;
 
   const emitted: any[] = [];
-  const storageKey =
-    'vault::localstorage::full-test::SDUX::Behavior::Persist::LocalStorage-with-encrypted-error-callback';
+  const storageKey = `vault::localstorage::${key}::SDUX::Behavior::Persist::LocalStorage-with-encrypted-error-callback`;
   const globalErrors: any[] = [];
   let errorSubscription: any;
 
@@ -39,6 +38,7 @@ describe('f202: Value - Replace - With ErrorCallbacks and encryption - Error Tes
 
   beforeEach(async () => {
     clearLocalStorage(storageKey);
+    emitted.length = 0;
     globalErrors.length = 0;
 
     await TestBed.configureTestingModule({
@@ -51,12 +51,13 @@ describe('f202: Value - Replace - With ErrorCallbacks and encryption - Error Tes
         provideFeatureCell(
           fullTestWithEncryptedErrorCallbacksErrorService,
           {
-            key: 'full-test-with-encrypted-error-callback',
+            key,
             initialState: null,
             insights: {
               wantsErrors: true,
               wantsPayload: true,
-              wantsState: true
+              wantsState: true,
+              wantsCandidates: true
             } as InsightConfig
           },
           [withLocalStoragePersistBehavior, withAes256EncryptBehavior],
@@ -132,7 +133,7 @@ describe('f202: Value - Replace - With ErrorCallbacks and encryption - Error Tes
     expect(state.error()).toEqual(
       Object({
         message: 'this is a filter error',
-        featureCellKey: 'full-test-with-encrypted-error-callback',
+        featureCellKey: key,
         details: jasmine.any(String),
         raw: jasmine.any(Object),
         timestamp: jasmine.any(Number)
@@ -158,7 +159,7 @@ describe('f202: Value - Replace - With ErrorCallbacks and encryption - Error Tes
         details: jasmine.any(String),
         raw: jasmine.any(Error),
         timestamp: jasmine.any(Number),
-        featureCellKey: 'full-test-with-encrypted-error-callback'
+        featureCellKey: key
       })
     ]);
 
@@ -178,7 +179,7 @@ describe('f202: Value - Replace - With ErrorCallbacks and encryption - Error Tes
         details: jasmine.any(String),
         raw: jasmine.any(Error),
         timestamp: jasmine.any(Number),
-        featureCellKey: 'full-test-with-encrypted-error-callback'
+        featureCellKey: key
       }),
       null
     ]);

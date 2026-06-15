@@ -6,6 +6,7 @@ export const f202Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:start:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'start'
   },
@@ -15,6 +16,7 @@ export const f202Snapshot = [
     behaviorKey: 'full-test::license',
     name: 'lifecycle:notification:license-attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
@@ -24,15 +26,28 @@ export const f202Snapshot = [
     behaviorKey: 'full-test::license',
     name: 'lifecycle:notification:license-approved',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification'
   },
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:start:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -40,9 +55,10 @@ export const f202Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'controller:start:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -50,9 +66,102 @@ export const f202Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::Delay',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::Delay',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'deny',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -67,15 +176,17 @@ export const f202Snapshot = [
     behaviorKey: 'vault-feature-cell',
     name: 'lifecycle:end:initialized',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'end'
   },
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'conductor:notification:deny',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'conductor',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -83,9 +194,10 @@ export const f202Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
     name: 'lifecycle:notification:revote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -93,9 +205,10 @@ export const f202Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:attempt',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -103,9 +216,113 @@ export const f202Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::Delay',
+    name: 'controller:start:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreAbstain',
     name: 'controller:end:vote',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreLicense',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::CoreError',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'SDUX::Controller::Policy::Delay',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: 'abstain',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:vote',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'controller',
     boundary: 'end',
     payload: {
@@ -117,9 +334,24 @@ export const f202Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+    behaviorKey: 'vault-conductor',
+    name: 'controller:end:attempt',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'controller',
+    boundary: 'end',
+    payload: {
+      decision: true
+    },
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
     name: 'stage:start:load-persist',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
     traceId: 'trace-id-removed'
@@ -130,6 +362,7 @@ export const f202Snapshot = [
     behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
     name: 'stage:end:load-persist',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'end',
     payload: {
@@ -143,6 +376,7 @@ export const f202Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:success',
     timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'
@@ -150,10 +384,11 @@ export const f202Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
+    behaviorKey: 'vault-conductor',
+    name: 'conductor:end:attempt',
     timestamp: 'ts-removed',
-    type: 'controller',
+    monotonicTimestamp: 'mts-removed',
+    type: 'conductor',
     boundary: 'end',
     payload: {
       status: 'success'
@@ -166,931 +401,7 @@ export const f202Snapshot = [
     behaviorKey: 'decision-engine',
     name: 'lifecycle:notification:finalize',
     timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      traceId: 'trace-id-removed',
-      outcome: 'deny'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'conductor:notification:deny',
-    timestamp: 'ts-removed',
-    type: 'conductor',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'lifecycle:notification:revote',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      traceId: 'trace-id-removed',
-      outcome: 'abstain'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    state: {
-      isLoading: false,
-      value: '__VAULT_UNDEFINED__',
-      error: null,
-      hasValue: false
-    },
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:start:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
-    name: 'stage:end:operator',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:start:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Filter',
-    name: 'stage:end:filter',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:start:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::BeforeTap',
-    name: 'stage:end:before-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    state: {
-      isLoading: false,
-      value: '__VAULT_UNDEFINED__',
-      error: null,
-      hasValue: false
-    },
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    state: {
-      isLoading: false,
-      value: '__VAULT_UNDEFINED__',
-      error: null,
-      hasValue: false
-    },
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:start:reducer',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Reducer',
-    name: 'stage:end:reducer',
-    timestamp: 'ts-removed',
-    state: {
-      isLoading: false,
-      value: '__VAULT_UNDEFINED__',
-      error: null,
-      hasValue: false
-    },
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:start:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::AfterTap',
-    name: 'stage:end:after-tap',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
-    name: 'stage:start:persist',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
-    name: 'stage:end:persist',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:end:replace',
-    timestamp: 'ts-removed',
-    state: {
-      isLoading: false,
-      value: '__VAULT_UNDEFINED__',
-      error: null,
-      hasValue: false
-    },
-    type: 'lifecycle',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:start:core-state',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'stage:end:core-state',
-    timestamp: 'ts-removed',
-    state: {
-      isLoading: false,
-      value: '__VAULT_UNDEFINED__',
-      error: null,
-      hasValue: false
-    },
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      status: 'success'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      traceId: 'trace-id-removed',
-      outcome: 'deny'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'conductor:notification:deny',
-    timestamp: 'ts-removed',
-    type: 'conductor',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      traceId: 'trace-id-removed',
-      outcome: 'deny'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'conductor:notification:deny',
-    timestamp: 'ts-removed',
-    type: 'conductor',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'lifecycle:notification:revote',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      traceId: 'trace-id-removed',
-      outcome: 'abstain'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-orchestrator',
-    name: 'lifecycle:start:replace',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:start:resolve',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Core::Value',
-    name: 'stage:end:resolve',
-    timestamp: 'ts-removed',
-    state: {
-      isLoading: false,
-      value: '__VAULT_UNDEFINED__',
-      error: null,
-      hasValue: false
-    },
-    type: 'stage',
-    boundary: 'end',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-feature-cell',
-    name: 'lifecycle:start:initialized',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'start'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'full-test::license',
-    name: 'lifecycle:notification:license-attempt',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'full-test::license',
-    name: 'lifecycle:notification:license-approved',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      traceId: 'trace-id-removed',
-      outcome: 'deny'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'vault-feature-cell',
-    name: 'lifecycle:end:initialized',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'end'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'conductor:notification:deny',
-    timestamp: 'ts-removed',
-    type: 'conductor',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'lifecycle:notification:revote',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:start:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:vote',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      traceId: 'trace-id-removed',
-      outcome: 'abstain'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
-    name: 'stage:start:load-persist',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'start',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'SDUX::Behavior::Persist::LocalStorage',
-    name: 'stage:end:load-persist',
-    timestamp: 'ts-removed',
-    type: 'stage',
-    boundary: 'end',
-    payload: {
-      noop: true
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:success',
-    timestamp: 'ts-removed',
-    type: 'lifecycle',
-    boundary: 'notification',
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'key-removed',
-    name: 'controller:end:attempt',
-    timestamp: 'ts-removed',
-    type: 'controller',
-    boundary: 'end',
-    payload: {
-      status: 'success'
-    },
-    traceId: 'trace-id-removed'
-  },
-  {
-    id: 'id-removed',
-    cell: 'full-test',
-    behaviorKey: 'decision-engine',
-    name: 'lifecycle:notification:finalize',
-    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
     type: 'lifecycle',
     boundary: 'notification',
     traceId: 'trace-id-removed'

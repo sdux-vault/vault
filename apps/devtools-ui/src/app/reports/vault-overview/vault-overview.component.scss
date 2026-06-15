@@ -1,0 +1,402 @@
+@use 'global' as global;
+@use '../scss/reports-common';
+
+.registry-search {
+  width: 250px;
+}
+
+.help-section {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-sm;
+  padding: global.$spacing-md;
+  background: global.$sdux-surface-raised;
+  border-radius: global.$border-radius-sm;
+  border: 1px solid global.$sdux-surface-outline;
+}
+
+.help-text {
+  margin: 0;
+  font-size: global.$font-size-sm;
+  color: global.$sdux-text-secondary;
+  line-height: 1.5;
+}
+
+.collapsible {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+}
+
+.section-chevron {
+  @include global.sdux-icon-button(28px, transparent);
+  margin-left: auto;
+  color: global.$sdux-primary-light;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background-color: global.$sdux-primary-base;
+    color: global.$sdux-text-white;
+  }
+
+  &.section-chevron-expanded {
+    transform: rotate(90deg);
+  }
+}
+
+.report-page {
+  .registry-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    gap: global.$spacing-md;
+
+    &:has(.detail-pane) .cell-cards .cell-card {
+      box-sizing: border-box;
+    }
+
+    .cell-cards {
+      flex: 1;
+      min-width: 0;
+      overflow-y: auto;
+    }
+  }
+
+  .vault-overview-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .section {
+      margin-bottom: global.$spacing-lg;
+
+      &.registry-section {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        gap: global.$spacing-sm;
+      }
+    }
+
+    .versions-table,
+    .registry-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th,
+      td {
+        @include global.sdux-text(global.$sdux-text-secondary);
+        font-size: global.$font-size-sm;
+        text-align: left;
+        padding: global.$spacing-xs global.$spacing-sm;
+        border-bottom: 1px solid global.$sdux-surface-outline;
+      }
+
+      th {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-weight: global.$font-weight-semibold;
+      }
+    }
+
+    .registry-row {
+      cursor: pointer;
+
+      &:hover {
+        background-color: global.$sdux-surface-outline;
+
+        td {
+          @include global.sdux-text(global.$sdux-text-primary);
+        }
+      }
+
+      &.selected {
+        background-color: global.$sdux-surface-lightish;
+
+        td {
+          @include global.sdux-text(global.$sdux-text-primary);
+        }
+      }
+    }
+
+    .cell-cards {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      align-content: flex-start;
+      gap: global.$spacing-md;
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+    }
+
+    .cell-card {
+      flex: 0 0 300px;
+      max-width: 300px;
+      min-height: 145px;
+      display: flex;
+      flex-direction: column;
+      background: global.$sdux-surface-mid;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-md;
+      padding: global.$spacing-md;
+
+      &.cell-card-collapsed {
+        min-height: 0;
+      }
+
+      &.selected {
+        border-color: global.$sdux-primary-base;
+        background-color: global.$sdux-surface-lightish;
+      }
+
+      .cell-card-header {
+        margin-bottom: global.$spacing-sm;
+        padding-bottom: global.$spacing-xs;
+        border-bottom: 2px solid global.$sdux-primary-base;
+      }
+
+      .cell-card-key {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-family: global.$sdux-code-font;
+        font-size: global.$font-size-sm;
+        font-weight: global.$font-weight-semibold;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .cell-card-body {
+        display: flex;
+        flex-direction: column;
+        gap: global.$spacing-sm;
+      }
+
+      .cell-card-row-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: global.$spacing-sm;
+        min-height: 70px;
+
+        .cell-card-stat {
+          height: 60px;
+        }
+      }
+
+      .cell-card-row-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: global.$spacing-sm;
+        min-height: 50px;
+
+        .cell-card-stat {
+          height: 40px;
+        }
+      }
+
+      .cell-card-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+      }
+
+      .cell-card-stat-value {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-size: global.$font-size-lg;
+        font-weight: global.$font-weight-bold;
+        line-height: 1;
+      }
+
+      .cell-card-stat-label {
+        @include global.sdux-text(global.$sdux-text-secondary);
+        font-size: global.$font-size-xs;
+        margin-top: global.$spacing-xxs;
+      }
+
+      .cell-card-licensed {
+        @include global.sdux-text(global.$sdux-warn-base);
+        font-size: global.$font-size-xs;
+        font-weight: global.$font-weight-medium;
+        margin-top: global.$spacing-xs;
+      }
+
+      .cell-card-footer {
+        margin-top: global.$spacing-sm;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .cell-card-view-btn {
+        @include global.button-base(
+          global.$sdux-text-white,
+          global.$sdux-primary-base,
+          global.$sdux-primary-dark
+        );
+        width: 150px;
+      }
+    }
+
+    .empty {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-size: global.$font-size-sm;
+      font-style: italic;
+    }
+
+    .free-license {
+      @include global.sdux-text(global.$sdux-text-secondary);
+      font-size: global.$font-size-sm;
+    }
+
+    .info-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      gap: global.$spacing-md;
+      margin-bottom: global.$spacing-lg;
+
+      @media (max-width: global.$breakpoint-md) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .info-card {
+      background: global.$sdux-surface-mid;
+      border: 1px solid global.$sdux-surface-outline;
+      border-radius: global.$border-radius-md;
+      padding: global.$spacing-md;
+      display: flex;
+      flex-direction: column;
+      min-height: 245px;
+
+      &:has(sdux-header-section [aria-expanded='false']) {
+        min-height: 0;
+      }
+
+      // ::ng-deep required to style .header-section inside sdux-header-section's encapsulated template
+      ::ng-deep .header-section {
+        margin-bottom: global.$spacing-sm;
+        padding-bottom: global.$spacing-xs;
+        border-bottom: 2px solid global.$sdux-primary-base;
+      }
+
+      .card-title {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-size: global.$font-size-md;
+        font-weight: global.$font-weight-bold;
+        margin: 0;
+      }
+
+      .card-list {
+        margin: 0;
+        padding: 0;
+      }
+
+      .card-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: global.$spacing-xs 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      .card-label {
+        @include global.sdux-text(global.$sdux-text-secondary);
+        font-size: global.$font-size-sm;
+        font-weight: global.$font-weight-medium;
+        margin: 0;
+      }
+
+      .card-value {
+        @include global.sdux-text(global.$sdux-text-primary);
+        font-family: global.$sdux-code-font;
+        font-size: global.$font-size-sm;
+        margin: 0;
+        text-align: right;
+      }
+    }
+  }
+}
+
+.detail-pane {
+  width: 400px;
+  min-width: 400px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid global.$sdux-surface-outline;
+  min-height: 0;
+
+  sdux-devtools-registry-detail {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+@media (max-width: global.$breakpoint-md) {
+  // exception: must pierce help-toggle encapsulation for mobile layout
+  sdux-help-toggle ::ng-deep .help-header {
+    flex-wrap: wrap;
+
+    .help-heading-row {
+      width: 100%;
+    }
+
+    .help-actions {
+      width: 100%;
+
+      [helpactions] {
+        width: 100%;
+      }
+
+      .registry-search {
+        width: 100%;
+      }
+    }
+  }
+
+  .report-page {
+    .registry-section {
+      &:has(.detail-pane) .cell-cards {
+        display: none;
+      }
+    }
+
+    .vault-overview-content {
+      flex: none;
+      overflow-y: auto;
+
+      .cell-card {
+        flex: 1 1 auto;
+        max-width: none;
+        width: 100%;
+      }
+    }
+  }
+
+  .detail-pane {
+    width: calc(100% - #{global.$spacing-xs});
+    min-width: 0;
+    margin-left: global.$spacing-xs;
+    border-top: 1px solid global.$sdux-surface-outline;
+    flex: 1;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+}

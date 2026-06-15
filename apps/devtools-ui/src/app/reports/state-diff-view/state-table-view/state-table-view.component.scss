@@ -1,0 +1,153 @@
+@use 'global' as global;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-md;
+  min-width: 0;
+}
+
+.state-table-container {
+  overflow: hidden;
+}
+
+.table-heading-row {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  margin-bottom: global.$spacing-xs;
+}
+
+.table-heading {
+  @include global.sdux-text(global.$sdux-text-primary);
+  font-size: global.$font-size-sm;
+  font-weight: global.$font-weight-bold;
+  margin: 0;
+}
+
+.delta-toggle {
+  @include global.sdux-icon-button(28px, transparent);
+  margin-left: auto;
+  color: global.$sdux-primary-light;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background-color: global.$sdux-primary-base;
+    color: global.$sdux-text-white;
+  }
+
+  &.active {
+    background-color: global.$sdux-primary-base;
+    color: global.$sdux-text-white;
+  }
+}
+
+.collapse-toggle {
+  @include global.sdux-icon-button(28px, transparent);
+  color: global.$sdux-primary-light;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background-color: global.$sdux-primary-base;
+    color: global.$sdux-text-white;
+  }
+
+  mat-icon {
+    transition: transform 0.2s ease;
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.table-scroll-wrapper {
+  max-height: 200px;
+  overflow: auto;
+}
+
+.state-table {
+  min-width: 100%;
+  border-collapse: collapse;
+  font-family: global.$sdux-code-font;
+  font-size: global.$font-size-sm;
+
+  th,
+  td {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    text-align: left;
+    padding: global.$spacing-xs global.$spacing-sm;
+    border-bottom: 1px solid global.$sdux-surface-outline;
+    white-space: nowrap;
+    min-width: 120px;
+  }
+
+  th {
+    @include global.sdux-text(global.$sdux-text-primary);
+    font-weight: global.$font-weight-semibold;
+    position: sticky;
+    top: 0;
+    background: global.$sdux-surface-dark;
+  }
+
+  .col-status {
+    width: 24px;
+    min-width: 24px;
+    text-align: center;
+    padding: global.$spacing-xs;
+  }
+
+  .cell-added {
+    background-color: global.$sdux-success-dark;
+    color: global.$sdux-text-white;
+  }
+
+  .cell-removed {
+    background-color: global.$sdux-accent-dark;
+    color: global.$sdux-text-white;
+    text-decoration: line-through;
+  }
+
+  .cell-modified {
+    background-color: global.$sdux-success-dark;
+    color: global.$sdux-text-white;
+  }
+}
+
+.status-indicator {
+  font-weight: global.$font-weight-bold;
+  font-size: global.$font-size-sm;
+
+  &.added {
+    color: global.$sdux-success-light;
+  }
+
+  &.modified {
+    color: global.$sdux-warn-base;
+  }
+
+  &.removed {
+    color: global.$sdux-accent-base;
+  }
+}
+
+.empty-table {
+  padding: global.$spacing-lg;
+  text-align: center;
+
+  p {
+    @include global.sdux-text(global.$sdux-text-secondary);
+    font-size: global.$font-size-sm;
+  }
+
+  .empty-hint {
+    margin-top: global.$spacing-xs;
+    font-size: global.$font-size-xs;
+    opacity: 0.7;
+  }
+}

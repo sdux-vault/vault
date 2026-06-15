@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { withDelayController } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
-import { flushVaultPipeline } from '@sdux-vault/testing-utils';
 import { getBankEmployeeData } from '../../structure/data/bank-employee.data';
 import { createTestInsightListener } from '../../structure/utils/create-test-insight-listener.util';
 import { expectMonitorSnapshot } from '../../structure/utils/expect-monitor-snapshot.util';
@@ -71,19 +70,19 @@ describe('p171: Controller - Delay Test - Merge', () => {
       Object({ value: getBankEmployeeData(0, true) })
     );
     jasmine.clock().tick(200);
-    await flushVaultPipeline();
+    await vaultSettled(key);
 
     testService.vault.mergeState(
       Object({ value: getBankEmployeeData(2, true) })
     );
     jasmine.clock().tick(200);
-    await flushVaultPipeline();
+    await vaultSettled(key);
 
     testService.vault.mergeState(
       Object({ value: getBankEmployeeData(3, true) })
     );
     jasmine.clock().tick(200);
-    await flushVaultPipeline();
+    await vaultSettled(key);
 
     expect(state.value()).toBeUndefined();
     expect(state.hasValue()).toBeFalse();
@@ -118,6 +117,7 @@ describe('p171: Controller - Delay Test - Merge', () => {
 
     jasmine.clock().tick(1_000);
     await vaultSettled(key);
+
     expect(state.value()).toEqual([
       Object({
         id: 'be-003',
@@ -144,12 +144,45 @@ describe('p171: Controller - Delay Test - Merge', () => {
     jasmine.clock().tick(1_000);
     await vaultSettled(key);
 
+    expect(state.value()).toEqual([
+      Object({
+        id: 'be-004',
+        firstName: 'Derek',
+        lastName: 'Hughes',
+        role: 'LoanOfficer',
+        status: 'Suspended',
+        salary: 78000,
+        hireDate: '2016-06-10',
+        birthDate: '1989-02-14',
+        phoneNumber: '555-810-4431',
+        address: Object({
+          street: '88 Willow Hill Rd',
+          city: 'Chicago',
+          state: 'IL',
+          zip: '60657'
+        })
+      })
+    ]);
+    expect(state.hasValue()).toBeTrue();
+    expect(state.isLoading()).toBeFalse();
+    expect(state.error()).toBeNull();
+
     testService.vault.mergeState(
       Object({ value: getBankEmployeeData(1, true) })
     );
     await vaultSettled(key);
 
-    // Assert — both withDelay applied in order
+    testService.vault.mergeState(
+      Object({ value: getBankEmployeeData(6, true) })
+    );
+    await vaultSettled(key);
+
+    testService.vault.mergeState(
+      Object({ value: getBankEmployeeData(7, true) })
+    );
+    await vaultSettled(key);
+
+    // Assert — all withDelay applied in order
     expect(state.value()).toEqual([
       Object({
         id: 'be-004',
@@ -174,7 +207,7 @@ describe('p171: Controller - Delay Test - Merge', () => {
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toBeNull();
 
-    jasmine.clock().tick(1_000);
+    jasmine.clock().tick(10_000);
     await vaultSettled(key);
 
     // Assert — both withDelay applied in order

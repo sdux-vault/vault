@@ -1,0 +1,84 @@
+<div class="event-table-wrapper">
+  <table class="event-table">
+    <thead>
+      <tr>
+        <th class="col-index" matTooltip="Event sequence number">#</th>
+        <th class="col-event" matTooltip="Pipeline event name">Event</th>
+        <th
+          class="col-boundary"
+          matTooltip="Event boundary (start/end/notification)">
+          Boundary
+        </th>
+        <th class="col-delta" matTooltip="Time delta from previous event">
+          Δms
+        </th>
+        <th
+          class="col-elapsed"
+          matTooltip="Total elapsed time from trace start">
+          Ems
+        </th>
+        <th class="col-state" matTooltip="State snapshot indicator">
+          <span class="full-label">State</span>
+          <span class="short-label">S</span>
+        </th>
+        <th class="col-payload" matTooltip="Payload data indicator">
+          <span class="full-label">Payload</span>
+          <span class="short-label">P</span>
+        </th>
+        <th class="col-error" matTooltip="Error indicator">
+          <span class="full-label">Error</span>
+          <span class="short-label">E</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (event of trace().events; track $index) {
+        <tr
+          [class.row-error]="hasError(event)"
+          [class.row-selected]="selectedEventId() === event.id"
+          [matTooltip]="event.name + '\nEvent ID: ' + event.id"
+          tabindex="0"
+          role="row"
+          (click)="selectEvent(event)"
+          (keydown.enter)="selectEvent(event)">
+          <td class="col-index">{{ $index + 1 }}</td>
+          <td class="col-event">
+            {{ eventDisplayName(event) }}
+          </td>
+          <td class="col-boundary">{{ event.boundary }}</td>
+          <td class="col-delta">
+            {{ deltaMs(event, $index) }}
+          </td>
+          <td class="col-elapsed">
+            {{ elapsedMs(event) }}
+          </td>
+          <td class="col-state">
+            @if (hasState(event)) {
+              <span
+                class="indicator indicator-state"
+                matTooltip="State snapshot available"
+                >●</span
+              >
+            }
+          </td>
+          <td class="col-payload">
+            @if (hasPayload(event)) {
+              <span
+                class="indicator indicator-payload"
+                matTooltip="Payload available"
+                >◆</span
+              >
+            }
+          </td>
+          <td class="col-error">
+            @if (hasError(event)) {
+              <span class="indicator indicator-error" matTooltip="Error present"
+                >⚠</span
+              >
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

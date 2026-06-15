@@ -3,6 +3,9 @@ import { RelatedTopicCategoryShape } from 'apps/docs-app/app/docs/related-topic/
 export const RELATED_TOPICS_TESTING_REGISTRY: RelatedTopicCategoryShape = {
   baseRoute: '/docs/welcome/testing',
   baseDisplay: 'Testing Strategies',
+  title: 'Testing Strategies in SDuX Vault — Unit and Integration Testing',
+  description:
+    'Learn how to test SDuX Vault stores, FeatureCells, and pipelines effectively.',
 
   // Reuse existing global groups
   globalCross: ['core'],

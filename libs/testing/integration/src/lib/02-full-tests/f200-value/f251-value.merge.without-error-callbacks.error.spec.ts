@@ -19,15 +19,14 @@ import { expectMonitorSnapshot } from '../../structure/utils/expect-monitor-snap
 import { FullTestService } from '../services/full-test.service';
 import { f251Snapshot } from './snap-shots/f251-value.merge.without-error-callbacks.error.snapshot';
 
-describe('f203: Value - Merge - Without ErrorCallbacks - Error Test', () => {
+describe('f251: Value - Merge - Without ErrorCallbacks - Error Test', () => {
   const key = 'full-test';
   let testService: FullTestService;
   let errorService: any;
   let stopListening: () => void;
 
   const emitted: any[] = [];
-  const storageKey =
-    'vault::localstorage::full-test::SDUX::Behavior::Persist::LocalStorage-without-error-callback-error';
+  const storageKey = `vault::localstorage::${key}::SDUX::Behavior::Persist::LocalStorage-without-error-callback-error`;
   const globalErrors: any[] = [];
   let errorSubscription: any;
 
@@ -43,6 +42,7 @@ describe('f203: Value - Merge - Without ErrorCallbacks - Error Test', () => {
   beforeEach(async () => {
     clearLocalStorage(storageKey);
     globalErrors.length = 0;
+    emitted.length = 0;
 
     await TestBed.configureTestingModule({
       providers: [
@@ -54,12 +54,13 @@ describe('f203: Value - Merge - Without ErrorCallbacks - Error Test', () => {
         provideFeatureCell(
           FullTestService,
           {
-            key: 'full-test',
+            key,
             initialState: null,
             insights: {
               wantsErrors: true,
               wantsPayload: true,
-              wantsState: true
+              wantsState: true,
+              wantsCandidates: true
             } as InsightConfig
           },
           [withLocalStoragePersistBehavior],

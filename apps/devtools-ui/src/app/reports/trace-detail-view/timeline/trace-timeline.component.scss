@@ -1,0 +1,182 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+}
+
+.timeline-section {
+  background: global.$sdux-surface-lightish;
+  border-radius: global.$border-radius-sm;
+  padding: global.$spacing-md;
+  max-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-axis {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-sm;
+  margin-bottom: global.$spacing-sm;
+  font-size: global.$font-size-xs;
+  color: global.$sdux-text-secondary;
+  flex-shrink: 0;
+
+  .axis-label {
+    font-weight: global.$font-weight-bold;
+    letter-spacing: 0.05em;
+  }
+
+  .axis-line {
+    flex: 1;
+    height: 1px;
+    background: global.$sdux-border-default-lg;
+  }
+
+  .axis-arrow {
+    font-size: global.$font-size-sm;
+  }
+}
+
+.timeline-rows {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-xs;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.timeline-row {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-sm;
+  padding: global.$spacing-xs global.$spacing-sm;
+  border-radius: global.$border-radius-sm;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    background: global.$sdux-surface-hover;
+  }
+
+  &.timeline-row-selected {
+    background: global.$sdux-surface-hover-md;
+    border: 1px solid global.$sdux-primary-base;
+  }
+
+  .timeline-id {
+    font-family: monospace;
+    font-size: global.$font-size-xs;
+    color: global.$sdux-text-secondary;
+    min-width: 24px;
+  }
+
+  .timeline-track {
+    flex: 1;
+    height: 14px;
+    position: relative;
+    background: global.$sdux-surface-hover-sm;
+    border-radius: 2px;
+
+    .timeline-bar {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      border-radius: 2px;
+      min-width: 2px;
+
+      &.status-success {
+        background: global.$sdux-success-base;
+      }
+
+      &.status-error {
+        background: global.$sdux-accent-base;
+      }
+
+      &.status-denied {
+        background: global.$sdux-warn-base;
+      }
+
+      &.status-orphaned {
+        background: global.$sdux-text-secondary;
+      }
+
+      &.status-aborted {
+        background: global.$sdux-warn-base;
+      }
+    }
+  }
+
+  .timeline-duration {
+    font-family: monospace;
+    font-size: global.$font-size-xs;
+    min-width: 55px;
+    text-align: right;
+    color: global.$sdux-text-primary;
+  }
+
+  .timeline-status {
+    font-weight: global.$font-weight-bold;
+    min-width: 14px;
+    text-align: center;
+  }
+}
+
+/* ─── STATUS LEGEND ─── */
+
+.status-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: global.$spacing-md;
+  font-size: global.$font-size-xs;
+  color: global.$sdux-text-secondary;
+  padding-top: global.$spacing-sm;
+  border-top: 1px solid global.$sdux-border-default;
+
+  .legend-separator {
+    width: 1px;
+    background: global.$sdux-border-default;
+  }
+
+  .legend-indicator {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-xs;
+  }
+}
+
+.status-success {
+  color: global.$sdux-success-base;
+}
+
+.status-error {
+  color: global.$sdux-accent-base;
+}
+
+.status-denied {
+  color: global.$sdux-warn-base;
+}
+
+.status-orphaned {
+  color: global.$sdux-text-secondary;
+}
+
+.status-aborted {
+  color: global.$sdux-warn-base;
+}
+
+.indicator {
+  cursor: default;
+}
+
+.indicator-state {
+  color: global.$sdux-success-base;
+}
+
+.indicator-payload {
+  color: global.$sdux-primary-base;
+}
+
+.indicator-error {
+  color: global.$sdux-accent-base;
+}

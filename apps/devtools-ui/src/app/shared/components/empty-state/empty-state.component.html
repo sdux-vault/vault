@@ -1,0 +1,8 @@
+@if (isEmpty()) {
+  <div class="empty-state">
+    <mat-icon class="empty-state-icon" aria-hidden="true">{{
+      icon()
+    }}</mat-icon>
+    <p class="empty-state-text">{{ message() }}</p>
+  </div>
+}
