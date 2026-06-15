@@ -395,8 +395,9 @@ describe('Employee FeatureCell', () =&gt; &#123;
           </ul>
 
           <div class="callout callout-warning">
-            <strong>Angular with Effects:</strong> When your FeatureCell uses
-            Angular effect() to react to committed state, an additional
+            <strong>Angular with Effects:</strong> When your
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            uses Angular effect() to react to committed state, an additional
             scheduler layer enters the picture. After awaiting vaultSettled,
             call TestBed.tick() to flush Angular's effect scheduler, then await
             vaultSettled again if the effect triggered a new mutation. The

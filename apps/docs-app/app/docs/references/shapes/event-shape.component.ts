@@ -111,6 +111,18 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
+                <strong>monotonicTimestamp?</strong>
+
+                <p class="type">type: number</p>
+              </td>
+              <td class="column-auto">
+                High-resolution monotonic timestamp captured via
+                performance.now(). Used for precise trace timing in DevTools and
+                Chrome Trace Export.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>name</strong>
 
                 <p class="type">type: string</p>

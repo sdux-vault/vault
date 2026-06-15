@@ -99,8 +99,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             Tab Sync requires both the controller and the behavior to be
-            registered on the same FeatureCell. No fluent API configuration is
-            needed — registration alone enables cross-tab negotiation.
+            registered on the same
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            No fluent API configuration is needed — registration alone enables
+            cross-tab negotiation.
           </p>
 
           <div class="sdux-tab-container">
@@ -204,7 +206,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             <p>
               If BroadcastChannel or localStorage is unavailable — SSR, Node.js,
               Deno, web workers — the Tab Sync Controller degrades gracefully.
-              It clears the negotiation cache, abstains, and the FeatureCell
+              It clears the negotiation cache, abstains, and the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
               functions normally as a single-tab state container. No errors, no
               conditional logic required.
             </p>

@@ -10,11 +10,16 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { NotFoundComponent } from '../../../not-found/not-found.component';
 
+import { createDebugDumpComponent } from './create-debug-dump.component';
 import { createVaultErrorComponent } from './create-vault-error.component';
 import { defineBehaviorKeyComponent } from './define-behavior-key.component';
 import { defineControllerKeyComponent } from './define-controller-key.component';
 import { defineVaultKeyComponent } from './define-vault-key.component';
+import { downloadAiAssistFileComponent } from './download-ai-assist-file.component';
+import { downloadDebugDumpComponent } from './download-debug-dump.component';
+import { downloadTraceDumpComponent } from './download-trace-dump.component';
 import { EventBusComponent } from './event-bus.component';
+import { exportTraceComponent } from './export-trace.component';
 import { FeatureCellComponent } from './feature-cell.component';
 import { getVaultLogLevelComponent } from './get-vault-log-level.component';
 import { isDeferredFactoryComponent } from './is-deferred-factory.component';
@@ -32,6 +37,7 @@ import { isVaultClearStateComponent } from './is-vault-clear-state.component';
 import { isVaultContinueComponent } from './is-vault-continue.component';
 import { isVaultNoopComponent } from './is-vault-noop.component';
 import { registerVersionComponent } from './register-version.component';
+import { reportGithubIssueComponent } from './report-github-issue.component';
 import { safeStringifyComponent } from './safe-stringify.component';
 import { setVaultLogLevelComponent } from './set-vault-log-level.component';
 import { validateBehaviorKeyComponent } from './validate-behavior-key.component';
@@ -51,11 +57,16 @@ import { vaultWarnComponent } from './vault-warn.component';
     CommonModule,
     MatTabsModule,
     MatExpansionModule,
+    createDebugDumpComponent,
     createVaultErrorComponent,
     defineBehaviorKeyComponent,
     defineControllerKeyComponent,
     defineVaultKeyComponent,
+    downloadAiAssistFileComponent,
+    downloadDebugDumpComponent,
+    downloadTraceDumpComponent,
     EventBusComponent,
+    exportTraceComponent,
     FeatureCellComponent,
     getVaultLogLevelComponent,
     isDeferredFactoryComponent,
@@ -73,6 +84,7 @@ import { vaultWarnComponent } from './vault-warn.component';
     isVaultContinueComponent,
     isVaultNoopComponent,
     registerVersionComponent,
+    reportGithubIssueComponent,
     safeStringifyComponent,
     setVaultLogLevelComponent,
     validateBehaviorKeyComponent,

@@ -65,15 +65,19 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </p>
           <p>
             Controllers are never implicitly enabled. A Controller participates
-            in a FeatureCell pipeline only if it is explicitly registered during
-            configuration. If a required Controller is omitted, the pipeline
-            fails fast rather than executing with incomplete authority.
+            in a
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            pipeline only if it is explicitly registered during configuration.
+            If a required Controller is omitted, the pipeline fails fast rather
+            than executing with incomplete authority.
           </p>
           <div class="callout callout-info">
             <p>
-              Controllers are not required for a FeatureCell to store, update,
-              or emit state. They are introduced only when additional
-              coordination, arbitration, or policy enforcement is needed.
+              Controllers are not required for a
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              to store, update, or emit state. They are introduced only when
+              additional coordination, arbitration, or policy enforcement is
+              needed.
             </p>
           </div>
         </div>

@@ -1042,6 +1042,13 @@ Tools/documentation/menu-generator
         <div class="submenu">
           <a
             mat-list-item
+            routerLink="/docs/references/functions/create-debug-dump"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">createDebugDump</span></a
+          >
+          <a
+            mat-list-item
             routerLink="/docs/references/functions/create-vault-error"
             routerLinkActive="active"
             (click)="closeSidenav()"
@@ -1070,10 +1077,38 @@ Tools/documentation/menu-generator
           >
           <a
             mat-list-item
+            routerLink="/docs/references/functions/download-ai-assist-file"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">downloadAiAssistFile</span></a
+          >
+          <a
+            mat-list-item
+            routerLink="/docs/references/functions/download-debug-dump"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">downloadDebugDump</span></a
+          >
+          <a
+            mat-list-item
+            routerLink="/docs/references/functions/download-trace-dump"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">downloadTraceDump</span></a
+          >
+          <a
+            mat-list-item
             routerLink="/docs/references/functions/event-bus"
             routerLinkActive="active"
             (click)="closeSidenav()"
             ><span class="menu-content">EventBus</span></a
+          >
+          <a
+            mat-list-item
+            routerLink="/docs/references/functions/export-trace"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">exportTrace</span></a
           >
           <a
             mat-list-item
@@ -1193,6 +1228,13 @@ Tools/documentation/menu-generator
             routerLinkActive="active"
             (click)="closeSidenav()"
             ><span class="menu-content">registerVersion</span></a
+          >
+          <a
+            mat-list-item
+            routerLink="/docs/references/functions/report-github-issue"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">reportGithubIssue</span></a
           >
           <a
             mat-list-item

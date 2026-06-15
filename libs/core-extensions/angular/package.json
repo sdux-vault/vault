@@ -1,6 +1,6 @@
 {
   "name": "@sdux-vault/angular",
-  "version": "0.11.1",
+  "version": "1.0.0",
   "license": "MIT",
   "author": {
     "name": "SDuX Vault",
@@ -34,7 +34,7 @@
     "devtools"
   ],
   "dependencies": {
-    "@sdux-vault/core": "0.9.1",
+    "@sdux-vault/core": "1.0.0",
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
@@ -42,8 +42,8 @@
     "rxjs": "^7.0.0"
   },
   "devDependencies": {
-    "@sdux-vault/engine": "0.28.2",
-    "@sdux-vault/shared": "0.9.2",
+    "@sdux-vault/engine": "1.0.0",
+    "@sdux-vault/shared": "1.0.0",
     "rxjs": "^7.0.0"
   },
   "files": [

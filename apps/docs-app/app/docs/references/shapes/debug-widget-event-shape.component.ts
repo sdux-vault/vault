@@ -76,16 +76,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td class="column-300">
-                <strong>monotonicTimestamp?</strong>
-
-                <p class="type">type: number</p>
-              </td>
-              <td class="column-auto">
-                High-resolution monotonic timestamp in milliseconds.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td class="column-300">
                 <strong>scheduler?</strong>
 
                 <p class="type">type: string</p>
