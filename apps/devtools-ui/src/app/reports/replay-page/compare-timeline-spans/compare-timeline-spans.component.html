@@ -120,12 +120,14 @@
           </div>
 
           <div class="timeline-time-axis">
+            <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -- axis positioning requires inline style -->
             <span class="axis-label" style="left: 0">0ms</span>
             @for (tick of tickMarks(); track tick.ms) {
               <span class="axis-label" [style.left.%]="tick.position">
                 {{ tick.ms }}ms
               </span>
             }
+            <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -- axis positioning requires inline style -->
             <span class="axis-label" style="right: 0; left: auto">
               {{ maxDuration() }}ms
             </span>
