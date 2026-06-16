@@ -7,7 +7,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   standalone: true,
   imports: [PipelineRelatedTopicComponent, BrandNameComponent],
   templateUrl: 'pipeline-isolation.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../../scss/example.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineIsolationComponent {}

@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 /**
@@ -7,7 +8,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 @Component({
   selector: 'sdux-blog-welcome',
   standalone: true,
-  imports: [BlogLayoutComponent],
+  imports: [BlogLayoutComponent, RouterModule],
   templateUrl: './welcome.component.html',
   styleUrls: ['../../../docs/scss/example.scss'],
   encapsulation: ViewEncapsulation.None

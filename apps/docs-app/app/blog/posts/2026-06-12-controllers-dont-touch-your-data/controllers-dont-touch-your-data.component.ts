@@ -1,10 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-controllers-dont-touch-your-data',
   standalone: true,
-  imports: [BlogLayoutComponent],
+  imports: [BlogLayoutComponent, RouterModule],
   template: `
     <sdux-blog-layout
       title="Controllers Don't Touch Your Data"

@@ -46,6 +46,18 @@
       </thead>
       <tbody>
         <tr>
+          <td>Queue</td>
+          <td>
+            Serializes pipeline attempts through a FIFO queue so every
+            transition is processed in deterministic order, one at a time.
+          </td>
+          <td>
+            <a routerLink="/docs/pipeline/execution-guarantee/conductor-queue"
+              >View</a
+            >
+          </td>
+        </tr>
+        <tr>
           <td>Policy (Controllers)</td>
           <td>
             Governs execution authority for pipeline attempts. Evaluates and

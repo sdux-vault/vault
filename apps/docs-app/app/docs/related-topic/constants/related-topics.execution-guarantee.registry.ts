@@ -26,12 +26,19 @@ export const RELATED_TOPICS_EXECUTION_GUARANTEE_REGISTRY: RelatedTopicCategorySh
           'Understand how SDuX Vault uses queueMicrotask to guarantee consistent pipeline execution ordering.'
       },
       {
-        link: '/docs/pipeline/isolation',
+        link: '/docs/pipeline/execution-guarantee/isolation',
         display: 'Pipeline Isolation',
         title:
           'Pipeline Isolation in SDuX Vault — Independent Execution Contexts',
         description:
           'Learn how SDuX Vault isolates pipeline executions to prevent cross-contamination between state transitions.'
+      },
+      {
+        link: '/docs/pipeline/execution-guarantee/conductor-queue',
+        display: 'Conductor Queue',
+        title: 'Conductor Queue — SDuX Vault Pipeline Serialization',
+        description:
+          'Learn how the Conductor Queue serializes pipeline attempts through a FIFO queue for deterministic execution ordering.'
       }
     ]
   };

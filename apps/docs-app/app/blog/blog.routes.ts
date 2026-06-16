@@ -95,6 +95,14 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-12-tab-sync-state/tab-sync-state.component').then(
         (m) => m.BlogTabSyncStateComponent
       )
+  },
+  {
+    path: 'redux-broke-my-trust',
+    data: { category: 'blogs', type: 'redux-broke-my-trust' },
+    loadComponent: () =>
+      import('./posts/2026-06-16-redux-broke-my-trust/redux-broke-my-trust.component').then(
+        (m) => m.BlogReduxBrokeMyTrustComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import {
   ExampleViewerSourceComponent,
@@ -11,6 +12,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [
     BlogLayoutComponent,
+    RouterModule,
     MatTab,
     MatTabGroup,
     ExampleViewerSourceComponent,

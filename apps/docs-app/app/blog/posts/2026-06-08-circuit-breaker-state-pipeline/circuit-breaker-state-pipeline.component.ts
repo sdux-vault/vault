@@ -1,11 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { DiagramComponent } from '../../../../../../libs/ui/web-components/src/public-api';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-circuit-breaker-state-pipeline',
   standalone: true,
-  imports: [BlogLayoutComponent, DiagramComponent],
+  imports: [BlogLayoutComponent, DiagramComponent, RouterModule],
   template: `
     <sdux-blog-layout
       title="Circuit Breaker Pattern, Built Into Your State Pipeline"

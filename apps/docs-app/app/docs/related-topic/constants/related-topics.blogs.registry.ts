@@ -87,6 +87,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Open a New Tab. State Is Already There. — SDuX Vault Blog',
       description:
         'See how SDuX Vault synchronizes state across browser tabs automatically with zero configuration.'
+    },
+    {
+      link: '/blog/redux-broke-my-trust',
+      display: 'I Built a State Engine Because Redux Broke My Trust',
+      title:
+        'I Built a State Engine Because Redux Broke My Trust — SDuX Vault Blog',
+      description:
+        'Learn why SDuX Vault was built from scratch — deterministic pipelines, ordered execution, and zero ambiguity in state management.'
     }
   ]
 };

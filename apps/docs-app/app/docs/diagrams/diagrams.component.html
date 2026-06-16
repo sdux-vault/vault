@@ -35,13 +35,13 @@
             >
           </li>
           <li>
-            <a [routerLink]="[]" fragment="behavior-addon-diagrams"
-              >Behavior & Add-on Diagrams</a
+            <a [routerLink]="[]" fragment="controller-diagrams"
+              >Controller Diagrams</a
             >
           </li>
           <li>
-            <a [routerLink]="[]" fragment="controller-diagrams"
-              >Controller Diagrams</a
+            <a [routerLink]="[]" fragment="behavior-addon-diagrams"
+              >Behavior & Add-on Diagrams</a
             >
           </li>
         </ul>
@@ -61,9 +61,9 @@
               }
             </ul>
 
-            <div class="table-title">Behaviors</div>
+            <div class="table-title">Controllers</div>
             <ul class="toc">
-              @for (link of behaviorLinks; track link.fragment) {
+              @for (link of controllerLinks; track link.fragment) {
                 <li>
                   <a [routerLink]="[]" [fragment]="link.fragment">
                     {{ link.display }}
@@ -72,9 +72,9 @@
               }
             </ul>
 
-            <div class="table-title">Controllers</div>
+            <div class="table-title">Behaviors</div>
             <ul class="toc">
-              @for (link of controllerLinks; track link.fragment) {
+              @for (link of behaviorLinks; track link.fragment) {
                 <li>
                   <a [routerLink]="[]" [fragment]="link.fragment">
                     {{ link.display }}
@@ -376,6 +376,256 @@
       <sdux-diagram
         image="diagrams/7.0/7.0-error-flow.svg"
         [tooltip]="'Error Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <hr class="sdux-hr" />
+
+  <section class="diagram-section" id="controller-diagrams">
+    <h4>Controller Diagrams</h4>
+  </section>
+
+  <section class="diagram-section" id="policy-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Policy Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how incoming values enter and traverse the
+        policy layer and then progress to the pipeline, if allowed. It
+        highlights the ordering of controllers applied to each update.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/9.0/9.1-policy-flow.svg"
+        [tooltip]="'Policy Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="controller-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how <strong>Controllers</strong> participate in
+        pipeline execution. Controllers do not execute within a pipeline stage.
+        Instead, they operate through the <em>Conductor</em>, receiving
+        execution requests emitted by Behaviors and issuing authoritative
+        decisions that govern pipeline progression.
+      </p>
+
+      <p>
+        The flow highlights the role of the <strong>Decision Engine</strong> as
+        a centralized progression gate, ensuring that all controller decisions
+        are serialized, validated, and applied deterministically before state
+        commitment.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/6.0/6.0-controller-flow.svg"
+        [tooltip]="'Controller Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="delay-controller-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Delay Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how the delay controller blocks and allows
+        values entering and traversing the pipeline based on the
+        millisecondDelay option.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/9.0/9.3-delay-controller-flow.svg"
+        [tooltip]="'Delay Controller Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="replay-global-error-controller">
+    <div class="section-title-navigation">
+      <div class="section-title">Replay Global Error Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how the
+        <strong>Replay Global Error Controller</strong> participates in pipeline
+        execution when a global Vault error is present. Controllers do not
+        execute within a pipeline stage and do not observe state directly.
+        Instead, they operate through the <em>Conductor</em>, responding to
+        execution <em>attempt</em> messages and issuing votes that determine
+        whether a pipeline execution may proceed, be denied, or be replayed.
+      </p>
+
+      <p>
+        The flow highlights the role of the
+        <strong>VaultErrorService</strong> as the authoritative source of global
+        error state. When a global error is active, the service emits an error
+        signal that influences both interceptor gating and controller
+        arbitration. While the paired interceptor blocks new pipeline admission,
+        the Replay Global Error controller evaluates execution attempts
+        associated with the current trace and issues denial votes while the
+        error remains active.
+      </p>
+
+      <p>
+        The <strong>Decision Engine</strong> acts as the centralized arbitration
+        point, collecting controller votes and applying them deterministically.
+        When the global error state changes—such as when
+        <code>VaultErrorService.clear()</code> is invoked—the controller may
+        request a revote for previously denied attempts, allowing execution to
+        resume under the updated conditions.
+      </p>
+
+      <p>
+        This design cleanly separates responsibilities: the VaultErrorService
+        signals global error lifecycle events, the interceptor controls pipeline
+        admission, and the controller governs execution replay and retry
+        behavior through formal arbitration rather than side effects or implicit
+        retries.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/6.0/6.1-replay-global-error-controller-flow.svg"
+        [tooltip]="'Replay Global Error Controller Flow'">
+      </sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="stepwise-controller-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Stepwise Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates how the
+        <strong>Stepwise Controller</strong> coordinates policy-driven execution
+        control when a Stepwise behavior emits a decision request. Unlike
+        standard pipeline stages, Stepwise does not resolve synchronously.
+        Instead, execution is intentionally paused while awaiting an explicit
+        external decision.
+      </p>
+
+      <p>
+        When a Stepwise behavior is invoked at the Filter, Reducer, or Resolve
+        stage, it emits a decision request rather than returning a value. The
+        pipeline immediately suspends execution for the current trace and
+        forwards the request to the Stepwise Controller through the Stepwise
+        bus.
+      </p>
+
+      <p>
+        The Stepwise Controller serializes all incoming requests using a FIFO
+        queue, ensuring that only one Stepwise decision is active at any given
+        time. This guarantees deterministic execution order and prevents
+        overlapping or ambiguous policy resolution when multiple Stepwise
+        behaviors are configured.
+      </p>
+
+      <p>
+        While awaiting a response, no downstream pipeline stages execute, no
+        snapshots are committed, and no additional updates are admitted for the
+        affected execution trace. The pipeline remains fully paused until an
+        external system — such as user input, developer tooling, or an automated
+        policy engine — emits a corresponding decision.
+      </p>
+
+      <p>
+        Once a response is received, the controller translates it into a
+        canonical pipeline control signal and resumes execution according to the
+        decision:
+      </p>
+
+      <ul>
+        <li>
+          <strong>continue</strong> — resume pipeline execution at the
+          appropriate downstream stage
+        </li>
+        <li>
+          <strong>block</strong> — suppress the current update with no state
+          change
+        </li>
+        <li>
+          <strong>clear</strong> — clear existing state and terminate the
+          current update
+        </li>
+      </ul>
+
+      <p>
+        After resolving the active request, the controller advances its internal
+        queue and processes the next pending Stepwise request, if any. This
+        design ensures that policy enforcement remains explicit, serialized, and
+        fully observable without compromising pipeline safety or determinism.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/3.8/3.8.1-stepwise-controller-flow.svg"
+        [tooltip]="'Stepwise Controller Flow'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="tab-sync-controller-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Tab Sync Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how the Tab Sync Controller coordinates tab
+        synchronization across multiple pipeline stages, ensuring consistent
+        state updates and preventing race conditions.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/9.0/9.5-tab-sync-controller-flow.svg"
+        [tooltip]="'Tab Sync Controller and Behavior Flow'"></sdux-diagram>
+    </div>
+  </section>
+
+  <section class="diagram-section" id="throttle-controller-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Throttle Controller Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram focuses on how the throttle controller aborts and allows
+        values entering and traversing the pipeline based on the
+        millisecondThrottle option.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/9.0/9.2-throttle-controller-flow.svg"
+        [tooltip]="'Throttle Controller Flow'"></sdux-diagram>
     </div>
   </section>
 
@@ -1016,258 +1266,6 @@
       <sdux-diagram
         image="diagrams/2.7/2.7.3-query-flow.svg"
         [tooltip]="'Entity Access - Query Flow'" />
-    </div>
-  </section>
-
-  <hr class="sdux-hr" />
-
-  <section class="diagram-section" id="controller-diagrams">
-    <h4>Controller Diagrams</h4>
-  </section>
-
-  <section class="diagram-section" id="policy-flow">
-    <div class="section-title-navigation">
-      <div class="section-title">Policy Flow</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="top">↑ top</a>
-      </div>
-    </div>
-
-    <div class="section-body">
-      <p>
-        This diagram focuses on how incoming values enter and traverse the
-        policy layer and then progress to the pipeline, if allowed. It
-        highlights the ordering of controllers applied to each update.
-      </p>
-
-      <sdux-diagram
-        image="diagrams/9.0/9.1-policy-flow.svg"
-        [tooltip]="'Policy Flow'" />
-    </div>
-  </section>
-
-  <section class="diagram-section" id="controller-flow">
-    <div class="section-title-navigation">
-      <div class="section-title">Controller Flow</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="top">↑ top</a>
-      </div>
-    </div>
-
-    <div class="section-body">
-      <p>
-        This diagram illustrates how <strong>Controllers</strong> participate in
-        pipeline execution. Controllers do not execute within a pipeline stage.
-        Instead, they operate through the <em>Conductor</em>, receiving
-        execution requests emitted by Behaviors and issuing authoritative
-        decisions that govern pipeline progression.
-      </p>
-
-      <p>
-        The flow highlights the role of the <strong>Decision Engine</strong> as
-        a centralized progression gate, ensuring that all controller decisions
-        are serialized, validated, and applied deterministically before state
-        commitment.
-      </p>
-
-      <sdux-diagram
-        image="diagrams/6.0/6.0-controller-flow.svg"
-        [tooltip]="'Controller Flow'"></sdux-diagram>
-    </div>
-  </section>
-
-  <section class="diagram-section" id="delay-controller-flow">
-    <div class="section-title-navigation">
-      <div class="section-title">Delay Controller Flow</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="top">↑ top</a>
-      </div>
-    </div>
-
-    <div class="section-body">
-      <p>
-        This diagram focuses on how the delay controller blocks and allows
-        values entering and traversing the pipeline based on the
-        millisecondDelay option.
-      </p>
-
-      <sdux-diagram
-        image="diagrams/9.0/9.3-delay-controller-flow.svg"
-        [tooltip]="'Delay Controller Flow'"></sdux-diagram>
-    </div>
-  </section>
-
-  <section
-    class="diagram-section"
-    id="replay-global-error-controller-execution">
-    <div class="section-title-navigation">
-      <div class="section-title">Replay Global Error Controller Flow</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="top">↑ top</a>
-      </div>
-    </div>
-
-    <div class="section-body">
-      <p>
-        This diagram illustrates how the
-        <strong>Replay Global Error Controller</strong> participates in pipeline
-        execution when a global Vault error is present. Controllers do not
-        execute within a pipeline stage and do not observe state directly.
-        Instead, they operate through the <em>Conductor</em>, responding to
-        execution <em>attempt</em> messages and issuing votes that determine
-        whether a pipeline execution may proceed, be denied, or be replayed.
-      </p>
-
-      <p>
-        The flow highlights the role of the
-        <strong>VaultErrorService</strong> as the authoritative source of global
-        error state. When a global error is active, the service emits an error
-        signal that influences both interceptor gating and controller
-        arbitration. While the paired interceptor blocks new pipeline admission,
-        the Replay Global Error controller evaluates execution attempts
-        associated with the current trace and issues denial votes while the
-        error remains active.
-      </p>
-
-      <p>
-        The <strong>Decision Engine</strong> acts as the centralized arbitration
-        point, collecting controller votes and applying them deterministically.
-        When the global error state changes—such as when
-        <code>VaultErrorService.clear()</code> is invoked—the controller may
-        request a revote for previously denied attempts, allowing execution to
-        resume under the updated conditions.
-      </p>
-
-      <p>
-        This design cleanly separates responsibilities: the VaultErrorService
-        signals global error lifecycle events, the interceptor controls pipeline
-        admission, and the controller governs execution replay and retry
-        behavior through formal arbitration rather than side effects or implicit
-        retries.
-      </p>
-
-      <sdux-diagram
-        image="diagrams/6.0/6.1-replay-global-error-controller-flow.svg"
-        [tooltip]="'Replay Global Error Controller Flow'">
-      </sdux-diagram>
-    </div>
-  </section>
-
-  <section class="diagram-section" id="stepwise-controller-flow">
-    <div class="section-title-navigation">
-      <div class="section-title">Stepwise Controller Flow</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="top">↑ top</a>
-      </div>
-    </div>
-
-    <div class="section-body">
-      <p>
-        This diagram illustrates how the
-        <strong>Stepwise Controller</strong> coordinates policy-driven execution
-        control when a Stepwise behavior emits a decision request. Unlike
-        standard pipeline stages, Stepwise does not resolve synchronously.
-        Instead, execution is intentionally paused while awaiting an explicit
-        external decision.
-      </p>
-
-      <p>
-        When a Stepwise behavior is invoked at the Filter, Reducer, or Resolve
-        stage, it emits a decision request rather than returning a value. The
-        pipeline immediately suspends execution for the current trace and
-        forwards the request to the Stepwise Controller through the Stepwise
-        bus.
-      </p>
-
-      <p>
-        The Stepwise Controller serializes all incoming requests using a FIFO
-        queue, ensuring that only one Stepwise decision is active at any given
-        time. This guarantees deterministic execution order and prevents
-        overlapping or ambiguous policy resolution when multiple Stepwise
-        behaviors are configured.
-      </p>
-
-      <p>
-        While awaiting a response, no downstream pipeline stages execute, no
-        snapshots are committed, and no additional updates are admitted for the
-        affected execution trace. The pipeline remains fully paused until an
-        external system — such as user input, developer tooling, or an automated
-        policy engine — emits a corresponding decision.
-      </p>
-
-      <p>
-        Once a response is received, the controller translates it into a
-        canonical pipeline control signal and resumes execution according to the
-        decision:
-      </p>
-
-      <ul>
-        <li>
-          <strong>continue</strong> — resume pipeline execution at the
-          appropriate downstream stage
-        </li>
-        <li>
-          <strong>block</strong> — suppress the current update with no state
-          change
-        </li>
-        <li>
-          <strong>clear</strong> — clear existing state and terminate the
-          current update
-        </li>
-      </ul>
-
-      <p>
-        After resolving the active request, the controller advances its internal
-        queue and processes the next pending Stepwise request, if any. This
-        design ensures that policy enforcement remains explicit, serialized, and
-        fully observable without compromising pipeline safety or determinism.
-      </p>
-
-      <sdux-diagram
-        image="diagrams/3.8/3.8.1-stepwise-controller-flow.svg"
-        [tooltip]="'Stepwise Controller Flow'" />
-    </div>
-  </section>
-
-  <section class="diagram-section" id="tab-sync-controller-flow">
-    <div class="section-title-navigation">
-      <div class="section-title">Tab Sync Controller Flow</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="top">↑ top</a>
-      </div>
-    </div>
-
-    <div class="section-body">
-      <p>
-        This diagram focuses on how the Tab Sync Controller coordinates tab
-        synchronization across multiple pipeline stages, ensuring consistent
-        state updates and preventing race conditions.
-      </p>
-
-      <sdux-diagram
-        image="diagrams/9.0/9.5-tab-sync-controller-flow.svg"
-        [tooltip]="'Tab Sync Controller and Behavior Flow'"></sdux-diagram>
-    </div>
-  </section>
-
-  <section class="diagram-section" id="throttle-controller-flow">
-    <div class="section-title-navigation">
-      <div class="section-title">Throttle Controller Flow</div>
-      <div class="section-top-link">
-        <a [routerLink]="[]" fragment="top">↑ top</a>
-      </div>
-    </div>
-
-    <div class="section-body">
-      <p>
-        This diagram focuses on how the throttle controller aborts and allows
-        values entering and traversing the pipeline based on the
-        millisecondThrottle option.
-      </p>
-
-      <sdux-diagram
-        image="diagrams/9.0/9.2-throttle-controller-flow.svg"
-        [tooltip]="'Throttle Controller Flow'"></sdux-diagram>
     </div>
   </section>
 
