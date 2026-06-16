@@ -160,6 +160,31 @@
     </div>
   </section>
 
+  <section class="diagram-section" id="conductor-queue-flow">
+    <div class="section-title-navigation">
+      <div class="section-title">Conductor Queue Flow</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        This diagram illustrates the conductor queue's FIFO processing model. It
+        captures how incoming state mutations are enqueued, how the head of
+        queue is dispatched to the decision engine for controller evaluation,
+        and how the arbitrator's outcome determines whether the attempt proceeds
+        to the orchestrator, is aborted, or pauses the queue. Microtask-based
+        finalization ensures deterministic queue advancement after each attempt
+        completes.
+      </p>
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2.2-conductor-queue-flow.svg"
+        [tooltip]="'Conductor Queue FIFO Processing Flow'" />
+    </div>
+  </section>
+
   <!-- ====================================================== -->
   <!-- EXECUTION FLOW -->
   <!-- ====================================================== -->

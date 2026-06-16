@@ -72,6 +72,7 @@ export class OverflowPillDirective implements OnInit, OnDestroy {
   #wrapHost(): void {
     const host = this.#el.nativeElement;
     const parent = host.parentNode;
+    /* istanbul ignore if -- defensive: host always has a parent in Angular templates */
     if (!parent) return;
 
     this.#wrapper = this.#renderer.createElement('div');
@@ -139,6 +140,7 @@ export class OverflowPillDirective implements OnInit, OnDestroy {
 
   /** Starts a ResizeObserver on the host element to re-evaluate overflow on dimension changes. */
   #observeResize(): void {
+    /* istanbul ignore if -- defensive: ResizeObserver is available in all supported browsers */
     if (typeof ResizeObserver === 'undefined') return;
 
     this.#observer = new ResizeObserver(() => {
@@ -150,6 +152,7 @@ export class OverflowPillDirective implements OnInit, OnDestroy {
 
   /** Starts a MutationObserver on the host to re-evaluate overflow when children are added or removed. */
   #observeChildChanges(): void {
+    /* istanbul ignore if -- defensive: MutationObserver is available in all supported browsers */
     if (typeof MutationObserver === 'undefined') return;
 
     this.#mutationObserver = new MutationObserver(() => {
@@ -186,6 +189,7 @@ export class OverflowPillDirective implements OnInit, OnDestroy {
    */
   #setVisible(visible: boolean): void {
     const fade = this.#pill?.parentElement;
+    /* istanbul ignore if -- defensive: fade is always present when pill exists */
     if (!fade) return;
 
     if (visible) {

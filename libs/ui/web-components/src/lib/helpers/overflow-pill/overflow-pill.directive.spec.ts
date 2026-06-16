@@ -32,9 +32,30 @@ class OverflowHostComponent {}
 })
 class NoOverflowHostComponent {}
 
+function mockOverflow(
+  host: HTMLElement,
+  scrollHeight: number,
+  clientHeight: number,
+  scrollTop = 0
+): void {
+  Object.defineProperty(host, 'scrollHeight', {
+    get: () => scrollHeight,
+    configurable: true
+  });
+  Object.defineProperty(host, 'clientHeight', {
+    get: () => clientHeight,
+    configurable: true
+  });
+  Object.defineProperty(host, 'scrollTop', {
+    get: () => scrollTop,
+    configurable: true
+  });
+}
+
 describe('Directive: OverflowPill', () => {
   describe('with overflow', () => {
     let fixture: ComponentFixture<OverflowHostComponent>;
+    let host: HTMLElement;
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
@@ -43,13 +64,17 @@ describe('Directive: OverflowPill', () => {
 
       fixture = TestBed.createComponent(OverflowHostComponent);
       fixture.detectChanges();
+
+      host = fixture.nativeElement.querySelector('.test-scroll');
+      mockOverflow(host, 200, 50);
+
+      host.dispatchEvent(new Event('scroll'));
     });
 
     it('should wrap the host element in a position-relative wrapper', () => {
-      const host = fixture.nativeElement.querySelector('.test-scroll');
       const wrapper = host.parentElement;
       expect(wrapper).toBeTruthy();
-      expect(wrapper.style.position).toBe('relative');
+      expect(wrapper!.style.position).toBe('relative');
     });
 
     it('should create the pill element', () => {
@@ -76,17 +101,23 @@ describe('Directive: OverflowPill', () => {
       expect(fade.style.display).not.toBe('none');
     });
 
+    it('should hide the pill when scrolled to the bottom', () => {
+      mockOverflow(host, 200, 50, 150);
+      host.dispatchEvent(new Event('scroll'));
+
+      const fade = fixture.nativeElement.querySelector('.sdux-overflow-fade');
+      expect(fade.style.display).toBe('none');
+    });
+
     it('should scroll the host when the pill is clicked', () => {
-      const host = fixture.nativeElement.querySelector('.test-scroll');
-      const scrollBySpy = jest.spyOn(host, 'scrollBy');
+      const scrollBySpy = spyOn(host, 'scrollBy').and.stub();
 
       const pill = fixture.nativeElement.querySelector('.sdux-overflow-pill');
       pill.click();
 
-      expect(scrollBySpy).toHaveBeenCalledWith({
-        top: 100,
-        behavior: 'smooth'
-      });
+      expect(scrollBySpy).toHaveBeenCalledWith(
+        jasmine.objectContaining({ top: 100, behavior: 'smooth' })
+      );
     });
   });
 
@@ -122,6 +153,36 @@ describe('Directive: OverflowPill', () => {
 
     it('should not throw on destroy', () => {
       expect(() => fixture.destroy()).not.toThrow();
+    });
+  });
+
+  describe('dynamic content', () => {
+    let fixture: ComponentFixture<OverflowHostComponent>;
+    let host: HTMLElement;
+
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [OverflowHostComponent]
+      }).compileComponents();
+
+      fixture = TestBed.createComponent(OverflowHostComponent);
+      fixture.detectChanges();
+
+      host = fixture.nativeElement.querySelector('.test-scroll');
+    });
+
+    it('should re-evaluate overflow when child content changes', (done) => {
+      mockOverflow(host, 200, 50);
+
+      const child = document.createElement('div');
+      child.textContent = 'added content';
+      host.appendChild(child);
+
+      setTimeout(() => {
+        const fade = fixture.nativeElement.querySelector('.sdux-overflow-fade');
+        expect(fade.style.display).not.toBe('none');
+        done();
+      }, 50);
     });
   });
 });

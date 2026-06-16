@@ -14,7 +14,7 @@ export const RELATED_TOPICS_EXECUTION_GUARANTEE_REGISTRY: RelatedTopicCategorySh
     globalCross: ['behavior'],
 
     // No cross-category inclusion
-    cross: [],
+    cross: ['controllers'],
 
     items: [
       {

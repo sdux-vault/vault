@@ -327,32 +327,6 @@
     }
   }
 
-  .code-inline {
-    display: block;
-    background: var(--sdux-surface-elevated);
-    color: var(--sdux-text-black); // readable in dark mode too
-    padding: 12px;
-    border-radius: var(--sdux-border-radius);
-    font-family: monospace;
-    font-size: 13px;
-
-    white-space: pre;
-    overflow-x: auto;
-    overflow-y: hidden;
-    width: 100%;
-
-    /* Smooth scroll bar */
-    scrollbar-width: thin;
-
-    .language-ts {
-      color: var(--sdux-text-black); // readable in dark mode too
-    }
-
-    &:hover {
-      @include global.sdux-elevate(active);
-    }
-  }
-
   /* Mobile tweaks */
   @media (max-width: global.$breakpoint-md) {
     padding: global.$spacing-md;

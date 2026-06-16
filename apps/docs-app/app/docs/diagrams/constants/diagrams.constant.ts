@@ -12,6 +12,12 @@ export const DIAGRAM_LINKS: DiagramLinkShape[] = [
     type: 'flow'
   },
   {
+    fragment: 'conductor-queue-flow',
+    display: 'Conductor Queue Flow',
+    sort: 'Conductor Queue Flow',
+    type: 'flow'
+  },
+  {
     fragment: 'simplified-flow',
     display: '(Simplified) Flow',
     sort: 'Flow (Simplified)',

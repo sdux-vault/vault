@@ -1,11 +1,20 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {
+  ExampleViewerSourceComponent,
+  ExampleViewerTabComponent
+} from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-redux-broke-my-trust',
   standalone: true,
-  imports: [BlogLayoutComponent, RouterModule],
+  imports: [
+    BlogLayoutComponent,
+    RouterModule,
+    ExampleViewerSourceComponent,
+    ExampleViewerTabComponent
+  ],
   template: `
     <sdux-blog-layout
       title="I Built a State Engine Because Redux Broke My Trust"
@@ -270,14 +279,20 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             waits. Three steps, readable on sight.
           </p>
 
-          <div class="code-inline">
-            <code class="language-ts">
-              // act &rarr; settle &rarr; assert it('updates cart', async ()
-              =&gt; &#123; cartCell.mergeState(&#123; value: mockItems &#125;);
-              await cartCellSettled(&lt;cart-cell-key&gt;);
-              expect(cartCell.state.total).toBe(42); &#125;);
-            </code>
-          </div>
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="false">
+            <sdux-example-viewer-tab
+              [label]="'Scoped Pipeline with Behaviors and Controllers'">
+              <pre
+                class="code-inline"><code class="language-ts">// act &rarr; settle &rarr; assert
+it('updates cart', async () =&gt; &#123;
+  cartCell.mergeState(&#123; value: mockItems &#125;);
+  await cartCellSettled(&lt;cart-cell-key&gt;);
+  expect(cartCell.state.total).toBe(42);
+&#125;);</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
 
           <p>
             The framework story needed to be real — not "we support React too"

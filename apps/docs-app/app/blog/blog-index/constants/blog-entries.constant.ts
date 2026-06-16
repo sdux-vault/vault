@@ -73,5 +73,11 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     title: 'I Built a State Engine Because Redux Broke My Trust',
     date: '2026-06-16',
     readingTime: 8
+  },
+  {
+    slug: 'featurecells-changed-how-i-think-about-state-ownership',
+    title: 'FeatureCells™ Changed How I Think About State Ownership',
+    date: '2026-06-17',
+    readingTime: 5
   }
 ];

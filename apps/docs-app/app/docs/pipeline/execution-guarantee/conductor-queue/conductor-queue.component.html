@@ -63,6 +63,11 @@
           <li>
             <a [routerLink]="[]" fragment="queue-lifecycle">Queue Lifecycle</a>
           </li>
+          <li>
+            <a [routerLink]="[]" fragment="controller-interaction"
+              >Controller Interaction</a
+            >
+          </li>
         </ul>
       </div>
     </div>
@@ -76,7 +81,7 @@
     <div class="section-body">
       <!-- TODO: Replace with actual diagram asset path once created -->
       <sdux-diagram
-        image="diagrams/2.2/2.2-conductor-queue-flow.svg"
+        image="diagrams/2.2/2.2.2-conductor-queue-flow.svg"
         [tooltip]="'Conductor Queue FIFO Processing Flow'" />
     </div>
   </section>
@@ -359,6 +364,127 @@
         When a <sdux-feature-cell /> is destroyed, the queue is drained, the
         processing flag is cleared, and no further attempts are accepted.
       </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONTROLLER INTERACTION -->
+  <!-- ====================================================== -->
+  <section class="section" id="controller-interaction">
+    <div class="section-title-navigation">
+      <div class="section-title">Controller Interaction</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        When the queue releases an attempt for processing, the conductor does
+        not execute the pipeline immediately. It first delegates the attempt to
+        the <strong>decision engine</strong>, which dispatches an
+        <i>attempt</i> message to every registered controller and collects their
+        votes.
+      </p>
+
+      <p>
+        Each controller returns a vote: <strong>abstain</strong>,
+        <strong>deny</strong>, or <strong>abort</strong>. The
+        <strong>arbitrator</strong> aggregates these votes using deterministic
+        priority rules to produce a single decision outcome.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="column-150">Vote</th>
+            <th class="column-auto">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Abstain</td>
+            <td>
+              the controller has no objection — the attempt may proceed to
+              pipeline execution.
+            </td>
+          </tr>
+          <tr>
+            <td>Deny</td>
+            <td>
+              the controller blocks the attempt — the attempt remains at the
+              head of the queue and is not shifted. The queue pauses until an
+              external event re-triggers processing.
+            </td>
+          </tr>
+          <tr>
+            <td>Abort</td>
+            <td>
+              the controller permanently rejects the attempt — the attempt is
+              finalized and removed from the queue without executing the
+              pipeline.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        The arbitrator resolves votes in descending priority:
+        <strong>abort</strong> overrides all other votes,
+        <strong>deny</strong> overrides abstain, and unanimous
+        <strong>abstain</strong> allows the attempt to proceed. If a controller
+        throws during evaluation, the arbitrator treats it as a deny.
+      </p>
+
+      <p>The conductor then acts on the resolved outcome:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="column-150">Outcome</th>
+            <th class="column-auto">Conductor action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Abstain</td>
+            <td>
+              the attempt proceeds to pipeline execution (orchestrator). On
+              completion, the conductor finalizes the attempt and advances the
+              queue.
+            </td>
+          </tr>
+          <tr>
+            <td>Abort</td>
+            <td>
+              the attempt is finalized via microtask and removed from the queue.
+              The pipeline does not execute.
+            </td>
+          </tr>
+          <tr>
+            <td>Deny</td>
+            <td>
+              the attempt stays at the head of the queue. The processing flag is
+              cleared, and the queue waits for an external event to re-process.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        After the pipeline completes (or fails), the decision engine sends
+        lifecycle notifications — <i>success</i>, <i>failure</i>, and
+        <i>finalize</i> — back through the controllers. These are observation
+        messages only and do not participate in arbitration.
+      </p>
+
+      <div class="callout callout-info">
+        <p>
+          Controllers never touch state directly. They vote on whether an
+          attempt should proceed, and the conductor enforces the outcome. This
+          separation ensures that the queue's ordering guarantees are never
+          bypassed by controller logic.
+        </p>
+      </div>
     </div>
   </section>
 

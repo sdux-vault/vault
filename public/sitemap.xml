@@ -36,6 +36,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/featurecells-changed-how-i-think-about-state-ownership</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/mutation-bugs-eliminated</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -47,6 +52,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/pipeline-anatomy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/redux-broke-my-trust</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -586,6 +596,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/execution-guarantee/conductor-queue</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/execution-guarantee/isolation</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/extensions</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -602,11 +622,6 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/extensions/licensing-and-monetization</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/pipeline/isolation</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

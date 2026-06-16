@@ -95,6 +95,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'I Built a State Engine Because Redux Broke My Trust — SDuX Vault Blog',
       description:
         'Learn why SDuX Vault was built from scratch — deterministic pipelines, ordered execution, and zero ambiguity in state management.'
+    },
+    {
+      link: '/blog/featurecells-changed-how-i-think-about-state-ownership',
+      display: 'FeatureCells™ Changed How I Think About State Ownership',
+      title:
+        'FeatureCells Changed How I Think About State Ownership — SDuX Vault Blog',
+      description:
+        'Explore how FeatureCells provide isolated typed state, scoped pipelines, and lifecycle-aware boundaries that scale with your team.'
     }
   ]
 };
