@@ -67,6 +67,29 @@ $splash-success: global.$sdux-success-base;
     z-index: 0;
   }
 
+  &-release-banner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: global.$spacing-lg;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1200px;
+    padding: global.$spacing-md global.$spacing-lg;
+    margin-bottom: global.$spacing-lg;
+    border: 2px solid $splash-primary;
+    border-radius: global.$border-radius-md;
+    background: color-mix(in srgb, $splash-primary 6%, $splash-bg);
+  }
+
+  &-release-text {
+    font-size: global.$font-size-xl;
+    font-weight: global.$font-weight-bold;
+    color: $splash-primary;
+  }
+
   &-split {
     position: relative;
     z-index: 1;
