@@ -6,33 +6,50 @@ BUILD_PATH="./builds"
 CONTAINER_NAME="sdux"
 
 clear;
-printf "\n\n🧹 Clean up builds...\n\n\n"
+printf "\n\n🧹 Clean up builds...\n"
 
-printf "📂 Available build files in $BUILD_PATH:\n\n"
-ls -lh $BUILD_PATH/$CONTAINER_NAME*.tar.gz 2>/dev/null || { printf "\n\n⚠️ No build files found.\n\n"; exit 0; }
+while true; do
+  # List build files
+  mapfile -t build_files < <(ls $BUILD_PATH/$CONTAINER_NAME*.tar.gz 2>/dev/null)
 
-printf "\n\n"
+  if [ ${#build_files[@]} -eq 0 ]; then
+    printf "\n\n⚠️ No build files found.\n\n"
+    exit 0
+  fi
 
-read -p "Enter the build version to delete (e.g. v1.3.3): " VERSION_TAG
-if [ -z "$VERSION_TAG" ]; then
-  printf "\n\n❌ Error: You must provide a version tag.\n\n"
-  exit 1
-fi
+  # Display numbered list
+  printf "\n\n📂 Available build files:\n\n"
+  for i in "${!build_files[@]}"; do
+    size=$(ls -lh "${build_files[$i]}" | awk '{print $5}')
+    date=$(ls -lh "${build_files[$i]}" | awk '{print $6, $7, $8}')
+    echo "$((i+1)). $(basename ${build_files[$i]}) ($size, $date)"
+  done
 
-TAR_FILE="$BUILD_PATH/$CONTAINER_NAME-$VERSION_TAG.tar.gz"
+  printf "\n\nEnter the number of the build to delete (x to exit): "
+  read selection
 
-if [ ! -f "$TAR_FILE" ]; then
-  printf "\n\n❌ Build file not found: $TAR_FILE\n\n"
-  exit 1
-fi
+  # Exit on x
+  if [[ "$selection" == "x" || "$selection" == "X" ]]; then
+    printf "\n\nGood-bye.\n\n"
+    exit 0
+  fi
 
-printf "\n⚠️  You are about to delete: $TAR_FILE\n\n"
-read -p "Are you sure? (Y/n): " CONFIRM
+  # Validate input
+  if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt ${#build_files[@]} ]; then
+    printf "\n\nInvalid selection.\n\n"
+    continue
+  fi
 
-if [[ "$CONFIRM" != "Y" && "$CONFIRM" != "y" ]]; then
-  printf "\n\nℹ️ Cancelled. No files were deleted.\n\n"
-  exit 0
-fi
+  TAR_FILE="${build_files[$((selection-1))]}"
 
-rm "$TAR_FILE"
-printf "\n\n✅ Deleted: $TAR_FILE\n\n"
+  printf "\n⚠️  You are about to delete: $TAR_FILE\n\n"
+  read -p "Are you sure? (Y/n): " CONFIRM
+
+  if [[ "$CONFIRM" != "Y" && "$CONFIRM" != "y" ]]; then
+    printf "\n\nℹ️ Cancelled.\n"
+    continue
+  fi
+
+  rm "$TAR_FILE"
+  printf "\n\n✅ Deleted: $TAR_FILE\n"
+done

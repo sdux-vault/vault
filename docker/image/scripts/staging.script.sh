@@ -91,3 +91,6 @@ else
   printf "❌ Failed to start staging container."
   exit 1
 fi
+
+# Return to main menu
+exec ./main.script.sh
