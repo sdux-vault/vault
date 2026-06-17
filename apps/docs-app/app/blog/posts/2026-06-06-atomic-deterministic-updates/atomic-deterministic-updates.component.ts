@@ -1,10 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-atomic-deterministic-updates',
   standalone: true,
-  imports: [BlogLayoutComponent],
+  imports: [BlogLayoutComponent, RouterModule],
   template: `
     <sdux-blog-layout
       title="Your State Updates Are Atomic and Deterministic"

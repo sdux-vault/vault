@@ -66,51 +66,36 @@
 
         <mat-divider></mat-divider>
 
-        <div class="menu-content-container">
+        <mat-expansion-panel class="nav-expansion">
+          <mat-expansion-panel-header>
+            <span class="nav-section-label">Execution Guarantees</span>
+          </mat-expansion-panel-header>
+
           <a
             mat-list-item
             routerLink="/docs/pipeline/execution-guarantee"
             routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
             (click)="closeSidenav()">
-            <div class="menu-content">Pipeline Execution Guarantees</div>
+            <div class="menu-content">Overview</div>
           </a>
-        </div>
 
-        <mat-divider></mat-divider>
-
-        <div class="menu-content-container">
           <a
             mat-list-item
-            routerLink="/docs/pipeline/isolation"
+            routerLink="/docs/pipeline/execution-guarantee/conductor-queue"
             routerLinkActive="active"
             (click)="closeSidenav()">
-            <div class="menu-content">Pipeline Isolation</div>
+            <span class="menu-content sub-item">Conductor Queue</span>
           </a>
-        </div>
 
-        <!-- <mat-divider></mat-divider>
-
-        <nav aria-labelledby="resolve-section-label">
-          <mat-expansion-panel class="nav-expansion">
-            <mat-expansion-panel-header>
-              <div class="nav-section-label">
-                <div class="menu-icon">
-                  <span class="menu-content">Auto-Vaulting</span>
-
-                  <sdux-image class="logo" image="brand/brand-icon.svg" height="20"></sdux-image>
-                </div>
-              </div>
-            </mat-expansion-panel-header>
-
-            <a mat-list-item routerLink="/docs/auto-vaulting/get" routerLinkActive="active" (click)="closeSidenav()">
-              <span class="menu-content">Auto-Vaulting Get</span>
-            </a>
-
-            <a mat-list-item routerLink="/docs/auto-vaulting/delete" routerLinkActive="active" (click)="closeSidenav()">
-              <span class="menu-content">Auto-Vaulting Delete</span>
-            </a>
-          </mat-expansion-panel>
-        </nav> -->
+          <a
+            mat-list-item
+            routerLink="/docs/pipeline/execution-guarantee/isolation"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <span class="menu-content sub-item">Pipeline Isolation</span>
+          </a>
+        </mat-expansion-panel>
 
         <mat-divider></mat-divider>
 

@@ -7,11 +7,11 @@
 
   .panel-column {
     width: calc(50% - 20px);
-    .panel-top {
-      width: 100%;
-    }
+    .panel-top,
     .panel-bottom {
       width: 100%;
+      max-height: 235px;
+      overflow-y: auto;
     }
   }
 }

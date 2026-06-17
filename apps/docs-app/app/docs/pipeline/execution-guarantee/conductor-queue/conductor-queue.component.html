@@ -1,0 +1,492 @@
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Conductor Queue</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>Conductor Queue</strong> serializes all pipeline attempts
+      through a FIFO queue, guaranteeing that every state transition processed
+      by a <sdux-feature-cell [tm]="true" /> executes one at a time, in the
+      exact order it was received.
+    </p>
+
+    <p>
+      The queue is the first stage in the policy layer. It establishes
+      deterministic ordering before any controller evaluation, decision engine
+      resolution, or pipeline computation begins.
+    </p>
+
+    <p>
+      This page describes the queue's responsibility boundaries, its
+      relationship to the conductor, and the guarantees it provides to all
+      downstream pipeline stages.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- TOC -->
+  <!-- ====================================================== -->
+  <section class="section" id="toc">
+    <div class="section-title">How to use this page</div>
+    <div class="section-body">
+      <div class="toc-container">
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="diagram">Diagram</a>
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="responsibility"
+              >Queue Responsibility</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="fifo-guarantee"
+              >FIFO Ordering Guarantee</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="single-active-attempt"
+              >Single Active Attempt</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="microtask-finalization"
+              >Microtask-Based Finalization</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="reentrancy-immunity"
+              >Reentrancy Immunity</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="queue-lifecycle">Queue Lifecycle</a>
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="controller-interaction"
+              >Controller Interaction</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAM -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="diagram">
+    <div class="section-title">Diagram</div>
+    <div class="section-body">
+      <!-- TODO: Replace with actual diagram asset path once created -->
+      <sdux-diagram
+        image="diagrams/2.2/2.2.2-conductor-queue-flow.svg"
+        [tooltip]="'Conductor Queue FIFO Processing Flow'" />
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- RESPONSIBILITY -->
+  <!-- ====================================================== -->
+  <section class="section" id="responsibility">
+    <div class="section-title-navigation">
+      <div class="section-title">Queue Responsibility</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        The queue is responsible for serializing pipeline attempts within a
+        single <sdux-feature-cell />. Every call to replace or merge state, and
+        every initialization request, enters the queue before any other pipeline
+        stage executes.
+      </p>
+
+      <p>
+        The queue does not evaluate, transform, or filter incoming attempts. Its
+        sole responsibility is ordering. It receives attempts, holds them in
+        sequence, and releases them one at a time for controller evaluation and
+        pipeline execution.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="column-200">Responsibility</th>
+            <th class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Serialization</td>
+            <td>
+              all pipeline attempts are enqueued in arrival order and processed
+              sequentially.
+            </td>
+          </tr>
+          <tr>
+            <td>Ordering</td>
+            <td>
+              attempts execute in strict FIFO order — no attempt may bypass or
+              preempt another.
+            </td>
+          </tr>
+          <tr>
+            <td>Isolation</td>
+            <td>
+              only one attempt is active at any time — subsequent attempts
+              remain queued until the active attempt finalizes.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- FIFO GUARANTEE -->
+  <!-- ====================================================== -->
+  <section class="section" id="fifo-guarantee">
+    <div class="section-title-navigation">
+      <div class="section-title">FIFO Ordering Guarantee</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        The queue enforces <strong>first-in, first-out</strong> ordering for all
+        pipeline attempts. When multiple state updates are requested against the
+        same <sdux-feature-cell />, the queue guarantees that they execute in
+        the exact order they were received.
+      </p>
+
+      <p>
+        This guarantee holds regardless of whether attempts are synchronous or
+        asynchronous, and regardless of whether a controller denies, abstains,
+        or allows the active attempt.
+      </p>
+
+      <p>
+        The FIFO guarantee eliminates race conditions, out-of-order state
+        commits, and timing-dependent behavior that arise in systems without
+        serialized execution.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SINGLE ACTIVE ATTEMPT -->
+  <!-- ====================================================== -->
+  <section class="section" id="single-active-attempt">
+    <div class="section-title-navigation">
+      <div class="section-title">Single Active Attempt</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        The queue permits exactly
+        <strong>one active pipeline attempt</strong> at a time. The active
+        attempt is always the head of the queue. All other queued attempts
+        remain pending until the active attempt completes its full lifecycle —
+        from controller evaluation through pipeline execution to finalization.
+      </p>
+
+      <p>
+        When the active attempt finalizes, it is removed from the queue, and the
+        next pending attempt (if any) becomes active. This progression is
+        automatic and deterministic.
+      </p>
+
+      <p>
+        The single-active-attempt constraint ensures that no two pipeline
+        executions overlap within a <sdux-feature-cell />. Every pipeline stage
+        — controllers, interceptors, resolve, merge, operators, filters,
+        reducers, state, and extensions — operates on a stable, uncontested
+        state foundation.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- MICROTASK FINALIZATION -->
+  <!-- ====================================================== -->
+  <section class="section" id="microtask-finalization">
+    <div class="section-title-navigation">
+      <div class="section-title">Microtask-Based Finalization</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        When the active attempt completes, finalization occurs inside a
+        microtask boundary. This ensures that the current pipeline cycle fully
+        drains before the queue advances to the next attempt.
+      </p>
+
+      <p>
+        The finalization sequence within the microtask follows a
+        <i>fixed</i> order:
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="column-50">Order</th>
+            <th class="column-200">Step</th>
+            <th class="column-auto">Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>notify finalize</td>
+            <td>
+              signals the decision engine that the active attempt has completed.
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>remove from queue</td>
+            <td>
+              the finalized attempt is removed from the head of the queue.
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>reset processing flag</td>
+            <td>
+              the queue is marked as idle, ready to accept the next attempt.
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>signal settled</td>
+            <td>emits a settled signal for devMode testing determinism.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>process next attempt</td>
+            <td>if pending attempts exist, the next one becomes active.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        This ordering is non-negotiable — no step may be reordered, skipped, or
+        split across multiple microtasks.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- REENTRANCY IMMUNITY -->
+  <!-- ====================================================== -->
+  <section class="section" id="reentrancy-immunity">
+    <div class="section-title-navigation">
+      <div class="section-title">Reentrancy Immunity</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        The queue's single-active-attempt constraint and microtask-based
+        finalization together provide
+        <strong>complete reentrancy immunity</strong>.
+      </p>
+
+      <p>
+        If a pipeline stage, controller, or observer triggers a new state update
+        during execution of the active attempt, that update is enqueued — not
+        executed immediately. It will be processed only after the current
+        attempt finalizes.
+      </p>
+
+      <p>
+        This eliminates an entire category of bugs: double-finalization,
+        out-of-order queue mutation, and re-entrant pipeline execution.
+      </p>
+
+      <div class="callout callout-info">
+        <p>
+          <strong>Tab sync is a real-world example.</strong> When multiple
+          browser tabs share the same <sdux-feature-cell />, the tab sync
+          controller coordinates initial state negotiation across tabs using a
+          BroadcastChannel. A newly opened tab sends a snapshot request to its
+          peers. If a peer responds with a snapshot before the negotiation
+          timeout, the controller aborts the initial attempt and commits the
+          cached snapshot instead. If no peer responds, the controller abstains
+          and the attempt proceeds normally.
+        </p>
+        <p>
+          During this negotiation window, any state updates triggered by the
+          application — or by the snapshot commit itself — are enqueued rather
+          than executed immediately. The queue guarantees that the negotiation
+          attempt finalizes completely before the next queued attempt begins.
+          Even the brief settling phase that follows a successful sync is
+          protected: attempts arriving during settling are aborted and
+          re-queued, preventing race conditions between the synced snapshot and
+          in-flight local state.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- QUEUE LIFECYCLE -->
+  <!-- ====================================================== -->
+  <section class="section" id="queue-lifecycle">
+    <div class="section-title-navigation">
+      <div class="section-title">Queue Lifecycle</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        The queue is created when the conductor is instantiated for a
+        <sdux-feature-cell />. It persists for the lifetime of that
+        <sdux-feature-cell />.
+      </p>
+
+      <p>
+        When a <sdux-feature-cell /> is reset, the queue is drained and the
+        processing flag is cleared. All pending attempts are discarded.
+      </p>
+
+      <p>
+        When a <sdux-feature-cell /> is destroyed, the queue is drained, the
+        processing flag is cleared, and no further attempts are accepted.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONTROLLER INTERACTION -->
+  <!-- ====================================================== -->
+  <section class="section" id="controller-interaction">
+    <div class="section-title-navigation">
+      <div class="section-title">Controller Interaction</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        When the queue releases an attempt for processing, the conductor does
+        not execute the pipeline immediately. It first delegates the attempt to
+        the <strong>decision engine</strong>, which dispatches an
+        <i>attempt</i> message to every registered controller and collects their
+        votes.
+      </p>
+
+      <p>
+        Each controller returns a vote: <strong>abstain</strong>,
+        <strong>deny</strong>, or <strong>abort</strong>. The
+        <strong>arbitrator</strong> aggregates these votes using deterministic
+        priority rules to produce a single decision outcome.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="column-150">Vote</th>
+            <th class="column-auto">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Abstain</td>
+            <td>
+              the controller has no objection — the attempt may proceed to
+              pipeline execution.
+            </td>
+          </tr>
+          <tr>
+            <td>Deny</td>
+            <td>
+              the controller blocks the attempt — the attempt remains at the
+              head of the queue and is not shifted. The queue pauses until an
+              external event re-triggers processing.
+            </td>
+          </tr>
+          <tr>
+            <td>Abort</td>
+            <td>
+              the controller permanently rejects the attempt — the attempt is
+              finalized and removed from the queue without executing the
+              pipeline.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        The arbitrator resolves votes in descending priority:
+        <strong>abort</strong> overrides all other votes,
+        <strong>deny</strong> overrides abstain, and unanimous
+        <strong>abstain</strong> allows the attempt to proceed. If a controller
+        throws during evaluation, the arbitrator treats it as a deny.
+      </p>
+
+      <p>The conductor then acts on the resolved outcome:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="column-150">Outcome</th>
+            <th class="column-auto">Conductor action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Abstain</td>
+            <td>
+              the attempt proceeds to pipeline execution (orchestrator). On
+              completion, the conductor finalizes the attempt and advances the
+              queue.
+            </td>
+          </tr>
+          <tr>
+            <td>Abort</td>
+            <td>
+              the attempt is finalized via microtask and removed from the queue.
+              The pipeline does not execute.
+            </td>
+          </tr>
+          <tr>
+            <td>Deny</td>
+            <td>
+              the attempt stays at the head of the queue. The processing flag is
+              cleared, and the queue waits for an external event to re-process.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        After the pipeline completes (or fails), the decision engine sends
+        lifecycle notifications — <i>success</i>, <i>failure</i>, and
+        <i>finalize</i> — back through the controllers. These are observation
+        messages only and do not participate in arbitration.
+      </p>
+
+      <div class="callout callout-info">
+        <p>
+          Controllers never touch state directly. They vote on whether an
+          attempt should proceed, and the conductor enforces the outcome. This
+          separation ensures that the queue's ordering guarantees are never
+          bypassed by controller logic.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

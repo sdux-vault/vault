@@ -95,6 +95,25 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-12-tab-sync-state/tab-sync-state.component').then(
         (m) => m.BlogTabSyncStateComponent
       )
+  },
+  {
+    path: 'redux-broke-my-trust',
+    data: { category: 'blogs', type: 'redux-broke-my-trust' },
+    loadComponent: () =>
+      import('./posts/2026-06-16-redux-broke-my-trust/redux-broke-my-trust.component').then(
+        (m) => m.BlogReduxBrokeMyTrustComponent
+      )
+  },
+  {
+    path: 'featurecells-changed-how-i-think-about-state-ownership',
+    data: {
+      category: 'blogs',
+      type: 'featurecells-changed-how-i-think-about-state-ownership'
+    },
+    loadComponent: () =>
+      import('./posts/2026-06-17-featurecells-changed-how-i-think-about-state-ownership/featurecells-changed-how-i-think-about-state-ownership.component').then(
+        (m) => m.BlogFeaturecellsChangedHowIThinkAboutStateOwnershipComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

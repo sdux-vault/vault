@@ -251,14 +251,6 @@ export const routes: Routes = [
             ]
           },
           {
-            path: 'isolation',
-            data: { category: 'execution-guarantee' },
-            loadComponent: () =>
-              import('./docs/pipeline/isolation/pipeline-isolation.component').then(
-                (m) => m.PipelineIsolationComponent
-              )
-          },
-          {
             path: 'execution-guarantee',
             data: { category: 'execution-guarantee' },
             children: [
@@ -267,6 +259,20 @@ export const routes: Routes = [
                 loadComponent: () =>
                   import('./docs/pipeline/execution-guarantee/execution-guarantee.pipeline.component').then(
                     (m) => m.PipelineExecutionGuaranteeComponent
+                  )
+              },
+              {
+                path: 'conductor-queue',
+                loadComponent: () =>
+                  import('./docs/pipeline/execution-guarantee/conductor-queue/conductor-queue.component').then(
+                    (m) => m.ConductorQueueComponent
+                  )
+              },
+              {
+                path: 'isolation',
+                loadComponent: () =>
+                  import('./docs/pipeline/execution-guarantee/isolation/pipeline-isolation.component').then(
+                    (m) => m.PipelineIsolationComponent
                   )
               }
             ]

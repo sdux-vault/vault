@@ -1,0 +1,32 @@
+@use 'global' as global;
+
+.sdux-overflow-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding-bottom: global.$spacing-xs;
+  pointer-events: none;
+}
+
+.sdux-overflow-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: global.$spacing-xs;
+  padding: global.$spacing-xs global.$spacing-md;
+  font-size: global.$font-size-xs;
+  color: var(--sdux-text-primary);
+  background: color-mix(in srgb, var(--sdux-surface) 95%, transparent);
+  border: 1px solid var(--sdux-surface-outline);
+  border-radius: global.$border-radius-lg;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.sdux-overflow-chevron {
+  font-size: 16px;
+  line-height: 1;
+}

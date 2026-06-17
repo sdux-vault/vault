@@ -46,3 +46,78 @@
   line-height: 0;
   margin-left: global.$spacing-xxs;
 }
+
+pre.pre-wrapper {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  color: var(--sdux-text-black);
+  overflow: auto;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  scrollbar-gutter: stable;
+
+  code {
+    width: 100%;
+
+    display: flex;
+
+    color: var(--sdux-text-black);
+
+    font-family: 'JetBrains Mono', monospace;
+    font-size: global.$font-size-sm;
+    line-height: global.$line-height;
+
+    border-radius: var(--sdux-border-radius);
+    white-space: pre;
+    overflow: scroll;
+
+    tab-size: 2;
+    text-align: left;
+
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: global.$sdux-shadow-base;
+    }
+  }
+}
+
+.code {
+  background: var(--sdux-surface-elevated);
+  color: var(--sdux-text-black);
+  padding: global.$spacing-xs global.$spacing-sm;
+  border-radius: global.$border-radius-xs;
+  font-family: monospace;
+  font-size: global.$font-size-xs;
+}
+
+.code-inline {
+  display: block;
+  background: var(--sdux-surface-elevated);
+  color: var(--sdux-text-black); // readable in dark mode too
+  padding: 12px;
+  border-radius: var(--sdux-border-radius);
+  font-family: monospace;
+  font-size: 13px;
+
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+
+  /* Smooth scroll bar */
+  scrollbar-width: thin;
+
+  .language-ts {
+    color: var(--sdux-text-black); // readable in dark mode too
+  }
+
+  &:hover {
+    @include global.sdux-elevate(active);
+  }
+}

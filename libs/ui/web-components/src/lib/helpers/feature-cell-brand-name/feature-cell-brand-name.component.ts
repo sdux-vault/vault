@@ -7,14 +7,12 @@ import { SDUX_FEATURE_CELL_BRAND_NAME } from '../../tokens/feature-cell-brand-na
   standalone: true,
   template: `
     @if (tm()) {
-      <span class="feature-cell-brand-name">
-        {{ featureCell
-        }}<span class="trademark" aria-hidden="true">&trade;</span>
-      </span>
+      <span class="feature-cell-brand-name"
+        >{{ featureCell
+        }}<span class="trademark" aria-hidden="true">&trade;</span></span
+      >
     } @else {
-      <span class="feature-cell-brand-name">
-        {{ featureCell }}
-      </span>
+      <span class="feature-cell-brand-name">{{ featureCell }}</span>
     }
   `,
   styles: `

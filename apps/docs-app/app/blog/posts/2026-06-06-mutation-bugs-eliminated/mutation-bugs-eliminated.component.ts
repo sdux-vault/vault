@@ -1,10 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-mutation-bugs-eliminated',
   standalone: true,
-  imports: [BlogLayoutComponent],
+  imports: [BlogLayoutComponent, RouterModule],
   template: `
     <sdux-blog-layout
       title="Mutation Bugs? Eliminated by Architecture"
@@ -226,7 +227,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             Read the full
-            <a routerLink="/docs/pipeline/isolation"
+            <a routerLink="/docs/pipeline/execution-guarantee/isolation"
               >Pipeline Isolation documentation</a
             >
             to see the complete isolation behavior matrix and understand exactly

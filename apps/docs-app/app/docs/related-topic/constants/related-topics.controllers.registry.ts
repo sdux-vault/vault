@@ -57,6 +57,13 @@ export const RELATED_TOPICS_CONTROLLERS_REGISTRY: RelatedTopicCategoryShape = {
         'Replay Global Error Controller in SDuX Vault — Error Recovery Replay',
       description:
         'Replay failed pipeline executions after global error recovery using withReplayGlobalErrorController in SDuX Vault.'
+    },
+    {
+      link: '/docs/pipeline/execution-guarantee/conductor-queue',
+      display: 'Conductor Queue',
+      title: 'Conductor Queue — SDuX Vault Pipeline Serialization',
+      description:
+        'Learn how the Conductor Queue serializes pipeline attempts through a FIFO queue for deterministic execution ordering.'
     }
   ]
 };
