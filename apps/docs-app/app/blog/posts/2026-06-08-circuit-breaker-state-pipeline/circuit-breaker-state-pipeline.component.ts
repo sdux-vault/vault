@@ -1,12 +1,18 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
 import { DiagramComponent } from '../../../../../../libs/ui/web-components/src/public-api';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-circuit-breaker-state-pipeline',
   standalone: true,
-  imports: [BlogLayoutComponent, DiagramComponent, RouterModule],
+  imports: [
+    BlogLayoutComponent,
+    DiagramComponent,
+    RouterModule,
+    VaultBrandNameComponent
+  ],
   template: `
     <sdux-blog-layout
       title="Circuit Breaker Pattern, Built Into Your State Pipeline"
@@ -17,9 +23,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <p class="lead">
           Every backend engineer knows the circuit breaker pattern: after N
           failures, stop trying. But frontend state management? Most libraries
-          let you crash-loop forever. SDuX Vault&#8482; brings deterministic
-          failure termination to your state pipeline with the Max Failures
-          controller.
+          let you crash-loop forever.
+          <sdux-vault-brand-name [tm]="true" /> brings deterministic failure
+          termination to your state pipeline with the Max Failures controller.
         </p>
       </header>
 
@@ -53,9 +59,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             The Max Failures controller operates within the Policy stage of the
-            SDuX Vault pipeline. It responds exclusively to failure events — it
-            does not observe, derive, or modify state values, and it does not
-            participate in normal attempt admission.
+            <sdux-vault-brand-name /> pipeline. It responds exclusively to
+            failure events — it does not observe, derive, or modify state
+            values, and it does not participate in normal attempt admission.
           </p>
           <p>
             Each execution trace is evaluated independently. For every failure

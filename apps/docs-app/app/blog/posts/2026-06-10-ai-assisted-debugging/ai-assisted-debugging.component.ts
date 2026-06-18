@@ -1,11 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-ai-assisted-debugging',
   standalone: true,
-  imports: [BlogLayoutComponent, RouterModule],
+  imports: [BlogLayoutComponent, RouterModule, VaultBrandNameComponent],
   template: `
     <sdux-blog-layout
       title="AI-Assisted Debugging Reports"
@@ -15,10 +16,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           Most frontend debugging is manual: console.log, reproduce, guess,
-          repeat. SDuX Vault&#8482; includes a built-in runtime debugger that
-          captures deterministic execution traces of your state pipeline — and
-          an AI Assist feature that turns those traces into structured
-          diagnostic reports.
+          repeat. <sdux-vault-brand-name [tm]="true" /> includes a built-in
+          runtime debugger that captures deterministic execution traces of your
+          state pipeline — and an AI Assist feature that turns those traces into
+          structured diagnostic reports.
         </p>
       </header>
 
@@ -39,10 +40,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             error-prone, and scales poorly as pipeline complexity grows.
           </p>
           <p>
-            SDuX Vault takes a different approach. Instead of asking you to
-            instrument your code manually, it records everything the pipeline
-            does — automatically, passively, and without altering runtime
-            behavior.
+            <sdux-vault-brand-name /> takes a different approach. Instead of
+            asking you to instrument your code manually, it records everything
+            the pipeline does — automatically, passively, and without altering
+            runtime behavior.
           </p>
         </div>
       </section>

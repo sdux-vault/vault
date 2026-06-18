@@ -2,7 +2,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -11,9 +12,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [
     BlogLayoutComponent,
-    RouterModule,
     ExampleViewerSourceComponent,
-    ExampleViewerTabComponent
+    ExampleViewerTabComponent,
+    RouterModule,
+    VaultBrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -27,8 +29,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           pipeline. After years of Redux boilerplate that everyone accepted as
           normal, action creators you were told to "write once and copy-paste,"
           and reducer sprawl that buried intent under ceremony — I stopped
-          tolerating it and started building something clean. SDuX Vault&#8482;
-          1.0.0 is the result.
+          tolerating it and started building something clean.
+          <sdux-vault-brand-name [tm]="true" /> 1.0.0 is the result.
         </p>
       </header>
 
@@ -96,11 +98,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </p>
           <p>
             That distinction mattered to me because I wanted code I could trust
-            on sight. In SDuX Vault, every state transition flows through a
-            single, ordered execution pipeline. No middleware chain running in
-            whatever order it registered. No action dispatch intercepted by an
-            effect you forgot existed. No selector returning stale data because
-            something changed underneath it.
+            on sight. In <sdux-vault-brand-name />, every state transition flows
+            through a single, ordered execution pipeline. No middleware chain
+            running in whatever order it registered. No action dispatch
+            intercepted by an effect you forgot existed. No selector returning
+            stale data because something changed underneath it.
           </p>
           <p>
             One pipeline. One direction. One result. You read it, you know it.
@@ -121,8 +123,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             eliminates the need for all that boilerplate.
           </p>
           <p>
-            That's why the pipeline isn't a feature of SDuX Vault — it
-            <em>is</em> SDuX Vault. Every state transition flows through nine
+            That's why the pipeline isn't a feature of
+            <sdux-vault-brand-name /> — it <em>is</em>
+            <sdux-vault-brand-name />. Every state transition flows through nine
             ordered stages. Each stage has a single responsibility. No stage can
             skip ahead, run out of order, or silently fail. You don't need
             action creators to describe intent — the pipeline stage <em>is</em>
@@ -175,9 +178,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             none of it has a guaranteed execution order.
           </p>
           <p>
-            I built SDuX Vault to replace that sprawl with nine explicit stages.
-            No middleware to wire. No action types to declare. Each stage has a
-            defined role:
+            I built <sdux-vault-brand-name /> to replace that sprawl with nine
+            explicit stages. No middleware to wire. No action types to declare.
+            Each stage has a defined role:
           </p>
 
           <table>
@@ -308,10 +311,10 @@ it('updates cart', async () =&gt; &#123;
             anything. And not a single line of copy-paste boilerplate required.
           </p>
           <p>
-            I built SDuX Vault because I believe state management code should be
-            as clean and intentional as the rest of your application. 1.0.0 is
-            the moment it stops being my standard and starts being available as
-            yours.
+            I built <sdux-vault-brand-name /> because I believe state management
+            code should be as clean and intentional as the rest of your
+            application. 1.0.0 is the moment it stops being my standard and
+            starts being available as yours.
           </p>
 
           <div class="callout callout-info">

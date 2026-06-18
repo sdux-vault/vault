@@ -2,7 +2,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  FeatureCellBrandNameComponent,
+  VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -13,7 +15,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     RouterModule,
     ExampleViewerSourceComponent,
-    ExampleViewerTabComponent
+    ExampleViewerTabComponent,
+    FeatureCellBrandNameComponent,
+    VaultBrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -23,11 +27,12 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       readingTime="5">
       <header class="docs-header">
         <p class="lead">
-          Every state library I used before SDuX Vault&#8482; shared the same
-          fundamental assumption: state lives in a global store, and every
-          feature reaches into it. FeatureCells changed that assumption
-          entirely. One feature, one cell, one truth — and the problems that
-          come with shared-everything architectures simply disappear.
+          Every state library I used before
+          <sdux-vault-brand-name [tm]="true" /> shared the same fundamental
+          assumption: state lives in a global store, and every feature reaches
+          into it. <sdux-feature-cell />s changed that assumption entirely. One
+          feature, one cell, one truth — and the problems that come with
+          shared-everything architectures simply disappear.
         </p>
       </header>
 
@@ -63,10 +68,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             A
             <a href="/docs/references/functions/feature-cell">FeatureCell</a> in
-            SDuX Vault is an isolated unit of state ownership. Each cell
-            encapsulates its own typed state, its own pipeline, and its own
-            lifecycle boundary. No other cell can read or write another cell's
-            state directly.
+            <sdux-vault-brand-name /> is an isolated unit of state ownership.
+            Each cell encapsulates its own typed state, its own pipeline, and
+            its own lifecycle boundary. No other cell can read or write another
+            cell's state directly.
           </p>
           <sdux-example-viewer-source
             [displayTabs]="false"
@@ -157,9 +162,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         </div>
         <div class="section-body">
           <p>
-            FeatureCells are lifecycle-aware. They mount when their feature
-            activates and unmount when it deactivates — releasing memory,
-            subscriptions, and pipeline resources automatically.
+            <sdux-feature-cell />s are lifecycle-aware. They mount when their
+            feature activates and unmount when it deactivates — releasing
+            memory, subscriptions, and pipeline resources automatically.
           </p>
           <p>
             This solves the stale-state problem that plagues global stores. When
@@ -188,8 +193,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">What This Means for Your Team</div>
         <div class="section-body">
           <p>
-            FeatureCells map directly to team ownership. One team owns the cart
-            cell. Another owns the user profile cell. A third owns the
+            <sdux-feature-cell />s map directly to team ownership. One team owns
+            the cart cell. Another owns the user profile cell. A third owns the
             notification cell. Each team can evolve its state shape, add or
             remove behaviors, and refactor its pipeline without coordinating
             with anyone else.

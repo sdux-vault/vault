@@ -114,6 +114,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-17-featurecells-changed-how-i-think-about-state-ownership/featurecells-changed-how-i-think-about-state-ownership.component').then(
         (m) => m.BlogFeaturecellsChangedHowIThinkAboutStateOwnershipComponent
       )
+  },
+  {
+    path: 'one-runtime-every-framework-zero-dependencies',
+    data: {
+      category: 'blogs',
+      type: 'one-runtime-every-framework-zero-dependencies'
+    },
+    loadComponent: () =>
+      import('./posts/2026-06-18-one-runtime-every-framework-zero-dependencies/one-runtime-every-framework-zero-dependencies.component').then(
+        (m) => m.BlogOneRuntimeEveryFrameworkZeroDependenciesComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

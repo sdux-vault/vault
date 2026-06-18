@@ -1,9 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { RouterModule } from '@angular/router';
 import {
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -16,7 +17,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MatTab,
     MatTabGroup,
     ExampleViewerSourceComponent,
-    ExampleViewerTabComponent
+    ExampleViewerTabComponent,
+    VaultBrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -27,7 +29,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           Open a second browser tab. Your state is already there — no custom
-          code, no manual sync. SDuX Vault&#8482;'s Tab Sync Controller uses
+          code, no manual sync.
+          <sdux-vault-brand-name [tm]="true" />'s Tab Sync Controller uses
           BroadcastChannel and a localStorage registry to negotiate state across
           tabs automatically.
         </p>
@@ -60,11 +63,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">How Tab Sync Works</div>
         <div class="section-body">
           <p>
-            SDuX Vault solves this with two components that work together: the
-            Tab Sync Controller and the Tab Sync State Behavior. The controller
-            handles initial negotiation — figuring out whether peer tabs exist
-            and synchronizing state before the first pipeline execution
-            completes. The behavior handles ongoing broadcasting after
+            <sdux-vault-brand-name /> solves this with two components that work
+            together: the Tab Sync Controller and the Tab Sync State Behavior.
+            The controller handles initial negotiation — figuring out whether
+            peer tabs exist and synchronizing state before the first pipeline
+            execution completes. The behavior handles ongoing broadcasting after
             negotiation is done.
           </p>
           <p>

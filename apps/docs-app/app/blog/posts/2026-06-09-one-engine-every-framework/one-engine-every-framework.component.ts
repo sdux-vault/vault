@@ -1,9 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { RouterModule } from '@angular/router';
 import {
+  CatchPhraseComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  FeatureCellBrandNameComponent,
+  VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -12,11 +15,14 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [
     BlogLayoutComponent,
-    RouterModule,
+    CatchPhraseComponent,
+    ExampleViewerSourceComponent,
+    ExampleViewerTabComponent,
+    FeatureCellBrandNameComponent,
     MatTab,
     MatTabGroup,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent
+    RouterModule,
+    VaultBrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -27,9 +33,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           Your state management shouldn't be married to your component
-          framework. SDuX Vault&#8482; runs the same pipeline logic in Angular,
-          React, Vue, and Svelte. Framework adapters are thin wrappers &#8212;
-          they add ergonomics, not rules.
+          framework. <sdux-vault-brand-name [tm]="true" /> runs the same
+          pipeline logic in Angular, React, Vue, and Svelte. Framework adapters
+          are thin wrappers &#8212; they add ergonomics, not rules.
         </p>
       </header>
 
@@ -58,15 +64,18 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       </section>
 
       <section class="section">
-        <div class="section-title">How SDuX Vault Stays Framework-Agnostic</div>
+        <div class="section-title">
+          How <sdux-vault-brand-name /> Stays Framework-Agnostic
+        </div>
         <div class="section-body">
           <p>
-            SDuX Vault is a Plain TypeScript, Zero Magic framework. It does not
-            depend on reflection, runtime patching, framework lifecycles, or
-            hidden side effects. Every concept &#8212; FeatureCells, pipelines,
-            reducers, filters, interceptors, lifecycle signals, and immutable
-            state snapshots &#8212; is implemented as a language-level primitive
-            composed in TypeScript, not a framework abstraction.
+            <sdux-vault-brand-name /> is a <sdux-catch-phrase /> framework. It
+            does not depend on reflection, runtime patching, framework
+            lifecycles, or hidden side effects. Every concept &#8212;
+            <sdux-feature-cell />s, pipelines, reducers, filters, interceptors,
+            lifecycle signals, and immutable state snapshots &#8212; is
+            implemented as a language-level primitive composed in TypeScript,
+            not a framework abstraction.
           </p>
           <p>
             Any framework integration exists only as a thin adapter that
@@ -79,9 +88,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
           <div class="callout callout-info">
             <strong>Key takeaway:</strong> Frameworks change how you register,
-            consume, and wire FeatureCells &#8212; but they never change
-            ownership rules, deterministic execution, immutability guarantees,
-            pipeline semantics, or lifecycle meaning.
+            consume, and wire <sdux-feature-cell />s &#8212; but they never
+            change ownership rules, deterministic execution, immutability
+            guarantees, pipeline semantics, or lifecycle meaning.
           </div>
         </div>
       </section>
@@ -315,10 +324,10 @@ employeeCell.initialize();</code></pre>
           </p>
 
           <div class="callout callout-info">
-            <strong>Key takeaway:</strong> FeatureCells are not owned by
-            components. They are registered at application startup and consumed
-            by components as long-lived, shared state containers. This holds
-            true regardless of which framework renders your UI.
+            <strong>Key takeaway:</strong> <sdux-feature-cell />s are not owned
+            by components. They are registered at application startup and
+            consumed by components as long-lived, shared state containers. This
+            holds true regardless of which framework renders your UI.
           </div>
         </div>
       </section>
