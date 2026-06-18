@@ -79,5 +79,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     title: 'FeatureCells™ Changed How I Think About State Ownership',
     date: '2026-06-17',
     readingTime: 5
+  },
+  {
+    slug: 'one-runtime-every-framework-zero-dependencies',
+    title:
+      'SDuX Vault™ 1.0.0 — One Runtime, Every Framework, Zero Dependencies',
+    date: '2026-06-18',
+    readingTime: 5
   }
 ];

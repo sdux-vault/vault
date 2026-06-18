@@ -1,9 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { RouterModule } from '@angular/router';
 import {
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -16,7 +17,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MatTab,
     MatTabGroup,
     ExampleViewerSourceComponent,
-    ExampleViewerTabComponent
+    ExampleViewerTabComponent,
+    VaultBrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -26,11 +28,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       readingTime="4">
       <header class="docs-header">
         <p class="lead">
-          How many lines of test setup does your state management need? SDuX
-          Vault&#8482; reduces the entire testing pattern to three steps:
-          mutate, await, assert. It works identically across Karma, Jest,
-          Vitest, and Angular TestBed — no mocks, no ceremony, no
-          framework-specific test harnesses.
+          How many lines of test setup does your state management need?
+          <sdux-vault-brand-name [tm]="true" /> reduces the entire testing
+          pattern to three steps: mutate, await, assert. It works identically
+          across Karma, Jest, Vitest, and Angular TestBed — no mocks, no
+          ceremony, no framework-specific test harnesses.
         </p>
       </header>
 
@@ -63,10 +65,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">The Pattern: Mutate, Await, Assert</div>
         <div class="section-body">
           <p>
-            SDuX Vault&#8482; is engineered for deterministic execution. The
-            pipeline enforces strict serialization, non-re-entrancy, and
-            explicit settlement boundaries. That architecture produces a testing
-            model that is exactly three steps:
+            <sdux-vault-brand-name [tm]="true" /> is engineered for
+            deterministic execution. The pipeline enforces strict serialization,
+            non-re-entrancy, and explicit settlement boundaries. That
+            architecture produces a testing model that is exactly three steps:
           </p>
           <ol>
             <li>
@@ -101,10 +103,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
           <div class="callout callout-info">
             <strong>Key takeaway:</strong> The three-step pattern works because
-            SDuX Vault's execution model is deterministic. The serialized
-            conductor queue and explicit microtask finalization boundary mean
-            every state transition settles predictably — no timing hacks, no
-            repeated tick() calls, no guesswork.
+            <sdux-vault-brand-name />'s execution model is deterministic. The
+            serialized conductor queue and explicit microtask finalization
+            boundary mean every state transition settles predictably — no timing
+            hacks, no repeated tick() calls, no guesswork.
           </div>
         </div>
       </section>
@@ -374,8 +376,8 @@ describe('Employee FeatureCell', () =&gt; &#123;
         <div class="section-body">
           <p>
             The three-step pattern is not a shortcut or a convenience wrapper.
-            It works because SDuX Vault's execution model is architecturally
-            deterministic:
+            It works because <sdux-vault-brand-name />'s execution model is
+            architecturally deterministic:
           </p>
           <ul>
             <li>

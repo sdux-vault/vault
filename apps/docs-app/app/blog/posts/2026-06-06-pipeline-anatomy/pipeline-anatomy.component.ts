@@ -1,11 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-pipeline-anatomy',
   standalone: true,
-  imports: [BlogLayoutComponent, RouterModule],
+  imports: [BlogLayoutComponent, RouterModule, VaultBrandNameComponent],
   template: `
     <sdux-blog-layout
       title="Pipeline Anatomy — What Happens When You Update State"
@@ -15,11 +16,12 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           What actually happens when you call
-          <code>replaceState</code> or <code>mergeState</code> in SDuX Vault™?
-          The answer is not "the value gets written to a store." The answer is a
-          deterministic, multi-stage pipeline that resolves, filters, reduces,
-          and commits your state change — atomically, every time. This post
-          walks through that journey step by step.
+          <code>replaceState</code> or <code>mergeState</code> in
+          <sdux-vault-brand-name [tm]="true" />? The answer is not "the value
+          gets written to a store." The answer is a deterministic, multi-stage
+          pipeline that resolves, filters, reduces, and commits your state
+          change — atomically, every time. This post walks through that journey
+          step by step.
         </p>
       </header>
 
@@ -28,10 +30,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">A State Update's Journey</div>
         <div class="section-body">
           <p>
-            When you update state in SDuX Vault, your value enters a structured
-            pipeline. The pipeline is not a metaphor — it's a literal, ordered
-            sequence of stages that every state update passes through before it
-            becomes visible to your application.
+            When you update state in <sdux-vault-brand-name />, your value
+            enters a structured pipeline. The pipeline is not a metaphor — it's
+            a literal, ordered sequence of stages that every state update passes
+            through before it becomes visible to your application.
           </p>
 
           <table>
@@ -187,8 +189,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </ul>
           <p>
             Each one has a fixed position in the pipeline. You don't think about
-            ordering — SDuX Vault validates and inserts each Behavior into the
-            correct stage automatically.
+            ordering — <sdux-vault-brand-name /> validates and inserts each
+            Behavior into the correct stage automatically.
           </p>
         </div>
       </section>
@@ -257,9 +259,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             declaration is the controller array. Like Behaviors, Controllers are
             explicitly registered. If a Behavior requires a Controller for
-            coordination, both must be declared — SDuX Vault fails fast if a
-            dependency is missing, rather than silently executing with
-            incomplete authority.
+            coordination, both must be declared —
+            <sdux-vault-brand-name /> fails fast if a dependency is missing,
+            rather than silently executing with incomplete authority.
           </p>
 
           <div class="callout callout-info">
@@ -277,13 +279,16 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">The Execution Guarantee</div>
         <div class="section-body">
           <p>
-            This is where SDuX Vault fundamentally differs from other state
-            management systems. The pipeline doesn't just process your update —
-            it guarantees <em>how</em> that processing occurs.
+            This is where <sdux-vault-brand-name /> fundamentally differs from
+            other state management systems. The pipeline doesn't just process
+            your update — it guarantees <em>how</em> that processing occurs.
           </p>
 
           <h4>Compute First, Commit Later</h4>
-          <p>SDuX Vault executes state updates in two distinct phases:</p>
+          <p>
+            <sdux-vault-brand-name /> executes state updates in two distinct
+            phases:
+          </p>
           <ol>
             <li>
               <strong>Pipeline computation</strong> — Determines what the next
@@ -361,7 +366,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             happened.
           </p>
 
-          <h4>After (SDuX Vault Pipeline)</h4>
+          <h4>After (<sdux-vault-brand-name /> Pipeline)</h4>
           <p>
             A state update enters the pipeline. It passes through declared
             stages in deterministic order. Every Behavior has a fixed position.

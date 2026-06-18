@@ -1,11 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-controllers-dont-touch-your-data',
   standalone: true,
-  imports: [BlogLayoutComponent, RouterModule],
+  imports: [BlogLayoutComponent, RouterModule, VaultBrandNameComponent],
   template: `
     <sdux-blog-layout
       title="Controllers Don't Touch Your Data"
@@ -15,9 +16,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           In most state libraries, middleware can do anything — transform data,
-          block requests, retry, persist. SDuX Vault&#8482; enforces a strict
-          separation: Behaviors transform state, Controllers enforce policy.
-          They can never cross.
+          block requests, retry, persist.
+          <sdux-vault-brand-name [tm]="true" /> enforces a strict separation:
+          Behaviors transform state, Controllers enforce policy. They can never
+          cross.
         </p>
       </header>
 
@@ -25,11 +27,12 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">The Data Path vs the Policy Path</div>
         <div class="section-body">
           <p>
-            SDuX Vault splits pipeline execution into two distinct paths. The
-            data path is where Behaviors operate — they resolve, filter, reduce,
-            encrypt, and persist state values. The policy path is where
-            Controllers operate — they mediate, arbitrate, and finalize control
-            decisions that affect how pipeline execution proceeds.
+            <sdux-vault-brand-name /> splits pipeline execution into two
+            distinct paths. The data path is where Behaviors operate — they
+            resolve, filter, reduce, encrypt, and persist state values. The
+            policy path is where Controllers operate — they mediate, arbitrate,
+            and finalize control decisions that affect how pipeline execution
+            proceeds.
           </p>
           <p>
             A Controller cannot access the state value. A Behavior cannot block
@@ -94,11 +97,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             hard to test, hard to reason about, and impossible to reuse.
           </p>
           <p>
-            SDuX Vault's separation means you can test data transformations
-            without worrying about policy, and test policy decisions without
-            worrying about data shape. Controllers are authoritative,
-            centralized, deterministic, and safe — decisions are serialized,
-            validated, and finalized in one place.
+            <sdux-vault-brand-name />'s separation means you can test data
+            transformations without worrying about policy, and test policy
+            decisions without worrying about data shape. Controllers are
+            authoritative, centralized, deterministic, and safe — decisions are
+            serialized, validated, and finalized in one place.
           </p>
           <p>
             Data flows through Behaviors. Policy flows through Controllers. They
