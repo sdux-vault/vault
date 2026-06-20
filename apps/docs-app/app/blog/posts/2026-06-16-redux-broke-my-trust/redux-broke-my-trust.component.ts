@@ -30,7 +30,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           normal, action creators you were told to "write once and copy-paste,"
           and reducer sprawl that buried intent under ceremony — I stopped
           tolerating it and started building something clean.
-          <sdux-vault-brand-name [tm]="true" /> 1.0.0 is the result.
+          <sdux-vault-brand-name [tm]="true" /> 1.0 is the result.
         </p>
       </header>
 
@@ -260,12 +260,12 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       </section>
 
       <section class="section">
-        <div class="section-title">Why 1.0.0 Now</div>
+        <div class="section-title">Why 1.0 Now</div>
         <div class="section-body">
           <p>
-            Why did it take so long to ship 1.0.0? Because I refused to ship
-            until the code was as clean as I demanded it to be — not just the
-            library code, but the code
+            Why did it take so long to ship 1.0? Because I refused to ship until
+            the code was as clean as I demanded it to be — not just the library
+            code, but the code
             <em>you</em> write when you use it.
           </p>
           <p>
@@ -304,7 +304,7 @@ it('updates cart', async () =&gt; &#123;
             platform. Zero dependencies on any framework.
           </p>
           <p>
-            1.0.0 ships because all of those contracts are now proven. Not
+            1.0 ships because all of those contracts are now proven. Not
             promised — proven. Thousands of tests. Real production patterns. A
             Pipeline Builder that generates type-safe TypeScript from a visual
             interface. StackBlitz examples you can run without installing
@@ -313,8 +313,8 @@ it('updates cart', async () =&gt; &#123;
           <p>
             I built <sdux-vault-brand-name /> because I believe state management
             code should be as clean and intentional as the rest of your
-            application. 1.0.0 is the moment it stops being my standard and
-            starts being available as yours.
+            application. 1.0 is the moment it stops being my standard and starts
+            being available as yours.
           </p>
 
           <div class="callout callout-info">

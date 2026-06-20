@@ -100,15 +100,17 @@ pre.pre-wrapper {
   display: block;
   background: var(--sdux-surface-elevated);
   color: var(--sdux-text-black); // readable in dark mode too
-  padding: 12px;
+  padding: global.$spacing-sm;
   border-radius: var(--sdux-border-radius);
   font-family: monospace;
-  font-size: 13px;
+  font-size: global.$font-size-sm;
 
   white-space: pre;
   overflow-x: auto;
   overflow-y: hidden;
-  width: 100%;
+  width: calc(
+    100% - #{global.$spacing-sm} * 2
+  ); // account for horizontal padding
 
   /* Smooth scroll bar */
   scrollbar-width: thin;

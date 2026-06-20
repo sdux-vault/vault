@@ -22,17 +22,17 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   ],
   template: `
     <sdux-blog-layout
-      title="<sdux-vault-brand-name [tm]='true' /> 1.0.0 — One Runtime, Every Framework, Zero Dependencies"
+      title="<sdux-vault-brand-name [tm]='true' /> 1.0 — One Runtime, Every Framework, Zero Dependencies"
       date="2026-06-18"
       pillar="SP"
       readingTime="5">
       <header class="docs-header">
         <p class="lead">
-          <sdux-vault-brand-name [tm]="true" /> 1.0.0 is here. A pure TypeScript
+          <sdux-vault-brand-name [tm]="true" /> 1.0 is here. A pure TypeScript
           state engine with first-class bindings for Angular, React, Vue, and
           Node &mdash; not because cross-framework is trendy, but because state
           logic should never be coupled to your rendering layer. This is what
-          "Plain TypeScript, Zero Magic" looks like after shipping 1.0.0.
+          "Plain TypeScript, Zero Magic" looks like after shipping 1.0.
         </p>
       </header>
 
@@ -147,7 +147,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             Getting started with a pipeline-based state engine could feel
-            intimidating. That's why 1.0.0 ships with the
+            intimidating. That's why 1.0 ships with the
             <a routerLink="/pipeline-builder">Pipeline Builder</a> &mdash; an
             interactive tool that generates production-ready pipeline
             configurations in minutes.

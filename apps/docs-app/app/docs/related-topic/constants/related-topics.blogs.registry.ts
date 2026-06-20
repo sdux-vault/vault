@@ -112,6 +112,15 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'SDuX Vault 1.0.0 — One Runtime, Every Framework — SDuX Vault Blog',
       description:
         'Learn how SDuX Vault 1.0.0 delivers a pure TypeScript state engine with first-class Angular, React, Vue, and Node bindings — zero dependencies.'
+    },
+    {
+      link: '/blog/redux-pattern-sdux-vault-contract',
+      display:
+        'Redux Gave You a Pattern — SDuX Vault™ 1.0.0 Gives You a Contract',
+      title:
+        'Redux Gave You a Pattern — SDuX Vault Gives a Contract — SDuX Vault Blog',
+      description:
+        'Explore how SDuX Vault replaces Redux conventions with architectural contracts — ordered execution, scoped ownership, and deterministic testing.'
     }
   ]
 };
