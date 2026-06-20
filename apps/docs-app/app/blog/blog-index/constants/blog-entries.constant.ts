@@ -82,9 +82,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   },
   {
     slug: 'one-runtime-every-framework-zero-dependencies',
-    title:
-      'SDuX Vault™ 1.0.0 — One Runtime, Every Framework, Zero Dependencies',
+    title: 'SDuX Vault™ 1.0 — One Runtime, Every Framework, Zero Dependencies',
     date: '2026-06-18',
     readingTime: 5
+  },
+  {
+    slug: 'redux-pattern-sdux-vault-contract',
+    title: 'Redux Gave You a Pattern — SDuX Vault™ 1.0 Gives You a Contract',
+    date: '2026-06-19',
+    readingTime: 9
   }
 ];
