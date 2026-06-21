@@ -65,4 +65,36 @@ describe('Component: BlogLayout', () => {
     expect(link).toBeTruthy();
     expect(link.textContent).toContain('All Posts');
   });
+
+  it('should render the share bar', () => {
+    expect(el.querySelector('.blog-share-bar')).toBeTruthy();
+  });
+
+  it('should render share links for all platforms', () => {
+    const links = el.querySelectorAll('.blog-share-links a');
+    expect(links.length).toBe(8);
+  });
+
+  it('should render the copy link button', () => {
+    const btn = el.querySelector('.blog-share-copy') as HTMLButtonElement;
+    expect(btn).toBeTruthy();
+    expect(btn.getAttribute('aria-label')).toEqual('Copy link to clipboard');
+  });
+
+  it('should build correct X share URL', () => {
+    const xLink = el.querySelector(
+      '.blog-share-links a[aria-label="Share on X"]'
+    ) as HTMLAnchorElement;
+    expect(xLink.href).toContain('twitter.com/intent/tweet');
+    expect(xLink.href).toContain('Test%20Post');
+  });
+
+  it('should call clipboard on copy link click', () => {
+    spyOn(navigator.clipboard, 'writeText');
+    const btn = el.querySelector('.blog-share-copy') as HTMLButtonElement;
+    btn.click();
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      'https://www.sdux-vault.com/'
+    );
+  });
 });
