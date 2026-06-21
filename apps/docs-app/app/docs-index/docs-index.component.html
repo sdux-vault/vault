@@ -1,0 +1,90 @@
+<div class="docs-container">
+  <div class="header">
+    <h3>Documentation</h3>
+  </div>
+
+  <div class="docs-index-toolbar">
+    <button
+      type="button"
+      class="sdux-button-toggle"
+      aria-label="Toggle expand or collapse all sections"
+      (click)="toggleAll()">
+      {{ allExpanded() ? 'Collapse All' : 'Expand All' }}
+    </button>
+  </div>
+
+  <div class="docs-index-grid">
+    <section class="docs-index-section">
+      <sdux-migration-subnavigation [forceExpanded]="allExpanded()" />
+    </section>
+
+    <section class="docs-index-section">
+      <sdux-vault-feature-cell-api-subnavigation
+        [forceExpanded]="allExpanded()" />
+    </section>
+
+    <section class="docs-index-section">
+      <sdux-pipeline-subnavigation [forceExpanded]="allExpanded()" />
+    </section>
+
+    <section class="docs-index-section">
+      <sdux-pipeline-controllers-subnavigation
+        [forceExpanded]="allExpanded()" />
+    </section>
+
+    <section class="docs-index-section">
+      <sdux-pipeline-behaviors-subnavigation [forceExpanded]="allExpanded()" />
+    </section>
+
+    <section class="docs-index-section">
+      <sdux-pipeline-extensions-subnavigation [forceExpanded]="allExpanded()" />
+    </section>
+
+    <section class="docs-index-section">
+      <mat-expansion-panel class="nav-expansion" [expanded]="allExpanded()">
+        <mat-expansion-panel-header>
+          <span class="nav-section-label">Global Error Handler</span>
+        </mat-expansion-panel-header>
+        <a
+          mat-list-item
+          routerLink="/docs/global-error-handler"
+          routerLinkActive="active">
+          Overview
+        </a>
+      </mat-expansion-panel>
+    </section>
+
+    <section class="docs-index-section">
+      <mat-expansion-panel class="nav-expansion" [expanded]="allExpanded()">
+        <mat-expansion-panel-header>
+          <span class="nav-section-label">Execution Guarantees</span>
+        </mat-expansion-panel-header>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/execution-guarantee"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+          Overview
+        </a>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/execution-guarantee/conductor-queue"
+          routerLinkActive="active">
+          Conductor Queue
+        </a>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/execution-guarantee/isolation"
+          routerLinkActive="active">
+          Pipeline Isolation
+        </a>
+      </mat-expansion-panel>
+    </section>
+
+    <section class="docs-index-section">
+      <sdux-dev-tools-subnavigation [forceExpanded]="allExpanded()" />
+    </section>
+  </div>
+
+  <sdux-pipeline-related-topics />
+</div>

@@ -5,6 +5,7 @@ import { RELATED_TOPICS_SDUX_REGISTRY } from 'apps/docs-app/app/docs/related-top
 import { RelatedTopicRegistryShape } from '../shapes/related-topic-registry.shape';
 import { RELATED_TOPICS_CONTROLLERS_REGISTRY } from './related-topics.controllers.registry';
 import { RELATED_TOPICS_DEPRECATED_REGISTRY } from './related-topics.deprecated.registry';
+import { RELATED_TOPICS_DOCS_REGISTRY } from './related-topics.docs.registry';
 import { RELATED_TOPICS_ENCRYPT_REGISTRY } from './related-topics.encypt.registry';
 import { RELATED_TOPICS_ERROR_REGISTRY } from './related-topics.error.registry';
 import { RELATED_TOPICS_EXECUTION_GUARANTEE_REGISTRY } from './related-topics.execution-guarantee.registry';
@@ -95,6 +96,8 @@ export const RELATED_TOPICS_REGISTRY: RelatedTopicRegistryShape = {
     deprecated: RELATED_TOPICS_DEPRECATED_REGISTRY,
 
     'dev-tools': RELATED_TOPICS_DEV_TOOLS_REGISTRY,
+
+    docs: RELATED_TOPICS_DOCS_REGISTRY,
 
     encrypt: RELATED_TOPICS_ENCRYPT_REGISTRY,
 

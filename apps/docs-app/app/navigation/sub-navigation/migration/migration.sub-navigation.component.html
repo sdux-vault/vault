@@ -1,5 +1,5 @@
 <nav aria-label="Migration">
-  <mat-expansion-panel class="nav-expansion">
+  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Migration</span>
     </mat-expansion-panel-header>
@@ -12,7 +12,7 @@
       <span class="menu-content">Pipeline Builder</span>
     </a>
 
-    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header">Bridges</span>
       </mat-expansion-panel-header>

@@ -13,6 +13,8 @@ export interface RelatedTopicRegistryCategoryShape {
 
   'dev-tools': RelatedTopicCategoryShape;
 
+  docs: RelatedTopicCategoryShape;
+
   encrypt: RelatedTopicCategoryShape;
 
   'entity-access': RelatedTopicCategoryShape;

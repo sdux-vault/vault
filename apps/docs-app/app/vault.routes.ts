@@ -80,6 +80,15 @@ export const routes: Routes = [
     path: 'docs',
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        data: { category: 'docs' },
+        loadComponent: () =>
+          import('./docs-index/docs-index.component').then(
+            (m) => m.DocsIndexComponent
+          )
+      },
+      {
         path: 'dev-tools',
         data: { category: 'dev-tools' },
         children: [

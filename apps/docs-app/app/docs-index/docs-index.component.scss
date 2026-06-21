@@ -1,0 +1,75 @@
+@use 'global' as global;
+
+.docs-index-toolbar {
+  display: flex;
+  justify-content: flex-end;
+
+  .sdux-button-toggle {
+    width: 120px;
+  }
+}
+
+.docs-index-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.docs-index-section {
+  border: 1px solid var(--sdux-border);
+  border-radius: global.$border-radius-md;
+  padding: global.$spacing-sm global.$spacing-md;
+
+  > a {
+    @include global.a-link(var(--sdux-text-primary), var(--sdux-text-inverse));
+    font-size: global.$font-size-md;
+    font-weight: global.$font-weight-medium;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .docs-index-heading {
+    font-size: global.$font-size-md;
+    font-weight: global.$font-weight-semibold;
+    color: var(--sdux-text-primary);
+    margin-bottom: global.$spacing-xs;
+  }
+
+  // exception: unavoidable third-party override to display panels as static open sections
+  .nav-expansion {
+    box-shadow: none !important;
+    background: transparent !important;
+
+    .mat-expansion-indicator {
+      display: none !important;
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0;
+
+      // Links directly inside the panel body (e.g. Global Error Handler, Execution Guarantees)
+      // exception: unavoidable third-party override to style mat-list-item children
+      > .mat-mdc-list-item {
+        padding-left: global.$spacing-lg !important;
+
+        .mdc-list-item__primary-text {
+          font-size: global.$font-size-sm !important;
+        }
+      }
+
+      // Nested panels get left indent for visual hierarchy
+      .nav-expansion {
+        margin-left: global.$spacing-md;
+
+        // Only show border-top on nested panels that are NOT first-child
+        &:not(:first-child) {
+          border-top: 1px solid var(--sdux-border);
+          padding-top: global.$spacing-xs;
+          margin-top: global.$spacing-xs;
+        }
+      }
+    }
+  }
+}

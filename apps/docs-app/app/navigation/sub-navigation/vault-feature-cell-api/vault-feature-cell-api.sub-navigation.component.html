@@ -1,5 +1,5 @@
 <nav aria-label="Vault Creation API">
-  <mat-expansion-panel class="nav-expansion">
+  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Vault Creation API</span>
     </mat-expansion-panel-header>
@@ -60,7 +60,7 @@
     </a>
 
     <mat-divider></mat-divider>
-    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
         <div class="menu-icon">
           <span class="sub-menu-content sub-item sub-header">FeatureCell</span>

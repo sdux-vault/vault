@@ -4,6 +4,7 @@ import {
   effect,
   HostListener,
   inject,
+  input,
   signal
 } from '@angular/core';
 import { MobileLayoutService } from '@sdux-vault/ui/web-components';
@@ -22,6 +23,9 @@ import { NavigationService } from '../service/navigation.service';
 export abstract class NavigationDirective {
   protected readonly mobile = inject(MobileLayoutService);
   protected readonly navigationService = inject(NavigationService);
+
+  /** When true, all expansion panels start expanded and closeSidenav is a no-op. */
+  readonly forceExpanded = input(false);
 
   /** Whether the sidenav is currently expanded */
   readonly isExpanded = signal<boolean>(this.restoreSidenavState());

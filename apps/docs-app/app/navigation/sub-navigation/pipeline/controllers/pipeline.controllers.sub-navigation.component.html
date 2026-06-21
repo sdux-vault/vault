@@ -1,10 +1,10 @@
 <nav aria-label="Pipeline Controllers">
-  <mat-expansion-panel class="nav-expansion">
+  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Pipeline Controllers</span>
     </mat-expansion-panel-header>
 
-    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header"
           >Architecture Overview</span
@@ -53,7 +53,7 @@
       <span class="menu-content">Delay</span>
     </a>
 
-    <mat-expansion-panel class="nav-expansion" [expanded]="false">
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header">Errors</span>
       </mat-expansion-panel-header>

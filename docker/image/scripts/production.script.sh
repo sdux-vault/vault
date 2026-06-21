@@ -44,15 +44,15 @@ else
 fi
 
 
-if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
+if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}-production$"; then
   # Stop and remove production container
-  printf "\n🛑 Stopping existing container: ${CONTAINER_NAME}\n\n"
-  docker stop $CONTAINER_NAME >/dev/null 2>&1 || printf "\n\nℹ️ No running production container to stop.\n\n"
+  printf "\n🛑 Stopping existing container: ${CONTAINER_NAME}-production\n\n"
+  docker stop "${CONTAINER_NAME}-production" >/dev/null 2>&1 || printf "\n\nℹ️ No running production container to stop.\n\n"
 
-  printf "\n🛑 REMOVING existing container: ${CONTAINER_NAME}\n\n"
-  docker rm $CONTAINER_NAME >/dev/null 2>&1 || printf "\n\nℹ️ No production container to remove.\n\n"
+  printf "\n🛑 REMOVING existing container: ${CONTAINER_NAME}-production\n\n"
+  docker rm "${CONTAINER_NAME}-production" >/dev/null 2>&1 || printf "\n\nℹ️ No production container to remove.\n\n"
 else
-  printf "\nℹ️ No existing container named ${CONTAINER_NAME}. Skipping stop/remove.\n\n"
+  printf "\nℹ️ No existing container named ${CONTAINER_NAME}-production. Skipping stop/remove.\n\n"
 fi
 
 # Launch production using the tagged image
