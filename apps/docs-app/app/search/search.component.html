@@ -27,8 +27,12 @@
             <div class="title">{{ result.title }}</div>
             <div class="meta">
               <span>{{ result.kind }}</span>
-              <span>{{ buildProject(result.project) }}</span>
-              <span>{{ result.docLink }}</span>
+              @if (result.project !== result.kind) {
+                <span>{{ buildProject(result.project) }}</span>
+              }
+              @if (result.docLink !== result.kind) {
+                <span>{{ result.docLink }}</span>
+              }
             </div>
           </div>
         }
