@@ -291,7 +291,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
                 class="code-inline"><code class="language-ts">// act &rarr; settle &rarr; assert
 it('updates cart', async () =&gt; &#123;
   cartCell.mergeState(&#123; value: mockItems &#125;);
-  await cartCellSettled(&lt;cart-cell-key&gt;);
+  await vaultSettled(&lt;cart-cell-key&gt;);
   expect(cartCell.state.total).toBe(42);
 &#125;);</code></pre>
             </sdux-example-viewer-tab>

@@ -1,5 +1,6 @@
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import {
   MobileLayoutService,
   sduxTestingModule
@@ -90,11 +91,14 @@ describe('Component: Toolbar', () => {
     expect(themeService.toggleDirection).toHaveBeenCalled();
   });
 
-  it('should call navigationService.show() when openDocumentation() is invoked', () => {
+  it('should call navigationService.show() and navigate to /docs when openDocumentation() is invoked', () => {
     const navigationService = TestBed.inject(NavigationService);
+    const router = TestBed.inject(Router);
     spyOn(navigationService, 'show');
+    spyOn(router, 'navigate');
     component.openDocumentation();
     expect(navigationService.show).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/docs']);
   });
 
   it('should handle a computed isMobile event', () => {

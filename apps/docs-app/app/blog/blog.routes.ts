@@ -133,6 +133,14 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-19-redux-pattern-sdux-vault-contract/redux-pattern-sdux-vault-contract.component').then(
         (m) => m.BlogReduxPatternSduxVaultContractComponent
       )
+  },
+  {
+    path: 'from-redux-to-sdux-vault',
+    data: { category: 'blogs', type: 'from-redux-to-sdux-vault' },
+    loadComponent: () =>
+      import('./posts/2026-06-22-from-redux-to-sdux-vault/from-redux-to-sdux-vault.component').then(
+        (m) => m.BlogFromReduxToSduxVaultComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   CatchPhraseComponent,
   ImageComponent,
@@ -52,6 +52,7 @@ export class ToolbarComponent {
   #navigationService = inject(NavigationService);
   #mobileService = inject(MobileLayoutService);
   #authenticationService = inject(AuthenticationService);
+  #router = inject(Router);
 
   readonly isAuthenticated = computed(() =>
     this.#authenticationService.isAuthenticated()
@@ -97,6 +98,7 @@ export class ToolbarComponent {
 
   openDocumentation(): void {
     this.#navigationService.show();
+    this.#router.navigate(['/docs']);
   }
 
   /** Toggles between light and dark themes */

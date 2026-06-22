@@ -121,6 +121,13 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'Redux Gave You a Pattern — SDuX Vault Gives a Contract — SDuX Vault Blog',
       description:
         'Explore how SDuX Vault replaces Redux conventions with architectural contracts — ordered execution, scoped ownership, and deterministic testing.'
+    },
+    {
+      link: '/blog/from-redux-to-sdux-vault',
+      display: 'From Redux to SDuX Vault — A Migration Guide',
+      title: 'From Redux to SDuX Vault — Migration Guide — SDuX Vault Blog',
+      description:
+        'Learn how to migrate from Redux to SDuX Vault incrementally — run both side by side, map concepts, and adopt feature by feature without rewriting.'
     }
   ]
 };

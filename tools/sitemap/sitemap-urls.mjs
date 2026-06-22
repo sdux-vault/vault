@@ -15,6 +15,7 @@ export const SITEMAP_URLS = [
   '/blog/circuit-breaker-state-pipeline',
   '/blog/controllers-dont-touch-your-data',
   '/blog/featurecells-changed-how-i-think-about-state-ownership',
+  '/blog/from-redux-to-sdux-vault',
   '/blog/mutation-bugs-eliminated',
   '/blog/one-engine-every-framework',
   '/blog/one-runtime-every-framework-zero-dependencies',
