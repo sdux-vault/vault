@@ -89,6 +89,10 @@ describe('Component: Search', () => {
     );
   });
 
+  it('should return "blog" for blog project', () => {
+    expect(component.buildProject('blog')).toBe('blog');
+  });
+
   // ---------------------------------------------------------
   // 4. updatePosition() computes geometry correctly
   // ---------------------------------------------------------

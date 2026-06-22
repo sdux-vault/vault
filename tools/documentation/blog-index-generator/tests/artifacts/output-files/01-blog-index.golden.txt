@@ -1,0 +1,28 @@
+{
+  "documents": [
+    {
+      "id": "blog:welcome",
+      "title": "Welcome to the SDuX Vault Blog",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/welcome",
+      "symbols": [
+        "welcome"
+      ],
+      "content": "Welcome to the SDuX Vault Blog Getting Started What to Expect welcome CE"
+    },
+    {
+      "id": "blog:pipeline-anatomy",
+      "title": "Pipeline Anatomy: How State Flows Through Stages",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/pipeline-anatomy",
+      "symbols": [
+        "pipeline-anatomy"
+      ],
+      "content": "Pipeline Anatomy: How State Flows Through Stages The Five Stages Resolve Stage Merge Stage pipeline-anatomy ED"
+    }
+  ]
+}

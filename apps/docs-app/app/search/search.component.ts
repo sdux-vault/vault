@@ -50,6 +50,7 @@ export class SearchComponent {
   }
 
   buildProject(project: string): string {
+    if (project === 'blog') return 'blog';
     return `@${this.#brandName.toLowerCase()}/${project}`;
   }
 
