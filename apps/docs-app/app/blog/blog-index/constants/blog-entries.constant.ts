@@ -91,5 +91,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     title: 'Redux Gave You a Pattern — SDuX Vault™ 1.0 Gives You a Contract',
     date: '2026-06-19',
     readingTime: 9
+  },
+  {
+    slug: 'from-redux-to-sdux-vault',
+    title:
+      "From Redux to SDuX Vault — A Migration Guide That Doesn't Ask You to Rewrite Everything",
+    date: '2026-06-22',
+    readingTime: 10
   }
 ];

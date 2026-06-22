@@ -2965,6 +2965,16 @@
       "url": "/blog/redux-pattern-sdux-vault-contract",
       "symbols": ["redux-pattern-sdux-vault-contract"],
       "content": "Redux Gave You a Pattern — SDuX Vault™ 1.0 Gives You a Contract redux-pattern-sdux-vault-contract RC"
+    },
+    {
+      "id": "blog:from-redux-to-sdux-vault",
+      "title": "From Redux to SDuX Vault — A Migration Guide That Doesn't Ask You to Rewrite Everything",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/from-redux-to-sdux-vault",
+      "symbols": ["from-redux-to-sdux-vault"],
+      "content": "From Redux to SDuX Vault — A Migration Guide That Doesn't Ask You to Rewrite Everything from-redux-to-sdux-vault TA"
     }
   ]
 }

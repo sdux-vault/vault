@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   ExampleViewerSourceComponent,
@@ -13,6 +14,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [
     BlogLayoutComponent,
+    MatTab,
+    MatTabGroup,
     RouterModule,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
@@ -73,24 +76,115 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             its own lifecycle boundary. No other cell can read or write another
             cell's state directly.
           </p>
-          <sdux-example-viewer-source
-            [displayTabs]="false"
-            [displayCopyPaste]="false">
-            <sdux-example-viewer-tab
-              [label]="'Registering a FeatureCell with Typed State'">
-              <pre
-                class="code-inline"><code class="language-ts">const cartCell = FeatureCell(CartService,
-    &#123;
+          <div class="sdux-tab-container">
+            <mat-tab-group
+              animationDuration="200ms"
+              mat-stretch-tabs="false"
+              class="sdux-tabs"
+              [selectedIndex]="0">
+              <mat-tab label="Angular">
+                <div class="tab-panel">
+                  <ng-content select="[retrieve]">
+                    <sdux-example-viewer-source [displayTabs]="false">
+                      <sdux-example-viewer-tab
+                        [label]="'Angular — Registering a FeatureCell with Typed State'">
+                        <pre
+                          class="code-inline"><code class="language-ts">// app.config.ts
+export const appConfig: ApplicationConfig = &#123;
+  providers: [
+    provideVault(&#123; logLevel: 'off' &#125;),
+    provideFeatureCell(
+      CartService,
+      &#123;
         key: 'cart',
         initialState: &#123;
-            items: [],
-            total: 0,
-            status: 'idle'
+          items: [],
+          total: 0,
+          status: 'idle'
         &#125;
-    &#125;
-);</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
+      &#125;
+    )
+  ]
+&#125;;</code></pre>
+                      </sdux-example-viewer-tab>
+                    </sdux-example-viewer-source>
+                  </ng-content>
+                </div>
+              </mat-tab>
+              <mat-tab label="React">
+                <div class="tab-panel">
+                  <ng-content select="[retrieve]">
+                    <sdux-example-viewer-source [displayTabs]="false">
+                      <sdux-example-viewer-tab
+                        [label]="'React — Registering a FeatureCell with Typed State'">
+                        <pre
+                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
+
+Vault(&#123; devMode: true, logLevel: 'off' &#125;);
+
+export const cartCell = FeatureCell(&#123;
+  key: 'cart',
+  initialState: &#123;
+    items: [],
+    total: 0,
+    status: 'idle'
+  &#125;
+&#125;);</code></pre>
+                      </sdux-example-viewer-tab>
+                    </sdux-example-viewer-source>
+                  </ng-content>
+                </div>
+              </mat-tab>
+              <mat-tab label="Vue">
+                <div class="tab-panel">
+                  <ng-content select="[retrieve]">
+                    <sdux-example-viewer-source [displayTabs]="false">
+                      <sdux-example-viewer-tab
+                        [label]="'Vue — Registering a FeatureCell with Typed State'">
+                        <pre
+                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
+
+Vault(&#123; devMode: true, logLevel: 'off' &#125;);
+
+export const cartCell = FeatureCell(&#123;
+  key: 'cart',
+  initialState: &#123;
+    items: [],
+    total: 0,
+    status: 'idle'
+  &#125;
+&#125;);</code></pre>
+                      </sdux-example-viewer-tab>
+                    </sdux-example-viewer-source>
+                  </ng-content>
+                </div>
+              </mat-tab>
+              <mat-tab label="Svelte">
+                <div class="tab-panel">
+                  <ng-content select="[retrieve]">
+                    <sdux-example-viewer-source [displayTabs]="false">
+                      <sdux-example-viewer-tab
+                        [label]="'Svelte — Registering a FeatureCell with Typed State'">
+                        <pre
+                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
+
+Vault(&#123; devMode: true, logLevel: 'off' &#125;);
+
+export const cartCell = FeatureCell(&#123;
+  key: 'cart',
+  initialState: &#123;
+    items: [],
+    total: 0,
+    status: 'idle'
+  &#125;
+&#125;);</code></pre>
+                      </sdux-example-viewer-tab>
+                    </sdux-example-viewer-source>
+                  </ng-content>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
           <p></p>
           <p>
             That's a complete ownership boundary. The cart feature owns its
@@ -127,27 +221,127 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             catalog. Each cell's pipeline is independent, composable, and
             testable in isolation.
           </p>
-          <sdux-example-viewer-source
-            [displayTabs]="false"
-            [displayCopyPaste]="false">
-            <sdux-example-viewer-tab
-              [label]="'Scoped Pipeline with Behaviors and Controllers'">
-              <pre
-                class="code-inline"><code class="language-ts">const cartCell = FeatureCell(
-    CartService,
-    &#123;
-        key: 'cart', initialState
-    &#125;,
-    [
-        withLocalStoragePersistBehavior
+          <div class="sdux-tab-container">
+            <mat-tab-group
+              animationDuration="200ms"
+              mat-stretch-tabs="false"
+              class="sdux-tabs"
+              [selectedIndex]="0">
+              <mat-tab label="Angular">
+                <div class="tab-panel">
+                  <ng-content select="[retrieve]">
+                    <sdux-example-viewer-source [displayTabs]="false">
+                      <sdux-example-viewer-tab
+                        [label]="'Angular — Scoped Pipeline with Behaviors and Controllers'">
+                        <pre
+                          class="code-inline"><code class="language-ts">// app.config.ts
+export const appConfig: ApplicationConfig = &#123;
+  providers: [
+    provideVault(&#123; logLevel: 'off' &#125;),
+    provideFeatureCell(
+      CartService,
+      &#123; key: 'cart', initialState &#125;,
+      [
+        withLocalStoragePersistBehavior,
         withAes256EncryptBehavior
-    ],
-    [
+      ],
+      [
         withMaxFailuresController(3)
-    ]
+      ]
+    )
+  ]
+&#125;;</code></pre>
+                      </sdux-example-viewer-tab>
+                    </sdux-example-viewer-source>
+                  </ng-content>
+                </div>
+              </mat-tab>
+              <mat-tab label="React">
+                <div class="tab-panel">
+                  <ng-content select="[retrieve]">
+                    <sdux-example-viewer-source [displayTabs]="false">
+                      <sdux-example-viewer-tab
+                        [label]="'React — Scoped Pipeline with Behaviors and Controllers'">
+                        <pre
+                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
+import &#123; withLocalStoragePersistBehavior, withAes256EncryptBehavior &#125; from '@sdux-vault/behaviors';
+import &#123; withMaxFailuresController &#125; from '@sdux-vault/controllers';
+
+Vault(&#123; devMode: true, logLevel: 'off' &#125;);
+
+export const cartCell = FeatureCell(
+  &#123; key: 'cart', initialState &#125;,
+  [
+    withLocalStoragePersistBehavior,
+    withAes256EncryptBehavior
+  ],
+  [
+    withMaxFailuresController(3)
+  ]
 );</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
+                      </sdux-example-viewer-tab>
+                    </sdux-example-viewer-source>
+                  </ng-content>
+                </div>
+              </mat-tab>
+              <mat-tab label="Vue">
+                <div class="tab-panel">
+                  <ng-content select="[retrieve]">
+                    <sdux-example-viewer-source [displayTabs]="false">
+                      <sdux-example-viewer-tab
+                        [label]="'Vue — Scoped Pipeline with Behaviors and Controllers'">
+                        <pre
+                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
+import &#123; withLocalStoragePersistBehavior, withAes256EncryptBehavior &#125; from '@sdux-vault/behaviors';
+import &#123; withMaxFailuresController &#125; from '@sdux-vault/controllers';
+
+Vault(&#123; devMode: true, logLevel: 'off' &#125;);
+
+export const cartCell = FeatureCell(
+  &#123; key: 'cart', initialState &#125;,
+  [
+    withLocalStoragePersistBehavior,
+    withAes256EncryptBehavior
+  ],
+  [
+    withMaxFailuresController(3)
+  ]
+);</code></pre>
+                      </sdux-example-viewer-tab>
+                    </sdux-example-viewer-source>
+                  </ng-content>
+                </div>
+              </mat-tab>
+              <mat-tab label="Svelte">
+                <div class="tab-panel">
+                  <ng-content select="[retrieve]">
+                    <sdux-example-viewer-source [displayTabs]="false">
+                      <sdux-example-viewer-tab
+                        [label]="'Svelte — Scoped Pipeline with Behaviors and Controllers'">
+                        <pre
+                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
+import &#123; withLocalStoragePersistBehavior, withAes256EncryptBehavior &#125; from '@sdux-vault/behaviors';
+import &#123; withMaxFailuresController &#125; from '@sdux-vault/controllers';
+
+Vault(&#123; devMode: true, logLevel: 'off' &#125;);
+
+export const cartCell = FeatureCell(
+  &#123; key: 'cart', initialState &#125;,
+  [
+    withLocalStoragePersistBehavior,
+    withAes256EncryptBehavior
+  ],
+  [
+    withMaxFailuresController(3)
+  ]
+);</code></pre>
+                      </sdux-example-viewer-tab>
+                    </sdux-example-viewer-source>
+                  </ng-content>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
           <p>
             The behaviors and controllers registered here operate exclusively
             within the cart cell's pipeline. They cannot leak into other cells,

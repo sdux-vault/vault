@@ -45,6 +45,9 @@ html {
   --sdux-text-black: #{global.$sdux-text-black};
   --sdux-text-black-white: #{global.$sdux-text-black};
 
+  /* Icons */
+  --sdux-icon-dark-filter: none;
+
   /* Layout */
   --app-toolbar-height: #{global.$toolbar-height};
   --app-footer-height: #{global.$footer-height};
@@ -174,6 +177,9 @@ html[data-theme='dark'] {
   --toolbar-bg: #{global.$sdux-surface-dark};
   --toolbar-text: #{global.$sdux-text-primary};
   --toolbar-border: #{global.$sdux-surface-outline};
+
+  /* Icons */
+  --sdux-icon-dark-filter: invert(1);
 
   /* Footer */
   --footer-border: #{global.$sdux-primary-light};

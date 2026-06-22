@@ -40,9 +40,7 @@
   display: flex;
   align-items: center;
   gap: global.$spacing-md;
-  padding: global.$spacing-md 0;
-  margin-top: global.$spacing-lg;
-  border-top: 1px solid var(--sdux-border);
+  border-top: 1px solid global.$sdux-surface-outline;
 
   .blog-share-label {
     font-size: global.$font-size-sm;
@@ -74,6 +72,10 @@
       img {
         width: global.$spacing-md;
         height: global.$spacing-md;
+      }
+
+      .dark-invert {
+        filter: var(--sdux-icon-dark-filter);
       }
     }
 

@@ -203,6 +203,33 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
                   </ng-content>
                 </div>
               </mat-tab>
+
+              <mat-tab label="Svelte">
+                <div class="tab-panel">
+                  <ng-content select="[retrieve]">
+                    <sdux-example-viewer-source [displayTabs]="false">
+                      <sdux-example-viewer-tab
+                        [label]="'Configure a FeatureCell with Tab Sync'">
+                        <pre
+                          class="code-inline"><code class="language-ts">export const employeeCell = FeatureCell&lt;Employee[]>(
+  &#123;
+    key: 'employees',
+    initialState: [],
+  &#125;,
+  [
+    // Tab Sync State Behavior is required
+    withTabSyncStateBehavior
+  ],
+  [
+    // Tab Sync Controller is required
+    withTabSyncController
+  ]
+);</code></pre>
+                      </sdux-example-viewer-tab>
+                    </sdux-example-viewer-source>
+                  </ng-content>
+                </div>
+              </mat-tab>
             </mat-tab-group>
           </div>
 
