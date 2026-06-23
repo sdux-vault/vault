@@ -128,6 +128,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'From Redux to SDuX Vault — Migration Guide — SDuX Vault Blog',
       description:
         'Learn how to migrate from Redux to SDuX Vault incrementally — run both side by side, map concepts, and adopt feature by feature without rewriting.'
+    },
+    {
+      link: '/blog/global-store-shared-dependency',
+      display:
+        'Global Store Is a Shared Dependency — Why Scoped State Ownership Wins',
+      title: 'Global Store vs Scoped State Ownership — SDuX Vault Blog',
+      description:
+        'Understand why global stores become coupling vectors at team scale and how scoped FeatureCell ownership eliminates cross-team state coordination.'
     }
   ]
 };
