@@ -98,5 +98,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
       "From Redux to SDuX Vault — A Migration Guide That Doesn't Ask You to Rewrite Everything",
     date: '2026-06-22',
     readingTime: 10
+  },
+  {
+    slug: 'global-store-shared-dependency',
+    title:
+      'Global Store Is a Shared Dependency — Why Scoped State Ownership Wins',
+    date: '2026-06-23',
+    readingTime: 6
   }
 ];

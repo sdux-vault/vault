@@ -141,6 +141,14 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-22-from-redux-to-sdux-vault/from-redux-to-sdux-vault.component').then(
         (m) => m.BlogFromReduxToSduxVaultComponent
       )
+  },
+  {
+    path: 'global-store-shared-dependency',
+    data: { category: 'blogs', type: 'global-store-shared-dependency' },
+    loadComponent: () =>
+      import('./posts/2026-06-23-global-store-shared-dependency/global-store-shared-dependency.component').then(
+        (m) => m.BlogGlobalStoreSharedDependencyComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.
