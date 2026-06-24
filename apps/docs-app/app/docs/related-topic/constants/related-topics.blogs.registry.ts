@@ -136,6 +136,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Global Store vs Scoped State Ownership — SDuX Vault Blog',
       description:
         'Understand why global stores become coupling vectors at team scale and how scoped FeatureCell ownership eliminates cross-team state coordination.'
+    },
+    {
+      link: '/blog/actions-are-ceremony',
+      display: 'Actions Are Ceremony — What Happens When You Remove Them',
+      title:
+        'Actions Are Ceremony — What Happens When You Remove Them — SDuX Vault Blog',
+      description:
+        'Learn how SDuX Vault eliminates Redux action boilerplate with direct state intent via mergeState and replaceState on the owning FeatureCell.'
     }
   ]
 };

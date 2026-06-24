@@ -149,6 +149,14 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-23-global-store-shared-dependency/global-store-shared-dependency.component').then(
         (m) => m.BlogGlobalStoreSharedDependencyComponent
       )
+  },
+  {
+    path: 'actions-are-ceremony',
+    data: { category: 'blogs', type: 'actions-are-ceremony' },
+    loadComponent: () =>
+      import('./posts/2026-06-24-actions-are-ceremony/actions-are-ceremony.component').then(
+        (m) => m.BlogActionsAreCeremonyComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

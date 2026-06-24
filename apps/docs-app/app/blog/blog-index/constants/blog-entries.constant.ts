@@ -105,5 +105,11 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
       'Global Store Is a Shared Dependency — Why Scoped State Ownership Wins',
     date: '2026-06-23',
     readingTime: 6
+  },
+  {
+    slug: 'actions-are-ceremony',
+    title: 'Actions Are Ceremony — What Happens When You Remove Them',
+    date: '2026-06-24',
+    readingTime: 6
   }
 ];
