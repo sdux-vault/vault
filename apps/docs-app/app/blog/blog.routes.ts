@@ -157,6 +157,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-24-actions-are-ceremony/actions-are-ceremony.component').then(
         (m) => m.BlogActionsAreCeremonyComponent
       )
+  },
+  {
+    path: 'global-dispatch-broadcasts-scoped-updates-dont',
+    data: {
+      category: 'blogs',
+      type: 'global-dispatch-broadcasts-scoped-updates-dont'
+    },
+    loadComponent: () =>
+      import('./posts/2026-06-25-global-dispatch-broadcasts-scoped-updates-dont/global-dispatch-broadcasts-scoped-updates-dont.component').then(
+        (m) => m.BlogGlobalDispatchBroadcastsScopedUpdatesDontComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

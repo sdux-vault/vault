@@ -111,5 +111,11 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     title: 'Actions Are Ceremony — What Happens When You Remove Them',
     date: '2026-06-24',
     readingTime: 6
+  },
+  {
+    slug: 'global-dispatch-broadcasts-scoped-updates-dont',
+    title: "Global Dispatch Broadcasts to Everything — Scoped Updates Don't",
+    date: '2026-06-25',
+    readingTime: 6
   }
 ];

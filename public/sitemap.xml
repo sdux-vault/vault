@@ -16,6 +16,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/actions-are-ceremony</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/ai-assisted-debugging</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -42,6 +47,16 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/from-redux-to-sdux-vault</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/global-dispatch-broadcasts-scoped-updates-dont</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/global-store-shared-dependency</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
