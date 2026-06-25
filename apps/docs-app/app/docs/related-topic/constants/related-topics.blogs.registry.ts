@@ -144,6 +144,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'Actions Are Ceremony — What Happens When You Remove Them — SDuX Vault Blog',
       description:
         'Learn how SDuX Vault eliminates Redux action boilerplate with direct state intent via mergeState and replaceState on the owning FeatureCell.'
+    },
+    {
+      link: '/blog/global-dispatch-broadcasts-scoped-updates-dont',
+      display:
+        "Global Dispatch Broadcasts to Everything — Scoped Updates Don't",
+      title: 'Global Dispatch Broadcasts to Everything — SDuX Vault Blog',
+      description:
+        'Understand why Redux dispatch broadcasts to every reducer and how SDuX Vault scoped updates target only the owning FeatureCell with zero wasted evaluation.'
     }
   ]
 };
