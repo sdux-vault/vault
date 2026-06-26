@@ -117,5 +117,11 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     title: "Global Dispatch Broadcasts to Everything — Scoped Updates Don't",
     date: '2026-06-25',
     readingTime: 6
+  },
+  {
+    slug: 'your-redux-reducers-already-work-in-sdux-vault',
+    title: 'Your Redux Reducers Already Work in SDuX Vault',
+    date: '2026-06-26',
+    readingTime: 6
   }
 ];
