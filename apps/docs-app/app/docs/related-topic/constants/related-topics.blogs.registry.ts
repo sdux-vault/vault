@@ -152,6 +152,13 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Global Dispatch Broadcasts to Everything — SDuX Vault Blog',
       description:
         'Understand why Redux dispatch broadcasts to every reducer and how SDuX Vault scoped updates target only the owning FeatureCell with zero wasted evaluation.'
+    },
+    {
+      link: '/blog/your-redux-reducers-already-work-in-sdux-vault',
+      display: 'Your Redux Reducers Already Work in SDuX Vault',
+      title: 'Your Redux Reducers Already Work in SDuX Vault — SDuX Vault Blog',
+      description:
+        'Learn how pure Redux reducers work as SDuX Vault reducer behaviors with zero modification — register declaratively and preserve execution guarantees.'
     }
   ]
 };

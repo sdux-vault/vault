@@ -168,6 +168,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-25-global-dispatch-broadcasts-scoped-updates-dont/global-dispatch-broadcasts-scoped-updates-dont.component').then(
         (m) => m.BlogGlobalDispatchBroadcastsScopedUpdatesDontComponent
       )
+  },
+  {
+    path: 'your-redux-reducers-already-work-in-sdux-vault',
+    data: {
+      category: 'blogs',
+      type: 'your-redux-reducers-already-work-in-sdux-vault'
+    },
+    loadComponent: () =>
+      import('./posts/2026-06-26-your-redux-reducers-already-work-in-sdux-vault/your-redux-reducers-already-work-in-sdux-vault.component').then(
+        (m) => m.BlogYourReduxReducersAlreadyWorkInSduxVaultComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.
