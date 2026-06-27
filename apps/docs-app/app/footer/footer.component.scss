@@ -39,6 +39,29 @@ $info-height: 25px;
     height: $info-height;
   }
 
+  .social-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: global.$spacing-lg;
+
+    a {
+      display: flex;
+      align-items: center;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
   transition:
     background-color 0.25s ease,
     color 0.25s ease,

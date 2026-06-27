@@ -123,5 +123,11 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     title: 'Your Redux Reducers Already Work in SDuX Vault',
     date: '2026-06-26',
     readingTime: 6
+  },
+  {
+    slug: 'react-tab-sync-subscribe-before-initialize',
+    title: 'React + Tab Sync: Subscribe Before Initialize',
+    date: '2026-06-27',
+    readingTime: 3
   }
 ];

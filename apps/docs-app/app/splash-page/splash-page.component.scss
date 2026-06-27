@@ -337,6 +337,10 @@ $splash-success: global.$sdux-success-base;
     border-radius: global.$border-radius-lg;
     border: 1px solid $splash-border;
     background: $splash-bg;
+    overflow: hidden;
+    min-width: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     transition:
       border-color 0.25s ease,
       box-shadow 0.25s ease;
@@ -624,6 +628,7 @@ $splash-success: global.$sdux-success-base;
       text-align: left;
       border-bottom: 1px solid $splash-border;
       font-size: global.$font-size-md;
+      white-space: nowrap;
     }
 
     th {
@@ -648,16 +653,13 @@ $splash-success: global.$sdux-success-base;
 // ─── Framework Support ───
 .frameworks {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: global.$spacing-lg;
   text-align: center;
+  justify-items: center;
 
   @media (max-width: global.$breakpoint-md) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: global.$breakpoint-sm) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
@@ -666,10 +668,15 @@ $splash-success: global.$sdux-success-base;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 200px;
   padding: global.$spacing-xl global.$spacing-md;
   border-radius: global.$border-radius-lg;
   border: 1px solid $splash-border;
   transition: border-color 0.2s ease;
+
+  @media (max-width: global.$breakpoint-md) {
+    width: 200px;
+  }
 
   &:hover {
     border-color: $splash-primary;

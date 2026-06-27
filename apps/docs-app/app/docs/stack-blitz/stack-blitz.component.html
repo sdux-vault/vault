@@ -35,7 +35,7 @@
     <div class="section-body">
       <div class="toc-container" id="toc">
         <div class="toc-title">Available Examples</div>
-        <ul class="toc">
+        <ul class="toc" aria-label="Example categories">
           @for (group of exampleGroups; track group.id) {
             <li>
               <a [routerLink]="[]" [fragment]="group.id">{{ group.heading }}</a>
@@ -74,7 +74,16 @@
       @for (example of group.examples; track example.id) {
         <section class="section-body" [id]="example.id">
           <div class="h-title-navigation">
-            <div class="h-section-title">{{ example.title }}</div>
+            <div class="h-section-title">
+              <strong> {{ example.title }} Example </strong>
+              @if ($any(example).isVault) {
+                <img
+                  src="assets/brand/brand-icon.svg"
+                  class="vault-badge-icon"
+                  alt="SDuX Vault Licensed feature"
+                  matTooltip="This is a SDuX Vault Licensed feature" />
+              }
+            </div>
             <div class="h-top-link">
               <a [routerLink]="[]" fragment="top">↑ top</a>
             </div>
@@ -83,32 +92,37 @@
           <div class="section-body">
             <p>{{ example.description }}</p>
 
-            <table [attr.aria-label]="example.title + ' Languages'">
-              <thead>
-                <tr>
-                  @for (lang of example.languages; track lang.key) {
-                    <th scope="col">{{ lang.name }}</th>
-                  }
-                </tr>
-              </thead>
+            <div
+              class="framework-icon-row"
+              role="group"
+              [attr.aria-label]="example.title + ' framework options'">
+              @for (lang of example.languages; track lang.key) {
+                <button
+                  type="button"
+                  class="framework-icon-button"
+                  [attr.aria-label]="
+                    'Launch ' + example.title + ' in ' + lang.name
+                  "
+                  [matTooltip]="'Launch ' + example.title + ' in ' + lang.name"
+                  (click)="
+                    openStackBlitzExample(lang.key, example.exampleName)
+                  ">
+                  <img
+                    [src]="frameworkIcons[lang.key]"
+                    [alt]="lang.name"
+                    class="framework-icon" />
+                  <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+                </button>
+              }
+            </div>
 
-              <tbody>
-                <tr>
-                  @for (lang of example.languages; track lang.key) {
-                    <td>
-                      <button
-                        type="button"
-                        class="sdux-button"
-                        (click)="
-                          openStackBlitzExample(lang.key, example.exampleName)
-                        ">
-                        Open
-                      </button>
-                    </td>
-                  }
-                </tr>
-              </tbody>
-            </table>
+            @if ($any(example).notice) {
+              <div class="callout callout-warning">
+                <strong>StackBlitz Limitation</strong>
+                <!-- trusted: static HTML from constants, not user-generated -->
+                <div [innerHTML]="$any(example).notice"></div>
+              </div>
+            }
           </div>
         </section>
       }

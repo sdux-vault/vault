@@ -441,3 +441,63 @@
   width: auto !important;
   text-decoration: none;
 }
+
+.vault-badge-icon {
+  width: global.$button-icon-size;
+  height: global.$button-icon-size;
+  vertical-align: middle;
+  margin-left: global.$spacing-xs;
+}
+
+.framework-icon-row {
+  display: flex;
+  gap: global.$spacing-lg;
+  align-items: center;
+  margin-top: global.$spacing-md;
+}
+
+.framework-icon-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: global.$border-radius-md;
+  padding: global.$spacing-sm;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: global.$sdux-surface-raised-md;
+
+    .framework-icon {
+      opacity: 0;
+    }
+
+    .launch-overlay-icon {
+      opacity: 1;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid global.$sdux-primary-base;
+    outline-offset: 2px;
+  }
+}
+
+.framework-icon {
+  width: 40px;
+  height: 40px;
+  transition: opacity 0.2s;
+}
+
+.launch-overlay-icon {
+  position: absolute;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: global.$sdux-primary-base;
+  opacity: 0;
+  transition: opacity 0.2s;
+}

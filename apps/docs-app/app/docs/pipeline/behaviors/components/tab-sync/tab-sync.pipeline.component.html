@@ -689,6 +689,44 @@ employeeCell.mergeState({
             </div>
           </mat-tab>
 
+          <!-- Svelte ---------------------------------------------------------- -->
+          <mat-tab label="Svelte">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 1: Synchronize FeatureCell State Across Tabs'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
+import { Employee } from './employee.shape';
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Enable cross-tab state synchronization
+    withTabSyncStateBehavior
+  ],
+  [
+    // Tab Sync Controller handles initial negotiation
+    withTabSyncController
+  ]
+);
+
+// Initialize the FeatureCell
+employeeCell.initialize();
+
+// State is committed locally and broadcast to other tabs
+employeeCell.mergeState({
+  value: [{ id: 1, name: 'Jane Doe' }]
+});`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
           <!-- Vue ------------------------------------------------------------- -->
           <mat-tab label="Vue">
             <div class="tab-panel">
@@ -820,6 +858,28 @@ employeeCell.state$.subscribe(snapshot => {
             </div>
           </mat-tab>
 
+          <!-- Svelte ---------------------------------------------------------- -->
+          <mat-tab label="Svelte">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 2: Receiving Cross-Tab State'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`// Tab A commits state
+employeeCell.mergeState({
+  value: [{ id: 1, name: 'Jane Doe' }]
+});
+
+// Tab B automatically receives the updated snapshot
+employeeCell.state$.subscribe(snapshot => {
+  console.info(snapshot.value);
+  // → [{ id: 1, name: 'Jane Doe' }]
+});`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
           <!-- Vue ------------------------------------------------------------- -->
           <mat-tab label="Vue">
             <div class="tab-panel">
@@ -943,6 +1003,42 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
             </div>
           </mat-tab>
 
+          <!-- Svelte ---------------------------------------------------------- -->
+          <mat-tab label="Svelte">
+            <div class="tab-panel">
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Example 3: Tab Sync with Local Storage Persistence'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
+import { withAes256EncryptBehavior } from '@sdux-vault/addons';
+import { withLocalStoragePersistBehavior } from '@sdux-vault/core';
+import { Employee } from './employee.shape';
+
+export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Cross-tab synchronization
+    withTabSyncStateBehavior,
+    // AES-256-GCM encryption for persisted state
+    withAes256EncryptBehavior,
+    // Durable local storage persistence
+    withLocalStoragePersistBehavior
+  ],
+  [
+    // Tab Sync Controller handles initial negotiation
+    withTabSyncController
+  ]
+);`}}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
           <!-- Vue ------------------------------------------------------------- -->
           <mat-tab label="Vue">
             <div class="tab-panel">
@@ -986,6 +1082,26 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
   <sdux-vault-tab-sync-licensing-common />
 
   <sdux-vault-tab-sync-privacy-common />
+
+  <!-- ====================================================== -->
+  <!-- STACKBLITZ EXAMPLE -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Try It Live</div>
+
+    <div class="section-body">
+      <p>
+        A runnable StackBlitz example demonstrates Tab Sync behavior across
+        Angular, React, Vue, and Svelte — no local setup required.
+      </p>
+
+      <p>
+        <a routerLink="/docs/stackblitz" fragment="tab-sync"
+          >Open the Tab Sync example →</a
+        >
+      </p>
+    </div>
+  </section>
 
   <!-- ====================================================== -->
   <!-- RELATED TOPICS -->

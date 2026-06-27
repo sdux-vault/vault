@@ -26,4 +26,17 @@
     font-weight: global.$font-weight-medium;
     color: global.$sdux-accent-base;
   }
+
+  .contact-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: global.$spacing-xs;
+  }
+
+  .form-divider {
+    border-top: 2px solid global.$sdux-primary-base;
+    padding-top: global.$spacing-md;
+    margin-top: global.$spacing-md;
+  }
 }

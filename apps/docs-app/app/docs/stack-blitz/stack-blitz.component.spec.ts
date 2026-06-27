@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
+import StackBlitz from '@stackblitz/sdk';
 import { sduxTestingModule } from '../../../../../libs/ui/web-components/src/public-api';
 import { StackBlitzOverviewComponent } from './stack-blitz.component';
 
@@ -89,7 +90,16 @@ describe('Component: StackBlitz Overview', () => {
             description:
               'Demonstrates the Mock BN built-in debugger — a floating panel that captures pipeline execution traces. Record a session, trigger state changes, then export logs or generate an AI diagnostic report. Choose your framework and launch the example directly in StackBlitz.',
             languages
-          }
+          },
+          Object({
+            title: 'Tab Sync',
+            id: 'tab-sync',
+            exampleName: 'tab-sync-example',
+            isVault: true,
+            description: jasmine.any(String),
+            notice: jasmine.any(String),
+            languages
+          })
         ]
       }
     ]);
@@ -100,10 +110,13 @@ describe('Component: StackBlitz Overview', () => {
       expect(typeof component.openStackBlitzExample).toBe('function');
     });
 
-    it('should reject with an error for an unknown language', async () => {
-      await expectAsync(
-        component.openStackBlitzExample('unknown', 'demo')
-      ).toBeRejectedWithError('Unknown project: unknown/demo');
+    it('should call openGithubProject with the correct repo slug', () => {
+      const spy = spyOn(StackBlitz, 'openGithubProject');
+      component.openStackBlitzExample('angular', 'demo-1');
+      expect(spy).toHaveBeenCalledWith(
+        'sdux-vault/stackblitz-examples/tree/main/stackblitz/angular/demo-1',
+        { openFile: 'src/app/example.component.ts' }
+      );
     });
   });
 });
