@@ -551,6 +551,47 @@ describe('PlanManager', () => {
     expect(consoleInfo).toEqual(['Audit: No stale dependencies found.']);
   });
 
+  it('printAudit skips caret ranges already targeting the exact version', () => {
+    fs.readFileSync.and.callFake((file) => {
+      if (file.includes('shared')) {
+        return JSON.stringify({ version: '1.0.2' });
+      }
+
+      if (file.includes('devtools')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '^1.0.2' }
+        });
+      }
+
+      if (file.includes('engine')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { devtools: '1.0.0' }
+        });
+      }
+
+      if (file.includes('core')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '^1.0.2' }
+        });
+      }
+
+      return '{}';
+    });
+
+    manager = new PlanManager({
+      graph,
+      projectRoot: '/repo',
+      libraries: structuredClone(libraries)
+    });
+
+    manager.printAudit();
+
+    expect(consoleInfo).toEqual(['Audit: No stale dependencies found.']);
+  });
+
   it('run with audit flag calls printAudit', () => {
     spyOn(manager, 'printAudit');
 

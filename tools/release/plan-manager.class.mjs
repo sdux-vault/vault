@@ -269,6 +269,7 @@ export class PlanManager {
         const actualVersion = allDeps[dep];
 
         if (actualVersion === expectedVersion) continue;
+        if (actualVersion === `^${expectedVersion}`) continue;
         if (!semver.satisfies(expectedVersion, actualVersion)) continue;
 
         if (!stale[lib]) {
