@@ -172,15 +172,17 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             In development, React StrictMode invokes effects twice to detect
             impure side effects. Because <strong>initialize()</strong> is
-            idempotent — calling it multiple times on the same FeatureCell has
-            no additional effect after the first call — StrictMode
+            idempotent — calling it multiple times on the same
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            has no additional effect after the first call — StrictMode
             double-invocation does not cause duplicate negotiation or
             double-broadcasting.
           </p>
 
           <p>
             If your cell initialization has expensive setup logic outside the
-            FeatureCell itself, guard the effect with a module-level flag:
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            itself, guard the effect with a module-level flag:
           </p>
 
           <sdux-example-viewer-source [displayTabs]="false">

@@ -81,6 +81,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/react-tab-sync-subscribe-before-initialize</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/redux-broke-my-trust</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

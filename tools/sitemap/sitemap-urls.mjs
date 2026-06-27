@@ -23,6 +23,7 @@ export const SITEMAP_URLS = [
   '/blog/one-engine-every-framework',
   '/blog/one-runtime-every-framework-zero-dependencies',
   '/blog/pipeline-anatomy',
+  '/blog/react-tab-sync-subscribe-before-initialize',
   '/blog/redux-broke-my-trust',
   '/blog/redux-pattern-sdux-vault-contract',
   '/blog/tab-sync-state',

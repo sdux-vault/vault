@@ -1,4 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
@@ -10,7 +11,7 @@ import {
  */
 @Component({
   selector: 'sdux-footer',
-  imports: [BrandNameComponent, RouterModule],
+  imports: [BrandNameComponent, MatTooltipModule, RouterModule],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
