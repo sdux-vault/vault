@@ -100,13 +100,13 @@ describe('CLI: release.update-version', () => {
 
     expect(consoleInfo).toEqual([
       'Syncing dependencies...',
-      'Updated shared → 2.0.0'
+      'Updated shared → ^2.0.0'
     ]);
 
     expect(writeFileSyncCalls.length).toEqual(1);
 
     const written = JSON.parse(writeFileSyncCalls[0].content);
-    expect(written.dependencies.shared).toEqual('2.0.0');
+    expect(written.dependencies.shared).toEqual('^2.0.0');
   });
 
   it('skips update when versions match', () => {
@@ -123,7 +123,7 @@ describe('CLI: release.update-version', () => {
     readFileSyncFiles = [
       JSON.stringify({
         dependencies: {
-          shared: '1.0.0'
+          shared: '^1.0.0'
         }
       })
     ];
@@ -189,7 +189,7 @@ describe('CLI: release.update-version', () => {
 
     expect(consoleInfo).toEqual([
       'Syncing dependencies...',
-      '⚠️  [dry-run] would update shared (1.0.0 → 2.0.0)',
+      '⚠️  [dry-run] would update shared (1.0.0 → ^2.0.0)',
       'Dependencies already up to date'
     ]);
 
@@ -219,13 +219,13 @@ describe('CLI: release.update-version', () => {
 
     expect(consoleInfo).toEqual([
       'Syncing dependencies...',
-      'Updated shared → 2.0.0'
+      'Updated shared → ^2.0.0'
     ]);
 
     expect(writeFileSyncCalls.length).toEqual(1);
 
     const written = JSON.parse(writeFileSyncCalls[0].content);
-    expect(written.peerDependencies.shared).toEqual('2.0.0');
+    expect(written.peerDependencies.shared).toEqual('^2.0.0');
   });
 
   it('updates devDependencies when mismatch exists', () => {
@@ -251,13 +251,13 @@ describe('CLI: release.update-version', () => {
 
     expect(consoleInfo).toEqual([
       'Syncing dependencies...',
-      'Updated shared → 2.0.0'
+      'Updated shared → ^2.0.0'
     ]);
 
     expect(writeFileSyncCalls.length).toEqual(1);
 
     const written = JSON.parse(writeFileSyncCalls[0].content);
-    expect(written.devDependencies.shared).toEqual('2.0.0');
+    expect(written.devDependencies.shared).toEqual('^2.0.0');
   });
 
   it('updates all dependency sections when mismatches exist', () => {
@@ -290,17 +290,17 @@ describe('CLI: release.update-version', () => {
 
     expect(consoleInfo).toEqual([
       'Syncing dependencies...',
-      'Updated shared → 2.0.0',
-      'Updated shared → 2.0.0',
-      'Updated devtools → 2.0.0'
+      'Updated shared → ^2.0.0',
+      'Updated shared → ^2.0.0',
+      'Updated devtools → ^2.0.0'
     ]);
 
     expect(writeFileSyncCalls.length).toEqual(1);
 
     const written = JSON.parse(writeFileSyncCalls[0].content);
-    expect(written.dependencies.shared).toEqual('2.0.0');
-    expect(written.peerDependencies.shared).toEqual('2.0.0');
-    expect(written.devDependencies.devtools).toEqual('2.0.0');
+    expect(written.dependencies.shared).toEqual('^2.0.0');
+    expect(written.peerDependencies.shared).toEqual('^2.0.0');
+    expect(written.devDependencies.devtools).toEqual('^2.0.0');
   });
 
   /* -----------------------------------------------------------
@@ -435,7 +435,7 @@ describe('CLI: release.update-version', () => {
 
     expect(consoleInfo).toEqual([
       'Syncing dependencies...',
-      'Updated shared → 2.0.0',
+      'Updated shared → ^2.0.0',
       'Syncing version file...',
       'Updated version file → 1.2.3'
     ]);
@@ -443,7 +443,7 @@ describe('CLI: release.update-version', () => {
     expect(writeFileSyncCalls.length).toEqual(2);
 
     const pkg = JSON.parse(writeFileSyncCalls[0].content);
-    expect(pkg.dependencies.shared).toEqual('2.0.0');
+    expect(pkg.dependencies.shared).toEqual('^2.0.0');
 
     expect(writeFileSyncCalls[1].content).toEqual(
       `const SDUX_VERSION = '1.2.3';`

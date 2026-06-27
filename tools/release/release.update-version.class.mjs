@@ -61,20 +61,21 @@ export class ReleaseUpdateVersion {
 
         const targetVersion = this.getVersionForLib(dep);
         const currentVersion = deps[dep];
+        const resolvedTarget = `^${targetVersion}`;
 
-        if (!targetVersion || currentVersion === targetVersion) continue;
+        if (!targetVersion || currentVersion === resolvedTarget) continue;
 
         if (this.dryRun) {
           console.info(
-            `⚠️  [dry-run] would update ${dep} (${currentVersion} → ${targetVersion})`
+            `⚠️  [dry-run] would update ${dep} (${currentVersion} → ${resolvedTarget})`
           );
           continue;
         }
 
-        deps[dep] = targetVersion;
+        deps[dep] = resolvedTarget;
         changed = true;
 
-        console.info(`Updated ${dep} → ${targetVersion}`);
+        console.info(`Updated ${dep} → ${resolvedTarget}`);
       }
     }
 
