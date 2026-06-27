@@ -159,6 +159,13 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Your Redux Reducers Already Work in SDuX Vault — SDuX Vault Blog',
       description:
         'Learn how pure Redux reducers work as SDuX Vault reducer behaviors with zero modification — register declaratively and preserve execution guarantees.'
+    },
+    {
+      link: '/blog/react-tab-sync-subscribe-before-initialize',
+      display: 'React + Tab Sync: Subscribe Before Initialize',
+      title: 'React Tab Sync Subscribe Before Initialize — SDuX Vault Blog',
+      description:
+        'Learn why React requires subscribing to state before calling initialize() when using Tab Sync, and how to fix the silent missed-snapshot issue.'
     }
   ]
 };

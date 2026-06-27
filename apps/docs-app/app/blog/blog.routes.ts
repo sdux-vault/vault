@@ -179,6 +179,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-26-your-redux-reducers-already-work-in-sdux-vault/your-redux-reducers-already-work-in-sdux-vault.component').then(
         (m) => m.BlogYourReduxReducersAlreadyWorkInSduxVaultComponent
       )
+  },
+  {
+    path: 'react-tab-sync-subscribe-before-initialize',
+    data: {
+      category: 'blogs',
+      type: 'react-tab-sync-subscribe-before-initialize'
+    },
+    loadComponent: () =>
+      import('./posts/2026-06-27-react-tab-sync-subscribe-before-initialize/react-tab-sync-subscribe-before-initialize.component').then(
+        (m) => m.BlogReactTabSyncSubscribeBeforeInitializeComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

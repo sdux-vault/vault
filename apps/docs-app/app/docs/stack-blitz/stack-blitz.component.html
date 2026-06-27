@@ -115,6 +115,14 @@
                 </button>
               }
             </div>
+
+            @if ($any(example).notice) {
+              <div class="callout callout-warning">
+                <strong>StackBlitz Limitation</strong>
+                <!-- trusted: static HTML from constants, not user-generated -->
+                <div [innerHTML]="$any(example).notice"></div>
+              </div>
+            }
           </div>
         </section>
       }
