@@ -138,6 +138,35 @@ describe('CLI: release.update-version', () => {
     expect(writeFileSyncCalls).toEqual([]);
   });
 
+  it('skips update when existing range already satisfies target version', () => {
+    updater = new ReleaseUpdateVersion({
+      packageRoot: '/repo',
+      graph: {
+        libraries: {
+          shared: {}
+        }
+      },
+      getVersionForLib: () => '1.0.1'
+    });
+
+    readFileSyncFiles = [
+      JSON.stringify({
+        dependencies: {
+          shared: '^1.0.0'
+        }
+      })
+    ];
+
+    updater.syncDependencies();
+
+    expect(consoleInfo).toEqual([
+      'Syncing dependencies...',
+      'Dependencies already up to date'
+    ]);
+
+    expect(writeFileSyncCalls).toEqual([]);
+  });
+
   it('ignores dependencies not in graph', () => {
     updater = new ReleaseUpdateVersion({
       packageRoot: '/repo',

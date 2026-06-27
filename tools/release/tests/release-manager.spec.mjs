@@ -180,6 +180,7 @@ describe('CLI: release-manager', () => {
       'npm run verify',
       '⚠️  [dry-run] command not executed',
       'Bumping version (patch)...',
+      '⚠️  [dry-run] would bump version to 1.2.4',
       'Bumping package version (patch)...',
       'git add libs/shared/package.json libs/shared/version.ts',
       '⚠️  [dry-run] command not executed',
@@ -201,6 +202,10 @@ describe('CLI: release-manager', () => {
       'cd /repo/dist/shared && npm pack',
       'Dry-run complete'
     ]);
+
+    expect(
+      writeFileSyncCalls.find((c) => c.file.endsWith('package.json'))
+    ).toBeUndefined();
   });
 
   /* -----------------------------------------------------------

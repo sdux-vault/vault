@@ -147,7 +147,12 @@ export class ReleaseManager {
           : `${major}.${minor}.${patch + 1}`;
 
     pkg.version = suffix ? `${bumped}-${suffix}` : bumped;
-    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2) + '\n');
+
+    if (this.dryRun) {
+      console.info(`⚠️  [dry-run] would bump version to ${pkg.version}`);
+    } else {
+      fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2) + '\n');
+    }
 
     const versionReleasePath = this.packageVersion();
 
