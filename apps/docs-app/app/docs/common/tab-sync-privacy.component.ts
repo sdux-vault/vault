@@ -4,24 +4,27 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: 'sdux-vault-tab-sync-privacy-common',
   standalone: true,
   template: `
-    <!-- Updated 2026-05-12 -->
+    <!-- Updated 2026-06-27 -->
     <section class="section">
       <div class="section-title">Privacy and Client-Side Storage</div>
       <div class="section-body">
         <p>
-          The Tab Sync system uses two browser storage mechanisms for cross-tab
-          coordination. Neither mechanism stores user data, application state,
-          or personally identifiable information.
+          The Tab Sync system uses one browser storage mechanism for cross-tab
+          coordination. It does not store user data, application state, or
+          personally identifiable information.
         </p>
 
-        <h4>sessionStorage</h4>
+        <h4>Tab Identifier (In-Memory)</h4>
         <p>
-          A single session-scoped tab identifier is stored in
-          <code>sessionStorage</code> under the key
-          <code>sdux-vault:tab-id</code>. This value is a random UUID generated
-          once per browser tab session. It is not transmitted to any server, is
-          not linked to user identity, and is automatically cleared when the tab
-          closes.
+          Each
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          instance generates a unique tab identifier via
+          <code>crypto.randomUUID()</code> at construction time. This value
+          exists only in memory for the lifetime of the page — it is never
+          written to any browser storage API or persistent mechanism. It is not
+          transmitted to any server and is not linked to user identity. When the
+          tab is closed, reloaded, or duplicated, a new identifier is generated
+          automatically.
         </p>
 
         <h4>localStorage</h4>
@@ -45,15 +48,15 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
         <h4>Regulatory Considerations</h4>
         <p>
-          Under the EU <strong>ePrivacy Directive</strong>, all client-side
-          storage mechanisms — including <code>sessionStorage</code> and
-          <code>localStorage</code> — are subject to consent requirements.
-          However, storage that is <em>strictly necessary</em> for the service
-          the user requested is exempt. A tab identifier and a peer-detection
-          registry used exclusively for cross-tab synchronization fall squarely
-          within that exemption and do not require a consent banner. The storage
-          should still be disclosed in the application's privacy policy as a
-          technical mechanism.
+          Under the EU <strong>ePrivacy Directive</strong>,
+          <code>localStorage</code> is subject to consent requirements. However,
+          storage that is <em>strictly necessary</em> for the service the user
+          requested is exempt. A peer-detection registry used exclusively for
+          cross-tab synchronization falls squarely within that exemption and
+          does not require a consent banner. The storage should still be
+          disclosed in the application's privacy policy as a technical
+          mechanism. The in-memory tab identifier is not subject to storage
+          consent requirements because it is never persisted.
         </p>
         <p>
           Under the California <strong>CCPA/CPRA</strong>, a random UUID that is
@@ -73,10 +76,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
         </p>
         <ul>
           <li>
-            The storage key <code>sdux-vault:tab-id</code> is named to be
-            self-describing and easily identifiable during audits.
-          </li>
-          <li>
             The storage key prefix
             <code>sdux-vault:tab-registry:</code> is named to be self-describing
             and easily identifiable during audits.
@@ -86,8 +85,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
             user correlation.
           </li>
           <li>
-            The tab identifier is scoped to <code>sessionStorage</code> and does
-            not persist beyond the browser tab session.
+            The tab identifier exists only in memory and is never persisted to
+            any storage mechanism.
           </li>
           <li>
             The tab registry is scoped to <code>localStorage</code> and is

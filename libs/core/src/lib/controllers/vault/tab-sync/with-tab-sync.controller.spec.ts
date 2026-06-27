@@ -7,7 +7,6 @@ import {
   StateSnapshotShape
 } from '@sdux-vault/shared';
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
-import { TAB_SYNC_SESSION_KEY } from '../../../constants/tab-sync-session-key.constant';
 import { TAB_SYNC_CTRL_CHANNEL_PREFIX } from './constants/tab-sync-ctrl-channel-prefix.constant';
 import { TAB_SYNC_REGISTRY_PREFIX } from './constants/tab-sync-registry-prefix.constant';
 import { TabSyncBusService } from './services/tab-sync-bus.service';
@@ -31,6 +30,7 @@ describe('Controller: withTabSyncController', () => {
   const registryKey = `${TAB_SYNC_REGISTRY_PREFIX}:${featureCellKey}`;
 
   const ctx: any = {
+    conductorId: 'test-conductor-id',
     featureCellKey
   };
 
@@ -91,12 +91,6 @@ describe('Controller: withTabSyncController', () => {
     setVaultLogLevel('debug');
 
     try {
-      sessionStorage.removeItem(TAB_SYNC_SESSION_KEY);
-    } catch {
-      // ignore
-    }
-
-    try {
       localStorage.removeItem(registryKey);
     } catch {
       // ignore
@@ -113,12 +107,6 @@ describe('Controller: withTabSyncController', () => {
     setVaultLogLevel('off');
 
     try {
-      sessionStorage.removeItem(TAB_SYNC_SESSION_KEY);
-    } catch {
-      // ignore
-    }
-
-    try {
       localStorage.removeItem(registryKey);
     } catch {
       // ignore
@@ -129,70 +117,8 @@ describe('Controller: withTabSyncController', () => {
   // Construction
   // ---------------------------------------------------------------------------
 
-  it('should have a stable tab identifier', () => {
-    expect(controller.tabId).toBeDefined();
-    expect(typeof controller.tabId).toBe('string');
-    expect(controller.tabId.length).toBeGreaterThan(0);
-  });
-
-  it('should persist tab identifier in sessionStorage', () => {
-    const stored = sessionStorage.getItem(TAB_SYNC_SESSION_KEY);
-    expect(stored).toBe(controller.tabId);
-  });
-
-  it('should fall back to random UUID when sessionStorage is unavailable', () => {
-    controller.destroy();
-
-    Object.defineProperty(globalThis, 'sessionStorage', {
-      value: undefined,
-      writable: true,
-      configurable: true
-    });
-
-    const degraded = new withTabSyncController('no-storage-key', {
-      featureCellKey: 'no-storage-cell'
-    } as any);
-
-    expect(degraded.tabId).toBeDefined();
-    expect(typeof degraded.tabId).toBe('string');
-    expect(degraded.tabId.length).toBeGreaterThan(0);
-
-    degraded.destroy();
-
-    Object.defineProperty(globalThis, 'sessionStorage', {
-      value: window.sessionStorage,
-      writable: true,
-      configurable: true
-    });
-  });
-
-  it('should fall back to random UUID when sessionStorage throws', () => {
-    controller.destroy();
-
-    const originalSessionStorage = window.sessionStorage;
-
-    Object.defineProperty(globalThis, 'sessionStorage', {
-      get() {
-        throw new DOMException('Access denied', 'SecurityError');
-      },
-      configurable: true
-    });
-
-    const degraded = new withTabSyncController('restricted-key', {
-      featureCellKey: 'restricted-cell'
-    } as any);
-
-    Object.defineProperty(globalThis, 'sessionStorage', {
-      value: originalSessionStorage,
-      writable: true,
-      configurable: true
-    });
-
-    expect(degraded.tabId).toBeDefined();
-    expect(typeof degraded.tabId).toBe('string');
-    expect(degraded.tabId.length).toBeGreaterThan(0);
-
-    degraded.destroy();
+  it('should use conductorId as the tab identifier', () => {
+    expect(controller.tabId).toBe('test-conductor-id');
   });
 
   // ---------------------------------------------------------------------------

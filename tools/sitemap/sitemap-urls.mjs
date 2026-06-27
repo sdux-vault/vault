@@ -29,6 +29,7 @@ export const SITEMAP_URLS = [
   '/blog/testing-state-3-steps',
   '/blog/welcome',
   '/blog/what-is-sdux-vault',
+  '/blog/your-redux-reducers-already-work-in-sdux-vault',
   '/contact',
   '/docs/dev-tools/built-in-debugger',
   '/docs/dev-tools/chrome-devtools-extension',

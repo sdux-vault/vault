@@ -19,7 +19,6 @@ import {
 } from '@sdux-vault/shared';
 import { Observable, of, race, Subject, Subscription, timer } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { TAB_SYNC_SESSION_KEY } from '../../../constants/tab-sync-session-key.constant';
 import { TAB_SYNC_CTRL_CHANNEL_PREFIX } from './constants/tab-sync-ctrl-channel-prefix.constant';
 import { TAB_SYNC_HEARTBEAT_INTERVAL } from './constants/tab-sync-heartbeat-interval.constant';
 import { TAB_SYNC_PEER_TIMEOUT } from './constants/tab-sync-peer-timeout.constant';
@@ -119,7 +118,7 @@ export class withTabSyncController<T> extends LicensingAbstract<T> {
     super(controllerCtx);
     this.key = key;
     this.#featureCellKey = controllerCtx.featureCellKey;
-    this.tabId = this.#resolveTabId();
+    this.tabId = controllerCtx.conductorId;
     this.#registryKey = `${TAB_SYNC_REGISTRY_PREFIX}:${this.#featureCellKey}`;
 
     vaultDebug(
@@ -137,28 +136,6 @@ export class withTabSyncController<T> extends LicensingAbstract<T> {
         this.validateLicense(valid);
       }
     );
-  }
-
-  /**
-   * Returns a stable tab identifier persisted in sessionStorage.
-   *
-   * @returns The resolved tab identifier string.
-   */
-  #resolveTabId(): string {
-    try {
-      if (typeof sessionStorage === 'undefined') {
-        return crypto.randomUUID();
-      }
-
-      let id = sessionStorage.getItem(TAB_SYNC_SESSION_KEY);
-      if (!id) {
-        id = crypto.randomUUID();
-        sessionStorage.setItem(TAB_SYNC_SESSION_KEY, id);
-      }
-      return id;
-    } catch {
-      return crypto.randomUUID();
-    }
   }
 
   /**
