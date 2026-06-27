@@ -2,6 +2,14 @@ import { LicensableClassContext } from './licensable-class.context';
 
 /** Runtime context supplied to controller class instances during pipeline execution. */
 export interface ControllerClassContext extends LicensableClassContext {
+  /**
+   * Unique identifier for the conductor instance that owns this pipeline.
+   *
+   * Generated once per page load and shared across all behaviors and
+   * controllers within the same conductor.
+   */
+  readonly conductorId: string;
+
   /** Unique key of the FeatureCell this controller is attached to. */
   featureCellKey: string;
   /** Requests a revote for the pipeline identified by the trace ID. */

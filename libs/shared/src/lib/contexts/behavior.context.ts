@@ -11,15 +11,6 @@ import { StateInputType } from '../types/state/state-input.type';
  */
 export interface BehaviorContext<T> {
   /**
-   * Unique identifier for the conductor instance that owns this pipeline.
-   *
-   * Generated once per page load and shared across all behaviors and
-   * controllers within the same conductor. Used by cross-tab features
-   * to distinguish messages originating from the local tab versus
-   * remote peers.
-   */
-  conductorId: string;
-  /**
    * Emits when the FeatureCell is destroyed. Behaviors may subscribe to this
    * to perform cleanup work.
    */
