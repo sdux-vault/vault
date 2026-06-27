@@ -26,8 +26,8 @@ describe('CLI: release.class (normalized)', () => {
       consoleError.push(msg.replace(/\n/g, ''));
     });
 
-    spyOn(PlanManager.prototype, 'run').and.callFake(function () {
-      planRun.push(this);
+    spyOn(PlanManager.prototype, 'run').and.callFake(function (opts) {
+      planRun.push({ instance: this, audit: opts?.audit ?? false });
     });
 
     spyOn(ReleaseManager.prototype, 'run').and.callFake(function () {
@@ -112,6 +112,7 @@ describe('CLI: release.class (normalized)', () => {
     await r.run();
 
     expect(planRun.length).toEqual(1);
+    expect(planRun[0].audit).toEqual(false);
     expect(releaseRun.length).toEqual(0);
   });
 
@@ -172,7 +173,8 @@ describe('CLI: release.class (normalized)', () => {
     expect(consoleInfo).toEqual([
       'Select mode:',
       '  1) Analyze (no changes, report only)',
-      '  2) Release (publish + update dependencies)',
+      '  2) Analyze with Audit (no changes, full dependency health report)',
+      '  3) Release (publish + update dependencies)',
       'Run mode:',
       '  1) Dry run (no files will be written)',
       '  2) Real run (updates version, writes + commit)',
@@ -202,7 +204,8 @@ describe('CLI: release.class (normalized)', () => {
     expect(consoleInfo).toEqual([
       'Select mode:',
       '  1) Analyze (no changes, report only)',
-      '  2) Release (publish + update dependencies)',
+      '  2) Analyze with Audit (no changes, full dependency health report)',
+      '  3) Release (publish + update dependencies)',
       'Run mode:',
       '  1) Dry run (no files will be written)',
       '  2) Real run (updates version, writes + commit)',
@@ -213,6 +216,53 @@ describe('CLI: release.class (normalized)', () => {
       '  2) minor  (new features)',
       '  3) major  (breaking changes)'
     ]);
+  });
+
+  it('runs plan manager in audit mode', async () => {
+    const r = new Release({
+      projectRoot: '/repo',
+      args: ['--mode=audit'],
+      libraries: LIBS,
+      dependencyGraph: GRAPH
+    });
+
+    await r.run();
+
+    expect(planRun.length).toEqual(1);
+    expect(planRun[0].audit).toEqual(true);
+    expect(releaseRun.length).toEqual(0);
+  });
+
+  it('prompts interactive audit flow', async () => {
+    answers = ['audit'];
+
+    const r = new Release({
+      projectRoot: '/repo',
+      args: [],
+      libraries: LIBS,
+      dependencyGraph: GRAPH
+    });
+
+    await r.run();
+
+    expect(planRun.length).toEqual(1);
+    expect(planRun[0].audit).toEqual(true);
+  });
+
+  it('fails audit without graph', async () => {
+    spyOn(process, 'exit').and.callFake(() => {
+      throw new Error('exit');
+    });
+
+    const r = new Release({
+      projectRoot: '/repo',
+      args: ['--mode=audit'],
+      libraries: LIBS
+    });
+
+    await expectAsync(r.run()).toBeRejected();
+
+    expect(consoleError).toEqual(['❌ Missing or invalid dependency graph']);
   });
 
   it('filters engine libraries correctly', async () => {
@@ -231,7 +281,8 @@ describe('CLI: release.class (normalized)', () => {
     expect(consoleInfo).toEqual([
       'Select mode:',
       '  1) Analyze (no changes, report only)',
-      '  2) Release (publish + update dependencies)',
+      '  2) Analyze with Audit (no changes, full dependency health report)',
+      '  3) Release (publish + update dependencies)',
       'Run mode:',
       '  1) Dry run (no files will be written)',
       '  2) Real run (updates version, writes + commit)',

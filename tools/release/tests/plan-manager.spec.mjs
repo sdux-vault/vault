@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import semver from 'semver';
 import { PlanManager } from '../plan-manager.class.mjs';
 
 describe('PlanManager', () => {
@@ -316,5 +317,253 @@ describe('PlanManager', () => {
       '',
       '✔ Plan complete'
     ]);
+  });
+
+  /* -----------------------------------------------------------
+   * SEMVER-SATISFIED RANGES
+   * --------------------------------------------------------- */
+
+  it('skips dependencies that satisfy semver range', () => {
+    fs.readFileSync.and.callFake((file) => {
+      if (file.includes('shared')) {
+        return JSON.stringify({ version: '1.0.2' });
+      }
+
+      if (file.includes('devtools')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '^1.0.1' }
+        });
+      }
+
+      if (file.includes('engine')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { devtools: '1.0.0' }
+        });
+      }
+
+      if (file.includes('core')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '^1.0.0' }
+        });
+      }
+
+      return '{}';
+    });
+
+    manager = new PlanManager({
+      graph,
+      projectRoot: '/repo',
+      libraries: structuredClone(libraries)
+    });
+
+    const { toRelease } = manager.resolveReleaseCandidates();
+
+    expect(Array.from(toRelease)).toEqual([]);
+  });
+
+  it('flags pinned versions that do not satisfy', () => {
+    fs.readFileSync.and.callFake((file) => {
+      if (file.includes('shared')) {
+        return JSON.stringify({ version: '1.0.2' });
+      }
+
+      if (file.includes('devtools')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '1.0.0' }
+        });
+      }
+
+      if (file.includes('engine')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { devtools: '1.0.0' }
+        });
+      }
+
+      if (file.includes('core')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '^1.0.0' }
+        });
+      }
+
+      return '{}';
+    });
+
+    manager = new PlanManager({
+      graph,
+      projectRoot: '/repo',
+      libraries: structuredClone(libraries)
+    });
+
+    const { toRelease, reasons } = manager.resolveReleaseCandidates();
+
+    expect(Array.from(toRelease)).toEqual(['devtools', 'engine', 'core']);
+
+    expect(reasons.devtools).toEqual([
+      'shared version mismatch (1.0.0 → 1.0.2)'
+    ]);
+  });
+
+  /* -----------------------------------------------------------
+   * AUDIT
+   * --------------------------------------------------------- */
+
+  it('resolveAuditCandidates returns stale-but-satisfied deps', () => {
+    fs.readFileSync.and.callFake((file) => {
+      if (file.includes('shared')) {
+        return JSON.stringify({ version: '1.0.2' });
+      }
+
+      if (file.includes('devtools')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '^1.0.1' }
+        });
+      }
+
+      if (file.includes('engine')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { devtools: '1.0.0' }
+        });
+      }
+
+      if (file.includes('core')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '1.0.2' }
+        });
+      }
+
+      return '{}';
+    });
+
+    manager = new PlanManager({
+      graph,
+      projectRoot: '/repo',
+      libraries: structuredClone(libraries)
+    });
+
+    const stale = manager.resolveAuditCandidates();
+
+    expect(Object.keys(stale)).toEqual(['devtools']);
+
+    expect(stale.devtools.items).toEqual([
+      {
+        dependency: 'shared',
+        actualVersion: '^1.0.1',
+        expectedVersion: '1.0.2'
+      }
+    ]);
+  });
+
+  it('printAudit prints stale dependencies', () => {
+    fs.readFileSync.and.callFake((file) => {
+      if (file.includes('shared')) {
+        return JSON.stringify({ version: '1.0.2' });
+      }
+
+      if (file.includes('devtools')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '^1.0.1' }
+        });
+      }
+
+      if (file.includes('engine')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { devtools: '1.0.0' }
+        });
+      }
+
+      if (file.includes('core')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '1.0.2' }
+        });
+      }
+
+      return '{}';
+    });
+
+    manager = new PlanManager({
+      graph,
+      projectRoot: '/repo',
+      libraries: structuredClone(libraries)
+    });
+
+    manager.printAudit();
+
+    expect(consoleInfo).toEqual([
+      'Audit Report (satisfied but stale):',
+      'Level 0:',
+      '  - devtools [1.0.0]',
+      '\t ℹ shared is satisfied (^1.0.1 covers 1.0.2) but could be tightened to ^1.0.2',
+      '',
+      '✔ Audit complete'
+    ]);
+  });
+
+  it('printAudit prints no stale message when all exact', () => {
+    fs.readFileSync.and.callFake((file) => {
+      if (file.includes('shared')) {
+        return JSON.stringify({ version: '1.0.0' });
+      }
+
+      if (file.includes('devtools')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '1.0.0' }
+        });
+      }
+
+      if (file.includes('engine')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { devtools: '1.0.0' }
+        });
+      }
+
+      if (file.includes('core')) {
+        return JSON.stringify({
+          version: '1.0.0',
+          dependencies: { shared: '1.0.0' }
+        });
+      }
+
+      return '{}';
+    });
+
+    manager = new PlanManager({
+      graph,
+      projectRoot: '/repo',
+      libraries: structuredClone(libraries)
+    });
+
+    manager.printAudit();
+
+    expect(consoleInfo).toEqual(['Audit: No stale dependencies found.']);
+  });
+
+  it('run with audit flag calls printAudit', () => {
+    spyOn(manager, 'printAudit');
+
+    manager.run({ audit: true });
+
+    expect(manager.printAudit).toHaveBeenCalled();
+  });
+
+  it('run without audit flag does not call printAudit', () => {
+    spyOn(manager, 'printAudit');
+
+    manager.run();
+
+    expect(manager.printAudit).not.toHaveBeenCalled();
   });
 });

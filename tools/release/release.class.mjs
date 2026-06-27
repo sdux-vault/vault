@@ -71,9 +71,12 @@ export class Release {
 
       console.info('\nSelect mode:\n');
       console.info('  1) Analyze (no changes, report only)');
-      console.info('  2) Release (publish + update dependencies)\n');
+      console.info(
+        '  2) Analyze with Audit (no changes, full dependency health report)'
+      );
+      console.info('  3) Release (publish + update dependencies)\n');
 
-      rl.question('Enter choice (1 or 2): ', (answer) => {
+      rl.question('Enter choice (1, 2, or 3): ', (answer) => {
         rl.close();
 
         const normalized = answer.trim().toLowerCase();
@@ -82,7 +85,11 @@ export class Release {
           return resolve('analyze');
         }
 
-        if (normalized === '2' || normalized === 'release') {
+        if (normalized === '2' || normalized === 'audit') {
+          return resolve('audit');
+        }
+
+        if (normalized === '3' || normalized === 'release') {
           return resolve('release');
         }
 
@@ -205,20 +212,23 @@ export class Release {
       this.mode = await this.askForMode();
     }
 
-    if (this.mode === 'analyze') {
+    if (this.mode === 'analyze' || this.mode === 'audit') {
       if (!this.dependencyGraph?.levels || !this.dependencyGraph?.libraries) {
         console.error('\n❌ Missing or invalid dependency graph\n');
         process.exit(1);
       }
 
-      console.info('\nRunning in ANALYZE mode (no changes will be made)\n');
+      const isAudit = this.mode === 'audit';
+      const label = isAudit ? 'AUDIT' : 'ANALYZE';
+
+      console.info(`\nRunning in ${label} mode (no changes will be made)\n`);
       const manager = new PlanManager({
         graph: this.dependencyGraph,
         projectRoot: this.projectRoot,
         libraries: this.LIBRARIES
       });
 
-      manager.run();
+      manager.run({ audit: isAudit });
     } else {
       if (this.dryRun === undefined) {
         this.dryRun = await this.askForDryRun();

@@ -4,6 +4,7 @@
 // --- END AI MODEL FILE PATH ---
 
 import fs from 'node:fs';
+import semver from 'semver';
 
 export class PlanManager {
   constructor({ graph, projectRoot, libraries = {} } = {}) {
@@ -21,13 +22,17 @@ export class PlanManager {
    * MAIN
    * --------------------------------------------------------- */
 
-  run() {
+  run({ audit = false } = {}) {
     console.info('\nBuilding release plan...\n');
 
     const details = this.resolveReleaseCandidates();
     const ordered = this.orderByLevels(details.toRelease);
 
     this.printPlan(ordered, details);
+
+    if (audit) {
+      this.printAudit(details);
+    }
 
     return ordered;
   }
@@ -109,6 +114,8 @@ export class PlanManager {
           throw new Error(`Missing expected version for ${dep}`);
         }
         if (actualVersion === expectedVersion) continue;
+
+        if (semver.satisfies(expectedVersion, actualVersion)) continue;
 
         toRelease.add(lib);
 
@@ -231,5 +238,91 @@ export class PlanManager {
     });
 
     console.info('✔ Plan complete\n');
+  }
+
+  /* -----------------------------------------------------------
+   * AUDIT
+   * --------------------------------------------------------- */
+
+  resolveAuditCandidates() {
+    const stale = {};
+    const packageCache = {};
+    const versions = {};
+
+    for (const lib of Object.keys(this.libraries)) {
+      const pkg = this.getPackageJson(lib);
+      packageCache[lib] = pkg;
+      versions[lib] = pkg.version;
+    }
+
+    for (const lib of Object.keys(this.librariesGraph)) {
+      const pkg = packageCache[lib];
+      const deps = pkg.dependencies || {};
+      const peerDeps = pkg.peerDependencies || {};
+      const devDeps = pkg.devDependencies || {};
+      const allDeps = { ...deps, ...peerDeps, ...devDeps };
+
+      for (const dep of Object.keys(allDeps)) {
+        if (!this.librariesGraph[dep]) continue;
+
+        const expectedVersion = versions[dep];
+        const actualVersion = allDeps[dep];
+
+        if (actualVersion === expectedVersion) continue;
+        if (!semver.satisfies(expectedVersion, actualVersion)) continue;
+
+        if (!stale[lib]) {
+          stale[lib] = {
+            packageVersion: pkg.version || null,
+            items: []
+          };
+        }
+
+        stale[lib].items.push({
+          dependency: dep,
+          actualVersion,
+          expectedVersion
+        });
+      }
+    }
+
+    return stale;
+  }
+
+  printAudit(resolved = {}) {
+    const stale = this.resolveAuditCandidates();
+    const staleLibs = Object.keys(stale);
+
+    if (staleLibs.length === 0) {
+      console.info('Audit: No stale dependencies found.\n');
+      return;
+    }
+
+    console.info('Audit Report (satisfied but stale):\n');
+
+    const orderedStale = this.orderByLevels(new Set(staleLibs));
+
+    orderedStale.forEach((level, index) => {
+      console.info(`Level ${index}:`);
+
+      level.forEach((lib) => {
+        const info = stale[lib];
+        const versionLabel = info?.packageVersion
+          ? ` [${info.packageVersion}]`
+          : '';
+
+        console.info(`  - ${lib}${versionLabel}`);
+
+        info.items.forEach((item) => {
+          console.info(
+            `\t ℹ ${item.dependency} is satisfied (${item.actualVersion} covers ${item.expectedVersion}) but could be tightened to ^${item.expectedVersion}`
+          );
+        });
+      });
+
+      console.info('');
+    });
+
+    console.info('✔ Audit complete\n');
   }
 }
