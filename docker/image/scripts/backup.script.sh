@@ -15,18 +15,34 @@ printf "Docker containers:\n\n"
 docker ps -a --filter "name=$IMAGE_NAME"
 
 printf "\n\n\n\nDocker images:\n\n"
-docker image ls --filter "reference=$IMAGE_NAME"
+mapfile -t image_tags < <(docker image ls --format '{{.Repository}} {{.Tag}}' | grep -E "^(${IMAGE_NAME}) v" | awk '{print $2}')
+
+if [ ${#image_tags[@]} -eq 0 ]; then
+  printf "⚠️ No images found for ${IMAGE_NAME}.\n\n"
+  exit 1
+fi
+
+for i in "${!image_tags[@]}"; do
+  echo "$((i+1)). ${IMAGE_NAME} ${image_tags[$i]}"
+done
 
 printf "\n\n"
 
 # Prompt for the version
-read -p "Enter the image version to mount for the backup (e.g. v1.3.3): " VERSION_TAG
-if [ -z "$VERSION_TAG" ]; then
-  printf "\n❌ Error: You must provide a version tag. Usage: ./mount-backup.script.sh v1.3.3\n\n"
-  exit 1
-else
-  printf "\n📦 Using version tag: $VERSION_TAG\n\n"
+read -p "Enter the number of the image to mount for backup (x to exit): " selection
+
+if [[ "$selection" == "x" || "$selection" == "X" ]]; then
+  printf "\n\nGood-bye.\n\n"
+  exit 0
 fi
+
+if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt ${#image_tags[@]} ]; then
+  printf "\n\n❌ Invalid selection.\n\n"
+  exit 1
+fi
+
+VERSION_TAG="${image_tags[$((selection-1))]}"
+printf "\n📦 Using version tag: $VERSION_TAG\n\n"
 
 # Stop and remove backup container if running
 printf "\n🛑 Stopping sdux-backup container...\n\n"
