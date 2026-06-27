@@ -8,7 +8,6 @@ import {
 } from '@sdux-vault/shared';
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
 import { Subject } from 'rxjs';
-import { TAB_SYNC_SESSION_KEY } from '../../../constants/tab-sync-session-key.constant';
 import { TabSyncBusService } from '../../../controllers/vault/tab-sync/services/tab-sync-bus.service';
 import { TabSyncBusCommandTypes } from '../../../controllers/vault/tab-sync/types/tab-sync-bus-command.type';
 import { TabSyncMessageShape } from '../../../shapes/state/tab-sync-message.shape';
@@ -22,8 +21,6 @@ describe('Behavior: TabSyncState', () => {
   let state$: Subject<StateEmitSnapshotShape<any>>;
 
   beforeEach(() => {
-    sessionStorage.removeItem(TAB_SYNC_SESSION_KEY);
-
     warnSpy = spyOn(console, 'warn');
     spyOn(console, 'error');
     spyOn(console, 'debug');
@@ -57,6 +54,7 @@ describe('Behavior: TabSyncState', () => {
     state$.asObservable().subscribe((s) => emitted.push(s));
 
     behavior = new withTabSyncStateBehavior('tab-sync-key', {
+      conductorId: 'test-conductor-id',
       featureCellKey: 'test-cell',
       lastSnapshot: mockCtx.lastSnapshot,
       state$
@@ -67,7 +65,6 @@ describe('Behavior: TabSyncState', () => {
     behavior.destroy(mockCtx);
     setVaultLogLevel('off');
     state$.complete();
-    sessionStorage.removeItem(TAB_SYNC_SESSION_KEY);
   });
 
   // -------------------------------------------------------
@@ -113,15 +110,13 @@ describe('Behavior: TabSyncState', () => {
       expect(behavior.critical).toBeTrue();
     });
 
-    it('should generate a unique tabId persisted in sessionStorage', () => {
-      expect(behavior.tabId).toBeDefined();
-      expect(typeof behavior.tabId).toBe('string');
-      expect(behavior.tabId.length).toBeGreaterThan(0);
-      expect(sessionStorage.getItem(TAB_SYNC_SESSION_KEY)).toBe(behavior.tabId);
+    it('should use conductorId as the tabId', () => {
+      expect(behavior.tabId).toBe('test-conductor-id');
     });
 
-    it('should share the same tabId across instances in the same tab', () => {
+    it('should share the same tabId when given the same conductorId', () => {
       const other = new withTabSyncStateBehavior('other-key', {
+        conductorId: 'test-conductor-id',
         featureCellKey: 'other-cell',
         lastSnapshot: mockCtx.lastSnapshot,
         state$
@@ -130,15 +125,14 @@ describe('Behavior: TabSyncState', () => {
       other.destroy(mockCtx);
     });
 
-    it('should generate a new tabId when sessionStorage is cleared', () => {
-      const originalId = behavior.tabId;
-      sessionStorage.removeItem(TAB_SYNC_SESSION_KEY);
+    it('should have different tabIds when given different conductorIds', () => {
       const fresh = new withTabSyncStateBehavior('fresh-key', {
+        conductorId: 'different-conductor-id',
         featureCellKey: 'fresh-cell',
         lastSnapshot: mockCtx.lastSnapshot,
         state$
       } as any);
-      expect(fresh.tabId).not.toBe(originalId);
+      expect(fresh.tabId).not.toBe(behavior.tabId);
       fresh.destroy(mockCtx);
     });
   });
@@ -1557,32 +1551,26 @@ describe('Behavior: TabSyncState', () => {
 
   describe('graceful degradation', () => {
     let originalBroadcastChannel: typeof BroadcastChannel;
-    let originalSessionStorage: Storage;
 
     beforeEach(() => {
       originalBroadcastChannel = globalThis.BroadcastChannel;
-      originalSessionStorage = globalThis.sessionStorage;
     });
 
     afterEach(() => {
       globalThis.BroadcastChannel = originalBroadcastChannel;
-      Object.defineProperty(globalThis, 'sessionStorage', {
-        value: originalSessionStorage,
-        writable: true,
-        configurable: true
-      });
     });
 
     it('should operate as core state when BroadcastChannel is unavailable', () => {
       (globalThis as any).BroadcastChannel = undefined;
 
       const degraded = new withTabSyncStateBehavior('degraded-key', {
+        conductorId: 'degraded-conductor',
         featureCellKey: 'degraded-cell',
         lastSnapshot: mockCtx.lastSnapshot,
         state$
       } as any);
 
-      expect(degraded.tabId).toBeDefined();
+      expect(degraded.tabId).toBe('degraded-conductor');
 
       const degradedCtx = { ...mockCtx };
       degradedCtx.incoming = { value: 'test' };
@@ -1590,47 +1578,6 @@ describe('Behavior: TabSyncState', () => {
       expect(result).toEqual({ value: 'test' });
 
       degraded.destroy(degradedCtx);
-    });
-
-    it('should fall back to random UUID when sessionStorage is unavailable', () => {
-      Object.defineProperty(globalThis, 'sessionStorage', {
-        value: undefined,
-        writable: true,
-        configurable: true
-      });
-
-      const degraded = new withTabSyncStateBehavior('no-storage-key', {
-        featureCellKey: 'no-storage-cell',
-        lastSnapshot: mockCtx.lastSnapshot,
-        state$
-      } as any);
-
-      expect(degraded.tabId).toBeDefined();
-      expect(typeof degraded.tabId).toBe('string');
-      expect(degraded.tabId.length).toBeGreaterThan(0);
-
-      degraded.destroy(mockCtx);
-    });
-
-    it('should fall back to random UUID when sessionStorage throws', () => {
-      Object.defineProperty(globalThis, 'sessionStorage', {
-        get() {
-          throw new DOMException('Access denied', 'SecurityError');
-        },
-        configurable: true
-      });
-
-      const degraded = new withTabSyncStateBehavior('restricted-key', {
-        featureCellKey: 'restricted-cell',
-        lastSnapshot: mockCtx.lastSnapshot,
-        state$
-      } as any);
-
-      expect(degraded.tabId).toBeDefined();
-      expect(typeof degraded.tabId).toBe('string');
-      expect(degraded.tabId.length).toBeGreaterThan(0);
-
-      degraded.destroy(mockCtx);
     });
   });
 });

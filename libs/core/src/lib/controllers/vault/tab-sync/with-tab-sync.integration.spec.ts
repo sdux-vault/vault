@@ -10,7 +10,6 @@ import {
 } from '@sdux-vault/shared';
 import { Subject } from 'rxjs';
 import { withTabSyncStateBehavior } from '../../../behaviors/vault/with-tab-sync-state/with-tab-sync-state.behavior';
-import { TAB_SYNC_SESSION_KEY } from '../../../constants/tab-sync-session-key.constant';
 import { TAB_SYNC_CTRL_CHANNEL_PREFIX } from './constants/tab-sync-ctrl-channel-prefix.constant';
 import { TabSyncBusService } from './services/tab-sync-bus.service';
 import { TabSyncBusCommandShape } from './shapes/tab-sync-bus-command.shape';
@@ -44,26 +43,10 @@ describe('Integration: TabSync Controller + Behavior', () => {
     debugSpy = spyOn(console, 'debug');
   });
 
-  // Cache the real sessionStorage reference before any test can corrupt it
-  const realSessionStorage: Storage = window.sessionStorage;
-
   beforeEach(() => {
     warnSpy.calls.reset();
     debugSpy.calls.reset();
     setVaultLogLevel('debug');
-
-    // Restore sessionStorage if a prior test corrupted it
-    Object.defineProperty(globalThis, 'sessionStorage', {
-      value: realSessionStorage,
-      writable: true,
-      configurable: true
-    });
-
-    try {
-      sessionStorage.removeItem(TAB_SYNC_SESSION_KEY);
-    } catch {
-      // ignore
-    }
 
     bus = TabSyncBusService();
     localStorage.removeItem(registryKey);
@@ -72,12 +55,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
   afterEach(() => {
     setVaultLogLevel('off');
     localStorage.removeItem(registryKey);
-
-    try {
-      sessionStorage.removeItem(TAB_SYNC_SESSION_KEY);
-    } catch {
-      // ignore
-    }
   });
 
   // -------------------------------------------------------------------------
@@ -94,11 +71,9 @@ describe('Integration: TabSync Controller + Behavior', () => {
 
   /**
    * Creates a paired controller + behavior simulating a single tab.
-   * Uses a fixed tabId override via sessionStorage to control identity.
+   * Uses conductorId to control tab identity.
    */
   function createTab(tabId: string): TabInstance {
-    sessionStorage.setItem(TAB_SYNC_SESSION_KEY, tabId);
-
     const state$ = new Subject<StateEmitSnapshotShape<any>>();
     const emitted: StateEmitSnapshotShape<any>[] = [];
     state$.subscribe((s) => emitted.push(s));
@@ -127,10 +102,12 @@ describe('Integration: TabSync Controller + Behavior', () => {
     } as any;
 
     const controller = new withTabSyncController(`ctrl-${tabId}`, {
+      conductorId: tabId,
       featureCellKey
     } as any);
 
     const behavior = new withTabSyncStateBehavior(`behavior-${tabId}`, {
+      conductorId: tabId,
       featureCellKey,
       lastSnapshot,
       state$
@@ -351,7 +328,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
           );
 
           // Now create tab 2
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -382,7 +358,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
             tab1.ctx
           );
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           // Clear commands to isolate tab 2's activity
@@ -431,7 +406,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
             tab1.ctx
           );
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -470,7 +444,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
             tab1.ctx
           );
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -523,7 +496,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
             tab1.ctx
           );
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -575,7 +547,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
           // Clear observer from tab 1's broadcast
           behaviorObserver.messages.length = 0;
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -630,7 +601,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
 
           behaviorObserver.messages.length = 0;
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -706,7 +676,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
             tab1.ctx
           );
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -751,7 +720,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
 
           ctrlObserver.messages.length = 0;
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -821,7 +789,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
         .subscribe(() => {
           const commands = collectBusCommands();
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -869,7 +836,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
 
           const notifications = collectBusNotifications();
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -911,7 +877,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
 
           const commands = collectBusCommands();
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -970,7 +935,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
             tab1.ctx
           );
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -1023,7 +987,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
             tab1.ctx
           );
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller
@@ -1077,7 +1040,6 @@ describe('Integration: TabSync Controller + Behavior', () => {
             tab1.ctx
           );
 
-          sessionStorage.setItem(TAB_SYNC_SESSION_KEY, 'tab-2');
           tab2 = createTab('tab-2');
 
           tab2.controller

@@ -16,7 +16,6 @@ import {
 import { Subscription } from 'rxjs';
 import { withCoreStateBehavior } from '../../../behaviors/state/with-core-state/with-core-state.behavior';
 import { TAB_SYNC_CHANNEL_PREFIX } from '../../../constants/tab-sync-channel-prefix.constant';
-import { TAB_SYNC_SESSION_KEY } from '../../../constants/tab-sync-session-key.constant';
 import { TabSyncBusService } from '../../../controllers/vault/tab-sync/services/tab-sync-bus.service';
 import { TabSyncBusCommandTypes } from '../../../controllers/vault/tab-sync/types/tab-sync-bus-command.type';
 import { TabSyncBusNotificationTypes } from '../../../controllers/vault/tab-sync/types/tab-sync-bus-notification.type';
@@ -96,7 +95,7 @@ export class withTabSyncStateBehavior<T> extends withCoreStateBehavior<T> {
     super(key, behaviorCtx);
     this.key = key;
     this.#featureCellKey = behaviorCtx.featureCellKey;
-    this.tabId = this.#resolveTabId();
+    this.tabId = behaviorCtx.conductorId;
 
     const tabSyncCtx = behaviorCtx as TabSyncBehaviorClassContext;
 
@@ -115,28 +114,6 @@ export class withTabSyncStateBehavior<T> extends withCoreStateBehavior<T> {
       (valid: boolean) => this.validateLicense(valid)
     );
     this.#subscribeToBusCommands();
-  }
-
-  /**
-   * Returns a stable tab identifier persisted in sessionStorage.
-   *
-   * @returns The resolved tab identifier string.
-   */
-  #resolveTabId(): string {
-    try {
-      if (typeof sessionStorage === 'undefined') {
-        return crypto.randomUUID();
-      }
-
-      let id = sessionStorage.getItem(TAB_SYNC_SESSION_KEY);
-      if (!id) {
-        id = crypto.randomUUID();
-        sessionStorage.setItem(TAB_SYNC_SESSION_KEY, id);
-      }
-      return id;
-    } catch {
-      return crypto.randomUUID();
-    }
   }
 
   /**
