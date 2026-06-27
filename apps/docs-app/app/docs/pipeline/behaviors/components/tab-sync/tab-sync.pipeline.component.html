@@ -303,26 +303,17 @@
 
     <div class="section-body">
       <p>
-        Each tab maintains a stable identifier stored in
-        <code>sessionStorage</code> under the key
-        <code>sdux-vault:tab-id</code>. This identifier is a UUID generated once
-        per browser tab session and persists across page reloads within the same
-        tab. When a tab is closed, <code>sessionStorage</code> is cleared
-        automatically by the browser, and a new identifier is assigned if the
-        user opens a fresh tab.
+        Each
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance receives a unique tab identifier (called a
+        <strong>conductor ID</strong>) generated automatically at construction
+        time via <code>crypto.randomUUID()</code>. This identifier is ephemeral
+        — it exists only for the lifetime of the page and is never persisted to
+        storage. When a tab is closed or the page is reloaded, a new identifier
+        is generated. When a tab is duplicated, the cloned tab receives its own
+        fresh identifier because the ID is generated in-memory, not read from
+        storage.
       </p>
-
-      <div class="callout callout-warning">
-        <strong>Non-Persistent Fallback</strong>
-        <p>
-          In environments where <code>sessionStorage</code> is unavailable or
-          access is restricted — such as server-side rendering, sandboxed
-          iframes, or certain privacy-focused browser configurations — the
-          behavior falls back to generating a plain UUID without persistence.
-          The tab identifier remains functional for the lifetime of the behavior
-          instance but will not survive page reloads.
-        </p>
-      </div>
 
       <p>
         The tab identifier is included in every broadcast message. Receiving
@@ -332,22 +323,13 @@
         the originating tab.
       </p>
 
-      <h4>Reading the Tab Identifier</h4>
-      <p>
-        The tab identifier is accessible at any time from
-        <code>sessionStorage</code> using the
-        <code>sdux-vault:tab-id</code> key. Because it is session-scoped and
-        stable, application code can read it to correlate local activity with
-        incoming broadcast messages.
-      </p>
-
       <h4>Filtering Broadcasts by Tab</h4>
       <p>
         By default, Tab Sync applies all valid remote snapshots to the local
         state. In some scenarios, applications may want to selectively process
-        broadcasts based on which tab sent them. The stable tab identifier makes
-        this possible by providing a consistent origin reference that survives
-        page navigation and reloads within the same tab session.
+        broadcasts based on which tab sent them. The tab identifier makes this
+        possible by providing a consistent origin reference for the lifetime of
+        the page.
       </p>
 
       <p>Common scenarios where broadcast filtering by tab is useful:</p>
@@ -381,28 +363,11 @@
       </ul>
 
       <div class="callout callout-info">
-        <strong>Session Scope</strong>
+        <strong>In-Memory Only</strong>
         <p>
-          The tab identifier is scoped to <code>sessionStorage</code> and is
-          never transmitted to a server. It exists solely for client-side
-          coordination between browser tabs sharing the same origin.
-        </p>
-      </div>
-      <div class="callout callout-warning">
-        <strong>Duplicate Tab Cloning</strong>
-        <p>
-          When a browser tab is duplicated (for example, using "Duplicate Tab"
-          in Chrome or Firefox), the new tab receives a copy of the original
-          tab's <code>sessionStorage</code>, including the
-          <code>sdux-vault:tab-id</code> value. This means the cloned tab will
-          initially share the same tab identifier as its source. Because Tab
-          Sync uses the tab identifier to filter out self-originated broadcasts,
-          both tabs will discard each other's messages as if they were local —
-          effectively preventing synchronization between them until one tab's
-          identifier changes. A page reload in the cloned tab will not resolve
-          this, as <code>sessionStorage</code> persists across reloads. The
-          identifier is only regenerated when <code>sessionStorage</code> is
-          explicitly cleared or the tab is closed and a new one is opened.
+          The tab identifier is generated in-memory and is never transmitted to
+          a server or persisted to any storage mechanism. It exists solely for
+          client-side coordination between browser tabs sharing the same origin.
         </p>
       </div>
     </div>
@@ -513,9 +478,9 @@
           There is no need to conditionally attach
           <code>withTabSyncStateBehavior</code> based on the runtime
           environment. The behavior detects the availability of
-          <code>BroadcastChannel</code> and <code>sessionStorage</code> at
-          construction time and adapts accordingly. In non-browser environments,
-          the tab identifier falls back to a plain UUID without persistence.
+          <code>BroadcastChannel</code> at construction time and adapts
+          accordingly. In non-browser environments, the behavior operates as
+          standard Core State seamlessly.
         </p>
       </div>
     </div>
@@ -820,6 +785,38 @@ employeeCell.state$.subscribe(snapshot => {
 });`}}</code></pre>
                 </sdux-example-viewer-tab>
               </sdux-example-viewer-source>
+
+              <div class="callout callout-warning">
+                <strong>Subscribe Before Initialize</strong>
+                <p>
+                  In React, the state subscription must be established
+                  <strong>before</strong> calling <code>initialize()</code> on
+                  the
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >. The Tab Sync controller performs BroadcastChannel
+                  negotiation during initialization and commits the negotiated
+                  snapshot synchronously. If the subscription is not active at
+                  that point, the component misses the initial cross-tab state.
+                </p>
+                <p>
+                  Place the subscription inside <code>useEffect</code> and call
+                  <code>initialize()</code> after it. Use a module-level flag to
+                  guard against React StrictMode invoking the effect twice in
+                  development:
+                </p>
+                <pre
+                  class="code-inline"><code class="language-ts">{{`useEffect(() => {
+  const sub = exampleState$.subscribe((emit) => {
+    setSnapshot(emit.snapshot);
+  });
+
+  // Initialize AFTER subscribing to catch the negotiation snapshot
+  initializeCell();
+
+  return () => sub.unsubscribe();
+}, []);`}}</code></pre>
+              </div>
             </div>
           </mat-tab>
 

@@ -40,6 +40,19 @@ import { Component, ViewEncapsulation } from '@angular/core';
           <tbody>
             <tr>
               <td class="column-300">
+                <strong>conductorId</strong>
+                <p class="modifiers">readonly</p>
+                <p class="type">type: string</p>
+              </td>
+              <td class="column-auto">
+                Unique identifier for the conductor instance that owns this
+                pipeline.<br /><br />
+                Generated once per page load and shared across all behaviors and
+                controllers within the same conductor.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
                 <strong>controllerConfig?</strong>
                 <p class="modifiers">readonly</p>
                 <p class="type">type: unknown</p>

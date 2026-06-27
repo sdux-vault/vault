@@ -189,17 +189,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
             </tr>
             <tr>
               <td>
-                <strong>#resolveTabId</strong>
-                <p class="modifiers">#private</p>
-
-                <p>returns: string</p>
-              </td>
-              <td>
-                Returns a stable tab identifier persisted in sessionStorage.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td>
                 <strong>#sendSnapshotResponse</strong>
                 <p class="modifiers">#private</p>
                 <p>inputs:</p>

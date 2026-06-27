@@ -189,6 +189,16 @@
       "url": "/blog/global-dispatch-broadcasts-scoped-updates-dont",
       "symbols": ["global-dispatch-broadcasts-scoped-updates-dont"],
       "content": "Global Dispatch Broadcasts to Everything — Scoped Updates Don't global-dispatch-broadcasts-scoped-updates-dont TA"
+    },
+    {
+      "id": "blog:your-redux-reducers-already-work-in-sdux-vault",
+      "title": "Your Redux Reducers Already Work in SDuX Vault",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/your-redux-reducers-already-work-in-sdux-vault",
+      "symbols": ["your-redux-reducers-already-work-in-sdux-vault"],
+      "content": "Your Redux Reducers Already Work in SDuX Vault your-redux-reducers-already-work-in-sdux-vault ED"
     }
   ]
 }
