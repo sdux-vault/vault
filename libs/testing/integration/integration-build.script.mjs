@@ -66,7 +66,7 @@ const copyDir = (src, dest) => {
 // 📦 Config (order matters)
 // ---------------------------------------------
 const LIB_BUILD_ORDER = [
-  'shared',
+  //'shared',
   //'devtools/tooling',
   'core',
   'addons',
@@ -75,10 +75,12 @@ const LIB_BUILD_ORDER = [
 ];
 
 const LIB_CONFIG = {
+  /*
   shared: {
     dist: 'shared',
     pkg: 'shared'
   },
+  */
   core: {
     dist: 'core',
     pkg: 'core'

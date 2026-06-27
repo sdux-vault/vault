@@ -7,6 +7,15 @@ import { StateInputType } from '../types/state/state-input.type';
  */
 export interface ControllerContext<T> {
   /**
+   * Unique identifier for the conductor instance that owns this pipeline.
+   *
+   * Generated once per page load and shared across all behaviors and
+   * controllers within the same conductor. Used by cross-tab features
+   * to distinguish messages originating from the local tab versus
+   * remote peers.
+   */
+  conductorId: string;
+  /**
    * Trace identifier for the current pipeline operation.
    */
   traceId: string;
