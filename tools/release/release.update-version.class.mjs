@@ -5,6 +5,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import semver from 'semver';
 
 export class ReleaseUpdateVersion {
   constructor({
@@ -63,7 +64,12 @@ export class ReleaseUpdateVersion {
         const currentVersion = deps[dep];
         const resolvedTarget = `^${targetVersion}`;
 
-        if (!targetVersion || currentVersion === resolvedTarget) continue;
+        if (
+          !targetVersion ||
+          currentVersion === resolvedTarget ||
+          semver.satisfies(targetVersion, currentVersion)
+        )
+          continue;
 
         if (this.dryRun) {
           console.info(
