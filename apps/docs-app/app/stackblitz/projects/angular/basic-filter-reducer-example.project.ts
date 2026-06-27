@@ -125,7 +125,7 @@ export const appConfig: ApplicationConfig = {
 `,
     'src/app/example.component.html': `<div class="example-container">
   <div class="header">
-    <div class="title">SDuX Vault Filter and Reducer Example</div>
+    <div class="title">Angular - SDuX Vault Filter and Reducer Example</div>
     <div class="subtitle">
       This example shows how SDUX processes state through a pipeline: input data
       flows through filters and reducers before becoming the final FeatureCell

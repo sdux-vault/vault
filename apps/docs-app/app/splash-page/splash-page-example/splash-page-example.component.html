@@ -96,6 +96,45 @@ export const employeeState$ = employeeCell.state$;`}}</code></pre>
         </ng-content>
       </div>
     </mat-tab>
+    <mat-tab label="Svelte">
+      <div class="tab-panel">
+        <ng-content select="[retrieve]">
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="false">
+            <sdux-example-viewer-tab
+              [label]="'Step 1: Initialize Vault and Register FeatureCell'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`// employee.cell.ts
+Vault({
+  logLevel: 'off'
+});
+
+export const employeeCell = FeatureCell&lt;Employee[]>({
+  key: 'employees',
+  initialState: []
+});
+
+employeeCell.initialize();
+
+export function loadEmployees(): void {
+  employeeCell.replaceState({
+    loading: false,
+    value: [
+      { id: 1, name: 'Ada' },
+      { id: 2, name: 'Brian' }
+    ],
+    error: null
+  });
+}
+
+export const employeeState = employeeCell.state;
+export const employeeState$ = employeeCell.state$;`}}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </ng-content>
+      </div>
+    </mat-tab>
     <mat-tab label="Vue">
       <div class="tab-panel">
         <ng-content select="[retrieve]">

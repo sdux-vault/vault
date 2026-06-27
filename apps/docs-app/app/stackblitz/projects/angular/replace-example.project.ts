@@ -125,7 +125,7 @@ export const appConfig: ApplicationConfig = {
 `,
     'src/app/example.component.html': `<div class="example-container">
   <div class="header">
-    <div class="title">SDuX Vault Replace Example</div>
+    <div class="title">Angular - SDuX Vault Replace Example</div>
     <div class="subtitle">
       This example demonstrates replaceState — the simplest way to update a
       FeatureCell. The entire previous state is discarded and replaced with the

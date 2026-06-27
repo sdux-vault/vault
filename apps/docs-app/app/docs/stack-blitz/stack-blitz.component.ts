@@ -1,4 +1,6 @@
 import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
@@ -16,6 +18,8 @@ import { PipelineRoutingDirective } from '../pipeline/directives/pipeline-routin
   selector: 'sdux-stack-blitz-overview',
   standalone: true,
   imports: [
+    MatIcon,
+    MatTooltip,
     PipelineRelatedTopicComponent,
     RouterModule,
     BrandNameComponent,
@@ -28,6 +32,13 @@ import { PipelineRoutingDirective } from '../pipeline/directives/pipeline-routin
 export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
   #brandNameService = inject(BrandNameService);
   #brandName = this.#brandNameService.value;
+
+  readonly frameworkIcons: Record<string, string> = {
+    angular: 'assets/brand/angular/angular-icon.svg',
+    react: 'assets/brand/react/react-icon.svg',
+    svelte: 'assets/brand/svelte/svelte-icon.svg',
+    vue: 'assets/brand/vue/vue-icon.svg'
+  };
 
   readonly exampleGroups = [
     {
@@ -99,6 +110,19 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
             { name: 'Svelte', key: 'svelte' },
             { name: 'Vue', key: 'vue' }
           ]
+        },
+        {
+          title: 'Tab Sync',
+          id: 'tab-sync',
+          exampleName: 'tab-sync-example',
+          isVault: true,
+          description: `Demonstrates cross-tab state synchronization using the Tab Sync behavior and controller. State changes committed in one browser tab are automatically broadcast to all other tabs via BroadcastChannel. Open the example in two tabs to see state synchronize in real time. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
         }
       ]
     }
@@ -156,6 +180,15 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
     'svelte/debugger-example': () =>
       import('../../stackblitz/projects/svelte/debugger-example.project'),
     'vue/debugger-example': () =>
-      import('../../stackblitz/projects/vue/debugger-example.project')
+      import('../../stackblitz/projects/vue/debugger-example.project'),
+
+    'angular/tab-sync-example': () =>
+      import('../../stackblitz/projects/angular/tab-sync-example.project'),
+    'react/tab-sync-example': () =>
+      import('../../stackblitz/projects/react/tab-sync-example.project'),
+    'svelte/tab-sync-example': () =>
+      import('../../stackblitz/projects/svelte/tab-sync-example.project'),
+    'vue/tab-sync-example': () =>
+      import('../../stackblitz/projects/vue/tab-sync-example.project')
   };
 }

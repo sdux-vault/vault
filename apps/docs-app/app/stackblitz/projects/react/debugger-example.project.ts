@@ -330,7 +330,7 @@ export function ExampleView() {
   return (
     <div className="example-container">
       <div className="header">
-        <div className="title">SDuX Vault Debugger Example</div>
+        <div className="title">React - SDuX Vault Debugger Example</div>
         <div className="subtitle">
           This example demonstrates the SDuX Vault built-in debugger — a
           floating panel that captures pipeline execution traces. Record a

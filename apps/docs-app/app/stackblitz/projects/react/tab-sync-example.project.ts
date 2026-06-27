@@ -1,14 +1,14 @@
 import { Project } from '@stackblitz/sdk';
 
-export const replaceExampleProject: Project = {
-  title: 'react-replace-example',
+export const tabSyncExampleProject: Project = {
+  title: 'react-tab-sync-example',
   template: 'node',
   files: {
     'index.html': `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>SDuX React Example</title>
+    <title>SDuX Vault Tab Sync Example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
@@ -18,8 +18,8 @@ export const replaceExampleProject: Project = {
 </html>
 `,
     'package.json': `{
-  "name": "react-replace-example",
-  "version": "1.0.1",
+  "name": "react-tab-sync-example",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -224,33 +224,68 @@ export const replaceExampleProject: Project = {
   color: #ccc;
 }
 `,
-    'src/app/ExampleView.tsx': `import { useEffect, useState } from 'react';
+    'src/app/ExampleView.tsx': `import { ChangeEvent, useEffect, useState } from 'react';
 import {
   Example,
   exampleState,
   exampleState\$,
+  initializeCell,
   replaceExamples,
   resetExamples
 } from './example.cell';
 import './ExampleView.css';
 
-const sample: Example[] = [
-  { id: 11, name: 'Luke', lastName: 'Skywalker' },
-  { id: 38, name: 'Leia', lastName: 'Organa' },
-  { id: 9, name: 'Han', lastName: 'Solo' }
+/**
+ * Sample datasets used to demonstrate state replacement and cross-tab sync.
+ */
+const samples: Example[][] = [
+  [
+    { id: 11, name: 'Luke', lastName: 'Skywalker' },
+    { id: 38, name: 'Leia', lastName: 'Organa' },
+    { id: 9, name: 'Han', lastName: 'Solo' }
+  ],
+  [
+    { id: 22, name: 'Anakin', lastName: 'Skywalker' },
+    { id: 44, name: 'Padmé', lastName: 'Amidala' },
+    { id: 66, name: 'Obi-Wan', lastName: 'Kenobi' }
+  ],
+  [
+    { id: 77, name: 'Din', lastName: 'Djarin' },
+    { id: 88, name: 'Ahsoka', lastName: 'Tano' },
+    { id: 99, name: 'Bo-Katan', lastName: 'Kryze' }
+  ]
 ];
 
-/** Renders the FeatureCell replace state example. */
+/**
+ * UI component for the Tab Sync example.
+ *
+ * This component consumes the Vault-backed state exposed by example.cell
+ * and demonstrates cross-tab state synchronization. When state is updated
+ * in one tab, the withTabSyncStateBehavior broadcasts the finalized snapshot
+ * to other tabs via BroadcastChannel.
+ *
+ * The component does not manage state directly — it delegates all state
+ * updates and lifecycle orchestration to the FeatureCell module.
+ */
 export function ExampleView() {
   const [snapshot, setSnapshot] = useState({
     value: exampleState.value,
     hasValue: exampleState.hasValue
   });
+  const [activeSample, setActiveSample] = useState<Example[]>(samples[0]);
   const [activeStateHint, setActiveStateHint] = useState(
     'Initial value is [] (empty array)'
   );
   const [displayActiveStateHint, setDisplayActiveStateHint] = useState(true);
 
+  /**
+   * Subscribes to state emissions then initializes the FeatureCell.
+   *
+   * Initialization is deferred so the subscription is guaranteed to
+   * be active before the Tab Sync controller begins BroadcastChannel
+   * negotiation. This ensures the component catches the negotiation
+   * snapshot that is committed synchronously via commitState.
+   */
   useEffect(() => {
     const sub = exampleState\$.subscribe((emit) => {
       setSnapshot({
@@ -258,14 +293,29 @@ export function ExampleView() {
         hasValue: emit.snapshot.hasValue
       });
     });
+    initializeCell();
     return () => sub.unsubscribe();
   }, []);
 
-  /** Loads sample data into the FeatureCell. */
+  /**
+   * Loads the active sample into the FeatureCell pipeline.
+   *
+   * When Tab Sync is enabled, the pipeline broadcasts the
+   * finalized snapshot to all other tabs via BroadcastChannel.
+   *
+   * Architectural Flow:
+   * Button Click
+   *   → Component handler
+   *   → Cell replaceState
+   *   → Vault update
+   *   → Pipeline execution
+   *   → BroadcastChannel broadcast
+   *   → Reactive UI refresh (all tabs)
+   */
   function loadSample() {
     setDisplayActiveStateHint(false);
-    setActiveStateHint('State updated with sample data.');
-    replaceExamples(sample);
+    setActiveStateHint('State updated and broadcast to all tabs.');
+    replaceExamples(activeSample);
   }
 
   /** Resets the FeatureCell state to its initial value. */
@@ -273,39 +323,70 @@ export function ExampleView() {
     resetExamples();
   }
 
+  /** Updates the active sample when the dropdown selection changes. */
+  function handleSampleChange(event: ChangeEvent<HTMLSelectElement>) {
+    const index = Number(event.target.value);
+    setActiveSample(samples[index]);
+  }
+
   return (
     <div className="example-container">
       <div className="header">
-        <div className="title">React - SDuX Vault Replace Example</div>
+        <div className="title">React - SDuX Vault Tab Sync Example</div>
         <div className="subtitle">
-          This example demonstrates replaceState — the simplest way to update a
-          FeatureCell. The entire previous state is discarded and replaced with
-          the new value in a single atomic operation.
+          This example demonstrates cross-tab state synchronization. Open this
+          page in two browser tabs — updating state in one tab automatically
+          propagates the change to the other via BroadcastChannel.
         </div>
       </div>
 
       <div className="section">
-        <div className="label">FeatureCell Flow</div>
-        <div className="flow-hint">Input → Output</div>
+        <div className="label">Tab Sync Flow</div>
+        <div className="flow-hint">Tab A → BroadcastChannel → Tab B</div>
+      </div>
+
+      <div className="section">
+        <div className="state-container">
+          <label className="label" htmlFor="sample-select">
+            Sample Dataset
+          </label>
+          <div className="hint">
+            Choose a character group to use as input state. Selecting a dataset
+            updates the input preview — click Load &amp; Sync State to apply it.
+          </div>
+          <div className="hint">
+            <select
+              id="sample-select"
+              className="sdux-select"
+              onChange={handleSampleChange}>
+              {samples.map((sample, index) => (
+                <option key={index} value={index}>
+                  {sample[0].name} {sample[0].lastName}, {sample[1].name}{' '}
+                  {sample[1].lastName}, {sample[2].name} {sample[2].lastName}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </div>
 
       <div className="section column">
         <div className="state-container">
           <div className="label">Input State</div>
-          <div className="hint">Raw data before processing</div>
+          <div className="hint">Data to replace and broadcast across tabs</div>
           <div className="hint file">
             <span className="emphasis">File:</span> app/ExampleView.tsx
           </div>
           <textarea
             className="data-textarea"
             readOnly
-            defaultValue={JSON.stringify(sample, null, 2)}
+            value={JSON.stringify(activeSample, null, 2)}
           />
         </div>
 
         <div className="state-container data-row">
-          <div className="label">FeatureCell State</div>
-          <div className="hint">Final state</div>
+          <div className="label">Synced FeatureCell State</div>
+          <div className="hint">State synchronized across tabs</div>
           <div className="hint file">
             <span className="emphasis">File:</span> app/example.cell.ts
           </div>
@@ -348,7 +429,7 @@ export function ExampleView() {
       <div className="section">
         <div className="actions">
           <button className="sdux-button primary" onClick={loadSample}>
-            Load Sample State
+            Load &amp; Sync State
           </button>
 
           <div className="secondary-actions">
@@ -370,17 +451,17 @@ export function ExampleView() {
           </a>
           <span className="separator">·</span>
           <a
+            href="https://www.sdux-vault.com/docs/pipeline/behaviors/tab-sync"
+            target="_blank"
+            rel="noopener noreferrer">
+            Tab Sync
+          </a>
+          <span className="separator">·</span>
+          <a
             href="https://www.sdux-vault.com/docs/pipeline/behaviors/state/updating"
             target="_blank"
             rel="noopener noreferrer">
             Updating State
-          </a>
-          <span className="separator">·</span>
-          <a
-            href="https://www.sdux-vault.com/docs/pipeline/behaviors/merge"
-            target="_blank"
-            rel="noopener noreferrer">
-            Merging State
           </a>
           <span className="separator">·</span>
           <a
@@ -395,31 +476,103 @@ export function ExampleView() {
   );
 }
 `,
-    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
+    'src/app/example.cell.ts': `import {
+  FeatureCell,
+  Vault,
+  withTabSyncController,
+  withTabSyncStateBehavior
+} from '@sdux-vault/core';
 
+/**
+ * Shape representing a single example entity in the FeatureCell state.
+ */
 export interface Example {
+  /** Unique identifier for the example entry. */
   id: number;
+
+  /** First name of the character. */
   name: string;
+
+  /** Last name of the character. */
   lastName: string;
 }
 
-// Initialize the Vault once at application startup
-Vault({ logLevel: 'off' });
+/**
+ * Initializes the Vault runtime for the Tab Sync example.
+ *
+ * devMode enables development diagnostics.
+ * bypassLicensing disables license checks for StackBlitz demos.
+ */
+Vault({ logLevel: 'off', devMode: true, bypassLicensing: true });
 
-// Register the FeatureCell at module scope
-const exampleCell = FeatureCell<Example[]>({
-  key: 'example-feature-cell-key',
-  initialState: []
-});
+/**
+ * Registers the FeatureCell with cross-tab synchronization.
+ *
+ * withTabSyncStateBehavior broadcasts finalized state snapshots to other
+ * browser tabs via BroadcastChannel. withTabSyncController coordinates
+ * the initial negotiation when a new tab opens, ensuring it receives
+ * the latest state from an existing peer.
+ */
+const exampleCell = FeatureCell<Example[]>(
+  {
+    key: 'example-feature-cell-key',
+    initialState: []
+  },
+  [withTabSyncStateBehavior],
+  [withTabSyncController]
+);
 
-// Initialize the pipeline
-exampleCell.initialize();
+let initialized = false;
 
-// Expose read-only state access
+/**
+ * Configures the Vault runtime pipeline and finalizes initialization.
+ *
+ * Initialization is deferred to allow React components to subscribe
+ * to state\$ before the Tab Sync controller begins BroadcastChannel
+ * negotiation. This ensures the subscription is active when the
+ * negotiation snapshot is committed synchronously via commitState.
+ *
+ * Guarded to run only once — safe to call from React StrictMode
+ * where useEffect fires twice.
+ *
+ * After initialize() is called:
+ * - The pipeline structure becomes immutable
+ * - No additional behaviors or operators may be registered
+ * - All subsequent state updates flow through the configured pipeline
+ *
+ * No state updates will be processed before initialize() is called.
+ */
+export function initializeCell(): void {
+  if (initialized) return;
+  initialized = true;
+  exampleCell.initialize();
+}
+
+/**
+ * Read-only state snapshot accessor.
+ *
+ * Provides access to:
+ * - value — current state value
+ * - hasValue — whether state contains a value
+ */
 export const exampleState = exampleCell.state;
+
+/**
+ * Observable stream of state emissions.
+ *
+ * Each emission includes the full snapshot after pipeline execution.
+ * Used by the component to subscribe to reactive state changes.
+ */
 export const exampleState\$ = exampleCell.state\$;
 
-/** Replaces the entire FeatureCell state with the provided input. */
+/**
+ * Replaces the entire FeatureCell state with the provided input.
+ *
+ * When Tab Sync is enabled, the pipeline broadcasts the finalized
+ * snapshot to all other tabs via BroadcastChannel.
+ *
+ * @param input - The new state value to commit.
+ */
 export function replaceExamples(input: Example[]): void {
   exampleCell.replaceState({
     loading: false,
@@ -428,7 +581,9 @@ export function replaceExamples(input: Example[]): void {
   });
 }
 
-/** Resets the FeatureCell state to its initial value. */
+/**
+ * Resets the FeatureCell state to its initial value.
+ */
 export function resetExamples(): void {
   exampleCell.reset();
 }

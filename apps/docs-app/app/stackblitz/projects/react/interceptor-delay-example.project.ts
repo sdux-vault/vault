@@ -328,7 +328,9 @@ export function ExampleView() {
   return (
     <div className="example-container">
       <div className="header">
-        <div className="title">SDuX Vault Interceptor Delay Example</div>
+        <div className="title">
+          React - SDuX Vault Interceptor Delay Example
+        </div>
         <div className="subtitle">
           This example demonstrates the delay interceptor controller: state
           updates are held for a configured duration before being released into

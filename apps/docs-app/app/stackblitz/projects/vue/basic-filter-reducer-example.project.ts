@@ -126,7 +126,7 @@ function handleToggleError(): void {
 <template>
   <div class="example-container">
     <div class="header">
-      <div class="title">SDuX Vault Filter and Reducer Example</div>
+      <div class="title">Vue - SDuX Vault Filter and Reducer Example</div>
       <div class="subtitle">
         This example shows how SDuX processes state through a pipeline: input
         data flows through filters and reducers before becoming the final

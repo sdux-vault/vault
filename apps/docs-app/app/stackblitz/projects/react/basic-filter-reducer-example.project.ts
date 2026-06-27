@@ -300,7 +300,9 @@ export function ExampleView() {
   return (
     <div className="example-container">
       <div className="header">
-        <div className="title">SDuX Vault Filter and Reducer Example</div>
+        <div className="title">
+          React - SDuX Vault Filter and Reducer Example
+        </div>
         <div className="subtitle">
           This example shows how SDuX processes state through a pipeline: input
           data flows through filters and reducers before becoming the final
