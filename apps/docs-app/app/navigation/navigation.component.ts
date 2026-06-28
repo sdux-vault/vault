@@ -8,7 +8,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import {
   BrandNameComponent,
   BrandNameService,
-  ImageComponent
+  ImageComponent,
+  NewComponent
 } from '@sdux-vault/ui/web-components';
 import { NavigationDirective } from './directive/navigation.directive';
 import { DevToolsSubNavigationComponent } from './sub-navigation/dev-tools/dev-tools.sub-navigation.component';
@@ -46,6 +47,7 @@ import { VaultFeatureCellApiSubNavigationComponent } from './sub-navigation/vaul
     MatListModule,
     MatSidenavModule,
     RouterLink,
+
     MatTooltipModule,
     RouterLinkActive,
     RouterOutlet,
@@ -58,6 +60,7 @@ import { VaultFeatureCellApiSubNavigationComponent } from './sub-navigation/vaul
     PipelineExtensionsSubNavigationComponent,
     GettingStartedSubNavigationComponent,
     DevToolsSubNavigationComponent,
+    NewComponent,
     BrandNameComponent
   ],
   templateUrl: './navigation.component.html',

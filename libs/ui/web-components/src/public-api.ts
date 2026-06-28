@@ -16,6 +16,7 @@ export * from './lib/helpers/diagram/diagram.component';
 export * from './lib/helpers/feature-cell-brand-name/feature-cell-brand-name.component';
 export * from './lib/helpers/image/image.component';
 export * from './lib/helpers/info-dialog/info-dialog.component';
+export * from './lib/helpers/new/new.component';
 export * from './lib/helpers/overflow-pill/overflow-pill.directive';
 export * from './lib/helpers/package-name/package-name.component';
 export * from './lib/helpers/vault-brand-name/vault-brand-name.component';
