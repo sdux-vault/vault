@@ -18,18 +18,34 @@ HEALTH_CHECK_API="/"
 HEALTH_CHECK_STATUS=""
 
 printf "\n\n\n\nDocker images:\n\n"
-docker image ls --format '{{.Repository}} {{.Tag}}' | grep -E "^(${CONTAINER_NAME}) v"
+mapfile -t image_tags < <(docker image ls --format '{{.Repository}} {{.Tag}}' | grep -E "^(${CONTAINER_NAME}) v" | awk '{print $2}')
+
+if [ ${#image_tags[@]} -eq 0 ]; then
+  printf "⚠️ No images found for ${CONTAINER_NAME}.\n\n"
+  exit 1
+fi
+
+for i in "${!image_tags[@]}"; do
+  echo "$((i+1)). ${CONTAINER_NAME} ${image_tags[$i]}"
+done
 
 printf "\n\n"
 
 # Prompt for the version
-read -p "Enter the image version (e.g. v1.3.3) to promote to production: " VERSION_TAG
-if [ -z "$VERSION_TAG" ]; then
-  printf "\n\n❌ Error: You must provide a version tag. Usage: ./production.script.sh v1.3.3\n\n"
-  exit 1
-else
-  printf "\nℹ️ Using VERSION_TAG: $VERSION_TAG\n\n"
+read -p "Enter the number of the image to promote to production (x to exit): " selection
+
+if [[ "$selection" == "x" || "$selection" == "X" ]]; then
+  printf "\n\nGood-bye.\n\n"
+  exit 0
 fi
+
+if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt ${#image_tags[@]} ]; then
+  printf "\n\n❌ Invalid selection.\n\n"
+  exit 1
+fi
+
+VERSION_TAG="${image_tags[$((selection-1))]}"
+printf "\nℹ️ Using VERSION_TAG: $VERSION_TAG\n\n"
 
 
 # Step 3: Stop and remove existing container if running

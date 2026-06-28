@@ -47,6 +47,8 @@ export interface RelatedTopicRegistryCategoryShape {
 
   'pipeline-overview': RelatedTopicCategoryShape;
 
+  press: RelatedTopicCategoryShape;
+
   'provide-feature-cell': RelatedTopicCategoryShape;
 
   'provide-vault': RelatedTopicCategoryShape;

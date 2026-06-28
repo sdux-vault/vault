@@ -21,22 +21,41 @@ HEALTH_CHECK_STATUS=""
 printf "Docker containers:\n\n"
 docker ps -a --filter "name=$CONTAINER_NAME"
 
+printf "\n\n\n\nDocker images:\n\n"
+docker image ls --format '{{.Repository}} {{.Tag}}' | grep -E "^(${CONTAINER_NAME}) v"
+
 printf "\n\n📂 Available build files in ./builds:\n\n"
-ls -lh $TAR_PATH/$CONTAINER_NAME*.tar.gz 2>/dev/null || printf "\n\n⚠️ No build files found.\n\n"
+mapfile -t build_files < <(ls $TAR_PATH/$CONTAINER_NAME*.tar.gz 2>/dev/null)
+
+if [ ${#build_files[@]} -eq 0 ]; then
+  printf "\n\n⚠️ No build files found.\n\n"
+  exit 1
+fi
+
+for i in "${!build_files[@]}"; do
+  size=$(ls -lh "${build_files[$i]}" | awk '{print $5}')
+  date=$(ls -lh "${build_files[$i]}" | awk '{print $6, $7, $8}')
+  echo "$((i+1)). $(basename ${build_files[$i]}) ($size, $date)"
+done
 
 printf "\n\n"
 
 # Step 0: Check version tag parameter
-read -p "Enter the tar file version to stage (e.g. v1.3.3): " VERSION_TAG
-if [ -z "$VERSION_TAG" ]; then
-  printf "\n\n❌ Error: Version tag required. Usage: ./staging.script.sh v1.3.3\n\n"
-  exit 1
-else
-  printf "\nℹ️ Using VERSION_TAG: $VERSION_TAG\n\n"
+read -p "Enter the number of the build to stage (x to exit): " selection
+
+if [[ "$selection" == "x" || "$selection" == "X" ]]; then
+  printf "\n\nGood-bye.\n\n"
+  exit 0
 fi
 
+if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt ${#build_files[@]} ]; then
+  printf "\n\n❌ Invalid selection.\n\n"
+  exit 1
+fi
 
-TAR_NAME="$TAR_PATH/$CONTAINER_NAME-$VERSION_TAG.tar.gz"
+TAR_NAME="${build_files[$((selection-1))]}"
+VERSION_TAG=$(basename "$TAR_NAME" | sed "s/${CONTAINER_NAME}-//" | sed 's/\.tar\.gz//')
+printf "\nℹ️ Using VERSION_TAG: $VERSION_TAG\n\n"
 
 # Step 1: Validate required files
 printf "\nStep 1: Starting staging load script...\n\n"

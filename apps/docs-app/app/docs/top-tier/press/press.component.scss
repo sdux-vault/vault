@@ -1,0 +1,46 @@
+@use 'global' as global;
+
+.logo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: global.$spacing-md;
+
+  .logo-card {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    border: 1px solid global.$sdux-border-color;
+    border-radius: global.$border-radius-sm;
+
+    .logo-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: global.$spacing-md;
+      background-color: global.$diagram-background-color;
+      min-height: 140px;
+
+      &.dark-preview {
+        background-color: global.$sdux-text-black;
+      }
+
+      img {
+        max-width: 200px;
+        max-height: 120px;
+      }
+    }
+
+    .logo-info {
+      padding: global.$spacing-sm;
+
+      h4 {
+        margin: 0 0 global.$spacing-xs;
+      }
+
+      p {
+        font-size: global.$font-size-sm;
+        margin: 0 0 global.$spacing-xs;
+      }
+    }
+  }
+}

@@ -64,8 +64,8 @@ export class ToolbarComponent {
   /** Branding image based on layout (compact icon for mobile, landscape logo for desktop) */
   public image = computed(() =>
     this.#mobileService.isMobile()
-      ? 'brand/sdux/brand.svg'
-      : 'brand/sdux/brand-landscape-dark.svg'
+      ? 'brand/sdux/sdux-symbol-dark.svg'
+      : 'brand/sdux/sdux-wordmark-dark.svg'
   );
 
   /** Current theme mode ("light" | "dark") */

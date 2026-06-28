@@ -12,7 +12,7 @@ import {
   template: `<div class="not-found-container">
     <div class="logo-block">
       <sdux-image
-        image="brand/sdux/brand-landscape.svg"
+        image="brand/sdux/sdux-wordmark.svg"
         tooltip="SDuX - {{ catchPhrase.value }}." />
       <div class="sub-title"><sdux-catch-phrase /></div>
     </div>

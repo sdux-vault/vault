@@ -10,6 +10,7 @@ import { DocsTopTierGettingStartedComponent } from './top-tier/getting-started.c
 import { DocsTopTierHowToDefineYourStateComponent } from './top-tier/how-to-define-your-state.component';
 import { DocsTopTierSDuXLicenseComponent } from './top-tier/license/sdux-license/sdux-license.component';
 import { DocsTopTierSDuXTrademarkUsageComponent } from './top-tier/license/sdux-trademark-usage/sdux-trademark-usage.component';
+import { DocsTopTierPressComponent } from './top-tier/press/press.component';
 import { DocsTopTierRoadmapComponent } from './top-tier/roadmap/roadmap.component';
 import { DocsTopTierSDuXReduxSimilaritiesComponent } from './top-tier/sdux-redux-similarities.component';
 import { DocsTopTierSupportedLanguagesComponent } from './top-tier/supported-languages/supported-languages.component';
@@ -31,6 +32,7 @@ import { DocsTopTierWhatIsSDuXComponent } from './top-tier/what-is-sdux.componen
     DocsTopTierSupportedLanguagesComponent,
     DocsTopTierSDuXLicenseComponent,
     DocsTopTierSDuXTrademarkUsageComponent,
+    DocsTopTierPressComponent,
     SDuXTestingComponent,
     SDuXBestPracticesComponent,
     SDuXContributorsComponent
