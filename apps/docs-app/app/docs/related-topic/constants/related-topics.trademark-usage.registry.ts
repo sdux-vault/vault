@@ -12,7 +12,7 @@ export const RELATED_TOPICS_TRADEMARK_USAGE_REGISTRY: RelatedTopicCategoryShape 
     globals: ['core'],
 
     // No cross-category inclusion
-    cross: ['license'],
+    cross: ['license', 'press'],
 
     items: []
   };

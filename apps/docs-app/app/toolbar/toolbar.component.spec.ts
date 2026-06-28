@@ -117,10 +117,10 @@ describe('Component: Toolbar', () => {
     const fakeSignal = signal<boolean>(false);
     spyOn(mobileService, 'isMobile').and.callFake(fakeSignal);
 
-    expect(component.image()).toBe('brand/sdux/brand-landscape-dark.svg');
+    expect(component.image()).toBe('brand/sdux/sdux-wordmark-dark.svg');
     fakeSignal.set(true);
 
-    expect(component.image()).toBe('brand/sdux/brand.svg');
+    expect(component.image()).toBe('brand/sdux/sdux-symbol-dark.svg');
   });
 
   describe('Authentication integration', () => {

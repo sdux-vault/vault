@@ -10,7 +10,7 @@ export const RELATED_TOPICS_LICENSE_REGISTRY: RelatedTopicCategoryShape = {
   globals: ['core'],
 
   // No cross-category inclusion
-  cross: ['welcome', 'trademark-usage'],
+  cross: ['welcome', 'trademark-usage', 'press'],
 
   items: []
 };
