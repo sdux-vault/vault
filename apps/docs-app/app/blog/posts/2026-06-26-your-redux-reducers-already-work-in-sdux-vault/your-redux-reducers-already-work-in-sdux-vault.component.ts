@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -17,8 +17,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    MatTab,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
     VaultBrandNameComponent,
@@ -194,20 +193,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             initialization:
           </p>
 
-          <div class="sdux-tab-container">
-            <mat-tab-group
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              class="sdux-tabs"
-              [selectedIndex]="0">
-              <mat-tab label="Angular">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Angular — Reducer Registration'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; provideFeatureCell &#125; from '&#64;sdux-vault/angular';
+          <sdux-multi-framework-example description="Reducer Registration">
+            <ng-template #angular>
+              <pre
+                class="code-inline"><code class="language-ts">import &#123; FeatureCell, injectVault &#125; from '&#64;sdux-vault/angular';
 
 // Your existing Redux reducer logic — unchanged
 const normalizeEmail = (state: UserState) =&gt; (&#123;
@@ -220,26 +209,22 @@ const applyDefaultRole = (state: UserState) =&gt; (&#123;
   role: state.role || 'viewer'
 &#125;);
 
-// Register declaratively — fixed order, explicit ownership
-provideFeatureCell(UserService, &#123;
-  key: 'user',
-  initialState: &#123; email: '', role: '', name: '' &#125;
-&#125;)
-  .reducers([normalizeEmail, applyDefaultRole])
-  .initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="React">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'React — Reducer Registration'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
+// user.service.ts
+&#64;FeatureCell&lt;UserState&gt;('user')
+&#64;Injectable(&#123; providedIn: 'root' &#125;)
+export class UserService &#123;
+  readonly vault = injectVault&lt;UserState&gt;(UserService);
+
+  constructor() &#123;
+    this.vault
+      .reducers([normalizeEmail, applyDefaultRole])
+      .initialize();
+  &#125;
+&#125;</code></pre>
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
 
 // Your existing Redux reducer logic — unchanged
 const normalizeEmail = (state: UserState) =&gt; (&#123;
@@ -259,77 +244,8 @@ const userCell = FeatureCell(&#123;
 &#125;)
   .reducers([normalizeEmail, applyDefaultRole])
   .initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Vue">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Vue — Reducer Registration'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
-
-// Your existing Redux reducer logic — unchanged
-const normalizeEmail = (state: UserState) =&gt; (&#123;
-  ...state,
-  email: state.email.toLowerCase().trim()
-&#125;);
-
-const applyDefaultRole = (state: UserState) =&gt; (&#123;
-  ...state,
-  role: state.role || 'viewer'
-&#125;);
-
-// Register declaratively — fixed order, explicit ownership
-const userCell = FeatureCell(&#123;
-  key: 'user',
-  initialState: &#123; email: '', role: '', name: '' &#125;
-&#125;)
-  .reducers([normalizeEmail, applyDefaultRole])
-  .initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Svelte">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Svelte — Reducer Registration'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
-
-// Your existing Redux reducer logic — unchanged
-const normalizeEmail = (state: UserState) =&gt; (&#123;
-  ...state,
-  email: state.email.toLowerCase().trim()
-&#125;);
-
-const applyDefaultRole = (state: UserState) =&gt; (&#123;
-  ...state,
-  role: state.role || 'viewer'
-&#125;);
-
-// Register declaratively — fixed order, explicit ownership
-const userCell = FeatureCell(&#123;
-  key: 'user',
-  initialState: &#123; email: '', role: '', name: '' &#125;
-&#125;)
-  .reducers([normalizeEmail, applyDefaultRole])
-  .initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+            </ng-template>
+          </sdux-multi-framework-example>
 
           <p>Three differences matter:</p>
 

@@ -8,6 +8,8 @@ export * from './lib/example-components/example-viewer-source/example-viewer-sou
 export * from './lib/example-components/example-viewer-tab/example-viewer-source-tab.component';
 export * from './lib/example-components/example-viewer-table/example-viewer-table.component';
 export * from './lib/example-components/example-viewer/example-viewer.component';
+export * from './lib/example-components/generic-tab/generic-tab.component';
+export * from './lib/example-components/multi-framework-example/multi-framework-example.component';
 
 export * from './lib/helpers/brand-name/brand-name.component';
 export * from './lib/helpers/catch-phrase/catch-phrase.component';

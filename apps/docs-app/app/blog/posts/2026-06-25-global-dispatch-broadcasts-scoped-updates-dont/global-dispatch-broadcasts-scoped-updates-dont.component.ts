@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -17,8 +17,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    MatTab,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
     VaultBrandNameComponent,
@@ -154,91 +153,34 @@ dispatch(&#123; type: 'ADD_USER', payload: user &#125;);
             <span class="code">replaceState()</span>.
           </p>
 
-          <div class="sdux-tab-container">
-            <mat-tab-group
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              class="sdux-tabs"
-              [selectedIndex]="0">
-              <mat-tab label="Angular">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Angular — Scoped State Update'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; injectVault &#125; from '&#64;sdux-vault/angular';
+          <sdux-multi-framework-example description="Scoped State Update">
+            <ng-template #angular>
+              <pre
+                class="code-inline"><code class="language-ts">import &#123; FeatureCell, injectVault &#125; from '&#64;sdux-vault/angular';
 
-// Inject the specific FeatureCell that owns user state
-const userCell = injectVault('user');
+&#64;FeatureCell&lt;UserState&gt;('user')
+&#64;Injectable(&#123; providedIn: 'root' &#125;)
+export class UserService &#123;
+  readonly vault = injectVault&lt;UserState&gt;(UserService);
 
-// Update targets ONLY the user FeatureCell
-// No other FeatureCell evaluates. No global broadcast.
-userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="React">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'React — Scoped State Update'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
+  updateUser(name: string, role: string) &#123;
+    // Update targets ONLY the user FeatureCell
+    // No other FeatureCell evaluates. No global broadcast.
+    this.vault.mergeState(&#123; value: &#123; name, role &#125; &#125;);
+  &#125;
+&#125;</code></pre>
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
 
 const userCell = FeatureCell('user', &#123; value: defaultUser &#125;);
 
 // Update targets ONLY the user FeatureCell
 // No other FeatureCell evaluates. No global broadcast.
 userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Vue">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Vue — Scoped State Update'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
-
-const userCell = FeatureCell('user', &#123; value: defaultUser &#125;);
-
-// Update targets ONLY the user FeatureCell
-// No other FeatureCell evaluates. No global broadcast.
-userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Svelte">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Svelte — Scoped State Update'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
-
-const userCell = FeatureCell('user', &#123; value: defaultUser &#125;);
-
-// Update targets ONLY the user FeatureCell
-// No other FeatureCell evaluates. No global broadcast.
-userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+            </ng-template>
+          </sdux-multi-framework-example>
 
           <p>
             When you call <span class="code">mergeState()</span>, you are

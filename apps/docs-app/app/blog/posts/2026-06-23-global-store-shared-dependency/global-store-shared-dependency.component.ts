@@ -1,11 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -15,10 +13,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [
     BlogLayoutComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
-    MatTab,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
     VaultBrandNameComponent,
@@ -120,20 +115,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             cell's state directly.
           </p>
 
-          <div class="sdux-tab-container">
-            <mat-tab-group
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              class="sdux-tabs"
-              [selectedIndex]="0">
-              <mat-tab label="Angular">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Angular &#8212; Independent FeatureCells with Scoped Ownership'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// app.config.ts &#8212; each cell is independent
+          <sdux-multi-framework-example
+            description="Independent FeatureCells with Scoped Ownership">
+            <ng-template #angular>
+              <pre
+                class="code-inline"><code class="language-ts">// app.config.ts &#8212; each cell is independent
 export const appConfig: ApplicationConfig = &#123;
   providers: [
     provideVault(&#123; logLevel: 'off' &#125;),
@@ -166,19 +152,10 @@ export const appConfig: ApplicationConfig = &#123;
     )
   ]
 &#125;;</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="React">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'React &#8212; Independent FeatureCells with Scoped Ownership'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
 
 Vault(&#123; devMode: true, logLevel: 'off' &#125;);
 
@@ -199,79 +176,8 @@ export const notificationsCell = FeatureCell(&#123;
   key: 'notifications',
   initialState: &#123; items: [], unreadCount: 0 &#125;
 &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Vue">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Vue &#8212; Independent FeatureCells with Scoped Ownership'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
-
-Vault(&#123; devMode: true, logLevel: 'off' &#125;);
-
-// Team A owns cart state
-export const cartCell = FeatureCell(&#123;
-  key: 'cart',
-  initialState: &#123; items: [], total: 0 &#125;
-&#125;);
-
-// Team B owns user profile state
-export const userProfileCell = FeatureCell(&#123;
-  key: 'user-profile',
-  initialState: &#123; name: '', preferences: &#123;&#125; &#125;
-&#125;);
-
-// Team C owns notifications state
-export const notificationsCell = FeatureCell(&#123;
-  key: 'notifications',
-  initialState: &#123; items: [], unreadCount: 0 &#125;
-&#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Svelte">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Svelte &#8212; Independent FeatureCells with Scoped Ownership'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
-
-Vault(&#123; devMode: true, logLevel: 'off' &#125;);
-
-// Team A owns cart state
-export const cartCell = FeatureCell(&#123;
-  key: 'cart',
-  initialState: &#123; items: [], total: 0 &#125;
-&#125;);
-
-// Team B owns user profile state
-export const userProfileCell = FeatureCell(&#123;
-  key: 'user-profile',
-  initialState: &#123; name: '', preferences: &#123;&#125; &#125;
-&#125;);
-
-// Team C owns notifications state
-export const notificationsCell = FeatureCell(&#123;
-  key: 'notifications',
-  initialState: &#123; items: [], unreadCount: 0 &#125;
-&#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+            </ng-template>
+          </sdux-multi-framework-example>
 
           <p>
             Three teams. Three cells. Zero shared state. Team A can rename every

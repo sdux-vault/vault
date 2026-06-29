@@ -166,6 +166,13 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'React Tab Sync Subscribe Before Initialize — SDuX Vault Blog',
       description:
         'Learn why React requires subscribing to state before calling initialize() when using Tab Sync, and how to fix the silent missed-snapshot issue.'
+    },
+    {
+      link: '/blog/reducers-cant-change-after-init',
+      display: "Reducers That Can't Change After Init — Why That's a Feature",
+      title: "Reducers That Can't Change After Init — SDuX Vault Blog",
+      description:
+        'Understand why SDuX Vault locks the pipeline after initialize() and how sealed execution eliminates dynamic reducer bugs that surface in production.'
     }
   ]
 };

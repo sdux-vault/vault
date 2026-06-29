@@ -1,9 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -14,10 +12,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   imports: [
     BlogLayoutComponent,
     RouterModule,
-    MatTab,
-    MatTabGroup,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     VaultBrandNameComponent
   ],
   template: `
@@ -110,20 +105,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             cross-tab negotiation.
           </p>
 
-          <div class="sdux-tab-container">
-            <mat-tab-group
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              class="sdux-tabs"
-              [selectedIndex]="0">
-              <mat-tab label="Angular">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Configure a FeatureCell with Tab Sync'">
-                        <pre
-                          class="code-inline"><code class="language-ts">export const appConfig: ApplicationConfig = &#123;
+          <sdux-multi-framework-example
+            description="Configure a FeatureCell with Tab Sync">
+            <ng-template #angular>
+              <pre
+                class="code-inline"><code class="language-ts">export const appConfig: ApplicationConfig = &#123;
   providers: [
     provideVault(&#123; logLevel: 'off' &#125;),
 
@@ -143,21 +129,29 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       ]
     )
   ]
-&#125;;</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
+&#125;;
 
-              <mat-tab label="React">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Configure a FeatureCell with Tab Sync'">
-                        <pre
-                          class="code-inline"><code class="language-ts">export const employeeCell = FeatureCell&lt;Employee[]>(
+// employee.service.ts
+import &#123; Injectable &#125; from '&#64;angular/core';
+import &#123; FeatureCell, injectVault &#125; from '&#64;sdux-vault/angular';
+
+&#64;FeatureCell&lt;Employee[]&gt;('employees')
+&#64;Injectable(&#123; providedIn: 'root' &#125;)
+export class EmployeeService &#123;
+  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+
+  constructor() &#123;
+    this.vault.initialize();
+  &#125;
+&#125;</code></pre>
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
+
+Vault(&#123; devMode: true, logLevel: 'off' &#125;);
+
+export const employeeCell = FeatureCell&lt;Employee[]&gt;(
   &#123;
     key: 'employees',
     initialState: [],
@@ -170,68 +164,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     // Tab Sync Controller is required
     withTabSyncController
   ]
-);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
+);
 
-              <mat-tab label="Vue">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Configure a FeatureCell with Tab Sync'">
-                        <pre
-                          class="code-inline"><code class="language-ts">export const employeeCell = FeatureCell&lt;Employee[]>(
-  &#123;
-    key: 'employees',
-    initialState: [],
-  &#125;,
-  [
-    // Tab Sync State Behavior is required
-    withTabSyncStateBehavior
-  ],
-  [
-    // Tab Sync Controller is required
-    withTabSyncController
-  ]
-);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-
-              <mat-tab label="Svelte">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Configure a FeatureCell with Tab Sync'">
-                        <pre
-                          class="code-inline"><code class="language-ts">export const employeeCell = FeatureCell&lt;Employee[]>(
-  &#123;
-    key: 'employees',
-    initialState: [],
-  &#125;,
-  [
-    // Tab Sync State Behavior is required
-    withTabSyncStateBehavior
-  ],
-  [
-    // Tab Sync Controller is required
-    withTabSyncController
-  ]
-);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+employeeCell.initialize();</code></pre>
+            </ng-template>
+          </sdux-multi-framework-example>
 
           <div class="callout callout-info">
             <div class="title">Degraded Mode</div>

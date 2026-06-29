@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -17,8 +17,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    MatTab,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
     VaultBrandNameComponent,
@@ -236,20 +235,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             unchanged while new features use <sdux-feature-cell />s.
           </p>
 
-          <div class="sdux-tab-container">
-            <mat-tab-group
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              class="sdux-tabs"
-              [selectedIndex]="0">
-              <mat-tab label="Angular">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Angular — Both Systems Registered Together'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// app.config.ts — both systems registered together
+          <sdux-multi-framework-example
+            description="Both Systems Registered Together">
+            <ng-template #angular>
+              <pre
+                class="code-inline"><code class="language-ts">// app.config.ts — both systems registered together
 export const appConfig: ApplicationConfig = &#123;
   providers: [
     // Existing NgRx store
@@ -267,19 +257,10 @@ export const appConfig: ApplicationConfig = &#123;
     )
   ]
 &#125;;</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="React">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'React — Both Systems in the Same Component Tree'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
 
 // SDuX Vault cells are imported directly — no Provider needed
 Vault(&#123; devMode: true, logLevel: 'off' &#125;);
@@ -288,55 +269,8 @@ export const settingsCell = FeatureCell(&#123;
   key: 'settings',
   initialState: defaultSettings
 &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Vue">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Vue — Both Systems in the Same Application'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
-
-// SDuX Vault cells are imported directly — no Provider needed
-Vault(&#123; devMode: true, logLevel: 'off' &#125;);
-
-export const settingsCell = FeatureCell(&#123;
-  key: 'settings',
-  initialState: defaultSettings
-&#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Svelte">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Svelte — Both Systems in the Same Application'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
-
-// SDuX Vault cells are imported directly — no Provider needed
-Vault(&#123; devMode: true, logLevel: 'off' &#125;);
-
-export const settingsCell = FeatureCell(&#123;
-  key: 'settings',
-  initialState: defaultSettings
-&#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+            </ng-template>
+          </sdux-multi-framework-example>
 
           <p>
             No adapters. No bridges. No shared state layer. Each system owns its
@@ -369,20 +303,11 @@ export const settingsCell = FeatureCell(&#123;
           </ul>
           <p>One <sdux-feature-cell /> definition. One pipeline. Done.</p>
 
-          <div class="sdux-tab-container">
-            <mat-tab-group
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              class="sdux-tabs"
-              [selectedIndex]="0">
-              <mat-tab label="Angular">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Angular — Complete State Contract for a New Feature'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// app.config.ts
+          <sdux-multi-framework-example
+            description="Complete State Contract for a New Feature">
+            <ng-template #angular>
+              <pre
+                class="code-inline"><code class="language-ts">// app.config.ts
 export const appConfig: ApplicationConfig = &#123;
   providers: [
     provideVault(&#123; logLevel: 'off' &#125;),
@@ -416,19 +341,10 @@ export class NotificationsService &#123;
     &#125;);
   &#125;
 &#125;</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="React">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'React — Complete State Contract for a New Feature'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
 
 Vault(&#123; devMode: true, logLevel: 'off' &#125;);
 
@@ -444,69 +360,8 @@ notificationsCell.mergeState(&#123;
   items: [...notificationsCell.state.items, newNotification],
   unreadCount: notificationsCell.state.unreadCount + 1
 &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Vue">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Vue — Complete State Contract for a New Feature'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
-
-Vault(&#123; devMode: true, logLevel: 'off' &#125;);
-
-export const notificationsCell = FeatureCell(&#123;
-  key: 'notifications',
-  initialState: &#123; items: [], unreadCount: 0 &#125;
-&#125;);
-
-notificationsCell.initialize();
-
-// Update state — no action objects required
-notificationsCell.mergeState(&#123;
-  items: [...notificationsCell.state.items, newNotification],
-  unreadCount: notificationsCell.state.unreadCount + 1
-&#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Svelte">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Svelte — Complete State Contract for a New Feature'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; Vault, FeatureCell &#125; from '@sdux-vault/core';
-
-Vault(&#123; devMode: true, logLevel: 'off' &#125;);
-
-export const notificationsCell = FeatureCell(&#123;
-  key: 'notifications',
-  initialState: &#123; items: [], unreadCount: 0 &#125;
-&#125;);
-
-notificationsCell.initialize();
-
-// Update state — no action objects required
-notificationsCell.mergeState(&#123;
-  items: [...notificationsCell.state.items, newNotification],
-  unreadCount: notificationsCell.state.unreadCount + 1
-&#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+            </ng-template>
+          </sdux-multi-framework-example>
 
           <h4>Phase 2: Parallel Validation</h4>
           <p>

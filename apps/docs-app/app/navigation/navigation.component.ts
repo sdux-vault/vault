@@ -9,7 +9,7 @@ import {
   BrandNameComponent,
   BrandNameService,
   ImageComponent,
-  NewComponent
+  SDuXNewComponent
 } from '@sdux-vault/ui/web-components';
 import { NavigationDirective } from './directive/navigation.directive';
 import { DevToolsSubNavigationComponent } from './sub-navigation/dev-tools/dev-tools.sub-navigation.component';
@@ -60,7 +60,7 @@ import { VaultFeatureCellApiSubNavigationComponent } from './sub-navigation/vaul
     PipelineExtensionsSubNavigationComponent,
     GettingStartedSubNavigationComponent,
     DevToolsSubNavigationComponent,
-    NewComponent,
+    SDuXNewComponent,
     BrandNameComponent
   ],
   templateUrl: './navigation.component.html',

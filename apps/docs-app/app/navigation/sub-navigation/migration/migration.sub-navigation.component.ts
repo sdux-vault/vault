@@ -2,7 +2,10 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { DeprecatedComponent } from '@sdux-vault/ui/web-components';
+import {
+  DeprecatedComponent,
+  SDuXNewComponent
+} from '@sdux-vault/ui/web-components';
 import { NavigationDirective } from '../../directive/navigation.directive';
 
 /**
@@ -25,7 +28,8 @@ import { NavigationDirective } from '../../directive/navigation.directive';
     RouterLink,
     RouterLinkActive,
     MatListModule,
-    DeprecatedComponent
+    DeprecatedComponent,
+    SDuXNewComponent
   ],
   templateUrl: './migration.sub-navigation.component.html',
   styleUrls: ['../../navigation.component.scss'],

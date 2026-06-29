@@ -1,9 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -13,10 +11,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [
     BlogLayoutComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
-    MatTab,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     RouterModule,
     VaultBrandNameComponent
   ],
@@ -157,20 +152,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             stages, and the Builder outputs copy-paste-ready TypeScript. No
             boilerplate to memorize. No configuration guessing.
           </p>
-          <div class="sdux-tab-container">
-            <mat-tab-group
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              class="sdux-tabs"
-              [selectedIndex]="0">
-              <mat-tab label="Angular">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Generated Angular Pipeline Configuration'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// app.config.ts
+          <sdux-multi-framework-example description="Pipeline Configuration">
+            <ng-template #angular>
+              <pre
+                class="code-inline"><code class="language-ts">// app.config.ts
 
 export const appConfig: ApplicationConfig = &#123;
   providers: [
@@ -200,19 +185,9 @@ export class CartService &#123;
     this.vault.initialize();
   &#125;
 &#125;</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="React">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Generated React Pipeline Configuration'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// main.ts
+            </ng-template>
+            <ng-template #core>
+              <pre class="code-inline"><code class="language-ts">// main.ts
 import &#123; Vault &#125; from '&#64;sdux-vault/core';
 
 Vault(&#123;
@@ -229,71 +204,8 @@ export const cartCell = FeatureCell(&#123;
 
 // Explicit activation
 cartCell.initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Vue">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Generated Vue Pipeline Configuration'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// main.ts
-import &#123; Vault &#125; from '&#64;sdux-vault/core';
-
-Vault(&#123;
-  logLevel: 'off'
-&#125;);
-
-// cart.cell.ts
-import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
-
-export const cartCell = FeatureCell(&#123;
-  key: 'cart',
-  initialState: &#123; items: [], total: 0, status: 'idle' &#125;
-&#125;);
-
-// Explicit activation
-cartCell.initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Svelte">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Generated Svelte Pipeline Configuration'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// main.ts
-import &#123; Vault &#125; from '&#64;sdux-vault/core';
-
-Vault(&#123;
-  logLevel: 'off'
-&#125;);
-
-// cart.cell.ts
-import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
-
-export const cartCell = FeatureCell(&#123;
-  key: 'cart',
-  initialState: &#123; items: [], total: 0, status: 'idle' &#125;
-&#125;);
-
-// Explicit activation
-cartCell.initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+            </ng-template>
+          </sdux-multi-framework-example>
           <p>
             The Builder doesn't generate scaffolding you'll throw away. It
             generates the same configuration a production app uses &mdash;
