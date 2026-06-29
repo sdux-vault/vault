@@ -10,7 +10,7 @@ import { DecisionOutcomesCommonComponent } from '../../../common/conductor/decis
 import { PipelineRoutingDirective } from '../../directives/pipeline-routing.directive';
 
 @Component({
-  selector: 'sdux-conductor',
+  selector: 'sdux-decision-engine',
   standalone: true,
   imports: [
     RouterModule,
@@ -20,8 +20,8 @@ import { PipelineRoutingDirective } from '../../directives/pipeline-routing.dire
     FeatureCellBrandNameComponent,
     PipelineRelatedTopicComponent
   ],
-  templateUrl: './conductor.component.html',
+  templateUrl: './decision-engine.component.html',
   styleUrls: ['../../../scss/example.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ConductorComponent extends PipelineRoutingDirective {}
+export class DecisionEngineComponent extends PipelineRoutingDirective {}

@@ -1,8 +1,8 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  AfterContentInit,
   Component,
   ContentChild,
-  OnInit,
   TemplateRef,
   input,
   signal
@@ -43,9 +43,12 @@ interface TabEntry {
   ],
   templateUrl: './multi-framework-example.component.html'
 })
-export class MultiFrameworkExampleComponent implements OnInit {
+export class MultiFrameworkExampleComponent implements AfterContentInit {
   /** Description appended to each tab label (e.g., "Sealed Pipeline"). */
   readonly description = input.required<string>();
+
+  /** Whether to display the copy-paste button inside the example viewer. */
+  readonly displayCopyPaste = input<boolean>(true);
 
   /** Template containing the Angular-specific code block. */
   @ContentChild('angular', { static: true })
@@ -55,7 +58,7 @@ export class MultiFrameworkExampleComponent implements OnInit {
   @ContentChild('core', { static: true }) coreTemplate!: TemplateRef<unknown>;
 
   /** Optional generic tab component with its own label, order, and content. */
-  @ContentChild(GenericTabComponent, { static: true })
+  @ContentChild(GenericTabComponent)
   genericTab!: GenericTabComponent;
 
   /** Computed ordered list of tabs to render. */
@@ -65,7 +68,7 @@ export class MultiFrameworkExampleComponent implements OnInit {
    * Computes the ordered tab list from the fixed framework set and any
    * optional generic tab, then writes the result to the `tabs` signal.
    */
-  ngOnInit() {
+  ngAfterContentInit() {
     const allTabs: TabEntry[] = [
       { label: 'Angular', template: 'angular' },
       { label: 'Bun', template: 'core' },

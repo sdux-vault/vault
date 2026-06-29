@@ -113,7 +113,7 @@ export class DocumentationLinkGenerator {
 
     // 1️⃣ Protect HARD blocks (pre, code, script, style)
     let result = content.replace(
-      /<(sdux-example-viewer-tab|sdux-diagram|h3|h4|pre|code|script|style)\b[\s\S]*?<\/\1\s*>/gi,
+      /<(sdux-multi-framework-example|sdux-example-viewer-tab|sdux-diagram|h3|h4|pre|code|script|style)\b[\s\S]*?<\/\1\s*>/gi,
       (match) => {
         const key = `__HARD_${hardBlocks.length}__`;
         hardBlocks.push(match);

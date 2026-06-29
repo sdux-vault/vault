@@ -7,7 +7,9 @@
     @for (tab of tabs(); track tab.label) {
       <mat-tab [label]="tab.label">
         <div class="tab-panel">
-          <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="displayCopyPaste()">
             <sdux-example-viewer-tab
               [label]="tab.label + ' — ' + description()">
               <ng-container *ngTemplateOutlet="getTemplate(tab)" />

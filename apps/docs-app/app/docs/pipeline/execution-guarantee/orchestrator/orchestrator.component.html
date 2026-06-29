@@ -1,0 +1,265 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Orchestrator</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>Orchestrator</strong> receives execution directives from the
+      Conductor and owns the ordered traversal of Pipeline stages. It sequences
+      configured Behaviors according to fixed Pipeline order, ensuring
+      deterministic execution and isolation between Behavior effects within a
+      <sdux-feature-cell [tm]="true" />.
+    </p>
+
+    <p>
+      The Orchestrator invokes only stages that are enabled, applicable, and
+      configured with the <sdux-feature-cell /> instantiation. It does not make
+      policy decisions, does not evaluate Controllers, and does not determine
+      whether an attempt should proceed. Those responsibilities belong to the
+      Conductor.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- RESPONSIBILITY -->
+  <!-- ====================================================== -->
+  <section class="section" id="responsibility">
+    <div class="section-title">Orchestrator Responsibility</div>
+
+    <div class="section-body">
+      <p>
+        The Orchestrator is the execution engine for a
+        <sdux-feature-cell />'s Pipeline. Its responsibilities are narrowly
+        scoped to stage traversal:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Stage sequencing</strong> — Behaviors are executed in their
+          canonical Pipeline order. No stage may be skipped, reordered, or
+          duplicated.
+        </li>
+        <li>
+          <strong>Isolation</strong> — Each Behavior receives an isolated copy
+          of the current pipeline value. Mutations within a Behavior cannot
+          affect upstream or downstream stages.
+        </li>
+        <li>
+          <strong>Determinism</strong> — Given identical state and
+          configuration, the Orchestrator always produces the same result.
+        </li>
+        <li>
+          <strong>Error containment</strong> — Pipeline errors are captured,
+          normalized, and dispatched through the error handling path without
+          corrupting the state snapshot.
+        </li>
+      </ul>
+
+      <p>
+        The Orchestrator does not enqueue attempts, does not evaluate
+        Controllers, and does not manage the FIFO queue. It operates exclusively
+        as a stage traversal engine.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- PIPELINE STAGES -->
+  <!-- ====================================================== -->
+  <section class="section" id="pipeline-stages">
+    <div class="section-title">Pipeline Stage Traversal</div>
+
+    <div class="section-body">
+      <p>
+        The Orchestrator traverses Pipeline stages in a fixed order. Each stage
+        is occupied by zero or more Behaviors. Stages with no configured
+        Behaviors are skipped silently.
+      </p>
+
+      <table aria-label="Orchestrator Pipeline Stage Order">
+        <thead>
+          <tr>
+            <th scope="col" class="column-50">Order</th>
+            <th scope="col" class="column-150">Stage</th>
+            <th scope="col" class="column-auto">Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Interceptors</td>
+            <td>
+              Intercepts the incoming value before resolution. May halt the
+              Pipeline entirely.
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Resolve</td>
+            <td>
+              Produces the State input from the incoming value, handling
+              synchronous values, Promises, Observables, and HTTP resources.
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Operators</td>
+            <td>
+              Applies transformations to the resolved value. May block the
+              Pipeline by returning undefined.
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Filter</td>
+            <td>
+              Filters State emissions based on configured filter functions.
+            </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>BeforeTap</td>
+            <td>
+              Observation point before reduction. Receives an isolated snapshot
+              of the current pipeline value.
+            </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Reducer</td>
+            <td>Computes next State from the current pipeline value.</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>AfterTap</td>
+            <td>
+              Observation point after reduction. Receives an isolated snapshot
+              of the reduced value.
+            </td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Encrypt</td>
+            <td>Applies encryption to the State before persistence.</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>Persist</td>
+            <td>Persists the State to configured storage.</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>State</td>
+            <td>
+              Commits the final
+              <a href="/docs/references/shapes/state-snapshot-shape"
+                >StateSnapshotShape</a
+              >
+              and emits the resolved value through Signals and observable
+              streams.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-info">
+        <strong>Replace vs Merge:</strong> The Orchestrator supports two
+        operation modes. A <strong>Replace</strong>
+        <span class="code">replaceState()</span> operation resolves and commits
+        a complete new State value. A <strong>Merge</strong>
+        <span class="code">mergeState()</span>
+        operation resolves a partial value and combines it with the current
+        State using the configured Merge Behavior before proceeding through
+        downstream stages.
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ISOLATION -->
+  <!-- ====================================================== -->
+  <section class="section" id="isolation">
+    <div class="section-title">Value Isolation</div>
+
+    <div class="section-body">
+      <p>
+        The Orchestrator enforces strict value isolation between stages. Before
+        each Behavior receives the pipeline value, it is deep-cloned. This
+        prevents unintended mutation leakage between stages and guarantees that
+        each Behavior operates on an independent copy.
+      </p>
+
+      <p>
+        After reduction completes, the final State value is cloned once more
+        before being committed to the
+        <a href="/docs/references/shapes/state-snapshot-shape"
+          >StateSnapshotShape</a
+        >. The pre-encrypted value is what consumers observe through Signals and
+        streams. The post-encrypted value is what flows to persistence.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ERROR HANDLING -->
+  <!-- ====================================================== -->
+  <section class="section" id="error-handling">
+    <div class="section-title">Error Handling</div>
+
+    <div class="section-body">
+      <p>
+        When a Behavior throws during Pipeline execution, the Orchestrator
+        captures the error and routes it through a structured error path:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Normalization</strong> — The raw error is converted into an
+          immutable Error representation.
+        </li>
+        <li>
+          <strong>Transform</strong> — Registered error transform Behaviors may
+          reshape the error for consumer-specific needs.
+        </li>
+        <li>
+          <strong>State commit</strong> — The error is committed to the State
+          snapshot so it is observable through Signals and streams.
+        </li>
+        <li>
+          <strong>Callbacks</strong> — Registered error callbacks are invoked
+          with isolated copies of the error and the current snapshot.
+        </li>
+      </ul>
+
+      <p>
+        Error handling does not interrupt queue processing. After error
+        finalization, the Conductor advances to the next queued attempt.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAMS -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="diagrams">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.1/2.1-execution-flow.svg"
+        [tooltip]="'Pipeline Execution Flow'" />
+
+      <sdux-diagram
+        image="diagrams/1.0/1.1-featurecell-lifecycle.svg"
+        [tooltip]="'FeatureCell Lifecycle'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2.1-pipeline-initialization-flow.svg"
+        [tooltip]="'Pipeline Initialization Flow'" />
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

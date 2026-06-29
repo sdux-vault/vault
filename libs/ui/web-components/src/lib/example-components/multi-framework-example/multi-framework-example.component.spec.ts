@@ -59,6 +59,62 @@ class TestHostWithGenericComponent {}
 })
 class TestHostWithOrderComponent {}
 
+@Component({
+  standalone: true,
+  imports: [MultiFrameworkExampleComponent],
+  template: `
+    <sdux-multi-framework-example
+      description="No Copy"
+      [displayCopyPaste]="false">
+      <ng-template #angular>
+        <pre class="code-inline"><code>angular code</code></pre>
+      </ng-template>
+      <ng-template #core>
+        <pre class="code-inline"><code>core code</code></pre>
+      </ng-template>
+    </sdux-multi-framework-example>
+  `
+})
+class TestHostWithNoCopyComponent {}
+
+@Component({
+  standalone: true,
+  imports: [MultiFrameworkExampleComponent, GenericTabComponent],
+  template: `
+    <sdux-multi-framework-example description="Testing">
+      <ng-template #angular>
+        <pre class="code-inline"><code>angular code</code></pre>
+      </ng-template>
+      <ng-template #core>
+        <pre class="code-inline"><code>core code</code></pre>
+      </ng-template>
+      <sdux-generic-tab label="Zzz Last Tab" [alphabetized]="true">
+        <pre class="code-inline"><code>generic code</code></pre>
+      </sdux-generic-tab>
+    </sdux-multi-framework-example>
+  `
+})
+class TestHostWithGenericAlphabetizedLastComponent {}
+
+@Component({
+  standalone: true,
+  imports: [MultiFrameworkExampleComponent, GenericTabComponent],
+  template: `
+    <sdux-multi-framework-example description="Testing">
+      <ng-template #angular>
+        <pre class="code-inline"><code>angular code</code></pre>
+      </ng-template>
+      <ng-template #core>
+        <pre class="code-inline"><code>core code</code></pre>
+      </ng-template>
+      <sdux-generic-tab label="Appended Tab" [alphabetized]="false">
+        <pre class="code-inline"><code>generic code</code></pre>
+      </sdux-generic-tab>
+    </sdux-multi-framework-example>
+  `
+})
+class TestHostWithGenericAppendedComponent {}
+
 describe('MultiFrameworkExampleComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
 
@@ -109,9 +165,12 @@ describe('MultiFrameworkExampleComponent', () => {
 
   it('should project the core template into all non-Angular tabs', () => {
     const el: HTMLElement = fixture.nativeElement;
-    const panels = el.querySelectorAll('.tab-panel');
-    for (let i = 1; i < panels.length; i++) {
-      expect(panels[i]?.textContent).toContain('core code');
+    const tabs = el.querySelectorAll<HTMLElement>('.mat-mdc-tab');
+    for (let i = 1; i < tabs.length; i++) {
+      tabs[i].click();
+      fixture.detectChanges();
+      const panel = el.querySelector('.mat-mdc-tab-body-active .tab-panel');
+      expect(panel?.textContent).toContain('core code');
     }
   });
 
@@ -124,6 +183,11 @@ describe('MultiFrameworkExampleComponent', () => {
     const el: HTMLElement = fixture.nativeElement;
     const firstTab = el.querySelector('.mat-mdc-tab');
     expect(firstTab?.classList).toContain('mdc-tab--active');
+  });
+
+  it('should default displayCopyPaste to true', () => {
+    const component = fixture.debugElement.children[0].componentInstance;
+    expect(component.displayCopyPaste()).toBeTrue();
   });
 });
 
@@ -155,8 +219,11 @@ describe('MultiFrameworkExampleComponent with generic (alphabetized)', () => {
 
   it('should project the generic template into the generic tab', () => {
     const el: HTMLElement = fixture.nativeElement;
-    const panels = el.querySelectorAll('.tab-panel');
-    expect(panels[1]?.textContent).toContain('generic code');
+    const tabs = el.querySelectorAll<HTMLElement>('.mat-mdc-tab');
+    tabs[1].click();
+    fixture.detectChanges();
+    const panel = el.querySelector('.mat-mdc-tab-body-active .tab-panel');
+    expect(panel?.textContent).toContain('generic code');
   });
 });
 
@@ -189,7 +256,90 @@ describe('MultiFrameworkExampleComponent with generic (order)', () => {
 
   it('should project the generic template at the ordered position', () => {
     const el: HTMLElement = fixture.nativeElement;
-    const panels = el.querySelectorAll('.tab-panel');
-    expect(panels[1]?.textContent).toContain('generic code');
+    const tabs = el.querySelectorAll<HTMLElement>('.mat-mdc-tab');
+    tabs[1].click();
+    fixture.detectChanges();
+    const panel = el.querySelector('.mat-mdc-tab-body-active .tab-panel');
+    expect(panel?.textContent).toContain('generic code');
+  });
+});
+
+describe('MultiFrameworkExampleComponent with displayCopyPaste false', () => {
+  let fixture: ComponentFixture<TestHostWithNoCopyComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        TestHostWithNoCopyComponent,
+        MultiFrameworkExampleComponent,
+        MatTabsModule,
+        NoopAnimationsModule
+      ],
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TestHostWithNoCopyComponent);
+    fixture.detectChanges();
+  });
+
+  it('should pass displayCopyPaste false to the example viewer', () => {
+    const component = fixture.debugElement.children[0].componentInstance;
+    expect(component.displayCopyPaste()).toBeFalse();
+  });
+});
+
+describe('MultiFrameworkExampleComponent with generic (alphabetized last)', () => {
+  let fixture: ComponentFixture<TestHostWithGenericAlphabetizedLastComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        TestHostWithGenericAlphabetizedLastComponent,
+        MultiFrameworkExampleComponent,
+        MatTabsModule,
+        NoopAnimationsModule
+      ],
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(
+      TestHostWithGenericAlphabetizedLastComponent
+    );
+    fixture.detectChanges();
+  });
+
+  it('should append the generic tab at the end when it sorts last alphabetically', () => {
+    const el: HTMLElement = fixture.nativeElement;
+    const tabLabels = el.querySelectorAll('.mat-mdc-tab');
+    const labels = Array.from(tabLabels).map((tab) => tab.textContent?.trim());
+    expect(labels.length).toBe(11);
+    expect(labels[10]).toBe('Zzz Last Tab');
+  });
+});
+
+describe('MultiFrameworkExampleComponent with generic (appended, not alphabetized)', () => {
+  let fixture: ComponentFixture<TestHostWithGenericAppendedComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        TestHostWithGenericAppendedComponent,
+        MultiFrameworkExampleComponent,
+        MatTabsModule,
+        NoopAnimationsModule
+      ],
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TestHostWithGenericAppendedComponent);
+    fixture.detectChanges();
+  });
+
+  it('should append the generic tab at the end when not alphabetized and no order', () => {
+    const el: HTMLElement = fixture.nativeElement;
+    const tabLabels = el.querySelectorAll('.mat-mdc-tab');
+    const labels = Array.from(tabLabels).map((tab) => tab.textContent?.trim());
+    expect(labels.length).toBe(11);
+    expect(labels[10]).toBe('Appended Tab');
   });
 });

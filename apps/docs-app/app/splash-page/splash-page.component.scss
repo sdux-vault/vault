@@ -834,12 +834,12 @@ $splash-success: global.$sdux-success-base;
 
     &-preview {
       background: $splash-code-bg;
-      padding: global.$spacing-lg;
+      // padding: global.$spacing-lg;
       font-family: global.$sdux-code-font;
       font-size: global.$font-size-xs;
       color: $splash-code-text;
       line-height: 1.6;
-      min-height: 265px;
+      min-height: 338px;
 
       pre {
         margin: 0;

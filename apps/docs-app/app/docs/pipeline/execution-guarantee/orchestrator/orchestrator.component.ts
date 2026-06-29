@@ -6,22 +6,20 @@ import {
   FeatureCellBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
-import { DecisionOutcomesCommonComponent } from '../../../common/conductor/decision-outcomes.common.component';
 import { PipelineRoutingDirective } from '../../directives/pipeline-routing.directive';
 
 @Component({
-  selector: 'sdux-conductor',
+  selector: 'sdux-orchestrator',
   standalone: true,
   imports: [
     RouterModule,
     BrandNameComponent,
-    DecisionOutcomesCommonComponent,
     DiagramComponent,
     FeatureCellBrandNameComponent,
     PipelineRelatedTopicComponent
   ],
-  templateUrl: './conductor.component.html',
+  templateUrl: './orchestrator.component.html',
   styleUrls: ['../../../scss/example.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ConductorComponent extends PipelineRoutingDirective {}
+export class OrchestratorComponent extends PipelineRoutingDirective {}

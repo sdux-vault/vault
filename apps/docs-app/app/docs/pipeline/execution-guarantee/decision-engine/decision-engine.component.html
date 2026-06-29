@@ -1,0 +1,227 @@
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Decision Engine &amp; Arbitrator</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>Decision Engine</strong> and
+      <strong>Arbitrator</strong> evaluate incoming state resolution requests
+      forwarded by the Conductor. Together they determine whether a request is
+      permitted, rejected, or deferred — producing a normalized execution
+      directive for the Orchestrator within a <sdux-feature-cell [tm]="true" />.
+    </p>
+
+    <p>
+      The Decision Engine coordinates registered Controllers and delegates vote
+      aggregation to the Arbitrator. The Arbitrator applies deterministic
+      priority rules to produce exactly one outcome per attempt.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- RESPONSIBILITY -->
+  <!-- ====================================================== -->
+  <section class="section" id="responsibility">
+    <div class="section-title">Responsibility</div>
+
+    <div class="section-body">
+      <p>
+        The Decision Engine and Arbitrator occupy the control layer between the
+        Conductor and the Orchestrator. Their combined responsibilities are:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Attempt evaluation</strong> — Each state resolution attempt is
+          submitted to all registered Controllers for evaluation.
+        </li>
+        <li>
+          <strong>Vote aggregation</strong> — Controller responses are
+          normalized and aggregated by the Arbitrator using deterministic
+          priority rules.
+        </li>
+        <li>
+          <strong>Decision production</strong> — A single outcome is produced
+          for every attempt: Abstain, Deny, or Abort.
+        </li>
+        <li>
+          <strong>Lifecycle notification</strong> — Controllers are notified of
+          Pipeline success, failure, and finalization events for observational
+          purposes.
+        </li>
+      </ul>
+
+      <p>
+        The Decision Engine does not modify State, does not participate in
+        Pipeline stage traversal, and does not enqueue or dequeue attempts. The
+        Arbitrator does not maintain execution history or internal state between
+        evaluations.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONTROLLER EVALUATION -->
+  <!-- ====================================================== -->
+  <section class="section" id="controller-evaluation">
+    <div class="section-title">Controller Evaluation</div>
+
+    <div class="section-body">
+      <p>
+        When the Conductor submits an attempt, the Decision Engine dispatches an
+        evaluation message to all registered Controllers. Each Controller
+        produces a vote indicating whether the attempt should proceed.
+      </p>
+
+      <p>
+        Controllers registered with a <sdux-feature-cell /> participate in every
+        <span class="code">replaceState()</span> or <strong>Merge</strong>
+        attempt evaluation. They may implement policies such as rate limiting,
+        circuit breakers, concurrency gates, or approval workflows.
+      </p>
+
+      <div class="callout callout-info">
+        Controllers are evaluated concurrently. All votes are collected before
+        the Arbitrator produces its decision. A Controller that fails during
+        evaluation is treated as a Deny vote.
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ARBITRATION -->
+  <!-- ====================================================== -->
+  <section class="section" id="arbitration">
+    <div class="section-title">Arbitration</div>
+
+    <div class="section-body">
+      <p>
+        The Arbitrator receives the collected votes and applies priority rules
+        to produce a single decision. The priority order is fixed and
+        deterministic:
+      </p>
+
+      <table aria-label="Arbitrator Vote Priority">
+        <thead>
+          <tr>
+            <th scope="col" class="column-75">Priority</th>
+            <th scope="col" class="column-100">Vote</th>
+            <th scope="col" class="column-auto">Effect</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1 (highest)</td>
+            <td>Abort</td>
+            <td>
+              The attempt is permanently rejected. No Pipeline execution occurs.
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Deny</td>
+            <td>
+              The attempt is blocked but may be re-evaluated when conditions
+              change.
+            </td>
+          </tr>
+          <tr>
+            <td>3 (lowest)</td>
+            <td>Abstain</td>
+            <td>
+              No objection. The attempt proceeds to the Orchestrator for
+              Pipeline execution.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        If no Controllers are registered, the Arbitrator treats the evaluation
+        as a unanimous Abstain and the attempt proceeds unconditionally.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DECISION OUTCOMES -->
+  <!-- ====================================================== -->
+  <sdux-decision-outcomes-common />
+
+  <!-- ====================================================== -->
+  <!-- LIFECYCLE NOTIFICATIONS -->
+  <!-- ====================================================== -->
+  <section class="section" id="lifecycle-notifications">
+    <div class="section-title">Lifecycle Notifications</div>
+
+    <div class="section-body">
+      <p>
+        After Pipeline execution completes, the Decision Engine notifies
+        registered Controllers of the result. These notifications are
+        observational — they do not participate in arbitration or affect the
+        decision for subsequent attempts.
+      </p>
+
+      <table aria-label="Lifecycle Notification Types">
+        <thead>
+          <tr>
+            <th scope="col" class="column-100">Notification</th>
+            <th scope="col" class="column-auto">Trigger</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Success</td>
+            <td>
+              Pipeline execution completed and State was committed successfully.
+            </td>
+          </tr>
+          <tr>
+            <td>Failure</td>
+            <td>
+              Pipeline execution failed and the Error was committed to the State
+              Snapshot.
+            </td>
+          </tr>
+          <tr>
+            <td>Finalize</td>
+            <td>
+              The trace associated with the attempt has fully completed and
+              resources may be released.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Controllers may use lifecycle notifications to update internal counters,
+        release concurrency tokens, or adjust future vote behavior. A Controller
+        that throws during notification is silently ignored.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAMS -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="diagrams">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/6.0/6.0-controller-flow.svg"
+        [tooltip]="'Controller Flow'" />
+
+      <sdux-diagram
+        image="diagrams/9.0/9.1-policy-flow.svg"
+        [tooltip]="'Policy Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2.2-conductor-queue-flow.svg"
+        [tooltip]="'Conductor Queue Flow'" />
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>
