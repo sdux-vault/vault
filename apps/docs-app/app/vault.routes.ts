@@ -271,6 +271,30 @@ export const routes: Routes = [
                   )
               },
               {
+                path: 'decision-engine',
+                data: { type: 'decision-engine' },
+                loadComponent: () =>
+                  import('./docs/pipeline/execution-guarantee/decision-engine/decision-engine.component').then(
+                    (m) => m.DecisionEngineComponent
+                  )
+              },
+              {
+                path: 'orchestrator',
+                data: { type: 'orchestrator' },
+                loadComponent: () =>
+                  import('./docs/pipeline/execution-guarantee/orchestrator/orchestrator.component').then(
+                    (m) => m.OrchestratorComponent
+                  )
+              },
+              {
+                path: 'conductor',
+                data: { type: 'conductor' },
+                loadComponent: () =>
+                  import('./docs/pipeline/execution-guarantee/conductor/conductor.component').then(
+                    (m) => m.ConductorComponent
+                  )
+              },
+              {
                 path: 'conductor-queue',
                 loadComponent: () =>
                   import('./docs/pipeline/execution-guarantee/conductor-queue/conductor-queue.component').then(

@@ -190,6 +190,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-27-react-tab-sync-subscribe-before-initialize/react-tab-sync-subscribe-before-initialize.component').then(
         (m) => m.BlogReactTabSyncSubscribeBeforeInitializeComponent
       )
+  },
+  {
+    path: 'reducers-cant-change-after-init',
+    data: {
+      category: 'blogs',
+      type: 'reducers-cant-change-after-init'
+    },
+    loadComponent: () =>
+      import('./posts/2026-06-29-reducers-cant-change-after-init/reducers-cant-change-after-init.component').then(
+        (m) => m.BlogReducersCantChangeAfterInitComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

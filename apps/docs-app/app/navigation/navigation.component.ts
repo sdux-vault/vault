@@ -9,7 +9,7 @@ import {
   BrandNameComponent,
   BrandNameService,
   ImageComponent,
-  NewComponent
+  SDuXNewComponent
 } from '@sdux-vault/ui/web-components';
 import { NavigationDirective } from './directive/navigation.directive';
 import { DevToolsSubNavigationComponent } from './sub-navigation/dev-tools/dev-tools.sub-navigation.component';
@@ -17,6 +17,7 @@ import { GettingStartedSubNavigationComponent } from './sub-navigation/getting-s
 import { MigrationSubNavigationComponent } from './sub-navigation/migration/migration.sub-navigation.component';
 import { PipelineBehaviorSubNavigationComponent } from './sub-navigation/pipeline/behaviors/pipeline.behaviors.sub-navigation.component';
 import { PipelineControllersSubNavigationComponent } from './sub-navigation/pipeline/controllers/pipeline.controllers.sub-navigation.component';
+import { ExecutionGuaranteeSubNavigationComponent } from './sub-navigation/pipeline/execution-guarantee/execution-guarantee.sub-navigation.component';
 import { PipelineExtensionsSubNavigationComponent } from './sub-navigation/pipeline/extensions/pipeline.extensions.sub-navigation.component';
 import { PipelineSubNavigationComponent } from './sub-navigation/pipeline/pipeline.sub-navigation.component';
 import { ReferencesSubNavigationComponent } from './sub-navigation/references/references.sub-navigation.component';
@@ -58,9 +59,10 @@ import { VaultFeatureCellApiSubNavigationComponent } from './sub-navigation/vaul
     PipelineControllersSubNavigationComponent,
     VaultFeatureCellApiSubNavigationComponent,
     PipelineExtensionsSubNavigationComponent,
+    ExecutionGuaranteeSubNavigationComponent,
     GettingStartedSubNavigationComponent,
     DevToolsSubNavigationComponent,
-    NewComponent,
+    SDuXNewComponent,
     BrandNameComponent
   ],
   templateUrl: './navigation.component.html',

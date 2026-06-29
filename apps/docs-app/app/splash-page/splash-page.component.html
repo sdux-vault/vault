@@ -39,7 +39,7 @@
         <button type="button" class="btn-primary" (click)="openBuilder()">
           Launch your first pipeline
         </button>
-        <button type="button" class="btn-ghost" (click)="openStartHere()">
+        <button class="btn-ghost" (click)="openStartHere()" type="button">
           Read the architecture
         </button>
       </div>
@@ -661,7 +661,7 @@ it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">a
     <div class="stackblitz">
       <article class="stackblitz-card">
         <div class="stackblitz-card-preview">
-          <pre><code>const cell = FeatureCell(
+          <pre><code class="language-ts">const cell = FeatureCell(
   ExampleService,
   &#123;
     key: 'example-feature-cell-key',
@@ -689,7 +689,7 @@ cell.initialize();</code></pre>
 
       <article class="stackblitz-card">
         <div class="stackblitz-card-preview">
-          <pre><code>const cell = FeatureCell(
+          <pre><code class="language-ts">const cell = FeatureCell(
   ExampleService,
   &#123;
     key: 'example-feature-cell-key',
@@ -718,17 +718,20 @@ cell
 
       <article class="stackblitz-card">
         <div class="stackblitz-card-preview">
-          <pre><code>Vault( &#123; devMode: true &#125; );
+          <pre><code class="language-ts">Vault( &#123; devMode: true &#125; );
 
-const cell = FeatureCell( ExampleService, &#123;
-  key: 'example-feature-cell-key',
-  initialState: [], 
-  insights: &#123;
-    wantsErrors: true,
-    wantsPayload: true,
-    wantsState: false
-  &#125; as InsightConfig
-&#125;);
+const cell = FeatureCell(
+  ExampleService,
+  &#123;
+    key: 'example-feature-cell-key',
+    initialState: [], 
+    insights: &#123;
+      wantsErrors: true,
+      wantsPayload: true,
+      wantsState: false
+    &#125; as InsightConfig
+  &#125;
+);
 
 cell.initialize();</code></pre>
         </div>

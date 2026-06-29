@@ -129,5 +129,11 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     title: 'React + Tab Sync: Subscribe Before Initialize',
     date: '2026-06-27',
     readingTime: 3
+  },
+  {
+    slug: 'reducers-cant-change-after-init',
+    title: "Reducers That Can't Change After Init — Why That's a Feature",
+    date: '2026-06-29',
+    readingTime: 6
   }
 ];

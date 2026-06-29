@@ -86,6 +86,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/reducers-cant-change-after-init</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/redux-broke-my-trust</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -636,12 +641,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/execution-guarantee/conductor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/execution-guarantee/conductor-queue</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/execution-guarantee/decision-engine</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/execution-guarantee/isolation</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/execution-guarantee/orchestrator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

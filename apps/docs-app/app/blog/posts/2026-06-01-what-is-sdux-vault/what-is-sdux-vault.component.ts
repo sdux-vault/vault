@@ -1,11 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { PackageNameComponent } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-what-is-sdux-vault',
   standalone: true,
-  imports: [BlogLayoutComponent, RouterModule],
+  imports: [BlogLayoutComponent, RouterModule, PackageNameComponent],
   template: `
     <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
     <sdux-blog-layout
@@ -206,19 +207,46 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             <tbody>
               <tr>
                 <td>Angular</td>
-                <td>Thin adapter — same core, Angular ergonomics</td>
+                <td>
+                  Decorator + DI adapter via <sdux-package-name />/angular
+                  including signal support
+                </td>
+              </tr>
+              <tr>
+                <td>Bun</td>
+                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+              </tr>
+              <tr>
+                <td>Deno</td>
+                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+              </tr>
+              <tr>
+                <td>Node.js</td>
+                <td>Direct <sdux-package-name />/core — no adapter needed</td>
               </tr>
               <tr>
                 <td>React</td>
-                <td>Thin adapter — same core, React ergonomics</td>
+                <td>Direct <sdux-package-name />/core — no adapter needed</td>
               </tr>
               <tr>
-                <td>Vue</td>
-                <td>Thin adapter — same core, Vue ergonomics</td>
+                <td>Solid</td>
+                <td>Direct <sdux-package-name />/core — no adapter needed</td>
               </tr>
               <tr>
                 <td>Svelte</td>
-                <td>Thin adapter — same core, Svelte ergonomics</td>
+                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+              </tr>
+              <tr>
+                <td>Vanilla JS</td>
+                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+              </tr>
+              <tr>
+                <td>Vue</td>
+                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+              </tr>
+              <tr>
+                <td>Web Components</td>
+                <td>Direct <sdux-package-name />/core — no adapter needed</td>
               </tr>
             </tbody>
           </table>

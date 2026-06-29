@@ -1,0 +1,22 @@
+<div class="sdux-tab-container">
+  <mat-tab-group
+    animationDuration="200ms"
+    mat-stretch-tabs="false"
+    class="sdux-tabs"
+    [selectedIndex]="0">
+    @for (tab of tabs(); track tab.label) {
+      <mat-tab [label]="tab.label">
+        <div class="tab-panel">
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="displayCopyPaste()">
+            <sdux-example-viewer-tab
+              [label]="tab.label + ' — ' + description()">
+              <ng-container *ngTemplateOutlet="getTemplate(tab)" />
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </div>
+      </mat-tab>
+    }
+  </mat-tab-group>
+</div>

@@ -68,36 +68,7 @@
 
         <mat-divider></mat-divider>
 
-        <mat-expansion-panel class="nav-expansion">
-          <mat-expansion-panel-header>
-            <span class="nav-section-label">Execution Guarantees</span>
-          </mat-expansion-panel-header>
-
-          <a
-            mat-list-item
-            routerLink="/docs/pipeline/execution-guarantee"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            (click)="closeSidenav()">
-            <div class="menu-content">Overview</div>
-          </a>
-
-          <a
-            mat-list-item
-            routerLink="/docs/pipeline/execution-guarantee/conductor-queue"
-            routerLinkActive="active"
-            (click)="closeSidenav()">
-            <span class="menu-content sub-item">Conductor Queue</span>
-          </a>
-
-          <a
-            mat-list-item
-            routerLink="/docs/pipeline/execution-guarantee/isolation"
-            routerLinkActive="active"
-            (click)="closeSidenav()">
-            <span class="menu-content sub-item">Pipeline Isolation</span>
-          </a>
-        </mat-expansion-panel>
+        <sdux-execution-guarantee-subnavigation />
 
         <mat-divider></mat-divider>
 

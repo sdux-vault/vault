@@ -3025,6 +3025,16 @@
       "url": "/blog/react-tab-sync-subscribe-before-initialize",
       "symbols": ["react-tab-sync-subscribe-before-initialize"],
       "content": "React + Tab Sync: Subscribe Before Initialize react-tab-sync-subscribe-before-initialize SP"
+    },
+    {
+      "id": "blog:reducers-cant-change-after-init",
+      "title": "Reducers That Can't Change After Init — Why That's a Feature",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/reducers-cant-change-after-init",
+      "symbols": ["reducers-cant-change-after-init"],
+      "content": "Reducers That Can't Change After Init — Why That's a Feature reducers-cant-change-after-init ED"
     }
   ]
 }

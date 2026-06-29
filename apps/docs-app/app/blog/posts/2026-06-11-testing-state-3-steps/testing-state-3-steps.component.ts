@@ -1,9 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
+  GenericTabComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -13,11 +12,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [
     BlogLayoutComponent,
+    GenericTabComponent,
+    MultiFrameworkExampleComponent,
     RouterModule,
-    MatTab,
-    MatTabGroup,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
     VaultBrandNameComponent
   ],
   template: `
@@ -121,19 +118,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             testing logic is identical — only the initialization differs.
           </p>
 
-          <div class="sdux-tab-container">
-            <mat-tab-group
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              class="sdux-tabs"
-              [selectedIndex]="0">
-              <mat-tab label="Angular">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab [label]="'Minimal Test Pattern'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// Example Angular Test Structure
+          <sdux-multi-framework-example description="Minimal Test Pattern">
+            <ng-template #angular>
+              <pre
+                class="code-inline"><code class="language-ts">// Example Angular Test Structure
 describe('Employee FeatureCell', () =&gt; &#123;
   let testService: ExampleService;
 
@@ -182,19 +170,10 @@ describe('Employee FeatureCell', () =&gt; &#123;
     expect(testService.vault.state.value).toEqual([&#123; name: 'Alice' &#125;]);
   &#125;);
 &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Angular with Effects">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Minimal Test Pattern for effects'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// Example Angular with Effect Test Structure
+            </ng-template>
+            <sdux-generic-tab label="Angular with Effects" [order]="1">
+              <pre
+                class="code-inline"><code class="language-ts">// Example Angular with Effect Test Structure
 describe('Employee FeatureCell', () =&gt; &#123;
   let testService: ExampleService;
 
@@ -255,18 +234,10 @@ describe('Employee FeatureCell', () =&gt; &#123;
     expect(testService.vault.state.value).toEqual([&#123; name: 'Alice' &#125;]);
   &#125;);
 &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="React">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab [label]="'Minimal Test Pattern'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// Example Test Structure
+            </sdux-generic-tab>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">// Example Test Structure
 describe('Employee FeatureCell', () =&gt; &#123;
   let employeeCell;
 
@@ -308,120 +279,8 @@ describe('Employee FeatureCell', () =&gt; &#123;
     expect(employeeCell.state.value).toEqual([&#123; name: 'Alice' &#125;]);
   &#125;);
 &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Vue">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab [label]="'Minimal Test Pattern'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// Example Test Structure
-describe('Employee FeatureCell', () =&gt; &#123;
-  let employeeCell;
-
-  beforeEach(() =&gt; &#123;
-    // Initialize the Vault runtime in deterministic test mode.
-    // This enables DevMode, resets prior global state, and
-    // registers settlement hooks.
-    VaultTesting();
-
-    // Declare the production FeatureCell exactly as it would
-    // exist in the application.
-    employeeCell = FeatureCell(&#123;
-      key: 'employees',
-      initialState: []
-    &#125;);
-
-    // Explicitly initialize the FeatureCell runtime.
-    // (In Angular this happens automatically via DI.)
-    employeeCell.initialize();
-  &#125;);
-
-  it('replaces state deterministically', async () =&gt; &#123;
-    // initialize() always commits the initial state.
-    // That commit runs through the full pipeline and
-    // settles via the microtask finalize boundary.
-    await vaultSettled('employees');
-
-    // Trigger a state mutation.
-    // This runs synchronously through the pipeline,
-    // but finalization occurs in a microtask.
-    employeeCell.replaceState([&#123; name: 'Alice' &#125;]);
-
-    // Await the conductor's microtask finalize boundary.
-    // This guarantees the queue has fully drained and
-    // settlement has completed.
-    await vaultSettled('employees');
-
-    // Now it is safe to assert.
-    expect(employeeCell.state.value).toEqual([&#123; name: 'Alice' &#125;]);
-  &#125;);
-&#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-
-              <mat-tab label="Svelte">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab [label]="'Minimal Test Pattern'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// Example Test Structure
-describe('Employee FeatureCell', () =&gt; &#123;
-  let employeeCell;
-
-  beforeEach(() =&gt; &#123;
-    // Initialize the Vault runtime in deterministic test mode.
-    // This enables DevMode, resets prior global state, and
-    // registers settlement hooks.
-    VaultTesting();
-
-    // Declare the production FeatureCell exactly as it would
-    // exist in the application.
-    employeeCell = FeatureCell(&#123;
-      key: 'employees',
-      initialState: []
-    &#125;);
-
-    // Explicitly initialize the FeatureCell runtime.
-    // (In Angular this happens automatically via DI.)
-    employeeCell.initialize();
-  &#125;);
-
-  it('replaces state deterministically', async () =&gt; &#123;
-    // initialize() always commits the initial state.
-    // That commit runs through the full pipeline and
-    // settles via the microtask finalize boundary.
-    await vaultSettled('employees');
-
-    // Trigger a state mutation.
-    // This runs synchronously through the pipeline,
-    // but finalization occurs in a microtask.
-    employeeCell.replaceState([&#123; name: 'Alice' &#125;]);
-
-    // Await the conductor's microtask finalize boundary.
-    // This guarantees the queue has fully drained and
-    // settlement has completed.
-    await vaultSettled('employees');
-
-    // Now it is safe to assert.
-    expect(employeeCell.state.value).toEqual([&#123; name: 'Alice' &#125;]);
-  &#125;);
-&#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+            </ng-template>
+          </sdux-multi-framework-example>
         </div>
       </section>
 

@@ -34,6 +34,28 @@ export const RELATED_TOPICS_EXECUTION_GUARANTEE_REGISTRY: RelatedTopicCategorySh
           'Learn how SDuX Vault isolates pipeline executions to prevent cross-contamination between state transitions.'
       },
       {
+        link: '/docs/pipeline/execution-guarantee/decision-engine',
+        display: 'Decision Engine & Arbitrator',
+        title:
+          'Decision Engine & Arbitrator — SDuX Vault Controller Arbitration',
+        description:
+          'Learn how the Decision Engine and Arbitrator evaluate controller votes to produce deterministic execution decisions.'
+      },
+      {
+        link: '/docs/pipeline/execution-guarantee/orchestrator',
+        display: 'Orchestrator',
+        title: 'Orchestrator — SDuX Vault Pipeline Stage Traversal',
+        description:
+          'Learn how the Orchestrator sequences Pipeline stages in deterministic order with strict value isolation.'
+      },
+      {
+        link: '/docs/pipeline/execution-guarantee/conductor',
+        display: 'Conductor',
+        title: 'Conductor — SDuX Vault Pipeline Control Boundary',
+        description:
+          'Learn how the Conductor serializes attempts, delegates controller arbitration, and routes approved requests into the Pipeline.'
+      },
+      {
         link: '/docs/pipeline/execution-guarantee/conductor-queue',
         display: 'Conductor Queue',
         title: 'Conductor Queue — SDuX Vault Pipeline Serialization',

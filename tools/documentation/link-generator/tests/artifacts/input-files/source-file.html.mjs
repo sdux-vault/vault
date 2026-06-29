@@ -52,5 +52,14 @@ export const SOURCE_HTML = `<div>
   <img title="provideFeatureCell" />
 
   <img alt="withDebounce icon" />
+
+  <sdux-multi-framework-example description="Creating a FeatureCell">
+    <ng-template #angular>
+      <pre class="code-inline"><code class="language-ts">provideFeatureCell({ key: 'test' })</code></pre>
+    </ng-template>
+    <ng-template #core>
+      <pre class="code-inline"><code class="language-ts">FeatureCellConfig</code></pre>
+    </ng-template>
+  </sdux-multi-framework-example>
 </div>
 `;

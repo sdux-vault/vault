@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import {
@@ -6,6 +6,7 @@ import {
   CatchPhraseComponent,
   ImageComponent
 } from '@sdux-vault/ui/web-components';
+import Prism from 'prismjs';
 import { NavigationService } from '../navigation/service/navigation.service';
 import { SplashPageExampleComponent } from './splash-page-example/splash-page-example.component';
 
@@ -22,9 +23,14 @@ import { SplashPageExampleComponent } from './splash-page-example/splash-page-ex
   templateUrl: './splash-page.component.html',
   styleUrls: ['./splash-page.component.scss']
 })
-export class SplashPageComponent {
+export class SplashPageComponent implements AfterViewInit {
+  #elementRef = inject(ElementRef);
   #navigationService = inject(NavigationService);
   #router = inject(Router);
+
+  ngAfterViewInit(): void {
+    Prism.highlightAllUnder(this.#elementRef.nativeElement);
+  }
 
   openBuilder() {
     this.openMenu();

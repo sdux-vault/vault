@@ -1,11 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   CatchPhraseComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -16,11 +14,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   imports: [
     BlogLayoutComponent,
     CatchPhraseComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
     FeatureCellBrandNameComponent,
-    MatTab,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     RouterModule,
     VaultBrandNameComponent
   ],
@@ -110,20 +105,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             identical &#8212; only the wiring changes.
           </p>
 
-          <div class="sdux-tab-container">
-            <mat-tab-group
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              class="sdux-tabs"
-              [selectedIndex]="0">
-              <mat-tab label="Angular">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Example: Creating an Angular FeatureCell'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// app.config.ts
+          <sdux-multi-framework-example description="Creating a FeatureCell">
+            <ng-template #angular>
+              <pre
+                class="code-inline"><code class="language-ts">// app.config.ts
 
 export const appConfig: ApplicationConfig = &#123;
   providers: [
@@ -144,7 +129,11 @@ export const appConfig: ApplicationConfig = &#123;
           
 import &#123; Injectable &#125; from '&#64;angular/core';
 import &#123; FeatureCell, injectVault &#125; from '&#64;sdux-vault/angular';
-import &#123; Employee &#125; from './employee.shape';
+
+// employee.shape.ts
+export interface Employee &#123;
+  name: string;
+&#125;
 
 &#64;FeatureCell&lt;Employee[]&gt;('employees')
 &#64;Injectable(&#123; providedIn: 'root' &#125;)
@@ -158,19 +147,10 @@ export class EmployeeService &#123;
     this.vault.initialize();
   &#125;
 &#125;</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="React">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Example: Creating a React FeatureCell'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// main.ts (or index.ts, app.ts)
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">// main.ts (or index.ts, app.ts)
 import &#123; Vault &#125; from '&#64;sdux-vault/core';
 
 Vault(&#123;
@@ -178,7 +158,7 @@ Vault(&#123;
 &#125;);
           
 // employee.cell.ts
-import &#123; provideFeatureCell &#125; from '&#64;sdux-vault/core';
+import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
 
 export const employeeCell = FeatureCell(&#123;
   key: 'employees',
@@ -187,129 +167,8 @@ export const employeeCell = FeatureCell(&#123;
 
 // Explicit activation
 employeeCell.initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Vue">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Example: Creating a Vue FeatureCell'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// main.ts (or index.ts, app.ts)
-import &#123; Vault &#125; from '&#64;sdux-vault/core';
-
-Vault(&#123;
-  logLevel: 'off'
-&#125;);
-          
-// employee.cell.ts
-import &#123; provideFeatureCell &#125; from '&#64;sdux-vault/core';
-
-export const employeeCell = FeatureCell(&#123;
-  key: 'employees',
-  initialState: []
-&#125;);
-
-// Explicit activation
-employeeCell.initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Svelte">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Example: Creating a Svelte FeatureCell'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// main.ts (or index.ts, app.ts)
-import &#123; Vault &#125; from '&#64;sdux-vault/core';
-
-Vault(&#123;
-  logLevel: 'off'
-&#125;);
-          
-// employee.cell.ts
-import &#123; provideFeatureCell &#125; from '&#64;sdux-vault/core';
-
-export const employeeCell = FeatureCell(&#123;
-  key: 'employees',
-  initialState: []
-&#125;);
-
-// Explicit activation
-employeeCell.initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Solid">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Example: Creating a Solid FeatureCell'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// main.ts (or index.ts, app.ts)
-import &#123; Vault &#125; from '&#64;sdux-vault/core';
-
-Vault(&#123;
-  logLevel: 'off'
-&#125;);
-          
-// employee.cell.ts
-import &#123; provideFeatureCell &#125; from '&#64;sdux-vault/core';
-
-export const employeeCell = FeatureCell(&#123;
-  key: 'employees',
-  initialState: []
-&#125;);
-
-// Explicit activation
-employeeCell.initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Qwik">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Example: Creating a Qwik FeatureCell'">
-                        <pre
-                          class="code-inline"><code class="language-ts">// main.ts (or index.ts, app.ts)
-import &#123; Vault &#125; from '&#64;sdux-vault/core';
-
-Vault(&#123;
-  logLevel: 'off'
-&#125;);
-          
-// employee.cell.ts
-import &#123; provideFeatureCell &#125; from '&#64;sdux-vault/core';
-
-export const employeeCell = FeatureCell(&#123;
-  key: 'employees',
-  initialState: []
-&#125;);
-
-// Explicit activation
-employeeCell.initialize();</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+            </ng-template>
+          </sdux-multi-framework-example>
 
           <p>
             The Angular version uses the &#64;<a

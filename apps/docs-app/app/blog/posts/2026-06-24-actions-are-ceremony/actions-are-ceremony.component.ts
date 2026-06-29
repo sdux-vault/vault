@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -17,8 +17,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    MatTab,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
     VaultBrandNameComponent,
@@ -151,42 +150,30 @@ dispatch(addUser(newUser));</code></pre>
             no type strings, no creator functions, no dispatch broadcasts.
           </p>
 
-          <div class="sdux-tab-container">
-            <mat-tab-group
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              class="sdux-tabs"
-              [selectedIndex]="0">
-              <mat-tab label="Angular">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Angular — Direct State Update'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; injectVault &#125; from '&#64;sdux-vault/angular';
+          <sdux-multi-framework-example description="Direct State Update">
+            <ng-template #angular>
+              <pre
+                class="code-inline"><code class="language-ts">import &#123; FeatureCell, injectVault &#125; from '&#64;sdux-vault/angular';
 
-// In your component or service
-const userCell = injectVault('user');
+&#64;FeatureCell&lt;UserState&gt;('user')
+&#64;Injectable(&#123; providedIn: 'root' &#125;)
+export class UserService &#123;
+  readonly vault = injectVault&lt;UserState&gt;(UserService);
 
-// Direct state intent — no action creators needed
-userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#125;);
+  updateUser(name: string, role: string) &#123;
+    // Direct state intent — no action creators needed
+    this.vault.mergeState(&#123; value: &#123; name, role &#125; &#125;);
+  &#125;
 
-// Or replace entirely
-userCell.replaceState(&#123; value: defaultUser &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="React">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'React — Direct State Update'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
+  resetUser() &#123;
+    // Or replace entirely
+    this.vault.replaceState(&#123; value: defaultUser &#125;);
+  &#125;
+&#125;</code></pre>
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
 
 const userCell = FeatureCell('user', &#123; value: defaultUser &#125;);
 
@@ -195,55 +182,8 @@ userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#1
 
 // Or replace entirely
 userCell.replaceState(&#123; value: defaultUser &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Vue">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Vue — Direct State Update'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
-
-const userCell = FeatureCell('user', &#123; value: defaultUser &#125;);
-
-// Direct state intent — no action creators needed
-userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#125;);
-
-// Or replace entirely
-userCell.replaceState(&#123; value: defaultUser &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-              <mat-tab label="Svelte">
-                <div class="tab-panel">
-                  <ng-content select="[retrieve]">
-                    <sdux-example-viewer-source [displayTabs]="false">
-                      <sdux-example-viewer-tab
-                        [label]="'Svelte — Direct State Update'">
-                        <pre
-                          class="code-inline"><code class="language-ts">import &#123; FeatureCell &#125; from '&#64;sdux-vault/core';
-
-const userCell = FeatureCell('user', &#123; value: defaultUser &#125;);
-
-// Direct state intent — no action creators needed
-userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#125;);
-
-// Or replace entirely
-userCell.replaceState(&#123; value: defaultUser &#125;);</code></pre>
-                      </sdux-example-viewer-tab>
-                    </sdux-example-viewer-source>
-                  </ng-content>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+            </ng-template>
+          </sdux-multi-framework-example>
 
           <p>
             The update target is unambiguous. You are calling a method on the

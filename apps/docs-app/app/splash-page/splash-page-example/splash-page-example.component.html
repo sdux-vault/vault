@@ -2,178 +2,70 @@
 <!-- Layout: Stratum (Example 20) | Copy: best-copy.md IDs | CSS: brian1 patterns -->
 
 <!-- ─── Hero (Split with Terminal) ─── -->
-<div class="sdux-tab-container">
-  <mat-tab-group
-    animationDuration="200ms"
-    mat-stretch-tabs="false"
-    class="sdux-tabs"
-    [selectedIndex]="0">
-    <mat-tab label="Angular">
-      <div class="tab-panel">
-        <ng-content select="[retrieve]">
-          <sdux-example-viewer-source
-            [displayTabs]="false"
-            [displayCopyPaste]="false">
-            <sdux-example-viewer-tab
-              [label]="'Step 1: Initialize Vault and Register FeatureCell'">
-              <pre
-                class="code-inline"><code class="language-ts">{{`// app.config.ts
-export const appConfig: ApplicationConfig = {
+<sdux-multi-framework-example
+  description="Initialize Vault and Register FeatureCell"
+  [displayCopyPaste]="false">
+  <ng-template #angular>
+    <pre class="code-inline"><code class="language-ts">// app.config.ts
+export const appConfig: ApplicationConfig = &#123;
   providers: [
-    provideVault({ logLevel: 'off' }),
+    provideVault(&#123; logLevel: 'off' &#125;),
     provideFeatureCell(
       EmployeeCell,
-      {
+      &#123;
         key: 'employees',
         initialState: []
-      }
+      &#125;
     )
   ]
-};
+&#125;;
 
 // example.service.ts
-@FeatureCell&lt;Employee[]&gt;('employees')
-@Injectable({ providedIn: 'root' })
-export class EmployeeCell {
+&#64;FeatureCell&lt;Employee[]&gt;('employees')
+&#64;Injectable(&#123; providedIn: 'root' &#125;)
+export class EmployeeCell &#123;
   private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeCell);
   readonly state = this.vault.state;
 
-  constructor() {
+  constructor() &#123;
     this.vault.initialize();
 
-    this.vault.replaceState({
+    this.vault.replaceState(&#123;
       loading: false,
       value: [
-        { id: 1, name: 'Ada' },
-        { id: 2, name: 'Brian' }
+        &#123; id: 1, name: 'Ada' &#125;,
+        &#123; id: 2, name: 'Brian' &#125;
       ],
       error: null
-    });
-  }
-}`}}</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
-        </ng-content>
-      </div>
-    </mat-tab>
-    <mat-tab label="React">
-      <div class="tab-panel">
-        <ng-content select="[retrieve]">
-          <sdux-example-viewer-source
-            [displayTabs]="false"
-            [displayCopyPaste]="false">
-            >
-            <sdux-example-viewer-tab
-              [label]="'Step 1: Initialize Vault and Register FeatureCell'">
-              <pre
-                class="code-inline"><code class="language-ts">{{`// employee.cell.ts
-Vault({
+    &#125;);
+  &#125;
+&#125;</code></pre>
+  </ng-template>
+  <ng-template #core>
+    <pre class="code-inline"><code class="language-ts">// employee.cell.ts
+Vault(&#123;
   logLevel: 'off'
-});
+&#125;);
 
-export const employeeCell = FeatureCell&lt;Employee[]>({
+export const employeeCell = FeatureCell&lt;Employee[]&gt;(&#123;
   key: 'employees',
   initialState: []
-});
+&#125;);
 
 employeeCell.initialize();
 
-export function loadEmployees(): void {
-  employeeCell.replaceState({
+export function loadEmployees(): void &#123;
+  employeeCell.replaceState(&#123;
     loading: false,
     value: [
-      { id: 1, name: 'Ada' },
-      { id: 2, name: 'Brian' }
+      &#123; id: 1, name: 'Ada' &#125;,
+      &#123; id: 2, name: 'Brian' &#125;
     ],
     error: null
-  });
-}
+  &#125;);
+&#125;
 
 export const employeeState = employeeCell.state;
-export const employeeState$ = employeeCell.state$;`}}</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
-        </ng-content>
-      </div>
-    </mat-tab>
-    <mat-tab label="Svelte">
-      <div class="tab-panel">
-        <ng-content select="[retrieve]">
-          <sdux-example-viewer-source
-            [displayTabs]="false"
-            [displayCopyPaste]="false">
-            <sdux-example-viewer-tab
-              [label]="'Step 1: Initialize Vault and Register FeatureCell'">
-              <pre
-                class="code-inline"><code class="language-ts">{{`// employee.cell.ts
-Vault({
-  logLevel: 'off'
-});
-
-export const employeeCell = FeatureCell&lt;Employee[]>({
-  key: 'employees',
-  initialState: []
-});
-
-employeeCell.initialize();
-
-export function loadEmployees(): void {
-  employeeCell.replaceState({
-    loading: false,
-    value: [
-      { id: 1, name: 'Ada' },
-      { id: 2, name: 'Brian' }
-    ],
-    error: null
-  });
-}
-
-export const employeeState = employeeCell.state;
-export const employeeState$ = employeeCell.state$;`}}</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
-        </ng-content>
-      </div>
-    </mat-tab>
-    <mat-tab label="Vue">
-      <div class="tab-panel">
-        <ng-content select="[retrieve]">
-          <sdux-example-viewer-source
-            [displayTabs]="false"
-            [displayCopyPaste]="false">
-            >
-            <sdux-example-viewer-tab
-              [label]="'Step 1: Initialize Vault and Register FeatureCell'">
-              <pre
-                class="code-inline"><code class="language-ts">{{`// employee.cell.ts
-Vault({
-  logLevel: 'off'
-});
-
-export const employeeCell = FeatureCell&lt;Employee[]>({
-  key: 'employees',
-  initialState: []
-});
-
-employeeCell.initialize();
-
-export function loadEmployees(): void {
-  employeeCell.replaceState({
-    loading: false,
-    value: [
-      { id: 1, name: 'Ada' },
-      { id: 2, name: 'Brian' }
-    ],
-    error: null
-  });
-}
-
-export const employeeState = employeeCell.state;
-export const employeeState$ = employeeCell.state$;`}}</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
-        </ng-content>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-</div>
+export const employeeState$ = employeeCell.state$;</code></pre>
+  </ng-template>
+</sdux-multi-framework-example>
