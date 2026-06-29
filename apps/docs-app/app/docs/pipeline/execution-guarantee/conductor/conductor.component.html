@@ -1,0 +1,283 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Conductor</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>Conductor</strong> is the control boundary between a
+      <sdux-feature-cell [tm]="true" /> and the Pipeline. It receives state
+      resolution requests, serializes them through a FIFO queue, delegates
+      controller arbitration to the Decision Engine, and routes approved
+      attempts into the Orchestrator for Pipeline execution.
+    </p>
+
+    <p>
+      The Conductor guarantees that every state transition for a
+      <sdux-feature-cell /> is processed one at a time, in order, with full
+      controller evaluation before any Pipeline stage executes.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- RESPONSIBILITY -->
+  <!-- ====================================================== -->
+  <section class="section" id="responsibility">
+    <div class="section-title">Conductor Responsibility</div>
+
+    <div class="section-body">
+      <p>
+        The Conductor serves as the single entry point for all state resolution
+        requests targeting a <sdux-feature-cell />. Its responsibilities are
+        narrowly scoped:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Serialization</strong> — All incoming attempts are enqueued in
+          strict FIFO order. Only one attempt may be active at any time.
+        </li>
+        <li>
+          <strong>Controller delegation</strong> — Each attempt is evaluated by
+          the Decision Engine and its registered Controllers before Pipeline
+          execution begins.
+        </li>
+        <li>
+          <strong>Routing</strong> — Approved attempts are forwarded to the
+          Orchestrator for deterministic Pipeline execution.
+        </li>
+        <li>
+          <strong>Lifecycle management</strong> — The Conductor coordinates
+          initialization, reset, and destruction of both Behaviors and
+          Controllers.
+        </li>
+      </ul>
+
+      <p>
+        The Conductor does not perform state derivation, does not participate in
+        Pipeline stage execution, and does not modify candidate values. It
+        operates exclusively as a coordination and control boundary.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- LIFECYCLE -->
+  <!-- ====================================================== -->
+  <section class="section" id="lifecycle">
+    <div class="section-title">Lifecycle Coordination</div>
+
+    <div class="section-body">
+      <p>
+        The Conductor manages the full lifecycle of a
+        <sdux-feature-cell />'s pipeline infrastructure:
+      </p>
+
+      <table aria-label="Conductor Lifecycle Operations">
+        <thead>
+          <tr>
+            <th scope="col" class="column-150">Operation</th>
+            <th scope="col" class="column-auto">Behavior</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Initialize</td>
+            <td>
+              Enqueues the initial state load as the first pipeline attempt.
+              Controllers and Behaviors are constructed and registered before
+              the first attempt is processed.
+            </td>
+          </tr>
+          <tr>
+            <td>Reset</td>
+            <td>
+              Clears the attempt queue, resets all registered Behaviors, and
+              resets all registered Controllers. The
+              <sdux-feature-cell /> returns to its pre-initialization state
+              without destruction.
+            </td>
+          </tr>
+          <tr>
+            <td>Destroy</td>
+            <td>
+              Clears the attempt queue, invokes destroy on all Behaviors and
+              Controllers, and completes all internal event streams. The
+              Conductor is terminal after destruction.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-warning">
+        Calling methods on a destroyed Conductor is invalid. Once destroyed, the
+        <sdux-feature-cell /> cannot be reactivated. Register a new
+        <sdux-feature-cell /> if the feature remounts.
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- CONTROLLER ARBITRATION -->
+  <!-- ====================================================== -->
+  <section class="section" id="controller-arbitration">
+    <div class="section-title">Controller Arbitration</div>
+
+    <div class="section-body">
+      <p>
+        Before any Pipeline stage executes, the Conductor submits the active
+        attempt to the Decision Engine for controller evaluation. Controllers
+        vote on whether the attempt should proceed, be denied, or be aborted.
+      </p>
+
+      <p>
+        The Decision Engine aggregates controller votes and produces a single
+        normalized outcome that determines the Conductor's next action.
+        Controller evaluation is deterministic — given identical state and
+        configuration, the same outcome is always produced.
+      </p>
+
+      <p>
+        Controllers registered with a <sdux-feature-cell /> participate in every
+        attempt evaluation. They may implement policies such as rate limiting,
+        circuit breakers, concurrency gates, or approval workflows.
+      </p>
+
+      <div class="callout callout-info">
+        <strong>Key point:</strong> Controllers evaluate policy before Pipeline
+        execution. They do not participate in state derivation, filtering,
+        reduction, or persistence. Their sole authority is over whether an
+        attempt proceeds.
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- OUTCOMES -->
+  <!-- ====================================================== -->
+  <section class="section" id="outcomes">
+    <div class="section-title">Decision Outcomes</div>
+
+    <div class="section-body">
+      <p>
+        The Decision Engine produces one of three possible outcomes for each
+        attempt:
+      </p>
+
+      <table aria-label="Decision Outcomes">
+        <thead>
+          <tr>
+            <th scope="col" class="column-125">Outcome</th>
+            <th scope="col" class="column-auto">Conductor Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Abstain</td>
+            <td>
+              No controller objected. The attempt proceeds to the Orchestrator
+              for Pipeline execution.
+            </td>
+          </tr>
+          <tr>
+            <td>Abort</td>
+            <td>
+              The attempt is permanently rejected. It is removed from the queue
+              and no Pipeline execution occurs. The state snapshot reflects the
+              abort.
+            </td>
+          </tr>
+          <tr>
+            <td>Deny</td>
+            <td>
+              The attempt is blocked but remains at the head of the queue. It
+              may be re-evaluated when conditions change (e.g., after a
+              controller revote signal).
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        After a successful Pipeline execution, the Conductor receives a
+        completion signal that finalizes the attempt and advances the queue.
+        After a Pipeline failure, the error is dispatched through the error
+        handling path and the attempt is finalized.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- GUARANTEES -->
+  <!-- ====================================================== -->
+  <section class="section" id="guarantees">
+    <div class="section-title">Execution Guarantees</div>
+
+    <div class="section-body">
+      <p>
+        The Conductor provides the following guarantees to all downstream
+        Pipeline stages:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Strict serialization</strong> — Only one attempt is active at
+          any time. No interleaving, no reentrancy, no race conditions.
+        </li>
+        <li>
+          <strong>FIFO ordering</strong> — Attempts are processed in the exact
+          order they were received.
+        </li>
+        <li>
+          <strong>Controller-first evaluation</strong> — Every attempt passes
+          through controller arbitration before any Pipeline Behavior executes.
+        </li>
+        <li>
+          <strong>Microtask finalization</strong> — Attempt completion occurs in
+          a microtask boundary, ensuring clean turn isolation and preventing
+          synchronous re-entry.
+        </li>
+        <li>
+          <strong>Deterministic settlement</strong> — In DevMode, the Conductor
+          exposes a settlement signal that resolves when the queue has fully
+          drained. This enables deterministic testing without timing hacks.
+        </li>
+      </ul>
+
+      <div class="callout callout-info">
+        <strong>Testing implication:</strong> The settlement guarantee is what
+        makes the three-step test pattern (mutate → await → assert) work.
+        <strong>vaultSettled(key)</strong> resolves when the Conductor's queue
+        has fully drained and the final state snapshot is stable.
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- DIAGRAMS -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="diagrams">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/2.2/2.2.2-conductor-queue-flow.svg"
+        [tooltip]="'Conductor Queue Flow'" />
+
+      <sdux-diagram
+        image="diagrams/2.1/2.1-execution-flow.svg"
+        [tooltip]="'Pipeline Execution Flow'" />
+
+      <sdux-diagram
+        image="diagrams/9.0/9.1-policy-flow.svg"
+        [tooltip]="'Policy Flow'" />
+
+      <sdux-diagram
+        image="diagrams/6.0/6.0-controller-flow.svg"
+        [tooltip]="'Controller Flow'" />
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

@@ -271,6 +271,14 @@ export const routes: Routes = [
                   )
               },
               {
+                path: 'conductor',
+                data: { type: 'conductor' },
+                loadComponent: () =>
+                  import('./docs/pipeline/execution-guarantee/conductor/conductor.component').then(
+                    (m) => m.ConductorComponent
+                  )
+              },
+              {
                 path: 'conductor-queue',
                 loadComponent: () =>
                   import('./docs/pipeline/execution-guarantee/conductor-queue/conductor-queue.component').then(
