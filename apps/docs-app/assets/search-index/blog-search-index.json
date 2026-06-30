@@ -219,6 +219,16 @@
       "url": "/blog/reducers-cant-change-after-init",
       "symbols": ["reducers-cant-change-after-init"],
       "content": "Reducers That Can't Change After Init — Why That's a Feature reducers-cant-change-after-init ED"
+    },
+    {
+      "id": "blog:pipeline-overview-video",
+      "title": "Introducing the SDuX Vault Pipeline Video",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/pipeline-overview-video",
+      "symbols": ["pipeline-overview-video"],
+      "content": "Introducing the SDuX Vault Pipeline Video pipeline-overview-video SP"
     }
   ]
 }

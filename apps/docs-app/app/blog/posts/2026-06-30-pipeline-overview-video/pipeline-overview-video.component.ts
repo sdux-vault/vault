@@ -94,8 +94,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
               <tr>
                 <td>Pipeline Layers</td>
                 <td>
-                  Conductor, Orchestrator, and FeatureCell definitions — the
-                  three execution boundaries
+                  Conductor, Orchestrator, and
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  definitions — the three execution boundaries
                 </td>
                 <td>1:35</td>
               </tr>
