@@ -1,0 +1,33 @@
+<nav aria-label="Reference Guides">
+  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+    <mat-expansion-panel-header>
+      <span class="nav-section-label">Reference Guides</span>
+    </mat-expansion-panel-header>
+
+    <sdux-references-subnavigation />
+
+    <a
+      mat-list-item
+      routerLink="/docs/diagrams"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">Diagrams</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/welcome/testing"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">Testing {{ brandName }}</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/videos"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">Videos</span>
+    </a>
+  </mat-expansion-panel>
+</nav>

@@ -1,0 +1,47 @@
+<nav aria-label="Licensing">
+  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+    <mat-expansion-panel-header>
+      <span class="nav-section-label">Licensing</span>
+    </mat-expansion-panel-header>
+
+    <a
+      mat-list-item
+      routerLink="/sdux/vault"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <div class="menu-icon menu-content">
+        <sdux-image
+          class="logo"
+          image="brand/sdux/sdux-vault-logo.svg"
+          height="20"></sdux-image>
+        Purchase {{ vaultBrandName }}
+      </div>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/welcome/license"
+      aria-label="Licensing"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <div class="menu-content">{{ brandName }} License</div>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/welcome/trademark-usage"
+      aria-label="Trademark Usage & Brand Policy"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <div class="menu-content">{{ brandName }} Trademark Usage</div>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/extensions/licensing-and-monetization"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Licensing & Monetization</span>
+    </a>
+  </mat-expansion-panel>
+</nav>

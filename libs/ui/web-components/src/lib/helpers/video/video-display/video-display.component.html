@@ -1,0 +1,40 @@
+<div
+  class="video-dialog"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Video: {{ data.tooltip || 'SDuX Vault' }}">
+  <div class="video-dialog-header">
+    <div class="title">Video: {{ data.tooltip || 'SDuX Vault' }}</div>
+
+    <button
+      type="button"
+      mat-icon-button
+      mat-dialog-close
+      aria-label="Close video"
+      class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="video-dialog-content">
+    <iframe
+      [src]="embedUrl"
+      title="SDuX Vault Video"
+      frameborder="0"
+      allow="
+        accelerometer;
+        autoplay;
+        clipboard-write;
+        encrypted-media;
+        gyroscope;
+        picture-in-picture;
+      "
+      allowfullscreen>
+    </iframe>
+
+    <sdux-share-bar
+      [title]="data.tooltip || 'SDuX Vault Video'"
+      [url]="shareUrl"
+      [type]="'video'" />
+  </div>
+</div>

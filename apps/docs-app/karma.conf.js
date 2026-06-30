@@ -18,6 +18,9 @@ module.exports = function (config) {
       },
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
+    jasmineHtlmReporter: {
+      suppressAll: true // removes the duplicated traces
+    },
     coverageReporter: {
       dir: require('path').join(__dirname, '..', '..', 'coverage'),
       subdir: 'webapp',

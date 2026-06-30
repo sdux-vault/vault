@@ -28,9 +28,18 @@
   }
 }
 
+.diagram-dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
 .diagram-controls {
   display: flex;
   gap: 8px;
+  flex-shrink: 0;
+  margin-left: auto;
 
   z-index: 10; /* ← THIS FIXES IT */
 }

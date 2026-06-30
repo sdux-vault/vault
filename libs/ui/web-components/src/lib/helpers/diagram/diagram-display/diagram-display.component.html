@@ -40,6 +40,11 @@
   </div>
 
   <div class="diagram-dialog-footer">
+    <sdux-share-bar
+      [title]="data.tooltip ?? 'Diagram'"
+      [url]="shareUrl"
+      [type]="'diagram'" />
+
     <div class="diagram-controls">
       <button
         type="button"

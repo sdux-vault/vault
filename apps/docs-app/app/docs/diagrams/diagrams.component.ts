@@ -5,13 +5,19 @@ import {
   DiagramComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRoutingDirective } from '../pipeline/directives/pipeline-routing.directive';
+import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.component';
 import { DIAGRAM_LINKS } from './constants/diagrams.constant';
 import { DiagramLinkShape } from './shapes/diagram-link.shape';
 
 @Component({
   selector: 'sdux-diagrams-documentation',
   standalone: true,
-  imports: [DiagramComponent, BrandNameComponent, RouterModule],
+  imports: [
+    DiagramComponent,
+    BrandNameComponent,
+    RouterModule,
+    PipelineRelatedTopicComponent
+  ],
   templateUrl: './diagrams.component.html',
   styleUrls: ['../scss/example.scss', './diagrams.component.scss']
 })

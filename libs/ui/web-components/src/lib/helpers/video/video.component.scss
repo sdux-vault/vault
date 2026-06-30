@@ -1,0 +1,60 @@
+@use 'global' as global;
+
+.video-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  background: inherit;
+  overflow: visible;
+
+  .video-title {
+    font-weight: global.$font-weight-bold;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: global.$font-size-sm;
+    line-height: 1.4;
+
+    @include global.h5-element;
+    margin-top: global.$spacing-sm;
+    margin-bottom: global.$spacing-sm;
+  }
+
+  .video-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .video-thumbnail {
+    position: relative;
+    display: inline-block;
+    max-width: 320px;
+    border-radius: var(--sdux-border-radius);
+    overflow: hidden;
+    filter: drop-shadow(0 4px 10px rgba(25, 118, 210, 0.4));
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .play-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover .play-overlay {
+      opacity: 1;
+    }
+  }
+}
