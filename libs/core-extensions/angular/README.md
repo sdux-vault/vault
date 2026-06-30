@@ -1,10 +1,10 @@
-Deterministic state management for angular — one pipeline, zero ambiguity.
+Deterministic state management for every framework — one pipeline, zero ambiguity.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sdux-vault/vault/main/apps/docs-app/assets/brand/sdux/brand-landscape.svg" height="80" alt="SDuX Vault" />
+  <img src="https://raw.githubusercontent.com/sdux-vault/vault/main/apps/docs-app/assets/brand/sdux/readme/sdux-vault.svg" height="200" alt="SDuX Vault" />
 </p>
 
-<h3 align="center">Plain TypeScript. Zero Magic.</h3>
+<p align="center">Deterministic state management for every framework — one pipeline, zero ambiguity.</p>
 
 # @sdux-vault/angular
 
