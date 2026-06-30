@@ -111,9 +111,19 @@ export const routes: Routes = [
 
       {
         path: 'diagrams',
+        data: { category: 'welcome' },
         loadComponent: () =>
           import('./docs/diagrams/diagrams.component').then(
             (m) => m.DocsDiagramDocumenationComponent
+          )
+      },
+
+      {
+        path: 'videos',
+        data: { category: 'welcome' },
+        loadComponent: () =>
+          import('./docs/videos/videos.component').then(
+            (m) => m.DocsVideoDocumentationComponent
           )
       },
 

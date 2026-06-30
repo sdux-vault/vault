@@ -2,7 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { ImageComponent } from '../../image/image.component';
+import { ShareBarComponent } from '../../share-bar/share-bar.component';
 import { DiagramDisplayDataModel } from '../models/diagram-display.model';
 
 /**
@@ -13,17 +15,33 @@ import { DiagramDisplayDataModel } from '../models/diagram-display.model';
 @Component({
   selector: 'sdux-diagram-dialog',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, MatIconModule, ImageComponent],
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    ImageComponent,
+    ShareBarComponent
+  ],
   styleUrls: ['diagram-display.component.scss'],
   templateUrl: 'diagram-display.component.html'
 })
 export class DiagramDisplayComponent {
+  /** Canonical page URL for sharing. */
+  readonly shareUrl: string;
+
   /**
    * Creates a new diagram display dialog instance.
    *
    * @param data - Diagram display data supplied via dependency injection.
+   * @param router - Angular Router used to derive the current page URL.
    */
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DiagramDisplayDataModel) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DiagramDisplayDataModel,
+    router: Router
+  ) {
+    const path = router.url.split('?')[0];
+    this.shareUrl = `https://www.sdux-vault.com${path}`;
+  }
 
   /** Current zoom scale factor. */
   zoom = 1;

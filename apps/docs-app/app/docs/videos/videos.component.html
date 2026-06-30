@@ -1,0 +1,127 @@
+<div class="docs-container">
+  <a id="top" aria-hidden="true"></a>
+
+  <div class="header">
+    <h3><sdux-brand-name [tm]="true" /> Videos</h3>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- INTRO / LEAD -->
+  <!-- ====================================================== -->
+  <header class="docs-header">
+    <p class="lead">
+      This page provides a video overview of the
+      <strong>SDuX pipeline architecture</strong> and its core concepts. Each
+      video is designed to be self-contained, covering a single topic between
+      two to five minutes. Videos complement the written documentation and
+      diagrams — they are not a replacement.
+    </p>
+  </header>
+
+  <!-- ====================================================== -->
+  <!-- TABLE OF CONTENTS -->
+  <!-- ====================================================== -->
+  <section class="diagram-section">
+    <div class="section-title">Table of Contents</div>
+
+    <div class="section-body">
+      <div class="toc-container">
+        <h4>Sections</h4>
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="overview-videos">Overview Videos</a>
+          </li>
+        </ul>
+
+        <div class="sorted-container">
+          <div class="panel-left">
+            <h4>Alphabetical</h4>
+
+            @if (overviewLinks.length) {
+              <div class="table-title">Overview</div>
+              <ul class="toc">
+                @for (link of overviewLinks; track link.fragment) {
+                  <li>
+                    <a [routerLink]="[]" [fragment]="link.fragment">
+                      {{ link.display }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
+
+            @if (stageLinks.length) {
+              <div class="table-title">Stages</div>
+              <ul class="toc">
+                @for (link of stageLinks; track link.fragment) {
+                  <li>
+                    <a [routerLink]="[]" [fragment]="link.fragment">
+                      {{ link.display }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
+
+            @if (testingLinks.length) {
+              <div class="table-title">Testing</div>
+              <ul class="toc">
+                @for (link of testingLinks; track link.fragment) {
+                  <li>
+                    <a [routerLink]="[]" [fragment]="link.fragment">
+                      {{ link.display }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
+
+            @if (integrationLinks.length) {
+              <div class="table-title">Integrations</div>
+              <ul class="toc">
+                @for (link of integrationLinks; track link.fragment) {
+                  <li>
+                    <a [routerLink]="[]" [fragment]="link.fragment">
+                      {{ link.display }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sdux-hr" />
+
+  <!-- ====================================================== -->
+  <!-- OVERVIEW VIDEOS -->
+  <!-- ====================================================== -->
+  <section class="diagram-section" id="overview-videos">
+    <h4>Overview Videos</h4>
+  </section>
+
+  <section class="diagram-section" id="pipeline-overview">
+    <div class="section-title-navigation">
+      <div class="section-title">Pipeline Overview</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        A complete walkthrough of the deterministic pipeline architecture in
+        under 5 minutes. Covers all 10 stages, the 3 execution boundaries
+        (Conductor, Orchestrator, FeatureCell), and why atomic pipeline
+        execution means zero partial state updates in production.
+      </p>
+
+      <sdux-video videoId="m7ClyWSh754" [tooltip]="'Pipeline Overview'" />
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

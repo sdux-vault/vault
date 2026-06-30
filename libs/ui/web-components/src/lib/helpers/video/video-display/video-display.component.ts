@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ShareBarComponent } from '../../share-bar/share-bar.component';
 import { VideoDisplayDataModel } from '../models/video-display.model';
 
 /**
@@ -13,13 +14,16 @@ import { VideoDisplayDataModel } from '../models/video-display.model';
 @Component({
   selector: 'sdux-video-dialog',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, MatIconModule],
+  imports: [MatDialogModule, MatButtonModule, MatIconModule, ShareBarComponent],
   styleUrls: ['video-display.component.scss'],
   templateUrl: 'video-display.component.html'
 })
 export class VideoDisplayComponent {
   /** Sanitized YouTube embed URL bound to the iframe src. */
   readonly embedUrl: SafeResourceUrl;
+
+  /** Canonical YouTube share URL for the video. */
+  readonly shareUrl: string;
 
   /** Video metadata injected from the dialog opener. */
   public data: VideoDisplayDataModel;
@@ -41,5 +45,11 @@ export class VideoDisplayComponent {
       url += `&start=${this.data.start}`;
     }
     this.embedUrl = sanitizer.bypassSecurityTrustResourceUrl(url);
+
+    let shareUrl = `https://www.youtube.com/watch?v=${this.data.videoId}`;
+    if (this.data.start) {
+      shareUrl += `&t=${this.data.start}`;
+    }
+    this.shareUrl = shareUrl;
   }
 }

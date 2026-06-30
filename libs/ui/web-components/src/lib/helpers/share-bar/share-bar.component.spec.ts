@@ -63,7 +63,9 @@ describe('Component: ShareBar', () => {
       'a[aria-label="Share on X"]'
     );
     expect(link.href).toContain('twitter.com/intent/tweet');
-    expect(link.href).toContain('Pipeline%20Overview');
+    expect(link.href).toContain(
+      encodeURIComponent('SDuX Vault: Pipeline Overview')
+    );
     expect(link.href).toContain(
       encodeURIComponent(
         'https://www.sdux-vault.com/blog/pipeline-overview-video'
@@ -138,7 +140,7 @@ describe('Component: ShareBar', () => {
     const link = fixture.nativeElement.querySelector(
       'a[aria-label="Share on X"]'
     );
-    expect(link.href).toContain('New%20Title');
+    expect(link.href).toContain(encodeURIComponent('SDuX Vault: New Title'));
     expect(link.href).toContain(
       encodeURIComponent('https://www.sdux-vault.com/blog/new-post')
     );

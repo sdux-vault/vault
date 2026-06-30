@@ -27,8 +27,10 @@ export class ShareBarComponent {
 
   /** Map of platform-specific share intent URLs. */
   readonly shareLinks = computed(() => {
-    const text = encodeURIComponent(this.title());
-    const url = encodeURIComponent(this.url());
+    const title = this.title();
+    const rawUrl = this.url();
+    const text = encodeURIComponent(`SDuX Vault: ${title}`);
+    const url = encodeURIComponent(rawUrl);
     return {
       x: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
       bluesky: `https://bsky.app/intent/compose?text=${text}%20${url}`,

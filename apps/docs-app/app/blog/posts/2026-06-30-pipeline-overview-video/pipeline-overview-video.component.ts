@@ -134,7 +134,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             <br />
           </div>
 
-          <sdux-video videoId="m7ClyWSh754" [tooltip]="'Pipeline Stages'" />
+          <sdux-video videoId="m7ClyWSh754" [tooltip]="'SDuX Overview'" />
         </div>
 
         <div class="section-body">

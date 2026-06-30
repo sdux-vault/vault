@@ -67,23 +67,23 @@ describe('Component: BlogLayout', () => {
   });
 
   it('should render the share bar', () => {
-    expect(el.querySelector('.blog-share-bar')).toBeTruthy();
+    expect(el.querySelector('.share-bar')).toBeTruthy();
   });
 
   it('should render share links for all platforms', () => {
-    const links = el.querySelectorAll('.blog-share-links a');
+    const links = el.querySelectorAll('.share-bar-links a');
     expect(links.length).toBe(8);
   });
 
   it('should render the copy link button', () => {
-    const btn = el.querySelector('.blog-share-copy') as HTMLButtonElement;
+    const btn = el.querySelector('.share-bar-copy') as HTMLButtonElement;
     expect(btn).toBeTruthy();
     expect(btn.getAttribute('aria-label')).toEqual('Copy link to clipboard');
   });
 
   it('should build correct X share URL', () => {
     const xLink = el.querySelector(
-      '.blog-share-links a[aria-label="Share on X"]'
+      '.share-bar-links a[aria-label="Share on X"]'
     ) as HTMLAnchorElement;
     expect(xLink.href).toContain('twitter.com/intent/tweet');
     expect(xLink.href).toContain('Test%20Post');
@@ -91,7 +91,7 @@ describe('Component: BlogLayout', () => {
 
   it('should call clipboard on copy link click', () => {
     spyOn(navigator.clipboard, 'writeText');
-    const btn = el.querySelector('.blog-share-copy') as HTMLButtonElement;
+    const btn = el.querySelector('.share-bar-copy') as HTMLButtonElement;
     btn.click();
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       'https://www.sdux-vault.com/'
