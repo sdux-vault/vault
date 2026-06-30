@@ -138,7 +138,7 @@ describe('CLI: release.update-version', () => {
     expect(writeFileSyncCalls).toEqual([]);
   });
 
-  it('skips update when existing range already satisfies target version', () => {
+  it('updates when existing range satisfies target but is not pinned to latest', () => {
     updater = new ReleaseUpdateVersion({
       packageRoot: '/repo',
       graph: {
@@ -161,10 +161,10 @@ describe('CLI: release.update-version', () => {
 
     expect(consoleInfo).toEqual([
       'Syncing dependencies...',
-      'Dependencies already up to date'
+      'Updated shared → ^1.0.1'
     ]);
 
-    expect(writeFileSyncCalls).toEqual([]);
+    expect(writeFileSyncCalls.length).toEqual(1);
   });
 
   it('ignores dependencies not in graph', () => {

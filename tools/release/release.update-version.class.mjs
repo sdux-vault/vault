@@ -64,12 +64,7 @@ export class ReleaseUpdateVersion {
         const currentVersion = deps[dep];
         const resolvedTarget = `^${targetVersion}`;
 
-        if (
-          !targetVersion ||
-          currentVersion === resolvedTarget ||
-          semver.satisfies(targetVersion, currentVersion)
-        )
-          continue;
+        if (!targetVersion || currentVersion === resolvedTarget) continue;
 
         if (this.dryRun) {
           console.info(
