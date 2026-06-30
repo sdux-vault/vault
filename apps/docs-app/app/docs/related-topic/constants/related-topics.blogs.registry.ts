@@ -173,6 +173,13 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: "Reducers That Can't Change After Init — SDuX Vault Blog",
       description:
         'Understand why SDuX Vault locks the pipeline after initialize() and how sealed execution eliminates dynamic reducer bugs that surface in production.'
+    },
+    {
+      link: '/blog/pipeline-overview-video',
+      display: 'Introducing the SDuX Vault Pipeline Video',
+      title: 'Introducing the SDuX Vault Pipeline Video — SDuX Vault Blog',
+      description:
+        'Watch the first SDuX Vault video — a complete walkthrough of the deterministic pipeline architecture, all 10 stages, and the atomic execution guarantees.'
     }
   ]
 };

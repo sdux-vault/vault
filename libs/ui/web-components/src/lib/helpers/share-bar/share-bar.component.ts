@@ -1,0 +1,48 @@
+import { Component, computed, input, ViewEncapsulation } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+/**
+ * Reusable social-media share bar component.
+ *
+ * Renders share links for X, Bluesky, Mastodon, LinkedIn, Reddit,
+ * Hacker News, Facebook, email, and a copy-to-clipboard button.
+ */
+@Component({
+  selector: 'sdux-share-bar',
+  standalone: true,
+  imports: [MatTooltipModule],
+  templateUrl: './share-bar.component.html',
+  styleUrls: ['./share-bar.component.scss'],
+  encapsulation: ViewEncapsulation.None
+})
+export class ShareBarComponent {
+  /** The title/text to share. */
+  readonly title = input.required<string>();
+
+  /** The canonical URL to share. */
+  readonly url = input.required<string>();
+
+  /** The content type label (e.g. 'post', 'video', 'diagram'). */
+  readonly type = input<string>('post');
+
+  /** Map of platform-specific share intent URLs. */
+  readonly shareLinks = computed(() => {
+    const text = encodeURIComponent(this.title());
+    const url = encodeURIComponent(this.url());
+    return {
+      x: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+      bluesky: `https://bsky.app/intent/compose?text=${text}%20${url}`,
+      mastodon: `https://mastodon.social/share?text=${text}%20${url}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+      reddit: `https://www.reddit.com/submit?url=${url}&title=${text}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      hackernews: `https://news.ycombinator.com/submitlink?u=${url}&t=${text}`,
+      email: `mailto:?subject=${text}&body=${url}`
+    };
+  });
+
+  /** Copies the canonical URL to the system clipboard. */
+  copyLink(): void {
+    navigator.clipboard.writeText(this.url());
+  }
+}

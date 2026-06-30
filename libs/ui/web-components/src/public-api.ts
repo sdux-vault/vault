@@ -21,7 +21,9 @@ export * from './lib/helpers/info-dialog/info-dialog.component';
 export * from './lib/helpers/new/new.component';
 export * from './lib/helpers/overflow-pill/overflow-pill.directive';
 export * from './lib/helpers/package-name/package-name.component';
+export * from './lib/helpers/share-bar/share-bar.component';
 export * from './lib/helpers/vault-brand-name/vault-brand-name.component';
+export * from './lib/helpers/video/video.component';
 
 export * from './lib/services/brand-name.service';
 export * from './lib/services/catch-phrase.service';

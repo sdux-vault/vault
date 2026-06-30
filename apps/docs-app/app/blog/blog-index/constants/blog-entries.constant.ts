@@ -135,5 +135,11 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     title: "Reducers That Can't Change After Init — Why That's a Feature",
     date: '2026-06-29',
     readingTime: 6
+  },
+  {
+    slug: 'pipeline-overview-video',
+    title: 'Introducing the SDuX Vault Pipeline Video',
+    date: '2026-06-30',
+    readingTime: 2
   }
 ];

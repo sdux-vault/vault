@@ -1,0 +1,56 @@
+@use 'global' as global;
+
+sdux-share-bar {
+  .share-bar {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-md;
+    padding: global.$spacing-sm 0;
+    border-top: 1px solid global.$sdux-surface-outline;
+  }
+
+  .share-bar-label {
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-medium;
+    color: var(--sdux-text-muted);
+    white-space: nowrap;
+  }
+
+  .share-bar-links {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    flex-wrap: wrap;
+
+    a,
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: global.$spacing-xl;
+      height: global.$spacing-xl;
+      border-radius: global.$border-radius-sm;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: var(--sdux-bg-hover);
+      }
+
+      img {
+        width: global.$spacing-md;
+        height: global.$spacing-md;
+      }
+
+      .dark-invert {
+        filter: var(--sdux-icon-dark-filter);
+      }
+    }
+  }
+
+  .share-bar-copy {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+}

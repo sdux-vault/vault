@@ -201,6 +201,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-06-29-reducers-cant-change-after-init/reducers-cant-change-after-init.component').then(
         (m) => m.BlogReducersCantChangeAfterInitComponent
       )
+  },
+  {
+    path: 'pipeline-overview-video',
+    data: {
+      category: 'blogs',
+      type: 'pipeline-overview-video'
+    },
+    loadComponent: () =>
+      import('./posts/2026-06-30-pipeline-overview-video/pipeline-overview-video.component').then(
+        (m) => m.BlogPipelineOverviewVideoComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.
