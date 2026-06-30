@@ -4,8 +4,6 @@ Deterministic state management for every framework — one pipeline, zero ambigu
   <img src="https://raw.githubusercontent.com/sdux-vault/vault/main/apps/docs-app/assets/brand/sdux/readme/sdux-vault.svg" height="200" alt="SDuX Vault" />
 </p>
 
-<p align="center">Deterministic state management for every framework — one pipeline, zero ambiguity.</p>
-
 # @sdux-vault/addons
 
 > Composable controllers and runtime policies for SDuX Vault.
