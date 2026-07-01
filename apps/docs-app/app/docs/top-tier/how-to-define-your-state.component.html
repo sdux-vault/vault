@@ -58,20 +58,9 @@
 
       <h4>Examples</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Minimal Angular Vault Configuration'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example description="Minimal Vault Configuration">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 import { provideVault } from '@sdux-vault/angular';
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -80,51 +69,16 @@ export const appConfig: ApplicationConfig = {
     })
   ]
 };`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Minimal React Vault Configuration'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// vault.ts
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`// vault.ts
 import { Vault } from '@sdux-vault/core';
 
 export const vault = Vault({
   logLevel: 'off'
 });`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Minimal React Main Configuration'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// vault.ts
-import { Vault } from '@sdux-vault/core';
-
-export const vault = Vault({
-  logLevel: 'off'
-});`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <sdux-vault-config-common />
     </div>
@@ -147,20 +101,11 @@ export const vault = Vault({
 
       <h4>Examples</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Register a FeatureCell with initialState in Angular'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { provideFeatureCell } from '@sdux-vault/angular';
+      <sdux-multi-framework-example
+        description="Register a FeatureCell with initialState">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { provideFeatureCell } from '@sdux-vault/angular';
                     
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -179,27 +124,17 @@ export const appConfig: ApplicationConfig = {
     )
   ]
 };`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Register a FeatureCell with initialState in React'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
 
 export interface Employee {
   id: number;
   name: string;
 }
 
-export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: []
@@ -212,46 +147,8 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
     // opt-in Controllers (optional)
   ]
 );`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Register a FeatureCell with initialState in Vue'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
-
-export interface Employee {
-  id: number;
-  name: string;
-}
-
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: []
-    // insights are optional and omitted unless needed
-  },
-  [
-    // opt-in Behaviors (optional)
-  ],
-  [
-    // opt-in Controllers (optional)
-  ]
-);`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <sdux-feature-cell-config-common />
     </div>
@@ -279,53 +176,33 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
 
       <h4>Examples</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Initialize with initialize in Angular'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { @FeatureCell, injectVault } from '@sdux-vault/angular';
+      <sdux-multi-framework-example description="Initialize and Expose State">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { @FeatureCell, injectVault } from '@sdux-vault/angular';
                     
 export interface Employee {
   id: number;
   name: string;
 }
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeCell {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeCell);
-  employeeState: StateSnapshotShape&lt;Employee[]>
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeCell);
+  employeeState: StateSnapshotShape`}}&lt;Employee[]&gt;{{`
 
   constructor() {
     this.vault.initialize();
     this.employeeState = this.vault.state;
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Initialize and expose state in React'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
 
 export interface Employee {
   id: number;
@@ -333,7 +210,7 @@ export interface Employee {
 }
 
 // 1. Register the FeatureCell (global, side-effect registration)
-export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: []
@@ -351,52 +228,8 @@ employeeCell.initialize();
 
 // 3. Expose state (snapshot wrapper)
 export const employeeState = employeeCell.state;`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Initialize and expose state in Vue'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
-
-export interface Employee {
-  id: number;
-  name: string;
-}
-
-// 1. Register the FeatureCell (global, side-effect registration)
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: []
-  },
-  [
-    // optional Behaviors
-  ],
-  [
-    // optional Controllers
-  ]
-);
-
-// 2. Initialize the FeatureCell
-employeeCell.initialize();
-
-// 3. Expose state (snapshot wrapper)
-export const employeeState = employeeCell.state;`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <p>
         This initialization should occur once during application startup and
@@ -428,33 +261,22 @@ export const employeeState = employeeCell.state;`}}</code></pre>
 
       <h4>Examples</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Simple Angular initialize()</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Simple Angular initialize()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`this.vault.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+      <sdux-multi-framework-example description="Simple initialize()">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.initialize();`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.initialize();`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <h4>
-                  Example 2: Angular Fluent configuration then initialize()
-                </h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Angular Fluent configuration then initialize()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`this.vault.withStateCache!({
+      <sdux-multi-framework-example
+        description="Fluent Configuration then initialize()">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.withStateCache!({
   ttl: CacheTTL.OneMinute,
   idKey: 'id',
   fetchType: ResolveTypes.Value,
@@ -467,30 +289,10 @@ export const employeeState = employeeCell.state;`}}</code></pre>
 .afterTaps(this.addAfterTaps())
 .filters(this.addFilters())
 .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Simple React initialize()</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Simple React initialize()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: React Fluent configuration then initialize()</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: React Fluent configuration then initialize()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.withStateCache!({
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.withStateCache!({
   ttl: CacheTTL.OneMinute,
   idKey: 'id',
   fetchType: ResolveTypes.Value,
@@ -503,49 +305,8 @@ export const employeeState = employeeCell.state;`}}</code></pre>
 .afterTaps(this.addAfterTaps())
 .filters(this.addFilters())
 .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Simple Vue initialize()</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Simple Vue initialize()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Vue Fluent configuration then initialize()</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Vue Fluent configuration then initialize()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.withStateCache!({
-  ttl: CacheTTL.OneMinute,
-  idKey: 'id',
-  fetchType: ResolveTypes.Value,
-  fetch: this.getByPromise
-})
-.interceptors(this.addDebounceInterceptor(1000))
-.operators(this.addOperators())
-.beforeTaps(this.addBeforeTaps())
-.reducers(this.addReducers())
-.afterTaps(this.addAfterTaps())
-.filters(this.addFilters())
-.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -595,20 +356,9 @@ export const employeeState = employeeCell.state;`}}</code></pre>
         retain their existing values.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Value Only Angular'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`load(): void {
+      <sdux-multi-framework-example description="Value Only">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`load(): void {
   this.vault.replaceState({
     value: [
       { id: 1, name: 'Ada' },
@@ -616,20 +366,9 @@ export const employeeState = employeeCell.state;`}}</code></pre>
     ]
   });
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Typescript / React / Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Value Only Typescript / React'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`load(): void {
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`load(): void {
   employeeCell.replaceState({
     value: [
       { id: 1, name: 'Ada' },
@@ -637,13 +376,8 @@ export const employeeState = employeeCell.state;`}}</code></pre>
     ]
   });
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 2: Error Only</h4>
       <p>
@@ -652,49 +386,22 @@ export const employeeState = employeeCell.state;`}}</code></pre>
         and error information must be surfaced to consumers.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Error Only Angular'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`load(): void {
+      <sdux-multi-framework-example description="Error Only">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`load(): void {
   this.vault.replaceState({
     error: new Error('this is an example error')
   });
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Typescript / React / Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Error Only Typescript / React / Vue'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`load(): void {
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`load(): void {
   employeeCell.replaceState({
     error: new Error('this is an example error')
   });
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 3: Loading Only</h4>
       <p>
@@ -703,49 +410,22 @@ export const employeeState = employeeCell.state;`}}</code></pre>
         asynchronous operation.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Loading Only Angular'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`load(): void {
+      <sdux-multi-framework-example description="Loading Only">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`load(): void {
   this.vault.replaceState({
     loading: true
   });
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Typescript / React / Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Loading Only Typescript / React / Vue'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`load(): void {
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`load(): void {
   employeeCell.replaceState({
     loading: true
   });
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 4: All Values</h4>
       <p>
@@ -754,20 +434,9 @@ export const employeeState = employeeCell.state;`}}</code></pre>
         loading state, and error information.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: All Values Angular'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`load(): void {
+      <sdux-multi-framework-example description="All Values">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`load(): void {
   this.vault.replaceState({
     error: new Error('this is an example error'),
     value: [
@@ -777,20 +446,9 @@ export const employeeState = employeeCell.state;`}}</code></pre>
     loading: true
   });
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Typescript / React / Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: All Values Typescript / React / Vue'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`load(): void {
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`load(): void {
   employeeCell.replaceState({
     error: new Error('this is an example error'),
     value: [
@@ -800,13 +458,8 @@ export const employeeState = employeeCell.state;`}}</code></pre>
     loading: true
   });
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <p>
         Whether using replaceState() or mergeState(), the resulting snapshot is
@@ -1001,12 +654,7 @@ export const employeeState = employeeCell.state;`}}</code></pre>
   <!-- SNAPSHOT CONTRACT -->
   <!-- ====================================================== -->
   <section class="section">
-    <div class="section-title">
-      <a href="/docs/references/shapes/state-snapshot-shape"
-        >StateSnapshotShape</a
-      >
-      Contract
-    </div>
+    <div class="section-title">StateSnapshotShape Contract</div>
 
     <div class="section-body">
       <p>
@@ -1025,48 +673,28 @@ export const employeeState = employeeCell.state;`}}</code></pre>
 
       <h4>Example 1: Conditional Rendering</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Conditional Rendering Angular'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@if (employeeState().isLoading()) {
-  &lt;p>Loading…&lt;/p>
+      <sdux-multi-framework-example description="Conditional Rendering">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@if (employeeState().isLoading()) {
+  `}}&lt;p&gt;Loading…&lt;/p&gt;{{`
 } @else if (employeeState().error()) {
-  &lt;p>Error loading employees&lt;/p>
+  `}}&lt;p&gt;Error loading employees&lt;/p&gt;{{`
 } @else if (employeeState().hasValue()) {
-  {{ employeeState().value() | json }}
+  `}}{{  '{{' }} employeeState().value() | json {{ '}}' }}{{`
 } @else {
-  &lt;p>No data&lt;/p>
+  `}}&lt;p&gt;No data&lt;/p&gt;{{`
 }
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Typescript / React / Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Conditional Rendering Typescript / React'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { useEffect, useState } from 'react';
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { useEffect, useState } from 'react';
 import type { StateSnapshotShape } from '@sdux-vault/shared';
 import { employeeCell } from './employee-cell'; // wherever it is defined
 
 export function EmployeeView() {
-  const [snapshot, setSnapshot] = useState&lt;StateSnapshotShape&lt;Employee[]> | null>(null);
+  const [snapshot, setSnapshot] = useState`}}&lt;StateSnapshotShape&lt;Employee[]&gt; | null&gt;{{`(null);
 
   useEffect(() => {
     const stopListening = employeeCell.state$.subscribe(setSnapshot);
@@ -1074,30 +702,25 @@ export function EmployeeView() {
   }, []);
 
   if (!snapshot) {
-    return &lt;p>Initializing…&lt;/p>;
+    return `}}&lt;p&gt;Initializing…&lt;/p&gt;{{`;
   }
 
   if (snapshot.isLoading()) {
-    return &lt;p>Loading…&lt;/p>;
+    return `}}&lt;p&gt;Loading…&lt;/p&gt;{{`;
   }
 
   if (snapshot.error()) {
-    return &lt;p>Error loading employees&lt;/p>;
+    return `}}&lt;p&gt;Error loading employees&lt;/p&gt;{{`;
   }
 
   if (snapshot.hasValue()) {
-    return &lt;pre>{JSON.stringify(snapshot.value(), null, 2)}&lt;/pre>;
+    return `}}&lt;pre&gt;{{`{JSON.stringify(snapshot.value(), null, 2)}`}}&lt;/pre&gt;{{`;
   }
 
-  return &lt;p>No data&lt;/p>;
+  return `}}&lt;p&gt;No data&lt;/p&gt;{{`;
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

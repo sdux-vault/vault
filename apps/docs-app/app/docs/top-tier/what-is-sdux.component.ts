@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import {
   BrandNameComponent,
   CatchPhraseComponent,
+  DiagramComponent,
   FeatureCellBrandNameComponent,
+  SDuXVideoComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { NothingHappenedQuoteComponent } from '../common/quotes/nothing-happened.component';
@@ -17,7 +19,9 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     PipelineRelatedTopicComponent,
     CatchPhraseComponent,
     VaultBrandNameComponent,
-    FeatureCellBrandNameComponent
+    FeatureCellBrandNameComponent,
+    SDuXVideoComponent,
+    DiagramComponent
   ],
   templateUrl: './what-is-sdux.component.html',
   styleUrls: ['../scss/example.scss']

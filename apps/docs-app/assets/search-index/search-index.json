@@ -3045,6 +3045,16 @@
       "url": "/blog/pipeline-overview-video",
       "symbols": ["pipeline-overview-video"],
       "content": "Introducing the SDuX Vault Pipeline Video pipeline-overview-video SP"
+    },
+    {
+      "id": "blog:effects-without-middleware",
+      "title": "Effects Without Middleware — How Pipeline Stages Replace Thunks & Sagas",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/effects-without-middleware",
+      "symbols": ["effects-without-middleware"],
+      "content": "Effects Without Middleware — How Pipeline Stages Replace Thunks & Sagas effects-without-middleware ED"
     }
   ]
 }

@@ -41,6 +41,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/effects-without-middleware</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/featurecells-changed-how-i-think-about-state-ownership</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

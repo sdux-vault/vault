@@ -3,6 +3,7 @@ import {
   BrandNameComponent,
   DiagramComponent,
   FeatureCellBrandNameComponent,
+  SDuXVideoComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultErrorShapeCommonComponent } from '../common/error/error-shape.component';
@@ -21,7 +22,8 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     VaultErrorShapeCommonComponent,
     PipelineRelatedTopicComponent,
     VaultBrandNameComponent,
-    FeatureCellBrandNameComponent
+    FeatureCellBrandNameComponent,
+    SDuXVideoComponent
   ],
   templateUrl: './core-concepts.component.html',
   styleUrls: ['../scss/example.scss']

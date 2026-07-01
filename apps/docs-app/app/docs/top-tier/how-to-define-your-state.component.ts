@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
 import {
   BrandNameComponent,
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { FeatureCellConfigCommonComponent } from '../common/feature-cell/feature-cell-config.component';
@@ -22,13 +20,11 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     BrandNameComponent,
     StateTypeCommonComponent,
     StateSnapshotShapeCommonComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
     VaultConfigCommonComponent,
     FeatureCellConfigCommonComponent,
     FeatureCellBrandNameComponent,
     VaultBrandNameComponent,
-    MatTabsModule,
+    MultiFrameworkExampleComponent,
     PipelineRelatedTopicComponent
   ],
   templateUrl: './how-to-define-your-state.component.html',

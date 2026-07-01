@@ -123,5 +123,26 @@
     </div>
   </section>
 
+  <section class="diagram-section" id="atomic-pipeline">
+    <div class="section-title-navigation">
+      <div class="section-title">Atomic Pipeline</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        SDuX Vault's pipeline is atomic — the full pipeline completes and
+        commits state, or nothing changes. No partial updates. No torn state. No
+        intermediate values leak to observers. The pipeline either commits the
+        entire result or rolls back completely — guaranteeing referential
+        isolation at every boundary.
+      </p>
+
+      <sdux-video videoId="TRlvCmluBcE" [tooltip]="'Atomic Pipeline'" />
+    </div>
+  </section>
+
   <sdux-pipeline-related-topics />
 </div>

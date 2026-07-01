@@ -141,5 +141,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     title: 'Introducing the SDuX Vault Pipeline Video',
     date: '2026-06-30',
     readingTime: 2
+  },
+  {
+    slug: 'effects-without-middleware',
+    title:
+      'Effects Without Middleware — How Pipeline Stages Replace Thunks and Sagas',
+    date: '2026-07-01',
+    readingTime: 9
   }
 ];
