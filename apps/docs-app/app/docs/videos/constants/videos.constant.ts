@@ -10,5 +10,11 @@ export const VIDEO_LINKS: VideoLinkShape[] = [
     display: 'Pipeline Overview',
     sort: 'pipeline-overview',
     type: 'overview'
+  },
+  {
+    fragment: 'atomic-pipeline',
+    display: 'Atomic Pipeline',
+    sort: 'atomic-pipeline',
+    type: 'overview'
   }
 ];

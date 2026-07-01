@@ -149,6 +149,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
+            data: { category: 'pipeline-overview' },
             loadComponent: () =>
               import('./docs/pipeline/pipeline.splashpage.component').then(
                 (m) => m.PipelineSplashpageComponent

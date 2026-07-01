@@ -121,6 +121,16 @@ export class DocumentationLinkGenerator {
       }
     );
 
+    // 1a️⃣ Protect section-title divs (heading-like, should not be auto-linked)
+    result = result.replace(
+      /<div\s+class="section-title"[\s\S]*?<\/div\s*>/gi,
+      (match) => {
+        const key = `__HARD_${hardBlocks.length}__`;
+        hardBlocks.push(match);
+        return key;
+      }
+    );
+
     // 1b️⃣ Protect self-closing elements (sdux-diagram)
     result = result.replace(/<sdux-diagram\b[^>]*\/>/gi, (match) => {
       const key = `__HARD_${hardBlocks.length}__`;

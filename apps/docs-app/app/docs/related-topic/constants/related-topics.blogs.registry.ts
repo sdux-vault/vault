@@ -180,6 +180,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Introducing the SDuX Vault Pipeline Video — SDuX Vault Blog',
       description:
         'Watch the first SDuX Vault video — a complete walkthrough of the deterministic pipeline architecture, all 10 stages, and the atomic execution guarantees.'
+    },
+    {
+      link: '/blog/effects-without-middleware',
+      display:
+        'Effects Without Middleware — How Pipeline Stages Replace Thunks and Sagas',
+      title: 'Effects Without Middleware — SDuX Vault Blog',
+      description:
+        'Learn how SDuX Vault resolves async inputs through pipeline stages instead of middleware — no thunks, no sagas, no dispatch chains.'
     }
   ]
 };

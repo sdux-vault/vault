@@ -25,7 +25,7 @@ printf "\n\n\n\nDocker images:\n\n"
 docker image ls --format '{{.Repository}} {{.Tag}}' | grep -E "^(${CONTAINER_NAME}) v"
 
 printf "\n\n📂 Available build files in ./builds:\n\n"
-mapfile -t build_files < <(ls $TAR_PATH/$CONTAINER_NAME*.tar.gz 2>/dev/null)
+mapfile -t build_files < <(ls -t $TAR_PATH/$CONTAINER_NAME*.tar.gz 2>/dev/null)
 
 if [ ${#build_files[@]} -eq 0 ]; then
   printf "\n\n⚠️ No build files found.\n\n"

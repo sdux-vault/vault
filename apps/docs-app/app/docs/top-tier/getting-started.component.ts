@@ -8,7 +8,8 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  PackageNameComponent
+  PackageNameComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { NothingHappenedQuoteComponent } from '../common/quotes/nothing-happened.component';
 import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.component';
@@ -27,7 +28,8 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     PipelineRelatedTopicComponent,
     NothingHappenedQuoteComponent,
     FeatureCellBrandNameComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    SDuXVideoComponent
   ],
   templateUrl: './getting-started.component.html',
   styleUrls: ['../scss/example.scss']

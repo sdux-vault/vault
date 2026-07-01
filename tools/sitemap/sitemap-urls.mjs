@@ -15,6 +15,7 @@ export const SITEMAP_URLS = [
   '/blog/atomic-deterministic-updates',
   '/blog/circuit-breaker-state-pipeline',
   '/blog/controllers-dont-touch-your-data',
+  '/blog/effects-without-middleware',
   '/blog/featurecells-changed-how-i-think-about-state-ownership',
   '/blog/from-redux-to-sdux-vault',
   '/blog/global-dispatch-broadcasts-scoped-updates-dont',

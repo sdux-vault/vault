@@ -291,12 +291,7 @@
 
   <section class="section" id="service-featurecell-rule">
     <div class="section-title-navigation">
-      <div class="section-title">
-        Service-to-<a href="/docs/references/functions/feature-cell"
-          >FeatureCell</a
-        >
-        Interaction Rule
-      </div>
+      <div class="section-title">Service-to-FeatureCell Interaction Rule</div>
       <div class="section-top-link">
         <a [routerLink]="[]" fragment="toc">↑ top</a>
       </div>
@@ -454,6 +449,50 @@ export function addEmployee(employee: Employee): void &#123;
 
 // 5️⃣ Export state surfaces
 export const employeeState = employeeCell.state;
+export const employeeState$ = employeeCell.state$;</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Svelte">
+            <div class="tab-panel">
+              <p>
+                In Svelte applications, the module that defines the
+                <sdux-feature-cell />
+                owns the state boundary. Svelte components consume state and
+                call exported domain functions — never the Vault directly.
+              </p>
+
+              <div class="table-title">employee.cell.ts</div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Svelte: employee.cell.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">// employee.cell.ts
+import &#123; Vault, FeatureCell &#125; from '<sdux-package-name />/core';
+import &#123; withArrayPushMergeBehavior &#125; from '<sdux-package-name />/addons';
+
+Vault(&#123; logLevel: 'off' &#125;);
+
+export const employeeCell = FeatureCell&lt;Employee[]&gt;(
+  &#123;
+    key: 'employees',
+    initialState: []
+  &#125;,
+  [
+    withArrayPushMergeBehavior
+  ]
+);
+
+employeeCell.initialize();
+
+export function addEmployee(employee: Employee): void &#123;
+  employeeCell.mergeState(&#123;
+    value: [employee]
+  &#125;);
+&#125;
+
 export const employeeState$ = employeeCell.state$;</code></pre>
                 </sdux-example-viewer-tab>
               </sdux-example-viewer-source>
@@ -824,6 +863,92 @@ function addSample() &#123;
     &lt;/pre&gt;
   &lt;/div&gt;
 &lt;/template&gt;</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Svelte">
+            <div class="tab-panel">
+              <p>
+                In Svelte applications, the module that defines the
+                <sdux-feature-cell />
+                owns the state boundary. Svelte components consume state and
+                call exported domain functions — never the Vault directly.
+              </p>
+
+              <div class="table-title">EmployeeView.svelte</div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Svelte: EmployeeView.svelte'">
+                  <pre
+                    class="code-inline"><code class="language-ts">&lt;script lang="ts"&gt;
+import &#123; addEmployee, employeeState$ &#125; from './employee.cell';
+import type &#123; Employee &#125; from './employee.types';
+
+let employees: Employee[] = [];
+
+employeeState$.subscribe(snapshot =&gt; &#123;
+  if (snapshot.hasValue) &#123;
+    employees = snapshot.value;
+  &#125;
+&#125;);
+
+function addSample() &#123;
+  addEmployee(&#123; id: 11, name: 'Luke' &#125;);
+  addEmployee(&#123; id: 38, name: 'Leia' &#125;);
+&#125;
+&lt;/script&gt;
+
+&lt;div&gt;
+  &lt;button on:click=&#123;addSample&#125;&gt;
+    Add Sample Employees
+  &lt;/button&gt;
+
+  &lt;pre&gt;
+    &#123;JSON.stringify(employees, null, 2)&#125;
+  &lt;/pre&gt;
+&lt;/div&gt;</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="TypeScript">
+            <div class="tab-panel">
+              <p>
+                In pure TypeScript, the module that defines the
+                <sdux-feature-cell /> acts as the owner. UI rendering is handled
+                externally — the cell module exports domain functions and state
+                surfaces only.
+              </p>
+
+              <div class="table-title">employee.view.ts</div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'TypeScript: employee.view.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">import &#123; addEmployee, employeeState$ &#125; from './employee.cell';
+import type &#123; Employee &#125; from './employee.types';
+
+// Subscribe to state changes
+employeeState$.subscribe(snapshot =&gt; &#123;
+  if (snapshot.hasValue) &#123;
+    renderEmployees(snapshot.value);
+  &#125;
+&#125;);
+
+// Domain-level interaction
+function addSample(): void &#123;
+  addEmployee(&#123; id: 11, name: 'Luke' &#125;);
+  addEmployee(&#123; id: 38, name: 'Leia' &#125;);
+&#125;
+
+function renderEmployees(employees: Employee[]): void &#123;
+  console.log(JSON.stringify(employees, null, 2));
+&#125;</code></pre>
                 </sdux-example-viewer-tab>
               </sdux-example-viewer-source>
             </div>

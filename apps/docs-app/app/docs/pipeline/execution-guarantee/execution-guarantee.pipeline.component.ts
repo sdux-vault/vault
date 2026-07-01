@@ -1,7 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   BrandNameComponent,
-  PackageNameComponent
+  DiagramComponent,
+  PackageNameComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 
@@ -11,7 +13,9 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   imports: [
     PipelineRelatedTopicComponent,
     BrandNameComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    SDuXVideoComponent,
+    DiagramComponent
   ],
   templateUrl: 'execution-guarantee.pipeline.component.html',
   styleUrls: ['../../scss/example.scss'],
