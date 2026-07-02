@@ -4,17 +4,20 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-vault-state-ref',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
     <div class="header">
       <h3>VaultStateRef</h3>
     </div>
     <header class="docs-header">
       <div class="lead">
-        Stub interface representing a read-only reference to Vault state.<br /><br />
+        Represents a reference view of Vault-managed state, including loading,
+        value, and error signals.<br /><br />
       </div>
     </header>
     <section class="section">
@@ -50,7 +53,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 </p>
               </td>
               <td class="column-auto">
-                The current error, or null if no error exists.<br /><br />
+                Holds the current error state, if any.<br /><br />
               </td>
             </tr>
             <tr>
@@ -60,7 +63,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p class="type">type: boolean</p>
               </td>
               <td class="column-auto">
-                Whether the state holds a resolved value.<br /><br />
+                Indicates whether a value is currently available.<br /><br />
               </td>
             </tr>
             <tr>
@@ -70,7 +73,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p class="type">type: boolean</p>
               </td>
               <td class="column-auto">
-                Whether the state is currently loading.<br /><br />
+                Indicates whether the state is currently loading.<br /><br />
               </td>
             </tr>
             <tr>
@@ -85,23 +88,24 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 </p>
               </td>
               <td class="column-auto">
-                The current pipeline value.<br /><br />
+                Holds the current pipeline value for the state.<br /><br />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
-    <section class="section">
-      <div class="section-title">Documentation Generation Notes</div>
-      <div class="section-body">
-        <p>
-          This reference API documentation is generated from @jsdoc-annotated
-          source code using @compodoc, with AI-assisted comments reviewed by a
-          human prior to publication.
-        </p>
-      </div>
-    </section>
+    <div class="documentation">
+      <p>
+        The <sdux-brand-name [tm]="true" /> documentation is central in
+        providing world-class support for our users.
+      </p>
+      <p>
+        This reference API documentation is generated from @jsdoc-annotated
+        source code using @compodoc, with AI-assisted comments reviewed by a
+        human prior to publication.
+      </p>
+    </div>
   </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None

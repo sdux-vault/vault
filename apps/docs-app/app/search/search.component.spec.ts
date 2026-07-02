@@ -15,7 +15,8 @@ class MockSearchService {
         title: 'replaceState',
         kind: 'function',
         project: 'core',
-        docLink: 'functions'
+        docLink: 'functions',
+        description: 'Replaces the current state snapshot.'
       } as SearchResultShape
     ])
   );
@@ -134,7 +135,8 @@ describe('Component: Search', () => {
       kind: 'function',
       project: 'core',
       docLink: 'functions',
-      url: 'url'
+      url: 'url',
+      description: 'Replaces the current state snapshot.'
     };
 
     // pre-populate state
@@ -156,5 +158,304 @@ describe('Component: Search', () => {
     (component as any).searchInput = undefined;
     window.dispatchEvent(new Event('resize'));
     expect(component.dropdownLeft()).toEqual(jasmine.any(Number));
+  });
+
+  // ---------------------------------------------------------
+  // 7. Keyboard navigation
+  // ---------------------------------------------------------
+  describe('keyboard navigation', () => {
+    const mockResults: SearchResultShape[] = [
+      {
+        id: 'fn:a',
+        title: 'Alpha',
+        kind: 'function',
+        project: 'core',
+        docLink: 'functions',
+        url: '/a',
+        description: 'Alpha function.'
+      },
+      {
+        id: 'fn:b',
+        title: 'Beta',
+        kind: 'function',
+        project: 'core',
+        docLink: 'functions',
+        url: '/b',
+        description: 'Beta function.'
+      },
+      {
+        id: 'fn:c',
+        title: 'Gamma',
+        kind: 'function',
+        project: 'core',
+        docLink: 'functions',
+        url: '/c',
+        description: 'Gamma function.'
+      }
+    ];
+
+    function keydown(key: string): void {
+      component.onKeydown(new KeyboardEvent('keydown', { key }));
+    }
+
+    beforeEach(() => {
+      component.results.set(mockResults);
+      component.activeIndex.set(-1);
+    });
+
+    it('ArrowDown should advance activeIndex', () => {
+      keydown('ArrowDown');
+      expect(component.activeIndex()).toBe(0);
+
+      keydown('ArrowDown');
+      expect(component.activeIndex()).toBe(1);
+    });
+
+    it('ArrowDown should wrap to the beginning', () => {
+      component.activeIndex.set(2);
+
+      keydown('ArrowDown');
+      expect(component.activeIndex()).toBe(0);
+    });
+
+    it('ArrowUp should move activeIndex backward', () => {
+      component.activeIndex.set(2);
+
+      keydown('ArrowUp');
+      expect(component.activeIndex()).toBe(1);
+    });
+
+    it('ArrowUp should wrap to the end from the beginning', () => {
+      component.activeIndex.set(0);
+
+      keydown('ArrowUp');
+      expect(component.activeIndex()).toBe(2);
+    });
+
+    it('ArrowUp from -1 should wrap to the last item', () => {
+      keydown('ArrowUp');
+      expect(component.activeIndex()).toBe(2);
+    });
+
+    it('Enter should navigate to the active result', () => {
+      component.activeIndex.set(1);
+
+      keydown('Enter');
+
+      expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/b');
+      expect(component.query()).toBe('');
+      expect(component.results()).toEqual([]);
+    });
+
+    it('Enter should do nothing when no item is active', () => {
+      keydown('Enter');
+
+      expect(mockRouter.navigateByUrl).not.toHaveBeenCalled();
+    });
+
+    it('Escape should clear query, results, and activeIndex', () => {
+      component.query.set('test');
+      component.activeIndex.set(1);
+
+      keydown('Escape');
+
+      expect(component.query()).toBe('');
+      expect(component.results()).toEqual([]);
+      expect(component.activeIndex()).toBe(-1);
+    });
+
+    it('Escape should close search even with no results', () => {
+      component.results.set([]);
+      component.query.set('xyz');
+      const blurSpy = spyOn(component.searchInput.nativeElement, 'blur');
+
+      keydown('Escape');
+
+      expect(component.query()).toBe('');
+      expect(blurSpy).toHaveBeenCalled();
+    });
+
+    it('onQueryChange should reset activeIndex', async () => {
+      component.activeIndex.set(2);
+
+      await component.onQueryChange('new query');
+
+      expect(component.activeIndex()).toBe(-1);
+    });
+
+    it('should not change activeIndex when results are empty', () => {
+      component.results.set([]);
+
+      keydown('ArrowDown');
+      expect(component.activeIndex()).toBe(-1);
+
+      keydown('ArrowUp');
+      expect(component.activeIndex()).toBe(-1);
+    });
+
+    describe('tooltip on arrow keys', () => {
+      beforeEach(async () => {
+        component.query.set('test');
+        component.focused.set(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+      });
+
+      it('ArrowDown should show tooltip on the active result', () => {
+        const tooltips = component.tooltips.toArray();
+        const showSpies = tooltips.map((t) => spyOn(t, 'show'));
+        const hideSpies = tooltips.map((t) => spyOn(t, 'hide'));
+
+        keydown('ArrowDown');
+
+        for (const spy of hideSpies) {
+          expect(spy).toHaveBeenCalled();
+        }
+        expect(showSpies[0]).toHaveBeenCalled();
+      });
+
+      it('ArrowUp should show tooltip on the active result', () => {
+        const tooltips = component.tooltips.toArray();
+        const showSpies = tooltips.map((t) => spyOn(t, 'show'));
+        const hideSpies = tooltips.map((t) => spyOn(t, 'hide'));
+
+        keydown('ArrowUp');
+
+        for (const spy of hideSpies) {
+          expect(spy).toHaveBeenCalled();
+        }
+        expect(showSpies[2]).toHaveBeenCalled();
+      });
+
+      it('should hide all tooltips then show only the active one', () => {
+        const tooltips = component.tooltips.toArray();
+        const showSpies = tooltips.map((t) => spyOn(t, 'show'));
+        const hideSpies = tooltips.map((t) => spyOn(t, 'hide'));
+
+        keydown('ArrowDown');
+        keydown('ArrowDown');
+
+        for (const spy of hideSpies) {
+          expect(spy).toHaveBeenCalledTimes(2);
+        }
+        expect(showSpies[1]).toHaveBeenCalled();
+      });
+
+      it('should handle arrow keys when tooltips QueryList is undefined', () => {
+        (component as any).tooltips = undefined;
+
+        expect(() => keydown('ArrowDown')).not.toThrow();
+        expect(component.activeIndex()).toBe(0);
+      });
+    });
+  });
+
+  // ---------------------------------------------------------
+  // 8. Highlight match
+  // ---------------------------------------------------------
+  describe('highlightMatch', () => {
+    it('should wrap matching substring in a mark element', () => {
+      component.query.set('Alpha');
+      const result = component.highlightMatch('Alpha');
+      expect(result).toBe('<mark class="highlight">Alpha</mark>');
+    });
+
+    it('should be case-insensitive', () => {
+      component.query.set('alpha');
+      const result = component.highlightMatch('Alpha');
+      expect(result).toBe('<mark class="highlight">Alpha</mark>');
+    });
+
+    it('should highlight partial matches', () => {
+      component.query.set('State');
+      const result = component.highlightMatch('replaceState');
+      expect(result).toBe('replace<mark class="highlight">State</mark>');
+    });
+
+    it('should highlight multiple occurrences', () => {
+      component.query.set('a');
+      const result = component.highlightMatch('Alpha');
+      expect(result).toBe(
+        '<mark class="highlight">A</mark>lph<mark class="highlight">a</mark>'
+      );
+    });
+
+    it('should return the title unchanged when query is empty', () => {
+      component.query.set('');
+      const result = component.highlightMatch('Alpha');
+      expect(result).toBe('Alpha');
+    });
+
+    it('should return the title unchanged when there is no match', () => {
+      component.query.set('xyz');
+      const result = component.highlightMatch('Alpha');
+      expect(result).toBe('Alpha');
+    });
+
+    it('should handle regex special characters in query', () => {
+      component.query.set('state()');
+      const result = component.highlightMatch('replaceState()');
+      expect(result).toBe('replace<mark class="highlight">State()</mark>');
+    });
+  });
+
+  // ---------------------------------------------------------
+  // 9. Global / shortcut
+  // ---------------------------------------------------------
+  describe('/ keyboard shortcut', () => {
+    it('should focus the search input when / is pressed', () => {
+      spyOn(component, 'focusInput');
+
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: '/' }));
+
+      expect(component.focusInput).toHaveBeenCalled();
+    });
+
+    it('should not focus when / is pressed inside an input element', () => {
+      spyOn(component, 'focusInput');
+
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      input.focus();
+
+      input.dispatchEvent(
+        new KeyboardEvent('keydown', { key: '/', bubbles: true })
+      );
+
+      expect(component.focusInput).not.toHaveBeenCalled();
+      document.body.removeChild(input);
+    });
+
+    it('should not focus when / is pressed inside a textarea', () => {
+      spyOn(component, 'focusInput');
+
+      const textarea = document.createElement('textarea');
+      document.body.appendChild(textarea);
+      textarea.focus();
+
+      textarea.dispatchEvent(
+        new KeyboardEvent('keydown', { key: '/', bubbles: true })
+      );
+
+      expect(component.focusInput).not.toHaveBeenCalled();
+      document.body.removeChild(textarea);
+    });
+
+    it('should not focus when search is already focused', () => {
+      component.focused.set(true);
+      spyOn(component, 'focusInput');
+
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: '/' }));
+
+      expect(component.focusInput).not.toHaveBeenCalled();
+    });
+
+    it('should ignore non-/ keys', () => {
+      spyOn(component, 'focusInput');
+
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'a' }));
+
+      expect(component.focusInput).not.toHaveBeenCalled();
+    });
   });
 });

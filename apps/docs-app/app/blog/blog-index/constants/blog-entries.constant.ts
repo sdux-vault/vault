@@ -148,5 +148,11 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
       'Effects Without Middleware — How Pipeline Stages Replace Thunks and Sagas',
     date: '2026-07-01',
     readingTime: 9
+  },
+  {
+    slug: 'selectors-without-a-global-tree',
+    title: 'Selectors Without a Global Tree — Scoped State Access That Scales',
+    date: '2026-07-02',
+    readingTime: 6
   }
 ];

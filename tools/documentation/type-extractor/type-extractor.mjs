@@ -35,8 +35,8 @@ const INDEX_JOBS = Object({
     },
     {
       name: 'angular',
-      srcDir: 'libs/core-extensions/angular/src/lib',
-      publicApis: ['../documentation-api.ts']
+      srcDir: 'libs/core-extensions/angular/src',
+      publicApis: ['./public-api.ts', './documentation-api.ts']
     },
     {
       name: 'core',
@@ -56,8 +56,8 @@ const INDEX_JOBS = Object({
     {
       name: 'engine',
       isEngine: true,
-      srcDir: 'lib/src',
-      publicApis: ['../documentation-api.ts']
+      srcDir: 'lib',
+      publicApis: ['./documentation-api.ts']
     }
   ],
   outputFile: path.join(__dirname, '../artifacts/type-index.json')

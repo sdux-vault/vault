@@ -1017,6 +1017,13 @@ Tools/documentation/menu-generator
         <div class="submenu">
           <a
             mat-list-item
+            routerLink="/docs/references/decorators/feature-cell"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">FeatureCell</span></a
+          >
+          <a
+            mat-list-item
             routerLink="/docs/references/decorators/vault-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
@@ -1040,6 +1047,13 @@ Tools/documentation/menu-generator
         </mat-expansion-panel-header>
 
         <div class="submenu">
+          <a
+            mat-list-item
+            routerLink="/docs/references/functions/create-angular-feature-cell-token"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">createAngularFeatureCellToken</span></a
+          >
           <a
             mat-list-item
             routerLink="/docs/references/functions/create-debug-dump"
@@ -1119,10 +1133,24 @@ Tools/documentation/menu-generator
           >
           <a
             mat-list-item
+            routerLink="/docs/references/functions/get-angular-feature-cell-token"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">getAngularFeatureCellToken</span></a
+          >
+          <a
+            mat-list-item
             routerLink="/docs/references/functions/get-vault-log-level"
             routerLinkActive="active"
             (click)="closeSidenav()"
             ><span class="menu-content">getVaultLogLevel</span></a
+          >
+          <a
+            mat-list-item
+            routerLink="/docs/references/functions/inject-vault"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">injectVault</span></a
           >
           <a
             mat-list-item
@@ -1224,6 +1252,27 @@ Tools/documentation/menu-generator
           >
           <a
             mat-list-item
+            routerLink="/docs/references/functions/provide-feature-cell"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">provideFeatureCell</span></a
+          >
+          <a
+            mat-list-item
+            routerLink="/docs/references/functions/provide-vault"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">provideVault</span></a
+          >
+          <a
+            mat-list-item
+            routerLink="/docs/references/functions/provide-vault-testing"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">provideVaultTesting</span></a
+          >
+          <a
+            mat-list-item
             routerLink="/docs/references/functions/register-version"
             routerLinkActive="active"
             (click)="closeSidenav()"
@@ -1235,6 +1284,15 @@ Tools/documentation/menu-generator
             routerLinkActive="active"
             (click)="closeSidenav()"
             ><span class="menu-content">reportGithubIssue</span></a
+          >
+          <a
+            mat-list-item
+            routerLink="/docs/references/functions/reset-angular-feature-cell-token-dev-mode"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content"
+              >resetAngularFeatureCellTokenDevMode</span
+            ></a
           >
           <a
             mat-list-item
@@ -1298,6 +1356,13 @@ Tools/documentation/menu-generator
             routerLinkActive="active"
             (click)="closeSidenav()"
             ><span class="menu-content">vaultLog</span></a
+          >
+          <a
+            mat-list-item
+            routerLink="/docs/references/functions/vault-testing"
+            routerLinkActive="active"
+            (click)="closeSidenav()"
+            ><span class="menu-content">VaultTesting</span></a
           >
           <a
             mat-list-item

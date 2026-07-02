@@ -3,6 +3,10 @@ AUTO-GENERATED DOCUMENTATION COMPONENT
 Tools/documentation/menu-generator
 -->
 @switch (type) {
+  @case ('create-angular-feature-cell-token') {
+    <sdux-create-angular-feature-cell-token />
+  }
+
   @case ('create-debug-dump') {
     <sdux-create-debug-dump />
   }
@@ -47,8 +51,16 @@ Tools/documentation/menu-generator
     <sdux-feature-cell />
   }
 
+  @case ('get-angular-feature-cell-token') {
+    <sdux-get-angular-feature-cell-token />
+  }
+
   @case ('get-vault-log-level') {
     <sdux-get-vault-log-level />
+  }
+
+  @case ('inject-vault') {
+    <sdux-inject-vault />
   }
 
   @case ('is-deferred-factory') {
@@ -107,12 +119,28 @@ Tools/documentation/menu-generator
     <sdux-is-vault-noop />
   }
 
+  @case ('provide-feature-cell') {
+    <sdux-provide-feature-cell />
+  }
+
+  @case ('provide-vault') {
+    <sdux-provide-vault />
+  }
+
+  @case ('provide-vault-testing') {
+    <sdux-provide-vault-testing />
+  }
+
   @case ('register-version') {
     <sdux-register-version />
   }
 
   @case ('report-github-issue') {
     <sdux-report-github-issue />
+  }
+
+  @case ('reset-angular-feature-cell-token-dev-mode') {
+    <sdux-reset-angular-feature-cell-token-dev-mode />
   }
 
   @case ('safe-stringify') {
@@ -149,6 +177,10 @@ Tools/documentation/menu-generator
 
   @case ('vault-log') {
     <sdux-vault-log />
+  }
+
+  @case ('vault-testing') {
+    <sdux-vault-testing />
   }
 
   @case ('vault-warn') {

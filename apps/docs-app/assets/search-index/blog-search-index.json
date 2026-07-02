@@ -239,6 +239,16 @@
       "url": "/blog/effects-without-middleware",
       "symbols": ["effects-without-middleware"],
       "content": "Effects Without Middleware — How Pipeline Stages Replace Thunks & Sagas effects-without-middleware ED"
+    },
+    {
+      "id": "blog:selectors-without-a-global-tree",
+      "title": "Selectors Without a Global Tree — Scoped State Access That Scales",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/selectors-without-a-global-tree",
+      "symbols": ["selectors-without-a-global-tree"],
+      "content": "Selectors Without a Global Tree — Scoped State Access That Scales selectors-without-a-global-tree TA"
     }
   ]
 }

@@ -40,10 +40,13 @@ export class SearchIndexGenerator {
   /**
    * @param {string} typeIndexPath - Path to type-index.json (organized symbol index).
    * @param {string} outputPath - Path to write search-index.json.
+   * @param {string} [compodocsPath] - Optional path to documentation.json for descriptions.
    */
-  constructor(typeIndexPath, outputPath) {
+  constructor(typeIndexPath, outputPath, compodocsPath) {
     this.typeIndexPath = typeIndexPath;
     this.outputPath = outputPath;
+    this.compodocsPath = compodocsPath;
+    this.descriptionMap = new Map();
     setSafeNamePrefix('');
   }
 
@@ -119,7 +122,8 @@ export class SearchIndexGenerator {
           relativePath,
           symbols: [name],
           content,
-          url
+          url,
+          description: this.descriptionMap.get(name) || ''
         });
       }
     }
@@ -142,12 +146,89 @@ export class SearchIndexGenerator {
   /**
    * Main execution pipeline:
    * - load type-index.json
+   * - load compodocs (if available) for descriptions
    * - build documents
    * - write search-index.json
    */
   run() {
     const typeIndexJson = this.loadTypeIndex();
+    this.loadCompodocDescriptions();
     const indexObject = this.buildDocuments(typeIndexJson);
     this.writeOutput(indexObject);
+  }
+
+  /**
+   * Loads compodoc documentation.json and builds a name → description map.
+   * Extracts the first sentence (up to 80 chars) from rawdescription.
+   */
+  loadCompodocDescriptions() {
+    if (!this.compodocsPath || !fs.existsSync(this.compodocsPath)) return;
+
+    const raw = fs.readFileSync(this.compodocsPath, 'utf8');
+    const doc = JSON.parse(raw);
+
+    const sections = [
+      'classes',
+      'injectables',
+      'interfaces',
+      'components',
+      'modules',
+      'pipes',
+      'directives'
+    ];
+
+    for (const section of sections) {
+      const items = doc[section];
+      if (Array.isArray(items)) {
+        for (const entry of items) {
+          if (entry.name && entry.rawdescription) {
+            this.descriptionMap.set(
+              entry.name,
+              this.#truncateDescription(entry.rawdescription)
+            );
+          }
+        }
+      }
+    }
+
+    if (doc.miscellaneous) {
+      const miscGroups = [
+        'functions',
+        'variables',
+        'enumerations',
+        'typealiases'
+      ];
+      for (const group of miscGroups) {
+        const items = doc.miscellaneous[group];
+        if (Array.isArray(items)) {
+          for (const entry of items) {
+            if (entry.name && entry.rawdescription) {
+              this.descriptionMap.set(
+                entry.name,
+                this.#truncateDescription(entry.rawdescription)
+              );
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Extracts the first sentence from a raw description and truncates to 80 chars.
+   */
+  #truncateDescription(raw) {
+    const cleaned = raw
+      .replace(/<[^>]+>/g, '')
+      .replace(/\n/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    const firstSentence = cleaned.split(/\.\s/)[0];
+    const text = firstSentence.endsWith('.')
+      ? firstSentence
+      : firstSentence + '.';
+
+    return text.length > 80 ? text.slice(0, 77) + '...' : text;
   }
 }

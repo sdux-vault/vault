@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic.component';
@@ -17,12 +15,9 @@ import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic
     PipelineRelatedTopicComponent,
     BrandNameComponent,
     RouterModule,
-    MatTabsModule,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     FeatureCellBrandNameComponent,
-    VaultBrandNameComponent,
-    BrandNameComponent
+    VaultBrandNameComponent
   ],
   templateUrl: './chrome-extension.component.html',
   styleUrls: ['../../scss/example.scss']

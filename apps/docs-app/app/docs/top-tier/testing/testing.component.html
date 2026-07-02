@@ -1,5 +1,4 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
-
 <div class="docs-container">
   <div class="header">
     <h3>Testing the <sdux-brand-name [tm]="true" /> Pipeline</h3>
@@ -608,7 +607,9 @@
 
       <p>
         <strong
-          >Vault (or VaultTesting) must be invoked before
+          >Vault (or
+          <a href="/docs/references/functions/vault-testing">VaultTesting</a>)
+          must be invoked before
           <a href="/docs/references/functions/feature-cell">FeatureCell</a>
           registration.</strong
         >
@@ -619,9 +620,10 @@
       </h4>
 
       <p>
-        After VaultTesting initializes the runtime, register and initialize
-        FeatureCells normally. In
-        <a href="/docs/references/const/dev-mode">DevMode</a>, each
+        After
+        <a href="/docs/references/functions/vault-testing">VaultTesting</a>
+        initializes the runtime, register and initialize FeatureCells normally.
+        In <a href="/docs/references/const/dev-mode">DevMode</a>, each
         <a href="/docs/references/functions/feature-cell">FeatureCell</a>
         attaches a settlement hook used by <code>vaultSettled()</code>.
       </p>
@@ -660,7 +662,8 @@
           <a href="/docs/references/const/dev-mode">DevMode</a> must be active
         </li>
         <li>
-          VaultTesting (or Vault with devMode enabled) must be initialized
+          <a href="/docs/references/functions/vault-testing">VaultTesting</a>
+          (or Vault with devMode enabled) must be initialized
         </li>
         <li>
           The
@@ -2129,9 +2132,12 @@ describe('Controller: withReplayGlobalError', () => {
       <h4>VaultTesting</h4>
 
       <p>
-        <strong>VaultTesting()</strong> is a convenience wrapper around
-        <code>Vault()</code> that preconfigures the runtime for deterministic
-        test execution.
+        <strong
+          ><a href="/docs/references/functions/vault-testing">VaultTesting</a
+          >()</strong
+        >
+        is a convenience wrapper around <code>Vault()</code> that preconfigures
+        the runtime for deterministic test execution.
       </p>
 
       <p>
@@ -2156,7 +2162,9 @@ describe('Controller: withReplayGlobalError', () => {
       </ul>
 
       <p>
-        As in production, Vault (or VaultTesting) must be invoked
+        As in production, Vault (or
+        <a href="/docs/references/functions/vault-testing">VaultTesting</a>)
+        must be invoked
         <strong
           >before any
           <a href="/docs/references/functions/feature-cell">FeatureCell</a>
@@ -2183,18 +2191,22 @@ describe('Controller: withReplayGlobalError', () => {
       </sdux-example-viewer-source>
 
       <p>
-        Internally, VaultTesting simply forwards the final configuration to
-        <code>Vault()</code> after enabling
+        Internally,
+        <a href="/docs/references/functions/vault-testing">VaultTesting</a>
+        simply forwards the final configuration to <code>Vault()</code> after
+        enabling
         <a href="/docs/references/const/dev-mode">DevMode</a>
         and resetting runtime state.
       </p>
 
       <div class="note">Note</div>
       <p>
-        The implementation is intentionally minimal. VaultTesting does not alter
-        pipeline semantics or execution behavior — it only prepares a clean,
-        development-enabled runtime before delegating to <code>Vault()</code>.
-        The pipeline itself remains identical to production execution.
+        The implementation is intentionally minimal.
+        <a href="/docs/references/functions/vault-testing">VaultTesting</a> does
+        not alter pipeline semantics or execution behavior — it only prepares a
+        clean, development-enabled runtime before delegating to
+        <code>Vault()</code>. The pipeline itself remains identical to
+        production execution.
       </p>
 
       <h5>Source Code</h5>
@@ -2226,7 +2238,9 @@ describe('Controller: withReplayGlobalError', () => {
       <h4>provideVaultTesting() — Angular Environment Provider</h4>
 
       <p>
-        provideVaultTesting() is the Angular environment-provider equivalent of
+        <a href="/docs/references/functions/provide-vault-testing"
+          >provideVaultTesting</a
+        >() is the Angular environment-provider equivalent of
         <code>VaultTesting()</code>. It configures the <sdux-brand-name /> for
         deterministic test execution using Angular’s dependency injection
         system.

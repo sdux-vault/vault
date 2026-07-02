@@ -8,7 +8,7 @@ import { VaultFeatureCellShapeCommonComponent } from '../../../../docs/common/fe
 import { PipelineRelatedTopicComponent } from '../../../../docs/related-topic/related-topic.component';
 
 /**
- * The pipeline injectVault documentation
+ * The pipeline <a href="/docs/references/functions/inject-vault">injectVault</a> documentation
  */
 @Component({
   selector: 'sdux-pipeline-inject-vault-api',

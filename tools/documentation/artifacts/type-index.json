@@ -1243,104 +1243,30 @@
       "docLink": "controllers"
     }
   },
-  "interfaces": {
-    "FeatureCellExtension": {
-      "kind": "interface",
-      "docKind": "interface",
-      "name": "FeatureCellExtension",
-      "project": "shared",
-      "relativePath": "libs/shared/src/lib/interfaces/behaviors/feature-cell-extension.interface.ts",
-      "docLink": "interfaces"
-    },
-    "FeatureCellFluentApi": {
-      "kind": "interface",
-      "docKind": "interface",
-      "name": "FeatureCellFluentApi",
-      "project": "shared",
-      "relativePath": "libs/shared/src/lib/interfaces/behaviors/feature-cell-fluent-api.interface.ts",
-      "docLink": "interfaces"
-    },
-    "FromObservableBehaviorExtension": {
-      "kind": "interface",
-      "docKind": "interface",
-      "name": "FromObservableBehaviorExtension",
-      "project": "core",
-      "relativePath": "libs/core/src/lib/behaviors/observable/interface/from-observable-behavior.interface.ts",
-      "docLink": "interfaces"
-    },
-    "FromPromiseBehaviorExtension": {
-      "kind": "interface",
-      "docKind": "interface",
-      "name": "FromPromiseBehaviorExtension",
-      "project": "core",
-      "relativePath": "libs/core/src/lib/behaviors/promise/interface/from-promise-behavior.interface.ts",
-      "docLink": "interfaces"
-    },
-    "FromStreamBehaviorExtension": {
-      "kind": "interface",
-      "docKind": "interface",
-      "name": "FromStreamBehaviorExtension",
-      "project": "core",
-      "relativePath": "libs/core/src/lib/behaviors/resolve/from-stream/interface/from-stream-behavior.interface.ts",
-      "docLink": "interfaces"
-    },
-    "VaultSignalStateRef": {
-      "kind": "interface",
-      "docKind": "interface",
-      "name": "VaultSignalStateRef",
+  "decorators": {
+    "FeatureCell": {
+      "kind": "function",
+      "docKind": "decorator",
+      "name": "FeatureCell",
       "project": "angular",
-      "relativePath": "libs/core-extensions/angular/src/lib/references/vault-signal.reference.ts",
-      "docLink": "interfaces"
+      "relativePath": "libs/core-extensions/angular/src/lib/decorators/feature-cell.decorator.ts",
+      "docLink": "decorators"
     },
-    "VaultStateRef": {
-      "kind": "interface",
-      "docKind": "interface",
-      "name": "VaultStateRef",
-      "project": "engine",
-      "relativePath": "../engine/lib/src/references/vault.reference.ts",
-      "docLink": "interfaces"
-    }
-  },
-  "abstracts": {
-    "AbstractActiveController": {
-      "kind": "class",
-      "docKind": "abstract",
-      "name": "AbstractActiveController",
+    "VaultBehavior": {
+      "kind": "function",
+      "docKind": "decorator",
+      "name": "VaultBehavior",
       "project": "shared",
-      "relativePath": "libs/shared/src/lib/abstracts/controllers/active-controller.abstract.ts",
-      "docLink": "abstracts"
+      "relativePath": "libs/shared/src/lib/decorators/vault-behavior.decorator.ts",
+      "docLink": "decorators"
     },
-    "AbstractErrorCallbackBehavior": {
-      "kind": "class",
-      "docKind": "abstract",
-      "name": "AbstractErrorCallbackBehavior",
+    "VaultController": {
+      "kind": "function",
+      "docKind": "decorator",
+      "name": "VaultController",
       "project": "shared",
-      "relativePath": "libs/shared/src/lib/abstracts/behaviors/error/with-error-callback.abstract.ts",
-      "docLink": "abstracts"
-    },
-    "AbstractErrorTransformBehavior": {
-      "kind": "class",
-      "docKind": "abstract",
-      "name": "AbstractErrorTransformBehavior",
-      "project": "shared",
-      "relativePath": "libs/shared/src/lib/abstracts/behaviors/error/with-error-transform.abstract.ts",
-      "docLink": "abstracts"
-    },
-    "LicensingAbstract": {
-      "kind": "class",
-      "docKind": "abstract",
-      "name": "LicensingAbstract",
-      "project": "engine",
-      "relativePath": "../engine/lib/src/licensing/licensing.abstract.ts",
-      "docLink": "abstracts"
-    },
-    "TapAbstractBehavior": {
-      "kind": "class",
-      "docKind": "abstract",
-      "name": "TapAbstractBehavior",
-      "project": "core",
-      "relativePath": "libs/core/src/lib/behaviors/tap/tap.abstract.ts",
-      "docLink": "abstracts"
+      "relativePath": "libs/shared/src/lib/decorators/vault-controller.decorator.ts",
+      "docLink": "decorators"
     }
   },
   "functions": {
@@ -1374,6 +1300,22 @@
       "name": "VaultErrorService",
       "project": "shared",
       "relativePath": "libs/shared/src/lib/services/error/vault-error.service.ts",
+      "docLink": "functions"
+    },
+    "VaultTesting": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "VaultTesting",
+      "project": "engine",
+      "relativePath": "../engine/lib/testing-utils/src/vault/vault-testing.ts",
+      "docLink": "functions"
+    },
+    "createAngularFeatureCellToken": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "createAngularFeatureCellToken",
+      "project": "angular",
+      "relativePath": "libs/core-extensions/angular/src/lib/tokens/feature-cell-di.token.ts",
       "docLink": "functions"
     },
     "createDebugDump": {
@@ -1448,12 +1390,28 @@
       "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.trace.ts",
       "docLink": "functions"
     },
+    "getAngularFeatureCellToken": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "getAngularFeatureCellToken",
+      "project": "angular",
+      "relativePath": "libs/core-extensions/angular/src/lib/tokens/feature-cell-di.token.ts",
+      "docLink": "functions"
+    },
     "getVaultLogLevel": {
       "kind": "function",
       "docKind": "function",
       "name": "getVaultLogLevel",
       "project": "shared",
       "relativePath": "libs/shared/src/lib/utils/logger/logger.util.ts",
+      "docLink": "functions"
+    },
+    "injectVault": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "injectVault",
+      "project": "angular",
+      "relativePath": "libs/core-extensions/angular/src/lib/injectors/feature-vault.injector.ts",
       "docLink": "functions"
     },
     "isDeferredFactory": {
@@ -1568,6 +1526,30 @@
       "relativePath": "libs/shared/src/lib/utils/isolate-value/isolate-value.util.ts",
       "docLink": "functions"
     },
+    "provideFeatureCell": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "provideFeatureCell",
+      "project": "angular",
+      "relativePath": "libs/core-extensions/angular/src/lib/providers/feature-cell/provide-feature-cell.provider.ts",
+      "docLink": "functions"
+    },
+    "provideVault": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "provideVault",
+      "project": "angular",
+      "relativePath": "libs/core-extensions/angular/src/lib/providers/vault/provide-vault.provider.ts",
+      "docLink": "functions"
+    },
+    "provideVaultTesting": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "provideVaultTesting",
+      "project": "angular",
+      "relativePath": "libs/core-extensions/angular/src/testing/provide-vault-testing.ts",
+      "docLink": "functions"
+    },
     "registerVersion": {
       "kind": "function",
       "docKind": "function",
@@ -1582,6 +1564,14 @@
       "name": "reportGithubIssue",
       "project": "dev-tools",
       "relativePath": "libs/devtools/tooling/src/lib/widget/downloads/debug-widget.dump.ts",
+      "docLink": "functions"
+    },
+    "resetAngularFeatureCellTokenDevMode": {
+      "kind": "function",
+      "docKind": "function",
+      "name": "resetAngularFeatureCellTokenDevMode",
+      "project": "angular",
+      "relativePath": "libs/core-extensions/angular/src/lib/tokens/feature-cell-di.token.ts",
       "docLink": "functions"
     },
     "safeStringify": {
@@ -1647,6 +1637,106 @@
       "project": "shared",
       "relativePath": "libs/shared/src/lib/utils/logger/logger.util.ts",
       "docLink": "functions"
+    }
+  },
+  "interfaces": {
+    "FeatureCellExtension": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "FeatureCellExtension",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/feature-cell-extension.interface.ts",
+      "docLink": "interfaces"
+    },
+    "FeatureCellFluentApi": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "FeatureCellFluentApi",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/interfaces/behaviors/feature-cell-fluent-api.interface.ts",
+      "docLink": "interfaces"
+    },
+    "FromObservableBehaviorExtension": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "FromObservableBehaviorExtension",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/observable/interface/from-observable-behavior.interface.ts",
+      "docLink": "interfaces"
+    },
+    "FromPromiseBehaviorExtension": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "FromPromiseBehaviorExtension",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/promise/interface/from-promise-behavior.interface.ts",
+      "docLink": "interfaces"
+    },
+    "FromStreamBehaviorExtension": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "FromStreamBehaviorExtension",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/resolve/from-stream/interface/from-stream-behavior.interface.ts",
+      "docLink": "interfaces"
+    },
+    "VaultSignalStateRef": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "VaultSignalStateRef",
+      "project": "angular",
+      "relativePath": "libs/core-extensions/angular/src/lib/references/vault-signal.reference.ts",
+      "docLink": "interfaces"
+    },
+    "VaultStateRef": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "VaultStateRef",
+      "project": "engine",
+      "relativePath": "../engine/lib/src/references/vault.reference.ts",
+      "docLink": "interfaces"
+    }
+  },
+  "abstracts": {
+    "AbstractActiveController": {
+      "kind": "class",
+      "docKind": "abstract",
+      "name": "AbstractActiveController",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/abstracts/controllers/active-controller.abstract.ts",
+      "docLink": "abstracts"
+    },
+    "AbstractErrorCallbackBehavior": {
+      "kind": "class",
+      "docKind": "abstract",
+      "name": "AbstractErrorCallbackBehavior",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/abstracts/behaviors/error/with-error-callback.abstract.ts",
+      "docLink": "abstracts"
+    },
+    "AbstractErrorTransformBehavior": {
+      "kind": "class",
+      "docKind": "abstract",
+      "name": "AbstractErrorTransformBehavior",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/abstracts/behaviors/error/with-error-transform.abstract.ts",
+      "docLink": "abstracts"
+    },
+    "LicensingAbstract": {
+      "kind": "class",
+      "docKind": "abstract",
+      "name": "LicensingAbstract",
+      "project": "engine",
+      "relativePath": "../engine/lib/src/licensing/licensing.abstract.ts",
+      "docLink": "abstracts"
+    },
+    "TapAbstractBehavior": {
+      "kind": "class",
+      "docKind": "abstract",
+      "name": "TapAbstractBehavior",
+      "project": "core",
+      "relativePath": "libs/core/src/lib/behaviors/tap/tap.abstract.ts",
+      "docLink": "abstracts"
     }
   },
   "contracts": {
@@ -2047,24 +2137,6 @@
       "project": "shared",
       "relativePath": "libs/shared/src/lib/contexts/tab-sync-behavior-class.context.ts",
       "docLink": "contexts"
-    }
-  },
-  "decorators": {
-    "VaultBehavior": {
-      "kind": "function",
-      "docKind": "decorator",
-      "name": "VaultBehavior",
-      "project": "shared",
-      "relativePath": "libs/shared/src/lib/decorators/vault-behavior.decorator.ts",
-      "docLink": "decorators"
-    },
-    "VaultController": {
-      "kind": "function",
-      "docKind": "decorator",
-      "name": "VaultController",
-      "project": "shared",
-      "relativePath": "libs/shared/src/lib/decorators/vault-controller.decorator.ts",
-      "docLink": "decorators"
     }
   },
   "services": {

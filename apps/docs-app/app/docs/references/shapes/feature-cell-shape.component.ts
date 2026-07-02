@@ -4,19 +4,21 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-feature-cell-shape',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
     <div class="header">
       <h3>FeatureCellShape</h3>
     </div>
     <header class="docs-header">
       <div class="lead">
-        Extends the base
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> shape
-        with a reactive state reference for testing stubs.<br /><br />
+        Defines the public shape of a Feature Cell with an exposed resolved
+        state reference. This interface extends the base Feature Cell contract
+        by adding access to the reactive state produced by resolution.<br /><br />
       </div>
     </header>
     <section class="section">
@@ -58,16 +60,17 @@ import { Component, ViewEncapsulation } from '@angular/core';
         </table>
       </div>
     </section>
-    <section class="section">
-      <div class="section-title">Documentation Generation Notes</div>
-      <div class="section-body">
-        <p>
-          This reference API documentation is generated from @jsdoc-annotated
-          source code using @compodoc, with AI-assisted comments reviewed by a
-          human prior to publication.
-        </p>
-      </div>
-    </section>
+    <div class="documentation">
+      <p>
+        The <sdux-brand-name [tm]="true" /> documentation is central in
+        providing world-class support for our users.
+      </p>
+      <p>
+        This reference API documentation is generated from @jsdoc-annotated
+        source code using @compodoc, with AI-assisted comments reviewed by a
+        human prior to publication.
+      </p>
+    </div>
   </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None

@@ -51,10 +51,14 @@ export class ComponentGenerator {
    * - modules
    * - miscellaneous: types, functions, enums, variables
    *
+   * When `relativePath` is provided and multiple entries share the same name,
+   * the entry whose `file` field matches the relative path is preferred.
+   *
    * @param {string} symbolName - The exact TypeScript symbol name.
+   * @param {string} [relativePath] - Optional source file path for disambiguation.
    * @returns The matching Compodoc entry object or `null` if not found.
    */
-  findCompodocEntry(symbolName) {
+  findCompodocEntry(symbolName, relativePath) {
     if (!this.compodocs) {
       throw new Error(
         `Compodocs JSON has not been loaded. Call loadCompodocs() first.`
@@ -62,6 +66,7 @@ export class ComponentGenerator {
     }
 
     const doc = this.compodocs;
+    const candidates = [];
 
     // Primary top-level categories
     const topLevelSections = [
@@ -77,8 +82,9 @@ export class ComponentGenerator {
     for (const section of topLevelSections) {
       const items = doc[section];
       if (Array.isArray(items)) {
-        const found = items.find((e) => e.name === symbolName);
-        if (found) return found;
+        for (const e of items) {
+          if (e.name === symbolName) candidates.push(e);
+        }
       }
     }
 
@@ -95,13 +101,26 @@ export class ComponentGenerator {
       for (const misc of miscGroups) {
         const items = doc.miscellaneous[misc];
         if (Array.isArray(items)) {
-          const found = items.find((e) => e.name === symbolName);
-          if (found) return found;
+          for (const e of items) {
+            if (e.name === symbolName) candidates.push(e);
+          }
         }
       }
     }
 
-    return null;
+    if (candidates.length === 0) return null;
+    if (candidates.length === 1) return candidates[0];
+
+    // Multiple candidates — disambiguate by file path
+    if (relativePath) {
+      const pathMatch = candidates.find(
+        (e) => e.file && relativePath.endsWith(e.file)
+      );
+      if (pathMatch) return pathMatch;
+    }
+
+    // Fallback to first match
+    return candidates[0];
   }
 
   /**
@@ -122,11 +141,13 @@ export class ComponentGenerator {
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-${kebab}',
   standalone: true,
-  template: \`${await renderClassDocumentation(entry, this.findCompodocEntry(symbolName))}\`,
+  imports: [BrandNameComponent],
+  template: \`${await renderClassDocumentation(entry, this.findCompodocEntry(symbolName, entry.relativePath))}\`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
 })

@@ -5,5 +5,5 @@ export interface SearchResultShape {
   project: string;
   docLink: string;
   url: string;
-  // optional: you can add score, snippet, etc. later
+  description: string;
 }

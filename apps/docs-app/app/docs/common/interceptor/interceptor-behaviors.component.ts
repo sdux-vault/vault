@@ -31,7 +31,11 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
               <p>type: void</p>
               <p>implementation:</p>
               <ul>
-                <li>provideFeatureCell</li>
+                <li>
+                  <a href="/docs/references/functions/provide-feature-cell"
+                    >provideFeatureCell</a
+                  >
+                </li>
               </ul>
             </td>
             <td>

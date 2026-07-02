@@ -4,22 +4,22 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-feature-cell',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
     <div class="header">
       <h3>FeatureCell</h3>
     </div>
     <header class="docs-header">
       <div class="lead">
-        Decorator factory that marks a class as a
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> with
-        an associated state type. This function produces a class decorator that
-        attaches identifying metadata used to associate a
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        instance with a unique key and a compile-time state type anchor.<br /><br />
+        Creates and registers a Feature Cell using the provided configuration
+        and optional behavior and controller contracts. This function produces a
+        Feature Cell instance keyed by the descriptor and registers it for later
+        resolution and usage.<br /><br />
       </div>
     </header>
     <section class="section">
@@ -48,46 +48,51 @@ import { Component, ViewEncapsulation } from '@angular/core';
                   <strong
                     ><a href="/docs/references/functions/feature-cell"
                       >FeatureCell</a
-                    >(key)</strong
+                    >(descriptor, behaviors, controllers)</strong
                   >
                 </p>
                 <p>inputs:</p>
                 <ul>
-                  <li>key: string</li>
+                  <li>
+                    descriptor:
+                    <a href="/docs/references/config/feature-cell-config"
+                      >FeatureCellConfig</a
+                    >
+                  </li>
+                  <li>behaviors: unknown</li>
+                  <li>controllers: unknown</li>
                 </ul>
                 <p>returns:</p>
                 <ul>
-                  <li>void</li>
+                  <li>
+                    <a href="/docs/references/shapes/feature-cell-shape"
+                      >FeatureCellShape</a
+                    >&lt;T&gt;
+                  </li>
                 </ul>
               </td>
               <td>
-                Decorator factory that marks a class as a
-                <a href="/docs/references/functions/feature-cell"
-                  >FeatureCell</a
-                >
-                with an associated state type. This function produces a class
-                decorator that attaches identifying metadata used to associate a
-                <a href="/docs/references/functions/feature-cell"
-                  >FeatureCell</a
-                >
-                instance with a unique key and a compile-time state type
-                anchor.<br /><br />
+                Creates and registers a Feature Cell using the provided
+                configuration and optional behavior and controller contracts.
+                This function produces a Feature Cell instance keyed by the
+                descriptor and registers it for later resolution and usage.<br /><br />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
-    <section class="section">
-      <div class="section-title">Documentation Generation Notes</div>
-      <div class="section-body">
-        <p>
-          This reference API documentation is generated from @jsdoc-annotated
-          source code using @compodoc, with AI-assisted comments reviewed by a
-          human prior to publication.
-        </p>
-      </div>
-    </section>
+    <div class="documentation">
+      <p>
+        The <sdux-brand-name [tm]="true" /> documentation is central in
+        providing world-class support for our users.
+      </p>
+      <p>
+        This reference API documentation is generated from @jsdoc-annotated
+        source code using @compodoc, with AI-assisted comments reviewed by a
+        human prior to publication.
+      </p>
+    </div>
   </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
