@@ -7,7 +7,6 @@ import {
   DestroyRef,
   Injector,
   provideZonelessChangeDetection,
-  runInInjectionContext,
   signal
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -57,11 +56,10 @@ describe('Behavior: HttpResource', () => {
       incoming: null
     };
 
-    runInInjectionContext(injector, () => {
-      behavior = new withHttpResourceBehavior('behavior key', {
-        injector
-      } as any);
-    });
+    withHttpResourceBehavior.setInjector(injector);
+    behavior = new withHttpResourceBehavior('behavior key', {
+      injector
+    } as any);
   });
 
   afterEach(() => {
@@ -97,9 +95,7 @@ describe('Behavior: HttpResource', () => {
     });
 
     let promise: any;
-    await runInInjectionContext(injector, async () => {
-      promise = behavior.computeResolve(ctx);
-    });
+    promise = behavior.computeResolve(ctx);
     TestBed.tick();
 
     // Simulate backend response
@@ -119,9 +115,7 @@ describe('Behavior: HttpResource', () => {
     ctx.incoming = httpResource<TestModel[]>(() => `/api/fail`, { injector });
 
     let promise: any;
-    await runInInjectionContext(injector, async () => {
-      promise = behavior.computeResolve(ctx);
-    });
+    promise = behavior.computeResolve(ctx);
     TestBed.tick();
 
     // Simulate backend error
@@ -156,9 +150,7 @@ describe('Behavior: HttpResource', () => {
       TestModel[]
     >;
     let result: any;
-    await runInInjectionContext(injector, async () => {
-      result = await behavior.computeResolve(ctx);
-    });
+    result = await behavior.computeResolve(ctx);
     TestBed.tick();
     expect(result).toBeUndefined();
     expect(warnSpy).toHaveBeenCalledTimes(0);
@@ -179,10 +171,8 @@ describe('Behavior: HttpResource', () => {
 
     let p1: any;
     let p2: any;
-    await runInInjectionContext(injector, async () => {
-      p1 = behavior.computeResolve(ctx1);
-      p2 = behavior.computeResolve(ctx2);
-    });
+    p1 = behavior.computeResolve(ctx1);
+    p2 = behavior.computeResolve(ctx2);
     TestBed.tick();
 
     mockBackend.expectOne('/api/u1').flush([{ id: 1, name: 'Ada' }]);
@@ -203,9 +193,7 @@ describe('Behavior: HttpResource', () => {
       });
 
       let promise: any;
-      await runInInjectionContext(injector, async () => {
-        promise = behavior.computeResolve(ctx);
-      });
+      promise = behavior.computeResolve(ctx);
       TestBed.tick();
 
       // Flush value
@@ -225,9 +213,7 @@ describe('Behavior: HttpResource', () => {
       });
 
       let promise: any;
-      await runInInjectionContext(injector, async () => {
-        promise = behavior.computeResolve(ctx);
-      });
+      promise = behavior.computeResolve(ctx);
       TestBed.tick();
 
       // Flush value
@@ -236,9 +222,7 @@ describe('Behavior: HttpResource', () => {
       const result = await promise;
       expect(result).toEqual([{ id: 99, name: 'Deleted' }]);
 
-      await runInInjectionContext(injector, async () => {
-        behavior.destroy();
-      });
+      behavior.destroy();
 
       await flushVaultPipeline();
 
@@ -258,9 +242,7 @@ describe('Behavior: HttpResource', () => {
       });
 
       let promise: any;
-      await runInInjectionContext(injector, async () => {
-        promise = behavior.computeResolve(ctx);
-      });
+      promise = behavior.computeResolve(ctx);
       TestBed.tick();
 
       // Flush value
@@ -301,9 +283,7 @@ describe('Behavior: HttpResource', () => {
       });
 
       let promise: any;
-      await runInInjectionContext(injector, async () => {
-        promise = behavior.computeResolve(ctx);
-      });
+      promise = behavior.computeResolve(ctx);
       TestBed.tick();
 
       // Flush value
@@ -330,9 +310,7 @@ describe('Behavior: HttpResource', () => {
       });
 
       let promise: any;
-      await runInInjectionContext(injector, async () => {
-        promise = behavior.computeResolve(ctx);
-      });
+      promise = behavior.computeResolve(ctx);
       TestBed.tick();
 
       // Flush value

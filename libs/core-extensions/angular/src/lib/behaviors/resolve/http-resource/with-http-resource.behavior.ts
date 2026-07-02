@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import { HttpResourceRef } from '@angular/common/http';
+import { Injector, runInInjectionContext } from '@angular/core';
 import {
   BehaviorClassContext,
   BehaviorContext,
@@ -60,6 +61,18 @@ export class withHttpResourceBehavior<T> implements ResolveBehaviorContract<T> {
    */
   static readonly resolveType: ResolveType;
 
+  /** Angular injector set by provideFeatureCell before behavior instantiation. */
+  private static _injector: Injector;
+
+  /**
+   * Sets the Angular injector used by all instances during resolve.
+   *
+   * @param injector - The Angular injector from the provider context.
+   */
+  static setInjector(injector: Injector): void {
+    withHttpResourceBehavior._injector = injector;
+  }
+
   /**
    * Instance-level behavior type identifier.
    */
@@ -110,7 +123,9 @@ export class withHttpResourceBehavior<T> implements ResolveBehaviorContract<T> {
 
       try {
         const value = await firstValueFrom(
-          toObservable(resource.value).pipe(
+          runInInjectionContext(withHttpResourceBehavior._injector, () =>
+            toObservable(resource.value)
+          ).pipe(
             filter((val): val is T => val !== undefined),
             take(1)
           )

@@ -890,6 +890,28 @@ export const p402Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-from-deferred',
+    behaviorKey: 'SDUX::Behavior::Resolve::HttpResource',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-from-deferred',
+    behaviorKey: 'SDUX::Behavior::Resolve::HttpResource',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-from-deferred',
     behaviorKey: 'vault-orchestrator',
     name: 'stage:end:core-state',
     timestamp: 'ts-removed',

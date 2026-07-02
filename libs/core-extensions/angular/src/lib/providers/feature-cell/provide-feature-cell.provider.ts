@@ -1,12 +1,22 @@
-import { Provider, Type } from '@angular/core';
-import { FeatureCell } from '@sdux-vault/core';
+import { inject, Injector, Provider, Type } from '@angular/core';
+import { FeatureCell, registerPlatformBehavior } from '@sdux-vault/core';
 import { FeatureCellConfig } from '@sdux-vault/engine';
 import {
   BehaviorClassContract,
-  ControllerClassContract
+  BehaviorTypes,
+  ControllerClassContract,
+  ResolveTypes
 } from '@sdux-vault/shared';
+import { withHttpResourceBehavior } from '../../behaviors/resolve/http-resource/with-http-resource.behavior';
 import { createAngularFeatureCellToken } from '../../tokens/feature-cell-di.token';
 import { AngularFeatureCellAdapter } from './feature.cell.adapter';
+
+// Register the Angular HTTP resource resolve behavior at module load time.
+registerPlatformBehavior(
+  BehaviorTypes.Resolve,
+  withHttpResourceBehavior,
+  ResolveTypes.HttpResource
+);
 
 /**
  * Angular provider factory that registers and exposes a FeatureCell instance.
@@ -33,6 +43,7 @@ export function provideFeatureCell<Service, T>(
     {
       provide: angularToken,
       useFactory: () => {
+        withHttpResourceBehavior.setInjector(inject(Injector));
         const coreCell = FeatureCell(descriptor, behaviors, controllers);
 
         return new AngularFeatureCellAdapter(coreCell).build();

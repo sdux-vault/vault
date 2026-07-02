@@ -801,6 +801,28 @@ export const p233Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-persist.with-session-storage',
+    behaviorKey: 'SDUX::Behavior::Resolve::HttpResource',
+    name: 'lifecycle:start:destroy',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-session-storage',
+    behaviorKey: 'SDUX::Behavior::Resolve::HttpResource',
+    name: 'lifecycle:end:destroy',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-persist.with-session-storage',
     behaviorKey: 'SDUX::Behavior::Persist::SessionStorage',
     name: 'lifecycle:start:destroy',
     timestamp: 'ts-removed',

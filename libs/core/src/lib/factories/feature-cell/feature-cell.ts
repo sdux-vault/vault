@@ -24,6 +24,7 @@ import { withCoreEmitStateBehavior } from '../../behaviors/state/with-core-emit-
 import { withCoreStateBehavior } from '../../behaviors/state/with-core-state/with-core-state.behavior';
 import { withCoreAfterTapBehavior } from '../../behaviors/tap/with-core-after-tap.behavior';
 import { withCoreBeforeTapBehavior } from '../../behaviors/tap/with-core-before-tap.behavior';
+import { getPlatformBehaviors } from '../../utils/platform-registry.util';
 
 /**
  * Creates and registers a Feature Cell using the provided configuration and optional behavior and controller contracts.
@@ -75,6 +76,7 @@ function loadDefaultBehaviors<T>(): BehaviorClassContract<T>[] {
     withCoreStateBehavior,
     withCoreErrorCallbackBehavior,
     withArrayMergeBehavior,
-    withCoreEmitStateBehavior
+    withCoreEmitStateBehavior,
+    ...getPlatformBehaviors()
   ];
 }

@@ -2,19 +2,18 @@ import { Observable } from 'rxjs';
 import { Vault } from '../../vault/vault';
 import { FeatureCell } from '../feature-cell';
 
-describe('Provider: Feature Cell (core vault functionality)', () => {
-  let vault: any;
-
+describe('Factory: Feature Cell)', () => {
   beforeEach(() => {
     Vault();
-    vault = FeatureCell({
+  });
+
+  it('should provide the correct FeatureCell token', () => {
+    const vault = FeatureCell({
       key: 'http-2',
       initialState: [],
       insights: {} as any
     });
-  });
 
-  it('should provide the correct FeatureCell token', () => {
     expect(vault).toEqual(
       Object({
         afterTaps: jasmine.any(Function),

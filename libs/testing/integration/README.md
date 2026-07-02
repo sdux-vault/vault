@@ -1123,8 +1123,10 @@ Test features are incremented by 10 in order to have plenty of space to add test
 |      |                         | p14 - Error                | Value/InitialState    |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 |      |                         | p15 - Error                | Value/InitialState    | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 |      |                         | p16                        | Value/InitialState    | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-| ⚠️   | HttpResource            |
-|      |                         | p20 – Resolve              | HttpResource          | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
+| ✅   | HttpResource            |
+|      |                         | p20 – Resolve              | HttpResource          | ✅      | ️      |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p21 – Resolve              | HttpResource          | ️        | ✅️    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p22 – Error                | HttpResource          | ✅️      | ️      |      |      |         |     |         |        |         |         |     |       | ✅️       | ✅     |
 | ✅   | Observable              |
 |      |                         | p30                        | Observable            | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 |      |                         | p31                        | Observable            |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
