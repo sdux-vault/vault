@@ -604,14 +604,15 @@ export async function renderClassDocumentation(entry, documentation) {
         ${classMetaSection}
       </header>
       ${finalizeOutput}
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
+      <div class="documentation">
+        <p>
+          The <sdux-brand-name [tm]="true" /> documentation is central in
+          providing world-class support for our users.
+        </p>
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated source code using
+          @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+        </p>
+      </div>
     </div>`;
 }

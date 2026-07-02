@@ -8,6 +8,7 @@ export interface SearchDocumentShape {
   symbols: string[];
   content: string;
   url: string;
+  description: string;
 
   // Required by FlexSearch.Document<T>
   // eslint-disable-next-line

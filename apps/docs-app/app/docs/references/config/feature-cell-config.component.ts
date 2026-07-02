@@ -4,19 +4,25 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-feature-cell-config',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
     <div class="header">
       <h3>FeatureCellConfig</h3>
     </div>
     <header class="docs-header">
       <div class="lead">
-        Stub configuration interface for defining a
+        Declarative configuration for constructing a
         <a href="/docs/references/functions/feature-cell">FeatureCell</a
         >.<br /><br />
+        This interface defines the minimum information required to identify,
+        initialize, and optionally observe a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance within the Vault system.<br /><br />
       </div>
     </header>
     <section class="section">
@@ -46,7 +52,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p class="type">type: T</p>
               </td>
               <td class="column-auto">
-                Initial state value for the
+                Initial state value that seeds the
                 <a href="/docs/references/functions/feature-cell">FeatureCell</a
                 >.<br /><br />
               </td>
@@ -63,7 +69,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 </p>
               </td>
               <td class="column-auto">
-                Optional insight configuration for diagnostics.<br /><br />
+                Optional insight configuration used for enabling diagnostics or
+                devtools-related observations.<br /><br />
               </td>
             </tr>
             <tr>
@@ -73,25 +80,28 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <p class="type">type: string</p>
               </td>
               <td class="column-auto">
-                Unique key identifying the
-                <a href="/docs/references/functions/feature-cell">FeatureCell</a
-                >.<br /><br />
+                Unique identifier assigned to the
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                instance.<br /><br />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
-    <section class="section">
-      <div class="section-title">Documentation Generation Notes</div>
-      <div class="section-body">
-        <p>
-          This reference API documentation is generated from @jsdoc-annotated
-          source code using @compodoc, with AI-assisted comments reviewed by a
-          human prior to publication.
-        </p>
-      </div>
-    </section>
+    <div class="documentation">
+      <p>
+        The <sdux-brand-name [tm]="true" /> documentation is central in
+        providing world-class support for our users.
+      </p>
+      <p>
+        This reference API documentation is generated from @jsdoc-annotated
+        source code using @compodoc, with AI-assisted comments reviewed by a
+        human prior to publication.
+      </p>
+    </div>
   </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None

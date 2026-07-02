@@ -73,7 +73,8 @@ export class SearchService {
         kind: d.kind,
         project: d.project,
         docLink: d.docLink,
-        url: d.url
+        url: d.url,
+        description: d.description || ''
       }));
   }
 

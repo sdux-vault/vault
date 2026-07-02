@@ -175,8 +175,10 @@ employeeCell.initialize();</code></pre>
               href="/docs/references/functions/feature-cell"
               >FeatureCell</a
             >
-            decorator and injectVault for DI integration. The non-Angular
-            version uses plain function calls. Both produce a
+            decorator and
+            <a href="/docs/references/functions/inject-vault">injectVault</a>
+            for DI integration. The non-Angular version uses plain function
+            calls. Both produce a
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             with identical pipeline semantics, identical state guarantees, and
             identical lifecycle control.

@@ -43,7 +43,7 @@
       background: var(--sdux-surface-main);
 
       @include global.sdux-font-body($size: global.$font-size-sm);
-      color: var(--sdux-text-primary);
+      color: global.$sdux-text-black;
 
       transition:
         opacity 0.2s ease,
@@ -107,30 +107,102 @@
     flex-direction: column;
     gap: global.$spacing-xs;
 
-    &:hover {
+    &:hover,
+    &.active {
       background: color-mix(in srgb, var(--sdux-primary) 18%, transparent);
     }
     &:active {
       background: color-mix(in srgb, var(--sdux-primary) 28%, transparent);
     }
 
-    .title {
+    .row-title {
       font-size: global.$font-size-sm;
       font-weight: global.$font-weight-semibold;
       color: var(--sdux-primary);
+
+      .highlight {
+        background-color: global.$sdux-warn-base;
+        color: global.$sdux-text-black;
+        border-radius: global.$border-radius-xs;
+        padding: 0 1px;
+      }
     }
 
-    .meta {
+    .row-meta {
+      display: flex;
+      align-items: center;
       font-size: global.$font-size-xs;
       color: var(--sdux-text-secondary);
-      display: flex;
-      gap: global.$spacing-xs;
+    }
 
-      span:not(:last-child)::after {
-        content: '·';
-        opacity: 0.5;
-        margin-left: global.$spacing-xs;
-      }
+    .col-doclink {
+      width: 4.5rem;
+      flex-shrink: 0;
+      text-align: left;
+    }
+
+    .col-pill {
+      width: 5rem;
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    .col-project {
+      flex: 1;
+      text-align: left;
+      margin-left: global.$spacing-sm;
+      font-weight: global.$font-weight-semibold;
+      color: global.$sdux-text-black;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 0 global.$spacing-xs;
+      border-radius: global.$border-radius-lg;
+      font-size: global.$font-size-xxs;
+      font-weight: global.$font-weight-semibold;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      text-align: center;
+      color: global.$sdux-text-white;
+      white-space: nowrap;
+    }
+
+    .pill-function {
+      width: 3.75rem;
+      background-color: global.$sdux-primary-base;
+    }
+
+    .pill-interface {
+      width: 4.25rem;
+      background-color: global.$sdux-primary-base;
+    }
+
+    .pill-class {
+      width: 3rem;
+      background-color: global.$sdux-primary-dark;
+    }
+
+    .pill-behavior {
+      width: 3.75rem;
+      background-color: global.$sdux-success-base;
+    }
+
+    .pill-type {
+      width: 2.25rem;
+      background-color: global.$sdux-warn-base;
+      color: global.$sdux-text-black;
+    }
+
+    .pill-const {
+      width: 2.75rem;
+      background-color: global.$sdux-text-disabled;
+    }
+
+    .pill-blog {
+      width: 2.25rem;
+      background-color: global.$sdux-accent-base;
     }
   }
 

@@ -10,6 +10,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { NotFoundComponent } from '../../../not-found/not-found.component';
 
+import { createAngularFeatureCellTokenComponent } from './create-angular-feature-cell-token.component';
 import { createDebugDumpComponent } from './create-debug-dump.component';
 import { createVaultErrorComponent } from './create-vault-error.component';
 import { defineBehaviorKeyComponent } from './define-behavior-key.component';
@@ -21,7 +22,9 @@ import { downloadTraceDumpComponent } from './download-trace-dump.component';
 import { EventBusComponent } from './event-bus.component';
 import { exportTraceComponent } from './export-trace.component';
 import { FeatureCellComponent } from './feature-cell.component';
+import { getAngularFeatureCellTokenComponent } from './get-angular-feature-cell-token.component';
 import { getVaultLogLevelComponent } from './get-vault-log-level.component';
+import { injectVaultComponent } from './inject-vault.component';
 import { isDeferredFactoryComponent } from './is-deferred-factory.component';
 import { isDefinedComponent } from './is-defined.component';
 import { isFunctionComponent } from './is-function.component';
@@ -36,8 +39,12 @@ import { isUndefinedComponent } from './is-undefined.component';
 import { isVaultClearStateComponent } from './is-vault-clear-state.component';
 import { isVaultContinueComponent } from './is-vault-continue.component';
 import { isVaultNoopComponent } from './is-vault-noop.component';
+import { provideFeatureCellComponent } from './provide-feature-cell.component';
+import { provideVaultComponent } from './provide-vault.component';
+import { provideVaultTestingComponent } from './provide-vault-testing.component';
 import { registerVersionComponent } from './register-version.component';
 import { reportGithubIssueComponent } from './report-github-issue.component';
+import { resetAngularFeatureCellTokenDevModeComponent } from './reset-angular-feature-cell-token-dev-mode.component';
 import { safeStringifyComponent } from './safe-stringify.component';
 import { setVaultLogLevelComponent } from './set-vault-log-level.component';
 import { validateBehaviorKeyComponent } from './validate-behavior-key.component';
@@ -47,6 +54,7 @@ import { vaultDebugComponent } from './vault-debug.component';
 import { vaultErrorComponent } from './vault-error.component';
 import { VaultErrorServiceComponent } from './vault-error-service.component';
 import { vaultLogComponent } from './vault-log.component';
+import { VaultTestingComponent } from './vault-testing.component';
 import { vaultWarnComponent } from './vault-warn.component';
 
 @Component({
@@ -57,6 +65,7 @@ import { vaultWarnComponent } from './vault-warn.component';
     CommonModule,
     MatTabsModule,
     MatExpansionModule,
+    createAngularFeatureCellTokenComponent,
     createDebugDumpComponent,
     createVaultErrorComponent,
     defineBehaviorKeyComponent,
@@ -68,7 +77,9 @@ import { vaultWarnComponent } from './vault-warn.component';
     EventBusComponent,
     exportTraceComponent,
     FeatureCellComponent,
+    getAngularFeatureCellTokenComponent,
     getVaultLogLevelComponent,
+    injectVaultComponent,
     isDeferredFactoryComponent,
     isDefinedComponent,
     isFunctionComponent,
@@ -83,8 +94,12 @@ import { vaultWarnComponent } from './vault-warn.component';
     isVaultClearStateComponent,
     isVaultContinueComponent,
     isVaultNoopComponent,
+    provideFeatureCellComponent,
+    provideVaultComponent,
+    provideVaultTestingComponent,
     registerVersionComponent,
     reportGithubIssueComponent,
+    resetAngularFeatureCellTokenDevModeComponent,
     safeStringifyComponent,
     setVaultLogLevelComponent,
     validateBehaviorKeyComponent,
@@ -94,6 +109,7 @@ import { vaultWarnComponent } from './vault-warn.component';
     vaultErrorComponent,
     VaultErrorServiceComponent,
     vaultLogComponent,
+    VaultTestingComponent,
     vaultWarnComponent
   ],
   templateUrl: './references-functions.component.html',

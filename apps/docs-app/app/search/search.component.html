@@ -4,7 +4,7 @@
       type="button"
       mat-icon-button
       class="search-trigger"
-      aria-label="Search documentation"
+      aria-label="Search documentation (press / to focus)"
       (click)="focusInput()">
       <mat-icon>search</mat-icon>
     </button>
@@ -13,26 +13,57 @@
       #searchInput
       type="search"
       aria-label="Search documentation"
+      placeholder="Search  ( / )"
       [value]="query()"
       (focus)="focused.set(true)"
       (blur)="focused.set(false)"
-      (input)="onQueryChange($event.target.value)" />
+      (input)="onQueryChange($event.target.value)"
+      (keydown)="onKeydown($event)" />
   </div>
 
   <div class="dropdown">
     @if (query() && results().length) {
-      <div class="results" [style.left.px]="dropdownLeft()">
-        @for (result of results(); track result.id) {
-          <div class="result" (mousedown)="goTo(result)">
-            <div class="title">{{ result.title }}</div>
-            <div class="meta">
-              <span>{{ result.kind }}</span>
-              @if (result.project !== result.kind) {
-                <span>{{ buildProject(result.project) }}</span>
-              }
-              @if (result.docLink !== result.kind) {
-                <span>{{ result.docLink }}</span>
-              }
+      <div class="results" role="listbox" [style.left.px]="dropdownLeft()">
+        @for (result of results(); track result.id; let i = $index) {
+          <div
+            #resultItem
+            class="result"
+            role="option"
+            [class.active]="i === activeIndex()"
+            [attr.aria-selected]="i === activeIndex()"
+            [matTooltip]="result.description"
+            [matTooltipDisabled]="!result.description"
+            matTooltipPosition="left"
+            (mousedown)="goTo(result)"
+            (mouseenter)="activeIndex.set(i)">
+            <!-- Trust: title comes from the build-time search index, not user input -->
+            <div
+              class="row-title"
+              [innerHTML]="highlightMatch(result.title)"></div>
+            <div class="row-meta">
+              <div class="col-doclink">
+                @if (result.docLink !== result.kind) {
+                  {{ result.docLink }}
+                }
+              </div>
+              <div class="col-pill">
+                <span
+                  class="pill"
+                  [class.pill-function]="result.kind === 'function'"
+                  [class.pill-interface]="result.kind === 'interface'"
+                  [class.pill-class]="result.kind === 'class'"
+                  [class.pill-behavior]="result.kind === 'behavior'"
+                  [class.pill-type]="result.kind === 'type'"
+                  [class.pill-const]="result.kind === 'const'"
+                  [class.pill-blog]="result.kind === 'blog'"
+                  >{{ result.kind }}</span
+                >
+              </div>
+              <div class="col-project">
+                @if (result.project !== result.kind) {
+                  {{ buildProject(result.project) }}
+                }
+              </div>
             </div>
           </div>
         }

@@ -188,6 +188,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Effects Without Middleware — SDuX Vault Blog',
       description:
         'Learn how SDuX Vault resolves async inputs through pipeline stages instead of middleware — no thunks, no sagas, no dispatch chains.'
+    },
+    {
+      link: '/blog/selectors-without-a-global-tree',
+      display:
+        'Selectors Without a Global Tree — Scoped State Access That Scales',
+      title: 'Selectors Without a Global Tree — SDuX Vault Blog',
+      description:
+        'Learn how SDuX Vault scopes state access to the owning FeatureCell — no global tree, no selector coupling, no cascade failures when the store restructures.'
     }
   ]
 };

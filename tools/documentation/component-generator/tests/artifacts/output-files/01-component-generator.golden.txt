@@ -4,10 +4,12 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-value-resolve-example-component',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>ValueResolveExampleComponent</h3>
@@ -78,15 +80,16 @@ how cache misses are resolved through the state pipeline.<br/><br/></div>
           </table>
         </div>
       </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
+      <div class="documentation">
+        <p>
+          The <sdux-brand-name [tm]="true" /> documentation is central in
+          providing world-class support for our users.
+        </p>
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated source code using
+          @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+        </p>
+      </div>
     </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
@@ -99,10 +102,12 @@ export class ValueResolveExampleComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-abstract-active-controller',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>ValueResolveExampleComponent</h3>
@@ -207,15 +212,16 @@ import { Component, ViewEncapsulation } from '@angular/core';
           </table>
         </div>
       </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
+      <div class="documentation">
+        <p>
+          The <sdux-brand-name [tm]="true" /> documentation is central in
+          providing world-class support for our users.
+        </p>
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated source code using
+          @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+        </p>
+      </div>
     </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
@@ -228,10 +234,12 @@ export class AbstractActiveControllerComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-bank-employee-model',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
         <div class="header">
           <h3>BankEmployeeModel</h3>
@@ -250,10 +258,12 @@ export class BankEmployeeModelComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-dev-mode',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>DevMode</h3>
@@ -340,15 +350,16 @@ import { Component, ViewEncapsulation } from '@angular/core';
           </table>
         </div>
       </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
+      <div class="documentation">
+        <p>
+          The <sdux-brand-name [tm]="true" /> documentation is central in
+          providing world-class support for our users.
+        </p>
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated source code using
+          @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+        </p>
+      </div>
     </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
@@ -361,10 +372,12 @@ export class DevModeComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-cache-ttl',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>CacheTTL</h3>
@@ -441,15 +454,16 @@ validity and refresh behavior.<br/><br/></div>
           </table>
         </div>
       </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
+      <div class="documentation">
+        <p>
+          The <sdux-brand-name [tm]="true" /> documentation is central in
+          providing world-class support for our users.
+        </p>
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated source code using
+          @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+        </p>
+      </div>
     </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
@@ -462,10 +476,12 @@ export class CacheTTLComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-behavior_meta',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>BEHAVIOR_META</h3>
@@ -494,15 +510,16 @@ on a behavior class and is required for correct pipeline registration.<br/><br/>
           <pre class="code-inline"><code class="language-ts">const Symbol(&#39;BEHAVIOR_META&#39;)</code></pre>
         </div>
       </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
+      <div class="documentation">
+        <p>
+          The <sdux-brand-name [tm]="true" /> documentation is central in
+          providing world-class support for our users.
+        </p>
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated source code using
+          @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+        </p>
+      </div>
     </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
@@ -515,10 +532,12 @@ export class BEHAVIOR_METAComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-is-defined',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>isDefined</h3>
@@ -565,15 +584,16 @@ Note: This intentionally does *not* exclude null.<br/><br/>
         </table>
       </div>
     </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
+      <div class="documentation">
+        <p>
+          The <sdux-brand-name [tm]="true" /> documentation is central in
+          providing world-class support for our users.
+        </p>
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated source code using
+          @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+        </p>
+      </div>
     </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
@@ -586,10 +606,12 @@ export class isDefinedComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-is-http-resource-ref',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>isHttpResourceRef</h3>
@@ -649,15 +671,16 @@ and does not validate the internal content of those properties.<br/><br/>
         </table>
       </div>
     </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
+      <div class="documentation">
+        <p>
+          The <sdux-brand-name [tm]="true" /> documentation is central in
+          providing world-class support for our users.
+        </p>
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated source code using
+          @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+        </p>
+      </div>
     </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
@@ -670,10 +693,12 @@ export class isHttpResourceRefComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-vault-behavior',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>VaultBehavior</h3>
@@ -737,15 +762,16 @@ management.<br/><br/>
         </table>
       </div>
     </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
+      <div class="documentation">
+        <p>
+          The <sdux-brand-name [tm]="true" /> documentation is central in
+          providing world-class support for our users.
+        </p>
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated source code using
+          @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+        </p>
+      </div>
     </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None
@@ -758,10 +784,12 @@ export class VaultBehaviorComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-behavior-type',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>BehaviorType</h3>
@@ -795,15 +823,16 @@ strong typing while preserving full runtime compatibility.<br/><br/></div>
         </p>
       </div>
     </section>
-      <section class="section">
-        <div class="section-title">Documentation Generation Notes</div>
-        <div class="section-body">
-          <p>
-            This reference API documentation is generated from @jsdoc-annotated source code using
-            @compodoc, with AI-assisted comments reviewed by a human prior to publication.
-          </p>
-        </div>
-      </section>
+      <div class="documentation">
+        <p>
+          The <sdux-brand-name [tm]="true" /> documentation is central in
+          providing world-class support for our users.
+        </p>
+        <p>
+          This reference API documentation is generated from @jsdoc-annotated source code using
+          @compodoc, with AI-assisted comments reviewed by a human prior to publication.
+        </p>
+      </div>
     </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None

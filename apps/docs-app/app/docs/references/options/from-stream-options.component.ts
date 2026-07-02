@@ -4,17 +4,19 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-from-stream-options',
   standalone: true,
+  imports: [BrandNameComponent],
   template: `<div class="docs-container">
     <div class="header">
       <h3>FromStreamOptions</h3>
     </div>
     <header class="docs-header">
       <div class="lead">
-        Configuration options for stream-based state observation.<br /><br />
+        Configuration options for the fromStream resolve behavior.<br /><br />
       </div>
     </header>
     <section class="section">
@@ -52,16 +54,17 @@ import { Component, ViewEncapsulation } from '@angular/core';
         </table>
       </div>
     </section>
-    <section class="section">
-      <div class="section-title">Documentation Generation Notes</div>
-      <div class="section-body">
-        <p>
-          This reference API documentation is generated from @jsdoc-annotated
-          source code using @compodoc, with AI-assisted comments reviewed by a
-          human prior to publication.
-        </p>
-      </div>
-    </section>
+    <div class="documentation">
+      <p>
+        The <sdux-brand-name [tm]="true" /> documentation is central in
+        providing world-class support for our users.
+      </p>
+      <p>
+        This reference API documentation is generated from @jsdoc-annotated
+        source code using @compodoc, with AI-assisted comments reviewed by a
+        human prior to publication.
+      </p>
+    </div>
   </div>`,
   styleUrl: '../../scss/example.scss',
   encapsulation: ViewEncapsulation.None

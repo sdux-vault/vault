@@ -12,6 +12,11 @@ const typeIndexPath = path.join(
   'artifacts',
   'type-index.json'
 );
+const compodocsPath = path.join(
+  projectRoot,
+  'documentation',
+  'documentation.json'
+);
 const outputPath = path.join(
   projectRoot,
   'apps',
@@ -21,5 +26,9 @@ const outputPath = path.join(
   'search-index.json'
 );
 
-const generator = new SearchIndexGenerator(typeIndexPath, outputPath);
+const generator = new SearchIndexGenerator(
+  typeIndexPath,
+  outputPath,
+  compodocsPath
+);
 generator.run();

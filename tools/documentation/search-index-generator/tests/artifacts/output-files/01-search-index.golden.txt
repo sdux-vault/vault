@@ -11,7 +11,8 @@
         "ValueResolveExampleComponent"
       ],
       "content": "ValueResolveExampleComponent ValueResolveExampleComponent class core projects/core/src/lib/dir_one/dir_one_file_one.ts",
-      "url": "/docs/references/classes/value-resolve-example-component"
+      "url": "/docs/references/classes/value-resolve-example-component",
+      "description": ""
     },
     {
       "id": "behaviors:withAes256EncryptBehavior",
@@ -24,7 +25,8 @@
         "withAes256EncryptBehavior"
       ],
       "content": "withAes256EncryptBehavior withAes256EncryptBehavior behaviors encrypt projects/encrypt/src/lib/behaviors/aes256/with-aes256-encrypt.behavior.ts",
-      "url": "/docs/pipeline/addons/encrypt/with-aes256encrypt-behavior"
+      "url": "/docs/pipeline/addons/encrypt/with-aes256encrypt-behavior",
+      "description": ""
     },
     {
       "id": "behaviors:withArrayAppendMergeBehavior",
@@ -37,7 +39,8 @@
         "withArrayAppendMergeBehavior"
       ],
       "content": "withArrayAppendMergeBehavior withArrayAppendMergeBehavior behaviors addons projects/addons/src/lib/behaviors/merge/array/array-append-merge/with-array-append-merge.behavior.ts",
-      "url": "/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+      "url": "/docs/pipeline/addons/merge/with-array-append-merge-behavior",
+      "description": ""
     },
     {
       "id": "behaviors:withCookieStoragePersistBehavior",
@@ -50,7 +53,8 @@
         "withCookieStoragePersistBehavior"
       ],
       "content": "withCookieStoragePersistBehavior withCookieStoragePersistBehavior behaviors persist projects/persist/src/lib/behaviors/cookie-storage/with-cookie-storage-persist.behavior.ts",
-      "url": "/docs/pipeline/addons/persist/with-cookie-storage-persist-behavior"
+      "url": "/docs/pipeline/addons/persist/with-cookie-storage-persist-behavior",
+      "description": ""
     },
     {
       "id": "interface:BankEmployeeModel",
@@ -63,7 +67,8 @@
         "BankEmployeeModel"
       ],
       "content": "BankEmployeeModel BankEmployeeModel interface core projects/core/src/lib/file_three.ts",
-      "url": "/docs/references/interfaces/bank-employee-model"
+      "url": "/docs/references/interfaces/bank-employee-model",
+      "description": ""
     }
   ]
 }

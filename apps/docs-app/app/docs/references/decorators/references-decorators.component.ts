@@ -10,6 +10,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { NotFoundComponent } from '../../../not-found/not-found.component';
 
+import { FeatureCellComponent } from './feature-cell.component';
 import { VaultBehaviorComponent } from './vault-behavior.component';
 import { VaultControllerComponent } from './vault-controller.component';
 
@@ -21,6 +22,7 @@ import { VaultControllerComponent } from './vault-controller.component';
     CommonModule,
     MatTabsModule,
     MatExpansionModule,
+    FeatureCellComponent,
     VaultBehaviorComponent,
     VaultControllerComponent
   ],
