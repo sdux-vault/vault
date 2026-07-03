@@ -7,7 +7,6 @@ import {
   DestroyRef,
   Injector,
   provideZonelessChangeDetection,
-  runInInjectionContext,
   signal
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -57,11 +56,10 @@ describe('Behavior: HttpResource', () => {
       incoming: null
     };
 
-    runInInjectionContext(injector, () => {
-      behavior = new withHttpResourceBehavior('behavior key', {
-        injector
-      } as any);
-    });
+    withHttpResourceBehavior.setInjector(injector);
+    behavior = new withHttpResourceBehavior('behavior key', {
+      injector
+    } as any);
   });
 
   afterEach(() => {
@@ -97,9 +95,7 @@ describe('Behavior: HttpResource', () => {
     });
 
     let promise: any;
-    await runInInjectionContext(injector, async () => {
-      promise = behavior.computeResolve(ctx);
-    });
+    promise = behavior.computeResolve(ctx);
     TestBed.tick();
 
     // Simulate backend response
@@ -119,9 +115,7 @@ describe('Behavior: HttpResource', () => {
     ctx.incoming = httpResource<TestModel[]>(() => `/api/fail`, { injector });
 
     let promise: any;
-    await runInInjectionContext(injector, async () => {
-      promise = behavior.computeResolve(ctx);
-    });
+    promise = behavior.computeResolve(ctx);
     TestBed.tick();
 
     // Simulate backend error
@@ -151,14 +145,82 @@ describe('Behavior: HttpResource', () => {
     expect(warnSpy).toHaveBeenCalledTimes(0);
   });
 
+  it('should reject via error$ race when error signal emits on a synthetic resource', async () => {
+    const errorSignal = signal<unknown>(undefined);
+
+    ctx.incoming = {
+      value: signal(undefined),
+      isLoading: signal(false),
+      error: errorSignal,
+      hasValue: () => false,
+      status: signal(0),
+      headers: signal(undefined),
+      reload: () => true,
+      destroy: () => {},
+      request: signal(undefined)
+    };
+
+    const promise = behavior.computeResolve(ctx);
+    await TestBed.tick();
+
+    errorSignal.set(new Error('Signal error'));
+    await TestBed.tick();
+
+    await promise
+      .then(() => {
+        fail('Expected rejection');
+      })
+      .catch((error: any) => {
+        expect(error).toEqual(
+          Object({
+            message: 'Signal error',
+            featureCellKey: 'cell-key',
+            details: jasmine.any(String),
+            raw: jasmine.any(Error),
+            timestamp: jasmine.any(Number)
+          })
+        );
+      });
+
+    expect(warnSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should throw a descriptive error when moduleInjector is not set', async () => {
+    withHttpResourceBehavior.setInjector(undefined as any);
+
+    ctx.incoming = {
+      value: signal(undefined),
+      isLoading: signal(false),
+      error: signal(undefined),
+      hasValue: () => false,
+      status: signal(0),
+      headers: signal(undefined),
+      reload: () => true,
+      destroy: () => {},
+      request: signal(undefined)
+    };
+
+    await behavior
+      .computeResolve(ctx)
+      .then(() => {
+        fail('Expected rejection');
+      })
+      .catch((error: any) => {
+        expect(error.message).toContain(
+          'requires an Angular Injector. Call setInjector()'
+        );
+      });
+
+    withHttpResourceBehavior.setInjector(injector);
+    expect(warnSpy).toHaveBeenCalledTimes(0);
+  });
+
   it('should skip when ctx.incoming is not an HttpResourceRef', async () => {
     const ctx = { incoming: { fake: true } } as unknown as BehaviorContext<
       TestModel[]
     >;
     let result: any;
-    await runInInjectionContext(injector, async () => {
-      result = await behavior.computeResolve(ctx);
-    });
+    result = await behavior.computeResolve(ctx);
     TestBed.tick();
     expect(result).toBeUndefined();
     expect(warnSpy).toHaveBeenCalledTimes(0);
@@ -179,10 +241,8 @@ describe('Behavior: HttpResource', () => {
 
     let p1: any;
     let p2: any;
-    await runInInjectionContext(injector, async () => {
-      p1 = behavior.computeResolve(ctx1);
-      p2 = behavior.computeResolve(ctx2);
-    });
+    p1 = behavior.computeResolve(ctx1);
+    p2 = behavior.computeResolve(ctx2);
     TestBed.tick();
 
     mockBackend.expectOne('/api/u1').flush([{ id: 1, name: 'Ada' }]);
@@ -203,9 +263,7 @@ describe('Behavior: HttpResource', () => {
       });
 
       let promise: any;
-      await runInInjectionContext(injector, async () => {
-        promise = behavior.computeResolve(ctx);
-      });
+      promise = behavior.computeResolve(ctx);
       TestBed.tick();
 
       // Flush value
@@ -225,9 +283,7 @@ describe('Behavior: HttpResource', () => {
       });
 
       let promise: any;
-      await runInInjectionContext(injector, async () => {
-        promise = behavior.computeResolve(ctx);
-      });
+      promise = behavior.computeResolve(ctx);
       TestBed.tick();
 
       // Flush value
@@ -236,9 +292,7 @@ describe('Behavior: HttpResource', () => {
       const result = await promise;
       expect(result).toEqual([{ id: 99, name: 'Deleted' }]);
 
-      await runInInjectionContext(injector, async () => {
-        behavior.destroy();
-      });
+      behavior.destroy();
 
       await flushVaultPipeline();
 
@@ -258,9 +312,7 @@ describe('Behavior: HttpResource', () => {
       });
 
       let promise: any;
-      await runInInjectionContext(injector, async () => {
-        promise = behavior.computeResolve(ctx);
-      });
+      promise = behavior.computeResolve(ctx);
       TestBed.tick();
 
       // Flush value
@@ -301,9 +353,7 @@ describe('Behavior: HttpResource', () => {
       });
 
       let promise: any;
-      await runInInjectionContext(injector, async () => {
-        promise = behavior.computeResolve(ctx);
-      });
+      promise = behavior.computeResolve(ctx);
       TestBed.tick();
 
       // Flush value
@@ -330,9 +380,7 @@ describe('Behavior: HttpResource', () => {
       });
 
       let promise: any;
-      await runInInjectionContext(injector, async () => {
-        promise = behavior.computeResolve(ctx);
-      });
+      promise = behavior.computeResolve(ctx);
       TestBed.tick();
 
       // Flush value

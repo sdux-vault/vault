@@ -1097,10 +1097,11 @@ Test features are incremented by 10 in order to have plenty of space to add test
 |                   | f1201    | Replace           | ✅           | ⚠️          | ❌        | ❌      | ❌         | ❌     | ❌        | ❌           | ✅      | ✅      | ✅        | ✅       |                | ❌     |
 |                   | f1202    | Replace           | ✅           | ⚠️          | ❌        | ❌      | ❌         | ❌     | ❌        | ❌           | ✅      | ✅      | ✅        | ✅       |                | ✅     |
 | By HttpResource   |
-|                   | fx00     | Replace           | ⚠️           | ⚠️          | ⚠️        | ⚠️      | ⚠️         | ⚠️     | ⚠️        | ⚠️           | ⚠️      | ⚠️      | ⚠️        | ⚠️       |                | ❌     |
-|                   | fx01     | Merge             | ⚠️           | ⚠️          | ⚠️        | ⚠️      | ⚠️         | ⚠️     | ⚠️        | ⚠️           | ⚠️      | ⚠️      | ⚠️        | ⚠️       |                | ❌     |
-|                   | fx02     | Replace           | ⚠️           | ⚠️          | ⚠️        | ⚠️      | ⚠️         | ⚠️     | ⚠️        | ⚠️           | ⚠️      | ⚠️      | ⚠️        | ⚠️       |                | ⚠️     |
-|                   | fx03     | Merge             | ⚠️           | ⚠️          | ⚠️        | ⚠️      | ⚠️         | ⚠️     | ⚠️        | ⚠️           | ⚠️      | ⚠️      | ⚠️        | ⚠️       |                | ⚠️     |
+|                   | f1300    | Replace           | ✅           | ⚠️          | ✅        | ✅      | ✅         | ✅     | ✅        | ⚠️           | ❌      | ✅      | ⚠️        | ✅       |                | ❌     |
+|                   | f1301    | Merge             | ✅           | ⚠️          | ✅        | ✅      | ✅         | ✅     | ✅        | ⚠️           | ✅      | ✅      | ⚠️        | ✅       |                | ❌     |
+|                   | f1302    | Replace           | ✅           | ⚠️          | ✅        | ✅      | ✅         | ✅     | ✅        | ⚠️           | ✅      | ✅      | ⚠️        | ✅       | ✅             | ✅     |
+|                   | f1303    | Merge             | ✅           | ⚠️          | ✅        | ✅      | ✅         | ✅     | ✅        | ⚠️           | ❌      | ✅      | ⚠️        | ✅       | ✅             | ✅     |
+|                   | f1304    | Replace           | ✅           | ⚠️          | ✅        | ✅      | ✅         | ✅     | ✅        | ⚠️           | ❌      | ✅      | ⚠️        | ✅       |                | ✅     |
 
 ---
 
@@ -1123,8 +1124,10 @@ Test features are incremented by 10 in order to have plenty of space to add test
 |      |                         | p14 - Error                | Value/InitialState    |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 |      |                         | p15 - Error                | Value/InitialState    | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 |      |                         | p16                        | Value/InitialState    | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-| ⚠️   | HttpResource            |
-|      |                         | p20 – Resolve              | HttpResource          | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
+| ✅   | HttpResource            |
+|      |                         | p20 – Resolve              | HttpResource          | ✅      | ️      |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p21 – Resolve              | HttpResource          | ️        | ✅️    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p22 – Error                | HttpResource          | ✅️      | ️      |      |      |         |     |         |        |         |         |     |       | ✅️       | ✅     |
 | ✅   | Observable              |
 |      |                         | p30                        | Observable            | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 |      |                         | p31                        | Observable            |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |

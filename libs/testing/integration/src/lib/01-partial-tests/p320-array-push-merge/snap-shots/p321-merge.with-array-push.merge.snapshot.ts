@@ -1066,6 +1066,28 @@ export const p321Snapshot = [
   {
     id: 'id-removed',
     cell: 'partial-merge.with-array-push',
+    behaviorKey: 'SDUX::Behavior::Resolve::HttpResource',
+    name: 'lifecycle:start:reset',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'lifecycle',
+    boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-merge.with-array-push',
+    behaviorKey: 'SDUX::Behavior::Resolve::HttpResource',
+    name: 'lifecycle:end:reset',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'lifecycle',
+    boundary: 'end',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'partial-merge.with-array-push',
     behaviorKey: 'SDUX::Behavior::Merge::ArrayPush',
     name: 'lifecycle:start:reset',
     timestamp: 'ts-removed',

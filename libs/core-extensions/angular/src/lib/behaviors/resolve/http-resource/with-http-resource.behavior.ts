@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import { HttpResourceRef } from '@angular/common/http';
+import { Injector, runInInjectionContext } from '@angular/core';
 import {
   BehaviorClassContext,
   BehaviorContext,
@@ -24,7 +25,10 @@ import {
   vaultDebug,
   vaultWarn
 } from '@sdux-vault/shared';
-import { filter, firstValueFrom, take } from 'rxjs';
+import { filter, firstValueFrom, mergeMap, race, take, throwError } from 'rxjs';
+
+/** Module-scoped injector set by provideFeatureCell before behavior instantiation. */
+let moduleInjector: Injector;
 
 /**
  * Resolve behavior that extracts state values from an Angular HTTP resource reference.
@@ -59,6 +63,15 @@ export class withHttpResourceBehavior<T> implements ResolveBehaviorContract<T> {
    * Resolve type identifier associated with HTTP resource inputs.
    */
   static readonly resolveType: ResolveType;
+
+  /**
+   * Sets the Angular injector used by all instances during resolve.
+   *
+   * @param injector - The Angular injector from the provider context.
+   */
+  static setInjector(value: Injector): void {
+    moduleInjector = value;
+  }
 
   /**
    * Instance-level behavior type identifier.
@@ -109,11 +122,29 @@ export class withHttpResourceBehavior<T> implements ResolveBehaviorContract<T> {
       );
 
       try {
+        if (!moduleInjector) {
+          throw new Error(
+            `${this.key} requires an Angular Injector. Call setInjector() before resolving an HttpResourceRef.`
+          );
+        }
+
+        // Note (2026-07-03): firstValueFrom has no timeout by design. If the
+        // underlying httpResource never resolves (neither value nor error signal
+        // changes), this promise hangs. This is an infrastructure/test issue
+        // (e.g., unflushed HTTP mock), not a behavior bug. Adding an arbitrary
+        // timeout would penalize slow networks and large payloads.
         const value = await firstValueFrom(
-          toObservable(resource.value).pipe(
-            filter((val): val is T => val !== undefined),
-            take(1)
-          )
+          runInInjectionContext(moduleInjector, () => {
+            const value$ = toObservable(resource.value).pipe(
+              filter((val): val is T => val !== undefined),
+              take(1)
+            );
+            const error$ = toObservable(resource.error).pipe(
+              filter((err) => err != null),
+              mergeMap((err) => throwError(() => err))
+            );
+            return race(value$, error$);
+          })
         );
 
         return value;

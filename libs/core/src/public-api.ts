@@ -9,3 +9,4 @@ export { withTabSyncStateBehavior } from './lib/behaviors/vault/with-tab-sync-st
 export { withTabSyncController } from './lib/controllers/vault/tab-sync/with-tab-sync.controller';
 export { FeatureCell } from './lib/factories/feature-cell/feature-cell';
 export { Vault } from './lib/factories/vault/vault';
+export { registerPlatformBehavior } from './lib/utils/platform-registry.util';

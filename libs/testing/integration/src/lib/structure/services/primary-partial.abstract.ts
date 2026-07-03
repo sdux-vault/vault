@@ -1,3 +1,5 @@
+import { httpResource, HttpResourceRef } from '@angular/common/http';
+import { inject, Injector } from '@angular/core';
 import { FeatureCellShape, VaultSignalStateRef } from '@sdux-vault/angular';
 import {
   DeferredFactory,
@@ -20,10 +22,13 @@ import { BankEmployeeShape } from '../shapes/bank-employee.shape';
  * @typeParam T - The FeatureCell state type managed by the test integration class.
  */
 export abstract class PrimaryPartialAbstractClass<T> {
+  static readonly HTTP_RESOURCE_URL = '/api/test/bank-employees';
+
   isError = false;
   fetches: string[] = [];
   globalError = VaultErrorService();
   errorCounter = 1;
+  readonly injector = inject(Injector);
 
   /**
    * Creates a new integration test helper with access to the underlying vault.
@@ -122,6 +127,23 @@ export abstract class PrimaryPartialAbstractClass<T> {
     return {
       value: () => Promise.reject(value)
     } as DeferredFactory<T>;
+  }
+
+  /**
+   * Creates a real HttpResourceRef backed by Angular's httpResource.
+   *
+   * Use HttpTestingController in the test to flush the response with data
+   * or an error status.
+   *
+   * @param url - The test endpoint URL. Defaults to HTTP_RESOURCE_URL.
+   * @returns A live HttpResourceRef that is waiting for an HTTP response.
+   */
+  createHttpResourceRef(
+    url = PrimaryPartialAbstractClass.HTTP_RESOURCE_URL
+  ): HttpResourceRef<BankEmployeeShape[] | undefined> {
+    return httpResource<BankEmployeeShape[]>(() => url, {
+      injector: this.injector
+    });
   }
 
   /**
