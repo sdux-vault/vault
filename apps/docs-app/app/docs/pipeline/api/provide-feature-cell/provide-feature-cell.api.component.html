@@ -47,24 +47,29 @@
       before runtime use.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      <strong
-        >Vault initialization must precede
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        registration.</strong
-      >
-      Calling
-      <strong
-        ><a href="/docs/references/functions/provide-feature-cell"
-          >provideFeatureCell</a
-        ></strong
-      >
-      before the Vault runtime has been initialized is invalid and results in a
-      runtime error. This ordering guarantee ensures that all FeatureCells are
-      registered against a fully prepared and consistent execution environment.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <strong
+          >Vault initialization must precede
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          registration.</strong
+        >
+        Calling
+        <strong
+          ><a href="/docs/references/functions/provide-feature-cell"
+            >provideFeatureCell</a
+          ></strong
+        >
+        before the Vault runtime has been initialized is invalid and results in
+        a runtime error. This ordering guarantee ensures that all FeatureCells
+        are registered against a fully prepared and consistent execution
+        environment.
+      </p>
+    </div>
   </header>
+
+  <sdux-feature-cell-diagram-common />
 
   <!-- ====================================================== -->
   <!-- REGISTRATION -->
@@ -254,28 +259,11 @@
     <div class="section-title">Examples</div>
 
     <div class="section-body">
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <p>
-                How a
-                <a href="/docs/references/functions/feature-cell"
-                  >FeatureCell</a
-                >
-                is registered and configured using Angular.
-              </p>
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Register a Basic FeatureCell</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Register a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <h4>Example 1: Register a Basic FeatureCell</h4>
+
+      <sdux-multi-framework-example description="Register a FeatureCell">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 import { provideVault } from '@sdux-vault/angular';
 
 export const appConfig: ApplicationConfig = {
@@ -298,27 +286,27 @@ import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
 
   // Use injectVault to get an instance of the FeatureCell
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Required to activate the FeatureCell
     this.vault.initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <h4>Example 2: Register a FeatureCell with Insights Enabled</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Register a FeatureCell with Insights Enabled'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <h4>Example 2: Register a FeatureCell with Insights Enabled</h4>
+
+      <sdux-multi-framework-example
+        description="Register a FeatureCell with Insights Enabled">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -346,30 +334,27 @@ import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
 
   // Use injectVault to get an instance of the FeatureCell
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Required to activate the FeatureCell
     this.vault.initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <h4>
-                  Example 3: Configuring a FeatureCell with ArrayPushMerge
-                  Behavior
-                </h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Configuring a FeatureCell with ArrayPushMerge Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <h4>Example 3: Configuring a FeatureCell with ArrayPushMerge Behavior</h4>
+
+      <sdux-multi-framework-example
+        description="FeatureCell with ArrayPushMerge Behavior">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -395,30 +380,29 @@ import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
 
   // Use injectVault to get an instance of the FeatureCell
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Required to activate the FeatureCell
     this.vault.initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <h4>
-                  Example 4: Configuring a FeatureCell with Behaviors and
-                  Controllers
-                </h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: Configuring a FeatureCell with Behaviors and Controllers'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <h4>
+        Example 4: Configuring a FeatureCell with Behaviors and Controllers
+      </h4>
+
+      <sdux-multi-framework-example
+        description="FeatureCell with Behaviors and Controllers">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -451,12 +435,12 @@ import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
 
   // Use injectVault to get an instance of the FeatureCell
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Required to activate the FeatureCell
@@ -472,13 +456,8 @@ export class EmployeeService {
     .initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

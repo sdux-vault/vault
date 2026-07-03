@@ -91,7 +91,7 @@ how cache misses are resolved through the state pipeline.<br/><br/></div>
         </p>
       </div>
     </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class ValueResolveExampleComponent{}
@@ -223,7 +223,7 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
         </p>
       </div>
     </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class AbstractActiveControllerComponent{}
@@ -247,7 +247,7 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
         <p>No documentation found in Compodocs for this interface.</p>
       </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class BankEmployeeModelComponent{}
@@ -361,7 +361,7 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
         </p>
       </div>
     </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class DevModeComponent{}
@@ -465,7 +465,7 @@ validity and refresh behavior.<br/><br/></div>
         </p>
       </div>
     </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class CacheTTLComponent{}
@@ -521,7 +521,7 @@ on a behavior class and is required for correct pipeline registration.<br/><br/>
         </p>
       </div>
     </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class BEHAVIOR_METAComponent{}
@@ -595,7 +595,7 @@ Note: This intentionally does *not* exclude null.<br/><br/>
         </p>
       </div>
     </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class isDefinedComponent{}
@@ -682,7 +682,7 @@ and does not validate the internal content of those properties.<br/><br/>
         </p>
       </div>
     </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class isHttpResourceRefComponent{}
@@ -773,7 +773,7 @@ management.<br/><br/>
         </p>
       </div>
     </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class VaultBehaviorComponent{}
@@ -834,7 +834,7 @@ strong typing while preserving full runtime compatibility.<br/><br/></div>
         </p>
       </div>
     </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class BehaviorTypeComponent{}

@@ -58,7 +58,7 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
       </tbody>
     </table>
   `,
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [PackageNameComponent]
 })

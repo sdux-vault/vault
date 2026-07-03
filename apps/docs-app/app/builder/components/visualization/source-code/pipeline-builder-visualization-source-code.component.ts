@@ -28,7 +28,7 @@ import { PipelineBuilderSourceCodeExplanationComponent } from '../source-code-ex
     PipelineBuilderStackBlitzComponent
   ],
   templateUrl: './pipeline-builder-visualization-source-code.component.html',
-  styleUrls: ['../../../../docs/scss/example.scss'],
+  styleUrls: ['../../../../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineBuilderSourceCodeVisualizationComponent {

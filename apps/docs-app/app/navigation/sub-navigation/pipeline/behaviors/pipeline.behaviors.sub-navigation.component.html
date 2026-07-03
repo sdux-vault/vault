@@ -77,6 +77,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/encrypt"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <span class="menu-content sub-item">Stage Overview</span>
         </a>
@@ -106,6 +107,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/entity-access"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <span class="menu-content sub-item">Stage Overview</span>
         </a>
@@ -145,6 +147,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/error"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <span class="menu-content sub-item">Stage Overview</span>
         </a>
@@ -184,6 +187,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/initialize"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <span class="menu-content sub-item">Stage Overview</span>
         </a>
@@ -234,6 +238,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/interceptors"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <span class="menu-content sub-item">Stage Overview</span>
         </a>
@@ -258,22 +263,6 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Entity Access</span>
-      </mat-expansion-panel-header>
-
-      <div class="sub-menu">
-        <a
-          mat-list-item
-          routerLink="/docs/pipeline/addons/entity-access/with-lookup-behavior"
-          routerLinkActive="active"
-          (click)="closeSidenav()">
-          <span class="menu-content">Lookup</span>
-        </a>
-      </div>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
-      <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header">Merge</span>
       </mat-expansion-panel-header>
 
@@ -282,6 +271,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/merge"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <span class="menu-content sub-item">Stage Overview</span>
         </a>
@@ -338,6 +328,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/operators"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <span class="menu-content sub-item">Stage Overview</span>
         </a>
@@ -367,6 +358,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/persist"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <div class="menu-icon">
             <span class="menu-content sub-item">Stage Overview</span>
@@ -427,6 +419,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/resolve"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <span class="menu-content sub-item">Stage Overview</span>
         </a>
@@ -436,7 +429,9 @@
           routerLink="/docs/pipeline/addons/resolve/with-core-from-deferred-behavior"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">fromDeferred Bridge</span>
+          <span class="menu-content"
+            >fromDeferred Bridge <sdux-deprecated
+          /></span>
         </a>
 
         <a
@@ -444,7 +439,9 @@
           routerLink="/docs/pipeline/addons/resolve/with-core-from-observable-behavior"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">fromObservable Bridge</span>
+          <span class="menu-content"
+            >fromObservable Bridge <sdux-deprecated
+          /></span>
         </a>
 
         <a
@@ -452,7 +449,9 @@
           routerLink="/docs/pipeline/addons/resolve/with-core-from-promise-behavior"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">fromPromise Bridge</span>
+          <span class="menu-content"
+            >fromPromise Bridge <sdux-deprecated
+          /></span>
         </a>
 
         <a
@@ -515,8 +514,9 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/state"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
-          <span class="menu-content sub-item">Stage Overview</span>
+          <span class="menu-content">Stage Overview</span>
         </a>
 
         <a
@@ -524,7 +524,7 @@
           routerLink="/docs/pipeline/behaviors/state/updating"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content sub-item">Updating State</span>
+          <span class="menu-content">Updating State</span>
         </a>
 
         <a
@@ -532,7 +532,7 @@
           routerLink="/docs/pipeline/behaviors/state/with-core-emit-state-behavior"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content sub-item">Emit State Emit</span>
+          <span class="menu-content">Emit State Emit</span>
         </a>
       </div>
     </mat-expansion-panel>
@@ -546,6 +546,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/stepwise"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <span class="menu-content sub-item">Stage Overview</span>
         </a>
@@ -599,6 +600,7 @@
           mat-list-item
           routerLink="/docs/pipeline/behaviors/taps"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
           <span class="menu-content sub-item">Stage Overview</span>
         </a>

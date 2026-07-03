@@ -1,10 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent,
   PackageNameComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
@@ -18,19 +16,17 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   selector: 'sdux-pipeline-merge-state-method',
   standalone: true,
   imports: [
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     RouterModule,
     PipelineRelatedTopicComponent,
     DiagramComponent,
     VaultBrandNameComponent,
     PackageNameComponent,
-    MatTabsModule,
     StateInputTypeCommonComponent,
     VaultBrandNameComponent
   ],
   templateUrl: './merge-state.method.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineMergeStateMethodComponent {}

@@ -1,9 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import {
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultDataSecurityPersistCommonComponent } from 'apps/docs-app/app/docs/common/data-security-persist.component';
 import { VaultPersistBehaviorComparisonCommonComponent } from 'apps/docs-app/app/docs/common/persist/persist-behavior-comparison.component';
@@ -21,16 +19,13 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     DiagramComponent,
     VaultPersistBehaviorsCommonComponent,
     PipelineRelatedTopicComponent,
-    MatTab,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     VaultDataSecurityPersistCommonComponent,
     VaultPersistBehaviorComparisonCommonComponent,
     VaultPersistLicensingCommonComponent
   ],
   templateUrl: './session-storage.pipeline.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineSessionStoragePersistComponent {}

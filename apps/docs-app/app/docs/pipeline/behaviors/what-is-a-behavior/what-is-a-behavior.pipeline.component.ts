@@ -2,8 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import {
   BrandNameComponent,
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent,
   PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from '../../../related-topic/related-topic.component';
@@ -17,13 +16,12 @@ import { PipelineRelatedTopicComponent } from '../../../related-topic/related-to
   imports: [
     BrandNameComponent,
     DiagramComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     PackageNameComponent,
     PipelineRelatedTopicComponent
   ],
   templateUrl: 'what-is-a-behavior.pipeline.component.html',
-  styleUrls: ['../../../scss/example.scss'],
+  styleUrls: ['../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineWhatIsABehaviorComponent {}

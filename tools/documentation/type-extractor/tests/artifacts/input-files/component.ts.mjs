@@ -17,7 +17,7 @@ import { ValueResolveService } from './service/value-resolve.example.service';
   standalone: true,
   imports: [MatProgressSpinnerModule, MatTableModule, MatIconModule, ExampleViewerTableComponent],
   templateUrl: './resolve-value.example.component.html',
-  styleUrls: ['../../../scss/example.scss']
+  styleUrls: ['../../../scss/documentation.scss']
 })
 export class ValueResolveExampleComponent {
   private readonly service = inject(ValueResolveService);

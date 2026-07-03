@@ -1,13 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { FeatureCellInsightsConfigCommonComponent } from 'apps/docs-app/app/docs/common/feature-cell/feature-cell-insights-config.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { FeatureCellDiagramCommonComponent } from '../../../common/feature-cell/feature-cell-diagram.component';
 
 /**
  * The pipeline provide vault documentation
@@ -16,16 +15,15 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   selector: 'sdux-pipeline-provide-feature-cell',
   standalone: true,
   imports: [
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
     PipelineRelatedTopicComponent,
-    MatTabsModule,
-    FeatureCellInsightsConfigCommonComponent
+    FeatureCellInsightsConfigCommonComponent,
+    FeatureCellDiagramCommonComponent
   ],
   templateUrl: './provide-feature-cell.api.component.html',
-  styleUrls: ['../../../scss/example.scss'],
+  styleUrls: ['../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineProvideFeatureCellComponent {}

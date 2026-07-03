@@ -87,7 +87,7 @@ import { withTabSyncStateBehaviorComponent } from './with-tab-sync-state-behavio
     withTabSyncStateBehaviorComponent
   ],
   templateUrl: './references-behaviors.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesBehaviorsLandingPageComponent {
   type!: string;

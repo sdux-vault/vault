@@ -23,7 +23,7 @@ import { VaultErrorServiceClassComponent } from './vault-error-service-class.com
     VaultErrorServiceClassComponent
   ],
   templateUrl: './references-services.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesServicesLandingPageComponent {
   type!: string;

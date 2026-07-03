@@ -22,22 +22,28 @@
       and outlines the runtime guarantees your extension can rely on.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      <strong>Vault does not validate licenses.</strong> Vault enforces pipeline
-      decisions based on validation results you provide. You own cryptographic
-      verification, remote calls, retries, and token parsing. Vault owns
-      enforcement.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <strong>Vault does not validate licenses.</strong> Vault enforces
+        pipeline decisions based on validation results you provide. You own
+        cryptographic verification, remote calls, retries, and token parsing.
+        Vault owns enforcement.
+      </p>
+    </div>
 
-    <div class="note">Note</div>
-    <p>
-      <strong
-        >Licensing is not active when <code>devMode</code> is set to
-        <code>true</code>.</strong
-      >
-      &nbsp;<a [routerLink]="[]" fragment="devmode-and-licensing">See more →</a>
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <strong
+          >Licensing is not active when <code>devMode</code> is set to
+          <code>true</code>.</strong
+        >
+        &nbsp;<a [routerLink]="[]" fragment="devmode-and-licensing"
+          >See more →</a
+        >
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -493,29 +499,32 @@
         required to activate your extension inside Vault.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Vault is intentionally hands-off. It provides the enforcement mechanism
-        — nothing more. It does not validate tokens, decrypt payloads, contact
-        your servers, retry failures, or manage customer state.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Vault is intentionally hands-off. It provides the enforcement
+          mechanism — nothing more. It does not validate tokens, decrypt
+          payloads, contact your servers, retry failures, or manage customer
+          state.
+        </p>
 
-      <p>
-        All validation logic — cryptographic verification, remote API calls,
-        entitlement checks, retry strategy, expiration handling, and revocation
-        rules — is your responsibility. Vault simply accepts your
-        <code>true</code> or <code>false</code> decision and enforces it
-        deterministically.
-      </p>
+        <p>
+          All validation logic — cryptographic verification, remote API calls,
+          entitlement checks, retry strategy, expiration handling, and
+          revocation rules — is your responsibility. Vault simply accepts your
+          <code>true</code> or <code>false</code> decision and enforces it
+          deterministically.
+        </p>
 
-      <p>
-        Vault does not provide customer support for your extension. Questions
-        related to license activation, validation failures, expired
-        entitlements, cryptographic errors, or runtime behavior of your Behavior
-        or Controller are your responsibility to diagnose and resolve. Vault
-        enforces decisions — it does not troubleshoot your commercial
-        implementation.
-      </p>
+        <p>
+          Vault does not provide customer support for your extension. Questions
+          related to license activation, validation failures, expired
+          entitlements, cryptographic errors, or runtime behavior of your
+          Behavior or Controller are your responsibility to diagnose and
+          resolve. Vault enforces decisions — it does not troubleshoot your
+          commercial implementation.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -559,13 +568,16 @@
         against tampering.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        The <code>licenseId</code> declared in your extension decorator must
-        exactly match the <code>licenseId</code> provided in
-        <code>provideVault()</code>. If they do not match, Vault will not inject
-        the payload and validation cannot succeed.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          The <code>licenseId</code> declared in your extension decorator must
+          exactly match the <code>licenseId</code> provided in
+          <code>provideVault()</code>. If they do not match, Vault will not
+          inject the payload and validation cannot succeed.
+        </p>
+      </div>
+      d
 
       <h4>Example: Vault Configuration</h4>
 
@@ -759,14 +771,15 @@ provideVault({
         </sdux-example-viewer-tab>
       </sdux-example-viewer-source>
 
-      <div class="note">Note</div>
-
-      <p>
-        Without this configuration, Vault will treat your extension as pending
-        and, after the configured timeout window, deny
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        activation.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Without this configuration, Vault will treat your extension as pending
+          and, after the configured timeout window, deny
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          activation.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -1072,20 +1085,22 @@ provideVault({
         </li>
       </ul>
 
-      <div class="note">Note</div>
-      <p>
-        Once <code>validateLicense(true)</code> is called, the Behavior is
-        permitted to participate in the pipeline. If <code>false</code> is
-        supplied, the
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> along
-        with the pipeline is terminal.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Once <code>validateLicense(true)</code> is called, the Behavior is
+          permitted to participate in the pipeline. If <code>false</code> is
+          supplied, the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          along with the pipeline is terminal.
+        </p>
 
-      <p>
-        The validation logic may be synchronous (as shown) or asynchronous. If
-        asynchronous, it must complete within the configured timeout window
-        (default: 15 seconds), or Vault will deny activation automatically.
-      </p>
+        <p>
+          The validation logic may be synchronous (as shown) or asynchronous. If
+          asynchronous, it must complete within the configured timeout window
+          (default: 15 seconds), or Vault will deny activation automatically.
+        </p>
+      </div>
 
       <sdux-example-viewer-source [displayTabs]="false">
         <sdux-example-viewer-tab
@@ -1229,20 +1244,22 @@ export class withPremiumMerge&lt;T&gt;
         </li>
       </ul>
 
-      <div class="note">Note</div>
-      <p>
-        Once <code>validateLicense(true)</code> is called, the Controller is
-        permitted to participate in the pipeline. If <code>false</code> is
-        supplied, the
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
-        pipeline becomes terminal.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Once <code>validateLicense(true)</code> is called, the Controller is
+          permitted to participate in the pipeline. If <code>false</code> is
+          supplied, the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
+          pipeline becomes terminal.
+        </p>
 
-      <p>
-        The validation logic may be synchronous (as shown) or asynchronous. If
-        asynchronous, it must complete within the configured timeout window
-        (default: 15 seconds), or Vault will deny activation automatically.
-      </p>
+        <p>
+          The validation logic may be synchronous (as shown) or asynchronous. If
+          asynchronous, it must complete within the configured timeout window
+          (default: 15 seconds), or Vault will deny activation automatically.
+        </p>
+      </div>
 
       <sdux-example-viewer-source [displayTabs]="false">
         <sdux-example-viewer-tab

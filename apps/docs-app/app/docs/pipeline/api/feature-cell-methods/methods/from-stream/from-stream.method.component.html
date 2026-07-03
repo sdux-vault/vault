@@ -38,19 +38,21 @@
       <li>Returns <code>void</code></li>
     </ul>
 
-    <div class="note">Note</div>
-    <p>
-      <strong>fromStream()</strong> does not commit state directly. Each emitted
-      value is forwarded to <strong>mergeState()</strong>, where it enters the
-      full pipeline and is processed through Resolve, operators, filters,
-      reducers, and taps before final commitment in the State stage.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <strong>fromStream()</strong> does not commit state directly. Each
+        emitted value is forwarded to <strong>mergeState()</strong>, where it
+        enters the full pipeline and is processed through Resolve, operators,
+        filters, reducers, and taps before final commitment in the State stage.
+      </p>
 
-    <h4>Learn More</h4>
-    <a
-      routerLink="/docs/pipeline/addons/resolve/with-core-from-stream-behavior">
-      <span class="menu-content sub-item">FromStream Behavior</span>
-    </a>
+      <h4>Learn More</h4>
+      <a
+        routerLink="/docs/pipeline/addons/resolve/with-core-from-stream-behavior">
+        <span class="menu-content sub-item">FromStream Behavior</span>
+      </a>
+    </div>
   </header>
 
   <section class="diagram-section">
@@ -189,22 +191,14 @@
 
       <h4>Example: Streaming Live Updates</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Example: fromStream()'">
-                  <pre class="code-inline"><code class="language-ts">{{`
-@FeatureCell&lt;number>('counter')
+      <sdux-multi-framework-example description="fromStream()">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell`}}&lt;number&gt;{{`('counter')
 @Injectable({ providedIn: 'root' })
 export class CounterService {
 
-  private readonly vault = injectVault&lt;number&gt;(CounterService);
+  private readonly vault = injectVault`}}&lt;number&gt;{{`(CounterService);
 
   constructor() {
     this.vault.initialize();
@@ -220,17 +214,10 @@ export class CounterService {
 // → full pipeline execution
 // → committed state snapshot
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Example: fromStream()'">
-                  <pre class="code-inline"><code class="language-ts">{{`
-const counterCell = FeatureCell&lt;number>({
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`
+const counterCell = FeatureCell`}}&lt;number&gt;{{`({
   key: 'counter',
   initialState: 0
 });
@@ -243,43 +230,18 @@ counterCell.fromStream(ticker$);
 
 // Each emission triggers merge-style execution
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Example: fromStream()'">
-                  <pre class="code-inline"><code class="language-ts">{{`
-const counterCell = FeatureCell&lt;number>({
-  key: 'counter',
-  initialState: 0
-});
-
-counterCell.initialize();
-
-const ticker$ = interval(1000);
-
-counterCell.fromStream(ticker$);
-
-// Each emission triggers merge-style execution
-`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          <strong>fromStream()</strong> does not replace state directly. It
+          delegates to <strong>mergeState()</strong>
+          for each emission. The active Merge behavior determines how values are
+          structurally combined with existing committed state.
+        </p>
       </div>
-
-      <div class="note">Note</div>
-      <p>
-        <strong>fromStream()</strong> does not replace state directly. It
-        delegates to <strong>mergeState()</strong>
-        for each emission. The active Merge behavior determines how values are
-        structurally combined with existing committed state.
-      </p>
     </div>
   </section>
 

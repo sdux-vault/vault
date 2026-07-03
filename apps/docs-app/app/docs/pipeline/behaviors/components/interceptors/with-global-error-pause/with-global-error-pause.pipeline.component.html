@@ -169,21 +169,10 @@
         replayed automatically by the paired controller.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Global Error Pause'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="Configure FeatureCell with Global Error Pause">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -206,32 +195,21 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
-@FeatureCell&lt;Employee[][]>('employees')
+@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Global Error Pause'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -247,43 +225,8 @@ export class EmployeeService {
 
 // Initialize the FeatureCell
 employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Global Error Pause'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Attach the Global Error Pause interceptor at definition time
-    withGlobalErrorPauseBehavior
-  ],
-  [
-    // Additional add-on controllers
-  ]
-);
-
-// Initialize the FeatureCell
-employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

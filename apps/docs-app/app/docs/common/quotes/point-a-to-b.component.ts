@@ -15,6 +15,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
     </blockquote>
   `,
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class PointAtoBQuoteComponent {}

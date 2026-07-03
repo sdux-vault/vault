@@ -22,6 +22,6 @@ import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic
     CatchPhraseComponent
   ],
   templateUrl: './supported-languages.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class DocsTopTierSupportedLanguagesComponent {}

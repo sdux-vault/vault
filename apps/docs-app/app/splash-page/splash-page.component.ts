@@ -3,10 +3,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import {
   BrandNameComponent,
-  CatchPhraseComponent,
-  ImageComponent
+  CatchPhraseComponent
 } from '@sdux-vault/ui/web-components';
 import Prism from 'prismjs';
+import { SupportedLanguagesConstants } from '../docs/top-tier/supported-languages/constants/supported-languages.constants';
 import { NavigationService } from '../navigation/service/navigation.service';
 import { SplashPageExampleComponent } from './splash-page-example/splash-page-example.component';
 
@@ -17,13 +17,19 @@ import { SplashPageExampleComponent } from './splash-page-example/splash-page-ex
     MatIconModule,
     BrandNameComponent,
     CatchPhraseComponent,
-    SplashPageExampleComponent,
-    ImageComponent
+    SplashPageExampleComponent
   ],
   templateUrl: './splash-page.component.html',
   styleUrls: ['./splash-page.component.scss']
 })
 export class SplashPageComponent implements AfterViewInit {
+  protected readonly supportedLanguages = SupportedLanguagesConstants.filter(
+    (lang) => lang.showInEcosystemStrip
+  );
+  protected readonly frameworkLanguages = SupportedLanguagesConstants.filter(
+    (lang) => lang.showInFrameworkTiles
+  );
+
   #elementRef = inject(ElementRef);
   #navigationService = inject(NavigationService);
   #router = inject(Router);

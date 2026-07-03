@@ -1,12 +1,20 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
+import {
+  SDuXVideoComponent,
+  VaultBrandNameComponent
+} from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-atomic-deterministic-updates',
   standalone: true,
-  imports: [BlogLayoutComponent, RouterModule, VaultBrandNameComponent],
+  imports: [
+    BlogLayoutComponent,
+    RouterModule,
+    VaultBrandNameComponent,
+    SDuXVideoComponent
+  ],
   template: `
     <sdux-blog-layout
       title="Your State Updates Are Atomic and Deterministic"
@@ -197,9 +205,17 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </p>
         </div>
       </section>
+
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video videoId="TRlvCmluBcE" [tooltip]="'Atomic Pipeline'" />
+        </div>
+      </section>
     </sdux-blog-layout>
   `,
-  styleUrls: ['../../../docs/scss/example.scss'],
+  styleUrls: ['../../../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class BlogAtomicDeterministicUpdatesComponent {}

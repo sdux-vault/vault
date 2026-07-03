@@ -228,9 +228,27 @@
     <div class="section-title">Example FeatureCell Declaration</div>
 
     <div class="section-body">
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 1: Array Filter - Keep Only Even Number'">
+      <sdux-multi-framework-example description="FeatureCell Declaration">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
+provideFeatureCell(
+  EmployeeService,
+  {
+    key: 'employees',
+    initialState: [] 
+  },
+  [
+    // opt-in behavior array 
+  ],
+  [
+    // opt-in controller array 
+  ]
+);
+
+// employee.service.ts
+this.vault.initialize()`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell(
   EmployeeCell, 
@@ -247,8 +265,8 @@
 );
 
 employeeCell.initialize() `}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

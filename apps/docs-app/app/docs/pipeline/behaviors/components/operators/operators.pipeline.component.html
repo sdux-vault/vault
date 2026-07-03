@@ -116,15 +116,17 @@
         execution.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Although operator composition is fully supported, operator chains should
-        remain narrowly focused. Because operators may suppress emissions or
-        alter values before reduction, combining multiple operators with
-        overlapping concerns can make pipeline behavior harder to reason about.
-        Operators are most effective when each enforces a single, clearly
-        defined transformation or suppression rule.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Although operator composition is fully supported, operator chains
+          should remain narrowly focused. Because operators may suppress
+          emissions or alter values before reduction, combining multiple
+          operators with overlapping concerns can make pipeline behavior harder
+          to reason about. Operators are most effective when each enforces a
+          single, clearly defined transformation or suppression rule.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -242,25 +244,16 @@
         value before downstream stages are evaluated.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Operators'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+      <sdux-multi-framework-example
+        description="Configure a FeatureCell with Operators">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more operators during initialization
@@ -273,19 +266,10 @@ export class EmployeeService {
       ).initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Operators'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -303,43 +287,8 @@ employeeCell.operators(
     // up to N operators
   ]
 ).initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Operators'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Operator behaviors are registered via the fluent API,
-    // not as part of the declarative FeatureCell definition.
-  ]
-);
-
-// Apply one or more operators during initialization
-employeeCell.operators(
-  [
-    withDistinctUntilChanged()
-    // up to N operators
-  ]
-).initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

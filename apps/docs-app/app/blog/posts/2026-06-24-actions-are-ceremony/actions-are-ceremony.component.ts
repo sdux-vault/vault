@@ -335,7 +335,7 @@ userCell.mergeState(addUserIntent);</code></pre>
       </section>
     </sdux-blog-layout>
   `,
-  styleUrls: ['../../../docs/scss/example.scss'],
+  styleUrls: ['../../../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class BlogActionsAreCeremonyComponent {}

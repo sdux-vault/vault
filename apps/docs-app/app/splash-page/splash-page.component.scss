@@ -297,14 +297,32 @@ $splash-success: global.$sdux-success-base;
     text-align: center;
   }
 
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: global.$spacing-lg;
+    width: 100%;
+
+    @media (max-width: global.$breakpoint-md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: global.$breakpoint-sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   &-logo {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: global.$spacing-sm;
     font-size: global.$font-size-lg;
     font-weight: global.$font-weight-semibold;
     color: color-mix(in srgb, $splash-text 50%, transparent);
     transition: color 0.2s ease;
+    text-align: center;
 
     mat-icon {
       font-size: 18px;

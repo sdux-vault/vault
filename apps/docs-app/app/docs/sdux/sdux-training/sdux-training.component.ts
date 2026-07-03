@@ -12,7 +12,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   standalone: true,
   imports: [PipelineRelatedTopicComponent, RouterModule, BrandNameComponent],
   templateUrl: './sdux-training.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SDuXTrainingOverviewComponent extends PipelineRoutingDirective {}

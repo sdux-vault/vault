@@ -35,13 +35,16 @@
       influence pipeline control flow beyond producing the merged value.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      The Merge stage is entered exclusively through explicit state-update APIs.
-      Pipeline executions that invoke merge semantics are initiated via the
-      <strong>mergeState</strong> method, which supply the incoming value and
-      optional merge configuration used by the active Merge behavior.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The Merge stage is entered exclusively through explicit state-update
+        APIs. Pipeline executions that invoke merge semantics are initiated via
+        the
+        <strong>mergeState</strong> method, which supply the incoming value and
+        optional merge configuration used by the active Merge behavior.
+      </p>
+    </div>
   </header>
 
   <section class="diagram-section">
@@ -287,34 +290,25 @@
         its fields.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        When a custom merge behavior is supplied, it replaces the default
-        <strong
-          ><a href="/docs/pipeline/behaviors/merge/with-array-merge-behavior"
-            >withArrayMergeBehavior</a
-          ></strong
-        >
-        for that
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
-        Exactly one merge behavior is active at any time.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          When a custom merge behavior is supplied, it replaces the default
+          <strong
+            ><a href="/docs/pipeline/behaviors/merge/with-array-merge-behavior"
+              >withArrayMergeBehavior</a
+            ></strong
+          >
+          for that
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+          Exactly one merge behavior is active at any time.
+        </p>
+      </div>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Use the Object Shallow Merge in a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="Use the Object Shallow Merge in a FeatureCell">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -349,10 +343,10 @@ import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { EmployeeProfile } from './employee-profile.shape';
 
-@FeatureCell&lt;EmployeeProfile&gt;('employee-profile')
+@FeatureCell`}}&lt;EmployeeProfile&gt;{{`('employee-profile')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  readonly vault = injectVault&lt;EmployeeProfile&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;EmployeeProfile&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
@@ -368,21 +362,10 @@ export class EmployeeService {
     });
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Use the Object Shallow Merge in a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;EmployeeProfile&gt;(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;EmployeeProfile&gt;{{`(
   {
     key: 'employee-profile',
     initialState: {
@@ -413,58 +396,8 @@ employeeCell.mergeState({
     }
   }
 });`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Use the Object Shallow Merge in a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;EmployeeProfile&gt;(
-  {
-    key: 'employee-profile',
-    initialState: {
-      user: {
-        id: 1,
-        name: 'Jane',
-        preferences: {
-          theme: 'light'
-        }
-      },
-      active: true
-    },
-  },
-  [
-    // Explicitly attach the Object Shallow Merge behavior
-    withObjectShallowMergeBehavior
-  ]
-);
-
-// Initialize the FeatureCell
-employeeCell.initialize();
-
-// Shallow-merge a top-level update
-employeeCell.mergeState({
-  value: {
-    user: {
-      name: 'Jane Doe'
-    }
-  }
-});`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

@@ -140,22 +140,24 @@
         application.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        <sdux-brand-name /> does not provide a dedicated post-processing or
-        selector stage inside the Vault. This is intentional. Introducing a
-        formal selector layer would require additional scaffolding, lifecycle
-        rules, and indirection to manage derived state within the pipeline
-        itself.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          <sdux-brand-name /> does not provide a dedicated post-processing or
+          selector stage inside the Vault. This is intentional. Introducing a
+          formal selector layer would require additional scaffolding, lifecycle
+          rules, and indirection to manage derived state within the pipeline
+          itself.
+        </p>
 
-      <p>
-        Instead, <sdux-brand-name /> encourages engineers to transform immutable
-        state snapshots <em>outside</em> of the Vault, directly on reactive
-        state emissions. This approach keeps the core pipeline simple and
-        deterministic while giving engineers full flexibility to shape data
-        using familiar, ergonomic patterns in their own code.
-      </p>
+        <p>
+          Instead, <sdux-brand-name /> encourages engineers to transform
+          immutable state snapshots <em>outside</em> of the Vault, directly on
+          reactive state emissions. This approach keeps the core pipeline simple
+          and deterministic while giving engineers full flexibility to shape
+          data using familiar, ergonomic patterns in their own code.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -198,35 +200,29 @@
         are implemented as reactive projections in Angular, React, and Vue.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <h4>Example: Computed State Projection (Signal-Based)</h4>
+      <h4>Example: Reactive State Projection</h4>
 
-              <p>
-                In Angular,
-                <a href="/docs/references/functions/feature-cell"
-                  >FeatureCell</a
-                >
-                state is exposed as reactive signals. Derived values are
-                expressed using <code>computed()</code>, which automatically
-                re-evaluates when the underlying state snapshot changes.
-              </p>
+      <p>
+        In Angular,
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        state is exposed as reactive signals. Derived values are expressed using
+        <code>computed()</code>, which automatically re-evaluates when the
+        underlying state snapshot changes.
+      </p>
 
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Computed projection from state signal'">
-                  <pre class="code-inline"><code class="language-ts">{{`
+      <p>
+        In other frameworks, derived values are created by mapping the reactive
+        <code>state$</code> stream. The projection updates automatically
+        whenever the Vault emits a new immutable state snapshot.
+      </p>
+
+      <sdux-multi-framework-example description="Reactive State Projection">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`
 @Injectable({ providedIn: 'root' })
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 export class EmployeeService {
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   // Base reactive state
   readonly employees = this.vault.state.value;
@@ -241,26 +237,9 @@ export class EmployeeService {
   }
 }
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <h4>Example: Reactive Projection from state$</h4>
-
-              <p>
-                In React, derived values are created by mapping the reactive
-                <code>state$</code> stream. The projection updates automatically
-                whenever the Vault emits a new immutable state snapshot.
-              </p>
-
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Map state$ into a derived stream'">
-                  <pre class="code-inline"><code class="language-ts">{{`
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`
 employeeCell.initialize();
 
 // Selector replacement: push-based projection
@@ -275,46 +254,8 @@ activeEmployees$.subscribe(active => {
   console.info('Active employees:', active);
 });
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <h4>Example: Reactive Projection from state$</h4>
-
-              <p>
-                In Vue, derived values are created by projecting the
-                <code>state$</code> observable into a reactive ref or computed
-                value. The projection stays synchronized with Vault state
-                emissions.
-              </p>
-
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Project state$ into a reactive value'">
-                  <pre class="code-inline"><code class="language-ts">{{`
-employeeCell.initialize();
-
-const activeEmployees$ = employeeCell.state$.pipe(
-  map(({ snapshot }) =>
-    snapshot.value?.filter(e => e.active) ?? []
-  )
-);
-
-// Example usage with a reactive wrapper
-activeEmployees$.subscribe(active => {
-  console.info('Active employees:', active);
-});
-`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <p>
         In all cases, the derived value reacts to state changes automatically.

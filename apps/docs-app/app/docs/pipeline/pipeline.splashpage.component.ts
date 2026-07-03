@@ -19,7 +19,7 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     PipelineRelatedTopicComponent
   ],
   templateUrl: 'pipeline.splashpage.component.html',
-  styleUrls: ['../scss/example.scss'],
+  styleUrls: ['../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineSplashpageComponent {}

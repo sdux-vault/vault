@@ -38,20 +38,22 @@
       effects.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      The <strong>reducers()</strong> method is additive. It may be invoked
-      multiple times, and each call appends reducer functions to the
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
-      reducer list. Reducers execute in the exact order they are registered
-      during initialization.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The <strong>reducers()</strong> method is additive. It may be invoked
+        multiple times, and each call appends reducer functions to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        reducer list. Reducers execute in the exact order they are registered
+        during initialization.
+      </p>
 
-    <p>
-      While multiple invocations are supported, the recommended practice is to
-      register related reducer functions as a single ordered array to preserve
-      clarity and intentional execution ordering.
-    </p>
+      <p>
+        While multiple invocations are supported, the recommended practice is to
+        register related reducer functions as a single ordered array to preserve
+        clarity and intentional execution ordering.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -70,8 +72,18 @@
 
       <h4>Example: Registering Reducer Functions</h4>
 
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Register Reducers'">
+      <sdux-multi-framework-example description="Register Reducers">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`this.vault
+  .reducers([
+    (current) => ({
+      ...current,
+      count: current.count + 1
+    })
+  ])
+  .initialize();`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
           <pre class="code-inline"><code class="language-ts">{{`employeeCell
   .reducers([
     (current) => ({
@@ -80,8 +92,8 @@
     })
   ])
   .initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>What this does</h4>
       <ul>

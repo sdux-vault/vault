@@ -8,6 +8,7 @@ import {
 import { FeatureCellInsightsConfigCommonComponent } from 'apps/docs-app/app/docs/common/feature-cell/feature-cell-insights-config.component';
 import { VaultFeatureCellShapeCommonComponent } from 'apps/docs-app/app/docs/common/feature-cell/feature-cell-shape.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { FeatureCellDiagramCommonComponent } from '../../../common/feature-cell/feature-cell-diagram.component';
 
 @Component({
   selector: 'sdux-pipeline-cell-builder-api',
@@ -19,10 +20,11 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     BrandNameComponent,
     PipelineRelatedTopicComponent,
     VaultFeatureCellShapeCommonComponent,
-    FeatureCellInsightsConfigCommonComponent
+    FeatureCellInsightsConfigCommonComponent,
+    FeatureCellDiagramCommonComponent
   ],
   templateUrl: './cell-builder.api.component.html',
-  styleUrls: ['../../../scss/example.scss'],
+  styleUrls: ['../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineCellBuilderComponent {}

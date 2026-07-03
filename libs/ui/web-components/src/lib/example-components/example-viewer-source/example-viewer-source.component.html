@@ -11,19 +11,25 @@
             <pre><code #codeBlock><ng-container *ngTemplateOutlet="tab.template"></ng-container></code></pre>
 
             @if (displayCopyPaste()) {
-              <button
-                type="button"
-                mat-icon-button
-                matTooltip="Copy {{ tab.label() }} source"
-                aria-label="Copy {{ tab.label() }} source"
-                class="copy-btn"
-                (click)="copyCode(i)">
-                @if (copySuccess()) {
-                  <mat-icon class="check-mark">check</mat-icon>
-                } @else {
-                  <mat-icon>content_copy</mat-icon>
+              <div class="action-buttons">
+                <button
+                  type="button"
+                  mat-icon-button
+                  matTooltip="Copy {{ tab.label() }} source"
+                  aria-label="Copy {{ tab.label() }} source"
+                  class="copy-btn"
+                  (click)="copyCode(i)">
+                  @if (copySuccess()) {
+                    <mat-icon class="check-mark">check</mat-icon>
+                  } @else {
+                    <mat-icon>content_copy</mat-icon>
+                  }
+                </button>
+                @if (showFrameworkSelector()) {
+                  <sdux-framework-selector
+                    [availableFrameworks]="availableFrameworks()" />
                 }
-              </button>
+              </div>
             }
           </div>
         </mat-tab>
@@ -37,19 +43,25 @@
         <pre><code #codeBlock><ng-container *ngTemplateOutlet="tab.template"></ng-container></code></pre>
 
         @if (displayCopyPaste()) {
-          <button
-            type="button"
-            mat-icon-button
-            matTooltip="Copy {{ tab.label() }} source"
-            aria-label="Copy {{ tab.label() }} source"
-            class="copy-btn"
-            (click)="copyCode(i)">
-            @if (copySuccess()) {
-              <mat-icon class="check-mark">check</mat-icon>
-            } @else {
-              <mat-icon>content_copy</mat-icon>
+          <div class="action-buttons">
+            <button
+              type="button"
+              mat-icon-button
+              matTooltip="Copy {{ tab.label() }} source"
+              aria-label="Copy {{ tab.label() }} source"
+              class="copy-btn"
+              (click)="copyCode(i)">
+              @if (copySuccess()) {
+                <mat-icon class="check-mark">check</mat-icon>
+              } @else {
+                <mat-icon>content_copy</mat-icon>
+              }
+            </button>
+            @if (showFrameworkSelector()) {
+              <sdux-framework-selector
+                [availableFrameworks]="availableFrameworks()" />
             }
-          </button>
+          </div>
         }
       </div>
     }

@@ -55,25 +55,53 @@
       <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      A
-      <a href="/docs/references/shapes/feature-cell-shape">FeatureCellShape</a>
-      instance is returned by
-      <strong
-        ><a href="/docs/references/functions/provide-feature-cell"
-          >provideFeatureCell</a
-        >()</strong
-      >
-      and becomes active only after initialization. All methods on this shape
-      are scoped to the owning
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
-      operate within the globally initialized Vault runtime.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        A
+        <a href="/docs/references/shapes/feature-cell-shape"
+          >FeatureCellShape</a
+        >
+        instance is returned by
+        <strong
+          ><a href="/docs/references/functions/provide-feature-cell"
+            >provideFeatureCell</a
+          >()</strong
+        >
+        and becomes active only after initialization. All methods on this shape
+        are scoped to the owning
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
+        operate within the globally initialized Vault runtime.
+      </p>
+    </div>
   </header>
 
+  <!-- ====================================================== -->
+  <!-- FEATURECELL SHAPE -->
+  <!-- ====================================================== -->
   <section class="section">
-    <div class="section-title">Table of Contents</div>
+    <div class="section-title">FeatureCellShape&lt;T&gt;</div>
+
+    <div class="section-body">
+      <p>
+        The following table defines the complete
+        <strong
+          ><a href="/docs/references/shapes/feature-cell-shape"
+            >FeatureCellShape</a
+          >&lt;T&gt;</strong
+        >
+        API. Each member represents a stable interaction point for configuring
+        behaviors, observing state, or issuing state updates.
+      </p>
+
+      <sdux-feature-cell-shape-common />
+    </div>
+  </section>
+
+  <sdux-feature-cell-diagram-common />
+
+  <section class="section">
+    <div class="section-title">FeatureCell Methods</div>
 
     <div class="section-body">
       <ul class="toc">
@@ -172,28 +200,6 @@
           >
         </li>
       </ul>
-    </div>
-  </section>
-
-  <!-- ====================================================== -->
-  <!-- FEATURECELL SHAPE -->
-  <!-- ====================================================== -->
-  <section class="section">
-    <div class="section-title">FeatureCellShape&lt;T&gt;</div>
-
-    <div class="section-body">
-      <p>
-        The following table defines the complete
-        <strong
-          ><a href="/docs/references/shapes/feature-cell-shape"
-            >FeatureCellShape</a
-          >&lt;T&gt;</strong
-        >
-        API. Each member represents a stable interaction point for configuring
-        behaviors, observing state, or issuing state updates.
-      </p>
-
-      <sdux-feature-cell-shape-common />
     </div>
   </section>
 

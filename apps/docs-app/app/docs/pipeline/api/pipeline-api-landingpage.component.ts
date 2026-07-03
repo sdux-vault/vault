@@ -63,7 +63,7 @@ import { PipelineVaultComponent } from './vault/vault.api.component';
     PipelineFromStreamMethodComponent
   ],
   templateUrl: './pipeline-api-landingpage.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineApiLandingComponent extends PipelineRoutingDirective {}

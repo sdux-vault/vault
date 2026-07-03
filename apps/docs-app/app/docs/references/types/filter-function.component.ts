@@ -52,7 +52,7 @@ type FilterFunction = function;
       </p>
     </div>
   </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class FilterFunctionComponent {}

@@ -20,6 +20,6 @@ import { PipelineRelatedTopicComponent } from '../../../related-topic/related-to
     VaultBrandNameComponent
   ],
   templateUrl: './building-custom-behaviors.component.html',
-  styleUrls: ['../../../scss/example.scss']
+  styleUrls: ['../../../scss/documentation.scss']
 })
 export class PipelineBuildingCustomBehaviorsComponent {}

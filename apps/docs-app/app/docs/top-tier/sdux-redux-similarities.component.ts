@@ -7,6 +7,6 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
   standalone: true,
   imports: [BrandNameComponent, PipelineRelatedTopicComponent],
   templateUrl: './sdux-redux-similarities.component.html',
-  styleUrls: ['../scss/example.scss']
+  styleUrls: ['../scss/documentation.scss']
 })
 export class DocsTopTierSDuXReduxSimilaritiesComponent {}

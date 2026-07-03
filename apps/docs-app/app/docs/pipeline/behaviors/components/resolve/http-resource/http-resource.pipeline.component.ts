@@ -1,9 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import {
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent,
   PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultResolveBehaviorCommonComponent } from 'apps/docs-app/app/docs/common/resolve/resolve-behaviors.common.component';
@@ -18,15 +16,12 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   imports: [
     DiagramComponent,
     PipelineRelatedTopicComponent,
-    MatTab,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     VaultResolveBehaviorCommonComponent,
     PackageNameComponent
   ],
   templateUrl: './http-resource.pipeline.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineHttpResourceBehaviorComponent {}

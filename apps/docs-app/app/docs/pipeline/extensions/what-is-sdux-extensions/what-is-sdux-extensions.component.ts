@@ -18,6 +18,6 @@ import { PipelineRelatedTopicComponent } from '../../../related-topic/related-to
     PipelineRelatedTopicComponent
   ],
   templateUrl: './what-is-sdux-extensions.component.html',
-  styleUrls: ['../../../scss/example.scss']
+  styleUrls: ['../../../scss/documentation.scss']
 })
 export class PipelineWhatIsSduxExtensionsComponent {}

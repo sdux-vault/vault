@@ -11,8 +11,18 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class RelatedTopicsService {
+  #aliases: Record<string, string> = {
+    'at-feature-cell': 'provide-vault',
+    'inject-vault': 'provide-vault',
+    'provide-feature-cell': 'provide-vault'
+  };
+
   #buildSeenLink(link: RelatedTopicLinkShape): string {
     return `${link.link}${link.fragment}`;
+  }
+
+  #findAlias(category: string): string | undefined {
+    return this.#aliases[category];
   }
 
   resolve(context: {
@@ -72,7 +82,14 @@ export class RelatedTopicsService {
           context.type as RelatedTopicCagtegoryKey
         ];
 
-      if (!current) return linkContainer;
+      const alias = this.#findAlias(context.category);
+
+      if (alias) {
+        current =
+          RELATED_TOPICS_REGISTRY.categories[alias as RelatedTopicCagtegoryKey];
+      } else {
+        return linkContainer;
+      }
     }
 
     // 4. Category items (exclude self)

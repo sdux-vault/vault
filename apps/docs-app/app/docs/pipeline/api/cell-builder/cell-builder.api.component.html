@@ -47,23 +47,26 @@
       before runtime use.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      <strong
-        >Vault initialization must precede
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        registration.</strong
-      >
-      Calling
-      <strong
-        ><a href="/docs/references/functions/provide-feature-cell"
-          >provideFeatureCell</a
-        ></strong
-      >
-      before the Vault runtime has been initialized is invalid and results in a
-      runtime error. This ordering guarantee ensures that all FeatureCells are
-      registered against a fully prepared and consistent execution environment.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <strong
+          >Vault initialization must precede
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          registration.</strong
+        >
+        Calling
+        <strong
+          ><a href="/docs/references/functions/provide-feature-cell"
+            >provideFeatureCell</a
+          ></strong
+        >
+        before the Vault runtime has been initialized is invalid and results in
+        a runtime error. This ordering guarantee ensures that all FeatureCells
+        are registered against a fully prepared and consistent execution
+        environment.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -274,6 +277,8 @@
       <sdux-feature-cell-shape-common />
     </div>
   </section>
+
+  <sdux-feature-cell-diagram-common />
 
   <!-- ====================================================== -->
   <!-- EXAMPLES -->

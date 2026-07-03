@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   DiagramComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultTapBehaviorCommonComponent } from 'apps/docs-app/app/docs/common/taps/tap-behaviors.component';
 import { VaultTapCallbackShapeCommonComponent } from 'apps/docs-app/app/docs/common/taps/tap-callback-shape.component';
@@ -21,16 +21,15 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     DiagramComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     RouterModule,
     VaultTapCallbackShapeCommonComponent,
     PipelineRelatedTopicComponent,
-    MatTabGroup,
-    MatTab,
     VaultTapBehaviorCommonComponent,
     VaultTapFluentApiCommonComponent
   ],
   templateUrl: './before-tap.pipeline.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineBeforeTapBehaviorComponent {}

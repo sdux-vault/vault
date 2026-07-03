@@ -36,21 +36,23 @@
       pipeline execution begins.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      The <strong>interceptors()</strong> method is additive. It may be invoked
-      multiple times, and each call appends interceptor behaviors to the
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
-      interceptor list. Interceptors may be supplied as a single array or across
-      multiple method invocations; in all cases, interceptors execute in the
-      exact order they are registered during initialization.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The <strong>interceptors()</strong> method is additive. It may be
+        invoked multiple times, and each call appends interceptor behaviors to
+        the <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        interceptor list. Interceptors may be supplied as a single array or
+        across multiple method invocations; in all cases, interceptors execute
+        in the exact order they are registered during initialization.
+      </p>
 
-    <p>
-      While multiple invocations are supported, the recommended practice is to
-      register related interceptor behaviors as a single ordered array to
-      preserve clarity and intentional execution ordering.
-    </p>
+      <p>
+        While multiple invocations are supported, the recommended practice is to
+        register related interceptor behaviors as a single ordered array to
+        preserve clarity and intentional execution ordering.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->

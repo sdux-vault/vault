@@ -24,7 +24,7 @@ import { BankEmployeeShapeComponent } from './bank-employee-shape.component';
     BankEmployeeShapeComponent
   ],
   templateUrl: './references-shapes.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesShapesLandingPageComponent{
   type!: string;

@@ -23,7 +23,7 @@ import { PipelineWhatIsAControllerComponent } from './what-is-a-controller/what-
     PipelineMaxFailuresControllerComponent
   ],
   templateUrl: './pipeline-controller-landingpage.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineControllerLandingComponent extends PipelineRoutingDirective {}

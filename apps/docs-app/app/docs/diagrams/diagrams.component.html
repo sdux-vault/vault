@@ -15,7 +15,7 @@
       controllers. Diagrams are ordered by conceptual importance first, followed
       by execution order through the pipeline. Each diagram is intended to stand
       on its own, serving as a concise mental model for how data flows,
-      decisions are made, and state is committed within a FeatureCell.
+      decisions are made, and state is committed within a <sdux-feature-cell />.
     </p>
   </header>
 
@@ -214,7 +214,7 @@
   <!-- ====================================================== -->
   <section class="diagram-section" id="featurecell-lifecycle">
     <div class="section-title-navigation">
-      <div class="section-title">FeatureCell Lifecycle</div>
+      <div class="section-title"><sdux-feature-cell /> Lifecycle</div>
       <div class="section-top-link">
         <a [routerLink]="[]" fragment="top">↑ top</a>
       </div>
@@ -222,7 +222,7 @@
 
     <div class="section-body">
       <p>
-        This diagram captures the lifecycle of a FeatureCell from user
+        This diagram captures the lifecycle of a <sdux-feature-cell /> from user
         interaction through pipeline execution and final state commitment. It
         provides a conceptual foundation for all other diagrams.
       </p>
@@ -235,7 +235,7 @@
 
   <section class="diagram-section" id="featurecell-initialization-flow">
     <div class="section-title-navigation">
-      <div class="section-title">FeatureCell Initialization Flow</div>
+      <div class="section-title"><sdux-feature-cell /> Initialization Flow</div>
       <div class="section-top-link">
         <a [routerLink]="[]" fragment="top">↑ top</a>
       </div>
@@ -243,7 +243,8 @@
 
     <div class="section-body">
       <p>
-        This diagram illustrates the initialization lifecycle of a FeatureCell
+        This diagram illustrates the initialization lifecycle of a
+        <sdux-feature-cell />
         from explicit initialization through initial pipeline execution and
         first state commitment. It captures how the system determines the
         initial upstream value before normal pipeline processing begins.
@@ -1173,9 +1174,9 @@
 
     <div class="section-body">
       <p>
-        Decryption occurs during FeatureCell initialization when persisted
-        encrypted state is restored. This diagram shows how encrypted data is
-        converted back into an initial plaintext snapshot.
+        Decryption occurs during <sdux-feature-cell /> initialization when
+        persisted encrypted state is restored. This diagram shows how encrypted
+        data is converted back into an initial plaintext snapshot.
       </p>
 
       <sdux-diagram
@@ -1199,9 +1200,9 @@
       <p>
         Persistence occurs after state computation and any optional encryption
         has completed. This diagram illustrates how persist behaviors observe
-        the finalized, committed FeatureCell state and write it to external
-        storage as a side effect, without influencing emitted state snapshots or
-        pipeline control flow.
+        the finalized, committed <sdux-feature-cell /> state and write it to
+        external storage as a side effect, without influencing emitted state
+        snapshots or pipeline control flow.
       </p>
 
       <p>
@@ -1230,9 +1231,9 @@
       <p>
         State cache operations introduce an identifier-based lookup surface that
         coordinates cache hits, cache misses, refresh resolution, and fan-out
-        handling through the FeatureCell pipeline. This diagram illustrates how
-        cached entities are resolved, refreshed, and delivered without bypassing
-        pipeline execution.
+        handling through the <sdux-feature-cell /> pipeline. This diagram
+        illustrates how cached entities are resolved, refreshed, and delivered
+        without bypassing pipeline execution.
       </p>
 
       <sdux-diagram
@@ -1254,8 +1255,8 @@
         Lookup operations provide identifier-based entity resolution without
         time-based expiration. This diagram shows how lookup requests coordinate
         hits, lookup-miss resolution, and concurrent fan-out through the
-        FeatureCell pipeline before delivering a resolved entity to the
-        consumer.
+        <sdux-feature-cell /> pipeline before delivering a resolved entity to
+        the consumer.
       </p>
 
       <sdux-diagram
@@ -1275,8 +1276,8 @@
     <div class="section-body">
       <p>
         Query operations provide synchronous identifier-based access to entities
-        that already exist in finalized FeatureCell state. The query behavior
-        maintains an internal entity index derived from committed state
+        that already exist in finalized <sdux-feature-cell /> state. The query
+        behavior maintains an internal entity index derived from committed state
         emissions and resolves requests directly from this index without
         triggering pipeline execution.
       </p>
@@ -1284,8 +1285,8 @@
       <p>
         This diagram illustrates how finalized state emissions populate the
         query cache and how query requests resolve immediately from locally
-        indexed entities while preserving the FeatureCell pipeline as the
-        authoritative source of truth.
+        indexed entities while preserving the <sdux-feature-cell /> pipeline as
+        the authoritative source of truth.
       </p>
 
       <sdux-diagram
@@ -1311,10 +1312,10 @@
     <div class="section-body">
       <p>
         This diagram illustrates the deterministic stabilization model for
-        FeatureCell integration tests. A state mutation triggers synchronous
-        pipeline execution followed by a deferred microtask finalize boundary.
-        Tests must await <code>vaultSettled()</code> to synchronize with that
-        boundary before asserting.
+        <sdux-feature-cell /> integration tests. A state mutation triggers
+        synchronous pipeline execution followed by a deferred microtask finalize
+        boundary. Tests must await <code>vaultSettled()</code> to synchronize
+        with that boundary before asserting.
       </p>
 
       <sdux-diagram

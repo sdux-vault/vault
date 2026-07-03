@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  GenericTabComponent,
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic.component';
 
@@ -16,12 +17,13 @@ import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic
     PipelineRelatedTopicComponent,
     BrandNameComponent,
     RouterModule,
-    MatTabsModule,
+    MultiFrameworkExampleComponent,
+    GenericTabComponent,
     FeatureCellBrandNameComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent
   ],
   templateUrl: './event-bus.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class SDuXDevToolsEventBusComponent {}

@@ -1,9 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import {
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultMergeFluentApiCommonComponent } from 'apps/docs-app/app/docs/common/merge/merge-flient-api.component';
 import { VaultObjectMergeCommonComponent } from 'apps/docs-app/app/docs/common/merge/object-merge-behaviors.component';
@@ -18,15 +16,12 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   imports: [
     DiagramComponent,
     PipelineRelatedTopicComponent,
-    MatTab,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     VaultMergeFluentApiCommonComponent,
     VaultObjectMergeCommonComponent
   ],
   templateUrl: './object-deep-merge.pipeline.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineObjectDeepMergeBehaviorComponent {}

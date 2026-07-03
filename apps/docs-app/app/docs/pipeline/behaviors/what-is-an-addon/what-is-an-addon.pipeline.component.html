@@ -190,11 +190,37 @@
     <div class="section-title">Example FeatureCell Declaration</div>
 
     <div class="section-body">
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 1: Configure a FeatureCell with Debounce'">
+      <sdux-multi-framework-example
+        description="FeatureCell with Addon Behavior">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
+provideFeatureCell(
+  EmployeeService,
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // opt-in behavior array 
+    withLookupBehavior
+  ],
+  [
+    // opt-in controller array 
+  ]
+);
+
+// employee.service.ts
+this.vault
+  .withLookup?.({
+    idKey: 'id',
+    fetchType: ResolveTypes.Promise,
+    fetch: (id: string) => promise 
+  })
+.initialize();`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
           <pre
-            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -216,8 +242,8 @@ employeeCell
     fetch: (id: string) => promise 
   })
 .initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

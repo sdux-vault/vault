@@ -196,15 +196,17 @@ export class withMyBehavior&lt;T&gt; implements BehaviorContract&lt;T&gt; {
         </sdux-example-viewer-tab>
       </sdux-example-viewer-source>
 
-      <div class="note">Note</div>
-      <p>
-        The static fields (type, key, critical, wantsConfig, configKey) are
-        populated at runtime by the &#64;<a
-          href="/docs/references/decorators/vault-behavior"
-          >VaultBehavior</a
-        >
-        decorator. Declare them as static readonly for type safety.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          The static fields (type, key, critical, wantsConfig, configKey) are
+          populated at runtime by the &#64;<a
+            href="/docs/references/decorators/vault-behavior"
+            >VaultBehavior</a
+          >
+          decorator. Declare them as static readonly for type safety.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -492,16 +494,18 @@ export class withCustomDistinctBehavior&lt;T&gt;
         </sdux-example-viewer-tab>
       </sdux-example-viewer-source>
 
-      <div class="note">Note</div>
-      <p>
-        When extending an existing Behavior, apply a new &#64;<a
-          href="/docs/references/decorators/vault-behavior"
-          >VaultBehavior</a
-        >
-        decorator with a unique key and configKey. The new decorator replaces
-        the parent's metadata so the orchestrator treats your subclass as a
-        distinct Behavior.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          When extending an existing Behavior, apply a new &#64;<a
+            href="/docs/references/decorators/vault-behavior"
+            >VaultBehavior</a
+          >
+          decorator with a unique key and configKey. The new decorator replaces
+          the parent's metadata so the orchestrator treats your subclass as a
+          distinct Behavior.
+        </p>
+      </div>
     </div>
   </section>
 

@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import {
   DiagramComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultErrorBehaviorCommonComponent } from 'apps/docs-app/app/docs/common/error/error-behaviors.component';
 import { ErrorHandlingOrderCommonComponent } from 'apps/docs-app/app/docs/common/error/error-emission-order.component';
@@ -21,6 +22,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     DiagramComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     StateSnapshotShapeCommonComponent,
     VaultErrorShapeCommonComponent,
     RouterModule,
@@ -29,7 +31,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     VaultErrorBehaviorCommonComponent
   ],
   templateUrl: './with-error-transform.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineErrorTransformBehaviorComponent {}

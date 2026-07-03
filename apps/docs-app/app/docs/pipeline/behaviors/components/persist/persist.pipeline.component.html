@@ -37,23 +37,25 @@
       inline without affecting pipeline scheduling.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      Persist behaviors may be freely composed and stacked within a
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a>. When
-      multiple persist behaviors are configured, each behavior is invoked in
-      sequence during the Persist stage and receives the same final pipeline
-      value.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        Persist behaviors may be freely composed and stacked within a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. When
+        multiple persist behaviors are configured, each behavior is invoked in
+        sequence during the Persist stage and receives the same final pipeline
+        value.
+      </p>
 
-    <p>
-      Persist behaviors do not coordinate with one another and do not influence
-      pipeline control flow. The only practical consideration when stacking
-      persist behaviors is execution cost: persistence speed is bounded by the
-      user’s device performance and, when custom asynchronous persist behaviors
-      are introduced, by external I/O latency. The pipeline preserves strict
-      execution order and does not allow overlapping runs.
-    </p>
+      <p>
+        Persist behaviors do not coordinate with one another and do not
+        influence pipeline control flow. The only practical consideration when
+        stacking persist behaviors is execution cost: persistence speed is
+        bounded by the user’s device performance and, when custom asynchronous
+        persist behaviors are introduced, by external I/O latency. The pipeline
+        preserves strict execution order and does not allow overlapping runs.
+      </p>
+    </div>
   </header>
 
   <sdux-vault-data-security-persist-common />

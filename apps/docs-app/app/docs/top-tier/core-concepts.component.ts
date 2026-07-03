@@ -26,6 +26,6 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     SDuXVideoComponent
   ],
   templateUrl: './core-concepts.component.html',
-  styleUrls: ['../scss/example.scss']
+  styleUrls: ['../scss/documentation.scss']
 })
 export class DocsTopTierCoreConceptsComponent {}

@@ -30,14 +30,16 @@
       telemetry that can be inspected during development.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      Enabling <code>&#123; debug: true &#125;</code> on the main Vault instance
-      is only necessary when the Vault Monitor output is being consumed by the
-      <sdux-brand-name /> Debugger or a custom
-      <code>EventBus</code> integration. Otherwise the monitor will still emit
-      events, but nothing will be listening to them.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        Enabling <code>&#123; debug: true &#125;</code> on the main Vault
+        instance is only necessary when the Vault Monitor output is being
+        consumed by the <sdux-brand-name /> Debugger or a custom
+        <code>EventBus</code> integration. Otherwise the monitor will still emit
+        events, but nothing will be listening to them.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -71,13 +73,15 @@
         stream to observe runtime behavior.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        The Vault Monitor only emits events when development mode is active.
-        This ensures that telemetry and debugging instrumentation are available
-        during development while avoiding unnecessary runtime overhead in
-        production environments.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          The Vault Monitor only emits events when development mode is active.
+          This ensures that telemetry and debugging instrumentation are
+          available during development while avoiding unnecessary runtime
+          overhead in production environments.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -98,20 +102,9 @@
         instance, but no pipeline event stream will be produced.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: Vault Initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example description="Vault Initialization">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 export const appConfig: ApplicationConfig = {
   providers: [
     provideVault({ 
@@ -119,45 +112,19 @@ export const appConfig: ApplicationConfig = {
     })
   ]
 };`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: Vault Initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`Vault({
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`Vault({
   devMode: true,
 });`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: Vault Initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// main.ts
+        </ng-template>
+        <sdux-generic-tab label="Vue">
+          <pre class="code-inline"><code class="language-ts">{{`// main.ts
 Vault({
   devMode: true,
 });`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </sdux-generic-tab>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

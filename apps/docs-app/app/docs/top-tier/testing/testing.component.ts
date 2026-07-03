@@ -42,7 +42,7 @@ import { PipelineRoutingDirective } from '../../pipeline/directives/pipeline-rou
     PackageNameComponent
   ],
   templateUrl: './testing.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SDuXTestingComponent extends PipelineRoutingDirective {}

@@ -145,9 +145,9 @@ export class DocumentationLinkGenerator {
       return key;
     });
 
-    // 2b️⃣ Protect HTML attribute values (aria-label, title, alt, etc.)
+    // 2b️⃣ Protect HTML attribute values (aria-label, title, alt, [tooltip], etc.)
     result = result.replace(
-      /(?:aria-label|aria-describedby|title|alt)="[^"]*"/gi,
+      /(?:aria-label|aria-describedby|title|alt|\[tooltip\])="[^"]*"/gi,
       (match) => {
         const key = `__SOFT_${softBlocks.length}__`;
         softBlocks.push(match);

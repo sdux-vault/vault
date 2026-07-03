@@ -103,14 +103,16 @@
         mutate state, and must not attempt to resume pipeline execution.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Although multiple error callbacks may be composed, callback logic should
-        remain narrowly scoped and observational. Complex or interdependent
-        callbacks can obscure intent and complicate failure analysis. Error
-        callbacks are most effective when limited to logging, diagnostics, or
-        transitional compatibility concerns.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Although multiple error callbacks may be composed, callback logic
+          should remain narrowly scoped and observational. Complex or
+          interdependent callbacks can obscure intent and complicate failure
+          analysis. Error callbacks are most effective when limited to logging,
+          diagnostics, or transitional compatibility concerns.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -199,8 +201,20 @@
       <p>This is the safest and most reusable callback form.</p>
 
       <h4>Example 1: Pure Error Callback</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 1: Pure Error Callback'">
+      <sdux-multi-framework-example description="Pure Error Callback">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.errors(
+  [
+    (error: VaultErrorShape, state: StateSnapshotShape&lt;Employee[]>) => {
+      console.info('Error occurred:', error.message);
+      console.info('Current state value:', state.value);
+    }
+  ]
+).initialize();`}}</code></pre>
+        </ng-template>
+
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`employeeCell.errors(
   [
@@ -210,13 +224,28 @@
     }
   ]
 ).initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 2: Factory-Generated Pure Error Callback</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 2: Factory-Generated Error Callback'">
+      <sdux-multi-framework-example
+        description="Factory-Generated Pure Error Callback">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export function createErrorLogger(label: string) {
+  return (error: VaultErrorShape, state: StateSnapshotShape&lt;Employee[]>) => { => {
+    console.info(label, error.message);
+  };
+}
+
+this.vault.errors(
+  [
+    createErrorLogger('EmployeeCell')
+  ]
+).initialize();`}}</code></pre>
+        </ng-template>
+
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`export function createErrorLogger(label: string) {
   return (error: VaultErrorShape, state: StateSnapshotShape&lt;Employee[]>) => { => {
@@ -229,8 +258,8 @@ employeeCell.errors(
     createErrorLogger('EmployeeCell')
   ]
 ).initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <!-- ====================================================== -->
       <!-- CATEGORY B -->
@@ -248,9 +277,24 @@ employeeCell.errors(
       </p>
 
       <h4>Example 3: Arrow Function Using Instance State</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 3: Instance-Bound Arrow Callback'">
+      <sdux-multi-framework-example
+        description="Arrow Function Using Instance State">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`readonly prefix = '[Employee Error]';
+
+readonly logError = (
+  error: VaultErrorShape
+) => {
+  console.info(this.prefix, error.message);
+};
+
+this.vault.errors(
+  [this.logError]
+).initialize();`}}</code></pre>
+        </ng-template>
+
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`readonly prefix = '[Employee Error]';
 
@@ -263,12 +307,26 @@ readonly logError = (
 employeeCell.errors(
   [this.logError]
 ).initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 4: Bound Instance Method</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 4: Bound Instance Method'">
+      <sdux-multi-framework-example description="Bound Instance Method">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`public logError(
+  error: VaultErrorShape,
+  state: StateSnapshotShape&lt;Employee[]>
+) {
+  console.info('Error:', error.message);
+  console.info('Snapshot value:', state.value);
+}
+
+this.vault.errors(
+  [this.logError.bind(this)]
+).initialize();`}}</code></pre>
+        </ng-template>
+
+        <ng-template #core>
           <pre class="code-inline"><code class="language-ts">{{`public logError(
   error: VaultErrorShape,
   state: StateSnapshotShape&lt;Employee[]>
@@ -280,8 +338,8 @@ employeeCell.errors(
 employeeCell.errors(
   [this.logError.bind(this)]
 ).initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <!-- ====================================================== -->
       <!-- CATEGORY C -->
@@ -296,8 +354,21 @@ employeeCell.errors(
       </p>
 
       <h4>Example 5: Delegated Error Logging</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 5: Delegated Callback'">
+      <sdux-multi-framework-example description="Delegated Error Logging">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`function logErrorMessage(error: VaultErrorShape) {
+  console.info('Logged error:', error.message);
+}
+
+this.vault.errors(
+  [
+    (error: VaultErrorShape) => logErrorMessage(error)
+  ]
+).initialize();`}}</code></pre>
+        </ng-template>
+
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`function logErrorMessage(error: VaultErrorShape) {
   console.info('Logged error:', error.message);
@@ -308,8 +379,8 @@ employeeCell.errors(
     (error: VaultErrorShape) => logErrorMessage(error)
   ]
 ).initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <!-- ====================================================== -->
       <!-- CATEGORY D -->
@@ -323,9 +394,21 @@ employeeCell.errors(
       </p>
 
       <h4>Example 6: Inline Conditional Callback</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 6: Inline Conditional Callback'">
+      <sdux-multi-framework-example description="Inline Conditional Callback">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.errors(
+  [
+    (error: VaultErrorShape) => {
+      if (error.status === 404) {
+        console.info('Resource not found');
+      }
+    }
+  ]
+).initialize();`}}</code></pre>
+        </ng-template>
+
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`employeeCell.errors(
   [
@@ -336,8 +419,8 @@ employeeCell.errors(
     }
   ]
 ).initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -371,9 +454,24 @@ employeeCell.errors(
       </p>
 
       <h4>Example: Discouraged Mutation Inside an Error Callback</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example: Discouraged Mutation in Error Callback'">
+      <sdux-multi-framework-example
+        description="Discouraged Mutation Inside an Error Callback">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.errors(
+  [
+    (error: VaultErrorShape, state: StateSnapshotShape&lt;Employee[]>) => {
+      // ❌ Mutating the finalized error
+      error.message = 'Modified message';
+      console.info('Error message:', error.message);
+    }
+  ]
+).initialize();
+
+// ❌ Violates the error callback contract: error and state are immutable snapshots`}}</code></pre>
+        </ng-template>
+
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`employeeCell.errors(
   [
@@ -386,8 +484,8 @@ employeeCell.errors(
 ).initialize();
 
 // ❌ Violates the error callback contract: error and state are immutable snapshots`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <p>
         Even if such mutation appears to have an effect, it violates pipeline
@@ -523,24 +621,14 @@ employeeCell.errors(
   <section class="section">
     <div class="section-title">Callback Examples</div>
 
-    <!-- Examples Section ---------------------------------------------------------->
+    <!-- Examples Section ------------------------------------------------------
+---->
 
     <div class="section-body">
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Use the Array Push Merge in a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <h4>Example 1: Register an Error Callback</h4>
+      <sdux-multi-framework-example description="Register an Error Callback">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -555,7 +643,7 @@ export const appConfig: ApplicationConfig = {
       [
         // **Important**
         // Error Callback behaviors are not registered as part of the 
-        // FeatureCell’s declarative configuration.
+        // FeatureCell's declarative configuration.
       ],
       [
         // opt-in Controllers 
@@ -587,15 +675,44 @@ export class EmployeeService {
     ).initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
 
-                <h4>Example 2: Async Error Callback (Remote Logging)</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Async Error Callback (Remote Logging)'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // **Important**
+    // Error Callback behaviors are not registered as part of the 
+    // FeatureCell's declarative configuration.
+  ],
+  [
+    // opt-in Controllers 
+  ]
+);
+
+// Register an error callback during initialization
+employeeCell.errors(
+  [
+    (error, state) => {
+      // Observational side effect only
+      console.info('Employee FeatureCell error:', error.message);
+      console.info('Last known state value:', state.value);
+    }
+  ]
+)
+.initialize();`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>Example 2: Async Error Callback (Remote Logging)</h4>
+      <sdux-multi-framework-example
+        description="Async Error Callback with Remote Logging">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -610,7 +727,7 @@ export const appConfig: ApplicationConfig = {
       [
         // **Important**
         // Error Callback behaviors are not registered as part of the 
-        // FeatureCell’s declarative configuration.
+        // FeatureCell's declarative configuration.
       ],
       [
         // opt-in Controllers 
@@ -658,22 +775,11 @@ export class EmployeeService {
     });
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
+        </ng-template>
 
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Register an Error Callback</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Register an Error Callback'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
   {
     key: 'employees',
     initialState: [],
@@ -681,41 +787,7 @@ export class EmployeeService {
   [
     // **Important**
     // Error Callback behaviors are not registered as part of the 
-    // FeatureCell’s declarative configuration.
-  ],
-  [
-    // opt-in Controllers 
-  ]
-);
-
-// Register an error callback during initialization
-employeeCell.errors(
-  [
-    (error, state) => {
-      // Observational side effect only
-      console.info('Employee FeatureCell error:', error.message);
-      console.info('Last known state value:', state.value);
-    }
-  ]
-)
-.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Async Error Callback (Remote Logging)</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Async Error Callback (Remote Logging)'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // **Important**
-    // Error Callback behaviors are not registered as part of the 
-    // FeatureCell’s declarative configuration.
+    // FeatureCell's declarative configuration.
   ],
   [
     // opt-in Controllers 
@@ -749,104 +821,8 @@ employeeCell
     ]
   )
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Register an Error Callback</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Register an Error Callback'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // **Important**
-    // Error Callback behaviors are not registered as part of the 
-    // FeatureCell’s declarative configuration.
-  ],
-  [
-    // opt-in Controllers 
-  ]
-);
-
-// Register an error callback during initialization
-employeeCell.errors(
-  [
-    (error, state) => {
-      // Observational side effect only
-      console.info('Employee FeatureCell error:', error.message);
-      console.info('Last known state value:', state.value);
-    }
-  ]
-)
-.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Async Error Callback (Remote Logging)</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Async Error Callback (Remote Logging)'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // **Important**
-    // Error Callback behaviors are not registered as part of the 
-    // FeatureCell’s declarative configuration.
-  ],
-  [
-    // opt-in Controllers 
-  ]
-);
-
-// Example async logger (implementation is app-owned)
-async function logErrorToApi(payload: {
-  message: string;
-  feature: string;
-  stateValue: unknown;
-}): Promise&lt;void&gt; {
-  await fetch('/api/logs/errors', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-}
-
-// Register an async error callback during initialization
-employeeCell
-  .errors(
-    [
-      async (error, state) => {
-        await logErrorToApi({
-          feature: 'employees',
-          message: error.message,
-          stateValue: state.value,
-        });
-      }
-    ]
-  )
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

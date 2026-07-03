@@ -38,55 +38,66 @@
       transitions.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      All emissions from <strong>state$</strong> represent
-      <strong>fully committed, immutable state</strong>. Subscribers must treat
-      emitted values as read-only.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        All emissions from <strong>state$</strong> represent
+        <strong>fully committed, immutable state</strong>. Subscribers must
+        treat emitted values as read-only.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
-  <!-- state$ -->
+  <!-- CONFIGURATION -->
   <!-- ====================================================== -->
   <section class="section">
-    <div class="section-title">Example</div>
+    <div class="section-title">Configuration</div>
 
-    <div class="section-body">
-      <p>
-        The <strong>state$</strong> observable is typically used for reactive
-        subscriptions, side effects, integration with external systems, or
-        advanced coordination logic that depends on state transitions.
-      </p>
+    <div class="table-title">State Stream</div>
+    <table aria-label="State Stream">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Member</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
 
-      <h4>Example: Subscribing to FeatureCell State Changes</h4>
+      <tbody>
+        <tr>
+          <td>
+            <strong>state$</strong>
 
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Observe FeatureCell State Changes'">
-          <pre
-            class="code-inline"><code class="language-ts">{{`employeeCell.state$
-  .subscribe(({ snapshot, type, options }) => {
-    console.info('State value:', snapshot.value);
-    console.info('Origin type:', type);
-    console.info('Options:', options);
-  });`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+            <p>type:</p>
+            <ul>
+              <li>
+                Observable&lt;<a
+                  href="/docs/references/shapes/state-emit-snapshot-shape"
+                  >StateEmitSnapshotShape</a
+                >&lt;T&gt;&gt;
+              </li>
+            </ul>
 
-      <h4>What this does</h4>
-      <ul>
-        <li>Subscribes to all committed state updates</li>
-        <li>Receives the full immutable state snapshot</li>
-        <li>Receives the pipeline origin of the change</li>
-        <li>Receives optional metadata associated with the update</li>
-      </ul>
-
-      <p>
-        This pattern is ideal for analytics, logging, debugging, cross-feature
-        coordination, or external integrations that must react to state changes
-        over time.
-      </p>
-    </div>
+            <p>lifecycle:</p>
+            <ul>
+              <li>
+                Emits until
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                destruction
+              </li>
+            </ul>
+          </td>
+          <td>
+            Emits a structured snapshot each time the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            commits state. Includes the immutable state snapshot, optional
+            update metadata, and the pipeline origin of the change.
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
   <!-- ====================================================== -->
@@ -182,55 +193,56 @@
   </section>
 
   <!-- ====================================================== -->
-  <!-- CONFIGURATION -->
+  <!-- state$ -->
   <!-- ====================================================== -->
   <section class="section">
-    <div class="section-title">Configuration</div>
+    <div class="section-title">Example</div>
 
-    <div class="table-title">State Stream</div>
-    <table aria-label="State Stream">
-      <thead>
-        <tr>
-          <th scope="col" class="column-250">Member</th>
-          <th scope="col" class="column-auto">Description</th>
-        </tr>
-      </thead>
+    <div class="section-body">
+      <p>
+        The <strong>state$</strong> observable is typically used for reactive
+        subscriptions, side effects, integration with external systems, or
+        advanced coordination logic that depends on state transitions.
+      </p>
 
-      <tbody>
-        <tr>
-          <td>
-            <strong>state$</strong>
+      <h4>Example: Subscribing to FeatureCell State Changes</h4>
 
-            <p>type:</p>
-            <ul>
-              <li>
-                Observable&lt;<a
-                  href="/docs/references/shapes/state-emit-snapshot-shape"
-                  >StateEmitSnapshotShape</a
-                >&lt;T&gt;&gt;
-              </li>
-            </ul>
+      <sdux-multi-framework-example
+        description="Observe FeatureCell State Changes">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.state$
+  .subscribe(({ snapshot, type, options }) => {
+    console.info('State value:', snapshot.value);
+    console.info('Origin type:', type);
+    console.info('Options:', options);
+  });`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.state$
+  .subscribe(({ snapshot, type, options }) => {
+    console.info('State value:', snapshot.value);
+    console.info('Origin type:', type);
+    console.info('Options:', options);
+  });`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-            <p>lifecycle:</p>
-            <ul>
-              <li>
-                Emits until
-                <a href="/docs/references/functions/feature-cell"
-                  >FeatureCell</a
-                >
-                destruction
-              </li>
-            </ul>
-          </td>
-          <td>
-            Emits a structured snapshot each time the
-            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-            commits state. Includes the immutable state snapshot, optional
-            update metadata, and the pipeline origin of the change.
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <h4>What this does</h4>
+      <ul>
+        <li>Subscribes to all committed state updates</li>
+        <li>Receives the full immutable state snapshot</li>
+        <li>Receives the pipeline origin of the change</li>
+        <li>Receives optional metadata associated with the update</li>
+      </ul>
+
+      <p>
+        This pattern is ideal for analytics, logging, debugging, cross-feature
+        coordination, or external integrations that must react to state changes
+        over time.
+      </p>
+    </div>
   </section>
 
   <!-- ====================================================== -->

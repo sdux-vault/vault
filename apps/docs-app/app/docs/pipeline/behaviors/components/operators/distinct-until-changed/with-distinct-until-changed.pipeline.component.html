@@ -47,14 +47,16 @@
       pipeline semantics.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      When no custom comparison function is supplied, the operator determines
-      equality by performing a
-      <strong>structural JSON comparison</strong> of the incoming value and the
-      last emitted value. If the two values are structurally identical, the
-      update is suppressed and no downstream pipeline stages execute.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        When no custom comparison function is supplied, the operator determines
+        equality by performing a
+        <strong>structural JSON comparison</strong> of the incoming value and
+        the last emitted value. If the two values are structurally identical,
+        the update is suppressed and no downstream pipeline stages execute.
+      </p>
+    </div>
 
     <pre
       class="code-inline"><code class="language-ts">JSON.stringify(incoming) === JSON.stringify(lastEmittedValue);</code></pre>
@@ -381,8 +383,8 @@
       </table>
 
       <div class="table-title">Actual Comparison Function for Example 3</div>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Custom Comparison Function'">
+      <sdux-multi-framework-example description="Custom Comparison Function">
+        <ng-template #angular>
           <pre
             class="code-inline"><code class="language-ts">{{`// Custom comparison function
 const compareById = (a: { id: number }, b: { id: number }) => {
@@ -390,15 +392,31 @@ const compareById = (a: { id: number }, b: { id: number }) => {
 };
 
 // Registering the operator with a custom comparison function
-&lt;employeeCell|this>.vault
+this.vault
   .operators(
     [
       withDistinctUntilChanged(compareById)
     ]
   )
   .initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Custom comparison function
+const compareById = (a: { id: number }, b: { id: number }) => {
+  return a.id === b.id;
+};
+
+// Registering the operator with a custom comparison function
+employeeCell
+  .operators(
+    [
+      withDistinctUntilChanged(compareById)
+    ]
+  )
+  .initialize();`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -428,25 +446,16 @@ const compareById = (a: { id: number }, b: { id: number }) => {
         suppressed and do not reach downstream stages.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Distinct Until Changed'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+      <sdux-multi-framework-example
+        description="Configure a FeatureCell with Distinct Until Changed">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more operators during initialization
@@ -459,27 +468,18 @@ export class EmployeeService {
       .initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
+        </ng-template>
 
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Distinct Until Changed'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
   },
   [
     // Operator behaviors are not registered as part of the
-    // FeatureCell’s declarative configuration.
+    // FeatureCell's declarative configuration.
   ]
 );
 
@@ -491,45 +491,8 @@ employeeCell
     ]
   )
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Distinct Until Changed'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Operator behaviors are not registered as part of the
-    // FeatureCell’s declarative configuration.
-  ]
-);
-
-// Apply distinct-until-changed during initialization
-employeeCell
-  .operators(
-    [
-      withDistinctUntilChanged()
-    ]
-  )
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

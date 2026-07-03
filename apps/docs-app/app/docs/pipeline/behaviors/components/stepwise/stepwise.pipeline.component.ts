@@ -1,11 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent,
   PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultStepwiseDecisionShapeCommonComponent } from 'apps/docs-app/app/docs/common/stepwise/stepwise-decision-shape.component';
@@ -19,18 +17,15 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     BrandNameComponent,
     RouterModule,
     DiagramComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     PipelineRelatedTopicComponent,
-    MatTabGroup,
-    MatTab,
     VaultStepwiseFluentApiCommonComponent,
     VaultStepwiseDecisionShapeCommonComponent,
     VaultStepwiseFunctionCommonComponent,
     PackageNameComponent
   ],
   templateUrl: './stepwise.pipeline.component.html',
-  styleUrls: ['../../../../scss/example.scss'],
+  styleUrls: ['../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineStepwiseBehaviorComponent {}

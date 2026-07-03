@@ -107,7 +107,7 @@ import { PipelineWhatIsABehaviorComponent } from './what-is-a-behavior/what-is-a
     PipelineEntityAccessComponent
   ],
   templateUrl: './pipeline-behavior-landingpage.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineBehaviorLandingComponent extends PipelineRoutingDirective {}

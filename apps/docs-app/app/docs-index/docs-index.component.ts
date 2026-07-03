@@ -34,7 +34,7 @@ import { VaultFeatureCellApiSubNavigationComponent } from '../navigation/sub-nav
     PipelineRelatedTopicComponent
   ],
   templateUrl: './docs-index.component.html',
-  styleUrls: ['./docs-index.component.scss', '../docs/scss/example.scss'],
+  styleUrls: ['./docs-index.component.scss', '../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None,
   host: { class: 'docs-index' }
 })

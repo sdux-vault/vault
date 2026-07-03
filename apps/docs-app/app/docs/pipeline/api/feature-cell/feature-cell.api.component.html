@@ -1,6 +1,4 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
-
-<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
 <div class="docs-container">
   <div class="header">
     <h3>FeatureCell Registration</h3>
@@ -48,24 +46,29 @@
       before runtime use.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      <strong
-        >Vault initialization must precede
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        registration.</strong
-      >
-      Calling
-      <strong
-        ><a href="/docs/references/functions/feature-cell"
-          >FeatureCell</a
-        ></strong
-      >
-      before the Vault runtime has been initialized is invalid and results in a
-      runtime error. This ordering guarantee ensures that all FeatureCells are
-      registered against a fully prepared and consistent execution environment.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <strong
+          >Vault initialization must precede
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          registration.</strong
+        >
+        Calling
+        <strong
+          ><a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >
+        before the Vault runtime has been initialized is invalid and results in
+        a runtime error. This ordering guarantee ensures that all FeatureCells
+        are registered against a fully prepared and consistent execution
+        environment.
+      </p>
+    </div>
   </header>
+
+  <sdux-feature-cell-diagram-common />
 
   <!-- ====================================================== -->
   <!-- REGISTRATION -->
@@ -282,43 +285,41 @@
     <div class="section-title">Examples</div>
 
     <div class="section-body">
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <p>
-                How a
-                <a href="/docs/references/functions/feature-cell"
-                  >FeatureCell</a
-                >
-                is registered and configured using React.
-              </p>
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Register a Basic FeatureCell</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Register a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+      <h4>Example 1: Register a Basic FeatureCell</h4>
+
+      <sdux-multi-framework-example description="Register a Basic FeatureCell">
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
   key: 'employees',
   initialState: []
 });
 
 // Initialization the FeatureCell 
 employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <sdux-generic-tab label="Vue" [alphabetized]="true">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// employee.cell.ts
+import { provideFeatureCell } from '@sdux-vault/core';
 
-                <h4>Example 2: Register a FeatureCell with Insights Enabled</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Register a FeatureCell with Insights'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: []
+});
+
+// Explicitly activate the FeatureCell
+employeeCell.initialize();`}}</code></pre>
+        </sdux-generic-tab>
+      </sdux-multi-framework-example>
+
+      <h4>Example 2: Register a FeatureCell with Insights Enabled</h4>
+
+      <sdux-multi-framework-example
+        description="Register a FeatureCell with Insights Enabled">
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
   key: 'employees',
   initialState: [],
   insights: {
@@ -330,18 +331,34 @@ employeeCell.initialize();`}}</code></pre>
 
 // Initialization the FeatureCell 
 employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <sdux-generic-tab label="Vue" [alphabetized]="true">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// employee.cell.ts
+import { provideFeatureCell } from '@sdux-vault/core';
 
-                <h4>
-                  Example 3: Configuring a FeatureCell with ArrayPushMerge
-                  Behavior
-                </h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Configuring a FeatureCell with ArrayPushMerge Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell({
+  key: 'employees',
+  initialState: [],
+  insights: {
+    id: 'employees-insight',
+    wantsState: true,
+    wantsErrors: true
+  }
+});
+
+// Explicitly activate the FeatureCell
+employeeCell.initialize();`}}</code></pre>
+        </sdux-generic-tab>
+      </sdux-multi-framework-example>
+
+      <h4>Example 3: FeatureCell with ArrayPushMerge Behavior</h4>
+
+      <sdux-multi-framework-example
+        description="FeatureCell with ArrayPushMerge Behavior">
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -354,18 +371,41 @@ employeeCell.initialize();`}}</code></pre>
 
 // Initialization the FeatureCell 
 employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <sdux-generic-tab label="Vue" [alphabetized]="true">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// employee.cell.ts
+import { provideFeatureCell } from '@sdux-vault/core';
+import { withArrayPushMergeBehavior } from '@sdux-vault/addons';
 
-                <h4>
-                  Example 4: Configuring a FeatureCell with Behaviors and
-                  Controllers
-                </h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: Configuring a FeatureCell with Behaviors and Controllers'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+export interface Employee {
+  id: number;
+  name: string;
+}
+
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    // Declarative behavior registration
+    withArrayPushMergeBehavior
+  ]
+);
+
+// Explicitly activate the FeatureCell
+employeeCell.initialize();`}}</code></pre>
+        </sdux-generic-tab>
+      </sdux-multi-framework-example>
+
+      <h4>Example 4: FeatureCell with Behaviors and Controllers</h4>
+
+      <sdux-multi-framework-example
+        description="FeatureCell with Behaviors and Controllers">
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -394,122 +434,10 @@ employeeCell
     stepwiseCallback: fn()
   })
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <p>
-                How a
-                <a href="/docs/references/functions/feature-cell"
-                  >FeatureCell</a
-                >
-                is registered and configured using Vue.
-              </p>
-
-              <ng-content select="[retrieve]">
-                <!-- ====================================================== -->
-                <!-- EXAMPLE 1 -->
-                <!-- ====================================================== -->
-                <h4>Example 1: Register a Basic FeatureCell</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Register a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// employee.cell.ts
-import { provideFeatureCell } from '@sdux-vault/core';
-
-export const employeeCell = FeatureCell({
-  key: 'employees',
-  initialState: []
-});
-
-// Explicitly activate the FeatureCell
-employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- ====================================================== -->
-                <!-- EXAMPLE 2 -->
-                <!-- ====================================================== -->
-                <h4>Example 2: Register a FeatureCell with Insights Enabled</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Register a FeatureCell with Insights'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// employee.cell.ts
-import { provideFeatureCell } from '@sdux-vault/core';
-
-export const employeeCell = FeatureCell({
-  key: 'employees',
-  initialState: [],
-  insights: {
-    id: 'employees-insight',
-    wantsState: true,
-    wantsErrors: true
-  }
-});
-
-// Explicitly activate the FeatureCell
-employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- ====================================================== -->
-                <!-- EXAMPLE 3 -->
-                <!-- ====================================================== -->
-                <h4>
-                  Example 3: Configure a FeatureCell with ArrayPushMerge
-                  Behavior
-                </h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: FeatureCell with ArrayPushMerge Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// employee.cell.ts
-import { provideFeatureCell } from '@sdux-vault/core';
-import { withArrayPushMergeBehavior } from '@sdux-vault/addons';
-
-export interface Employee {
-  id: number;
-  name: string;
-}
-
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Declarative behavior registration
-    withArrayPushMergeBehavior
-  ]
-);
-
-// Explicitly activate the FeatureCell
-employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- ====================================================== -->
-                <!-- EXAMPLE 4 -->
-                <!-- ====================================================== -->
-                <h4>
-                  Example 4: Configure a FeatureCell with Behaviors and
-                  Controllers
-                </h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: FeatureCell with Behaviors and Controllers'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// employee.cell.ts
+        </ng-template>
+        <sdux-generic-tab label="Vue" [alphabetized]="true">
+          <pre
+            class="code-inline"><code class="language-ts">{{`// employee.cell.ts
 import { provideFeatureCell } from '@sdux-vault/core';
 import {
   withStepwiseFilterBehavior,
@@ -523,7 +451,7 @@ export interface Employee {
   name: string;
 }
 
-export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -545,13 +473,8 @@ employeeCell
   .withStepwiseReducer({ stepwiseCallback: fn() })
   .withStepwiseResolve({ stepwiseCallback: fn() })
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </sdux-generic-tab>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

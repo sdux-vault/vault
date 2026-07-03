@@ -77,43 +77,45 @@
         activates.
       </p>
 
-      <h4>Notes</h4>
+      <div class="callout callout-info">
+        <div class="title">Notes</div>
 
-      <ul>
-        <li>
-          <strong>No fetch or resolution execution occurs.</strong>
-          Query behavior never triggers pipeline execution. Entities must
-          already exist in finalized
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          state before they can be queried.
-        </li>
+        <ul>
+          <li>
+            <strong>No fetch or resolution execution occurs.</strong>
+            Query behavior never triggers pipeline execution. Entities must
+            already exist in finalized
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            state before they can be queried.
+          </li>
 
-        <li>
-          <strong>Query results are synchronous.</strong>
-          The query API resolves entities immediately from the local cache and
-          does not return Promises or Observables.
-        </li>
+          <li>
+            <strong>Query results are synchronous.</strong>
+            The query API resolves entities immediately from the local cache and
+            does not return Promises or Observables.
+          </li>
 
-        <li>
-          <strong>Cache population is state-driven.</strong>
-          Entities enter the query cache only through finalized pipeline
-          emissions. The behavior never inserts entities directly into state.
-        </li>
+          <li>
+            <strong>Cache population is state-driven.</strong>
+            Entities enter the query cache only through finalized pipeline
+            emissions. The behavior never inserts entities directly into state.
+          </li>
 
-        <li>
-          <strong>Pipeline lifecycle alignment is preserved.</strong>
-          The query cache is cleared automatically when the owning
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          resets, destroys, or emits a state-clearing snapshot.
-        </li>
+          <li>
+            <strong>Pipeline lifecycle alignment is preserved.</strong>
+            The query cache is cleared automatically when the owning
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            resets, destroys, or emits a state-clearing snapshot.
+          </li>
 
-        <li>
-          <strong>Query behavior does not guarantee presence.</strong>
-          If an entity has not yet entered state or has been removed from state,
-          queries resolve with
-          <code>undefined</code>.
-        </li>
-      </ul>
+          <li>
+            <strong>Query behavior does not guarantee presence.</strong>
+            If an entity has not yet entered state or has been removed from
+            state, queries resolve with
+            <code>undefined</code>.
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -429,29 +431,18 @@
     <div class="section-title">Query Examples</div>
 
     <div class="section-body">
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- ANGULAR -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Configure Query Behavior</h4>
+      <h4>Example 1: Configure Query Behavior</h4>
 
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure Query Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]>('employees')
+      <sdux-multi-framework-example description="Configure Query Behavior">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
 
-  private readonly vault = injectVault&lt;Employee[]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Assumes withQueryBehavior is registered during FeatureCell setup (provideFeatureCell)
@@ -462,37 +453,10 @@ export class EmployeeService {
       .initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Query an Entity</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Query an Entity'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`const employee = this.vault.query('123');
-
-if (employee) {
-  console.info(employee.name);
-}`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- REACT -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Configure Query Behavior</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure Query Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: []
@@ -508,73 +472,29 @@ employeeCell
     idKey: 'id'
   })
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <h4>Example 2: Query an Entity</h4>
+      <h4>Example 2: Query an Entity</h4>
 
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Query an Entity'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`const employee = employeeCell.query('123');
-
-if (employee) {
-  console.info(employee.name);
-}`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- VUE -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Configure Query Behavior</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure Query Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: []
-  },
-  [
-    withQueryBehavior
-  ]
-);
-
-// Executed during application startup (e.g. app.config.ts)
-employeeCell
-  .withQuery({
-    idKey: 'id'
-  })
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Query an Entity</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Query an Entity'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`const employee = employeeCell.query('123');
+      <sdux-multi-framework-example description="Query an Entity">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`const employee = this.vault.query('123');
 
 if (employee) {
   console.info(employee.name);
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`const employee = employeeCell.query('123');
+
+if (employee) {
+  console.info(employee.name);
+}`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

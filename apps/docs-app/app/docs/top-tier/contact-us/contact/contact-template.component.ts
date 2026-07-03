@@ -9,7 +9,10 @@ import { ContactInquiryService } from './service/contact-inquiry.service';
   standalone: true,
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './contact-template.component.html',
-  styleUrls: ['../../../scss/example.scss', './contact-template.component.scss']
+  styleUrls: [
+    '../../../scss/documentation.scss',
+    './contact-template.component.scss'
+  ]
 })
 export class ContactTemplateComponent {
   #contactService = inject(ContactInquiryService);

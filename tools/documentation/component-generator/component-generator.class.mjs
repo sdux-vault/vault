@@ -148,7 +148,7 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
   standalone: true,
   imports: [BrandNameComponent],
   template: \`${await renderClassDocumentation(entry, this.findCompodocEntry(symbolName, entry.relativePath))}\`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class ${className}{}

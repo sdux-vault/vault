@@ -20,7 +20,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     PipelineRelatedTopicComponent
   ],
   templateUrl: './entity-access.pipeline.component.html',
-  styleUrls: ['../../../../scss/example.scss'],
+  styleUrls: ['../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineEntityAccessComponent {}

@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
+  SDuXVideoComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -15,7 +16,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     RouterModule,
-    VaultBrandNameComponent
+    VaultBrandNameComponent,
+    SDuXVideoComponent
   ],
   template: `
     <sdux-blog-layout
@@ -325,9 +327,17 @@ it('updates cart', async () =&gt; &#123;
           </div>
         </div>
       </section>
+
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video videoId="m7ClyWSh754" [tooltip]="'Pipeline Overview'" />
+        </div>
+      </section>
     </sdux-blog-layout>
   `,
-  styleUrls: ['../../../docs/scss/example.scss'],
+  styleUrls: ['../../../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class BlogReduxBrokeMyTrustComponent {}

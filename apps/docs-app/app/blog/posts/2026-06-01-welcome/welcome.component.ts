@@ -140,7 +140,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       </section>
     </sdux-blog-layout>
   `,
-  styleUrls: ['../../../docs/scss/example.scss'],
+  styleUrls: ['../../../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class BlogWelcomeComponent {}

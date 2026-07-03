@@ -22,7 +22,6 @@ import { RELATED_TOPICS_OPERATORS_REGISTRY } from './related-topics.operators.re
 import { RELATED_TOPICS_PERSIST_REGISTRY } from './related-topics.persist.registry';
 import { RELATED_TOPICS_PIPELINE_OVERVIEW_REGISTRY } from './related-topics.pipeline-overview.registry';
 import { RELATED_TOPICS_PRESS_REGISTRY } from './related-topics.press.registry';
-import { RELATED_TOPICS_PROVIDE_FEATURE_CELL_REGISTRY } from './related-topics.provide-feature-cell.registry';
 import { RELATED_TOPICS_PROVIDE_VAULT_REGISTRY } from './related-topics.provide-vault.registry';
 import { RELATED_TOPICS_REDUCERS_REGISTRY } from './related-topics.reducers.registry';
 import { RELATED_TOPICS_RESOLVE_REGISTRY } from './related-topics.resolve.registry';
@@ -134,8 +133,6 @@ export const RELATED_TOPICS_REGISTRY: RelatedTopicRegistryShape = {
     'pipeline-overview': RELATED_TOPICS_PIPELINE_OVERVIEW_REGISTRY,
 
     press: RELATED_TOPICS_PRESS_REGISTRY,
-
-    'provide-feature-cell': RELATED_TOPICS_PROVIDE_FEATURE_CELL_REGISTRY,
 
     'provide-vault': RELATED_TOPICS_PROVIDE_VAULT_REGISTRY,
 

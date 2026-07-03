@@ -31,7 +31,7 @@ import { VaultConfigComponent } from './vault-config.component';
     VaultConfigComponent
   ],
   templateUrl: './references-config.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesConfigLandingPageComponent {
   type!: string;

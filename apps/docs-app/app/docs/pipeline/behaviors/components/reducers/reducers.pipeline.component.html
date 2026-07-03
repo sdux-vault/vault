@@ -123,14 +123,16 @@
         responsibility is to derive the next immutable state value.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Although multiple reducer functions may be composed, reducer logic
-        should remain narrowly focused and structurally conservative. Overly
-        complex or interdependent reducers can obscure intent and make state
-        evolution difficult to reason about. Reducers are most effective when
-        each function enforces a single, clearly defined transformation.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Although multiple reducer functions may be composed, reducer logic
+          should remain narrowly focused and structurally conservative. Overly
+          complex or interdependent reducers can obscure intent and make state
+          evolution difficult to reason about. Reducers are most effective when
+          each function enforces a single, clearly defined transformation.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -347,22 +349,31 @@
       </p>
 
       <h4>Example 1: Pure Reducer Function</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 1: Pure Reducer Function'">
+      <sdux-multi-framework-example description="Pure Reducer Function">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.reducers(
+            class="code-inline"><code class="language-ts">{{`this.vault.reducers(
   [
     (current) => ({ ...current, count: current.count + 1 })
   ]
 ).initialize()
 // count is incremented immutably`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => ({ ...current, count: current.count + 1 })
+  ]
+).initialize()
+// count is incremented immutably`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 2: Factory-Generated Pure Reducer Function</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 2: Factory-Generated Pure Reducer Function'">
+      <sdux-multi-framework-example
+        description="Factory-Generated Pure Reducer Function">
+        <ng-template #angular>
           <pre
             class="code-inline"><code class="language-ts">{{`export function withFullName() {
   return (emp) => ({
@@ -371,13 +382,28 @@
   });
 }
 
-&lt;employeeCell\|this&gt;.vault.reducers(
+this.vault.reducers(
   [
     withFullName()
   ]
 ).initialize()`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export function withFullName() {
+  return (emp) => ({
+    ...emp,
+    fullName: emp.firstName + ' ' + emp.lastName
+  });
+}
+
+employeeCell.reducers(
+  [
+    withFullName()
+  ]
+).initialize()`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>
         Category B: Instance-Aware but Correctly Bound Reducer Functions
@@ -402,9 +428,9 @@
       </p>
 
       <h4>Example 3: Arrow Function Using Instance State</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 3: Arrow Function Using Instance State'">
+      <sdux-multi-framework-example
+        description="Arrow Function Using Instance State">
+        <ng-template #angular>
           <pre
             class="code-inline"><code class="language-ts">{{`readonly incrementBy = 5;
 
@@ -413,17 +439,32 @@ readonly incrementReducer = (current) => ({
   count: current.count + this.incrementBy
 });
 
-&lt;employeeCell\|this&gt;.vault.reducers(
+this.vault.reducers(
   [this.incrementReducer]
 ).initialize();
 
 // count is incremented using instance-scoped configuration`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`readonly incrementBy = 5;
+
+readonly incrementReducer = (current) => ({
+  ...current,
+  count: current.count + this.incrementBy
+});
+
+employeeCell.reducers(
+  [this.incrementReducer]
+).initialize();
+
+// count is incremented using instance-scoped configuration`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 4: Bound Instance Method</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 4: Bound Instance Method'">
+      <sdux-multi-framework-example description="Bound Instance Method">
+        <ng-template #angular>
           <pre
             class="code-inline"><code class="language-ts">{{`public normalizeName(current) {
   return {
@@ -432,13 +473,28 @@ readonly incrementReducer = (current) => ({
   };
 }
 
-&lt;employeeCell\|this&gt;.vault.reducers(
+this.vault.reducers(
   [this.normalizeName.bind(this)]
 ).initialize();
 
 // reducer logic is instance-bound and deterministic per FeatureCell`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`public normalizeName(current) {
+  return {
+    ...current,
+    name: current.name.trim().toLowerCase()
+  };
+}
+
+employeeCell.reducers(
+  [this.normalizeName.bind(this)]
+).initialize();
+
+// reducer logic is instance-bound and deterministic per FeatureCell`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Category C: Delegating Reducer Functions (Reducers Only)</h4>
       <p>
@@ -462,19 +518,28 @@ readonly incrementReducer = (current) => ({
       </p>
 
       <h4>Example 5: Delegating Reducer Method</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 5: Delegating Reducer Method'">
+      <sdux-multi-framework-example description="Delegating Reducer Method">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.reducers(
+            class="code-inline"><code class="language-ts">{{`this.vault.reducers(
   [
     (employees) => this.partialReducerStandaloneMethod(employees)
   ]
 ).initialize();
 
 // reducer logic is delegated but remains pure and deterministic`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (employees) => this.partialReducerStandaloneMethod(employees)
+  ]
+).initialize();
+
+// reducer logic is delegated but remains pure and deterministic`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Category D: Inline Lambda Reducers (Allowed, Use Sparingly)</h4>
       <p>
@@ -490,11 +555,10 @@ readonly incrementReducer = (current) => ({
       </p>
 
       <h4>Example 6: Inline Conditional Reducer</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 6: Inline Conditional Reducer'">
+      <sdux-multi-framework-example description="Inline Conditional Reducer">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.reducers(
+            class="code-inline"><code class="language-ts">{{`this.vault.reducers(
   [
     (current) => {
       if (!current.items?.length) return current;
@@ -502,8 +566,19 @@ readonly incrementReducer = (current) => ({
     }
   ]
 ).initialize()`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => {
+      if (!current.items?.length) return current;
+      return { ...current, items: [...current.items].sort() };
+    }
+  ]
+).initialize()`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -528,10 +603,10 @@ readonly incrementReducer = (current) => ({
       </p>
 
       <h4>Example 7: Discouraged Mutation</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 7: Discouraged Mutation'">
+      <sdux-multi-framework-example description="Discouraged Mutation">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.reducers(
+            class="code-inline"><code class="language-ts">{{`this.vault.reducers(
   [
     (current) => {
       current.count++; // ❌ mutation
@@ -541,8 +616,21 @@ readonly incrementReducer = (current) => ({
 ).initialize()
 
 // ❌ Vault error: reducers must not mutate state`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => {
+      current.count++; // ❌ mutation
+      return current;
+    }
+  ]
+).initialize()
+
+// ❌ Vault error: reducers must not mutate state`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -701,27 +789,17 @@ readonly incrementReducer = (current) => ({
         behavior.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <!-- Example 1 -->
-                <h4>Example 1: Basic Increment Reducer</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Basic Increment Reducer'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
-@Injectable({
+      <!-- Example 1 -->
+      <h4>Example 1: Basic Increment Reducer</h4>
+      <sdux-multi-framework-example description="Basic Increment Reducer">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`&#64;FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
+&#64;Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more reducers during initialization
@@ -736,21 +814,32 @@ export class EmployeeService {
   }
 }
 // count is incremented immutably`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => ({
+      ...current,
+      count: current.count + 1
+    })
+  ]
+).initialize()
+// count is incremented immutably`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <!-- Example 2 -->
-                <h4>Example 2: Adding Derived Fields</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Adding Derived Fields'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
-@Injectable({
+      <!-- Example 2 -->
+      <h4>Example 2: Adding Derived Fields</h4>
+      <sdux-multi-framework-example description="Adding Derived Fields">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`&#64;FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
+&#64;Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more reducers during initialization
@@ -766,21 +855,33 @@ export class EmployeeService {
   }
 }
 // derived fields are added immutably`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (emp) => ({
+      ...emp,
+      fullName: emp.firstName + ' ' + emp.lastName,
+      senior: emp.years > 10
+    })
+  ]
+).initialize()
+// derived fields are added immutably`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <!-- Example 3 -->
-                <h4>Example 3: Conditional Reducer</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Conditional Reducer'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
-@Injectable({
+      <!-- Example 3 -->
+      <h4>Example 3: Conditional Reducer</h4>
+      <sdux-multi-framework-example description="Conditional Reducer">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`&#64;FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
+&#64;Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more reducers during initialization
@@ -798,21 +899,36 @@ export class EmployeeService {
   }
 }
 // state changes only when items exist`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => {
+      if (!current.items?.length) return current;
+      return {
+        ...current,
+        items: [...current.items].sort()
+      };
+    }
+  ]
+).initialize()
+// state changes only when items exist`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <!-- Example 4 -->
-                <h4>Example 4: Returning the Same Value (No Change)</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: Returning the Same Value'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
-@Injectable({
+      <!-- Example 4 -->
+      <h4>Example 4: Returning the Same Value (No Change)</h4>
+      <sdux-multi-framework-example
+        description="Returning the Same Value (No Change)">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`&#64;FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
+&#64;Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more reducers during initialization
@@ -824,169 +940,17 @@ export class EmployeeService {
   }
 }
 // no state change — safe and legal`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <!-- Example 1 -->
-                <h4>Example 1: Basic Increment Reducer</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Basic Increment Reducer'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
-  [
-    (current) => ({
-      ...current,
-      count: current.count + 1
-    })
-  ]
-).initialize()
-// count is incremented immutably`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- Example 2 -->
-                <h4>Example 2: Adding Derived Fields</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Adding Derived Fields'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
-  [
-    (emp) => ({
-      ...emp,
-      fullName: emp.firstName + ' ' + emp.lastName,
-      senior: emp.years > 10
-    })
-  ]
-).initialize()
-// derived fields are added immutably`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- Example 3 -->
-                <h4>Example 3: Conditional Reducer</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Conditional Reducer'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
-  [
-    (current) => {
-      if (!current.items?.length) return current;
-      return {
-        ...current,
-        items: [...current.items].sort()
-      };
-    }
-  ]
-).initialize()
-// state changes only when items exist`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- Example 4 -->
-                <h4>Example 4: Returning the Same Value (No Change)</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: Returning the Same Value'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
   [
     (current) => current
   ]
 ).initialize()
 // no state change — safe and legal`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <!-- Example 1 -->
-                <h4>Example 1: Basic Increment Reducer</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Basic Increment Reducer'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
-  [
-    (current) => ({
-      ...current,
-      count: current.count + 1
-    })
-  ]
-).initialize()
-// count is incremented immutably`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- Example 2 -->
-                <h4>Example 2: Adding Derived Fields</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Adding Derived Fields'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
-  [
-    (emp) => ({
-      ...emp,
-      fullName: emp.firstName + ' ' + emp.lastName,
-      senior: emp.years > 10
-    })
-  ]
-).initialize()
-// derived fields are added immutably`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- Example 3 -->
-                <h4>Example 3: Conditional Reducer</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Conditional Reducer'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
-  [
-    (current) => {
-      if (!current.items?.length) return current;
-      return {
-        ...current,
-        items: [...current.items].sort()
-      };
-    }
-  ]
-).initialize()
-// state changes only when items exist`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- Example 4 -->
-                <h4>Example 4: Returning the Same Value (No Change)</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: Returning the Same Value'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
-  [
-    (current) => current
-  ]
-).initialize()
-// no state change — safe and legal`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -1004,25 +968,17 @@ export class EmployeeService {
         deterministic state evolution.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 5: Invalid Mutation'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
-@Injectable({
+      <!-- Example 5 -->
+      <h4>Example 5: Invalid — Mutating the Input</h4>
+      <sdux-multi-framework-example description="Invalid Mutation">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`&#64;FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
+&#64;Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more reducers during initialization
@@ -1038,21 +994,33 @@ export class EmployeeService {
 }
 
 // ❌ Vault error: reducers must not mutate state`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+  [
+    (current) => {
+      current.count++; // ❌ mutation
+      return current;
+    }
+  ]
+).initialize()
 
-                <!-- Example 6 -->
-                <h4>Example 6: Invalid — Returning Wrong Shape</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 6: Invalid Structural Return'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
-@Injectable({
+// ❌ Vault error: reducers must not mutate state`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <!-- Example 6 -->
+      <h4>Example 6: Invalid — Returning Wrong Shape</h4>
+      <sdux-multi-framework-example description="Invalid Structural Return">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`&#64;FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
+&#64;Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more reducers during initialization
@@ -1065,93 +1033,18 @@ export class EmployeeService {
 }
 
 // ❌ Vault error: reducer returned incompatible state type`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <!-- Example 5 -->
-                <h4>Example 5: Invalid — Mutating the Input</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 5: Invalid Mutation'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
-  [
-    (current) => {
-      current.count++; // ❌ mutation
-      return current;
-    }
-  ]
-).initialize()
-
-// ❌ Vault error: reducers must not mutate state`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- Example 6 -->
-                <h4>Example 6: Invalid — Returning Wrong Shape</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 6: Invalid Structural Return'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
   [
     (current) => 123 // ❌ incorrect type
   ]
 ).initialize()
 
 // ❌ Vault error: reducer returned incompatible state type`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <!-- Example 5 -->
-                <h4>Example 5: Invalid — Mutating the Input</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 5: Invalid Mutation'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
-  [
-    (current) => {
-      current.count++; // ❌ mutation
-      return current;
-    }
-  ]
-).initialize()
-
-// ❌ Vault error: reducers must not mutate state`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <!-- Example 6 -->
-                <h4>Example 6: Invalid — Returning Wrong Shape</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 6: Invalid Structural Return'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.reducers(
-  [
-    (current) => 123 // ❌ incorrect type
-  ]
-).initialize()
-
-// ❌ Vault error: reducer returned incompatible state type`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

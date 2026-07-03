@@ -27,7 +27,7 @@ import { VaultControllerComponent } from './vault-controller.component';
     VaultControllerComponent
   ],
   templateUrl: './references-decorators.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesDecoratorsLandingPageComponent {
   type!: string;

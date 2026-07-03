@@ -24,7 +24,7 @@ import { ValueResolveExampleComponentComponent } from './value-resolve-example-c
     ValueResolveExampleComponentComponent
   ],
   templateUrl: './references-classes.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesClassesLandingPageComponent{
   type!: string;

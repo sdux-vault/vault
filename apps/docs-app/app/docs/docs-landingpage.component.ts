@@ -38,6 +38,6 @@ import { DocsTopTierWhatIsSDuXComponent } from './top-tier/what-is-sdux.componen
     SDuXContributorsComponent
   ],
   templateUrl: './docs-landingpage.component.html',
-  styleUrls: ['./scss/example.scss']
+  styleUrls: ['./scss/documentation.scss']
 })
 export class DocsLandingPageComponent extends PipelineRoutingDirective {}

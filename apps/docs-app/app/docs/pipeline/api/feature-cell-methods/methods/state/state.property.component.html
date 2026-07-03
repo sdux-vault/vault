@@ -51,6 +51,55 @@
   </header>
 
   <!-- ====================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="table-title">State Access</div>
+    <table aria-label="State Access">
+      <thead>
+        <tr>
+          <th scope="col" class="column-250">Member</th>
+          <th scope="col" class="column-auto">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <strong>state</strong>
+
+            <p>type:</p>
+            <ul>
+              <li>
+                <a href="/docs/references/shapes/state-snapshot-shape"
+                  >StateSnapshotShape</a
+                >&lt;T&gt;
+              </li>
+            </ul>
+
+            <p>mutability:</p>
+            <ul>
+              <li>Immutable</li>
+            </ul>
+          </td>
+          <td>
+            Returns the current immutable state snapshot for the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            This snapshot reflects the most recently committed state and may be
+            read synchronously at any time after initialization.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <sdux-state-snapshot-shape-common />
+
+    <sdux-vault-signal-state-ref-common />
+  </section>
+
+  <!-- ====================================================== -->
   <!-- state -->
   <!-- ====================================================== -->
   <section class="section">
@@ -65,8 +114,17 @@
 
       <h4>Example: Reading FeatureCell State</h4>
 
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Read FeatureCell State'">
+      <sdux-multi-framework-example description="Read FeatureCell State">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`const snapshot = this.vault.state;
+
+console.info(snapshot.value());
+console.info(snapshot.hasValue());
+console.info(snapshot.isLoading());
+console.info(snapshot.error());`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`const snapshot = employeeCell.state;
 
@@ -74,8 +132,8 @@ console.info(snapshot.value);
 console.info(snapshot.hasValue);
 console.info(snapshot.isLoading);
 console.info(snapshot.error);`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>What this does</h4>
       <ul>
@@ -133,27 +191,27 @@ console.info(snapshot.error);`}}</code></pre>
 
       <h4>Example: Reading FeatureCell State with Signals</h4>
 
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Angular Signal State Example'">
+      <sdux-multi-framework-example description="Angular Signal State">
+        <ng-template #angular>
           <pre class="code-inline"><code class="language-ts">{{`&#64;Component({
   selector: 'employee-view',
   template: \`
     &#64;if (state.hasValue()) {
-      &lt;div&gt;
-        &lt;p&gt;Employees: {{ state.value() | json }}&lt;/p&gt;
-      &lt;/div&gt;
+      `}}&lt;div&gt;{{`
+        `}}&lt;p&gt;{{`Employees: `}}{{ '{{' }}{{ ` state.value() | json ` }}{{ '}}' }}{{``}}&lt;/p&gt;{{`
+      `}}&lt;/div&gt;{{`
     }
 
     &#64;if (state.isLoading()) {
-      &lt;div&gt;
+      `}}&lt;div&gt;{{`
         Loading...
-      &lt;/div&gt;
+      `}}&lt;/div&gt;{{`
     }
 
     &#64;if (state.error()) {
-      &lt;div&gt;
-        Error: {{ state.error()?.message }}
-      &lt;/div&gt;
+      `}}&lt;div&gt;{{`
+        Error: `}}{{ '{{' }}{{ ` state.error()?.message ` }}{{ '}}' }}{{`
+      `}}&lt;/div&gt;{{`
     }
   \`
 })
@@ -161,8 +219,8 @@ export class EmployeeComponent {
   private bankEmployeeServce = inject(EmployeeService);
   state = this.bankEmployeeService.vault.state;
 }`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>What this does</h4>
       <ul>
@@ -182,55 +240,6 @@ export class EmployeeComponent {
         configuration changes are required.
       </p>
     </div>
-  </section>
-
-  <!-- ====================================================== -->
-  <!-- CONFIGURATION -->
-  <!-- ====================================================== -->
-  <section class="section">
-    <div class="section-title">Configuration</div>
-
-    <div class="table-title">State Access</div>
-    <table aria-label="State Access">
-      <thead>
-        <tr>
-          <th scope="col" class="column-250">Member</th>
-          <th scope="col" class="column-auto">Description</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>
-            <strong>state</strong>
-
-            <p>type:</p>
-            <ul>
-              <li>
-                <a href="/docs/references/shapes/state-snapshot-shape"
-                  >StateSnapshotShape</a
-                >&lt;T&gt;
-              </li>
-            </ul>
-
-            <p>mutability:</p>
-            <ul>
-              <li>Immutable</li>
-            </ul>
-          </td>
-          <td>
-            Returns the current immutable state snapshot for the
-            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
-            This snapshot reflects the most recently committed state and may be
-            read synchronously at any time after initialization.
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <sdux-state-snapshot-shape-common />
-
-    <sdux-vault-signal-state-ref-common />
   </section>
 
   <section class="section">

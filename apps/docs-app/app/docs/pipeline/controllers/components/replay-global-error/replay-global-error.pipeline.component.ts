@@ -1,9 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
 import {
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultControllerReplayGlobalErrorCommonComponent } from 'apps/docs-app/app/docs/common/controller/controller-replay-global-error.common.component';
 import { VaultErrorShapeCommonComponent } from 'apps/docs-app/app/docs/common/error/error-shape.component';
@@ -17,15 +15,13 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   standalone: true,
   imports: [
     DiagramComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     PipelineRelatedTopicComponent,
-    MatTabsModule,
     VaultErrorShapeCommonComponent,
     VaultControllerReplayGlobalErrorCommonComponent
   ],
   templateUrl: './replay-global-error.pipeline.component.html',
-  styleUrls: ['../../../../scss/example.scss'],
+  styleUrls: ['../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineReplayGlobalErrorControllerComponent {}

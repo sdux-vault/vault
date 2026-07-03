@@ -85,7 +85,7 @@ import { VaultRegistrationShapeComponent } from './vault-registration-shape.comp
     VaultRegistrationShapeComponent
   ],
   templateUrl: './references-shapes.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesShapesLandingPageComponent {
   type!: string;

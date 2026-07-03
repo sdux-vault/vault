@@ -123,14 +123,17 @@
         exposure, or downstream observers.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Although multiple emit-state callbacks may be composed, callback logic
-        should remain narrowly scoped and observational. Complex or
-        interdependent callbacks can obscure intent and complicate state-change
-        analysis. Emit-state callbacks are most effective when limited to
-        diagnostics, transitional compatibility, or integration side effects.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Although multiple emit-state callbacks may be composed, callback logic
+          should remain narrowly scoped and observational. Complex or
+          interdependent callbacks can obscure intent and complicate
+          state-change analysis. Emit-state callbacks are most effective when
+          limited to diagnostics, transitional compatibility, or integration
+          side effects.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -561,22 +564,11 @@ employeeCell.emitStates(
     <div class="section-title">Examples</div>
 
     <div class="section-body">
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Register a State Emit Callback</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Register a State Emit Callback'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <h4>Example 1: Register a State Emit Callback</h4>
+      <sdux-multi-framework-example
+        description="Register a State Emit Callback">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -591,7 +583,7 @@ export const appConfig: ApplicationConfig = {
       [
         // **Important**
         // State emit callbacks are not registered as part of the
-        // FeatureCell’s declarative configuration.
+        // FeatureCell's declarative configuration.
       ],
       [
         // opt-in Controllers
@@ -606,10 +598,10 @@ import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault
@@ -626,66 +618,10 @@ export class EmployeeService {
       .initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Async State Emit Callback (Remote Logging)</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Async State Emit Callback (Remote Logging)'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// bank-employee.service.ts
-
-@Injectable({ providedIn: 'root' })
-export class EmployeeService {
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
-
-  constructor() {
-    this.vault
-      .emitStates(
-        [
-          async (snapshot) => {
-            await logStateToApi({
-              feature: 'employees',
-              value: snapshot.value,
-              isLoading: snapshot.isLoading,
-              hasValue: snapshot.hasValue,
-            });
-          }
-        ]
-      )
-      .initialize();
-  }
-}
-
-async function logStateToApi(payload: {
-  feature: string;
-  value: unknown;
-  isLoading: boolean;
-  hasValue: boolean;
-}): Promise&lt;void&gt; {
-  await fetch('/api/logs/state', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-}`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Register a State Emit Callback</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Register a State Emit Callback'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -711,15 +647,54 @@ employeeCell
     ]
   )
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <h4>Example 2: Async State Emit Callback (Remote Logging)</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Async State Emit Callback (Remote Logging)'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`async function logState(payload: {
+      <h4>Example 2: Async State Emit Callback (Remote Logging)</h4>
+      <sdux-multi-framework-example
+        description="Async State Emit Callback (Remote Logging)">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// bank-employee.service.ts
+
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
+
+  constructor() {
+    this.vault
+      .emitStates(
+        [
+          async (snapshot) => {
+            await logStateToApi({
+              feature: 'employees',
+              value: snapshot.value,
+              isLoading: snapshot.isLoading,
+              hasValue: snapshot.hasValue,
+            });
+          }
+        ]
+      )
+      .initialize();
+  }
+}
+
+async function logStateToApi(payload: {
+  feature: string;
+  value: unknown;
+  isLoading: boolean;
+  hasValue: boolean;
+}): Promise`}}&lt;void&gt;{{` {
+  await fetch('/api/logs/state', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+}`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`async function logState(payload: {
   feature: string;
   value: unknown;
 }) {
@@ -742,71 +717,8 @@ employeeCell
     ]
   )
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Register a State Emit Callback</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Register a State Emit Callback'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [],
-  []
-);
-
-employeeCell
-  .emitStates(
-    [
-      (snapshot) => {
-        console.info('Employees snapshot emitted');
-        console.info('Current value:', snapshot.value);
-      }
-    ]
-  )
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Async State Emit Callback (Remote Logging)</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Async State Emit Callback (Remote Logging)'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell
-  .emitStates(
-    [
-      async (snapshot) => {
-        await fetch('/api/logs/state', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            feature: 'employees',
-            value: snapshot.value,
-          }),
-        });
-      }
-    ]
-  )
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

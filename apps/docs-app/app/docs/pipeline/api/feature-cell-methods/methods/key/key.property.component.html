@@ -50,14 +50,20 @@
     <div class="section-body">
       <h4>Example: Key</h4>
 
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example: Key'">
+      <sdux-multi-framework-example description="Key">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.initialize();
+
+console.info(this.vault.key)`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`employeeCell.initialize();
 
 console.info(employeeCell.key)`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

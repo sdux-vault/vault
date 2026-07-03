@@ -1,12 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultTabSyncLicensingCommonComponent } from 'apps/docs-app/app/docs/common/tab-sync-licensing.component';
@@ -22,20 +20,17 @@ import { VaultTabSyncPrivacyCommonComponent } from '../../../../common/tab-sync-
   standalone: true,
   imports: [
     DiagramComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     RouterModule,
     PipelineRelatedTopicComponent,
     VaultTabSyncLicensingCommonComponent,
     VaultTabSyncPrivacyCommonComponent,
-    MatTabGroup,
-    MatTab,
     VaultBrandNameComponent,
     BrandNameComponent,
     FeatureCellBrandNameComponent
   ],
   templateUrl: './tab-sync.pipeline.component.html',
-  styleUrls: ['../../../../scss/example.scss'],
+  styleUrls: ['../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineTabSyncBehaviorComponent extends NavigationDirective {}

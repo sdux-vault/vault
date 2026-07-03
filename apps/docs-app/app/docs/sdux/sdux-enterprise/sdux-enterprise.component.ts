@@ -33,7 +33,7 @@ import { EnterpriseContactShape } from './shape/enterprise-contact.shape';
     BrandNameComponent
   ],
   templateUrl: './sdux-enterprise.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SDuXEnterpriseOverviewComponent extends PipelineRoutingDirective {

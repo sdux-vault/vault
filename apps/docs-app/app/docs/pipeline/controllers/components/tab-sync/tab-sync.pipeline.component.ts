@@ -31,7 +31,7 @@ import { VaultTabSyncPrivacyCommonComponent } from '../../../../common/tab-sync-
     VaultBrandNameComponent
   ],
   templateUrl: './tab-sync.pipeline.component.html',
-  styleUrls: ['../../../../scss/example.scss'],
+  styleUrls: ['../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineTabSyncControllerComponent extends NavigationDirective {}

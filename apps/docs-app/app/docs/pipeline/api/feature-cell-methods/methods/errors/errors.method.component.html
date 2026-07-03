@@ -47,20 +47,22 @@
       surface.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      The <strong>errors()</strong> method is additive. It may be invoked
-      multiple times, and each invocation appends callbacks to the
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s error
-      callback list. Callbacks execute in the exact order they are registered
-      during initialization.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The <strong>errors()</strong> method is additive. It may be invoked
+        multiple times, and each invocation appends callbacks to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        error callback list. Callbacks execute in the exact order they are
+        registered during initialization.
+      </p>
 
-    <p>
-      While multiple invocations are supported, the recommended practice is to
-      register related error callbacks as a single ordered array to preserve
-      clarity and intentional execution ordering.
-    </p>
+      <p>
+        While multiple invocations are supported, the recommended practice is to
+        register related error callbacks as a single ordered array to preserve
+        clarity and intentional execution ordering.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -80,8 +82,18 @@
 
       <h4>Example: Registering Error Callbacks</h4>
 
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Register Error Callbacks'">
+      <sdux-multi-framework-example description="Register Error Callbacks">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`this.vault
+  .errors([
+    (error, state) => {
+      console.error('Employee FeatureCell error:', error.message);
+      console.info('Last known state:', state.value);
+    }
+  ])
+  .initialize();`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
           <pre class="code-inline"><code class="language-ts">{{`employeeCell
   .errors([
     (error, state) => {
@@ -90,8 +102,8 @@
     }
   ])
   .initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>What this does</h4>
       <ul>

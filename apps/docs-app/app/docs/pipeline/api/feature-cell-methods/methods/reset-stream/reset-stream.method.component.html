@@ -47,65 +47,17 @@
       reset operation has occurred.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      Unlike <strong>destroyed$</strong>, the <strong>reset$</strong> stream
-      does not indicate teardown. After a reset event, the
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> remains
-      active and may continue processing updates, executing pipelines, and
-      emitting state snapshots.
-    </p>
-  </header>
-
-  <!-- ====================================================== -->
-  <!-- reset$ -->
-  <!-- ====================================================== -->
-  <section class="section">
-    <div class="section-title">Example</div>
-
-    <div class="section-body">
+    <div class="callout callout-info">
+      <div class="title">Note</div>
       <p>
-        The <strong>reset$</strong> observable allows consumers to react to
+        Unlike <strong>destroyed$</strong>, the <strong>reset$</strong> stream
+        does not indicate teardown. After a reset event, the
         <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        resets. This is commonly used to clear derived UI state, reset local
-        caches, or reinitialize external resources that depend on
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state.
-      </p>
-
-      <h4>Example: Observing FeatureCell Reset</h4>
-
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Observe FeatureCell Reset'">
-          <pre
-            class="code-inline"><code class="language-ts">{{`employeeCell.reset$
-  .subscribe(() => {
-    console.info('FeatureCell was reset');
-  });`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
-
-      <h4>What this does</h4>
-      <ul>
-        <li>
-          Subscribes to the
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          reset signal
-        </li>
-        <li>Receives a notification each time reset() is called</li>
-        <li>Continues listening across multiple resets</li>
-        <li>Does not receive state values or snapshots</li>
-      </ul>
-
-      <p>
-        This stream is ideal for coordinating cleanup or reinitialization logic
-        that must run whenever
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
-        is cleared, without requiring
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        teardown.
+        remains active and may continue processing updates, executing pipelines,
+        and emitting state snapshots.
       </p>
     </div>
-  </section>
+  </header>
 
   <!-- ====================================================== -->
   <!-- CONFIGURATION -->
@@ -148,6 +100,63 @@
         </tr>
       </tbody>
     </table>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- reset$ -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        The <strong>reset$</strong> observable allows consumers to react to
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        resets. This is commonly used to clear derived UI state, reset local
+        caches, or reinitialize external resources that depend on
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state.
+      </p>
+
+      <h4>Example: Observing FeatureCell Reset</h4>
+
+      <sdux-multi-framework-example description="Observe FeatureCell Reset">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.reset$
+  .subscribe(() => {
+    console.info('FeatureCell was reset');
+  });`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.reset$
+  .subscribe(() => {
+    console.info('FeatureCell was reset');
+  });`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>
+          Subscribes to the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          reset signal
+        </li>
+        <li>Receives a notification each time reset() is called</li>
+        <li>Continues listening across multiple resets</li>
+        <li>Does not receive state values or snapshots</li>
+      </ul>
+
+      <p>
+        This stream is ideal for coordinating cleanup or reinitialization logic
+        that must run whenever
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> state
+        is cleared, without requiring
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        teardown.
+      </p>
+    </div>
   </section>
 
   <!-- ====================================================== -->

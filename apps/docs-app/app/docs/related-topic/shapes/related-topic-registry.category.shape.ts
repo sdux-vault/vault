@@ -49,8 +49,6 @@ export interface RelatedTopicRegistryCategoryShape {
 
   press: RelatedTopicCategoryShape;
 
-  'provide-feature-cell': RelatedTopicCategoryShape;
-
   'provide-vault': RelatedTopicCategoryShape;
 
   reducers: RelatedTopicCategoryShape;

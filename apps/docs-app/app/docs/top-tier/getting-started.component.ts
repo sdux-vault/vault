@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
@@ -8,6 +7,8 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  GenericTabComponent,
+  MultiFrameworkExampleComponent,
   PackageNameComponent,
   SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
@@ -24,7 +25,8 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     CatchPhraseComponent,
     RouterModule,
     BrandNameComponent,
-    MatTabsModule,
+    MultiFrameworkExampleComponent,
+    GenericTabComponent,
     PipelineRelatedTopicComponent,
     NothingHappenedQuoteComponent,
     FeatureCellBrandNameComponent,
@@ -32,6 +34,6 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     SDuXVideoComponent
   ],
   templateUrl: './getting-started.component.html',
-  styleUrls: ['../scss/example.scss']
+  styleUrls: ['../scss/documentation.scss']
 })
 export class DocsTopTierGettingStartedComponent {}

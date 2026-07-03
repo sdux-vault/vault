@@ -1940,19 +1940,22 @@ describe('Controller: withReplayGlobalError', () => {
         analyze outside the browser.
       </p>
 
-      <div class="note">Typical Use Cases</div>
-      <ul>
-        <li>Exporting large diagnostic objects during debugging</li>
-        <li>Capturing pipeline state snapshots</li>
-        <li>Saving integration test artifacts for external analysis</li>
-        <li>Inspecting DevTools insight emissions or execution traces</li>
-        <li>Creating testing artifacts for comparison</li>
-      </ul>
+      <div class="callout callout-info">
+        <div class="title">Note Typical Use Cases</div>
 
-      <p>
-        The generated file name includes a timestamp to ensure uniqueness across
-        multiple downloads within the same test session.
-      </p>
+        <ul>
+          <li>Exporting large diagnostic objects during debugging</li>
+          <li>Capturing pipeline state snapshots</li>
+          <li>Saving integration test artifacts for external analysis</li>
+          <li>Inspecting DevTools insight emissions or execution traces</li>
+          <li>Creating testing artifacts for comparison</li>
+        </ul>
+
+        <p>
+          The generated file name includes a timestamp to ensure uniqueness
+          across multiple downloads within the same test session.
+        </p>
+      </div>
 
       <h5>Example</h5>
 
@@ -1999,20 +2002,22 @@ describe('Controller: withReplayGlobalError', () => {
         </sdux-example-viewer-tab>
       </sdux-example-viewer-source>
 
-      <div class="note">Important Notes</div>
-      <ul>
-        <li>Intended for debugging and testing scenarios only</li>
-        <li>Runs only in browser environments</li>
-        <li>Not suitable for Node.js or headless test runners</li>
-        <li>Does not affect Vault pipeline execution or state</li>
-      </ul>
+      <div class="callout callout-info">
+        <div class="title">Important Notes</div>
+        <ul>
+          <li>Intended for debugging and testing scenarios only</li>
+          <li>Runs only in browser environments</li>
+          <li>Not suitable for Node.js or headless test runners</li>
+          <li>Does not affect Vault pipeline execution or state</li>
+        </ul>
 
-      <p>
-        This helper is purely a developer convenience tool. It does not interact
-        with the
-        <sdux-brand-name /> runtime or testing stabilization mechanisms such as
-        <code>vaultSettled()</code>.
-      </p>
+        <p>
+          This helper is purely a developer convenience tool. It does not
+          interact with the
+          <sdux-brand-name /> runtime or testing stabilization mechanisms such
+          as <code>vaultSettled()</code>.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -2199,15 +2204,17 @@ describe('Controller: withReplayGlobalError', () => {
         and resetting runtime state.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        The implementation is intentionally minimal.
-        <a href="/docs/references/functions/vault-testing">VaultTesting</a> does
-        not alter pipeline semantics or execution behavior — it only prepares a
-        clean, development-enabled runtime before delegating to
-        <code>Vault()</code>. The pipeline itself remains identical to
-        production execution.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          The implementation is intentionally minimal.
+          <a href="/docs/references/functions/vault-testing">VaultTesting</a>
+          does not alter pipeline semantics or execution behavior — it only
+          prepares a clean, development-enabled runtime before delegating to
+          <code>Vault()</code>. The pipeline itself remains identical to
+          production execution.
+        </p>
+      </div>
 
       <h5>Source Code</h5>
       <sdux-example-viewer-source [displayTabs]="false">

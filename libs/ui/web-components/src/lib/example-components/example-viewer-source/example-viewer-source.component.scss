@@ -103,6 +103,13 @@
        COPY BUTTON (cleaned)
        =============================== */
 
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
     .copy-btn {
       @include global.sdux-icon-button(36px);
 

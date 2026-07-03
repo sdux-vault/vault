@@ -10,7 +10,10 @@ import { BLOG_ENTRIES } from './constants/blog-entries.constant';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './blog-index.component.html',
-  styleUrls: ['./blog-index.component.scss', '../../docs/scss/example.scss'],
+  styleUrls: [
+    './blog-index.component.scss',
+    '../../docs/scss/documentation.scss'
+  ],
   encapsulation: ViewEncapsulation.None
 })
 export class BlogIndexComponent {

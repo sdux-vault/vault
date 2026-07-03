@@ -28,6 +28,6 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     PipelineRelatedTopicComponent
   ],
   templateUrl: './how-to-define-your-state.component.html',
-  styleUrls: ['../scss/example.scss']
+  styleUrls: ['../scss/documentation.scss']
 })
 export class DocsTopTierHowToDefineYourStateComponent {}

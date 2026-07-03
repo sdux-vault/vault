@@ -154,14 +154,16 @@
         mutate state, and must not attempt to resume pipeline execution.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Although multiple error callbacks may be composed, callback logic should
-        remain narrowly scoped and observational. Complex or interdependent
-        callbacks can obscure intent and complicate failure analysis. Error
-        callbacks are most effective when limited to logging, diagnostics, or
-        transitional compatibility concerns.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Although multiple error callbacks may be composed, callback logic
+          should remain narrowly scoped and observational. Complex or
+          interdependent callbacks can obscure intent and complicate failure
+          analysis. Error callbacks are most effective when limited to logging,
+          diagnostics, or transitional compatibility concerns.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -209,24 +211,29 @@
         interrupt downstream error handling.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Multiple error transform behaviors may be composed. When configured,
-        they execute sequentially in the exact order they are declared in the
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        definition. Each transform receives the
-        <em>current</em>
-        <a href="/docs/references/shapes/vault-error-shape">VaultErrorShape</a>
-        produced by the preceding behavior—starting with core error
-        normalization—and may replace it or pass it through unchanged.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Multiple error transform behaviors may be composed. When configured,
+          they execute sequentially in the exact order they are declared in the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          definition. Each transform receives the
+          <em>current</em>
+          <a href="/docs/references/shapes/vault-error-shape"
+            >VaultErrorShape</a
+          >
+          produced by the preceding behavior—starting with core error
+          normalization—and may replace it or pass it through unchanged.
+        </p>
 
-      <p>
-        Because transforms are applied cumulatively, their order is semantically
-        significant. Error transform behaviors should remain narrowly scoped and
-        intentional. Overlapping or order-dependent transforms can obscure error
-        provenance and complicate failure analysis.
-      </p>
+        <p>
+          Because transforms are applied cumulatively, their order is
+          semantically significant. Error transform behaviors should remain
+          narrowly scoped and intentional. Overlapping or order-dependent
+          transforms can obscure error provenance and complicate failure
+          analysis.
+        </p>
+      </div>
     </div>
   </section>
 

@@ -132,13 +132,13 @@
     },
     {
       "id": "blog:one-runtime-every-framework-zero-dependencies",
-      "title": "<sdux-vault-brand-name [tm]='true' /> 1.0 — One Runtime, Every Framework, Zero Dependencies",
+      "title": "One Runtime, Every Framework, Zero Dependencies",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/one-runtime-every-framework-zero-dependencies",
       "symbols": ["one-runtime-every-framework-zero-dependencies"],
-      "content": "<sdux-vault-brand-name [tm]='true' /> 1.0 — One Runtime, Every Framework, Zero Dependencies one-runtime-every-framework-zero-dependencies SP"
+      "content": "One Runtime, Every Framework, Zero Dependencies one-runtime-every-framework-zero-dependencies SP"
     },
     {
       "id": "blog:redux-pattern-sdux-vault-contract",

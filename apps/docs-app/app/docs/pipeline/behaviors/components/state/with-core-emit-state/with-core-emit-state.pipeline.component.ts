@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   DiagramComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultStateBehaviorCommonComponent } from 'apps/docs-app/app/docs/common/state/state-behaviors.component';
 import { StateCallbackFluentApiCommonComponent } from 'apps/docs-app/app/docs/common/state/state-callback-fluent-api.component';
@@ -30,13 +30,12 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     VaultStateBehaviorCommonComponent,
     StateEmitCallbackCommonComponent,
     StateCallbackFluentApiCommonComponent,
-    MatTabGroup,
-    MatTab,
+    MultiFrameworkExampleComponent,
     StateEmissionOrderCommonComponent,
     StateConsumptionMechanismCommonComponent
   ],
   templateUrl: './with-core-emit-state.pipeline.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineCoreEmitStateBehaviorComponent {}

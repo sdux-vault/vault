@@ -79,7 +79,7 @@ import { VaultPrivateErrorServiceContractComponent } from './vault-private-error
     VaultPrivateErrorServiceContractComponent
   ],
   templateUrl: './references-contracts.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesContractsLandingPageComponent {
   type!: string;

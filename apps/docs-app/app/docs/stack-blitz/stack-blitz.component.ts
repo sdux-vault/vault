@@ -27,7 +27,7 @@ import { createExampleGroups } from './constants/stackblitz-examples.constants';
     FeatureCellBrandNameComponent
   ],
   templateUrl: './stack-blitz.component.html',
-  styleUrls: ['../scss/example.scss'],
+  styleUrls: ['../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class StackBlitzOverviewComponent extends PipelineRoutingDirective {

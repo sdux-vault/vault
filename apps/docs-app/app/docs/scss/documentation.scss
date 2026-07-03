@@ -1,6 +1,6 @@
 @use 'global' as global;
 
-// example.scss
+// documentation.scss
 
 /* ============================================
    DOCS SECTION CONTAINER
@@ -75,25 +75,9 @@
     max-width: 720px;
   }
 
-  /* Small laptop */
+  /* Small laptop — matches Angular docs content width (700px + 100px padding) */
   @media (min-width: global.$breakpoint-lg) {
-    max-width: 960px;
-  }
-
-  /* Desktop */
-  @media (min-width: 1280px) {
-    max-width: 1120px;
-  }
-
-  /* Large desktop */
-  @media (min-width: 1600px) {
-    max-width: 1280px;
-  }
-
-  .note {
-    @include global.h5-element;
-    margin-top: global.$spacing-md;
-    margin-bottom: -#{global.$spacing-md};
+    max-width: 800px;
   }
 
   .docs-header {
@@ -418,6 +402,26 @@
   table {
     border: 1px solid
       color-mix(in srgb, var(--sdux-surface-outline) 60%, transparent);
+  }
+
+  .platform-label {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    vertical-align: top;
+    height: 100%;
+
+    sdux-image {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .platform-icon-spacer {
+    display: inline-block;
+    width: 15px;
+    flex-shrink: 0;
   }
 }
 

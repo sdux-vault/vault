@@ -1,10 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultErrorBehaviorCommonComponent } from 'apps/docs-app/app/docs/common/error/error-behaviors.component';
 import { VaultErrorCallbackFluentApiCommonComponent } from 'apps/docs-app/app/docs/common/error/error-callback-fluent-api.component';
@@ -23,22 +21,19 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   standalone: true,
   imports: [
     DiagramComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
     StateSnapshotShapeCommonComponent,
     VaultErrorShapeCommonComponent,
     RouterModule,
     PipelineRelatedTopicComponent,
     VaultErrorCallbackFluentApiCommonComponent,
     VaultErrorCallbackShapeCommonComponent,
-    MatTab,
-    MatTabGroup,
+    MultiFrameworkExampleComponent,
     ErrorHandlingOrderCommonComponent,
     ErrorConsumptionMechanismCommonComponent,
     VaultErrorBehaviorCommonComponent
   ],
   templateUrl: './with-core-error-callback.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineCoreErrorCallbackBehaviorComponent {}

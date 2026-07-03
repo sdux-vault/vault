@@ -111,19 +111,21 @@
         intercepted an action, or whether execution short-circuited.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        <sdux-brand-name /> intentionally avoids a global dispatch or action
-        layer. Introducing one would require additional indirection, implicit
-        routing rules, and shared mutable concerns that undermine the pipeline’s
-        determinism and isolation guarantees.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          <sdux-brand-name /> intentionally avoids a global dispatch or action
+          layer. Introducing one would require additional indirection, implicit
+          routing rules, and shared mutable concerns that undermine the
+          pipeline’s determinism and isolation guarantees.
+        </p>
 
-      <p>
-        By submitting intent directly into the pipeline,
-        <sdux-brand-name /> keeps state transitions explicit, auditable, and
-        bound to a single execution boundary.
-      </p>
+        <p>
+          By submitting intent directly into the pipeline,
+          <sdux-brand-name /> keeps state transitions explicit, auditable, and
+          bound to a single execution boundary.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -160,42 +162,22 @@
         The examples below demonstrate how engineers submit intent directly into
         a
         <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        pipeline in Angular, React, and Vue using <strong>replaceState</strong>.
+        pipeline using <strong>replaceState</strong>. In all cases, intent is
+        submitted directly into the pipeline. The Resolve stage executes the
+        deferred input, the pipeline completes deterministically, and the State
+        stage commits a single authoritative snapshot — without dispatch,
+        external reducers, or action interpretation.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <h4>Example: Execute the Pipeline with a Deferred Input</h4>
-
-              <p>
-                In Angular, intent is expressed by invoking a pipeline entry
-                API. A deferred factory is submitted, resolved by the pipeline,
-                and committed as a finalized state snapshot.
-              </p>
-
-              <p>
-                In all cases, intent is submitted directly into the pipeline.
-                The Resolve stage executes the deferred input, the pipeline
-                completes deterministically, and the State stage commits a
-                single authoritative snapshot — without dispatch, external
-                reducers, or action interpretation.
-              </p>
-
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Pipeline execution (no dispatch)'">
-                  <pre class="code-inline"><code class="language-ts">{{`
+      <h4>Example: Execute the Pipeline Without Dispatch</h4>
+      <sdux-multi-framework-example
+        description="Pipeline execution (no dispatch)">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`
 @Injectable({ providedIn: 'root' })
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 export class EmployeeService {
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
@@ -208,27 +190,9 @@ export class EmployeeService {
   }
 }
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <h4>Example: Execute the Pipeline from Application Code</h4>
-
-              <p>
-                In React, intent is submitted directly to the
-                <a href="/docs/references/functions/feature-cell">FeatureCell</a
-                >. There is no action object and no dispatch call — the pipeline
-                executes immediately.
-              </p>
-
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Pipeline execution (no dispatch)'">
-                  <pre class="code-inline"><code class="language-ts">{{`
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`
 employeeCell.initialize();
 
 function loadEmployees() {
@@ -237,40 +201,8 @@ function loadEmployees() {
   );
 }
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <h4>Example: Execute the Pipeline from a Composable</h4>
-
-              <p>
-                In Vue, the same pipeline entry API is used. The Vault resolves
-                the deferred input and emits a finalized, immutable state
-                snapshot.
-              </p>
-
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Pipeline execution (no dispatch)'">
-                  <pre class="code-inline"><code class="language-ts">{{`
-employeeCell.initialize();
-
-const loadEmployees = () => {
-  employeeCell.replaceState(() =>
-    fetch('/api/employees').then(r => r.json())
-  );
-};
-`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

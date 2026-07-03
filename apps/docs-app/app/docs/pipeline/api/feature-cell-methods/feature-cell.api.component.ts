@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { VaultFeatureCellShapeCommonComponent } from 'apps/docs-app/app/docs/common/feature-cell/feature-cell-shape.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { FeatureCellDiagramCommonComponent } from '../../../common/feature-cell/feature-cell-diagram.component';
 
 /**
  * The pipeline provide vault documentation
@@ -12,10 +13,11 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   imports: [
     RouterModule,
     PipelineRelatedTopicComponent,
-    VaultFeatureCellShapeCommonComponent
+    VaultFeatureCellShapeCommonComponent,
+    FeatureCellDiagramCommonComponent
   ],
   templateUrl: './feature-cell.api.component.html',
-  styleUrls: ['../../../scss/example.scss'],
+  styleUrls: ['../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineFeatureCellApiComponent {}

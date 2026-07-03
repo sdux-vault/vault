@@ -34,14 +34,16 @@
       deterministic, time-based pause before pipeline continuation.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      The Delay Controller governs execution timing, not value admission or
-      derivation. It does not participate in filtering, reduction, or resolution
-      logic, and it does not enqueue or drop candidate values. Its authority is
-      limited strictly to pausing and resuming pipeline execution based Flowon
-      elapsed time.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The Delay Controller governs execution timing, not value admission or
+        derivation. It does not participate in filtering, reduction, or
+        resolution logic, and it does not enqueue or drop candidate values. Its
+        authority is limited strictly to pausing and resuming pipeline execution
+        based Flowon elapsed time.
+      </p>
+    </div>
 
     <p class="live-example-link">
       Try it in StackBlitz:
@@ -171,21 +173,10 @@
         <code>.withDelay(&lt;WithDelayControllerOptions&gt;)</code>.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Delay Controller'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="Configure a FeatureCell with Delay Controller">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -208,21 +199,10 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Delay Controller'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -235,40 +215,8 @@ export const appConfig: ApplicationConfig = {
     withDelayController
   ]
 );`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Delay Controller'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Optional add-on behaviors
-  ],
-  [
-    // Attach the Delay Controller structurally
-    withDelayController
-  ]
-);`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -451,26 +399,16 @@ export const appConfig: ApplicationConfig = {
         updates are forwarded independently after the delay interval.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Delay Controller'">
-                    <pre class="code-inline"><code class="language-ts">{{`
-@FeatureCell&lt;Employee[][]>('employees')
+      <sdux-multi-framework-example
+        description="Configure a FeatureCell with Delay">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply delay controller configuration during initialization
@@ -482,21 +420,10 @@ export class EmployeeService {
   }
 }
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Delay Controller'">
-                    <pre class="code-inline"><code class="language-ts">{{`
-export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -516,47 +443,8 @@ employeeCell
   })
   .initialize();
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Delay Controller'">
-                    <pre class="code-inline"><code class="language-ts">{{`
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-    [
-      // Additional add-on behaviors
-    ],
-    [
-      withDelayController
-    ]
-  }
-);
-
-// Apply delay controller configuration during initialization
-employeeCell
-  .withDelay?.({
-    millisecondDelay: 500
-  })
-  .initialize();
-`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <p>
         In all cases, the Delay Controller pauses pipeline execution for each

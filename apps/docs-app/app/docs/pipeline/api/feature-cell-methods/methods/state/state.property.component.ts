@@ -1,8 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent,
   PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { StateSnapshotShapeCommonComponent } from 'apps/docs-app/app/docs/common/state/state-snapshot-shape.component';
@@ -16,8 +15,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   selector: 'sdux-pipeline-state-property',
   standalone: true,
   imports: [
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     RouterModule,
     PipelineRelatedTopicComponent,
     StateSnapshotShapeCommonComponent,
@@ -25,7 +23,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     PackageNameComponent
   ],
   templateUrl: './state.property.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineStatePropertyComponent {}
