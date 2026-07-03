@@ -356,7 +356,10 @@ export class TypeExtractor {
         for (const symbol of symbols) {
           if (
             symbol.name === 'VaultPrivateErrorService' ||
-            symbol.name === 'VaultPrivateErrorClass'
+            symbol.name === 'VaultPrivateErrorClass' ||
+            symbol.name === 'getPlatformBehaviors' ||
+            symbol.name === 'registerPlatformBehavior' ||
+            symbol.name === 'resetPlatformBehaviorsForTests'
           )
             continue;
 
