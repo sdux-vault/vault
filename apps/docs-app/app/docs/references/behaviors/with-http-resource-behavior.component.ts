@@ -131,6 +131,21 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
                 Resets the behavior without modifying internal state.<br /><br />
               </td>
             </tr>
+            <tr>
+              <td>
+                <strong>setInjector</strong>
+                <p class="modifiers">static</p>
+                <p>inputs:</p>
+                <ul>
+                  <li>value: Injector</li>
+                </ul>
+                <p>returns: void</p>
+              </td>
+              <td>
+                Sets the Angular injector used by all instances during
+                resolve.<br /><br />
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
