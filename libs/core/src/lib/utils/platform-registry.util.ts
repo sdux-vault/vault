@@ -57,6 +57,7 @@ export function registerPlatformBehavior<T>(
   }
 
   if (resolveType !== undefined) {
+    /* istanbul ignore if -- defensive guard; ALLOWED_BEHAVIOR_TYPES currently only contains Resolve */
     if (type !== BehaviorTypes.Resolve) {
       throw new Error(
         `registerPlatformBehavior: resolveType can only be provided when type is "${BehaviorTypes.Resolve}", received "${type}".`

@@ -1,3 +1,8 @@
+import { provideHttpClient } from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting
+} from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
@@ -6,6 +11,7 @@ import { getBankEmployeeData } from '../../structure/data/bank-employee.data';
 import { partialHttpResourceService } from './partial-http-resource.service';
 
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
+import { PrimaryPartialAbstractClass } from '../../structure/services/primary-partial.abstract';
 import { createTestInsightListener } from '../../structure/utils/create-test-insight-listener.util';
 import { expectMonitorSnapshot } from '../../structure/utils/expect-monitor-snapshot.util';
 import { p021Snapshot } from './snap-shots/p021-http-resource.merge.snapshot';
@@ -24,6 +30,7 @@ import { p021Snapshot } from './snap-shots/p021-http-resource.merge.snapshot';
 describe('p021: HttpResource - Merge', () => {
   let testService: partialHttpResourceService;
   let stopListening: () => void;
+  let httpMock: HttpTestingController;
   const key = 'partial-http-resource';
   const emitted: any[] = [];
 
@@ -35,6 +42,8 @@ describe('p021: HttpResource - Merge', () => {
         }),
         partialHttpResourceService,
         provideZonelessChangeDetection(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
         provideFeatureCell(
           partialHttpResourceService,
           {
@@ -48,12 +57,14 @@ describe('p021: HttpResource - Merge', () => {
 
     stopListening = createTestInsightListener(emitted);
 
+    httpMock = TestBed.inject(HttpTestingController);
     testService = TestBed.inject(partialHttpResourceService);
     testService.initialize();
   });
 
   afterEach(() => {
     stopListening();
+    httpMock.verify();
   });
 
   it('should resolve an HttpResourceRef via mergeState and commit state', async () => {
@@ -63,12 +74,14 @@ describe('p021: HttpResource - Merge', () => {
     expect(state.value()).toEqual([]);
     expect(state.hasValue()).toBeTrue();
 
-    const mockResource = testService.createMockHttpResourceRef(
-      getBankEmployeeData(0, true)
-    );
+    const mockResource = testService.createHttpResourceRef();
 
     testService.vault.mergeState(mockResource as any);
 
+    await TestBed.tick();
+    httpMock
+      .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
+      .flush(getBankEmployeeData(0, true));
     await vaultSettled(key);
 
     expect(state.value()).toEqual([
@@ -82,10 +95,12 @@ describe('p021: HttpResource - Merge', () => {
     expect(state.error()).toBeNull();
     expect(state.isLoading()).toBeFalse();
 
-    const resource2 = testService.createMockHttpResourceRef(
-      getBankEmployeeData(1, true)
-    );
+    const resource2 = testService.createHttpResourceRef();
     testService.vault.mergeState(resource2 as any);
+    await TestBed.tick();
+    httpMock
+      .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
+      .flush(getBankEmployeeData(1, true));
     await vaultSettled(key);
 
     // Default merge behavior (withArrayMerge) replaces the array

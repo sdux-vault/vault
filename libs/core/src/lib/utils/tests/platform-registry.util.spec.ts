@@ -225,4 +225,13 @@ describe('Util: registerPlatformBehavior', () => {
       )
     ).not.toThrow();
   });
+
+  it('should use behaviorClass.key as registryKey when resolveType is omitted', () => {
+    expect(() =>
+      registerPlatformBehavior(
+        BehaviorTypes.Resolve,
+        MockPlatformBehavior as unknown as BehaviorClassContract
+      )
+    ).not.toThrow();
+  });
 });

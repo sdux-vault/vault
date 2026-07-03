@@ -145,6 +145,76 @@ describe('Behavior: HttpResource', () => {
     expect(warnSpy).toHaveBeenCalledTimes(0);
   });
 
+  it('should reject via error$ race when error signal emits on a synthetic resource', async () => {
+    const errorSignal = signal<unknown>(undefined);
+
+    ctx.incoming = {
+      value: signal(undefined),
+      isLoading: signal(false),
+      error: errorSignal,
+      hasValue: () => false,
+      status: signal(0),
+      headers: signal(undefined),
+      reload: () => true,
+      destroy: () => {},
+      request: signal(undefined)
+    };
+
+    const promise = behavior.computeResolve(ctx);
+    await TestBed.tick();
+
+    errorSignal.set(new Error('Signal error'));
+    await TestBed.tick();
+
+    await promise
+      .then(() => {
+        fail('Expected rejection');
+      })
+      .catch((error: any) => {
+        expect(error).toEqual(
+          Object({
+            message: 'Signal error',
+            featureCellKey: 'cell-key',
+            details: jasmine.any(String),
+            raw: jasmine.any(Error),
+            timestamp: jasmine.any(Number)
+          })
+        );
+      });
+
+    expect(warnSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should throw a descriptive error when moduleInjector is not set', async () => {
+    withHttpResourceBehavior.setInjector(undefined as any);
+
+    ctx.incoming = {
+      value: signal(undefined),
+      isLoading: signal(false),
+      error: signal(undefined),
+      hasValue: () => false,
+      status: signal(0),
+      headers: signal(undefined),
+      reload: () => true,
+      destroy: () => {},
+      request: signal(undefined)
+    };
+
+    await behavior
+      .computeResolve(ctx)
+      .then(() => {
+        fail('Expected rejection');
+      })
+      .catch((error: any) => {
+        expect(error.message).toContain(
+          'requires an Angular Injector. Call setInjector()'
+        );
+      });
+
+    withHttpResourceBehavior.setInjector(injector);
+    expect(warnSpy).toHaveBeenCalledTimes(0);
+  });
+
   it('should skip when ctx.incoming is not an HttpResourceRef', async () => {
     const ctx = { incoming: { fake: true } } as unknown as BehaviorContext<
       TestModel[]
