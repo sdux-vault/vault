@@ -1,0 +1,38 @@
+<section class="section keep-reading" aria-label="Recommended blog posts">
+  <div class="section-title">Keep Reading</div>
+
+  <div class="section-body">
+    <nav class="keep-reading-cards" aria-label="More blog posts">
+      @for (entry of recommendations(); track entry.slug) {
+        <a
+          class="keep-reading-card"
+          [routerLink]="'/blog/' + entry.slug"
+          (click)="scrollToTop()"
+          [matTooltip]="entry.title"
+          matTooltipPosition="above"
+          [attr.aria-label]="
+            'Read: ' + entry.title + ' — ' + entry.readingTime + ' min read'
+          "
+          role="article">
+          <div class="keep-reading-card-body">
+            <span class="keep-reading-title">{{ entry.title }}</span>
+            <span class="keep-reading-meta">
+              <span class="keep-reading-date">{{ entry.date }}</span>
+              <span class="keep-reading-divider" aria-hidden="true">·</span>
+              <span class="keep-reading-time"
+                >{{ entry.readingTime }} min read</span
+              >
+            </span>
+          </div>
+          <span class="keep-reading-arrow" aria-hidden="true">→</span>
+        </a>
+      }
+    </nav>
+
+    <div class="keep-reading-footer">
+      <a routerLink="/blog" aria-label="Browse all blog posts"
+        >Browse all posts →</a
+      >
+    </div>
+  </div>
+</section>

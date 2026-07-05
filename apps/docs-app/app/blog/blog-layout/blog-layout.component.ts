@@ -9,6 +9,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ShareBarComponent } from '@sdux-vault/ui/web-components';
 import { PipelineRoutingDirective } from '../../docs/pipeline/directives/pipeline-routing.directive';
 import { PipelineRelatedTopicComponent } from '../../docs/related-topic/related-topic.component';
+import { BlogKeepReadingComponent } from '../blog-keep-reading/blog-keep-reading.component';
 
 /**
  * Reusable blog post layout wrapper that provides standard blog chrome
@@ -19,7 +20,12 @@ import { PipelineRelatedTopicComponent } from '../../docs/related-topic/related-
 @Component({
   selector: 'sdux-blog-layout',
   standalone: true,
-  imports: [RouterLink, ShareBarComponent, PipelineRelatedTopicComponent],
+  imports: [
+    RouterLink,
+    ShareBarComponent,
+    PipelineRelatedTopicComponent,
+    BlogKeepReadingComponent
+  ],
   templateUrl: './blog-layout.component.html',
   styleUrls: [
     './blog-layout.component.scss',
