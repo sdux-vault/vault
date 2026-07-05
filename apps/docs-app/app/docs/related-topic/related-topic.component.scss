@@ -5,13 +5,38 @@
   display: flex;
   justify-content: space-between;
 
+  @media (max-width: global.$breakpoint-md) {
+    flex-direction: column;
+    gap: global.$spacing-md;
+  }
+
   .panel-column {
     width: calc(50% - 20px);
+
+    @media (max-width: global.$breakpoint-md) {
+      width: 100%;
+
+      &:first-child .panel-top {
+        border-top: none;
+        padding-top: 0;
+      }
+    }
     .panel-top,
     .panel-bottom {
       width: 100%;
-      max-height: 235px;
+      max-height: 245px;
       overflow-y: auto;
+      margin-bottom: global.$spacing-md;
+
+      @media (max-width: global.$breakpoint-md) {
+        border-top: 3px solid global.$sdux-primary-base;
+        padding-top: global.$spacing-sm;
+      }
+
+      ul {
+        padding-left: global.$spacing-lg;
+        margin-top: 0;
+      }
     }
   }
 }

@@ -28,6 +28,18 @@
 
         <mat-divider></mat-divider>
 
+        <div class="menu-content-container">
+          <a
+            mat-list-item
+            routerLink="/docs/stackblitz"
+            routerLinkActive="active"
+            (click)="closeSidenav()">
+            <div class="menu-content">StackBlitz Examples</div>
+          </a>
+        </div>
+
+        <mat-divider></mat-divider>
+
         <sdux-getting-started-subnavigation />
 
         <mat-divider></mat-divider>
@@ -73,18 +85,6 @@
         <mat-divider></mat-divider>
 
         <sdux-dev-tools-subnavigation />
-
-        <mat-divider></mat-divider>
-
-        <div class="menu-content-container">
-          <a
-            mat-list-item
-            routerLink="/docs/stackblitz"
-            routerLinkActive="active"
-            (click)="closeSidenav()">
-            <div class="menu-content">StackBlitz Examples</div>
-          </a>
-        </div>
 
         <mat-divider></mat-divider>
 

@@ -14,7 +14,7 @@ import {
 
       <div class="section-body">
         <sdux-video
-          videoId="-wTfiJaN9iU"
+          videoId="koAAo1B-__Y"
           [tooltip]="'FeatureCell Definition'" />
 
         <sdux-diagram
