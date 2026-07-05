@@ -1,9 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
-} from '@sdux-vault/ui/web-components';
+import { MultiFrameworkExampleComponent } from '@sdux-vault/ui/web-components';
 import { VaultFeatureCellShapeCommonComponent } from '../../../../docs/common/feature-cell/feature-cell-shape.component';
 import { PipelineRelatedTopicComponent } from '../../../../docs/related-topic/related-topic.component';
 
@@ -14,14 +11,13 @@ import { PipelineRelatedTopicComponent } from '../../../../docs/related-topic/re
   selector: 'sdux-pipeline-inject-vault-api',
   standalone: true,
   imports: [
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     RouterModule,
     PipelineRelatedTopicComponent,
     VaultFeatureCellShapeCommonComponent
   ],
   templateUrl: './inject-vault.api.component.html',
-  styleUrls: ['../../../scss/example.scss'],
+  styleUrls: ['../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineInjectVaultComponent {}

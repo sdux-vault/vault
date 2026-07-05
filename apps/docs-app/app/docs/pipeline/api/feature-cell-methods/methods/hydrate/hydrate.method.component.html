@@ -271,47 +271,15 @@
     <div class="section-title">Examples</div>
 
     <div class="section-body">
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example: Asynchronous Hydration</h4>
+      <h4>Example: Synchronous Hydration</h4>
 
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure descriptor.initialState initialization'">
-                    <pre class="code-inline"><code class="language-ts">{{`
-@FeatureCell&lt;Employee[]&gt;('employees')
+      <sdux-multi-framework-example description="Synchronous hydrate()">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
-
-  constructor() {
-    this.vault
-      .hydrate(() =>
-        fetch('/api/employees')
-          .then(res => res.json())
-      )
-      .initialize();
-  }
-}`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example: Synchronous Hydration</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure .hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
-@Injectable({ providedIn: 'root' })
-export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault
@@ -322,21 +290,10 @@ export class EmployeeService {
       .initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example: Synchronous Hydration</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Synchronous hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
   key: 'employees'
 });
 
@@ -346,15 +303,32 @@ employeeCell
     { id: 2, name: 'Bob' }
   ])
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <h4>Example: Asynchronous Hydration</h4>
+      <h4>Example: Asynchronous Hydration</h4>
 
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Asynchronous hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+      <sdux-multi-framework-example description="Asynchronous hydrate()">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
+
+  constructor() {
+    this.vault
+      .hydrate(() =>
+        fetch('/api/employees')
+          .then(res => res.json())
+      )
+      .initialize();
+  }
+}`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
   key: 'employees'
 });
 
@@ -364,56 +338,8 @@ employeeCell
       .then(res => res.json())
   )
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example: Synchronous Hydration</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Synchronous hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
-  key: 'employees'
-});
-
-employeeCell
-  .hydrate(() => [
-    { id: 1, name: 'Alice' },
-    { id: 2, name: 'Bob' }
-  ])
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example: Asynchronous Hydration</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Asynchronous hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
-  key: 'employees'
-});
-
-employeeCell
-  .hydrate(() =>
-    fetch('/api/employees')
-      .then(res => res.json())
-  )
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

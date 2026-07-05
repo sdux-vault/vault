@@ -8,6 +8,7 @@
       mat-list-item
       routerLink="/docs/pipeline/extensions"
       routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
       (click)="closeSidenav()">
       <span class="menu-content sub-item"
         >What is {{ brandName }} Extensions?</span

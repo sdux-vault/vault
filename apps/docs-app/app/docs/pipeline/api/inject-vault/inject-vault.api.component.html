@@ -62,23 +62,25 @@
       decorator.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      <strong
-        ><a href="/docs/references/functions/inject-vault">injectVault</a
-        >()</strong
-      >
-      may only be used within the owning
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> service.
-      Attempting to inject the same
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> into
-      multiple services or outside a
-      <strong
-        >&#64;<a href="/docs/references/functions/feature-cell"
-          >FeatureCell</a
-        ></strong
-      >-decorated class is invalid and results in a runtime error.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <strong
+          ><a href="/docs/references/functions/inject-vault">injectVault</a
+          >()</strong
+        >
+        may only be used within the owning
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        service. Attempting to inject the same
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> into
+        multiple services or outside a
+        <strong
+          >&#64;<a href="/docs/references/functions/feature-cell"
+            >FeatureCell</a
+          ></strong
+        >-decorated class is invalid and results in a runtime error.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -113,8 +115,9 @@
 
       <h4>Example: Declaring an Angular FeatureCell</h4>
 
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Angular FeatureCell Declaration'">
+      <sdux-multi-framework-example
+        description="Angular FeatureCell Declaration">
+        <ng-template #angular>
           <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
@@ -138,20 +141,20 @@ import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
 
   // Use injectVault to get an instance of the FeatureCell
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Required to activate the FeatureCell
     this.vault.initialize();
   }
 }`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>What this does</h4>
       <ul>

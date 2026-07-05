@@ -18,6 +18,6 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     SDuXVideoComponent
   ],
   templateUrl: './complete-pipeline-spec.component.html',
-  styleUrls: ['../../../scss/example.scss']
+  styleUrls: ['../../../scss/documentation.scss']
 })
 export class CompletePipelineSpecComponent {}

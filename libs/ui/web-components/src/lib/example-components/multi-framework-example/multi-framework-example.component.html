@@ -2,14 +2,15 @@
   <mat-tab-group
     animationDuration="200ms"
     mat-stretch-tabs="false"
-    class="sdux-tabs"
-    [selectedIndex]="0">
-    @for (tab of tabs(); track tab.label) {
+    class="sdux-tabs">
+    @for (tab of visibleTabs(); track tab.label) {
       <mat-tab [label]="tab.label">
         <div class="tab-panel">
           <sdux-example-viewer-source
             [displayTabs]="false"
-            [displayCopyPaste]="displayCopyPaste()">
+            [displayCopyPaste]="displayCopyPaste()"
+            [showFrameworkSelector]="true"
+            [availableFrameworks]="tabLabels()">
             <sdux-example-viewer-tab
               [label]="tab.label + ' — ' + description()">
               <ng-container *ngTemplateOutlet="getTemplate(tab)" />

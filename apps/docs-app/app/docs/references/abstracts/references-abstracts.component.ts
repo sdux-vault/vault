@@ -31,7 +31,7 @@ import { TapAbstractBehaviorComponent } from './tap-abstract-behavior.component'
     TapAbstractBehaviorComponent
   ],
   templateUrl: './references-abstracts.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesAbstractsLandingPageComponent {
   type!: string;

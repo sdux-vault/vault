@@ -51,28 +51,34 @@
       propagated to downstream stages in a deterministic and isolated manner.
     </p>
 
-    <p class="docs-note">
-      <strong
-        >Why
-        <a href="/docs/references/types/deferred-factory">DeferredFactory</a
-        >?</strong
-      >
-      Promises are <em>eager</em> by nature: once created, they begin executing
-      immediately and may resolve or reject outside of the pipeline lifecycle.
-      Passing a raw promise as state input would allow resolution to occur
-      before the Resolve stage executes, potentially producing out-of-order
-      updates, false state snapshots, or untracked errors.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <strong
+          >Why
+          <a href="/docs/references/types/deferred-factory">DeferredFactory</a
+          >?</strong
+        >
+        Promises are <em>eager</em> by nature: once created, they begin
+        executing immediately and may resolve or reject outside of the pipeline
+        lifecycle. Passing a raw promise as state input would allow resolution
+        to occur before the Resolve stage executes, potentially producing
+        out-of-order updates, false state snapshots, or untracked errors.
+      </p>
+    </div>
 
-    <p class="docs-note">
-      The
-      <a href="/docs/references/types/deferred-factory">DeferredFactory</a
-      >&lt;T&gt; wrapper ensures that promise execution is
-      <em>deferred</em> until the Resolve stage explicitly invokes it. This
-      guarantees that the promise is resolved <strong>inside</strong> pipeline
-      execution, under orchestration control, with proper lifecycle binding,
-      error normalization, and deterministic state emission.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The
+        <a href="/docs/references/types/deferred-factory">DeferredFactory</a
+        >&lt;T&gt; wrapper ensures that promise execution is
+        <em>deferred</em> until the Resolve stage explicitly invokes it. This
+        guarantees that the promise is resolved <strong>inside</strong> pipeline
+        execution, under orchestration control, with proper lifecycle binding,
+        error normalization, and deterministic state emission.
+      </p>
+    </div>
   </header>
 
   <section class="diagram-section">
@@ -155,24 +161,14 @@
 
       <h4>Example 1: Resolve a Promise-Based State Update</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve a Promise State Update'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+      <sdux-multi-framework-example
+        description="Resolve a Promise State Update">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
@@ -189,21 +185,10 @@ export class EmployeeService {
     this.vault.replaceState(deferredEmployees);
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve a Promise State Update'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -222,46 +207,8 @@ const deferredEmployees = {
 
 // Submit a promise-based state update
 employeeCell.replaceState(deferredEmployees);`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve a Promise State Update'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  }
-);
-
-employeeCell.initialize();
-
-const deferredEmployees = {
-  value: () =>
-    Promise.resolve([
-      { id: 1, name: 'Alice' },
-      { id: 2, name: 'Bob' }
-    ])
-};
-
-// Submit a promise-based state update
-employeeCell.replaceState(deferredEmployees);`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

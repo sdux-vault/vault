@@ -24,7 +24,7 @@ import { VideoLinkShape } from './shapes/video-link.shape';
     PipelineRelatedTopicComponent
   ],
   templateUrl: './videos.component.html',
-  styleUrls: ['../scss/example.scss', './videos.component.scss']
+  styleUrls: ['../scss/documentation.scss', './videos.component.scss']
 })
 export class DocsVideoDocumentationComponent extends PipelineRoutingDirective {
   /** All video links. */
@@ -36,21 +36,7 @@ export class DocsVideoDocumentationComponent extends PipelineRoutingDirective {
     .slice()
     .sort((a, b) => a.sort.localeCompare(b.sort));
 
-  /** Stage-specific videos sorted alphabetically. */
-  stageLinks = this.allLinks
-    .filter((link: VideoLinkShape) => link.type === 'stage')
-    .slice()
-    .sort((a, b) => a.sort.localeCompare(b.sort));
-
-  /** Testing videos sorted alphabetically. */
-  testingLinks = this.allLinks
-    .filter((link: VideoLinkShape) => link.type === 'testing')
-    .slice()
-    .sort((a, b) => a.sort.localeCompare(b.sort));
-
-  /** Integration videos sorted alphabetically. */
-  integrationLinks = this.allLinks
-    .filter((link: VideoLinkShape) => link.type === 'integration')
-    .slice()
-    .sort((a, b) => a.sort.localeCompare(b.sort));
+  stageFlows = this.allLinks
+    .filter((link: VideoLinkShape) => link.type === 'flow')
+    .slice();
 }

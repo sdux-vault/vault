@@ -53,19 +53,24 @@
       and propagated as pipeline errors.
     </p>
 
-    Note Recommended to use a merge behavior or it is pointless
-    <ul>
-      <li>
-        <a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
-          >withArrayAppendMergeBehavior</a
-        >
-      </li>
-      <li>
-        <a href="/docs/pipeline/addons/merge/with-array-push-merge-behavior"
-          >withArrayPushMergeBehavior</a
-        >
-      </li>
-    </ul>
+    <div class="callout callout-warning">
+      <div class="title">Note</div>
+      Recommended to use a merge behavior or it is pointless because the state
+      will be replaced with each new emission. For example, if you want to
+      append to an array, use
+      <ul>
+        <li>
+          <a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+            >withArrayAppendMergeBehavior</a
+          >
+        </li>
+        <li>
+          <a href="/docs/pipeline/addons/merge/with-array-push-merge-behavior"
+            >withArrayPushMergeBehavior</a
+          >
+        </li>
+      </ul>
+    </div>
   </header>
 
   <section class="diagram-section">
@@ -146,24 +151,14 @@
 
       <h4>Example 1: Stream Values into a FeatureCell</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve an Observable State Update'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+      <sdux-multi-framework-example
+        description="Resolve an Observable State Update">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor(private readonly http: HttpClient) {
     this.vault.initialize();
@@ -178,23 +173,12 @@ export class EmployeeService {
     this.vault.replaceState(employees$);
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { from } from 'rxjs';
 
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve an Observable State Update'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { from } from 'rxjs';
-
-export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -211,46 +195,8 @@ const employees$ = of([
 
 // Submit an observable-based state update
 employeeCell.replaceState(employees$);`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve an Observable State Update'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { from } from 'rxjs';
-
-export const employeeCell = FeatureCell&t;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  }
-);
-
-employeeCell.initialize();
-
-// Observable defined locally in the module
-const employees$ = of([
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' }
-]);
-
-// Submit an observable-based state update
-employeeCell.replaceState(employees$);`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

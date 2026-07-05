@@ -1,9 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
-} from '@sdux-vault/ui/web-components';
+import { MultiFrameworkExampleComponent } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 
 /**
@@ -15,11 +12,10 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   imports: [
     RouterModule,
     PipelineRelatedTopicComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent
+    MultiFrameworkExampleComponent
   ],
   templateUrl: './key.property.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineKeyPropertyComponent {}

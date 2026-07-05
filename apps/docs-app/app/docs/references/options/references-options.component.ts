@@ -39,7 +39,7 @@ import { WithThrottleControllerOptionsComponent } from './with-throttle-controll
     WithThrottleControllerOptionsComponent
   ],
   templateUrl: './references-options.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesOptionsLandingPageComponent {
   type!: string;

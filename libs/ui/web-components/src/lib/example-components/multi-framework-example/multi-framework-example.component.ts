@@ -2,12 +2,15 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
   Component,
+  computed,
   ContentChild,
-  TemplateRef,
+  inject,
   input,
-  signal
+  signal,
+  TemplateRef
 } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FrameworkPreferenceService } from '../../services/framework-preference.service';
 import { ExampleViewerSourceComponent } from '../example-viewer-source/example-viewer-source.component';
 import { ExampleViewerTabComponent } from '../example-viewer-tab/example-viewer-source-tab.component';
 import { GenericTabComponent } from '../generic-tab/generic-tab.component';
@@ -52,10 +55,11 @@ export class MultiFrameworkExampleComponent implements AfterContentInit {
 
   /** Template containing the Angular-specific code block. */
   @ContentChild('angular', { static: true })
-  angularTemplate!: TemplateRef<unknown>;
+  angularTemplate: TemplateRef<unknown> | undefined;
 
   /** Template containing the core code block (used for all non-Angular frameworks). */
-  @ContentChild('core', { static: true }) coreTemplate!: TemplateRef<unknown>;
+  @ContentChild('core', { static: true })
+  coreTemplate: TemplateRef<unknown> | undefined;
 
   /** Optional generic tab component with its own label, order, and content. */
   @ContentChild(GenericTabComponent)
@@ -64,23 +68,48 @@ export class MultiFrameworkExampleComponent implements AfterContentInit {
   /** Computed ordered list of tabs to render. */
   readonly tabs = signal<TabEntry[]>([]);
 
+  /** Framework preference service for global tab selection. */
+  readonly #preferenceService = inject(FrameworkPreferenceService);
+
+  /** The currently preferred framework label. */
+  readonly preferredFramework = this.#preferenceService.preferred;
+
+  /** Tabs to render — all tabs when no preference, single tab when set. */
+  readonly visibleTabs = computed(() => {
+    const all = this.tabs();
+    const preferred = this.preferredFramework();
+    if (!preferred) return all;
+    const match = all.find((tab) => tab.label === preferred);
+    return match ? [match] : all;
+  });
+
+  /** All tab labels derived from the current tab list, used for the framework selector menu. */
+  readonly tabLabels = computed(() => this.tabs().map((tab) => tab.label));
+
   /**
    * Computes the ordered tab list from the fixed framework set and any
    * optional generic tab, then writes the result to the `tabs` signal.
    */
   ngAfterContentInit() {
-    const allTabs: TabEntry[] = [
-      { label: 'Angular', template: 'angular' },
-      { label: 'Bun', template: 'core' },
-      { label: 'Deno', template: 'core' },
-      { label: 'Node.js', template: 'core' },
-      { label: 'React', template: 'core' },
-      { label: 'Solid', template: 'core' },
-      { label: 'Svelte', template: 'core' },
-      { label: 'Vanilla JS', template: 'core' },
-      { label: 'Vue', template: 'core' },
-      { label: 'Web Components', template: 'core' }
-    ];
+    const allTabs: TabEntry[] = [];
+
+    if (this.angularTemplate) {
+      allTabs.push({ label: 'Angular', template: 'angular' });
+    }
+
+    if (this.coreTemplate) {
+      allTabs.push(
+        { label: 'Bun', template: 'core' },
+        { label: 'Deno', template: 'core' },
+        { label: 'Node.js', template: 'core' },
+        { label: 'React', template: 'core' },
+        { label: 'Solid', template: 'core' },
+        { label: 'Svelte', template: 'core' },
+        { label: 'Vanilla JS', template: 'core' },
+        { label: 'Vue', template: 'core' },
+        { label: 'Web Components', template: 'core' }
+      );
+    }
 
     if (this.genericTab) {
       const genericLabel = this.genericTab.label();
@@ -88,6 +117,14 @@ export class MultiFrameworkExampleComponent implements AfterContentInit {
         label: genericLabel,
         template: 'generic'
       };
+
+      const existingIndex = allTabs.findIndex(
+        (tab) => tab.label === genericLabel
+      );
+      if (existingIndex !== -1) {
+        allTabs.splice(existingIndex, 1);
+      }
+
       const orderValue = this.genericTab.order();
       if (orderValue !== undefined) {
         allTabs.splice(orderValue, 0, genericEntry);
@@ -114,7 +151,7 @@ export class MultiFrameworkExampleComponent implements AfterContentInit {
    * @param tab - The tab entry whose content template is requested.
    * @returns The `TemplateRef` corresponding to the tab's template type.
    */
-  getTemplate(tab: TabEntry): TemplateRef<unknown> {
+  getTemplate(tab: TabEntry): TemplateRef<unknown> | undefined {
     switch (tab.template) {
       case 'angular':
         return this.angularTemplate;

@@ -21,7 +21,10 @@ import { PipelineRelatedTopicComponent } from '../../docs/related-topic/related-
   standalone: true,
   imports: [RouterLink, ShareBarComponent, PipelineRelatedTopicComponent],
   templateUrl: './blog-layout.component.html',
-  styleUrls: ['./blog-layout.component.scss', '../../docs/scss/example.scss'],
+  styleUrls: [
+    './blog-layout.component.scss',
+    '../../docs/scss/documentation.scss'
+  ],
   encapsulation: ViewEncapsulation.None
 })
 export class BlogLayoutComponent extends PipelineRoutingDirective {

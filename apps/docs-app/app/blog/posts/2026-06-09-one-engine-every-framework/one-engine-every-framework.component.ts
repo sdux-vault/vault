@@ -4,6 +4,7 @@ import {
   CatchPhraseComponent,
   FeatureCellBrandNameComponent,
   MultiFrameworkExampleComponent,
+  SDuXVideoComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -17,7 +18,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     FeatureCellBrandNameComponent,
     MultiFrameworkExampleComponent,
     RouterModule,
-    VaultBrandNameComponent
+    VaultBrandNameComponent,
+    SDuXVideoComponent
   ],
   template: `
     <sdux-blog-layout
@@ -209,9 +211,16 @@ employeeCell.initialize();</code></pre>
           </p>
         </div>
       </section>
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video videoId="m7ClyWSh754" [tooltip]="'Pipeline Overview'" />
+        </div>
+      </section>
     </sdux-blog-layout>
   `,
-  styleUrls: ['../../../docs/scss/example.scss'],
+  styleUrls: ['../../../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class BlogOneEngineEveryFrameworkComponent {}

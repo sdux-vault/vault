@@ -57,16 +57,18 @@
       definition.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      Controllers are not required for a <sdux-brand-name />
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> to
-      store, update, or emit state. A
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> can
-      operate correctly using only Behaviors and the core pipeline. Controllers
-      are introduced only when additional coordination, arbitration, or policy
-      enforcement is required.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        Controllers are not required for a <sdux-brand-name />
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> to
+        store, update, or emit state. A
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> can
+        operate correctly using only Behaviors and the core pipeline.
+        Controllers are introduced only when additional coordination,
+        arbitration, or policy enforcement is required.
+      </p>
+    </div>
   </header>
 
   <!-- ============================================================ -->
@@ -233,12 +235,35 @@
   <!-- EXAMPLES -->
   <!-- ====================================================== -->
   <section class="section">
-    <div class="section-title">Example FeatureCell Declaration</div>
+    <div class="section-title">Example</div>
 
     <div class="section-body">
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 1: Array Filter - Keep Only Even Number'">
+      <sdux-multi-framework-example
+        description="Controller with Stepwise Behavior">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
+provideFeatureCell(
+  EmployeeService,
+  {
+    key: 'employees',
+    initialState: [] 
+  },
+  [
+    // opt-in behavior array 
+    withStepwiseResolveBehavior
+  ],
+  [
+    // opt-in controller array 
+    withStepwiseController
+  ]
+);
+
+// employee.service.ts
+this.vault.withStepwiseResolve(
+  stepwiseCallback: fn
+).initialize()`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell(
   EmployeeCell, 
@@ -259,8 +284,8 @@
 employeeCell.withStepwiseResolve(
   stepwiseCallback: fn
 ).initialize() `}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

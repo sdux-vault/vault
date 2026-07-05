@@ -17,6 +17,6 @@ import { SDuXDevToolsVaultMonitorComponent } from './vault-monitor/vault-monitor
     DevToolsOverviewComponent
   ],
   templateUrl: './dev-tools-landingpage.component.html',
-  styleUrls: ['../scss/example.scss']
+  styleUrls: ['../scss/documentation.scss']
 })
 export class DevtoolsLandingPageComponent extends PipelineRoutingDirective {}

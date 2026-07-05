@@ -182,16 +182,22 @@
       </p>
 
       <h4>RxJS fromStream State</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example: RxJS fromStream Merge State'">
+      <sdux-multi-framework-example description="RxJS fromStream State">
+        <ng-template #angular>
           <pre class="code-inline">
-<code class="language-ts">{{`&lt;this|employeeCell>.vault.fromStream(
+<code class="language-ts">{{`this.vault.fromStream(
   events$.pipe(
     debounceTime(300),
     distinctUntilChanged();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline">
+<code class="language-ts">{{`employeeCell.fromStream(
+  events$.pipe(
+    debounceTime(300),
+    distinctUntilChanged();`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>
         Single Candidates: <code>replaceState()</code> and
@@ -214,28 +220,44 @@
       </p>
 
       <h4>RxJS Replace State</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example: RxJS Replace State'">
+      <sdux-multi-framework-example description="RxJS Replace State">
+        <ng-template #angular>
           <pre class="code-inline">
-<code class="language-ts">{{`&lt;this|employeeCell>.vault.replaceState(
+<code class="language-ts">{{`this.vault.replaceState(
   fetchEmployee$.pipe(
     timeout(2000)
   )
 );`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline">
+<code class="language-ts">{{`employeeCell.replaceState(
+  fetchEmployee$.pipe(
+    timeout(2000)
+  )
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>RxJS Merge State</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example: RxJS Merge State'">
+      <sdux-multi-framework-example description="RxJS Merge State">
+        <ng-template #angular>
           <pre class="code-inline">
-<code class="language-ts">{{`&lt;this|lt;thisemployeeCell>.vault.mergeState(
+<code class="language-ts">{{`this.vault.mergeState(
   update$.pipe(
     map(partial => ({ status: 'ready', ...partial }))
   )
 );`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline">
+<code class="language-ts">{{`employeeCell.mergeState(
+  update$.pipe(
+    map(partial => ({ status: 'ready', ...partial }))
+  )
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Design Rule</h4>
 
@@ -266,106 +288,220 @@
       <p>
         Use <code>debounceTime</code> to delay emission until input stabilizes:
       </p>
-      <pre
-        class="code-inline"><code class="language-ts">{{`import { debounceTime, map } from 'rxjs/operators';
+      <sdux-multi-framework-example description="Debounce User Input">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { debounceTime, map } from 'rxjs/operators';
 
-&lt;this|employeeCell>.vault.fromStream(
+this.vault.fromStream(
   inputChange$.pipe(
     map(e => e.target.value),
     debounceTime(300)
   )
 );`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { debounceTime, map } from 'rxjs/operators';
+
+employeeCell.fromStream(
+  inputChange$.pipe(
+    map(e => e.target.value),
+    debounceTime(300)
+  )
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Throttle Burst Events</h4>
       <p>
         Use <code>throttleTime</code> to allow at most one emission per window:
       </p>
-      <pre
-        class="code-inline"><code class="language-ts">{{`import { throttleTime } from 'rxjs/operators';
+      <sdux-multi-framework-example description="Throttle Burst Events">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { throttleTime } from 'rxjs/operators';
 
-&lt;this|employeeCell>.vault.fromStream(
+this.vault.fromStream(
   scroll$.pipe(
     throttleTime(250)
   )
 );`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { throttleTime } from 'rxjs/operators';
+
+employeeCell.fromStream(
+  scroll$.pipe(
+    throttleTime(250)
+  )
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Audit or Sample at a Fixed Cadence</h4>
       <p>
         Use <code>auditTime</code> or <code>sampleTime</code> to control cadence
         without suppressing upstream events:
       </p>
-      <pre
-        class="code-inline"><code class="language-ts">{{`import { auditTime, sampleTime } from 'rxjs/operators';
+      <sdux-multi-framework-example
+        description="Audit or Sample at a Fixed Cadence">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { auditTime, sampleTime } from 'rxjs/operators';
 
-&lt;this|lt;thisemployeeCell>.vault.fromStream(events$.pipe(auditTime(1000)));
-&lt;this|lt;thisemployeeCell>.vault.fromStream(events$.pipe(sampleTime(1000)));`}}</code></pre>
+this.vault.fromStream(events$.pipe(auditTime(1000)));
+this.vault.fromStream(events$.pipe(sampleTime(1000)));`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { auditTime, sampleTime } from 'rxjs/operators';
+
+employeeCell.fromStream(events$.pipe(auditTime(1000)));
+employeeCell.fromStream(events$.pipe(sampleTime(1000)));`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Distinct Until Changed</h4>
       <p>
         Prevent redundant updates when the value has not meaningfully changed:
       </p>
-      <pre
-        class="code-inline"><code class="language-ts">{{`import { distinctUntilChanged } from 'rxjs/operators';
+      <sdux-multi-framework-example description="Distinct Until Changed">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { distinctUntilChanged } from 'rxjs/operators';
 
-&lt;this|employeeCell>.vault.fromStream(
+this.vault.fromStream(
   value$.pipe(
     distinctUntilChanged()
   )
 );`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { distinctUntilChanged } from 'rxjs/operators';
+
+employeeCell.fromStream(
+  value$.pipe(
+    distinctUntilChanged()
+  )
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Buffer Events Over Time</h4>
       <p>Batch events into arrays using <code>bufferTime</code>:</p>
-      <pre
-        class="code-inline"><code class="language-ts">{{`import { bufferTime, filter } from 'rxjs/operators';
+      <sdux-multi-framework-example description="Buffer Events Over Time">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { bufferTime, filter } from 'rxjs/operators';
 
-&lt;this|employeeCell>.vault.fromStream(
+this.vault.fromStream(
   actions$.pipe(
     bufferTime(500),
     filter(batch => batch.length > 0)
   )
 );`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { bufferTime, filter } from 'rxjs/operators';
+
+employeeCell.fromStream(
+  actions$.pipe(
+    bufferTime(500),
+    filter(batch => batch.length > 0)
+  )
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Switch to the Latest Async Request</h4>
       <p>
         Use <code>switchMap</code> when only the latest request should remain
         active. Prior requests are cancelled at the stream level.
       </p>
-      <pre
-        class="code-inline"><code class="language-ts">{{`import { switchMap } from 'rxjs/operators';
+      <sdux-multi-framework-example
+        description="Switch to the Latest Async Request">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { switchMap } from 'rxjs/operators';
 
-&lt;this|employeeCell>.vault.fromStream(
+this.vault.fromStream(
   query$.pipe(
     switchMap(q => fetchEmployees$(q))
   )
 );`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { switchMap } from 'rxjs/operators';
+
+employeeCell.fromStream(
+  query$.pipe(
+    switchMap(q => fetchEmployees$(q))
+  )
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Ignore New Requests While Busy</h4>
       <p>
         Use <code>exhaustMap</code> to ignore new triggers while an async task
         is running (useful for submit buttons).
       </p>
-      <pre
-        class="code-inline"><code class="language-ts">{{`import { exhaustMap } from 'rxjs/operators';
+      <sdux-multi-framework-example
+        description="Ignore New Requests While Busy">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { exhaustMap } from 'rxjs/operators';
 
-&lt;this|employeeCell>.vault.fromStream(
+this.vault.fromStream(
   submitClicks$.pipe(
     exhaustMap(() => submitForm$())
   )
 );`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { exhaustMap } from 'rxjs/operators';
+
+employeeCell.fromStream(
+  submitClicks$.pipe(
+    exhaustMap(() => submitForm$())
+  )
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Queue Requests Sequentially</h4>
       <p>
         Use <code>concatMap</code> to guarantee ordering by running async work
         sequentially, one at a time.
       </p>
-      <pre
-        class="code-inline"><code class="language-ts">{{`import { concatMap } from 'rxjs/operators';
+      <sdux-multi-framework-example description="Queue Requests Sequentially">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { concatMap } from 'rxjs/operators';
 
-&lt;this|employeeCell>.vault.fromStream(
+this.vault.fromStream(
   requests$.pipe(
     concatMap(req => processRequest$(req))
   )
 );`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { concatMap } from 'rxjs/operators';
+
+employeeCell.fromStream(
+  requests$.pipe(
+    concatMap(req => processRequest$(req))
+  )
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -483,13 +619,16 @@
         </li>
       </ul>
 
-      <div class="note">Note</div>
-      <p>
-        RxJS controls <em>what enters</em> the pipeline and <em>when</em> it
-        enters. Once a value enters <sdux-brand-name />, the <sdux-brand-name />
-        pipeline proceeds deterministically under the rules of orchestration and
-        policy.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          RxJS controls <em>what enters</em> the pipeline and <em>when</em> it
+          enters. Once a value enters <sdux-brand-name />, the
+          <sdux-brand-name />
+          pipeline proceeds deterministically under the rules of orchestration
+          and policy.
+        </p>
+      </div>
     </div>
   </section>
 

@@ -50,15 +50,16 @@
       </li>
     </ul>
 
-    <div class="note">Note</div>
-
-    <p>
-      Initialization failures should be treated as catastrophic correctness
-      violations. If the declared initialization source does not produce the
-      expected value, the
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> does not
-      silently recover. Recovery is always explicit.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        Initialization failures should be treated as catastrophic correctness
+        violations. If the declared initialization source does not produce the
+        expected value, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> does
+        not silently recover. Recovery is always explicit.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -143,24 +144,15 @@
 
       <h4>Example: How to Recover from Initialization Failure</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to recover from Initialization Failure'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+      <sdux-multi-framework-example
+        description="How to recover from Initialization Failure">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
   private isInitializationAttempted = false;
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     effect(() => {
@@ -191,70 +183,10 @@ export class EmployeeService {
       .initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to recover from Initialization Failure'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  }
-);
-
-let isInitializationAttempted = false;
-
-employeeCell.state$.subscribe({ next(state) => {
-  if (state.error) {
-    console.error('Initialization failed:', state.error);
-    if (!isInitializationAttempted) {
-
-      // Step 1: Reset the FeatureCell to clear the error state
-      employeeCell.reset();
-
-      // Step 2: Explicitly replace state with a known-good value
-      const fallbackEmployees: Employee[] = [
-        { id: 1, name: 'Alice' },
-        { id: 2, name: 'Bob' }
-      ];
-
-      employeeCell.replaceState({ value: fallbackEmployees });
-    } else {
-      // Handle subsequent errors after recovery attempt (optional)
-    }
-  }
-
-  // Handle normal state updates here
-  isInitializationAttempted = true;
-});
-
-employeeCell.hydrate(() => Promise.resolve()).initialize();
-
-`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to recover from Initialization Failure'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -288,15 +220,9 @@ employeeCell.state$.subscribe({ next(state) => {
 });
 
 employeeCell.hydrate(() => Promise.resolve(...)).initialize();
-
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -459,12 +385,14 @@ employeeCell.hydrate(() => Promise.resolve(...)).initialize();
         descriptor-based initial values are irrelevant.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        If dynamic data is not desired, do not use <code>hydrate()</code>. Vault
-        will then resolve initialization using storage or static configuration
-        instead.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          If dynamic data is not desired, do not use <code>hydrate()</code>.
+          Vault will then resolve initialization using storage or static
+          configuration instead.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -520,23 +448,13 @@ employeeCell.hydrate(() => Promise.resolve(...)).initialize();
 
       <h4>Example: How to configure .hydrate()</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure .hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+      <sdux-multi-framework-example description="How to configure .hydrate()">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault
@@ -544,20 +462,10 @@ export class EmployeeService {
       .initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure .hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     // ignored
@@ -566,40 +474,9 @@ export class EmployeeService {
 );
 
 employeeCell.hydrate(() => Promise.resolve(...)).initialize();
-
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure .hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    // ignored
-    initialState: []
-  }
-);
-
-employeeCell.hydrate(() => Promise.resolve(...)).initialize();
-
-`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -658,20 +535,10 @@ employeeCell.hydrate(() => Promise.resolve(...)).initialize();
 
       <h4>Example: How to configure storage initialization</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure storage initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="How to configure storage initialization">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -691,29 +558,19 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure storage initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     // ignored
@@ -722,40 +579,9 @@ export class EmployeeService {
 );
 
 employeeCell.initialize();
-
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure storage initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    // ignored
-    initialState: []
-  }
-);
-
-employeeCell.initialize();
-
-`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -793,20 +619,10 @@ employeeCell.initialize();
 
       <h4>Example: How to configure descriptor.initialState initialization</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure descriptor.initialState initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="How to configure descriptor.initialState initialization">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -826,29 +642,19 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure descriptor.initialState initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     // Initial state is declared directly in the descriptor
@@ -860,43 +666,9 @@ export class EmployeeService {
 );
 
 employeeCell.initialize();
-
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure descriptor.initialState initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    // Initial state is declared directly in the descriptor
-    initialState: [
-      { id: 1, name: 'Alice' },
-      { id: 2, name: 'Bob' }
-    ]
-  },
-);
-
-employeeCell.initialize();
-
-`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -935,36 +707,28 @@ employeeCell.initialize();
 
       <p>This is a valid and intentional initialization strategy.</p>
 
-      <div class="note">Note</div>
-
-      <p>
-        When performing manual initialization, you should use
-        <code>replaceState()</code>, not <code>mergeState()</code>. At this
-        point the
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> has no
-        existing value. Using <code>mergeState()</code> would attempt to merge
-        onto <code>undefined</code>, which may reproduce the same incorrect
-        assumptions that led to the missing initial state.
-        <code>replaceState()</code> establishes a clean, authoritative baseline
-        and ensures downstream logic operates on a fully defined value.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          When performing manual initialization, you should use
+          <code>replaceState()</code>, not <code>mergeState()</code>. At this
+          point the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> has
+          no existing value. Using <code>mergeState()</code> would attempt to
+          merge onto <code>undefined</code>, which may reproduce the same
+          incorrect assumptions that led to the missing initial state.
+          <code>replaceState()</code> establishes a clean, authoritative
+          baseline and ensures downstream logic operates on a fully defined
+          value.
+        </p>
+      </div>
 
       <h4>Example: How to configure initialization with replaceState()</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure initialization with replaceState()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="How to configure initialization with replaceState()">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -981,10 +745,10 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
@@ -997,20 +761,10 @@ export class EmployeeService {
     });
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure initialization with replaceState()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     // ignored as undefined
@@ -1026,47 +780,9 @@ employeeCell.replaceState({
       { id: 2, name: 'Bob' }
   ]
 });
-
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure initialization with replaceState()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    // ignored as undefined
-    initialState: undefined
-  }
-);
-
-employeeCell.initialize();
-
-employeeCell.replaceState({
-  value : [
-      { id: 1, name: 'Alice' },
-      { id: 2, name: 'Bob' }
-  ]
-});
-
-`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

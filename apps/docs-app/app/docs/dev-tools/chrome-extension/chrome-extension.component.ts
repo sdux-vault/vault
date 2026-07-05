@@ -20,6 +20,6 @@ import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic
     VaultBrandNameComponent
   ],
   templateUrl: './chrome-extension.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class SDuXDevToolsChromeExtensionComponent {}

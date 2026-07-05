@@ -207,20 +207,10 @@
         >&gt;).
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="Register Max Failures Controller">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -243,22 +233,13 @@ export const appConfig: ApplicationConfig = {
     )
   ]
 };`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
 Vault();
 
-export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -272,41 +253,8 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
     withMaxFailuresController
   ]
 );`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
-Vault();
-
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Optional add-on behaviors
-  ],
-  [
-    // Optional add-on controllers
-    // Attach the Max Failures Controller structurally
-    withMaxFailuresController
-  ]
-);`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -343,26 +291,16 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
         trace.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// Define a FeatureCell with typed state and a unique store key
-@FeatureCell&lt;Employee[]>('employees')
+      <sdux-multi-framework-example description="Configure Max Failures">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Define a FeatureCell with typed state and a unique store key
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Set the failure threshold to 3 and activate the cell
@@ -374,23 +312,14 @@ export class EmployeeService {
   }
 }
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
 Vault();
 
 // Define a FeatureCell with typed state and a unique store key
-export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -412,50 +341,8 @@ employeeCell
   })
   .initialize();
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 1: Configure a FeatureCell with Max Failures Controller'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
-Vault();
-
-// Define a FeatureCell with typed state and a unique store key
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Optional add-on behaviors
-  ],
-  [
-    // Optional add-on controllers 
-    // Register the Max Failures controller to cap consecutive pipeline failures
-    withMaxFailuresController
-  ]
-);
-
-// Set the failure threshold to 3 and activate the cell
-employeeCell
-  .withMaxFailures({
-    maxFailures: 3
-  })
-  .initialize();
-`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <p>
         In all cases, the Max Failures Controller monitors failure events per

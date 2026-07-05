@@ -26,6 +26,6 @@ import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic
     ExampleViewerTabComponent
   ],
   templateUrl: './built-in-debugger.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class SDuXDevToolsBuiltInDebuggerComponent {}

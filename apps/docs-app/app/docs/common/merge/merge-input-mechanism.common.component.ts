@@ -139,7 +139,7 @@ import { FeatureCellBrandNameComponent } from '@sdux-vault/ui/web-components';
     </p>
   `,
   imports: [FeatureCellBrandNameComponent, RouterModule],
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class MergeInputMechanismCommonComponent {}

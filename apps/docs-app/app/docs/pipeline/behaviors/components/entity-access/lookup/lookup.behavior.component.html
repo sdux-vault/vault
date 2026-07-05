@@ -74,57 +74,61 @@
         activation.
       </p>
 
-      <h4>Notes</h4>
-      <ul>
-        <li>
-          <strong>No time-based expiration is applied.</strong>
-          Unlike cache behavior, lookup entries do not expire automatically.
-          Recorded entities remain available until they are explicitly removed
-          through pipeline finalization, reset, or destroy.
-        </li>
+      <div class="callout callout-info">
+        <div class="title">Notes</div>
+        <ul>
+          <li>
+            <strong>No time-based expiration is applied.</strong>
+            Unlike cache behavior, lookup entries do not expire automatically.
+            Recorded entities remain available until they are explicitly removed
+            through pipeline finalization, reset, or destroy.
+          </li>
 
-        <li>
-          <strong>Lookup APIs and state update APIs coexist.</strong>
-          The
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          continues to expose <code>replaceState()</code> and
-          <code>mergeState()</code> alongside <code>lookup()</code> and
-          <code>lookup$()</code>. Direct state updates remain valid and may
-          populate or update lookup entries when identifiers match.
-        </li>
+          <li>
+            <strong>Lookup APIs and state update APIs coexist.</strong>
+            The
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            continues to expose <code>replaceState()</code> and
+            <code>mergeState()</code> alongside <code>lookup()</code> and
+            <code>lookup$()</code>. Direct state updates remain valid and may
+            populate or update lookup entries when identifiers match.
+          </li>
 
-        <li>
-          <strong>Concurrent lookups are fan-out coordinated.</strong>
-          Multiple lookups for the same identifier share a single in-flight
-          pipeline resolution. All awaiting callers resolve together when
-          finalization completes.
-        </li>
+          <li>
+            <strong>Concurrent lookups are fan-out coordinated.</strong>
+            Multiple lookups for the same identifier share a single in-flight
+            pipeline resolution. All awaiting callers resolve together when
+            finalization completes.
+          </li>
 
-        <li>
-          <strong>Interceptors influence lookup resolution timing.</strong>
-          Lookup resolution occurs through the
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          pipeline. Interceptors such as debounce, delay, throttling, or
-          conditional gating may delay or suppress resolution execution.
-        </li>
+          <li>
+            <strong>Interceptors influence lookup resolution timing.</strong>
+            Lookup resolution occurs through the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            pipeline. Interceptors such as debounce, delay, throttling, or
+            conditional gating may delay or suppress resolution execution.
+          </li>
 
-        <li>
-          <strong>Filters may intentionally discard resolved entities.</strong>
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          filters may remove or suppress a resolved entity during pipeline
-          evaluation, resulting in a finalized <code>undefined</code> value even
-          when the entity exists upstream or on a remote source.
-        </li>
+          <li>
+            <strong
+              >Filters may intentionally discard resolved entities.</strong
+            >
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            filters may remove or suppress a resolved entity during pipeline
+            evaluation, resulting in a finalized <code>undefined</code> value
+            even when the entity exists upstream or on a remote source.
+          </li>
 
-        <li>
-          <strong>Lifecycle alignment is preserved.</strong>
-          Lookup state is reset or destroyed in coordination with the owning
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          lifecycle, ensuring that resolved entities never outlive the
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a> that
-          produced them.
-        </li>
-      </ul>
+          <li>
+            <strong>Lifecycle alignment is preserved.</strong>
+            Lookup state is reset or destroyed in coordination with the owning
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            lifecycle, ensuring that resolved entities never outlive the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            that produced them.
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -506,26 +510,17 @@
     <div class="section-title">Lookup Examples</div>
 
     <div class="section-body">
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Configure Lookup Behavior</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure Lookup Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+      <h4>Example 1: Configure Lookup Behavior</h4>
+
+      <sdux-multi-framework-example description="Configure Lookup Behavior">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Assumes withLookupBehavior is registered during FeatureCell setup (provideFeatureCell)
@@ -538,119 +533,54 @@ export class EmployeeService {
       .initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    withLookupBehavior
+  ]
+);
 
-                <h4>Example 2: Lookup an Entity</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Example 2: Lookup'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// Promise-based lookup
+// Executed during application startup (e.g. app.config.ts)
+employeeCell
+  .withLookup({
+    idKey: 'id',
+    fetchType: ResolveType.Promise,
+    fetch: (id) => fetchEmployeeById(id)
+  })
+  .initialize();`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>Example 2: Lookup an Entity</h4>
+
+      <sdux-multi-framework-example description="Lookup an Entity">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Promise-based lookup
 const employee = await this.vault.lookup('123');
 
 // Observable-based lookup
 this.vault.lookup$('123').subscribe(emp => {
   console.info(emp);
 });`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Configure Lookup Behavior</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure Lookup Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    withLookupBehavior
-  ]
-);
-
-// Executed during application startup (e.g. app.config.ts)
-employeeCell
-  .withLookup({
-    idKey: 'id',
-    fetchType: ResolveType.Promise,
-    fetch: (id) => fetchEmployeeById(id)
-  })
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Lookup an Entity</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Lookup an Entity'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// Promise-based lookup
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Promise-based lookup
 const employee = await employeeCell.lookup('123');
 
 // Observable-based lookup
 employeeCell.lookup$('123').subscribe(emp => {
   console.info(emp);
 });`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Configure Lookup Behavior</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure Lookup Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    withLookupBehavior
-  ]
-);
-
-// Executed during application startup (e.g. app.config.ts)
-employeeCell
-  .withLookup({
-    idKey: 'id',
-    fetchType: ResolveType.Promise,
-    fetch: (id) => fetchEmployeeById(id)
-  })
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Lookup an Entity</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Lookup an Entity'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// Promise-based lookup
-const employee = await employeeCell.lookup('123');
-
-// Observable-based lookup
-employeeCell.lookup$('123').subscribe(emp => {
-  console.info(emp);
-});`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

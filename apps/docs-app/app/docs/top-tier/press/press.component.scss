@@ -1,14 +1,19 @@
 @use 'global' as global;
 
 .logo-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: global.$spacing-md;
+
+  @media (max-width: global.$breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
 
   .logo-card {
     display: flex;
     flex-direction: column;
-    width: 280px;
+    width: 300px;
+    justify-self: center;
     border: 1px solid global.$sdux-border-color;
     border-radius: global.$border-radius-sm;
 

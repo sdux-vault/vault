@@ -25,7 +25,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   ],
   templateUrl: './sdux-trademark-usage.component.html',
   styleUrls: [
-    '../../../scss/example.scss',
+    '../../../scss/documentation.scss',
     './sdux-trademark-usage.component.scss'
   ]
 })

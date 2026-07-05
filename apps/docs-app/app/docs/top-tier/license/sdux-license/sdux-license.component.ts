@@ -31,7 +31,10 @@ import { SDUX_VAULT_COMMUNITY_LICENSE_1_0 } from './constants/ngl-vault-communit
     PackageNameComponent
   ],
   templateUrl: './sdux-license.component.html',
-  styleUrls: ['../../../scss/example.scss', './sdux-license.component.scss']
+  styleUrls: [
+    '../../../scss/documentation.scss',
+    './sdux-license.component.scss'
+  ]
 })
 export class DocsTopTierSDuXLicenseComponent implements AfterViewInit {
   /* istanbul ignore next -- defensive invariant, unreachable in compliant runtimes */

@@ -21,7 +21,7 @@ import { PipelineBuilderSourceCodeVisualizationComponent } from './source-code/p
   ],
   templateUrl: './pipeline-builder-visualization.component.html',
   styleUrls: [
-    '../../../docs/scss/example.scss',
+    '../../../docs/scss/documentation.scss',
     './pipeline-builder-visualization.component.scss'
   ]
 })

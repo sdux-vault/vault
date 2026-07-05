@@ -33,7 +33,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     VaultErrorCallbackShapeCommonComponent
   ],
   templateUrl: './with-core-error.behavior.component.html',
-  styleUrls: ['../../../../scss/example.scss'],
+  styleUrls: ['../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineCoreErrorBehaviorComponent {}

@@ -32,7 +32,7 @@ import { CoreRoadmapSortKey } from './types/roadmap-sort-key.type';
     PackageNameComponent
   ],
   templateUrl: './roadmap.component.html',
-  styleUrls: ['./roadmap.component.scss', '../../scss/example.scss']
+  styleUrls: ['./roadmap.component.scss', '../../scss/documentation.scss']
 })
 export class DocsTopTierRoadmapComponent {
   readonly coreSortOptions: { key: string; value: string }[] = [

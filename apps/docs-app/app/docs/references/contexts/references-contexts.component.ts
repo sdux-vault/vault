@@ -35,7 +35,7 @@ import { TabSyncBehaviorClassContextComponent } from './tab-sync-behavior-class-
     TabSyncBehaviorClassContextComponent
   ],
   templateUrl: './references-contexts.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesContextsLandingPageComponent {
   type!: string;

@@ -26,7 +26,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
       </p>
     </blockquote>
   `,
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class VaultTestingRuleCommonComponent {}

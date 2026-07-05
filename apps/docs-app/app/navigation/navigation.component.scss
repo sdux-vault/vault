@@ -22,8 +22,6 @@
   }
 
   .sdux-sidenav {
-    // test are expandable
-
     width: global.$sidenav-width;
     min-width: global.$sidenav-width;
     background-color: var(--sdux-surface-bg);
@@ -50,11 +48,9 @@
           height: 42px;
 
           .menu-content {
-            // padding-top: 8px;
             height: 24px;
-            font-weight: global.$font-weight-medium;
-
-            // hteser are the non-expandable one
+            font-size: global.$font-size-sm;
+            font-weight: global.$font-weight-semibold;
             color: var(--sdux-text-default);
 
             .logo {
@@ -67,6 +63,7 @@
 
             &.sub-item {
               padding-inline-start: global.$spacing-md;
+              font-weight: global.$font-weight-medium;
               color: var(--sdux-text-default);
             }
           }
@@ -76,7 +73,6 @@
            Sub-item indentation
            =============================== */
         .sub-item {
-          // these are children
           padding-inline-start: calc(global.$spacing-md + 12px);
           color: var(--sdux-text-default);
         }
@@ -146,11 +142,14 @@
   }
 }
 
+/* exception: mat-expansion-panel-body padding is not configurable via inputs */
 ::ng-deep .mat-expansion-panel-body {
-  padding: 0 !important;
+  border-top: 1px solid global.$sdux-primary-base;
+  padding: 0 !important; /* exception: override Material internal padding */
 }
 
 .nav-expansion {
+  /* exception: override Material expansion panel defaults */
   background: var(--sidenav-bg) !important;
   color: var(--sidenav-text) !important;
   box-shadow: none !important;
@@ -158,23 +157,17 @@
   margin: 0;
   padding: 0;
 
-  // .mat-expansion-panel {
-
   .mat-expansion-panel-header {
     border-radius: 0;
     padding-left: 0;
-    // font-weight: global.$font-weight-semibold;
-    min-height: 36px !important;
+    min-height: 36px !important; /* exception: override Material min-height */
     height: 42px;
 
     .mat-content {
       .nav-section-label {
-        padding: 0;
         padding: global.$spacing-sm global.$spacing-md;
-        // font-size: global.$font-size-xs;
-        // font-weight: global.$font-weight-semibold;
-        // text-transform: uppercase;
-        // letter-spacing: 0.04em;
+        font-size: global.$font-size-sm;
+        font-weight: global.$font-weight-semibold;
         color: var(--sdux-text-muted);
 
         .tiny-label {
@@ -184,53 +177,33 @@
     }
 
     &.mat-expanded {
-      border-bottom: 1px solid global.$sdux-primary-base;
       height: 42px;
     }
 
-    /*
-    .menu-content {
-      border: 4px solid red !important;
-      padding-left: global.$spacing-md;
-    }
-      */
-
     .sub-menu-content {
       padding-inline-start: global.$spacing-sm;
       font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-medium;
     }
   }
-  // }
-
-  /*
-  .mat-expansion-panel-body {
-    border: 2px solid blue;
-    padding: 0;
-    background: var(--sidenav-bg);
-  }
-    */
 
   &.grandparent {
-    .sub-menu-content {
-      padding-inline-start: global.$spacing-sm;
-      font-size: global.$font-size-sm;
-    }
-
     .sub-menu {
       padding-inline-start: global.$spacing-sm;
 
       .sub-header {
-        font-weight: global.$font-weight-medium !important;
+        font-weight: global.$font-weight-medium;
       }
 
       a.mat-mdc-list-item {
         padding-inline-start: 0;
 
         .menu-content {
-          opacity: 0.9;
+          /* exception: override Material list-item padding */
           padding-inline-start: global.$spacing-lg !important;
           font-size: global.$font-size-sm;
-          color: var(--sdux-text-default);
+          font-weight: global.$font-weight-regular;
+          color: var(--sdux-text-muted);
         }
       }
     }
@@ -238,27 +211,28 @@
 }
 
 /* Sub-items inside expansion panel */
-/**
-These don't seem to do anythin
-*/
 .nav-expansion .sub-menu a.mat-mdc-list-item {
+  /* exception: override Material list-item padding */
   padding-inline-start: global.$spacing-md !important;
 
   .menu-content {
-    opacity: 0.9;
+    /* exception: override Material list-item padding */
     padding-inline-start: global.$spacing-lg !important;
     font-size: global.$font-size-sm;
-    color: var(--sdux-text-default);
+    font-weight: global.$font-weight-regular;
+    color: var(--sdux-text-muted);
   }
 }
 
 .nav-expansion a.mat-mdc-list-item {
+  /* exception: override Material list-item padding */
   padding: 0 !important;
 
   .menu-content {
-    // these are children without expansion
+    /* exception: override Material list-item padding; +4px aligns text with expansion header labels */
     padding-inline-start: calc(global.$spacing-lg + 4px) !important;
     font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-medium;
     color: var(--sdux-text-default);
   }
 }

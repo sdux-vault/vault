@@ -86,26 +86,29 @@
         interrupt downstream error handling.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Multiple error transform behaviors may be composed. When configured,
-        they execute sequentially in the exact order they are declared in the
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        definition. Each transform receives the
-        <em>current</em>
-        <a href="/docs/references/interfaces/references-vault-error-shape"
-          >VaultErrorShape</a
-        >
-        produced by the preceding behavior—starting with core error
-        normalization—and may replace it or pass it through unchanged.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Multiple error transform behaviors may be composed. When configured,
+          they execute sequentially in the exact order they are declared in the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          definition. Each transform receives the
+          <em>current</em>
+          <a href="/docs/references/interfaces/references-vault-error-shape"
+            >VaultErrorShape</a
+          >
+          produced by the preceding behavior—starting with core error
+          normalization—and may replace it or pass it through unchanged.
+        </p>
 
-      <p>
-        Because transforms are applied cumulatively, their order is semantically
-        significant. Error transform behaviors should remain narrowly scoped and
-        intentional. Overlapping or order-dependent transforms can obscure error
-        provenance and complicate failure analysis.
-      </p>
+        <p>
+          Because transforms are applied cumulatively, their order is
+          semantically significant. Error transform behaviors should remain
+          narrowly scoped and intentional. Overlapping or order-dependent
+          transforms can obscure error provenance and complicate failure
+          analysis.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -153,8 +156,8 @@
       <sdux-example-viewer-source [displayTabs]="false">
         <sdux-example-viewer-tab
           [label]="'Example 1: Register a Custom Error Transform Behavior'">
-          <pre class="code-inline"><code class="language-ts">{{`
-// ------------------------------------------------------------
+          <pre
+            class="code-inline"><code class="language-ts">{{`// ------------------------------------------------------------
 // Custom Error Transform Behavior
 // ------------------------------------------------------------
 
@@ -182,13 +185,44 @@ export class withEmployeeErrorTagTransform&lt;T>
       }
     };
   }
-}
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
 
-// ------------------------------------------------------------
+      <h4>Example 2: Attach Error Transform in FeatureCell</h4>
+
+      <sdux-multi-framework-example
+        description="Register Error Transform in FeatureCell">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
+provideFeatureCell(
+  EmployeeService,
+  {
+    key: 'employees',
+    initialState: [],
+  },
+  [
+    withEmployeeErrorTagTransform
+  ],
+  [
+    // opt-in Controllers 
+  ]
+);
+
+// employee.service.ts
+this.vault.initialize();
+
+// Any error thrown in this FeatureCell will now
+// carry a feature tag and normalized message
+`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// ------------------------------------------------------------
 // FeatureCell Configuration
 // ------------------------------------------------------------
 
-export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -207,8 +241,8 @@ employeeCell.initialize();
 // Any error thrown in this FeatureCell will now
 // carry a feature tag and normalized message
 `}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

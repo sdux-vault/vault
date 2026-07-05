@@ -332,7 +332,7 @@ userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#1
       </section>
     </sdux-blog-layout>
   `,
-  styleUrls: ['../../../docs/scss/example.scss'],
+  styleUrls: ['../../../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class BlogGlobalDispatchBroadcastsScopedUpdatesDontComponent {}

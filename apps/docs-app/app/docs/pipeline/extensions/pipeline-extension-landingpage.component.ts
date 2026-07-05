@@ -15,7 +15,7 @@ import { PipelineWhatIsSduxExtensionsComponent } from './what-is-sdux-extensions
     PipelineWhatIsSduxExtensionsComponent
   ],
   templateUrl: './pipeline-extension-landingpage.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineExtensionsLandingComponent extends PipelineRoutingDirective {}

@@ -69,6 +69,18 @@
     </div>
   </header>
 
+  <section class="diagram-section">
+    <div class="section-title">Diagrams & Videos</div>
+
+    <div class="section-body">
+      <sdux-video videoId="kHWlsfNZba8" [tooltip]="'Vault Definition'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'" />
+    </div>
+  </section>
+
   <!-- ====================================================== -->
   <!-- INITIALIZATION -->
   <!-- ====================================================== -->
@@ -186,44 +198,25 @@
     <div class="section-title">Examples</div>
 
     <div class="section-body">
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <p>
-                How
-                <a href="/docs/references/functions/provide-vault"
-                  >provideVault</a
-                >
-                is initialized using Angular.
-              </p>
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Initialize the Vault with Default Settings</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Default Vault Initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <h4>Example 1: Initialize the Vault with Default Settings</h4>
+
+      <sdux-multi-framework-example description="Default Vault Initialization">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 export const appConfig: ApplicationConfig = {
   providers: [
     provideVault()
   ]
 };`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <h4>
-                  Example 2: Initialize the Vault with Diagnostics Enabled
-                </h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Vault Initialization with Configuration'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <h4>Example 2: Initialize the Vault with Diagnostics Enabled</h4>
+
+      <sdux-multi-framework-example
+        description="Vault Initialization with Configuration">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 export const appConfig: ApplicationConfig = {
   providers: [
     provideVault({ 
@@ -232,13 +225,8 @@ export const appConfig: ApplicationConfig = {
     })
   ]
 };`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

@@ -32,7 +32,7 @@ import { PipelineRoutingDirective } from '../../pipeline/directives/pipeline-rou
     PackageNameComponent
   ],
   templateUrl: './best-practices.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SDuXBestPracticesComponent extends PipelineRoutingDirective {}

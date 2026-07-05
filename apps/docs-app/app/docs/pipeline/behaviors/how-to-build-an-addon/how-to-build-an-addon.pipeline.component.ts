@@ -19,7 +19,7 @@ import { PipelineRelatedTopicComponent } from '../../../related-topic/related-to
     PipelineRelatedTopicComponent
   ],
   templateUrl: 'how-to-build-an-addon.pipeline.component.html',
-  styleUrls: ['../../../scss/example.scss'],
+  styleUrls: ['../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineHowToBuildAnAddonComponent {}

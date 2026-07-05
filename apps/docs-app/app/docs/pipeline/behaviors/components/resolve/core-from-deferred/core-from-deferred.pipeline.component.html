@@ -16,12 +16,14 @@
       standard state update APIs.
     </div>
 
-    <div class="note">Note</div>
-    fromDeferred is not backed by a standalone behavior; it is an alias provided
-    by
-    <a href="/docs/pipeline/behaviors/promise/with-core-from-promise-behavior"
-      >withCoreFromPromiseBehavior</a
-    >
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      fromDeferred is not backed by a standalone behavior; it is an alias
+      provided by
+      <a href="/docs/pipeline/behaviors/promise/with-core-from-promise-behavior"
+        >withCoreFromPromiseBehavior</a
+      >
+    </div>
 
     <p>
       This behavior operates <strong>outside of the pipeline</strong> and does
@@ -71,33 +73,35 @@
       pipeline control, avoiding false state snapshots and orphaned updates.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      <code>fromDeferred()</code> is a <em>single-resolution bridge</em>, not a
-      pipeline resolve mechanism. It exists to adapt externally managed or
-      legacy deferred-based workflows into a normalized
-      <code>StateType&lt;T&gt;</code>.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <code>fromDeferred()</code> is a <em>single-resolution bridge</em>, not
+        a pipeline resolve mechanism. It exists to adapt externally managed or
+        legacy deferred-based workflows into a normalized
+        <code>StateType&lt;T&gt;</code>.
+      </p>
 
-    <p>
-      In most cases, it is
-      <strong>recommended to pass a deferred factory directly</strong> to
-      <strong>replaceState</strong> or <strong>mergeState</strong> and allow the
-      Resolve stage to handle normalization automatically using the same
-      deferred semantics. This approach avoids resolving promises outside of
-      pipeline control, reduces indirection and boilerplate, and ensures that
-      promise execution, error handling, and state commitment all occur within a
-      single, deterministic pipeline boundary. Using the promise-based state
-      APIs preserves the same lifecycle guarantees provided by fromPromise,
-      while minimizing unnecessary steps that can complicate debugging or
-      obscure the true source of state transitions.
-    </p>
+      <p>
+        In most cases, it is
+        <strong>recommended to pass a deferred factory directly</strong> to
+        <strong>replaceState</strong> or <strong>mergeState</strong> and allow
+        the Resolve stage to handle normalization automatically using the same
+        deferred semantics. This approach avoids resolving promises outside of
+        pipeline control, reduces indirection and boilerplate, and ensures that
+        promise execution, error handling, and state commitment all occur within
+        a single, deterministic pipeline boundary. Using the promise-based state
+        APIs preserves the same lifecycle guarantees provided by fromPromise,
+        while minimizing unnecessary steps that can complicate debugging or
+        obscure the true source of state transitions.
+      </p>
 
-    <p>
-      Use <code>fromDeferred()</code> or <code>fromPromise()</code> only when
-      you explicitly need to adapt or normalize a promise or deferred function
-      result into a <code>StateType&lt;T&gt;</code> before submission.
-    </p>
+      <p>
+        Use <code>fromDeferred()</code> or <code>fromPromise()</code> only when
+        you explicitly need to adapt or normalize a promise or deferred function
+        result into a <code>StateType&lt;T&gt;</code> before submission.
+      </p>
+    </div>
   </header>
 
   <section class="diagram-section">
@@ -302,24 +306,14 @@
 
       <h4>Example 1: Resolve a Deferred Factory and Inject the Result</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve a Deferred Factory and Inject the Result'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+      <sdux-multi-framework-example
+        description="Resolve a Deferred Factory and Inject the Result">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
@@ -334,25 +328,14 @@ export class EmployeeService {
 
     // Resolve the promise once and inject the result into the pipeline
     this.vault.fromDeferred(deferredEmployees).then(
-      (incoming: StateType&lt;Employee[]>) => this.vault.mergeState(incoming)
+      (incoming: StateType`}}&lt;Employee[]&gt;{{`) => this.vault.mergeState(incoming)
     );
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve a Deferred Factory and Inject the Result'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -373,48 +356,8 @@ const deferredEmployees = {
 employeeCell.fromDeferred(deferredEmployees).then(
   (incoming) => employeeCell.mergeState(incoming)
 );`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve a Deferred Factory and Inject the Result'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  }
-);
-
-employeeCell.initialize();
-
-const deferredEmployees = {
-  value: () =>
-    Promise.resolve([
-      { id: 1, name: 'Alice' },
-      { id: 2, name: 'Bob' }
-    ])
-};
-
-// Resolve the promise once and inject the result into the pipeline
-employeeCell.fromDeferred(deferredEmployees).then(
-  (incoming) => employeeCell.mergeState(incoming)
-);`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

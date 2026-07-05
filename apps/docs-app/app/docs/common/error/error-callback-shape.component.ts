@@ -52,7 +52,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
       </tbody>
     </table>
   `,
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class VaultErrorCallbackShapeCommonComponent {}

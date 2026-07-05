@@ -49,45 +49,20 @@
                 }
               </ul>
             }
+          </div>
+          <div class="panel-right">
+            <h4>By Stage</h4>
 
-            @if (stageLinks.length) {
-              <div class="table-title">Stages</div>
-              <ul class="toc">
-                @for (link of stageLinks; track link.fragment) {
-                  <li>
-                    <a [routerLink]="[]" [fragment]="link.fragment">
-                      {{ link.display }}
-                    </a>
-                  </li>
-                }
-              </ul>
-            }
-
-            @if (testingLinks.length) {
-              <div class="table-title">Testing</div>
-              <ul class="toc">
-                @for (link of testingLinks; track link.fragment) {
-                  <li>
-                    <a [routerLink]="[]" [fragment]="link.fragment">
-                      {{ link.display }}
-                    </a>
-                  </li>
-                }
-              </ul>
-            }
-
-            @if (integrationLinks.length) {
-              <div class="table-title">Integrations</div>
-              <ul class="toc">
-                @for (link of integrationLinks; track link.fragment) {
-                  <li>
-                    <a [routerLink]="[]" [fragment]="link.fragment">
-                      {{ link.display }}
-                    </a>
-                  </li>
-                }
-              </ul>
-            }
+            <div class="table-title">Flows</div>
+            <ul class="toc">
+              @for (link of stageFlows; track link.fragment) {
+                <li>
+                  <a [routerLink]="[]" [fragment]="link.fragment">
+                    {{ link.display }}
+                  </a>
+                </li>
+              }
+            </ul>
           </div>
         </div>
       </div>
@@ -141,6 +116,86 @@
       </p>
 
       <sdux-video videoId="TRlvCmluBcE" [tooltip]="'Atomic Pipeline'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="vault-definition">
+    <div class="section-title-navigation">
+      <div class="section-title">Vault Definition</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        SDuX Vault is a TypeScript state management system that handles state as
+        a Pipeline. Every state change is sealed behind strict, isolated
+        boundaries enforced by the Vault. Each FeatureCell owns exactly one
+        slice of application state — no central store, no selectors, no
+        dispatched actions.
+      </p>
+
+      <sdux-video videoId="kHWlsfNZba8" [tooltip]="'Vault Definition'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="feature-cell-definition">
+    <div class="section-title-navigation">
+      <div class="section-title">FeatureCell Definition</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        A FeatureCell is the Conductor and Orchestrator — it is the SDuX
+        Pipeline. This video explains how a FeatureCell conducts and
+        orchestrates pipeline execution, how the Policy Layer eliminates race
+        conditions, and how state flows through Pre-Processing, Processing,
+        Output, and Post-Processing layers.
+      </p>
+
+      <sdux-video videoId="-wTfiJaN9iU" [tooltip]="'FeatureCell Definition'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="conductor-definition">
+    <div class="section-title-navigation">
+      <div class="section-title">Conductor Definition</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The Conductor is the Policy Layer — it queues requests one at a time to
+        determine if a new candidate is allowed into the pipeline. This
+        eliminates race conditions by design.
+      </p>
+
+      <sdux-video videoId="wbdY-KtPOPI" [tooltip]="'Conductor Definition'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="orchestrator-definition">
+    <div class="section-title-navigation">
+      <div class="section-title">Orchestrator Definition</div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The Orchestrator streams state through the pipeline layers in order —
+        Pre-Processing, Processing, Output, and Post-Processing. Each layer is
+        split into stages that execute deterministically from top to bottom.
+      </p>
+
+      <sdux-video videoId="aMTkMNqpIXA" [tooltip]="'Orchestrator Definition'" />
     </div>
   </section>
 

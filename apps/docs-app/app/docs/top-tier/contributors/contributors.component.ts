@@ -22,7 +22,7 @@ import { PipelineRoutingDirective } from '../../pipeline/directives/pipeline-rou
     PackageNameComponent
   ],
   templateUrl: './contributors.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SDuXContributorsComponent extends PipelineRoutingDirective {}

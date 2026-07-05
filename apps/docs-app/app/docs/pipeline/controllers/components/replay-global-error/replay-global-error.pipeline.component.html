@@ -33,23 +33,25 @@
       replay decisions in response to global error lifecycle events.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      When a global Vault error is active, pipeline execution remains paused
-      until an external action explicitly clears the error state. Clearing the
-      global error is performed by invoking
-      <code>VaultErrorServiceClass().clear()</code>, which removes the active
-      error signal and allows controllers and interceptors that depend on global
-      error state to resume normal operation.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        When a global Vault error is active, pipeline execution remains paused
+        until an external action explicitly clears the error state. Clearing the
+        global error is performed by invoking
+        <code>VaultErrorServiceClass().clear()</code>, which removes the active
+        error signal and allows controllers and interceptors that depend on
+        global error state to resume normal operation.
+      </p>
 
-    <p>
-      Until the global error is cleared, new pipeline attempts may be denied and
-      previously blocked executions will not be replayed. This design ensures
-      that recovery from global error conditions is explicit, intentional, and
-      fully controlled by the application rather than occurring implicitly or
-      automatically.
-    </p>
+      <p>
+        Until the global error is cleared, new pipeline attempts may be denied
+        and previously blocked executions will not be replayed. This design
+        ensures that recovery from global error conditions is explicit,
+        intentional, and fully controlled by the application rather than
+        occurring implicitly or automatically.
+      </p>
+    </div>
 
     <h4>Additional Help</h4>
     <a href="docs/global-error-handler">Global Error Handler</a>
@@ -240,21 +242,10 @@
 
       <p>Registering the controller does configure the controller by itself.</p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Replay Global Error Controller'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="Register Replay Global Error Controller">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -277,21 +268,10 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Replay Global Error Controller'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -304,40 +284,8 @@ export const appConfig: ApplicationConfig = {
     withReplayGlobalErrorController
   ]
 );`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Replay Global Error Controller'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Optional add-on behaviors
-  ],
-  [
-    // Attach the Replay Global Error Controller structurally
-    withReplayGlobalErrorController
-  ]
-);`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -474,24 +422,12 @@ export const appConfig: ApplicationConfig = {
         deterministic and controlled manner.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>
-                  Example 1: Configure a FeatureCell with Replay Global Error
-                </h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Replay Global Error'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <h4>Example 1: Configure a FeatureCell with Replay Global Error</h4>
+
+      <sdux-multi-framework-example
+        description="Configure FeatureCell with Replay Global Error">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -513,71 +449,10 @@ export const appConfig: ApplicationConfig = {
     )
   ]
 };`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Configure a Service</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Configure a Service'">
-                    <pre class="code-inline"><code class="language-ts">{{`
-@FeatureCell&lt;Employee[][]>('employees')
-@Injectable({
-  providedIn: 'root'
-})
-export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
-
-  constructor() {
-    this.vault.initialize();
-  }
-}`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 3: Observe and Clear a Global Vault Error</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Observe and Clear a Global Vault Error'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { VaultErrorService } from '@sdux-vault/shared';
-
-// Obtain the singleton service
-const errorService = VaultErrorService();
-
-// Listen for global Vault error changes
-const subscription = errorService.error$.subscribe((error) => {
-  if (error) {
-    console.info('Global Vault error detected:', error.message);
-  } else {
-    console.info('Global Vault error cleared');
-  }
-});
-
-// At some later point (user action, recovery flow, retry button, etc.)
-errorService.clear();
-
-// Cleanup when no longer needed
-subscription.unsubscribe();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>
-                  Example 1: Configure a FeatureCell with Replay Global Error
-                </h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Replay Global Error'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -594,16 +469,35 @@ subscription.unsubscribe();`}}</code></pre>
 // Initialize the FeatureCell
 employeeCell.initialize();
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-                <h4>Example 2: Observe and Clear a Global Vault Error</h4>
+      <h4>Example 2: Configure a Service (Angular)</h4>
 
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Observe and Clear a Global Vault Error'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { VaultErrorService } from '@sdux-vault/shared';
+      <sdux-multi-framework-example description="Configure a Service">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
+
+  constructor() {
+    this.vault.initialize();
+  }
+}`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>Example 3: Observe and Clear a Global Vault Error</h4>
+
+      <sdux-multi-framework-example
+        description="Observe and Clear a Global Vault Error">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { VaultErrorService } from '@sdux-vault/shared';
 
 // Obtain the singleton service
 const errorService = VaultErrorService();
@@ -622,46 +516,10 @@ errorService.clear();
 
 // Cleanup when no longer needed
 subscription.unsubscribe();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Replay Global Error'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Additional add-on behaviors 
-  ],
-  [
-    // REQUIRED: Coordinates replay and retry once the error is cleared
-    withReplayGlobalErrorController
-  ]
-);
-
-// Initialize the FeatureCell
-employeeCell.initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Observe and Clear a Global Vault Error</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Observe and Clear a Global Vault Error'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { VaultErrorService } from '@sdux-vault/shared';
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { VaultErrorService } from '@sdux-vault/shared';
 
 // Obtain the singleton service
 const errorService = VaultErrorService();
@@ -680,13 +538,8 @@ errorService.clear();
 
 // Cleanup when no longer needed
 subscription.unsubscribe();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

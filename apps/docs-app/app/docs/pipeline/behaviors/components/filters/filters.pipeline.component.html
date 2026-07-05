@@ -330,22 +330,31 @@
       </p>
 
       <h4>Example 1: Pure Filter Function</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 1: Pure Filter Function'">
+      <sdux-multi-framework-example description="Pure Filter Function">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+            class="code-inline"><code class="language-ts">{{`this.vault.filters(
   [
     (employees) => employees.filter(e => e.status === 'Active')
   ]
 ).initialize()
 // Inactive employees are removed`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.filters(
+  [
+    (employees) => employees.filter(e => e.status === 'Active')
+  ]
+).initialize()
+// Inactive employees are removed`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 2: Factory-Generated Pure Filter Function</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 2: Factory-Generated Pure Filter Function'">
+      <sdux-multi-framework-example
+        description="Factory-Generated Pure Filter Function">
+        <ng-template #angular>
           <pre
             class="code-inline"><code class="language-ts">{{`// Factory function produces a pure, parameterized filter
 export function partialFilterStartDateAfter(cutoff: string) {
@@ -356,15 +365,34 @@ export function partialFilterStartDateAfter(cutoff: string) {
 }
 
 // Register the generated filter during initialization
-&lt;employeeCell\|this&gt;.vault.filters(
+this.vault.filters(
   [
     partialFilterStartDateAfter('2020-01-01')
   ]
 ).initialize()
 
 // Employees hired before 2020-01-01 are removed`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Factory function produces a pure, parameterized filter
+export function partialFilterStartDateAfter(cutoff: string) {
+  const cutoffDate = new Date(cutoff);
+
+  return (employees) =>
+    employees.filter(e => new Date(e.hireDate) >= cutoffDate);
+}
+
+// Register the generated filter during initialization
+employeeCell.filters(
+  [
+    partialFilterStartDateAfter('2020-01-01')
+  ]
+).initialize()
+
+// Employees hired before 2020-01-01 are removed`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>
         Category B: Instance-Aware but Correctly Bound Functions (Acceptable)
@@ -381,9 +409,9 @@ export function partialFilterStartDateAfter(cutoff: string) {
       </p>
 
       <h4>Example 3: Arrow Function Using Instance State</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 3: Arrow Function Using Instance State'">
+      <sdux-multi-framework-example
+        description="Arrow Function Using Instance State">
+        <ng-template #angular>
           <pre
             class="code-inline"><code class="language-ts">{{`readonly salaryThreshold = 80000;
 
@@ -391,25 +419,47 @@ readonly filterBySalary = (employees) => {
   return employees.filter(e => e.salary > this.salaryThreshold);
 };
 
-&lt;employeeCell\|this&gt;.vault.filters(
+this.vault.filters(
   [this.filterBySalary]
 ).initialize()`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`readonly salaryThreshold = 80000;
+
+readonly filterBySalary = (employees) => {
+  return employees.filter(e => e.salary > this.salaryThreshold);
+};
+
+employeeCell.filters(
+  [this.filterBySalary]
+).initialize()`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 4: Bound Instance Method</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 4: Bound Instance Method'">
+      <sdux-multi-framework-example description="Bound Instance Method">
+        <ng-template #angular>
           <pre
             class="code-inline"><code class="language-ts">{{`public filterByCity(employees) {
   return employees.filter(e => e.address.city === 'New York');
 }
 
-&lt;employeeCell\|this&gt;.vault.filters(
+this.vault.filters(
   [this.filterByCity.bind(this)]
 ).initialize()`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`public filterByCity(employees) {
+  return employees.filter(e => e.address.city === 'New York');
+}
+
+employeeCell.filters(
+  [this.filterByCity.bind(this)]
+).initialize()`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Category C: Inline Lambdas (Allowed, Use Sparingly)</h4>
       <p>
@@ -422,17 +472,26 @@ readonly filterBySalary = (employees) => {
       <p>Inline filters are best reserved for trivial, self-contained rules.</p>
 
       <h4>Example 5: Inline Lambda Filter</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 5: Inline Lambda Filter'">
+      <sdux-multi-framework-example description="Inline Lambda Filter">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+            class="code-inline"><code class="language-ts">{{`this.vault.filters(
   [
     (value: number) => Math.min(value, 10)
   ]
 ).initialize()
 // 15 → 10`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.filters(
+  [
+    (value: number) => Math.min(value, 10)
+  ]
+).initialize()
+// 15 → 10`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -458,13 +517,13 @@ readonly filterBySalary = (employees) => {
       </p>
 
       <h4>Example 6: Discouraged External State Dependency</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 6: Discouraged External State Dependency'">
+      <sdux-multi-framework-example
+        description="Discouraged External State Dependency">
+        <ng-template #angular>
           <pre
             class="code-inline"><code class="language-ts">{{`let cutoffDate = new Date('2024-01-01');
 
-&lt;employeeCell\|this&gt;.vault.filters(
+this.vault.filters(
   [
     (employees) =>
       employees.filter(e => new Date(e.hireDate) >= cutoffDate)
@@ -472,8 +531,21 @@ readonly filterBySalary = (employees) => {
 ).initialize()
 
 // ❌ Behavior depends on external mutable state`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`let cutoffDate = new Date('2024-01-01');
+
+employeeCell.filters(
+  [
+    (employees) =>
+      employees.filter(e => new Date(e.hireDate) >= cutoffDate)
+  ]
+).initialize()
+
+// ❌ Behavior depends on external mutable state`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -617,52 +689,78 @@ readonly filterBySalary = (employees) => {
       </p>
 
       <h4>Example 1: Array Filter — Keep Only Even Numbers</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 1: Array Filter - Keep Only Even Number'">
+      <sdux-multi-framework-example
+        description="Array Filter — Keep Only Even Numbers">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+            class="code-inline"><code class="language-ts">{{`this.vault.filters(
   [
     (value: number[]) => value.filter(n => n % 2 === 0)
   ]
 ).initialize()
 // [1 , 2, 3, 4] → [2, 4]`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.filters(
+  [
+    (value: number[]) => value.filter(n => n % 2 === 0)
+  ]
+).initialize()
+// [1 , 2, 3, 4] → [2, 4]`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 2: Reject Update</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 2: Reject Update'">
+      <sdux-multi-framework-example description="Reject Update">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+            class="code-inline"><code class="language-ts">{{`this.vault.filters(
   [
     () => undefined
   ]
 ).initialize()
 // any incoming value → update suppressed`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.filters(
+  [
+    () => undefined
+  ]
+).initialize()
+// any incoming value → update suppressed`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 3: Invalid Structural Change</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 3: Invalid Structural Change'">
+      <sdux-multi-framework-example description="Invalid Structural Change">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+            class="code-inline"><code class="language-ts">{{`this.vault.filters(
   [
     (value: number[]) => 42
   ]
 ).initialize()
 // ❌ throws Vault error — array structure must be preserved`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.filters(
+  [
+    (value: number[]) => 42
+  ]
+).initialize()
+// ❌ throws Vault error — array structure must be preserved`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 4: Object Filter — Remove Sensitive Fields</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 4: Object Filter - Remove Sensitive Fields'">
+      <sdux-multi-framework-example
+        description="Object Filter — Remove Sensitive Fields">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+            class="code-inline"><code class="language-ts">{{`this.vault.filters(
   [
     (value: { id: number; name: string; password: string }) => {
       const { password, ...rest } = value;
@@ -671,22 +769,43 @@ readonly filterBySalary = (employees) => {
   ]
 ).initialize()
 // { id, name, password } → { id, name }`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.filters(
+  [
+    (value: { id: number; name: string; password: string }) => {
+      const { password, ...rest } = value;
+      return rest;
+    }
+  ]
+).initialize()
+// { id, name, password } → { id, name }`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 5: Primitive Filter — Clamp Value</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 5: Primitive Filter - Clamp Value'">
+      <sdux-multi-framework-example
+        description="Primitive Filter — Clamp Value">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+            class="code-inline"><code class="language-ts">{{`this.vault.filters(
   [
     (value: number) => Math.min(value, 10)
   ]
 ).initialize()
 // 15 → 10`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.filters(
+  [
+    (value: number) => Math.min(value, 10)
+  ]
+).initialize()
+// 15 → 10`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -705,10 +824,10 @@ readonly filterBySalary = (employees) => {
 
       <!-- Example 5 -->
       <h4>Example 6: Invalid — Mutating the Input</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Example 6: Invalid Mutation'">
+      <sdux-multi-framework-example description="Invalid — Mutating the Input">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+            class="code-inline"><code class="language-ts">{{`this.vault.filters(
   [
     (current) => {
       current.count++; // ❌ mutation
@@ -718,24 +837,47 @@ readonly filterBySalary = (employees) => {
 ).initialize()
 
 // ❌ Vault error: filters must not mutate the incoming value`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.filters(
+  [
+    (current) => {
+      current.count++; // ❌ mutation
+      return current;
+    }
+  ]
+).initialize()
+
+// ❌ Vault error: filters must not mutate the incoming value`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <!-- Example 6 -->
       <h4>Example 7: Invalid — Returning Wrong Shape</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Example 7: Invalid Structural Return'">
+      <sdux-multi-framework-example
+        description="Invalid — Returning Wrong Shape">
+        <ng-template #angular>
           <pre
-            class="code-inline"><code class="language-ts">{{`&lt;employeeCell\|this&gt;.vault.filters(
+            class="code-inline"><code class="language-ts">{{`this.vault.filters(
   [
     (current) => 123 // ❌ incorrect type
   ]
 ).initialize()
 
 // ❌ Vault error: filter returned incompatible value type`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.filters(
+  [
+    (current) => 123 // ❌ incorrect type
+  ]
+).initialize()
+
+// ❌ Vault error: filter returned incompatible value type`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

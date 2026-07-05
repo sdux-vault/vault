@@ -138,7 +138,7 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
       </table>
     }
   `,
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [PackageNameComponent]
 })

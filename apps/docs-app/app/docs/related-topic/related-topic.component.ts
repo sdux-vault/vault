@@ -16,7 +16,7 @@ import { RelatedTopicsService } from './services/related-topics.service';
   standalone: true,
   imports: [RouterModule, BrandNameComponent, OverflowPillDirective],
   templateUrl: './related-topic.component.html',
-  styleUrls: ['../scss/example.scss', './related-topic.component.scss'],
+  styleUrls: ['../scss/documentation.scss', './related-topic.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineRelatedTopicComponent {

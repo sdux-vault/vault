@@ -24,6 +24,6 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     DiagramComponent
   ],
   templateUrl: './what-is-sdux.component.html',
-  styleUrls: ['../scss/example.scss']
+  styleUrls: ['../scss/documentation.scss']
 })
 export class DocsTopTierWhatIsSDuXComponent {}

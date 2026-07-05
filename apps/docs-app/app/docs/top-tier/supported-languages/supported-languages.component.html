@@ -128,7 +128,15 @@
 
         <tbody>
           <tr>
-            <td><strong>Angular</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/angular/angular-icon.svg"
+                  height="15"
+                  alt="Angular" />
+                <strong>Angular</strong></span
+              >
+            </td>
             <td>
               First-class support via &#64;<a
                 href="/docs/references/functions/feature-cell"
@@ -142,7 +150,33 @@
           </tr>
 
           <tr>
-            <td><strong>Bun</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/astro/astro-icon.svg"
+                  height="15"
+                  alt="Astro" />
+                <strong>Astro</strong></span
+              >
+            </td>
+            <td>
+              Fully supported. Astro's island architecture runs
+              <sdux-brand-name /> in any framework island (React, Vue, Svelte,
+              Solid) or in standalone TypeScript. FeatureCells persist across
+              page navigations when registered at app scope.
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/bun/bun-icon.svg"
+                  height="15"
+                  alt="Bun" />
+                <strong>Bun</strong></span
+              >
+            </td>
             <td>
               Fully supported with the same semantics as Node.js. FeatureCells
               function as long-lived stateful services, ideal for orchestration,
@@ -151,7 +185,33 @@
           </tr>
 
           <tr>
-            <td><strong>Deno</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/capacitor/capacitor-icon.svg"
+                  height="15"
+                  alt="Capacitor" />
+                <strong>Capacitor</strong></span
+              >
+            </td>
+            <td>
+              Fully supported. Capacitor runs web apps in a native WebView.
+              <sdux-brand-name /> operates identically to a browser environment.
+              Native plugin results integrate naturally via
+              <code>replaceState</code> and <code>mergeState</code>.
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/deno/deno-icon.svg"
+                  height="15"
+                  alt="Deno" />
+                <strong>Deno</strong></span
+              >
+            </td>
             <td>
               Fully supported. Same semantics as Node.js. FeatureCells function
               as long-lived stateful services, ideal for orchestration,
@@ -160,7 +220,15 @@
           </tr>
 
           <tr>
-            <td><strong>Edge Runtimes</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/edge/edge-icon.svg"
+                  height="15"
+                  alt="Edge Runtimes" />
+                <strong>Edge Runtimes</strong></span
+              >
+            </td>
             <td>
               Supported with awareness of runtime constraints. Long-lived
               FeatureCells may be limited, but request-bounded FeatureCells
@@ -169,7 +237,15 @@
           </tr>
 
           <tr>
-            <td><strong>Electron</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/electron/electron-icon.svg"
+                  height="15"
+                  alt="Electron" />
+                <strong>Electron</strong></span
+              >
+            </td>
             <td>
               Supported. Combines browser and Node.js runtimes without altering
               <sdux-brand-name /> behavior.
@@ -177,7 +253,34 @@
           </tr>
 
           <tr>
-            <td><strong>NativeScript</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/ionic/ionic-icon.svg"
+                  height="15"
+                  alt="Ionic" />
+                <strong>Ionic</strong></span
+              >
+            </td>
+            <td>
+              Fully supported. Ionic apps are Angular, React, or Vue apps with a
+              mobile UI layer. <sdux-brand-name /> works identically to the
+              underlying framework. Mobile lifecycle concerns (background,
+              foreground, offline) are handled explicitly via
+              <sdux-brand-name /> lifecycle methods.
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/nativescript/nativescript-icon.svg"
+                  height="15"
+                  alt="NativeScript" />
+                <strong>NativeScript</strong></span
+              >
+            </td>
             <td>
               Fully supported. UI layer is irrelevant to <sdux-brand-name />;
               patterns mirror Angular or React usage.
@@ -185,7 +288,15 @@
           </tr>
 
           <tr>
-            <td><strong>NestJS</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/nestjs/nestjs-icon.svg"
+                  height="15"
+                  alt="NestJS" />
+                <strong>NestJS</strong></span
+              >
+            </td>
             <td>
               Supported with lifecycle awareness. FeatureCells map cleanly to
               providers.
@@ -207,7 +318,33 @@
           </tr>
 
           <tr>
-            <td><strong>Node.js</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/nextjs/nextjs-icon.svg"
+                  height="15"
+                  alt="Next.js" />
+                <strong>Next.js</strong></span
+              >
+            </td>
+            <td>
+              Fully supported. FeatureCells work in both server components (via
+              server-side state) and client components (via React hooks or
+              direct state access). State registered at module scope persists
+              across navigations.
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/nodejs/nodejs-icon.svg"
+                  height="15"
+                  alt="Node.js" />
+                <strong>Node.js</strong></span
+              >
+            </td>
             <td>
               Fully supported. FeatureCells function as long-lived stateful
               services, ideal for orchestration, background processing, event
@@ -216,7 +353,32 @@
           </tr>
 
           <tr>
-            <td><strong>Qwik</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/nuxt/nuxt-icon.svg"
+                  height="15"
+                  alt="Nuxt" />
+                <strong>Nuxt</strong></span
+              >
+            </td>
+            <td>
+              Fully supported. Same guarantees as Vue. FeatureCells work in both
+              server and client contexts. State registered via Nuxt plugins
+              persists across navigations.
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/qwik/qwik-icon.svg"
+                  height="15"
+                  alt="Qwik" />
+                <strong>Qwik</strong></span
+              >
+            </td>
             <td>
               Reactivity-first framework. <sdux-brand-name /> owns state
               correctness; the framework owns rendering. Strong alignment with
@@ -225,7 +387,15 @@
           </tr>
 
           <tr>
-            <td><strong>React</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/react/react-icon.svg"
+                  height="15"
+                  alt="React" />
+                <strong>React</strong></span
+              >
+            </td>
             <td>
               Fully supported using plain TypeScript. FeatureCells are
               registered explicitly and consumed via state, state$, or framework
@@ -270,7 +440,12 @@
           </tr>
 
           <tr>
-            <td><strong>Service Workers</strong></td>
+            <td>
+              <span class="platform-label">
+                <span class="platform-icon-spacer"></span>
+                <strong>Service Workers</strong></span
+              >
+            </td>
             <td>
               Fully supported with lifecycle awareness. FeatureCells operate
               within a constrained, event-driven lifecycle governed by the
@@ -283,7 +458,15 @@
           </tr>
 
           <tr>
-            <td><strong>Solid</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/solid/solid-icon.svg"
+                  height="15"
+                  alt="Solid" />
+                <strong>Solid</strong></span
+              >
+            </td>
             <td>
               Reactivity-first framework. <sdux-brand-name /> owns state
               correctness; the framework owns rendering. Strong alignment with
@@ -292,7 +475,15 @@
           </tr>
 
           <tr>
-            <td><strong>Svelte</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/svelte/svelte-icon.svg"
+                  height="15"
+                  alt="Svelte" />
+                <strong>Svelte</strong></span
+              >
+            </td>
             <td>
               Reactivity-first framework. <sdux-brand-name /> owns state
               correctness; the framework owns rendering. Strong alignment with
@@ -301,7 +492,15 @@
           </tr>
 
           <tr>
-            <td><strong>Tauri</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/tauri/tauri-icon.svg"
+                  height="15"
+                  alt="Tauri" />
+                <strong>Tauri</strong></span
+              >
+            </td>
             <td>
               Supported. Combines browser and Node.js runtimes without altering
               <sdux-brand-name /> behavior.
@@ -309,7 +508,15 @@
           </tr>
 
           <tr>
-            <td><strong>Vanilla JavaScript</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/vanillajs/vanillajs-icon.svg"
+                  height="15"
+                  alt="Vanilla JavaScript" />
+                <strong>Vanilla JavaScript</strong></span
+              >
+            </td>
             <td>
               Fully supported. FeatureCells operate as plain runtime objects.
               Explicit initialization and destruction are clearest and most
@@ -318,7 +525,15 @@
           </tr>
 
           <tr>
-            <td><strong>Vue</strong></td>
+            <td>
+              <span class="platform-label">
+                <img
+                  src="assets/brand/vue/vue-icon.svg"
+                  height="15"
+                  alt="Vue" />
+                <strong>Vue</strong></span
+              >
+            </td>
             <td>
               Same guarantees as React. Vue reactivity integrates cleanly via
               adapters without influencing
@@ -327,7 +542,12 @@
           </tr>
 
           <tr>
-            <td><strong>Web Components</strong></td>
+            <td>
+              <span class="platform-label">
+                <span class="platform-icon-spacer"></span>
+                <strong>Web Components</strong></span
+              >
+            </td>
             <td>
               Framework-agnostic by nature. FeatureCells may be owned by
               elements, shared controllers, or host applications without
@@ -336,7 +556,12 @@
           </tr>
 
           <tr>
-            <td><strong>Web Workers</strong></td>
+            <td>
+              <span class="platform-label">
+                <span class="platform-icon-spacer"></span>
+                <strong>Web Workers</strong></span
+              >
+            </td>
             <td>
               Fully supported. Web Workers provide a stable, message-driven
               execution environment well-suited to long-running pipelines.
@@ -496,7 +721,8 @@ export class EmployeeComponent {
               </ng-content>
             </div>
           </mat-tab>
-          <mat-tab label="Qwik / React / Solid / Svelte /Vue">
+          <mat-tab
+            label="Astro / Qwik / React / Solid / Svelte / Vue / Web Components">
             <h4>Component-Driven UI Frameworks</h4>
 
             <p>
@@ -663,7 +889,8 @@ self.onclose = () => {
             </div>
           </mat-tab>
 
-          <mat-tab label="Node.js / Bun / Deno / Vanilla JavaScript">
+          <mat-tab
+            label="Node.js / Bun / Deno / NestJS / Vanilla JS / TypeScript">
             <div class="tab-panel">
               <h4>Examples: Plain Runtime & Backend</h4>
 
@@ -725,6 +952,164 @@ jobCell.mergeState({ processed: 1 });
 process.on('SIGTERM', () => {
   jobCell.destroy();
 });`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Capacitor / Electron / Ionic / NativeScript / Tauri">
+            <div class="tab-panel">
+              <h4>Desktop & Mobile Runtimes</h4>
+
+              <p>
+                In desktop and mobile runtime environments, FeatureCells operate
+                identically to browser or Node.js environments.
+                <sdux-brand-name /> runs inside the WebView (Capacitor,
+                Electron, Tauri) or alongside the native UI layer (Ionic,
+                NativeScript) without modification.
+              </p>
+
+              <p>
+                Mobile lifecycle concerns &mdash; background/foreground
+                transitions, offline state, and limited memory &mdash; are
+                handled explicitly via <sdux-brand-name /> lifecycle methods
+                (<code>initialize</code>, <code>reset</code>,
+                <code>destroy</code>).
+              </p>
+
+              <h4>What this does</h4>
+              <ul>
+                <li>
+                  Runs <sdux-brand-name /> inside native WebViews or alongside
+                  native UI
+                </li>
+                <li>
+                  Uses the same
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  APIs as browser environments
+                </li>
+                <li>
+                  Handles mobile lifecycle explicitly via
+                  <code>destroy()</code> and <code>reset()</code>
+                </li>
+                <li>
+                  Native plugin results integrate via
+                  <code>replaceState</code> and <code>mergeState</code>
+                </li>
+              </ul>
+
+              <h4>Example: FeatureCell in a Mobile/Desktop App</h4>
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Mobile/Desktop FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// app.ts (Capacitor / Ionic / Electron / Tauri / NativeScript)
+import { Vault } from '@sdux-vault/core';
+
+Vault({
+  logLevel: 'off'
+});
+
+import { FeatureCell } from '@sdux-vault/core';
+
+const settingsCell = FeatureCell({
+  key: 'app-settings',
+  initialState: { theme: 'light', notifications: true }
+});
+
+settingsCell.initialize();
+
+// Respond to native plugin results
+async function onCameraCapture() {
+  const photo = await Camera.getPhoto();
+  settingsCell.mergeState({ lastPhoto: photo.path });
+}
+
+// Handle app lifecycle
+document.addEventListener('pause', () => {
+  // App entering background — persist or cleanup
+});
+
+document.addEventListener('resume', () => {
+  // App returning to foreground
+});
+
+// Graceful shutdown
+window.addEventListener('beforeunload', () => {
+  settingsCell.destroy();
+});`}}</code></pre>
+                  </sdux-example-viewer-tab>
+                </sdux-example-viewer-source>
+              </ng-content>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Next.js / Nuxt">
+            <div class="tab-panel">
+              <h4>Meta-Frameworks (Server + Client)</h4>
+
+              <p>
+                In meta-frameworks like Next.js and Nuxt, FeatureCells bridge
+                server and client execution contexts.
+                <sdux-brand-name /> state registered at module scope persists
+                across page navigations and works in both server components and
+                client components.
+              </p>
+
+              <p>
+                FeatureCells should be registered once at application scope
+                (e.g., in a plugin, layout, or module initializer) and consumed
+                by components via the framework's standard patterns (React hooks
+                for Next.js, Composition API for Nuxt).
+              </p>
+
+              <h4>What this does</h4>
+              <ul>
+                <li>
+                  Registers a
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  once at application scope
+                </li>
+                <li>Works in both server and client rendering contexts</li>
+                <li>State persists across page navigations</li>
+                <li>
+                  Integrates with framework-specific patterns (hooks, plugins)
+                </li>
+              </ul>
+
+              <h4>Example: FeatureCell in a Meta-Framework</h4>
+              <ng-content select="[retrieve]">
+                <sdux-example-viewer-source [displayTabs]="false">
+                  <sdux-example-viewer-tab
+                    [label]="'Example: Meta-Framework FeatureCell'">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{`// lib/cells/user.cell.ts (shared module scope)
+import { Vault, FeatureCell } from '@sdux-vault/core';
+
+Vault({ logLevel: 'off' });
+
+export const userCell = FeatureCell({
+  key: 'user',
+  initialState: { name: '', role: 'guest' }
+});
+
+userCell.initialize();
+
+// Next.js: consumed in a client component
+// 'use client';
+// import { userCell } from '@/lib/cells/user.cell';
+// const state = userCell.state;
+
+// Nuxt: consumed via a plugin or composable
+// export default defineNuxtPlugin(() => {
+//   return { provide: { userCell } };
+// });`}}</code></pre>
                   </sdux-example-viewer-tab>
                 </sdux-example-viewer-source>
               </ng-content>

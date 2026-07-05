@@ -35,7 +35,7 @@ import { PipelineStepService } from './services/pipeline-step.service';
   ],
   templateUrl: './pipeline-builder-splashpage.component.html',
   styleUrls: [
-    '../docs/scss/example.scss',
+    '../docs/scss/documentation.scss',
     './pipeline-builder-splashpage.component.scss'
   ]
 })

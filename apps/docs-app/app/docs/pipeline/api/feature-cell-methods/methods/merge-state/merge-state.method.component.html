@@ -71,18 +71,10 @@
       </p>
 
       <div class="table-title">Anti-Pattern</div>
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Anti-Pattern'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`merge(entry: Example): void {
+      <sdux-multi-framework-example description="Anti-Pattern">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`merge(entry: Example): void {
   const current = this.state.value() ?? [];
   this.#vault.mergeState({
     loading: false,
@@ -91,17 +83,10 @@
   });
 }
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Anti-Pattern'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`function merge(entry: Example): void {
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`function merge(entry: Example): void {
   const current = exampleCell.state.value ?? [];
   exampleCell.mergeState({
     loading: false,
@@ -110,31 +95,8 @@
   });
 }
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Anti-Pattern'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`function merge(entry: Example): void {
-  const current = exampleCell.state.value ?? [];
-  exampleCell.mergeState({
-    loading: false,
-    value: [...current, entry],
-    error: null
-  });
-}
-`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <p>
         This pattern reads State at call time and freezes the Snapshot into the
@@ -159,18 +121,10 @@
       </p>
 
       <div class="table-title">Recommended Pattern</div>
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Recommended'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`merge(entry: Example): void {
+      <sdux-multi-framework-example description="Recommended">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`merge(entry: Example): void {
   this.#vault.mergeState({
     loading: false,
     value: [entry],
@@ -178,17 +132,10 @@
   });
 }
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Recommended'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`function merge(entry: Example): void {
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`function merge(entry: Example): void {
   exampleCell.mergeState({
     loading: false,
     value: [entry],
@@ -196,30 +143,8 @@
   });
 }
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Recommended'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`function merge(entry: Example): void {
-  exampleCell.mergeState({
-    loading: false,
-    value: [entry],
-    error: null
-  });
-}
-`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <p>
         Selecting an appropriate merge Behavior from the
@@ -385,22 +310,14 @@
 
       <h4>Example: Merging Default State</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Example: mergeState()'">
-                  <pre class="code-inline"><code class="language-ts">{{`
-@FeatureCell&lt;Employee[]&gt;('employees')
+      <sdux-multi-framework-example description="mergeState()">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
 
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
@@ -418,16 +335,9 @@ export class EmployeeService {
 // this.vault.state.value()
 // [{ name: 'Alice' }]
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Example: mergeState()'">
-                  <pre class="code-inline"><code class="language-ts">{{`
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`
 export const employeeCell = FeatureCell({
   key: 'employees',
   initialState: [{ name: 'John', age: 30 }] 
@@ -441,37 +351,8 @@ employeeCell.mergeState([{ age: 31 }]);
 // employeeCell.state.value 
 // [{ age: 31 }]
 `}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab [label]="'Example: mergeState()'">
-                  <pre class="code-inline"><code class="language-ts">{{`
-export const employeeCell = FeatureCell({
-  key: 'employees',
-  initialState: [{ name: 'John', age: 30 }]
-});
-
-employeeCell.initialize();
-employeeCell.mergeState([{ name: 'Alice' }]);
-
-// If current state is:
-// [{ name: 'John', age: 30 }]
-//
-// After merge (default merge behavior):
-// employeeCell.state.value 
-// [{ name: 'Alice' }]
-`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <div class="callout callout-info">
         <div class="title">Note</div>

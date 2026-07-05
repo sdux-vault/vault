@@ -28,13 +28,16 @@
       pipeline control flow beyond producing the merged value.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      The Merge stage is entered exclusively through explicit state-update APIs.
-      Pipeline executions that invoke merge semantics are initiated via the
-      <strong>mergeState</strong> method, which supply the incoming value and
-      optional merge configuration used by the active Merge behavior.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The Merge stage is entered exclusively through explicit state-update
+        APIs. Pipeline executions that invoke merge semantics are initiated via
+        the
+        <strong>mergeState</strong> method, which supply the incoming value and
+        optional merge configuration used by the active Merge behavior.
+      </p>
+    </div>
   </header>
 
   <section class="diagram-section">
@@ -217,29 +220,19 @@
         merge-style update.
       </p>
 
-      <div class="note">Note</div>
-
-      “The
-      <a href="/docs/pipeline/behaviors/merge/with-array-merge-behavior"
-        >withArrayMergeBehavior</a
-      >
-      is the default Merge behavior and does not need to be explicitly attached
-      to a <a href="/docs/references/functions/feature-cell">FeatureCell</a>.”
-
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Use the Array Merge in a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        “The
+        <a href="/docs/pipeline/behaviors/merge/with-array-merge-behavior"
+          >withArrayMergeBehavior</a
+        >
+        is the default Merge behavior and does not need to be explicitly
+        attached to a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.”
+      </div>
+      <sdux-multi-framework-example description="Array Merge in a FeatureCell">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -266,12 +259,12 @@ import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
 
   // Use injectVault to get an instance of the FeatureCell
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Required to activate the FeatureCell
@@ -288,19 +281,10 @@ export class EmployeeService {
     )
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Use the Array Merge in a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -321,47 +305,8 @@ employeeCell.mergeState(
     ]
   }
 )`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Use the Array Merge in a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // The withArrayMergeBehavior is the default Merge behavior
-    // and does not need to be attached to a FeatureCell.
-  ],
-);
-
-// Initialization the FeatureCell 
-employeeCell.initialize();
-
-employeeCell.mergeState(
-  {
-    value: [
-      { id: 1, name: 'Jane Doe' }
-    ]
-  }
-)`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

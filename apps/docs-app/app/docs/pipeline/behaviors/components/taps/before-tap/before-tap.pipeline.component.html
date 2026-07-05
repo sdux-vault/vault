@@ -112,15 +112,18 @@
         and react externally.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Because before taps allow side effects, their logic should remain
-        narrowly focused and intentional. Long-running, blocking, or stateful
-        operations can degrade pipeline performance and introduce hidden
-        coupling. Before taps are most effective when each function performs a
-        single, well-defined observational task such as logging, diagnostics,
-        auditing, or external signaling—not business logic or state derivation.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Because before taps allow side effects, their logic should remain
+          narrowly focused and intentional. Long-running, blocking, or stateful
+          operations can degrade pipeline performance and introduce hidden
+          coupling. Before taps are most effective when each function performs a
+          single, well-defined observational task such as logging, diagnostics,
+          auditing, or external signaling—not business logic or state
+          derivation.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -198,21 +201,10 @@
 
       <h4>Example: Registering Before Tap Callbacks</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: Registering Before Tap Callback'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="Registering Before Tap Callback">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -228,12 +220,12 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
-@FeatureCell&lt;Employee[][]>('employees')
+@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more before taps during initialization
@@ -245,21 +237,10 @@ export class EmployeeService {
       ).initialize()
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: Registering Before Tap Callback'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -273,41 +254,8 @@ employeeCell
     ]
   )
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: Registering Before Tap Callback'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  }
-);
-
-employeeCell
-  .beforeTaps(
-    [
-      fn
-    ]
-  )
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -729,26 +677,16 @@ employeeCell.beforeTaps(
         must not return values or mutate state.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Logging the State</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Logging the State'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+      <h4>Example 1: Logging the State</h4>
+      <sdux-multi-framework-example description="Logging the State">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more beforeTaps during initialization
@@ -764,20 +702,31 @@ export class EmployeeService {
 }
 
 // logs the current pipeline value without mutation`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
+  [
+    (current) => {
+      console.info('State after filters:', current);
+    }
+  ]
+).initialize();
 
-                <h4>Example 2: Measuring State Size</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Measuring State Size'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+// logs the current pipeline value without mutation`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>Example 2: Measuring State Size</h4>
+      <sdux-multi-framework-example description="Measuring State Size">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more beforeTaps during initialization
@@ -793,20 +742,31 @@ export class EmployeeService {
 }
 
 // emits diagnostic metrics based on snapshot size`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
+  [
+    (current) => {
+      metrics.trackSize(JSON.stringify(current).length);
+    }
+  ]
+).initialize();
 
-                <h4>Example 3: Snapshot Inspection</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Snapshot Inspection'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+// emits diagnostic metrics based on snapshot size`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>Example 3: Snapshot Inspection</h4>
+      <sdux-multi-framework-example description="Snapshot Inspection">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more beforeTaps during initialization
@@ -824,20 +784,33 @@ export class EmployeeService {
 }
 
 // inspects snapshot and emits a warning when thresholds are exceeded`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
+  [
+    (current) => {
+      if (current.items?.length > 100) {
+        console.warn('Large state detected');
+      }
+    }
+  ]
+).initialize();
 
-                <h4>Example 4: Invalid — Attempting to Modify State</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: Invalid Mutation'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+// inspects snapshot and emits a warning when thresholds are exceeded`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>Example 4: Invalid — Attempting to Modify State</h4>
+      <sdux-multi-framework-example description="Invalid Mutation">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more beforeTaps during initialization
@@ -853,20 +826,31 @@ export class EmployeeService {
 }
 
 // ❌ Vault error: tap functions must not mutate state`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
+  [
+    (current) => {
+      current.count++; // ❌ mutation attempt
+    }
+  ]
+).initialize();
 
-                <h4>Example 5: Invalid — Returning a New Value</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 5: Invalid Return Value'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[][]>('employees')
+// ❌ Vault error: tap functions must not mutate state`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>Example 5: Invalid — Returning a New Value</h4>
+      <sdux-multi-framework-example description="Invalid Return Value">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more beforeTaps during initialization
@@ -882,90 +866,10 @@ export class EmployeeService {
 }
 
 // ❌ Vault error: tap functions must not return or replace state`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Logging the State</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Logging the State'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
-  [
-    (current) => {
-      console.info('State after filters:', current);
-    }
-  ]
-).initialize();
-
-// logs the current pipeline value without mutation`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Measuring State Size</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Measuring State Size'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
-  [
-    (current) => {
-      metrics.trackSize(JSON.stringify(current).length);
-    }
-  ]
-).initialize();
-
-// emits diagnostic metrics based on snapshot size`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 3: Snapshot Inspection</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Snapshot Inspection'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
-  [
-    (current) => {
-      if (current.items?.length > 100) {
-        console.warn('Large state detected');
-      }
-    }
-  ]
-).initialize();
-
-// inspects snapshot and emits a warning when thresholds are exceeded`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 4: Invalid — Attempting to Modify State</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: Invalid Mutation'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
-  [
-    (current) => {
-      current.count++; // ❌ mutation attempt
-    }
-  ]
-).initialize();
-
-// ❌ Vault error: tap functions must not mutate state`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 5: Invalid — Returning a New Value</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 5: Invalid Return Value'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
   [
     (current) => {
       return { ...current, injected: true }; // ❌ returning a value
@@ -974,105 +878,8 @@ export class EmployeeService {
 ).initialize();
 
 // ❌ Vault error: tap functions must not return or replace state`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Logging the State</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Logging the State'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
-  [
-    (current) => {
-      console.info('State after filters:', current);
-    }
-  ]
-).initialize();
-
-// logs the current pipeline value without mutation`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 2: Measuring State Size</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Measuring State Size'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
-  [
-    (current) => {
-      metrics.trackSize(JSON.stringify(current).length);
-    }
-  ]
-).initialize();
-
-// emits diagnostic metrics based on snapshot size`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 3: Snapshot Inspection</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 3: Snapshot Inspection'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
-  [
-    (current) => {
-      if (current.items?.length > 100) {
-        console.warn('Large state detected');
-      }
-    }
-  ]
-).initialize();
-
-// inspects snapshot and emits a warning when thresholds are exceeded`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 4: Invalid — Attempting to Modify State</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 4: Invalid Mutation'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
-  [
-    (current) => {
-      current.count++; // ❌ mutation attempt
-    }
-  ]
-).initialize();
-
-// ❌ Vault error: tap functions must not mutate state`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example 5: Invalid — Returning a New Value</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 5: Invalid Return Value'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`employeeCell.beforeTaps(
-  [
-    (current) => {
-      return { ...current, injected: true }; // ❌ returning a value
-    }
-  ]
-).initialize();
-
-// ❌ Vault error: tap functions must not return or replace state`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

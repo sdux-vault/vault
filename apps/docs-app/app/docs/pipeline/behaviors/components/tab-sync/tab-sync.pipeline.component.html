@@ -579,20 +579,10 @@
         semantics, or participate in pipeline control flow.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 1: Synchronize FeatureCell State Across Tabs'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="Synchronize FeatureCell State Across Tabs">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 import { ApplicationConfig } from '@angular/core';
 import { provideVault, provideFeatureCell } from '@sdux-vault/angular';
@@ -627,10 +617,10 @@ import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
@@ -643,23 +633,14 @@ export class EmployeeService {
     });
   }
 }`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 1: Synchronize FeatureCell State Across Tabs'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
 import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
 import { Employee } from './employee.shape';
 
-export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -681,88 +662,8 @@ employeeCell.initialize();
 employeeCell.mergeState({
   value: [{ id: 1, name: 'Jane Doe' }]
 });`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- Svelte ---------------------------------------------------------- -->
-          <mat-tab label="Svelte">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 1: Synchronize FeatureCell State Across Tabs'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
-import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
-import { Employee } from './employee.shape';
-
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Enable cross-tab state synchronization
-    withTabSyncStateBehavior
-  ],
-  [
-    // Tab Sync Controller handles initial negotiation
-    withTabSyncController
-  ]
-);
-
-// Initialize the FeatureCell
-employeeCell.initialize();
-
-// State is committed locally and broadcast to other tabs
-employeeCell.mergeState({
-  value: [{ id: 1, name: 'Jane Doe' }]
-});`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 1: Synchronize FeatureCell State Across Tabs'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
-import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
-import { Employee } from './employee.shape';
-
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Enable cross-tab state synchronization
-    withTabSyncStateBehavior
-  ],
-  [
-    // Tab Sync Controller handles initial negotiation
-    withTabSyncController
-  ]
-);
-
-// Initialize the FeatureCell
-employeeCell.initialize();
-
-// State is committed locally and broadcast to other tabs
-employeeCell.mergeState({
-  value: [{ id: 1, name: 'Jane Doe' }]
-});`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Example 2: Receiving State from Another Tab</h4>
 
@@ -774,20 +675,10 @@ employeeCell.mergeState({
         observable.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 2: Receiving Cross-Tab State'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// Tab A commits state
+      <sdux-multi-framework-example description="Receiving Cross-Tab State">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Tab A commits state
 this.vault.mergeState({
   value: [{ id: 1, name: 'Jane Doe' }]
 });
@@ -796,19 +687,10 @@ this.vault.mergeState({
 // via the standard state signal
 console.info(this.vault.state.value());
 // → [{ id: 1, name: 'Jane Doe' }]`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 2: Receiving Cross-Tab State'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// Tab A commits state
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Tab A commits state
 employeeCell.mergeState({
   value: [{ id: 1, name: 'Jane Doe' }]
 });
@@ -818,30 +700,26 @@ employeeCell.state$.subscribe(snapshot => {
   console.info(snapshot.value);
   // → [{ id: 1, name: 'Jane Doe' }]
 });`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
-              <div class="callout callout-warning">
-                <strong>Subscribe Before Initialize</strong>
-                <p>
-                  In React, the state subscription must be established
-                  <strong>before</strong> calling <code>initialize()</code> on
-                  the
-                  <a href="/docs/references/functions/feature-cell"
-                    >FeatureCell</a
-                  >. The Tab Sync controller performs BroadcastChannel
-                  negotiation during initialization and commits the negotiated
-                  snapshot synchronously. If the subscription is not active at
-                  that point, the component misses the initial cross-tab state.
-                </p>
-                <p>
-                  Place the subscription inside <code>useEffect</code> and call
-                  <code>initialize()</code> after it. Use a module-level flag to
-                  guard against React StrictMode invoking the effect twice in
-                  development:
-                </p>
-                <pre
-                  class="code-inline"><code class="language-ts">{{`useEffect(() => {
+      <div class="callout callout-warning">
+        <strong>Subscribe Before Initialize (React)</strong>
+        <p>
+          In React, the state subscription must be established
+          <strong>before</strong> calling <code>initialize()</code> on the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>. The
+          Tab Sync controller performs BroadcastChannel negotiation during
+          initialization and commits the negotiated snapshot synchronously. If
+          the subscription is not active at that point, the component misses the
+          initial cross-tab state.
+        </p>
+        <p>
+          Place the subscription inside <code>useEffect</code> and call
+          <code>initialize()</code> after it. Use a module-level flag to guard
+          against React StrictMode invoking the effect twice in development:
+        </p>
+        <pre class="code-inline"><code class="language-ts">{{`useEffect(() => {
   const sub = exampleState$.subscribe((emit) => {
     setSnapshot(emit.snapshot);
   });
@@ -851,54 +729,6 @@ employeeCell.state$.subscribe(snapshot => {
 
   return () => sub.unsubscribe();
 }, []);`}}</code></pre>
-              </div>
-            </div>
-          </mat-tab>
-
-          <!-- Svelte ---------------------------------------------------------- -->
-          <mat-tab label="Svelte">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 2: Receiving Cross-Tab State'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// Tab A commits state
-employeeCell.mergeState({
-  value: [{ id: 1, name: 'Jane Doe' }]
-});
-
-// Tab B automatically receives the updated snapshot
-employeeCell.state$.subscribe(snapshot => {
-  console.info(snapshot.value);
-  // → [{ id: 1, name: 'Jane Doe' }]
-});`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 2: Receiving Cross-Tab State'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// Tab A commits state
-employeeCell.mergeState({
-  value: [{ id: 1, name: 'Jane Doe' }]
-});
-
-// Tab B automatically receives the updated snapshot
-employeeCell.state$.subscribe(snapshot => {
-  console.info(snapshot.value);
-  // → [{ id: 1, name: 'Jane Doe' }]
-});`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
       </div>
 
       <h4>Example 3: Pairing Tab Sync with Persistence</h4>
@@ -912,20 +742,10 @@ employeeCell.state$.subscribe(snapshot => {
         encryption.
       </p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 3: Tab Sync with Local Storage Persistence'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="Tab Sync with Local Storage Persistence">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 import { ApplicationConfig } from '@angular/core';
 import { provideVault, provideFeatureCell } from '@sdux-vault/angular';
@@ -959,25 +779,16 @@ export const appConfig: ApplicationConfig = {
     )
   ]
 };`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 3: Tab Sync with Local Storage Persistence'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
 import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
 import { withAes256EncryptBehavior } from '@sdux-vault/addons';
 import { withLocalStoragePersistBehavior } from '@sdux-vault/core';
 import { Employee } from './employee.shape';
 
-export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -995,84 +806,8 @@ export const employeeCell = FeatureCell&lt;Employee[]>(
     withTabSyncController
   ]
 );`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- Svelte ---------------------------------------------------------- -->
-          <mat-tab label="Svelte">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 3: Tab Sync with Local Storage Persistence'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
-import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
-import { withAes256EncryptBehavior } from '@sdux-vault/addons';
-import { withLocalStoragePersistBehavior } from '@sdux-vault/core';
-import { Employee } from './employee.shape';
-
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Cross-tab synchronization
-    withTabSyncStateBehavior,
-    // AES-256-GCM encryption for persisted state
-    withAes256EncryptBehavior,
-    // Durable local storage persistence
-    withLocalStoragePersistBehavior
-  ],
-  [
-    // Tab Sync Controller handles initial negotiation
-    withTabSyncController
-  ]
-);`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Example 3: Tab Sync with Local Storage Persistence'">
-                  <pre
-                    class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
-import { withTabSyncStateBehavior, withTabSyncController } from '@sdux-vault/core';
-import { withAes256EncryptBehavior } from '@sdux-vault/addons';
-import { withLocalStoragePersistBehavior } from '@sdux-vault/core';
-import { Employee } from './employee.shape';
-
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Cross-tab synchronization
-    withTabSyncStateBehavior,
-    // AES-256-GCM encryption for persisted state
-    withAes256EncryptBehavior,
-    // Durable local storage persistence
-    withLocalStoragePersistBehavior
-  ],
-  [
-    // Tab Sync Controller handles initial negotiation
-    withTabSyncController
-  ]
-);`}}</code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

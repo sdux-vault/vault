@@ -19,7 +19,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     RouterModule
   ],
   templateUrl: './dev-tools-overview.component.html',
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class DevToolsOverviewComponent {}

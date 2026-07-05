@@ -33,6 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MobileLayoutService } from '../../services/mobile-layout.service';
 import { ExampleViewerTabComponent } from '../example-viewer-tab/example-viewer-source-tab.component';
+import { FrameworkSelectorComponent } from '../framework-selector/framework-selector.component';
 import { ExampleViewerService } from '../services/example-viewer.service';
 
 /**
@@ -41,7 +42,13 @@ import { ExampleViewerService } from '../services/example-viewer.service';
 @Component({
   selector: 'sdux-example-viewer-source',
   standalone: true,
-  imports: [MatTabsModule, NgTemplateOutlet, MatTooltipModule, MatIconModule],
+  imports: [
+    MatTabsModule,
+    NgTemplateOutlet,
+    MatTooltipModule,
+    MatIconModule,
+    FrameworkSelectorComponent
+  ],
   templateUrl: './example-viewer-source.component.html',
   styleUrls: ['./example-viewer-source.component.scss']
 })
@@ -69,6 +76,16 @@ export class ExampleViewerSourceComponent implements AfterContentInit {
    * Whether the copy/paste buttons should be displayed.
    */
   readonly displayCopyPaste = input<boolean>(true);
+
+  /**
+   * Whether the framework selector globe icon should be displayed.
+   */
+  readonly showFrameworkSelector = input<boolean>(false);
+
+  /**
+   * Framework labels available for the framework selector menu.
+   */
+  readonly availableFrameworks = input<string[]>([]);
 
   /**
    * Whether the source panel should be visible by default.

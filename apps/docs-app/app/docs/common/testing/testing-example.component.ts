@@ -9,7 +9,7 @@ import {
   selector: 'sdux-testing-example-common',
   standalone: true,
   templateUrl: `./testing-example.component.html`,
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   imports: [
     MatTabsModule,
     ExampleViewerSourceComponent,

@@ -21,7 +21,7 @@ import { PipelineRoutingDirective } from '../../directives/pipeline-routing.dire
     PipelineRelatedTopicComponent
   ],
   templateUrl: './decision-engine.component.html',
-  styleUrls: ['../../../scss/example.scss'],
+  styleUrls: ['../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class DecisionEngineComponent extends PipelineRoutingDirective {}

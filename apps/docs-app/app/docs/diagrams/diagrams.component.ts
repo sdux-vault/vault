@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
-  DiagramComponent
+  DiagramComponent,
+  FeatureCellBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRoutingDirective } from '../pipeline/directives/pipeline-routing.directive';
 import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.component';
@@ -16,10 +17,11 @@ import { DiagramLinkShape } from './shapes/diagram-link.shape';
     DiagramComponent,
     BrandNameComponent,
     RouterModule,
-    PipelineRelatedTopicComponent
+    PipelineRelatedTopicComponent,
+    FeatureCellBrandNameComponent
   ],
   templateUrl: './diagrams.component.html',
-  styleUrls: ['../scss/example.scss', './diagrams.component.scss']
+  styleUrls: ['../scss/documentation.scss', './diagrams.component.scss']
 })
 export class DocsDiagramDocumenationComponent extends PipelineRoutingDirective {
   allLinks: DiagramLinkShape[] = DIAGRAM_LINKS;

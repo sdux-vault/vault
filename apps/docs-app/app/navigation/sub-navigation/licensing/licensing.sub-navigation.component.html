@@ -20,6 +20,22 @@
 
     <a
       mat-list-item
+      routerLink="/docs/pipeline/extensions/licensing-and-monetization"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Licensing & Monetization</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/docs/welcome/press"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content sub-item">Press</span>
+    </a>
+
+    <a
+      mat-list-item
       routerLink="/docs/welcome/license"
       aria-label="Licensing"
       routerLinkActive="active"
@@ -34,14 +50,6 @@
       routerLinkActive="active"
       (click)="closeSidenav()">
       <div class="menu-content">{{ brandName }} Trademark Usage</div>
-    </a>
-
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/extensions/licensing-and-monetization"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Licensing & Monetization</span>
     </a>
   </mat-expansion-panel>
 </nav>

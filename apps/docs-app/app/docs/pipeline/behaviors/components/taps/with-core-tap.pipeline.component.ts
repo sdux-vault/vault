@@ -21,7 +21,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     VaultTapFluentApiCommonComponent
   ],
   templateUrl: './with-core-tap.pipeline.component.html',
-  styleUrls: ['../../../../scss/example.scss'],
+  styleUrls: ['../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineCoreTapBehaviorComponent {}

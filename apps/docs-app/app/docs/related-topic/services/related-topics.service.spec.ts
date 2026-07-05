@@ -544,4 +544,30 @@ describe('Service: RelatedTopics', () => {
       })
     );
   });
+
+  it('resolves aliased category through #findAlias', () => {
+    (TEST_REGISTRY.categories as any)['provide-vault'] = {
+      baseRoute: '/provide-vault',
+      baseDisplay: 'Provide Vault',
+      items: [{ link: '/provide-vault/setup', display: 'Setup' }]
+    };
+
+    const result = service.resolve({ category: 'at-feature-cell' });
+
+    expect(result.links.length).toBe(1);
+    expect(result.links[0].display).toBe('Setup');
+  });
+
+  it('returns empty when category is unknown and has no alias', () => {
+    const result = service.resolve({ category: 'no-alias-exists' });
+
+    expect(result).toEqual(
+      Object({
+        links: [],
+        crossLinks: [],
+        globalLinks: [],
+        globalCrossLinks: []
+      })
+    );
+  });
 });

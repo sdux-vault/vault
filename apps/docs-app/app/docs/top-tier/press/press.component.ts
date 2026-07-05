@@ -20,7 +20,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     PipelineRelatedTopicComponent
   ],
   templateUrl: './press.component.html',
-  styleUrls: ['../../scss/example.scss', './press.component.scss']
+  styleUrls: ['../../scss/documentation.scss', './press.component.scss']
 })
 export class DocsTopTierPressComponent implements AfterViewInit {
   /* istanbul ignore next -- defensive invariant, unreachable in compliant runtimes */

@@ -2,12 +2,8 @@
  * Public API Surface of web
  */
 
-export * from './lib/example-components/example-viewer-body/example-viewer-body.component';
-export * from './lib/example-components/example-viewer-header/example-viewer-header.component';
 export * from './lib/example-components/example-viewer-source/example-viewer-source.component';
 export * from './lib/example-components/example-viewer-tab/example-viewer-source-tab.component';
-export * from './lib/example-components/example-viewer-table/example-viewer-table.component';
-export * from './lib/example-components/example-viewer/example-viewer.component';
 export * from './lib/example-components/generic-tab/generic-tab.component';
 export * from './lib/example-components/multi-framework-example/multi-framework-example.component';
 

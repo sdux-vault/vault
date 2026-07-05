@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   DiagramComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 import { DecisionOutcomesCommonComponent } from '../../../common/conductor/decision-outcomes.common.component';
@@ -18,10 +19,11 @@ import { PipelineRoutingDirective } from '../../directives/pipeline-routing.dire
     DecisionOutcomesCommonComponent,
     DiagramComponent,
     FeatureCellBrandNameComponent,
-    PipelineRelatedTopicComponent
+    PipelineRelatedTopicComponent,
+    SDuXVideoComponent
   ],
   templateUrl: './conductor.component.html',
-  styleUrls: ['../../../scss/example.scss'],
+  styleUrls: ['../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ConductorComponent extends PipelineRoutingDirective {}

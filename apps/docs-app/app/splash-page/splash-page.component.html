@@ -57,49 +57,16 @@
     <span class="trusted-label">
       <sdux-catch-phrase />
     </span>
-    <span class="trusted-logo">
-      <sdux-image
-        image="brand/angular/angular-icon.svg"
-        height="15"
-        alt="Angular logo" />
-      Angular</span
-    >
-
-    <span class="trusted-logo">
-      <sdux-image
-        image="brand/nodejs/nodejs-icon.svg"
-        height="15"
-        alt="NodeJs logo" />
-      Node</span
-    >
-
-    <span class="trusted-logo">
-      <sdux-image
-        image="brand/react/react-icon.svg"
-        height="15"
-        alt="React logo" />
-      React</span
-    >
-
-    <span class="trusted-logo">
-      <sdux-image
-        image="brand/svelte/svelte-icon.svg"
-        height="15"
-        alt="Svelte logo" />
-      Svelte</span
-    >
-    <span class="trusted-logo">
-      <sdux-image
-        image="brand/typescript/typescript-icon.svg"
-        height="15"
-        alt="TypeScript logo" />
-      TypeScript</span
-    >
-
-    <span class="trusted-logo">
-      <sdux-image image="brand/vue/vue-icon.svg" height="13" alt="VueJs logo" />
-      Vue</span
-    >
+    <div class="trusted-grid">
+      @for (language of supportedLanguages; track language.name) {
+        <span class="trusted-logo">
+          <img
+            [src]="'assets/' + language.logo"
+            height="40"
+            [alt]="language.logoAlt" />
+        </span>
+      }
+    </div>
   </div>
 </section>
 
@@ -552,60 +519,18 @@ it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">a
     </p>
 
     <div class="frameworks">
-      <div class="framework-tile">
-        <sdux-image
-          image="brand/angular/angular-icon.svg"
-          tooltip="Angular"
-          height="20"
-          alt="Angular logo" />
-        <p class="framework-tile-name">Angular</p>
-        <p class="framework-tile-note">Injectable services</p>
-      </div>
-      <div class="framework-tile">
-        <sdux-image
-          image="brand/react/react-icon.svg"
-          tooltip="React"
-          height="20"
-          alt="React logo" />
-        <p class="framework-tile-name">React</p>
-        <p class="framework-tile-note">Hooks + context</p>
-      </div>
-      <div class="framework-tile">
-        <sdux-image
-          image="brand/vue/vue-icon.svg"
-          tooltip="Vue"
-          height="20"
-          alt="Vue logo" />
-        <p class="framework-tile-name">Vue</p>
-        <p class="framework-tile-note">Composition API</p>
-      </div>
-      <div class="framework-tile">
-        <sdux-image
-          image="brand/svelte/svelte-icon.svg"
-          tooltip="Svelte"
-          height="20"
-          alt="Svelte logo" />
-        <p class="framework-tile-name">Svelte</p>
-        <p class="framework-tile-note">Stores + reactivity</p>
-      </div>
-      <div class="framework-tile">
-        <sdux-image
-          image="brand/nodejs/nodejs-icon.svg"
-          tooltip="Node.js"
-          height="20"
-          alt="Node.js logo" />
-        <p class="framework-tile-name">Node</p>
-        <p class="framework-tile-note">Server-side state</p>
-      </div>
-      <div class="framework-tile">
-        <sdux-image
-          image="brand/typescript/typescript-icon.svg"
-          tooltip="TypeScript"
-          height="20"
-          alt="TypeScript logo" />
-        <p class="framework-tile-name">Any TS</p>
-        <p class="framework-tile-note">Zero dependencies</p>
-      </div>
+      @for (language of frameworkLanguages; track language.name) {
+        <div class="framework-tile">
+          <img
+            [src]="'assets/' + language.logo"
+            [alt]="language.logoAlt"
+            height="20" />
+          <p class="framework-tile-name">
+            {{ language.displayName || language.name }}
+          </p>
+          <p class="framework-tile-note">{{ language.note }}</p>
+        </div>
+      }
     </div>
   </div>
 </section>

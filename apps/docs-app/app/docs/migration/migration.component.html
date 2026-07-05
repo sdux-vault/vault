@@ -175,8 +175,14 @@
         dispatched globally and interpreted by reducers within the root store.
       </p>
 
-      <pre
-        class="code-inline"><code class="language-ts">{{`{ type: 'ADD_USER', payload: user }`}}</code></pre>
+      <sdux-example-viewer-source
+        [displayTabs]="false"
+        [displayCopyPaste]="false">
+        <sdux-example-viewer-tab [label]="'Redux Action'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`{ type: 'ADD_USER', payload: user }`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
 
       <p>
         Because Redux uses a single global store, every action is broadcast to
@@ -196,12 +202,18 @@
         using <code>mergeState()</code> or <code>replaceState()</code>.
       </p>
 
-      <pre
-        class="code-inline"><code class="language-ts">{{`vault.replaceState(nextValue)
+      <sdux-example-viewer-source
+        [displayTabs]="false"
+        [displayCopyPaste]="false">
+        <sdux-example-viewer-tab [label]="'SDuX State Update'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`vault.replaceState(nextValue)
 
 or
 
 vault.mergeState(partialValue)`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
 
       <p>
         Each
@@ -275,9 +287,14 @@ vault.mergeState(partialValue)`}}</code></pre>
         action is broadcast to all reducers.
       </p>
 
-      <pre class="code-inline"><code class="language-ts">{{`
-dispatch({ type: 'ADD_USER', payload: user })
-`}}</code></pre>
+      <sdux-example-viewer-source
+        [displayTabs]="false"
+        [displayCopyPaste]="false">
+        <sdux-example-viewer-tab [label]="'Redux Dispatch'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`dispatch({ type: 'ADD_USER', payload: user })`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
 
       <p>
         Each reducer decides whether to respond based on the action type.
@@ -304,12 +321,18 @@ dispatch({ type: 'ADD_USER', payload: user })
         <li><code>replaceState()</code></li>
       </ul>
 
-      <pre
-        class="code-inline"><code class="language-ts">{{`vault.replaceState(nextValue)
+      <sdux-example-viewer-source
+        [displayTabs]="false"
+        [displayCopyPaste]="false">
+        <sdux-example-viewer-tab [label]="'SDuX State Update'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`vault.replaceState(nextValue)
 
 or
 
 vault.mergeState(partialValue)`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
 
       <p>
         When you call <code>mergeState()</code>, you are explicitly updating
@@ -420,13 +443,17 @@ vault.mergeState(partialValue)`}}</code></pre>
         initialized.
       </p>
 
-      <pre class="code-inline"><code class="language-ts">{{`
-featureCell
+      <sdux-example-viewer-source
+        [displayTabs]="false"
+        [displayCopyPaste]="false">
+        <sdux-example-viewer-tab [label]="'Register Reducers'">
+          <pre class="code-inline"><code class="language-ts">{{`featureCell
   .reducers([
     (current) => ({ ...current, count: current.count + 1 })
   ])
-  .initialize()
-`}}</code></pre>
+  .initialize()`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
 
       <p>
         Reducers are not dynamically injected into the pipeline. Once
@@ -671,19 +698,9 @@ featureCell
 
       <p>FeatureCells can run alongside Redux during gradual adoption.</p>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Register a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example description="Register a FeatureCell">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -698,19 +715,9 @@ export const appConfig: ApplicationConfig = {
     )
   ]
 };`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Register a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`Vault({
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`Vault({
   devMode: true,
   logLevel: 'debug'
 });
@@ -719,33 +726,8 @@ export const employeeCell = FeatureCell({
   key: 'employees',
   initialState: [],
 });`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Register a FeatureCell'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`Vault({
-  devMode: true,
-  logLevel: 'debug'
-});
-
-export const employeeCell = FeatureCell({
-  key: 'employees',
-  initialState: [],
-});`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>Additional Information</h4>
       <ul>

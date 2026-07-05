@@ -87,7 +87,7 @@ import { VaultRegistrationLicenseStatusTypesComponent } from './vault-registrati
     VaultRegistrationLicenseStatusTypesComponent
   ],
   templateUrl: './references-const.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesConstLandingPageComponent {
   type!: string;

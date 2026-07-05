@@ -65,14 +65,17 @@
       >.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      Because Stepwise Filter does not return a value, failing to invoke a
-      decision method (continue, block, or clear) leaves the pipeline awaiting a
-      response that never arrives. This creates a policy deadlock and prevents
-      the <a href="/docs/references/functions/feature-cell">FeatureCell</a> from
-      processing further updates.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        Because Stepwise Filter does not return a value, failing to invoke a
+        decision method (continue, block, or clear) leaves the pipeline awaiting
+        a response that never arrives. This creates a policy deadlock and
+        prevents the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> from
+        processing further updates.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -296,30 +299,20 @@
         later via the fluent API can be applied during pipeline execution.
       </p>
 
-      <div class="note">Note</div>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Registering the behavior does not register the Stepwise controller.
+          The Stepwise controller must be attached structurally when the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          is defined.
+        </p>
+      </div>
 
-      <p>
-        Registering the behavior does not register the Stepwise controller. The
-        Stepwise controller must be attached structurally when the
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        is defined.
-      </p>
-
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Stepwise Filter Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="Configure a FeatureCell with Stepwise Filter Behavior">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -343,12 +336,12 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
-@FeatureCell&lt;Employee[][]>('employees')
+@FeatureCell`}}&lt;Employee[][]&gt;{{`('employees')
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[][]>(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[][]&gt;{{`(EmployeeService);
 
   constructor() {
     // Apply one or more reducers during initialization
@@ -362,21 +355,10 @@ export class EmployeeService {
     ).initialize()
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Stepwise Filter Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -399,50 +381,8 @@ employeeCell
     }
   })
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Configure a FeatureCell with Stepwise Filter Behavior'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    withStepwiseFilterBehavior
-    // Optional add-on behaviors
-  ],
-  [
-    // Attach the Stepwise Controller structurally
-    withStepwiseController
-  ]
-);
-
-employeeCell
-  .withStepwiseFilter({
-    stepwiseCallback: (current, candidate, decisions) => { 
-      // evaluate current and/or candidate 
-      // and return a decision
-    }
-  })
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -613,15 +553,17 @@ readonly stepwiseCheck = (current, candidate, decisions) => {
         invalid pipeline behavior.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Because Stepwise Filter does not return a value, failing to invoke a
-        decision method (continue, block, or clear) leaves the pipeline awaiting
-        a response that never arrives. This creates a policy deadlock and
-        prevents the
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> from
-        processing further updates.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Because Stepwise Filter does not return a value, failing to invoke a
+          decision method (continue, block, or clear) leaves the pipeline
+          awaiting a response that never arrives. This creates a policy deadlock
+          and prevents the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> from
+          processing further updates.
+        </p>
+      </div>
 
       <h4>Example 6: Invalid — Missing Decision (Deadlock)</h4>
       <sdux-example-viewer-source [displayTabs]="false">

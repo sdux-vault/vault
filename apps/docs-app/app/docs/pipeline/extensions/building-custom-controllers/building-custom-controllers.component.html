@@ -316,15 +316,17 @@ export class withMyController&lt;T&gt; implements ControllerContract&lt;T&gt; {
         </sdux-example-viewer-tab>
       </sdux-example-viewer-source>
 
-      <div class="note">Note</div>
-      <p>
-        The static fields (type, key, critical, wantsConfig, configKey) are
-        populated at runtime by the &#64;<a
-          href="/docs/references/decorators/vault-controller"
-          >VaultController</a
-        >
-        decorator. Declare them as static readonly for type safety.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          The static fields (type, key, critical, wantsConfig, configKey) are
+          populated at runtime by the &#64;<a
+            href="/docs/references/decorators/vault-controller"
+            >VaultController</a
+          >
+          decorator. Declare them as static readonly for type safety.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -484,8 +486,27 @@ declare module '@sdux-vault/shared' {
         configuration.
       </p>
 
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'feature-cell-usage.ts'">
+      <sdux-multi-framework-example description="Register the Controller">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
+provideFeatureCell(
+  MyCellService,
+  {
+    key: 'my-cell',
+    initialState: {}
+  },
+  [],
+  [
+    withMyController   // register in the controller array
+  ]
+);
+
+// my-cell.service.ts
+this.vault
+  .withMyController({ maxConcurrent: 3 })
+  .initialize();`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`import { FeatureCell } from '@sdux-vault/core';
 import { withMyController } from './with-my-controller.controller';
@@ -505,8 +526,8 @@ export const myCell = FeatureCell(
 myCell
   .withMyController({ maxConcurrent: 3 })
   .initialize();`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 
@@ -590,14 +611,16 @@ export class withCustomDelayController&lt;T&gt;
         </sdux-example-viewer-tab>
       </sdux-example-viewer-source>
 
-      <div class="note">Note</div>
-      <p>
-        The new &#64;<a href="/docs/references/decorators/vault-controller"
-          >VaultController</a
-        >
-        decorator replaces the parent's metadata entirely. The Conductor will
-        register your subclass under the new key and config key.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          The new &#64;<a href="/docs/references/decorators/vault-controller"
+            >VaultController</a
+          >
+          decorator replaces the parent's metadata entirely. The Conductor will
+          register your subclass under the new key and config key.
+        </p>
+      </div>
     </div>
   </section>
 

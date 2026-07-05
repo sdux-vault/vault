@@ -37,6 +37,18 @@ export const routes: Routes = [
       import('./dashboard/login/login.component').then((m) => m.LoginComponent)
   },
   {
+    path: 'press',
+    data: { category: 'welcome' },
+    loadComponent: () =>
+      import('./docs/top-tier/press/press.component').then(
+        (m) => m.DocsTopTierPressComponent
+      )
+  },
+  {
+    path: 'press-kit',
+    redirectTo: 'press'
+  },
+  {
     path: 'sdux',
     children: [
       {

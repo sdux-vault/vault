@@ -51,23 +51,26 @@
       participate in state commitment.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      The <strong>emitStates()</strong> method is additive. It may be invoked
-      multiple times, and each invocation overwrites previously registered
-      emit-state callbacks. Callbacks execute in the exact order they are
-      registered during initialization.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The <strong>emitStates()</strong> method is additive. It may be invoked
+        multiple times, and each invocation overwrites previously registered
+        emit-state callbacks. Callbacks execute in the exact order they are
+        registered during initialization.
+      </p>
 
-    <p>
-      Emit-state callbacks must be registered before <code>initialize()</code>.
-    </p>
+      <p>
+        Emit-state callbacks must be registered before
+        <code>initialize()</code>.
+      </p>
 
-    <h4>Learn More</h4>
-    <a
-      routerLink="/docs/pipeline/behaviors/state/with-core-emit-state-behavior">
-      <span class="menu-content sub-item">Core Emit State Behavior</span>
-    </a>
+      <h4>Learn More</h4>
+      <a
+        routerLink="/docs/pipeline/behaviors/state/with-core-emit-state-behavior">
+        <span class="menu-content sub-item">Core Emit State Behavior</span>
+      </a>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -113,31 +116,22 @@
 
       <h4>Example: Registering Emit-State Callbacks</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example : Registering Emit-State Callbacks'">
-                    <pre class="code-inline"><code class="language-ts">{{`
+      <sdux-multi-framework-example
+        description="Registering Emit-State Callbacks">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`
 // The provideFeatureCell key must match the @FeatureCell key input
           
 import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
 
   // Use injectVault to get an instance of the FeatureCell
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Required to activate the FeatureCell
@@ -151,19 +145,10 @@ export class EmployeeService {
       .initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example : Registering Emit-State Callbacks'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
   key: 'employees',
   initialState: []
 });
@@ -178,40 +163,8 @@ employeeCell
     ]
   )
   .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example : Registering Emit-State Callbacks'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell({
-  key: 'employees',
-  initialState: []
-});
-
-// Initialization the FeatureCell 
-employeeCell
-  .emitStates(
-    [
-      (snapshot) => {
-        console.info('Snapshot committed:', snapshot.value);
-      }
-    ]
-  )
-  .initialize();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

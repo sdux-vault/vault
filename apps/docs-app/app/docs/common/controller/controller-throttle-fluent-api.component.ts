@@ -94,7 +94,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
       </div>
     </section>
   `,
-  styleUrls: ['../../scss/example.scss'],
+  styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class VaultControllerThrottleFluentApiCommonComponent {}

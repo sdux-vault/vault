@@ -55,14 +55,16 @@
       logged without interrupting pipeline execution.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      Session Storage persistence is ideal for ephemeral UI flows such as
-      wizards, progress tracking, or temporary interaction state. It is not
-      intended for durable application data or values that must survive full
-      browser restarts. For long-lived persistence requirements, a Local Storage
-      persist behavior should be used instead.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        Session Storage persistence is ideal for ephemeral UI flows such as
+        wizards, progress tracking, or temporary interaction state. It is not
+        intended for durable application data or values that must survive full
+        browser restarts. For long-lived persistence requirements, a Local
+        Storage persist behavior should be used instead.
+      </p>
+    </div>
   </header>
 
   <sdux-vault-data-security-persist-common />
@@ -143,30 +145,21 @@
         influence merge semantics, or participate in pipeline control flow.
       </p>
 
-      <div class="note">Note</div>
-      <p>
-        Persist behaviors operate after all upstream stages—including resolve,
-        merge, operators, filters, and reducers—have completed. Multiple persist
-        behaviors may be attached to a
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
-        will be executed sequentially.
-      </p>
+      <div class="callout callout-info">
+        <div class="title">Note</div>
+        <p>
+          Persist behaviors operate after all upstream stages—including resolve,
+          merge, operators, filters, and reducers—have completed. Multiple
+          persist behaviors may be attached to a
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
+          will be executed sequentially.
+        </p>
+      </div>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Persist FeatureCell State to Session Storage'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example
+        description="Persist FeatureCell State to Session Storage">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -192,10 +185,10 @@ import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
@@ -208,21 +201,10 @@ export class EmployeeService {
     });
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Persist FeatureCell State to Session Storage'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -240,45 +222,8 @@ employeeCell.initialize();
 employeeCell.mergeState({
   value: [{ id: 1, name: 'Jane Doe' }]
 });`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Persist FeatureCell State to Session Storage'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  },
-  [
-    // Attach sessionStorage-based persistence
-    withSessionStoragePersistBehavior
-  ]
-);
-
-// Initialize the FeatureCell
-employeeCell.initialize();
-
-// Commit state and persist to sessionStorage
-employeeCell.mergeState({
-  value: [{ id: 1, name: 'Jane Doe' }]
-});`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

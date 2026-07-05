@@ -35,7 +35,7 @@ import { VaultStateRefComponent } from './vault-state-ref.component';
     VaultStateRefComponent
   ],
   templateUrl: './references-interfaces.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesInterfacesLandingPageComponent {
   type!: string;

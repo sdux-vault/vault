@@ -134,7 +134,7 @@ ${importStatements.join('\n')}
     ${importClassNames.join(',\n    ')}
   ],
   templateUrl: './references-${kind}.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ${componentName}{
   type!: string;

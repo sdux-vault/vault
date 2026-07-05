@@ -51,19 +51,21 @@
       <code>replaceState</code> operation through the pipeline.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      <strong
-        >initialize() must be called before a
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> can be
-        used.</strong
-      >
-      Any attempt to read state, issue updates, or interact with a
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> before
-      initialization results in a runtime error. A
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> that is
-      not initialized is non-operational.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <strong
+          >initialize() must be called before a
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> can
+          be used.</strong
+        >
+        Any attempt to read state, issue updates, or interact with a
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> before
+        initialization results in a runtime error. A
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> that
+        is not initialized is non-operational.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -240,22 +242,11 @@
     <div class="section-title">Example</div>
 
     <div class="section-body">
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example: Basic Initialization</h4>
+      <h4>Example: Basic Initialization</h4>
 
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure descriptor.initialState initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// app.config.ts
+      <sdux-multi-framework-example description="Basic Initialization">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -275,27 +266,44 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
-@FeatureCell&lt;Employee[]&gt;('employees')
+@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
+  {
+    key: 'employees',
+    // Initial state is declared directly in the descriptor
+    initialState: [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' }
+    ]
+  },
+);
 
-                <h4>Example: hydrate() + initialize()</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure .hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+employeeCell.initialize();
+
+`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>Example: hydrate() + initialize()</h4>
+
+      <sdux-multi-framework-example description="hydrate() + initialize()">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault
@@ -303,43 +311,10 @@ export class EmployeeService {
       .initialize();
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example: Basic Initialization</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure descriptor.initialState initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    // Initial state is declared directly in the descriptor
-    initialState: [
-      { id: 1, name: 'Alice' },
-      { id: 2, name: 'Bob' }
-    ]
-  },
-);
-
-employeeCell.initialize();
-
-`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example: hydrate() + initialize()</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure .hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     // ignored
@@ -350,61 +325,8 @@ employeeCell.initialize();
 employeeCell.hydrate(() => Promise.resolve(...)).initialize();
 
 `}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <h4>Example: Basic Initialization</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure descriptor.initialState initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    // Initial state is declared directly in the descriptor
-    initialState: [
-      { id: 1, name: 'Alice' },
-      { id: 2, name: 'Bob' }
-    ]
-  },
-);
-
-employeeCell.initialize();
-
-`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>Example: hydrate() + initialize()</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example: How to configure .hydrate()'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    // ignored
-    initialState: []
-  }
-);
-
-employeeCell.hydrate(() => Promise.resolve(...)).initialize();
-
-`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

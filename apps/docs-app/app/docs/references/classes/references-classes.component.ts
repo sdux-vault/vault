@@ -37,7 +37,7 @@ import { VaultUsagePromiseFactoryRequiredErrorComponent } from './vault-usage-pr
     VaultUsagePromiseFactoryRequiredErrorComponent
   ],
   templateUrl: './references-classes.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesClassesLandingPageComponent {
   type!: string;

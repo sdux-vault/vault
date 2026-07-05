@@ -402,7 +402,7 @@ userCell.state$.subscribe(snapshot =&gt; &#123;
       </section>
     </sdux-blog-layout>
   `,
-  styleUrls: ['../../../docs/scss/example.scss'],
+  styleUrls: ['../../../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class BlogSelectorsWithoutAGlobalTreeComponent {}

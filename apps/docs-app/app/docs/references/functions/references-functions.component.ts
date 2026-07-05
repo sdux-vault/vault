@@ -113,7 +113,7 @@ import { vaultWarnComponent } from './vault-warn.component';
     vaultWarnComponent
   ],
   templateUrl: './references-functions.component.html',
-  styleUrls: ['../../scss/example.scss']
+  styleUrls: ['../../scss/documentation.scss']
 })
 export class ReferencesFunctionsLandingPageComponent {
   type!: string;

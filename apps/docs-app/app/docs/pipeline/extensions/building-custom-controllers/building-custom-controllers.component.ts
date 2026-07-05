@@ -3,6 +3,7 @@ import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { DevmodeLicensingCommonComponent } from '../../../common/licensing/devmode-licensing.component';
@@ -15,11 +16,12 @@ import { PipelineRelatedTopicComponent } from '../../../related-topic/related-to
     BrandNameComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     DevmodeLicensingCommonComponent,
     PipelineRelatedTopicComponent,
     VaultBrandNameComponent
   ],
   templateUrl: './building-custom-controllers.component.html',
-  styleUrls: ['../../../scss/example.scss']
+  styleUrls: ['../../../scss/documentation.scss']
 })
 export class PipelineBuildingCustomControllersComponent {}

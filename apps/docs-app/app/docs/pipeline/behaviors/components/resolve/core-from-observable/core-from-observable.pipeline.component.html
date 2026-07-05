@@ -64,29 +64,32 @@
       or produce orphaned state updates.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      <code>fromObservable()</code> is a <em>single-resolution bridge</em>, not
-      a streaming mechanism. It exists primarily to support migration from
-      Redux-style or externally managed async flows where observables are
-      resolved before state submission.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        <code>fromObservable()</code> is a <em>single-resolution bridge</em>,
+        not a streaming mechanism. It exists primarily to support migration from
+        Redux-style or externally managed async flows where observables are
+        resolved before state submission.
+      </p>
 
-    <p>
-      In most cases, it is
-      <strong>recommended to pass the observable directly</strong> to
-      <strong>replaceState</strong> or <strong>mergeState</strong> and allow the
-      Resolve stage to handle normalization automatically. This reduces
-      indirection, minimizes unnecessary wrapping code, and avoids subtle
-      debugging issues caused by resolving values outside the pipeline.
-    </p>
+      <p>
+        In most cases, it is
+        <strong>recommended to pass the observable directly</strong> to
+        <strong>replaceState</strong> or <strong>mergeState</strong> and allow
+        the Resolve stage to handle normalization automatically. This reduces
+        indirection, minimizes unnecessary wrapping code, and avoids subtle
+        debugging issues caused by resolving values outside the pipeline.
+      </p>
 
-    <p>
-      Use <code>fromObservable()</code> only when you explicitly need to adapt
-      or transform an observable into a <code>StateType&lt;T&gt;</code> envelope
-      before submission. For continuous or high-frequency observable sources
-      that emit over time, use <strong>fromStream()</strong> instead.
-    </p>
+      <p>
+        Use <code>fromObservable()</code> only when you explicitly need to adapt
+        or transform an observable into a
+        <code>StateType&lt;T&gt;</code> envelope before submission. For
+        continuous or high-frequency observable sources that emit over time, use
+        <strong>fromStream()</strong> instead.
+      </p>
+    </div>
   </header>
 
   <section class="diagram-section">
@@ -283,24 +286,14 @@
 
       <h4>Example 1: Resolve an Observable and Inject the Result</h4>
 
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <!-- Angular --------------------------------------------------------- -->
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve an Observable and Inject the Result'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`@FeatureCell&lt;Employee[]&gt;('employees')
+      <sdux-multi-framework-example
+        description="Resolve an Observable and Inject the Result">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  private readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  private readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     this.vault.initialize();
@@ -313,27 +306,16 @@ export class EmployeeService {
 
     // Resolve the observable once and inject the result into the pipeline
     this.vault.fromObservable(employees$).subscribe({
-      next: (incoming: StateType&lt;Employee[]>) => this.vault.mergeState(incoming)
+      next: (incoming: StateType`}}&lt;Employee[]&gt;{{`) => this.vault.mergeState(incoming)
     });
   }
 }`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { of } from 'rxjs';
 
-          <!-- React ----------------------------------------------------------- -->
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve an Observable and Inject the Result'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { of } from 'rxjs';
-
-export const employeeCell = FeatureCell&lt;Employee[]>(
+export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
   {
     key: 'employees',
     initialState: [],
@@ -350,50 +332,10 @@ const employees$ = of([
 
 // Resolve the observable once and inject the result into the pipeline
 employeeCell.fromObservable(employees$).subscribe({
-  next: (incoming: StateType&lt;Employee[]>) => this.vault.mergeState(incoming)
+  next: (incoming: StateType`}}&lt;Employee[]&gt;{{`) => this.vault.mergeState(incoming)
 });`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <!-- Vue ------------------------------------------------------------- -->
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Resolve an Observable and Inject the Result'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`import { of } from 'rxjs';
-
-export const employeeCell = FeatureCell&lt;Employee[]>(
-  {
-    key: 'employees',
-    initialState: [],
-  }
-);
-
-employeeCell.initialize();
-
-// Observable defined locally in the module
-const employees$ = of([
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' }
-]);
-
-// Resolve the observable once and inject the result into the pipeline
-employeeCell.fromObservable(employees$).subscribe({
-  next: (incoming: StateType&lt;Employee[]>) => this.vault.mergeState(incoming)
-});`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </ng-template>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   DiagramComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
+  MultiFrameworkExampleComponent,
   PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRoutingDirective } from '../pipeline/directives/pipeline-routing.directive';
@@ -21,10 +21,10 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     DiagramComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    MatTabsModule,
+    MultiFrameworkExampleComponent,
     PackageNameComponent
   ],
   templateUrl: './migration.component.html',
-  styleUrls: ['../scss/example.scss']
+  styleUrls: ['../scss/documentation.scss']
 })
 export class DocsMigrationComponent extends PipelineRoutingDirective {}

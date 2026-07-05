@@ -43,14 +43,16 @@
       lifecycle has ended.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      The <strong>destroyed$</strong> stream is completed as part of the
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-      destruction process. Once this stream emits, the
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-      cannot be re-initialized or reused.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The <strong>destroyed$</strong> stream is completed as part of the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        destruction process. Once this stream emits, the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        cannot be re-initialized or reused.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -69,15 +71,23 @@
 
       <h4>Example: Observing FeatureCell Destruction</h4>
 
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Observe FeatureCell Destruction'">
+      <sdux-multi-framework-example
+        description="Observe FeatureCell Destruction">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.destroyed$
+  .subscribe(() => {
+    console.info('FeatureCell has been destroyed');
+  });`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`employeeCell.destroyed$
   .subscribe(() => {
     console.info('FeatureCell has been destroyed');
   });`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>What this does</h4>
       <ul>

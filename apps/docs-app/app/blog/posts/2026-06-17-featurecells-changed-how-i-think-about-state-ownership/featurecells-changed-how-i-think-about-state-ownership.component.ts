@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import {
   FeatureCellBrandNameComponent,
   MultiFrameworkExampleComponent,
+  SDuXVideoComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -15,7 +16,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     FeatureCellBrandNameComponent,
-    VaultBrandNameComponent
+    VaultBrandNameComponent,
+    SDuXVideoComponent
   ],
   template: `
     <sdux-blog-layout
@@ -310,9 +312,18 @@ export const cartCell = FeatureCell(
           </p>
         </div>
       </section>
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video
+            videoId="-wTfiJaN9iU"
+            [tooltip]="'FeatureCell Definition'" />
+        </div>
+      </section>
     </sdux-blog-layout>
   `,
-  styleUrls: ['../../../docs/scss/example.scss'],
+  styleUrls: ['../../../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class BlogFeaturecellsChangedHowIThinkAboutStateOwnershipComponent {}

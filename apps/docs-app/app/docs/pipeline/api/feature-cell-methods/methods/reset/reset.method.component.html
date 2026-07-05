@@ -39,186 +39,17 @@
       fully initialized and operable.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      Unlike <strong>destroy()</strong>, calling <strong>reset()</strong> does
-      not finalize the
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a>. The
-      cell may continue to receive updates, execute pipelines, and emit new
-      state snapshots after the reset completes.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        Unlike <strong>destroy()</strong>, calling <strong>reset()</strong> does
+        not finalize the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>. The
+        cell may continue to receive updates, execute pipelines, and emit new
+        state snapshots after the reset completes.
+      </p>
+    </div>
   </header>
-
-  <!-- ====================================================== -->
-  <!-- STATE SHAPE AFTER RESET -->
-  <!-- ====================================================== -->
-  <section class="section">
-    <div class="section-title">State Shape After Reset</div>
-
-    <div class="section-body">
-      <p>
-        When <strong>reset()</strong> is called, the
-        <code>StateSnapshotShape.value</code> is set to <code>undefined</code>.
-        The
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        remains initialized, but its committed state value is cleared.
-      </p>
-
-      <p>
-        Depending on the structural expectations of your
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>, you
-        may need to explicitly re-establish a valid state shape before
-        continuing execution. This is especially important when merge behaviors
-        or stream-based updates assume a specific value type (such as an array
-        or object).
-      </p>
-
-      <p>
-        For example, if your
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> relies
-        on array-based merge semantics, you should restore the value to an empty
-        array:
-      </p>
-
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Example: replaceState'">
-                    <pre><code>{{ `this.vault.replaceState({value: []});` }}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Example: replaceState'">
-                    <pre><code>{{ `employeeCell.replaceState({value: []});` }}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Example: replaceState'">
-                    <pre><code>{{ `employeeCell.replaceState({value: []});` }}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
-
-      <p>
-        Reset clears state — it does not reconstruct your domain shape. If
-        subsequent updates depend on a non-undefined structure, that structure
-        must be restored explicitly.
-      </p>
-    </div>
-  </section>
-
-  <!-- ====================================================== -->
-  <!-- reset() -->
-  <!-- ====================================================== -->
-  <section class="section">
-    <div class="section-title">Example</div>
-
-    <div class="section-body">
-      <p>
-        Calling <strong>reset()</strong> clears the
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
-        current state and error information while keeping the
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        active.
-      </p>
-
-      <h4>Example: Resetting a FeatureCell</h4>
-
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="Angular">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Example: reset()'">
-                    <pre><code>{{`// Reset the FeatureCell state
-
-this.vault.reset();
-
-// FeatureCell remains initialized and operable`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Example: reset()'">
-                    <pre><code>{{`// Reset the FeatureCell state
-
-employeeCell.reset();
-
-// FeatureCell remains initialized and operable`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <ng-content select="[retrieve]">
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab [label]="'Example: reset()'">
-                    <pre><code>{{`// Reset the FeatureCell state
-
-employeeCell.reset();
-
-// FeatureCell remains initialized and operable`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
-
-      <h4>What this does</h4>
-      <ul>
-        <li>Clears the current state value</li>
-        <li>Clears any associated error</li>
-        <li>Emits a reset lifecycle event</li>
-        <li>Preserves all registered behaviors and controllers</li>
-      </ul>
-
-      <p>
-        After reset, subsequent updates are processed normally, and new state
-        snapshots may be emitted as pipeline execution resumes.
-      </p>
-    </div>
-  </section>
 
   <!-- ====================================================== -->
   <!-- CONFIGURATION -->
@@ -261,6 +92,103 @@ employeeCell.reset();
         </tr>
       </tbody>
     </table>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STATE SHAPE AFTER RESET -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">State Shape After Reset</div>
+
+    <div class="section-body">
+      <p>
+        When <strong>reset()</strong> is called, the
+        <code>StateSnapshotShape.value</code> is set to <code>undefined</code>.
+        The
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        remains initialized, but its committed state value is cleared.
+      </p>
+
+      <p>
+        Depending on the structural expectations of your
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>, you
+        may need to explicitly re-establish a valid state shape before
+        continuing execution. This is especially important when merge behaviors
+        or stream-based updates assume a specific value type (such as an array
+        or object).
+      </p>
+
+      <p>
+        For example, if your
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> relies
+        on array-based merge semantics, you should restore the value to an empty
+        array:
+      </p>
+
+      <sdux-multi-framework-example description="replaceState After Reset">
+        <ng-template #angular>
+          <pre><code>{{ `this.vault.replaceState({value: []});` }}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre><code>{{ `employeeCell.replaceState({value: []});` }}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <p>
+        Reset clears state — it does not reconstruct your domain shape. If
+        subsequent updates depend on a non-undefined structure, that structure
+        must be restored explicitly.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- reset() -->
+  <!-- ====================================================== -->
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        Calling <strong>reset()</strong> clears the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>’s
+        current state and error information while keeping the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        active.
+      </p>
+
+      <h4>Example: Resetting a FeatureCell</h4>
+
+      <sdux-multi-framework-example description="reset()">
+        <ng-template #angular>
+          <pre><code>{{`// Reset the FeatureCell state
+
+this.vault.reset();
+
+// FeatureCell remains initialized and operable`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre><code>{{`// Reset the FeatureCell state
+
+employeeCell.reset();
+
+// FeatureCell remains initialized and operable`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>What this does</h4>
+      <ul>
+        <li>Clears the current state value</li>
+        <li>Clears any associated error</li>
+        <li>Emits a reset lifecycle event</li>
+        <li>Preserves all registered behaviors and controllers</li>
+      </ul>
+
+      <p>
+        After reset, subsequent updates are processed normally, and new state
+        snapshots may be emitted as pipeline execution resumes.
+      </p>
+    </div>
   </section>
 
   <!-- ====================================================== -->

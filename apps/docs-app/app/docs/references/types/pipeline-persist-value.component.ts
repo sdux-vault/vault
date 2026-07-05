@@ -56,7 +56,7 @@ type PipelinePersistValue = T | undefined;
       </p>
     </div>
   </div>`,
-  styleUrl: '../../scss/example.scss',
+  styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class PipelinePersistValueComponent {}

@@ -1,7 +1,4 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
-
-<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
-<!-- Finished 2026-01-24 -->
 <div class="docs-container">
   <div class="header">
     <h3>Vault Initialization</h3>
@@ -61,6 +58,18 @@
       </p>
     </div>
   </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams & Videos</div>
+
+    <div class="section-body">
+      <sdux-video videoId="kHWlsfNZba8" [tooltip]="'Vault Definition'" />
+
+      <sdux-diagram
+        image="diagrams/2.2/2.2-full-pipeline-flow.svg"
+        [tooltip]="'Full Pipeline Flow'" />
+    </div>
+  </section>
 
   <!-- ====================================================== -->
   <!-- INITIALIZATION -->
@@ -173,61 +182,21 @@
     <div class="section-title">Examples</div>
 
     <div class="section-body">
-      <div class="sdux-tab-container">
-        <mat-tab-group
-          animationDuration="200ms"
-          mat-stretch-tabs="false"
-          class="sdux-tabs"
-          [selectedIndex]="0">
-          <mat-tab label="React">
-            <div class="tab-panel">
-              <p>
-                How <a href="/docs/references/functions/vault">Vault</a> is
-                initialized using React.
-              </p>
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Initialize the Vault with Default Settings</h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Default Vault Initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
+      <h4>Example 1: Initialize the Vault with Default Settings</h4>
+
+      <sdux-multi-framework-example description="Default Vault Initialization">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
 Vault();`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-
-                <h4>
-                  Example 2: Initialize the Vault with Diagnostics Enabled
-                </h4>
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Vault Initialization with Configuration'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`Vault({
-  devMode: true,
-  logLevel: 'debug'
-});`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Vue">
-            <div class="tab-panel">
-              <p>
-                How <a href="/docs/references/functions/vault">Vault</a> is
-                initialized using Vue.
-              </p>
-
-              <ng-content select="[retrieve]">
-                <h4>Example 1: Initialize the Vault with Default Settings</h4>
-
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 1: Default Vault Initialization'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// main.ts
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`// Initialize the Vault with default configuration
+Vault();`}}</code></pre>
+        </ng-template>
+        <sdux-generic-tab label="Vue" [alphabetized]="true">
+          <pre class="code-inline"><code class="language-ts">{{`// main.ts
 import { createApp } from 'vue';
 import { Vault } from '@sdux-vault/core';
 import App from './App.vue';
@@ -236,18 +205,27 @@ import App from './App.vue';
 Vault();
 
 createApp(App).mount('#app');`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
+        </sdux-generic-tab>
+      </sdux-multi-framework-example>
 
-                <h4>
-                  Example 2: Initialize the Vault with Diagnostics Enabled
-                </h4>
+      <h4>Example 2: Initialize the Vault with Diagnostics Enabled</h4>
 
-                <sdux-example-viewer-source [displayTabs]="false">
-                  <sdux-example-viewer-tab
-                    [label]="'Example 2: Vault Initialization with Configuration'">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{`// main.ts
+      <sdux-multi-framework-example
+        description="Vault Initialization with Configuration">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`Vault({
+  devMode: true,
+  logLevel: 'debug'
+});`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre class="code-inline"><code class="language-ts">{{`Vault({
+  devMode: true,
+  logLevel: 'debug'
+});`}}</code></pre>
+        </ng-template>
+        <sdux-generic-tab label="Vue" [alphabetized]="true">
+          <pre class="code-inline"><code class="language-ts">{{`// main.ts
 import { createApp } from 'vue';
 import { Vault } from '@sdux-vault/core';
 import App from './App.vue';
@@ -258,13 +236,8 @@ Vault({
 });
 
 createApp(App).mount('#app');`}}</code></pre>
-                  </sdux-example-viewer-tab>
-                </sdux-example-viewer-source>
-              </ng-content>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+        </sdux-generic-tab>
+      </sdux-multi-framework-example>
     </div>
   </section>
 

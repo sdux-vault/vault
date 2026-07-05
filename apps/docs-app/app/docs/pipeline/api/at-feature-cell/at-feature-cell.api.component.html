@@ -61,20 +61,22 @@
       Vault orchestrator reads during Angular-based registration.
     </p>
 
-    <div class="note">Note</div>
-    <p>
-      This decorator is available only when using
-      <strong><sdux-package-name />/angular</strong>. Non-Angular environments
-      must use
-      <strong
-        ><a href="/docs/references/functions/provide-feature-cell"
-          >provideFeatureCell</a
-        >()</strong
-      >
-      for
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-      registration.
-    </p>
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        This decorator is available only when using
+        <strong><sdux-package-name />/angular</strong>. Non-Angular environments
+        must use
+        <strong
+          ><a href="/docs/references/functions/provide-feature-cell"
+            >provideFeatureCell</a
+          >()</strong
+        >
+        for
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        registration.
+      </p>
+    </div>
   </header>
 
   <!-- ====================================================== -->
@@ -129,6 +131,8 @@
       </p>
     </div>
   </section>
+
+  <sdux-feature-cell-diagram-common />
 
   <!-- ====================================================== -->
   <!-- DECORATOR SIGNATURE -->
@@ -233,8 +237,9 @@
       </p>
 
       <h4>Example: Declaring an Angular FeatureCell</h4>
-      <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab [label]="'Angular FeatureCell Declaration'">
+      <sdux-multi-framework-example
+        description="Angular FeatureCell Declaration">
+        <ng-template #angular>
           <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
 
 export const appConfig: ApplicationConfig = {
@@ -258,18 +263,18 @@ import { Injectable } from '&#64;angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.shape';
 
-&#64;FeatureCell&lt;BankEmployeeShape&gt;('employees')
+&#64;FeatureCell`}}&lt;BankEmployeeShape&gt;{{`('employees')
 &#64;Injectable({ providedIn: 'root' })
 export class EmployeeService {
-  readonly vault = injectVault&lt;Employee[]&gt;(EmployeeService);
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
 
   constructor() {
     // Required to activate the FeatureCell
     this.vault.initialize();
   }
 }`}}</code></pre>
-        </sdux-example-viewer-tab>
-      </sdux-example-viewer-source>
+        </ng-template>
+      </sdux-multi-framework-example>
 
       <h4>What this does</h4>
       <ul>
@@ -381,10 +386,9 @@ export class EmployeeService {
       </p>
 
       <p>
-        Initialization is typically performed in the service constructor,but may
-        be deferred if advanced lifecycle control is required.
+        Initialization is typically performed in the service constructor, but
+        may be deferred if advanced lifecycle control is required.
       </p>
-      x
     </div>
   </section>
 

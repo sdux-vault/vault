@@ -2,8 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   DiagramComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultErrorCallbackShapeCommonComponent } from 'apps/docs-app/app/docs/common/error/error-callback-shape.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
@@ -15,15 +14,14 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
   selector: 'sdux-pipeline-errors-method',
   standalone: true,
   imports: [
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
+    MultiFrameworkExampleComponent,
     RouterModule,
     PipelineRelatedTopicComponent,
     DiagramComponent,
     VaultErrorCallbackShapeCommonComponent
   ],
   templateUrl: './errors.method.component.html',
-  styleUrls: ['../../../../../scss/example.scss'],
+  styleUrls: ['../../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineErrorsMethodComponent {}

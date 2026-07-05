@@ -23,6 +23,6 @@ import { PipelineRoutingDirective } from '../../directives/pipeline-routing.dire
     DevmodeLicensingCommonComponent
   ],
   templateUrl: './licensing-and-monetization.component.html',
-  styleUrls: ['../../../scss/example.scss']
+  styleUrls: ['../../../scss/documentation.scss']
 })
 export class PipelineLicensingAndMonetizationComponent extends PipelineRoutingDirective {}

@@ -16,7 +16,7 @@ import {
   ],
   standalone: true,
   templateUrl: './global-error-handler.component.html',
-  styleUrls: ['../scss/example.scss'],
+  styleUrls: ['../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class GlobalErrorHandlerComponent {}
