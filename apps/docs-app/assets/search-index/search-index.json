@@ -3429,6 +3429,16 @@
       "url": "/blog/selectors-without-a-global-tree",
       "symbols": ["selectors-without-a-global-tree"],
       "content": "Selectors Without a Global Tree — Scoped State Access That Scales selectors-without-a-global-tree TA"
+    },
+    {
+      "id": "blog:no-createstore-no-combinereducers-no-provider",
+      "title": "No createStore, No combineReducers, No Provider — Setting Up State in 3 Lines",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/no-createstore-no-combinereducers-no-provider",
+      "symbols": ["no-createstore-no-combinereducers-no-provider"],
+      "content": "No createStore, No combineReducers, No Provider — Setting Up State in 3 Lines no-createstore-no-combinereducers-no-provider ED"
     }
   ]
 }
