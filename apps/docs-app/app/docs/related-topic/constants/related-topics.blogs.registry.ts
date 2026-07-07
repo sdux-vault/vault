@@ -196,6 +196,15 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Selectors Without a Global Tree — SDuX Vault Blog',
       description:
         'Learn how SDuX Vault scopes state access to the owning FeatureCell — no global tree, no selector coupling, no cascade failures when the store restructures.'
+    },
+    {
+      link: '/blog/no-createstore-no-combinereducers-no-provider',
+      display:
+        'No createStore, No combineReducers, No Provider — Setting Up State in 3 Lines',
+      title:
+        'No createStore, No combineReducers, No Provider — SDuX Vault Blog',
+      description:
+        'Learn how SDuX Vault replaces Redux store ceremony with two function calls — no root reducer, no Provider wrapper, no middleware composition.'
     }
   ]
 };

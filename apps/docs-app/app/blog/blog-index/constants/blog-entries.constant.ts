@@ -154,5 +154,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     title: 'Selectors Without a Global Tree — Scoped State Access That Scales',
     date: '2026-07-02',
     readingTime: 6
+  },
+  {
+    slug: 'no-createstore-no-combinereducers-no-provider',
+    title:
+      'No createStore, No combineReducers, No Provider — Setting Up State in 3 Lines',
+    date: '2026-07-07',
+    readingTime: 4
   }
 ];
