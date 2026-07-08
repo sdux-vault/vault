@@ -50,6 +50,33 @@ describe('Component: StackBlitz Overview', () => {
             description:
               'Demonstrates replaceState — the simplest way to update a FeatureCell. The entire previous state is discarded and replaced with the new value in a single atomic operation. Choose your framework and launch the example directly in StackBlitz.',
             languages
+          },
+          {
+            title: 'Promise',
+            id: 'promise',
+            exampleName: 'promise-example',
+            description: jasmine.stringMatching(
+              /Demonstrates replaceState with a deferred promise factory/
+            ),
+            languages
+          },
+          {
+            title: 'Observable',
+            id: 'observable',
+            exampleName: 'observable-example',
+            description: jasmine.stringMatching(
+              /Demonstrates replaceState with an RxJS Observable/
+            ),
+            languages
+          },
+          {
+            title: 'HTTP Resource',
+            id: 'http-resource',
+            exampleName: 'http-resource-example',
+            description: jasmine.stringMatching(
+              /Demonstrates replaceState with Angular's httpResource/
+            ),
+            languages: [{ name: 'Angular', key: 'angular' }]
           }
         ]
       },
@@ -63,16 +90,18 @@ describe('Component: StackBlitz Overview', () => {
             title: 'Filter & Reducer Pipeline',
             id: 'basic-filter-reducer',
             exampleName: 'basic-filter-reducer-example',
-            description:
-              'Demonstrates how Mock BN processes state through a pipeline: input data flows through filters and reducers before becoming the final FeatureCell state. Choose your framework and launch the example directly in StackBlitz.',
+            description: jasmine.stringMatching(
+              /Demonstrates how .* processes state through a pipeline.*filters and reducers/
+            ),
             languages
           },
           {
             title: 'Delay Interceptor Pipeline',
             id: 'interceptor-delay',
             exampleName: 'interceptor-delay-example',
-            description:
-              'Demonstrates how Mock BN processes state through a pipeline: input data flows through a delay interceptor before becoming the final FeatureCell state. Choose your framework and launch the example directly in StackBlitz.',
+            description: jasmine.stringMatching(
+              /Demonstrates how .* processes state through a pipeline.*delay interceptor/
+            ),
             languages
           }
         ]
@@ -87,8 +116,9 @@ describe('Component: StackBlitz Overview', () => {
             title: 'Built-in Debugger',
             id: 'debugger',
             exampleName: 'debugger-example',
-            description:
-              'Demonstrates the Mock BN built-in debugger — a floating panel that captures pipeline execution traces. Record a session, trigger state changes, then export logs or generate an AI diagnostic report. Choose your framework and launch the example directly in StackBlitz.',
+            description: jasmine.stringMatching(
+              /Demonstrates the .* built-in debugger/
+            ),
             languages
           },
           Object({
@@ -110,13 +140,108 @@ describe('Component: StackBlitz Overview', () => {
       expect(typeof component.openStackBlitzExample).toBe('function');
     });
 
-    it('should call openGithubProject with the correct repo slug', () => {
-      const spy = spyOn(StackBlitz, 'openGithubProject');
-      component.openStackBlitzExample('angular', 'demo-1');
-      expect(spy).toHaveBeenCalledWith(
-        'sdux-vault/stackblitz-examples/tree/main/stackblitz/angular/demo-1',
-        { openFile: 'src/app/example.component.ts' }
+    it('should call openProject with the correct inline project', async () => {
+      const spy = spyOn(StackBlitz, 'openProject');
+      await component.openStackBlitzExample('angular', 'replace-state');
+      expect(spy).toHaveBeenCalled();
+      const callArgs = spy.calls.mostRecent().args;
+      expect(callArgs[0]).toBeDefined();
+      expect(callArgs[1]).toEqual({ openFile: 'src/app/example.component.ts' });
+    });
+
+    it('should reject with error if example not found', async () => {
+      try {
+        await component.openStackBlitzExample('angular', 'nonexistent');
+        fail('Should have thrown an error');
+      } catch (error) {
+        expect((error as Error).message).toContain('Unknown project');
+      }
+    });
+
+    it('should reject with error if language not found', async () => {
+      try {
+        await component.openStackBlitzExample('nonexistent', 'replace-state');
+        fail('Should have thrown an error');
+      } catch (error) {
+        expect((error as Error).message).toContain('Unknown project');
+      }
+    });
+  });
+
+  describe('copyStackBlitzExample', () => {
+    it('should copy URL to clipboard', () => {
+      spyOn(navigator.clipboard, 'writeText').and.returnValue(
+        Promise.resolve()
       );
+      component.copyStackBlitzExample('angular', 'replace-state');
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+        'https://stackblitz.com/github/sdux-vault/stackblitz-examples/tree/main/stackblitz/angular/replace-example'
+      );
+    });
+
+    it('should set copySuccess signal for the correct key', () => {
+      jasmine.clock().install();
+      try {
+        spyOn(navigator.clipboard, 'writeText').and.returnValue(
+          Promise.resolve()
+        );
+        component.copyStackBlitzExample('angular', 'replace-state');
+        expect(component.copySuccess()).toBe('angular/replace-state');
+        jasmine.clock().tick(2000);
+        expect(component.copySuccess()).toBeNull();
+      } finally {
+        jasmine.clock().uninstall();
+      }
+    });
+
+    it('should not copy to clipboard if example not found', () => {
+      spyOn(navigator.clipboard, 'writeText').and.returnValue(
+        Promise.resolve()
+      );
+      component.copyStackBlitzExample('angular', 'nonexistent');
+      expect(navigator.clipboard.writeText).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('frameworkIcons', () => {
+    it('should have icons for all frameworks', () => {
+      expect(component.frameworkIcons).toEqual({
+        angular: 'assets/brand/angular/angular-icon.svg',
+        react: 'assets/brand/react/react-icon.svg',
+        svelte: 'assets/brand/svelte/svelte-icon.svg',
+        vue: 'assets/brand/vue/vue-icon.svg'
+      });
+    });
+
+    it('should contain correct icon paths', () => {
+      expect(component.frameworkIcons['angular']).toContain('angular');
+      expect(component.frameworkIcons['react']).toContain('react');
+      expect(component.frameworkIcons['svelte']).toContain('svelte');
+      expect(component.frameworkIcons['vue']).toContain('vue');
+    });
+  });
+
+  describe('exampleGroups property', () => {
+    it('should have three groups: Getting Started, Intermediate, Advanced', () => {
+      expect(component.exampleGroups.length).toBe(3);
+      expect(component.exampleGroups[0].id).toBe('getting-started');
+      expect(component.exampleGroups[1].id).toBe('intermediate');
+      expect(component.exampleGroups[2].id).toBe('advanced');
+    });
+
+    it('should have correct number of examples per group', () => {
+      expect(component.exampleGroups[0].examples.length).toBe(4);
+      expect(component.exampleGroups[1].examples.length).toBe(2);
+      expect(component.exampleGroups[2].examples.length).toBe(2);
+    });
+
+    it('should have all required example properties', () => {
+      const example = component.exampleGroups[0].examples[0];
+      expect('title' in example).toBe(true);
+      expect('id' in example).toBe(true);
+      expect('exampleName' in example).toBe(true);
+      expect('description' in example).toBe(true);
+      expect('languages' in example).toBe(true);
     });
   });
 });

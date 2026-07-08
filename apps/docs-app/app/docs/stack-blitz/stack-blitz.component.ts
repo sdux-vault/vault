@@ -1,4 +1,4 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
@@ -11,6 +11,7 @@ import StackBlitz from '@stackblitz/sdk';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 import { PipelineRoutingDirective } from '../pipeline/directives/pipeline-routing.directive';
 import { createExampleGroups } from './constants/stackblitz-examples.constants';
+import { STACKBLITZ_PROJECT_IMPORTS } from './constants/stackblitz-project-imports.generated';
 
 /**
  * The stack-blitz documentation
@@ -43,10 +44,54 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
 
   readonly exampleGroups = createExampleGroups(this.#brandName);
 
+  copySuccess = signal<string | null>(null);
+
+  /**
+   * Finds an example by id within the example groups and returns its exampleName.
+   */
+  private findExampleName(exampleId: string): string | null {
+    for (const group of this.exampleGroups) {
+      const example = group.examples.find((ex) => ex.id === exampleId);
+      if (example) {
+        return example.exampleName;
+      }
+    }
+    return null;
+  }
+
+  copyStackBlitzExample(language: string, example: string) {
+    const exampleName = this.findExampleName(example);
+    if (!exampleName) {
+      return;
+    }
+    const url = `https://stackblitz.com/github/sdux-vault/stackblitz-examples/tree/main/stackblitz/${language}/${exampleName}`;
+    const key = `${language}/${example}`;
+    navigator.clipboard.writeText(url);
+    this.copySuccess.set(key);
+    setTimeout(() => this.copySuccess.set(null), 2000);
+  }
+
   /* istanbul ignore next -- dynamic imports not available in Karma test bundle */
-  openStackBlitzExample(language: string, example: string) {
-    const repoSlug = `sdux-vault/stackblitz-examples/tree/main/stackblitz/${language}/${example}`;
-    StackBlitz.openGithubProject(repoSlug, {
+  async openStackBlitzExample(language: string, example: string) {
+    const exampleName = this.findExampleName(example);
+    if (!exampleName) {
+      return Promise.reject(
+        new Error(`Unknown project: ${language}/${example}`)
+      );
+    }
+    const key = `${language}/${exampleName}`;
+    const loader =
+      STACKBLITZ_PROJECT_IMPORTS[
+        key as keyof typeof STACKBLITZ_PROJECT_IMPORTS
+      ];
+    if (!loader) {
+      return Promise.reject(new Error(`Unknown project: ${key}`));
+    }
+    const module = await loader();
+    const project = Object.values(
+      module as Record<string, unknown>
+    )[0] as import('@stackblitz/sdk').Project;
+    StackBlitz.openProject(project, {
       openFile: 'src/app/example.component.ts'
     });
   }

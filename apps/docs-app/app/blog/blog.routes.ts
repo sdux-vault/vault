@@ -245,6 +245,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-07-no-createstore-no-combinereducers-no-provider/no-createstore-no-combinereducers-no-provider.component').then(
         (m) => m.BlogNoCreatestoreNoCombinereducersNoProviderComponent
       )
+  },
+  {
+    path: 'components-without-connect-or-useselector',
+    data: {
+      category: 'blogs',
+      type: 'components-without-connect-or-useselector'
+    },
+    loadComponent: () =>
+      import('./posts/2026-07-08-components-without-connect-or-useselector/components-without-connect-or-useselector.component').then(
+        (m) => m.BlogComponentsWithoutConnectOrUseselectorComponent
+      )
   }
   // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.

@@ -89,6 +89,19 @@ export const routes: Routes = [
     loadChildren: () => import('./blog/blog.routes').then((m) => m.blogRoutes)
   },
   {
+    path: 'sitemap',
+    loadComponent: () =>
+      import('./sitemap/sitemap.component').then((m) => m.SitemapComponent)
+  },
+  {
+    path: 'examples/:language/:id',
+    data: { category: 'stackblitz' },
+    loadComponent: () =>
+      import('./example-detail/example-detail.component').then(
+        (m) => m.ExampleDetailComponent
+      )
+  },
+  {
     path: 'docs',
     children: [
       {

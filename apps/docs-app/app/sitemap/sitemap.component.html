@@ -1,0 +1,129 @@
+<div class="docs-container" id="top">
+  <div class="header">
+    <h3>Sitemap</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      Complete index of all <sdux-brand-name [tm]="true" /> documentation,
+      guides, API references, blog posts, and live examples.
+    </p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- GENERAL                                                      -->
+  <!-- ============================================================ -->
+  <section class="sitemap-category">
+    <h4 class="sitemap-category-title">General</h4>
+
+    <div class="sitemap-link-list">
+      <a routerLink="/" class="sitemap-link">Home</a>
+      <a routerLink="/about" class="sitemap-link">About</a>
+      <a routerLink="/press" class="sitemap-link">Press</a>
+      <a routerLink="/contact" class="sitemap-link">Contact</a>
+      <a routerLink="/docs" class="sitemap-link">Documentation Index</a>
+      <a routerLink="/blog" class="sitemap-link">Blog Index</a>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- BLOG                                                         -->
+  <!-- ============================================================ -->
+  <section class="sitemap-category">
+    <h4 class="sitemap-category-title">Blog</h4>
+
+    <div class="sitemap-link-list">
+      @for (entry of blogEntries; track entry.slug) {
+        <a [routerLink]="'/blog/' + entry.slug" class="sitemap-link">
+          {{ entry.title }}
+          <span class="sitemap-date">{{ entry.date }}</span>
+        </a>
+      }
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- LIVE EXAMPLES                                                -->
+  <!-- ============================================================ -->
+  <section class="sitemap-category">
+    <h4 class="sitemap-category-title">Live Examples</h4>
+
+    <div class="sitemap-link-list">
+      <a routerLink="/docs/stackblitz" class="sitemap-link">
+        StackBlitz Examples — Overview
+      </a>
+    </div>
+
+    <div class="sitemap-grid">
+      <div class="sitemap-section">
+        <sdux-stackblitz-examples-subnavigation [forceExpanded]="true" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DOCUMENTATION                                                -->
+  <!-- ============================================================ -->
+  <section class="sitemap-category">
+    <h4 class="sitemap-category-title">Documentation</h4>
+
+    <div class="sitemap-grid">
+      <div class="sitemap-section">
+        <sdux-getting-started-subnavigation [forceExpanded]="true" />
+      </div>
+
+      <div class="sitemap-section">
+        <sdux-migration-subnavigation [forceExpanded]="true" />
+      </div>
+
+      <div class="sitemap-section">
+        <sdux-vault-feature-cell-api-subnavigation [forceExpanded]="true" />
+      </div>
+
+      <div class="sitemap-section">
+        <sdux-pipeline-subnavigation [forceExpanded]="true" />
+      </div>
+
+      <div class="sitemap-section">
+        <sdux-pipeline-controllers-subnavigation [forceExpanded]="true" />
+      </div>
+
+      <div class="sitemap-section">
+        <sdux-pipeline-behaviors-subnavigation [forceExpanded]="true" />
+      </div>
+
+      <div class="sitemap-section">
+        <sdux-pipeline-extensions-subnavigation [forceExpanded]="true" />
+      </div>
+
+      <div class="sitemap-section">
+        <sdux-execution-guarantee-subnavigation [forceExpanded]="true" />
+      </div>
+
+      <div class="sitemap-section">
+        <sdux-dev-tools-subnavigation [forceExpanded]="true" />
+      </div>
+
+      <div class="sitemap-section">
+        <sdux-licensing-subnavigation [forceExpanded]="true" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- API REFERENCES                                               -->
+  <!-- ============================================================ -->
+  <section class="sitemap-category">
+    <h4 class="sitemap-category-title">API References</h4>
+
+    <div class="sitemap-grid">
+      <div class="sitemap-section">
+        <sdux-reference-guides-subnavigation [forceExpanded]="true" />
+      </div>
+
+      <div class="sitemap-section">
+        <sdux-references-subnavigation [forceExpanded]="true" />
+      </div>
+    </div>
+  </section>
+</div>

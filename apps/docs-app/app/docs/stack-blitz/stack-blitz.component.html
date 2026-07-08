@@ -97,22 +97,46 @@
               role="group"
               [attr.aria-label]="example.title + ' framework options'">
               @for (lang of example.languages; track lang.key) {
-                <button
-                  type="button"
-                  class="framework-icon-button"
-                  [attr.aria-label]="
-                    'Launch ' + example.title + ' in ' + lang.name
-                  "
-                  [matTooltip]="'Launch ' + example.title + ' in ' + lang.name"
-                  (click)="
-                    openStackBlitzExample(lang.key, example.exampleName)
-                  ">
-                  <img
-                    [src]="frameworkIcons[lang.key]"
-                    [alt]="lang.name"
-                    class="framework-icon" />
-                  <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
-                </button>
+                <div class="framework-icon-group">
+                  <button
+                    type="button"
+                    class="framework-icon-button"
+                    [attr.aria-label]="
+                      'Launch ' + example.title + ' in ' + lang.name
+                    "
+                    [matTooltip]="
+                      'Launch ' + example.title + ' in ' + lang.name
+                    "
+                    (click)="
+                      openStackBlitzExample(lang.key, example.exampleName)
+                    ">
+                    <img
+                      [src]="frameworkIcons[lang.key]"
+                      [alt]="lang.name"
+                      class="framework-icon" />
+                    <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+                  </button>
+                  <button
+                    type="button"
+                    class="share-link-button"
+                    [attr.aria-label]="
+                      'Share ' + example.title + ' in ' + lang.name
+                    "
+                    [matTooltip]="lang.name + ' shareable link'"
+                    (click)="
+                      copyStackBlitzExample(lang.key, example.exampleName)
+                    ">
+                    @if (
+                      copySuccess() === lang.key + '/' + example.exampleName
+                    ) {
+                      <mat-icon class="share-link-icon copy-success"
+                        >check</mat-icon
+                      >
+                    } @else {
+                      <mat-icon class="share-link-icon">content_copy</mat-icon>
+                    }
+                  </button>
+                </div>
               }
             </div>
 
