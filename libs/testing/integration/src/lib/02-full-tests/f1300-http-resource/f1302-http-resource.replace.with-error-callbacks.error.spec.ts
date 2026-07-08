@@ -65,7 +65,7 @@ describe('f1302: HttpResource - Replace - With ErrorCallbacks and encryption - E
           {
             key,
             initialState: null,
-            insights: { wantsErrors: true, wantsPayload: true } as any
+            insights: { wantsErrors: true, wantsPayload: true }
           },
           [withLocalStoragePersistBehavior, withAes256EncryptBehavior],
           [withThrottleController]
@@ -107,19 +107,19 @@ describe('f1302: HttpResource - Replace - With ErrorCallbacks and encryption - E
     expect(testService.partialErrorAbstract.getErrors()).toEqual([]);
     expect(globalErrors).toEqual([null]);
 
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
       .flush(getBankEmployeeData());
     await vaultSettled(key);
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
       .flush(getBankEmployeeData());
     await vaultSettled(key);
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)

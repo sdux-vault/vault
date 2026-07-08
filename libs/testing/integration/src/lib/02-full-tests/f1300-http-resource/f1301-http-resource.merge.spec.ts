@@ -66,7 +66,7 @@ describe('f1301: HttpResource - Merge Test', () => {
         provideHttpClientTesting(),
         provideFeatureCell(
           FullTestService,
-          { key, initialState: [], insights: {} as any },
+          { key, initialState: [], insights: {} },
           [withLocalStoragePersistBehavior]
         )
       ]
@@ -86,21 +86,21 @@ describe('f1301: HttpResource - Merge Test', () => {
     testService.partialAfterTapAbstract.clearTaps();
     testService.partialBeforeTapAbstract.clearTaps();
 
-    testService.vault.mergeState(testService.createHttpResourceRef() as any);
+    testService.vault.mergeState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
       .flush(getBankEmployeeData());
     await vaultSettled(key);
 
-    testService.vault.mergeState(testService.createHttpResourceRef() as any);
+    testService.vault.mergeState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
       .flush(getBankEmployeeData());
     await vaultSettled(key);
 
-    testService.vault.mergeState(testService.createHttpResourceRef() as any);
+    testService.vault.mergeState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
@@ -141,7 +141,7 @@ describe('f1301: HttpResource - Merge Test', () => {
     testService.partialBeforeTapAbstract.clearTaps();
     testService.partialAfterTapAbstract.clearTaps();
 
-    testService.vault.mergeState(testService.createHttpResourceRef() as any);
+    testService.vault.mergeState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)

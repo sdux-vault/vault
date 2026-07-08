@@ -67,7 +67,7 @@ describe('f1300: HttpResource - Replace Test', () => {
         provideHttpClientTesting(),
         provideFeatureCell(
           FullTestService,
-          { key, initialState: [], insights: {} as any },
+          { key, initialState: [], insights: {} },
           [withLocalStoragePersistBehavior]
         )
       ]
@@ -87,21 +87,21 @@ describe('f1300: HttpResource - Replace Test', () => {
     testService.partialAfterTapAbstract.clearTaps();
     testService.partialBeforeTapAbstract.clearTaps();
 
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
       .flush(getBankEmployeeData());
     await vaultSettled(key);
 
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
       .flush(getBankEmployeeData());
     await vaultSettled(key);
 
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
@@ -142,7 +142,7 @@ describe('f1300: HttpResource - Replace Test', () => {
     testService.partialBeforeTapAbstract.clearTaps();
     testService.partialAfterTapAbstract.clearTaps();
 
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
