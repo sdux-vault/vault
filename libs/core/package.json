@@ -1,6 +1,6 @@
 {
   "name": "@sdux-vault/core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "author": {
     "name": "SDuX Vault",
@@ -35,7 +35,7 @@
     "devtools"
   ],
   "dependencies": {
-    "@sdux-vault/engine": "^1.0.2",
+    "@sdux-vault/engine": "^1.0.3",
     "tslib": "^2.3.0"
   },
   "peerDependencies": {

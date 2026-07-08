@@ -65,7 +65,7 @@ describe('f1304: HttpResource - Replace - With encryption - Error Test', () => {
           {
             key,
             initialState: null,
-            insights: { wantsErrors: true, wantsPayload: true } as any
+            insights: { wantsErrors: true, wantsPayload: true }
           },
           [withLocalStoragePersistBehavior, withAes256EncryptBehavior],
           [withThrottleController]
@@ -104,19 +104,19 @@ describe('f1304: HttpResource - Replace - With encryption - Error Test', () => {
     expect(testService.partialErrorAbstract.getErrors()).toEqual([]);
     expect(globalErrors).toEqual([null]);
 
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
       .flush(getBankEmployeeData());
     await vaultSettled(key);
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
       .flush(getBankEmployeeData());
     await vaultSettled(key);
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
@@ -147,7 +147,7 @@ describe('f1304: HttpResource - Replace - With encryption - Error Test', () => {
     expect(getLocalStorage(storageKey)).toBeNull();
 
     jasmine.clock().tick(1_000);
-    testService.vault.replaceState(testService.createHttpResourceRef() as any);
+    testService.vault.replaceState(testService.createHttpResourceRef());
     await TestBed.tick();
     httpMock
       .expectOne(PrimaryPartialAbstractClass.HTTP_RESOURCE_URL)
