@@ -18,6 +18,37 @@ export function createExampleGroups(brandName: string) {
             { name: 'Svelte', key: 'svelte' },
             { name: 'Vue', key: 'vue' }
           ]
+        },
+        {
+          title: 'Promise',
+          id: 'promise',
+          exampleName: 'promise-example',
+          description: `Demonstrates replaceState with a deferred promise factory — ${brandName} handles asynchronous state updates via promises. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
+        },
+        {
+          title: 'Observable',
+          id: 'observable',
+          exampleName: 'observable-example',
+          description: `Demonstrates replaceState with an RxJS Observable — ${brandName} manages state through reactive stream patterns. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
+        },
+        {
+          title: 'HTTP Resource',
+          id: 'http-resource',
+          exampleName: 'http-resource-example',
+          description: `Demonstrates replaceState with Angular's httpResource — ${brandName} integrates HTTP requests directly into state management. Launch the example in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
         }
       ]
     },

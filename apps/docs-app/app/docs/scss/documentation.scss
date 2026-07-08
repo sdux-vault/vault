@@ -460,6 +460,60 @@
   margin-top: global.$spacing-md;
 }
 
+.framework-icon-group {
+  display: inline-flex;
+  align-items: center;
+  gap: global.$spacing-xs;
+  border: 1px solid global.$sdux-surface-outline;
+  border-radius: global.$border-radius-lg;
+  padding: global.$spacing-xs;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: global.$sdux-shadow-hover;
+  }
+}
+
+.share-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: global.$border-radius-md;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid global.$sdux-primary-base;
+    outline-offset: 2px;
+  }
+
+  .share-link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: global.$font-size-md;
+    color: global.$sdux-text-secondary;
+
+    &.copy-success {
+      color: global.$sdux-success-light;
+    }
+  }
+}
+
 .framework-icon-button {
   position: relative;
   display: inline-flex;
