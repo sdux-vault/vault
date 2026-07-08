@@ -205,6 +205,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'No createStore, No combineReducers, No Provider — SDuX Vault Blog',
       description:
         'Learn how SDuX Vault replaces Redux store ceremony with two function calls — no root reducer, no Provider wrapper, no middleware composition.'
+    },
+    {
+      link: '/blog/components-without-connect-or-useselector',
+      display:
+        'Components Without connect() or useSelector — Direct State Injection',
+      title: 'Components Without connect() or useSelector — SDuX Vault Blog',
+      description:
+        'Learn how SDuX Vault components inject the owning FeatureCell directly — no connect(), no useSelector(), no Provider wrapper, and no store-wide re-renders.'
     }
   ]
 };

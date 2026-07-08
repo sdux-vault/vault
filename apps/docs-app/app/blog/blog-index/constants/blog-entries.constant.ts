@@ -161,5 +161,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
       'No createStore, No combineReducers, No Provider — Setting Up State in 3 Lines',
     date: '2026-07-07',
     readingTime: 4
+  },
+  {
+    slug: 'components-without-connect-or-useselector',
+    title:
+      'Components Without connect() or useSelector — Direct State Injection',
+    date: '2026-07-08',
+    readingTime: 5
   }
 ];

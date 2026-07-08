@@ -9,12 +9,15 @@
   "extends": "./tsconfig.json",
   "exclude": [
     "**/*.spec.ts",
+    "**/*.spec.mjs",
     "*.md",
     "dist/**",
     "projects/testing/**",
     "documentation/**",
     "apps/docs-app/testing/**",
     "apps/docs-app/app/**",
+    "apps/docs-app/app/navigation/sub-navigation/stackblitz-examples/**",
+    "tools/**",
     "libs/testing/integration/**"
   ]
 }

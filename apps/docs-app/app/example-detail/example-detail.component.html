@@ -1,0 +1,112 @@
+<div class="docs-container">
+  @if (notFound()) {
+    <div class="header">
+      <h3>Example Not Found</h3>
+    </div>
+    <div class="section">
+      <div class="section-body">
+        <p>
+          The requested example does not exist. Browse all available examples:
+        </p>
+        <p>
+          <a routerLink="/docs/stackblitz">StackBlitz Examples — Try It Live</a>
+        </p>
+      </div>
+    </div>
+  } @else if (example(); as ex) {
+    <div class="header">
+      <h3>{{ ex.title }} — {{ capitalize(language()) }}</h3>
+    </div>
+
+    <header class="docs-header">
+      <p class="lead">{{ ex.description }}</p>
+    </header>
+
+    <section class="section">
+      <div class="section-title">Launch Example</div>
+      <div class="section-body">
+        <div class="example-detail-actions">
+          <button
+            type="button"
+            class="example-detail-launch"
+            [attr.aria-label]="
+              'Launch ' + ex.title + ' in ' + capitalize(language())
+            "
+            [matTooltip]="
+              'Launch ' + ex.title + ' in ' + capitalize(language())
+            "
+            (click)="openStackBlitzExample()">
+            <img
+              [src]="frameworkIcons[language()]"
+              [alt]="capitalize(language())" />
+            <span>Open in StackBlitz</span>
+            <mat-icon>open_in_new</mat-icon>
+          </button>
+
+          <button
+            type="button"
+            class="example-detail-share"
+            [attr.aria-label]="capitalize(language()) + ' shareable link'"
+            [matTooltip]="capitalize(language()) + ' shareable link'"
+            (click)="copyStackBlitzLink()">
+            @if (copySuccess()) {
+              <mat-icon class="copy-success-icon">check</mat-icon>
+              <span>Copied!</span>
+            } @else {
+              <mat-icon>content_copy</mat-icon>
+              <span>Copy Link</span>
+            }
+          </button>
+        </div>
+      </div>
+    </section>
+
+    @if (otherLanguages().length > 0) {
+      <section class="section">
+        <div class="section-title">Also Available In</div>
+        <div class="section-body">
+          <div class="example-detail-other-frameworks">
+            <div class="other-framework-links">
+              @for (lang of otherLanguages(); track lang.key) {
+                <a [routerLink]="'/examples/' + lang.key + '/' + exampleId()">
+                  <img [src]="frameworkIcons[lang.key]" [alt]="lang.name" />
+                  {{ lang.name }}
+                </a>
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+    }
+
+    @if ($any(ex).notice) {
+      <section class="section">
+        <div class="section-body">
+          <div class="callout callout-warning">
+            <strong>StackBlitz Limitation</strong>
+            <!-- trusted: static HTML from constants, not user-generated -->
+            <div [innerHTML]="$any(ex).notice"></div>
+          </div>
+        </div>
+      </section>
+    }
+
+    <section class="section">
+      <div class="section-title">More Examples</div>
+      <div class="section-body">
+        <ul>
+          <li>
+            <a routerLink="/docs/stackblitz"> All StackBlitz Examples </a>
+          </li>
+          <li>
+            <a routerLink="/docs/stackblitz" [fragment]="$any(ex).id">
+              {{ group()?.heading }} Examples
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <sdux-pipeline-related-topics />
+  }
+</div>

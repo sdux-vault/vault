@@ -1,0 +1,106 @@
+@use 'global' as global;
+
+.example-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: global.$spacing-lg;
+  margin-top: global.$spacing-lg;
+}
+
+.example-detail-launch {
+  display: inline-flex;
+  align-items: center;
+  gap: global.$spacing-sm;
+  background: none;
+  border: 1px solid global.$sdux-primary-base;
+  border-radius: global.$border-radius-md;
+  padding: global.$spacing-sm global.$spacing-lg;
+  cursor: pointer;
+  font-size: global.$font-size-md;
+  color: global.$sdux-primary-base;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: global.$sdux-shadow-hover;
+  }
+
+  &:focus-visible {
+    outline: 2px solid global.$sdux-primary-base;
+    outline-offset: 2px;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.example-detail-share {
+  display: inline-flex;
+  align-items: center;
+  gap: global.$spacing-xs;
+  background: none;
+  border: 1px solid global.$sdux-primary-base;
+  border-radius: global.$border-radius-md;
+  padding: global.$spacing-sm global.$spacing-md;
+  cursor: pointer;
+  font-size: global.$font-size-sm;
+  color: global.$sdux-primary-base;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: global.$sdux-shadow-hover;
+  }
+
+  &:focus-visible {
+    outline: 2px solid global.$sdux-primary-base;
+    outline-offset: 2px;
+  }
+
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .copy-success-icon {
+    color: global.$sdux-success-light;
+  }
+}
+
+.example-detail-other-frameworks {
+  margin-top: global.$spacing-lg;
+
+  .other-framework-links {
+    display: flex;
+    gap: global.$spacing-md;
+    margin-top: global.$spacing-sm;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: global.$spacing-xs;
+      @include global.a-link(
+        global.$sdux-primary-base,
+        global.$sdux-text-inverse
+      );
+
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}

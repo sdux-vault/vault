@@ -21,7 +21,7 @@ const outputPath = path.join(__dirname, 'sitemap-urls.mjs');
  * Pages that are not reachable through the sidenav navigation
  * but should appear in the sitemap.
  */
-const SUPPLEMENT_URLS = ['/', '/about', '/contact', '/blog'];
+const SUPPLEMENT_URLS = ['/', '/about', '/contact', '/blog', '/sitemap'];
 
 const blogRoutesFile = path.join(
   projectRoot,

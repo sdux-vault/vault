@@ -1,0 +1,122 @@
+@use 'global' as global;
+
+// ============================================================
+// SITEMAP LAYOUT
+// Flat, always-expanded navigation for SEO crawlability.
+// ============================================================
+
+.sitemap-category {
+  margin-bottom: global.$spacing-xl;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.sitemap-category-title {
+  font-size: global.$font-size-xl;
+  font-weight: global.$font-weight-bold;
+  color: global.$sdux-primary-light;
+  border-bottom: 2px solid global.$sdux-primary-base;
+  padding-bottom: global.$spacing-xs;
+  margin-bottom: global.$spacing-lg;
+}
+
+.sitemap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: global.$spacing-lg;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sitemap-section {
+  border: 1px solid global.$sdux-border-default;
+  border-radius: global.$border-radius-md;
+  padding: global.$spacing-sm global.$spacing-md;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: global.$sdux-primary-base;
+    box-shadow: global.$sdux-shadow-base;
+  }
+
+  // Force all expansion panels open and remove toggle affordances
+  // exception: unavoidable third-party override to render panels as static open sections
+  .nav-expansion {
+    box-shadow: none !important;
+    background: transparent !important;
+
+    .mat-expansion-indicator {
+      display: none !important;
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0;
+
+      // exception: unavoidable third-party override to compact all list items
+      .mat-mdc-list-item {
+        padding-left: global.$spacing-lg !important;
+        min-height: 28px !important;
+        height: auto !important;
+
+        .mdc-list-item__primary-text {
+          font-size: global.$font-size-sm !important;
+          color: global.$sdux-primary-base !important;
+        }
+
+        &:hover .mdc-list-item__primary-text {
+          color: global.$sdux-text-inverse !important;
+          text-decoration: underline;
+        }
+      }
+
+      // exception: unavoidable third-party override for nested nav link text
+      .menu-content {
+        color: global.$sdux-primary-base !important;
+      }
+
+      a.mat-mdc-list-item:hover .menu-content {
+        color: global.$sdux-text-inverse !important;
+        text-decoration: underline;
+      }
+
+      .nav-expansion {
+        margin-left: global.$spacing-md;
+
+        &:not(:first-child) {
+          border-top: 1px solid global.$sdux-border-default;
+          padding-top: global.$spacing-xs;
+          margin-top: global.$spacing-xs;
+        }
+      }
+    }
+  }
+}
+
+.sitemap-link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sitemap-link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: global.$spacing-md;
+  min-height: 28px;
+  padding: 0 global.$spacing-lg;
+  font-size: global.$font-size-sm;
+  @include global.a-link(global.$sdux-primary-base, global.$sdux-text-inverse);
+}
+
+.sitemap-date {
+  font-size: global.$font-size-xs;
+  color: global.$sdux-text-secondary;
+  white-space: nowrap;
+}

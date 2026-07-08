@@ -90,12 +90,12 @@ pre.pre-wrapper {
 @mixin code-block($bg-color, $text-color) {
   background: $bg-color;
   color: $text-color;
-  padding: global.$spacing-xs global.$spacing-sm;
+  padding-right: global.$spacing-xs;
   border-radius: global.$border-radius-xs;
   font-size: calc(1em - 1px);
   font-style: italic;
 
-  margin-left: global.$spacing-xs;
+  // margin-left: global.$spacing-xs;
 }
 
 .code {
