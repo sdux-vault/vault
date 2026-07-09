@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 /**
  * StackBlitz Project Imports Map
  * ------------------------------

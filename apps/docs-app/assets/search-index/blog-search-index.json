@@ -259,6 +259,26 @@
       "url": "/blog/no-createstore-no-combinereducers-no-provider",
       "symbols": ["no-createstore-no-combinereducers-no-provider"],
       "content": "No createStore, No combineReducers, No Provider — Setting Up State in 3 Lines no-createstore-no-combinereducers-no-provider ED"
+    },
+    {
+      "id": "blog:components-without-connect-or-useselector",
+      "title": "Components Without connect() or useSelector — Direct State Injection",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/components-without-connect-or-useselector",
+      "symbols": ["components-without-connect-or-useselector"],
+      "content": "Components Without connect() or useSelector — Direct State Injection components-without-connect-or-useselector ED"
+    },
+    {
+      "id": "blog:testing-without-mock-stores",
+      "title": "Testing Without Mock Stores — act, settle, assert",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/testing-without-mock-stores",
+      "symbols": ["testing-without-mock-stores"],
+      "content": "Testing Without Mock Stores — act, settle, assert testing-without-mock-stores ED"
     }
   ]
 }
