@@ -213,6 +213,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Components Without connect() or useSelector — SDuX Vault Blog',
       description:
         'Learn how SDuX Vault components inject the owning FeatureCell directly — no connect(), no useSelector(), no Provider wrapper, and no store-wide re-renders.'
+    },
+    {
+      link: '/blog/testing-without-mock-stores',
+      display: 'Testing Without Mock Stores — act, settle, assert',
+      title:
+        'Testing Without Mock Stores — act, settle, assert — SDuX Vault Blog',
+      description:
+        'Learn how SDuX Vault eliminates Redux test mocking with deterministic pipeline execution — no mock store, no fake dispatch, just act → settle → assert.'
     }
   ]
 };

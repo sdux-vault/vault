@@ -168,5 +168,11 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
       'Components Without connect() or useSelector — Direct State Injection',
     date: '2026-07-08',
     readingTime: 5
+  },
+  {
+    slug: 'testing-without-mock-stores',
+    title: 'Testing Without Mock Stores — act, settle, assert',
+    date: '2026-07-09',
+    readingTime: 7
   }
 ];
