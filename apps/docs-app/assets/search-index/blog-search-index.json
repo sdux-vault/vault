@@ -279,6 +279,26 @@
       "url": "/blog/testing-without-mock-stores",
       "symbols": ["testing-without-mock-stores"],
       "content": "Testing Without Mock Stores — act, settle, assert testing-without-mock-stores ED"
+    },
+    {
+      "id": "blog:redux-and-sdux-vault-side-by-side",
+      "title": "Redux and SDuX Vault Can Run Side by Side — Indefinitely",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/redux-and-sdux-vault-side-by-side",
+      "symbols": ["redux-and-sdux-vault-side-by-side"],
+      "content": "Redux and SDuX Vault Can Run Side by Side — Indefinitely redux-and-sdux-vault-side-by-side TA"
+    },
+    {
+      "id": "blog:the-mental-model-shift",
+      "title": "the mental model shift",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/the-mental-model-shift",
+      "symbols": ["the-mental-model-shift"],
+      "content": "the mental model shift the-mental-model-shift TA"
     }
   ]
 }

@@ -264,8 +264,23 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-09-testing-without-mock-stores/testing-without-mock-stores.component').then(
         (m) => m.BlogTestingWithoutMockStoresComponent
       )
+  },
+  {
+    path: 'redux-and-sdux-vault-side-by-side',
+    data: { category: 'blogs', type: 'redux-and-sdux-vault-side-by-side' },
+    loadComponent: () =>
+      import('./posts/2026-07-10-redux-and-sdux-vault-side-by-side/redux-and-sdux-vault-side-by-side.component').then(
+        (m) => m.BlogReduxAndSduxVaultSideBySideComponent
+      )
+  },
+  {
+    path: 'the-mental-model-shift',
+    data: { category: 'blogs', type: 'the-mental-model-shift' },
+    loadComponent: () =>
+      import('./posts/2026-07-10-the-mental-model-shift/the-mental-model-shift.component').then(
+        (m) => m.BlogTheMentalModelShiftComponent
+      )
   }
-  // Blog posts are lazy-loaded by slug.
   // Add new entries here when a post is created by the write-blog-post prompt.
   //
   // Example:

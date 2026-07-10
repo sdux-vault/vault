@@ -221,6 +221,21 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'Testing Without Mock Stores — act, settle, assert — SDuX Vault Blog',
       description:
         'Learn how SDuX Vault eliminates Redux test mocking with deterministic pipeline execution — no mock store, no fake dispatch, just act → settle → assert.'
+    },
+    {
+      link: '/blog/redux-and-sdux-vault-side-by-side',
+      display: 'Redux and SDuX Vault Can Run Side by Side — Indefinitely',
+      title: 'Redux and SDuX Vault Can Run Side by Side — SDuX Vault Blog',
+      description:
+        'Learn how Redux and SDuX Vault coexist in the same app with zero conflicts — run both indefinitely while you adopt FeatureCells feature by feature.'
+    },
+    {
+      link: '/blog/the-mental-model-shift',
+      display:
+        'The Mental Model Shift — From “What Action Happened” to “What State Should Exist”',
+      title: 'The Mental Model Shift — SDuX Vault Blog',
+      description:
+        'Understand how shifting from action-driven to state-driven thinking eliminates stale state, event ordering bugs, and reducer composition failures.'
     }
   ]
 };

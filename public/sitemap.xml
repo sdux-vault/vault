@@ -111,6 +111,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/redux-and-sdux-vault-side-by-side</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/redux-broke-my-trust</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -137,6 +142,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/testing-without-mock-stores</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/the-mental-model-shift</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
