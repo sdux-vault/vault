@@ -8,12 +8,16 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
   string,
   () => Promise<unknown>
 > = {
+  'angular/array-append-merge-example': () =>
+    import('../../../stackblitz/projects/angular/array-append-merge-example.project'),
   'angular/basic-filter-reducer-example': () =>
     import('../../../stackblitz/projects/angular/basic-filter-reducer-example.project'),
   'angular/debugger-example': () =>
     import('../../../stackblitz/projects/angular/debugger-example.project'),
   'angular/http-resource-example': () =>
     import('../../../stackblitz/projects/angular/http-resource-example.project'),
+  'angular/initial-state-example': () =>
+    import('../../../stackblitz/projects/angular/initial-state-example.project'),
   'angular/interceptor-delay-example': () =>
     import('../../../stackblitz/projects/angular/interceptor-delay-example.project'),
   'angular/observable-example': () =>
@@ -30,10 +34,20 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/bun/promise-example.project'),
   'bun/replace-example': () =>
     import('../../../stackblitz/projects/bun/replace-example.project'),
+  'nodejs/array-append-example': () =>
+    import('../../../stackblitz/projects/nodejs/array-append-example.project'),
+  'nodejs/promise-example': () =>
+    import('../../../stackblitz/projects/nodejs/promise-example.project'),
+  'nodejs/replace-example': () =>
+    import('../../../stackblitz/projects/nodejs/replace-example.project'),
+  'react/array-append-merge-example': () =>
+    import('../../../stackblitz/projects/react/array-append-merge-example.project'),
   'react/basic-filter-reducer-example': () =>
     import('../../../stackblitz/projects/react/basic-filter-reducer-example.project'),
   'react/debugger-example': () =>
     import('../../../stackblitz/projects/react/debugger-example.project'),
+  'react/initial-state-example': () =>
+    import('../../../stackblitz/projects/react/initial-state-example.project'),
   'react/interceptor-delay-example': () =>
     import('../../../stackblitz/projects/react/interceptor-delay-example.project'),
   'react/observable-example': () =>
@@ -44,10 +58,14 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/react/replace-example.project'),
   'react/tab-sync-example': () =>
     import('../../../stackblitz/projects/react/tab-sync-example.project'),
+  'svelte/array-append-merge-example': () =>
+    import('../../../stackblitz/projects/svelte/array-append-merge-example.project'),
   'svelte/basic-filter-reducer-example': () =>
     import('../../../stackblitz/projects/svelte/basic-filter-reducer-example.project'),
   'svelte/debugger-example': () =>
     import('../../../stackblitz/projects/svelte/debugger-example.project'),
+  'svelte/initial-state-example': () =>
+    import('../../../stackblitz/projects/svelte/initial-state-example.project'),
   'svelte/interceptor-delay-example': () =>
     import('../../../stackblitz/projects/svelte/interceptor-delay-example.project'),
   'svelte/observable-example': () =>
@@ -58,10 +76,20 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/svelte/replace-example.project'),
   'svelte/tab-sync-example': () =>
     import('../../../stackblitz/projects/svelte/tab-sync-example.project'),
+  'vanillajs/array-append-example': () =>
+    import('../../../stackblitz/projects/vanillajs/array-append-example.project'),
+  'vanillajs/promise-example': () =>
+    import('../../../stackblitz/projects/vanillajs/promise-example.project'),
+  'vanillajs/replace-example': () =>
+    import('../../../stackblitz/projects/vanillajs/replace-example.project'),
+  'vue/array-append-merge-example': () =>
+    import('../../../stackblitz/projects/vue/array-append-merge-example.project'),
   'vue/basic-filter-reducer-example': () =>
     import('../../../stackblitz/projects/vue/basic-filter-reducer-example.project'),
   'vue/debugger-example': () =>
     import('../../../stackblitz/projects/vue/debugger-example.project'),
+  'vue/initial-state-example': () =>
+    import('../../../stackblitz/projects/vue/initial-state-example.project'),
   'vue/interceptor-delay-example': () =>
     import('../../../stackblitz/projects/vue/interceptor-delay-example.project'),
   'vue/observable-example': () =>

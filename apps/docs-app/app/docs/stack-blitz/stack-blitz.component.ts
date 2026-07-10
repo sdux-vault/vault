@@ -1,5 +1,6 @@
 import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltip } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import {
@@ -35,12 +36,15 @@ import { STACKBLITZ_PROJECT_IMPORTS } from './constants/stackblitz-project-impor
 export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
   #brandNameService = inject(BrandNameService);
   #brandName = this.#brandNameService.value;
+  #snackBar = inject(MatSnackBar);
 
   readonly frameworkIcons: Record<string, string> = {
     angular: 'assets/brand/angular/angular-icon.svg',
     bun: 'assets/brand/bun/bun-icon.svg',
+    nodejs: 'assets/brand/nodejs/nodejs-icon.svg',
     react: 'assets/brand/react/react-icon.svg',
     svelte: 'assets/brand/svelte/svelte-icon.svg',
+    vanillajs: 'assets/brand/vanillajs/vanillajs-icon.svg',
     vue: 'assets/brand/vue/vue-icon.svg'
   };
 
@@ -50,17 +54,19 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
   copySuccess = signal<string | null>(null);
 
   /**
-   * Finds an example by id within the example groups and returns its exampleName.
+   * Finds an example by exampleName within the example groups and returns its exampleName.
    */
   private findExampleName(exampleId: string): string | null {
     for (const group of this.exampleGroups) {
-      const example = group.examples.find((ex) => ex.id === exampleId);
+      const example = group.examples.find((ex) => ex.exampleName === exampleId);
       if (example) {
         return example.exampleName;
       }
     }
     for (const section of this.languageSections) {
-      const example = section.examples.find((ex) => ex.id === exampleId);
+      const example = section.examples.find(
+        (ex) => ex.exampleName === exampleId
+      );
       if (example) {
         return example.exampleName;
       }
@@ -75,7 +81,12 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
     }
     const url = `https://stackblitz.com/github/sdux-vault/stackblitz-examples/tree/main/stackblitz/${language}/${exampleName}`;
     const key = `${language}/${example}`;
-    navigator.clipboard.writeText(url);
+    navigator.clipboard.writeText(url).then(() => {
+      this.#snackBar.open('Link copied!', '', {
+        duration: 2000,
+        verticalPosition: 'top'
+      });
+    });
     this.copySuccess.set(key);
     setTimeout(() => this.copySuccess.set(null), 2000);
   }

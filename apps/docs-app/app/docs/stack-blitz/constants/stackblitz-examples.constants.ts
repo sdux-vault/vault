@@ -18,6 +18,18 @@ export function createExampleGroups(brandName: string) {
             { name: 'Svelte', key: 'svelte' },
             { name: 'Vue', key: 'vue' }
           ]
+        },
+        {
+          title: 'Initial State',
+          id: 'initial-state',
+          exampleName: 'initial-state-example',
+          description: `Demonstrates initialState — the descriptor-level seed value that populates a FeatureCell before any explicit replaceState() or mergeState() call. ${brandName} initializes the cell automatically so components receive state immediately on startup. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
         }
       ]
     },
@@ -66,6 +78,18 @@ export function createExampleGroups(brandName: string) {
       description:
         'Pipeline controllers and interceptors — add timing, throttling, and orchestration to your state transitions.',
       examples: [
+        {
+          title: 'Array Append Merge',
+          id: 'array-append-merge',
+          exampleName: 'array-append-merge-example',
+          description: `Demonstrates mergeState with withArrayAppendMergeBehavior — ${brandName} concatenates incoming arrays with existing FeatureCell state on every mergeState() call, growing the list without discarding previous entries. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
+        },
         {
           title: 'Filter & Reducer Pipeline',
           id: 'basic-filter-reducer',
