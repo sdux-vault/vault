@@ -40,12 +40,7 @@ describe('Component: StackBlitz Overview', () => {
     expect(intermediate).toBeDefined();
     expect(advanced).toBeDefined();
 
-    const requiredGettingStarted = [
-      'replace-state',
-      'promise',
-      'observable',
-      'http-resource'
-    ];
+    const requiredGettingStarted = ['replace-state'];
     const actualGettingStartedIds = gettingStarted!.examples.map(
       (e: { id: string }) => e.id
     );
@@ -66,6 +61,13 @@ describe('Component: StackBlitz Overview', () => {
       (e: { id: string }) => e.id
     );
     requiredAdvanced.forEach((id) => expect(actualAdvancedIds).toContain(id));
+  });
+
+  it('should expose languageSections', () => {
+    expect(component.languageSections.length).toBeGreaterThanOrEqual(1);
+    const bun = component.languageSections.find((s) => s.id === 'bun');
+    expect(bun).toBeDefined();
+    expect(bun!.examples.length).toBeGreaterThanOrEqual(1);
   });
 
   describe('openStackBlitzExample', () => {
@@ -134,6 +136,18 @@ describe('Component: StackBlitz Overview', () => {
       component.copyStackBlitzExample('angular', 'nonexistent');
       expect(navigator.clipboard.writeText).not.toHaveBeenCalled();
     });
+
+    it('should copy URL for a language section example', () => {
+      spyOn(navigator.clipboard, 'writeText').and.returnValue(
+        Promise.resolve()
+      );
+      // Clear exampleGroups so findExampleName falls through to the languageSections loop
+      (component as any).exampleGroups = [];
+      component.copyStackBlitzExample('bun', 'bun-replace-state');
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+        'https://stackblitz.com/github/sdux-vault/stackblitz-examples/tree/main/stackblitz/bun/replace-example'
+      );
+    });
   });
 
   describe('frameworkIcons', () => {
@@ -154,21 +168,25 @@ describe('Component: StackBlitz Overview', () => {
   });
 
   describe('exampleGroups property', () => {
-    it('should have three groups: Getting Started, Intermediate, Advanced', () => {
-      expect(component.exampleGroups.length).toBe(3);
+    it('should have four groups: Getting Started, Core Patterns, Intermediate, Advanced', () => {
+      expect(component.exampleGroups.length).toBe(4);
       expect(component.exampleGroups[0].id).toBe('getting-started');
-      expect(component.exampleGroups[1].id).toBe('intermediate');
-      expect(component.exampleGroups[2].id).toBe('advanced');
+      expect(component.exampleGroups[1].id).toBe('core-patterns');
+      expect(component.exampleGroups[2].id).toBe('intermediate');
+      expect(component.exampleGroups[3].id).toBe('advanced');
     });
 
     it('should have correct number of examples per group', () => {
       expect(component.exampleGroups[0].examples.length).toBeGreaterThanOrEqual(
-        4
+        1
       );
       expect(component.exampleGroups[1].examples.length).toBeGreaterThanOrEqual(
-        2
+        3
       );
       expect(component.exampleGroups[2].examples.length).toBeGreaterThanOrEqual(
+        2
+      );
+      expect(component.exampleGroups[3].examples.length).toBeGreaterThanOrEqual(
         2
       );
     });

@@ -33,24 +33,50 @@
     </div>
 
     <div class="section-body">
-      <div class="toc-container" id="toc">
-        <div class="toc-title">Available Examples</div>
-        <ul class="toc" aria-label="Example categories">
-          @for (group of exampleGroups; track group.id) {
-            <li>
-              <a [routerLink]="[]" [fragment]="group.id">{{ group.heading }}</a>
-              <ul>
-                @for (example of group.examples; track example.id) {
-                  <li>
-                    <a [routerLink]="[]" [fragment]="example.id">{{
-                      example.title
-                    }}</a>
-                  </li>
-                }
-              </ul>
-            </li>
-          }
-        </ul>
+      <div class="toc-columns">
+        <div class="toc-container" id="toc">
+          <div class="toc-title">Angular, React, Svelte & Vue Examples</div>
+          <ul class="toc" aria-label="Example categories">
+            @for (group of exampleGroups; track group.id) {
+              <li>
+                <a [routerLink]="[]" [fragment]="group.id">{{
+                  group.heading
+                }}</a>
+                <ul>
+                  @for (example of group.examples; track example.id) {
+                    <li>
+                      <a [routerLink]="[]" [fragment]="example.id">{{
+                        example.title
+                      }}</a>
+                    </li>
+                  }
+                </ul>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div class="toc-container">
+          <div class="toc-title">Specialty Runtime Examples</div>
+          <ul class="toc" aria-label="Language example categories">
+            @for (section of languageSections; track section.id) {
+              <li>
+                <a [routerLink]="[]" [fragment]="section.id">{{
+                  section.heading
+                }}</a>
+                <ul>
+                  @for (example of section.examples; track example.id) {
+                    <li>
+                      <a [routerLink]="[]" [fragment]="example.id">{{
+                        example.title
+                      }}</a>
+                    </li>
+                  }
+                </ul>
+              </li>
+            }
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -169,6 +195,85 @@
             @if ($any(example).notice) {
               <div class="callout callout-warning">
                 <strong>StackBlitz Limitation</strong>
+                <!-- trusted: static HTML from constants, not user-generated -->
+                <div [innerHTML]="$any(example).notice"></div>
+              </div>
+            }
+          </div>
+        </section>
+      }
+    </section>
+  }
+
+  <!-- ============================================================ -->
+  <!-- LANGUAGE SECTIONS                                           -->
+  <!-- ============================================================ -->
+
+  @for (section of languageSections; track section.id) {
+    <hr class="section-divider" />
+
+    <section class="section" [id]="section.id">
+      <div class="section-title-navigation">
+        <div class="section-title">
+          <img
+            [src]="section.icon"
+            [alt]="section.heading"
+            class="language-section-heading-icon" />
+          {{ section.heading }}
+        </div>
+        <div class="section-top-link">
+          <a [routerLink]="[]" fragment="top">↑ top</a>
+        </div>
+      </div>
+      <div class="section-body">
+        <p>{{ section.description }}</p>
+      </div>
+
+      @for (example of section.examples; track example.id) {
+        <section class="section-body" [id]="example.id">
+          <div class="h-title-navigation">
+            <div class="h-section-title">
+              <strong> {{ example.title }} Example </strong>
+            </div>
+            <div class="h-top-link">
+              <a [routerLink]="[]" fragment="top">↑ top</a>
+            </div>
+          </div>
+
+          <div class="section-body">
+            <p>{{ example.description }}</p>
+
+            <div
+              class="framework-icon-row"
+              role="group"
+              [attr.aria-label]="
+                example.title + ' ' + section.heading + ' example'
+              ">
+              @for (lang of example.languages; track lang.key) {
+                <div
+                  class="framework-icon-group framework-icon-group-local-only">
+                  <div
+                    class="framework-icon-button framework-icon-button-local-only"
+                    [attr.aria-label]="
+                      'Run ' + example.title + ' locally with ' + lang.name
+                    "
+                    [matTooltip]="
+                      'Local-only example. Run with ' +
+                      lang.name +
+                      ' — see instructions below.'
+                    ">
+                    <img
+                      [src]="frameworkIcons[lang.key]"
+                      [alt]="lang.name"
+                      class="framework-icon" />
+                  </div>
+                </div>
+              }
+            </div>
+
+            @if ($any(example).notice) {
+              <div class="callout callout-warning">
+                <strong>Local-Only Example</strong>
                 <!-- trusted: static HTML from constants, not user-generated -->
                 <div [innerHTML]="$any(example).notice"></div>
               </div>
