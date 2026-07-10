@@ -37,6 +37,7 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
 
   readonly frameworkIcons: Record<string, string> = {
     angular: 'assets/brand/angular/angular-icon.svg',
+    bun: 'assets/brand/bun/bun-icon.svg',
     react: 'assets/brand/react/react-icon.svg',
     svelte: 'assets/brand/svelte/svelte-icon.svg',
     vue: 'assets/brand/vue/vue-icon.svg'

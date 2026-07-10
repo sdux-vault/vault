@@ -24,6 +24,12 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/angular/replace-example.project'),
   'angular/tab-sync-example': () =>
     import('../../../stackblitz/projects/angular/tab-sync-example.project'),
+  'bun/http-resource-example': () =>
+    import('../../../stackblitz/projects/bun/http-resource-example.project'),
+  'bun/promise-example': () =>
+    import('../../../stackblitz/projects/bun/promise-example.project'),
+  'bun/replace-example': () =>
+    import('../../../stackblitz/projects/bun/replace-example.project'),
   'react/basic-filter-reducer-example': () =>
     import('../../../stackblitz/projects/react/basic-filter-reducer-example.project'),
   'react/debugger-example': () =>

@@ -477,6 +477,15 @@
   }
 }
 
+.framework-icon-group-local-only {
+  transition: none;
+
+  &:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
 .share-link-button {
   display: inline-flex;
   align-items: center;
@@ -541,6 +550,22 @@
   &:focus-visible {
     outline: 2px solid global.$sdux-primary-base;
     outline-offset: 2px;
+  }
+}
+
+.framework-icon-button-local-only {
+  cursor: default;
+
+  &:hover {
+    background-color: transparent;
+
+    .framework-icon {
+      opacity: 1;
+    }
+
+    .launch-overlay-icon {
+      opacity: 0;
+    }
   }
 }
 
