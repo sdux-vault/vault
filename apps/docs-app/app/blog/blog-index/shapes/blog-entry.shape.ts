@@ -3,4 +3,5 @@ export interface BlogEntry {
   readonly title: string;
   readonly date: string;
   readonly readingTime: number;
+  readonly active?: boolean;
 }

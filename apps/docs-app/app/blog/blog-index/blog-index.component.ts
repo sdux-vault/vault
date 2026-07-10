@@ -17,7 +17,7 @@ import { BLOG_ENTRIES } from './constants/blog-entries.constant';
   encapsulation: ViewEncapsulation.None
 })
 export class BlogIndexComponent {
-  readonly entries = [...BLOG_ENTRIES].sort((a, b) =>
-    b.date.localeCompare(a.date)
-  );
+  readonly entries = [...BLOG_ENTRIES]
+    .filter((entry) => entry.active)
+    .sort((a, b) => b.date.localeCompare(a.date));
 }
