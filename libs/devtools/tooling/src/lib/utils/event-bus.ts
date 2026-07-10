@@ -39,8 +39,11 @@ class EventBusInstance implements EventBusContract {
    * Creates a new EventBus instance and exposes it on the global object for DevTools access.
    */
   constructor() {
-    window.sdux ??= {} as SDuXShape;
-    window.sdux.vaultEventBus = this;
+    // istanbul ignore next -- defensive only; window is always defined in browser test environments
+    if (typeof window !== 'undefined') {
+      window.sdux ??= {} as SDuXShape;
+      window.sdux.vaultEventBus = this;
+    }
   }
 
   /**

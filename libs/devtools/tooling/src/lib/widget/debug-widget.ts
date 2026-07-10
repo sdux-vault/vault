@@ -8,8 +8,17 @@ import {
 } from './downloads/debug-widget.dump';
 import { exportTrace } from './downloads/debug-widget.trace';
 
+/**
+ * No-op base class used when `HTMLElement` is unavailable (Node.js, Deno, Bun,
+ * workers). Allows the module to be imported without crashing in non-browser
+ * runtimes while keeping the custom element fully functional in the browser.
+ */
+// istanbul ignore next -- defensive only; HTMLElement is always defined in browser test environments
+const SafeHTMLElement =
+  typeof HTMLElement !== 'undefined' ? HTMLElement : class {};
+
 /** Custom element that renders the SDuX debug widget overlay in the browser. */
-export class DebugWidget extends HTMLElement {
+export class DebugWidget extends (SafeHTMLElement as typeof HTMLElement) {
   /** Recorder instance that captures pipeline events. */
   private recorder = new DebugWidgetRecorder();
   /** Whether the recorder is currently active. */
