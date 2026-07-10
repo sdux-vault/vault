@@ -155,6 +155,7 @@
     align-items: center;
     justify-content: space-between;
 
+    h2,
     h3 {
       a {
         @include global.a-link(
@@ -527,6 +528,18 @@
   border: none;
   border-top: 1px solid global.$sdux-surface-outline;
   margin: global.$spacing-xl 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .language-section-heading-icon {
