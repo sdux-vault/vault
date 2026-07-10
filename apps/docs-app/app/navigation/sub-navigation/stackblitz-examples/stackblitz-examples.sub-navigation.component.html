@@ -73,6 +73,34 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Bun</span>
+      </mat-expansion-panel-header>
+
+      <a
+        mat-list-item
+        routerLink="/examples/bun/http-resource"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Http Resource</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/bun/promise"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Promise</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/bun/replace"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Replace</div>
+      </a>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+      <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header">React</span>
       </mat-expansion-panel-header>
 
