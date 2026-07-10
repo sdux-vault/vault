@@ -176,6 +176,7 @@
               "**/testing/data/**",
               "**/docs-app/app/docs/stack-blitz/constants/stackblitz-project-imports.generated.ts",
               "**/docs-app/app/docs/stack-blitz/constants/stackblitz-examples.constants.ts",
+              "**/docs-app/app/docs/stack-blitz/constants/stackblitz-language-sections.constants.ts",
               "**/docs-app/app/builder/services/files/pipeline-file-builder.abstract.ts",
               "**/docs-app/app/docs/resolve/value/example/resolve-value.example.component.ts"
             ]

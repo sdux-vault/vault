@@ -11,6 +11,7 @@ import StackBlitz from '@stackblitz/sdk';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 import { PipelineRoutingDirective } from '../pipeline/directives/pipeline-routing.directive';
 import { createExampleGroups } from './constants/stackblitz-examples.constants';
+import { createLanguageSections } from './constants/stackblitz-language-sections.constants';
 import { STACKBLITZ_PROJECT_IMPORTS } from './constants/stackblitz-project-imports.generated';
 
 /**
@@ -44,6 +45,7 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
   };
 
   readonly exampleGroups = createExampleGroups(this.#brandName);
+  readonly languageSections = createLanguageSections(this.#brandName);
 
   copySuccess = signal<string | null>(null);
 
@@ -53,6 +55,12 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
   private findExampleName(exampleId: string): string | null {
     for (const group of this.exampleGroups) {
       const example = group.examples.find((ex) => ex.id === exampleId);
+      if (example) {
+        return example.exampleName;
+      }
+    }
+    for (const section of this.languageSections) {
+      const example = section.examples.find((ex) => ex.id === exampleId);
       if (example) {
         return example.exampleName;
       }

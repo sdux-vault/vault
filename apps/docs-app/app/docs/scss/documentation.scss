@@ -523,6 +523,30 @@
   }
 }
 
+.section-divider {
+  border: none;
+  border-top: 1px solid global.$sdux-surface-outline;
+  margin: global.$spacing-xl 0;
+}
+
+.language-section-heading-icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: global.$spacing-xs;
+}
+
+.toc-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: global.$spacing-xl;
+
+  .toc-container {
+    flex: 1 1 0;
+    min-width: 200px;
+  }
+}
+
 .framework-icon-button {
   position: relative;
   display: inline-flex;

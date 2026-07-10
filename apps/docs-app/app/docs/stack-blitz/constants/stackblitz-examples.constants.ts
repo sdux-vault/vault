@@ -1,11 +1,11 @@
 /** StackBlitz example group definitions. */
 export function createExampleGroups(brandName: string) {
-  return [
+  const groups = [
     {
       heading: 'Getting Started',
       id: 'getting-started',
       description:
-        'Core pipeline concepts — filters, reducers, and FeatureCell state. Start here to understand how data flows through the pipeline.',
+        'Your first FeatureCell — learn state replacement, the foundation of every SDuX Vault update.',
       examples: [
         {
           title: 'Replace State',
@@ -18,7 +18,15 @@ export function createExampleGroups(brandName: string) {
             { name: 'Svelte', key: 'svelte' },
             { name: 'Vue', key: 'vue' }
           ]
-        },
+        }
+      ]
+    },
+    {
+      heading: 'Core Patterns',
+      id: 'core-patterns',
+      description:
+        'Async state inputs — promises, observables, and HTTP resources. The patterns you will use in every real application.',
+      examples: [
         {
           title: 'Promise',
           id: 'promise',
@@ -94,7 +102,7 @@ export function createExampleGroups(brandName: string) {
           ]
         },
         {
-          title: 'HTTP Resource',
+          title: 'HTTP Resource (Angular)',
           id: 'http-resource',
           exampleName: 'http-resource-example',
           description: `Demonstrates replaceState with Angular's httpResource — ${brandName} integrates HTTP requests directly into state management. Launch the example in StackBlitz.`,
@@ -211,4 +219,9 @@ export function createExampleGroups(brandName: string) {
       ]
     }
   ];
+
+  return groups.map((group) => ({
+    ...group,
+    examples: [...group.examples].sort((a, b) => a.title.localeCompare(b.title))
+  }));
 }
