@@ -1,7 +1,7 @@
 <div class="docs-container">
   @if (notFound()) {
     <div class="header">
-      <h3>Example Not Found</h3>
+      <h2>Example Not Found</h2>
     </div>
     <div class="section">
       <div class="section-body">
@@ -15,7 +15,7 @@
     </div>
   } @else if (example(); as ex) {
     <div class="header">
-      <h3>{{ ex.title }} — {{ capitalize(language()) }}</h3>
+      <h2>{{ ex.title }} — {{ capitalize(language()) }}</h2>
     </div>
 
     <header class="docs-header">

@@ -22,7 +22,7 @@ describe('Component: DocsIndex', () => {
   });
 
   it('should render the Documentation header', () => {
-    expect(el.querySelector('.header h3')?.textContent).toEqual(
+    expect(el.querySelector('.header h2')?.textContent).toEqual(
       'Documentation'
     );
   });
