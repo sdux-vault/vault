@@ -11,8 +11,8 @@ import {
 import StackBlitz from '@stackblitz/sdk';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 import { PipelineRoutingDirective } from '../pipeline/directives/pipeline-routing.directive';
-import { createExampleGroups } from './constants/stackblitz-examples.constants';
-import { createLanguageSections } from './constants/stackblitz-language-sections.constants';
+import { createExampleGroups } from './constants/stackblitz-examples.constant';
+import { createLanguageSections } from './constants/stackblitz-language-sections.constant';
 import { STACKBLITZ_PROJECT_IMPORTS } from './constants/stackblitz-project-imports.generated';
 
 /**
@@ -39,7 +39,7 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
   #snackBar = inject(MatSnackBar);
 
   readonly frameworkIcons: Record<string, string> = {
-    angular: 'assets/brand/angular/angular-icon.svg',
+    angular: 'assets/brand/angular/angular-icon.png',
     bun: 'assets/brand/bun/bun-icon.svg',
     nodejs: 'assets/brand/nodejs/nodejs-icon.svg',
     react: 'assets/brand/react/react-icon.svg',

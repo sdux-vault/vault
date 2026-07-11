@@ -49,6 +49,11 @@ const INDEX_JOBS = Object({
       publicApis: ['../public-api.ts', '../documentation-api.ts']
     },
     {
+      name: 'react',
+      srcDir: 'libs/core-extensions/react/src',
+      publicApis: ['./documentation-api.ts']
+    },
+    {
       name: 'shared',
       srcDir: 'libs/shared/src/lib',
       publicApis: ['../public-api.ts']

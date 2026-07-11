@@ -30,7 +30,7 @@ export const interceptorDelayExampleProject: Project = {
   },
   "dependencies": {
     "@sdux-vault/addons": "latest",
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/react": "latest",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rxjs": "~7.8.0"
@@ -230,8 +230,7 @@ export const interceptorDelayExampleProject: Project = {
 import { ElapsedTimer } from './elapsed-timer';
 import {
   Example,
-  exampleState,
-  exampleState\$,
+  exampleCell,
   replaceExamples,
   resetExamples,
   toggleError,
@@ -253,12 +252,7 @@ const sample: Example[] = [
  * the pipeline. A real-time elapsed timer shows the delay window.
  */
 export function ExampleView() {
-  const [snapshot, setSnapshot] = useState({
-    value: exampleState.value,
-    isLoading: exampleState.isLoading,
-    error: exampleState.error,
-    hasValue: exampleState.hasValue
-  });
+  const snapshot = exampleCell.useSyncExternalStore();
   const [activeStateHint, setActiveStateHint] = useState(
     'Initial value is [] (empty array)'
   );
@@ -275,18 +269,7 @@ export function ExampleView() {
   }
 
   useEffect(() => {
-    const sub = exampleState\$.subscribe((emit) => {
-      setSnapshot({
-        value: emit.snapshot.value,
-        isLoading: emit.snapshot.isLoading,
-        error: emit.snapshot.error,
-        hasValue: emit.snapshot.hasValue
-      });
-    });
-    return () => {
-      sub.unsubscribe();
-      timerRef.current?.destroy();
-    };
+    return () => timerRef.current?.destroy();
   }, []);
 
   const hasError = snapshot.error !== null;
@@ -317,13 +300,13 @@ export function ExampleView() {
   function handleToggleLoading() {
     const next = !isLoading;
     setIsLoading(next);
-    toggleLoading(next);
+    toggleLoading(next, snapshot.value);
   }
 
   /** Toggles the error state between an Error instance and null. */
   function handleToggleError() {
     const error = hasError ? null : new Error('Example error message');
-    toggleError(error);
+    toggleError(error, snapshot.value);
   }
 
   return (
@@ -605,7 +588,7 @@ export class ElapsedTimer {
 }
 `,
     'src/app/example.cell.ts': `import { withDelayController } from '@sdux-vault/addons';
-import { FeatureCell, Vault } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/react';
 
 /**
  * Shape representing a single example entity in the FeatureCell state.
@@ -645,7 +628,7 @@ Vault({
 });
 
 // Register the FeatureCell at module scope
-const exampleCell = FeatureCell<Example[]>(
+export const exampleCell = FeatureCell<Example[]>(
   // FeatureCell descriptor (identity + initial state)
   {
     // Unique state key used by the Vault
@@ -682,10 +665,6 @@ const exampleCell = FeatureCell<Example[]>(
  */
 exampleCell.withDelay?.({ millisecondDelay: 3_000 }).initialize();
 
-// Expose read-only state access
-export const exampleState = exampleCell.state;
-export const exampleState\$ = exampleCell.state\$;
-
 /** Replaces the entire FeatureCell state with the provided input. */
 export function replaceExamples(input: Example[]): void {
   exampleCell.replaceState({
@@ -701,18 +680,24 @@ export function resetExamples(): void {
 }
 
 /** Toggles the loading flag on the current state. */
-export function toggleLoading(loading: boolean): void {
+export function toggleLoading(
+  loading: boolean,
+  value: Example[] | undefined
+): void {
   exampleCell.replaceState({
     loading,
-    value: exampleState.value
+    value
   });
 }
 
 /** Toggles the error state between an Error instance and null. */
-export function toggleError(error: Error | null): void {
+export function toggleError(
+  error: Error | null,
+  value: Example[] | undefined
+): void {
   exampleCell.replaceState({
     error,
-    value: exampleState.value
+    value
   });
 }
 `,

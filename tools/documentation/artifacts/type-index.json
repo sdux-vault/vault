@@ -1680,6 +1680,14 @@
       "relativePath": "libs/core/src/lib/behaviors/resolve/from-stream/interface/from-stream-behavior.interface.ts",
       "docLink": "interfaces"
     },
+    "ReactAdapterCoreFeatureCellShape": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "ReactAdapterCoreFeatureCellShape",
+      "project": "react",
+      "relativePath": "libs/core-extensions/react/src/lib/factories/feature-cell/feature.cell.adapter.ts",
+      "docLink": "interfaces"
+    },
     "VaultSignalStateRef": {
       "kind": "interface",
       "docKind": "interface",
@@ -1694,6 +1702,14 @@
       "name": "VaultStateRef",
       "project": "engine",
       "relativePath": "../engine/lib/src/references/vault.reference.ts",
+      "docLink": "interfaces"
+    },
+    "VaultSyncExternalStoreRef": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "VaultSyncExternalStoreRef",
+      "project": "react",
+      "relativePath": "libs/core-extensions/react/src/lib/references/vault-sync-external-store.reference.ts",
       "docLink": "interfaces"
     }
   },
@@ -1988,6 +2004,14 @@
       "name": "FeatureCellClass",
       "project": "engine",
       "relativePath": "../engine/lib/src/factories/feature-cell/feature-cell.class.ts",
+      "docLink": "classes"
+    },
+    "ReactFeatureCellAdapter": {
+      "kind": "class",
+      "docKind": "class",
+      "name": "ReactFeatureCellAdapter",
+      "project": "react",
+      "relativePath": "libs/core-extensions/react/src/lib/factories/feature-cell/feature.cell.adapter.ts",
       "docLink": "classes"
     },
     "VaultEncryptionIntegrityError": {

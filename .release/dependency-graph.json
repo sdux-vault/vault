@@ -4,7 +4,7 @@
     ["@sdux-vault/devtools"],
     ["@sdux-vault/engine"],
     ["@sdux-vault/addons", "@sdux-vault/core"],
-    ["@sdux-vault/angular"]
+    ["@sdux-vault/angular", "@sdux-vault/react"]
   ],
 
   "libraries": {
@@ -17,7 +17,8 @@
         "@sdux-vault/engine",
         "@sdux-vault/addons",
         "@sdux-vault/core",
-        "@sdux-vault/angular"
+        "@sdux-vault/angular",
+        "@sdux-vault/react"
       ]
     },
 
@@ -35,7 +36,8 @@
       "dependents": [
         "@sdux-vault/addons",
         "@sdux-vault/core",
-        "@sdux-vault/angular"
+        "@sdux-vault/angular",
+        "@sdux-vault/react"
       ]
     },
 
@@ -50,10 +52,21 @@
       "type": "library",
       "source": "npm",
       "dependencies": ["@sdux-vault/engine", "@sdux-vault/shared"],
-      "dependents": ["@sdux-vault/angular"]
+      "dependents": ["@sdux-vault/angular", "@sdux-vault/react"]
     },
 
     "@sdux-vault/angular": {
+      "type": "library",
+      "source": "npm",
+      "dependencies": [
+        "@sdux-vault/core",
+        "@sdux-vault/engine",
+        "@sdux-vault/shared"
+      ],
+      "dependents": []
+    },
+
+    "@sdux-vault/react": {
       "type": "library",
       "source": "npm",
       "dependencies": [

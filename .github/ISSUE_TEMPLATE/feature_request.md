@@ -16,7 +16,8 @@ Which area does this feature relate to? (select one or more)
 
 - [ ] Core
 - [ ] Addons
-- [ ] Core Extensions
+- [ ] Core Extensions - Angular
+- [ ] Core Extensions - React
 - [ ] Devtools / Tooling
 - [ ] Chrome Extensions
 - [ ] Devtools UI

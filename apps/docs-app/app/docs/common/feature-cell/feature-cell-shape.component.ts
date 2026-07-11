@@ -168,6 +168,31 @@ import { Component, ViewEncapsulation } from '@angular/core';
           <td>Registers filter functions executed during the filter stage.</td>
         </tr>
 
+        <!-- fromStream -->
+        <tr>
+          <td>
+            <strong>fromStream&lt;T&gt;</strong>
+            <p>inputs:</p>
+            <ul>
+              <li>source$: Observable&lt;T&gt;</li>
+              <li>
+                options?:
+                <a href="/docs/references/config/from-stream-options"
+                  >FromStreamOptions</a
+                >
+              </li>
+            </ul>
+            <p>return:</p>
+            <ul>
+              <li>void</li>
+            </ul>
+          </td>
+          <td>
+            Subscribes to an Observable source and forwards each emitted value
+            through <strong>mergeState()</strong> as a discrete state update.
+          </td>
+        </tr>
+
         <!-- hydrate -->
         <tr>
           <td>
@@ -408,6 +433,31 @@ import { Component, ViewEncapsulation } from '@angular/core';
             Observable that emits state snapshots when the
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             commits new state.
+          </td>
+        </tr>
+
+        <!-- useSyncExternalStore -->
+        <tr>
+          <td>
+            <strong>useSyncExternalStore&lt;T&gt;</strong>
+            <img
+              src="assets/brand/react/react-icon.svg"
+              height="15"
+              alt="React" />
+            <p>return:</p>
+            <ul>
+              <li>
+                <a href="/docs/references/shapes/state-snapshot-shape"
+                  >StateSnapshotShape</a
+                >&lt;T&gt;
+              </li>
+            </ul>
+          </td>
+          <td>
+            <strong>React</strong> extension that subscribes the current render
+            to
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            state updates and returns the latest committed snapshot.
           </td>
         </tr>
       </tbody>

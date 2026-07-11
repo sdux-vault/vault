@@ -5,7 +5,7 @@ export const SupportedLanguagesConstants: SupportedLanguageShape[] = [
     name: 'Angular',
     description: 'A platform for building mobile and desktop web applications.',
     note: 'Injectable services',
-    logo: 'brand/angular/angular-icon.svg',
+    logo: 'brand/angular/angular-icon.png',
     logoAlt: 'Angular logo',
     showInEcosystemStrip: true,
     showInFrameworkTiles: true

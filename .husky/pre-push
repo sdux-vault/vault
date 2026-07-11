@@ -2,57 +2,75 @@ echo "Running library coverage before push..."
 
 npm run test:coverage:clean
 
+printf "\n\nTesting Addons.\n\n\n\n"
 npm run test:coverage:addons || {
   printf "\n\nERROR: Test Coverage issues were found in the 'addons' committed files. Please address them before proceeding.\n\n\n\n"
   exit 1
 }
 
+printf "\n\nTesting Angular.\n\n\n\n"
 npm run test:coverage:angular || {
   printf "\n\nERROR: Test Coverage issues were found in the 'angular' committed files. Please address them before proceeding.\n\n\n\n"
   exit 1
 }
 
 
+printf "\n\nTesting Core.\n\n\n\n"
 npm run test:coverage:core || {
   printf "\n\nERROR: Test Coverage issues were found in the 'core' committed files. Please address them before proceeding.\n\n\n\n"
   exit 1
 }
 
+printf "\n\nTesting DevTools.\n\n\n\n"
 npm run test:coverage:devtools || {
   printf "\n\nERROR: Test Coverage issues were found in the 'devtools' committed files. Please address them before proceeding.\n\n\n\n"
   exit 1
 }
 
+printf "\n\nTesting DevTools-Ui.\n\n\n\n"
 npm run test:coverage:devtools-ui || {
   printf "\n\nERROR: Test Coverage issues were found in the 'devtools-ui' committed files. Please address them before proceeding.\n\n\n\n"
   exit 1
 }
 
-npm run test:coverage:shared || {
-  printf "\n\nERROR: Test Coverage issues were found in the 'shared' committed files. Please address them before proceeding.\n\n\n\n"
-  exit 1
-}
-
+printf "\n\nTesting Docs-app.\n\n\n\n"
 npm run test:coverage:docs-app || {
   printf "\n\nERROR: Test Coverage issues were found in the 'docs-app app' committed files. Please address them before proceeding.\n\n\n\n"
   exit 1
 }
 
+printf "\n\nTesting React.\n\n\n\n"
+npm run test:coverage:react || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'react' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+printf "\n\nTesting Shared.\n\n\n\n"
+npm run test:coverage:shared || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'shared' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+
+printf "\n\nTesting Web Components.\n\n\n\n"
 npm run test:coverage:web-components || {
   printf "\n\nERROR: Test Coverage issues were found in the 'web-components' committed files. Please address them before proceeding.\n\n\n\n"
   exit 1
 }
 
+printf "\n\nTesting Integration.\n\n\n\n"
 npm run test:coverage:integration || {
   printf "\n\nERROR: Test Coverage issues were found in the 'integration' committed files. Please address them before proceeding.\n\n\n\n"
   exit 1
 }
 
+printf "\n\nTesting Tools.\n\n\n\n"
 npm run test:tools || {
   printf "\n\nERROR: Test Coverage issues were found in the 'tools' committed files. Please address them before proceeding.\n\n\n\n"
   exit 1
 }
 
+printf "\n\nTesting Chrome Extension.\n\n\n\n"
 npm run test:coverage:chrome-extension || {
   printf "\n\nERROR: Test Coverage issues were found in the 'chrome-extension' committed files. Please address them before proceeding.\n\n\n\n"
   exit 1

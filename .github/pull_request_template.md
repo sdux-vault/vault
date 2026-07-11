@@ -26,6 +26,7 @@ Closes #
 - [ ] Chrome Extension
 - [ ] Core
 - [ ] Core Extensions (Angular)
+- [ ] Core Extensions (React)
 - [ ] Devtools / Tooling
 - [ ] Devtools UI
 - [ ] Docs App

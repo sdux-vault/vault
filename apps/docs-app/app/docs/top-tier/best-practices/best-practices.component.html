@@ -411,7 +411,9 @@ export class EmployeeService &#123;
                 <sdux-feature-cell />
                 acts as the architectural owner. Components must not call
                 mutation APIs directly. Instead, they call exported domain
-                functions.
+                functions. Components use
+                <strong>useSyncExternalStore()</strong> to render the owning
+                <sdux-feature-cell /> State.
               </p>
 
               <div class="table-title">employee.cell.ts</div>
@@ -420,7 +422,7 @@ export class EmployeeService &#123;
                 <sdux-example-viewer-tab label="React: employee.cell.ts">
                   <pre
                     class="code-inline"><code class="language-ts">// employee.cell.ts
-import &#123; Vault, FeatureCell &#125; from '<sdux-package-name />/core';
+import &#123; Vault, FeatureCell &#125; from '<sdux-package-name />/react';
 import &#123; withArrayPushMergeBehavior &#125; from '<sdux-package-name />/addons';
 
 // 1️⃣ Initialize global runtime
@@ -615,7 +617,10 @@ export const employeeState$ = employeeCell.state$;`}}</code></pre>
 
       <ul>
         <li>Read state from an owning service (Angular)</li>
-        <li>Subscribe to exported state surfaces (React / Vue)</li>
+        <li>
+          Render State through <strong>useSyncExternalStore()</strong> (React)
+        </li>
+        <li>Subscribe to exported state surfaces (Vue)</li>
         <li>Trigger domain methods exposed by the owner</li>
       </ul>
 
@@ -772,33 +777,29 @@ export class EmployeeViewComponent &#123;
               <sdux-example-viewer-source [displayTabs]="false">
                 <sdux-example-viewer-tab label="React: EmployeeView.tsx">
                   <pre
-                    class="code-inline"><code class="language-tsx">import &#123; useEffect, useState &#125; from 'react';
-import &#123; addEmployee, employeeState$ &#125; from './employee.cell';
-import type &#123;  Employee &#125; from './employee.types';
+                    class="code-inline"><code class="language-tsx">import &#123; addEmployee, employeeCell &#125; from './employee.cell';
 
 export function EmployeeView() &#123;
-
-  const [employees, setEmployees] = useState&lt;Employee[]&gt;([]);
-
-  // Subscribe to observable surface
-  useEffect(() =&gt; &#123;
-    const sub = employeeState$.subscribe(snapshot =&gt; &#123;
-    if (snapshot.hasValue) &#123;
-      setEmployees([...snapshot.value]);
-    &#125;
-  &#125;);
-
-    return () =&gt; sub.unsubscribe();
-  &#125;, []);
+  const snapshot = employeeCell.useSyncExternalStore();
 
   function addSample() &#123;
     addEmployee(&#123; id: 11, name: 'Luke' &#125;);
     addEmployee(&#123; id: 38, name: 'Leia' &#125;);
   &#125;
 
+  if (snapshot.isLoading) &#123;
+    return &lt;p&gt;Loading...&lt;/p&gt;;
+  &#125;
+
+  if (snapshot.error) &#123;
+    return &lt;p role="alert"&gt;&#123;snapshot.error.message&#125;&lt;/p&gt;;
+  &#125;
+
+  const employees = snapshot.hasValue ? snapshot.value : [];
+
   return (
     &lt;div&gt;
-      &lt;button onClick=&#123;addSample&#125;&gt;
+      &lt;button type="button" onClick=&#123;addSample&#125;&gt;
         Add Sample Employees
       &lt;/button&gt;
 

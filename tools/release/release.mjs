@@ -68,15 +68,6 @@ const LIBRARIES = {
     licenses: ['mit', 'community', 'commercial']
   },
 
-  '@sdux-vault/core': {
-    packageName: '@sdux-vault/core',
-    packagePath: 'libs/core',
-    distPath: 'dist/core',
-    versionFile: 'src/lib/version/version.register.ts',
-    buildCommand: 'npm run build:core',
-    licenses: ['mit', 'community', 'commercial']
-  },
-
   '@sdux-vault/angular': {
     packageName: '@sdux-vault/core-extensions/angular',
     packagePath: 'libs/core-extensions/angular',
@@ -86,12 +77,30 @@ const LIBRARIES = {
     licenses: ['mit']
   },
 
+  '@sdux-vault/core': {
+    packageName: '@sdux-vault/core',
+    packagePath: 'libs/core',
+    distPath: 'dist/core',
+    versionFile: 'src/lib/version/version.register.ts',
+    buildCommand: 'npm run build:core',
+    licenses: ['mit', 'community', 'commercial']
+  },
+
   '@sdux-vault/devtools': {
     packageName: '@sdux-vault/devtools',
     packagePath: 'libs/devtools/tooling',
     distPath: 'dist/devtools/tooling',
     versionFile: 'src/lib/version/version.register.ts',
     buildCommand: 'npm run build:devtools',
+    licenses: ['mit']
+  },
+
+  '@sdux-vault/react': {
+    packageName: '@sdux-vault/react',
+    packagePath: 'libs/core-extensions/react',
+    distPath: 'dist/core-extensions/react',
+    versionFile: 'src/lib/version/version.register.ts',
+    buildCommand: 'npm run build:react',
     licenses: ['mit']
   },
 

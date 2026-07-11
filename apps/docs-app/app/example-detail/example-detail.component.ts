@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BrandNameService } from '@sdux-vault/ui/web-components';
 import StackBlitz from '@stackblitz/sdk';
 import { PipelineRelatedTopicComponent } from '../docs/related-topic/related-topic.component';
-import { createExampleGroups } from '../docs/stack-blitz/constants/stackblitz-examples.constants';
+import { createExampleGroups } from '../docs/stack-blitz/constants/stackblitz-examples.constant';
 import { STACKBLITZ_PROJECT_IMPORTS } from '../docs/stack-blitz/constants/stackblitz-project-imports.generated';
 
 /**
@@ -36,7 +36,7 @@ export class ExampleDetailComponent {
   #brandName = this.#brandNameService.value;
 
   readonly frameworkIcons: Record<string, string> = {
-    angular: 'assets/brand/angular/angular-icon.svg',
+    angular: 'assets/brand/angular/angular-icon.png',
     react: 'assets/brand/react/react-icon.svg',
     svelte: 'assets/brand/svelte/svelte-icon.svg',
     vue: 'assets/brand/vue/vue-icon.svg'

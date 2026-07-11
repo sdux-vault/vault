@@ -4,6 +4,22 @@ export const initialStateExampleProject: Project = {
   title: 'react-initial-state-example',
   template: 'node',
   files: {
+    'dist/assets/index-JQIQyGTZ.css': `.example-container{display:flex;flex-direction:column;gap:.75rem;padding:1rem}.header{display:flex;flex-direction:column;gap:.25rem}.title{font-size:2rem;font-weight:600;letter-spacing:.3px}.subtitle{font-size:1rem;color:#666;max-width:600px}.section{padding:1rem}.section.column{border:1px solid rgba(0,0,0,.08);border-radius:8px;display:flex;gap:.75rem}@media(max-width:768px){.section.column{flex-direction:column}.section.column .state-container{width:100%}}.state-container{flex:1;display:flex;flex-direction:column;gap:.35rem;min-width:0}.state-container.data-row{height:430px}.textarea,.data-textarea{width:100%;box-sizing:border-box;height:300px;padding:.5rem;border:1px solid rgba(0,0,0,.08);border-radius:6px;font-family:monospace;font-size:.8rem;background:#fafafa;color:#222}.data-textarea.error{color:#d33}.textarea{height:175px}.label{font-size:1.1rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#666}.flow-hint{margin-top:.25rem;font-size:1rem;letter-spacing:.3px;color:#666}.hint{font-size:1rem;color:#777;margin-top:-.15rem;margin-left:.5rem}.hint.file{min-height:16px;color:#999;font-family:monospace;font-size:.9rem}.hint.state{margin-top:.15rem}.emphasis{font-weight:600;color:#555}.actions{justify-content:flex-start;display:flex;align-items:center;gap:3rem}@media(max-width:768px){.actions{flex-direction:column;align-items:flex-start;gap:2rem}}.secondary-actions{display:flex;gap:2rem}@media(max-width:768px){.secondary-actions{gap:1.5rem;flex-direction:column;align-items:flex-start}}.status{height:300px;font-size:.85rem;color:#666;display:flex;align-items:center;justify-content:center}.learn-more{display:flex;flex-direction:column;gap:.35rem}.learn-more-links{display:flex;align-items:center;gap:.75rem;font-size:1rem}.learn-more-links a{color:#555;text-decoration:none}.learn-more-links a:hover{text-decoration:underline;color:#222}.learn-more-links .separator{color:#ccc}.example-container{padding:.25rem;display:flex;flex-direction:column;gap:.25rem}.sdux-button{height:40px;color:#fff;background-color:#1976d2;border:1px solid #004ba0;border-radius:.3125rem;font-size:.875rem;padding:.5rem;gap:.25rem;font-weight:600;min-width:125px;display:flex;flex-direction:row;justify-content:center;align-items:center;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+`,
+    'dist/index.html': `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>SDuX React Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="module" crossorigin src="/assets/index-CjaYIN-u.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-JQIQyGTZ.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+`,
     'index.html': `<!doctype html>
 <html lang="en">
   <head>
@@ -29,7 +45,7 @@ export const initialStateExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/react": "latest",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rxjs": "~7.8.0"
@@ -225,14 +241,8 @@ export const initialStateExampleProject: Project = {
   color: #ccc;
 }
 `,
-    'src/app/ExampleView.tsx': `import { useEffect, useState } from 'react';
-import {
-  Example,
-  exampleState,
-  exampleState\$,
-  replaceExamples,
-  resetExamples
-} from './example.cell';
+    'src/app/ExampleView.tsx': `import { useState } from 'react';
+import { Example, exampleCell } from './example.cell';
 import './ExampleView.css';
 
 const sample: Example[] = [
@@ -243,35 +253,26 @@ const sample: Example[] = [
 
 /** Renders the FeatureCell initial state example. */
 export function ExampleView() {
-  const [snapshot, setSnapshot] = useState({
-    value: exampleState.value,
-    hasValue: exampleState.hasValue
-  });
+  const snapshot = exampleCell.useSyncExternalStore();
   const [activeStateHint, setActiveStateHint] = useState(
     'initialState configured at registration time.'
   );
   const [displayActiveStateHint, setDisplayActiveStateHint] = useState(true);
 
-  useEffect(() => {
-    const sub = exampleState\$.subscribe((emit) => {
-      setSnapshot({
-        value: emit.snapshot.value,
-        hasValue: emit.snapshot.hasValue
-      });
-    });
-    return () => sub.unsubscribe();
-  }, []);
-
   /** Loads sample data into the FeatureCell. */
   function loadSample() {
     setDisplayActiveStateHint(false);
     setActiveStateHint('State updated with sample data.');
-    replaceExamples(sample);
+    exampleCell.replaceState({
+      loading: false,
+      value: sample,
+      error: null
+    });
   }
 
   /** Clears the FeatureCell state. Does NOT restore initialState. */
   function handleResetState() {
-    resetExamples();
+    exampleCell.reset();
   }
 
   return (
@@ -397,7 +398,7 @@ export function ExampleView() {
   );
 }
 `,
-    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
+    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/react';
 
 /**
  * Shape representing a single example entity in the FeatureCell state.
@@ -438,52 +439,13 @@ Vault({
  * \`replaceState\` through the full pipeline, seeding state before any consumer
  * reads it. Explicit \`replaceState()\` calls always override it.
  */
-const exampleCell = FeatureCell<Example[]>({
+export const exampleCell = FeatureCell<Example[]>({
   key: 'example-feature-cell-key',
   initialState: [{ id: 66, name: 'Darth', lastName: 'Vader' }]
 });
 
 // Initialize the pipeline
 exampleCell.initialize();
-
-/**
- * Read-only synchronous state snapshot exposed to React components.
- * Provides access to \`value\`, \`isLoading\`, \`error\`, and \`hasValue\`.
- */
-export const exampleState = exampleCell.state;
-
-/**
- * Observable stream of committed state snapshots.
- * Emits each time the FeatureCell pipeline commits a new value.
- */
-export const exampleState\$ = exampleCell.state\$;
-
-/**
- * Replaces the entire FeatureCell state with the provided input.
- *
- * @param input - The new collection of Example records to commit.
- * @returns void
- */
-export function replaceExamples(input: Example[]): void {
-  exampleCell.replaceState({
-    loading: false,
-    value: input,
-    error: null
-  });
-}
-
-/**
- * Clears the FeatureCell state to \`undefined\`, resetting the loading and
- * error fields without destroying the FeatureCell or its pipeline.
- *
- * This does NOT restore the \`initialState\` configured at registration.
- * To return to a specific value, call \`replaceExamples()\` with the desired data.
- *
- * @returns void
- */
-export function resetExamples(): void {
-  exampleCell.reset();
-}
 `,
     'src/main.tsx': `import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

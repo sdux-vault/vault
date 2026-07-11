@@ -202,13 +202,13 @@
     },
     {
       "id": "blog:react-tab-sync-subscribe-before-initialize",
-      "title": "React + Tab Sync: Subscribe Before Initialize",
+      "title": "React + Tab Sync: Render the Initial Snapshot Correctly",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/react-tab-sync-subscribe-before-initialize",
       "symbols": ["react-tab-sync-subscribe-before-initialize"],
-      "content": "React + Tab Sync: Subscribe Before Initialize react-tab-sync-subscribe-before-initialize SP"
+      "content": "React + Tab Sync: Render the Initial Snapshot Correctly react-tab-sync-subscribe-before-initialize SP"
     },
     {
       "id": "blog:reducers-cant-change-after-init",

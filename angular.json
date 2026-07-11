@@ -247,6 +247,39 @@
         }
       }
     },
+    "react": {
+      "projectType": "library",
+      "root": "libs/core-extensions/react",
+      "sourceRoot": "libs/core-extensions/react/src",
+      "prefix": "sdux-react",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/core-extensions/react/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/core-extensions/react/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libs/core-extensions/react/tsconfig.spec.json",
+            "karmaConfig": "libs/core-extensions/react/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            },
+            "codeCoverageExclude": ["**/testing/**"],
+            "scripts": []
+          }
+        }
+      }
+    },
     "core": {
       "projectType": "library",
       "root": "libs/core",

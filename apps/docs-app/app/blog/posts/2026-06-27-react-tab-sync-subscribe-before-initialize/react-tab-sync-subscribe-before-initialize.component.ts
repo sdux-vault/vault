@@ -19,22 +19,22 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   ],
   template: `
     <sdux-blog-layout
-      title="React + Tab Sync: Subscribe Before Initialize"
+      title="React + Tab Sync: Render the Initial Snapshot Correctly"
       date="2026-06-27"
       pillar="SP"
       readingTime="3">
       <header class="docs-header">
         <p class="lead">
-          The <sdux-vault-brand-name [tm]="true" /> Tab Sync works identically
-          across Angular, Vue, and Svelte — but React requires one extra step.
-          If you subscribe to state after calling <strong>initialize()</strong>,
-          your component misses the negotiated cross-tab snapshot entirely. Here
-          is why it happens and how to fix it.
+          React components render <sdux-vault-brand-name [tm]="true" /> Tab Sync
+          State through <strong>useSyncExternalStore()</strong>. The method
+          reads the current Snapshot during render and connects the component to
+          subsequent State changes, including State negotiated before the
+          component mounted.
         </p>
       </header>
 
       <section class="section">
-        <div class="section-title">The Problem</div>
+        <div class="section-title">The React Rendering Requirement</div>
         <div class="section-body">
           <p>
             The Tab Sync Controller performs BroadcastChannel negotiation during
@@ -44,166 +44,168 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </p>
 
           <p>
-            In Angular, this is invisible. Services are instantiated by the DI
-            container and subscriptions are established during construction. By
-            the time the pipeline fires, observers are already listening.
+            A React component must render both the current committed Snapshot
+            and every subsequent State change. This matters for Tab Sync because
+            the negotiated State can be committed before the component mounts.
+            The render cannot depend on receiving that negotiation as a future
+            Observable emission.
           </p>
 
           <p>
-            In React, component state subscriptions live inside
-            <strong>useEffect</strong>, which runs after the first render. If
-            you call <strong>initialize()</strong> at the module level (during
-            import) or before the effect runs, the negotiated snapshot commits
-            to a state observable that has no subscribers yet. The component
-            renders with empty bootstrap state and never receives the cross-tab
-            data.
+            <strong>useSyncExternalStore()</strong> provides that render
+            contract. It reads the current
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            Snapshot during render and connects the component to later local and
+            cross-tab State changes.
           </p>
-
-          <div class="callout callout-warning">
-            <strong>Silent Failure</strong>
-            <p>
-              This is not a crash or an error. The component simply renders with
-              initial state while the negotiated snapshot sits in the observable
-              unobserved. The user sees an empty screen in the new tab even
-              though another tab has data. No console warning is produced.
-            </p>
-          </div>
         </div>
       </section>
 
       <section class="section">
-        <div class="section-title">The Fix</div>
+        <div class="section-title">
+          FeatureCell and Component Responsibilities
+        </div>
         <div class="section-body">
           <p>
-            Subscribe to the state observable <strong>before</strong> calling
-            <strong>initialize()</strong>. Place both operations inside
-            <strong>useEffect</strong> in the correct order: subscribe first,
-            initialize second.
+            Create and initialize the React-augmented
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a> in
+            its owning module. The component imports that stable cell reference
+            and calls <strong>useSyncExternalStore()</strong> at the top level
+            of its render function.
           </p>
 
           <sdux-example-viewer-source [displayTabs]="false">
-            <sdux-example-viewer-tab
-              [label]="'React — Subscribe Before Initialize'">
+            <sdux-example-viewer-tab [label]="'React — FeatureCell Module'">
+              <pre class="code-inline"><code class="language-ts">import &#123;
+  withTabSyncController,
+  withTabSyncStateBehavior
+&#125; from '&#64;sdux-vault/core';
+import &#123; FeatureCell &#125; from '&#64;sdux-vault/react';
+
+export const employeeCell = FeatureCell&lt;Employee[]&gt;(
+  &#123;
+    key: 'employees',
+    initialState: []
+  &#125;,
+  [withTabSyncStateBehavior],
+  [withTabSyncController]
+);
+
+employeeCell.initialize();</code></pre>
+            </sdux-example-viewer-tab>
+
+            <sdux-example-viewer-tab [label]="'React — Component Render'">
               <pre
-                class="code-inline"><code class="language-ts">useEffect(() =&gt; &#123;
-  // 1. Subscribe FIRST — catches the negotiation snapshot
-  const sub = employeeState$.subscribe((emit) =&gt; &#123;
-    setSnapshot(emit.snapshot);
-  &#125;);
+                class="code-inline"><code class="language-ts">import &#123; employeeCell &#125; from './employee.cell';
 
-  // 2. Initialize AFTER — negotiation commits synchronously
-  initializeCell();
+export function EmployeeView() &#123;
+  const snapshot = employeeCell.useSyncExternalStore();
 
-  return () =&gt; sub.unsubscribe();
-&#125;, []);</code></pre>
+  if (snapshot.isLoading) &#123;
+    return &lt;p&gt;Loading...&lt;/p&gt;;
+  &#125;
+
+  if (snapshot.error) &#123;
+    return &lt;p role="alert"&gt;&#123;snapshot.error.message&#125;&lt;/p&gt;;
+  &#125;
+
+  if (!snapshot.hasValue) &#123;
+    return &lt;p&gt;No synchronized State is available.&lt;/p&gt;;
+  &#125;
+
+  return &lt;pre&gt;&#123;JSON.stringify(snapshot.value, null, 2)&#125;&lt;/pre&gt;;
+&#125;</code></pre>
             </sdux-example-viewer-tab>
           </sdux-example-viewer-source>
 
           <p>
-            This ordering guarantees the subscription is active when the Tab
-            Sync Controller commits the negotiated snapshot. The component
-            receives the cross-tab state on its very first emission.
+            The component does not depend on receiving the negotiation as a new
+            emission. It reads the current committed Snapshot during render and
+            remains connected to later local and cross-tab State changes through
+            the same React subscription contract.
           </p>
         </div>
       </section>
 
       <section class="section">
-        <div class="section-title">Why Other Frameworks Don't Need This</div>
+        <div class="section-title">Render Subscription Contract</div>
         <div class="section-body">
           <p>
-            The subscription timing issue is unique to React's rendering model.
-            Here is why Angular, Vue, and Svelte avoid it entirely:
+            The React method owns two connected responsibilities: reading the
+            current Snapshot and maintaining the render subscription.
           </p>
 
-          <table aria-label="Framework subscription timing comparison">
+          <table aria-label="useSyncExternalStore render contract">
             <thead>
               <tr>
-                <th scope="column-175">Framework</th>
-                <th scope="column-auto">Subscription Timing</th>
-                <th scope="column-100">Issue?</th>
+                <th scope="col" class="column-200">Responsibility</th>
+                <th scope="col" class="column-auto">Contract</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Angular</td>
-                <td>
-                  Constructor / DI instantiation — before template renders
-                </td>
-                <td>No</td>
+                <td>Initial render</td>
+                <td>Reads the latest committed Snapshot synchronously.</td>
               </tr>
               <tr>
-                <td>Vue</td>
+                <td>State changes</td>
                 <td>
-                  <strong>onMounted</strong> runs synchronously after the
-                  instance is created
+                  Connects the React render to subsequent
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  State changes.
                 </td>
-                <td>No</td>
               </tr>
               <tr>
-                <td>Svelte</td>
+                <td>Component lifecycle</td>
                 <td>
-                  <strong>onMount</strong> runs synchronously after first DOM
-                  insert
+                  React manages subscription attachment, cleanup, and
+                  resubscription.
                 </td>
-                <td>No</td>
               </tr>
               <tr>
-                <td>React</td>
+                <td>Tab Sync negotiation</td>
                 <td>
-                  <strong>useEffect</strong> runs asynchronously after paint
+                  State committed before the component mounted remains available
+                  as the current Snapshot.
                 </td>
-                <td>Yes — if initialize runs before the effect</td>
               </tr>
             </tbody>
           </table>
 
           <p>
-            The key distinction: React defers side effects until after the
-            browser paints. If <strong>initialize()</strong> runs at module
-            scope or during render, the negotiation completes before
-            <strong>useEffect</strong> has a chance to subscribe.
+            Use <strong>state</strong> for synchronous reads outside render and
+            <strong>state$</strong> for non-rendering consumers that explicitly
+            own an Observable subscription. Neither surface replaces
+            <strong>useSyncExternalStore()</strong> for React UI rendering.
           </p>
         </div>
       </section>
 
       <section class="section">
-        <div class="section-title">React StrictMode Considerations</div>
+        <div class="section-title">React StrictMode and Ownership</div>
         <div class="section-body">
           <p>
-            In development, React StrictMode invokes effects twice to detect
-            impure side effects. Because <strong>initialize()</strong> is
-            idempotent — calling it multiple times on the same
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-            has no additional effect after the first call — StrictMode
-            double-invocation does not cause duplicate negotiation or
-            double-broadcasting.
+            initialization belongs to the owning module rather than a component
+            effect. React StrictMode can attach, clean up, and attach the render
+            subscription again during development;
+            <strong>useSyncExternalStore()</strong> participates in that
+            lifecycle without requiring application-level flags.
           </p>
 
-          <p>
-            If your cell initialization has expensive setup logic outside the
-            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-            itself, guard the effect with a module-level flag:
-          </p>
-
-          <sdux-example-viewer-source [displayTabs]="false">
-            <sdux-example-viewer-tab [label]="'React — StrictMode Guard'">
-              <pre
-                class="code-inline"><code class="language-ts">let initialized = false;
-
-useEffect(() =&gt; &#123;
-  const sub = employeeState$.subscribe((emit) =&gt; &#123;
-    setSnapshot(emit.snapshot);
-  &#125;);
-
-  if (!initialized) &#123;
-    initialized = true;
-    initializeCell();
-  &#125;
-
-  return () =&gt; sub.unsubscribe();
-&#125;, []);</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
+          <div class="callout callout-info">
+            <strong>Keep responsibilities separate</strong>
+            <p>
+              The module creates and initializes the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+              The component calls <strong>useSyncExternalStore()</strong> during
+              render. React owns the render subscription lifecycle, so the
+              component does not need a manual subscription, cleanup callback,
+              initialization effect, or StrictMode guard.
+            </p>
+          </div>
         </div>
       </section>
 

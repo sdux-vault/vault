@@ -8,6 +8,8 @@
     { "path": "./libs/core/tsconfig.spec.json" },
     { "path": "./libs/core-extensions/angular/tsconfig.lib.json" },
     { "path": "./libs/core-extensions/angular/tsconfig.spec.json" },
+    { "path": "./libs/core-extensions/react/tsconfig.lib.json" },
+    { "path": "./libs/core-extensions/react/tsconfig.spec.json" },
     { "path": "./libs/devtools/tooling/tsconfig.lib.json" },
     { "path": "./libs/devtools/tooling/tsconfig.spec.json" },
     { "path": "./libs/shared/tsconfig.lib.json" },

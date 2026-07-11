@@ -15,8 +15,10 @@ import { FeatureCellFluentApiComponent } from './feature-cell-fluent-api.compone
 import { FromObservableBehaviorExtensionComponent } from './from-observable-behavior-extension.component';
 import { FromPromiseBehaviorExtensionComponent } from './from-promise-behavior-extension.component';
 import { FromStreamBehaviorExtensionComponent } from './from-stream-behavior-extension.component';
+import { ReactAdapterCoreFeatureCellShapeComponent } from './react-adapter-core-feature-cell-shape.component';
 import { VaultSignalStateRefComponent } from './vault-signal-state-ref.component';
 import { VaultStateRefComponent } from './vault-state-ref.component';
+import { VaultSyncExternalStoreRefComponent } from './vault-sync-external-store-ref.component';
 
 @Component({
   selector: 'sdux-references-interfaces-splashpage',
@@ -31,8 +33,10 @@ import { VaultStateRefComponent } from './vault-state-ref.component';
     FromObservableBehaviorExtensionComponent,
     FromPromiseBehaviorExtensionComponent,
     FromStreamBehaviorExtensionComponent,
+    ReactAdapterCoreFeatureCellShapeComponent,
     VaultSignalStateRefComponent,
-    VaultStateRefComponent
+    VaultStateRefComponent,
+    VaultSyncExternalStoreRefComponent
   ],
   templateUrl: './references-interfaces.component.html',
   styleUrls: ['../../scss/documentation.scss']
