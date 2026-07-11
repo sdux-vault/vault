@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import StackBlitz from '@stackblitz/sdk';
 import { sduxTestingModule } from '../../../../../libs/ui/web-components/src/public-api';
@@ -8,15 +9,18 @@ import { StackBlitzOverviewComponent } from './stack-blitz.component';
 describe('Component: StackBlitz Overview', () => {
   let component: StackBlitzOverviewComponent;
   let fixture: ComponentFixture<StackBlitzOverviewComponent>;
+  let snackBarSpy: jasmine.SpyObj<MatSnackBar>;
 
   beforeEach(async () => {
+    snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
     await TestBed.configureTestingModule({
       imports: [
         sduxTestingModule,
         CommonModule,
         RouterModule.forRoot([]),
         StackBlitzOverviewComponent
-      ]
+      ],
+      providers: [{ provide: MatSnackBar, useValue: snackBarSpy }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(StackBlitzOverviewComponent);
@@ -77,7 +81,7 @@ describe('Component: StackBlitz Overview', () => {
 
     it('should call openProject with the correct inline project', async () => {
       const spy = spyOn(StackBlitz, 'openProject');
-      await component.openStackBlitzExample('angular', 'replace-state');
+      await component.openStackBlitzExample('angular', 'replace-example');
       expect(spy).toHaveBeenCalled();
       const callArgs = spy.calls.mostRecent().args;
       expect(callArgs[0]).toBeDefined();
@@ -95,7 +99,7 @@ describe('Component: StackBlitz Overview', () => {
 
     it('should reject with error if language not found', async () => {
       try {
-        await component.openStackBlitzExample('nonexistent', 'replace-state');
+        await component.openStackBlitzExample('nonexistent', 'replace-example');
         fail('Should have thrown an error');
       } catch (error) {
         expect((error as Error).message).toContain('Unknown project');
@@ -108,7 +112,7 @@ describe('Component: StackBlitz Overview', () => {
       spyOn(navigator.clipboard, 'writeText').and.returnValue(
         Promise.resolve()
       );
-      component.copyStackBlitzExample('angular', 'replace-state');
+      component.copyStackBlitzExample('angular', 'replace-example');
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
         'https://stackblitz.com/github/sdux-vault/stackblitz-examples/tree/main/stackblitz/angular/replace-example'
       );
@@ -120,8 +124,8 @@ describe('Component: StackBlitz Overview', () => {
         spyOn(navigator.clipboard, 'writeText').and.returnValue(
           Promise.resolve()
         );
-        component.copyStackBlitzExample('angular', 'replace-state');
-        expect(component.copySuccess()).toBe('angular/replace-state');
+        component.copyStackBlitzExample('angular', 'replace-example');
+        expect(component.copySuccess()).toBe('angular/replace-example');
         jasmine.clock().tick(2000);
         expect(component.copySuccess()).toBeNull();
       } finally {
@@ -137,13 +141,34 @@ describe('Component: StackBlitz Overview', () => {
       expect(navigator.clipboard.writeText).not.toHaveBeenCalled();
     });
 
+    it('should show a snackbar with "Link copied!" after copying', async () => {
+      spyOn(navigator.clipboard, 'writeText').and.returnValue(
+        Promise.resolve()
+      );
+      component.copyStackBlitzExample('angular', 'replace-example');
+      await Promise.resolve();
+      expect(snackBarSpy.open).toHaveBeenCalledWith('Link copied!', '', {
+        duration: 2000,
+        verticalPosition: 'top'
+      });
+    });
+
+    it('should not show a snackbar if example is not found', async () => {
+      spyOn(navigator.clipboard, 'writeText').and.returnValue(
+        Promise.resolve()
+      );
+      component.copyStackBlitzExample('angular', 'nonexistent');
+      await Promise.resolve();
+      expect(snackBarSpy.open).not.toHaveBeenCalled();
+    });
+
     it('should copy URL for a language section example', () => {
       spyOn(navigator.clipboard, 'writeText').and.returnValue(
         Promise.resolve()
       );
       // Clear exampleGroups so findExampleName falls through to the languageSections loop
       (component as any).exampleGroups = [];
-      component.copyStackBlitzExample('bun', 'bun-replace-state');
+      component.copyStackBlitzExample('bun', 'replace-example');
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
         'https://stackblitz.com/github/sdux-vault/stackblitz-examples/tree/main/stackblitz/bun/replace-example'
       );

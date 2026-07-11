@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
@@ -19,9 +21,14 @@ import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic
     ExampleViewerTabComponent,
     RouterModule,
     MatTabsModule,
-    CatchPhraseComponent
+    CatchPhraseComponent,
+    MatIconModule,
+    MatTooltipModule
   ],
   templateUrl: './supported-languages.component.html',
-  styleUrls: ['../../scss/documentation.scss']
+  styleUrls: [
+    '../../scss/documentation.scss',
+    './supported-languages.component.scss'
+  ]
 })
 export class DocsTopTierSupportedLanguagesComponent {}

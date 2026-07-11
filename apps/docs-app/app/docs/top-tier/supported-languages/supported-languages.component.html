@@ -121,8 +121,9 @@
       <table aria-label="TypeScript-Compatible Environments">
         <thead>
           <tr>
-            <th scope="col" class="column-250">Platform</th>
+            <th scope="col" class="column-175">Platform</th>
             <th scope="col" class="column-auto">Support & Notes</th>
+            <th scope="col" class="column-50">StackBlitz</th>
           </tr>
         </thead>
 
@@ -147,6 +148,17 @@
               integration on top of the same core runtime but does not alter
               <sdux-brand-name /> behavior or lifecycle rules.
             </td>
+            <td>
+              <a
+                class="stackblitz-link"
+                href="/docs/stackblitz#replace-state"
+                target="_blank"
+                rel="noopener"
+                matTooltip="View Angular Stackblitz examples"
+                aria-label="View Angular Stackblitz examples">
+                <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+              </a>
+            </td>
           </tr>
 
           <tr>
@@ -165,6 +177,7 @@
               Solid) or in standalone TypeScript. FeatureCells persist across
               page navigations when registered at app scope.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -181,6 +194,17 @@
               Fully supported with the same semantics as Node.js. FeatureCells
               function as long-lived stateful services, ideal for orchestration,
               background processing, and tooling.
+            </td>
+            <td>
+              <a
+                class="stackblitz-link"
+                href="/docs/stackblitz#bun"
+                target="_blank"
+                rel="noopener"
+                matTooltip="View Bun Stackblitz examples"
+                aria-label="View Bun Stackblitz examples">
+                <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+              </a>
             </td>
           </tr>
 
@@ -200,6 +224,7 @@
               Native plugin results integrate naturally via
               <code>replaceState</code> and <code>mergeState</code>.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -217,6 +242,7 @@
               as long-lived stateful services, ideal for orchestration,
               background processing, and tooling.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -234,6 +260,7 @@
               FeatureCells may be limited, but request-bounded FeatureCells
               remain fully valid.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -250,6 +277,7 @@
               Supported. Combines browser and Node.js runtimes without altering
               <sdux-brand-name /> behavior.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -269,6 +297,7 @@
               foreground, offline) are handled explicitly via
               <sdux-brand-name /> lifecycle methods.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -285,6 +314,7 @@
               Fully supported. UI layer is irrelevant to <sdux-brand-name />;
               patterns mirror Angular or React usage.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -315,6 +345,7 @@
                 <li>Request-scoped FeatureCells are generally discouraged</li>
               </ul>
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -333,6 +364,7 @@
               direct state access). State registered at module scope persists
               across navigations.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -349,6 +381,17 @@
               Fully supported. FeatureCells function as long-lived stateful
               services, ideal for orchestration, background processing, event
               pipelines, CLIs, and servers.
+            </td>
+            <td>
+              <a
+                class="stackblitz-link"
+                href="/docs/stackblitz#nodejs"
+                target="_blank"
+                rel="noopener"
+                matTooltip="View Node.js Stackblitz examples"
+                aria-label="View Node.js Stackblitz examples">
+                <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+              </a>
             </td>
           </tr>
 
@@ -367,6 +410,7 @@
               server and client contexts. State registered via Nuxt plugins
               persists across navigations.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -384,6 +428,7 @@
               correctness; the framework owns rendering. Strong alignment with
               fine-grained reactivity.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -437,6 +482,17 @@
                 </li>
               </ul>
             </td>
+            <td>
+              <a
+                class="stackblitz-link"
+                href="/docs/stackblitz#replace-state"
+                target="_blank"
+                rel="noopener"
+                matTooltip="View React Stackblitz examples"
+                aria-label="View React Stackblitz examples">
+                <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+              </a>
+            </td>
           </tr>
 
           <tr>
@@ -455,6 +511,7 @@
               Best suited for request-bounded or event-scoped FeatureCells
               rather than long-lived state owners.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -472,6 +529,7 @@
               correctness; the framework owns rendering. Strong alignment with
               fine-grained reactivity.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -489,6 +547,18 @@
               correctness; the framework owns rendering. Strong alignment with
               fine-grained reactivity.
             </td>
+            <td>
+              <a
+                class="stackblitz-link"
+                href="/docs/stackblitz#replace-state"
+                target="_blank"
+                rel="noopener"
+                matTooltip="View Svelte Stackblitz examples"
+                aria-label="View Svelte Stackblitz examples">
+                <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+              </a>
+            </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -505,6 +575,7 @@
               Supported. Combines browser and Node.js runtimes without altering
               <sdux-brand-name /> behavior.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -521,6 +592,17 @@
               Fully supported. FeatureCells operate as plain runtime objects.
               Explicit initialization and destruction are clearest and most
               transparent in this environment.
+            </td>
+            <td>
+              <a
+                class="stackblitz-link"
+                href="/docs/stackblitz#vanillajs"
+                target="_blank"
+                rel="noopener"
+                matTooltip="View Vanilla JavaScript Stackblitz examples"
+                aria-label="View Vanilla JavaScript Stackblitz examples">
+                <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+              </a>
             </td>
           </tr>
 
@@ -539,6 +621,18 @@
               adapters without influencing
               <sdux-brand-name /> lifecycle or pipeline semantics.
             </td>
+            <td>
+              <a
+                class="stackblitz-link"
+                href="/docs/stackblitz#replace-state"
+                target="_blank"
+                rel="noopener"
+                matTooltip="View Vue Stackblitz examples"
+                aria-label="View Vue Stackblitz examples">
+                <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+              </a>
+            </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -553,6 +647,7 @@
               elements, shared controllers, or host applications without
               violating any <sdux-brand-name /> contracts.
             </td>
+            <td></td>
           </tr>
 
           <tr>
@@ -572,6 +667,7 @@
               Explicit lifecycle control enables predictable teardown and
               resource management.
             </td>
+            <td></td>
           </tr>
         </tbody>
       </table>

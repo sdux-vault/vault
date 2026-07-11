@@ -18,6 +18,18 @@ export function createExampleGroups(brandName: string) {
             { name: 'Svelte', key: 'svelte' },
             { name: 'Vue', key: 'vue' }
           ]
+        },
+        {
+          title: 'Initial State',
+          id: 'initial-state',
+          exampleName: 'initial-state-example',
+          description: `Demonstrates initialState — the descriptor-level seed value that populates a FeatureCell before any explicit replaceState() or mergeState() call. ${brandName} initializes the cell automatically so components receive state immediately on startup. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
         }
       ]
     },
@@ -38,56 +50,6 @@ export function createExampleGroups(brandName: string) {
             { name: 'Svelte', key: 'svelte' },
             { name: 'Vue', key: 'vue' }
           ]
-        },
-        {
-          title: 'Bun Replace State',
-          id: 'bun-replace-state',
-          exampleName: 'replace-example',
-          localOnly: true,
-          notice: `
-            <p>
-              Bun examples are designed to run locally and are not available in
-              the StackBlitz browser runtime.
-            </p>
-            <p>To run this example locally:</p>
-            <ol>
-              <li><code>git clone https://github.com/sdux-vault/stackblitz-examples.git</code></li>
-              <li><code>cd stackblitz-examples/stackblitz/bun/replace-example</code></li>
-              <li><code>bun install</code></li>
-              <li><code>bun start</code></li>
-            </ol>
-            <p>
-              This example demonstrates server-side state replacement using
-              <code>Bun.serve()</code> and ${brandName}.
-            </p>
-          `,
-          description: `Demonstrates server-side replaceState with Bun — ${brandName} manages a local HTTP counter service through deterministic state replacement. A learning example for the SDuX pipeline model; not a production-hardened server. Run the example locally with Bun.`,
-          languages: [{ name: 'Bun', key: 'bun' }]
-        },
-        {
-          title: 'Bun Promise',
-          id: 'bun-promise',
-          exampleName: 'promise-example',
-          localOnly: true,
-          notice: `
-            <p>
-              Bun examples are designed to run locally and are not available in
-              the StackBlitz browser runtime.
-            </p>
-            <p>To run this example locally:</p>
-            <ol>
-              <li><code>git clone https://github.com/sdux-vault/stackblitz-examples.git</code></li>
-              <li><code>cd stackblitz-examples/stackblitz/bun/promise-example</code></li>
-              <li><code>bun install</code></li>
-              <li><code>bun start</code></li>
-            </ol>
-            <p>
-              This example demonstrates deterministic async state loading with
-              Promise-based API calls and local Bun execution.
-            </p>
-          `,
-          description: `Demonstrates Promise-driven state updates with Bun — ${brandName} loads async user data through deterministic settlement boundaries and ordered reducers. A learning example for the SDuX pipeline model; not a production-hardened server. Run the example locally with Bun.`,
-          languages: [{ name: 'Bun', key: 'bun' }]
         },
         {
           title: 'Observable',
@@ -117,6 +79,18 @@ export function createExampleGroups(brandName: string) {
         'Pipeline controllers and interceptors — add timing, throttling, and orchestration to your state transitions.',
       examples: [
         {
+          title: 'Array Append Merge',
+          id: 'array-append-merge',
+          exampleName: 'array-append-merge-example',
+          description: `Demonstrates mergeState with withArrayAppendMergeBehavior — ${brandName} concatenates incoming arrays with existing FeatureCell state on every mergeState() call, growing the list without discarding previous entries. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
+        },
+        {
           title: 'Filter & Reducer Pipeline',
           id: 'basic-filter-reducer',
           exampleName: 'basic-filter-reducer-example',
@@ -139,31 +113,6 @@ export function createExampleGroups(brandName: string) {
             { name: 'Svelte', key: 'svelte' },
             { name: 'Vue', key: 'vue' }
           ]
-        },
-        {
-          title: 'Bun HTTP Resource',
-          id: 'bun-http-resource',
-          exampleName: 'http-resource-example',
-          localOnly: true,
-          notice: `
-            <p>
-              Bun examples are designed to run locally and are not available in
-              the StackBlitz browser runtime.
-            </p>
-            <p>To run this example locally:</p>
-            <ol>
-              <li><code>git clone https://github.com/sdux-vault/stackblitz-examples.git</code></li>
-              <li><code>cd stackblitz-examples/stackblitz/bun/http-resource-example</code></li>
-              <li><code>bun install</code></li>
-              <li><code>bun start</code></li>
-            </ol>
-            <p>
-              This example demonstrates HTTP resource orchestration with Bun,
-              remote fetches, and deterministic pipeline settlement.
-            </p>
-          `,
-          description: `Demonstrates HTTP resource management with Bun — ${brandName} fetches remote API data and commits state deterministically through a local Bun server. A learning example for the SDuX pipeline model; not a production-hardened server. Run the example locally with Bun.`,
-          languages: [{ name: 'Bun', key: 'bun' }]
         }
       ]
     },

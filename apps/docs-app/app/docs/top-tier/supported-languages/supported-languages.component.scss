@@ -1,0 +1,34 @@
+@use 'global' as global;
+
+// supported-languages.component.scss
+
+// Centers the open_in_new icon within the StackBlitz column cell and overrides
+// the documentation.scss .launch-overlay-icon rule (opacity: 0, position: absolute)
+// which is designed for the hover-overlay pattern in .framework-icon-button and
+// is not appropriate here.
+.stackblitz-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: global.$sdux-primary-base;
+  padding: global.$spacing-xs;
+  border-radius: global.$border-radius-md;
+  transition: color 0.2s;
+
+  &:hover {
+    color: global.$sdux-primary-dark;
+  }
+
+  .launch-overlay-icon {
+    position: static;
+    font-size: global.$font-size-md;
+    width: global.$font-size-md;
+    height: global.$font-size-md;
+    line-height: 1;
+    overflow: visible;
+    opacity: 1;
+    transition: none;
+    color: inherit;
+  }
+}

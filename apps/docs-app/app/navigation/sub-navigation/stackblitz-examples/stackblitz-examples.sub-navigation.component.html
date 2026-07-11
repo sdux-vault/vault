@@ -15,6 +15,13 @@
 
       <a
         mat-list-item
+        routerLink="/examples/angular/array-append-merge"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Array Append Merge</div>
+      </a>
+      <a
+        mat-list-item
         routerLink="/examples/angular/basic-filter-reducer"
         routerLinkActive="active"
         (click)="closeSidenav()">
@@ -33,6 +40,13 @@
         routerLinkActive="active"
         (click)="closeSidenav()">
         <div class="menu-content">Http Resource</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/angular/initial-state"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Initial State</div>
       </a>
       <a
         mat-list-item
@@ -101,9 +115,44 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Nodejs</span>
+      </mat-expansion-panel-header>
+
+      <a
+        mat-list-item
+        routerLink="/examples/nodejs/array-append"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Array Append</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/nodejs/promise"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Promise</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/nodejs/replace"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Replace</div>
+      </a>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+      <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header">React</span>
       </mat-expansion-panel-header>
 
+      <a
+        mat-list-item
+        routerLink="/examples/react/array-append-merge"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Array Append Merge</div>
+      </a>
       <a
         mat-list-item
         routerLink="/examples/react/basic-filter-reducer"
@@ -117,6 +166,13 @@
         routerLinkActive="active"
         (click)="closeSidenav()">
         <div class="menu-content">Debugger</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/react/initial-state"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Initial State</div>
       </a>
       <a
         mat-list-item
@@ -162,6 +218,13 @@
 
       <a
         mat-list-item
+        routerLink="/examples/svelte/array-append-merge"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Array Append Merge</div>
+      </a>
+      <a
+        mat-list-item
         routerLink="/examples/svelte/basic-filter-reducer"
         routerLinkActive="active"
         (click)="closeSidenav()">
@@ -173,6 +236,13 @@
         routerLinkActive="active"
         (click)="closeSidenav()">
         <div class="menu-content">Debugger</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/svelte/initial-state"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Initial State</div>
       </a>
       <a
         mat-list-item
@@ -213,9 +283,44 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Vanillajs</span>
+      </mat-expansion-panel-header>
+
+      <a
+        mat-list-item
+        routerLink="/examples/vanillajs/array-append"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Array Append</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/vanillajs/promise"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Promise</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/vanillajs/replace"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Replace</div>
+      </a>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+      <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header">Vue</span>
       </mat-expansion-panel-header>
 
+      <a
+        mat-list-item
+        routerLink="/examples/vue/array-append-merge"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Array Append Merge</div>
+      </a>
       <a
         mat-list-item
         routerLink="/examples/vue/basic-filter-reducer"
@@ -229,6 +334,13 @@
         routerLinkActive="active"
         (click)="closeSidenav()">
         <div class="menu-content">Debugger</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/vue/initial-state"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Initial State</div>
       </a>
       <a
         mat-list-item
