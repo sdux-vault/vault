@@ -412,6 +412,8 @@ ${this.#vaultParenthesisTabSpacer})`
 
     if (framework === StateFrameworkTypes.Angular) {
       packages.add('@sdux-vault/angular');
+    } else if (framework === StateFrameworkTypes.React) {
+      packages.add('@sdux-vault/react');
     } else {
       // Core package is always required unless angular is installed
       packages.add('@sdux-vault/core');

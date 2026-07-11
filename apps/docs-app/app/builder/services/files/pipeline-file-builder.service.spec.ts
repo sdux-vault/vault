@@ -130,7 +130,7 @@ describe('Service: PipelineFileBuilder', () => {
       const file = service.generatedFiles()[0];
       expect(file.name).toBe('installation');
 
-      expect(normalize(file.contents)).toBe(`npm install @sdux-vault/core;`);
+      expect(normalize(file.contents)).toBe(`npm install @sdux-vault/react;`);
     });
 
     it('should generate vault-vue.ts when framework is Vue', () => {

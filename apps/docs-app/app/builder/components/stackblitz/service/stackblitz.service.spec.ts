@@ -81,7 +81,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['package.json'].replace(/\n|\s/g, '')).toBe(
-        `{"name":"SDuXPipelineBuilderDemo","version":"0.0.1","private":true,"scripts":{"start":"ngserve--host0.0.0.0--port4200"},"dependencies":{"@angular/cdk":"21.2.5","@angular/cli":"21.2.5","@angular/common":"21.2.8","@angular/compiler":"21.2.8","@angular/core":"21.2.8","@angular/platform-browser":"21.2.8","@sdux-vault/core":"latest","@sdux-vault/angular":"latest","rxjs":"~7.8.0","tslib":"^2.3.0"},"devDependencies":{"@angular/build":"^21.2.6","@angular/compiler-cli":"21.2.8","typescript":"~5.9.2"}}`
+        `{"name":"SDuXPipelineBuilderAngularDemo","version":"1.0.0","private":true,"scripts":{"start":"ngserve--host0.0.0.0--port4200"},"dependencies":{"@angular/cdk":"21.2.5","@angular/cli":"21.2.5","@angular/common":"21.2.8","@angular/compiler":"21.2.8","@angular/core":"21.2.8","@angular/platform-browser":"21.2.8","@sdux-vault/angular":"latest","rxjs":"~7.8.0","tslib":"^2.3.0"},"devDependencies":{"@angular/build":"^21.2.6","@angular/compiler-cli":"21.2.8","typescript":"~5.9.2"}}`
       );
 
       expect(expectedProject.files['angular.json'].replace(/\n|\s/g, '')).toBe(
@@ -198,7 +198,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['package.json'].replace(/\n|\s/g, '')).toBe(
-        `{"name":"SDuXPipelineBuilderReactDemo","version":"0.0.1","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"tsc&&vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/core":"latest","react":"^19.1.0","react-dom":"^19.1.0","rxjs":"~7.8.0"},"devDependencies":{"@types/react":"^19.1.2","@types/react-dom":"^19.1.2","@vitejs/plugin-react":"^4.4.1","typescript":"~5.9.2","vite":"^6.3.3"}}`
+        `{"name":"SDuXPipelineBuilderReactDemo","version":"1.0.0","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"tsc&&vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/react":"latest","react":"^19.1.0","react-dom":"^19.1.0","rxjs":"~7.8.0"},"devDependencies":{"@types/react":"^19.1.2","@types/react-dom":"^19.1.2","@vitejs/plugin-react":"^4.4.1","typescript":"~5.9.2","vite":"^6.3.3"}}`
       );
 
       expect(expectedProject.files['tsconfig.json'].replace(/\n|\s/g, '')).toBe(
@@ -310,7 +310,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['package.json'].replace(/\n|\s/g, '')).toBe(
-        `{"name":"SDuXPipelineBuilderVueDemo","version":"0.0.1","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"vue-tsc&&vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/core":"latest","vue":"^3.5.13","rxjs":"~7.8.0"},"devDependencies":{"@vitejs/plugin-vue":"^5.2.3","typescript":"~5.9.2","vite":"^6.3.3","vue-tsc":"^2.2.8"}}`
+        `{"name":"SDuXPipelineBuilderVueDemo","version":"1.0.0","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"vue-tsc&&vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/core":"latest","vue":"^3.5.13","rxjs":"~7.8.0"},"devDependencies":{"@vitejs/plugin-vue":"^5.2.3","typescript":"~5.9.2","vite":"^6.3.3","vue-tsc":"^2.2.8"}}`
       );
 
       expect(expectedProject.files['tsconfig.json'].replace(/\n|\s/g, '')).toBe(
@@ -425,7 +425,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['package.json'].replace(/\n|\s/g, '')).toBe(
-        `{"name":"SDuXPipelineBuilderSvelteDemo","version":"0.0.1","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/core":"latest","svelte":"^5.28.2","rxjs":"~7.8.0"},"devDependencies":{"@sveltejs/vite-plugin-svelte":"^5.0.3","typescript":"~5.9.2","vite":"^6.3.3"}}`
+        `{"name":"SDuXPipelineBuilderSvelteDemo","version":"1.0.0","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/core":"latest","svelte":"^5.28.2","rxjs":"~7.8.0"},"devDependencies":{"@sveltejs/vite-plugin-svelte":"^5.0.3","typescript":"~5.9.2","vite":"^6.3.3"}}`
       );
 
       expect(expectedProject.files['tsconfig.json'].replace(/\n|\s/g, '')).toBe(
