@@ -143,11 +143,12 @@ export const appConfig: ApplicationConfig = {
 `,
     'src/app/example.component.html': `<div class="example-container">
   <div class="header">
-    <div class="title">Angular - SDuX Vault Replace Example</div>
+    <div class="title">Angular - SDuX Vault Initial State Example</div>
     <div class="subtitle">
-      This example demonstrates replaceState — the simplest way to update a
-      FeatureCell. The entire previous state is discarded and replaced with the
-      new value in a single atomic operation.
+      This example demonstrates initialState — a FeatureCell can be seeded with
+      pre-populated state at registration time. The initialState is processed
+      through the full pipeline on initialize() and is the lowest-precedence
+      initialization source.
     </div>
   </div>
 

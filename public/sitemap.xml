@@ -2131,6 +2131,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/angular/hydrate-state</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/angular/initial-state</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2206,6 +2211,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/react/hydrate-state</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/react/initial-state</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2247,6 +2257,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/examples/svelte/debugger</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/svelte/hydrate-state</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2307,6 +2322,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/examples/vue/debugger</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/vue/hydrate-state</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -1,0 +1,65 @@
+<div class="section-body">
+  <p>{{ example().description }}</p>
+
+  <div
+    class="framework-icon-row"
+    role="group"
+    [attr.aria-label]="example().title + ' framework options'">
+    @for (lang of example().languages; track lang.key) {
+      <div
+        class="framework-icon-group"
+        [class.framework-icon-group-local-only]="$any(example()).localOnly">
+        @if ($any(example()).localOnly) {
+          <div
+            class="framework-icon-button framework-icon-button-local-only"
+            [attr.aria-label]="
+              'Run ' + example().title + ' locally with ' + lang.name
+            "
+            [matTooltip]="
+              'Local-only example. Run with ' +
+              lang.name +
+              ' — see instructions below.'
+            ">
+            <img
+              [src]="frameworkIcons[lang.key]"
+              [alt]="lang.name"
+              class="framework-icon" />
+          </div>
+        } @else {
+          <button
+            type="button"
+            class="framework-icon-button"
+            [attr.aria-label]="'Launch ' + example().title + ' in ' + lang.name"
+            [matTooltip]="'Launch ' + example().title + ' in ' + lang.name"
+            (click)="openStackBlitzExample(lang.key, example().exampleName)">
+            <img
+              [src]="frameworkIcons[lang.key]"
+              [alt]="lang.name"
+              class="framework-icon" />
+            <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+          </button>
+          <button
+            type="button"
+            class="share-link-button"
+            [attr.aria-label]="'Share ' + example().title + ' in ' + lang.name"
+            [matTooltip]="lang.name + ' shareable link'"
+            (click)="copyStackBlitzExample(lang.key, example().exampleName)">
+            @if (copySuccess() === lang.key + '/' + example().exampleName) {
+              <mat-icon class="share-link-icon copy-success">check</mat-icon>
+            } @else {
+              <mat-icon class="share-link-icon">content_copy</mat-icon>
+            }
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  @if (example().notice) {
+    <div class="callout callout-warning">
+      <strong>StackBlitz Limitation</strong>
+      <!-- trusted: static HTML from constants, not user-generated -->
+      <div [innerHTML]="example().notice"></div>
+    </div>
+  }
+</div>

@@ -42,6 +42,18 @@ export function createExampleGroups(brandName: string) {
         'Async state inputs — promises, observables, and HTTP resources. The patterns you will use in every real application.',
       examples: [
         {
+          title: 'Hydrate State',
+          id: 'hydrate-state',
+          exampleName: 'hydrate-state-example',
+          description: `Demonstrates hydrate() with a deferred factory that supplies the authoritative initial FeatureCell value when initialize() runs. ${brandName} processes the resolved value through the normal state pipeline. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
+        },
+        {
           title: 'Promise',
           id: 'promise',
           exampleName: 'promise-example',
