@@ -1,7 +1,7 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/core",
+    "outDir": "../../../out-tsc/react",
     "declaration": true,
     "declarationMap": true,
     "inlineSourceMap": false,
@@ -9,7 +9,7 @@
     "sourceMap": true,
     "types": []
   },
-  "references": [{ "path": "../engine-stub/tsconfig.lib.json" }],
+  "references": [{ "path": "../../engine-stub/tsconfig.lib.json" }],
   "include": ["src/**/*.ts"],
   "exclude": ["**/*.spec.ts"]
 }

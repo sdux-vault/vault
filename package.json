@@ -187,6 +187,8 @@
     "@types/flexsearch": "^0.7.6",
     "@types/jasmine": "~5.1.0",
     "@types/prismjs": "^1.26.6",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "angular-in-memory-web-api": "^0.21.0",
@@ -213,6 +215,8 @@
     "npm-watch": "^0.13.0",
     "prettier": "^3.6.2",
     "pretty-quick": "^4.2.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "rimraf": "^6.0.1",
     "typescript": "~5.9.2"
   }
