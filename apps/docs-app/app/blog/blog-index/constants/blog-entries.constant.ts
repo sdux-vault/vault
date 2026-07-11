@@ -214,7 +214,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     slug: 'the-mental-model-shift',
     title:
       'The Mental Model Shift — From “What Action Happened” to “What State Should Exist”',
-    date: '2026-07-10',
+    date: '2026-07-11',
     readingTime: 8,
     active: true
   }

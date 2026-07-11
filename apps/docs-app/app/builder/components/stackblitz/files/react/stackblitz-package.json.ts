@@ -1,6 +1,6 @@
 export const REACT_PACKAGE_JSON_FILE = {
   name: 'SDuX Pipeline Builder React Demo',
-  version: '0.0.1',
+  version: '1.0.0',
   private: true,
   type: 'module',
   scripts: {
@@ -10,7 +10,7 @@ export const REACT_PACKAGE_JSON_FILE = {
     preview: 'vite preview'
   },
   dependencies: {
-    '@sdux-vault/core': 'latest',
+    '@sdux-vault/react': 'latest',
     react: '^19.1.0',
     'react-dom': '^19.1.0',
     rxjs: '~7.8.0'
