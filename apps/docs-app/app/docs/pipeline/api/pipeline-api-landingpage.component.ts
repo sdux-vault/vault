@@ -23,6 +23,7 @@ import { PipelineResetStreamMethodComponent } from './feature-cell-methods/metho
 import { PipelineResetMethodComponent } from './feature-cell-methods/methods/reset/reset.method.component';
 import { PipelineStateStreamMethodComponent } from './feature-cell-methods/methods/state-stream/state-stream.method.component';
 import { PipelineStatePropertyComponent } from './feature-cell-methods/methods/state/state.property.component';
+import { PipelineUseSyncExternalStoreMethodComponent } from './feature-cell-methods/methods/use-sync-external-store/use-sync-external-store.method.component';
 import { PipelineFeatureCellComponent } from './feature-cell/feature-cell.api.component';
 import { PipelineInjectVaultComponent } from './inject-vault/inject-vault.api.component';
 import { PipelineProvideFeatureCellComponent } from './provide-feature-cell/provide-feature-cell.api.component';
@@ -51,6 +52,7 @@ import { PipelineVaultComponent } from './vault/vault.api.component';
     PipelineResetMethodComponent,
     PipelineStatePropertyComponent,
     PipelineStateStreamMethodComponent,
+    PipelineUseSyncExternalStoreMethodComponent,
     PipelineAtFeatureCellComponent,
     PipelineInjectVaultComponent,
     PipelineHydrateMethodComponent,

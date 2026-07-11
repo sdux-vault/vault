@@ -240,6 +240,7 @@ export const appConfig: ApplicationConfig = {
         <ng-template #core>
           <pre
             class="code-inline"><code class="language-ts">{{`// employee.cell.ts
+// React applications import Vault and FeatureCell from '@sdux-vault/react'.
 import { Vault, FeatureCell } from '@sdux-vault/core';
 
 export interface Employee {
@@ -340,24 +341,18 @@ export class ExampleComponent {
         <ng-template #core>
           <pre
             class="code-inline"><code class="language-tsx">{{`// EmployeeView.tsx
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
-  employeeState,
-  employeeState$,
+  employeeCell,
   loadEmployees
 } from './employee.cell';
 
 export function EmployeeView() {
-  const [snapshot, setSnapshot] = useState(employeeState);
+  const snapshot = employeeCell.useSyncExternalStore();
 
   useEffect(() => {
-    // Subscribe once on mount
-    const sub = employeeState$.subscribe(setSnapshot);
-
-    // Trigger data load (could also live elsewhere)
+    // Trigger the post-render side effect once after mount
     loadEmployees();
-
-    return () => sub.unsubscribe();
   }, []);
 
   if (snapshot.isLoading) {

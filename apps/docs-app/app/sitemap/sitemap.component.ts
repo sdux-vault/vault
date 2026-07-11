@@ -53,5 +53,7 @@ import { VaultFeatureCellApiSubNavigationComponent } from '../navigation/sub-nav
   host: { class: 'sdux-sitemap' }
 })
 export class SitemapComponent {
-  readonly blogEntries = BLOG_ENTRIES;
+  readonly blogEntries = [...BLOG_ENTRIES]
+    .filter((entry) => entry.active)
+    .sort((a, b) => b.date.localeCompare(a.date));
 }

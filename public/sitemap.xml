@@ -486,6 +486,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/apis/feature-cell-api/use-sync-external-store-method</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/apis/inject-vault</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -932,6 +937,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/references/classes/feature-cell-class</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/classes/react-feature-cell-adapter</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

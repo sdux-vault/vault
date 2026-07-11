@@ -1,3 +1,5 @@
+import type { StackBlitzExampleShape } from '../shapes/stackblitz-example.shape';
+
 /** StackBlitz example group definitions. */
 export function createExampleGroups(brandName: string) {
   const groups = [
@@ -31,7 +33,7 @@ export function createExampleGroups(brandName: string) {
             { name: 'Vue', key: 'vue' }
           ]
         }
-      ]
+      ] satisfies StackBlitzExampleShape[]
     },
     {
       heading: 'Core Patterns',
@@ -70,7 +72,7 @@ export function createExampleGroups(brandName: string) {
           description: `Demonstrates replaceState with Angular's httpResource — ${brandName} integrates HTTP requests directly into state management. Launch the example in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         }
-      ]
+      ] satisfies StackBlitzExampleShape[]
     },
     {
       heading: 'Intermediate',
@@ -114,7 +116,7 @@ export function createExampleGroups(brandName: string) {
             { name: 'Vue', key: 'vue' }
           ]
         }
-      ]
+      ] satisfies StackBlitzExampleShape[]
     },
     {
       heading: 'Advanced',
@@ -165,7 +167,7 @@ export function createExampleGroups(brandName: string) {
             { name: 'Vue', key: 'vue' }
           ]
         }
-      ]
+      ] satisfies StackBlitzExampleShape[]
     }
   ];
 

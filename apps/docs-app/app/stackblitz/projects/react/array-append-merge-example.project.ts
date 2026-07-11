@@ -30,7 +30,7 @@ export const arrayAppendMergeExampleProject: Project = {
   },
   "dependencies": {
     "@sdux-vault/addons": "latest",
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/react": "latest",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rxjs": "~7.8.0"
@@ -226,11 +226,10 @@ export const arrayAppendMergeExampleProject: Project = {
   color: #ccc;
 }
 `,
-    'src/app/ExampleView.tsx': `import { useEffect, useState } from 'react';
+    'src/app/ExampleView.tsx': `import { useState } from 'react';
 import {
   Example,
-  exampleState,
-  exampleState\$,
+  exampleCell,
   mergeExamples,
   resetExamples
 } from './example.cell';
@@ -253,24 +252,11 @@ const sample: Example[] = [
  * to the cell module to preserve the service boundary pattern.
  */
 export function ExampleView() {
-  const [snapshot, setSnapshot] = useState({
-    value: exampleState.value,
-    hasValue: exampleState.hasValue
-  });
+  const snapshot = exampleCell.useSyncExternalStore();
   const [activeStateHint, setActiveStateHint] = useState(
     'initialState seeded on initialize() — click Append to grow the list.'
   );
   const [displayActiveStateHint, setDisplayActiveStateHint] = useState(true);
-
-  useEffect(() => {
-    const sub = exampleState\$.subscribe((emit) => {
-      setSnapshot({
-        value: emit.snapshot.value,
-        hasValue: emit.snapshot.hasValue
-      });
-    });
-    return () => sub.unsubscribe();
-  }, []);
 
   /**
    * Delegates an array append merge to the FeatureCell cell module.
@@ -426,7 +412,7 @@ export function ExampleView() {
 }
 `,
     'src/app/example.cell.ts': `import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
-import { FeatureCell, Vault } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/react';
 
 /**
  * Shape representing a single example entity in the FeatureCell state.
@@ -467,7 +453,7 @@ Vault({
  * \`mergeState()\` call concatenates the incoming array with the existing state,
  * growing the list without discarding previous entries.
  */
-const exampleCell = FeatureCell<Example[]>(
+export const exampleCell = FeatureCell<Example[]>(
   // FeatureCell descriptor (identity + initial state)
   {
     // Unique state key used by the Vault
@@ -495,14 +481,6 @@ exampleCell.initialize();
  * Read-only synchronous state snapshot exposed to React components.
  * Provides access to \`value\`, \`isLoading\`, \`error\`, and \`hasValue\`.
  */
-export const exampleState = exampleCell.state;
-
-/**
- * Observable stream of committed state snapshots.
- * Emits each time the FeatureCell pipeline commits a new value.
- */
-export const exampleState\$ = exampleCell.state\$;
-
 /**
  * Appends \`input\` to the existing FeatureCell state array using the
  * configured \`withArrayAppendMergeBehavior\`.

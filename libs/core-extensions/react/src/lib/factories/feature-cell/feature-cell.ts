@@ -24,7 +24,7 @@ export function FeatureCell<T>(
   behaviors: BehaviorClassContract<T>[] = [],
   controllers: ControllerClassContract<T>[] = []
 ): FeatureCellShape<T> {
-  const coreCell = CoreFeatureCell(descriptor, behaviors, controllers);
+  const coreCell = CoreFeatureCell<T>(descriptor, behaviors, controllers);
 
-  return new ReactFeatureCellAdapter(coreCell).build();
+  return new ReactFeatureCellAdapter<T>(coreCell).build();
 }

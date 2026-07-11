@@ -25,10 +25,11 @@
       provide the public API for state updates.
     </li>
     <li>
-      <strong>ExampleView.tsx</strong> — A simple React component that bridges
-      the Vault's reactive state stream into React state via
-      <code>useState</code> / <code>useEffect</code> and delegates state updates
-      to the cell module's exported functions.
+      <strong>ExampleView.tsx</strong> — A React component that renders the
+      current immutable Snapshot through
+      <strong>useSyncExternalStore()</strong> and delegates State updates to the
+      cell module's exported functions. React manages the render subscription
+      and cleanup.
     </li>
     <li>
       <strong>main.tsx</strong> — The application entry point that renders the
@@ -52,8 +53,9 @@
     </li>
     <li>
       <strong>Keep Vault access inside the cell module</strong> — components
-      should only read the exported state and call exported functions to update
-      state.
+      should render the exported <sdux-feature-cell /> through
+      <strong>useSyncExternalStore()</strong> and call exported functions to
+      update State.
     </li>
   </ul>
 

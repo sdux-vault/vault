@@ -1,6 +1,26 @@
 import { useSyncExternalStore } from 'react';
-import { FeatureCellBaseShape, StateSnapshotShape } from '@sdux-vault/shared';
-import { FeatureCellShape } from '../../shapes/feature-cell.shape';
+import {
+  FeatureCellBaseShape,
+  StateEmitSnapshotShape,
+  StateSnapshotShape
+} from '@sdux-vault/shared';
+import { Observable } from 'rxjs';
+import { FeatureCellShape as ReactFeatureCellShape } from '../../shapes/feature-cell.shape';
+
+/**
+ * Minimal core FeatureCell contract required by the React adapter.
+ */
+interface ReactAdapterCoreFeatureCellShape<T> extends FeatureCellBaseShape<T> {
+  /**
+   * Read-only synchronous snapshot of the current FeatureCell state.
+   */
+  state: StateSnapshotShape<T>;
+
+  /**
+   * Observable that emits committed state snapshots.
+   */
+  state$: Observable<StateEmitSnapshotShape<T>>;
+}
 
 /**
  * React adapter that augments a core FeatureCell with an explicit
@@ -21,11 +41,7 @@ export class ReactFeatureCellAdapter<T> {
    *
    * @param core - The framework-agnostic FeatureCell instance to adapt.
    */
-  constructor(
-    private readonly core: FeatureCellBaseShape<T> & {
-      readonly state: StateSnapshotShape<T>;
-    }
-  ) {
+  constructor(private readonly core: ReactAdapterCoreFeatureCellShape<T>) {
     this.#cachedSnapshot = this.core.state;
   }
 
@@ -34,8 +50,8 @@ export class ReactFeatureCellAdapter<T> {
    *
    * @returns The FeatureCell with an attached `useSyncExternalStore()` method.
    */
-  build(): FeatureCellShape<T> {
-    const cell = this.core as FeatureCellShape<T>;
+  build(): ReactFeatureCellShape<T> {
+    const cell = this.core;
 
     Object.defineProperty(cell, 'useSyncExternalStore', {
       configurable: true,
@@ -44,11 +60,12 @@ export class ReactFeatureCellAdapter<T> {
       value: () =>
         useSyncExternalStore(
           this.#subscribe.bind(this),
+          this.#getSnapshot.bind(this),
           this.#getSnapshot.bind(this)
         )
     });
 
-    return cell;
+    return cell as unknown as ReactFeatureCellShape<T>;
   }
 
   /**

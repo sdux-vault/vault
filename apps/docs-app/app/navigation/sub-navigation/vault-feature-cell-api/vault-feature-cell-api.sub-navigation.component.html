@@ -37,6 +37,7 @@
           mat-list-item
           routerLink="/docs/pipeline/apis/feature-cell-api"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           aria-label="Complete FeatureCell API documentation"
           (click)="closeSidenav()">
           <span class="menu-content">Overview</span>
@@ -202,14 +203,32 @@
           (click)="closeSidenav()">
           <span class="menu-content">state$</span>
         </a>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/use-sync-external-store-method"
+          routerLinkActive="active"
+          aria-label="useSyncExternalStore method documentation"
+          (click)="closeSidenav()">
+          <div class="menu-icon menu-content">
+            useSyncExternalStore
+            <img
+              src="assets/brand/react/react-icon.svg"
+              height="15"
+              alt="React" />
+          </div>
+        </a>
       </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <div class="menu-icon">
-          <span class="sub-menu-content sub-item sub-header">Angular</span>
-        </div>
+        <span class="sub-menu-content sub-item sub-header menu-icon"
+          >Angular
+          <img
+            src="assets/brand/angular/angular-icon.png"
+            height="15"
+            alt="Angular" />
+        </span>
       </mat-expansion-panel-header>
 
       <div class="sub-menu">
@@ -219,7 +238,13 @@
           aria-label="provideVault documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">provideVault (Angular)</span>
+          <span class="menu-icon menu-content"
+            >provideVault
+            <img
+              src="assets/brand/angular/angular-icon.png"
+              height="15"
+              alt="Angular"
+          /></span>
         </a>
 
         <a
@@ -228,7 +253,13 @@
           aria-label="&#64;FeatureCell decorator documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">&#64;FeatureCell (Angular)</span>
+          <span class="menu-icon menu-content"
+            >&#64;FeatureCell
+            <img
+              src="assets/brand/angular/angular-icon.png"
+              height="15"
+              alt="Angular"
+          /></span>
         </a>
 
         <a
@@ -237,7 +268,13 @@
           aria-label="provideFeatureCell documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">provideFeatureCell (Angular)</span>
+          <span class="menu-icon menu-content"
+            >provideFeatureCell
+            <img
+              src="assets/brand/angular/angular-icon.png"
+              height="15"
+              alt="Angular"
+          /></span>
         </a>
 
         <a
@@ -246,7 +283,13 @@
           aria-label="injectVault injector documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">injectVault (Angular)</span>
+          <span class="menu-icon menu-content"
+            >injectVault
+            <img
+              src="assets/brand/angular/angular-icon.png"
+              height="15"
+              alt="Angular"
+          /></span>
         </a>
       </div>
     </mat-expansion-panel>

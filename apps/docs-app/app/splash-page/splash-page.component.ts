@@ -6,7 +6,7 @@ import {
   CatchPhraseComponent
 } from '@sdux-vault/ui/web-components';
 import Prism from 'prismjs';
-import { SupportedLanguagesConstants } from '../docs/top-tier/supported-languages/constants/supported-languages.constants';
+import { SupportedLanguagesConstants } from '../docs/top-tier/supported-languages/constants/supported-languages.constant';
 import { NavigationService } from '../navigation/service/navigation.service';
 import { SplashPageExampleComponent } from './splash-page-example/splash-page-example.component';
 

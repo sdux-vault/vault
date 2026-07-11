@@ -40,14 +40,14 @@ export class PipelineFileBuilderReactService {
         type: FileTypes.Simple,
         stackBlitzFileType: StackblitzFileTypes.ReactCell,
         contents: `${vaultImports}
-import { FeatureCell, Vault } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/react';
 ${interfaceDefinition}
 
 // Initialize the Vault once at application startup
 Vault({ logLevel: 'off' });
 ${coreBehaviorNotes}
 // Register the FeatureCell at module scope
-const ${cellName} = FeatureCell<${type}>({
+export const ${cellName} = FeatureCell<${type}>({
 
   // Unique state key used by the Vault
   key: '${featureCellKey}',
@@ -71,8 +71,7 @@ ${serviceExamples}`
         name: `${componentName}.tsx`,
         type: FileTypes.Simple,
         stackBlitzFileType: StackblitzFileTypes.ReactComponent,
-        contents: `import { useEffect, useState } from 'react';
-import * as cell from './example.cell';
+        contents: `import * as cell from './example.cell';
 
 /**
  * UI component responsible for rendering the example FeatureCell state.
@@ -84,9 +83,8 @@ import * as cell from './example.cell';
  * updates to the exported cell functions.
  */
 export function ${componentName}() {
-
   /**
-   * Local snapshot bridged from the Vault's reactive state stream.
+   * Current immutable FeatureCell snapshot for this React render.
    *
    * Provides reactive access to:
    * - value
@@ -94,33 +92,17 @@ export function ${componentName}() {
    * - error
    * - hasValue
    *
-   * The RxJS subscription is managed automatically via useEffect cleanup.
+   * React manages the render subscription and cleanup through
+   * useSyncExternalStore().
    */
-  const [snapshot, setSnapshot] = useState({
-    value: cell.${stateName}.value,
-    isLoading: cell.${stateName}.isLoading,
-    error: cell.${stateName}.error,
-    hasValue: cell.${stateName}.hasValue
-  });
-
-  useEffect(() => {
-    const sub = cell.${stateName}$.subscribe((emit) => {
-      setSnapshot({
-        value: emit.snapshot.value,
-        isLoading: emit.snapshot.isLoading,
-        error: emit.snapshot.error,
-        hasValue: emit.snapshot.hasValue
-      });
-    });
-    return () => sub.unsubscribe();
-  }, []);
+  const snapshot = cell.${cellName}.useSyncExternalStore();
 
 ${componentExamples}
 
   return (
     <div>
       <div style={{ marginBottom: '1rem' }}>
-        <button onClick={loadSample}>
+        <button type="button" onClick={loadSample}>
           Click me to add data
         </button>
       </div>
@@ -170,13 +152,13 @@ createRoot(document.getElementById('root')!).render(
         type: FileTypes.FromStream,
         contents: `${vaultImports}
 import { Observable } from 'rxjs';
-import { FeatureCell, Vault } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/react';
 
 // Initialize the Vault once at application startup
 Vault({ logLevel: 'off' });
 
 // Register the FeatureCell at module scope
-const ${cellName} = FeatureCell<${type}>({
+export const ${cellName} = FeatureCell<${type}>({
 
   // Unique state key used by the Vault
   key: '${featureCellKey}',
@@ -210,13 +192,12 @@ export function connectStream(source$: Observable<${type}>): void {
         id: this.getBuildId(),
         name: `${componentName}.tsx`,
         type: FileTypes.FromStream,
-        contents: `import { useEffect, useState } from 'react';
-import * as cell from './example.cell';
+        contents: `import * as cell from './example.cell';
 
 /**
  * Advanced example component demonstrating:
  *
- * - Reactive state subscription
+ * - React render subscription
  * - Stream delegation to FeatureCell via connectStream()
  *
  * Architectural Flow:
@@ -226,24 +207,7 @@ import * as cell from './example.cell';
  * The component never touches the Vault directly.
  */
 export function ${componentName}() {
-  const [snapshot, setSnapshot] = useState({
-    value: cell.${stateName}.value,
-    isLoading: cell.${stateName}.isLoading,
-    error: cell.${stateName}.error,
-    hasValue: cell.${stateName}.hasValue
-  });
-
-  useEffect(() => {
-    const sub = cell.${stateName}$.subscribe((emit) => {
-      setSnapshot({
-        value: emit.snapshot.value,
-        isLoading: emit.snapshot.isLoading,
-        error: emit.snapshot.error,
-        hasValue: emit.snapshot.hasValue
-      });
-    });
-    return () => sub.unsubscribe();
-  }, []);
+  const snapshot = cell.${cellName}.useSyncExternalStore();
 
   return (
     <div>

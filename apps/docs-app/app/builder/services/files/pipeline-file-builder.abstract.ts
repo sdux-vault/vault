@@ -13,7 +13,7 @@ import {
   StateFrameworkType,
   StateFrameworkTypes
 } from 'apps/docs-app/app/builder/types/state-framework.type';
-import { FileBuilderVaultApiComments } from '../../constants/builder/fluent-api-comments.constants';
+import { FileBuilderVaultApiComments } from '../../constants/builder/fluent-api-comments.constant';
 import { BehaviorDefinitionShape } from '../../shapes/behavior-definition.shape';
 import { StageDefinitionShape } from '../../shapes/stage-definition.shape';
 import {

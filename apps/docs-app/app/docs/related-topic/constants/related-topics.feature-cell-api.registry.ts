@@ -210,6 +210,14 @@ export const RELATED_TOPICS_FEATURE_CELL_API_REGISTRY: RelatedTopicCategoryShape
           'Subscribe to reactive state changes using the state$ Observable on a FeatureCell in SDuX Vault.'
       },
       {
+        link: '/docs/pipeline/apis/feature-cell-api/use-sync-external-store-method',
+        display: 'useSyncExternalStore()',
+        title:
+          'useSyncExternalStore() in SDuX Vault — React Render Subscription',
+        description:
+          'Connect a React component render to FeatureCell state changes and access the latest committed snapshot using useSyncExternalStore() in SDuX Vault.'
+      },
+      {
         link: '/docs/pipeline/apis/feature-cell-api/vault',
         display: 'Vault Initialization',
         title: 'Vault Initialization in SDuX Vault — Root Store Setup',

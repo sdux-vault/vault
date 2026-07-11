@@ -6,7 +6,8 @@
       "@sdux-vault/core": ["dist/core"],
       "@sdux-vault/shared": ["dist/shared"],
       "@sdux-vault/devtools": ["dist/devtools/tooling"],
-      "@sdux-vault/angular": ["dist/core-extensions/angular"]
+      "@sdux-vault/angular": ["dist/core-extensions/angular"],
+      "@sdux-vault/react": ["dist/core-extensions/react"]
     }
   }
 }

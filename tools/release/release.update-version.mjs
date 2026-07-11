@@ -96,6 +96,12 @@ const LIBRARIES = {
     versionFile: 'src/lib/version/version.register.ts'
   },
 
+  '@sdux-vault/react': {
+    packageName: '@sdux-vault/react',
+    packagePath: 'libs/core-extensions/react',
+    versionFile: 'src/lib/version/version.register.ts'
+  },
+
   '@sdux-vault/devtools': {
     packageName: '@sdux-vault/devtools',
     packagePath: 'libs/devtools/tooling',

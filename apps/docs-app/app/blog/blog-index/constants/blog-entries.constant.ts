@@ -146,7 +146,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   },
   {
     slug: 'react-tab-sync-subscribe-before-initialize',
-    title: 'React + Tab Sync: Subscribe Before Initialize',
+    title: 'React + Tab Sync: Render the Initial Snapshot Correctly',
     date: '2026-06-27',
     readingTime: 3,
     active: true
@@ -216,6 +216,6 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
       'The Mental Model Shift — From “What Action Happened” to “What State Should Exist”',
     date: '2026-07-10',
     readingTime: 8,
-    active: false
+    active: true
   }
 ];

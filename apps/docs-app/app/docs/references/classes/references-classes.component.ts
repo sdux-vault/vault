@@ -12,6 +12,7 @@ import { NotFoundComponent } from '../../../not-found/not-found.component';
 
 import { EventBusInstanceComponent } from './event-bus-instance.component';
 import { FeatureCellClassComponent } from './feature-cell-class.component';
+import { ReactFeatureCellAdapterComponent } from './react-feature-cell-adapter.component';
 import { VaultEncryptionIntegrityErrorComponent } from './vault-encryption-integrity-error.component';
 import { VaultErrorComponent } from './vault-error.component';
 import { VaultLicenseErrorComponent } from './vault-license-error.component';
@@ -29,6 +30,7 @@ import { VaultUsagePromiseFactoryRequiredErrorComponent } from './vault-usage-pr
     MatExpansionModule,
     EventBusInstanceComponent,
     FeatureCellClassComponent,
+    ReactFeatureCellAdapterComponent,
     VaultEncryptionIntegrityErrorComponent,
     VaultErrorComponent,
     VaultLicenseErrorComponent,

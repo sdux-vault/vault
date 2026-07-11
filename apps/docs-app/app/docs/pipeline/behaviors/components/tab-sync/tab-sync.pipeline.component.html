@@ -703,32 +703,34 @@ employeeCell.state$.subscribe(snapshot => {
         </ng-template>
       </sdux-multi-framework-example>
 
-      <div class="callout callout-warning">
-        <strong>Subscribe Before Initialize (React)</strong>
+      <div class="callout callout-info">
+        <strong>React Render Subscription</strong>
         <p>
-          In React, the state subscription must be established
-          <strong>before</strong> calling <code>initialize()</code> on the
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>. The
-          Tab Sync controller performs BroadcastChannel negotiation during
-          initialization and commits the negotiated snapshot synchronously. If
-          the subscription is not active at that point, the component misses the
-          initial cross-tab state.
+          React components render Tab Sync State through
+          <strong>useSyncExternalStore()</strong>. Initialize the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> in
+          its owning module before the component renders. The method reads the
+          current Snapshot during render, including State committed by the Tab
+          Sync negotiation during initialization, and connects the component to
+          subsequent State changes.
         </p>
         <p>
-          Place the subscription inside <code>useEffect</code> and call
-          <code>initialize()</code> after it. Use a module-level flag to guard
-          against React StrictMode invoking the effect twice in development:
+          Do not create a separate <strong>state$</strong> subscription or call
+          <strong>initialize()</strong> from a React effect for this render
+          path. The owning module controls initialization, while the component
+          owns only its render subscription:
         </p>
-        <pre class="code-inline"><code class="language-ts">{{`useEffect(() => {
-  const sub = exampleState$.subscribe((emit) => {
-    setSnapshot(emit.snapshot);
-  });
+        <pre
+          class="code-inline"><code class="language-ts">{{`// employeeCell uses FeatureCell from '@sdux-vault/react'.
+export function EmployeeView() {
+  const snapshot = employeeCell.useSyncExternalStore();
 
-  // Initialize AFTER subscribing to catch the negotiation snapshot
-  initializeCell();
+  if (!snapshot.hasValue) {
+    return &lt;p&gt;No synchronized State is available.&lt;/p&gt;;
+  }
 
-  return () => sub.unsubscribe();
-}, []);`}}</code></pre>
+  return &lt;pre&gt;{JSON.stringify(snapshot.value, null, 2)}&lt;/pre&gt;;
+}`}}</code></pre>
       </div>
 
       <h4>Example 3: Pairing Tab Sync with Persistence</h4>

@@ -30,6 +30,7 @@ export const tabSyncExampleProject: Project = {
   },
   "dependencies": {
     "@sdux-vault/core": "latest",
+    "@sdux-vault/react": "latest",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rxjs": "~7.8.0"
@@ -228,8 +229,7 @@ export const tabSyncExampleProject: Project = {
     'src/app/ExampleView.tsx': `import { ChangeEvent, useEffect, useState } from 'react';
 import {
   Example,
-  exampleState,
-  exampleState\$,
+  exampleCell,
   initializeCell,
   replaceExamples,
   resetExamples
@@ -269,10 +269,7 @@ const samples: Example[][] = [
  * updates and lifecycle orchestration to the FeatureCell module.
  */
 export function ExampleView() {
-  const [snapshot, setSnapshot] = useState({
-    value: exampleState.value,
-    hasValue: exampleState.hasValue
-  });
+  const snapshot = exampleCell.useSyncExternalStore();
   const [activeSample, setActiveSample] = useState<Example[]>(samples[0]);
   const [activeStateHint, setActiveStateHint] = useState(
     'Initial value is [] (empty array)'
@@ -288,14 +285,7 @@ export function ExampleView() {
    * snapshot that is committed synchronously via commitState.
    */
   useEffect(() => {
-    const sub = exampleState\$.subscribe((emit) => {
-      setSnapshot({
-        value: emit.snapshot.value,
-        hasValue: emit.snapshot.hasValue
-      });
-    });
     initializeCell();
-    return () => sub.unsubscribe();
   }, []);
 
   /**
@@ -478,11 +468,10 @@ export function ExampleView() {
 }
 `,
     'src/app/example.cell.ts': `import {
-  FeatureCell,
-  Vault,
   withTabSyncController,
   withTabSyncStateBehavior
 } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/react';
 
 /**
  * Shape representing a single example entity in the FeatureCell state.
@@ -531,7 +520,7 @@ Vault({
  * the initial negotiation when a new tab opens, ensuring it receives
  * the latest state from an existing peer.
  */
-const exampleCell = FeatureCell<Example[]>(
+export const exampleCell = FeatureCell<Example[]>(
   {
     key: 'example-feature-cell-key',
     initialState: []
@@ -565,23 +554,6 @@ export function initializeCell(): void {
   initialized = true;
   exampleCell.initialize();
 }
-
-/**
- * Read-only state snapshot accessor.
- *
- * Provides access to:
- * - value — current state value
- * - hasValue — whether state contains a value
- */
-export const exampleState = exampleCell.state;
-
-/**
- * Observable stream of state emissions.
- *
- * Each emission includes the full snapshot after pipeline execution.
- * Used by the component to subscribe to reactive state changes.
- */
-export const exampleState\$ = exampleCell.state\$;
 
 /**
  * Replaces the entire FeatureCell state with the provided input.

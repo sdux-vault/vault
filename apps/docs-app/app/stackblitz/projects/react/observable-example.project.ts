@@ -29,7 +29,7 @@ export const observableExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/react": "latest",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rxjs": "~7.8.0"
@@ -225,11 +225,10 @@ export const observableExampleProject: Project = {
   color: #ccc;
 }
 `,
-    'src/app/ExampleView.tsx': `import { useEffect, useState } from 'react';
+    'src/app/ExampleView.tsx': `import { useState } from 'react';
 import {
   Example,
-  exampleState,
-  exampleState\$,
+  exampleCell,
   replaceExamples,
   resetExamples
 } from './example.cell';
@@ -243,24 +242,11 @@ const sample: Example[] = [
 
 /** Renders the FeatureCell promise resolve example. */
 export function ExampleView() {
-  const [snapshot, setSnapshot] = useState({
-    value: exampleState.value,
-    hasValue: exampleState.hasValue
-  });
+  const snapshot = exampleCell.useSyncExternalStore();
   const [activeStateHint, setActiveStateHint] = useState(
     'Initial value is [] (empty array)'
   );
   const [displayActiveStateHint, setDisplayActiveStateHint] = useState(true);
-
-  useEffect(() => {
-    const sub = exampleState\$.subscribe((emit) => {
-      setSnapshot({
-        value: emit.snapshot.value,
-        hasValue: emit.snapshot.hasValue
-      });
-    });
-    return () => sub.unsubscribe();
-  }, []);
 
   /** Loads sample data into the FeatureCell via an RxJS Observable. */
   function loadSample() {
@@ -396,7 +382,7 @@ export function ExampleView() {
   );
 }
 `,
-    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
+    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/react';
 import { of } from 'rxjs';
 
 export interface Example {
@@ -423,7 +409,7 @@ Vault({
 });
 
 // Register the FeatureCell at module scope
-const exampleCell = FeatureCell<Example[]>({
+export const exampleCell = FeatureCell<Example[]>({
   key: 'example-feature-cell-key',
   initialState: []
 });
@@ -432,9 +418,6 @@ const exampleCell = FeatureCell<Example[]>({
 exampleCell.initialize();
 
 // Expose read-only state access
-export const exampleState = exampleCell.state;
-export const exampleState\$ = exampleCell.state\$;
-
 /**
  * Replaces the entire FeatureCell state using a deferred promise factory.
  *

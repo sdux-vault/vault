@@ -29,7 +29,7 @@ export const basicFilterReducerExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/react": "latest",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rxjs": "~7.8.0"
@@ -225,11 +225,10 @@ export const basicFilterReducerExampleProject: Project = {
   color: #ccc;
 }
 `,
-    'src/app/ExampleView.tsx': `import { useEffect, useState } from 'react';
+    'src/app/ExampleView.tsx': `import { useState } from 'react';
 import {
   Example,
-  exampleState,
-  exampleState\$,
+  exampleCell,
   replaceExamples,
   resetExamples,
   toggleError,
@@ -245,29 +244,12 @@ const sample: Example[] = [
 
 /** Renders the FeatureCell state example with filter and reducer pipeline visualization. */
 export function ExampleView() {
-  const [snapshot, setSnapshot] = useState({
-    value: exampleState.value,
-    isLoading: exampleState.isLoading,
-    error: exampleState.error,
-    hasValue: exampleState.hasValue
-  });
+  const snapshot = exampleCell.useSyncExternalStore();
   const [activeStateHint, setActiveStateHint] = useState(
     'Initial value is [] (empty array)'
   );
   const [displayActiveStateHint, setDisplayActiveStateHint] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const sub = exampleState\$.subscribe((emit) => {
-      setSnapshot({
-        value: emit.snapshot.value,
-        isLoading: emit.snapshot.isLoading,
-        error: emit.snapshot.error,
-        hasValue: emit.snapshot.hasValue
-      });
-    });
-    return () => sub.unsubscribe();
-  }, []);
 
   const hasError = snapshot.error !== null;
 
@@ -289,13 +271,13 @@ export function ExampleView() {
   function handleToggleLoading() {
     const next = !isLoading;
     setIsLoading(next);
-    toggleLoading(next);
+    toggleLoading(next, snapshot.value);
   }
 
   /** Toggles the error state between an Error instance and null. */
   function handleToggleError() {
     const error = hasError ? null : new Error('Example error message');
-    toggleError(error);
+    toggleError(error, snapshot.value);
   }
 
   return (
@@ -478,7 +460,7 @@ export function ExampleView() {
   );
 }
 `,
-    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
+    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/react';
 
 export interface Example {
   id: number;
@@ -506,7 +488,7 @@ Vault({
 });
 
 // Register the FeatureCell at module scope
-const exampleCell = FeatureCell<Example[]>({
+export const exampleCell = FeatureCell<Example[]>({
   key: 'example-feature-cell-key',
   initialState: []
 });
@@ -530,10 +512,6 @@ exampleCell
   ])
   .initialize();
 
-// Expose read-only state access
-export const exampleState = exampleCell.state;
-export const exampleState\$ = exampleCell.state\$;
-
 /** Replaces the entire FeatureCell state with the provided input. */
 export function replaceExamples(input: Example[]): void {
   exampleCell.replaceState({
@@ -549,18 +527,24 @@ export function resetExamples(): void {
 }
 
 /** Toggles the loading flag on the current state. */
-export function toggleLoading(loading: boolean): void {
+export function toggleLoading(
+  loading: boolean,
+  value: Example[] | undefined
+): void {
   exampleCell.replaceState({
     loading,
-    value: exampleState.value
+    value
   });
 }
 
 /** Toggles the error state between an Error instance and null. */
-export function toggleError(error: Error | null): void {
+export function toggleError(
+  error: Error | null,
+  value: Example[] | undefined
+): void {
   exampleCell.replaceState({
     error,
-    value: exampleState.value
+    value
   });
 }
 `,
