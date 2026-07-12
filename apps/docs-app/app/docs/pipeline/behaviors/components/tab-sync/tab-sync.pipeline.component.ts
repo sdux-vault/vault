@@ -11,6 +11,7 @@ import { VaultTabSyncLicensingCommonComponent } from 'apps/docs-app/app/docs/com
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 import { NavigationDirective } from '../../../../../navigation/directive/navigation.directive';
 import { VaultTabSyncPrivacyCommonComponent } from '../../../../common/tab-sync-privacy.component';
+import { StackBlitzTryItLiveComponent } from '../../../../stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline tab synchronization documentation
@@ -27,7 +28,8 @@ import { VaultTabSyncPrivacyCommonComponent } from '../../../../common/tab-sync-
     VaultTabSyncPrivacyCommonComponent,
     VaultBrandNameComponent,
     BrandNameComponent,
-    FeatureCellBrandNameComponent
+    FeatureCellBrandNameComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './tab-sync.pipeline.component.html',
   styleUrls: ['../../../../scss/documentation.scss'],

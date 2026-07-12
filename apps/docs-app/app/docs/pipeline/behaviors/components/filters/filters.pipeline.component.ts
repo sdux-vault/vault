@@ -6,6 +6,7 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { VaultFilterFunctionShapeCommonComponent } from 'apps/docs-app/app/docs/common/filter-function-shape.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from '../../../../stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline filters documentation
@@ -18,7 +19,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     MultiFrameworkExampleComponent,
     RouterModule,
     VaultFilterFunctionShapeCommonComponent,
-    PipelineRelatedTopicComponent
+    PipelineRelatedTopicComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './filters.pipeline.component.html',
   styleUrls: ['../../../../scss/documentation.scss'],

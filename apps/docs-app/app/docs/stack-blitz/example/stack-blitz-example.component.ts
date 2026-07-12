@@ -1,8 +1,10 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltip } from '@angular/material/tooltip';
+import { BrandNameService } from '@sdux-vault/ui/web-components';
 import StackBlitz from '@stackblitz/sdk';
+import { createExampleGroups } from '../constants/stackblitz-examples.constant';
 import { STACKBLITZ_PROJECT_IMPORTS } from '../constants/stackblitz-project-imports.generated';
 import type { StackBlitzExampleShape } from '../shapes/stackblitz-example.shape';
 
@@ -17,9 +19,39 @@ import type { StackBlitzExampleShape } from '../shapes/stackblitz-example.shape'
 })
 export class StackBlitzExampleComponent {
   readonly #snackBar = inject(MatSnackBar);
+  readonly #brandName = inject(BrandNameService).value;
+  readonly #exampleGroups = createExampleGroups(this.#brandName);
 
-  /** Provides the example metadata rendered by this component. */
-  readonly example = input.required<StackBlitzExampleShape>();
+  /** Provides example metadata directly when the caller already has the entry. */
+  readonly example = input<StackBlitzExampleShape>();
+
+  /** Identifies an example to resolve from the framework example constants. */
+  readonly id = input<string>();
+
+  /**
+   * Selects the directly supplied example or resolves the requested example ID.
+   * Direct metadata takes precedence when both inputs are present.
+   */
+  readonly resolvedExample = computed(() => {
+    const example = this.example();
+    if (example) {
+      return example;
+    }
+
+    const id = this.id();
+    if (!id) {
+      return undefined;
+    }
+
+    for (const group of this.#exampleGroups) {
+      const match = group.examples.find((entry) => entry.id === id);
+      if (match) {
+        return match;
+      }
+    }
+
+    return undefined;
+  });
 
   /** Maps each supported runtime key to its displayed framework icon. */
   readonly frameworkIcons: Record<string, string> = {

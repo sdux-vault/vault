@@ -6,6 +6,7 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { VaultResolveBehaviorCommonComponent } from 'apps/docs-app/app/docs/common/resolve/resolve-behaviors.common.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline http resource behavior documentation
@@ -18,7 +19,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     PipelineRelatedTopicComponent,
     MultiFrameworkExampleComponent,
     VaultResolveBehaviorCommonComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './http-resource.pipeline.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

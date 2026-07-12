@@ -8,6 +8,7 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { StateInputTypeCommonComponent } from 'apps/docs-app/app/docs/common/state/state-input-type.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline merge-state method documentation
@@ -23,7 +24,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     VaultBrandNameComponent,
     PackageNameComponent,
     StateInputTypeCommonComponent,
-    VaultBrandNameComponent
+    VaultBrandNameComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './merge-state.method.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

@@ -8,6 +8,7 @@ import { StateConsumptionMechanismCommonComponent } from 'apps/docs-app/app/docs
 import { StateEmissionOrderCommonComponent } from 'apps/docs-app/app/docs/common/state/state-emission-order.component';
 import { StateUpdateMechanismCommonComponent } from 'apps/docs-app/app/docs/common/state/state-update-mechanism.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline updating state behavior documentation
@@ -22,7 +23,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     StateEmissionOrderCommonComponent,
     StateConsumptionMechanismCommonComponent,
     BrandNameComponent,
-    StateUpdateMechanismCommonComponent
+    StateUpdateMechanismCommonComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './updating-state.pipeline.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

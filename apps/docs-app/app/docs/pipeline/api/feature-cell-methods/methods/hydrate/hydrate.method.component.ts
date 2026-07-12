@@ -5,6 +5,7 @@ import {
   MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline hydrate method documentation
@@ -16,7 +17,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     MultiFrameworkExampleComponent,
     RouterModule,
     PipelineRelatedTopicComponent,
-    DiagramComponent
+    DiagramComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './hydrate.method.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

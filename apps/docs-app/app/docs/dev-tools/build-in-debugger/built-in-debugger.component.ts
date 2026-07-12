@@ -10,6 +10,7 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { FeatureCellInsightsConfigCommonComponent } from '../../common/feature-cell/feature-cell-insights-config.component';
 import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from '../../stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 @Component({
   selector: 'sdux-dev-tools-built-in-debugger',
@@ -23,7 +24,8 @@ import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic
     FeatureCellBrandNameComponent,
     FeatureCellInsightsConfigCommonComponent,
     ExampleViewerSourceComponent,
-    ExampleViewerTabComponent
+    ExampleViewerTabComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './built-in-debugger.component.html',
   styleUrls: ['../../scss/documentation.scss']
