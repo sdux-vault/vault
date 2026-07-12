@@ -16,6 +16,8 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/angular/debugger-example.project'),
   'angular/http-resource-example': () =>
     import('../../../stackblitz/projects/angular/http-resource-example.project'),
+  'angular/hydrate-state-example': () =>
+    import('../../../stackblitz/projects/angular/hydrate-state-example.project'),
   'angular/initial-state-example': () =>
     import('../../../stackblitz/projects/angular/initial-state-example.project'),
   'angular/interceptor-delay-example': () =>
@@ -46,6 +48,8 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/react/basic-filter-reducer-example.project'),
   'react/debugger-example': () =>
     import('../../../stackblitz/projects/react/debugger-example.project'),
+  'react/hydrate-state-example': () =>
+    import('../../../stackblitz/projects/react/hydrate-state-example.project'),
   'react/initial-state-example': () =>
     import('../../../stackblitz/projects/react/initial-state-example.project'),
   'react/interceptor-delay-example': () =>
@@ -64,6 +68,8 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/svelte/basic-filter-reducer-example.project'),
   'svelte/debugger-example': () =>
     import('../../../stackblitz/projects/svelte/debugger-example.project'),
+  'svelte/hydrate-state-example': () =>
+    import('../../../stackblitz/projects/svelte/hydrate-state-example.project'),
   'svelte/initial-state-example': () =>
     import('../../../stackblitz/projects/svelte/initial-state-example.project'),
   'svelte/interceptor-delay-example': () =>
@@ -88,6 +94,8 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/vue/basic-filter-reducer-example.project'),
   'vue/debugger-example': () =>
     import('../../../stackblitz/projects/vue/debugger-example.project'),
+  'vue/hydrate-state-example': () =>
+    import('../../../stackblitz/projects/vue/hydrate-state-example.project'),
   'vue/initial-state-example': () =>
     import('../../../stackblitz/projects/vue/initial-state-example.project'),
   'vue/interceptor-delay-example': () =>

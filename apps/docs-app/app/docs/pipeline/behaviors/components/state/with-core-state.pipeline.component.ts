@@ -6,6 +6,7 @@ import { StateConsumptionMechanismCommonComponent } from 'apps/docs-app/app/docs
 import { StateEmissionOrderCommonComponent } from 'apps/docs-app/app/docs/common/state/state-emission-order.component';
 import { StateUpdateMechanismCommonComponent } from 'apps/docs-app/app/docs/common/state/state-update-mechanism.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from '../../../../stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline core state behavior documentation
@@ -20,7 +21,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     VaultStateBehaviorCommonComponent,
     StateEmissionOrderCommonComponent,
     StateConsumptionMechanismCommonComponent,
-    StateUpdateMechanismCommonComponent
+    StateUpdateMechanismCommonComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './with-core-state.pipeline.component.html',
   styleUrls: ['../../../../scss/documentation.scss'],

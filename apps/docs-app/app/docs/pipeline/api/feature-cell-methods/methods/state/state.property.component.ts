@@ -7,6 +7,7 @@ import {
 import { StateSnapshotShapeCommonComponent } from 'apps/docs-app/app/docs/common/state/state-snapshot-shape.component';
 import { VaultSignalStateRefCommonComponent } from 'apps/docs-app/app/docs/common/vault/vault-signal-state-ref-shape.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline state documentation
@@ -20,7 +21,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     PipelineRelatedTopicComponent,
     StateSnapshotShapeCommonComponent,
     VaultSignalStateRefCommonComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './state.property.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

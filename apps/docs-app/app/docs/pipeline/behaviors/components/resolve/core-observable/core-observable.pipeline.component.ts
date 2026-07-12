@@ -5,6 +5,7 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { VaultResolveBehaviorCommonComponent } from 'apps/docs-app/app/docs/common/resolve/resolve-behaviors.common.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline core observable documentation
@@ -16,7 +17,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     DiagramComponent,
     PipelineRelatedTopicComponent,
     MultiFrameworkExampleComponent,
-    VaultResolveBehaviorCommonComponent
+    VaultResolveBehaviorCommonComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './core-observable.pipeline.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

@@ -6,6 +6,7 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { VaultReducerFunctionShapeCommonComponent } from 'apps/docs-app/app/docs/common/reducer-function-shape.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline reducers method documentation
@@ -18,7 +19,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     RouterModule,
     PipelineRelatedTopicComponent,
     DiagramComponent,
-    VaultReducerFunctionShapeCommonComponent
+    VaultReducerFunctionShapeCommonComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './reducers.method.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

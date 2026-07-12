@@ -10,6 +10,7 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { PipelineRoutingDirective } from '../pipeline/directives/pipeline-routing.directive';
 import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from '../stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 @Component({
   selector: 'sdux-migration-documentation',
@@ -22,7 +23,8 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     MultiFrameworkExampleComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './migration.component.html',
   styleUrls: ['../scss/documentation.scss']

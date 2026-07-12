@@ -11,6 +11,7 @@ import { StateSnapshotShapeCommonComponent } from '../common/state/state-snapsho
 import { StateTypeCommonComponent } from '../common/state/state-type.component';
 import { VaultConfigCommonComponent } from '../common/vault/vault-config.component';
 import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from '../stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 @Component({
   selector: 'sdux-top-tier-how-to-define-your-state',
@@ -25,7 +26,8 @@ import { PipelineRelatedTopicComponent } from '../related-topic/related-topic.co
     FeatureCellBrandNameComponent,
     VaultBrandNameComponent,
     MultiFrameworkExampleComponent,
-    PipelineRelatedTopicComponent
+    PipelineRelatedTopicComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './how-to-define-your-state.component.html',
   styleUrls: ['../scss/documentation.scss']

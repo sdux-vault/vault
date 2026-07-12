@@ -7,6 +7,7 @@ import {
 import { VaultControllerDelayFluentApiCommonComponent } from 'apps/docs-app/app/docs/common/controller/controller-delay-fluent-api.component';
 import { VaultControllerDelayCommonComponent } from 'apps/docs-app/app/docs/common/controller/controller-delay.common.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from '../../../../stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 @Component({
   selector: 'sdux-pipeline-delay-controller',
@@ -17,7 +18,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     DiagramComponent,
     PipelineRelatedTopicComponent,
     VaultControllerDelayCommonComponent,
-    VaultControllerDelayFluentApiCommonComponent
+    VaultControllerDelayFluentApiCommonComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './delay.pipeline.component.html',
   styleUrls: ['../../../../scss/documentation.scss'],

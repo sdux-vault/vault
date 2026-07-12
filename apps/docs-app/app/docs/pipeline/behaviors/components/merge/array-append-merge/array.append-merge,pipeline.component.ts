@@ -6,6 +6,7 @@ import {
 import { VaultArrayMergeCommonComponent } from 'apps/docs-app/app/docs/common/merge/array-merge-behaviors.component';
 import { VaultMergeFluentApiCommonComponent } from 'apps/docs-app/app/docs/common/merge/merge-flient-api.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 
 /**
  * The pipeline array append merge documentation
@@ -18,7 +19,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     PipelineRelatedTopicComponent,
     VaultArrayMergeCommonComponent,
     VaultMergeFluentApiCommonComponent,
-    MultiFrameworkExampleComponent
+    MultiFrameworkExampleComponent,
+    StackBlitzTryItLiveComponent
   ],
   templateUrl: './array-append-merge.pipeline.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

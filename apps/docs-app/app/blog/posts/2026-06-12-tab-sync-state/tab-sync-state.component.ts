@@ -4,6 +4,7 @@ import {
   MultiFrameworkExampleComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
+import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
@@ -13,7 +14,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     RouterModule,
     MultiFrameworkExampleComponent,
-    VaultBrandNameComponent
+    VaultBrandNameComponent,
+    StackBlitzTryItLiveComponent
   ],
   template: `
     <sdux-blog-layout
@@ -25,7 +27,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <p class="lead">
           Open a second browser tab. Your state is already there — no custom
           code, no manual sync.
-          <sdux-vault-brand-name [tm]="true" />'s Tab Sync Controller uses
+          <sdux-vault-brand-name [tm]="true" /> Tab Sync Controller uses
           BroadcastChannel and a localStorage registry to negotiate state across
           tabs automatically.
         </p>
@@ -185,7 +187,7 @@ employeeCell.initialize();</code></pre>
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Read More</div>
         <div class="section-body">
           <p>
             Read the full
@@ -197,6 +199,8 @@ employeeCell.initialize();</code></pre>
           </p>
         </div>
       </section>
+      <sdux-stack-blitz-try-it-live [id]="'tab-sync'">
+      </sdux-stack-blitz-try-it-live>
     </sdux-blog-layout>
   `,
   styleUrls: ['../../../docs/scss/documentation.scss'],
