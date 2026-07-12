@@ -22,6 +22,18 @@ export function createExampleGroups(brandName: string) {
           ]
         },
         {
+          title: 'Reset State',
+          id: 'reset-state',
+          exampleName: 'replace-example',
+          description: `Demonstrates <strong>resetState</strong> — the simplest way to reset a FeatureCell to an <span class="code">undefined</span> state. The entire previous state is discarded and replaced with undefined in a single atomic operation. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
+        },
+        {
           title: 'Initial State',
           id: 'initial-state',
           exampleName: 'initial-state-example',
@@ -41,6 +53,18 @@ export function createExampleGroups(brandName: string) {
       description:
         'Async state inputs — promises, observables, and HTTP resources. The patterns you will use in every real application.',
       examples: [
+        {
+          title: 'Error',
+          id: 'basic-error',
+          exampleName: 'replace-example',
+          description: `Demonstrates <strong>error</strong> setting, resetting and handling. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
+        },
         {
           title: 'Hydrate State',
           id: 'hydrate-state',
