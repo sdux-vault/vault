@@ -1,18 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AnalyticsService } from '../../services/analytics/analytics.service';
 import { VideoDialogService } from './service/video.dialog.service';
 import { SDuXVideoComponent } from './video.component';
 
 describe('Component: Video', () => {
   let fixture: ComponentFixture<SDuXVideoComponent>;
   let dialogService: jasmine.SpyObj<VideoDialogService>;
+  let analyticsService: jasmine.SpyObj<AnalyticsService>;
 
   beforeEach(async () => {
     dialogService = jasmine.createSpyObj('VideoDialogService', ['open']);
+    analyticsService = jasmine.createSpyObj('AnalyticsService', [
+      'trackVideoInteraction'
+    ]);
 
     await TestBed.configureTestingModule({
       imports: [SDuXVideoComponent],
-      providers: [{ provide: VideoDialogService, useValue: dialogService }]
+      providers: [
+        { provide: VideoDialogService, useValue: dialogService },
+        { provide: AnalyticsService, useValue: analyticsService }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SDuXVideoComponent);
@@ -47,6 +55,10 @@ describe('Component: Video', () => {
         262,
         'Pipeline Stages'
       );
+      expect(analyticsService.trackVideoInteraction).toHaveBeenCalledOnceWith({
+        videoId: 'm7ClyWSh754',
+        action: 'play'
+      });
     });
 
     it('should call VideoDialogService.open() on Enter key', () => {
@@ -58,6 +70,10 @@ describe('Component: Video', () => {
         262,
         'Pipeline Stages'
       );
+      expect(analyticsService.trackVideoInteraction).toHaveBeenCalledOnceWith({
+        videoId: 'm7ClyWSh754',
+        action: 'play'
+      });
     });
   });
 
@@ -81,6 +97,10 @@ describe('Component: Video', () => {
         undefined,
         'Video'
       );
+      expect(analyticsService.trackVideoInteraction).toHaveBeenCalledOnceWith({
+        videoId: 'abc123',
+        action: 'play'
+      });
     });
   });
 });

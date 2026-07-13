@@ -1,5 +1,13 @@
-import { Component, computed, input, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  ViewEncapsulation
+} from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AnalyticsService } from '../../services/analytics/analytics.service';
+import { AnalyticsSharePlatforms } from '../../services/analytics/types/analytics-share-platform.type';
 
 /**
  * Reusable social-media share bar component.
@@ -16,6 +24,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   encapsulation: ViewEncapsulation.None
 })
 export class ShareBarComponent {
+  /** Records share-bar interactions for the configured content. */
+  readonly #analyticsService = inject(AnalyticsService);
+
   /** The title/text to share. */
   readonly title = input.required<string>();
 
@@ -43,8 +54,28 @@ export class ShareBarComponent {
     };
   });
 
-  /** Copies the canonical URL to the system clipboard. */
+  /**
+   * Records selection of a social sharing destination.
+   *
+   * @param platform Supplies the selected sharing destination.
+   */
+  trackShare(platform: Exclude<AnalyticsSharePlatforms, 'clipboard'>): void {
+    this.#analyticsService.trackShareInteraction({
+      contentType: this.type(),
+      contentUrl: this.url(),
+      platform,
+      action: 'share'
+    });
+  }
+
+  /** Copies the canonical URL to the system clipboard and records the action. */
   copyLink(): void {
+    this.#analyticsService.trackShareInteraction({
+      contentType: this.type(),
+      contentUrl: this.url(),
+      platform: 'clipboard',
+      action: 'copy'
+    });
     navigator.clipboard.writeText(this.url());
   }
 }

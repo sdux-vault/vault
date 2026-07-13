@@ -1,20 +1,6 @@
 @use 'global' as global;
 
-sdux-share-bar {
-  .share-bar {
-    display: flex;
-    align-items: center;
-    gap: global.$spacing-md;
-    padding: global.$spacing-sm 0;
-  }
-
-  .share-bar-label {
-    font-size: global.$font-size-sm;
-    font-weight: global.$font-weight-medium;
-    color: var(--sdux-text-muted);
-    white-space: nowrap;
-  }
-
+.section {
   .share-bar-links {
     display: flex;
     align-items: center;

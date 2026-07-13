@@ -217,5 +217,13 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-07-11',
     readingTime: 8,
     active: true
+  },
+  {
+    slug: 'no-middleware-registration-order',
+    title:
+      'No Middleware Registration Order — Pipeline Stages That Always Execute the Same Way',
+    date: '2026-07-13',
+    readingTime: 7,
+    active: true
   }
 ];

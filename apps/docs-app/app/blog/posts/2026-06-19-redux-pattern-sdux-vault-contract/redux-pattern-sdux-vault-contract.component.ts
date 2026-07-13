@@ -326,7 +326,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             Explore the full
@@ -338,8 +338,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
               href="https://www.sdux-vault.com?utm_source=blog&utm_medium=cta&utm_campaign=redux-pattern-sdux-vault-contract"
               >sdux-vault.com</a
             >
-            to explore the architecture, launch the Pipeline Builder, or try a
-            live StackBlitz example — no install required.
+            to explore the architecture.
           </p>
         </div>
       </section>

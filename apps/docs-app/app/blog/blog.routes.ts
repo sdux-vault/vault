@@ -280,6 +280,14 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-10-the-mental-model-shift/the-mental-model-shift.component').then(
         (m) => m.BlogTheMentalModelShiftComponent
       )
+  },
+  {
+    path: 'no-middleware-registration-order',
+    data: { category: 'blogs', type: 'no-middleware-registration-order' },
+    loadComponent: () =>
+      import('./posts/2026-07-13-no-middleware-registration-order/no-middleware-registration-order.component').then(
+        (m) => m.BlogNoMiddlewareRegistrationOrderComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

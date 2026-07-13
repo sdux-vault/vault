@@ -389,10 +389,10 @@ employeeCell.state$
       </section>
 
       <!-- ============================================================ -->
-      <!-- Try It Yourself                                              -->
+      <!-- Deeper Dive                                              -->
       <!-- ============================================================ -->
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             See how <sdux-feature-cell /> state injection works across
@@ -419,14 +419,7 @@ employeeCell.state$
                 Redux to SDuX Vault Migration Guide
               </a>
             </li>
-            <li>
-              <a routerLink="/docs/stackblitz">
-                StackBlitz Examples — Try It Live
-              </a>
-            </li>
           </ul>
-
-          <!-- StackBlitz: replace-example -->
         </div>
       </section>
     </sdux-blog-layout>

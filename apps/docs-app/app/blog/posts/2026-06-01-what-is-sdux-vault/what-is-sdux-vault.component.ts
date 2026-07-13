@@ -278,7 +278,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             The fastest way to see SDuX Vault in action is to open a live demo —
@@ -289,8 +289,6 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             <a href="/docs/stackblitz">Open a StackBlitz demo →</a>
           </p>
-
-          <!-- StackBlitz: what-is-sdux-vault -->
 
           <p>
             Ready to dig deeper? Start with the

@@ -360,7 +360,7 @@ export function initAnalytics() &#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <ul>
             <li>

@@ -354,7 +354,7 @@ export const cartCell = FeatureCell(&#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             See the full <sdux-feature-cell /> registration API and
@@ -382,13 +382,7 @@ export const cartCell = FeatureCell(&#123;
                 Redux to SDuX Vault Migration Guide
               </a>
             </li>
-            <li>
-              <a routerLink="/docs/stackblitz">
-                StackBlitz Examples — Try It Live
-              </a>
-            </li>
           </ul>
-          <!-- StackBlitz: setup-3-lines -->
         </div>
       </section>
     </sdux-blog-layout>

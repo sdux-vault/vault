@@ -16,6 +16,7 @@ import {
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideVault } from '@sdux-vault/angular';
 import {
+  ANALYTICS_ENABLED,
   SDUX_BRAND_NAME,
   SDUX_CATCH_PHRASE,
   SDUX_FEATURE_CELL_BRAND_NAME,
@@ -58,6 +59,12 @@ export const appConfig: ApplicationConfig = {
      * Eliminates Zone.js overhead by relying entirely on Signals reactivity.
      */
     provideZonelessChangeDetection(),
+
+    /** Enables analytics only for environments that explicitly opt in. */
+    {
+      provide: ANALYTICS_ENABLED,
+      useValue: environment.analyticsEnabled
+    },
 
     /**
      * Configures application routing and registers route definitions.

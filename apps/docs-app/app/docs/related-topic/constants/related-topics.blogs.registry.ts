@@ -236,6 +236,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'The Mental Model Shift — SDuX Vault Blog',
       description:
         'Understand how shifting from action-driven to state-driven thinking eliminates stale state, event ordering bugs, and reducer composition failures.'
+    },
+    {
+      link: '/blog/no-middleware-registration-order',
+      display:
+        'No Middleware Registration Order — Pipeline Stages That Always Execute the Same Way',
+      title: 'No Middleware Registration Order — SDuX Vault Blog',
+      description:
+        'Learn how SDuX Vault replaces implicit Redux middleware ordering with a fixed, guaranteed pipeline stage sequence that executes the same way every time.'
     }
   ]
 };

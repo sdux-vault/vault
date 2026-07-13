@@ -192,7 +192,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             Read the full

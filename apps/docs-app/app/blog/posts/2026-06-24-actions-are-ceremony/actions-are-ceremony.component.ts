@@ -305,13 +305,12 @@ userCell.mergeState(addUserIntent);</code></pre>
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             See how <sdux-vault-brand-name /> eliminates action ceremony in a
             live, runnable example:
           </p>
-          <!-- StackBlitz: actions-are-ceremony -->
           <ul>
             <li>
               <a routerLink="/docs/migration">

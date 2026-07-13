@@ -5,6 +5,7 @@ import {
   ExampleViewerTabComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
+import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
@@ -15,13 +16,15 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     RouterModule,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    VaultBrandNameComponent
+    VaultBrandNameComponent,
+    StackBlitzTryItLiveComponent
   ],
   template: `
     <sdux-blog-layout
       title="React + Tab Sync: Render the Initial Snapshot Correctly"
       date="2026-06-27"
       pillar="SP"
+      [tryItNow]="false"
       readingTime="3">
       <header class="docs-header">
         <p class="lead">
@@ -210,7 +213,7 @@ export function EmployeeView() &#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             Read the full
@@ -220,15 +223,9 @@ export function EmployeeView() &#123;
             documentation for the complete cross-tab negotiation flow, broadcast
             filtering, and persistence pairing patterns.
           </p>
-          <p>
-            Launch the
-            <a routerLink="/docs/stackblitz" fragment="tab-sync"
-              >Tab Sync StackBlitz example</a
-            >
-            to see the configuration in action across all four frameworks.
-          </p>
         </div>
       </section>
+      <sdux-stack-blitz-try-it-live [id]="'tab-sync'" />
     </sdux-blog-layout>
   `,
   styleUrls: ['../../../docs/scss/documentation.scss'],
