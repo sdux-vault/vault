@@ -298,17 +298,14 @@ export const cartCell = FeatureCell(
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
-          <!-- StackBlitz: featurecells-ownership -->
           <p>
             Explore the
             <a [routerLink]="['/docs/pipeline/apis/feature-cell']"
               >FeatureCell API documentation</a
             >
-            to see the full registration surface, or jump into a live StackBlitz
-            demo to create your own isolated cells with typed state and scoped
-            pipelines.
+            to see the full registration surface.
           </p>
         </div>
       </section>

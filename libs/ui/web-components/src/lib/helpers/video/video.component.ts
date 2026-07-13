@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { AnalyticsService } from '../../services/analytics/analytics.service';
 import { VideoDialogService } from './service/video.dialog.service';
 
 /**
@@ -55,8 +56,16 @@ export class SDuXVideoComponent {
   /** Tooltip and title displayed above the thumbnail. */
   readonly tooltip = input<string>('Video');
 
-  /** Video dialog service used to open the player overlay. */
-  constructor(private readonly videoDialog: VideoDialogService) {}
+  /**
+   * Initializes the video helper with dialog and analytics services.
+   *
+   * @param videoDialog Provides the dialog used to display the selected video.
+   * @param analyticsService Records video play interactions.
+   */
+  constructor(
+    private readonly videoDialog: VideoDialogService,
+    private readonly analyticsService: AnalyticsService
+  ) {}
 
   /** YouTube thumbnail URL derived from the video identifier. */
   get thumbnailUrl(): string {
@@ -66,5 +75,9 @@ export class SDuXVideoComponent {
   /** Opens the video dialog with the current video configuration. */
   open(): void {
     this.videoDialog.open(this.videoId(), this.start(), this.tooltip());
+    this.analyticsService.trackVideoInteraction({
+      videoId: this.videoId(),
+      action: 'play'
+    });
   }
 }

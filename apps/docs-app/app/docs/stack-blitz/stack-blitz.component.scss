@@ -1,0 +1,16 @@
+@use 'global' as global;
+
+.language-container {
+  gap: global.$spacing-sm;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .image-container {
+    height: 24px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}

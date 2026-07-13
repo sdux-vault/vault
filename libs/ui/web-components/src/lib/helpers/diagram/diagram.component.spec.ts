@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AnalyticsService } from '../../services/analytics/analytics.service';
 import { sduxTestingModule } from '../../testing-module/sdux.testing.module';
 import { ImageComponent } from '../image/image.component';
 import { DiagramComponent } from './diagram.component';
@@ -9,9 +10,13 @@ import { DiagramDialogService } from './service/diagram.dialog.service';
 describe('Component: Diagram', () => {
   let fixture: ComponentFixture<DiagramComponent>;
   let dialogService: jasmine.SpyObj<DiagramDialogService>;
+  let analyticsService: jasmine.SpyObj<AnalyticsService>;
 
   beforeEach(async () => {
     dialogService = jasmine.createSpyObj('DiagramDialogService', ['open']);
+    analyticsService = jasmine.createSpyObj('AnalyticsService', [
+      'trackDiagramInteraction'
+    ]);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -20,7 +25,10 @@ describe('Component: Diagram', () => {
         CommonModule,
         sduxTestingModule
       ],
-      providers: [{ provide: DiagramDialogService, useValue: dialogService }]
+      providers: [
+        { provide: DiagramDialogService, useValue: dialogService },
+        { provide: AnalyticsService, useValue: analyticsService }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(DiagramComponent);
@@ -70,6 +78,29 @@ describe('Component: Diagram', () => {
         600,
         'My Diagram'
       );
+      expect(analyticsService.trackDiagramInteraction).toHaveBeenCalledOnceWith(
+        {
+          diagramId: 'diagrams/test.svg',
+          action: 'click'
+        }
+      );
+    });
+
+    it('should not track the diagram before its image loads', () => {
+      const fakeImg = {
+        naturalWidth: 800,
+        naturalHeight: 600,
+        onload: null as (() => void) | null,
+        src: ''
+      };
+      spyOn(globalThis, 'Image').and.returnValue(
+        fakeImg as unknown as HTMLImageElement
+      );
+
+      const wrapper = fixture.debugElement.query(By.css('.diagram-wrapper'));
+      wrapper.triggerEventHandler('click');
+
+      expect(analyticsService.trackDiagramInteraction).not.toHaveBeenCalled();
     });
   });
 
@@ -98,6 +129,12 @@ describe('Component: Diagram', () => {
         800,
         600,
         'Diagram'
+      );
+      expect(analyticsService.trackDiagramInteraction).toHaveBeenCalledOnceWith(
+        {
+          diagramId: 'diagrams/test.svg',
+          action: 'click'
+        }
       );
     });
   });

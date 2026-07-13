@@ -13,7 +13,8 @@ import { BlogLayoutComponent } from './blog-layout.component';
       [title]="title"
       [date]="date"
       [pillar]="pillar"
-      [readingTime]="readingTime">
+      [readingTime]="readingTime"
+      [tryItNow]="tryItNow">
       <p class="test-content">Projected content</p>
     </sdux-blog-layout>
   `
@@ -23,6 +24,7 @@ class TestHostComponent {
   date = '2026-06-04';
   pillar = 'TA';
   readingTime = '5';
+  tryItNow = true;
 }
 
 describe('Component: BlogLayout', () => {
@@ -60,6 +62,24 @@ describe('Component: BlogLayout', () => {
     );
   });
 
+  it('should render the Try It Yourself section by default', () => {
+    const titles = Array.from(el.querySelectorAll('.section-title')).map(
+      (node) => node.textContent?.trim()
+    );
+    expect(titles).toContain('Try It Yourself');
+  });
+
+  it('should hide the Try It Yourself section when tryItNow is false', () => {
+    fixture.componentInstance.tryItNow = false;
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+
+    const titles = Array.from(el.querySelectorAll('.section-title')).map(
+      (node) => node.textContent?.trim()
+    );
+    expect(titles).not.toContain('Try It Yourself');
+  });
+
   it('should render a back link to /blog', () => {
     const link = el.querySelector('.blog-back-link a') as HTMLAnchorElement;
     expect(link).toBeTruthy();
@@ -67,7 +87,7 @@ describe('Component: BlogLayout', () => {
   });
 
   it('should render the share bar', () => {
-    expect(el.querySelector('.share-bar')).toBeTruthy();
+    expect(el.querySelector('sdux-share-bar')).toBeTruthy();
   });
 
   it('should render share links for all platforms', () => {

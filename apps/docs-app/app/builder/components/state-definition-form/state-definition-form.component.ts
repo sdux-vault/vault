@@ -57,22 +57,6 @@ export class StateDefinitionFormComponent {
   readonly primitives = PIPELINE_BUILDER_FORM_PRIMITIVE_CONSTANT;
 
   #primitiveSignal!: Signal<StatePrimitiveType | null>;
-  /***
-   *
-   * If you enable this then you need to change this in the pipeline-builder.service
-   *
-   * readonly getInitialValue = computed(() => {
-   *   onst initialValue = this.#stateInput()?.initialValue;
-   *   eturn isStateInitialValueType(initialValue) ? initialValue : null;
-   * });
-   *
-   */
-  // #initialValueSignal!: Signal<string | null>;
-
-  // readonly displayCustomValue = computed(() => {
-  //   return this.#initialValueSignal() === StateInitialValueTypes.Custom;
-  // });
-
   readonly filteredInitialValues = computed(() => {
     const primitive = this.#primitiveSignal() as StatePrimitiveType | null;
 
@@ -101,38 +85,15 @@ export class StateDefinitionFormComponent {
       );
     });
 
-    // this.stateDefinitionForm.controls.initialValue.valueChanges
-    //   .pipe(takeUntilDestroyed(this.#destroyRef))
-    //   .subscribe((value) => {
-    //     const isCustom = value === 'custom';
-
-    //     const control = this.stateDefinitionForm.controls.customValue;
-
-    //     if (isCustom) {
-    //       control.enable({ emitEvent: false });
-    //     } else {
-    //       control.disable({ emitEvent: false });
-    //       control.setValue(null, { emitEvent: false });
-    //     }
-    //   });
-
-    // // Debounced updates to the service
+    // Debounced updates to the service
     this.stateDefinitionForm.valueChanges
       .pipe(
         debounceTime(250),
-        // avoid emitting when form object changes but values are same
         map((value) => {
-          // let finalInitialValue: string | null = value.initialValue ?? null;
-
-          // if (value.initialValue === StateInitialValueTypes.Custom) {
-          //   finalInitialValue = value.customValue ?? null;
-          // }
-
           return {
             framework: value.framework ?? null,
             shapeName: (value.shapeName ?? '') as string,
             primitive: value.primitive ?? null,
-            // initialValue: finalInitialValue
             initialValue: value.initialValue
           } satisfies Partial<StateInputShape>;
         }),
@@ -145,21 +106,6 @@ export class StateDefinitionFormComponent {
         this.#builder.commitStateInput(partial);
       });
   }
-
-  // ngOnInit(): void {
-  //   const incoming = this.#builder.getInitialValue();
-
-  //   if (incoming && !Object.values(StateInitialValueTypes).includes(incoming as any)) {
-  //     // Not a known type → treat as custom
-  //     this.stateDefinitionForm.patchValue(
-  //       {
-  //         initialValue: StateInitialValueTypes.Custom,
-  //         customValue: incoming
-  //       },
-  //       { emitEvent: true }
-  //     );
-  //   }
-  // }
 
   #buildForm(): void {
     this.stateDefinitionForm = this.formBuilder.group({
@@ -188,9 +134,17 @@ export class StateDefinitionFormComponent {
         initialValue: this.stateDefinitionForm.controls.primitive.value
       }
     );
+  }
 
-    // this.#initialValueSignal = toSignal(this.stateDefinitionForm.controls.initialValue.valueChanges, {
-    //   initialValue: this.stateDefinitionForm.controls.initialValue.value
-    // });
+  getFrameworkIcon(framework: string): string {
+    if (framework === 'Angular') {
+      return 'assets/brand/angular/angular-icon.png';
+    } else if (framework === 'React') {
+      return 'assets/brand/react/react-icon.svg';
+    } else if (framework === 'Svelte') {
+      return 'assets/brand/svelte/svelte-icon.svg';
+    } else {
+      return 'assets/brand/vue/vue-icon.svg';
+    }
   }
 }

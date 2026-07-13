@@ -27,7 +27,7 @@ import { StackBlitzExampleComponent } from './example/stack-blitz-example.compon
     StackBlitzExampleComponent
   ],
   templateUrl: './stack-blitz.component.html',
-  styleUrls: ['../scss/documentation.scss'],
+  styleUrls: ['../scss/documentation.scss', './stack-blitz.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
@@ -40,6 +40,7 @@ export class StackBlitzOverviewComponent extends PipelineRoutingDirective {
     nodejs: 'assets/brand/nodejs/nodejs-icon.svg',
     react: 'assets/brand/react/react-icon.svg',
     svelte: 'assets/brand/svelte/svelte-icon.svg',
+    typescript: 'assets/brand/typescript/typescript-icon.svg',
     vanillajs: 'assets/brand/vanillajs/vanillajs-icon.svg',
     vue: 'assets/brand/vue/vue-icon.svg'
   };

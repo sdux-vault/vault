@@ -339,16 +339,13 @@ const userCell = FeatureCell(&#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             Take an existing Redux reducer and register it in a
             <sdux-feature-cell />. The function stays the same — the wiring
             simplifies:
           </p>
-
-          <!-- StackBlitz: your-redux-reducers-already-work -->
-
           <ul>
             <li>
               <a routerLink="/docs/migration">

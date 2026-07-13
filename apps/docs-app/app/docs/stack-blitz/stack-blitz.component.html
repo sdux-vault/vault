@@ -61,9 +61,17 @@
           <ul class="toc" aria-label="Language example categories">
             @for (section of languageSections; track section.id) {
               <li>
-                <a [routerLink]="[]" [fragment]="section.id">{{
-                  section.heading
-                }}</a>
+                <div class="language-container">
+                  <a [routerLink]="[]" [fragment]="section.id">{{
+                    section.heading
+                  }}</a>
+                  <div class="image-container">
+                    <img
+                      [src]="section.icon"
+                      class="image-15"
+                      alt="{{ section.heading }} icon" />
+                  </div>
+                </div>
                 <ul>
                   @for (example of section.examples; track example.id) {
                     <li>

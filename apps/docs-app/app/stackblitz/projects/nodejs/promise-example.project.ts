@@ -1,13 +1,14 @@
 import { Project } from '@stackblitz/sdk';
 
 export const promiseExampleProject: Project = {
-  title: 'node-promise-example',
+  title: 'node-typescript-promise-example',
   template: 'node',
   files: {
-    'README.md': `# SDuX Vault Node.js Promise Example
+    'README.md': `# SDuX Vault TypeScript Promise Example
 
-A script demonstrating async promise resolution with SDuX Vault running in
-Node.js with TypeScript.
+A script demonstrating async promise resolution with SDuX Vault in plain
+TypeScript. It uses only runtime-neutral APIs, so the same file runs in Node,
+Bun, Deno, or the browser — this folder runs it with Node via \`tsx\`.
 
 ## What This Example Shows
 
@@ -23,8 +24,12 @@ Node.js with TypeScript.
 ## This Is Not Production Code
 
 This example is intentionally minimal. Its job is to show that SDuX Vault handles
-async promise resolution in plain Node.js TypeScript — nothing more. Adapt the
+async promise resolution in plain TypeScript — nothing more. Adapt the
 patterns to your own data-fetching use case and build from there.
+
+> The runner guards \`process.exit(0)\` with a \`typeof process\` check so the
+> script exits cleanly under Node (an open RxJS subscription can otherwise keep
+> the event loop alive) while remaining a no-op in non-Node runtimes.
 
 ## Prerequisites
 
@@ -124,7 +129,7 @@ writes in both environments, so concurrent commits are safe without any extra
 locking logic.
 `,
     'package.json': `{
-  "name": "node-promise-example",
+  "name": "node-typescript-promise-example",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -490,7 +495,16 @@ class PromiseExample {
   }
 }
 
-new PromiseExample().run().then(() => process.exit(0));
+// The example logic uses only runtime-neutral APIs, so this same file runs in
+// Node, Bun, Deno, or the browser. \`process\` only exists in Node-like runtimes,
+// so guard the call: in Node it forces a clean exit (an open RxJS subscription
+// can otherwise keep the event loop alive and hang the script); everywhere else
+// this is a harmless no-op.
+new PromiseExample().run().then(() => {
+  if (typeof process !== 'undefined' && process.exit) {
+    process.exit(0);
+  }
+});
 `,
     'tsconfig.json': `{
   "compilerOptions": {

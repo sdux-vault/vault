@@ -23,6 +23,7 @@ export const SITEMAP_URLS = [
   '/blog/global-store-shared-dependency',
   '/blog/mutation-bugs-eliminated',
   '/blog/no-createstore-no-combinereducers-no-provider',
+  '/blog/no-middleware-registration-order',
   '/blog/one-engine-every-framework',
   '/blog/one-runtime-every-framework-zero-dependencies',
   '/blog/pipeline-anatomy',

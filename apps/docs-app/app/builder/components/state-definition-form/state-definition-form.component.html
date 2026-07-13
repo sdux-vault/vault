@@ -9,9 +9,17 @@
 
     <mat-radio-group formControlName="framework" class="radio-group">
       @for (framework of frameworks; track framework) {
-        <mat-radio-button class="entity" [value]="framework">{{
-          framework
-        }}</mat-radio-button>
+        <mat-radio-button class="entity" [value]="framework">
+          <div class="entity-container">
+            <div>
+              {{ framework }}
+            </div>
+            <img
+              src="{{ getFrameworkIcon(framework) }}"
+              class="image-15"
+              alt="{{ framework }} icon" />
+          </div>
+        </mat-radio-button>
       }
     </mat-radio-group>
   </section>

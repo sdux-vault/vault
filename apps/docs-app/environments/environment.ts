@@ -6,6 +6,7 @@ export const environment: EnvironmentShape = {
   enterprise: true,
   pro: false,
   development: true,
+  analyticsEnabled: true,
   api: 'https://api.sdux-vault.com',
   useInMemoryApi: false,
   devMode: false,

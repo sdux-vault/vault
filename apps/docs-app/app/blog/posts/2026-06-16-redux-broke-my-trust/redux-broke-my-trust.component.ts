@@ -318,13 +318,6 @@ it('updates cart', async () =&gt; &#123;
             application. 1.0 is the moment it stops being my standard and starts
             being available as yours.
           </p>
-
-          <div class="callout callout-info">
-            <strong>Ready to see it?</strong> Visit
-            <a href="https://www.sdux-vault.com">sdux-vault.com</a> to explore
-            the architecture, launch the Pipeline Builder, or try a live
-            StackBlitz example — no install required.
-          </div>
         </div>
       </section>
 

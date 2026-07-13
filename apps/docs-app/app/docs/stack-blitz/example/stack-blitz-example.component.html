@@ -32,7 +32,7 @@
               class="framework-icon-button"
               [attr.aria-label]="'Launch ' + example.title + ' in ' + lang.name"
               [matTooltip]="'Launch ' + example.title + ' in ' + lang.name"
-              (click)="openStackBlitzExample(lang.key, example.exampleName)">
+              (click)="launchStackBlitzExample(example, lang.key)">
               <img
                 [src]="frameworkIcons[lang.key]"
                 [alt]="lang.name"
@@ -44,7 +44,7 @@
               class="share-link-button"
               [attr.aria-label]="'Share ' + example.title + ' in ' + lang.name"
               [matTooltip]="lang.name + ' shareable link'"
-              (click)="copyStackBlitzExample(lang.key, example.exampleName)">
+              (click)="copyStackBlitzExample(example, lang.key)">
               @if (copySuccess() === lang.key + '/' + example.exampleName) {
                 <mat-icon class="share-link-icon copy-success">check</mat-icon>
               } @else {

@@ -7,6 +7,7 @@ export const environment: EnvironmentShape = {
   enterprise: false,
   pro: false,
   development: true,
+  analyticsEnabled: false,
   bypassLicensing: false,
   api: 'http://localhost:3101',
   useInMemoryApi: false,

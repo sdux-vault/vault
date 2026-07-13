@@ -16,6 +16,28 @@
 
   <ng-content />
 
+  @if (tryItNow()) {
+    <section class="section">
+      <div class="section-title">Try It Yourself</div>
+      <div class="section-body">
+        <p>
+          Reading about a deterministic pipeline only takes you so far — the
+          fastest way to understand it is to change some state and watch what
+          happens. Open a live StackBlitz demo or create your own pipeline with
+          the builder, run an update, and see the same ordered stages execute
+          every time. No install, no setup, just your browser.
+        </p>
+        <p>
+          <a href="/docs/stackblitz">Open a StackBlitz demo →</a>
+        </p>
+
+        <p>
+          <a href="/docs/pipeline/builder">Interactive Pipeline Builder →</a>
+        </p>
+      </div>
+    </section>
+  }
+
   <sdux-share-bar [title]="title()" [url]="shareUrl()" />
 
   <sdux-blog-keep-reading />

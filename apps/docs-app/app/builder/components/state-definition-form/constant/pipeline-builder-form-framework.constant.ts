@@ -5,4 +5,4 @@ export const PIPELINE_BUILDER_FORM_FRAMEWORK_CONSTANT = [
   StateFrameworkTypes.React,
   StateFrameworkTypes.Vue,
   StateFrameworkTypes.Svelte
-];
+].sort((a, b) => a.localeCompare(b));

@@ -347,18 +347,9 @@ it('sorts items by name immutably', () =&gt; &#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
-          <p>
-            Start a new <sdux-vault-brand-name /> project with a StackBlitz demo
-            and write your first deterministic test. No mock store required.
-          </p>
           <ul>
-            <li>
-              <a [routerLink]="['/examples/angular/replace-state']"
-                >StackBlitz: Replace State Example</a
-              >
-            </li>
             <li>
               <a [routerLink]="['/docs/top-tier/testing']"
                 >Docs: Testing with <sdux-vault-brand-name

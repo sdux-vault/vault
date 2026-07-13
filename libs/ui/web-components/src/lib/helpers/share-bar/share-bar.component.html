@@ -1,86 +1,100 @@
-<div class="share-bar">
-  <span class="share-bar-label">Share this {{ type() }}:</span>
-  <div class="share-bar-links">
-    <a
-      [href]="shareLinks().x"
-      target="_blank"
-      rel="noopener"
-      aria-label="Share on X"
-      matTooltip="Share on X">
-      <img
-        src="assets/social-media/x.svg"
-        alt="Share on X"
-        class="dark-invert" />
-    </a>
-    <a
-      [href]="shareLinks().bluesky"
-      target="_blank"
-      rel="noopener"
-      aria-label="Share on Bluesky"
-      matTooltip="Share on Bluesky">
-      <img src="assets/social-media/bluesky.svg" alt="Share on Bluesky" />
-    </a>
-    <a
-      [href]="shareLinks().mastodon"
-      target="_blank"
-      rel="noopener"
-      aria-label="Share on Mastodon"
-      matTooltip="Share on Mastodon">
-      <img src="assets/social-media/mastodon.svg" alt="Share on Mastodon" />
-    </a>
-    <a
-      [href]="shareLinks().linkedin"
-      target="_blank"
-      rel="noopener"
-      aria-label="Share on LinkedIn"
-      matTooltip="Share on LinkedIn">
-      <img src="assets/social-media/linkedin.svg" alt="Share on LinkedIn" />
-    </a>
-    <a
-      [href]="shareLinks().reddit"
-      target="_blank"
-      rel="noopener"
-      aria-label="Share on Reddit"
-      matTooltip="Share on Reddit">
-      <img src="assets/social-media/reddit.svg" alt="Share on Reddit" />
-    </a>
-    <a
-      [href]="shareLinks().hackernews"
-      target="_blank"
-      rel="noopener"
-      aria-label="Share on Hacker News"
-      matTooltip="Share on Hacker News">
-      <img
-        src="assets/social-media/hackernews.svg"
-        alt="Share on Hacker News" />
-    </a>
-    <a
-      [href]="shareLinks().facebook"
-      target="_blank"
-      rel="noopener"
-      aria-label="Share on Facebook"
-      matTooltip="Share on Facebook">
-      <img src="assets/social-media/facebook.svg" alt="Share on Facebook" />
-    </a>
-    <a
-      [href]="shareLinks().email"
-      aria-label="Share via email"
-      matTooltip="Share via email">
-      <img
-        src="assets/social-media/email.svg"
-        alt="Share via email"
-        class="dark-invert" />
-    </a>
-    <button
-      type="button"
-      (click)="copyLink()"
-      aria-label="Copy link to clipboard"
-      matTooltip="Copy link"
-      class="share-bar-copy">
-      <img
-        src="assets/social-media/link.svg"
-        alt="Copy link"
-        class="dark-invert" />
-    </button>
+<section class="section">
+  <div class="section-title">Share the {{ type() }}</div>
+  <div class="section-body">
+    <p>
+      If this saved you time or changed how you think about state, pass it on —
+      one share helps another developer find it.
+    </p>
+    <div class="share-bar-links">
+      <a
+        [href]="shareLinks().x"
+        target="_blank"
+        rel="noopener"
+        (click)="trackShare('x')"
+        aria-label="Share on X"
+        matTooltip="Share on X">
+        <img
+          src="assets/social-media/x.svg"
+          alt="Share on X"
+          class="dark-invert" />
+      </a>
+      <a
+        [href]="shareLinks().bluesky"
+        target="_blank"
+        rel="noopener"
+        (click)="trackShare('bluesky')"
+        aria-label="Share on Bluesky"
+        matTooltip="Share on Bluesky">
+        <img src="assets/social-media/bluesky.svg" alt="Share on Bluesky" />
+      </a>
+      <a
+        [href]="shareLinks().mastodon"
+        target="_blank"
+        rel="noopener"
+        (click)="trackShare('mastodon')"
+        aria-label="Share on Mastodon"
+        matTooltip="Share on Mastodon">
+        <img src="assets/social-media/mastodon.svg" alt="Share on Mastodon" />
+      </a>
+      <a
+        [href]="shareLinks().linkedin"
+        target="_blank"
+        rel="noopener"
+        (click)="trackShare('linkedin')"
+        aria-label="Share on LinkedIn"
+        matTooltip="Share on LinkedIn">
+        <img src="assets/social-media/linkedin.svg" alt="Share on LinkedIn" />
+      </a>
+      <a
+        [href]="shareLinks().reddit"
+        target="_blank"
+        rel="noopener"
+        (click)="trackShare('reddit')"
+        aria-label="Share on Reddit"
+        matTooltip="Share on Reddit">
+        <img src="assets/social-media/reddit.svg" alt="Share on Reddit" />
+      </a>
+      <a
+        [href]="shareLinks().hackernews"
+        target="_blank"
+        rel="noopener"
+        (click)="trackShare('hackernews')"
+        aria-label="Share on Hacker News"
+        matTooltip="Share on Hacker News">
+        <img
+          src="assets/social-media/hackernews.svg"
+          alt="Share on Hacker News" />
+      </a>
+      <a
+        [href]="shareLinks().facebook"
+        target="_blank"
+        rel="noopener"
+        (click)="trackShare('facebook')"
+        aria-label="Share on Facebook"
+        matTooltip="Share on Facebook">
+        <img src="assets/social-media/facebook.svg" alt="Share on Facebook" />
+      </a>
+      <a
+        [href]="shareLinks().email"
+        (click)="trackShare('email')"
+        aria-label="Share via email"
+        matTooltip="Share via email">
+        <img
+          src="assets/social-media/email.svg"
+          alt="Share via email"
+          class="dark-invert" />
+      </a>
+      <button
+        type="button"
+        (click)="copyLink()"
+        aria-label="Copy link to clipboard"
+        matTooltip="Copy link"
+        class="share-bar-copy">
+        <img
+          src="assets/social-media/link.svg"
+          alt="Copy link"
+          class="dark-invert" />
+      </button>
+    </div>
   </div>
-</div>
+</section>

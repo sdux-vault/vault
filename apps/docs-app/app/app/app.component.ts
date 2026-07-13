@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AnalyticsService } from '../analytics/analytics.service';
 import { FooterComponent } from '../footer/footer.component';
 import { NavigationComponent } from '../navigation/navigation.component';
+import { AnalyticsService } from '../services/analytics/analytics.service';
 import { LoadingSpinnerComponent } from '../spinner/loading-spinner.component';
 import { ThemeService } from '../theme/theme.service';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
