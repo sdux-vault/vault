@@ -386,17 +386,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         </div>
       </section>
 
-      <!-- ─── Try It Yourself ─── -->
+      <!-- ─── Deeper Dive ─── -->
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
-          <p>
-            Open a live StackBlitz demo to see the pipeline in action — trigger
-            state updates and watch each stage execute in real time:
-          </p>
-          <p>
-            <a routerLink="/docs/stackblitz">Open a StackBlitz demo →</a>
-          </p>
           <p>
             For the full pipeline stage reference, see the
             <a routerLink="/docs/pipeline/behaviors/complete-pipeline-spec"

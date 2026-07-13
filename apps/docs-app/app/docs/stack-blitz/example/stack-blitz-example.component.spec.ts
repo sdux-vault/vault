@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { sduxTestingModule } from '../../../../../../libs/ui/web-components/src/public-api';
+import {
+  AnalyticsService,
+  sduxTestingModule
+} from '@sdux-vault/ui/web-components';
 import type { StackBlitzExampleShape } from '../shapes/stackblitz-example.shape';
 import { StackBlitzExampleComponent } from './stack-blitz-example.component';
 
@@ -8,6 +11,7 @@ describe('Component: StackBlitz Example', () => {
   let component: StackBlitzExampleComponent;
   let fixture: ComponentFixture<StackBlitzExampleComponent>;
   let snackBarSpy: jasmine.SpyObj<MatSnackBar>;
+  let analyticsSpy: jasmine.SpyObj<AnalyticsService>;
 
   const example: StackBlitzExampleShape = {
     title: 'Replace State',
@@ -19,10 +23,16 @@ describe('Component: StackBlitz Example', () => {
 
   beforeEach(async () => {
     snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
+    analyticsSpy = jasmine.createSpyObj('AnalyticsService', [
+      'trackStackBlitzInteraction'
+    ]);
 
     await TestBed.configureTestingModule({
       imports: [sduxTestingModule, StackBlitzExampleComponent],
-      providers: [{ provide: MatSnackBar, useValue: snackBarSpy }]
+      providers: [
+        { provide: MatSnackBar, useValue: snackBarSpy },
+        { provide: AnalyticsService, useValue: analyticsSpy }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(StackBlitzExampleComponent);
@@ -88,8 +98,7 @@ describe('Component: StackBlitz Example', () => {
   it('should copy the shareable URL and show success feedback', async () => {
     spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
 
-    component.copyStackBlitzExample('angular', 'replace-example');
-    await Promise.resolve();
+    await component.copyStackBlitzExample(example, 'angular');
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       'https://stackblitz.com/github/sdux-vault/stackblitz-examples/tree/main/stackblitz/angular/replace-example'
@@ -99,16 +108,50 @@ describe('Component: StackBlitz Example', () => {
       duration: 2000,
       verticalPosition: 'top'
     });
+    expect(analyticsSpy.trackStackBlitzInteraction).toHaveBeenCalledOnceWith({
+      exampleId: 'replace-state',
+      framework: 'angular',
+      action: 'copy'
+    });
   });
 
-  it('should clear copy feedback after two seconds', () => {
+  it('should not track a copy when clipboard writing fails', async () => {
+    spyOn(navigator.clipboard, 'writeText').and.returnValue(
+      Promise.reject(new Error('Clipboard permission denied'))
+    );
+
+    await expectAsync(
+      component.copyStackBlitzExample(example, 'vue')
+    ).toBeRejectedWithError('Clipboard permission denied');
+
+    expect(analyticsSpy.trackStackBlitzInteraction).not.toHaveBeenCalled();
+    expect(component.copySuccess()).toBeNull();
+  });
+
+  it('should track the selected example and framework when launching', () => {
+    spyOn(component, 'openStackBlitzExample').and.resolveTo();
+
+    component.launchStackBlitzExample(example, 'angular');
+
+    expect(analyticsSpy.trackStackBlitzInteraction).toHaveBeenCalledOnceWith({
+      exampleId: 'replace-state',
+      framework: 'angular',
+      action: 'launch'
+    });
+    expect(component.openStackBlitzExample).toHaveBeenCalledOnceWith(
+      example,
+      'angular'
+    );
+  });
+
+  it('should clear copy feedback after two seconds', async () => {
     jasmine.clock().install();
 
     try {
       spyOn(navigator.clipboard, 'writeText').and.returnValue(
         Promise.resolve()
       );
-      component.copyStackBlitzExample('angular', 'replace-example');
+      await component.copyStackBlitzExample(example, 'angular');
 
       jasmine.clock().tick(2000);
 
@@ -120,7 +163,10 @@ describe('Component: StackBlitz Example', () => {
 
   it('should reject unknown generated projects', async () => {
     await expectAsync(
-      component.openStackBlitzExample('unknown', 'missing-example')
+      component.openStackBlitzExample(
+        { ...example, exampleName: 'missing-example' },
+        'unknown'
+      )
     ).toBeRejectedWithError('Unknown project: unknown/missing-example');
   });
 

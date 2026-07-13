@@ -537,7 +537,7 @@ notificationsCell.mergeState(&#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             Explore the full
@@ -554,8 +554,7 @@ notificationsCell.mergeState(&#123;
               href="https://www.sdux-vault.com?utm_source=blog&utm_medium=cta&utm_campaign=from-redux-to-sdux-vault"
               >sdux-vault.com</a
             >
-            to explore the architecture or try a live StackBlitz example — no
-            install required.
+            to explore the architecture.
           </p>
         </div>
       </section>

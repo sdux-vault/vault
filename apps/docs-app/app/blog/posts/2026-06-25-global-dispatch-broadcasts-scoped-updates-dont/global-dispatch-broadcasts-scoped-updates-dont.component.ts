@@ -300,7 +300,7 @@ userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#1
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             See how <sdux-vault-brand-name /> eliminates global dispatch

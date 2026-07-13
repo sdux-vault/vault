@@ -1,4 +1,5 @@
 import { Component, computed, input } from '@angular/core';
+import { AnalyticsService } from '../../services/analytics/analytics.service';
 import { ImageComponent } from '../image/image.component';
 import { DiagramDialogService } from './service/diagram.dialog.service';
 
@@ -53,8 +54,12 @@ export class DiagramComponent {
   /**
    * constructor
    * @param diagramDialog The diagram Dialog Service from DI
+   * @param analyticsService The analytics service used to record diagram clicks
    */
-  constructor(private readonly diagramDialog: DiagramDialogService) {}
+  constructor(
+    private readonly diagramDialog: DiagramDialogService,
+    private readonly analyticsService: AnalyticsService
+  ) {}
 
   /** Opens the full-size diagram dialog. */
   open(): void {
@@ -68,6 +73,10 @@ export class DiagramComponent {
         img.naturalHeight,
         this.tooltip()
       );
+      this.analyticsService.trackDiagramInteraction({
+        diagramId: this.image(),
+        action: 'click'
+      });
     };
   }
 }

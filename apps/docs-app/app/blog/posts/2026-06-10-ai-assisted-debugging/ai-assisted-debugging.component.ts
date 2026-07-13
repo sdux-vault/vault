@@ -1,17 +1,24 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
+import { StackBlitzTryItLiveComponent } from '../../../docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
   selector: 'sdux-blog-ai-assisted-debugging',
   standalone: true,
-  imports: [BlogLayoutComponent, RouterModule, VaultBrandNameComponent],
+  imports: [
+    BlogLayoutComponent,
+    RouterModule,
+    VaultBrandNameComponent,
+    StackBlitzTryItLiveComponent
+  ],
   template: `
     <sdux-blog-layout
       title="AI-Assisted Debugging Reports"
       date="2026-06-10"
       pillar="SP"
+      [tryItNow]="false"
       readingTime="4">
       <header class="docs-header">
         <p class="lead">
@@ -234,7 +241,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             Read the full
@@ -244,14 +251,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             for configuration details, architecture overview, and the complete
             list of AI Assist diagnostic metrics.
           </p>
-          <p>
-            Try it in StackBlitz:
-            <a routerLink="/docs/stackblitz" fragment="debugger"
-              >Built-in Debugger demo &#8594;</a
-            >
-          </p>
         </div>
       </section>
+      <sdux-stack-blitz-try-it-live
+        [id]="'debugger'"></sdux-stack-blitz-try-it-live>
     </sdux-blog-layout>
   `,
   styleUrls: ['../../../docs/scss/documentation.scss'],

@@ -22,6 +22,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       title="One Runtime, Every Framework, Zero Dependencies"
       date="2026-06-18"
       pillar="SP"
+      [tryItNow]="false"
       readingTime="5">
       <header class="docs-header">
         <p class="lead">
@@ -218,7 +219,7 @@ cartCell.initialize();</code></pre>
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Now &mdash; No Install Required</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             Every framework binding has a live

@@ -1,5 +1,7 @@
 import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { AnalyticsService } from '../../services/analytics/analytics.service';
 import { ShareBarComponent } from './share-bar.component';
 
 @Component({
@@ -26,11 +28,19 @@ class TypeHostComponent {
 describe('Component: ShareBar', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let host: TestHostComponent;
+  let analyticsService: jasmine.SpyObj<AnalyticsService>;
 
   beforeEach(async () => {
+    analyticsService = jasmine.createSpyObj('AnalyticsService', [
+      'trackShareInteraction'
+    ]);
+
     await TestBed.configureTestingModule({
       imports: [TestHostComponent, TypeHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      providers: [
+        provideZonelessChangeDetection(),
+        { provide: AnalyticsService, useValue: analyticsService }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -44,8 +54,8 @@ describe('Component: ShareBar', () => {
   });
 
   it('should render the share label with default type', () => {
-    const label = fixture.nativeElement.querySelector('.share-bar-label');
-    expect(label.textContent).toContain('Share this post:');
+    const label = fixture.nativeElement.querySelector('.section-title');
+    expect(label.textContent).toContain('Share the post');
   });
 
   it('should render all share links', () => {
@@ -129,6 +139,27 @@ describe('Component: ShareBar', () => {
     expect(writeTextSpy).toHaveBeenCalledWith(
       'https://www.sdux-vault.com/blog/pipeline-overview-video'
     );
+    expect(analyticsService.trackShareInteraction).toHaveBeenCalledOnceWith({
+      contentType: 'post',
+      contentUrl: 'https://www.sdux-vault.com/blog/pipeline-overview-video',
+      platform: 'clipboard',
+      action: 'copy'
+    });
+  });
+
+  it('should track the selected social platform', () => {
+    const link = fixture.debugElement.query(
+      By.css('a[aria-label="Share on Bluesky"]')
+    );
+
+    link.triggerEventHandler('click');
+
+    expect(analyticsService.trackShareInteraction).toHaveBeenCalledOnceWith({
+      contentType: 'post',
+      contentUrl: 'https://www.sdux-vault.com/blog/pipeline-overview-video',
+      platform: 'bluesky',
+      action: 'share'
+    });
   });
 
   it('should update links when inputs change', () => {
@@ -150,7 +181,24 @@ describe('Component: ShareBar', () => {
     const typeFixture = TestBed.createComponent(TypeHostComponent);
     typeFixture.detectChanges();
 
-    const label = typeFixture.nativeElement.querySelector('.share-bar-label');
-    expect(label.textContent).toContain('Share this video:');
+    const label = typeFixture.nativeElement.querySelector('.section-title');
+    expect(label.textContent).toContain('Share the video');
+  });
+
+  it('should track the configured content type', () => {
+    const typeFixture = TestBed.createComponent(TypeHostComponent);
+    typeFixture.detectChanges();
+    const link = typeFixture.debugElement.query(
+      By.css('a[aria-label="Share on X"]')
+    );
+
+    link.triggerEventHandler('click');
+
+    expect(analyticsService.trackShareInteraction).toHaveBeenCalledOnceWith({
+      contentType: 'video',
+      contentUrl: 'https://www.sdux-vault.com/test',
+      platform: 'x',
+      action: 'share'
+    });
   });
 });

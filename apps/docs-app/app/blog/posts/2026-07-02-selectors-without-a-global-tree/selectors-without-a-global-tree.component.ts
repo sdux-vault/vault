@@ -372,12 +372,11 @@ userCell.state$.subscribe(snapshot =&gt; &#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             Explore scoped state access and reactive APIs in a live example:
           </p>
-          <!-- StackBlitz: selectors-without-global-tree -->
           <ul>
             <li>
               <a routerLink="/docs/pipeline/apis/feature-cell-api">
@@ -393,9 +392,6 @@ userCell.state$.subscribe(snapshot =&gt; &#123;
               <a routerLink="/docs/pipeline/execution-guarantee">
                 Pipeline Execution Guarantees
               </a>
-            </li>
-            <li>
-              <a routerLink="/docs/stackblitz"> StackBlitz Examples </a>
             </li>
           </ul>
         </div>

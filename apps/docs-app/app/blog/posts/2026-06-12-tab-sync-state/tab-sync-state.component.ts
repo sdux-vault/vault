@@ -22,6 +22,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       title="Open a New Tab. State Is Already There."
       date="2026-06-12"
       pillar="SP"
+      [tryItNow]="false"
       readingTime="4">
       <header class="docs-header">
         <p class="lead">
@@ -187,7 +188,7 @@ employeeCell.initialize();</code></pre>
       </section>
 
       <section class="section">
-        <div class="section-title">Read More</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             Read the full

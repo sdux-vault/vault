@@ -311,7 +311,7 @@ it('cart reducer adds items correctly', () =&gt; &#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             The StackBlitz examples demonstrate
@@ -321,11 +321,6 @@ it('cart reducer adds items correctly', () =&gt; &#123;
             alongside an existing Redux store.
           </p>
           <ul>
-            <li>
-              <a [routerLink]="['/docs/stackblitz']">
-                StackBlitz Examples — Replace State, Promise, Observable
-              </a>
-            </li>
             <li>
               <a [routerLink]="['/docs/migration']">
                 Redux Concepts in SDuX Vault — full concept mapping

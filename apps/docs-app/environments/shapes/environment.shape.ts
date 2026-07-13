@@ -8,6 +8,8 @@ export interface EnvironmentShape {
   readonly pro: boolean;
   /** Whether the environment is a development build. */
   readonly development: boolean;
+  /** Whether Google Analytics event collection is enabled. */
+  readonly analyticsEnabled: boolean;
   /** Base URL for the API server. */
   readonly api: string;
   /** Whether to use an in-memory API instead of a remote server. */

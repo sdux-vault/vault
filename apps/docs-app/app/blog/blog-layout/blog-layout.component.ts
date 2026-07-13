@@ -46,6 +46,9 @@ export class BlogLayoutComponent extends PipelineRoutingDirective {
   /** Estimated reading time in minutes. */
   readonly readingTime = input.required<string>();
 
+  /** Try it now - default is true. */
+  readonly tryItNow = input<boolean>(true);
+
   /** Router instance used to derive the canonical share URL. */
   readonly #router = inject(Router);
 

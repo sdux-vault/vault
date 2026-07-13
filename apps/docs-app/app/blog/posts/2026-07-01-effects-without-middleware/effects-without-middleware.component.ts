@@ -470,7 +470,7 @@ userCell.mergeState(&#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             Explore how <sdux-vault-brand-name /> handles async state resolution

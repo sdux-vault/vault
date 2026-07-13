@@ -259,9 +259,8 @@ export const notificationsCell = FeatureCell(&#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
-          <!-- StackBlitz: global-store-shared-dependency -->
           <p>
             Read the full
             <a routerLink="/docs/migration"
@@ -272,9 +271,7 @@ export const notificationsCell = FeatureCell(&#123;
             <a routerLink="/docs/references/functions/feature-cell"
               >FeatureCell API documentation</a
             >
-            to see the full registration surface, or jump into a live StackBlitz
-            demo to create your own isolated cells with typed state and scoped
-            ownership.
+            to see the full registration surface.
           </p>
         </div>
       </section>

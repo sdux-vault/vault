@@ -448,20 +448,14 @@ function addItem(cell: CartCell, item: CartItem) &#123;
       </section>
 
       <section class="section">
-        <div class="section-title">Try It Yourself</div>
+        <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
             The StackBlitz examples show <sdux-vault-brand-name /> state intent
             expressed directly — no action objects, no dispatch, no reducer
-            trees. Open any example and look at how state updates are triggered
-            in the component.
+            trees.
           </p>
           <ul>
-            <li>
-              <a [routerLink]="['/docs/stackblitz']">
-                StackBlitz Examples — Replace State, Promise, Observable
-              </a>
-            </li>
             <li>
               <a [routerLink]="['/docs/migration']">
                 Redux Concepts in SDuX Vault — full concept mapping
