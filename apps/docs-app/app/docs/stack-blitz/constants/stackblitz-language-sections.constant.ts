@@ -174,7 +174,7 @@ export function createLanguageSections(brandName: string) {
       id: 'nodejs',
       icon: 'assets/brand/nodejs/nodejs-icon.svg',
       description:
-        'Server-side state management with Node.js and TypeScript — learning examples for the SDuX pipeline model running outside the browser. These examples require a local Node.js installation.',
+        'Server-side state management with Node.js — learning examples for the SDuX pipeline model running outside the browser. These examples require a local Node.js installation.',
       examples: [
         {
           title: 'Array Append',
@@ -195,7 +195,7 @@ export function createLanguageSections(brandName: string) {
             </ol>
             <p>
               This example demonstrates array append merge behavior with
-              TypeScript and ${brandName}.
+              Node.js and ${brandName}.
             </p>
           `,
           description: `Demonstrates mergeState with withArrayAppendMergeBehavior in Node.js — ${brandName} concatenates incoming arrays with existing FeatureCell state on every mergeState() call, with initialState seeding and reset support. Run the example locally with Node.js. Refer to the README file.`,
@@ -220,7 +220,7 @@ export function createLanguageSections(brandName: string) {
             </ol>
             <p>
               This example demonstrates async Promise-based state updates with
-              TypeScript and ${brandName}.
+              Node.js and ${brandName}.
             </p>
           `,
           description: `Demonstrates async Promise-based state updates in Node.js — ${brandName} handles two-step async commits with loading placeholders, concurrent fetches, and reducer-derived totals. Run the example locally with Node.js. Refer to the README file.`,
@@ -245,11 +245,95 @@ export function createLanguageSections(brandName: string) {
             </ol>
             <p>
               This example demonstrates atomic full-state replacement with
-              TypeScript and ${brandName}.
+              Node.js and ${brandName}.
             </p>
           `,
           description: `Demonstrates replaceState in Node.js — ${brandName} atomically swaps the entire FeatureCell state in a single pipeline write, with awaited confirmation via state$ before the next operation proceeds. Run the example locally with Node.js. Refer to the README file.`,
           languages: [{ name: 'Node.js', key: 'nodejs' }]
+        }
+      ]
+    },
+    {
+      heading: 'TypeScript',
+      id: 'typescript',
+      icon: 'assets/brand/typescript/typescript-icon.svg',
+      description:
+        'State management in plain TypeScript — runtime-neutral learning examples for the SDuX pipeline model that run anywhere TypeScript runs, including Node.js, Bun, and Deno. These examples require a local Node.js installation to run.',
+      examples: [
+        {
+          title: 'Array Append',
+          id: 'typescript-array-append',
+          exampleName: 'array-append-example',
+          localOnly: true,
+          notice: `
+            <p>
+              TypeScript examples are designed to run locally and are not available in
+              the StackBlitz browser runtime.
+            </p>
+            <p>To run this example locally:</p>
+            <ol>
+              <li><code>git clone https://github.com/sdux-vault/stackblitz-examples.git</code></li>
+              <li><code>cd stackblitz-examples/stackblitz/nodejs/array-append-example</code></li>
+              <li><code>npm install</code></li>
+              <li><code>npm start</code></li>
+            </ol>
+            <p>
+              This example demonstrates array append merge behavior in plain
+              TypeScript with ${brandName}.
+            </p>
+          `,
+          description: `Demonstrates mergeState with withArrayAppendMergeBehavior in plain TypeScript — ${brandName} concatenates incoming arrays with existing FeatureCell state on every mergeState() call, with initialState seeding and reset support. Runtime-neutral TypeScript that runs anywhere TypeScript runs. Refer to the README file.`,
+          languages: [{ name: 'TypeScript', key: 'typescript' }]
+        },
+        {
+          title: 'Promise',
+          id: 'typescript-promise',
+          exampleName: 'promise-example',
+          localOnly: true,
+          notice: `
+            <p>
+              TypeScript examples are designed to run locally and are not available in
+              the StackBlitz browser runtime.
+            </p>
+            <p>To run this example locally:</p>
+            <ol>
+              <li><code>git clone https://github.com/sdux-vault/stackblitz-examples.git</code></li>
+              <li><code>cd stackblitz-examples/stackblitz/nodejs/promise-example</code></li>
+              <li><code>npm install</code></li>
+              <li><code>npm start</code></li>
+            </ol>
+            <p>
+              This example demonstrates async Promise-based state updates in plain
+              TypeScript with ${brandName}.
+            </p>
+          `,
+          description: `Demonstrates async Promise-based state updates in plain TypeScript — ${brandName} handles two-step async commits with loading placeholders, concurrent fetches, and reducer-derived totals. Runtime-neutral TypeScript that runs anywhere TypeScript runs. Refer to the README file.`,
+          languages: [{ name: 'TypeScript', key: 'typescript' }]
+        },
+        {
+          title: 'Replace State',
+          id: 'typescript-replace-state',
+          exampleName: 'replace-example',
+          localOnly: true,
+          notice: `
+            <p>
+              TypeScript examples are designed to run locally and are not available in
+              the StackBlitz browser runtime.
+            </p>
+            <p>To run this example locally:</p>
+            <ol>
+              <li><code>git clone https://github.com/sdux-vault/stackblitz-examples.git</code></li>
+              <li><code>cd stackblitz-examples/stackblitz/nodejs/replace-example</code></li>
+              <li><code>npm install</code></li>
+              <li><code>npm start</code></li>
+            </ol>
+            <p>
+              This example demonstrates atomic full-state replacement in plain
+              TypeScript with ${brandName}.
+            </p>
+          `,
+          description: `Demonstrates replaceState in plain TypeScript — ${brandName} atomically swaps the entire FeatureCell state in a single pipeline write, with awaited confirmation via state$ before the next operation proceeds. Runtime-neutral TypeScript that runs anywhere TypeScript runs. Refer to the README file.`,
+          languages: [{ name: 'TypeScript', key: 'typescript' }]
         }
       ]
     }

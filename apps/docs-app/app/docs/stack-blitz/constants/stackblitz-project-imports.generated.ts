@@ -107,5 +107,11 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
   'vue/replace-example': () =>
     import('../../../stackblitz/projects/vue/replace-example.project'),
   'vue/tab-sync-example': () =>
-    import('../../../stackblitz/projects/vue/tab-sync-example.project')
+    import('../../../stackblitz/projects/vue/tab-sync-example.project'),
+  'typescript/array-append-example': () =>
+    import('../../../stackblitz/projects/nodejs/array-append-example.project'),
+  'typescript/promise-example': () =>
+    import('../../../stackblitz/projects/nodejs/promise-example.project'),
+  'typescript/replace-example': () =>
+    import('../../../stackblitz/projects/nodejs/replace-example.project')
 };

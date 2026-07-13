@@ -299,6 +299,16 @@
       "url": "/blog/the-mental-model-shift",
       "symbols": ["the-mental-model-shift"],
       "content": "the mental model shift the-mental-model-shift TA"
+    },
+    {
+      "id": "blog:no-middleware-registration-order",
+      "title": "No Middleware Registration Order — Pipeline Stages That Always Execute the Same Way",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/no-middleware-registration-order",
+      "symbols": ["no-middleware-registration-order"],
+      "content": "No Middleware Registration Order — Pipeline Stages That Always Execute the Same Way no-middleware-registration-order ED"
     }
   ]
 }

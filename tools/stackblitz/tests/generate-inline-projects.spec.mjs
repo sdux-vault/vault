@@ -9,16 +9,14 @@ import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const FRAMEWORK_ALIASES = new Map([['typescript', 'nodejs']]);
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    Phase 2 Helper Functions (shared across test suites)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
 function toSlug(name) {
-  return name
-    .replace(/_/g, '-')
-    .replace(/([a-z])([A-Z])/g, '$1-$2')
-    .toLowerCase();
+  return name.replace(/-example$/, '');
 }
 
 function toTitle(name) {
@@ -101,9 +99,11 @@ export class MockStackBlitzExamplesSubNavigationComponent extends NavigationDire
 function generateProjectImports(frameworkExamples, importsOutputDir) {
   const entries = [];
   for (const [framework, examples] of Object.entries(frameworkExamples)) {
+    const projectFramework = FRAMEWORK_ALIASES.get(framework) ?? framework;
+
     for (const example of examples) {
       const key = `${framework}/${example}`;
-      const importPath = `../../../stackblitz/projects/${framework}/${example}.project`;
+      const importPath = `../../../stackblitz/projects/${projectFramework}/${example}.project`;
       entries.push(`  '${key}': () => import('${importPath}')`);
     }
   }
@@ -118,6 +118,21 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<string, () => Promise<unknown>> 
 ${entries.join(',\n')}
 };
 `;
+}
+
+function applyFrameworkAliases(frameworkExamples) {
+  for (const [framework, sourceFramework] of FRAMEWORK_ALIASES) {
+    const sourceExamples = frameworkExamples[sourceFramework];
+    if (!sourceExamples) {
+      throw new Error(
+        `Cannot create the ${framework} framework alias: ${sourceFramework} examples were not found.`
+      );
+    }
+
+    frameworkExamples[framework] = [...sourceExamples];
+  }
+
+  return frameworkExamples;
 }
 
 function generateSitemapUrls(frameworkExamples, projectRoot) {
@@ -646,6 +661,7 @@ describe('Phase 2: Navigation & Routes Generation', () => {
   let mkdirSyncMock;
   let consoleInfo;
   let consoleError;
+  let frameworkExamples;
 
   const projectRoot = path.resolve(__dirname, '../../../');
   const sourceRoot = path.resolve(
@@ -684,7 +700,7 @@ describe('Phase 2: Navigation & Routes Generation', () => {
     spyOn(fs, 'readFileSync').and.returnValue('');
 
     // Generate Phase 2 artifacts
-    const frameworkExamples = {
+    frameworkExamples = applyFrameworkAliases({
       angular: [
         'basic-filter-reducer',
         'debugger',
@@ -721,8 +737,9 @@ describe('Phase 2: Navigation & Routes Generation', () => {
         'promise',
         'replace',
         'tab-sync'
-      ]
-    };
+      ],
+      nodejs: ['array-append-example', 'promise-example', 'replace-example']
+    });
 
     // Generate sub-navigation HTML
     const navHtml = generateNavHtml(frameworkExamples, navDir, projectRoot);
@@ -781,6 +798,19 @@ describe('Phase 2: Navigation & Routes Generation', () => {
   });
 
   describe('Sub-Navigation HTML Generation', () => {
+    it('should duplicate Node.js examples under the TypeScript framework', () => {
+      expect(frameworkExamples.typescript).toEqual(frameworkExamples.nodejs);
+      expect(frameworkExamples.typescript).not.toBe(frameworkExamples.nodejs);
+    });
+
+    it('should fail clearly when an aliased source framework is missing', () => {
+      expect(() =>
+        applyFrameworkAliases({ angular: ['replace-example'] })
+      ).toThrowError(
+        'Cannot create the typescript framework alias: nodejs examples were not found.'
+      );
+    });
+
     it('should generate sub-navigation HTML with Material expansion panels', () => {
       const navHtmlFile = writeFileSyncMock.find(
         (f) =>
@@ -804,7 +834,14 @@ describe('Phase 2: Navigation & Routes Generation', () => {
           path.join(navDir, 'stackblitz-examples.sub-navigation.component.html')
       );
 
-      const frameworks = ['Angular', 'React', 'Svelte', 'Vue'];
+      const frameworks = [
+        'Angular',
+        'React',
+        'Svelte',
+        'Vue',
+        'Nodejs',
+        'Typescript'
+      ];
       frameworks.forEach((fw) => {
         expect(navHtmlFile.content).toContain(fw);
       });
@@ -994,10 +1031,32 @@ describe('Phase 2: Navigation & Routes Generation', () => {
           path.join(importsOutputDir, 'stackblitz-project-imports.generated.ts')
       );
 
-      const frameworks = ['angular', 'react', 'svelte', 'vue'];
+      const frameworks = [
+        'angular',
+        'react',
+        'svelte',
+        'vue',
+        'nodejs',
+        'typescript'
+      ];
       frameworks.forEach((fw) => {
         expect(importsFile.content).toContain(`'${fw}/`);
       });
+    });
+
+    it('should map TypeScript keys to the existing Node.js project modules', () => {
+      const importsFile = writeFileSyncMock.find(
+        (f) =>
+          f.filePath ===
+          path.join(importsOutputDir, 'stackblitz-project-imports.generated.ts')
+      );
+
+      expect(importsFile.content).toContain(
+        "'typescript/promise-example': () => import('../../../stackblitz/projects/nodejs/promise-example.project')"
+      );
+      expect(importsFile.content).not.toContain(
+        "import('../../../stackblitz/projects/typescript/promise-example.project')"
+      );
     });
 
     it('should have dynamic import functions for each example', () => {
@@ -1067,6 +1126,19 @@ describe('Phase 2: Navigation & Routes Generation', () => {
       );
 
       expect(sitemapFile.content).toMatch(/\/examples\/\w+\/[\w-]+/);
+    });
+
+    it('should include TypeScript URLs for the aliased Node.js examples', () => {
+      const sitemapFile = writeFileSyncMock.find(
+        (f) =>
+          f.filePath ===
+          path.resolve(
+            projectRoot,
+            'tools/stackblitz/stackblitz-example-urls.generated.mjs'
+          )
+      );
+
+      expect(sitemapFile.content).toContain("'/examples/typescript/promise'");
     });
   });
 

@@ -1,13 +1,14 @@
 import { Project } from '@stackblitz/sdk';
 
 export const arrayAppendExampleProject: Project = {
-  title: 'node-array-append-example',
+  title: 'node-typescript-array-append-example',
   template: 'node',
   files: {
-    'README.md': `# SDuX Vault Node.js Array Append Example
+    'README.md': `# SDuX Vault TypeScript Array Append Example
 
-A script demonstrating array append merge behavior with SDuX Vault running in
-Node.js with TypeScript.
+A script demonstrating array append merge behavior with SDuX Vault in plain
+TypeScript. It uses only runtime-neutral APIs, so the same file runs in Node,
+Bun, Deno, or the browser — this folder runs it with Node via \`tsx\`.
 
 ## What This Example Shows
 
@@ -25,8 +26,12 @@ Node.js with TypeScript.
 ## This Is Not Production Code
 
 This example is intentionally minimal. Its job is to show that SDuX Vault's
-add-on behaviors work in plain Node.js TypeScript — nothing more. Take the
+add-on behaviors work in plain TypeScript — nothing more. Take the
 pattern, wire it to your own data model, and build from there.
+
+> The runner guards \`process.exit(0)\` with a \`typeof process\` check so the
+> script exits cleanly under Node (an open RxJS subscription can otherwise keep
+> the event loop alive) while remaining a no-op in non-Node runtimes.
 
 ## Prerequisites
 
@@ -116,7 +121,7 @@ behaviors from \`@sdux-vault/addons\` work identically in Node — the same beha
 registered in an Angular or Svelte app configures the pipeline the same way here.
 `,
     'package.json': `{
-  "name": "node-array-append-example",
+  "name": "node-typescript-array-append-example",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -303,7 +308,16 @@ class ArrayAppendExample {
   }
 }
 
-new ArrayAppendExample().run().then(() => process.exit(0));
+// The example logic uses only runtime-neutral APIs, so this same file runs in
+// Node, Bun, Deno, or the browser. \`process\` only exists in Node-like runtimes,
+// so guard the call: in Node it forces a clean exit (an open RxJS subscription
+// can otherwise keep the event loop alive and hang the script); everywhere else
+// this is a harmless no-op.
+new ArrayAppendExample().run().then(() => {
+  if (typeof process !== 'undefined' && process.exit) {
+    process.exit(0);
+  }
+});
 `,
     'tsconfig.json': `{
   "compilerOptions": {

@@ -44,6 +44,8 @@ const EXCLUDE_FILES = new Set([
 ]);
 const EXCLUDE_EXTENSIONS = new Set(['.js', '.js.map', '.d.ts']);
 
+const FRAMEWORK_ALIASES = new Map([['typescript', 'nodejs']]);
+
 function collectFiles(dirPath, basePath = dirPath) {
   const files = {};
 
@@ -242,6 +244,18 @@ function discoverExamples() {
       .map((d) => d.name)
       .sort();
   }
+
+  for (const [framework, sourceFramework] of FRAMEWORK_ALIASES) {
+    const sourceExamples = result[sourceFramework];
+    if (!sourceExamples) {
+      throw new Error(
+        `Cannot create the ${framework} framework alias: ${sourceFramework} examples were not found.`
+      );
+    }
+
+    result[framework] = [...sourceExamples];
+  }
+
   return result;
 }
 
@@ -317,9 +331,11 @@ export class StackBlitzExamplesSubNavigationComponent extends NavigationDirectiv
 function generateProjectImports(frameworkExamples) {
   const entries = [];
   for (const [framework, examples] of Object.entries(frameworkExamples)) {
+    const projectFramework = FRAMEWORK_ALIASES.get(framework) ?? framework;
+
     for (const example of examples) {
       const key = `${framework}/${example}`;
-      const importPath = `../../../stackblitz/projects/${framework}/${example}.project`;
+      const importPath = `../../../stackblitz/projects/${projectFramework}/${example}.project`;
       entries.push(`  '${key}': () => import('${importPath}')`);
     }
   }

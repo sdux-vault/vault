@@ -48,6 +48,13 @@
       .entity {
         // flex: 0 0 calc(20% - global.$spacing-sm);
         white-space: nowrap;
+
+        .entity-container {
+          gap: global.$spacing-sm;
+          display: flex;
+          align-items: center;
+          width: fit-content;
+        }
       }
     }
   }

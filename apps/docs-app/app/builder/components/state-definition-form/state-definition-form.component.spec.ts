@@ -293,64 +293,18 @@ describe('Component: StateDefinitionFormComponent', () => {
     });
   });
 
-  // ────────────────────────────────────────────
-  // displayCustomValue computed behavior
-  // ────────────────────────────────────────────
-
-  // describe('displayCustomValue', () => {
-  //   it('should return false when primitive is null', () => {
-  //     scheduler.run(() => {
-  //       createComponent();
-  //       expect(component.displayCustomValue()).toBeFalse();
-  //     });
-  //   });
-
-  //   it('should return true when primitive includes Custom option', () => {
-  //     scheduler.run(() => {
-  //       createComponent();
-
-  //       component.stateDefinitionForm.patchValue({
-  //         primitive: StatePrimitiveTypes.Array
-  //       });
-
-  //       fixture.detectChanges();
-
-  //       expect(component.displayCustomValue()).toBeTrue();
-  //     });
-  //   });
-
-  //   it('should return false when primitive does NOT include Custom option', () => {
-  //     scheduler.run(() => {
-  //       createComponent();
-
-  //       component.stateDefinitionForm.patchValue({
-  //         primitive: StatePrimitiveTypes.Boolean
-  //       });
-
-  //       fixture.detectChanges();
-
-  //       expect(component.displayCustomValue()).toBeFalse();
-  //     });
-  //   });
-
-  //   it('should update reactively when primitive changes', () => {
-  //     scheduler.run(() => {
-  //       createComponent();
-
-  //       component.stateDefinitionForm.patchValue({
-  //         primitive: StatePrimitiveTypes.Boolean
-  //       });
-
-  //       fixture.detectChanges();
-  //       expect(component.displayCustomValue()).toBeFalse();
-
-  //       component.stateDefinitionForm.patchValue({
-  //         primitive: StatePrimitiveTypes.Object
-  //       });
-
-  //       fixture.detectChanges();
-  //       expect(component.displayCustomValue()).toBeTrue();
-  //     });
-  //   });
-  // });
+  it('should handle getFrameworkIcon', () => {
+    expect(component.getFrameworkIcon('Angular')).toBe(
+      'assets/brand/angular/angular-icon.png'
+    );
+    expect(component.getFrameworkIcon('React')).toBe(
+      'assets/brand/react/react-icon.svg'
+    );
+    expect(component.getFrameworkIcon('Svelte')).toBe(
+      'assets/brand/svelte/svelte-icon.svg'
+    );
+    expect(component.getFrameworkIcon('Vue')).toBe(
+      'assets/brand/vue/vue-icon.svg'
+    );
+  });
 });

@@ -54,5 +54,8 @@ export const STACKBLITZ_EXAMPLE_URLS = [
   '/examples/vue/observable',
   '/examples/vue/promise',
   '/examples/vue/replace',
-  '/examples/vue/tab-sync'
+  '/examples/vue/tab-sync',
+  '/examples/typescript/array-append',
+  '/examples/typescript/promise',
+  '/examples/typescript/replace'
 ];
