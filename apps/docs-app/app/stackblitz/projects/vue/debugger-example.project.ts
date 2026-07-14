@@ -157,8 +157,7 @@ function handleToggleError(): void {
 Vault({
   devMode: true,
   logLevel: 'off'
-})</textarea
-        >
+})</textarea>
       </div>
 
       <div class="state-container">
@@ -180,8 +179,7 @@ FeatureCell({
     wantsPayload: true,
     wantsState: false
   } as InsightConfig
-})</textarea
-        >
+})</textarea>
       </div>
     </div>
 

@@ -168,8 +168,7 @@ function handleToggleError(): void {
           <span class="emphasis">File:</span> app/example.cell.ts
         </div>
         <textarea class="textarea" readonly>
-.withDelay?.({ millisecondDelay: 3_000 })</textarea
-        >
+.withDelay?.({ millisecondDelay: 3_000 })</textarea>
       </div>
 
       <div class="state-container">

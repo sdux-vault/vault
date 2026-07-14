@@ -31,6 +31,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/atomic-state-commitment</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/circuit-breaker-state-pipeline</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2297,6 +2302,21 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/examples/svelte/tab-sync</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/typescript/array-append</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/typescript/promise</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/typescript/replace</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
