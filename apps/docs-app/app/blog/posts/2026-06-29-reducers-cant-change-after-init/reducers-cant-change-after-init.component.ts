@@ -1,9 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   FeatureCellBrandNameComponent,
-  MultiFrameworkExampleComponent,
-  VaultBrandNameComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -14,7 +14,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     MultiFrameworkExampleComponent,
     RouterModule,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     FeatureCellBrandNameComponent
   ],
   template: `
@@ -26,10 +26,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           Redux lets you dynamically inject, replace, and reorder reducers at
-          runtime. <sdux-vault-brand-name [tm]="true" /> locks the pipeline
-          after <span class="code">initialize()</span>. That sounds restrictive
-          — until you realize it eliminates an entire class of runtime
-          state-logic bugs.
+          runtime. <sdux-brand-name /> locks the pipeline after
+          <span class="code">initialize()</span>. That sounds restrictive —
+          until you realize it eliminates an entire class of runtime state-logic
+          bugs.
         </p>
       </header>
 
@@ -82,11 +82,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
       <section class="section">
         <div class="section-title">
-          Why <sdux-vault-brand-name /> Locks the Pipeline
+          Why <sdux-brand-name /> Locks the Pipeline
         </div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> takes the opposite position. Every
+            <sdux-brand-name /> takes the opposite position. Every
             <a routerLink="/docs/welcome/what-is-a-behavior">Behavior</a> and
             <a routerLink="/docs/welcome/what-is-a-controller">Controller</a>
             is registered before
@@ -184,8 +184,8 @@ const userCell = FeatureCell(&#123;
 
           <div class="callout callout-info">
             <p>
-              <sdux-vault-brand-name /> eliminates all four by making the
-              pipeline a build-time decision, not a runtime variable.
+              <sdux-brand-name /> eliminates all four by making the pipeline a
+              build-time decision, not a runtime variable.
             </p>
           </div>
         </div>
@@ -279,11 +279,11 @@ const userCell = FeatureCell(&#123;
           </p>
 
           <p>
-            <sdux-vault-brand-name /> handles this differently. Instead of
-            injecting reducers into a shared store, each lazy-loaded feature
-            creates its own <sdux-feature-cell /> with its own sealed pipeline.
-            The cell is constructed and initialized when the module loads. It is
-            destroyed when the module unloads.
+            <sdux-brand-name /> handles this differently. Instead of injecting
+            reducers into a shared store, each lazy-loaded feature creates its
+            own <sdux-feature-cell /> with its own sealed pipeline. The cell is
+            constructed and initialized when the module loads. It is destroyed
+            when the module unloads.
           </p>
 
           <sdux-multi-framework-example description="Lazy-Loaded FeatureCell">
@@ -340,7 +340,7 @@ export function initAnalytics() &#123;
         <div class="section-body">
           <p>
             Redux optimized for runtime flexibility.
-            <sdux-vault-brand-name /> optimized for runtime predictability.
+            <sdux-brand-name /> optimized for runtime predictability.
           </p>
 
           <p>

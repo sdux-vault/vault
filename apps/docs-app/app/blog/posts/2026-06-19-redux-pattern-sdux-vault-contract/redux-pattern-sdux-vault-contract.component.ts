@@ -4,8 +4,7 @@ import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent,
-  VaultBrandNameComponent
+  FeatureCellBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -18,7 +17,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     ExampleViewerTabComponent,
     RouterModule,
     BrandNameComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     FeatureCellBrandNameComponent
   ],
   template: `
@@ -32,7 +31,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           Redux defined how a generation of developers thinks about state
           management. Actions, reducers, a single store — these ideas brought
           discipline to front-end architecture when it desperately needed it.
-          But a pattern is not a contract. <sdux-vault-brand-name [tm]="true" />
+          But a pattern is not a contract. <sdux-brand-name />
           1.0 takes what Redux got right — explicit transitions, centralized
           state, predictable flow — and replaces what it left undefined with
           architectural guarantees you never have to enforce yourself.
@@ -117,7 +116,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">The Comparison Table — Explained</div>
         <div class="section-body">
           <p>
-            The <sdux-vault-brand-name />
+            The <sdux-brand-name />
             <a routerLink="/docs/welcome/sdux-redux-similarities"
               >comparison page</a
             >
@@ -184,8 +183,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
           <p>
             Every row in this table represents a concern that Redux leaves to
-            convention and <sdux-vault-brand-name /> makes structural. Not
-            through opinion — through pipeline architecture.
+            convention and <sdux-brand-name /> makes structural. Not through
+            opinion — through pipeline architecture.
           </p>
         </div>
       </section>
@@ -202,8 +201,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             your validation logic completes before your reducer sees the action.
           </p>
           <p>
-            In <sdux-vault-brand-name />, execution order is the architecture.
-            Nine stages execute in a fixed sequence:
+            In <sdux-brand-name />, execution order is the architecture. Nine
+            stages execute in a fixed sequence:
           </p>
 
           <div class="code-inline">
@@ -233,7 +232,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             async effects complete. The ceremony scales with complexity — and
             when tests are hard to write, teams write fewer of them.
           </p>
-          <p><sdux-vault-brand-name /> testing follows three steps:</p>
+          <p><sdux-brand-name /> testing follows three steps:</p>
 
           <sdux-example-viewer-source
             [displayTabs]="false"
@@ -278,7 +277,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             Redux proved that explicit state transitions matter. That idea
-            stands. What <sdux-vault-brand-name /> 1.0 proves is that you can go
+            stands. What <sdux-brand-name /> 1.0 proves is that you can go
             further — that the architecture itself can enforce what Redux left
             to discipline:
           </p>
@@ -319,8 +318,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </p>
           <p>
             A pattern says "here's how you should do it." A contract says
-            "here's what will happen." <sdux-vault-brand-name /> 1.0 is the
-            contract.
+            "here's what will happen." <sdux-brand-name /> 1.0 is the contract.
           </p>
         </div>
       </section>

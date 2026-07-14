@@ -2,8 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
-  SDuXVideoComponent,
-  VaultBrandNameComponent
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -14,7 +13,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     RouterModule,
     BrandNameComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     SDuXVideoComponent
   ],
   template: `
@@ -26,10 +25,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           Today I'm excited to share something I've wanted to build for a long
-          time — the first <sdux-vault-brand-name [tm]="true" /> video. It walks
-          through the entire deterministic pipeline from end to end, and it
-          marks a real step forward in how we deliver world-class documentation
-          and training for engineers.
+          time — the first <sdux-brand-name /> video. It walks through the
+          entire deterministic pipeline from end to end, and it marks a real
+          step forward in how we deliver world-class documentation and training
+          for engineers.
         </p>
       </header>
 
@@ -55,7 +54,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">What the Video Covers</div>
         <div class="section-body">
           <p>
-            The video walks through the complete <sdux-vault-brand-name />
+            The video walks through the complete <sdux-brand-name />
             pipeline architecture in under 5 minutes. Here's the breakdown:
           </p>
 
@@ -69,7 +68,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             </thead>
             <tbody>
               <tr>
-                <td>What is <sdux-vault-brand-name /></td>
+                <td>What is <sdux-brand-name /></td>
                 <td>
                   High-level introduction to the framework-agnostic state
                   management engine
@@ -115,7 +114,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
                 <td>3:24</td>
               </tr>
               <tr>
-                <td><sdux-vault-brand-name /> Guarantees</td>
+                <td><sdux-brand-name /> Guarantees</td>
                 <td>
                   The execution guarantees enforced at every pipeline boundary
                 </td>

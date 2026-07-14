@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 import { DiagramComponent } from '../../../../../../libs/ui/web-components/src/public-api';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -11,7 +11,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     DiagramComponent,
     RouterModule,
-    VaultBrandNameComponent
+    BrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -24,8 +24,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           Every backend engineer knows the circuit breaker pattern: after N
           failures, stop trying. But frontend state management? Most libraries
           let you crash-loop forever.
-          <sdux-vault-brand-name [tm]="true" /> brings deterministic failure
-          termination to your state pipeline with the Max Failures controller.
+          <sdux-brand-name /> brings deterministic failure termination to your
+          state pipeline with the Max Failures controller.
         </p>
       </header>
 
@@ -59,9 +59,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             The Max Failures controller operates within the Policy stage of the
-            <sdux-vault-brand-name /> pipeline. It responds exclusively to
-            failure events — it does not observe, derive, or modify state
-            values, and it does not participate in normal attempt admission.
+            <sdux-brand-name /> pipeline. It responds exclusively to failure
+            events — it does not observe, derive, or modify state values, and it
+            does not participate in normal attempt admission.
           </p>
           <p>
             Each execution trace is evaluated independently. For every failure

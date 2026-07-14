@@ -3,8 +3,7 @@ import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   FeatureCellBrandNameComponent,
-  MultiFrameworkExampleComponent,
-  VaultBrandNameComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -16,7 +15,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     FeatureCellBrandNameComponent
   ],
   template: `
@@ -33,8 +32,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           global store isn't just where your state lives — it's a shared
           dependency that every feature, every team, and every pull request must
           coordinate around.
-          <sdux-vault-brand-name [tm]="true" /> eliminates that coordination
-          cost by scoping state to independent <sdux-feature-cell />s.
+          <sdux-brand-name /> eliminates that coordination cost by scoping state
+          to independent <sdux-feature-cell />s.
         </p>
       </header>
 
@@ -108,7 +107,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">Scoped Ownership with FeatureCells</div>
         <div class="section-body">
           <p>
-            In <sdux-vault-brand-name />, state is owned by independent
+            In <sdux-brand-name />, state is owned by independent
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>s.
             Each cell encapsulates its own typed state, its own pipeline, and
             its own lifecycle boundary. No other cell can read or write another
@@ -252,8 +251,8 @@ export const notificationsCell = FeatureCell(&#123;
           <div class="callout callout-info">
             <strong>The core shift:</strong> Redux scopes state by convention
             (slice naming, selector discipline, action prefixing).
-            <sdux-vault-brand-name /> scopes state by architecture — the cell
-            boundary is enforced, not agreed upon.
+            <sdux-brand-name /> scopes state by architecture — the cell boundary
+            is enforced, not agreed upon.
           </div>
         </div>
       </section>

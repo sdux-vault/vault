@@ -3,8 +3,7 @@ import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
-  VaultBrandNameComponent
+  ExampleViewerTabComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -17,7 +16,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     RouterModule,
-    VaultBrandNameComponent
+    BrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -27,18 +26,18 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       readingTime="6">
       <header class="docs-header">
         <p class="lead">
-          You do not have to choose. <sdux-vault-brand-name /> runs alongside
-          Redux in the same application with zero conflicts — no shared state,
-          no Provider collision, no adapter layer. Your existing Redux stores
-          keep running unchanged while new features adopt FeatureCells at
-          whatever pace suits your team.
+          You do not have to choose. <sdux-brand-name /> runs alongside Redux in
+          the same application with zero conflicts — no shared state, no
+          Provider collision, no adapter layer. Your existing Redux stores keep
+          running unchanged while new features adopt FeatureCells at whatever
+          pace suits your team.
         </p>
         <div class="callout callout-info">
           <strong>Redux Angle:</strong> Redux migration typically requires a
           big-bang rewrite or complex adapter layers.
         </div>
         <div class="callout callout-info">
-          <strong><sdux-vault-brand-name /></strong>
+          <strong><sdux-brand-name /></strong>
           runs alongside Redux with zero conflicts, enabling gradual
           feature-by-feature adoption.
         </div>
@@ -59,8 +58,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             rollback path if something goes wrong.
           </p>
           <p>
-            <sdux-vault-brand-name /> is designed so coexistence is not a
-            workaround — it is the intended adoption path. The
+            <sdux-brand-name /> is designed so coexistence is not a workaround —
+            it is the intended adoption path. The
             <a href="/docs/migration">Redux migration guide</a> documents this
             directly:
           </p>
@@ -81,11 +80,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">No Shared State. No Conflicts.</div>
         <div class="section-body">
           <p>
-            Redux owns a global store tree. <sdux-vault-brand-name /> owns
-            independent FeatureCells. These are structurally separate — there is
-            no global registry that both systems must register against, no
-            shared dispatch channel, and no Provider that both systems fight
-            over.
+            Redux owns a global store tree. <sdux-brand-name /> owns independent
+            FeatureCells. These are structurally separate — there is no global
+            registry that both systems must register against, no shared dispatch
+            channel, and no Provider that both systems fight over.
           </p>
           <p>
             A
@@ -257,8 +255,8 @@ userCell
           <div class="callout callout-info">
             <p>
               <strong>No coordination required:</strong> because Redux and
-              <sdux-vault-brand-name /> are structurally separate, neither
-              system needs to be aware that the other is running in parallel.
+              <sdux-brand-name /> are structurally separate, neither system
+              needs to be aware that the other is running in parallel.
               Validation is a component-level concern, not a store-level one.
             </p>
           </div>
@@ -270,18 +268,17 @@ userCell
         <div class="section-body">
           <p>
             Coexisting systems still need to be tested together. Redux tests and
-            <sdux-vault-brand-name /> tests use different patterns — Redux tests
+            <sdux-brand-name /> tests use different patterns — Redux tests
             require mock stores and dispatch sequences while
-            <sdux-vault-brand-name /> tests use act → settle → assert — but they
-            live in the same test suite without conflict.
+            <sdux-brand-name /> tests use act → settle → assert — but they live
+            in the same test suite without conflict.
           </p>
           <p>
             A component that reads from both a Redux selector and a
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             can be tested with a Redux mock store alongside a
-            <sdux-vault-brand-name /> test environment. The two isolation
-            boundaries do not interfere because they operate on different state
-            channels.
+            <sdux-brand-name /> test environment. The two isolation boundaries
+            do not interfere because they operate on different state channels.
           </p>
           <sdux-example-viewer-source [displayTabs]="false">
             <sdux-example-viewer-tab
@@ -315,8 +312,8 @@ it('cart reducer adds items correctly', () =&gt; &#123;
         <div class="section-body">
           <p>
             The StackBlitz examples demonstrate
-            <sdux-vault-brand-name /> running in isolation — the same patterns
-            you would use when introducing a
+            <sdux-brand-name /> running in isolation — the same patterns you
+            would use when introducing a
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             alongside an existing Redux store.
           </p>

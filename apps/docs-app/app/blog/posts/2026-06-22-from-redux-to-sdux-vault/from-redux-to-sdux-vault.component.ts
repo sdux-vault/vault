@@ -5,8 +5,7 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  MultiFrameworkExampleComponent,
-  VaultBrandNameComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -20,7 +19,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     FeatureCellBrandNameComponent
   ],
   template: `
@@ -35,11 +34,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           institutional knowledge baked into reducer trees, selector files, and
           middleware stacks. Nobody is going to approve a two-sprint rewrite to
           swap state management libraries — nor should they.
-          <sdux-vault-brand-name [tm]="true" /> runs alongside Redux with zero
-          conflicts. This guide maps every Redux concept to its
-          <sdux-vault-brand-name /> equivalent, shows you how to run both
-          systems in the same application, and gives you a phased migration path
-          that lets you prove value before committing fully.
+          <sdux-brand-name /> runs alongside Redux with zero conflicts. This
+          guide maps every Redux concept to its <sdux-brand-name /> equivalent,
+          shows you how to run both systems in the same application, and gives
+          you a phased migration path that lets you prove value before
+          committing fully.
         </p>
       </header>
 
@@ -48,7 +47,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             Redux deserves credit for establishing principles that
-            <sdux-vault-brand-name /> builds on:
+            <sdux-brand-name /> builds on:
           </p>
           <ul>
             <li>
@@ -69,9 +68,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </ul>
           <p>
             These ideas shaped how an entire generation thinks about front-end
-            state. <sdux-vault-brand-name /> doesn't reject them — it formalizes
-            them into architectural guarantees and eliminates the ceremony
-            required to maintain them.
+            state. <sdux-brand-name /> doesn't reject them — it formalizes them
+            into architectural guarantees and eliminates the ceremony required
+            to maintain them.
           </p>
         </div>
       </section>
@@ -117,9 +116,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             <thead>
               <tr>
                 <th class="column-150">Redux Concept</th>
-                <th class="column-auto">
-                  <sdux-vault-brand-name /> Equivalent
-                </th>
+                <th class="column-auto"><sdux-brand-name /> Equivalent</th>
                 <th class="column-auto">Key Difference</th>
               </tr>
             </thead>
@@ -208,7 +205,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
               </tr>
               <tr>
                 <td>DevTools</td>
-                <td><sdux-vault-brand-name /> DevTools (Chrome extension)</td>
+                <td><sdux-brand-name /> DevTools (Chrome extension)</td>
                 <td>
                   Pipeline-aware — shows stage execution, not just action
                   history
@@ -219,7 +216,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
           <div class="callout callout-info">
             <strong>The core mental model shift:</strong> Redux asks "what
-            action happened?" <sdux-vault-brand-name /> asks "what state should
+            action happened?" <sdux-brand-name /> asks "what state should
             exist?"
           </div>
         </div>
@@ -229,10 +226,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">Running Both Side by Side</div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> and Redux can coexist in the same
-            application. There is no conflict, no shared global state, and no
-            Provider collision. Your existing Redux store continues operating
-            unchanged while new features use <sdux-feature-cell />s.
+            <sdux-brand-name /> and Redux can coexist in the same application.
+            There is no conflict, no shared global state, and no Provider
+            collision. Your existing Redux store continues operating unchanged
+            while new features use <sdux-feature-cell />s.
           </p>
 
           <sdux-multi-framework-example
@@ -419,8 +416,8 @@ notificationsCell.mergeState(&#123;
           <ul>
             <li>
               <strong>Pure reducer functions</strong> — if your Redux reducer is
-              pure and doesn't mutate, it works as a
-              <sdux-vault-brand-name /> reducer behavior with zero modification
+              pure and doesn't mutate, it works as a <sdux-brand-name /> reducer
+              behavior with zero modification
             </li>
             <li>
               <strong>State shape design</strong> — your interfaces and types
@@ -505,8 +502,8 @@ notificationsCell.mergeState(&#123;
         <div class="section-body">
           <p>
             Redux testing often requires mocking stores, faking dispatches, and
-            orchestrating async middleware. <sdux-vault-brand-name /> testing is
-            three steps:
+            orchestrating async middleware. <sdux-brand-name /> testing is three
+            steps:
           </p>
 
           <sdux-example-viewer-source

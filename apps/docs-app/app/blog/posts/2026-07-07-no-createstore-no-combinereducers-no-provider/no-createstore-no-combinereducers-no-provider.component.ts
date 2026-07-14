@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  MultiFrameworkExampleComponent,
-  VaultBrandNameComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -18,7 +18,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     ExampleViewerTabComponent,
     MultiFrameworkExampleComponent,
     RouterModule,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     FeatureCellBrandNameComponent
   ],
   template: `
@@ -32,8 +32,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           Redux setup is a ceremony. You create a store, compose your reducers
           into a root tree, wrap your app in a Provider, register middleware,
           and configure enhancers — all before you write a single line of
-          feature logic. <sdux-vault-brand-name [tm]="true" /> replaces that
-          entire ceremony with two function calls and zero root configuration.
+          feature logic. <sdux-brand-name /> replaces that entire ceremony with
+          two function calls and zero root configuration.
         </p>
       </header>
 
@@ -137,9 +137,9 @@ function App() &#123;
         <div class="section-title">Vault + <sdux-feature-cell /> Setup</div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> does not have a root store. There is no
-            reducer tree to compose, no middleware to register, and no Provider
-            to wrap. Setup is two function calls:
+            <sdux-brand-name /> does not have a root store. There is no reducer
+            tree to compose, no middleware to register, and no Provider to wrap.
+            Setup is two function calls:
           </p>
 
           <ol>
@@ -239,9 +239,9 @@ export const cartCell = FeatureCell(&#123;
 
           <div class="callout callout-info">
             <p>
-              In <sdux-vault-brand-name />, there is no root configuration
-              ceremony. Each <sdux-feature-cell /> declares its own state, its
-              own behaviors, and its own controllers. The Vault coordinates
+              In <sdux-brand-name />, there is no root configuration ceremony.
+              Each <sdux-feature-cell /> declares its own state, its own
+              behaviors, and its own controllers. The Vault coordinates
               execution — you do not compose a global tree.
             </p>
           </div>
@@ -258,11 +258,10 @@ export const cartCell = FeatureCell(&#123;
           </p>
 
           <p>
-            <sdux-vault-brand-name /> has no Provider. FeatureCells are
-            registered at application startup and are globally accessible by
-            injection (Angular) or direct import (React, Vue, Svelte, Node).
-            There is no context hierarchy to manage and no Provider nesting to
-            debug.
+            <sdux-brand-name /> has no Provider. FeatureCells are registered at
+            application startup and are globally accessible by injection
+            (Angular) or direct import (React, Vue, Svelte, Node). There is no
+            context hierarchy to manage and no Provider nesting to debug.
           </p>
 
           <table>
@@ -270,7 +269,7 @@ export const cartCell = FeatureCell(&#123;
               <tr>
                 <th>Concern</th>
                 <th>Redux</th>
-                <th><sdux-vault-brand-name /></th>
+                <th><sdux-brand-name /></th>
               </tr>
             </thead>
             <tbody>
@@ -324,11 +323,11 @@ export const cartCell = FeatureCell(&#123;
         </div>
         <div class="section-body">
           <p>
-            Because <sdux-vault-brand-name /> does not use a global store, it
-            can run alongside Redux in the same application. You do not need to
-            rewrite your Redux setup to start using FeatureCells. Register a
-            Vault, add a <sdux-feature-cell /> for your next feature, and let
-            the two systems coexist.
+            Because <sdux-brand-name /> does not use a global store, it can run
+            alongside Redux in the same application. You do not need to rewrite
+            your Redux setup to start using FeatureCells. Register a Vault, add
+            a <sdux-feature-cell /> for your next feature, and let the two
+            systems coexist.
           </p>
 
           <p>
@@ -346,7 +345,7 @@ export const cartCell = FeatureCell(&#123;
           <div class="callout callout-info">
             <p>
               For a complete mapping of Redux concepts to
-              <sdux-vault-brand-name /> equivalents, see the
+              <sdux-brand-name /> equivalents, see the
               <a routerLink="/docs/migration">Migration Guide</a>.
             </p>
           </div>

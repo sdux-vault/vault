@@ -3,8 +3,7 @@ import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
-  VaultBrandNameComponent
+  ExampleViewerTabComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -17,7 +16,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     RouterModule,
-    VaultBrandNameComponent
+    BrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -29,9 +28,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <p class="lead">
           Redux asks: <em>what action happened?</em> and derives state by
           replaying that history through a reducer tree.
-          <sdux-vault-brand-name [tm]="true" /> asks:
-          <em>what state should exist?</em> and drives it through a
-          deterministic pipeline. The shift is subtle. Its consequences are not.
+          <sdux-brand-name /> asks: <em>what state should exist?</em> and drives
+          it through a deterministic pipeline. The shift is subtle. Its
+          consequences are not.
         </p>
         <p>
           This post walks through the two mental models, shows exactly where
@@ -44,8 +43,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           action history through reducer composition.
         </div>
         <div class="callout callout-info">
-          <strong><sdux-vault-brand-name /></strong> expresses state intent
-          directly and drives it through a deterministic pipeline.
+          <strong><sdux-brand-name /></strong> expresses state intent directly
+          and drives it through a deterministic pipeline.
         </div>
       </header>
 
@@ -100,10 +99,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">The State-Driven Model</div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> starts from a different question: what
-            should the state be <em>right now</em>? You express that intent
-            directly, without naming an action, without broadcasting to a global
-            store, and without relying on middleware to coordinate the outcome.
+            <sdux-brand-name /> starts from a different question: what should
+            the state be <em>right now</em>? You express that intent directly,
+            without naming an action, without broadcasting to a global store,
+            and without relying on middleware to coordinate the outcome.
           </p>
           <p>
             The
@@ -260,9 +259,9 @@ userCell.replaceState(
             In the Redux version, three separate actions represent the lifecycle
             of one operation. Each action dispatches globally. Each reducer must
             handle all three cases. In the
-            <sdux-vault-brand-name /> version, the deferred factory function
-            enters the pipeline and the loading, resolved, and error states are
-            managed internally through the Resolve stage — no action objects, no
+            <sdux-brand-name /> version, the deferred factory function enters
+            the pipeline and the loading, resolved, and error states are managed
+            internally through the Resolve stage — no action objects, no
             dispatch sequences, no global broadcast.
           </p>
 
@@ -308,7 +307,7 @@ cartCell
             In Redux, a reducer that does not respond to an action must
             explicitly return the current state. Every reducer does this work
             for every unmatched action type. In
-            <sdux-vault-brand-name />, the
+            <sdux-brand-name />, the
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             only executes when its own state is updated. There is no concept of
             "not matching" because there is no global broadcast to opt out of.
@@ -414,8 +413,8 @@ function addItem(cell: CartCell, item: CartItem) &#123;
             safer than dispatching it globally.
           </p>
           <p>
-            <sdux-vault-brand-name /> provides these guarantees at the
-            architectural level:
+            <sdux-brand-name /> provides these guarantees at the architectural
+            level:
           </p>
           <ul>
             <li>
@@ -451,7 +450,7 @@ function addItem(cell: CartCell, item: CartItem) &#123;
         <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
-            The StackBlitz examples show <sdux-vault-brand-name /> state intent
+            The StackBlitz examples show <sdux-brand-name /> state intent
             expressed directly — no action objects, no dispatch, no reducer
             trees.
           </p>

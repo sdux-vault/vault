@@ -1,9 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
-  VaultBrandNameComponent
+  ExampleViewerTabComponent
 } from '@sdux-vault/ui/web-components';
 import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -16,7 +16,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     RouterModule,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     StackBlitzTryItLiveComponent
   ],
   template: `
@@ -28,11 +28,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       readingTime="3">
       <header class="docs-header">
         <p class="lead">
-          React components render <sdux-vault-brand-name [tm]="true" /> Tab Sync
-          State through <strong>useSyncExternalStore()</strong>. The method
-          reads the current Snapshot during render and connects the component to
-          subsequent State changes, including State negotiated before the
-          component mounted.
+          React components render <sdux-brand-name /> Tab Sync State through
+          <strong>useSyncExternalStore()</strong>. The method reads the current
+          Snapshot during render and connects the component to subsequent State
+          changes, including State negotiated before the component mounted.
         </p>
       </header>
 

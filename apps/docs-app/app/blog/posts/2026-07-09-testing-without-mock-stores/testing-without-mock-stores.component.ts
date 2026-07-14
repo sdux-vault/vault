@@ -1,9 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
-  VaultBrandNameComponent
+  ExampleViewerTabComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -15,7 +15,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     RouterModule,
-    VaultBrandNameComponent
+    BrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -30,7 +30,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           behavior.
         </p>
         <div class="callout callout-info">
-          <sdux-vault-brand-name /> testing is three words: act, settle, assert.
+          <sdux-brand-name /> testing is three words: act, settle, assert.
         </div>
         <p>
           No mock store. No fake dispatch. The pipeline is deterministic — same
@@ -73,10 +73,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">What Deterministic Testing Looks Like</div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> executes state updates through a
-            serialized pipeline with explicit settlement boundaries. That means
-            tests can do something Redux tests can't: trust the output without
-            mocking the framework.
+            <sdux-brand-name /> executes state updates through a serialized
+            pipeline with explicit settlement boundaries. That means tests can
+            do something Redux tests can't: trust the output without mocking the
+            framework.
           </p>
           <p>The canonical testing pattern is three words:</p>
           <ul>
@@ -123,10 +123,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         </div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name />'s pipeline is engineered to be
-            deterministic. Every stage executes in a fixed order. State commits
-            are atomic — either the snapshot commits completely or nothing
-            changes. No intermediate visibility. No torn state. No reentrancy.
+            <sdux-brand-name />'s pipeline is engineered to be deterministic.
+            Every stage executes in a fixed order. State commits are atomic —
+            either the snapshot commits completely or nothing changes. No
+            intermediate visibility. No torn state. No reentrancy.
           </p>
           <p>That architecture makes testing simple because:</p>
           <ul>
@@ -172,7 +172,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             In Redux, testing async effects means mock thunks, mock sagas, or
-            marble diagram matchers. <sdux-vault-brand-name /> handles async
+            marble diagram matchers. <sdux-brand-name /> handles async
             differently: through resolve behaviors and controllers that are part
             of the pipeline's fixed execution sequence.
           </p>
@@ -217,15 +217,15 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             One concern when migrating from Redux: "Will I have to rewrite my
             reducer tests?" The answer is no. Pure reducer functions are still
-            pure. <sdux-vault-brand-name /> reducers have a simple contract:
+            pure. <sdux-brand-name /> reducers have a simple contract:
             <span class="code">(current: T) =&gt; T</span>. They receive the
             current state and return the next state.
           </p>
           <p>
             You can test reducers in isolation, just like in Redux. The
-            difference is that in <sdux-vault-brand-name />, reducers are
-            registered declaratively and execute in a fixed pipeline order — so
-            integration tests don't have to mock the state container.
+            difference is that in <sdux-brand-name />, reducers are registered
+            declaratively and execute in a fixed pipeline order — so integration
+            tests don't have to mock the state container.
           </p>
           <sdux-example-viewer-source [displayTabs]="false">
             <sdux-example-viewer-tab [label]="'Pure Reducer Function Test'">
@@ -254,7 +254,7 @@ it('sorts items by name immutably', () =&gt; &#123;
           </sdux-example-viewer-source>
           <p>
             Pure functions are testable regardless of the framework. In
-            <sdux-vault-brand-name />, when you register reducers via
+            <sdux-brand-name />, when you register reducers via
             <span class="code">.reducers()</span>, they execute in a fixed
             pipeline order — so integration tests don't have to mock the state
             container or coordinate dispatch timing.
@@ -272,7 +272,7 @@ it('sorts items by name immutably', () =&gt; &#123;
             <thead>
               <tr>
                 <th>Redux</th>
-                <th><sdux-vault-brand-name /></th>
+                <th><sdux-brand-name /></th>
               </tr>
             </thead>
             <tbody>
@@ -325,10 +325,10 @@ it('sorts items by name immutably', () =&gt; &#123;
         <div class="section-title">The Testing Guarantee</div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name />'s commitment to testing rigor is
-            deliberate. The framework was engineered from the ground up so that
-            tests are deterministic, isolated, and trustworthy. Not as an
-            afterthought — as a first-class design priority.
+            <sdux-brand-name />'s commitment to testing rigor is deliberate. The
+            framework was engineered from the ground up so that tests are
+            deterministic, isolated, and trustworthy. Not as an afterthought —
+            as a first-class design priority.
           </p>
           <p>
             That commitment means: if your test passes locally, it will pass in
@@ -352,12 +352,12 @@ it('sorts items by name immutably', () =&gt; &#123;
           <ul>
             <li>
               <a [routerLink]="['/docs/top-tier/testing']"
-                >Docs: Testing with <sdux-vault-brand-name
+                >Docs: Testing with <sdux-brand-name
               /></a>
             </li>
             <li>
               <a [routerLink]="['/docs/migration']"
-                >Migration: Redux Concepts in <sdux-vault-brand-name
+                >Migration: Redux Concepts in <sdux-brand-name
               /></a>
             </li>
           </ul>
