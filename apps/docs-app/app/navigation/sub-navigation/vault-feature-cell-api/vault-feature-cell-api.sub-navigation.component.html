@@ -234,7 +234,22 @@
       <div class="sub-menu">
         <a
           mat-list-item
-          routerLink="/docs/pipeline/apis/provide-vault"
+          routerLink="/docs/pipeline/apis/angular"
+          aria-label="angular overview documentation"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeSidenav()">
+          <span class="menu-icon menu-content"
+            >Overview
+            <img
+              src="assets/brand/angular/angular-icon.png"
+              class="image-15"
+              alt="Angular"
+          /></span>
+        </a>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/angular/provide-vault"
           aria-label="provideVault documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
@@ -249,7 +264,7 @@
 
         <a
           mat-list-item
-          routerLink="/docs/pipeline/apis/at-feature-cell"
+          routerLink="/docs/pipeline/apis/angular/at-feature-cell"
           aria-label="&#64;FeatureCell decorator documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
@@ -264,7 +279,7 @@
 
         <a
           mat-list-item
-          routerLink="/docs/pipeline/apis/provide-feature-cell"
+          routerLink="/docs/pipeline/apis/angular/provide-feature-cell"
           aria-label="provideFeatureCell documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
@@ -279,7 +294,7 @@
 
         <a
           mat-list-item
-          routerLink="/docs/pipeline/apis/inject-vault"
+          routerLink="/docs/pipeline/apis/angular/inject-vault"
           aria-label="injectVault injector documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">

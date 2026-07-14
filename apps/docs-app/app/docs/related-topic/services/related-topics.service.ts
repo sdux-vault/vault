@@ -11,11 +11,7 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class RelatedTopicsService {
-  #aliases: Record<string, string> = {
-    'at-feature-cell': 'provide-vault',
-    'inject-vault': 'provide-vault',
-    'provide-feature-cell': 'provide-vault'
-  };
+  #aliases: Record<string, string> = {};
 
   #buildSeenLink(link: RelatedTopicLinkShape): string {
     return `${link.link}${link.fragment}`;

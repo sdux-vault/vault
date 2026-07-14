@@ -29,11 +29,6 @@ describe('Component: BlogKeepReading', () => {
     fixture.detectChanges();
   }
 
-  it('should create', () => {
-    fixture.detectChanges();
-    expect(component).toBeTruthy();
-  });
-
   it('should render the section title', () => {
     fixture.detectChanges();
     el = fixture.nativeElement;
@@ -152,26 +147,28 @@ describe('Component: BlogKeepReading', () => {
     });
   });
 
-  it('should scroll to top when scrollToTop is called', () => {
-    const container = document.createElement('div');
-    const scrollSpy = jasmine.createSpy('scrollTo');
-    container.scrollTo = scrollSpy;
-    spyOn(document, 'querySelector').and.returnValue(container);
-    component.scrollToTop();
-    expect(scrollSpy).toHaveBeenCalledWith({
-      top: 0,
-      behavior: 'smooth'
+  describe('scrollToTop', () => {
+    it('should scroll to top when scrollToTop is called', () => {
+      const container = document.createElement('div');
+      const scrollSpy = jasmine.createSpy('scrollTo');
+      container.scrollTo = scrollSpy;
+      spyOn(document, 'querySelector').and.returnValue(container);
+      component.scrollToTop();
+      expect(scrollSpy).toHaveBeenCalledWith({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
-  });
 
-  it('should fall back to window.scrollTo when mat-sidenav-content is not found', () => {
-    spyOn(document, 'querySelector').and.returnValue(null);
-    const windowScrollSpy = jasmine.createSpy('scrollTo');
-    window.scrollTo = windowScrollSpy;
-    component.scrollToTop();
-    expect(windowScrollSpy).toHaveBeenCalledWith({
-      top: 0,
-      behavior: 'smooth'
+    it('should fall back to window.scrollTo when mat-sidenav-content is not found', () => {
+      spyOn(document, 'querySelector').and.returnValue(null);
+      const windowScrollSpy = jasmine.createSpy('scrollTo');
+      window.scrollTo = windowScrollSpy;
+      component.scrollToTop();
+      expect(windowScrollSpy).toHaveBeenCalledWith({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
   });
 

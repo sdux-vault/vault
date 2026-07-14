@@ -183,7 +183,7 @@ const activeUsers = userCell.state.value
 // Reactive stream — scoped to this FeatureCell
 userCell.state$.subscribe(snapshot =&gt; &#123;
   const active = snapshot.value.filter(u =&gt; u.active);
-  console.log(active);
+  console.info(active);
 &#125;);</code></pre>
             </ng-template>
           </sdux-multi-framework-example>

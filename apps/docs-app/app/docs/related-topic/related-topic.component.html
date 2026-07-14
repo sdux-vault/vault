@@ -9,6 +9,7 @@
             @for (link of links()?.links; track link.id) {
               <li>
                 <a
+                  (click)="scrollToTop()"
                   [routerLink]="link.link"
                   [fragment]="link.fragment"
                   [innerHTML]="link.display"></a>
@@ -21,6 +22,7 @@
             @for (link of links()?.crossLinks; track link.id) {
               <li>
                 <a
+                  (click)="scrollToTop()"
                   [routerLink]="link.link"
                   [fragment]="link.fragment"
                   [innerHTML]="link.display"></a>
@@ -35,6 +37,7 @@
             @for (link of links()?.globalLinks; track link.id) {
               <li>
                 <a
+                  (click)="scrollToTop()"
                   [routerLink]="link.link"
                   [fragment]="link.fragment"
                   [innerHTML]="link.display"></a>
@@ -47,6 +50,7 @@
             @for (link of links()?.globalCrossLinks; track link.id) {
               <li>
                 <a
+                  (click)="scrollToTop()"
                   [routerLink]="link.link"
                   [fragment]="link.fragment"
                   [innerHTML]="link.display"></a>

@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { PipelineRoutingDirective } from '../directives/pipeline-routing.directive';
+import { PipelineAngularApiOverviewComponent } from './angular/angular.api.component';
 import { PipelineAtFeatureCellComponent } from './at-feature-cell/at-feature-cell.api.component';
 import { PipelineCellBuilderComponent } from './cell-builder/cell-builder.api.component';
 import { PipelineFeatureCellApiComponent } from './feature-cell-methods/feature-cell.api.component';
@@ -62,7 +63,8 @@ import { PipelineVaultComponent } from './vault/vault.api.component';
     PipelineMergeStateMethodComponent,
     PipelineReplaceStateMethodComponent,
     PipelineOperatorsMethodComponent,
-    PipelineFromStreamMethodComponent
+    PipelineFromStreamMethodComponent,
+    PipelineAngularApiOverviewComponent
   ],
   templateUrl: './pipeline-api-landingpage.component.html',
   styleUrls: ['../../scss/documentation.scss'],
