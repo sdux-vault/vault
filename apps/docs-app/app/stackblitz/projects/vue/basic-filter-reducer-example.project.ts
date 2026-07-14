@@ -157,8 +157,7 @@ function handleToggleError(): void {
       (example: Example) => example.name !== 'Han'
     );
   }
-]</textarea
-        >
+]</textarea>
       </div>
 
       <div class="state-container">
@@ -177,8 +176,7 @@ function handleToggleError(): void {
       return example;
     });
   }
-]</textarea
-        >
+]</textarea>
       </div>
     </div>
 
