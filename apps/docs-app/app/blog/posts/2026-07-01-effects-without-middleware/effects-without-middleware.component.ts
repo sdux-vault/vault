@@ -6,8 +6,7 @@ import {
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
   MultiFrameworkExampleComponent,
-  PackageNameComponent,
-  VaultBrandNameComponent
+  PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -21,7 +20,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     FeatureCellBrandNameComponent,
     PackageNameComponent
   ],
@@ -36,7 +35,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           Redux effects are middleware — thunks dispatching thunks, sagas
           yielding sagas, observables piping into more observables. Every async
           operation becomes a dispatch chain that resolves at arbitrary times
-          with no ordering guarantee. <sdux-vault-brand-name [tm]="true" />
+          with no ordering guarantee. <sdux-brand-name />
           eliminates middleware entirely. Asynchronous inputs resolve through
           pipeline stages with serialized execution, deterministic ordering, and
           atomic state commitment.
@@ -142,9 +141,9 @@ function* rootSaga() &#123;
         </div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> does not use middleware. Asynchronous
-            input is handled through the Resolve stage — a core pipeline stage
-            that normalizes all incoming inputs into a canonical value before
+            <sdux-brand-name /> does not use middleware. Asynchronous input is
+            handled through the Resolve stage — a core pipeline stage that
+            normalizes all incoming inputs into a canonical value before
             downstream processing begins.
           </p>
 
@@ -212,8 +211,8 @@ function* rootSaga() &#123;
           </p>
 
           <p>
-            In <sdux-vault-brand-name />, you submit a deferred factory directly
-            to the owning <sdux-feature-cell />. The pipeline resolves the async
+            In <sdux-brand-name />, you submit a deferred factory directly to
+            the owning <sdux-feature-cell />. The pipeline resolves the async
             value under its own coordination — serialized through the conductor
             queue, committed atomically in a microtask boundary.
           </p>
@@ -310,10 +309,10 @@ userCell.mergeState(&#123;
           </p>
 
           <p>
-            <sdux-vault-brand-name /> provides orchestration through
-            Controllers. Controllers govern execution authority for pipeline
-            attempts — they evaluate whether an update is allowed, denied, or
-            aborted before pipeline computation begins.
+            <sdux-brand-name /> provides orchestration through Controllers.
+            Controllers govern execution authority for pipeline attempts — they
+            evaluate whether an update is allowed, denied, or aborted before
+            pipeline computation begins.
           </p>
 
           <table>
@@ -385,8 +384,8 @@ userCell.mergeState(&#123;
           </p>
 
           <p>
-            <sdux-vault-brand-name /> eliminates this entire category of bug
-            through architectural constraints:
+            <sdux-brand-name /> eliminates this entire category of bug through
+            architectural constraints:
           </p>
 
           <ul>
@@ -421,7 +420,7 @@ userCell.mergeState(&#123;
         <div class="section-body">
           <p>
             Redux handles async through middleware that dispatches new actions
-            at arbitrary times. <sdux-vault-brand-name /> resolves async inputs
+            at arbitrary times. <sdux-brand-name /> resolves async inputs
             through pipeline-coordinated stages with serialized execution.
           </p>
 
@@ -473,7 +472,7 @@ userCell.mergeState(&#123;
         <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
-            Explore how <sdux-vault-brand-name /> handles async state resolution
+            Explore how <sdux-brand-name /> handles async state resolution
             without middleware:
           </p>
           <ul>

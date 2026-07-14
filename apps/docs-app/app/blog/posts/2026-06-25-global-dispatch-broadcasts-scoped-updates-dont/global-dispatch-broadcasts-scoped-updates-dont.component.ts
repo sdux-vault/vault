@@ -5,8 +5,7 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  MultiFrameworkExampleComponent,
-  VaultBrandNameComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -20,7 +19,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     FeatureCellBrandNameComponent
   ],
   template: `
@@ -33,7 +32,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <p class="lead">
           Every Redux dispatch broadcasts to the entire reducer tree. Every
           reducer evaluates. Every selector re-checks. In
-          <sdux-vault-brand-name [tm]="true" />, updates target the owning
+          <sdux-brand-name />, updates target the owning
           <sdux-feature-cell [tm]="true" /> directly — no broadcast, no global
           evaluation, no wasted cycles.
         </p>
@@ -141,14 +140,11 @@ dispatch(&#123; type: 'ADD_USER', payload: user &#125;);
       </section>
 
       <section class="section">
-        <div class="section-title">
-          Scoped Updates in <sdux-vault-brand-name />
-        </div>
+        <div class="section-title">Scoped Updates in <sdux-brand-name /></div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> does not use global dispatch. State
-            updates are invoked directly on the owning
-            <sdux-feature-cell /> using
+            <sdux-brand-name /> does not use global dispatch. State updates are
+            invoked directly on the owning <sdux-feature-cell /> using
             <span class="code">mergeState()</span> or
             <span class="code">replaceState()</span>.
           </p>
@@ -206,7 +202,7 @@ userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#1
         <div class="section-body">
           <p>
             The difference is structural. In Redux, cost scales with total
-            application size. In <sdux-vault-brand-name />, cost scales with the
+            application size. In <sdux-brand-name />, cost scales with the
             feature being updated.
           </p>
 
@@ -250,7 +246,7 @@ userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#1
           <p>
             A fifty-feature application with Redux pays the broadcast tax on
             every single dispatch. A fifty-feature application with
-            <sdux-vault-brand-name /> pays only the cost of the single
+            <sdux-brand-name /> pays only the cost of the single
             <sdux-feature-cell /> being updated — the other forty-nine are
             untouched.
           </p>
@@ -303,8 +299,8 @@ userCell.mergeState(&#123; value: &#123; name: 'Alice', role: 'admin' &#125; &#1
         <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
-            See how <sdux-vault-brand-name /> eliminates global dispatch
-            broadcasting in favor of scoped, direct state updates:
+            See how <sdux-brand-name /> eliminates global dispatch broadcasting
+            in favor of scoped, direct state updates:
           </p>
 
           <ul>

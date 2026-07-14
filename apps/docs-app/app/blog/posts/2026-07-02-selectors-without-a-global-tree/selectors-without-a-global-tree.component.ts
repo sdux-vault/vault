@@ -6,8 +6,7 @@ import {
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
   MultiFrameworkExampleComponent,
-  PackageNameComponent,
-  VaultBrandNameComponent
+  PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -21,7 +20,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     FeatureCellBrandNameComponent,
     PackageNameComponent
   ],
@@ -36,10 +35,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           Redux selectors project slices from a global store tree. When the tree
           changes shape, every selector downstream breaks. Memoization libraries
           patch the performance problem but not the coupling problem.
-          <sdux-vault-brand-name [tm]="true" /> eliminates the global tree
-          entirely. State access is scoped to the owning
-          <sdux-feature-cell [tm]="true" /> — no global registry, no tree
-          coupling, no cascade failures.
+          <sdux-brand-name /> eliminates the global tree entirely. State access
+          is scoped to the owning <sdux-feature-cell [tm]="true" /> — no global
+          registry, no tree coupling, no cascade failures.
         </p>
       </header>
 
@@ -124,11 +122,10 @@ const selectActiveUsers = (state: RootState) =&gt;
         </div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> does not use a global store. State is
-            owned by individual FeatureCells. Each
-            <sdux-feature-cell /> maintains its own isolated state and execution
-            lifecycle. There is no root reducer tree, no global namespace, and
-            no shared state path.
+            <sdux-brand-name /> does not use a global store. State is owned by
+            individual FeatureCells. Each <sdux-feature-cell /> maintains its
+            own isolated state and execution lifecycle. There is no root reducer
+            tree, no global namespace, and no shared state path.
           </p>
 
           <p>
@@ -201,10 +198,10 @@ userCell.state$.subscribe(snapshot =&gt; &#123;
 
           <div class="callout callout-info">
             <p>
-              Selectors in <sdux-vault-brand-name /> are not global projections.
-              They are scoped, reusable views of a specific state owner. The
-              owning <sdux-feature-cell /> is the boundary — not a position in a
-              global tree.
+              Selectors in <sdux-brand-name /> are not global projections. They
+              are scoped, reusable views of a specific state owner. The owning
+              <sdux-feature-cell /> is the boundary — not a position in a global
+              tree.
             </p>
           </div>
         </div>
@@ -216,10 +213,10 @@ userCell.state$.subscribe(snapshot =&gt; &#123;
         </div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> provides multiple state access surfaces to
-            match different consumption patterns. All surfaces read from the
-            same atomic snapshot produced by the pipeline — they differ only in
-            how they deliver updates to consumers.
+            <sdux-brand-name /> provides multiple state access surfaces to match
+            different consumption patterns. All surfaces read from the same
+            atomic snapshot produced by the pipeline — they differ only in how
+            they deliver updates to consumers.
           </p>
 
           <table>
@@ -280,7 +277,7 @@ userCell.state$.subscribe(snapshot =&gt; &#123;
 
           <p>
             The difference is that memoization in
-            <sdux-vault-brand-name /> is simpler to reason about:
+            <sdux-brand-name /> is simpler to reason about:
           </p>
 
           <ul>
@@ -308,10 +305,10 @@ userCell.state$.subscribe(snapshot =&gt; &#123;
           <div class="callout callout-info">
             <p>
               Memoization strategies remain valid in
-              <sdux-vault-brand-name />. However, because state updates are
-              atomic and deterministic, recomputation behavior is easier to
-              reason about. You know exactly when the snapshot changed and
-              exactly what changed — no Reselect dependency graph required.
+              <sdux-brand-name />. However, because state updates are atomic and
+              deterministic, recomputation behavior is easier to reason about.
+              You know exactly when the snapshot changed and exactly what
+              changed — no Reselect dependency graph required.
             </p>
           </div>
         </div>
@@ -323,8 +320,8 @@ userCell.state$.subscribe(snapshot =&gt; &#123;
           <p>
             Redux selectors project from a global store tree, requiring
             composition and memoization libraries to manage coupling and
-            performance. <sdux-vault-brand-name /> provides scoped reactive
-            state directly from the owning <sdux-feature-cell />.
+            performance. <sdux-brand-name /> provides scoped reactive state
+            directly from the owning <sdux-feature-cell />.
           </p>
 
           <table>

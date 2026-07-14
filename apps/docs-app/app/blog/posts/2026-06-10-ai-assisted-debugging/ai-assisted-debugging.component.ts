@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 import { StackBlitzTryItLiveComponent } from '../../../docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -10,7 +10,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   imports: [
     BlogLayoutComponent,
     RouterModule,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     StackBlitzTryItLiveComponent
   ],
   template: `
@@ -23,10 +23,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           Most frontend debugging is manual: console.log, reproduce, guess,
-          repeat. <sdux-vault-brand-name [tm]="true" /> includes a built-in
-          runtime debugger that captures deterministic execution traces of your
-          state pipeline — and an AI Assist feature that turns those traces into
-          structured diagnostic reports.
+          repeat. <sdux-brand-name /> includes a built-in runtime debugger that
+          captures deterministic execution traces of your state pipeline — and
+          an AI Assist feature that turns those traces into structured
+          diagnostic reports.
         </p>
       </header>
 
@@ -47,9 +47,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             error-prone, and scales poorly as pipeline complexity grows.
           </p>
           <p>
-            <sdux-vault-brand-name /> takes a different approach. Instead of
-            asking you to instrument your code manually, it records everything
-            the pipeline does — automatically, passively, and without altering
+            <sdux-brand-name /> takes a different approach. Instead of asking
+            you to instrument your code manually, it records everything the
+            pipeline does — automatically, passively, and without altering
             runtime behavior.
           </p>
         </div>

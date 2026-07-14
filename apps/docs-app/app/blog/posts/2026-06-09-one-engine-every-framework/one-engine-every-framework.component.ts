@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   CatchPhraseComponent,
   FeatureCellBrandNameComponent,
   MultiFrameworkExampleComponent,
-  SDuXVideoComponent,
-  VaultBrandNameComponent
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -18,7 +18,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     FeatureCellBrandNameComponent,
     MultiFrameworkExampleComponent,
     RouterModule,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     SDuXVideoComponent
   ],
   template: `
@@ -30,9 +30,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           Your state management shouldn't be married to your component
-          framework. <sdux-vault-brand-name [tm]="true" /> runs the same
-          pipeline logic in Angular, React, Vue, and Svelte. Framework adapters
-          are thin wrappers &#8212; they add ergonomics, not rules.
+          framework. <sdux-brand-name /> runs the same pipeline logic in
+          Angular, React, Vue, and Svelte. Framework adapters are thin wrappers
+          &#8212; they add ergonomics, not rules.
         </p>
       </header>
 
@@ -62,17 +62,16 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
       <section class="section">
         <div class="section-title">
-          How <sdux-vault-brand-name /> Stays Framework-Agnostic
+          How <sdux-brand-name /> Stays Framework-Agnostic
         </div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> is a <sdux-catch-phrase /> framework. It
-            does not depend on reflection, runtime patching, framework
-            lifecycles, or hidden side effects. Every concept &#8212;
-            <sdux-feature-cell />s, pipelines, reducers, filters, interceptors,
-            lifecycle signals, and immutable state snapshots &#8212; is
-            implemented as a language-level primitive composed in TypeScript,
-            not a framework abstraction.
+            <sdux-brand-name /> is a <sdux-catch-phrase /> framework. It does
+            not depend on reflection, runtime patching, framework lifecycles, or
+            hidden side effects. Every concept &#8212; <sdux-feature-cell />s,
+            pipelines, reducers, filters, interceptors, lifecycle signals, and
+            immutable state snapshots &#8212; is implemented as a language-level
+            primitive composed in TypeScript, not a framework abstraction.
           </p>
           <p>
             Any framework integration exists only as a thin adapter that

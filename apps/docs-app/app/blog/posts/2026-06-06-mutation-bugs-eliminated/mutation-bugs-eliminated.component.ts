@@ -2,8 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
-  SDuXVideoComponent,
-  VaultBrandNameComponent
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -14,7 +13,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     BrandNameComponent,
     RouterModule,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     SDuXVideoComponent
   ],
   template: `
@@ -26,7 +25,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           Most state management libraries tell you "don't mutate state."
-          <sdux-brand-name [tm]="true" /> <sdux-vault-brand-name [tm]="true" />
+          <sdux-brand-name [tm]="true" /> <sdux-brand-name />
           takes a different approach — it makes mutation structurally
           impossible. Every pipeline stage receives an independent copy of your
           data, eliminating mutation leaks not by convention, but by
@@ -55,7 +54,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             The fundamental issue is that "don't mutate" is a social contract,
             not an architectural guarantee.
-            <sdux-vault-brand-name /> eliminates the entire category by making
+            <sdux-brand-name /> eliminates the entire category by making
             mutation structurally impossible at every pipeline boundary.
           </p>
         </div>
@@ -66,7 +65,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             When state enters any pipeline stage in
-            <sdux-vault-brand-name />, it is automatically deep-cloned via
+            <sdux-brand-name />, it is automatically deep-cloned via
             structuredClone. Every stage — interceptor, resolver, filter,
             reducer, merge, persist — receives its own independent copy of the
             data. No stage can see or affect another stage's copy.
@@ -81,7 +80,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
           <div class="callout callout-info">
             <strong>Key takeaway:</strong>
-            <sdux-vault-brand-name /> uses a clone-first, freeze-safe fallback
+            <sdux-brand-name /> uses a clone-first, freeze-safe fallback
             strategy. The primary path deep-clones via structuredClone. When
             cloning isn't possible, the pipeline falls back to deep-freezing the
             value to prevent mutation.
@@ -95,8 +94,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             Not everything can be cloned. structuredClone cannot handle
             functions, promises, class instances, or DOM nodes.
-            <sdux-vault-brand-name /> handles these cases deterministically
-            rather than silently ignoring them.
+            <sdux-brand-name /> handles these cases deterministically rather
+            than silently ignoring them.
           </p>
           <p>
             When a value cannot be deep-cloned, the pipeline applies a deep
@@ -222,9 +221,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             "Don't mutate" is a convention. Conventions break under deadline
             pressure, during late-night debugging, and in code written by
             engineers who haven't read the style guide.
-            <sdux-vault-brand-name /> eliminates the category entirely. Your
-            state is isolated at every boundary, every time, without you writing
-            a single line of defensive code.
+            <sdux-brand-name /> eliminates the category entirely. Your state is
+            isolated at every boundary, every time, without you writing a single
+            line of defensive code.
           </p>
 
           <div class="callout callout-warning">

@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   DiagramComponent,
   MultiFrameworkExampleComponent,
-  PackageNameComponent,
-  VaultBrandNameComponent
+  PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { StateInputTypeCommonComponent } from 'apps/docs-app/app/docs/common/state/state-input-type.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
@@ -21,11 +21,10 @@ import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz
     RouterModule,
     PipelineRelatedTopicComponent,
     DiagramComponent,
-    VaultBrandNameComponent,
     PackageNameComponent,
     StateInputTypeCommonComponent,
-    VaultBrandNameComponent,
-    StackBlitzTryItLiveComponent
+    StackBlitzTryItLiveComponent,
+    BrandNameComponent
   ],
   templateUrl: './merge-state.method.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

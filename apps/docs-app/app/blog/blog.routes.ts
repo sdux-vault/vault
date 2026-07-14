@@ -288,6 +288,14 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-13-no-middleware-registration-order/no-middleware-registration-order.component').then(
         (m) => m.BlogNoMiddlewareRegistrationOrderComponent
       )
+  },
+  {
+    path: 'atomic-state-commitment',
+    data: { category: 'blogs', type: 'atomic-state-commitment' },
+    loadComponent: () =>
+      import('./posts/2026-07-14-atomic-state-commitment/atomic-state-commitment.component').then(
+        (m) => m.BlogAtomicStateCommitmentComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

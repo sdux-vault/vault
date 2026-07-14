@@ -1,9 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   MultiFrameworkExampleComponent,
-  SDuXVideoComponent,
-  VaultBrandNameComponent
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -14,7 +14,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     MultiFrameworkExampleComponent,
     RouterModule,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     SDuXVideoComponent
   ],
   template: `
@@ -26,11 +26,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       readingTime="5">
       <header class="docs-header">
         <p class="lead">
-          <sdux-vault-brand-name [tm]="true" /> 1.0 is here. A pure TypeScript
-          state engine with first-class bindings for Angular, React, Vue, and
-          Node &mdash; not because cross-framework is trendy, but because state
-          logic should never be coupled to your rendering layer. This is what
-          "Plain TypeScript, Zero Magic" looks like after shipping 1.0.
+          <sdux-brand-name /> 1.0 is here. A pure TypeScript state engine with
+          first-class bindings for Angular, React, Vue, and Node &mdash; not
+          because cross-framework is trendy, but because state logic should
+          never be coupled to your rendering layer. This is what "Plain
+          TypeScript, Zero Magic" looks like after shipping 1.0.
         </p>
       </header>
 
@@ -54,7 +54,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             APIs are completely different.
           </p>
           <p>
-            <sdux-vault-brand-name /> started from a different premise: state
+            <sdux-brand-name /> started from a different premise: state
             transitions are pure logic. They don't need a component tree, a
             virtual DOM, or a dependency injection container. They need a typed
             pipeline that runs the same way everywhere.
@@ -74,8 +74,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </p>
           <div class="callout callout-info">
             <strong>Zero dependencies</strong> means your bundle size stays
-            predictable. <sdux-vault-brand-name /> adds only the pipeline
-            runtime &mdash; no transitive dependency tree to audit or update.
+            predictable. <sdux-brand-name /> adds only the pipeline runtime
+            &mdash; no transitive dependency tree to audit or update.
           </div>
           <p>
             Because the core is plain TypeScript, it runs anywhere the language
@@ -89,8 +89,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">First-Class Bindings, Not Afterthoughts</div>
         <div class="section-body">
           <p>
-            Framework support in <sdux-vault-brand-name /> is delivered through
-            thin binding packages that adapt the core engine to each framework's
+            Framework support in <sdux-brand-name /> is delivered through thin
+            binding packages that adapt the core engine to each framework's
             idioms:
           </p>
           <table>
@@ -213,7 +213,7 @@ cartCell.initialize();</code></pre>
             The Builder doesn't generate scaffolding you'll throw away. It
             generates the same configuration a production app uses &mdash;
             because there's only one way to configure a pipeline in
-            <sdux-vault-brand-name />.
+            <sdux-brand-name />.
           </p>
         </div>
       </section>

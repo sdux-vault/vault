@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
-  SDuXVideoComponent,
-  VaultBrandNameComponent
+  BrandNameComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -12,7 +12,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   imports: [
     BlogLayoutComponent,
     RouterModule,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     SDuXVideoComponent
   ],
   template: `
@@ -26,8 +26,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           How many bugs in your app are timing bugs? Race conditions.
           Reentrancy. Observers firing on partial state. Promise resolution
           interleaving with state writes.
-          <sdux-vault-brand-name [tm]="true" /> eliminates the entire category —
-          not with workarounds, but with architecture.
+          <sdux-brand-name /> eliminates the entire category — not with
+          workarounds, but with architecture.
         </p>
       </header>
 
@@ -35,8 +35,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">The Two-Phase Execution Model</div>
         <div class="section-body">
           <p>
-            Every state update in <sdux-vault-brand-name /> runs in two strict
-            phases. This separation is the foundation that makes timing bugs
+            Every state update in <sdux-brand-name /> runs in two strict phases.
+            This separation is the foundation that makes timing bugs
             structurally impossible.
           </p>
           <p>
@@ -127,10 +127,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <div class="callout callout-warning">
             <strong>Note:</strong> In traditional state systems, a common source
             of reentrancy is observers that dispatch new actions in response to
-            state changes. <sdux-vault-brand-name />'s microtask-deferred
-            commitment ensures any such dispatch enters the pipeline as a
-            separate, ordered execution — never interleaving with the current
-            commit.
+            state changes. <sdux-brand-name />'s microtask-deferred commitment
+            ensures any such dispatch enters the pipeline as a separate, ordered
+            execution — never interleaving with the current commit.
           </div>
         </div>
       </section>
@@ -141,7 +140,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         </div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> enforces a strict ordering model across
+            <sdux-brand-name /> enforces a strict ordering model across
             promises, observables, and streams. Regardless of how an input
             originates, the following ordering is guaranteed:
           </p>
@@ -184,7 +183,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             Most state management systems bolt on timing safety through
             middleware, scheduler configurations, or developer discipline.
-            <sdux-vault-brand-name /> makes timing bugs impossible at the
+            <sdux-brand-name /> makes timing bugs impossible at the
             architectural level. You don't configure this behavior. You don't
             opt into it. It's how the pipeline works.
           </p>
@@ -201,7 +200,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             >
             to see the complete execution model, ordering rules, and state
             commitment guarantees that underpin
-            <sdux-vault-brand-name /> pipeline reliability.
+            <sdux-brand-name /> pipeline reliability.
           </p>
         </div>
       </section>

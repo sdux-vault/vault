@@ -244,6 +244,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'No Middleware Registration Order — SDuX Vault Blog',
       description:
         'Learn how SDuX Vault replaces implicit Redux middleware ordering with a fixed, guaranteed pipeline stage sequence that executes the same way every time.'
+    },
+    {
+      link: '/blog/atomic-state-commitment',
+      display:
+        'Atomic State Commitment — Why Components Never See Partial Updates',
+      title: 'Atomic State Commitment — SDuX Vault Blog',
+      description:
+        'Understand how SDuX Vault defers state commitment to a microtask boundary, committing atomic snapshots so components never see partial or torn updates.'
     }
   ]
 };

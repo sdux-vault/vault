@@ -5,8 +5,7 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  MultiFrameworkExampleComponent,
-  VaultBrandNameComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -20,7 +19,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     FeatureCellBrandNameComponent
   ],
   template: `
@@ -34,8 +33,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           Redux actions were a breakthrough — explicit intent as data. But
           action type strings, creator functions, and switch statements scaled
           into boilerplate factories. What if you kept the explicitness but
-          dropped the ceremony? <sdux-vault-brand-name [tm]="true" /> answers
-          that question with <span class="code">mergeState()</span> and
+          dropped the ceremony? <sdux-brand-name /> answers that question with
+          <span class="code">mergeState()</span> and
           <span class="code">replaceState()</span>.
         </p>
       </header>
@@ -142,8 +141,8 @@ dispatch(addUser(newUser));</code></pre>
         <div class="section-title">Direct State Intent with mergeState</div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> does not use global action objects.
-            Instead, state updates are invoked directly on the owning
+            <sdux-brand-name /> does not use global action objects. Instead,
+            state updates are invoked directly on the owning
             <sdux-feature-cell />. You call
             <span class="code">mergeState()</span> or
             <span class="code">replaceState()</span> on the state owner itself —
@@ -268,8 +267,8 @@ userCell.replaceState(&#123; value: defaultUser &#125;);</code></pre>
         </div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> does not prohibit action-like structures.
-            If your team benefits from named intent objects for organization or
+            <sdux-brand-name /> does not prohibit action-like structures. If
+            your team benefits from named intent objects for organization or
             auditability, you can still structure your input that way:
           </p>
 
@@ -294,7 +293,7 @@ userCell.mergeState(addUserIntent);</code></pre>
 
           <div class="callout callout-info">
             <p>
-              <sdux-vault-brand-name /> is intentionally designed to minimize
+              <sdux-brand-name /> is intentionally designed to minimize
               structural boilerplate. Action creators, switch statements, and
               large type unions are not required for correctness. Avoid
               recreating Redux-style ceremony unless it provides clear value for
@@ -308,8 +307,8 @@ userCell.mergeState(addUserIntent);</code></pre>
         <div class="section-title">Deeper Dive</div>
         <div class="section-body">
           <p>
-            See how <sdux-vault-brand-name /> eliminates action ceremony in a
-            live, runnable example:
+            See how <sdux-brand-name /> eliminates action ceremony in a live,
+            runnable example:
           </p>
           <ul>
             <li>

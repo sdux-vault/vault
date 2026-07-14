@@ -1,9 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
-  VaultBrandNameComponent
+  ExampleViewerTabComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -15,7 +15,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     RouterModule,
-    VaultBrandNameComponent
+    BrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -27,9 +27,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <p class="lead">
           Redux middleware runs in registration order. Change the order, change
           the behavior — and there is no contract about who goes first.
-          <sdux-vault-brand-name [tm]="true" /> replaces unordered middleware
-          with a fixed, guaranteed sequence of pipeline stages. Same order.
-          Every time. Deterministic.
+          <sdux-brand-name /> replaces unordered middleware with a fixed,
+          guaranteed sequence of pipeline stages. Same order. Every time.
+          Deterministic.
         </p>
         <p>
           This post explains why implicit middleware ordering is a source of
@@ -42,8 +42,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           registration order with no execution contract.
         </div>
         <div class="callout callout-info">
-          <strong><sdux-vault-brand-name /></strong> pipeline stages execute in
-          a fixed, guaranteed order every time.
+          <strong><sdux-brand-name /></strong> pipeline stages execute in a
+          fixed, guaranteed order every time.
         </div>
       </header>
 
@@ -112,12 +112,12 @@ const store = createStore(
         <div class="section-title">A Fixed, Ordered Pipeline</div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> does not compose middleware. Every state
-            update flows through a deterministic pipeline whose stage order is
-            fixed by the architecture — not by the order in which you register
-            behaviors. You register reducers, filters, taps, and other behaviors
-            in any order that reads well; the pipeline still executes each stage
-            in its canonical position.
+            <sdux-brand-name /> does not compose middleware. Every state update
+            flows through a deterministic pipeline whose stage order is fixed by
+            the architecture — not by the order in which you register behaviors.
+            You register reducers, filters, taps, and other behaviors in any
+            order that reads well; the pipeline still executes each stage in its
+            canonical position.
           </p>
           <p>
             The
@@ -259,7 +259,7 @@ cartCell
                 <th scope="col" class="column-250">Concern</th>
                 <th scope="col" class="column-auto">Redux Middleware</th>
                 <th scope="col" class="column-auto">
-                  <sdux-vault-brand-name /> Pipeline
+                  <sdux-brand-name /> Pipeline
                 </th>
               </tr>
             </thead>

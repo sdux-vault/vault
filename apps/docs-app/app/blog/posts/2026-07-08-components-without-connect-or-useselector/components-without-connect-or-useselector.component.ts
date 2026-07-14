@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  MultiFrameworkExampleComponent,
-  VaultBrandNameComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -19,7 +19,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     FeatureCellBrandNameComponent,
     MultiFrameworkExampleComponent,
     RouterModule,
-    VaultBrandNameComponent
+    BrandNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -34,7 +34,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <span class="code">useSelector()</span>, and
           <span class="code">useDispatch()</span>. Every component subscribes to
           the global store and re-evaluates on every update.
-          <sdux-vault-brand-name [tm]="true" /> components inject the
+          <sdux-brand-name /> components inject the
           <sdux-feature-cell [tm]="true" /> directly — no HOCs, no hooks
           ceremony, no store-wide re-renders.
         </p>
@@ -137,13 +137,11 @@ function UserList() &#123;
       <!-- SDuX Vault Direct Injection                                  -->
       <!-- ============================================================ -->
       <section class="section">
-        <div class="section-title">
-          <sdux-vault-brand-name /> Direct Injection
-        </div>
+        <div class="section-title"><sdux-brand-name /> Direct Injection</div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> components do not connect to a global
-            store. Instead, they inject or import the specific
+            <sdux-brand-name /> components do not connect to a global store.
+            Instead, they inject or import the specific
             <sdux-feature-cell /> whose state they depend on. Because
             FeatureCells are state owners, a component interacts directly with
             the state it cares about — not a centralized root tree.
@@ -233,11 +231,11 @@ employeeCell.state$
           </p>
 
           <p>
-            <sdux-vault-brand-name /> has no Provider requirement. FeatureCells
-            are registered at application startup and are globally addressable
-            by key. In Angular, you inject the owning service. In React, Vue,
-            and Svelte, you import the cell directly. There is no context
-            boundary to manage and no wrapper to forget.
+            <sdux-brand-name /> has no Provider requirement. FeatureCells are
+            registered at application startup and are globally addressable by
+            key. In Angular, you inject the owning service. In React, Vue, and
+            Svelte, you import the cell directly. There is no context boundary
+            to manage and no wrapper to forget.
           </p>
 
           <div class="callout callout-info">
@@ -269,10 +267,10 @@ employeeCell.state$
           </p>
 
           <p>
-            <sdux-vault-brand-name /> eliminates the problem architecturally.
-            State commitment is atomic and deferred to a microtask. Components
-            never observe intermediate values or partially reduced state. Every
-            render sees a finalized snapshot.
+            <sdux-brand-name /> eliminates the problem architecturally. State
+            commitment is atomic and deferred to a microtask. Components never
+            observe intermediate values or partially reduced state. Every render
+            sees a finalized snapshot.
           </p>
 
           <table>
@@ -280,7 +278,7 @@ employeeCell.state$
               <tr>
                 <th class="column-175">Concern</th>
                 <th class="column-auto">Redux</th>
-                <th class="column-auto"><sdux-vault-brand-name /></th>
+                <th class="column-auto"><sdux-brand-name /></th>
               </tr>
             </thead>
             <tbody>
@@ -324,9 +322,8 @@ employeeCell.state$
               store dispatch — even when the selected slice has not changed.
               Referential equality checks prevent a re-render, but the selector
               still executes. In large applications with many selectors, this
-              evaluation cost adds up. <sdux-vault-brand-name /> scoped updates
-              do not trigger evaluation outside the owning
-              <sdux-feature-cell />.
+              evaluation cost adds up. <sdux-brand-name /> scoped updates do not
+              trigger evaluation outside the owning <sdux-feature-cell />.
             </p>
           </div>
         </div>
@@ -345,8 +342,7 @@ employeeCell.state$
           </p>
 
           <p>
-            <strong><sdux-vault-brand-name /></strong> inverts that
-            relationship.
+            <strong><sdux-brand-name /></strong> inverts that relationship.
             <strong
               ><i>The <sdux-feature-cell /> is the state owner.</i></strong
             >

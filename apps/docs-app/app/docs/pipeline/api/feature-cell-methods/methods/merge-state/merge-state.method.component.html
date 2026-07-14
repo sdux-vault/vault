@@ -66,8 +66,7 @@
       <p>
         A common anti-pattern when using Merge is reading the current State,
         combining it with new data in consumer code, and passing the
-        pre-computed result to the <sdux-vault-brand-name /> as the merge
-        payload.
+        pre-computed result to the <sdux-brand-name /> as the merge payload.
       </p>
 
       <div class="table-title">Anti-Pattern</div>
@@ -112,12 +111,11 @@
 
       <p>
         Instead, pass only the new data as the merge payload and delegate the
-        combination logic to a Merge Behavior.
-        <sdux-vault-brand-name /> provides purpose-built merge Behaviors through
-        the addons package that handle array accumulation, property merging, and
-        other common strategies. These Behaviors operate inside the Pipeline at
-        the correct execution point, ensuring they always merge against the
-        current resolved State.
+        combination <sdux-brand-name />logic to a Merge Behavior. provides
+        purpose-built merge Behaviors through the addons package that handle
+        array accumulation, property merging, and other common strategies. These
+        Behaviors operate inside the Pipeline at the correct execution point,
+        ensuring they always merge against the current resolved State.
       </p>
 
       <div class="table-title">Recommended Pattern</div>

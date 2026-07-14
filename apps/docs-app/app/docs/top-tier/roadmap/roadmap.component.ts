@@ -6,8 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import {
   BrandNameComponent,
-  PackageNameComponent,
-  VaultBrandNameComponent
+  PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from '../../related-topic/related-topic.component';
 import { AddonRoadMapConstants } from './constants/addons-roadmap-features.constant';
@@ -27,7 +26,6 @@ import { CoreRoadmapSortKey } from './types/roadmap-sort-key.type';
     MatFormFieldModule,
     MatButtonModule,
     MatIconModule,
-    VaultBrandNameComponent,
     PipelineRelatedTopicComponent,
     PackageNameComponent
   ],

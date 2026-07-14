@@ -225,5 +225,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-07-13',
     readingTime: 7,
     active: true
+  },
+  {
+    slug: 'atomic-state-commitment',
+    title: 'Atomic State Commitment — Why Components Never See Partial Updates',
+    date: '2026-07-14',
+    readingTime: 7,
+    active: true
   }
 ];

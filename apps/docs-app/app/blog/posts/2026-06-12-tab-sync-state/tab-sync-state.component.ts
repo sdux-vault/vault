@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
-  MultiFrameworkExampleComponent,
-  VaultBrandNameComponent
+  BrandNameComponent,
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz/try-it-live/stack-blitz-try-it-live.component';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -14,7 +14,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BlogLayoutComponent,
     RouterModule,
     MultiFrameworkExampleComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     StackBlitzTryItLiveComponent
   ],
   template: `
@@ -28,9 +28,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <p class="lead">
           Open a second browser tab. Your state is already there — no custom
           code, no manual sync.
-          <sdux-vault-brand-name [tm]="true" /> Tab Sync Controller uses
-          BroadcastChannel and a localStorage registry to negotiate state across
-          tabs automatically.
+          <sdux-brand-name /> Tab Sync Controller uses BroadcastChannel and a
+          localStorage registry to negotiate state across tabs automatically.
         </p>
       </header>
 
@@ -61,7 +60,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">How Tab Sync Works</div>
         <div class="section-body">
           <p>
-            <sdux-vault-brand-name /> solves this with two components that work
+            <sdux-brand-name /> solves this with two components that work
             together: the Tab Sync Controller and the Tab Sync State Behavior.
             The controller handles initial negotiation — figuring out whether
             peer tabs exist and synchronizing state before the first pipeline

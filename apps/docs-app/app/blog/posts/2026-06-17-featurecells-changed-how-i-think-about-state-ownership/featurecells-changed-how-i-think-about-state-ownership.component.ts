@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   FeatureCellBrandNameComponent,
   MultiFrameworkExampleComponent,
-  SDuXVideoComponent,
-  VaultBrandNameComponent
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -16,7 +16,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     FeatureCellBrandNameComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     SDuXVideoComponent
   ],
   template: `
@@ -28,10 +28,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           Every state library I used before
-          <sdux-vault-brand-name [tm]="true" /> shared the same fundamental
-          assumption: state lives in a global store, and every feature reaches
-          into it. <sdux-feature-cell />s changed that assumption entirely. One
-          feature, one cell, one truth — and the problems that come with
+          <sdux-brand-name /> shared the same fundamental assumption: state
+          lives in a global store, and every feature reaches into it.
+          <sdux-feature-cell />s changed that assumption entirely. One feature,
+          one cell, one truth — and the problems that come with
           shared-everything architectures simply disappear.
         </p>
       </header>
@@ -68,10 +68,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             A
             <a href="/docs/references/functions/feature-cell">FeatureCell</a> in
-            <sdux-vault-brand-name /> is an isolated unit of state ownership.
-            Each cell encapsulates its own typed state, its own pipeline, and
-            its own lifecycle boundary. No other cell can read or write another
-            cell's state directly.
+            <sdux-brand-name /> is an isolated unit of state ownership. Each
+            cell encapsulates its own typed state, its own pipeline, and its own
+            lifecycle boundary. No other cell can read or write another cell's
+            state directly.
           </p>
           <sdux-multi-framework-example
             description="Registering a FeatureCell with Typed State">

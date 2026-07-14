@@ -5,8 +5,7 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  MultiFrameworkExampleComponent,
-  VaultBrandNameComponent
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -20,7 +19,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
-    VaultBrandNameComponent,
+    BrandNameComponent,
     FeatureCellBrandNameComponent
   ],
   template: `
@@ -32,9 +31,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       <header class="docs-header">
         <p class="lead">
           If your Redux reducer is pure, does not mutate, and preserves shape —
-          it works as a <sdux-vault-brand-name [tm]="true" /> reducer behavior
-          with zero modification. This is the easiest migration path: take what
-          you already have and register it declaratively.
+          it works as a <sdux-brand-name /> reducer behavior with zero
+          modification. This is the easiest migration path: take what you
+          already have and register it declaratively.
         </p>
       </header>
 
@@ -42,8 +41,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">What Makes a Reducer Portable</div>
         <div class="section-body">
           <p>
-            A Redux reducer is portable to <sdux-vault-brand-name /> when it
-            meets three criteria:
+            A Redux reducer is portable to <sdux-brand-name /> when it meets
+            three criteria:
           </p>
 
           <ul>
@@ -64,7 +63,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             Most well-written Redux reducers already satisfy all three. The
             patterns Redux taught you — spread operators, array methods that
             return new arrays, computed properties — all produce functions that
-            work directly in <sdux-vault-brand-name />.
+            work directly in <sdux-brand-name />.
           </p>
 
           <div class="callout callout-info">
@@ -83,11 +82,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             In Redux, reducers compose into a tree via
-            <span class="code">combineReducers()</span>. In
-            <sdux-vault-brand-name />, reducers register declaratively through
-            the fluent <span class="code">.reducers()</span> API and must be
-            configured <strong>before</strong> the <sdux-feature-cell /> is
-            initialized.
+            <span class="code">combineReducers()</span>. In <sdux-brand-name />,
+            reducers register declaratively through the fluent
+            <span class="code">.reducers()</span> API and must be configured
+            <strong>before</strong> the <sdux-feature-cell /> is initialized.
           </p>
 
           <sdux-example-viewer-source
@@ -168,7 +166,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
           <p>
             The function you wrote for Redux is the function you register in
-            <sdux-vault-brand-name />. The investment in learning pure state
+            <sdux-brand-name />. The investment in learning pure state
             transformations was not wasted — it was preparation.
           </p>
         </div>
@@ -187,7 +185,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </p>
 
           <p>
-            In <sdux-vault-brand-name />, reducers exist as a dedicated
+            In <sdux-brand-name />, reducers exist as a dedicated
             <strong>Reducer Stage</strong> within the pipeline. They are
             registered declaratively and the pipeline structure is fixed after
             initialization:
@@ -266,9 +264,8 @@ const userCell = FeatureCell(&#123;
 
           <p>
             Unlike Redux reducer trees, which may be composed or replaced at
-            runtime, <sdux-vault-brand-name /> enforces pipeline consistency.
-            Reducers cannot be added, removed, or reordered after
-            initialization.
+            runtime, <sdux-brand-name /> enforces pipeline consistency. Reducers
+            cannot be added, removed, or reordered after initialization.
           </p>
 
           <div class="callout callout-warning">
