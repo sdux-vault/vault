@@ -111,6 +111,15 @@ const LIBRARIES = {
     versionFile: 'src/lib/version/version.register.ts',
     buildCommand: 'npm run build:shared',
     licenses: ['mit']
+  },
+
+  '@sdux-vault/vue': {
+    packageName: '@sdux-vault/vue',
+    packagePath: 'libs/core-extensions/vue',
+    distPath: 'dist/core-extensions/vue',
+    versionFile: 'src/lib/version/version.register.ts',
+    buildCommand: 'npm run build:vue',
+    licenses: ['mit']
   }
   /*
   'dev-tools-ui': {

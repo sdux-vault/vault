@@ -72,6 +72,7 @@
     "build:testing-utils": "ng build testing-utils",
     "build:integration:tests": "node libs/testing/integration/integration-build.script.mjs",
     "build:react": "ng build react",
+    "build:vue": "ng build vue",
     "build:readmes": "node tools/readme-generation/readme-builder.mjs",
     "build:references": "run-s build:engine-docs:single-only build:docs-json:single-only build:merge-compodocs:single-only build:types:single-only build:reference-docs:single-only build:reference-menus:single-only build:link-generator:single-only build:search-index:single-only build:blog-index:single-only build:merge-indexes:single-only format:all",
     "build:engine-docs:single-only": "npm run docs:json --prefix ../engine",
