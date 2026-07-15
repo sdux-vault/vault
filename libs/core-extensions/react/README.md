@@ -16,6 +16,14 @@ Deterministic state management for every framework — one pipeline, zero ambigu
 </p>
 
 <p align="center">
+  <a href="https://youtu.be/m7ClyWSh754">
+    <img src="https://img.youtube.com/vi/m7ClyWSh754/maxresdefault.jpg" width="600" alt="Watch: 5-minute overview" />
+  </a>
+  <br />
+  <em>Watch: 5-minute overview</em>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
   <img src="https://img.shields.io/badge/TypeScript-first-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/React-19+-61DAFB?logo=react&logoColor=black" alt="React 19+" />
