@@ -3,6 +3,7 @@ import { RELATED_TOPICS_DEV_TOOLS_REGISTRY } from 'apps/docs-app/app/docs/relate
 import { RELATED_TOPICS_ENTITY_ACCESS_REGISTRY } from 'apps/docs-app/app/docs/related-topic/constants/related-topics.entity-access.registry';
 import { RELATED_TOPICS_SDUX_REGISTRY } from 'apps/docs-app/app/docs/related-topic/constants/related-topics.sdux.registry';
 import { RelatedTopicRegistryShape } from '../shapes/related-topic-registry.shape';
+import { RELATED_TOPICS_PROVIDE_VAULT_REGISTRY } from './related-topics.angular.registry';
 import { RELATED_TOPICS_CONTROLLERS_REGISTRY } from './related-topics.controllers.registry';
 import { RELATED_TOPICS_DEPRECATED_REGISTRY } from './related-topics.deprecated.registry';
 import { RELATED_TOPICS_DOCS_REGISTRY } from './related-topics.docs.registry';
@@ -22,7 +23,6 @@ import { RELATED_TOPICS_OPERATORS_REGISTRY } from './related-topics.operators.re
 import { RELATED_TOPICS_PERSIST_REGISTRY } from './related-topics.persist.registry';
 import { RELATED_TOPICS_PIPELINE_OVERVIEW_REGISTRY } from './related-topics.pipeline-overview.registry';
 import { RELATED_TOPICS_PRESS_REGISTRY } from './related-topics.press.registry';
-import { RELATED_TOPICS_PROVIDE_VAULT_REGISTRY } from './related-topics.provide-vault.registry';
 import { RELATED_TOPICS_REDUCERS_REGISTRY } from './related-topics.reducers.registry';
 import { RELATED_TOPICS_RESOLVE_REGISTRY } from './related-topics.resolve.registry';
 import { RELATED_TOPICS_STACKBLITZ_REGISTRY } from './related-topics.stackblitz.registry';
@@ -77,6 +77,8 @@ export const RELATED_TOPICS_REGISTRY: RelatedTopicRegistryShape = {
   },
 
   categories: {
+    angular: RELATED_TOPICS_PROVIDE_VAULT_REGISTRY,
+
     blogs: RELATED_TOPICS_BLOGS_REGISTRY,
 
     default: {
@@ -133,8 +135,6 @@ export const RELATED_TOPICS_REGISTRY: RelatedTopicRegistryShape = {
     'pipeline-overview': RELATED_TOPICS_PIPELINE_OVERVIEW_REGISTRY,
 
     press: RELATED_TOPICS_PRESS_REGISTRY,
-
-    'provide-vault': RELATED_TOPICS_PROVIDE_VAULT_REGISTRY,
 
     reducers: RELATED_TOPICS_REDUCERS_REGISTRY,
 

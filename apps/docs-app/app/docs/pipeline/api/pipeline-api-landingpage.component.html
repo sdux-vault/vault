@@ -91,12 +91,31 @@
     }
   }
 
-  @case ('at-feature-cell') {
-    <sdux-pipeline-at-feature-cell-api />
+  @case ('react') {
+    <sdux-pipeline-react-overview-api />
   }
 
-  @case ('inject-vault') {
-    <sdux-pipeline-inject-vault-api />
+  @case ('angular') {
+    @switch (type) {
+      @case ('at-feature-cell') {
+        <sdux-pipeline-at-feature-cell-api />
+      }
+
+      @case ('inject-vault') {
+        <sdux-pipeline-inject-vault-api />
+      }
+
+      @case ('provide-vault') {
+        <sdux-pipeline-provide-vault-api />
+      }
+
+      @case ('provide-feature-cell') {
+        <sdux-pipeline-provide-feature-cell />
+      }
+      @default {
+        <sdux-pipeline-angular-overview-api />
+      }
+    }
   }
 
   @case ('cell-builder') {
@@ -105,14 +124,6 @@
 
   @case ('vault') {
     <sdux-pipeline-vault-api />
-  }
-
-  @case ('provide-vault') {
-    <sdux-pipeline-provide-vault-api />
-  }
-
-  @case ('provide-feature-cell') {
-    <sdux-pipeline-provide-feature-cell />
   }
 
   @case ('feature-cell') {

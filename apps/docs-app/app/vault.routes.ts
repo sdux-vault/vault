@@ -102,6 +102,14 @@ export const routes: Routes = [
       )
   },
   {
+    path: 'stackblitz',
+    data: { category: 'stackblitz' },
+    loadComponent: () =>
+      import('./docs/stack-blitz/stack-blitz.component').then(
+        (m) => m.StackBlitzOverviewComponent
+      )
+  },
+  {
     path: 'docs',
     children: [
       {

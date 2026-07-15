@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MultiFrameworkExampleComponent } from '@sdux-vault/ui/web-components';
-import { VaultFeatureCellShapeCommonComponent } from '../../../../docs/common/feature-cell/feature-cell-shape.component';
-import { PipelineRelatedTopicComponent } from '../../../../docs/related-topic/related-topic.component';
+import { VaultFeatureCellShapeCommonComponent } from '../../../../../docs/common/feature-cell/feature-cell-shape.component';
+import { PipelineRelatedTopicComponent } from '../../../../../docs/related-topic/related-topic.component';
 
 /**
  * The pipeline <a href="/docs/references/functions/inject-vault">injectVault</a> documentation
@@ -17,7 +17,7 @@ import { PipelineRelatedTopicComponent } from '../../../../docs/related-topic/re
     VaultFeatureCellShapeCommonComponent
   ],
   templateUrl: './inject-vault.api.component.html',
-  styleUrls: ['../../../scss/documentation.scss'],
+  styleUrls: ['../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineInjectVaultComponent {}

@@ -1,26 +1,7 @@
+import { StateSnapshotShape } from '@sdux-vault/shared';
 import { useSyncExternalStore } from 'react';
-import {
-  FeatureCellBaseShape,
-  StateEmitSnapshotShape,
-  StateSnapshotShape
-} from '@sdux-vault/shared';
-import { Observable } from 'rxjs';
-import { FeatureCellShape as ReactFeatureCellShape } from '../../shapes/feature-cell.shape';
-
-/**
- * Minimal core FeatureCell contract required by the React adapter.
- */
-interface ReactAdapterCoreFeatureCellShape<T> extends FeatureCellBaseShape<T> {
-  /**
-   * Read-only synchronous snapshot of the current FeatureCell state.
-   */
-  state: StateSnapshotShape<T>;
-
-  /**
-   * Observable that emits committed state snapshots.
-   */
-  state$: Observable<StateEmitSnapshotShape<T>>;
-}
+import { ReactFeatureCellContext } from '../../context/react-feature-cell.context';
+import { FeatureCellShape } from '../../shapes/feature-cell.shape';
 
 /**
  * React adapter that augments a core FeatureCell with an explicit
@@ -41,7 +22,7 @@ export class ReactFeatureCellAdapter<T> {
    *
    * @param core - The framework-agnostic FeatureCell instance to adapt.
    */
-  constructor(private readonly core: ReactAdapterCoreFeatureCellShape<T>) {
+  constructor(private readonly core: ReactFeatureCellContext<T>) {
     this.#cachedSnapshot = this.core.state;
   }
 
@@ -50,7 +31,7 @@ export class ReactFeatureCellAdapter<T> {
    *
    * @returns The FeatureCell with an attached `useSyncExternalStore()` method.
    */
-  build(): ReactFeatureCellShape<T> {
+  build(): FeatureCellShape<T> {
     const cell = this.core;
 
     Object.defineProperty(cell, 'useSyncExternalStore', {
@@ -65,7 +46,7 @@ export class ReactFeatureCellAdapter<T> {
         )
     });
 
-    return cell as unknown as ReactFeatureCellShape<T>;
+    return cell as unknown as FeatureCellShape<T>;
   }
 
   /**

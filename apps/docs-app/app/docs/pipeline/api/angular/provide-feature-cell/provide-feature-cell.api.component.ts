@@ -6,7 +6,7 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { FeatureCellInsightsConfigCommonComponent } from 'apps/docs-app/app/docs/common/feature-cell/feature-cell-insights-config.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
-import { FeatureCellDiagramCommonComponent } from '../../../common/feature-cell/feature-cell-diagram.component';
+import { FeatureCellDiagramCommonComponent } from '../../../../common/feature-cell/feature-cell-diagram.component';
 
 /**
  * The pipeline provide vault documentation
@@ -23,7 +23,7 @@ import { FeatureCellDiagramCommonComponent } from '../../../common/feature-cell/
     FeatureCellDiagramCommonComponent
   ],
   templateUrl: './provide-feature-cell.api.component.html',
-  styleUrls: ['../../../scss/documentation.scss'],
+  styleUrls: ['../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineProvideFeatureCellComponent {}

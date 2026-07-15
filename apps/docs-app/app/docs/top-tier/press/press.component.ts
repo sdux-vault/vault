@@ -4,6 +4,8 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   CatchPhraseComponent,
+  FeatureCellBrandNameComponent,
+  PackageNameComponent,
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
@@ -17,6 +19,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     BrandNameComponent,
     VaultBrandNameComponent,
     CatchPhraseComponent,
+    FeatureCellBrandNameComponent,
+    PackageNameComponent,
     PipelineRelatedTopicComponent
   ],
   templateUrl: './press.component.html',

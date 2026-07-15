@@ -2,7 +2,7 @@ import { RelatedTopicCategoryShape } from 'apps/docs-app/app/docs/related-topic/
 
 export const RELATED_TOPICS_ENCRYPT_REGISTRY: RelatedTopicCategoryShape = {
   baseRoute: '/docs/pipeline/behaviors/encrypt',
-  baseDisplay: 'Encrypt Behavior',
+  baseDisplay: 'Encrypt Overview',
   title: 'Encrypt Behaviors in SDuX Vault — State Encryption at Rest',
   description:
     'Encrypt persisted state data using encryption behaviors in the SDuX Vault pipeline.',

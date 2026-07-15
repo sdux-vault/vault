@@ -8,8 +8,8 @@
   <!-- ====================================================== -->
   <header class="docs-header">
     <p class="lead">
-      Download official <sdux-brand-name /> logos and brand assets for use in
-      articles, presentations, documentation, and integrations.
+      Download official <sdux-brand-name [tm]="true" /> logos and brand assets
+      for use in articles, presentations, documentation, and integrations.
     </p>
 
     <p>
@@ -25,12 +25,73 @@
   </header>
 
   <!-- ====================================================== -->
+  <!-- PRODUCT NAMING & TRADEMARK USAGE -->
+  <!-- ====================================================== -->
+  <section class="section" id="product-naming">
+    <div class="section-title">Product Naming &amp; Trademark Usage</div>
+
+    <div class="section-body">
+      <p>
+        The distinction between <sdux-brand-name [tm]="true" /> and
+        <sdux-vault-brand-name [tm]="true" /> is intentional. Use
+        <sdux-brand-name /> as the primary name for the framework and its
+        technical ecosystem. Reserve <sdux-vault-brand-name /> for the licensed
+        commercial product and the capabilities provided specifically through
+        that product.
+      </p>
+
+      <ul>
+        <li>
+          <strong><sdux-brand-name [tm]="true" /></strong> — the free,
+          MIT-licensed state management framework and the primary name for the
+          technology. Use <sdux-brand-name /> when discussing the API,
+          FeatureCell, State, the Pipeline, Behavior and Controller
+          capabilities, framework integrations, documentation, or the project
+          generally.
+        </li>
+        <li>
+          <strong><sdux-vault-brand-name [tm]="true" /></strong> — the licensed
+          commercial product built on <sdux-brand-name />. Use
+          <sdux-vault-brand-name /> only when discussing its licensed runtime,
+          commercial services, or product-specific features. Development use is
+          available under the Community License; production use requires a valid
+          license. Do not use <sdux-vault-brand-name /> as an interchangeable
+          name for the free <sdux-brand-name /> framework.
+        </li>
+        <li>
+          <strong><sdux-feature-cell [tm]="true" /></strong> — the official name
+          for a feature-scoped State declaration. Write it as one word with a
+          capital F and C.
+        </li>
+        <li>
+          <strong><sdux-catch-phrase [tm]="true" /></strong> — the official
+          catchphrase. Preserve the wording and capitalization exactly as shown.
+        </li>
+        <li>
+          <strong><sdux-package-name />/*</strong> — the official package scope.
+          Use the lowercase scoped format when referring to a published package.
+        </li>
+      </ul>
+
+      <p>
+        Use the trademark symbol on the first mention of a trademarked name in
+        an article. Subsequent mentions do not require the symbol.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
   <!-- TABLE OF CONTENTS -->
   <!-- ====================================================== -->
   <section class="section" id="press-toc">
     <div class="section-title">On This Page</div>
     <div class="section-body">
       <ul>
+        <li>
+          <a [routerLink]="[]" fragment="product-naming"
+            >Product Naming &amp; Trademark Usage</a
+          >
+        </li>
         <li>
           <a [routerLink]="[]" fragment="sdux-wordmark"
             ><sdux-brand-name /> Wordmark</a

@@ -1,0 +1,106 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>React Integration with <sdux-brand-name [tm]="true" /></h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-brand-name [tm]="true" /> integrates with React through
+      <strong><sdux-package-name />/react</strong>. The package extends the core
+      <sdux-feature-cell [tm]="true" /> contract with
+      <strong>useSyncExternalStore()</strong> for render-time State access.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="title">React package usage</div>
+      <p>
+        <sdux-brand-name /> can run in a React application without
+        <strong><sdux-package-name />/react</strong>. The core APIs remain
+        available, but the React render-time subscription surface is supplied
+        only by the React package.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section-title">React Integration</div>
+
+    <div class="section-body">
+      <strong><sdux-package-name />/react</strong> is a React integration
+      wrapper around the core <sdux-brand-name /> APIs. It preserves the core
+      <sdux-feature-cell /> FluentApi, synchronous State Snapshot, and State
+      Stream while adding an explicit React render-time subscription method.
+
+      <div class="callout callout-warning">
+        <div class="title">Initial State requires a render-time connection</div>
+        <p>
+          Without <strong><sdux-package-name />/react</strong> and
+          <strong>useSyncExternalStore()</strong>, a React component must
+          provide its own render-time integration with
+          <sdux-feature-cell /> State. A subscription created after
+          initialization can miss the emission that committed the initial State,
+          leaving that State absent from the first render.
+        </p>
+
+        <p>
+          Later State updates may still render correctly, creating a
+          <strong>false-positive result</strong>: subsequent updates appear to
+          work even though the initial render was never connected to the current
+          Snapshot. A custom integration must read the current Snapshot during
+          render and remain connected to subsequent State changes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Installation</div>
+
+    <div class="section-body">
+      <p>
+        The React extension is available from the
+        <strong><sdux-package-name />/react</strong> package on npm.
+      </p>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'React'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`npm install &#64;sdux-vault/react`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+      <p>
+        <a
+          href="https://www.npmjs.com/package/@sdux-vault/react"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Download @sdux-vault/react from npm in a new window"
+          >Download <sdux-package-name />/react from npm →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">useSyncExternalStore()</div>
+
+    <div class="section-body">
+      <p>
+        <strong>useSyncExternalStore()</strong> connects the current React
+        render to <sdux-feature-cell /> State and returns the latest immutable
+        Snapshot. The same surface provides the current Snapshot during render
+        and connects the component to subsequent State changes.
+      </p>
+
+      <p>
+        <a
+          [routerLink]="[
+            '/docs/pipeline/apis/feature-cell-api/use-sync-external-store-method'
+          ]"
+          >Read the useSyncExternalStore method documentation →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

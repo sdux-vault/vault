@@ -2,6 +2,7 @@ import { RelatedTopicCategoryShape } from './related-topic-category.shape';
 
 export interface RelatedTopicRegistryCategoryShape {
   /** Named global link groups */
+  angular: RelatedTopicCategoryShape;
 
   blogs: RelatedTopicCategoryShape;
 
@@ -48,8 +49,6 @@ export interface RelatedTopicRegistryCategoryShape {
   'pipeline-overview': RelatedTopicCategoryShape;
 
   press: RelatedTopicCategoryShape;
-
-  'provide-vault': RelatedTopicCategoryShape;
 
   reducers: RelatedTopicCategoryShape;
 

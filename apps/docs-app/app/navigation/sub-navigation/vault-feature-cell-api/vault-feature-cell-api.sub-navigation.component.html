@@ -220,6 +220,15 @@
       </div>
     </mat-expansion-panel>
 
+    <a
+      mat-list-item
+      routerLink="/docs/pipeline/apis/cell-builder"
+      aria-label="CellBuilder documentation"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content">CellBuilder</span>
+    </a>
+
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header menu-icon"
@@ -234,73 +243,73 @@
       <div class="sub-menu">
         <a
           mat-list-item
-          routerLink="/docs/pipeline/apis/provide-vault"
+          routerLink="/docs/pipeline/apis/angular"
+          aria-label="angular overview documentation"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeSidenav()">
+          <span class="menu-icon menu-content">Overview </span>
+        </a>
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/angular/provide-vault"
           aria-label="provideVault documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content"
-            >provideVault
-            <img
-              src="assets/brand/angular/angular-icon.png"
-              class="image-15"
-              alt="Angular"
-          /></span>
+          <span class="menu-icon menu-content">provideVault </span>
         </a>
 
         <a
           mat-list-item
-          routerLink="/docs/pipeline/apis/at-feature-cell"
+          routerLink="/docs/pipeline/apis/angular/at-feature-cell"
           aria-label="&#64;FeatureCell decorator documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content"
-            >&#64;FeatureCell
-            <img
-              src="assets/brand/angular/angular-icon.png"
-              class="image-15"
-              alt="Angular"
-          /></span>
+          <span class="menu-icon menu-content">&#64;FeatureCell </span>
         </a>
 
         <a
           mat-list-item
-          routerLink="/docs/pipeline/apis/provide-feature-cell"
+          routerLink="/docs/pipeline/apis/angular/provide-feature-cell"
           aria-label="provideFeatureCell documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content"
-            >provideFeatureCell
-            <img
-              src="assets/brand/angular/angular-icon.png"
-              class="image-15"
-              alt="Angular"
-          /></span>
+          <span class="menu-icon menu-content">provideFeatureCell </span>
         </a>
 
         <a
           mat-list-item
-          routerLink="/docs/pipeline/apis/inject-vault"
+          routerLink="/docs/pipeline/apis/angular/inject-vault"
           aria-label="injectVault injector documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content"
-            >injectVault
-            <img
-              src="assets/brand/angular/angular-icon.png"
-              class="image-15"
-              alt="Angular"
-          /></span>
+          <span class="menu-icon menu-content">injectVault /></span>
         </a>
       </div>
     </mat-expansion-panel>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/apis/cell-builder"
-      aria-label="CellBuilder documentation"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content">CellBuilder</span>
-    </a>
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header menu-icon"
+          >React
+          <img
+            src="assets/brand/react/react-icon.svg"
+            class="image-15"
+            alt="React" />
+        </span>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/react"
+          aria-label="react overview documentation"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeSidenav()">
+          <span class="menu-icon menu-content">Overview </span>
+        </a>
+      </div>
+    </mat-expansion-panel>
   </mat-expansion-panel>
 </nav>

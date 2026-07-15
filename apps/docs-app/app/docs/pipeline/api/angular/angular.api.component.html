@@ -1,0 +1,164 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Angular Integration with <sdux-brand-name [tm]="true" /></h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-brand-name [tm]="true" /> integrates with Angular through
+      <strong><sdux-package-name />/angular</strong>. The package extends the
+      core <sdux-feature-cell [tm]="true" /> contract with Angular State
+      Signals, application providers, class metadata, and typed dependency
+      injection.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="title">Angular package usage</div>
+      <p>
+        <sdux-brand-name /> can run in an Angular application without
+        <strong><sdux-package-name />/angular</strong>. The core APIs remain
+        available, but Angular-specific State Signals, providers, decorators,
+        and injection APIs are supplied only by the Angular package.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Angular Integration</div>
+
+    <div class="section-body">
+      <p>
+        <strong><sdux-package-name />/angular</strong> is an Angular integration
+        wrapper around the core <sdux-brand-name /> APIs. It preserves the core
+        <sdux-feature-cell /> contract and adds Angular-specific surfaces for
+        Signals, application configuration, class registration, dependency
+        injection, and lifecycle ownership.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Installation</div>
+
+    <div class="section-body">
+      <p>
+        The Angular extension is available from the
+        <strong><sdux-package-name />/angular</strong> package on npm.
+      </p>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Angular'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`npm install &#64;sdux-vault/angular`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+      <p>
+        <a
+          href="https://www.npmjs.com/package/@sdux-vault/angular"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Download @sdux-vault/angular from npm in a new window"
+          >Download <sdux-package-name />/angular from npm →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">State Signals</div>
+
+    <div class="section-body">
+      <p>
+        The Angular <sdux-feature-cell /> exposes its current State through
+        read-only Signals for the resolved value, loading status, Error, and
+        value presence. These Signals provide Angular-reactive access to the
+        latest State Snapshot.
+      </p>
+
+      <p>
+        <a
+          [routerLink]="['/docs/pipeline/apis/feature-cell-api/state-property']"
+          >Read the State property documentation →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">provideVault</div>
+
+    <div class="section-body">
+      <p>
+        <strong>provideVault</strong> supplies the Angular application provider
+        that initializes the global <sdux-vault-brand-name /> during application
+        startup. Its optional configuration applies to every
+        <sdux-feature-cell /> in the application.
+      </p>
+
+      <p>
+        <a [routerLink]="['/docs/pipeline/apis/angular/provide-vault']"
+          >Read the provideVault documentation →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">&#64;FeatureCell</div>
+
+    <div class="section-body">
+      <p>
+        <strong>&#64;FeatureCell</strong> marks an Angular class with a unique
+        <sdux-feature-cell /> key and a compile-time State type. The decorator
+        establishes identity and typing for Angular registration and injection.
+      </p>
+
+      <p>
+        <a [routerLink]="['/docs/pipeline/apis/angular/at-feature-cell']"
+          >Read the &#64;FeatureCell documentation →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">provideFeatureCell</div>
+
+    <div class="section-body">
+      <p>
+        <strong>provideFeatureCell</strong> registers an Angular service class
+        with a configured <sdux-feature-cell />. The resulting Angular provider
+        exposes the core API together with Angular State Signals and lifecycle
+        ownership.
+      </p>
+
+      <p>
+        <a [routerLink]="['/docs/pipeline/apis/angular/provide-feature-cell']"
+          >Read the provideFeatureCell documentation →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">injectVault</div>
+
+    <div class="section-body">
+      <p>
+        <strong>injectVault</strong> injects the typed
+        <sdux-feature-cell /> associated with an
+        <strong>&#64;FeatureCell</strong>-decorated class. The injected surface
+        includes State access, State replacement and merging, and configured
+        Behavior Extensions.
+      </p>
+
+      <p>
+        <a [routerLink]="['/docs/pipeline/apis/angular/inject-vault']"
+          >Read the injectVault documentation →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

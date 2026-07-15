@@ -41,4 +41,14 @@ export class PipelineRelatedTopicComponent {
       })
     )
   );
+
+  /** Scrolls the page to the top when navigating to a new post. */
+  scrollToTop(): void {
+    const container = document.querySelector('mat-sidenav-content');
+    if (container) {
+      container.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
 }
