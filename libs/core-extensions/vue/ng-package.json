@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/core-extensions/vue",
+  "allowedNonPeerDependencies": ["@sdux-vault/core"],
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  },
+  "assets": ["README.md", "LICENSE"]
+}

@@ -45,6 +45,12 @@ npm run test:coverage:react || {
   exit 1
 }
 
+printf "\n\nTesting Vue.\n\n\n\n"
+npm run test:coverage:vue || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'vue' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
 printf "\n\nTesting Shared.\n\n\n\n"
 npm run test:coverage:shared || {
   printf "\n\nERROR: Test Coverage issues were found in the 'shared' committed files. Please address them before proceeding.\n\n\n\n"
