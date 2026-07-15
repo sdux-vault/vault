@@ -27,10 +27,12 @@ import { PipelineResetStreamMethodComponent } from './feature-cell-methods/metho
 import { PipelineResetMethodComponent } from './feature-cell-methods/methods/reset/reset.method.component';
 import { PipelineStateStreamMethodComponent } from './feature-cell-methods/methods/state-stream/state-stream.method.component';
 import { PipelineStatePropertyComponent } from './feature-cell-methods/methods/state/state.property.component';
+import { PipelineUseReactiveStateMethodComponent } from './feature-cell-methods/methods/use-reactive-state/use-reactive-state.method.component';
 import { PipelineUseSyncExternalStoreMethodComponent } from './feature-cell-methods/methods/use-sync-external-store/use-sync-external-store.method.component';
 import { PipelineFeatureCellComponent } from './feature-cell/feature-cell.api.component';
 import { PipelineReactApiOverviewComponent } from './react/react.api.component';
 import { PipelineVaultComponent } from './vault/vault.api.component';
+import { PipelineVueApiOverviewComponent } from './vue/vue.api.component';
 
 @Component({
   selector: 'sdux-pipeline-api-landingpage',
@@ -66,7 +68,9 @@ import { PipelineVaultComponent } from './vault/vault.api.component';
     PipelineOperatorsMethodComponent,
     PipelineFromStreamMethodComponent,
     PipelineAngularApiOverviewComponent,
-    PipelineReactApiOverviewComponent
+    PipelineReactApiOverviewComponent,
+    PipelineUseReactiveStateMethodComponent,
+    PipelineVueApiOverviewComponent
   ],
   templateUrl: './pipeline-api-landingpage.component.html',
   styleUrls: ['../../scss/documentation.scss'],

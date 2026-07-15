@@ -81,6 +81,10 @@
         <sdux-pipeline-state-stream-method />
       }
 
+      @case ('use-reactive-state-method') {
+        <sdux-pipeline-use-reactive-state-method />
+      }
+
       @case ('use-sync-external-store-method') {
         <sdux-pipeline-use-sync-external-store-method />
       }
@@ -93,6 +97,10 @@
 
   @case ('react') {
     <sdux-pipeline-react-overview-api />
+  }
+
+  @case ('vue') {
+    <sdux-pipeline-vue-overview-api />
   }
 
   @case ('angular') {

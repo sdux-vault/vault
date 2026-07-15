@@ -205,6 +205,20 @@
         </a>
         <a
           mat-list-item
+          routerLink="/docs/pipeline/apis/feature-cell-api/use-reactive-state-method"
+          routerLinkActive="active"
+          aria-label="useReactiveState method documentation"
+          (click)="closeSidenav()">
+          <div class="menu-icon menu-content">
+            useReactiveState
+            <img
+              src="assets/brand/vue/vue-icon.svg"
+              class="image-15"
+              alt="Vue" />
+          </div>
+        </a>
+        <a
+          mat-list-item
           routerLink="/docs/pipeline/apis/feature-cell-api/use-sync-external-store-method"
           routerLinkActive="active"
           aria-label="useSyncExternalStore method documentation"
@@ -304,6 +318,27 @@
           mat-list-item
           routerLink="/docs/pipeline/apis/react"
           aria-label="react overview documentation"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeSidenav()">
+          <span class="menu-icon menu-content">Overview </span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header menu-icon"
+          >Vue
+          <img src="assets/brand/vue/vue-icon.svg" class="image-15" alt="Vue" />
+        </span>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/vue"
+          aria-label="vue overview documentation"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">

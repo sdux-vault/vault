@@ -12,7 +12,8 @@ import {
 @Injectable({ providedIn: 'root' })
 export class RelatedTopicsService {
   #aliases: Record<string, string> = {
-    react: 'feature-cell-api'
+    react: 'feature-cell-api',
+    vue: 'feature-cell-api'
   };
 
   #buildSeenLink(link: RelatedTopicLinkShape): string {

@@ -218,6 +218,13 @@ export const RELATED_TOPICS_FEATURE_CELL_API_REGISTRY: RelatedTopicCategoryShape
           'Connect a React component render to FeatureCell state changes and access the latest committed snapshot using useSyncExternalStore() in SDuX Vault.'
       },
       {
+        link: '/docs/pipeline/apis/feature-cell-api/use-reactive-state-method',
+        display: 'useReactiveState()',
+        title: 'useReactiveState() in SDuX Vault — Vue Render Subscription',
+        description:
+          'Connect a Vue component render to FeatureCell state changes and access the latest committed snapshot using useReactiveState() in SDuX Vault.'
+      },
+      {
         link: '/docs/pipeline/apis/feature-cell-api/vault',
         display: 'Vault Initialization',
         title: 'Vault Initialization in SDuX Vault — Root Store Setup',

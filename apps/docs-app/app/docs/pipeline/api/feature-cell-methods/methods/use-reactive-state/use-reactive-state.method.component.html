@@ -1,0 +1,263 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>useReactiveState()</h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      The <strong>useReactiveState()</strong> method connects an active Vue
+      effect scope to the State of a <sdux-feature-cell [tm]="true" /> and
+      returns its current Snapshot as a readonly reactive object.
+    </p>
+
+    <p>
+      This method is available only for Vue and extends the
+      <sdux-feature-cell /> contract with a reactive State surface for Vue
+      components.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="title">Vue Package</div>
+      <p>
+        The Vue Extension is available from the
+        <strong><sdux-package-name />/vue</strong> package on npm.
+      </p>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Vue'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`npm install &#64;sdux-vault/vue`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+      <p>
+        <a
+          href="https://www.npmjs.com/package/@sdux-vault/vue"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Download @sdux-vault/vue from npm in a new window"
+          >Download <sdux-package-name />/vue from npm →</a
+        >
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Usage</div>
+
+    <div class="section-body">
+      <p>
+        Use <strong>useReactiveState()</strong> when a Vue component renders
+        <sdux-feature-cell /> State. It returns the current Snapshot and keeps
+        its fields reactive for subsequent State changes.
+      </p>
+
+      <div class="table-title">Choose the State access surface</div>
+      <table aria-label="State access by usage">
+        <thead>
+          <tr>
+            <th scope="col" class="column-auto">Surface</th>
+            <th scope="col" class="column-250">Usage</th>
+            <th scope="col" class="column-auto">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>useReactiveState()</strong></td>
+            <td>Render State in a Vue component</td>
+            <td>
+              Returns a readonly reactive Snapshot and connects the active
+              effect scope to future State changes.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>state</strong></td>
+            <td>Read State outside an effect scope</td>
+            <td>
+              Returns the latest Snapshot synchronously without creating a
+              subscription.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>state$</strong></td>
+            <td>Observe every State emission</td>
+            <td>
+              Provides an Observable for consumers that explicitly manage a
+              subscription and its cleanup.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-warning">
+        <div class="title">
+          Do not rely on later updates to validate the initial component State
+        </div>
+
+        <ol>
+          <li>
+            <strong>Initial setup:</strong> A manual
+            <strong>state$</strong> subscription created after the
+            <sdux-feature-cell /> has initialized can miss the earlier emission
+            that committed <strong>initialState</strong>.
+          </li>
+          <li>
+            <strong>Later updates:</strong> A subsequent
+            <strong>replaceState()</strong> or
+            <strong>mergeState()</strong> emission can reach that subscription,
+            even though the initial component State was absent.
+          </li>
+          <li>
+            <strong>Vue State surface:</strong> Use
+            <strong>useReactiveState()</strong> so the component receives the
+            current Snapshot and remains connected to subsequent State changes
+            through the same effect-scope contract.
+          </li>
+        </ol>
+      </div>
+
+      <h4>Before component setup</h4>
+      <p>
+        The <sdux-feature-cell /> must already be initialized by the
+        application's State setup. Import its stable reference into the Vue
+        component instead of creating or initializing it inside component setup.
+      </p>
+
+      <h4>During setup</h4>
+      <ol>
+        <li>
+          Call <strong>useReactiveState()</strong> within an active Vue effect
+          scope, including a component's setup context.
+        </li>
+        <li>
+          Store the returned readonly reactive Snapshot in a stable component
+          reference.
+        </li>
+        <li>
+          Read <strong>hasValue</strong>, <strong>value</strong>,
+          <strong>isLoading</strong>, and <strong>error</strong> from that
+          Snapshot to determine what the component displays.
+        </li>
+      </ol>
+
+      <h4>When State changes</h4>
+      <p>
+        When the <sdux-feature-cell /> commits new State, the returned Snapshot
+        exposes the latest committed fields reactively. The component does not
+        require a separate <strong>state$</strong> subscription for this State
+        surface.
+      </p>
+
+      <h4>When the effect scope is disposed</h4>
+      <p>
+        The State subscription belongs to the Vue effect scope created by the
+        consumer of <strong>useReactiveState()</strong>. Disposing that scope
+        also disposes its State subscription, so the component does not perform
+        manual subscription cleanup.
+      </p>
+
+      <h4>Event handlers and code outside an effect scope</h4>
+      <p>
+        Use <strong>state</strong> when an event handler or other imperative
+        code needs the latest Snapshot at the moment that code runs. Use
+        <strong>state$</strong> when every State emission is required outside
+        the Vue effect scope, and dispose of that Observable subscription when
+        its owner is no longer active.
+      </p>
+
+      <div class="callout callout-info">
+        <div class="title">Render State with one reactive surface</div>
+        <p>
+          For Vue component State, use <strong>useReactiveState()</strong> as
+          the reactive surface. Reading <strong>state</strong> does not connect
+          the component to future State changes, while using
+          <strong>state$</strong> creates a separate subscription lifecycle that
+          the component must manage.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Method Contract</div>
+
+    <div class="section-body">
+      <div class="table-title">Runtime Invocation</div>
+      <table aria-label="Runtime Invocation">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Method</th>
+            <th scope="col" class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong>useReactiveState&lt;T&gt;</strong>
+
+              <p>inputs:</p>
+              <ul>
+                <li>None</li>
+              </ul>
+
+              <p>return:</p>
+              <ul>
+                <li>Readonly&lt;StateSnapshotShape&lt;T&gt;&gt;</li>
+              </ul>
+            </td>
+            <td>
+              Subscribes the active Vue effect scope to
+              <sdux-feature-cell /> State updates and returns the latest
+              committed Snapshot as a readonly reactive object.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Snapshot Output</div>
+
+    <div class="section-body">
+      <p>
+        The returned readonly reactive Snapshot represents the latest committed
+        State for the <sdux-feature-cell />.
+      </p>
+
+      <sdux-state-snapshot-shape-common />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Example</div>
+
+    <div class="section-body">
+      <p>
+        This component imports an existing, initialized
+        <sdux-feature-cell /> and calls
+        <strong>useReactiveState()</strong> during setup. The template reads
+        each Snapshot field directly from the returned readonly reactive object.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Vue'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;script setup lang="ts"&gt;
+import { exampleCell } from './example.cell';
+
+const snapshot = exampleCell.useReactiveState();
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;p v-if="snapshot.isLoading"&gt;Loading...&lt;/p&gt;
+  &lt;p v-else-if="snapshot.error" role="alert" v-text="snapshot.error.message"&gt;&lt;/p&gt;
+  &lt;p v-else-if="!snapshot.hasValue"&gt;No State is available.&lt;/p&gt;
+  &lt;pre v-else v-text="JSON.stringify(snapshot.value, null, 2)"&gt;&lt;/pre&gt;
+&lt;/template&gt;`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>
