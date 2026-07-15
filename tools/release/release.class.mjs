@@ -6,6 +6,8 @@
 import readline from 'node:readline';
 import { PlanManager } from './plan-manager.class.mjs';
 import { ReleaseManager } from './release-manager.class.mjs';
+import { TagManager } from './tag-manager.class.mjs';
+import { ExecModule } from '../utils/exec-sync.util.mjs';
 
 const VALID_TYPES = ['patch', 'minor', 'major'];
 
@@ -74,9 +76,10 @@ export class Release {
       console.info(
         '  2) Analyze with Audit (no changes, full dependency health report)'
       );
-      console.info('  3) Release (publish + update dependencies)\n');
+      console.info('  3) Release (publish + update dependencies)');
+      console.info('  4) Tag Release (Git Admin Only)\n');
 
-      rl.question('Enter choice (1, 2, or 3): ', (answer) => {
+      rl.question('Enter choice (1, 2, 3, or 4): ', (answer) => {
         rl.close();
 
         const normalized = answer.trim().toLowerCase();
@@ -91,6 +94,15 @@ export class Release {
 
         if (normalized === '3' || normalized === 'release') {
           return resolve('release');
+        }
+
+        if (
+          normalized === '4' ||
+          normalized === 'tag' ||
+          normalized === 'tag release' ||
+          normalized === 'tag-release'
+        ) {
+          return resolve('tag');
         }
 
         console.error('\n❌ Invalid mode selection');
@@ -207,6 +219,9 @@ export class Release {
    * --------------------------------------------------------- */
 
   async run() {
+    ExecModule.exec('clear', {
+      stdio: 'inherit'
+    });
     // ALWAYS confirm dry run first (safety gate)
     if (!this.mode) {
       this.mode = await this.askForMode();
@@ -243,6 +258,17 @@ export class Release {
       if (!lib) {
         console.error(`\n❌ Unknown library "${this.libKey}"\n`);
         process.exit(1);
+      }
+
+      if (this.mode === 'tag') {
+        const manager = new TagManager({
+          projectRoot: this.projectRoot,
+          lib,
+          dryRun: this.dryRun
+        });
+
+        manager.run();
+        return;
       }
 
       if (!this.type) {

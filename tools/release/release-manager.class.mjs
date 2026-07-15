@@ -168,16 +168,15 @@ export class ReleaseManager {
     // commit (dynamic name)
     const libName = this.packageName.split('/').pop();
 
-    this.exec(`git commit -m "chore(${libName}): release version bump"`);
-
-    // tag
-    this.exec(`git tag ${libName}@${pkg.version}`);
+    this.exec(
+      `git commit -m "chore(${libName}): ${pkg.version} release version bump"`
+    );
   }
 
   push() {
-    console.info('\nPushing changes + tags...');
+    console.info('\nPushing release...');
     this.exec(
-      'git push --no-verify --follow-tags --set-upstream origin $(git branch --show-current)'
+      'git push --no-verify --set-upstream origin $(git branch --show-current)'
     );
   }
 
