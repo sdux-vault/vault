@@ -5,16 +5,15 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  PackageNameComponent,
-  VaultBrandNameComponent
+  PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 
 /**
- * The pipeline angular overview
+ * The pipeline react overview
  */
 @Component({
-  selector: 'sdux-pipeline-angular-overview-api',
+  selector: 'sdux-pipeline-react-overview-api',
   standalone: true,
   imports: [
     BrandNameComponent,
@@ -22,12 +21,11 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     PackageNameComponent,
     RouterModule,
     PipelineRelatedTopicComponent,
-    VaultBrandNameComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent
   ],
-  templateUrl: './angular.api.component.html',
+  templateUrl: './react.api.component.html',
   styleUrls: ['../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PipelineAngularApiOverviewComponent {}
+export class PipelineReactApiOverviewComponent {}

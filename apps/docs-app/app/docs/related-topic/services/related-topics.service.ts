@@ -11,7 +11,9 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class RelatedTopicsService {
-  #aliases: Record<string, string> = {};
+  #aliases: Record<string, string> = {
+    react: 'feature-cell-api'
+  };
 
   #buildSeenLink(link: RelatedTopicLinkShape): string {
     return `${link.link}${link.fragment}`;

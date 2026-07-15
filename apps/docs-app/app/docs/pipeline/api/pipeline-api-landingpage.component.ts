@@ -1,7 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { PipelineRoutingDirective } from '../directives/pipeline-routing.directive';
 import { PipelineAngularApiOverviewComponent } from './angular/angular.api.component';
-import { PipelineAtFeatureCellComponent } from './at-feature-cell/at-feature-cell.api.component';
+import { PipelineAtFeatureCellComponent } from './angular/at-feature-cell/at-feature-cell.api.component';
+import { PipelineInjectVaultComponent } from './angular/inject-vault/inject-vault.api.component';
+import { PipelineProvideFeatureCellComponent } from './angular/provide-feature-cell/provide-feature-cell.api.component';
+import { PipelineProvideVaultComponent } from './angular/provide-vault/provide-vault.api.component';
 import { PipelineCellBuilderComponent } from './cell-builder/cell-builder.api.component';
 import { PipelineFeatureCellApiComponent } from './feature-cell-methods/feature-cell.api.component';
 import { PipelineAfterTapsMethodComponent } from './feature-cell-methods/methods/after-taps/after-taps.method.component';
@@ -26,9 +29,7 @@ import { PipelineStateStreamMethodComponent } from './feature-cell-methods/metho
 import { PipelineStatePropertyComponent } from './feature-cell-methods/methods/state/state.property.component';
 import { PipelineUseSyncExternalStoreMethodComponent } from './feature-cell-methods/methods/use-sync-external-store/use-sync-external-store.method.component';
 import { PipelineFeatureCellComponent } from './feature-cell/feature-cell.api.component';
-import { PipelineInjectVaultComponent } from './inject-vault/inject-vault.api.component';
-import { PipelineProvideFeatureCellComponent } from './provide-feature-cell/provide-feature-cell.api.component';
-import { PipelineProvideVaultComponent } from './provide-vault/provide-vault.api.component';
+import { PipelineReactApiOverviewComponent } from './react/react.api.component';
 import { PipelineVaultComponent } from './vault/vault.api.component';
 
 @Component({
@@ -64,7 +65,8 @@ import { PipelineVaultComponent } from './vault/vault.api.component';
     PipelineReplaceStateMethodComponent,
     PipelineOperatorsMethodComponent,
     PipelineFromStreamMethodComponent,
-    PipelineAngularApiOverviewComponent
+    PipelineAngularApiOverviewComponent,
+    PipelineReactApiOverviewComponent
   ],
   templateUrl: './pipeline-api-landingpage.component.html',
   styleUrls: ['../../scss/documentation.scss'],

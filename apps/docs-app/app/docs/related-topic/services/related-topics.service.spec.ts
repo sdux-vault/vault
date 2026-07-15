@@ -546,16 +546,24 @@ describe('Service: RelatedTopics', () => {
   });
 
   it('resolves aliased category through #findAlias', () => {
-    (TEST_REGISTRY.categories as any)['provide-vault'] = {
+    (TEST_REGISTRY.categories as any)['feature-cell-api'] = {
       baseRoute: '/provide-vault',
       baseDisplay: 'Provide Vault',
       items: [{ link: '/provide-vault/setup', display: 'Setup' }]
     };
 
-    const result = service.resolve({ category: 'at-feature-cell' });
+    const result = service.resolve({ category: 'react' });
 
-    expect(result.links.length).toBe(0);
-    // expect(result.links[0].display).toBe('');
+    expect(result).toEqual(
+      Object({
+        links: [
+          Object({ link: '/provide-vault/setup', display: 'Setup', id: 1 })
+        ],
+        crossLinks: [],
+        globalLinks: [],
+        globalCrossLinks: []
+      })
+    );
   });
 
   it('returns empty when category is unknown and has no alias', () => {

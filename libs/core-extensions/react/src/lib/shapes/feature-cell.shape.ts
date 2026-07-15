@@ -1,4 +1,5 @@
 import { FeatureCellBaseShape } from '@sdux-vault/shared';
+import { ReactFeatureCellContext } from '../context/react-feature-cell.context';
 import { VaultSyncExternalStoreRef } from '../references/vault-sync-external-store.reference';
 
 /**
@@ -6,4 +7,7 @@ import { VaultSyncExternalStoreRef } from '../references/vault-sync-external-sto
  * exposing an explicit render-time subscription method.
  */
 export interface FeatureCellShape<T>
-  extends FeatureCellBaseShape<T>, VaultSyncExternalStoreRef<T> {}
+  extends
+    FeatureCellBaseShape<T>,
+    ReactFeatureCellContext<T>,
+    VaultSyncExternalStoreRef<T> {}

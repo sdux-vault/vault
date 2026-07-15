@@ -25,7 +25,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     SDuXVideoComponent
   ],
   templateUrl: './provide-vault.api.component.html',
-  styleUrls: ['../../../scss/documentation.scss'],
+  styleUrls: ['../../../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PipelineProvideVaultComponent {}
