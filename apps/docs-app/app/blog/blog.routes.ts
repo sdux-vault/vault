@@ -296,6 +296,14 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-14-atomic-state-commitment/atomic-state-commitment.component').then(
         (m) => m.BlogAtomicStateCommitmentComponent
       )
+  },
+  {
+    path: 'what-transfers-directly-from-redux',
+    data: { category: 'blogs', type: 'what-transfers-directly-from-redux' },
+    loadComponent: () =>
+      import('./posts/2026-07-15-what-transfers-directly-from-redux/what-transfers-directly-from-redux.component').then(
+        (m) => m.BlogWhatTransfersDirectlyFromReduxComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //
