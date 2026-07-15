@@ -87,7 +87,12 @@ const templates = [
 
 const auditor = new SeoAuditor({
   registryDir,
-  templates
+  templates,
+  routeAliases: {
+    '/docs/pipeline/apis/cell-builder':
+      '/docs/pipeline/apis/feature-cell-api/cell-builder',
+    '/docs/pipeline/apis/react': '/docs/pipeline/apis/feature-cell-api'
+  }
 });
 const result = auditor.audit();
 

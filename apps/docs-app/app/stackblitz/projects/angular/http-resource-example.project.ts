@@ -628,7 +628,7 @@ export class ExampleService {
    * value signal, and resolves the response through the pipeline.
    */
   loadFromApi(): void {
-    console.log('loadFromApi called');
+    console.info('loadFromApi called');
     this.#vault.replaceState(
       httpResource<Example[]>(
         () => 'https://jsonplaceholder.typicode.com/users',

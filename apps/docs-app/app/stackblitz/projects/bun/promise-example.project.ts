@@ -461,10 +461,10 @@ const _server = Bun.serve({
   }
 });
 
-console.log(\`✅ Server running at http://localhost:\${PORT}\`);
-console.log(\`📝 Try: curl http://localhost:\${PORT}\`);
-console.log(\`⚡ Load a user: curl -X POST http://localhost:\${PORT}/load/1\`);
-console.log(
+console.info(\`✅ Server running at http://localhost:\${PORT}\`);
+console.info(\`📝 Try: curl http://localhost:\${PORT}\`);
+console.info(\`⚡ Load a user: curl -X POST http://localhost:\${PORT}/load/1\`);
+console.info(
   \`📦 Load batch: curl -X POST -H "Content-Type: application/json" -d '{"userIds": [1,2,3]}' http://localhost:\${PORT}/load-batch\`
 );
 `,

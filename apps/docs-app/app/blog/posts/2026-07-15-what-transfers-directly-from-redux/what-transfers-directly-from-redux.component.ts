@@ -76,7 +76,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
                 <td>Immutable state shapes</td>
                 <td>
                   Your state interfaces stay the same — only ownership moves
-                  from a global tree to a FeatureCell
+                  from a global tree to a
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
                 </td>
               </tr>
               <tr>
@@ -142,7 +145,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             immutable tree. In <sdux-brand-name />, each
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             owns its own isolated state. The TypeScript interface that described
-            a Redux slice describes a FeatureCell's initial state without edits.
+            a Redux slice describes a
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>'s
+            initial state without edits.
           </p>
           <sdux-example-viewer-source
             [displayTabs]="false"

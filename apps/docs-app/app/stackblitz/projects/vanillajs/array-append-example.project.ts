@@ -98,7 +98,7 @@ class ArrayAppendExample {
   async run() {
     // setTimeout(0) lets the microtask queue flush so initialState is committed
     await new Promise((resolve) => setTimeout(resolve, 0));
-    console.log(
+    console.info(
       this.#cell.state.value?.map((e) => \`\${e.name} \${e.lastName}\`).join(', ')
     );
     // Darth Vader

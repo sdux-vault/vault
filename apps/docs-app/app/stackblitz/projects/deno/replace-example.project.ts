@@ -1,14 +1,14 @@
 import { Project } from '@stackblitz/sdk';
 
 export const replaceExampleProject: Project = {
-  title: 'node-typescript-replace-example',
+  title: 'replace-example',
   template: 'node',
   files: {
-    'README.md': `# SDuX Vault TypeScript Replace Example
+    'README.md': `# SDuX Vault Deno Replace Example
 
 A script demonstrating atomic full-state replacement with SDuX Vault in plain
-TypeScript. It uses only runtime-neutral APIs, so the same file runs in Node,
-Bun, Deno, or the browser — this folder runs it with Node via \`tsx\`.
+TypeScript running directly in Deno. Dependencies use Deno's \`npm:\` specifiers,
+so no Node.js package manifest, npm installation, or TypeScript runner is needed.
 
 ## What This Example Shows
 
@@ -24,29 +24,26 @@ Bun, Deno, or the browser — this folder runs it with Node via \`tsx\`.
 ## This Is Not Production Code
 
 This example is intentionally minimal. Its job is to show that SDuX Vault works
-in plain TypeScript — nothing more. The patterns here are a starting
-point. Take what applies to your use case and build from there.
+directly in Deno — nothing more. The patterns here are a starting point. Take
+what applies to your use case and build from there.
 
-> The runner guards \`process.exit(0)\` with a \`typeof process\` check so the
-> script exits cleanly under Node (an open RxJS subscription can otherwise keep
-> the event loop alive) while remaining a no-op in non-Node runtimes.
+> The runner calls \`Deno.exit(0)\` after completion because an open RxJS
+> subscription can otherwise keep the event loop alive.
 
 ## Prerequisites
 
-- Node.js 18 or later
-- npm
+- Deno 2 or later
 
 ## Quick Start
 
 \`\`\`bash
-npm install
-npm start
+deno run src/main.ts
 \`\`\`
 
 ## Expected Output
 
 \`\`\`
-=== SDuX Vault Node.js Replace Example ===
+=== SDuX Vault Deno Replace Example ===
 
 [CELL] Counter cell created
 [STATE] Initial: count=0, label="Counter Example"
@@ -114,35 +111,72 @@ class ReplaceExample {
 }
 \`\`\`
 
-## Why Node.js for SDuX Vault?
+## Why Deno for SDuX Vault?
 
 SDuX Vault is a plain TypeScript library with no browser dependencies. The same
 \`FeatureCell\` API that manages UI state in Angular, React, Vue, or Svelte works
-identically here — no adaptation needed. The conductor queue serializes writes in
-both environments, so the correctness guarantees are the same.
+runs directly in Deno through \`npm:@sdux-vault/core\`. The conductor queue
+serializes writes, so the correctness guarantees remain the same.
 `,
-    'package.json': `{
-  "name": "node-typescript-replace-example",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "tsx src/main.ts"
-  },
-  "dependencies": {
-    "@sdux-vault/core": "latest",
-    "rxjs": "^7.8.2"
-  },
-  "devDependencies": {
-    "@types/node": "latest",
-    "tsx": "^4.19.4",
-    "typescript": "~5.9.2"
+    'deno.json': `{
+  "tasks": {
+    "start": "deno run src/main.ts"
   }
 }
 `,
-    'src/main.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
-import { firstValueFrom } from 'rxjs';
-import { skip } from 'rxjs/operators';
+    'deno.lock': `{
+  "version": "5",
+  "specifiers": {
+    "npm:@sdux-vault/core@*": "1.0.5_rxjs@7.8.2",
+    "npm:rxjs@*": "7.8.2"
+  },
+  "npm": {
+    "@sdux-vault/core@1.0.5_rxjs@7.8.2": {
+      "integrity": "sha512-g3FBzzSYc3UFK9VhOvJQjYq41YoiHgjbCp801rBcJEKAivpk1/bj96JrqGKfQPtdzu+pXXjJ9WBUwUOAi+Sfgg==",
+      "dependencies": [
+        "@sdux-vault/engine",
+        "rxjs",
+        "tslib"
+      ]
+    },
+    "@sdux-vault/devtools@1.0.6_rxjs@7.8.2": {
+      "integrity": "sha512-Hpn+7huQow7QQzOBfA63JVzFsw0Y7b1ctFtltjjE4R33Pi1k59yNY79lW5rrX7viTGYk5vno7xmXiI8315lTLw==",
+      "dependencies": [
+        "rxjs",
+        "tslib"
+      ]
+    },
+    "@sdux-vault/engine@1.0.5_rxjs@7.8.2": {
+      "integrity": "sha512-qa8OsLbOOgaZfBYQzZy1cQLm+SIWlz5/bdolTrNsuxQFdqKCeVJwYFwV61Ei4pGbrOG0Sg8zKuvwfHeMOYUc7w==",
+      "dependencies": [
+        "@sdux-vault/devtools",
+        "@sdux-vault/shared",
+        "rxjs",
+        "tslib"
+      ]
+    },
+    "@sdux-vault/shared@1.0.4_rxjs@7.8.2": {
+      "integrity": "sha512-Q0mH4gHBlSN1Ir0YYX82fUbNsKrKMUbKV6mtvmL8UbVL43cqByxGgH5Xifivto2k1rHfZMFPtGJQ593rBfX/Ww==",
+      "dependencies": [
+        "rxjs",
+        "tslib"
+      ]
+    },
+    "rxjs@7.8.2": {
+      "integrity": "sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==",
+      "dependencies": [
+        "tslib"
+      ]
+    },
+    "tslib@2.8.1": {
+      "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="
+    }
+  }
+}
+`,
+    'src/main.ts': `import { FeatureCell, Vault } from 'npm:@sdux-vault/core';
+import { firstValueFrom } from 'npm:rxjs';
+import { skip } from 'npm:rxjs/operators';
 
 /**
  * Defines the domain state managed by the counter FeatureCell.
@@ -189,7 +223,7 @@ class ReplaceExample {
   /**
    * The counter FeatureCell with a zeroed initial state. No Vault configuration
    * or framework bootstrap is needed — SDuX Vault runs as a plain TypeScript
-   * module in Node with no extra wiring.
+   * module in Deno with no extra wiring.
    */
   #cell = FeatureCell<CounterState>({
     key: 'counter',
@@ -214,7 +248,7 @@ class ReplaceExample {
    * confirmed committed snapshot before logging.
    */
   async run(): Promise<void> {
-    console.info('=== SDuX Vault Node.js Replace Example ===\\n');
+    console.info('=== SDuX Vault Deno Replace Example ===\\n');
 
     // initialize() queues the initialState commit in the microtask queue.
     // A zero-timeout tick yields to the event loop so the microtask queue
@@ -311,30 +345,11 @@ class ReplaceExample {
   }
 }
 
-// The example logic uses only runtime-neutral APIs, so this same file runs in
-// Node, Bun, Deno, or the browser. \`process\` only exists in Node-like runtimes,
-// so guard the call: in Node it forces a clean exit (an open RxJS subscription
-// can otherwise keep the event loop alive and hang the script); everywhere else
-// this is a harmless no-op.
+// Exit explicitly after the example completes because the open RxJS
+// subscription can otherwise keep the Deno event loop alive.
 new ReplaceExample().run().then(() => {
-  if (typeof process !== 'undefined' && process.exit) {
-    process.exit(0);
-  }
+  Deno.exit(0);
 });
-`,
-    'tsconfig.json': `{
-  "compilerOptions": {
-    "lib": ["ES2022"],
-    "module": "ES2022",
-    "target": "ES2022",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "bundler",
-    "types": ["node"]
-  }
-}
 `
   }
 };

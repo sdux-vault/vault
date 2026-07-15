@@ -36,6 +36,12 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/bun/promise-example.project'),
   'bun/replace-example': () =>
     import('../../../stackblitz/projects/bun/replace-example.project'),
+  'deno/array-append-example': () =>
+    import('../../../stackblitz/projects/deno/array-append-example.project'),
+  'deno/promise-example': () =>
+    import('../../../stackblitz/projects/deno/promise-example.project'),
+  'deno/replace-example': () =>
+    import('../../../stackblitz/projects/deno/replace-example.project'),
   'nodejs/array-append-example': () =>
     import('../../../stackblitz/projects/nodejs/array-append-example.project'),
   'nodejs/promise-example': () =>

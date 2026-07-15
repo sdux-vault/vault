@@ -25,6 +25,13 @@ export class SeoAuditor {
   #templates;
 
   /**
+   * UI routes that intentionally reuse metadata from another registry route.
+   *
+   * @type {Map<string, string>}
+   */
+  #routeAliases;
+
+  /**
    * Registry files discovered in the constants directory.
    *
    * @type {string[]}
@@ -39,18 +46,20 @@ export class SeoAuditor {
   #registries = new Map();
 
   /**
-   * All docs routes derived from landing page templates.
+   * Groups of equivalent docs routes derived from landing page templates.
+   * A group contains the same logical route under each supported prefix.
    *
-   * @type {Set<string>}
+   * @type {string[][]}
    */
-  #docsRoutes = new Set();
+  #docsRouteGroups = [];
 
   /**
-   * @param {{ registryDir: string, templates: Array<{ templateFile: string, routePrefixes: string[], switchOn: 'category-type' | 'type-only', categoryFromData?: string }> }} config
+   * @param {{ registryDir: string, templates: Array<{ templateFile: string, routePrefixes: string[], switchOn: 'category-type' | 'type-only', categoryFromData?: string }>, routeAliases?: Record<string, string> }} config
    */
   constructor(config) {
     this.#registryDir = config.registryDir;
     this.#templates = config.templates;
+    this.#routeAliases = new Map(Object.entries(config.routeAliases ?? {}));
   }
 
   /**
@@ -170,7 +179,7 @@ export class SeoAuditor {
   }
 
   /**
-   * Builds the docs route set by parsing landing page templates.
+   * Builds equivalent docs route groups by parsing landing page templates.
    *
    * For templates with `switchOn: 'category-type'`, extracts nested
    * `@switch(category)` → `@switch(type)` pairs to produce routes
@@ -180,12 +189,14 @@ export class SeoAuditor {
    * under a single `@switch(type)` to produce `prefix/type` routes.
    */
   #loadDocsRoutes() {
+    this.#docsRouteGroups = [];
+
     for (const template of this.#templates) {
       const content = readFileSync(template.templateFile, 'utf-8');
-      const routes = this.#parseTemplate(content, template);
+      const routeGroups = this.#parseTemplate(content, template);
 
-      for (const route of routes) {
-        this.#docsRoutes.add(route);
+      for (const routeGroup of routeGroups) {
+        this.#docsRouteGroups.push(routeGroup);
       }
     }
   }
@@ -195,33 +206,38 @@ export class SeoAuditor {
    *
    * @param {string} content - Template HTML content.
    * @param {{ routePrefixes: string[], switchOn: 'category-type' | 'type-only', categoryFromData?: string }} template - Template config.
-   * @returns {string[]}
+   * @returns {string[][]}
    */
   #parseTemplate(content, template) {
-    const routes = [];
+    const routeGroups = [];
 
     if (template.switchOn === 'category-type') {
       const pairs = this.#extractCategoryTypePairs(content);
 
-      for (const prefix of template.routePrefixes) {
-        for (const { category, types } of pairs) {
-          routes.push(`${prefix}/${category}`);
-          for (const type of types) {
-            routes.push(`${prefix}/${category}/${type}`);
-          }
+      for (const { category, types } of pairs) {
+        routeGroups.push(
+          template.routePrefixes.map((prefix) => `${prefix}/${category}`)
+        );
+
+        for (const type of types) {
+          routeGroups.push(
+            template.routePrefixes.map(
+              (prefix) => `${prefix}/${category}/${type}`
+            )
+          );
         }
       }
     } else {
       const types = this.#extractTypeCases(content);
 
-      for (const prefix of template.routePrefixes) {
-        for (const type of types) {
-          routes.push(`${prefix}/${type}`);
-        }
+      for (const type of types) {
+        routeGroups.push(
+          template.routePrefixes.map((prefix) => `${prefix}/${type}`)
+        );
       }
     }
 
-    return routes;
+    return routeGroups;
   }
 
   /**
@@ -238,45 +254,58 @@ export class SeoAuditor {
     let currentCategory = null;
     let currentTypes = [];
     let depth = 0;
-    let inCategorySwitch = false;
-    let inTypeSwitch = false;
+    let categorySwitchDepth = null;
+    let typeSwitchDepth = null;
 
     for (const line of lines) {
       const trimmed = line.trim();
+      const depthBeforeLine = depth;
 
       if (trimmed === '@switch (category) {') {
-        inCategorySwitch = true;
-        continue;
+        categorySwitchDepth = depthBeforeLine;
+      } else if (categorySwitchDepth !== null) {
+        const caseMatch = trimmed.match(/^@case \('([^']+)'\)\s*\{/);
+
+        if (
+          caseMatch &&
+          typeSwitchDepth === null &&
+          depthBeforeLine === categorySwitchDepth + 1
+        ) {
+          if (currentCategory) {
+            pairs.push({ category: currentCategory, types: currentTypes });
+          }
+
+          currentCategory = caseMatch[1];
+          currentTypes = [];
+        } else if (
+          currentCategory &&
+          trimmed === '@switch (type) {' &&
+          depthBeforeLine === categorySwitchDepth + 2
+        ) {
+          typeSwitchDepth = depthBeforeLine;
+        } else if (
+          caseMatch &&
+          typeSwitchDepth !== null &&
+          depthBeforeLine === typeSwitchDepth + 1
+        ) {
+          currentTypes.push(caseMatch[1]);
+        }
       }
 
-      if (!inCategorySwitch) continue;
+      const openingBraces = (line.match(/\{/g) ?? []).length;
+      const closingBraces = (line.match(/\}/g) ?? []).length;
+      depth += openingBraces - closingBraces;
 
-      const categoryMatch = trimmed.match(/^@case \('([^']+)'\)\s*\{/);
-      const typeMatch = trimmed.match(/^@case \('([^']+)'\)\s*\{/);
-
-      if (trimmed === '@switch (type) {') {
-        inTypeSwitch = true;
-        continue;
+      if (typeSwitchDepth !== null && depth <= typeSwitchDepth) {
+        typeSwitchDepth = null;
       }
 
-      if (inTypeSwitch && typeMatch && depth === 0) {
-        currentTypes.push(typeMatch[1]);
-        continue;
-      }
-
-      if (!inTypeSwitch && categoryMatch) {
+      if (categorySwitchDepth !== null && depth <= categorySwitchDepth) {
         if (currentCategory) {
           pairs.push({ category: currentCategory, types: currentTypes });
         }
-        currentCategory = categoryMatch[1];
-        currentTypes = [];
-        inTypeSwitch = false;
-        continue;
+        break;
       }
-    }
-
-    if (currentCategory) {
-      pairs.push({ category: currentCategory, types: currentTypes });
     }
 
     return pairs;
@@ -330,11 +359,19 @@ export class SeoAuditor {
 
     const missing = [];
 
-    for (const route of this.#docsRoutes) {
-      if (route.includes('/deprecated')) continue;
-      if (!allRegistryLinks.has(route)) {
-        missing.push(route);
-      }
+    for (const routeGroup of this.#docsRouteGroups) {
+      const routes = routeGroup.filter(
+        (route) => !route.includes('/deprecated')
+      );
+
+      if (routes.length === 0) continue;
+
+      const hasRegistryEntry = routes.some((route) => {
+        const canonicalRoute = this.#routeAliases.get(route) ?? route;
+        return allRegistryLinks.has(canonicalRoute);
+      });
+
+      if (!hasRegistryEntry) missing.push(routes[0]);
     }
 
     return missing.sort();

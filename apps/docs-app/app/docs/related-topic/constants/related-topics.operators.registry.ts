@@ -17,7 +17,7 @@ export const RELATED_TOPICS_OPERATORS_REGISTRY: RelatedTopicCategoryShape = {
 
   items: [
     {
-      link: '/docs/pipeline/behaviors/operators/with-distinct-until-changed-behavior',
+      link: '/docs/pipeline/behaviors/operators/with-distinct-until-changed',
       display: 'Distinct Until Changed Behavior',
       title:
         'Distinct Until Changed in SDuX Vault — Duplicate Emission Prevention',

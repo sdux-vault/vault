@@ -49,13 +49,7 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
                 <strong>constructor</strong>
                 <p>inputs:</p>
                 <ul>
-                  <li>
-                    core:
-                    <a
-                      href="/docs/references/interfaces/react-adapter-core-feature-cell-shape"
-                      >ReactAdapterCoreFeatureCellShape</a
-                    >
-                  </li>
+                  <li>core: ReactFeatureCellContext</li>
                 </ul>
               </td>
               <td>
@@ -122,7 +116,12 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
               <td>
                 <strong>build</strong>
 
-                <p>returns: ReactFeatureCellShape&lt;T&gt;</p>
+                <p>
+                  returns:
+                  <a href="/docs/references/shapes/feature-cell-shape"
+                    >FeatureCellShape</a
+                  >&lt;T&gt;
+                </p>
               </td>
               <td>
                 Builds and returns the React-augmented

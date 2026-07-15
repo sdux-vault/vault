@@ -122,6 +122,34 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header">Deno</span>
+      </mat-expansion-panel-header>
+
+      <a
+        mat-list-item
+        routerLink="/examples/deno/array-append"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Array Append</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/deno/promise"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Promise</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/examples/deno/replace"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content">Replace</div>
+      </a>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+      <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header">Nodejs</span>
       </mat-expansion-panel-header>
 

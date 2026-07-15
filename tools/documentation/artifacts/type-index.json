@@ -1680,14 +1680,6 @@
       "relativePath": "libs/core/src/lib/behaviors/resolve/from-stream/interface/from-stream-behavior.interface.ts",
       "docLink": "interfaces"
     },
-    "ReactAdapterCoreFeatureCellShape": {
-      "kind": "interface",
-      "docKind": "interface",
-      "name": "ReactAdapterCoreFeatureCellShape",
-      "project": "react",
-      "relativePath": "libs/core-extensions/react/src/lib/factories/feature-cell/feature.cell.adapter.ts",
-      "docLink": "interfaces"
-    },
     "VaultSignalStateRef": {
       "kind": "interface",
       "docKind": "interface",
