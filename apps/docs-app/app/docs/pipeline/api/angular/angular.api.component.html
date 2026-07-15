@@ -65,26 +65,6 @@
   </section>
 
   <section class="section">
-    <div class="section-title">State Signals</div>
-
-    <div class="section-body">
-      <p>
-        The Angular <sdux-feature-cell /> exposes its current State through
-        read-only Signals for the resolved value, loading status, Error, and
-        value presence. These Signals provide Angular-reactive access to the
-        latest State Snapshot.
-      </p>
-
-      <p>
-        <a
-          [routerLink]="['/docs/pipeline/apis/feature-cell-api/state-property']"
-          >Read the State property documentation →</a
-        >
-      </p>
-    </div>
-  </section>
-
-  <section class="section">
     <div class="section-title">provideVault</div>
 
     <div class="section-body">
@@ -98,24 +78,6 @@
       <p>
         <a [routerLink]="['/docs/pipeline/apis/angular/provide-vault']"
           >Read the provideVault documentation →</a
-        >
-      </p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-title">&#64;FeatureCell</div>
-
-    <div class="section-body">
-      <p>
-        <strong>&#64;FeatureCell</strong> marks an Angular class with a unique
-        <sdux-feature-cell /> key and a compile-time State type. The decorator
-        establishes identity and typing for Angular registration and injection.
-      </p>
-
-      <p>
-        <a [routerLink]="['/docs/pipeline/apis/angular/at-feature-cell']"
-          >Read the &#64;FeatureCell documentation →</a
         >
       </p>
     </div>
@@ -141,20 +103,59 @@
   </section>
 
   <section class="section">
+    <div class="section-title">&#64;<sdux-feature-cell /></div>
+
+    <div class="section-body">
+      <p>
+        <strong>&#64;<sdux-feature-cell /></strong> marks an Angular class with
+        a unique <sdux-feature-cell /> key and a compile-time State type. The
+        decorator establishes identity and typing for Angular registration and
+        injection.
+      </p>
+
+      <p>
+        <a [routerLink]="['/docs/pipeline/apis/angular/at-feature-cell']"
+          >Read the &#64;<sdux-feature-cell /> documentation →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="section-title">injectVault</div>
 
     <div class="section-body">
       <p>
         <strong>injectVault</strong> injects the typed
         <sdux-feature-cell /> associated with an
-        <strong>&#64;FeatureCell</strong>-decorated class. The injected surface
-        includes State access, State replacement and merging, and configured
-        Behavior Extensions.
+        <strong>&#64;<sdux-feature-cell /></strong>-decorated class. The
+        injected surface includes State access, State replacement and merging,
+        and configured Behavior Extensions.
       </p>
 
       <p>
         <a [routerLink]="['/docs/pipeline/apis/angular/inject-vault']"
           >Read the injectVault documentation →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">State Signals</div>
+
+    <div class="section-body">
+      <p>
+        The Angular <sdux-feature-cell /> exposes its current State through
+        read-only Signals for the resolved value, loading status, Error, and
+        value presence. These Signals provide Angular-reactive access to the
+        latest State Snapshot.
+      </p>
+
+      <p>
+        <a
+          [routerLink]="['/docs/pipeline/apis/feature-cell-api/state-property']"
+          >Read the State property documentation →</a
         >
       </p>
     </div>

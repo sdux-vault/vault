@@ -232,5 +232,13 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-07-14',
     readingTime: 7,
     active: true
+  },
+  {
+    slug: 'what-transfers-directly-from-redux',
+    title:
+      'What Transfers Directly from Redux — Pure Functions, State Shapes, and Immutability',
+    date: '2026-07-15',
+    readingTime: 5,
+    active: true
   }
 ];

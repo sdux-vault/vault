@@ -252,6 +252,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Atomic State Commitment — SDuX Vault Blog',
       description:
         'Understand how SDuX Vault defers state commitment to a microtask boundary, committing atomic snapshots so components never see partial or torn updates.'
+    },
+    {
+      link: '/blog/what-transfers-directly-from-redux',
+      display:
+        'What Transfers Directly from Redux — Pure Functions, State Shapes, and Immutability',
+      title: 'What Transfers Directly from Redux — SDuX Blog',
+      description:
+        'Learn which Redux skills transfer directly to SDuX Vault — pure reducers, immutable state shapes, and outcome-based testing carry over unchanged.'
     }
   ]
 };
