@@ -19,7 +19,7 @@ export const observableExampleProject: Project = {
 `,
     'package.json': `{
   "name": "react-observable-example",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {

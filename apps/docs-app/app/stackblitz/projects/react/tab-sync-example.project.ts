@@ -19,7 +19,7 @@ export const tabSyncExampleProject: Project = {
 `,
     'package.json': `{
   "name": "react-tab-sync-example",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {

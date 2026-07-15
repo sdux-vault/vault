@@ -19,7 +19,7 @@ export const debuggerExampleProject: Project = {
 `,
     'package.json': `{
   "name": "vue-debugger-example",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,7 +29,7 @@ export const debuggerExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/vue": "latest",
     "rxjs": "~7.8.0",
     "vue": "^3.5.13"
   },
@@ -50,12 +50,10 @@ import ExampleView from './ExampleView.vue';
 </template>
 `,
     'src/app/ExampleView.vue': `<script setup lang="ts">
-import type { Subscription } from 'rxjs';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { ref } from 'vue';
 import {
   type Example,
-  exampleState,
-  exampleState\$,
+  exampleCell,
   replaceExamples,
   resetExamples,
   toggleError,
@@ -68,33 +66,11 @@ const sample: Example[] = [
   { id: 9, name: 'Han', lastName: 'Solo' }
 ];
 
-const snapshot = ref({
-  value: exampleState.value,
-  isLoading: exampleState.isLoading,
-  error: exampleState.error as unknown,
-  hasValue: exampleState.hasValue
-});
+const snapshot = exampleCell.useReactiveState();
 
 const activeStateHint = ref('Initial value is [] (empty array)');
 const displayActiveStateHint = ref(true);
 const isLoading = ref(false);
-
-let sub: Subscription;
-
-onMounted(() => {
-  sub = exampleState\$.subscribe((emit) => {
-    snapshot.value = {
-      value: emit.snapshot.value,
-      isLoading: emit.snapshot.isLoading,
-      error: emit.snapshot.error,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-});
-
-onUnmounted(() => {
-  sub?.unsubscribe();
-});
 
 /** Loads sample data into the FeatureCell pipeline. */
 function loadSample(): void {
@@ -118,7 +94,7 @@ function handleToggleLoading(): void {
 
 /** Toggles the error state between an Error instance and null. */
 function handleToggleError(): void {
-  const hasError = snapshot.value.error !== null;
+  const hasError = snapshot.error !== null;
   const error = hasError ? null : new Error('Example error message');
   toggleError(error);
 }
@@ -587,7 +563,7 @@ FeatureCell({
 }
 </style>
 `,
-    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
+    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/vue';
 import { InsightConfig } from '@sdux-vault/shared';
 
 export interface Example {
@@ -616,7 +592,7 @@ Vault({
 });
 
 // Register the FeatureCell at module scope
-const exampleCell = FeatureCell<Example[]>({
+export const exampleCell = FeatureCell<Example[]>({
   key: 'example-feature-cell-key',
   initialState: [],
 
@@ -656,10 +632,6 @@ exampleCell
   ])
   .initialize();
 
-// Expose read-only state access
-export const exampleState = exampleCell.state;
-export const exampleState\$ = exampleCell.state\$;
-
 /** Replaces the entire FeatureCell state with the provided input. */
 export function replaceExamples(input: Example[]): void {
   exampleCell.replaceState({
@@ -678,7 +650,7 @@ export function resetExamples(): void {
 export function toggleLoading(loading: boolean): void {
   exampleCell.replaceState({
     loading,
-    value: exampleState.value
+    value: exampleCell.state.value
   });
 }
 
@@ -686,7 +658,7 @@ export function toggleLoading(loading: boolean): void {
 export function toggleError(error: Error | null): void {
   exampleCell.replaceState({
     error,
-    value: exampleState.value
+    value: exampleCell.state.value
   });
 }
 `,

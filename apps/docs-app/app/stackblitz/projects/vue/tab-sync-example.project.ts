@@ -19,7 +19,7 @@ export const tabSyncExampleProject: Project = {
 `,
     'package.json': `{
   "name": "vue-tab-sync-example",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,7 +29,7 @@ export const tabSyncExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/vue": "latest",
     "rxjs": "~7.8.0",
     "vue": "^3.5.13"
   },
@@ -50,12 +50,10 @@ import ExampleView from './ExampleView.vue';
 </template>
 `,
     'src/app/ExampleView.vue': `<script setup lang="ts">
-import type { Subscription } from 'rxjs';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { ref } from 'vue';
 import {
   type Example,
-  exampleState,
-  exampleState\$,
+  exampleCell,
   replaceExamples,
   resetExamples
 } from './example.cell';
@@ -81,29 +79,11 @@ const samples: Example[][] = [
   ]
 ];
 
-const snapshot = ref({
-  value: exampleState.value,
-  hasValue: exampleState.hasValue
-});
+const snapshot = exampleCell.useReactiveState();
 
 const activeSample = ref<Example[]>(samples[0]);
 const activeStateHint = ref('Initial value is [] (empty array)');
 const displayActiveStateHint = ref(true);
-
-let sub: Subscription;
-
-onMounted(() => {
-  sub = exampleState\$.subscribe((emit) => {
-    snapshot.value = {
-      value: emit.snapshot.value,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-});
-
-onUnmounted(() => {
-  sub?.unsubscribe();
-});
 
 /**
  * Loads the active sample into the FeatureCell pipeline.
@@ -454,11 +434,10 @@ function handleSampleChange(event: Event): void {
 </style>
 `,
     'src/app/example.cell.ts': `import {
-  FeatureCell,
-  Vault,
   withTabSyncController,
   withTabSyncStateBehavior
 } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/vue';
 
 /**
  * Shape representing a single example entity in the FeatureCell state.
@@ -507,7 +486,7 @@ Vault({
  * the initial negotiation when a new tab opens, ensuring it receives
  * the latest state from an existing peer.
  */
-const exampleCell = FeatureCell<Example[]>(
+export const exampleCell = FeatureCell<Example[]>(
   {
     key: 'example-feature-cell-key',
     initialState: []
@@ -527,23 +506,6 @@ const exampleCell = FeatureCell<Example[]>(
  * No state updates will be processed before initialize() is called.
  */
 exampleCell.initialize();
-
-/**
- * Read-only state snapshot accessor.
- *
- * Provides access to:
- * - value — current state value
- * - hasValue — whether state contains a value
- */
-export const exampleState = exampleCell.state;
-
-/**
- * Observable stream of state emissions.
- *
- * Each emission includes the full snapshot after pipeline execution.
- * Used by the component to subscribe to reactive state changes.
- */
-export const exampleState\$ = exampleCell.state\$;
 
 /**
  * Replaces the entire FeatureCell state with the provided input.

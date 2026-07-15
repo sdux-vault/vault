@@ -19,7 +19,7 @@ export const hydrateStateExampleProject: Project = {
 `,
     'package.json': `{
   "name": "react-hydrate-state-example",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {

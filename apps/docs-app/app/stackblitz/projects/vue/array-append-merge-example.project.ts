@@ -19,7 +19,7 @@ export const arrayAppendMergeExampleProject: Project = {
 `,
     'package.json': `{
   "name": "vue-array-append-merge-example",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -30,7 +30,7 @@ export const arrayAppendMergeExampleProject: Project = {
   },
   "dependencies": {
     "@sdux-vault/addons": "latest",
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/vue": "latest",
     "rxjs": "~7.8.0",
     "vue": "^3.5.13"
   },
@@ -51,12 +51,10 @@ import ExampleView from './ExampleView.vue';
 </template>
 `,
     'src/app/ExampleView.vue': `<script setup lang="ts">
-import type { Subscription } from 'rxjs';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { ref } from 'vue';
 import {
   type Example,
-  exampleState,
-  exampleState\$,
+  exampleCell,
   mergeExamples,
   resetExamples
 } from './example.cell';
@@ -67,30 +65,12 @@ const sample: Example[] = [
   { id: 9, name: 'Han', lastName: 'Solo' }
 ];
 
-const snapshot = ref({
-  value: exampleState.value,
-  hasValue: exampleState.hasValue
-});
+const snapshot = exampleCell.useReactiveState();
 
 const activeStateHint = ref(
   'initialState seeded on initialize() — click Append to grow the list.'
 );
 const displayActiveStateHint = ref(true);
-
-let sub: Subscription;
-
-onMounted(() => {
-  sub = exampleState\$.subscribe((emit) => {
-    snapshot.value = {
-      value: emit.snapshot.value,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-});
-
-onUnmounted(() => {
-  sub?.unsubscribe();
-});
 
 /**
  * Delegates an array append merge to the FeatureCell cell module.
@@ -420,7 +400,7 @@ function handleResetState(): void {
 </style>
 `,
     'src/app/example.cell.ts': `import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
-import { FeatureCell, Vault } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/vue';
 
 /**
  * Shape representing a single example entity in the FeatureCell state.
@@ -461,7 +441,7 @@ Vault({
  * \`mergeState()\` call concatenates the incoming array with the existing state,
  * growing the list without discarding previous entries.
  */
-const exampleCell = FeatureCell<Example[]>(
+export const exampleCell = FeatureCell<Example[]>(
   // FeatureCell descriptor (identity + initial state)
   {
     // Unique state key used by the Vault
@@ -484,18 +464,6 @@ const exampleCell = FeatureCell<Example[]>(
 
 // Initialize the pipeline
 exampleCell.initialize();
-
-/**
- * Read-only synchronous state snapshot exposed to Vue components.
- * Provides access to \`value\`, \`isLoading\`, \`error\`, and \`hasValue\`.
- */
-export const exampleState = exampleCell.state;
-
-/**
- * Observable stream of committed state snapshots.
- * Emits each time the FeatureCell pipeline commits a new value.
- */
-export const exampleState\$ = exampleCell.state\$;
 
 /**
  * Appends \`input\` to the existing FeatureCell state array using the

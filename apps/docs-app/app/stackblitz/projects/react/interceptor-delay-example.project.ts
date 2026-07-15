@@ -19,7 +19,7 @@ export const interceptorDelayExampleProject: Project = {
 `,
     'package.json': `{
   "name": "react-interceptor-delay",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {

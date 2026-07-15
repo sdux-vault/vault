@@ -91,7 +91,8 @@ const auditor = new SeoAuditor({
   routeAliases: {
     '/docs/pipeline/apis/cell-builder':
       '/docs/pipeline/apis/feature-cell-api/cell-builder',
-    '/docs/pipeline/apis/react': '/docs/pipeline/apis/feature-cell-api'
+    '/docs/pipeline/apis/react': '/docs/pipeline/apis/feature-cell-api',
+    '/docs/pipeline/apis/vue': '/docs/pipeline/apis/feature-cell-api'
   }
 });
 const result = auditor.audit();
