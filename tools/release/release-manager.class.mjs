@@ -188,7 +188,8 @@ export class ReleaseManager {
       'build:core',
       'build:addons',
       'build:angular',
-      'build:react'
+      'build:react',
+      'build:vue'
     ];
 
     console.info(`\nBuilding ${dependencies.join(' ')}...`);
