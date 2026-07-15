@@ -4,22 +4,6 @@ export const hydrateStateExampleProject: Project = {
   title: 'react-hydrate-state-example',
   template: 'node',
   files: {
-    'dist/assets/index-D6AsyO4-.css': `.example-container{display:flex;flex-direction:column;gap:.75rem;padding:1rem}.header{display:flex;flex-direction:column;gap:.25rem}.title{font-size:2rem;font-weight:600;letter-spacing:.3px}.subtitle{font-size:1rem;color:#666;max-width:600px}.section{padding:1rem}.section.column{border:1px solid rgba(0,0,0,.08);border-radius:8px;display:flex;gap:.75rem}@media(max-width:768px){.section.column{flex-direction:column}.section.column .state-container{width:100%}}.state-container{flex:1;display:flex;flex-direction:column;gap:.35rem;min-width:0}.state-container.data-row{height:430px}.textarea,.data-textarea{width:100%;box-sizing:border-box;height:300px;padding:.5rem;border:1px solid rgba(0,0,0,.08);border-radius:6px;font-family:monospace;font-size:.8rem;background:#fafafa;color:#222}.data-textarea.error{color:#d33}.textarea{height:175px}.label{font-size:1.1rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#666}.flow-hint{margin-top:.25rem;font-size:1rem;letter-spacing:.3px;color:#666;font-family:monospace}.hint{font-size:1rem;color:#777;margin-top:-.15rem;margin-left:.5rem}.hint.file{min-height:16px;color:#999;font-family:monospace;font-size:.9rem}.hint.state{margin-top:.15rem}.emphasis{font-weight:600;color:#555}.actions{justify-content:flex-start;display:flex;align-items:center;gap:3rem}@media(max-width:768px){.actions{flex-direction:column;align-items:flex-start;gap:2rem}}.secondary-actions{display:flex;gap:2rem}@media(max-width:768px){.secondary-actions{gap:1.5rem;flex-direction:column;align-items:flex-start}}.status{height:300px;font-size:.85rem;color:#666;display:flex;align-items:center;justify-content:center}.learn-more{display:flex;flex-direction:column;gap:.35rem}.learn-more-links{display:flex;align-items:center;gap:.75rem;font-size:1rem}.learn-more-links a{color:#555;text-decoration:none}.learn-more-links a:hover{text-decoration:underline;color:#222}.learn-more-links .separator{color:#ccc}.example-container{padding:.25rem;display:flex;flex-direction:column;gap:.25rem}.sdux-button{height:40px;color:#fff;background-color:#1976d2;border:1px solid #004ba0;border-radius:.3125rem;font-size:.875rem;padding:.5rem;gap:.25rem;font-weight:600;min-width:125px;display:flex;flex-direction:row;justify-content:center;align-items:center;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-`,
-    'dist/index.html': `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>SDuX React Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script type="module" crossorigin src="/assets/index-CAoD3njc.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-D6AsyO4-.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-</html>
-`,
     'index.html': `<!doctype html>
 <html lang="en">
   <head>

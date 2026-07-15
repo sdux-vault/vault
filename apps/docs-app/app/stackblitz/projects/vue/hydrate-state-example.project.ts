@@ -4,22 +4,6 @@ export const hydrateStateExampleProject: Project = {
   title: 'vue-hydrate-state-example',
   template: 'node',
   files: {
-    'dist/assets/index-BGhcl83l.css': `.example-container[data-v-9f559746]{display:flex;flex-direction:column;gap:.75rem;padding:1rem}.header[data-v-9f559746]{display:flex;flex-direction:column;gap:.25rem}.title[data-v-9f559746]{font-size:2rem;font-weight:600;letter-spacing:.3px}.subtitle[data-v-9f559746]{font-size:1rem;color:#666;max-width:600px}.section[data-v-9f559746]{padding:1rem}.section.column[data-v-9f559746]{border:1px solid rgba(0,0,0,.08);border-radius:8px;display:flex;gap:.75rem}@media(max-width:768px){.section.column[data-v-9f559746]{flex-direction:column}.section.column .state-container[data-v-9f559746]{width:100%}}.state-container[data-v-9f559746]{flex:1;display:flex;flex-direction:column;gap:.35rem;min-width:0}.state-container.data-row[data-v-9f559746]{height:430px}.textarea[data-v-9f559746],.data-textarea[data-v-9f559746]{width:100%;box-sizing:border-box;height:300px;padding:.5rem;border:1px solid rgba(0,0,0,.08);border-radius:6px;font-family:monospace;font-size:.8rem;background:#fafafa;color:#222}.data-textarea.error[data-v-9f559746]{color:#d33}.textarea[data-v-9f559746]{height:175px}.label[data-v-9f559746]{font-size:1.1rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#666}.flow-hint[data-v-9f559746]{margin-top:.25rem;font-size:1rem;letter-spacing:.3px;color:#666;font-family:monospace}.hint[data-v-9f559746]{font-size:1rem;color:#777;margin-top:-.15rem;margin-left:.5rem}.hint.file[data-v-9f559746]{min-height:16px;color:#999;font-family:monospace;font-size:.9rem}.hint.state[data-v-9f559746]{margin-top:.15rem}.emphasis[data-v-9f559746]{font-weight:600;color:#555}.actions[data-v-9f559746]{justify-content:flex-start;display:flex;align-items:center;gap:3rem}@media(max-width:768px){.actions[data-v-9f559746]{flex-direction:column;align-items:flex-start;gap:2rem}}.secondary-actions[data-v-9f559746]{display:flex;gap:2rem}@media(max-width:768px){.secondary-actions[data-v-9f559746]{gap:1.5rem;flex-direction:column;align-items:flex-start}}.status[data-v-9f559746]{height:300px;font-size:.85rem;color:#666;display:flex;align-items:center;justify-content:center}.learn-more[data-v-9f559746]{display:flex;flex-direction:column;gap:.35rem}.learn-more-links[data-v-9f559746]{display:flex;align-items:center;gap:.75rem;font-size:1rem}.learn-more-links a[data-v-9f559746]{color:#555;text-decoration:none}.learn-more-links a[data-v-9f559746]:hover{text-decoration:underline;color:#222}.learn-more-links .separator[data-v-9f559746]{color:#ccc}.example-container{padding:.25rem;display:flex;flex-direction:column;gap:.25rem}.sdux-button{height:40px;color:#fff;background-color:#1976d2;border:1px solid #004ba0;border-radius:.3125rem;font-size:.875rem;padding:.5rem;gap:.25rem;font-weight:600;min-width:125px;display:flex;flex-direction:row;justify-content:center;align-items:center;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-`,
-    'dist/index.html': `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>SDuX Vue Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script type="module" crossorigin src="/assets/index-DKkc-UsW.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BGhcl83l.css">
-  </head>
-  <body>
-    <div id="app"></div>
-  </body>
-</html>
-`,
     'index.html': `<!doctype html>
 <html lang="en">
   <head>

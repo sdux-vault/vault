@@ -507,10 +507,10 @@ const _server = Bun.serve({
   }
 });
 
-console.log(\`✅ Server running at http://localhost:\${PORT}\`);
-console.log(\`📝 Try: curl http://localhost:\${PORT}\`);
-console.log(\`📖 Fetch post: curl -X POST http://localhost:\${PORT}/posts/1\`);
-console.log(
+console.info(\`✅ Server running at http://localhost:\${PORT}\`);
+console.info(\`📝 Try: curl http://localhost:\${PORT}\`);
+console.info(\`📖 Fetch post: curl -X POST http://localhost:\${PORT}/posts/1\`);
+console.info(
   \`📚 Fetch batch: curl -X POST -H "Content-Type: application/json" -d '{"postIds": [1,2,3]}' http://localhost:\${PORT}/posts/batch\`
 );
 `,

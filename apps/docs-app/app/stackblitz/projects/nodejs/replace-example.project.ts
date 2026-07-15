@@ -100,7 +100,7 @@ class ReplaceExample {
   async run(): Promise<void> {
     // setTimeout(0) lets the microtask queue flush so initialState is committed
     await new Promise((resolve) => setTimeout(resolve, 0));
-    console.log(\`count=\${this.#cell.state.value?.count}\`);
+    console.info(\`count=\${this.#cell.state.value?.count}\`);
 
     // Each write registers the listener first, then commits
     const next = await this.#replaceCounter(42, 'My Custom Count');
@@ -214,47 +214,47 @@ class ReplaceExample {
    * confirmed committed snapshot before logging.
    */
   async run(): Promise<void> {
-    console.log('=== SDuX Vault Node.js Replace Example ===\\n');
+    console.info('=== SDuX Vault Node.js Replace Example ===\\n');
 
     // initialize() queues the initialState commit in the microtask queue.
     // A zero-timeout tick yields to the event loop so the microtask queue
     // flushes and the committed initialState is available before we read it.
     await new Promise((resolve) => setTimeout(resolve, 0));
 
-    console.log('[CELL] Counter cell created');
-    console.log(
+    console.info('[CELL] Counter cell created');
+    console.info(
       \`[STATE] Initial: count=\${this.#cell.state.value?.count}, label="\${this.#cell.state.value?.label}"\\n\`
     );
 
     // Increment three times — each call awaits a confirmed committed snapshot
     for (let i = 0; i < 3; i++) {
-      console.log('[ACTION] Incrementing counter...');
+      console.info('[ACTION] Incrementing counter...');
       const state = await this.#incrementCounter();
-      console.log(\`[STATE]  count=\${state.count}, label="\${state.label}"\\n\`);
+      console.info(\`[STATE]  count=\${state.count}, label="\${state.label}"\\n\`);
     }
 
     // Replace with an entirely different state in one atomic write
-    console.log(
+    console.info(
       '[ACTION] Replacing with custom state: count=42, label="My Custom Count"'
     );
     const replaced = await this.#replaceCounter(42, 'My Custom Count');
-    console.log(
+    console.info(
       \`[STATE]  count=\${replaced.count}, label="\${replaced.label}"\\n\`
     );
 
     // Increment once more — shows the counter continuing from the replaced state
-    console.log('[ACTION] Incrementing counter...');
+    console.info('[ACTION] Incrementing counter...');
     const afterReplace = await this.#incrementCounter();
-    console.log(
+    console.info(
       \`[STATE]  count=\${afterReplace.count}, label="\${afterReplace.label}"\\n\`
     );
 
     // Reset to zero — the label also changes to reflect the reset intent
-    console.log('[ACTION] Resetting counter to zero...');
+    console.info('[ACTION] Resetting counter to zero...');
     const reset = await this.#replaceCounter(0, 'Counter Reset');
-    console.log(\`[STATE]  count=\${reset.count}, label="\${reset.label}"\\n\`);
+    console.info(\`[STATE]  count=\${reset.count}, label="\${reset.label}"\\n\`);
 
-    console.log('=== Done ===');
+    console.info('=== Done ===');
   }
 
   /**

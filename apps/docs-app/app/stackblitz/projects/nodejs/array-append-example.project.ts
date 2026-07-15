@@ -102,7 +102,7 @@ class ArrayAppendExample {
   async run(): Promise<void> {
     // setTimeout(0) lets the microtask queue flush so initialState is committed
     await new Promise((resolve) => setTimeout(resolve, 0));
-    console.log(this.#cell.state.value?.map(label).join(', '));
+    console.info(this.#cell.state.value?.map(label).join(', '));
     // [Darth Vader]
 
     // Each mergeState() concatenates — it does not replace
@@ -226,43 +226,47 @@ class ArrayAppendExample {
    * logging so the output always reflects the actual pipeline result.
    */
   async run(): Promise<void> {
-    console.log('=== SDuX Vault Node.js Array Append Example ===\\n');
+    console.info('=== SDuX Vault Node.js Array Append Example ===\\n');
 
     // initialize() queues the initialState commit in the microtask queue.
     // A zero-timeout tick yields to the event loop so the microtask queue
     // flushes and the committed initialState is available before we read it.
     await new Promise((resolve) => setTimeout(resolve, 0));
 
-    console.log(
+    console.info(
       '[CELL] Examples cell created with initialState + withArrayAppendMergeBehavior'
     );
-    console.log(
+    console.info(
       \`[STATE] Initial: [\${this.#cell.state.value?.map((e) => this.#label(e)).join(', ')}]\\n\`
     );
 
     // Merge one entry — withArrayAppendMergeBehavior concatenates, not replaces
-    console.log('[ACTION] Merging [Luke Skywalker]...');
+    console.info('[ACTION] Merging [Luke Skywalker]...');
     const after1 = await this.#mergeExamples([
       { id: 1, name: 'Luke', lastName: 'Skywalker' }
     ]);
-    console.log(\`[STATE]  [\${after1.map((e) => this.#label(e)).join(', ')}]\\n\`);
+    console.info(
+      \`[STATE]  [\${after1.map((e) => this.#label(e)).join(', ')}]\\n\`
+    );
 
     // Merge two more entries — all previous entries are preserved in the committed snapshot
-    console.log('[ACTION] Merging [Han Solo, Leia Organa]...');
+    console.info('[ACTION] Merging [Han Solo, Leia Organa]...');
     const after2 = await this.#mergeExamples([
       { id: 2, name: 'Han', lastName: 'Solo' },
       { id: 3, name: 'Leia', lastName: 'Organa' }
     ]);
-    console.log(\`[STATE]  [\${after2.map((e) => this.#label(e)).join(', ')}]\\n\`);
+    console.info(
+      \`[STATE]  [\${after2.map((e) => this.#label(e)).join(', ')}]\\n\`
+    );
 
     // Reset clears state to undefined without destroying the cell or its pipeline
-    console.log('[ACTION] Resetting state...');
+    console.info('[ACTION] Resetting state...');
     this.#cell.reset();
-    console.log(
+    console.info(
       \`[STATE]  \${this.#cell.state.value ?? 'undefined'} (state cleared, cell pipeline intact)\\n\`
     );
 
-    console.log('=== Done ===');
+    console.info('=== Done ===');
   }
 
   /**

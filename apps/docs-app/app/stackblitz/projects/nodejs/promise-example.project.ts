@@ -102,7 +102,7 @@ class PromiseExample {
   async run(): Promise<void> {
     // setTimeout(0) lets the microtask queue flush so initialState is committed
     await new Promise((resolve) => setTimeout(resolve, 0));
-    console.log(\`\${this.#getUsersValue().users.length} users\`);
+    console.info(\`\${this.#getUsersValue().users.length} users\`);
 
     // Placeholder committed before async work begins
     await this.#commitUsersState({
@@ -255,49 +255,51 @@ class PromiseExample {
    * Each step awaits a confirmed committed snapshot before logging.
    */
   async run(): Promise<void> {
-    console.log('=== SDuX Vault Node.js Promise Example ===\\n');
+    console.info('=== SDuX Vault Node.js Promise Example ===\\n');
 
     // initialize() queues the initialState commit in the microtask queue.
     // A zero-timeout tick yields to the event loop so the microtask queue
     // flushes and the committed initialState is available before we read it.
     await new Promise((resolve) => setTimeout(resolve, 0));
 
-    console.log('[CELL] Users cell created with reducer (counts loaded users)');
-    console.log(
+    console.info(
+      '[CELL] Users cell created with reducer (counts loaded users)'
+    );
+    console.info(
       \`[STATE] Initial: \${this.#getUsersValue().users.length} users\\n\`
     );
 
     // Load a single user — two-step: loading placeholder committed first, then resolved
-    console.log('[ACTION] Loading user 1...');
+    console.info('[ACTION] Loading user 1...');
     const afterUser1 = await this.#loadUser(1);
     const user1 = afterUser1.users.find((u) => u.id === 1)!;
-    console.log(
+    console.info(
       \`[STATE]  user 1: \${user1.status} → name: \${user1.name}, email: \${user1.email}\`
     );
-    console.log(
+    console.info(
       \`[STATE]  totalLoaded (from reducer): \${afterUser1.totalLoaded}\\n\`
     );
 
     // Load two users concurrently — all placeholders committed before any fetch resolves
-    console.log('[ACTION] Loading users 2 and 3 concurrently...');
+    console.info('[ACTION] Loading users 2 and 3 concurrently...');
     const afterBatch = await this.#loadUsers([2, 3]);
     const user2 = afterBatch.users.find((u) => u.id === 2)!;
     const user3 = afterBatch.users.find((u) => u.id === 3)!;
-    console.log(\`[STATE]  user 2: \${user2.status} → \${user2.name}\`);
-    console.log(\`[STATE]  user 3: \${user3.status} → \${user3.name}\`);
-    console.log(
+    console.info(\`[STATE]  user 2: \${user2.status} → \${user2.name}\`);
+    console.info(\`[STATE]  user 3: \${user3.status} → \${user3.name}\`);
+    console.info(
       \`[STATE]  totalLoaded (from reducer): \${afterBatch.totalLoaded}\\n\`
     );
 
     // Load user 999 — always rejects; the error state is committed for that entry only
-    console.log('[ACTION] Loading user 999 (will error)...');
+    console.info('[ACTION] Loading user 999 (will error)...');
     const afterError = await this.#loadUser(999);
     const errUser = afterError.users.find((u) => u.id === 999)!;
-    console.log(
+    console.info(
       \`[ERROR]  user 999: \${errUser.status} → \${errUser.errorMessage}\`
     );
     // The rest of the collection is unchanged — error is isolated to user 999
-    console.log(
+    console.info(
       \`[STATE]  loaded users still in state: \${afterError.users
         .filter((u) => u.status === 'loaded')
         .map((u) => \`user \${u.id}\`)
@@ -305,17 +307,17 @@ class PromiseExample {
     );
 
     // Clear all users — demonstrates resetting the collection through the pipeline
-    console.log('[ACTION] Clearing all users...');
+    console.info('[ACTION] Clearing all users...');
     const cleared = await this.#commitUsersState({
       users: [],
       totalLoaded: 0,
       lastRefresh: new Date().toISOString()
     });
-    console.log(
+    console.info(
       \`[STATE]  \${cleared.users.length} users, totalLoaded: \${cleared.totalLoaded}\\n\`
     );
 
-    console.log('=== Done ===');
+    console.info('=== Done ===');
   }
 
   /**

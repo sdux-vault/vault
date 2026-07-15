@@ -100,7 +100,7 @@ class ReplaceExample {
   async run() {
     // setTimeout(0) lets the microtask queue flush so initialState is committed
     await new Promise((resolve) => setTimeout(resolve, 0));
-    console.log(\`count=\${this.#cell.state.value?.count}\`);
+    console.info(\`count=\${this.#cell.state.value?.count}\`);
 
     // Each write registers the listener first, then commits
     const next = await this.#replaceCounter(42, 'My Custom Count');

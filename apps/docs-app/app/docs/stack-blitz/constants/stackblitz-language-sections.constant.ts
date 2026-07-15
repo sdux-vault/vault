@@ -86,6 +86,87 @@ export function createLanguageSections(brandName: string) {
       ]
     },
     {
+      heading: 'Deno',
+      id: 'deno',
+      icon: 'assets/brand/deno/deno-icon.svg',
+      description:
+        'Native TypeScript state management with Deno — learning examples for the SDuX pipeline model using Deno npm specifiers and runtime tooling. These examples require a local Deno installation.',
+      examples: [
+        {
+          title: 'Array Append',
+          id: 'deno-array-append',
+          exampleName: 'array-append-example',
+          localOnly: true,
+          notice: `
+            <p>
+              Deno examples are designed to run locally and are not available in
+              the StackBlitz browser runtime.
+            </p>
+            <p>To run this example locally with Deno:</p>
+            <ol>
+              <li><code>git clone https://github.com/sdux-vault/stackblitz-examples.git</code></li>
+              <li><code>cd stackblitz-examples/stackblitz/deno/array-append-example</code></li>
+              <li><code>deno run src/main.ts</code></li>
+            </ol>
+            <p>
+              Deno resolves the example's <code>npm:</code> imports directly, so
+              no <code>npm install</code> step or separate TypeScript runner is required.
+            </p>
+          `,
+          description: `Demonstrates mergeState with withArrayAppendMergeBehavior in Deno — ${brandName} concatenates incoming arrays with existing FeatureCell state on every mergeState() call, with initialState seeding and reset support. Native Deno TypeScript using npm specifiers, with no npm installation or separate TypeScript runner required. Run the example locally with Deno. Refer to the README file.`,
+          languages: [{ name: 'Deno', key: 'deno' }]
+        },
+        {
+          title: 'Promise',
+          id: 'deno-promise',
+          exampleName: 'promise-example',
+          localOnly: true,
+          notice: `
+            <p>
+              Deno examples are designed to run locally and are not available in
+              the StackBlitz browser runtime.
+            </p>
+            <p>To run this example locally with Deno:</p>
+            <ol>
+              <li><code>git clone https://github.com/sdux-vault/stackblitz-examples.git</code></li>
+              <li><code>cd stackblitz-examples/stackblitz/deno/promise-example</code></li>
+              <li><code>deno run src/main.ts</code></li>
+            </ol>
+            <p>
+              Deno resolves the example's <code>npm:</code> imports directly, so
+              no <code>npm install</code> step or separate TypeScript runner is required.
+            </p>
+          `,
+          description: `Demonstrates async Promise-based state updates in Deno — ${brandName} handles two-step async commits with loading placeholders, concurrent fetches, error settlement, and reducer-derived totals. Native Deno TypeScript using npm specifiers, with no npm installation or separate TypeScript runner required. Run the example locally with Deno. Refer to the README file.`,
+          languages: [{ name: 'Deno', key: 'deno' }]
+        },
+        {
+          title: 'Replace State',
+          id: 'deno-replace-state',
+          exampleName: 'replace-example',
+          localOnly: true,
+          notice: `
+            <p>
+              Deno examples are designed to run locally and are not available in
+              the StackBlitz browser runtime.
+            </p>
+            <p>To run this example locally with Deno:</p>
+            <ol>
+              <li><code>git clone https://github.com/sdux-vault/stackblitz-examples.git</code></li>
+              <li><code>cd stackblitz-examples/stackblitz/deno/replace-example</code></li>
+              <li><code>deno run src/main.ts</code></li>
+            </ol>
+            <p>
+              Deno resolves the example's <code>npm:</code> imports directly, so
+              no <code>npm install</code> step or separate TypeScript runner is required.
+            </p>
+          `,
+          description: `Demonstrates replaceState in Deno — ${brandName} atomically swaps the entire FeatureCell state in a single pipeline write, with awaited confirmation through state$ before the next operation proceeds. Native Deno TypeScript using npm specifiers, with no npm installation or separate TypeScript runner required. Run the example locally with Deno. Refer to the README file.`,
+          languages: [{ name: 'Deno', key: 'deno' }]
+        }
+      ]
+    },
+    {
       heading: 'VanillaJS',
       id: 'vanillajs',
       icon: 'assets/brand/vanillajs/vanillajs-icon.svg',
