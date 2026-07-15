@@ -171,6 +171,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/what-transfers-directly-from-redux</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/your-redux-reducers-already-work-in-sdux-vault</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -376,7 +381,27 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.sdux-vault.com/docs/pipeline/apis/at-feature-cell</loc>
+    <loc>https://www.sdux-vault.com/docs/pipeline/apis/angular</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/apis/angular/at-feature-cell</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/apis/angular/inject-vault</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/apis/angular/provide-feature-cell</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/apis/angular/provide-vault</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -501,17 +526,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.sdux-vault.com/docs/pipeline/apis/inject-vault</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/pipeline/apis/provide-feature-cell</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/pipeline/apis/provide-vault</loc>
+    <loc>https://www.sdux-vault.com/docs/pipeline/apis/react</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2046,11 +2061,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.sdux-vault.com/docs/stackblitz</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.sdux-vault.com/docs/videos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2082,11 +2092,6 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/welcome/license</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/press</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2187,6 +2192,21 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/examples/bun/replace</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/deno/array-append</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/deno/promise</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/deno/replace</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2386,6 +2406,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/press</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/sdux/enterprise</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2402,6 +2427,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/sitemap</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/stackblitz</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

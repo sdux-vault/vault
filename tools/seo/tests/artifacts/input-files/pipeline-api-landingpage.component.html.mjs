@@ -1,0 +1,142 @@
+export const PIPELINE_API_LANDINGPAGE_HTML = `
+@switch (category) {
+  @case ('feature-cell-api') {
+    @switch (type) {
+      @case ('after-taps-method') {
+        <sdux-pipeline-after-taps-method />
+      }
+
+      @case ('before-taps-method') {
+        <sdux-pipeline-before-taps-method />
+      }
+
+      @case ('destroy-method') {
+        <sdux-pipeline-destroy-method />
+      }
+
+      @case ('destroyed-stream-method') {
+        <sdux-pipeline-destroyed-stream-method />
+      }
+
+      @case ('emit-states-method') {
+        <sdux-pipeline-emit-states-method />
+      }
+
+      @case ('errors-method') {
+        <sdux-pipeline-errors-method />
+      }
+
+      @case ('filters-method') {
+        <sdux-pipeline-filters-method />
+      }
+
+      @case ('from-stream-method') {
+        <sdux-pipeline-from-stream-method />
+      }
+
+      @case ('hydrate-method') {
+        <sdux-pipeline-hydrate-method />
+      }
+
+      @case ('initialize-method') {
+        <sdux-pipeline-initialize-method />
+      }
+
+      @case ('interceptors-method') {
+        <sdux-pipeline-interceptors-method />
+      }
+
+      @case ('key-property') {
+        <sdux-pipeline-key-property />
+      }
+
+      @case ('merge-state-method') {
+        <sdux-pipeline-merge-state-method />
+      }
+
+      @case ('operators-method') {
+        <sdux-pipeline-operators-method />
+      }
+
+      @case ('reducers-method') {
+        <sdux-pipeline-reducers-method />
+      }
+
+      @case ('replace-state-method') {
+        <sdux-pipeline-replace-state-method />
+      }
+
+      @case ('reset-method') {
+        <sdux-pipeline-reset-method />
+      }
+
+      @case ('reset-stream-method') {
+        <sdux-pipeline-reset-stream-method />
+      }
+
+      @case ('state-property') {
+        <sdux-pipeline-state-property />
+      }
+
+      @case ('state-stream-method') {
+        <sdux-pipeline-state-stream-method />
+      }
+
+      @case ('use-sync-external-store-method') {
+        <sdux-pipeline-use-sync-external-store-method />
+      }
+
+      @default {
+        <sdux-pipeline-feature-cell-api />
+      }
+    }
+  }
+
+  @case ('react') {
+    <sdux-pipeline-react-overview-api />
+  }
+
+  @case ('angular') {
+    @switch (type) {
+      @case ('at-feature-cell') {
+        <sdux-pipeline-at-feature-cell-api />
+      }
+
+      @case ('inject-vault') {
+        <sdux-pipeline-inject-vault-api />
+      }
+
+      @case ('provide-vault') {
+        <sdux-pipeline-provide-vault-api />
+      }
+
+      @case ('provide-feature-cell') {
+        <sdux-pipeline-provide-feature-cell />
+      }
+      @default {
+        <sdux-pipeline-angular-overview-api />
+      }
+    }
+  }
+
+  @case ('cell-builder') {
+    <sdux-pipeline-cell-builder-api />
+  }
+
+  @case ('vault') {
+    <sdux-pipeline-vault-api />
+  }
+
+  @case ('feature-cell') {
+    <sdux-pipeline-feature-cell />
+  }
+
+  @case ('feature-cell-api') {
+    <sdux-pipeline-feature-cell-api />
+  }
+
+  @default {
+    <sdux-pipeline-feature-cell-api />
+  }
+}
+`;

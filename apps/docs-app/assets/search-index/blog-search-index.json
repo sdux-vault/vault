@@ -319,6 +319,16 @@
       "url": "/blog/atomic-state-commitment",
       "symbols": ["atomic-state-commitment"],
       "content": "Atomic State Commitment — Why Components Never See Partial Updates atomic-state-commitment ED"
+    },
+    {
+      "id": "blog:what-transfers-directly-from-redux",
+      "title": "What Transfers Directly from Redux — Pure Functions, State Shapes, and Immutability",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/what-transfers-directly-from-redux",
+      "symbols": ["what-transfers-directly-from-redux"],
+      "content": "What Transfers Directly from Redux — Pure Functions, State Shapes, and Immutability what-transfers-directly-from-redux ED"
     }
   ]
 }

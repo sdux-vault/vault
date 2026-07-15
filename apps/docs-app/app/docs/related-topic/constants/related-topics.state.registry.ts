@@ -17,6 +17,13 @@ export const RELATED_TOPICS_STATE_REGISTRY: RelatedTopicCategoryShape = {
 
   items: [
     {
+      link: '/docs/pipeline/behaviors/state/updating',
+      display: 'Updating State',
+      title: 'Updating State in SDuX Vault — Pipeline Update APIs',
+      description:
+        'Learn how FeatureCell update APIs submit candidate state through the deterministic SDuX Vault pipeline.'
+    },
+    {
       link: '/docs/pipeline/addons/state/with-core-emit-state-behavior',
       display: 'Core State Emit Behavior',
       title:
