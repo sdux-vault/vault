@@ -4,7 +4,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: 'sdux-feature-cell-shape-common',
   standalone: true,
   template: `
-    <!-- Updated 2026-01-21 -->
+    <!-- Updated 2026-07-15 -->
     <div class="table-title">
       <a href="/docs/references/shapes/feature-cell-shape">FeatureCellShape</a
       >&lt;T&gt;
@@ -436,10 +436,36 @@ import { Component, ViewEncapsulation } from '@angular/core';
           </td>
         </tr>
 
+        <!-- useReactiveState -->
+        <tr>
+          <td>
+            <strong>useReactiveState&lt;T&gt;</strong>
+            &nbsp;
+            <img src="assets/brand/vue/vue-icon.svg" height="12" alt="Vue" />
+            <p>return:</p>
+            <ul>
+              <li>
+                Readonly&lt;<a
+                  href="/docs/references/shapes/state-snapshot-shape"
+                  >StateSnapshotShape</a
+                >&lt;T&gt;&gt;
+              </li>
+            </ul>
+          </td>
+          <td>
+            <strong>Vue</strong> extension that subscribes the active effect
+            scope to
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            state updates and returns the latest committed snapshot as a
+            readonly reactive object.
+          </td>
+        </tr>
+
         <!-- useSyncExternalStore -->
         <tr>
           <td>
             <strong>useSyncExternalStore&lt;T&gt;</strong>
+            &nbsp;
             <img
               src="assets/brand/react/react-icon.svg"
               height="15"

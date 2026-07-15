@@ -1,0 +1,172 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="docs-container">
+  <div class="header">
+    <h3>Vue Integration with <sdux-brand-name [tm]="true" /></h3>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <sdux-brand-name [tm]="true" /> integrates with Vue through
+      <strong><sdux-package-name />/vue</strong>. The package preserves the core
+      <sdux-feature-cell [tm]="true" /> contract and adds
+      <strong>useReactiveState()</strong> for reactive State access within a Vue
+      effect scope.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="title">Vue package usage</div>
+      <p>
+        <sdux-brand-name /> can run in a Vue application without
+        <strong><sdux-package-name />/vue</strong>. The core APIs remain
+        available, but the Vue reactive State surface is supplied only by the
+        Vue package.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Vue Integration</div>
+
+    <div class="section-body">
+      <p>
+        <strong><sdux-package-name />/vue</strong> is a Vue integration wrapper
+        around the core <sdux-brand-name /> APIs. It preserves the core
+        <sdux-feature-cell /> FluentApi, synchronous State Snapshot, and State
+        Stream while adding <strong>useReactiveState()</strong> as the Vue
+        reactive State surface.
+      </p>
+
+      <p>
+        Call <strong>useReactiveState()</strong> during component setup or
+        within another active Vue effect scope. The effect scope owns the
+        resulting subscription lifecycle and exposes subsequent State changes
+        through the readonly reactive Snapshot, so the component does not
+        require a separate <strong>state$</strong> subscription or manual
+        subscription cleanup.
+      </p>
+
+      <div class="callout callout-warning">
+        <div class="title">Initial State requires a reactive connection</div>
+        <p>
+          A manual <strong>state$</strong> subscription created after the
+          <sdux-feature-cell /> has initialized can miss the emission that
+          committed the initial State. Later State updates may still reach that
+          subscription even though the component did not receive the current
+          Snapshot during setup.
+        </p>
+
+        <p>
+          <strong>useReactiveState()</strong> gives the component the current
+          Snapshot and connects it to subsequent State changes through the same
+          effect-scope contract. Outside an active effect scope, read
+          <strong>state</strong> for the latest synchronous Snapshot or use
+          <strong>state$</strong> when an explicitly managed Observable
+          subscription is required.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Installation</div>
+
+    <div class="section-body">
+      <p>
+        The Vue extension is available from the
+        <strong><sdux-package-name />/vue</strong> package on npm.
+      </p>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Vue'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`npm install &#64;sdux-vault/vue`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+      <p>
+        <a
+          href="https://www.npmjs.com/package/@sdux-vault/vue"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Download @sdux-vault/vue from npm in a new window"
+          >Download <sdux-package-name />/vue from npm →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Vue Component Pattern</div>
+
+    <div class="section-body">
+      <p>
+        Create and initialize the <sdux-feature-cell /> outside the component,
+        then import its stable reference into the Vue component. During setup,
+        call <strong>useReactiveState()</strong> once and render from the
+        returned readonly reactive Snapshot.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'FeatureCell'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { FeatureCell, Vault } from '&#64;sdux-vault/vue';
+
+Vault({
+  logLevel: 'off',
+  devMode: false
+});
+
+export const counterCell = FeatureCell&lt;number&gt;({
+  key: 'counter',
+  initialState: 0
+});
+
+counterCell.initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+
+        <sdux-example-viewer-tab [label]="'Vue'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`&lt;script setup lang="ts"&gt;
+import { counterCell } from './counter.cell';
+
+const snapshot = counterCell.useReactiveState();
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;p v-if="snapshot.isLoading"&gt;Loading...&lt;/p&gt;
+  &lt;p
+    v-else-if="snapshot.error"
+    role="alert"
+    v-text="snapshot.error.message"&gt;
+  &lt;/p&gt;
+  &lt;p v-else-if="!snapshot.hasValue"&gt;No State is available.&lt;/p&gt;
+  &lt;p v-else v-text="'Count: ' + snapshot.value"&gt;&lt;/p&gt;
+&lt;/template&gt;`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">useReactiveState()</div>
+
+    <div class="section-body">
+      <p>
+        <strong>useReactiveState()</strong> connects the active Vue effect scope
+        to <sdux-feature-cell /> State and returns the latest committed Snapshot
+        as a readonly reactive object. Its <strong>value</strong>,
+        <strong>hasValue</strong>, <strong>isLoading</strong>, and
+        <strong>error</strong> fields remain reactive as State changes.
+      </p>
+
+      <p>
+        <a
+          [routerLink]="[
+            '/docs/pipeline/apis/feature-cell-api/use-reactive-state-method'
+          ]"
+          >Read the useReactiveState method documentation →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

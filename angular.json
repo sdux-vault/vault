@@ -280,6 +280,39 @@
         }
       }
     },
+    "vue": {
+      "projectType": "library",
+      "root": "libs/core-extensions/vue",
+      "sourceRoot": "libs/core-extensions/vue/src",
+      "prefix": "sdux-vue",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/core-extensions/vue/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/core-extensions/vue/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libs/core-extensions/vue/tsconfig.spec.json",
+            "karmaConfig": "libs/core-extensions/vue/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            },
+            "codeCoverageExclude": ["**/testing/**"],
+            "scripts": []
+          }
+        }
+      }
+    },
     "core": {
       "projectType": "library",
       "root": "libs/core",

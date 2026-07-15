@@ -19,7 +19,7 @@ export const initialStateExampleProject: Project = {
 `,
     'package.json': `{
   "name": "react-initial-state-example",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {

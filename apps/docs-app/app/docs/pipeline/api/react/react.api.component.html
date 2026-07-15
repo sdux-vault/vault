@@ -7,8 +7,8 @@
   <header class="docs-header">
     <p class="lead">
       <sdux-brand-name [tm]="true" /> integrates with React through
-      <strong><sdux-package-name />/react</strong>. The package extends the core
-      <sdux-feature-cell [tm]="true" /> contract with
+      <strong><sdux-package-name />/react</strong>. The package preserves the
+      core <sdux-feature-cell [tm]="true" /> contract and adds
       <strong>useSyncExternalStore()</strong> for render-time State access.
     </p>
 
@@ -17,8 +17,8 @@
       <p>
         <sdux-brand-name /> can run in a React application without
         <strong><sdux-package-name />/react</strong>. The core APIs remain
-        available, but the React render-time subscription surface is supplied
-        only by the React package.
+        available, but the React render-time State surface is supplied only by
+        the React package.
       </p>
     </div>
   </header>
@@ -27,28 +27,39 @@
     <div class="section-title">React Integration</div>
 
     <div class="section-body">
-      <strong><sdux-package-name />/react</strong> is a React integration
-      wrapper around the core <sdux-brand-name /> APIs. It preserves the core
-      <sdux-feature-cell /> FluentApi, synchronous State Snapshot, and State
-      Stream while adding an explicit React render-time subscription method.
+      <p>
+        <strong><sdux-package-name />/react</strong> is a React integration
+        wrapper around the core <sdux-brand-name /> APIs. It preserves the core
+        <sdux-feature-cell /> FluentApi, synchronous State Snapshot, and State
+        Stream while adding <strong>useSyncExternalStore()</strong> as the React
+        render-time State surface.
+      </p>
+
+      <p>
+        Call <strong>useSyncExternalStore()</strong> at the top level of a React
+        function component. React owns the resulting subscription lifecycle and
+        requests the latest Snapshot when State changes, so the component does
+        not require a separate <strong>state$</strong> subscription or manual
+        subscription cleanup for its render path.
+      </p>
 
       <div class="callout callout-warning">
         <div class="title">Initial State requires a render-time connection</div>
         <p>
-          Without <strong><sdux-package-name />/react</strong> and
-          <strong>useSyncExternalStore()</strong>, a React component must
-          provide its own render-time integration with
-          <sdux-feature-cell /> State. A subscription created after
-          initialization can miss the emission that committed the initial State,
-          leaving that State absent from the first render.
+          A manual <strong>state$</strong> subscription created after the
+          <sdux-feature-cell /> has initialized can miss the emission that
+          committed the initial State. Later State updates may still reach that
+          subscription even though the initial render did not receive the
+          current Snapshot.
         </p>
 
         <p>
-          Later State updates may still render correctly, creating a
-          <strong>false-positive result</strong>: subsequent updates appear to
-          work even though the initial render was never connected to the current
-          Snapshot. A custom integration must read the current Snapshot during
-          render and remain connected to subsequent State changes.
+          <strong>useSyncExternalStore()</strong> gives the render the current
+          Snapshot and connects it to subsequent State changes through the same
+          render-time contract. Outside the render path, read
+          <strong>state</strong> for the latest synchronous Snapshot or use
+          <strong>state$</strong> when an explicitly managed Observable
+          subscription is required.
         </p>
       </div>
     </div>
@@ -81,14 +92,71 @@
   </section>
 
   <section class="section">
+    <div class="section-title">React Component Pattern</div>
+
+    <div class="section-body">
+      <p>
+        Create and initialize the <sdux-feature-cell /> outside the component,
+        then import its stable reference into the React component. During
+        render, call <strong>useSyncExternalStore()</strong> once at the top
+        level and render from the returned Snapshot.
+      </p>
+
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'FeatureCell'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { FeatureCell, Vault } from '&#64;sdux-vault/react';
+
+Vault({
+  logLevel: 'off',
+  devMode: false
+});
+
+export const counterCell = FeatureCell&lt;number&gt;({
+  key: 'counter',
+  initialState: 0
+});
+
+counterCell.initialize();`}}</code></pre>
+        </sdux-example-viewer-tab>
+
+        <sdux-example-viewer-tab [label]="'React'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`import { counterCell } from './counter.cell';
+
+export function CounterView() {
+  const snapshot = counterCell.useSyncExternalStore();
+
+  if (snapshot.isLoading) {
+    return &lt;p&gt;Loading...&lt;/p&gt;;
+  }
+
+  if (snapshot.error) {
+    return &lt;p role="alert"&gt;{snapshot.error.message}&lt;/p&gt;;
+  }
+
+  if (!snapshot.hasValue) {
+    return &lt;p&gt;No State is available.&lt;/p&gt;;
+  }
+
+  return &lt;p&gt;Count: {snapshot.value}&lt;/p&gt;;
+}`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="section-title">useSyncExternalStore()</div>
 
     <div class="section-body">
       <p>
         <strong>useSyncExternalStore()</strong> connects the current React
-        render to <sdux-feature-cell /> State and returns the latest immutable
-        Snapshot. The same surface provides the current Snapshot during render
-        and connects the component to subsequent State changes.
+        render to <sdux-feature-cell /> State and returns the latest committed
+        immutable Snapshot. Its <strong>value</strong>,
+        <strong>hasValue</strong>, <strong>isLoading</strong>, and
+        <strong>error</strong> fields represent the State available to the
+        current render.
       </p>
 
       <p>

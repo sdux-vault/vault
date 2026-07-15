@@ -7,6 +7,7 @@
       // "@sdux-vault/shared": ["libs/shared/src/public-api"],
       "@sdux-vault/angular": ["libs/core-extensions/angular/src/public-api"],
       "@sdux-vault/react": ["libs/core-extensions/react/src/public-api"],
+      "@sdux-vault/vue": ["libs/core-extensions/vue/src/public-api"],
       "@sdux-vault/testing-utils": ["libs/testing/utils/src/public-api"],
       "@sdux-vault/devtools-ui": ["apps/devtools-ui/src/public-api"],
       "@sdux-vault/ui/web-components": ["libs/ui/web-components/src/public-api"]

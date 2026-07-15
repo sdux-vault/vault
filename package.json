@@ -1,6 +1,6 @@
 {
   "name": "@sdux-vault/vault",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "engines": {
     "node": ">=24.0.0",
     "npm": ">=11.0.0"
@@ -72,6 +72,7 @@
     "build:testing-utils": "ng build testing-utils",
     "build:integration:tests": "node libs/testing/integration/integration-build.script.mjs",
     "build:react": "ng build react",
+    "build:vue": "ng build vue",
     "build:readmes": "node tools/readme-generation/readme-builder.mjs",
     "build:references": "run-s build:engine-docs:single-only build:docs-json:single-only build:merge-compodocs:single-only build:types:single-only build:reference-docs:single-only build:reference-menus:single-only build:link-generator:single-only build:search-index:single-only build:blog-index:single-only build:merge-indexes:single-only format:all",
     "build:engine-docs:single-only": "npm run docs:json --prefix ../engine",
@@ -133,6 +134,7 @@
     "test:docs-app": "ng test docs-app",
     "test:web-components": "ng test web-components",
     "test:tools": "node --experimental-vm-modules node_modules/jasmine/bin/jasmine.js --config=tools/jasmine.node.json",
+    "test:vue": "ng test vue",
     "test:coverage": "run-s test:coverage:*",
     "test:coverage:addons": "ng test addons --watch=false --browsers=ChromeHeadless --code-coverage --source-map=false",
     "test:coverage:angular": "ng test angular --watch=false --browsers=ChromeHeadless --code-coverage --source-map=false",
@@ -143,6 +145,7 @@
     "test:coverage:integration": "npm run build:integration:tests && ng test integration --watch=false --browsers=ChromeHeadless --code-coverage --source-map=false",
     "test:coverage:react": "ng test react --watch=false --browsers=ChromeHeadless --code-coverage --source-map=false",
     "test:coverage:shared": "ng test shared --watch=false --browsers=ChromeHeadless --code-coverage --source-map=false",
+    "test:coverage:vue": "ng test vue --watch=false --browsers=ChromeHeadless --code-coverage --source-map=false",
     "test:coverage:web-components": "ng test web-components --watch=false --browsers=ChromeHeadless --code-coverage --source-map=false",
     "test:coverage:clean": "rimraf coverage",
     "typecheck": "tsc -p tsconfig.json --noEmit",
@@ -221,6 +224,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rimraf": "^6.0.1",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "vue": "^3.5.13"
   }
 }

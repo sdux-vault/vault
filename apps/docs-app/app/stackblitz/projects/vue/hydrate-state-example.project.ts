@@ -19,7 +19,7 @@ export const hydrateStateExampleProject: Project = {
 `,
     'package.json': `{
   "name": "vue-hydrate-state-example",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,7 +29,7 @@ export const hydrateStateExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/vue": "latest",
     "rxjs": "~7.8.0",
     "vue": "^3.5.13"
   },
@@ -50,12 +50,10 @@ import ExampleView from './ExampleView.vue';
 </template>
 `,
     'src/app/ExampleView.vue': `<script setup lang="ts">
-import type { Subscription } from 'rxjs';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { ref } from 'vue';
 import {
   type Example,
-  exampleState,
-  exampleState\$,
+  exampleCell,
   replaceExamples,
   resetExamples
 } from './example.cell';
@@ -67,14 +65,8 @@ const sample: Example[] = [
   { id: 9, name: 'Han', lastName: 'Solo' }
 ];
 
-/**
- * Holds the reactive Vue view of the current FeatureCell snapshot.
- * Stream emissions update these fields after hydration and later mutations.
- */
-const snapshot = ref({
-  value: exampleState.value,
-  hasValue: exampleState.hasValue
-});
+/** Holds the reactive Vue view of the current FeatureCell snapshot. */
+const snapshot = exampleCell.useReactiveState();
 
 /** Describes whether the visible value came from hydration or a later update. */
 const activeStateHint = ref('hydrate() factory resolved during initialize().');
@@ -82,26 +74,10 @@ const activeStateHint = ref('hydrate() factory resolved during initialize().');
 /** Controls whether the template shows the source of the hydrated value. */
 const displayActiveStateHint = ref(true);
 
-/** Holds the active stream subscription for component lifecycle cleanup. */
-let sub: Subscription;
-
-onMounted(() => {
-  sub = exampleState\$.subscribe((emit) => {
-    snapshot.value = {
-      value: emit.snapshot.value,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-});
-
-onUnmounted(() => {
-  sub?.unsubscribe();
-});
-
 /**
  * Replaces the hydrated value with the sample dataset through the cell module.
- * The button click updates the pipeline, the stream emits, and Vue refreshes
- * the template from the reactive snapshot.
+ * The button click updates the pipeline and Vue refreshes the template from
+ * the reactive snapshot.
  * @returns void
  */
 function loadSample(): void {
@@ -414,7 +390,7 @@ function handleResetState(): void {
 }
 </style>
 `,
-    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
+    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/vue';
 
 /**
  * Defines one character record stored in the example's array state.
@@ -452,10 +428,10 @@ Vault({
  * Owns the FeatureCell that demonstrates deferred initialization with \`hydrate()\`.
  * The descriptor leaves its fallback undefined so the factory registered before
  * \`initialize()\` supplies the authoritative initial value. Vue components read
- * the exposed snapshot and stream while mutation functions in this module keep
- * pipeline access in one place.
+ * its reactive State while mutation functions in this module keep pipeline
+ * access in one place.
  */
-const exampleCell = FeatureCell<Example[] | undefined>({
+export const exampleCell = FeatureCell<Example[] | undefined>({
   key: 'example-feature-cell-key',
   initialState: undefined
 });
@@ -466,18 +442,6 @@ exampleCell
     Promise.resolve([{ id: 1, name: 'Darth', lastName: 'Sidious' }])
   )
   .initialize();
-
-/**
- * Exposes the current read-only state used to seed the component's reactive snapshot.
- * Its \`value\` and \`hasValue\` fields reflect hydration and later pipeline updates.
- */
-export const exampleState = exampleCell.state;
-
-/**
- * Emits committed snapshots so the Vue component can keep its ref state reactive.
- * Hydration and later replacements flow through the same subscription surface.
- */
-export const exampleState\$ = exampleCell.state\$;
 
 /**
  * Replaces the entire hydrated state with a caller-provided character array.

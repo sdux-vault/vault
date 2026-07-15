@@ -19,7 +19,7 @@ export const initialStateExampleProject: Project = {
 `,
     'package.json': `{
   "name": "vue-initial-state-example",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,7 +29,7 @@ export const initialStateExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/vue": "latest",
     "rxjs": "~7.8.0",
     "vue": "^3.5.13"
   },
@@ -50,12 +50,10 @@ import ExampleView from './ExampleView.vue';
 </template>
 `,
     'src/app/ExampleView.vue': `<script setup lang="ts">
-import type { Subscription } from 'rxjs';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { ref } from 'vue';
 import {
   type Example,
-  exampleState,
-  exampleState\$,
+  exampleCell,
   replaceExamples,
   resetExamples
 } from './example.cell';
@@ -66,28 +64,10 @@ const sample: Example[] = [
   { id: 9, name: 'Han', lastName: 'Solo' }
 ];
 
-const snapshot = ref({
-  value: exampleState.value,
-  hasValue: exampleState.hasValue
-});
+const snapshot = exampleCell.useReactiveState();
 
 const activeStateHint = ref('initialState configured at registration time.');
 const displayActiveStateHint = ref(true);
-
-let sub: Subscription;
-
-onMounted(() => {
-  sub = exampleState\$.subscribe((emit) => {
-    snapshot.value = {
-      value: emit.snapshot.value,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-});
-
-onUnmounted(() => {
-  sub?.unsubscribe();
-});
 
 /** Loads sample data into the FeatureCell. */
 function loadSample(): void {
@@ -401,7 +381,7 @@ function handleResetState(): void {
 }
 </style>
 `,
-    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
+    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/vue';
 
 /**
  * Shape representing a single example entity in the FeatureCell state.
@@ -442,25 +422,13 @@ Vault({
  * \`replaceState\` through the full pipeline, seeding state before any consumer
  * reads it. Explicit \`replaceState()\` calls always override it.
  */
-const exampleCell = FeatureCell<Example[]>({
+export const exampleCell = FeatureCell<Example[]>({
   key: 'example-feature-cell-key',
   initialState: [{ id: 66, name: 'Darth', lastName: 'Vader' }]
 });
 
 // Initialize the pipeline
 exampleCell.initialize();
-
-/**
- * Read-only synchronous state snapshot exposed to Vue components.
- * Provides access to \`value\`, \`isLoading\`, \`error\`, and \`hasValue\`.
- */
-export const exampleState = exampleCell.state;
-
-/**
- * Observable stream of committed state snapshots.
- * Emits each time the FeatureCell pipeline commits a new value.
- */
-export const exampleState\$ = exampleCell.state\$;
 
 /**
  * Replaces the entire FeatureCell state with the provided input.

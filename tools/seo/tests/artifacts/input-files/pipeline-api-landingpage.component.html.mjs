@@ -96,6 +96,10 @@ export const PIPELINE_API_LANDINGPAGE_HTML = `
     <sdux-pipeline-react-overview-api />
   }
 
+  @case ('vue') {
+    <sdux-pipeline-vue-overview-api />
+  }
+
   @case ('angular') {
     @switch (type) {
       @case ('at-feature-cell') {
