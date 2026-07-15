@@ -1,22 +1,32 @@
 import fs from 'node:fs';
 import readline from 'node:readline';
+import { ExecModule } from '../../utils/exec-sync.util.mjs';
 import { PlanManager } from '../plan-manager.class.mjs';
 import { ReleaseManager } from '../release-manager.class.mjs';
 import { Release } from '../release.class.mjs';
+import { TagManager } from '../tag-manager.class.mjs';
 
 describe('CLI: release.class (normalized)', () => {
+  let execCalls;
   let consoleInfo;
   let consoleError;
   let answers;
   let planRun;
   let releaseRun;
+  let tagRun;
 
   beforeEach(() => {
+    execCalls = [];
     consoleInfo = [];
     consoleError = [];
     answers = [];
     planRun = [];
     releaseRun = [];
+    tagRun = [];
+
+    spyOn(ExecModule, 'exec').and.callFake((cmd) => {
+      execCalls.push(cmd);
+    });
 
     spyOn(console, 'info').and.callFake((msg) => {
       consoleInfo.push(msg.replace(/\n/g, ''));
@@ -32,6 +42,10 @@ describe('CLI: release.class (normalized)', () => {
 
     spyOn(ReleaseManager.prototype, 'run').and.callFake(function () {
       releaseRun.push(this);
+    });
+
+    spyOn(TagManager.prototype, 'run').and.callFake(function () {
+      tagRun.push(this);
     });
 
     spyOn(readline, 'createInterface').and.callFake(() => {
@@ -69,6 +83,18 @@ describe('CLI: release.class (normalized)', () => {
     }
   };
 
+  it('runs clear command', async () => {
+    const r = new Release({
+      projectRoot: '/repo',
+      args: ['--type=patch', '--lib=shared', '--dry', '--mode=release'],
+      libraries: LIBS
+    });
+
+    await r.run();
+
+    expect(execCalls).toEqual(['clear']);
+  });
+
   /* -----------------------------------------------------------
    * PARSING
    * --------------------------------------------------------- */
@@ -95,6 +121,27 @@ describe('CLI: release.class (normalized)', () => {
 
     expect(r.type).toEqual('minor');
     expect(r.mode).toEqual('analyze');
+  });
+
+  it('prompts for tag release mode', async () => {
+    answers = ['4'];
+
+    const r = new Release({
+      projectRoot: '/repo',
+      args: [],
+      libraries: LIBS
+    });
+
+    const mode = await r.askForMode();
+
+    expect(mode).toEqual('tag');
+    expect(consoleInfo).toEqual([
+      'Select mode:',
+      '  1) Analyze (no changes, report only)',
+      '  2) Analyze with Audit (no changes, full dependency health report)',
+      '  3) Release (publish + update dependencies)',
+      '  4) Tag Release (Git Admin Only)'
+    ]);
   });
 
   /* -----------------------------------------------------------
@@ -175,6 +222,7 @@ describe('CLI: release.class (normalized)', () => {
       '  1) Analyze (no changes, report only)',
       '  2) Analyze with Audit (no changes, full dependency health report)',
       '  3) Release (publish + update dependencies)',
+      '  4) Tag Release (Git Admin Only)',
       'Run mode:',
       '  1) Dry run (no files will be written)',
       '  2) Real run (updates version, writes + commit)',
@@ -206,6 +254,7 @@ describe('CLI: release.class (normalized)', () => {
       '  1) Analyze (no changes, report only)',
       '  2) Analyze with Audit (no changes, full dependency health report)',
       '  3) Release (publish + update dependencies)',
+      '  4) Tag Release (Git Admin Only)',
       'Run mode:',
       '  1) Dry run (no files will be written)',
       '  2) Real run (updates version, writes + commit)',
@@ -215,6 +264,66 @@ describe('CLI: release.class (normalized)', () => {
       '  1) patch  (bug fixes)',
       '  2) minor  (new features)',
       '  3) major  (breaking changes)'
+    ]);
+  });
+
+  /* -----------------------------------------------------------
+   * TAG MODE
+   * --------------------------------------------------------- */
+
+  it('runs tag manager with args only', async () => {
+    const r = new Release({
+      projectRoot: '/repo',
+      args: ['--mode=tag', '--lib=shared', '--dry'],
+      libraries: LIBS,
+      dependencyGraph: GRAPH
+    });
+
+    await r.run();
+
+    expect(tagRun.length).toEqual(1);
+    expect(releaseRun.length).toEqual(0);
+    expect(planRun.length).toEqual(0);
+
+    const manager = tagRun[0];
+
+    expect(manager.projectRoot).toEqual('/repo');
+    expect(manager.packageName).toEqual('@sdux-vault/shared');
+    expect(manager.packagePath).toEqual('/repo/libs/shared');
+    expect(manager.dryRun).toEqual(true);
+    expect(r.type).toBeUndefined();
+  });
+
+  it('prompts for a live tag without prompting for a release type', async () => {
+    answers = ['tag', '2', '1'];
+
+    const r = new Release({
+      projectRoot: '/repo',
+      args: [],
+      libraries: LIBS,
+      dependencyGraph: GRAPH
+    });
+
+    await r.run();
+
+    expect(tagRun.length).toEqual(1);
+    expect(releaseRun.length).toEqual(0);
+    expect(planRun.length).toEqual(0);
+    expect(tagRun[0].dryRun).toEqual(false);
+    expect(r.type).toBeUndefined();
+    expect(answers).toEqual([]);
+
+    expect(consoleInfo).toEqual([
+      'Select mode:',
+      '  1) Analyze (no changes, report only)',
+      '  2) Analyze with Audit (no changes, full dependency health report)',
+      '  3) Release (publish + update dependencies)',
+      '  4) Tag Release (Git Admin Only)',
+      'Run mode:',
+      '  1) Dry run (no files will be written)',
+      '  2) Real run (updates version, writes + commit)',
+      'Select library:',
+      '  1) shared'
     ]);
   });
 
@@ -283,6 +392,7 @@ describe('CLI: release.class (normalized)', () => {
       '  1) Analyze (no changes, report only)',
       '  2) Analyze with Audit (no changes, full dependency health report)',
       '  3) Release (publish + update dependencies)',
+      '  4) Tag Release (Git Admin Only)',
       'Run mode:',
       '  1) Dry run (no files will be written)',
       '  2) Real run (updates version, writes + commit)',
