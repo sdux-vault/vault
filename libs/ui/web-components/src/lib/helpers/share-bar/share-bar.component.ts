@@ -8,6 +8,7 @@ import {
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AnalyticsService } from '../../services/analytics/analytics.service';
 import { AnalyticsSharePlatforms } from '../../services/analytics/types/analytics-share-platform.type';
+import { AnalyticsType } from '../../services/analytics/types/analytics.type';
 
 /**
  * Reusable social-media share bar component.
@@ -32,6 +33,9 @@ export class ShareBarComponent {
 
   /** The canonical URL to share. */
   readonly url = input.required<string>();
+
+  /** The share message. */
+  readonly displayMessage = input<boolean>(true);
 
   /** The content type label (e.g. 'post', 'video', 'diagram'). */
   readonly type = input<string>('post');
@@ -64,7 +68,7 @@ export class ShareBarComponent {
       contentType: this.type(),
       contentUrl: this.url(),
       platform,
-      action: 'share'
+      action: AnalyticsType.Share
     });
   }
 
@@ -74,7 +78,7 @@ export class ShareBarComponent {
       contentType: this.type(),
       contentUrl: this.url(),
       platform: 'clipboard',
-      action: 'copy'
+      action: AnalyticsType.Copy
     });
     navigator.clipboard.writeText(this.url());
   }

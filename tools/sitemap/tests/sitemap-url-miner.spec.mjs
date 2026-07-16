@@ -274,7 +274,7 @@ describe('CLI: sitemap-url-miner', () => {
 
       expect(urls.length).toBeGreaterThan(100);
       expect(urls).toContain('/');
-      expect(urls).toContain('/docs/pipeline/builder');
+      expect(urls).toContain('/builder');
       expect(urls).toContain(
         '/docs/references/abstracts/abstract-active-controller'
       );

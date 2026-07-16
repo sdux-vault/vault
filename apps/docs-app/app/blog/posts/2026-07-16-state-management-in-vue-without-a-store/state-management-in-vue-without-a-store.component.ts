@@ -105,24 +105,30 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             snapshots &mdash; is a language-level primitive, not a framework
             abstraction. The payoff for you is direct:
             <span class="code">Vault()</span> and
-            <span class="code">FeatureCell()</span> are the same battle-tested
-            core running inside your Vue app &mdash; no Vue-specific
-            reimplementation, no behavior that only exists here.
+            <span class="code"
+              ><a href="/docs/references/functions/feature-cell">FeatureCell</a
+              >()</span
+            >
+            are the same battle-tested core running inside your Vue app &mdash;
+            no Vue-specific reimplementation, no behavior that only exists here.
           </p>
           <p>
             Vue integration is delivered as a thin wrapper,
             <span class="code">&#64;sdux-vault/vue</span>, that preserves the
             core <sdux-feature-cell /> contract and adds one Vue-native
             addition: <span class="code">useReactiveState()</span>. That single
-            composable connects a FeatureCell's committed state to Vue's effect
-            scope, so your component re-renders reactively with no manual
-            subscription and no cleanup code.
+            composable connects a
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>'s
+            committed state to Vue's effect scope, so your component re-renders
+            reactively with no manual subscription and no cleanup code.
           </p>
           <div class="callout callout-info">
             <strong>Key takeaway:</strong> There is no Provider and no store
-            instance to register at the root. You create a FeatureCell once as a
-            module-level constant and import its stable reference wherever you
-            need it &mdash; the same way you would import any other module.
+            instance to register at the root. You create a
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            once as a module-level constant and import its stable reference
+            wherever you need it &mdash; the same way you would import any other
+            module.
           </div>
         </div>
       </section>
@@ -134,12 +140,13 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             Two calls set up ownership. Initialize the Vault runtime once, then
-            register a FeatureCell with a unique key and its initial state.
-            Registration binds identity and configuration; it does not run the
-            pipeline. Calling <span class="code">initialize()</span> prepares
-            the cell for state updates. Create and initialize the cell
-            <em>outside</em> the component so its reference stays stable across
-            renders.
+            register a
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            with a unique key and its initial state. Registration binds identity
+            and configuration; it does not run the pipeline. Calling
+            <span class="code">initialize()</span> prepares the cell for state
+            updates. Create and initialize the cell <em>outside</em> the
+            component so its reference stays stable across renders.
           </p>
           <sdux-example-viewer-source [displayTabs]="false">
             <sdux-example-viewer-tab [label]="'FeatureCell'">
@@ -161,9 +168,13 @@ counterCell.initialize();</code></pre>
           </sdux-example-viewer-source>
           <div class="callout callout-warning">
             <strong>Warning:</strong> Vault initialization must precede
-            FeatureCell registration. Registering a FeatureCell before the Vault
-            runtime is initialized is invalid and results in a runtime error.
-            Each FeatureCell key may be registered exactly once.
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            registration. Registering a
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            before the Vault runtime is initialized is invalid and results in a
+            runtime error. Each
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            key may be registered exactly once.
           </div>
         </div>
       </section>
@@ -249,8 +260,9 @@ function increment() &#123;
         <div class="section-title">Atomic Updates and Why They Matter</div>
         <div class="section-body">
           <p>
-            You update a FeatureCell by submitting a new value into its
-            pipeline.
+            You update a
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a> by
+            submitting a new value into its pipeline.
             <span class="code">replaceState()</span> fully replaces the
             committed state with the resolved incoming value;
             <span class="code">mergeState()</span> structurally combines the
@@ -266,8 +278,11 @@ function increment() &#123;
             The update does not mutate the existing state directly. The incoming
             value is resolved and processed through the pipeline, and the
             current committed state is replaced only when that work finishes.
-            Your component observes the new StateSnapshotShape as one complete
-            value &mdash; never a half-applied intermediate.
+            Your component observes the new
+            <a href="/docs/references/shapes/state-snapshot-shape"
+              >StateSnapshotShape</a
+            >
+            as one complete value &mdash; never a half-applied intermediate.
           </p>
           <div class="callout callout-info">
             <strong>Key takeaway:</strong> Because state snapshots are immutable

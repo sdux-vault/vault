@@ -1,10 +1,14 @@
 <section class="section">
-  <div class="section-title">Share the {{ type() }}</div>
+  @if (displayMessage()) {
+    <div class="section-title">Share the {{ type() }}</div>
+  }
   <div class="section-body">
-    <p>
-      If this saved you time or changed how you think about state, pass it on —
-      one share helps another developer find it.
-    </p>
+    @if (displayMessage()) {
+      <p>
+        If this saved you time or changed how you think about state, pass it on
+        — one share helps another developer find it.
+      </p>
+    }
     <div class="share-bar-links">
       <a
         [href]="shareLinks().x"
