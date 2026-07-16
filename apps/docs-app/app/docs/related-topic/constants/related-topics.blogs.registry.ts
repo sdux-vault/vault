@@ -260,6 +260,13 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'What Transfers Directly from Redux — SDuX Blog',
       description:
         'Learn which Redux skills transfer directly to SDuX Vault — pure reducers, immutable state shapes, and outcome-based testing carry over unchanged.'
+    },
+    {
+      link: '/blog/state-management-in-vue-without-a-store',
+      display: 'State Management in Vue Without a Store',
+      title: 'State Management in Vue Without a Store — SDuX Blog',
+      description:
+        'Learn how to own scoped, reactive, atomically-committed Vue state with SDuX Vault FeatureCells — no Pinia, Vuex, or global store required.'
     }
   ]
 };

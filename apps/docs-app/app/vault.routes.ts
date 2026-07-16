@@ -89,6 +89,13 @@ export const routes: Routes = [
     loadChildren: () => import('./blog/blog.routes').then((m) => m.blogRoutes)
   },
   {
+    path: 'builder',
+    loadComponent: () =>
+      import('./builder/pipeline-builder-splashpage.component').then(
+        (m) => m.PipelineBuilderSplashpageComponent
+      )
+  },
+  {
     path: 'sitemap',
     loadComponent: () =>
       import('./sitemap/sitemap.component').then((m) => m.SitemapComponent)

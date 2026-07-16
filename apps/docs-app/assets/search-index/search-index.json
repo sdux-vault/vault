@@ -3533,6 +3533,16 @@
       "url": "/blog/what-transfers-directly-from-redux",
       "symbols": ["what-transfers-directly-from-redux"],
       "content": "What Transfers Directly from Redux — Pure Functions, State Shapes, and Immutability what-transfers-directly-from-redux ED"
+    },
+    {
+      "id": "blog:state-management-in-vue-without-a-store",
+      "title": "State Management in Vue Without a Store",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/state-management-in-vue-without-a-store",
+      "symbols": ["state-management-in-vue-without-a-store"],
+      "content": "State Management in Vue Without a Store state-management-in-vue-without-a-store TA"
     }
   ]
 }

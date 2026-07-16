@@ -240,5 +240,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-07-15',
     readingTime: 5,
     active: true
+  },
+  {
+    slug: 'state-management-in-vue-without-a-store',
+    title: 'State Management in Vue Without a Store',
+    date: '2026-07-16',
+    readingTime: 6,
+    active: true
   }
 ];

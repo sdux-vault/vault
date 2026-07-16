@@ -25,6 +25,20 @@ class TypeHostComponent {
   type = 'video';
 }
 
+@Component({
+  standalone: true,
+  imports: [ShareBarComponent],
+  template: `<sdux-share-bar
+    [title]="title"
+    [url]="url"
+    [displayMessage]="displayMessage" />`
+})
+class DisplayMessageHostComponent {
+  title = 'Test';
+  url = 'https://www.sdux-vault.com/test';
+  displayMessage = false;
+}
+
 describe('Component: ShareBar', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let host: TestHostComponent;
@@ -36,7 +50,11 @@ describe('Component: ShareBar', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent, TypeHostComponent],
+      imports: [
+        TestHostComponent,
+        TypeHostComponent,
+        DisplayMessageHostComponent
+      ],
       providers: [
         provideZonelessChangeDetection(),
         { provide: AnalyticsService, useValue: analyticsService }
@@ -56,6 +74,38 @@ describe('Component: ShareBar', () => {
   it('should render the share label with default type', () => {
     const label = fixture.nativeElement.querySelector('.section-title');
     expect(label.textContent).toContain('Share the post');
+  });
+
+  it('should render the share message by default', () => {
+    const message = fixture.nativeElement.querySelector('.section-body p');
+    expect(message).toBeTruthy();
+    expect(message.textContent).toContain('If this saved you time');
+  });
+
+  it('should hide the share label when displayMessage is false', () => {
+    const messageFixture = TestBed.createComponent(DisplayMessageHostComponent);
+    messageFixture.detectChanges();
+
+    const label = messageFixture.nativeElement.querySelector('.section-title');
+    expect(label).toBeNull();
+  });
+
+  it('should hide the share message when displayMessage is false', () => {
+    const messageFixture = TestBed.createComponent(DisplayMessageHostComponent);
+    messageFixture.detectChanges();
+
+    const message =
+      messageFixture.nativeElement.querySelector('.section-body p');
+    expect(message).toBeNull();
+  });
+
+  it('should still render share links when displayMessage is false', () => {
+    const messageFixture = TestBed.createComponent(DisplayMessageHostComponent);
+    messageFixture.detectChanges();
+
+    const links =
+      messageFixture.nativeElement.querySelectorAll('.share-bar-links a');
+    expect(links.length).toBe(8);
   });
 
   it('should render all share links', () => {
