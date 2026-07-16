@@ -1,6 +1,6 @@
 export const VUE_PACKAGE_JSON_FILE = {
   name: 'SDuX Vue Pipeline Builder Demo',
-  version: '1.0.0',
+  version: '2.0.0',
   private: true,
   type: 'module',
   scripts: {

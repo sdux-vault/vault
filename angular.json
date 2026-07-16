@@ -313,6 +313,39 @@
         }
       }
     },
+    "svelte": {
+      "projectType": "library",
+      "root": "libs/core-extensions/svelte",
+      "sourceRoot": "libs/core-extensions/svelte/src",
+      "prefix": "sdux-svelte",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/core-extensions/svelte/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/core-extensions/svelte/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libs/core-extensions/svelte/tsconfig.spec.json",
+            "karmaConfig": "libs/core-extensions/svelte/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["libs/ui/styles/scss"]
+            },
+            "codeCoverageExclude": ["**/testing/**"],
+            "scripts": []
+          }
+        }
+      }
+    },
     "core": {
       "projectType": "library",
       "root": "libs/core",

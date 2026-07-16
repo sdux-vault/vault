@@ -1,0 +1,15 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../../out-tsc/svelte",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    "sourceMap": true,
+    "types": []
+  },
+  "references": [{ "path": "../../engine-stub/tsconfig.lib.json" }],
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.spec.ts"]
+}

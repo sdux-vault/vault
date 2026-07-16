@@ -416,6 +416,8 @@ ${this.#vaultParenthesisTabSpacer})`
       packages.add('@sdux-vault/react');
     } else if (framework === StateFrameworkTypes.Vue) {
       packages.add('@sdux-vault/vue');
+    } else if (framework === StateFrameworkTypes.Svelte) {
+      packages.add('@sdux-vault/svelte');
     } else {
       // Core package is always required unless angular is installed
       packages.add('@sdux-vault/core');

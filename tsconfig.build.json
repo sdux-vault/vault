@@ -8,6 +8,7 @@
       "@sdux-vault/devtools": ["dist/devtools/tooling"],
       "@sdux-vault/angular": ["dist/core-extensions/angular"],
       "@sdux-vault/react": ["dist/core-extensions/react"],
+      "@sdux-vault/svelte": ["dist/core-extensions/svelte"],
       "@sdux-vault/vue": ["dist/core-extensions/vue"]
     }
   }

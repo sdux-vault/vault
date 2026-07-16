@@ -1,0 +1,11 @@
+{
+  "extends": "../../../tsconfig.build.json",
+  "compilerOptions": {
+    "declarationMap": false,
+    "inlineSourceMap": false,
+    "inlineSources": false
+  },
+  "angularCompilerOptions": {
+    "compilationMode": "partial"
+  }
+}

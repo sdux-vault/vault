@@ -59,6 +59,11 @@ const INDEX_JOBS = Object({
       publicApis: ['../public-api.ts']
     },
     {
+      name: 'svelte',
+      srcDir: 'libs/core-extensions/svelte/src',
+      publicApis: ['./documentation-api.ts']
+    },
+    {
       name: 'engine',
       isEngine: true,
       srcDir: 'lib',

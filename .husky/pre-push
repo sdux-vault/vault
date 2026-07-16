@@ -45,6 +45,12 @@ npm run test:coverage:react || {
   exit 1
 }
 
+printf "\n\nTesting Svelte.\n\n\n\n"
+npm run test:coverage:svelte || {
+  printf "\n\nERROR: Test Coverage issues were found in the 'svelte' committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
 printf "\n\nTesting Vue.\n\n\n\n"
 npm run test:coverage:vue || {
   printf "\n\nERROR: Test Coverage issues were found in the 'vue' committed files. Please address them before proceeding.\n\n\n\n"
