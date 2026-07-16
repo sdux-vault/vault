@@ -304,6 +304,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-15-what-transfers-directly-from-redux/what-transfers-directly-from-redux.component').then(
         (m) => m.BlogWhatTransfersDirectlyFromReduxComponent
       )
+  },
+  {
+    path: 'state-management-in-vue-without-a-store',
+    data: {
+      category: 'blogs',
+      type: 'state-management-in-vue-without-a-store'
+    },
+    loadComponent: () =>
+      import('./posts/2026-07-16-state-management-in-vue-without-a-store/state-management-in-vue-without-a-store.component').then(
+        (m) => m.BlogStateManagementInVueWithoutAStoreComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //
