@@ -1,5 +1,5 @@
 export const PACKAGE_JSON_FILE = {
-  name: 'SDuX Pipeline Builder Angular Demo',
+  name: 'SDuX Angular Pipeline Builder Demo',
   version: '1.0.0',
   private: true,
   scripts: {

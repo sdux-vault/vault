@@ -67,7 +67,7 @@ describe('Service: PipelineFileBuilderVue', () => {
       expect(file.stackBlitzFileType).toBe('Vue Cell');
 
       expect(normalize(file.contents)).toBe(
-        `imports { FeatureCell } from @sdux-vault/coreimport { FeatureCell, Vault } from '@sdux-vault/core';interface definition// Initialize the Vault once at application startupVault({ logLevel: 'off' });core behavior notes// Register the FeatureCell at module scopeconst exampleCell = FeatureCell<employees[]>({ // Unique state key used by the Vault key: 'example-feature-cell-key', // Initial value for the state initialState: []});// Runtime pipeline configurationexampleCell.initialize();// Expose read-only state accessexport const exampleState = exampleCell.state;export const exampleState$ = exampleCell.state$;service examples`
+        `imports { FeatureCell } from @sdux-vault/coreimport { FeatureCell, Vault } from '@sdux-vault/vue';interface definition// Initialize the Vault once at application startupVault({ logLevel: 'off' });core behavior notes// Register the FeatureCell at module scopeexport const exampleCell = FeatureCell<employees[]>({ // Unique state key used by the Vault key: 'example-feature-cell-key', // Initial value for the state initialState: []});// Runtime pipeline configurationexampleCell.initialize();// Expose read-only state accessexport const exampleState = exampleCell.state;export const exampleState$ = exampleCell.state$;service examples`
       );
     });
 
@@ -80,11 +80,11 @@ describe('Service: PipelineFileBuilderVue', () => {
       expect(file.stackBlitzFileType).toBe('Vue Component');
 
       expect(normalize(file.contents.slice(0, 1000))).toBe(
-        `<script setup lang="ts">import { ref, onMounted, onUnmounted } from 'vue';import type { Subscription } from 'rxjs';import * as cell from './example.cell';/** * UI component responsible for rendering the example FeatureCell state. * * This component consumes the Vault-backed state exposed by the * example cell module and reacts to its value, loading, and error state. * * The component does not manage state directly — it delegates all state * updates to the exported cell functions. *//** * Local snapshot bridged from the Vault's reactive state stream. * * Provides reactive access to: * - value * - isLoading * - error * - hasValue * * The RxJS subscription is managed automatically via onMounted/onUnmounted. */const snapshot = ref({ value: cell.exampleState.value, isLoading: cell.exampleState.isLoading, error: cell.exampleState.error, hasValue: cell.exampleState.hasValue});let sub: Subscription;onMounted(() => { sub = cell.exampleState$.subscribe((e`
+        `<script setup lang="ts">import * as cell from './example.cell';/** * UI component responsible for rendering the example FeatureCell state. * * This component consumes the Vault-backed state exposed by the * example cell module and reacts to its value, loading, and error state. * * The component does not manage state directly — it delegates all state * updates to the exported cell functions. *//** * Readonly reactive snapshot bridged from the Vault's reactive state. * * Provides reactive access to: * - value * - isLoading * - error * - hasValue * * The effect-scope subscription is managed automatically by * useReactiveState() and is disposed with the component's scope. */const snapshot = cell.exampleCell.useReactiveState();component examples</script><template> <div>  <div style="margin-bottom: 1rem">   <button type="button" @click="loadSample">    Click me to add data   </button>  </div>  <!-- Render state value when available --> `
       );
 
       expect(normalize(file.contents.slice(1000))).toBe(
-        `mit) => {  snapshot.value = {   value: emit.snapshot.value,   isLoading: emit.snapshot.isLoading,   error: emit.snapshot.error,   hasValue: emit.snapshot.hasValue  }; });});onUnmounted(() => { sub?.unsubscribe();});component examples</script><template> <div>  <div style="margin-bottom: 1rem">   <button type="button" @click="loadSample">    Click me to add data   </button>  </div>  <!-- Render state value when available -->  <div v-if="snapshot.hasValue">   <p>employees[]: {{ JSON.stringify(snapshot.value, null, 2) }}</p>  </div>  <!-- Render loading state -->  <div v-if="snapshot.isLoading">   Loading...  </div>  <!-- Render error state -->  <div v-if="snapshot.error">   Error: {{ snapshot.error?.message }}  </div> </div></template>`
+        `  <div v-if="snapshot.hasValue">   <p>employees[]: {{ JSON.stringify(snapshot.value, null, 2) }}</p>  </div>  <!-- Render loading state -->  <div v-if="snapshot.isLoading">   Loading...  </div>  <!-- Render error state -->  <div v-if="snapshot.error">   Error: {{ snapshot.error?.message }}  </div> </div></template>`
       );
     });
 
@@ -110,8 +110,12 @@ describe('Service: PipelineFileBuilderVue', () => {
       expect(file.name).toBe('example.cell.ts');
       expect(file.type).toBe('fromStream');
 
-      expect(normalize(file.contents)).toBe(
-        `imports { FeatureCell } from @sdux-vault/coreimport { Observable } from 'rxjs';import { FeatureCell, Vault } from '@sdux-vault/core';// Initialize the Vault once at application startupVault({ logLevel: 'off' });// Register the FeatureCell at module scopeconst exampleCell = FeatureCell<employees[]>({ // Unique state key used by the Vault key: 'example-feature-cell-key', // Initial value for the state initialState: []});// Runtime pipeline configurationexampleCell.initialize();// Expose read-only state accessexport const exampleState = exampleCell.state;export const exampleState$ = exampleCell.state$;/** * Connect an external observable stream to this FeatureCell. * * Each emitted value becomes a standard state update * and flows through the normal Vault pipeline. * * The subscription lifecycle is automatically managed * by the FeatureCell and is cleaned up on reset/destroy. */export function connectStream(source$: Observable<employees[]>): void { exampleCell.fromStream(source$);}`
+      expect(normalize(file.contents.slice(0, 1000))).toBe(
+        `imports { FeatureCell } from @sdux-vault/coreimport { Observable } from 'rxjs';import { FeatureCell, Vault } from '@sdux-vault/vue';// Initialize the Vault once at application startupVault({ logLevel: 'off' });// Register the FeatureCell at module scopeexport const exampleCell = FeatureCell<employees[]>({ // Unique state key used by the Vault key: 'example-feature-cell-key', // Initial value for the state initialState: []});// Runtime pipeline configurationexampleCell.initialize();// Expose read-only state accessexport const exampleState = exampleCell.state;export const exampleState$ = exampleCell.state$;/** * Connect an external observable stream to this FeatureCell. * * Each emitted value becomes a standard state update * and flows through the normal Vault pipeline. * * The subscription lifecycle is automatically managed * by the FeatureCell and is cleaned up on reset/destroy. */export function connectStream(source$: Observable<employees[]>): voi`
+      );
+
+      expect(normalize(file.contents.slice(1000))).toBe(
+        `d { exampleCell.fromStream(source$);}`
       );
     });
 
@@ -123,12 +127,10 @@ describe('Service: PipelineFileBuilderVue', () => {
       expect(file.type).toBe('fromStream');
 
       expect(normalize(file.contents.slice(0, 1000))).toBe(
-        `<script setup lang="ts">import { ref, onMounted, onUnmounted } from 'vue';import type { Subscription } from 'rxjs';import * as cell from './example.cell';/** * Advanced example component demonstrating: * * - Reactive state subscription * - Stream delegation to FeatureCell via connectStream() * * Architectural Flow: * * Stream Source → connectStream() → Vault → Pipeline * * The component never touches the Vault directly. */const snapshot = ref({ value: cell.exampleState.value, isLoading: cell.exampleState.isLoading, error: cell.exampleState.error, hasValue: cell.exampleState.hasValue});let sub: Subscription;onMounted(() => { sub = cell.exampleState$.subscribe((emit) => {  snapshot.value = {   value: emit.snapshot.value,   isLoading: emit.snapshot.isLoading,   error: emit.snapshot.error,   hasValue: emit.snapshot.hasValue  }; });});onUnmounted(() => { sub?.unsubscribe();});</script><template> <div>  <!-- Render state `
+        `<script setup lang="ts">import * as cell from './example.cell';/** * Advanced example component demonstrating: * * - Reactive state subscription * - Stream delegation to FeatureCell via connectStream() * * Architectural Flow: * * Stream Source → connectStream() → Vault → Pipeline * * The component never touches the Vault directly. */const snapshot = cell.exampleCell.useReactiveState();</script><template> <div>  <!-- Render state value when available -->  <div v-if="snapshot.hasValue">   <p>employees[]: {{ JSON.stringify(snapshot.value, null, 2) }}</p>  </div>  <!-- Render loading state -->  <div v-if="snapshot.isLoading">   Loading...  </div>  <!-- Render error state -->  <div v-if="snapshot.error">   Error: {{ snapshot.error?.message }}  </div> </div></template>`
       );
 
-      expect(normalize(file.contents.slice(1000))).toBe(
-        `value when available -->  <div v-if="snapshot.hasValue">   <p>employees[]: {{ JSON.stringify(snapshot.value, null, 2) }}</p>  </div>  <!-- Render loading state -->  <div v-if="snapshot.isLoading">   Loading...  </div>  <!-- Render error state -->  <div v-if="snapshot.error">   Error: {{ snapshot.error?.message }}  </div> </div></template>`
-      );
+      expect(normalize(file.contents.slice(1000))).toBe(``);
     });
   });
 
