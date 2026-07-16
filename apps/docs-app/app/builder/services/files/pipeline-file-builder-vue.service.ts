@@ -40,14 +40,14 @@ export class PipelineFileBuilderVueService {
         type: FileTypes.Simple,
         stackBlitzFileType: StackblitzFileTypes.VueCell,
         contents: `${vaultImports}
-import { FeatureCell, Vault } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/vue';
 ${interfaceDefinition}
 
 // Initialize the Vault once at application startup
 Vault({ logLevel: 'off' });
 ${coreBehaviorNotes}
 // Register the FeatureCell at module scope
-const ${cellName} = FeatureCell<${type}>({
+export const ${cellName} = FeatureCell<${type}>({
 
   // Unique state key used by the Vault
   key: '${featureCellKey}',
@@ -72,8 +72,6 @@ ${serviceExamples}`
         type: FileTypes.Simple,
         stackBlitzFileType: StackblitzFileTypes.VueComponent,
         contents: `<script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import type { Subscription } from 'rxjs';
 import * as cell from './example.cell';
 
 /**
@@ -87,7 +85,7 @@ import * as cell from './example.cell';
  */
 
 /**
- * Local snapshot bridged from the Vault's reactive state stream.
+ * Readonly reactive snapshot bridged from the Vault's reactive state.
  *
  * Provides reactive access to:
  * - value
@@ -95,31 +93,10 @@ import * as cell from './example.cell';
  * - error
  * - hasValue
  *
- * The RxJS subscription is managed automatically via onMounted/onUnmounted.
+ * The effect-scope subscription is managed automatically by
+ * useReactiveState() and is disposed with the component's scope.
  */
-const snapshot = ref({
-  value: cell.${stateName}.value,
-  isLoading: cell.${stateName}.isLoading,
-  error: cell.${stateName}.error,
-  hasValue: cell.${stateName}.hasValue
-});
-
-let sub: Subscription;
-
-onMounted(() => {
-  sub = cell.${stateName}$.subscribe((emit) => {
-    snapshot.value = {
-      value: emit.snapshot.value,
-      isLoading: emit.snapshot.isLoading,
-      error: emit.snapshot.error,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-});
-
-onUnmounted(() => {
-  sub?.unsubscribe();
-});
+const snapshot = cell.${cellName}.useReactiveState();
 
 ${componentExamples}
 </script>
@@ -165,13 +142,13 @@ createApp(${componentName}).mount('#app');`
         type: FileTypes.FromStream,
         contents: `${vaultImports}
 import { Observable } from 'rxjs';
-import { FeatureCell, Vault } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/vue';
 
 // Initialize the Vault once at application startup
 Vault({ logLevel: 'off' });
 
 // Register the FeatureCell at module scope
-const ${cellName} = FeatureCell<${type}>({
+export const ${cellName} = FeatureCell<${type}>({
 
   // Unique state key used by the Vault
   key: '${featureCellKey}',
@@ -206,8 +183,6 @@ export function connectStream(source$: Observable<${type}>): void {
         name: `${componentName}.vue`,
         type: FileTypes.FromStream,
         contents: `<script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import type { Subscription } from 'rxjs';
 import * as cell from './example.cell';
 
 /**
@@ -223,29 +198,7 @@ import * as cell from './example.cell';
  * The component never touches the Vault directly.
  */
 
-const snapshot = ref({
-  value: cell.${stateName}.value,
-  isLoading: cell.${stateName}.isLoading,
-  error: cell.${stateName}.error,
-  hasValue: cell.${stateName}.hasValue
-});
-
-let sub: Subscription;
-
-onMounted(() => {
-  sub = cell.${stateName}$.subscribe((emit) => {
-    snapshot.value = {
-      value: emit.snapshot.value,
-      isLoading: emit.snapshot.isLoading,
-      error: emit.snapshot.error,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-});
-
-onUnmounted(() => {
-  sub?.unsubscribe();
-});
+const snapshot = cell.${cellName}.useReactiveState();
 </script>
 
 <template>

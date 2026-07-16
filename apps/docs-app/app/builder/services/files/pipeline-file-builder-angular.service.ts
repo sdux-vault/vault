@@ -28,6 +28,7 @@ export class PipelineFileBuilderAngularService {
       componentExamples,
       interfaceDefinition
     } = input;
+
     const componentName = 'ExampleComponent';
     return [
       {

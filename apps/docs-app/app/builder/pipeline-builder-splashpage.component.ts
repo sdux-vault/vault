@@ -60,6 +60,10 @@ export class PipelineBuilderSplashpageComponent {
   /** Responsive mode */
   readonly isSmallScreen = computed(() => this.mobile.isMobile());
 
+  readonly framework = computed(() =>
+    this.pipelineBuilderService.getStateFramework()
+  );
+
   /** Layout math */
   readonly leftPanelWidth = computed(() =>
     this.isRightPanelDisplayed() ? (this.isSmallScreen() ? '0%' : '22%') : '0%'

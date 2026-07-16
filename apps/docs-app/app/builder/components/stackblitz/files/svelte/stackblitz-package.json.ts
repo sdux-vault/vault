@@ -1,5 +1,5 @@
 export const SVELTE_PACKAGE_JSON_FILE = {
-  name: 'SDuX Pipeline Builder Svelte Demo',
+  name: 'SDuX Svelte Pipeline Builder Demo',
   version: '1.0.0',
   private: true,
   type: 'module',

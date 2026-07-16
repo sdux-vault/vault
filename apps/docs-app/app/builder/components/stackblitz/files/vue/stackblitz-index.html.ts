@@ -3,7 +3,7 @@ export const VUE_INDEX_HTML_FILE = `
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>SDuX Vue Example</title>
+    <title>SDuX Vue Pipeline Builder Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>

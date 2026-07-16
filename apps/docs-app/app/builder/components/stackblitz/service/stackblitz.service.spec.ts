@@ -81,7 +81,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['package.json'].replace(/\n|\s/g, '')).toBe(
-        `{"name":"SDuXPipelineBuilderAngularDemo","version":"1.0.0","private":true,"scripts":{"start":"ngserve--host0.0.0.0--port4200"},"dependencies":{"@angular/cdk":"21.2.5","@angular/cli":"21.2.5","@angular/common":"21.2.8","@angular/compiler":"21.2.8","@angular/core":"21.2.8","@angular/platform-browser":"21.2.8","@sdux-vault/angular":"latest","rxjs":"~7.8.0","tslib":"^2.3.0"},"devDependencies":{"@angular/build":"^21.2.6","@angular/compiler-cli":"21.2.8","typescript":"~5.9.2"}}`
+        `{"name":"SDuXAngularPipelineBuilderDemo","version":"1.0.0","private":true,"scripts":{"start":"ngserve--host0.0.0.0--port4200"},"dependencies":{"@angular/cdk":"21.2.5","@angular/cli":"21.2.5","@angular/common":"21.2.8","@angular/compiler":"21.2.8","@angular/core":"21.2.8","@angular/platform-browser":"21.2.8","@sdux-vault/angular":"latest","rxjs":"~7.8.0","tslib":"^2.3.0"},"devDependencies":{"@angular/build":"^21.2.6","@angular/compiler-cli":"21.2.8","typescript":"~5.9.2"}}`
       );
 
       expect(expectedProject.files['angular.json'].replace(/\n|\s/g, '')).toBe(
@@ -101,7 +101,7 @@ describe('Service: StackBlitz', () => {
       expect(
         expectedProject.files['src/index.html'].replace(/\n|\s/g, '')
       ).toBe(
-        '<!doctypehtml><htmllang="en"><head><metacharset="utf-8"/><title>Demo1</title><basehref="/"/><metaname="viewport"content="width=device-width,initial-scale=1"/><linkrel="icon"type="image/x-icon"href="favicon.ico"/></head><body><example-view></example-view></body></html>'
+        '<!doctypehtml><htmllang="en"><head><metacharset="utf-8"/><title>SDuXAngularPipelineBuilderDemo</title><basehref="/"/><metaname="viewport"content="width=device-width,initial-scale=1"/><linkrel="icon"type="image/x-icon"href="favicon.ico"/></head><body><example-view></example-view></body></html>'
       );
 
       expect(expectedProject.files['src/app/app.config.ts']).toBe('appConfig');
@@ -198,7 +198,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['package.json'].replace(/\n|\s/g, '')).toBe(
-        `{"name":"SDuXPipelineBuilderReactDemo","version":"1.0.0","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"tsc&&vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/react":"latest","react":"^19.1.0","react-dom":"^19.1.0","rxjs":"~7.8.0"},"devDependencies":{"@types/react":"^19.1.2","@types/react-dom":"^19.1.2","@vitejs/plugin-react":"^4.4.1","typescript":"~5.9.2","vite":"^6.3.3"}}`
+        `{"name":"SDuXReactPipelineBuilderDemo","version":"1.0.0","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"tsc&&vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/react":"latest","react":"^19.1.0","react-dom":"^19.1.0","rxjs":"~7.8.0"},"devDependencies":{"@types/react":"^19.1.2","@types/react-dom":"^19.1.2","@vitejs/plugin-react":"^4.4.1","typescript":"~5.9.2","vite":"^6.3.3"}}`
       );
 
       expect(expectedProject.files['tsconfig.json'].replace(/\n|\s/g, '')).toBe(
@@ -212,7 +212,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['index.html'].replace(/\n|\s/g, '')).toBe(
-        '<!doctypehtml><htmllang="en"><head><metacharset="utf-8"/><title>SDuXReactExample</title><metaname="viewport"content="width=device-width,initial-scale=1"/></head><body><divid="root"></div><scripttype="module"src="/src/main.tsx"></script></body></html>'
+        '<!doctypehtml><htmllang="en"><head><metacharset="utf-8"/><title>SDuXReactPipelineBuilderDemo</title><metaname="viewport"content="width=device-width,initial-scale=1"/></head><body><divid="root"></div><scripttype="module"src="/src/main.tsx"></script></body></html>'
       );
 
       expect(expectedProject.files['src/styles.css']).toBe('');
@@ -310,7 +310,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['package.json'].replace(/\n|\s/g, '')).toBe(
-        `{"name":"SDuXPipelineBuilderVueDemo","version":"1.0.0","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"vue-tsc&&vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/core":"latest","vue":"^3.5.13","rxjs":"~7.8.0"},"devDependencies":{"@vitejs/plugin-vue":"^5.2.3","typescript":"~5.9.2","vite":"^6.3.3","vue-tsc":"^2.2.8"}}`
+        `{"name":"SDuXVuePipelineBuilderDemo","version":"1.0.0","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"vue-tsc&&vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/vue":"latest","vue":"^3.5.13","rxjs":"~7.8.0"},"devDependencies":{"@vitejs/plugin-vue":"^5.2.3","typescript":"~5.9.2","vite":"^6.3.3","vue-tsc":"^2.2.8"}}`
       );
 
       expect(expectedProject.files['tsconfig.json'].replace(/\n|\s/g, '')).toBe(
@@ -324,7 +324,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['index.html'].replace(/\n|\s/g, '')).toBe(
-        '<!doctypehtml><htmllang="en"><head><metacharset="utf-8"/><title>SDuXVueExample</title><metaname="viewport"content="width=device-width,initial-scale=1"/></head><body><divid="app"></div><scripttype="module"src="/src/main.ts"></script></body></html>'
+        '<!doctypehtml><htmllang="en"><head><metacharset="utf-8"/><title>SDuXVuePipelineBuilderDemo</title><metaname="viewport"content="width=device-width,initial-scale=1"/></head><body><divid="app"></div><scripttype="module"src="/src/main.ts"></script></body></html>'
       );
 
       expect(expectedProject.files['src/env.d.ts'].replace(/\n|\s/g, '')).toBe(
@@ -425,7 +425,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['package.json'].replace(/\n|\s/g, '')).toBe(
-        `{"name":"SDuXPipelineBuilderSvelteDemo","version":"1.0.0","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/core":"latest","svelte":"^5.28.2","rxjs":"~7.8.0"},"devDependencies":{"@sveltejs/vite-plugin-svelte":"^5.0.3","typescript":"~5.9.2","vite":"^6.3.3"}}`
+        `{"name":"SDuXSveltePipelineBuilderDemo","version":"1.0.0","private":true,"type":"module","scripts":{"start":"vite","dev":"vite","build":"vitebuild","preview":"vitepreview"},"dependencies":{"@sdux-vault/core":"latest","svelte":"^5.28.2","rxjs":"~7.8.0"},"devDependencies":{"@sveltejs/vite-plugin-svelte":"^5.0.3","typescript":"~5.9.2","vite":"^6.3.3"}}`
       );
 
       expect(expectedProject.files['tsconfig.json'].replace(/\n|\s/g, '')).toBe(
@@ -445,7 +445,7 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files['index.html'].replace(/\n|\s/g, '')).toBe(
-        '<!doctypehtml><htmllang="en"><head><metacharset="utf-8"/><title>SDuXSvelteExample</title><metaname="viewport"content="width=device-width,initial-scale=1"/></head><body><divid="app"></div><scripttype="module"src="/src/main.ts"></script></body></html>'
+        '<!doctypehtml><htmllang="en"><head><metacharset="utf-8"/><title>SDuXSveltePipelineBuilderDemo</title><metaname="viewport"content="width=device-width,initial-scale=1"/></head><body><divid="app"></div><scripttype="module"src="/src/main.ts"></script></body></html>'
       );
 
       expect(expectedProject.files['src/styles.css']).toBe('');
@@ -579,6 +579,90 @@ describe('Service: StackBlitz', () => {
       );
 
       expect(expectedProject.files).toEqual(Object({}));
+    });
+  });
+
+  describe('Regression: reads generated files fresh on each build', () => {
+    const generatedFiles = signal<GeneratedFileShape[]>([
+      Object({
+        type: FileTypes.Simple,
+        stackBlitzFileType: StackblitzFileTypes.VueCell,
+        contents: 'stale vue cell'
+      }),
+      Object({
+        type: FileTypes.Simple,
+        stackBlitzFileType: StackblitzFileTypes.VueComponent,
+        contents: 'stale vue component'
+      }),
+      Object({
+        type: FileTypes.All,
+        stackBlitzFileType: StackblitzFileTypes.VueMain,
+        contents: 'stale vue main'
+      })
+    ]);
+
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [sduxTestingModule],
+        providers: [
+          {
+            provide: PipelineFileBuilderService,
+            useValue: {
+              generatedFiles
+            }
+          },
+          {
+            provide: PipelineBuilderService,
+            useValue: {
+              getStateFramework: signal('Vue')
+            }
+          }
+        ]
+      }).compileComponents();
+
+      service = TestBed.inject(StackBlitzService);
+    });
+
+    it('should use files updated after the service is constructed', () => {
+      spyOn(StackBlitzSDK, 'openProject').and.callFake(
+        (inputProject, inputOptions) => {
+          expectedProject = inputProject;
+          options = inputOptions;
+        }
+      );
+
+      // Update the computed AFTER StackBlitzService has been constructed. A
+      // stale one-time snapshot of generatedFiles() would still emit the
+      // original 'stale ...' contents here.
+      generatedFiles.set([
+        Object({
+          type: FileTypes.Simple,
+          stackBlitzFileType: StackblitzFileTypes.VueCell,
+          contents: 'fresh vue cell'
+        }),
+        Object({
+          type: FileTypes.Simple,
+          stackBlitzFileType: StackblitzFileTypes.VueComponent,
+          contents: 'fresh vue component'
+        }),
+        Object({
+          type: FileTypes.All,
+          stackBlitzFileType: StackblitzFileTypes.VueMain,
+          contents: 'fresh vue main'
+        })
+      ]);
+
+      service.buildProject();
+
+      expect(expectedProject.files['src/main.ts']).toBe('fresh vue main');
+
+      expect(expectedProject.files['src/app/example.cell.ts']).toBe(
+        'fresh vue cell'
+      );
+
+      expect(expectedProject.files['src/app/ExampleView.vue']).toBe(
+        'fresh vue component'
+      );
     });
   });
 });

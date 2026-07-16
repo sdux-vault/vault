@@ -32,7 +32,6 @@ export class StackBlitzService {
   #sdk: typeof StackBlitz;
   readonly #fileBuilderService = inject(PipelineFileBuilderService);
   readonly #pipelineBuilderService = inject(PipelineBuilderService);
-  readonly #generatedFiles = this.#fileBuilderService.generatedFiles();
 
   constructor() {
     this.#sdk = StackBlitz;
@@ -131,9 +130,10 @@ export class StackBlitzService {
   #findFileByStackBlitzTypeContents(stackBlitzFileType: string): string {
     // istanbul ignore next - This is not reachable based on the calling method
     return (
-      this.#generatedFiles.find(
-        (file) => file.stackBlitzFileType === stackBlitzFileType
-      )?.contents || ''
+      this.#fileBuilderService
+        .generatedFiles()
+        .find((file) => file.stackBlitzFileType === stackBlitzFileType)
+        ?.contents || ''
     );
   }
 }

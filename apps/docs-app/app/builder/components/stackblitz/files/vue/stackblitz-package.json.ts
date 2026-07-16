@@ -1,5 +1,5 @@
 export const VUE_PACKAGE_JSON_FILE = {
-  name: 'SDuX Pipeline Builder Vue Demo',
+  name: 'SDuX Vue Pipeline Builder Demo',
   version: '1.0.0',
   private: true,
   type: 'module',
@@ -10,7 +10,7 @@ export const VUE_PACKAGE_JSON_FILE = {
     preview: 'vite preview'
   },
   dependencies: {
-    '@sdux-vault/core': 'latest',
+    '@sdux-vault/vue': 'latest',
     vue: '^3.5.13',
     rxjs: '~7.8.0'
   },
