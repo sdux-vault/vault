@@ -6,7 +6,8 @@
     "release/**/tests/**/*.spec.mjs",
     "seo/**/tests/**/*.spec.mjs",
     "sitemap/**/tests/**/*.spec.mjs",
-    "stackblitz/**/tests/**/*.spec.mjs"
+    "stackblitz/**/tests/**/*.spec.mjs",
+    "tutorial/**/tests/**/*.spec.mjs"
   ],
   "helpers": [],
   "random": false

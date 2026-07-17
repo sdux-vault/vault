@@ -35,6 +35,17 @@
   &.callout-warning {
     border-left-color: global.$sdux-warn-base;
   }
+
+  &.callout-action {
+    border: 1px solid global.$sdux-primary-base;
+    border-left-width: 4px;
+    padding: global.$spacing-md;
+    background-color: color-mix(
+      in srgb,
+      global.$sdux-primary-base 8%,
+      var(--sdux-surface-bg)
+    );
+  }
 }
 
 // ────────────────────────────────

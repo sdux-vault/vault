@@ -1,0 +1,101 @@
+@use 'global' as global;
+
+:host {
+  display: block;
+}
+
+.tutorial-layout {
+  display: grid;
+  grid-template-areas:
+    'steps'
+    'content';
+  grid-template-columns: minmax(0, 1fr);
+  gap: global.$spacing-md;
+  align-items: start;
+
+  @media (min-width: global.$breakpoint-md) {
+    grid-template-areas: 'content steps';
+    grid-template-columns: minmax(0, 1fr) minmax(225px, 275px);
+    gap: global.$spacing-lg;
+  }
+
+  .tutorial-steps {
+    grid-area: steps;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: global.$spacing-sm;
+    position: static;
+    align-self: start;
+    width: 100%;
+    min-width: 0;
+    height: fit-content;
+    max-height: none;
+    padding: global.$spacing-md;
+    padding-right: global.$spacing-sm;
+    overflow: visible;
+    box-sizing: border-box;
+    border: 1px solid global.$sdux-primary-base;
+    border-radius: global.$border-radius-md;
+    background-color: var(--sdux-surface-bg);
+
+    @media (min-width: global.$breakpoint-md) {
+      position: sticky;
+      top: 150px;
+    }
+
+    .tutorial-steps-title {
+      margin: 0;
+      color: var(--sdux-text-default);
+      font-size: global.$font-size-lg;
+      font-weight: global.$font-weight-semibold;
+    }
+
+    .tutorial-step-list {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: global.$spacing-xs;
+      width: 100%;
+      margin: 0;
+      padding-left: global.$spacing-sm;
+      box-sizing: border-box;
+
+      li {
+        width: 100%;
+        padding: global.$spacing-xs global.$spacing-sm;
+        padding-left: 0;
+        box-sizing: border-box;
+        border-left: 3px solid transparent;
+        border-radius: global.$border-radius-sm;
+        transition:
+          background-color 150ms ease,
+          border-color 150ms ease;
+      }
+
+      .tutorial-step-active {
+        border-left-color: global.$sdux-primary-base;
+        background-color: color-mix(
+          in srgb,
+          global.$sdux-primary-base 12%,
+          transparent
+        );
+        padding-left: global.$spacing-xs;
+        font-weight: global.$font-weight-semibold;
+      }
+
+      a {
+        @include global.a-link-primary;
+      }
+    }
+  }
+
+  .tutorial-content {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+    min-width: 0;
+  }
+}

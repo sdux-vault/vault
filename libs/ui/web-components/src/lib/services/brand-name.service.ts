@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { SDUX_BRAND_NAME } from '../tokens/brand-name.token';
+import { SDUX_FEATURE_CELL_BRAND_NAME } from '../tokens/feature-cell-brand-name.token';
 import { SDUX_VAULT_BRAND_NAME } from '../tokens/vault-brand-name.token';
 
 /**
@@ -20,6 +21,11 @@ export class BrandNameService {
   readonly #vaultBrandName = inject(SDUX_VAULT_BRAND_NAME);
 
   /**
+   * Resolved feature cell brand name string injected from the SDUX_FEATURE_CELL_BRAND_NAME token.
+   */
+  readonly #featureCellBrandName = inject(SDUX_FEATURE_CELL_BRAND_NAME);
+
+  /**
    * Returns the configured brand name.
    */
   get value(): string {
@@ -31,5 +37,12 @@ export class BrandNameService {
    */
   get vaultValue(): string {
     return this.#vaultBrandName;
+  }
+
+  /**
+   * Returns the configured feature cell brand name.
+   */
+  get featureCellValue(): string {
+    return this.#featureCellBrandName;
   }
 }

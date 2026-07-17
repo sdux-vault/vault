@@ -50,13 +50,27 @@ export const routes: Routes = [
   },
   {
     path: 'tutorial',
+    data: { category: 'tutorial' },
     children: [
       {
-        path: 'angular',
-        data: { category: 'tutorial' },
+        path: '',
         loadComponent: () =>
           import('./docs/tutorial/tutorial.component').then(
             (m) => m.TutorialComponent
+          )
+      },
+      {
+        path: 'angular',
+        loadComponent: () =>
+          import('./docs/tutorial/angular/tutorial.angular.component').then(
+            (m) => m.TutorialAngularComponent
+          )
+      },
+      {
+        path: 'example',
+        loadComponent: () =>
+          import('./docs/tutorial/angular/examples/complete-character-management/example.component').then(
+            (m) => m.ExampleComponent
           )
       }
     ]

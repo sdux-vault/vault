@@ -1,9 +1,45 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import Prism from 'prismjs';
 import { MobileLayoutService } from '../../services/mobile-layout.service';
+import { ExampleViewerTabComponent } from '../example-viewer-tab/example-viewer-source-tab.component';
 import { ExampleViewerService } from '../services/example-viewer.service';
 import { ExampleViewerSourceComponent } from './example-viewer-source.component';
+
+@Component({
+  selector: 'sdux-dynamic-example-viewer-test',
+  standalone: true,
+  imports: [ExampleViewerSourceComponent, ExampleViewerTabComponent],
+  template: `
+    <sdux-example-viewer-source [displayTabs]="false">
+      @for (file of files; track file.fileName) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  `
+})
+class DynamicExampleViewerTestComponent {
+  readonly files = [
+    {
+      fileName: 'example.component.ts',
+      source: `export class ExampleComponent {
+  readonly value = true;
+}`
+    },
+    {
+      fileName: 'example.service.ts',
+      source: `export class ExampleService {
+  getValue(): boolean {
+    return true;
+  }
+}`
+    }
+  ];
+}
 
 describe('ExampleViewerSourceComponent', () => {
   let fixture: ComponentFixture<ExampleViewerSourceComponent>;
@@ -29,7 +65,10 @@ describe('ExampleViewerSourceComponent', () => {
     snack = jasmine.createSpyObj('MatSnackBar', ['open']);
 
     await TestBed.configureTestingModule({
-      imports: [ExampleViewerSourceComponent],
+      imports: [
+        ExampleViewerSourceComponent,
+        DynamicExampleViewerTestComponent
+      ],
       providers: [
         { provide: ExampleViewerService, useValue: exampleViewerService },
         { provide: MatSnackBar, useValue: snack },
@@ -119,5 +158,31 @@ describe('ExampleViewerSourceComponent', () => {
       'ex-123',
       true
     );
+  });
+
+  it('should preserve and highlight multiline source rendered by @for', async () => {
+    const highlightedSources: string[] = [];
+    spyOn(Prism, 'highlightElement').and.callFake((element) => {
+      highlightedSources.push(element.textContent?.trim() ?? '');
+    });
+
+    const dynamicFixture = TestBed.createComponent(
+      DynamicExampleViewerTestComponent
+    );
+    dynamicFixture.detectChanges();
+    await dynamicFixture.whenStable();
+    dynamicFixture.detectChanges();
+
+    const expectedSources = dynamicFixture.componentInstance.files.map(
+      ({ source }) => source
+    );
+    const renderedSources = Array.from(
+      dynamicFixture.nativeElement.querySelectorAll(
+        'pre.view-code-inline > code'
+      ) as NodeListOf<HTMLElement>
+    ).map(({ textContent }) => textContent?.trim() ?? '');
+
+    expect(renderedSources).toEqual(expectedSources);
+    expect(highlightedSources).toEqual(expectedSources);
   });
 });

@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   DiagramComponent,
   MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
@@ -20,7 +21,8 @@ import { StackBlitzTryItLiveComponent } from 'apps/docs-app/app/docs/stack-blitz
     PipelineRelatedTopicComponent,
     DiagramComponent,
     StateInputTypeCommonComponent,
-    StackBlitzTryItLiveComponent
+    StackBlitzTryItLiveComponent,
+    BrandNameComponent
   ],
   templateUrl: './replace-state.method.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

@@ -1,0 +1,276 @@
+<section class="character-example" aria-labelledby="character-example-title">
+  <header class="character-example__header">
+    <div>
+      <p class="character-example__eyebrow">Interactive example</p>
+      <h2 id="character-example-title">Star Wars character registry</h2>
+      <p>
+        Select, create, update, and remove characters from an in-memory
+        collection.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="button button--secondary"
+      (click)="restoreInitialCharacters()">
+      Restore initial data
+    </button>
+  </header>
+
+  @if (feedback(); as operationFeedback) {
+    <div
+      class="feedback"
+      [class.feedback--error]="operationFeedback.tone === 'error'"
+      [class.feedback--info]="operationFeedback.tone === 'info'"
+      [class.feedback--success]="operationFeedback.tone === 'success'"
+      [attr.role]="operationFeedback.tone === 'error' ? 'alert' : 'status'"
+      aria-live="polite">
+      {{ operationFeedback.message }}
+    </div>
+  }
+
+  <div class="character-example__toolbar">
+    <div class="field field--selection">
+      <label for="character-selection">Character</label>
+      <select
+        #characterSelection
+        id="character-selection"
+        [disabled]="characters().length === 0"
+        (change)="selectCharacter(characterSelection.value)">
+        <option value="" disabled [selected]="selectedCharacterId() === null">
+          Select a character
+        </option>
+        @for (character of characters(); track character.id) {
+          <option
+            [value]="character.id"
+            [selected]="character.id === selectedCharacterId()">
+            {{ displayName(character) }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="character-example__actions" aria-label="Character actions">
+      <button type="button" class="button" (click)="startCreate()">
+        Add character
+      </button>
+    </div>
+  </div>
+
+  @if (deleteCandidate(); as character) {
+    <section
+      class="delete-confirmation"
+      aria-labelledby="delete-confirmation-title"
+      role="alert">
+      <div>
+        <h3 id="delete-confirmation-title">
+          Remove {{ displayName(character) }}?
+        </h3>
+        <p>This action removes the character from the current collection.</p>
+      </div>
+      <div class="delete-confirmation__actions">
+        <button
+          type="button"
+          class="button button--secondary"
+          (click)="cancelDelete()">
+          Keep character
+        </button>
+        <button
+          type="button"
+          class="button button--danger"
+          (click)="confirmDelete()">
+          Confirm removal
+        </button>
+      </div>
+    </section>
+  }
+
+  <div class="character-example__workspace">
+    <section class="panel character-details" aria-labelledby="details-title">
+      <div class="panel__header">
+        <p class="panel__eyebrow">Current selection</p>
+        <h3 id="details-title">Character details</h3>
+      </div>
+
+      @if (selectedCharacter(); as character) {
+        <dl>
+          <div>
+            <dt>Name</dt>
+            <dd>{{ displayName(character) }}</dd>
+          </div>
+          <div>
+            <dt>Identifier</dt>
+            <dd>{{ character.id }}</dd>
+          </div>
+          <div>
+            <dt>Faction</dt>
+            <dd>{{ character.faction }}</dd>
+          </div>
+          <div>
+            <dt>Jedi status</dt>
+            <dd>{{ character.isJedi ? 'Jedi' : 'Not a Jedi' }}</dd>
+          </div>
+        </dl>
+      } @else {
+        <div class="empty-state">
+          <h4>No character selected</h4>
+          <p>
+            The collection is empty. Add a character to continue the example.
+          </p>
+          <button type="button" class="button" (click)="startCreate()">
+            Add the first character
+          </button>
+        </div>
+      }
+    </section>
+
+    <section class="panel editor" aria-labelledby="editor-title">
+      <div class="panel__header">
+        <p class="panel__eyebrow">
+          {{ editorMode() === 'create' ? 'Create' : 'Edit' }}
+        </p>
+        <h3 id="editor-title">{{ editorTitle() }}</h3>
+      </div>
+
+      <form [formGroup]="characterForm" (ngSubmit)="saveCharacter()" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="character-first-name">First name</label>
+            <input
+              id="character-first-name"
+              type="text"
+              formControlName="name"
+              autocomplete="off"
+              maxlength="40"
+              [attr.aria-invalid]="
+                characterForm.controls.name.invalid &&
+                (characterForm.controls.name.dirty ||
+                  characterForm.controls.name.touched)
+                  ? true
+                  : null
+              "
+              [attr.aria-describedby]="
+                characterForm.controls.name.invalid &&
+                (characterForm.controls.name.dirty ||
+                  characterForm.controls.name.touched)
+                  ? 'character-first-name-error'
+                  : null
+              " />
+            @if (
+              characterForm.controls.name.invalid &&
+              (characterForm.controls.name.dirty ||
+                characterForm.controls.name.touched)
+            ) {
+              <p class="field__error" id="character-first-name-error">
+                Enter a first name between 2 and 40 characters.
+              </p>
+            }
+          </div>
+
+          <div class="field">
+            <label for="character-last-name">Last name</label>
+            <input
+              id="character-last-name"
+              type="text"
+              formControlName="lastName"
+              autocomplete="off"
+              maxlength="40"
+              [attr.aria-invalid]="
+                characterForm.controls.lastName.invalid &&
+                (characterForm.controls.lastName.dirty ||
+                  characterForm.controls.lastName.touched)
+                  ? true
+                  : null
+              "
+              [attr.aria-describedby]="
+                characterForm.controls.lastName.invalid &&
+                (characterForm.controls.lastName.dirty ||
+                  characterForm.controls.lastName.touched)
+                  ? 'character-last-name-error'
+                  : null
+              " />
+            @if (
+              characterForm.controls.lastName.invalid &&
+              (characterForm.controls.lastName.dirty ||
+                characterForm.controls.lastName.touched)
+            ) {
+              <p class="field__error" id="character-last-name-error">
+                Enter a last name between 2 and 40 characters.
+              </p>
+            }
+          </div>
+
+          <div class="field form-grid__full">
+            <label for="character-faction">Faction</label>
+            <select
+              id="character-faction"
+              formControlName="faction"
+              [attr.aria-invalid]="
+                characterForm.controls.faction.invalid &&
+                (characterForm.controls.faction.dirty ||
+                  characterForm.controls.faction.touched)
+                  ? true
+                  : null
+              "
+              [attr.aria-describedby]="
+                characterForm.controls.faction.invalid &&
+                (characterForm.controls.faction.dirty ||
+                  characterForm.controls.faction.touched)
+                  ? 'character-faction-error'
+                  : null
+              ">
+              <option value="" disabled>Select a faction</option>
+              @for (faction of factions; track faction) {
+                <option [value]="faction">{{ faction }}</option>
+              }
+            </select>
+            @if (
+              characterForm.controls.faction.invalid &&
+              (characterForm.controls.faction.dirty ||
+                characterForm.controls.faction.touched)
+            ) {
+              <p class="field__error" id="character-faction-error">
+                Select a faction.
+              </p>
+            }
+          </div>
+
+          <label class="checkbox form-grid__full">
+            <input type="checkbox" formControlName="isJedi" />
+            <span>Character is a Jedi</span>
+          </label>
+        </div>
+
+        <div class="editor__actions">
+          @if (editorMode() === 'edit') {
+            <button
+              type="button"
+              class="button button--danger editor__remove"
+              [disabled]="!selectedCharacter()"
+              (click)="requestDelete()">
+              Remove Character
+            </button>
+          }
+          <button
+            type="submit"
+            class="button"
+            [disabled]="characterForm.invalid">
+            {{ submitLabel() }}
+          </button>
+          <button
+            type="button"
+            class="button button--secondary"
+            (click)="cancelEdit()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <footer class="character-example__summary" aria-live="polite">
+    {{ characters().length }}
+    {{ characters().length === 1 ? 'character' : 'characters' }} in the
+    collection.
+  </footer>
+</section>

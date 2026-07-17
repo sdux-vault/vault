@@ -1,0 +1,606 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Pipeline Architecture Index -->
+<div class="docs-container docs-container-wide" id="top">
+  <!-- ====================================================== -->
+  <!-- INTRO -->
+  <!-- ====================================================== -->
+
+  <div class="tutorial-layout">
+    <nav class="tutorial-steps" aria-labelledby="tutorial-steps-title">
+      <h2 class="tutorial-steps-title" id="tutorial-steps-title">Steps</h2>
+      <ol class="tutorial-step-list">
+        @for (step of tutorialSteps; track step.id) {
+          <li [class.tutorial-step-active]="isActiveStep(step.id)">
+            <a
+              [routerLink]="[]"
+              [fragment]="'step-' + step.id"
+              [attr.aria-current]="isAriaStep(step.id)">
+              {{ step.label }}
+            </a>
+          </li>
+        }
+      </ol>
+    </nav>
+
+    <main class="tutorial-content">
+      <div class="header">
+        <h2><sdux-brand-name [tm]="true" /> Tutorial</h2>
+      </div>
+      <header class="docs-header">
+        <p class="lead">This is the tutorial</p>
+      </header>
+
+      <section class="diagram-section">
+        <div class="section-title"><sdux-brand-name /> in 5 Minutes</div>
+
+        <div class="section-body">
+          <p>
+            This optional five-minute video introduces <sdux-brand-name /> and
+            provides context for the tutorial. You can continue directly to
+            Angular Project Set-up without watching it.
+          </p>
+
+          <sdux-video videoId="m7ClyWSh754" [tooltip]="'Pipeline Overview'" />
+        </div>
+      </section>
+
+      <section class="section" id="step-1">
+        <div class="section-title-navigation">
+          <div class="section-title">Angular Project Set-up</div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            Begin with a new standalone Angular application so each tutorial
+            step uses the same project structure and configuration. The commands
+            below create the application, move into its directory, install the
+            required core package, and start the development server.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>Create an application</li>
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Create a new Angular project'">
+                  <pre
+                    class="code-inline"><code class="language-ts">npx @angular/cli@21 new sdux-inventory \
+  --standalone \
+  --style=css \
+  --routing=false \
+  --skip-git;
+
+cd sdux-inventory;
+npm start;
+</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <li>
+                Navigate to
+                <a href="http://localhost:4200" target="_blank"
+                  >http://localhost:4200</a
+                >
+                to view the application.
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="step-2">
+        <div class="section-title-navigation">
+          <div class="section-title">Install <sdux-brand-name /></div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            Install the <sdux-package-name />/angular package to add the Angular
+            integration to your project. The package installs the core runtime
+            and exposes the Angular providers, decorator, injector, and
+            Signal-based State access used throughout this tutorial.
+          </p>
+
+          <p>The Angular integration includes:</p>
+
+          <ul>
+            <li>
+              <strong
+                ><a href="/docs/references/functions/provide-vault"
+                  >provideVault</a
+                ></strong
+              >
+              configures the application-level <sdux-vault-brand-name />.
+            </li>
+            <li>
+              <strong
+                ><a href="/docs/references/functions/provide-feature-cell"
+                  >provideFeatureCell</a
+                ></strong
+              >
+              registers a <sdux-feature-cell /> with Angular dependency
+              injection.
+            </li>
+            <li>
+              <strong
+                ><a href="/docs/pipeline/apis/angular/at-feature-cell"
+                  >&#64;<sdux-feature-cell /></a
+              ></strong>
+              associates an Angular service with its registered
+              <sdux-feature-cell />.
+            </li>
+            <li>
+              <strong
+                ><a href="/docs/references/functions/inject-vault"
+                  >injectVault</a
+                ></strong
+              >
+              provides the registered <sdux-feature-cell /> to its Angular
+              service.
+            </li>
+            <li>
+              <strong>state</strong> (<a
+                href="/docs/references/shapes/state-snapshot-shape"
+                >StateSnapshotShape</a
+              >) exposes Signal-based access to the current State:
+              <ul>
+                <li><span class="code">this.vault.state.value()</span></li>
+                <li><span class="code">this.vault.state.error()</span></li>
+                <li><span class="code">this.vault.state.isLoading()</span></li>
+                <li><span class="code">this.vault.state.hasValue()</span></li>
+              </ul>
+            </li>
+          </ul>
+
+          <p class="callout callout-warning">
+            If the development server from the previous step is still running,
+            open a second terminal in the project directory before running the
+            installation command.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>Install the <sdux-package-name />/angular package</li>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Install the @sdux-vault/angular package'">
+                  <pre
+                    class="code-inline"><code class="language-ts">npm install @sdux-vault/angular</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </ol>
+          </div>
+
+          <div class="callout callout-learn-more">
+            <div class="title">Explore the Docs</div>
+
+            <ul>
+              <li>
+                <a href="/docs/references/functions/provide-vault"
+                  >provideVault</a
+                >
+              </li>
+              <li>
+                <a href="/docs/references/functions/provide-feature-cell"
+                  >provideFeatureCell</a
+                >
+              </li>
+              <li>
+                <a href="/docs/pipeline/apis/angular/at-feature-cell"
+                  >&#64;<sdux-feature-cell
+                /></a>
+              </li>
+              <li>
+                <a href="/docs/references/functions/inject-vault"
+                  >injectVault</a
+                >
+              </li>
+              <li>
+                <a href="/docs/references/shapes/state-snapshot-shape"
+                  >StateSnapshotShape</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="step-3">
+        <div class="section-title-navigation">
+          <div class="section-title">Define Feature State</div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            State is the feature-owned data that describes a feature at a
+            specific moment. Defining State means deciding which values belong
+            to the feature, assigning a type to each value, and identifying
+            which properties are required.
+          </p>
+
+          <p>
+            In TypeScript, an interface captures those decisions as a
+            compile-time contract for the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            and its consumers. This contract makes the expected State shape
+            explicit, keeps State usage consistent, and allows TypeScript to
+            identify missing properties and incompatible values during
+            development. The interface defines the shape of State; it does not
+            create or load a State value.
+          </p>
+
+          <p>
+            In <sdux-brand-name />, each <sdux-feature-cell /> declares State
+            for a single Feature. This keeps the State definition focused on the
+            data owned by that Feature instead of combining unrelated
+            application data into one shared global store definition.
+          </p>
+
+          <p class="callout callout-info">
+            In this tutorial, the <strong>Feature</strong> and the
+            <strong>State</strong> represents characters from the
+            <a href="https://www.starwars.com" target="_blank"
+              >Star Wars universe</a
+            >.
+          </p>
+
+          <p>
+            Each character has an identifier, name, faction, and Jedi status.
+            Keeping these fields in one focused State definition gives the
+            <sdux-feature-cell />, Pipeline, and Angular application a
+            consistent representation of the character data.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>
+                Create a new file named:
+                <span class="code">star-wars-character.state.ts</span>
+              </li>
+            </ol>
+          </div>
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab
+              [label]="'Define the State for a Star Wars character'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ starWarsCharacterStateSource }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </div>
+        <div class="callout callout-warning">
+          <div class="title">Global Store vs. <sdux-feature-cell /></div>
+          <p>
+            In a global store, all application data is combined into one shared
+            State definition. This can lead to a large, complex State shape that
+            is difficult to manage and maintain. In contrast, a
+            <sdux-feature-cell /> defines State for a single Feature, keeping
+            the State definition focused and manageable.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="step-4">
+        <div class="section-title-navigation">
+          <div class="section-title">Build the Angular Service</div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            Begin with the domain responsibility, not the integration mechanism.
+            The character service establishes a single boundary for the Star
+            Wars character use case and provides a stable home for the
+            operations that will read or change character State. Its name and
+            scope communicate what the application does, independent of how
+            State will later be managed.
+          </p>
+
+          <p>
+            Implement that boundary as a conventional Angular service. Angular
+            dependency injection makes the service available to consumers, while
+            the familiar class structure keeps it focused, testable, and easy to
+            extend. No state-management integration is required in this step;
+            the service is ordinary Angular code organized around one
+            application responsibility.
+          </p>
+
+          <p>
+            The initial implementation is intentionally minimal. It establishes
+            the service’s identity and injection boundary before State behavior
+            is added, allowing later integrations to extend a clear design
+            rather than determine it.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>
+                Create
+                <span class="code">example.service.ts</span> in the same
+                directory as the State definition.
+              </li>
+              <li>
+                In our case, add commented-out code to the file to show the
+                structure of the service.
+              </li>
+            </ol>
+          </div>
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'star-wars-character.service.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ initialServiceSource }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </div>
+      </section>
+
+      <section class="section" id="step-5">
+        <div class="section-title-navigation">
+          <div class="section-title">
+            Initialize the <sdux-vault-brand-name />
+          </div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            Initialize the <sdux-vault-brand-name /> once during Angular
+            application bootstrap, before registering or activating any
+            <sdux-feature-cell />. This establishes the application-scoped
+            runtime services required by every <sdux-feature-cell /> without
+            defining or modifying Feature State.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>
+                Open <span class="code">app.config.ts</span> and keep the
+                providers generated by Angular.
+              </li>
+              <li>
+                Add
+                <span class="code"
+                  ><a href="/docs/references/functions/provide-vault"
+                    >provideVault</a
+                  >()</span
+                >
+                to the <span class="code">providers</span> without a
+                configuration object to apply the default runtime configuration.
+              </li>
+            </ol>
+          </div>
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab
+              [label]="'Add provideVault() to app.config.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ initialAppConfigSource }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+
+          <div class="callout callout-learn-more">
+            <div class="title">Explore the Docs</div>
+
+            <ul>
+              <li>
+                <a href="/docs/pipeline/apis/angular/provide-vault"
+                  >provideVault()</a
+                >
+              </li>
+              <li>
+                <a href="/docs/references/config/vault-config">VaultConfig</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="step-6">
+        <div class="section-title-navigation">
+          <div class="section-title">Register the <sdux-feature-cell /></div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            The
+            <span class="code"
+              ><a href="/docs/references/functions/provide-feature-cell"
+                >provideFeatureCell</a
+              >()</span
+            >
+            provider registers
+            <span class="code">StarWarsCharacterService</span> with the
+            application-scoped <sdux-vault-brand-name />. Its descriptor assigns
+            the unique <span class="code">star-wars-character</span>
+            key and supplies an initial State value that satisfies
+            <span class="code">StarWarsCharacterState</span>. Registration
+            establishes the <sdux-feature-cell /> contract without executing the
+            Pipeline or emitting State.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>Open <span class="code">app.config.ts</span>.</li>
+              <li>
+                Import
+                <span class="code"
+                  ><a href="/docs/references/functions/provide-feature-cell"
+                    >provideFeatureCell</a
+                  >()</span
+                >
+                and <span class="code">StarWarsCharacterService</span>.
+              </li>
+              <li>
+                Add the
+                <span class="code"
+                  ><a href="/docs/references/functions/provide-feature-cell"
+                    >provideFeatureCell</a
+                  >()</span
+                >
+                registration after
+                <span class="code"
+                  ><a href="/docs/references/functions/provide-vault"
+                    >provideVault</a
+                  >()</span
+                >.
+              </li>
+              <li>
+                Assign the <span class="code">star-wars-character</span> key and
+                provide the initial character State.
+              </li>
+            </ol>
+          </div>
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'app.config.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ registeredAppConfigSource }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </div>
+      </section>
+
+      <section class="section" id="step-7">
+        <div class="section-title-navigation">
+          <div class="section-title">
+            Connect the Service to <sdux-brand-name />
+          </div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            <sdux-brand-name /> begins with the Feature, not the framework. Each
+            <sdux-feature-cell /> establishes a deliberate domain boundary, and
+            its service should express the use cases and State interactions that
+            belong to that domain. Angular supplies dependency injection and
+            lifecycle integration, but it does not define the Feature’s
+            architecture—it is the host, not the architect.
+          </p>
+
+          <p>
+            The service remains unmistakably Angular: injectable, focused,
+            testable, and organized around a clear application responsibility.
+            The Angular integration for <sdux-brand-name /> adds a thin layer of
+            framework-native syntax, connecting the service to its
+            <sdux-feature-cell /> through familiar decorator and injection
+            patterns. The result is domain-led architecture expressed through
+            conventional Angular code.
+          </p>
+
+          <p>
+            An injectable Angular service owns the interaction with the
+            registered <sdux-feature-cell />. The
+            <span class="code"
+              >&#64;<a href="/docs/references/functions/feature-cell"
+                >FeatureCell</a
+              ></span
+            >
+            decorator associates the service with the same unique key used
+            during registration, while
+            <span class="code"
+              ><a href="/docs/references/functions/inject-vault">injectVault</a
+              >()</span
+            >
+            provides access to its State. Calling
+            <span class="code">initialize()</span> activates the
+            <sdux-feature-cell /> when Angular creates the service.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>
+                Create the
+                <span class="code">example.service.ts</span> in the same
+                directory as the State definition.
+              </li>
+              <li>
+                Decorate <span class="code">ExampleService</span> with the
+                <span class="code">star-wars-character</span> key.
+              </li>
+              <li>
+                Inject the <sdux-vault-brand-name /> for
+                <span class="code">StarWarsCharacterState</span>.
+              </li>
+              <li>
+                Call <span class="code">initialize()</span> in the constructor.
+              </li>
+            </ol>
+          </div>
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'star-wars-character.service.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">// star-wars-character.service.ts
+import &#123; Injectable &#125; from '@angular/core';
+import &#123; FeatureCell, injectVault &#125; from '@sdux-vault/angular';
+import &#123; StarWarsCharacterState &#125; from './star-wars-character.state';
+
+&#64;FeatureCell&lt;StarWarsCharacterState&gt;('star-wars-character')
+&#64;Injectable(&#123; providedIn: 'root' &#125;)
+export class StarWarsCharacterService &#123;
+  readonly #vault = injectVault&lt;StarWarsCharacterState&gt;(
+    StarWarsCharacterService
+  );
+
+  constructor() &#123;
+    this.#vault.initialize();
+  &#125;
+&#125;
+</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </div>
+      </section>
+
+      <section class="section" id="step-8">
+        <div class="section-title-navigation">
+          <div class="section-title">Final Service Implementation</div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <sdux-example-viewer-source>
+            @for (file of completeCharacterManagementSource; track file.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </div>
+      </section>
+
+      <sdux-pipeline-related-topics />
+    </main>
+  </div>
+</div>
