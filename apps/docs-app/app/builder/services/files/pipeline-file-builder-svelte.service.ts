@@ -24,7 +24,6 @@ export class PipelineFileBuilderSvelteService {
     } = input;
 
     const cellName = 'exampleCell';
-    const stateName = 'exampleState';
     const componentName = 'ExampleView';
 
     return [
@@ -40,14 +39,14 @@ export class PipelineFileBuilderSvelteService {
         type: FileTypes.Simple,
         stackBlitzFileType: StackblitzFileTypes.SvelteCell,
         contents: `${vaultImports}
-import { FeatureCell, Vault } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/svelte';
 ${interfaceDefinition}
 
 // Initialize the Vault once at application startup
 Vault({ logLevel: 'off' });
 ${coreBehaviorNotes}
 // Register the FeatureCell at module scope
-const ${cellName} = FeatureCell<${type}>({
+export const ${cellName} = FeatureCell<${type}>({
 
   // Unique state key used by the Vault
   key: '${featureCellKey}',
@@ -60,10 +59,6 @@ const ${cellName} = FeatureCell<${type}>({
 ${cellName}
 ${vaultChain.replace(/^this\.#vault\n?/, '')}
 
-// Expose read-only state access
-export const ${stateName} = ${cellName}.state;
-export const ${stateName}$ = ${cellName}.state$;
-
 ${serviceExamples}`
       },
       {
@@ -72,8 +67,6 @@ ${serviceExamples}`
         type: FileTypes.Simple,
         stackBlitzFileType: StackblitzFileTypes.SvelteComponent,
         contents: `<script lang="ts">
-import { onDestroy } from 'svelte';
-import type { Subscription } from 'rxjs';
 import * as cell from './example.cell';
 
 /**
@@ -87,7 +80,7 @@ import * as cell from './example.cell';
  */
 
 /**
- * Local snapshot bridged from the Vault's reactive state stream.
+ * Reactive Snapshot read from the FeatureCell State getter.
  *
  * Provides reactive access to:
  * - value
@@ -95,27 +88,9 @@ import * as cell from './example.cell';
  * - error
  * - hasValue
  *
- * The RxJS subscription is managed automatically via onDestroy.
+ * The Svelte adapter manages the State subscription and effect cleanup.
  */
-let snapshot = $state({
-  value: cell.${stateName}.value,
-  isLoading: cell.${stateName}.isLoading,
-  error: cell.${stateName}.error,
-  hasValue: cell.${stateName}.hasValue
-});
-
-const sub: Subscription = cell.${stateName}$.subscribe((emit) => {
-  snapshot = {
-    value: emit.snapshot.value,
-    isLoading: emit.snapshot.isLoading,
-    error: emit.snapshot.error,
-    hasValue: emit.snapshot.hasValue
-  };
-});
-
-onDestroy(() => {
-  sub?.unsubscribe();
-});
+let snapshot = $derived(cell.${cellName}.state);
 
 ${componentExamples}
 </script>
@@ -165,13 +140,13 @@ mount(${componentName}, { target: document.getElementById('app')! });`
         type: FileTypes.FromStream,
         contents: `${vaultImports}
 import { Observable } from 'rxjs';
-import { FeatureCell, Vault } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/svelte';
 
 // Initialize the Vault once at application startup
 Vault({ logLevel: 'off' });
 
 // Register the FeatureCell at module scope
-const ${cellName} = FeatureCell<${type}>({
+export const ${cellName} = FeatureCell<${type}>({
 
   // Unique state key used by the Vault
   key: '${featureCellKey}',
@@ -183,10 +158,6 @@ const ${cellName} = FeatureCell<${type}>({
 // Runtime pipeline configuration
 ${cellName}
 ${vaultChain.replace(/^this\.#vault\n?/, '')}
-
-// Expose read-only state access
-export const ${stateName} = ${cellName}.state;
-export const ${stateName}$ = ${cellName}.state$;
 
 /**
  * Connect an external observable stream to this FeatureCell.
@@ -206,14 +177,12 @@ export function connectStream(source$: Observable<${type}>): void {
         name: `${componentName}.svelte`,
         type: FileTypes.FromStream,
         contents: `<script lang="ts">
-import { onDestroy } from 'svelte';
-import type { Subscription } from 'rxjs';
 import * as cell from './example.cell';
 
 /**
  * Advanced example component demonstrating:
  *
- * - Reactive state subscription
+ * - Reactive FeatureCell State getter
  * - Stream delegation to FeatureCell via connectStream()
  *
  * Architectural Flow:
@@ -223,25 +192,7 @@ import * as cell from './example.cell';
  * The component never touches the Vault directly.
  */
 
-let snapshot = $state({
-  value: cell.${stateName}.value,
-  isLoading: cell.${stateName}.isLoading,
-  error: cell.${stateName}.error,
-  hasValue: cell.${stateName}.hasValue
-});
-
-const sub: Subscription = cell.${stateName}$.subscribe((emit) => {
-  snapshot = {
-    value: emit.snapshot.value,
-    isLoading: emit.snapshot.isLoading,
-    error: emit.snapshot.error,
-    hasValue: emit.snapshot.hasValue
-  };
-});
-
-onDestroy(() => {
-  sub?.unsubscribe();
-});
+let snapshot = $derived(cell.${cellName}.state);
 </script>
 
 <div>

@@ -66,9 +66,15 @@ describe('Service: PipelineFileBuilderSvelte', () => {
       expect(file.type).toBe('simple');
       expect(file.stackBlitzFileType).toBe('Svelte Cell');
 
-      expect(normalize(file.contents)).toBe(
-        `imports { FeatureCell } from @sdux-vault/coreimport { FeatureCell, Vault } from '@sdux-vault/core';interface definition// Initialize the Vault once at application startupVault({ logLevel: 'off' });core behavior notes// Register the FeatureCell at module scopeconst exampleCell = FeatureCell<employees[]>({ // Unique state key used by the Vault key: 'example-feature-cell-key', // Initial value for the state initialState: []});// Runtime pipeline configurationexampleCell.initialize();// Expose read-only state accessexport const exampleState = exampleCell.state;export const exampleState$ = exampleCell.state$;service examples`
+      const contents = normalize(file.contents);
+
+      expect(contents).toContain(
+        `import { FeatureCell, Vault } from '@sdux-vault/svelte';`
       );
+      expect(contents).toContain(
+        `export const exampleCell = FeatureCell<employees[]>({`
+      );
+      expect(contents).not.toContain('exampleState');
     });
 
     it('should generate ExampleView.svelte', () => {
@@ -79,13 +85,15 @@ describe('Service: PipelineFileBuilderSvelte', () => {
       expect(file.type).toBe('simple');
       expect(file.stackBlitzFileType).toBe('Svelte Component');
 
-      expect(normalize(file.contents.slice(0, 1000))).toBe(
-        `<script lang="ts">import { onDestroy } from 'svelte';import type { Subscription } from 'rxjs';import * as cell from './example.cell';/** * UI component responsible for rendering the example FeatureCell state. * * This component consumes the Vault-backed state exposed by the * example cell module and reacts to its value, loading, and error state. * * The component does not manage state directly — it delegates all state * updates to the exported cell functions. *//** * Local snapshot bridged from the Vault's reactive state stream. * * Provides reactive access to: * - value * - isLoading * - error * - hasValue * * The RxJS subscription is managed automatically via onDestroy. */let snapshot = $state({ value: cell.exampleState.value, isLoading: cell.exampleState.isLoading, error: cell.exampleState.error, hasValue: cell.exampleState.hasValue});const sub: Subscription = cell.exampleState$.subscribe((emit) => { snapshot = {  value: emit.snapshot.value,`
-      );
+      const contents = normalize(file.contents);
 
-      expect(normalize(file.contents.slice(1000))).toBe(
-        `  isLoading: emit.snapshot.isLoading,  error: emit.snapshot.error,  hasValue: emit.snapshot.hasValue };});onDestroy(() => { sub?.unsubscribe();});component examples</script><div> <div style="margin-bottom: 1rem">  <button type="button" onclick={loadSample}>   Click me to add data  </button> </div> <!-- Render state value when available --> {#if snapshot.hasValue}  <div>   <p>employees[]: {JSON.stringify(snapshot.value, null, 2)}</p>  </div> {/if} <!-- Render loading state --> {#if snapshot.isLoading}  <div>   Loading...  </div> {/if} <!-- Render error state --> {#if snapshot.error}  <div>   Error: {snapshot.error?.message}  </div> {/if}</div>`
+      expect(contents).toContain(
+        'let snapshot = $derived(cell.exampleCell.state);'
       );
+      expect(contents).toContain('component examples');
+      expect(contents).not.toContain('Subscription');
+      expect(contents).not.toContain('onDestroy');
+      expect(contents).not.toContain('exampleState$');
     });
 
     it('should generate main.ts', () => {
@@ -110,9 +118,18 @@ describe('Service: PipelineFileBuilderSvelte', () => {
       expect(file.name).toBe('example.cell.ts');
       expect(file.type).toBe('fromStream');
 
-      expect(normalize(file.contents)).toBe(
-        `imports { FeatureCell } from @sdux-vault/coreimport { Observable } from 'rxjs';import { FeatureCell, Vault } from '@sdux-vault/core';// Initialize the Vault once at application startupVault({ logLevel: 'off' });// Register the FeatureCell at module scopeconst exampleCell = FeatureCell<employees[]>({ // Unique state key used by the Vault key: 'example-feature-cell-key', // Initial value for the state initialState: []});// Runtime pipeline configurationexampleCell.initialize();// Expose read-only state accessexport const exampleState = exampleCell.state;export const exampleState$ = exampleCell.state$;/** * Connect an external observable stream to this FeatureCell. * * Each emitted value becomes a standard state update * and flows through the normal Vault pipeline. * * The subscription lifecycle is automatically managed * by the FeatureCell and is cleaned up on reset/destroy. */export function connectStream(source$: Observable<employees[]>): void { exampleCell.fromStream(source$);}`
+      const contents = normalize(file.contents);
+
+      expect(contents).toContain(
+        `import { FeatureCell, Vault } from '@sdux-vault/svelte';`
       );
+      expect(contents).toContain(
+        `export const exampleCell = FeatureCell<employees[]>({`
+      );
+      expect(contents).toContain(
+        'export function connectStream(source$: Observable<employees[]>): void'
+      );
+      expect(contents).not.toContain('exampleState');
     });
 
     it('should generate the fromStream ExampleView.svelte', () => {
@@ -122,13 +139,14 @@ describe('Service: PipelineFileBuilderSvelte', () => {
       expect(file.name).toBe('ExampleView.svelte');
       expect(file.type).toBe('fromStream');
 
-      expect(normalize(file.contents.slice(0, 1000))).toBe(
-        `<script lang="ts">import { onDestroy } from 'svelte';import type { Subscription } from 'rxjs';import * as cell from './example.cell';/** * Advanced example component demonstrating: * * - Reactive state subscription * - Stream delegation to FeatureCell via connectStream() * * Architectural Flow: * * Stream Source → connectStream() → Vault → Pipeline * * The component never touches the Vault directly. */let snapshot = $state({ value: cell.exampleState.value, isLoading: cell.exampleState.isLoading, error: cell.exampleState.error, hasValue: cell.exampleState.hasValue});const sub: Subscription = cell.exampleState$.subscribe((emit) => { snapshot = {  value: emit.snapshot.value,  isLoading: emit.snapshot.isLoading,  error: emit.snapshot.error,  hasValue: emit.snapshot.hasValue };});onDestroy(() => { sub?.unsubscribe();});</script><div> <!-- Render state value when available --> {#if snapshot.hasValue}  <div>   <p>employees[]: {J`
-      );
+      const contents = normalize(file.contents);
 
-      expect(normalize(file.contents.slice(1000))).toBe(
-        `SON.stringify(snapshot.value, null, 2)}</p>  </div> {/if} <!-- Render loading state --> {#if snapshot.isLoading}  <div>   Loading...  </div> {/if} <!-- Render error state --> {#if snapshot.error}  <div>   Error: {snapshot.error?.message}  </div> {/if}</div>`
+      expect(contents).toContain(
+        'let snapshot = $derived(cell.exampleCell.state);'
       );
+      expect(contents).not.toContain('Subscription');
+      expect(contents).not.toContain('onDestroy');
+      expect(contents).not.toContain('exampleState$');
     });
   });
 

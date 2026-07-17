@@ -113,6 +113,15 @@ const LIBRARIES = {
     licenses: ['mit']
   },
 
+  '@sdux-vault/svelte': {
+    packageName: '@sdux-vault/svelte',
+    packagePath: 'libs/core-extensions/svelte',
+    distPath: 'dist/core-extensions/svelte',
+    versionFile: 'src/lib/version/version.register.ts',
+    buildCommand: 'npm run build:svelte',
+    licenses: ['mit']
+  },
+
   '@sdux-vault/vue': {
     packageName: '@sdux-vault/vue',
     packagePath: 'libs/core-extensions/vue',

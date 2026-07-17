@@ -203,6 +203,7 @@
           (click)="closeSidenav()">
           <span class="menu-content">state$</span>
         </a>
+
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/feature-cell-api/use-reactive-state-method"
@@ -318,6 +319,30 @@
           mat-list-item
           routerLink="/docs/pipeline/apis/react"
           aria-label="react overview documentation"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeSidenav()">
+          <span class="menu-icon menu-content">Overview </span>
+        </a>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+      <mat-expansion-panel-header>
+        <span class="sub-menu-content sub-item sub-header menu-icon"
+          >Svelte
+          <img
+            src="assets/brand/svelte/svelte-icon.svg"
+            class="image-15"
+            alt="Svelte" />
+        </span>
+      </mat-expansion-panel-header>
+
+      <div class="sub-menu">
+        <a
+          mat-list-item
+          routerLink="/docs/pipeline/apis/svelte"
+          aria-label="svelte overview documentation"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">

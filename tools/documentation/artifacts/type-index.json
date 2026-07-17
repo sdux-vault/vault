@@ -1680,6 +1680,14 @@
       "relativePath": "libs/core/src/lib/behaviors/resolve/from-stream/interface/from-stream-behavior.interface.ts",
       "docLink": "interfaces"
     },
+    "VaultReactiveStateRef": {
+      "kind": "interface",
+      "docKind": "interface",
+      "name": "VaultReactiveStateRef",
+      "project": "vue",
+      "relativePath": "libs/core-extensions/vue/src/lib/references/vault-reactive-state.reference.ts",
+      "docLink": "interfaces"
+    },
     "VaultSignalStateRef": {
       "kind": "interface",
       "docKind": "interface",
@@ -1998,12 +2006,12 @@
       "relativePath": "../engine/lib/src/factories/feature-cell/feature-cell.class.ts",
       "docLink": "classes"
     },
-    "ReactFeatureCellAdapter": {
+    "SvelteFeatureCellAdapter": {
       "kind": "class",
       "docKind": "class",
-      "name": "ReactFeatureCellAdapter",
-      "project": "react",
-      "relativePath": "libs/core-extensions/react/src/lib/factories/feature-cell/feature.cell.adapter.ts",
+      "name": "SvelteFeatureCellAdapter",
+      "project": "svelte",
+      "relativePath": "libs/core-extensions/svelte/src/lib/factories/feature-cell/svelte-feature-cell.adapter.ts",
       "docLink": "classes"
     },
     "VaultEncryptionIntegrityError": {

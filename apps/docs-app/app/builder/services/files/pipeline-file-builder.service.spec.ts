@@ -164,7 +164,7 @@ describe('Service: PipelineFileBuilder', () => {
       const file = service.generatedFiles()[0];
       expect(file.name).toBe('installation');
 
-      expect(normalize(file.contents)).toBe('npm install @sdux-vault/core;');
+      expect(normalize(file.contents)).toBe('npm install @sdux-vault/svelte;');
     });
   });
 

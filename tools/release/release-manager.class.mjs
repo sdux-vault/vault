@@ -189,6 +189,7 @@ export class ReleaseManager {
       'build:addons',
       'build:angular',
       'build:react',
+      'build:svelte',
       'build:vue'
     ];
 

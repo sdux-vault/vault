@@ -1,36 +1,36 @@
 /**
  * AUTO-GENERATED DOCUMENTATION COMPONENT
- * Symbol: <a href="/docs/references/classes/react-feature-cell-adapter">ReactFeatureCellAdapter</a>
+ * Symbol: <a href="/docs/references/classes/svelte-feature-cell-adapter">SvelteFeatureCellAdapter</a>
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
-  selector: 'sdux-react-feature-cell-adapter',
+  selector: 'sdux-svelte-feature-cell-adapter',
   standalone: true,
   imports: [BrandNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>ReactFeatureCellAdapter</h3>
+      <h3>SvelteFeatureCellAdapter</h3>
     </div>
     <header class="docs-header">
       <div class="lead">
-        React adapter that augments a core
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> with
-        an explicit useSyncExternalStore() render-time subscription method.<br /><br />
-        This class preserves the core fluent API and snapshot access patterns
-        while exposing a React-native bridge for subscribing to state changes
-        during render.<br /><br />
+        Svelte adapter that augments the existing
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> State
+        getter with Svelte reactive effect tracking.<br /><br />
+        The adapted getter preserves synchronous Snapshot access while allowing
+        Svelte templates, derived values, and effects to react to State
+        changes.<br /><br />
       </div>
     </header>
     <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-        Part of the <strong>@sdux-vault/react</strong> project.
+        Part of the <strong>@sdux-vault/svelte</strong> project.
 
         <pre
-          class="code-inline"><code class="language-ts">npm install @sdux-vault/react</code></pre>
+          class="code-inline"><code class="language-ts">npm install @sdux-vault/svelte</code></pre>
       </div>
     </section>
     <section class="section">
@@ -49,13 +49,18 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
                 <strong>constructor</strong>
                 <p>inputs:</p>
                 <ul>
-                  <li>core: ReactFeatureCellContext</li>
+                  <li>
+                    core:
+                    <a href="/docs/references/shapes/feature-cell-shape"
+                      >FeatureCellShape</a
+                    >
+                  </li>
                 </ul>
               </td>
               <td>
-                Creates a new
-                <a href="/docs/references/classes/react-feature-cell-adapter"
-                  >ReactFeatureCellAdapter</a
+                Creates a
+                <a href="/docs/references/classes/svelte-feature-cell-adapter"
+                  >SvelteFeatureCellAdapter</a
                 >
                 for the provided core
                 <a href="/docs/references/functions/feature-cell">FeatureCell</a
@@ -79,41 +84,6 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
           <tbody>
             <tr>
               <td>
-                <strong>#getSnapshot</strong>
-                <p class="modifiers">#private</p>
-
-                <p>
-                  returns:
-                  <a href="/docs/references/shapes/state-snapshot-shape"
-                    >StateSnapshotShape</a
-                  >&lt;T&gt;
-                </p>
-              </td>
-              <td>
-                Returns a stable snapshot reference for React while preserving
-                the core cell&#39;s immutable public snapshot semantics.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>#subscribe</strong>
-                <p class="modifiers">#private</p>
-                <p>inputs:</p>
-                <ul>
-                  <li>onStoreChange: function</li>
-                </ul>
-                <p>returns: void</p>
-              </td>
-              <td>
-                Bridges
-                <a href="/docs/references/functions/feature-cell"
-                  >FeatureCell</a
-                >
-                state emissions into React&#39;s external store contract.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td>
                 <strong>build</strong>
 
                 <p>
@@ -124,7 +94,7 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
                 </p>
               </td>
               <td>
-                Builds and returns the React-augmented
+                Builds and returns the Svelte-augmented
                 <a href="/docs/references/functions/feature-cell"
                   >FeatureCell</a
                 >
@@ -148,18 +118,26 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
           <tbody>
             <tr>
               <td class="column-300">
-                <strong>#cachedSnapshot</strong>
-
-                <p class="type">
-                  type:
-                  <a href="/docs/references/shapes/state-snapshot-shape"
-                    >StateSnapshotShape</a
-                  >
-                </p>
+                <strong>#readState</strong>
+                <p class="modifiers">readonly</p>
+                <p class="type">type: function</p>
               </td>
               <td class="column-auto">
-                Cached snapshot reference returned to React when the underlying
-                state has not materially changed.<br /><br />
+                Reads the original core
+                <a href="/docs/references/functions/feature-cell"
+                  >FeatureCell</a
+                >
+                State getter.<br /><br />
+              </td>
+            </tr>
+            <tr>
+              <td class="column-300">
+                <strong>#stateTracker</strong>
+                <p class="modifiers">readonly</p>
+                <p class="type">type: SvelteStateTracker</p>
+              </td>
+              <td class="column-auto">
+                Connects reactive State reads to the Svelte effect lifecycle.<br /><br />
               </td>
             </tr>
           </tbody>
@@ -181,4 +159,4 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
   styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class ReactFeatureCellAdapterComponent {}
+export class SvelteFeatureCellAdapterComponent {}

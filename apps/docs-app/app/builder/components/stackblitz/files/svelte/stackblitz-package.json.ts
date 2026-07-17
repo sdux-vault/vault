@@ -1,6 +1,6 @@
 export const SVELTE_PACKAGE_JSON_FILE = {
   name: 'SDuX Svelte Pipeline Builder Demo',
-  version: '1.0.0',
+  version: '2.0.0',
   private: true,
   type: 'module',
   scripts: {
@@ -10,7 +10,7 @@ export const SVELTE_PACKAGE_JSON_FILE = {
     preview: 'vite preview'
   },
   dependencies: {
-    '@sdux-vault/core': 'latest',
+    '@sdux-vault/svelte': 'latest',
     svelte: '^5.28.2',
     rxjs: '~7.8.0'
   },

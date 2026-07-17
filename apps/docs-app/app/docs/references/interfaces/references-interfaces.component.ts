@@ -15,6 +15,7 @@ import { FeatureCellFluentApiComponent } from './feature-cell-fluent-api.compone
 import { FromObservableBehaviorExtensionComponent } from './from-observable-behavior-extension.component';
 import { FromPromiseBehaviorExtensionComponent } from './from-promise-behavior-extension.component';
 import { FromStreamBehaviorExtensionComponent } from './from-stream-behavior-extension.component';
+import { VaultReactiveStateRefComponent } from './vault-reactive-state-ref.component';
 import { VaultSignalStateRefComponent } from './vault-signal-state-ref.component';
 import { VaultStateRefComponent } from './vault-state-ref.component';
 import { VaultSyncExternalStoreRefComponent } from './vault-sync-external-store-ref.component';
@@ -32,6 +33,7 @@ import { VaultSyncExternalStoreRefComponent } from './vault-sync-external-store-
     FromObservableBehaviorExtensionComponent,
     FromPromiseBehaviorExtensionComponent,
     FromStreamBehaviorExtensionComponent,
+    VaultReactiveStateRefComponent,
     VaultSignalStateRefComponent,
     VaultStateRefComponent,
     VaultSyncExternalStoreRefComponent
