@@ -18,6 +18,8 @@ Which area does this feature relate to? (select one or more)
 - [ ] Addons
 - [ ] Core Extensions - Angular
 - [ ] Core Extensions - React
+- [ ] Core Extensions - Svelte
+- [ ] Core Extensions - Vue
 - [ ] Devtools / Tooling
 - [ ] Chrome Extensions
 - [ ] Devtools UI

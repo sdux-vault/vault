@@ -315,6 +315,22 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-16-state-management-in-vue-without-a-store/state-management-in-vue-without-a-store.component').then(
         (m) => m.BlogStateManagementInVueWithoutAStoreComponent
       )
+  },
+  {
+    path: 'plain-typescript-zero-magic',
+    data: { category: 'blogs', type: 'plain-typescript-zero-magic' },
+    loadComponent: () =>
+      import('./posts/2026-07-17-plain-typescript-zero-magic/plain-typescript-zero-magic.component').then(
+        (m) => m.BlogPlainTypescriptZeroMagicComponent
+      )
+  },
+  {
+    path: 'the-boilerplate-audit',
+    data: { category: 'blogs', type: 'the-boilerplate-audit' },
+    loadComponent: () =>
+      import('./posts/2026-07-18-the-boilerplate-audit/the-boilerplate-audit.component').then(
+        (m) => m.BlogTheBoilerplateAuditComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

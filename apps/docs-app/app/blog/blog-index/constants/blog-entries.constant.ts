@@ -247,5 +247,21 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-07-16',
     readingTime: 6,
     active: true
+  },
+  {
+    slug: 'plain-typescript-zero-magic',
+    title:
+      "Plain TypeScript, Zero Magic — What 'No Hidden Runtime Behavior' Actually Means",
+    date: '2026-07-17',
+    readingTime: 6,
+    active: true
+  },
+  {
+    slug: 'the-boilerplate-audit',
+    title:
+      'The Boilerplate Audit — Counting the Files Redux Requires for One Feature',
+    date: '2026-07-18',
+    readingTime: 6,
+    active: false
   }
 ];
