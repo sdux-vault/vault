@@ -49,6 +49,19 @@ export const routes: Routes = [
     redirectTo: 'press'
   },
   {
+    path: 'tutorial',
+    children: [
+      {
+        path: 'angular',
+        data: { category: 'tutorial' },
+        loadComponent: () =>
+          import('./docs/tutorial/tutorial.component').then(
+            (m) => m.TutorialComponent
+          )
+      }
+    ]
+  },
+  {
     path: 'sdux',
     children: [
       {
