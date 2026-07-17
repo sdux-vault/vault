@@ -80,6 +80,17 @@
     max-width: 800px;
   }
 
+  /* Wider reading surface for documentation with a persistent side panel. */
+  &.docs-container-wide {
+    @media (min-width: global.$breakpoint-md) {
+      max-width: 100%;
+    }
+
+    @media (min-width: global.$breakpoint-lg) {
+      max-width: 1200px;
+    }
+  }
+
   .docs-header {
     background-color: var(--sdux-surface-bg) !important;
     padding-left: global.$spacing-sm;

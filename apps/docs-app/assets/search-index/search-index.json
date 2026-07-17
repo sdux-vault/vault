@@ -3555,6 +3555,26 @@
       "url": "/blog/state-management-in-vue-without-a-store",
       "symbols": ["state-management-in-vue-without-a-store"],
       "content": "State Management in Vue Without a Store state-management-in-vue-without-a-store TA"
+    },
+    {
+      "id": "blog:plain-typescript-zero-magic",
+      "title": "Plain TypeScript, Zero Magic — What 'No Hidden Runtime Behavior' Actually Means",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/plain-typescript-zero-magic",
+      "symbols": ["plain-typescript-zero-magic"],
+      "content": "Plain TypeScript, Zero Magic — What 'No Hidden Runtime Behavior' Actually Means plain-typescript-zero-magic TA"
+    },
+    {
+      "id": "blog:the-boilerplate-audit",
+      "title": "The Boilerplate Audit — Counting the Files Redux Requires for One Feature",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/the-boilerplate-audit",
+      "symbols": ["the-boilerplate-audit"],
+      "content": "The Boilerplate Audit — Counting the Files Redux Requires for One Feature the-boilerplate-audit TA"
     }
   ]
 }

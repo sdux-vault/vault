@@ -267,6 +267,22 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'State Management in Vue Without a Store — SDuX Blog',
       description:
         'Learn how to own scoped, reactive, atomically-committed Vue state with SDuX Vault FeatureCells — no Pinia, Vuex, or global store required.'
+    },
+    {
+      link: '/blog/plain-typescript-zero-magic',
+      display:
+        "Plain TypeScript, Zero Magic — What 'No Hidden Runtime Behavior' Actually Means",
+      title: 'Plain TypeScript, Zero Magic — SDuX Blog',
+      description:
+        'Understand what "Plain TypeScript, Zero Magic" means in SDuX Vault — no implicit mutation, no interception, and explicit execution you can debug and trust.'
+    },
+    {
+      link: '/blog/the-boilerplate-audit',
+      display:
+        'The Boilerplate Audit — Counting the Files Redux Requires for One Feature',
+      title: 'The Boilerplate Audit — SDuX Blog',
+      description:
+        'Count the files Redux needs for one feature — actions, reducers, selectors, effects — then replace them with a single SDuX Vault FeatureCell definition.'
     }
   ]
 };
