@@ -64,6 +64,11 @@ const INDEX_JOBS = Object({
       publicApis: ['./documentation-api.ts']
     },
     {
+      name: 'vue',
+      srcDir: 'libs/core-extensions/vue/src',
+      publicApis: ['./documentation-api.ts']
+    },
+    {
       name: 'engine',
       isEngine: true,
       srcDir: 'lib',

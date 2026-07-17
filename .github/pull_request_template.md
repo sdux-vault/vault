@@ -27,6 +27,8 @@ Closes #
 - [ ] Core
 - [ ] Core Extensions (Angular)
 - [ ] Core Extensions (React)
+- [ ] Core Extensions (Svelte)
+- [ ] Core Extensions (Vue)
 - [ ] Devtools / Tooling
 - [ ] Devtools UI
 - [ ] Docs App

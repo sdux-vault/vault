@@ -546,6 +546,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/apis/svelte</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/apis/vault</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -981,7 +986,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.sdux-vault.com/docs/references/classes/react-feature-cell-adapter</loc>
+    <loc>https://www.sdux-vault.com/docs/references/classes/svelte-feature-cell-adapter</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

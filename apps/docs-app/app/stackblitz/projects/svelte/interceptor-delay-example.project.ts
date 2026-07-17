@@ -19,7 +19,7 @@ export const interceptorDelayExampleProject: Project = {
 `,
     'package.json': `{
   "name": "svelte-interceptor-delay",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -30,7 +30,7 @@ export const interceptorDelayExampleProject: Project = {
   },
   "dependencies": {
     "@sdux-vault/addons": "latest",
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/svelte": "latest",
     "rxjs": "~7.8.0"
   },
   "devDependencies": {
@@ -54,8 +54,7 @@ export const interceptorDelayExampleProject: Project = {
   import { ElapsedTimer } from './elapsed-timer';
   import {
     type Example,
-    exampleState,
-    exampleState\$,
+    exampleCell,
     replaceExamples,
     resetExamples,
     toggleError,
@@ -68,12 +67,7 @@ export const interceptorDelayExampleProject: Project = {
     { id: 9, name: 'Han', lastName: 'Solo' }
   ];
 
-  let snapshot = \$state({
-    value: exampleState.value,
-    isLoading: exampleState.isLoading,
-    error: exampleState.error as unknown | null,
-    hasValue: exampleState.hasValue
-  });
+  let snapshot = \$derived(exampleCell.state);
 
   let activeStateHint = \$state('Initial value is [] (empty array)');
   let displayActiveStateHint = \$state(true);
@@ -85,17 +79,7 @@ export const interceptorDelayExampleProject: Project = {
     timerDisplay = ElapsedTimer.format(ms);
   });
 
-  const sub = exampleState\$.subscribe((emit) => {
-    snapshot = {
-      value: emit.snapshot.value,
-      isLoading: emit.snapshot.isLoading,
-      error: emit.snapshot.error,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-
   onDestroy(() => {
-    sub.unsubscribe();
     timer.destroy();
   });
 
@@ -575,7 +559,7 @@ export class ElapsedTimer {
 }
 `,
     'src/app/example.cell.ts': `import { withDelayController } from '@sdux-vault/addons';
-import { FeatureCell, Vault } from '@sdux-vault/core';
+import { FeatureCell, Vault } from '@sdux-vault/svelte';
 
 /**
  * Shape representing a single example entity in the FeatureCell state.
@@ -615,7 +599,7 @@ Vault({
 });
 
 // Register the FeatureCell at module scope
-const exampleCell = FeatureCell<Example[]>(
+export const exampleCell = FeatureCell<Example[]>(
   // FeatureCell descriptor (identity + initial state)
   {
     // Unique state key used by the Vault
@@ -652,10 +636,6 @@ const exampleCell = FeatureCell<Example[]>(
  */
 exampleCell.withDelay?.({ millisecondDelay: 3_000 }).initialize();
 
-// Expose read-only state access
-export const exampleState = exampleCell.state;
-export const exampleState\$ = exampleCell.state\$;
-
 /** Replaces the entire FeatureCell state with the provided input. */
 export function replaceExamples(input: Example[]): void {
   exampleCell.replaceState({
@@ -674,7 +654,7 @@ export function resetExamples(): void {
 export function toggleLoading(loading: boolean): void {
   exampleCell.replaceState({
     loading,
-    value: exampleState.value
+    value: exampleCell.state.value
   });
 }
 
@@ -682,7 +662,7 @@ export function toggleLoading(loading: boolean): void {
 export function toggleError(error: Error | null): void {
   exampleCell.replaceState({
     error,
-    value: exampleState.value
+    value: exampleCell.state.value
   });
 }
 `,

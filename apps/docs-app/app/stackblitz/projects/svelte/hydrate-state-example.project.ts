@@ -19,7 +19,7 @@ export const hydrateStateExampleProject: Project = {
 `,
     'package.json': `{
   "name": "svelte-hydrate-state-example",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,7 +29,7 @@ export const hydrateStateExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/svelte": "latest",
     "rxjs": "~7.8.0"
   },
   "devDependencies": {
@@ -48,11 +48,9 @@ export const hydrateStateExampleProject: Project = {
 <ExampleView />
 `,
     'src/app/ExampleView.svelte': `<script lang="ts">
-  import { onDestroy } from 'svelte';
   import {
     type Example,
-    exampleState,
-    exampleState\$,
+    exampleCell,
     replaceExamples,
     resetExamples
   } from './example.cell';
@@ -64,14 +62,8 @@ export const hydrateStateExampleProject: Project = {
     { id: 9, name: 'Han', lastName: 'Solo' }
   ];
 
-  /**
-   * Holds the reactive Svelte view of the current FeatureCell snapshot.
-   * Stream emissions update these fields after hydration and later mutations.
-   */
-  let snapshot = \$state({
-    value: exampleState.value,
-    hasValue: exampleState.hasValue
-  });
+  /** Reactively reads the current FeatureCell Snapshot. */
+  let snapshot = \$derived(exampleCell.state);
 
   /** Describes whether the visible value came from hydration or a later update. */
   let activeStateHint = \$state(
@@ -81,22 +73,10 @@ export const hydrateStateExampleProject: Project = {
   /** Controls whether the template shows the source of the hydrated value. */
   let displayActiveStateHint = \$state(true);
 
-  /** Keeps the local rune snapshot synchronized with committed cell state. */
-  const sub = exampleState\$.subscribe((emit) => {
-    snapshot = {
-      value: emit.snapshot.value,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-
-  onDestroy(() => {
-    sub.unsubscribe();
-  });
-
   /**
    * Replaces the hydrated value with the sample dataset through the cell module.
-   * The button click updates the pipeline, the stream emits, and Svelte refreshes
-   * the template from the local rune snapshot.
+   * The button click updates the pipeline and Svelte refreshes the template from
+   * the FeatureCell's reactive State getter.
    * @returns void
    */
   function loadSample(): void {
@@ -399,7 +379,7 @@ export const hydrateStateExampleProject: Project = {
   }
 </style>
 `,
-    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
+    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/svelte';
 
 /**
  * Defines one character record stored in the example's array state.
@@ -437,10 +417,10 @@ Vault({
  * Owns the FeatureCell that demonstrates deferred initialization with \`hydrate()\`.
  * The descriptor leaves its fallback undefined so the factory registered before
  * \`initialize()\` supplies the authoritative initial value. Svelte components read
- * the exposed snapshot and stream while mutation functions in this module keep
- * pipeline access in one place.
+ * the reactive State getter while mutation functions in this module keep pipeline
+ * access in one place.
  */
-const exampleCell = FeatureCell<Example[] | undefined>({
+export const exampleCell = FeatureCell<Example[] | undefined>({
   key: 'example-feature-cell-key',
   initialState: undefined
 });
@@ -451,18 +431,6 @@ exampleCell
     Promise.resolve([{ id: 1, name: 'Darth', lastName: 'Sidious' }])
   )
   .initialize();
-
-/**
- * Exposes the current read-only state used to seed the component's \`\$state\` snapshot.
- * Its \`value\` and \`hasValue\` fields reflect hydration and later pipeline updates.
- */
-export const exampleState = exampleCell.state;
-
-/**
- * Emits committed snapshots so the Svelte component can keep its rune state reactive.
- * Hydration and later replacements flow through the same subscription surface.
- */
-export const exampleState\$ = exampleCell.state\$;
 
 /**
  * Replaces the entire hydrated state with a caller-provided character array.

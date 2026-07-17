@@ -19,7 +19,7 @@ export const debuggerExampleProject: Project = {
 `,
     'package.json': `{
   "name": "svelte-debugger-example",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,7 +29,7 @@ export const debuggerExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/svelte": "latest",
     "rxjs": "~7.8.0"
   },
   "devDependencies": {
@@ -48,11 +48,9 @@ export const debuggerExampleProject: Project = {
 <ExampleView />
 `,
     'src/app/ExampleView.svelte': `<script lang="ts">
-  import { onDestroy } from 'svelte';
   import {
     type Example,
-    exampleState,
-    exampleState\$,
+    exampleCell,
     replaceExamples,
     resetExamples,
     toggleError,
@@ -65,29 +63,11 @@ export const debuggerExampleProject: Project = {
     { id: 9, name: 'Han', lastName: 'Solo' }
   ];
 
-  let snapshot = \$state({
-    value: exampleState.value,
-    isLoading: exampleState.isLoading,
-    error: exampleState.error as unknown | null,
-    hasValue: exampleState.hasValue
-  });
+  let snapshot = \$derived(exampleCell.state);
 
   let activeStateHint = \$state('Initial value is [] (empty array)');
   let displayActiveStateHint = \$state(true);
   let isLoading = \$state(false);
-
-  const sub = exampleState\$.subscribe((emit) => {
-    snapshot = {
-      value: emit.snapshot.value,
-      isLoading: emit.snapshot.isLoading,
-      error: emit.snapshot.error,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-
-  onDestroy(() => {
-    sub.unsubscribe();
-  });
 
   /** Loads sample data into the FeatureCell pipeline. */
   function loadSample(): void {
@@ -560,7 +540,7 @@ export const debuggerExampleProject: Project = {
   }
 </style>
 `,
-    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
+    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/svelte';
 import type { InsightConfig } from '@sdux-vault/shared';
 
 export interface Example {
@@ -589,7 +569,7 @@ Vault({
 });
 
 // Register the FeatureCell at module scope
-const exampleCell = FeatureCell<Example[]>({
+export const exampleCell = FeatureCell<Example[]>({
   key: 'example-feature-cell-key',
   initialState: [],
 
@@ -629,10 +609,6 @@ exampleCell
   ])
   .initialize();
 
-// Expose read-only state access
-export const exampleState = exampleCell.state;
-export const exampleState\$ = exampleCell.state\$;
-
 /** Replaces the entire FeatureCell state with the provided input. */
 export function replaceExamples(input: Example[]): void {
   exampleCell.replaceState({
@@ -651,7 +627,7 @@ export function resetExamples(): void {
 export function toggleLoading(loading: boolean): void {
   exampleCell.replaceState({
     loading,
-    value: exampleState.value
+    value: exampleCell.state.value
   });
 }
 
@@ -659,7 +635,7 @@ export function toggleLoading(loading: boolean): void {
 export function toggleError(error: Error | null): void {
   exampleCell.replaceState({
     error,
-    value: exampleState.value
+    value: exampleCell.state.value
   });
 }
 `,

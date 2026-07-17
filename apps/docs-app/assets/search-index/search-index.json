@@ -2497,6 +2497,18 @@
       "description": "Runtime extension contract for behaviors that expose a `fromStream` API."
     },
     {
+      "id": "interfaces:VaultReactiveStateRef",
+      "title": "VaultReactiveStateRef",
+      "kind": "interface",
+      "project": "vue",
+      "docLink": "interfaces",
+      "relativePath": "libs/core-extensions/vue/src/lib/references/vault-reactive-state.reference.ts",
+      "symbols": ["VaultReactiveStateRef"],
+      "content": "VaultReactiveStateRef VaultReactiveStateRef interfaces vue libs/core-extensions/vue/src/lib/references/vault-reactive-state.reference.ts",
+      "url": "/docs/references/interfaces/vault-reactive-state-ref",
+      "description": "Vue reactive State surface exposed by a wrapped FeatureCell."
+    },
+    {
       "id": "interfaces:VaultSignalStateRef",
       "title": "VaultSignalStateRef",
       "kind": "interface",
@@ -2965,16 +2977,16 @@
       "description": "Concrete FeatureCell factory that extends the builder to produce a fully conf..."
     },
     {
-      "id": "classes:ReactFeatureCellAdapter",
-      "title": "ReactFeatureCellAdapter",
+      "id": "classes:SvelteFeatureCellAdapter",
+      "title": "SvelteFeatureCellAdapter",
       "kind": "class",
-      "project": "react",
+      "project": "svelte",
       "docLink": "classes",
-      "relativePath": "libs/core-extensions/react/src/lib/factories/feature-cell/feature.cell.adapter.ts",
-      "symbols": ["ReactFeatureCellAdapter"],
-      "content": "ReactFeatureCellAdapter ReactFeatureCellAdapter classes react libs/core-extensions/react/src/lib/factories/feature-cell/feature.cell.adapter.ts",
-      "url": "/docs/references/classes/react-feature-cell-adapter",
-      "description": "React adapter that augments a core FeatureCell with an explicit `useSyncExter..."
+      "relativePath": "libs/core-extensions/svelte/src/lib/factories/feature-cell/svelte-feature-cell.adapter.ts",
+      "symbols": ["SvelteFeatureCellAdapter"],
+      "content": "SvelteFeatureCellAdapter SvelteFeatureCellAdapter classes svelte libs/core-extensions/svelte/src/lib/factories/feature-cell/svelte-feature-cell.adapter.ts",
+      "url": "/docs/references/classes/svelte-feature-cell-adapter",
+      "description": "Svelte adapter that augments the existing FeatureCell State getter with Svelt..."
     },
     {
       "id": "classes:VaultEncryptionIntegrityError",

@@ -19,7 +19,7 @@ export const observableExampleProject: Project = {
 `,
     'package.json': `{
   "name": "svelte-observable-example",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,7 +29,7 @@ export const observableExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/core": "latest",
+    "@sdux-vault/svelte": "latest",
     "rxjs": "~7.8.0"
   },
   "devDependencies": {
@@ -48,11 +48,9 @@ export const observableExampleProject: Project = {
 <ExampleView />
 `,
     'src/app/ExampleView.svelte': `<script lang="ts">
-  import { onDestroy } from 'svelte';
   import {
     type Example,
-    exampleState,
-    exampleState\$,
+    exampleCell,
     replaceExamples,
     resetExamples
   } from './example.cell';
@@ -63,24 +61,10 @@ export const observableExampleProject: Project = {
     { id: 9, name: 'Han', lastName: 'Solo' }
   ];
 
-  let snapshot = \$state({
-    value: exampleState.value,
-    hasValue: exampleState.hasValue
-  });
+  let snapshot = \$derived(exampleCell.state);
 
   let activeStateHint = \$state('Initial value is [] (empty array)');
   let displayActiveStateHint = \$state(true);
-
-  const sub = exampleState\$.subscribe((emit) => {
-    snapshot = {
-      value: emit.snapshot.value,
-      hasValue: emit.snapshot.hasValue
-    };
-  });
-
-  onDestroy(() => {
-    sub.unsubscribe();
-  });
 
   /** Loads sample data into the FeatureCell via an RxJS Observable. */
   function loadSample(): void {
@@ -381,7 +365,7 @@ export const observableExampleProject: Project = {
   }
 </style>
 `,
-    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
+    'src/app/example.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/svelte';
 import { of } from 'rxjs';
 
 export interface Example {
@@ -408,17 +392,13 @@ Vault({
 });
 
 // Register the FeatureCell at module scope
-const exampleCell = FeatureCell<Example[]>({
+export const exampleCell = FeatureCell<Example[]>({
   key: 'example-feature-cell-key',
   initialState: []
 });
 
 // Initialize the pipeline
 exampleCell.initialize();
-
-// Expose read-only state access
-export const exampleState = exampleCell.state;
-export const exampleState\$ = exampleCell.state\$;
 
 /**
  * Replaces the entire FeatureCell state using a deferred promise factory.
