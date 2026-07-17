@@ -31,6 +31,7 @@ import { PipelineUseReactiveStateMethodComponent } from './feature-cell-methods/
 import { PipelineUseSyncExternalStoreMethodComponent } from './feature-cell-methods/methods/use-sync-external-store/use-sync-external-store.method.component';
 import { PipelineFeatureCellComponent } from './feature-cell/feature-cell.api.component';
 import { PipelineReactApiOverviewComponent } from './react/react.api.component';
+import { PipelineSvelteApiOverviewComponent } from './svelte/svelte.api.component';
 import { PipelineVaultComponent } from './vault/vault.api.component';
 import { PipelineVueApiOverviewComponent } from './vue/vue.api.component';
 
@@ -70,7 +71,8 @@ import { PipelineVueApiOverviewComponent } from './vue/vue.api.component';
     PipelineAngularApiOverviewComponent,
     PipelineReactApiOverviewComponent,
     PipelineUseReactiveStateMethodComponent,
-    PipelineVueApiOverviewComponent
+    PipelineVueApiOverviewComponent,
+    PipelineSvelteApiOverviewComponent
   ],
   templateUrl: './pipeline-api-landingpage.component.html',
   styleUrls: ['../../scss/documentation.scss'],
