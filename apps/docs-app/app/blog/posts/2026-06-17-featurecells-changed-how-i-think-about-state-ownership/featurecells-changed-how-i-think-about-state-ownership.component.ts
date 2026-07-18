@@ -316,6 +316,10 @@ export const cartCell = FeatureCell(
           <sdux-video
             videoId="koAAo1B-__Y"
             [tooltip]="'FeatureCell Definition'" />
+
+          <sdux-video
+            videoId="aFTiIvR0H4M"
+            [tooltip]="'SDUX vs Redux O(n) Comparison'" />
         </div>
       </section>
     </sdux-blog-layout>

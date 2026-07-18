@@ -326,6 +326,10 @@ it('updates cart', async () =&gt; &#123;
 
         <div class="section-body">
           <sdux-video videoId="m7ClyWSh754" [tooltip]="'Pipeline Overview'" />
+
+          <sdux-video
+            videoId="aFTiIvR0H4M"
+            [tooltip]="'SDUX vs Redux O(n) Comparison'" />
         </div>
       </section>
     </sdux-blog-layout>

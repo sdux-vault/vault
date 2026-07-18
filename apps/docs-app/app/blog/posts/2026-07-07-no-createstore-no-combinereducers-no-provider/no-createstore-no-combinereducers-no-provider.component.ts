@@ -5,7 +5,8 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  MultiFrameworkExampleComponent
+  MultiFrameworkExampleComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -19,7 +20,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
-    FeatureCellBrandNameComponent
+    FeatureCellBrandNameComponent,
+    SDuXVideoComponent
   ],
   template: `
     <sdux-blog-layout
@@ -382,6 +384,15 @@ export const cartCell = FeatureCell(&#123;
               </a>
             </li>
           </ul>
+        </div>
+      </section>
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video
+            videoId="aFTiIvR0H4M"
+            [tooltip]="'SDUX vs Redux O(n) Comparison'" />
         </div>
       </section>
     </sdux-blog-layout>

@@ -62,6 +62,10 @@
 
     <div class="section-body">
       <sdux-video videoId="m7ClyWSh754" [tooltip]="'Pipeline Overview'" />
+
+      <sdux-video
+        videoId="aFTiIvR0H4M"
+        [tooltip]="'SDUX vs Redux O(n) Comparison'" />
     </div>
   </section>
 
@@ -155,7 +159,10 @@
     <div class="section-title">Installation</div>
 
     <div class="section-body">
-      <h4>Install <sdux-package-name /> Packages</h4>
+      <h4>
+        Install <sdux-package-name /> Packages (Compatible with all TypeScript
+        Frameworks)
+      </h4>
       <sdux-example-viewer-source [displayTabs]="false">
         <sdux-example-viewer-tab [label]="'Install SDuX Packages'">
           <pre
@@ -163,13 +170,40 @@
         </sdux-example-viewer-tab>
       </sdux-example-viewer-source>
 
-      <h4>Optionally install developer tools and add-ons</h4>
+      <h4>
+        Thin Core Wrappers to natively and reactively handle state updates
+      </h4>
       <sdux-example-viewer-source [displayTabs]="false">
-        <sdux-example-viewer-tab
-          [label]="'Optionally install developer tools and add-ons'">
+        <sdux-example-viewer-tab [label]="'Install Angular SDuX Packages'">
           <pre
-            class="code-inline"><code class="language-ts">{{`npm install @sdux-vault/devtools
-npm install @sdux-vault/addons`}}</code></pre>
+            class="code-inline"><code class="language-ts">{{`npm install @sdux-vault/angular`}}</code></pre>
+        </sdux-example-viewer-tab>
+
+        <sdux-example-viewer-tab [label]="'Install React SDuX Packages'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`npm install @sdux-vault/react`}}</code></pre>
+        </sdux-example-viewer-tab>
+
+        <sdux-example-viewer-tab [label]="'Install Svelte SDuX Packages'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`npm install @sdux-vault/svelte`}}</code></pre>
+        </sdux-example-viewer-tab>
+
+        <sdux-example-viewer-tab [label]="'Install Vue SDuX Packages'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`npm install @sdux-vault/vue`}}</code></pre>
+        </sdux-example-viewer-tab>
+      </sdux-example-viewer-source>
+
+      <h4>Optionally install developer tools and add-ons (TypeScript)</h4>
+      <sdux-example-viewer-source [displayTabs]="false">
+        <sdux-example-viewer-tab [label]="'Optionally install developer tools'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`npm install @sdux-vault/devtools`}}</code></pre>
+        </sdux-example-viewer-tab>
+        <sdux-example-viewer-tab [label]="'Optionally install add-ons'">
+          <pre
+            class="code-inline"><code class="language-ts">{{`npm install @sdux-vault/addons`}}</code></pre>
         </sdux-example-viewer-tab>
       </sdux-example-viewer-source>
     </div>

@@ -78,5 +78,13 @@ export const VIDEO_LINKS: VideoLinkShape[] = [
     display: 'Orchestrator Definition',
     sort: 'orchestrator-definition',
     type: 'overview'
+  },
+
+  // Comparison
+  {
+    fragment: 'sdux-vs-redux-on-comparison',
+    display: 'SDUX vs Redux O(n) Comparison',
+    sort: 'sdux-vs-redux-on-comparison',
+    type: 'comparison'
   }
 ];
