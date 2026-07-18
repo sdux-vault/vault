@@ -283,6 +283,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'The Boilerplate Audit — SDuX Blog',
       description:
         'Count the files Redux needs for one feature — actions, reducers, selectors, effects — then replace them with a single SDuX Vault FeatureCell definition.'
+    },
+    {
+      link: '/blog/fluent-api-predictable-state-interaction',
+      display:
+        'The Fluent API That Makes State Interaction Predictable by Design',
+      title: 'The Fluent API for Predictable State — SDuX Blog',
+      description:
+        'Learn how the typed FeatureCellShape<T> fluent API gives every state interaction a single deterministic contract — no scattered dispatch, selectors, or middleware.'
     }
   ]
 };

@@ -2,10 +2,7 @@
 <!-- Finished 2026-01-24 -->
 <div class="docs-container">
   <div class="header">
-    <h2>
-      <a href="/docs/references/shapes/feature-cell-shape">FeatureCellShape</a
-      >&lt;T&gt;
-    </h2>
+    <h2><sdux-brand-name /> <sdux-feature-cell /> Fluent API</h2>
   </div>
 
   <!-- ====================================================== -->
@@ -16,9 +13,8 @@
       A
       <strong
         ><a href="/docs/references/functions/feature-cell"
-          >FeatureCell</a
-        ></strong
-      >
+          ><sdux-feature-cell /></a
+      ></strong>
       exposes a stable runtime surface defined by the
       <strong
         ><a href="/docs/references/shapes/feature-cell-shape"
@@ -34,11 +30,15 @@
     <ul>
       <li>
         Defines the complete public runtime API of a
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        <a href="/docs/references/functions/feature-cell"
+          ><sdux-feature-cell
+        /></a>
       </li>
       <li>
         Available only after
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        <a href="/docs/references/functions/feature-cell"
+          ><sdux-feature-cell
+        /></a>
         registration
       </li>
       <li>Used to configure behaviors during initialization</li>
@@ -55,7 +55,8 @@
       does not describe pipeline internals, execution mechanics, or behavior
       implementation. It defines only the externally visible interaction surface
       exposed by a registered
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+      <a href="/docs/references/functions/feature-cell"><sdux-feature-cell /></a
+      >.
     </p>
 
     <div class="callout callout-info">
@@ -66,15 +67,18 @@
           >FeatureCellShape</a
         >
         instance is returned by
+        <sdux-feature-cell />() or
         <strong
           ><a href="/docs/references/functions/provide-feature-cell"
             >provideFeatureCell</a
           >()</strong
         >
-        and becomes active only after initialization. All methods on this shape
-        are scoped to the owning
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
-        operate within the globally initialized Vault runtime.
+        (only angular) and becomes active only after initialization. All methods
+        on this shape are scoped to the owning
+        <a href="/docs/references/functions/feature-cell"
+          ><sdux-feature-cell
+        /></a>
+        and operate within the globally initialized Vault runtime.
       </p>
     </div>
   </header>
@@ -104,7 +108,7 @@
   <sdux-feature-cell-diagram-common />
 
   <section class="section">
-    <div class="section-title">FeatureCell Methods</div>
+    <div class="section-title"><sdux-feature-cell /> Fluent API Methods</div>
 
     <div class="section-body">
       <ul class="toc">

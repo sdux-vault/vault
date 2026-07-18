@@ -331,6 +331,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-18-the-boilerplate-audit/the-boilerplate-audit.component').then(
         (m) => m.BlogTheBoilerplateAuditComponent
       )
+  },
+  {
+    path: 'fluent-api-predictable-state-interaction',
+    data: {
+      category: 'blogs',
+      type: 'fluent-api-predictable-state-interaction'
+    },
+    loadComponent: () =>
+      import('./posts/2026-07-20-fluent-api-predictable-state-interaction/fluent-api-predictable-state-interaction.component').then(
+        (m) => m.BlogFluentApiPredictableStateInteractionComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

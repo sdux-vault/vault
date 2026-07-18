@@ -263,5 +263,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-07-18',
     readingTime: 6,
     active: true
+  },
+  {
+    slug: 'fluent-api-predictable-state-interaction',
+    title: 'The Fluent API That Makes State Interaction Predictable by Design',
+    date: '2026-07-20',
+    readingTime: 7,
+    active: true
   }
 ];

@@ -29,10 +29,14 @@ table {
   // table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
-  margin-top: global.$spacing-lg 0;
+  margin-top: global.$spacing-lg;
   background-color: var(--sdux-surface-elevated);
   overflow: hidden;
   font-size: global.$font-size-sm;
+
+  ul {
+    margin: 0;
+  }
 }
 
 .table-scroll {
