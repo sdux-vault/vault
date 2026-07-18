@@ -262,6 +262,6 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
       'The Boilerplate Audit — Counting the Files Redux Requires for One Feature',
     date: '2026-07-18',
     readingTime: 6,
-    active: false
+    active: true
   }
 ];
