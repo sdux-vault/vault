@@ -1,276 +1,1030 @@
+<!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
 <section class="character-example" aria-labelledby="character-example-title">
-  <header class="character-example__header">
+  <header class="header">
     <div>
-      <p class="character-example__eyebrow">Interactive example</p>
+      <p class="eyebrow">Interactive example</p>
       <h2 id="character-example-title">Star Wars character registry</h2>
       <p>
-        Select, create, update, and remove characters from an in-memory
-        collection.
+        Use SDuX Vault state management to select, create, update, and remove
+        characters from an in-memory collection.
       </p>
     </div>
-
-    <button
-      type="button"
-      class="button button--secondary"
-      (click)="restoreInitialCharacters()">
-      Restore initial data
-    </button>
   </header>
 
   @if (feedback(); as operationFeedback) {
+    <!-- Teaching point: CRUD Foundation feedback (ex-003) -->
     <div
       class="feedback"
-      [class.feedback--error]="operationFeedback.tone === 'error'"
-      [class.feedback--info]="operationFeedback.tone === 'info'"
-      [class.feedback--success]="operationFeedback.tone === 'success'"
+      [class.error]="operationFeedback.tone === 'error'"
+      [class.info]="operationFeedback.tone === 'info'"
+      [class.success]="operationFeedback.tone === 'success'"
       [attr.role]="operationFeedback.tone === 'error' ? 'alert' : 'status'"
       aria-live="polite">
       {{ operationFeedback.message }}
     </div>
   }
 
-  <div class="character-example__toolbar">
-    <div class="field field--selection">
-      <label for="character-selection">Character</label>
-      <select
-        #characterSelection
-        id="character-selection"
-        [disabled]="characters().length === 0"
-        (change)="selectCharacter(characterSelection.value)">
-        <option value="" disabled [selected]="selectedCharacterId() === null">
-          Select a character
-        </option>
-        @for (character of characters(); track character.id) {
-          <option
-            [value]="character.id"
-            [selected]="character.id === selectedCharacterId()">
-            {{ displayName(character) }}
-          </option>
-        }
-      </select>
-    </div>
-
-    <div class="character-example__actions" aria-label="Character actions">
-      <button type="button" class="button" (click)="startCreate()">
-        Add character
+  @if (globalError(); as error) {
+    <!-- Teaching point: Errors (ex-004) -->
+    <div class="feedback error global-error" role="alert" aria-live="assertive">
+      <span>{{ error.message }}</span>
+      <!-- Teaching point: Errors (ex-004) -->
+      <button
+        type="button"
+        class="button secondary"
+        [disabled]="featureCellDestroyed()"
+        (click)="clearGlobalError()">
+        Clear
       </button>
     </div>
-  </div>
-
-  @if (deleteCandidate(); as character) {
-    <section
-      class="delete-confirmation"
-      aria-labelledby="delete-confirmation-title"
-      role="alert">
-      <div>
-        <h3 id="delete-confirmation-title">
-          Remove {{ displayName(character) }}?
-        </h3>
-        <p>This action removes the character from the current collection.</p>
-      </div>
-      <div class="delete-confirmation__actions">
-        <button
-          type="button"
-          class="button button--secondary"
-          (click)="cancelDelete()">
-          Keep character
-        </button>
-        <button
-          type="button"
-          class="button button--danger"
-          (click)="confirmDelete()">
-          Confirm removal
-        </button>
-      </div>
-    </section>
   }
 
-  <div class="character-example__workspace">
-    <section class="panel character-details" aria-labelledby="details-title">
-      <div class="panel__header">
-        <p class="panel__eyebrow">Current selection</p>
-        <h3 id="details-title">Character details</h3>
-      </div>
+  @if (featureCellDestroyed()) {
+    <!-- Teaching point: FeatureCell destruction (ex-005) -->
+    <div class="feedback error" role="alert" aria-live="assertive">
+      The FeatureCell is intentionally catastrophic and inoperable after a
+      destroy(). You will need to reload the page to continue.
+    </div>
+  }
 
-      @if (selectedCharacter(); as character) {
-        <dl>
-          <div>
-            <dt>Name</dt>
-            <dd>{{ displayName(character) }}</dd>
-          </div>
-          <div>
-            <dt>Identifier</dt>
-            <dd>{{ character.id }}</dd>
-          </div>
-          <div>
-            <dt>Faction</dt>
-            <dd>{{ character.faction }}</dd>
-          </div>
-          <div>
-            <dt>Jedi status</dt>
-            <dd>{{ character.isJedi ? 'Jedi' : 'Not a Jedi' }}</dd>
-          </div>
-        </dl>
-      } @else {
-        <div class="empty-state">
-          <h4>No character selected</h4>
-          <p>
-            The collection is empty. Add a character to continue the example.
-          </p>
-          <button type="button" class="button" (click)="startCreate()">
-            Add the first character
+  <fieldset class="feature-cell-controls" [disabled]="featureCellDestroyed()">
+    @if (deleteCandidate(); as character) {
+      <!-- Teaching point: Remove (ex-006) -->
+      <section
+        class="delete-confirmation"
+        aria-labelledby="delete-confirmation-title"
+        role="alert">
+        <div>
+          <h3 id="delete-confirmation-title">
+            Remove {{ displayName(character) }}?
+          </h3>
+          <p>This action removes the character from the current collection.</p>
+        </div>
+        <div class="actions">
+          <!-- Teaching point: Remove (ex-006) -->
+          <button
+            type="button"
+            class="button secondary"
+            (click)="cancelDelete()">
+            Keep character
+          </button>
+          <!-- Teaching point: Remove (ex-006) -->
+          <button type="button" class="button danger" (click)="confirmDelete()">
+            Confirm removal
           </button>
         </div>
-      }
-    </section>
+      </section>
+    }
 
-    <section class="panel editor" aria-labelledby="editor-title">
-      <div class="panel__header">
-        <p class="panel__eyebrow">
-          {{ editorMode() === 'create' ? 'Create' : 'Edit' }}
-        </p>
-        <h3 id="editor-title">{{ editorTitle() }}</h3>
+    <!-- Teaching point: CRUD Foundation (ex-007) -->
+    <div class="workspace">
+      <!-- Teaching point: Collection Selection (ex-001) -->
+      <div class="field selection">
+        <label for="character-selection">
+          Character ({{ characters().length }} total)
+        </label>
+        <!-- Teaching point: Collection Selection (ex-001) -->
+        <select
+          #characterSelection
+          id="character-selection"
+          [disabled]="characters().length === 0"
+          (change)="selectCharacter(characterSelection.value)">
+          <option value="" disabled [selected]="selectedCharacterId() === null">
+            Select a character
+          </option>
+          @for (character of characters(); track character.id) {
+            <option
+              [value]="character.id"
+              [selected]="character.id === selectedCharacterId()">
+              {{ displayName(character) }}
+            </option>
+          }
+        </select>
       </div>
 
-      <form [formGroup]="characterForm" (ngSubmit)="saveCharacter()" novalidate>
-        <div class="form-grid">
-          <div class="field">
-            <label for="character-first-name">First name</label>
-            <input
-              id="character-first-name"
-              type="text"
-              formControlName="name"
-              autocomplete="off"
-              maxlength="40"
-              [attr.aria-invalid]="
-                characterForm.controls.name.invalid &&
-                (characterForm.controls.name.dirty ||
-                  characterForm.controls.name.touched)
-                  ? true
-                  : null
-              "
-              [attr.aria-describedby]="
-                characterForm.controls.name.invalid &&
-                (characterForm.controls.name.dirty ||
-                  characterForm.controls.name.touched)
-                  ? 'character-first-name-error'
-                  : null
-              " />
-            @if (
-              characterForm.controls.name.invalid &&
-              (characterForm.controls.name.dirty ||
-                characterForm.controls.name.touched)
-            ) {
-              <p class="field__error" id="character-first-name-error">
-                Enter a first name between 2 and 40 characters.
-              </p>
-            }
+      <!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
+      <section class="panel character-details" aria-labelledby="details-title">
+        <!-- Teaching point: Promise / Observable / HTTP Resource loading state (ex-008) -->
+        @if (state.isLoading()) {
+          <div
+            class="loading-overlay"
+            role="status"
+            aria-label="Loading characters">
+            <span class="spinner" aria-hidden="true"></span>
           </div>
+        }
 
-          <div class="field">
-            <label for="character-last-name">Last name</label>
-            <input
-              id="character-last-name"
-              type="text"
-              formControlName="lastName"
-              autocomplete="off"
-              maxlength="40"
-              [attr.aria-invalid]="
-                characterForm.controls.lastName.invalid &&
-                (characterForm.controls.lastName.dirty ||
-                  characterForm.controls.lastName.touched)
-                  ? true
-                  : null
-              "
-              [attr.aria-describedby]="
-                characterForm.controls.lastName.invalid &&
-                (characterForm.controls.lastName.dirty ||
-                  characterForm.controls.lastName.touched)
-                  ? 'character-last-name-error'
-                  : null
-              " />
-            @if (
-              characterForm.controls.lastName.invalid &&
-              (characterForm.controls.lastName.dirty ||
-                characterForm.controls.lastName.touched)
-            ) {
-              <p class="field__error" id="character-last-name-error">
-                Enter a last name between 2 and 40 characters.
-              </p>
-            }
-          </div>
-
-          <div class="field form-grid__full">
-            <label for="character-faction">Faction</label>
-            <select
-              id="character-faction"
-              formControlName="faction"
-              [attr.aria-invalid]="
-                characterForm.controls.faction.invalid &&
-                (characterForm.controls.faction.dirty ||
-                  characterForm.controls.faction.touched)
-                  ? true
-                  : null
-              "
-              [attr.aria-describedby]="
-                characterForm.controls.faction.invalid &&
-                (characterForm.controls.faction.dirty ||
-                  characterForm.controls.faction.touched)
-                  ? 'character-faction-error'
-                  : null
-              ">
-              <option value="" disabled>Select a faction</option>
-              @for (faction of factions; track faction) {
-                <option [value]="faction">{{ faction }}</option>
-              }
-            </select>
-            @if (
-              characterForm.controls.faction.invalid &&
-              (characterForm.controls.faction.dirty ||
-                characterForm.controls.faction.touched)
-            ) {
-              <p class="field__error" id="character-faction-error">
-                Select a faction.
-              </p>
-            }
-          </div>
-
-          <label class="checkbox form-grid__full">
-            <input type="checkbox" formControlName="isJedi" />
-            <span>Character is a Jedi</span>
-          </label>
+        <div class="header">
+          <h3 id="details-title">Character details</h3>
         </div>
 
-        <div class="editor__actions">
-          @if (editorMode() === 'edit') {
+        @if (selectedCharacter(); as character) {
+          <!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
+          <dl>
+            <div>
+              <dt>Name</dt>
+              <dd>{{ displayName(character) }}</dd>
+            </div>
+            <div>
+              <dt>Identifier</dt>
+              <dd>{{ character.id }}</dd>
+            </div>
+            <div>
+              <dt>Faction</dt>
+              <dd>{{ character.faction }}</dd>
+            </div>
+            <div>
+              <dt class="force-sensitive">Force-sensitive</dt>
+              <dd>{{ character.forceSensitiveDisplay }}</dd>
+            </div>
+          </dl>
+        } @else {
+          <div class="empty-state">
+            @if (characters().length === 0) {
+              <h4>The collection is empty</h4>
+              <p>Add a character to continue the example.</p>
+              <!-- Teaching point: Create (ex-009) -->
+              <button type="button" class="button" (click)="startCreate()">
+                Add the first character
+              </button>
+            } @else {
+              <h4>No character selected</h4>
+              <p>
+                Choose a character from the list or complete the form to add a
+                new one.
+              </p>
+            }
+          </div>
+        }
+      </section>
+
+      <!-- Teaching point: Create (ex-009) -->
+      <div class="actions add-action" aria-label="Character actions">
+        <!-- Teaching point: Create (ex-009) -->
+        <button type="button" class="button" (click)="startCreate()">
+          Add character
+        </button>
+      </div>
+
+      <!-- Teaching point: Create / Update (ex-010) -->
+      <section class="panel editor" aria-labelledby="editor-title">
+        <div class="header">
+          <h3 id="editor-title">{{ editorTitle() }}</h3>
+        </div>
+
+        <!-- Teaching point: Create / Update (ex-010) -->
+        <form
+          [formGroup]="characterForm"
+          (ngSubmit)="saveCharacter()"
+          novalidate>
+          <div class="form-grid">
+            <!-- Teaching point: Create / Update (ex-010) -->
+            <div class="field">
+              <label for="character-first-name">First name</label>
+              <input
+                id="character-first-name"
+                type="text"
+                formControlName="name"
+                autocomplete="off"
+                maxlength="40"
+                [attr.aria-invalid]="
+                  characterForm.controls.name.invalid &&
+                  (characterForm.controls.name.dirty ||
+                    characterForm.controls.name.touched)
+                    ? true
+                    : null
+                "
+                [attr.aria-describedby]="
+                  characterForm.controls.name.invalid &&
+                  (characterForm.controls.name.dirty ||
+                    characterForm.controls.name.touched)
+                    ? 'character-first-name-error'
+                    : null
+                " />
+              @if (
+                characterForm.controls.name.invalid &&
+                (characterForm.controls.name.dirty ||
+                  characterForm.controls.name.touched)
+              ) {
+                <p class="error" id="character-first-name-error">
+                  Enter a first name between 2 and 40 characters.
+                </p>
+              }
+            </div>
+
+            <!-- Teaching point: Create / Update (ex-010) -->
+            <div class="field">
+              <label for="character-last-name">Last name</label>
+              <input
+                id="character-last-name"
+                type="text"
+                formControlName="lastName"
+                autocomplete="off"
+                maxlength="40"
+                [attr.aria-invalid]="
+                  characterForm.controls.lastName.invalid &&
+                  (characterForm.controls.lastName.dirty ||
+                    characterForm.controls.lastName.touched)
+                    ? true
+                    : null
+                "
+                [attr.aria-describedby]="
+                  characterForm.controls.lastName.invalid &&
+                  (characterForm.controls.lastName.dirty ||
+                    characterForm.controls.lastName.touched)
+                    ? 'character-last-name-error'
+                    : null
+                " />
+              @if (
+                characterForm.controls.lastName.invalid &&
+                (characterForm.controls.lastName.dirty ||
+                  characterForm.controls.lastName.touched)
+              ) {
+                <p class="error" id="character-last-name-error">
+                  Enter a last name between 2 and 40 characters.
+                </p>
+              }
+            </div>
+
+            <!-- Teaching point: Create / Update (ex-010) -->
+            <div class="field">
+              <label for="character-faction">Faction</label>
+              <select
+                id="character-faction"
+                formControlName="faction"
+                [attr.aria-invalid]="
+                  characterForm.controls.faction.invalid &&
+                  (characterForm.controls.faction.dirty ||
+                    characterForm.controls.faction.touched)
+                    ? true
+                    : null
+                "
+                [attr.aria-describedby]="
+                  characterForm.controls.faction.invalid &&
+                  (characterForm.controls.faction.dirty ||
+                    characterForm.controls.faction.touched)
+                    ? 'character-faction-error'
+                    : null
+                ">
+                <option value="" disabled>Select a faction</option>
+                @for (faction of factions; track faction) {
+                  <option [value]="faction">{{ faction }}</option>
+                }
+              </select>
+              @if (
+                characterForm.controls.faction.invalid &&
+                (characterForm.controls.faction.dirty ||
+                  characterForm.controls.faction.touched)
+              ) {
+                <p class="error" id="character-faction-error">
+                  Select a faction.
+                </p>
+              }
+            </div>
+
+            <!-- Teaching point: Create / Update (ex-010) -->
+            <label class="checkbox">
+              <input type="checkbox" formControlName="isForceSensitive" />
+              <span>Character is force-sensitive</span>
+            </label>
+          </div>
+
+          <div class="actions">
+            @if (editorMode() === 'edit') {
+              <!-- Teaching point: Remove (ex-006) -->
+              <button
+                type="button"
+                class="button danger remove"
+                [disabled]="!selectedCharacter()"
+                (click)="requestDelete()">
+                Remove Character
+              </button>
+            }
+            <!-- Teaching point: Create / Update (ex-010) -->
+            <button
+              type="submit"
+              class="button"
+              [disabled]="characterForm.invalid">
+              {{ submitLabel() }}
+            </button>
+            <!-- Teaching point: Create / Update (ex-010) -->
             <button
               type="button"
-              class="button button--danger editor__remove"
-              [disabled]="!selectedCharacter()"
-              (click)="requestDelete()">
-              Remove Character
+              class="button secondary"
+              (click)="cancelEdit()">
+              Cancel
             </button>
-          }
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div class="state-output">
+      <input
+        id="state-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle State visibility"
+        checked />
+      <div class="section-header">
+        <span>State</span>
+        <label
+          class="section-chevron"
+          for="state-section-toggle"
+          title="Show or hide State"></label>
+      </div>
+
+      <input
+        id="raw-state-output-toggle"
+        class="tap-toggle"
+        type="checkbox"
+        aria-label="Toggle State output visibility"
+        checked />
+
+      <!-- Teaching point: Initial State (ex-012) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>Initial State</h3>
+          <label
+            class="tap-chevron"
+            for="raw-state-output-toggle"
+            title="Show or hide Initial State output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Initial State output"
+          [value]="originalStateJson"></textarea>
+      </div>
+
+      <!-- Teaching point: Raw StateSnapshot (ex-013) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>Raw StateSnapshot</h3>
+          <label
+            class="tap-chevron"
+            for="raw-state-output-toggle"
+            title="Show or hide Raw StateSnapshot output"></label>
+        </div>
+        <!-- Teaching point: Raw StateSnapshot (ex-013) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Raw StateSnapshot output"
+          [value]="rawStateJson()"></textarea>
+      </div>
+
+      <!-- Teaching point: Raw StateSnapshot$ (ex-014) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>Raw StateSnapshot$</h3>
+          <label
+            class="tap-chevron"
+            for="raw-state-output-toggle"
+            title="Show or hide Raw StateSnapshot$ output"></label>
+        </div>
+        <!-- Teaching point: Raw StateSnapshot$ (ex-014) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Raw StateSnapshot$ output"
+          [value]="rawStateStreamJson()"></textarea>
+      </div>
+    </div>
+
+    <div class="filter-reducer-output">
+      <input
+        id="filters-reducers-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Filters and Reducers visibility"
+        checked />
+      <div class="section-header">
+        <span>Filters and Reducers</span>
+        <label
+          class="section-chevron"
+          for="filters-reducers-section-toggle"
+          title="Show or hide Filters and Reducers"></label>
+      </div>
+
+      <!-- Teaching point: Filter (ex-016) -->
+      <div class="tap-column">
+        <input
+          id="filter-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle Filter source visibility"
+          checked />
+        <div class="tap-header">
+          <h3>Filter</h3>
+          <label
+            class="tap-chevron"
+            for="filter-output-toggle"
+            title="Show or hide Filter output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="6"
+          aria-label="Filter source"
+          [value]="filterSource"></textarea>
+      </div>
+
+      <!-- Teaching point: Reducer 1 (ex-017) -->
+      <div class="tap-column">
+        <input
+          id="reducer-one-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle Reducer 1 output visibility"
+          checked />
+        <div class="tap-header">
+          <h3>Reducer 1</h3>
+          <label
+            class="tap-chevron"
+            for="reducer-one-output-toggle"
+            title="Show or hide Reducer 1 output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="6"
+          aria-label="Reducer 1 output"
+          [value]="reducer1Source"></textarea>
+      </div>
+
+      <!-- Teaching point: Reducer 2 (ex-018) -->
+      <div class="tap-column">
+        <input
+          id="reducer-two-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle Reducer 2 output visibility"
+          checked />
+        <div class="tap-header">
+          <h3>Reducer 2</h3>
+          <label
+            class="tap-chevron"
+            for="reducer-two-output-toggle"
+            title="Show or hide Reducer 2 output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="6"
+          aria-label="Reducer 2 output"
+          [value]="reducer2Source"></textarea>
+      </div>
+    </div>
+
+    <!-- Milestone: CRUD Foundation -->
+
+    <div class="pipeline-actions">
+      <input
+        id="actions-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Actions visibility"
+        checked />
+      <div class="section-header">
+        <span>Actions</span>
+        <label
+          class="section-chevron"
+          for="actions-section-toggle"
+          title="Show or hide Actions"></label>
+      </div>
+
+      <!-- Teaching point: Persist Null (ex-020) -->
+      <div class="action-row">
+        <input
+          id="persist-null-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Persist Null description" />
+        <div class="button-container">
+          <!-- Teaching point: Persist Null (ex-020) -->
           <button
-            type="submit"
+            type="button"
+            class="button danger"
+            (click)="persistNullValue()">
+            Persist Null Value
+          </button>
+          <label
+            class="description-chevron"
+            for="persist-null-description"
+            title="Show or hide Persist Null Value description"></label>
+        </div>
+        <div class="description-container">
+          Calls <code>replaceState(&#123; value: null &#125;)</code> to
+          demonstrate null normalization. The FeatureCell intentionally persists
+          the value as <code>undefined</code>, clearing the current state.
+        </div>
+      </div>
+
+      <!-- Teaching point: Reset (ex-021) -->
+      <div class="action-row">
+        <input
+          id="reset-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Reset Data description" />
+        <div class="button-container">
+          <!-- Teaching point: Reset (ex-021) -->
+          <button type="button" class="button danger" (click)="resetState()">
+            Reset State
+          </button>
+          <label
+            class="description-chevron"
+            for="reset-description"
+            title="Show or hide Reset Data description"></label>
+        </div>
+        <div class="description-container">
+          Calls the FeatureCell's dedicated <code>reset()</code> API to
+          explicitly clear the current state value to
+          <code>undefined</code> without submitting replacement state.
+        </div>
+      </div>
+
+      <!-- Teaching point: Restore (ex-022) -->
+      <div class="action-row">
+        <input
+          id="restore-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Restore Initial Data description" />
+        <div class="button-container">
+          <!-- Teaching point: Restore (ex-022) -->
+          <button
+            type="button"
+            class="button warn"
+            (click)="restoreInitialCharacters()">
+            Restore Initial Data
+          </button>
+          <label
+            class="description-chevron"
+            for="restore-description"
+            title="Show or hide Restore Initial Data description"></label>
+        </div>
+        <div class="description-container">
+          Replaces the current collection with its captured initial values and
+          selects the first restored character.
+        </div>
+      </div>
+
+      <!-- Teaching point: Hydration (ex-023) -->
+      <div class="action-row">
+        <input
+          id="hydrate-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Hydrate Model description" />
+        <div class="button-container">
+          <!-- Teaching point: Hydration (ex-023) -->
+          <button type="button" class="button">Hydrate Model</button>
+          <label
+            class="description-chevron"
+            for="hydrate-description"
+            title="Show or hide Hydrate Model description"></label>
+        </div>
+        <div class="description-container">
+          Hydrates a character model from serialized data before adding it to
+          the collection.
+        </div>
+      </div>
+
+      <!-- Teaching point: Promise (ex-024) -->
+      <div class="action-row">
+        <input
+          id="promise-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Fetch with Promise description" />
+        <div class="button-container">
+          <!-- Teaching point: Promise (ex-024) -->
+          <button
+            type="button"
             class="button"
-            [disabled]="characterForm.invalid">
-            {{ submitLabel() }}
+            [hidden]="promisePending()"
+            (click)="fetchWithPromise()">
+            Fetch with Promise
           </button>
           <button
             type="button"
-            class="button button--secondary"
-            (click)="cancelEdit()">
-            Cancel
+            class="button"
+            [hidden]="!promisePending()"
+            (click)="resolvePromise()">
+            Resolve Promise
           </button>
+          <label
+            class="description-chevron"
+            for="promise-description"
+            title="Show or hide Fetch with Promise description"></label>
         </div>
-      </form>
-    </section>
-  </div>
+        <div class="description-container">
+          Fetches character data with a Promise and updates the collection when
+          the request resolves.
+        </div>
+      </div>
 
-  <footer class="character-example__summary" aria-live="polite">
-    {{ characters().length }}
-    {{ characters().length === 1 ? 'character' : 'characters' }} in the
-    collection.
-  </footer>
+      <!-- Teaching point: Observable (ex-025) -->
+      <div class="action-row">
+        <input
+          id="observable-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Add by Observable description" />
+        <div class="button-container">
+          <!-- Teaching point: Observable (ex-025) -->
+          <button type="button" class="button">Add by Observable</button>
+          <label
+            class="description-chevron"
+            for="observable-description"
+            title="Show or hide Add by Observable description"></label>
+        </div>
+        <div class="description-container">
+          Adds character data emitted by an Observable to the current
+          collection.
+        </div>
+      </div>
+
+      <!-- Teaching point: HTTP Resource (ex-026) -->
+      <div class="action-row">
+        <input
+          id="resource-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Fetch with httpResource description" />
+        <div class="button-container">
+          <!-- Teaching point: HTTP Resource (ex-026) -->
+          <button type="button" class="button">Fetch with httpResource</button>
+          <label
+            class="description-chevron"
+            for="resource-description"
+            title="Show or hide Fetch with httpResource description"></label>
+        </div>
+        <div class="description-container">
+          Loads character data with Angular's HTTP resource API and updates the
+          collection when the resource resolves.
+        </div>
+      </div>
+
+      <!-- Teaching point: Errors (ex-004) -->
+      <div class="action-row">
+        <input
+          id="error-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Throw Error description" />
+        <div class="button-container">
+          <!-- Teaching point: Errors (ex-004) -->
+          <button type="button" class="button danger">Throw Error</button>
+          <label
+            class="description-chevron"
+            for="error-description"
+            title="Show or hide Throw Error description"></label>
+        </div>
+        <div class="description-container">
+          Triggers an intentional error to demonstrate how a failed state
+          operation is presented to the user.
+        </div>
+      </div>
+
+      <!-- Teaching point: FeatureCell destruction (ex-005) -->
+      <div class="action-row">
+        <input
+          id="destroy-feature-cell-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Destroy FeatureCell description" />
+        <div class="button-container">
+          <!-- Teaching point: FeatureCell destruction (ex-005) -->
+          <button
+            type="button"
+            class="button danger"
+            (click)="destroyFeatureCell()">
+            Destroy FeatureCell
+          </button>
+          <label
+            class="description-chevron"
+            for="destroy-feature-cell-description"
+            title="Show or hide Destroy FeatureCell description"></label>
+        </div>
+        <div class="description-container">
+          Permanently tears down the FeatureCell, releases its runtime
+          resources, destroys attached behaviors and controllers, completes
+          internal streams, and prevents further pipeline execution, state
+          updates, or emissions.
+        </div>
+      </div>
+
+      <!-- Teaching point: Distinct Until Changed (ex-027) -->
+      <div class="distinct-operator">
+        <input
+          id="distinct-operator-toggle"
+          class="section-toggle"
+          type="checkbox"
+          aria-label="Toggle Distinct Until Changed Operator visibility"
+          checked />
+        <div class="section-header">
+          <span>Distinct Until Changed Operator</span>
+          <label
+            class="section-chevron"
+            for="distinct-operator-toggle"
+            title="Show or hide Distinct Until Changed Operator"></label>
+        </div>
+
+        <div class="operator-actions">
+          <!-- Teaching point: Distinct Until Changed (ex-027) -->
+          <div class="action-row">
+            <input
+              id="same-state-description"
+              class="description-toggle"
+              type="checkbox"
+              aria-label="Show Submit Same State description" />
+            <div class="button-container">
+              <!-- Teaching point: Distinct Until Changed (ex-027) -->
+              <button type="button" class="button">Submit Same State</button>
+              <label
+                class="description-chevron"
+                for="same-state-description"
+                title="Show or hide Submit Same State description"></label>
+            </div>
+            <div class="description-container">
+              Resubmits the current state. The operator recognizes the
+              equivalent value, stops the pipeline run, and prevents a redundant
+              snapshot.
+            </div>
+          </div>
+
+          <!-- Teaching point: Distinct Until Changed (ex-027) -->
+          <div class="action-row">
+            <input
+              id="changed-state-description"
+              class="description-toggle"
+              type="checkbox"
+              aria-label="Show Submit Changed State description" />
+            <div class="button-container">
+              <!-- Teaching point: Distinct Until Changed (ex-027) -->
+              <button type="button" class="button">Submit Changed State</button>
+              <label
+                class="description-chevron"
+                for="changed-state-description"
+                title="Show or hide Submit Changed State description"></label>
+            </div>
+            <div class="description-container">
+              Submits an updated state. The operator accepts the meaningful
+              change, allowing downstream stages to run and emit a new snapshot.
+            </div>
+          </div>
+
+          <!-- Teaching point: Distinct Until Changed state payload (ex-028) -->
+          <div class="payload-column">
+            <input
+              id="state-payload-toggle"
+              class="section-toggle"
+              type="checkbox"
+              aria-label="Toggle State Payload visibility"
+              checked />
+            <div class="section-header payload-header">
+              <span>State Payload</span>
+              <label
+                class="section-chevron"
+                for="state-payload-toggle"
+                title="Show or hide State Payload"></label>
+            </div>
+            <!-- Teaching point: Distinct Until Changed state payload (ex-028) -->
+            <textarea
+              readonly
+              rows="8"
+              aria-label="State Payload output"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teaching point: Tab Sync (ex-029) -->
+      <div class="tab-sync-operator">
+        <input
+          id="tab-sync-operator-toggle"
+          class="section-toggle"
+          type="checkbox"
+          aria-label="Toggle Tab Sync Controller and Behavior visibility"
+          checked />
+        <div class="section-header">
+          <span>Tab Sync Controller and Behavior</span>
+          <label
+            class="section-chevron"
+            for="tab-sync-operator-toggle"
+            title="Show or hide Tab Sync Controller and Behavior"></label>
+        </div>
+
+        <div class="operator-actions">
+          <div class="action-row">
+            <input
+              id="tab-sync-description"
+              class="description-toggle"
+              type="checkbox"
+              aria-label="Show View Tab Sync description" />
+            <div class="button-container">
+              <!-- Teaching point: Tab Sync (ex-029) -->
+              <button type="button" class="button" (click)="viewTabSync()">
+                View Tab Sync
+              </button>
+              <label
+                class="description-chevron"
+                for="tab-sync-description"
+                title="Show or hide View Tab Sync description"></label>
+            </div>
+            <div class="description-container">
+              Opens this example in another tab to demonstrate initial state
+              negotiation and ongoing synchronization of finalized FeatureCell
+              snapshots through withTabSyncController and withTabSyncBehavior.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tap-output">
+      <input
+        id="results-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Results visibility"
+        checked />
+      <div class="section-header">
+        <span>Results</span>
+        <label
+          class="section-chevron"
+          for="results-section-toggle"
+          title="Show or hide Results"></label>
+      </div>
+
+      <input
+        id="tap-output-toggle"
+        class="tap-toggle"
+        type="checkbox"
+        aria-label="Toggle pipeline output visibility"
+        checked />
+
+      <!-- Teaching point: Before Taps (ex-031) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>Before Taps</h3>
+          <label
+            class="tap-chevron"
+            for="tap-output-toggle"
+            title="Show or hide pipeline output"></label>
+        </div>
+        <!-- Teaching point: Before Taps (ex-031) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Before Taps output"
+          [value]="beforeTapInputJson()"></textarea>
+      </div>
+
+      <!-- Teaching point: After Taps (ex-032) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>After Taps</h3>
+          <label
+            class="tap-chevron"
+            for="tap-output-toggle"
+            title="Show or hide pipeline output"></label>
+        </div>
+        <!-- Teaching point: After Taps (ex-032) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="After Taps output"
+          [value]="afterTapInputJson()"></textarea>
+      </div>
+
+      <!-- Teaching point: Delay (ex-033) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>Delay Timer</h3>
+          <label
+            class="tap-chevron"
+            for="tap-output-toggle"
+            title="Show or hide pipeline output"></label>
+        </div>
+        <!-- Teaching point: Delay (ex-033) -->
+        <div class="delay-fields">
+          <label>
+            Delay (ms)
+            <input type="number" min="0" />
+          </label>
+          <label>
+            Timer (ms)
+            <input type="number" min="0" />
+          </label>
+        </div>
+      </div>
+
+      <!-- Teaching point: Encryption (ex-034) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>Encrypted State</h3>
+          <label
+            class="tap-chevron"
+            for="tap-output-toggle"
+            title="Show or hide pipeline output"></label>
+        </div>
+        <!-- Teaching point: Encryption (ex-034) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Encrypted State output"></textarea>
+      </div>
+
+      <!-- Teaching point: State Emission (ex-035) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>State Emission</h3>
+          <label
+            class="tap-chevron"
+            for="tap-output-toggle"
+            title="Show or hide pipeline output"></label>
+        </div>
+        <!-- Teaching point: State Emission (ex-035) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="State Emission output"
+          [value]="emittedStateJson()"></textarea>
+      </div>
+
+      <!-- Teaching point: Error Emission (ex-036) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>Error Emission</h3>
+          <label
+            class="tap-chevron"
+            for="tap-output-toggle"
+            title="Show or hide pipeline output"></label>
+        </div>
+        <!-- Teaching point: Error Emission (ex-036) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Error Emission output"></textarea>
+      </div>
+    </div>
+
+    <div class="stepwise-output">
+      <input
+        id="stepwise-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Stepwise Requests visibility"
+        checked />
+      <div class="section-header">
+        <span>Stepwise Requests</span>
+        <label
+          class="section-chevron"
+          for="stepwise-section-toggle"
+          title="Show or hide Stepwise Requests"></label>
+      </div>
+
+      <!-- Teaching point: Stepwise Merge (ex-038) -->
+      <div class="stepwise-column">
+        <div class="stepwise-header">
+          <h3>Stepwise Merge</h3>
+          <!-- Teaching point: Stepwise Merge (ex-038) -->
+          <button type="button" class="button">Accept</button>
+        </div>
+        <!-- Teaching point: Stepwise Merge (ex-038) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Stepwise Merge output"></textarea>
+      </div>
+
+      <!-- Teaching point: Stepwise Filter (ex-039) -->
+      <div class="stepwise-column">
+        <div class="stepwise-header">
+          <h3>Stepwise Filter</h3>
+          <!-- Teaching point: Stepwise Filter (ex-039) -->
+          <button type="button" class="button">Accept</button>
+        </div>
+        <!-- Teaching point: Stepwise Filter (ex-039) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Stepwise Filter output"></textarea>
+      </div>
+
+      <!-- Teaching point: Stepwise Reducer (ex-040) -->
+      <div class="stepwise-column">
+        <div class="stepwise-header">
+          <h3>Stepwise Reducer</h3>
+          <!-- Teaching point: Stepwise Reducer (ex-040) -->
+          <button type="button" class="button">Accept</button>
+        </div>
+        <!-- Teaching point: Stepwise Reducer (ex-040) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Stepwise Reducer output"></textarea>
+      </div>
+    </div>
+  </fieldset>
 </section>

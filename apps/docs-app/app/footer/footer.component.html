@@ -1,3 +1,13 @@
+@if (!isEnterprise) {
+  <div class="environment-banner" role="status">
+    @for (detail of environmentDetails; track detail.key) {
+      <span class="environment-detail">
+        <strong>{{ detail.key }}:</strong> {{ detail.value }}
+      </span>
+    }
+  </div>
+}
+
 <footer class="footer" [class.isMobile]="isMobile()" aria-label="Site footer">
   <div class="info-container">
     <a routerLink="sdux/training" routerLinkActive="active">

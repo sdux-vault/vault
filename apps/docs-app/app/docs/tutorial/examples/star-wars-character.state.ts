@@ -14,6 +14,9 @@ export interface StarWarsCharacterState {
   /** Faction associated with the character. */
   faction: string;
 
-  /** Indicates whether the character is a Jedi. */
-  isJedi: boolean;
+  /** Indicates whether the character is force-sensitive. */
+  isForceSensitive: boolean;
+
+  /** Translated display value for force-sensitive status. */
+  forceSensitiveDisplay?: string;
 }

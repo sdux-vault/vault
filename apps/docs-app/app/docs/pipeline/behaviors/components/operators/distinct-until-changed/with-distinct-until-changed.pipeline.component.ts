@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   DiagramComponent,
+  ExampleViewerSourceComponent,
+  ExampleViewerTabComponent,
   MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { VaultDistinctUntilChangedBehaviorCommonComponent } from 'apps/docs-app/app/docs/common/distinct-until-change-behavior.component';
@@ -16,7 +18,9 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     DiagramComponent,
     VaultDistinctUntilChangedBehaviorCommonComponent,
     PipelineRelatedTopicComponent,
-    MultiFrameworkExampleComponent
+    MultiFrameworkExampleComponent,
+    ExampleViewerSourceComponent,
+    ExampleViewerTabComponent
   ],
   templateUrl: './with-distinct-until-changed.pipeline.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

@@ -131,6 +131,41 @@ describe('Behavior: withArrayPushMerge', () => {
 
         expect(result).toEqual({ y: 2 });
         expect(result).toBe(next);
+        expect(warnSpy).toHaveBeenCalledWith(
+          'One Time Warning: [vault] behavior key: ArrayPushMerge received non-array current value. This behavior is intended for array state.',
+          jasmine.any(String)
+        );
+      });
+
+      it('should return nextValue when both are non-arrays', () => {
+        let curr = [{ x: 1 }];
+        let next = { y: 2 } as any;
+
+        curr = behavior.computeMerge(curr, next);
+
+        expect(curr).toEqual([Object({ x: 1 }), Object({ y: 2 })]);
+        expect(next).toEqual(Object({ y: 2 }));
+
+        next = { y: 2, z: 3 };
+
+        curr = behavior.computeMerge(curr, next);
+
+        expect(curr).toEqual([
+          Object({ x: 1 }),
+          Object({ y: 2 }),
+          Object({ y: 2, z: 3 })
+        ]);
+        expect(next).toEqual(Object({ y: 2, z: 3 }));
+      });
+
+      it('should return nextValue even if next is null', () => {
+        const curr = [1, 2];
+        const next = null;
+
+        const result = behavior.computeMerge(curr, next as any);
+
+        expect(result).toBeNull();
+        expect(warnSpy).not.toHaveBeenCalled();
       });
 
       it('should allow merge when curr=null and next is array', () => {

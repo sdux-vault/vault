@@ -1,4 +1,5 @@
 import {
+  ResolveTypes,
   setVaultLogLevel,
   StateSnapshotShape,
   VAULT_CLEAR_STATE,
@@ -276,6 +277,37 @@ describe('Behavior: CoreState', () => {
         expect(warnSpy).not.toHaveBeenCalled();
         expect(errorSpy).not.toHaveBeenCalled();
         expect(emitted).toEqual([]);
+      });
+
+      it('preparePipelineIncoming should set loading for Promise resolution', async () => {
+        mockCtx.incoming = { value: () => Promise.resolve(22) };
+        mockCtx.resolveType = ResolveTypes.Promise;
+
+        const incomingRef = mockCtx.incoming;
+        const result = behavior.preparePipelineIncoming(mockCtx);
+
+        expect(result).toBe(incomingRef);
+        expect(mockCtx.lastSnapshot).toEqual(
+          Object({
+            isLoading: true,
+            value: undefined,
+            error: null,
+            hasValue: false
+          })
+        );
+        expect(warnSpy).not.toHaveBeenCalled();
+        expect(errorSpy).not.toHaveBeenCalled();
+        expect(emitted).toEqual([
+          Object({
+            type: 'Incoming Pipeline',
+            snapshot: Object({
+              isLoading: true,
+              value: undefined,
+              error: null,
+              hasValue: false
+            })
+          })
+        ]);
       });
 
       it('preparePipelineIncoming should set loading true for HttpResourceRef', async () => {
@@ -1117,7 +1149,7 @@ describe('Behavior: CoreState', () => {
   });
 
   describe('finalizePipelineVaultStop', () => {
-    it('finalizePipelineVaultStop should not update the previous', async () => {
+    it('finalizePipelineVaultStop should clear loading and preserve the previous value', async () => {
       mockCtx.incoming = Object({
         value: true,
         isLoading: true,
@@ -1133,10 +1165,10 @@ describe('Behavior: CoreState', () => {
 
       expect(mockCtx.lastSnapshot).toEqual(
         Object({
-          isLoading: true,
+          isLoading: false,
           value: 'hello world',
           error: null,
-          hasValue: false
+          hasValue: true
         })
       );
 
@@ -1147,10 +1179,10 @@ describe('Behavior: CoreState', () => {
         Object({
           type: 'Finalize Pipeline',
           snapshot: Object({
-            isLoading: true,
+            isLoading: false,
             value: 'hello world',
             error: null,
-            hasValue: false
+            hasValue: true
           })
         })
       ]);
@@ -1192,6 +1224,46 @@ describe('Behavior: CoreState', () => {
         expect(warnSpy).not.toHaveBeenCalled();
         expect(errorSpy).not.toHaveBeenCalled();
 
+        expect(emitted).toEqual([
+          Object({
+            type: 'Finalize Pipeline',
+            snapshot: Object({
+              isLoading: false,
+              value: undefined,
+              error: null,
+              hasValue: false
+            })
+          }),
+          Object({
+            type: 'Finalize Pipeline',
+            snapshot: Object({
+              isLoading: false,
+              value: [Object({ id: 1 })],
+              error: null,
+              hasValue: true
+            })
+          })
+        ]);
+      });
+
+      it('finalizePipelineState should clear loading after Promise resolution', async () => {
+        mockCtx.incoming = { value: () => Promise.resolve([{ id: 1 }]) };
+        mockCtx.resolveType = ResolveTypes.Promise;
+        mockCtx.lastSnapshot.isLoading = true;
+        const value = [{ id: 1 }];
+
+        behavior.finalizePipelineState(value, mockCtx);
+
+        expect(mockCtx.lastSnapshot).toEqual(
+          Object({
+            isLoading: false,
+            value,
+            error: null,
+            hasValue: true
+          })
+        );
+        expect(warnSpy).not.toHaveBeenCalled();
+        expect(errorSpy).not.toHaveBeenCalled();
         expect(emitted).toEqual([
           Object({
             type: 'Finalize Pipeline',

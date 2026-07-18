@@ -17,6 +17,7 @@ import {
   isUndefined,
   isVaultClearState,
   isVaultNoop,
+  ResolveTypes,
   safeStringify,
   StateEmitSnapshotShape,
   StateEmitType,
@@ -188,7 +189,10 @@ export class withCoreStateBehavior<T>
       return VAULT_NOOP;
     }
 
-    if (isHttpResourceRef(incoming)) {
+    if (
+      isHttpResourceRef(incoming) ||
+      ctx.resolveType === ResolveTypes.Promise
+    ) {
       changes.isLoading = true;
     } else if (isStateInputShape(incoming)) {
       if (!isNullish(incoming?.loading)) {
@@ -218,7 +222,10 @@ export class withCoreStateBehavior<T>
   finalizePipelineState(value: FinalState<T>, ctx: BehaviorContext<T>): void {
     vaultDebug(`${this.key} - finalizeVaultState`);
 
-    if (isHttpResourceRef(ctx.incoming)) {
+    if (
+      isHttpResourceRef(ctx.incoming) ||
+      ctx.resolveType === ResolveTypes.Promise
+    ) {
       this.commitState(
         ctx,
         { isLoading: false },
@@ -256,7 +263,11 @@ export class withCoreStateBehavior<T>
    */
   finalizePipelineVaultStop(ctx: BehaviorContext<T>): void {
     vaultDebug(`${this.key} - finalizePipelineVaultStop`);
-    this.commitState(ctx, null, StateEmitTypes.FinalizePipeline);
+    this.commitState(
+      ctx,
+      { isLoading: false },
+      StateEmitTypes.FinalizePipeline
+    );
   }
 
   /**

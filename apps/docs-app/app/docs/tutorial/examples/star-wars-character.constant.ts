@@ -6,27 +6,34 @@ export const STAR_WARS_CHARACTERS: readonly StarWarsCharacterState[] = [
     name: 'Luke',
     lastName: 'Skywalker',
     faction: 'Rebel Alliance',
-    isJedi: true
+    isForceSensitive: true
   },
   {
     id: 2,
     name: 'Leia',
     lastName: 'Organa',
     faction: 'Rebel Alliance',
-    isJedi: false
+    isForceSensitive: false
   },
   {
     id: 3,
     name: 'Darth',
     lastName: 'Vader',
     faction: 'Galactic Empire',
-    isJedi: false
+    isForceSensitive: false
   },
   {
     id: 4,
     name: 'Obi-Wan',
     lastName: 'Kenobi',
     faction: 'Jedi Order',
-    isJedi: true
+    isForceSensitive: true
+  },
+  {
+    id: 5,
+    name: 'Chewbacca',
+    lastName: 'unknown',
+    faction: 'Rebel Alliance',
+    isForceSensitive: false
   }
 ];

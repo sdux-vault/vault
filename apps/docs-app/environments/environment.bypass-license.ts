@@ -1,5 +1,6 @@
 import { VaultLicensingShape } from '@sdux-vault/shared';
 import { EnvironmentShape } from './shapes/environment.shape';
+import { EnvironmentTypes } from './types/environment.type';
 
 /** Environment configuration with licensing bypassed for local development. */
 export const environment: EnvironmentShape = {
@@ -14,5 +15,6 @@ export const environment: EnvironmentShape = {
   license: {
     licenseId: 'sdux-vault',
     payload: ''
-  } as VaultLicensingShape
+  } as VaultLicensingShape,
+  environment: EnvironmentTypes.BypassLicensing
 };

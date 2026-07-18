@@ -1,5 +1,7 @@
 import { VaultLicensingShape } from '@sdux-vault/shared';
 
+import { EnvironmentType } from '../types/environment.type';
+
 /** Shape defining the structure of a docs-app environment configuration. */
 export interface EnvironmentShape {
   /** Whether the enterprise feature set is enabled. */
@@ -20,4 +22,6 @@ export interface EnvironmentShape {
   readonly bypassLicensing: boolean;
   /** Vault licensing configuration for this environment. */
   readonly license: VaultLicensingShape;
+  /** Vault licensing configuration for this environment. */
+  readonly environment: EnvironmentType;
 }

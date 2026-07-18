@@ -3,6 +3,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
+import {
+  VaultErrorService,
+  VaultPrivateErrorService
+} from '@sdux-vault/shared';
+import type { VaultErrorShape } from '@sdux-vault/shared';
+import { STAR_WARS_CHARACTERS } from '../../../examples/star-wars-character.constant';
 import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import { ExampleComponent } from './example.component';
 import { ExampleService } from './example.service';
@@ -15,14 +21,24 @@ describe('ExampleComponent', () => {
       name: 'Luke',
       lastName: 'Skywalker',
       faction: 'Jedi Order',
-      isJedi: true
+      isForceSensitive: true
     },
     {
       id: 2,
       name: 'Leia',
       lastName: 'Organa',
       faction: 'Rebel Alliance',
-      isJedi: false
+      isForceSensitive: false
+    }
+  ];
+  const initialCharactersWithDisplay: readonly StarWarsCharacterState[] = [
+    {
+      ...initialCharacters[1]!,
+      forceSensitiveDisplay: 'No'
+    },
+    {
+      ...initialCharacters[0]!,
+      forceSensitiveDisplay: 'Yes'
     }
   ];
 
@@ -31,9 +47,10 @@ describe('ExampleComponent', () => {
   let service: ExampleService;
 
   const configureComponent = async (
-    initialState: readonly StarWarsCharacterState[] = initialCharacters
+    initialState: readonly StarWarsCharacterState[] = initialCharacters,
+    renderTemplate = false
   ): Promise<void> => {
-    await TestBed.configureTestingModule({
+    const testingModule = TestBed.configureTestingModule({
       imports: [ExampleComponent],
       providers: [
         provideVaultTesting(),
@@ -42,11 +59,15 @@ describe('ExampleComponent', () => {
           withArrayAppendMergeBehavior
         ])
       ]
-    })
-      .overrideComponent(ExampleComponent, {
+    });
+
+    if (!renderTemplate) {
+      testingModule.overrideComponent(ExampleComponent, {
         set: { template: '' }
-      })
-      .compileComponents();
+      });
+    }
+
+    await testingModule.compileComponents();
 
     fixture = TestBed.createComponent(ExampleComponent);
     component = fixture.componentInstance;
@@ -62,35 +83,215 @@ describe('ExampleComponent', () => {
       name: string;
       lastName: string;
       faction: string;
-      isJedi: boolean;
+      isForceSensitive: boolean;
     }> = {}
   ): void => {
     component['characterForm'].setValue({
       name: values.name ?? 'Han',
       lastName: values.lastName ?? 'Solo',
       faction: values.faction ?? 'Rebel Alliance',
-      isJedi: values.isJedi ?? false
+      isForceSensitive: values.isForceSensitive ?? false
     });
+  };
+
+  const expectClearedForm = (): void => {
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    expect(component['characterForm'].pristine).toBeTrue();
+    expect(component['characterForm'].untouched).toBeTrue();
   };
 
   it('should initialize its read model and editor from the first character', async () => {
     await configureComponent();
 
-    expect(component['characters']()).toEqual(initialCharacters);
-    expect(component['selectedCharacterId']()).toBe(1);
-    expect(component['selectedCharacter']()).toEqual(initialCharacters[0]!);
+    expect(component['characters']()).toEqual(initialCharactersWithDisplay);
+    expect(component['selectedCharacterId']()).toBe(2);
+    expect(component['selectedCharacter']()).toEqual(
+      initialCharactersWithDisplay[0]!
+    );
     expect(component['editorMode']()).toBe('edit');
     expect(component['editorTitle']()).toBe('Update character');
     expect(component['submitLabel']()).toBe('Save changes');
     expect(component['characterForm'].getRawValue()).toEqual({
-      name: 'Luke',
-      lastName: 'Skywalker',
-      faction: 'Jedi Order',
-      isJedi: true
+      name: 'Leia',
+      lastName: 'Organa',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
     });
     expect(component['displayName'](initialCharacters[0]!)).toBe(
       'Luke Skywalker'
     );
+  });
+
+  it('should expose the original State, filter, and reducer teaching sources', async () => {
+    await configureComponent();
+    const replaceNewLines = (value: string): string =>
+      value.replace(/\r?\n/g, ' ');
+
+    expect(replaceNewLines(component['originalStateJson'])).toBe(
+      replaceNewLines(JSON.stringify(STAR_WARS_CHARACTERS, null, 2))
+    );
+    expect(replaceNewLines(component['filterSource'])).toBe(
+      replaceNewLines(`export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacterState[]> =
+  (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');"
+ `)
+    );
+    expect(replaceNewLines(component['reducer1Source'])).toBe(
+      replaceNewLines(`#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacterState[]): readonly StarWarsCharacterState[] {
+  return characters.map((character) => ({
+    ...character,
+    forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
+  }));
+`)
+    );
+    expect(replaceNewLines(component['reducer2Source'])).toBe(
+      replaceNewLines(`export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacterState[]> {
+  return (characters) =>
+    [...characters].sort((left, right) =>
+      left.lastName.localeCompare(right.lastName)
+    );
+}`)
+    );
+  });
+
+  it('should recompute the serialized raw state after a state change', async () => {
+    await configureComponent();
+
+    expect(JSON.parse(component['rawStateJson']())).toEqual({
+      isLoading: false,
+      value: initialCharactersWithDisplay,
+      error: null,
+      hasValue: true
+    });
+
+    const character = service.createCharacter({
+      name: 'Han',
+      lastName: 'Solo',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
+    await vaultSettled(key);
+
+    expect(JSON.parse(component['rawStateJson']())).toEqual({
+      isLoading: false,
+      value: [
+        ...initialCharactersWithDisplay,
+        { ...character, forceSensitiveDisplay: 'No' }
+      ],
+      error: null,
+      hasValue: true
+    });
+  });
+
+  it('should update the serialized raw state from state$ emissions', async () => {
+    await configureComponent();
+
+    const character = service.createCharacter({
+      name: 'Leia',
+      lastName: 'Organa',
+      faction: 'Rebel Alliance',
+      isForceSensitive: true
+    });
+    await vaultSettled(key);
+
+    expect(JSON.parse(component['rawStateStreamJson']())).toEqual({
+      isLoading: false,
+      value: [
+        initialCharactersWithDisplay[0]!,
+        { ...character, forceSensitiveDisplay: 'Yes' },
+        initialCharactersWithDisplay[1]!
+      ],
+      error: null,
+      hasValue: true
+    });
+  });
+
+  it('should display the filtered Before Tap input before reducers transform it', async () => {
+    await configureComponent();
+
+    expect(JSON.parse(component['beforeTapInputJson']())).toEqual(
+      initialCharacters
+    );
+    expect(component['characters']()).toEqual(initialCharactersWithDisplay);
+  });
+
+  it('should display the transformed After Tap input after reducers finish', async () => {
+    await configureComponent();
+
+    expect(JSON.parse(component['afterTapInputJson']())).toEqual(
+      initialCharactersWithDisplay
+    );
+    expect(component['characters']()).toEqual(initialCharactersWithDisplay);
+  });
+
+  it('should display the finalized StateSnapshot from state emission', async () => {
+    await configureComponent();
+
+    expect(JSON.parse(component['emittedStateJson']())).toEqual({
+      isLoading: false,
+      value: initialCharactersWithDisplay,
+      error: null,
+      hasValue: true
+    });
+  });
+
+  it('should serialize an absent state value as undefined', async () => {
+    await configureComponent();
+
+    service.persistNullValue();
+    await vaultSettled(key);
+
+    expect(JSON.parse(component['rawStateJson']())).toEqual(
+      jasmine.objectContaining({
+        isLoading: false,
+        value: 'undefined',
+        error: jasmine.objectContaining({
+          message:
+            '[vault] Reducer stage received undefined state in FeatureCell "star-wars-character", but reducers are registered.',
+          featureCellKey: key
+        }),
+        hasValue: false
+      })
+    );
+    expect(JSON.parse(component['rawStateStreamJson']())).toEqual(
+      jasmine.objectContaining({
+        isLoading: false,
+        value: 'undefined',
+        error: jasmine.objectContaining({
+          message:
+            '[vault] Reducer stage received undefined state in FeatureCell "star-wars-character", but reducers are registered.',
+          featureCellKey: key
+        }),
+        hasValue: false
+      })
+    );
+  });
+
+  it('should display and clear an active global error', async () => {
+    const privateErrorService = VaultPrivateErrorService();
+    const globalErrorService = VaultErrorService();
+    const clear = spyOn(globalErrorService, 'clear').and.callThrough();
+    const error: VaultErrorShape = {
+      message: 'The pipeline failed.',
+      featureCellKey: key,
+      timestamp: Date.now(),
+      raw: new Error('The pipeline failed.')
+    };
+
+    privateErrorService.clear();
+    await configureComponent();
+    privateErrorService.setError(error);
+
+    expect(component['globalError']()).toBe(error);
+
+    component['clearGlobalError']();
+
+    expect(clear).toHaveBeenCalledOnceWith();
+    expect(component['globalError']()).toBeNull();
   });
 
   it('should select a valid character and ignore an unknown ID', async () => {
@@ -100,12 +301,14 @@ describe('ExampleComponent', () => {
 
     component['selectCharacter']('999');
 
-    expect(component['selectedCharacterId']()).toBe(1);
+    expect(component['selectedCharacterId']()).toBe(2);
 
     component['selectCharacter']('2');
 
     expect(component['selectedCharacterId']()).toBe(2);
-    expect(component['selectedCharacter']()).toEqual(initialCharacters[1]!);
+    expect(component['selectedCharacter']()).toEqual(
+      initialCharactersWithDisplay[0]!
+    );
     expect(component['editorMode']()).toBe('edit');
     expect(component['deleteCandidate']()).toBeNull();
     expect(component['feedback']()).toBeNull();
@@ -113,7 +316,7 @@ describe('ExampleComponent', () => {
       name: 'Leia',
       lastName: 'Organa',
       faction: 'Rebel Alliance',
-      isJedi: false
+      isForceSensitive: false
     });
   });
 
@@ -132,14 +335,14 @@ describe('ExampleComponent', () => {
       name: '',
       lastName: '',
       faction: '',
-      isJedi: false
+      isForceSensitive: false
     });
     expect(component['characterForm'].pristine).toBeTrue();
     expect(component['characterForm'].untouched).toBeTrue();
 
     component['cancelEdit']();
 
-    expect(component['selectedCharacterId']()).toBe(1);
+    expect(component['selectedCharacterId']()).toBe(2);
     expect(component['editorMode']()).toBe('edit');
     expect(component['feedback']()).toEqual({
       message: 'The new character was discarded.',
@@ -154,7 +357,7 @@ describe('ExampleComponent', () => {
 
     component['cancelEdit']();
 
-    expect(component['characterForm'].controls.name.value).toBe('Luke');
+    expect(component['characterForm'].controls.name.value).toBe('Leia');
     expect(component['characterForm'].pristine).toBeTrue();
     expect(component['feedback']()).toEqual({
       message: 'Unsaved changes were discarded.',
@@ -178,6 +381,13 @@ describe('ExampleComponent', () => {
     ).toBeTrue();
     expect(
       component['characterForm'].controls.faction.hasError('required')
+    ).toBeTrue();
+
+    component['characterForm'].controls.name.setValue(
+      null as unknown as string
+    );
+    expect(
+      component['characterForm'].controls.name.hasError('required')
     ).toBeTrue();
 
     component['characterForm'].controls.name.setValue(' A ');
@@ -206,7 +416,8 @@ describe('ExampleComponent', () => {
       name: 'Han',
       lastName: 'Solo',
       faction: 'Rebel Alliance',
-      isJedi: false
+      isForceSensitive: false,
+      forceSensitiveDisplay: 'No'
     });
     expect(component['selectedCharacterId']()).toBe(3);
     expect(component['editorMode']()).toBe('edit');
@@ -214,7 +425,7 @@ describe('ExampleComponent', () => {
       name: 'Han',
       lastName: 'Solo',
       faction: 'Rebel Alliance',
-      isJedi: false
+      isForceSensitive: false
     });
     expect(component['feedback']()).toEqual({
       message: 'Han Solo was added and selected.',
@@ -234,12 +445,13 @@ describe('ExampleComponent', () => {
     component['saveCharacter']();
     await vaultSettled(key);
 
-    expect(service.characters()[1]).toEqual({
+    expect(service.characters()[0]).toEqual({
       id: 2,
       name: 'General Leia',
       lastName: 'Organa',
       faction: 'Rebel Alliance',
-      isJedi: false
+      isForceSensitive: false,
+      forceSensitiveDisplay: 'No'
     });
     expect(component['feedback']()).toEqual({
       message: 'General Leia Organa was updated.',
@@ -268,7 +480,9 @@ describe('ExampleComponent', () => {
     component['confirmDelete']();
     component['requestDelete']();
 
-    expect(component['deleteCandidate']()).toEqual(initialCharacters[0]!);
+    expect(component['deleteCandidate']()).toEqual(
+      initialCharactersWithDisplay[0]!
+    );
     expect(component['feedback']()).toBeNull();
 
     component['cancelDelete']();
@@ -278,7 +492,7 @@ describe('ExampleComponent', () => {
     component['confirmDelete']();
     await vaultSettled(key);
 
-    expect(service.characters()).toEqual([initialCharacters[1]!]);
+    expect(service.characters()).toEqual([initialCharactersWithDisplay[1]!]);
     expect(component['deleteCandidate']()).toBeNull();
     expect(component['selectedCharacterId']()).toBeNull();
     expect(component['editorMode']()).toBe('create');
@@ -286,10 +500,10 @@ describe('ExampleComponent', () => {
       name: '',
       lastName: '',
       faction: '',
-      isJedi: false
+      isForceSensitive: false
     });
     expect(component['feedback']()).toEqual({
-      message: 'Luke Skywalker was removed.',
+      message: 'Leia Organa was removed.',
       tone: 'success'
     });
 
@@ -309,11 +523,11 @@ describe('ExampleComponent', () => {
     component['restoreInitialCharacters']();
     await vaultSettled(key);
 
-    expect(service.characters()).toEqual(initialCharacters);
-    expect(component['selectedCharacterId']()).toBe(1);
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
+    expect(component['selectedCharacterId']()).toBe(2);
     expect(component['editorMode']()).toBe('edit');
     expect(component['deleteCandidate']()).toBeNull();
-    expect(component['characterForm'].controls.name.value).toBe('Luke');
+    expect(component['characterForm'].controls.name.value).toBe('Leia');
     expect(component['feedback']()).toEqual({
       message: 'The initial character collection was restored.',
       tone: 'success'
@@ -336,5 +550,142 @@ describe('ExampleComponent', () => {
       message: 'The initial character collection was restored.',
       tone: 'success'
     });
+  });
+
+  it('should delegate persisting null to the service', async () => {
+    await configureComponent();
+    const persistNullValue = spyOn(service, 'persistNullValue');
+    setValidForm();
+
+    component['persistNullValue']();
+
+    expect(persistNullValue).toHaveBeenCalledOnceWith();
+    expectClearedForm();
+  });
+
+  it('should delegate resetting state to the service', async () => {
+    await configureComponent();
+    const resetState = spyOn(service, 'resetState');
+    setValidForm();
+
+    component['resetState']();
+
+    expect(resetState).toHaveBeenCalledOnceWith();
+    expectClearedForm();
+  });
+
+  it('should delegate Promise request and resolution while tracking its pending state', async () => {
+    await configureComponent();
+    const fetchWithPromise = spyOn(service, 'fetchWithPromise');
+    const resolve = jasmine.createSpy('resolvePromise');
+    const getPromiseResolver = spyOn(
+      service,
+      'getPromiseResolver'
+    ).and.returnValue(resolve);
+
+    component['fetchWithPromise']();
+
+    expect(fetchWithPromise).toHaveBeenCalledOnceWith();
+    expect(component['promisePending']()).toBeTrue();
+
+    component['resolvePromise']();
+
+    expect(getPromiseResolver).toHaveBeenCalledOnceWith();
+    expect(resolve).toHaveBeenCalledOnceWith();
+    expect(component['promisePending']()).toBeFalse();
+  });
+
+  it('should keep the Resolve Promise action visible when no resolver is available', async () => {
+    await configureComponent();
+    spyOn(service, 'getPromiseResolver').and.returnValue(null);
+    component['promisePending'].set(true);
+
+    component['resolvePromise']();
+
+    expect(component['promisePending']()).toBeTrue();
+  });
+
+  it('should switch Promise buttons and display the spinner until resolution', async () => {
+    await configureComponent(initialCharacters, true);
+    const element = fixture.nativeElement as HTMLElement;
+    const buttons = Array.from(element.querySelectorAll('button'));
+    const fetchButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Fetch with Promise'
+    )!;
+    const resolveButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Resolve Promise'
+    )!;
+
+    expect(fetchButton.hidden).toBeFalse();
+    expect(resolveButton.hidden).toBeTrue();
+
+    fetchButton.click();
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    expect(fetchButton.hidden).toBeTrue();
+    expect(resolveButton.hidden).toBeFalse();
+    expect(service.state.isLoading()).toBeTrue();
+    expect(
+      element.querySelector('[aria-label="Loading characters"]')
+    ).not.toBeNull();
+
+    resolveButton.click();
+    fixture.detectChanges();
+
+    expect(fetchButton.hidden).toBeFalse();
+    expect(resolveButton.hidden).toBeTrue();
+
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    expect(service.state.isLoading()).toBeFalse();
+    expect(
+      element.querySelector('[aria-label="Loading characters"]')
+    ).toBeNull();
+    expect(service.characters()).toEqual([
+      {
+        id: 102,
+        name: 'Din',
+        lastName: 'Djarin',
+        faction: 'Unaffiliated',
+        isForceSensitive: false,
+        forceSensitiveDisplay: 'No'
+      },
+      ...initialCharactersWithDisplay,
+      {
+        id: 101,
+        name: 'Ahsoka',
+        lastName: 'Tano',
+        faction: 'Jedi Order',
+        isForceSensitive: true,
+        forceSensitiveDisplay: 'Yes'
+      }
+    ]);
+  });
+
+  it('should delegate FeatureCell destruction to the service', async () => {
+    await configureComponent();
+    const destroyFeatureCell = spyOn(service, 'destroyFeatureCell');
+    setValidForm();
+
+    component['destroyFeatureCell']();
+
+    expect(destroyFeatureCell).toHaveBeenCalledOnceWith();
+    expectClearedForm();
+    expect(component['featureCellDestroyed']()).toBeTrue();
+  });
+
+  it('should open the Tab Sync example in a new browser tab', async () => {
+    await configureComponent();
+    const open = spyOn(window, 'open');
+
+    component['viewTabSync']();
+
+    expect(open).toHaveBeenCalledOnceWith(
+      window.location.href,
+      '_blank',
+      'noopener'
+    );
   });
 });
