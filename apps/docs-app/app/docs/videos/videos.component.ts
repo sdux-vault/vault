@@ -39,4 +39,8 @@ export class DocsVideoDocumentationComponent extends PipelineRoutingDirective {
   stageFlows = this.allLinks
     .filter((link: VideoLinkShape) => link.type === 'flow')
     .slice();
+
+  comparisonLinks = this.allLinks
+    .filter((link: VideoLinkShape) => link.type === 'comparison')
+    .slice();
 }

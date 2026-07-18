@@ -12,5 +12,5 @@ export interface VideoLinkShape {
   sort: string;
 
   /** Video category. */
-  type: 'overview' | 'flow';
+  type: 'overview' | 'flow' | 'comparison';
 }

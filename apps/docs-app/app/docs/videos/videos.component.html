@@ -31,6 +31,11 @@
           <li>
             <a [routerLink]="[]" fragment="overview-videos">Overview Videos</a>
           </li>
+          <li>
+            <a [routerLink]="[]" fragment="comparison-videos"
+              >Comparison Videos</a
+            >
+          </li>
         </ul>
 
         <div class="sorted-container">
@@ -49,6 +54,17 @@
                 }
               </ul>
             }
+
+            <div class="table-title">Comparison</div>
+            <ul class="toc">
+              @for (link of comparisonLinks; track link.fragment) {
+                <li>
+                  <a [routerLink]="[]" [fragment]="link.fragment">
+                    {{ link.display }}
+                  </a>
+                </li>
+              }
+            </ul>
           </div>
           <div class="panel-right">
             <h4>By Stage</h4>
@@ -196,6 +212,34 @@
       </p>
 
       <sdux-video videoId="79J23hQtApI" [tooltip]="'Orchestrator Definition'" />
+    </div>
+  </section>
+
+  <section class="diagram-section" id="comparison-videos">
+    <h4>Comparison Videos</h4>
+  </section>
+
+  <section class="diagram-section" id="sdux-vs-redux-on-comparison">
+    <div class="section-title-navigation">
+      <div class="section-title">
+        <sdux-brand-name /> vs Redux O(n) Comparison
+      </div>
+      <div class="section-top-link">
+        <a [routerLink]="[]" fragment="top">↑ top</a>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p>
+        A visual comparison of how Redux and SDuX Vault process state updates as
+        applications scale. Shows Redux reducer and selector work growing with
+        feature count while targeted FeatureCell pipeline execution remains
+        O(1).
+      </p>
+
+      <sdux-video
+        videoId="aFTiIvR0H4M"
+        [tooltip]="'SDUX vs Redux O(n) Comparison'" />
     </div>
   </section>
 

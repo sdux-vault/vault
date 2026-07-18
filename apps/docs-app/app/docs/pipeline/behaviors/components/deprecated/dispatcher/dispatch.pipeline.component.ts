@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   DiagramComponent,
-  MultiFrameworkExampleComponent
+  MultiFrameworkExampleComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 
@@ -18,7 +19,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     BrandNameComponent,
     RouterModule,
     PipelineRelatedTopicComponent,
-    MultiFrameworkExampleComponent
+    MultiFrameworkExampleComponent,
+    SDuXVideoComponent
   ],
   templateUrl: './dispatch.pipeline.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

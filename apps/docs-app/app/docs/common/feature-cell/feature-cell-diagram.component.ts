@@ -13,10 +13,6 @@ import {
       <div class="section-title">Diagrams & Videos</div>
 
       <div class="section-body">
-        <sdux-video
-          videoId="koAAo1B-__Y"
-          [tooltip]="'FeatureCell Definition'" />
-
         <sdux-diagram
           image="diagrams/1.0/1.1-featurecell-lifecycle.svg"
           [tooltip]="'FeatureCell Lifecycle'"></sdux-diagram>
@@ -25,9 +21,14 @@ import {
           image="diagrams/2.2/2.2.1-pipeline-initialization-flow.svg"
           [tooltip]="'FeatureCell Initialization Flow'">
         </sdux-diagram>
+
         <sdux-diagram
           image="diagrams/2.2/2.2-full-pipeline-flow.svg"
           [tooltip]="'Full Pipeline Flow'" />
+
+        <sdux-video
+          videoId="koAAo1B-__Y"
+          [tooltip]="'FeatureCell Definition'" />
       </div>
     </section>
   `,

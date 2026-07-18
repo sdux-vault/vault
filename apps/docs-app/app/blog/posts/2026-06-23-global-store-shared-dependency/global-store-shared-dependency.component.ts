@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   FeatureCellBrandNameComponent,
-  MultiFrameworkExampleComponent
+  MultiFrameworkExampleComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -16,7 +17,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     RouterModule,
     BrandNameComponent,
     BrandNameComponent,
-    FeatureCellBrandNameComponent
+    FeatureCellBrandNameComponent,
+    SDuXVideoComponent
   ],
   template: `
     <sdux-blog-layout
@@ -272,6 +274,16 @@ export const notificationsCell = FeatureCell(&#123;
             >
             to see the full registration surface.
           </p>
+        </div>
+      </section>
+
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video
+            videoId="aFTiIvR0H4M"
+            [tooltip]="'SDUX vs Redux O(n) Comparison'" />
         </div>
       </section>
     </sdux-blog-layout>

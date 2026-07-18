@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -16,7 +17,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     RouterModule,
-    BrandNameComponent
+    BrandNameComponent,
+    SDuXVideoComponent
   ],
   template: `
     <sdux-blog-layout
@@ -475,6 +477,15 @@ function addItem(cell: CartCell, item: CartItem) &#123;
             that owns the state. See how much of the surrounding machinery
             disappears.
           </p>
+        </div>
+      </section>
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video
+            videoId="aFTiIvR0H4M"
+            [tooltip]="'SDUX vs Redux O(n) Comparison'" />
         </div>
       </section>
     </sdux-blog-layout>

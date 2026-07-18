@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   DiagramComponent,
-  MultiFrameworkExampleComponent
+  MultiFrameworkExampleComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { StateConsumptionMechanismCommonComponent } from 'apps/docs-app/app/docs/common/state/state-consumption-mechanism.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
@@ -20,7 +21,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     RouterModule,
     PipelineRelatedTopicComponent,
     StateConsumptionMechanismCommonComponent,
-    MultiFrameworkExampleComponent
+    MultiFrameworkExampleComponent,
+    SDuXVideoComponent
   ],
   templateUrl: './selectors.pipeline.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],

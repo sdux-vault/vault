@@ -6,7 +6,8 @@ import {
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
   MultiFrameworkExampleComponent,
-  PackageNameComponent
+  PackageNameComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -22,7 +23,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BrandNameComponent,
     BrandNameComponent,
     FeatureCellBrandNameComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    SDuXVideoComponent
   ],
   template: `
     <sdux-blog-layout
@@ -391,6 +393,16 @@ userCell.state$.subscribe(snapshot =&gt; &#123;
               </a>
             </li>
           </ul>
+        </div>
+      </section>
+
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video
+            videoId="aFTiIvR0H4M"
+            [tooltip]="'SDUX vs Redux O(n) Comparison'" />
         </div>
       </section>
     </sdux-blog-layout>

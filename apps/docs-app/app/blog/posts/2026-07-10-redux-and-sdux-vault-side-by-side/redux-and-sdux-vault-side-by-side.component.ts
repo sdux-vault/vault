@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
-  ExampleViewerTabComponent
+  ExampleViewerTabComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -16,7 +17,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     RouterModule,
-    BrandNameComponent
+    BrandNameComponent,
+    SDuXVideoComponent
   ],
   template: `
     <sdux-blog-layout
@@ -334,6 +336,15 @@ it('cart reducer adds items correctly', () =&gt; &#123;
             real traffic. Retire the Redux slice when you are ready — or never.
             The choice is yours.
           </p>
+        </div>
+      </section>
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video
+            videoId="aFTiIvR0H4M"
+            [tooltip]="'SDUX vs Redux O(n) Comparison'" />
         </div>
       </section>
     </sdux-blog-layout>

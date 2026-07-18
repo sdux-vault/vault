@@ -346,14 +346,6 @@ cartCell.initialize();</code></pre>
         </div>
       </section>
 
-      <section class="diagram-section">
-        <div class="section-title">Videos</div>
-
-        <div class="section-body">
-          <sdux-video videoId="TRlvCmluBcE" [tooltip]="'Pipeline Isolation'" />
-        </div>
-      </section>
-
       <section class="section">
         <div class="section-title">Deeper Dive</div>
         <div class="section-body">
@@ -369,6 +361,18 @@ cartCell.initialize();</code></pre>
             existing reducer and selector knowledge carries directly into
             <sdux-brand-name />.
           </p>
+        </div>
+      </section>
+
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video videoId="TRlvCmluBcE" [tooltip]="'Pipeline Isolation'" />
+
+          <sdux-video
+            videoId="aFTiIvR0H4M"
+            [tooltip]="'SDUX vs Redux O(n) Comparison'" />
         </div>
       </section>
     </sdux-blog-layout>
