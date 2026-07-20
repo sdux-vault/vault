@@ -1,6 +1,12 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
+import {
+  withArrayAppendMergeBehavior,
+  withStepwiseController,
+  withStepwiseFilterBehavior,
+  withStepwiseReducerBehavior,
+  withStepwiseResolveBehavior
+} from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import {
@@ -11,8 +17,13 @@ import type { VaultErrorShape } from '@sdux-vault/shared';
 import { STAR_WARS_CHARACTERS } from '../../../examples/star-wars-character.constant';
 import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import { ExampleComponent } from './example.component';
+import { exampleHydrate } from './example.hydrate';
+import { exampleObservable } from './example.observable';
 import { examplePromise } from './example.promise';
-import { ExampleService } from './example.service';
+import {
+  EXAMPLE_ENCRYPTED_STORAGE_KEY,
+  ExampleService
+} from './example.service';
 
 describe('ExampleComponent', () => {
   const key = 'star-wars-character';
@@ -47,18 +58,52 @@ describe('ExampleComponent', () => {
   let fixture: ComponentFixture<ExampleComponent>;
   let service: ExampleService;
 
+  const acceptStepwiseAndSettle = async (): Promise<void> => {
+    for (let stage = 0; stage < 4; stage += 1) {
+      await new Promise((resolve) => setTimeout(resolve));
+
+      if (service.isStepwiseResolvePending()) {
+        component['acceptStepwiseResolve']();
+        continue;
+      }
+
+      if (service.isStepwiseFilterPending()) {
+        component['acceptStepwiseFilter']();
+        continue;
+      }
+
+      if (service.isStepwiseReducerPending()) {
+        component['acceptStepwiseReducer']();
+        continue;
+      }
+
+      break;
+    }
+
+    await vaultSettled(key);
+  };
+
   const configureComponent = async (
     initialState: readonly StarWarsCharacterState[] = initialCharacters,
-    renderTemplate = false
+    renderTemplate = false,
+    deferHydration = false
   ): Promise<void> => {
     const testingModule = TestBed.configureTestingModule({
       imports: [ExampleComponent],
       providers: [
         provideVaultTesting(),
         provideZonelessChangeDetection(),
-        provideFeatureCell(ExampleService, { key, initialState }, [
-          withArrayAppendMergeBehavior
-        ])
+        provideFeatureCell(
+          ExampleService,
+          { key, initialState },
+          [
+            withArrayAppendMergeBehavior,
+            withStepwiseResolveBehavior,
+            withStepwiseFilterBehavior,
+            withStepwiseReducerBehavior
+          ],
+          [withStepwiseController]
+        )
       ]
     });
 
@@ -70,12 +115,20 @@ describe('ExampleComponent', () => {
 
     await testingModule.compileComponents();
 
+    if (!deferHydration) {
+      spyOn(exampleHydrate, 'getPromise').and.resolveTo(initialState);
+    }
+
     fixture = TestBed.createComponent(ExampleComponent);
     component = fixture.componentInstance;
     service = TestBed.inject(ExampleService);
     fixture.detectChanges();
-    await vaultSettled(key);
-    await fixture.whenStable();
+
+    if (!deferHydration) {
+      await acceptStepwiseAndSettle();
+      await fixture.whenStable();
+    }
+
     fixture.detectChanges();
   };
 
@@ -128,7 +181,7 @@ describe('ExampleComponent', () => {
     );
   });
 
-  it('should expose the original State, filter, and reducer teaching sources', async () => {
+  it('should expose the State, filter, reducer, and comparison teaching sources', async () => {
     await configureComponent();
     const replaceNewLines = (value: string): string =>
       value.replace(/\r?\n/g, ' ');
@@ -157,6 +210,262 @@ describe('ExampleComponent', () => {
     );
 }`)
     );
+    expect(replaceNewLines(component['comparisonFunctionSource'])).toBe(
+      replaceNewLines(`withDistinctUntilChanged<readonly StarWarsCharacterState[]>(
+  (incoming, previous) =>
+    incoming.every(({ id }) =>
+      previous.some((character) => character.id === id)
+    )
+)`)
+    );
+  });
+
+  it('should display and control the active Stepwise Resolve callback', async () => {
+    await configureComponent(initialCharacters, true);
+    const element = fixture.nativeElement as HTMLElement;
+    const resolveColumn =
+      element.querySelector<HTMLElement>('.stepwise-column')!;
+    const buttons = Array.from(resolveColumn.querySelectorAll('button'));
+    const acceptButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Accept'
+    )!;
+    const cancelButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Cancel'
+    )!;
+    const output = resolveColumn.querySelector<HTMLTextAreaElement>(
+      '[aria-label="Stepwise Resolve output"]'
+    )!;
+
+    expect(acceptButton.disabled).toBeTrue();
+    expect(cancelButton.disabled).toBeTrue();
+    expect(output.value).not.toBe('');
+    expect(element.textContent).not.toContain(
+      'Stepwise Resolve is awaiting confirmation.'
+    );
+
+    const han = service.createCharacter({
+      name: 'Han',
+      lastName: 'Solo',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    expect(acceptButton.disabled).toBeFalse();
+    expect(cancelButton.disabled).toBeFalse();
+    expect(JSON.parse(output.value)).toEqual({
+      current: initialCharactersWithDisplay,
+      candidate: [han]
+    });
+    expect(element.textContent).toContain(
+      'Stepwise Resolve is awaiting confirmation.'
+    );
+
+    acceptButton.click();
+    await acceptStepwiseAndSettle();
+    fixture.detectChanges();
+
+    expect(acceptButton.disabled).toBeTrue();
+    expect(cancelButton.disabled).toBeTrue();
+    expect(element.textContent).not.toContain(
+      'Stepwise Resolve is awaiting confirmation.'
+    );
+    expect(service.characters()).toContain(
+      jasmine.objectContaining({ id: han.id, forceSensitiveDisplay: 'No' })
+    );
+
+    const committed = service.characters();
+    service.createCharacter({
+      name: 'Chewbacca',
+      lastName: 'Wookiee',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    cancelButton.click();
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    expect(service.characters()).toBe(committed);
+    expect(acceptButton.disabled).toBeTrue();
+    expect(cancelButton.disabled).toBeTrue();
+  });
+
+  it('should display and control the active Stepwise Filter callback', async () => {
+    await configureComponent(initialCharacters, true);
+    const element = fixture.nativeElement as HTMLElement;
+    const filterColumn =
+      element.querySelectorAll<HTMLElement>('.stepwise-column')[1]!;
+    const buttons = Array.from(filterColumn.querySelectorAll('button'));
+    const acceptButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Accept'
+    )!;
+    const cancelButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Cancel'
+    )!;
+    const output = filterColumn.querySelector<HTMLTextAreaElement>(
+      '[aria-label="Stepwise Filter output"]'
+    )!;
+
+    expect(acceptButton.disabled).toBeTrue();
+    expect(cancelButton.disabled).toBeTrue();
+    expect(element.textContent).not.toContain(
+      'Stepwise Filter is awaiting confirmation.'
+    );
+
+    const han = service.createCharacter({
+      name: 'Han',
+      lastName: 'Solo',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
+    await new Promise((resolve) => setTimeout(resolve));
+    component['acceptStepwiseResolve']();
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    expect(acceptButton.disabled).toBeFalse();
+    expect(cancelButton.disabled).toBeFalse();
+    expect(JSON.parse(output.value)).toEqual({
+      current: initialCharactersWithDisplay,
+      candidate: [...initialCharactersWithDisplay, han]
+    });
+    expect(element.textContent).toContain(
+      'Stepwise Filter is awaiting confirmation.'
+    );
+
+    acceptButton.click();
+    await acceptStepwiseAndSettle();
+    fixture.detectChanges();
+
+    expect(service.characters()).toContain(
+      jasmine.objectContaining({ id: han.id, forceSensitiveDisplay: 'No' })
+    );
+    expect(acceptButton.disabled).toBeTrue();
+    expect(cancelButton.disabled).toBeTrue();
+    expect(element.textContent).not.toContain(
+      'Stepwise Filter is awaiting confirmation.'
+    );
+
+    const committed = service.characters();
+    service.createCharacter({
+      name: 'Chewbacca',
+      lastName: 'Wookiee',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
+    await new Promise((resolve) => setTimeout(resolve));
+    component['acceptStepwiseResolve']();
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    cancelButton.click();
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    expect(service.characters()).toBe(committed);
+    expect(acceptButton.disabled).toBeTrue();
+    expect(cancelButton.disabled).toBeTrue();
+  });
+
+  it('should display and control the active Stepwise Reducer callback', async () => {
+    await configureComponent(initialCharacters, true);
+    const element = fixture.nativeElement as HTMLElement;
+    const reducerColumn =
+      element.querySelectorAll<HTMLElement>('.stepwise-column')[2]!;
+    const buttons = Array.from(reducerColumn.querySelectorAll('button'));
+    const acceptButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Accept'
+    )!;
+    const cancelButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Cancel'
+    )!;
+    const output = reducerColumn.querySelector<HTMLTextAreaElement>(
+      '[aria-label="Stepwise Reducer output"]'
+    )!;
+
+    expect(acceptButton.disabled).toBeTrue();
+    expect(cancelButton.disabled).toBeTrue();
+    expect(element.textContent).not.toContain(
+      'Stepwise Reducer is awaiting confirmation.'
+    );
+
+    const han = service.createCharacter({
+      name: 'Han',
+      lastName: 'Solo',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
+    await new Promise((resolve) => setTimeout(resolve));
+    component['acceptStepwiseResolve']();
+    await new Promise((resolve) => setTimeout(resolve));
+    component['acceptStepwiseFilter']();
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    expect(acceptButton.disabled).toBeFalse();
+    expect(cancelButton.disabled).toBeFalse();
+    expect(JSON.parse(output.value)).toEqual({
+      current: initialCharactersWithDisplay,
+      candidate: [
+        ...initialCharactersWithDisplay,
+        { ...han, forceSensitiveDisplay: 'No' }
+      ]
+    });
+    expect(element.textContent).toContain(
+      'Stepwise Reducer is awaiting confirmation.'
+    );
+
+    acceptButton.click();
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    expect(service.characters()).toEqual([
+      ...initialCharactersWithDisplay,
+      { ...han, forceSensitiveDisplay: 'No' }
+    ]);
+    expect(acceptButton.disabled).toBeTrue();
+    expect(cancelButton.disabled).toBeTrue();
+    expect(element.textContent).not.toContain(
+      'Stepwise Reducer is awaiting confirmation.'
+    );
+
+    const committed = service.characters();
+    service.createCharacter({
+      name: 'Chewbacca',
+      lastName: 'Wookiee',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
+    await new Promise((resolve) => setTimeout(resolve));
+    component['acceptStepwiseResolve']();
+    await new Promise((resolve) => setTimeout(resolve));
+    component['acceptStepwiseFilter']();
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    cancelButton.click();
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    expect(service.characters()).toBe(committed);
+    expect(acceptButton.disabled).toBeTrue();
+    expect(cancelButton.disabled).toBeTrue();
+  });
+
+  it('should display the comparison function source in its textarea', async () => {
+    await configureComponent(initialCharacters, true);
+    const comparisonOutput = (
+      fixture.nativeElement as HTMLElement
+    ).querySelector<HTMLTextAreaElement>(
+      '[aria-label="Comparison Function output"]'
+    );
+
+    expect(comparisonOutput).not.toBeNull();
+    expect(comparisonOutput!.value).toBe(component['comparisonFunctionSource']);
   });
 
   it('should recompute the serialized raw state after a state change', async () => {
@@ -175,7 +484,7 @@ describe('ExampleComponent', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
 
     expect(JSON.parse(component['rawStateJson']())).toEqual({
       isLoading: false,
@@ -197,7 +506,7 @@ describe('ExampleComponent', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: true
     });
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
 
     expect(JSON.parse(component['rawStateStreamJson']())).toEqual({
       isLoading: false,
@@ -245,7 +554,7 @@ describe('ExampleComponent', () => {
     await configureComponent();
 
     service.persistNullValue();
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
 
     expect(JSON.parse(component['rawStateJson']())).toEqual(
       jasmine.objectContaining({
@@ -269,6 +578,26 @@ describe('ExampleComponent', () => {
           featureCellKey: key
         }),
         hasValue: false
+      })
+    );
+    expect(JSON.parse(component['emittedStateJson']())).toEqual(
+      jasmine.objectContaining({
+        isLoading: false,
+        value: 'undefined',
+        hasValue: false
+      })
+    );
+    expect(JSON.parse(component['errorEmissionJson']())).toEqual(
+      jasmine.objectContaining({
+        error: jasmine.objectContaining({
+          message:
+            '[vault] Reducer stage received undefined state in FeatureCell "star-wars-character", but reducers are registered.'
+        }),
+        state: jasmine.objectContaining({
+          isLoading: false,
+          value: 'undefined',
+          hasValue: false
+        })
       })
     );
   });
@@ -409,7 +738,7 @@ describe('ExampleComponent', () => {
     setValidForm({ name: '  Han  ', lastName: '  Solo  ' });
 
     component['saveCharacter']();
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
 
     const createdCharacter = service.characters()[2];
 
@@ -445,7 +774,7 @@ describe('ExampleComponent', () => {
     });
 
     component['saveCharacter']();
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
 
     expect(service.characters()[0]).toEqual({
       id: 2,
@@ -492,7 +821,7 @@ describe('ExampleComponent', () => {
 
     component['requestDelete']();
     component['confirmDelete']();
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
 
     expect(service.characters()).toEqual([initialCharactersWithDisplay[1]!]);
     expect(component['deleteCandidate']()).toBeNull();
@@ -520,10 +849,10 @@ describe('ExampleComponent', () => {
     await configureComponent();
     component['requestDelete']();
     component['confirmDelete']();
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
 
     component['restoreInitialCharacters']();
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
 
     expect(service.characters()).toEqual(initialCharactersWithDisplay);
     expect(component['selectedCharacterId']()).toBe(2);
@@ -543,7 +872,7 @@ describe('ExampleComponent', () => {
     expect(component['selectedCharacter']()).toBeNull();
 
     component['restoreInitialCharacters']();
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
 
     expect(component['characters']()).toEqual([]);
     expect(component['selectedCharacterId']()).toBeNull();
@@ -574,6 +903,70 @@ describe('ExampleComponent', () => {
 
     expect(resetState).toHaveBeenCalledOnceWith();
     expectClearedForm();
+  });
+
+  it('should display only Resolve and Reject controls for pending hydration', async () => {
+    await configureComponent(initialCharacters, true, true);
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    const hydrateControls = element.querySelector(
+      '.hydrate-controls'
+    ) as HTMLElement;
+    const buttons = Array.from(hydrateControls.querySelectorAll('button'));
+
+    expect(buttons.map(({ textContent }) => textContent?.trim())).toEqual([
+      'Resolve',
+      'Reject'
+    ]);
+    expect(buttons.every(({ disabled }) => !disabled)).toBeTrue();
+    expect(hydrateControls.textContent).not.toContain('Hydrate Model');
+    expect(element.textContent).toContain(
+      'The initial state hydrate method is awaiting resolve or reject in the Action section'
+    );
+
+    buttons[0]!.click();
+    fixture.detectChanges();
+
+    expect(buttons.every(({ disabled }) => disabled)).toBeTrue();
+    expect(element.textContent).not.toContain(
+      'The initial state hydrate method is awaiting resolve or reject in the Action section'
+    );
+
+    await acceptStepwiseAndSettle();
+    await fixture.whenStable();
+
+    expect(service.state.isLoading()).toBeFalse();
+    expect(service.state.error()).toBeNull();
+    expect(service.state.hasValue()).toBeTrue();
+  });
+
+  it('should reject the pending hydration through its controller', async () => {
+    await configureComponent(initialCharacters, false, true);
+    await new Promise((resolve) => setTimeout(resolve));
+
+    component['rejectHydration']();
+    await acceptStepwiseAndSettle();
+
+    expect(component['hydrationSettled']()).toBeTrue();
+    expect(service.state.isLoading()).toBeFalse();
+    expect(service.state.hasValue()).toBeFalse();
+    expect(service.state.error()?.message).toBe(
+      'The character hydration was rejected.'
+    );
+
+    VaultPrivateErrorService().clear();
+  });
+
+  it('should safely ignore unavailable hydration controllers', async () => {
+    await configureComponent();
+    spyOn(exampleHydrate, 'getResolve').and.returnValue(null);
+    spyOn(exampleHydrate, 'getReject').and.returnValue(null);
+
+    expect(() => component['resolveHydration']()).not.toThrow();
+    expect(() => component['rejectHydration']()).not.toThrow();
+    expect(component['hydrationSettled']()).toBeFalse();
   });
 
   it('should delegate Promise request and resolution while tracking its pending state', async () => {
@@ -631,22 +1024,273 @@ describe('ExampleComponent', () => {
     expect(component['promisePending']()).toBeTrue();
   });
 
+  it('should keep timing through Promise loading and stop on finalization', async () => {
+    await configureComponent();
+    const requestAnimationFrame = spyOn(
+      window,
+      'requestAnimationFrame'
+    ).and.returnValue(42);
+    const cancelAnimationFrame = spyOn(window, 'cancelAnimationFrame');
+
+    component['fetchWithPromise']();
+    await new Promise((resolve) => setTimeout(resolve));
+
+    expect(requestAnimationFrame).toHaveBeenCalledTimes(1);
+    expect(service.state.isLoading()).toBeTrue();
+    expect(cancelAnimationFrame).not.toHaveBeenCalledWith(42);
+
+    examplePromise.getResolve()!();
+    await acceptStepwiseAndSettle();
+
+    expect(service.state.isLoading()).toBeFalse();
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(42);
+  });
+
+  it('should delegate the Observable request and emission while tracking its pending state', async () => {
+    await configureComponent();
+    const addByObservable = spyOn(service, 'addByObservable');
+    const emit = jasmine.createSpy('emitObservable');
+    const getEmit = spyOn(exampleObservable, 'getEmit').and.returnValue(emit);
+
+    component['addByObservable']();
+
+    expect(addByObservable).toHaveBeenCalledOnceWith();
+    expect(component['observablePending']()).toBeTrue();
+
+    component['emitObservable']();
+
+    expect(getEmit).toHaveBeenCalledOnceWith();
+    expect(emit).toHaveBeenCalledOnceWith();
+    expect(component['observablePending']()).toBeFalse();
+  });
+
+  it('should delegate the Observable error while tracking its pending state', async () => {
+    await configureComponent();
+    const error = jasmine.createSpy('errorObservable');
+    const getError = spyOn(exampleObservable, 'getError').and.returnValue(
+      error
+    );
+    component['observablePending'].set(true);
+
+    component['errorObservable']();
+
+    expect(getError).toHaveBeenCalledOnceWith();
+    expect(error).toHaveBeenCalledOnceWith();
+    expect(component['observablePending']()).toBeFalse();
+  });
+
+  it('should keep the Observable actions visible when no emitter is available', async () => {
+    await configureComponent();
+    spyOn(exampleObservable, 'getEmit').and.returnValue(null);
+    component['observablePending'].set(true);
+
+    component['emitObservable']();
+
+    expect(component['observablePending']()).toBeTrue();
+  });
+
+  it('should keep the Observable actions visible when no error controller is available', async () => {
+    await configureComponent();
+    spyOn(exampleObservable, 'getError').and.returnValue(null);
+    component['observablePending'].set(true);
+
+    component['errorObservable']();
+
+    expect(component['observablePending']()).toBeTrue();
+  });
+
+  it('should delegate the HTTP resource request and stop timing after state$ emits', async () => {
+    await configureComponent(initialCharacters, true);
+    const fetchWithHttpResource = spyOn(service, 'fetchWithHttpResource');
+    const requestAnimationFrame = spyOn(
+      window,
+      'requestAnimationFrame'
+    ).and.returnValue(42);
+    const cancelAnimationFrame = spyOn(window, 'cancelAnimationFrame');
+    const buttons = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll('button')
+    );
+    const fetchButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Replace with httpResource'
+    );
+
+    expect(fetchButton).toBeDefined();
+    fetchButton!.click();
+
+    expect(fetchWithHttpResource).toHaveBeenCalledOnceWith();
+    expect(requestAnimationFrame).toHaveBeenCalledTimes(1);
+
+    service.createCharacter({
+      name: 'Han',
+      lastName: 'Solo',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
+    await acceptStepwiseAndSettle();
+
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(42);
+  });
+
+  it('should display the configured delay and elapsed timer in milliseconds', async () => {
+    await configureComponent(initialCharacters, true);
+    const element = fixture.nativeElement as HTMLElement;
+    const delayInput = element.querySelector<HTMLInputElement>(
+      '[aria-label="Configured delay in milliseconds"]'
+    )!;
+    const timerInput = element.querySelector<HTMLInputElement>(
+      '[aria-label="Elapsed delay timer in milliseconds"]'
+    )!;
+
+    expect(delayInput.readOnly).toBeTrue();
+    expect(delayInput.valueAsNumber).toBe(3_000);
+    expect(timerInput.readOnly).toBeTrue();
+    expect(timerInput.valueAsNumber).toBe(0);
+
+    component['delayTimerMilliseconds'].set(1_275);
+    fixture.detectChanges();
+
+    expect(timerInput.valueAsNumber).toBe(1_275);
+  });
+
+  it('should start timing from each requested pipeline action', async () => {
+    await configureComponent(initialCharacters, true);
+    const persistNullValue = spyOn(service, 'persistNullValue');
+    const fetchWithPromise = spyOn(service, 'fetchWithPromise');
+    const addByObservable = spyOn(service, 'addByObservable');
+    const fetchWithHttpResource = spyOn(service, 'fetchWithHttpResource');
+    const restoreInitialCharacters = spyOn(
+      service,
+      'restoreInitialCharacters'
+    ).and.returnValue(initialCharactersWithDisplay[0]!);
+    const requestAnimationFrame = spyOn(
+      window,
+      'requestAnimationFrame'
+    ).and.returnValue(42);
+    const buttons = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll('button')
+    );
+    const clickAction = (label: string): void => {
+      const button = buttons.find(
+        ({ textContent }) => textContent?.trim() === label
+      );
+
+      expect(button).withContext(label).toBeDefined();
+      button!.click();
+    };
+
+    clickAction('Persist Null Value');
+    clickAction('Fetch with Promise');
+    clickAction('Add by Observable');
+    clickAction('Replace with httpResource');
+    clickAction('Restore Initial Data');
+
+    expect(persistNullValue).toHaveBeenCalledOnceWith();
+    expect(fetchWithPromise).toHaveBeenCalledOnceWith();
+    expect(addByObservable).toHaveBeenCalledOnceWith();
+    expect(fetchWithHttpResource).toHaveBeenCalledOnceWith();
+    expect(restoreInitialCharacters).toHaveBeenCalledOnceWith();
+    expect(requestAnimationFrame).toHaveBeenCalledTimes(5);
+  });
+
+  it('should delegate both Distinct Until Changed button clicks', async () => {
+    await configureComponent(initialCharacters, true);
+    const submitSameState = spyOn(service, 'submitSameState');
+    const submitChangedState = spyOn(service, 'submitChangedState');
+    spyOn(window, 'requestAnimationFrame').and.returnValue(42);
+    const buttons = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll('button')
+    );
+    const sameButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Submit Same State'
+    );
+    const changedButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Submit Changed State'
+    );
+
+    expect(sameButton).toBeDefined();
+    expect(changedButton).toBeDefined();
+
+    sameButton!.click();
+    changedButton!.click();
+
+    expect(submitSameState).toHaveBeenCalledOnceWith();
+    expect(submitChangedState).toHaveBeenCalledOnceWith();
+  });
+
+  it('should switch the Throw Error action to Reset Error and disarm it', async () => {
+    const globalErrorService = VaultErrorService();
+    const clear = spyOn(globalErrorService, 'clear').and.callThrough();
+    spyOn(window, 'requestAnimationFrame').and.returnValue(42);
+    await configureComponent(initialCharacters, true);
+    const errorButton = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll('button')
+    ).find(({ textContent }) => textContent?.trim() === 'Throw Error');
+
+    expect(errorButton).toBeDefined();
+
+    errorButton!.click();
+    fixture.detectChanges();
+
+    expect(service.isThrowError()).toBeTrue();
+    expect(errorButton!.textContent?.trim()).toBe('Reset Error');
+
+    await acceptStepwiseAndSettle();
+    errorButton!.click();
+    fixture.detectChanges();
+
+    expect(service.isThrowError()).toBeFalse();
+    expect(clear).toHaveBeenCalledOnceWith();
+    expect(errorButton!.textContent?.trim()).toBe('Throw Error');
+  });
+
+  it('should refresh the encrypted State output after state$ emits', async () => {
+    await configureComponent(initialCharacters, true);
+    const encryptedEnvelope = JSON.stringify({
+      v: 1,
+      alg: 'AES-256-GCM',
+      iv: [1, 2, 3],
+      data: [4, 5, 6]
+    });
+    const encryptedOutput = (
+      fixture.nativeElement as HTMLElement
+    ).querySelector<HTMLTextAreaElement>(
+      '[aria-label="Encrypted State output"]'
+    )!;
+
+    localStorage.setItem(EXAMPLE_ENCRYPTED_STORAGE_KEY, encryptedEnvelope);
+    service.createCharacter({
+      name: 'Han',
+      lastName: 'Solo',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
+    await acceptStepwiseAndSettle();
+    fixture.detectChanges();
+
+    expect(component['encryptedState']()).toBe(encryptedEnvelope);
+    expect(encryptedOutput.value).toBe(encryptedEnvelope);
+
+    localStorage.removeItem(EXAMPLE_ENCRYPTED_STORAGE_KEY);
+  });
+
   it('should switch Promise buttons and display the spinner until resolution', async () => {
     await configureComponent(initialCharacters, true);
     const element = fixture.nativeElement as HTMLElement;
-    const buttons = Array.from(element.querySelectorAll('button'));
-    const fetchButton = buttons.find(
-      ({ textContent }) => textContent?.trim() === 'Fetch with Promise'
-    )!;
-    const resolveButton = buttons.find(
-      ({ textContent }) => textContent?.trim() === 'Resolve'
-    )!;
-    const rejectButton = buttons.find(
-      ({ textContent }) => textContent?.trim() === 'Reject'
-    )!;
     const promiseControls = element.querySelector(
       '.promise-controls'
     ) as HTMLElement;
+    const promiseButtons = Array.from(
+      promiseControls.querySelectorAll('button')
+    );
+    const fetchButton = promiseButtons.find(
+      ({ textContent }) => textContent?.trim() === 'Fetch with Promise'
+    )!;
+    const resolveButton = promiseButtons.find(
+      ({ textContent }) => textContent?.trim() === 'Resolve'
+    )!;
+    const rejectButton = promiseButtons.find(
+      ({ textContent }) => textContent?.trim() === 'Reject'
+    )!;
 
     expect(fetchButton.hidden).toBeFalse();
     expect(resolveButton.hidden).toBeTrue();
@@ -659,8 +1303,8 @@ describe('ExampleComponent', () => {
     expect(fetchButton.hidden).toBeTrue();
     expect(resolveButton.hidden).toBeFalse();
     expect(rejectButton.hidden).toBeFalse();
-    expect(resolveButton.getBoundingClientRect().width).toBe(100);
-    expect(rejectButton.getBoundingClientRect().width).toBe(100);
+    expect(resolveButton.getBoundingClientRect().width).toBe(122.5);
+    expect(rejectButton.getBoundingClientRect().width).toBe(122.5);
     expect(rejectButton.classList).toContain('danger');
     expect(promiseControls.getBoundingClientRect().width).toBe(
       promiseControls.parentElement!.getBoundingClientRect().width
@@ -680,7 +1324,7 @@ describe('ExampleComponent', () => {
     expect(resolveButton.hidden).toBeTrue();
     expect(rejectButton.hidden).toBeTrue();
 
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
     fixture.detectChanges();
 
     expect(service.state.isLoading()).toBeFalse();
@@ -712,14 +1356,16 @@ describe('ExampleComponent', () => {
     VaultPrivateErrorService().clear();
     await configureComponent(initialCharacters, true);
     const element = fixture.nativeElement as HTMLElement;
-    const buttons = Array.from(element.querySelectorAll('button'));
-    const fetchButton = buttons.find(
+    const promiseButtons = Array.from(
+      element.querySelectorAll<HTMLButtonElement>('.promise-controls button')
+    );
+    const fetchButton = promiseButtons.find(
       ({ textContent }) => textContent?.trim() === 'Fetch with Promise'
     )!;
-    const resolveButton = buttons.find(
+    const resolveButton = promiseButtons.find(
       ({ textContent }) => textContent?.trim() === 'Resolve'
     )!;
-    const rejectButton = buttons.find(
+    const rejectButton = promiseButtons.find(
       ({ textContent }) => textContent?.trim() === 'Reject'
     )!;
 
@@ -739,19 +1385,27 @@ describe('ExampleComponent', () => {
     expect(resolveButton.hidden).toBeTrue();
     expect(rejectButton.hidden).toBeTrue();
 
-    await vaultSettled(key);
+    await acceptStepwiseAndSettle();
     fixture.detectChanges();
 
     expect(service.state.isLoading()).toBeFalse();
     expect(service.characters()).toEqual(initialCharactersWithDisplay);
-    expect(service.state.error()?.message).toBe('Unexpected error');
-    expect(component['globalError']()?.message).toBe('Unexpected error');
+    expect(service.state.error()?.message).toBe(
+      'The character request was rejected.'
+    );
+    expect(component['globalError']()?.message).toBe(
+      'The character request was rejected.'
+    );
     expect(JSON.parse(component['errorEmissionJson']())).toEqual({
-      error: jasmine.objectContaining({ message: 'Unexpected error' }),
+      error: jasmine.objectContaining({
+        message: 'The character request was rejected.'
+      }),
       state: {
         isLoading: false,
         value: initialCharactersWithDisplay,
-        error: jasmine.objectContaining({ message: 'Unexpected error' }),
+        error: jasmine.objectContaining({
+          message: 'The character request was rejected.'
+        }),
         hasValue: true
       }
     });
@@ -765,6 +1419,148 @@ describe('ExampleComponent', () => {
     expect(
       element.querySelector('[aria-label="Loading characters"]')
     ).toBeNull();
+
+    VaultPrivateErrorService().clear();
+  });
+
+  it('should switch Observable buttons until the source emits characters', async () => {
+    await configureComponent(initialCharacters, true);
+    const element = fixture.nativeElement as HTMLElement;
+    const buttons = Array.from(element.querySelectorAll('button'));
+    const addButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Add by Observable'
+    )!;
+    const emitButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Emit'
+    )!;
+    const errorButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Error'
+    )!;
+    const observableControls = element.querySelector(
+      '.observable-controls'
+    ) as HTMLElement;
+
+    expect(addButton.hidden).toBeFalse();
+    expect(emitButton.hidden).toBeTrue();
+    expect(errorButton.hidden).toBeTrue();
+
+    addButton.click();
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    expect(addButton.hidden).toBeTrue();
+    expect(emitButton.hidden).toBeFalse();
+    expect(errorButton.hidden).toBeFalse();
+    expect(emitButton.getBoundingClientRect().width).toBe(122.5);
+    expect(errorButton.getBoundingClientRect().width).toBe(122.5);
+    expect(errorButton.classList).toContain('danger');
+    expect(observableControls.getBoundingClientRect().width).toBe(
+      observableControls.parentElement!.getBoundingClientRect().width
+    );
+    expect(getComputedStyle(observableControls).justifyContent).toBe(
+      'space-between'
+    );
+    expect(service.state.isLoading()).toBeTrue();
+    expect(
+      element.querySelector('[aria-label="Loading characters"]')
+    ).not.toBeNull();
+
+    emitButton.click();
+    fixture.detectChanges();
+
+    expect(addButton.hidden).toBeFalse();
+    expect(emitButton.hidden).toBeTrue();
+    expect(errorButton.hidden).toBeTrue();
+
+    await acceptStepwiseAndSettle();
+    fixture.detectChanges();
+
+    expect(service.state.isLoading()).toBeFalse();
+    expect(
+      element.querySelector('[aria-label="Loading characters"]')
+    ).toBeNull();
+    expect(service.characters()).toEqual([
+      {
+        id: 201,
+        name: 'Ezra',
+        lastName: 'Bridger',
+        faction: 'Jedi Order',
+        isForceSensitive: true,
+        forceSensitiveDisplay: 'Yes'
+      },
+      ...initialCharactersWithDisplay,
+      {
+        id: 202,
+        name: 'Hera',
+        lastName: 'Syndulla',
+        faction: 'Rebel Alliance',
+        isForceSensitive: false,
+        forceSensitiveDisplay: 'No'
+      }
+    ]);
+  });
+
+  it('should error a pending Observable and expose the pipeline error', async () => {
+    VaultPrivateErrorService().clear();
+    await configureComponent(initialCharacters, true);
+    const element = fixture.nativeElement as HTMLElement;
+    const buttons = Array.from(element.querySelectorAll('button'));
+    const addButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Add by Observable'
+    )!;
+    const emitButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Emit'
+    )!;
+    const errorButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Error'
+    )!;
+
+    addButton.click();
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    expect(addButton.hidden).toBeTrue();
+    expect(emitButton.hidden).toBeFalse();
+    expect(errorButton.hidden).toBeFalse();
+    expect(service.state.isLoading()).toBeTrue();
+    expect(
+      element.querySelector('[aria-label="Loading characters"]')
+    ).not.toBeNull();
+
+    errorButton.click();
+    fixture.detectChanges();
+
+    expect(addButton.hidden).toBeFalse();
+    expect(emitButton.hidden).toBeTrue();
+    expect(errorButton.hidden).toBeTrue();
+
+    await acceptStepwiseAndSettle();
+    fixture.detectChanges();
+
+    expect(service.state.isLoading()).toBeFalse();
+    expect(
+      element.querySelector('[aria-label="Loading characters"]')
+    ).toBeNull();
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
+    expect(service.state.error()?.message).toBe(
+      'The character request was rejected.'
+    );
+    expect(component['globalError']()?.message).toBe(
+      'The character request was rejected.'
+    );
+    expect(JSON.parse(component['errorEmissionJson']())).toEqual({
+      error: jasmine.objectContaining({
+        message: 'The character request was rejected.'
+      }),
+      state: {
+        isLoading: false,
+        value: initialCharactersWithDisplay,
+        error: jasmine.objectContaining({
+          message: 'The character request was rejected.'
+        }),
+        hasValue: true
+      }
+    });
 
     VaultPrivateErrorService().clear();
   });

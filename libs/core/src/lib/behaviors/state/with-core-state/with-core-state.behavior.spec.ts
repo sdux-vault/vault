@@ -231,8 +231,9 @@ describe('Behavior: CoreState', () => {
         ]);
       });
 
-      it('preparePipelineIncoming should set for Observable', async () => {
+      it('preparePipelineIncoming should set loading for Observable resolution', async () => {
         mockCtx.incoming = new Observable();
+        mockCtx.resolveType = ResolveTypes.Observable;
 
         const incomingRef = mockCtx.incoming;
 
@@ -243,7 +244,7 @@ describe('Behavior: CoreState', () => {
 
         expect(mockCtx.lastSnapshot).toEqual(
           Object({
-            isLoading: false,
+            isLoading: true,
             value: undefined,
             error: null,
             hasValue: false
@@ -252,7 +253,17 @@ describe('Behavior: CoreState', () => {
 
         expect(warnSpy).not.toHaveBeenCalled();
         expect(errorSpy).not.toHaveBeenCalled();
-        expect(emitted).toEqual([]);
+        expect(emitted).toEqual([
+          Object({
+            type: 'Incoming Pipeline',
+            snapshot: Object({
+              isLoading: true,
+              value: undefined,
+              error: null,
+              hasValue: false
+            })
+          })
+        ]);
       });
 
       it('preparePipelineIncoming should set for deferred function', async () => {
@@ -948,8 +959,9 @@ describe('Behavior: CoreState', () => {
         ]);
       });
 
-      it('preparePipelineIncoming should set for Observable', async () => {
+      it('preparePipelineIncoming should set loading for Observable resolution', async () => {
         mockCtx.incoming = new Observable();
+        mockCtx.resolveType = ResolveTypes.Observable;
 
         const incomingRef = mockCtx.incoming;
 
@@ -960,7 +972,7 @@ describe('Behavior: CoreState', () => {
 
         expect(mockCtx.lastSnapshot).toEqual(
           Object({
-            isLoading: false,
+            isLoading: true,
             value: undefined,
             error: null,
             hasValue: false
@@ -969,7 +981,18 @@ describe('Behavior: CoreState', () => {
 
         expect(warnSpy).not.toHaveBeenCalled();
         expect(errorSpy).not.toHaveBeenCalled();
-        expect(emitted).toEqual([]);
+        expect(emitted).toEqual([
+          Object({
+            type: 'Incoming Pipeline',
+            snapshot: Object({
+              isLoading: true,
+              value: undefined,
+              error: null,
+              hasValue: false
+            }),
+            options: { value: true }
+          })
+        ]);
       });
 
       it('preparePipelineIncoming should set loading true for HttpResourceRef', async () => {
@@ -1268,6 +1291,37 @@ describe('Behavior: CoreState', () => {
         ]);
       });
 
+      it('finalizePipelineState should atomically clear loading and set an Observable value', () => {
+        mockCtx.incoming = new Observable();
+        mockCtx.resolveType = ResolveTypes.Observable;
+        mockCtx.lastSnapshot.isLoading = true;
+        const value = [{ id: 1 }];
+
+        behavior.finalizePipelineState(value, mockCtx);
+
+        expect(mockCtx.lastSnapshot).toEqual(
+          Object({
+            isLoading: false,
+            value,
+            error: null,
+            hasValue: true
+          })
+        );
+        expect(warnSpy).not.toHaveBeenCalled();
+        expect(errorSpy).not.toHaveBeenCalled();
+        expect(emitted).toEqual([
+          Object({
+            type: 'Finalize Pipeline',
+            snapshot: Object({
+              isLoading: false,
+              value: [Object({ id: 1 })],
+              error: null,
+              hasValue: true
+            })
+          })
+        ]);
+      });
+
       it('finalizePipelineState should clear loading once and preserve the value when a Promise resolves undefined', () => {
         const previous = [{ id: 1 }];
         mockCtx.incoming = { value: () => Promise.resolve(undefined) };
@@ -1299,6 +1353,77 @@ describe('Behavior: CoreState', () => {
               value: [Object({ id: 1 })],
               error: null,
               hasValue: true
+            })
+          })
+        ]);
+      });
+
+      it('finalizePipelineState should clear Promise loading and preserve the value for VAULT_NOOP', () => {
+        const previous = [{ id: 1 }];
+        mockCtx.incoming = { value: () => Promise.resolve(VAULT_NOOP) };
+        mockCtx.resolveType = ResolveTypes.Promise;
+        mockCtx.lastSnapshot = {
+          isLoading: true,
+          value: previous,
+          error: null,
+          hasValue: true
+        };
+
+        behavior.finalizePipelineState(VAULT_NOOP, mockCtx);
+
+        expect(mockCtx.lastSnapshot).toEqual(
+          Object({
+            isLoading: false,
+            value: previous,
+            error: null,
+            hasValue: true
+          })
+        );
+        expect(warnSpy).not.toHaveBeenCalled();
+        expect(errorSpy).not.toHaveBeenCalled();
+        expect(emitted).toEqual([
+          Object({
+            type: 'Finalize Pipeline',
+            snapshot: Object({
+              isLoading: false,
+              value: [Object({ id: 1 })],
+              error: null,
+              hasValue: true
+            })
+          })
+        ]);
+      });
+
+      it('finalizePipelineState should atomically clear Promise loading and value for null', () => {
+        mockCtx.incoming = { value: () => Promise.resolve(null) };
+        mockCtx.resolveType = ResolveTypes.Promise;
+        mockCtx.lastSnapshot = {
+          isLoading: true,
+          value: [{ id: 1 }],
+          error: null,
+          hasValue: true
+        };
+
+        behavior.finalizePipelineState(null, mockCtx);
+
+        expect(mockCtx.lastSnapshot).toEqual(
+          Object({
+            isLoading: false,
+            value: undefined,
+            error: null,
+            hasValue: false
+          })
+        );
+        expect(warnSpy).not.toHaveBeenCalled();
+        expect(errorSpy).not.toHaveBeenCalled();
+        expect(emitted).toEqual([
+          Object({
+            type: 'Finalize Pipeline',
+            snapshot: Object({
+              isLoading: false,
+              value: undefined,
+              error: null,
+              hasValue: false
             })
           })
         ]);

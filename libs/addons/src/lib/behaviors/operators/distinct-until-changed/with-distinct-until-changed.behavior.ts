@@ -4,6 +4,8 @@ import type {
   PipelineUpstreamValue
 } from '@sdux-vault/shared';
 import {
+  isUndefined,
+  isNullish,
   BehaviorClassContext,
   BehaviorType,
   BehaviorTypes,
@@ -96,13 +98,13 @@ abstract class withDistinctUntilChangedBehavior<
       `${this.key} applyOperator called with value: "${safeStringify(value)}"`
     );
 
-    if (value == null) {
+    if (isNullish(value)) {
       vaultDebug(`${this.key} skipped — value is invalid.`);
       return VAULT_NOOP;
     }
 
     // First emission
-    if (this.#previous === undefined) {
+    if (isUndefined(this.#previous)) {
       this.#previous = value;
       vaultDebug(`${this.key} first value accepted: "${safeStringify(value)}"`);
       return value;

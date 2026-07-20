@@ -191,7 +191,8 @@ export class withCoreStateBehavior<T>
 
     if (
       isHttpResourceRef(incoming) ||
-      ctx.resolveType === ResolveTypes.Promise
+      ctx.resolveType === ResolveTypes.Promise ||
+      ctx.resolveType === ResolveTypes.Observable
     ) {
       changes.isLoading = true;
     } else if (isStateInputShape(incoming)) {
@@ -224,7 +225,8 @@ export class withCoreStateBehavior<T>
 
     const shouldClearLoading =
       isHttpResourceRef(ctx.incoming) ||
-      ctx.resolveType === ResolveTypes.Promise;
+      ctx.resolveType === ResolveTypes.Promise ||
+      ctx.resolveType === ResolveTypes.Observable;
 
     if (isVaultNoop(value)) {
       this.commitState(

@@ -18,9 +18,16 @@ const SOURCE_FILE_TYPES = [
   { type: 'service', suffix: '.service.ts' },
   { type: 'html', suffix: '.component.html' },
   { type: 'filter', suffix: '.filter.ts' },
+  { type: 'hydrate', suffix: '.hydrate.ts' },
+  { type: 'observable', suffix: '.observable.ts' },
+  { type: 'promise', suffix: '.promise.ts' },
+  { type: 'httpResource', suffix: '.http-resource.ts' },
   { type: 'scss', suffix: '.component.scss' },
   { type: 'componentSpec', suffix: '.component.spec.ts' },
-  { type: 'serviceSpec', suffix: '.service.spec.ts' }
+  { type: 'serviceSpec', suffix: '.service.spec.ts' },
+  { type: 'observableSpec', suffix: '.observable.spec.ts' },
+  { type: 'promiseSpec', suffix: '.promise.spec.ts' },
+  { type: 'httpResourceSpec', suffix: '.http-resource.spec.ts' }
 ];
 const SOURCE_FILE_TYPE_ORDER = new Map(
   SOURCE_FILE_TYPES.map(({ type }, index) => [type, index])

@@ -230,6 +230,13 @@ $action-column-width: calc(
       transform: translateY(-1px);
     }
 
+    &:active:not(:disabled) {
+      box-shadow: inset 0 3px 5px
+        color-mix(in srgb, $sdux-text-inverse 35%, transparent);
+      transform: translateY(1px) scale(0.98);
+      transition-duration: 50ms;
+    }
+
     &:focus-visible {
       outline: 3px solid
         color-mix(in srgb, $sdux-primary-light 55%, transparent);
@@ -428,10 +435,14 @@ $action-column-width: calc(
           inset: 0;
           z-index: 1;
           display: flex;
+          flex-direction: column;
+          gap: $spacing-md;
           align-items: center;
           justify-content: center;
+          padding: $spacing-lg;
           background: var(--sdux-surface-elevated);
           border-radius: $border-radius-md;
+          text-align: center;
 
           .spinner {
             width: 48px;
@@ -440,6 +451,13 @@ $action-column-width: calc(
             border-top-color: $sdux-primary-dark;
             border-radius: 50%;
             animation: character-loading-spin 800ms linear infinite;
+          }
+
+          .loading-guidance {
+            max-width: 34ch;
+            margin: 0;
+            color: var(--sdux-text-default);
+            line-height: 1.5;
           }
         }
 
@@ -542,7 +560,6 @@ $action-column-width: calc(
     border-top: 1px solid $sdux-primary-base;
 
     > .section-toggle:not(:checked) ~ .action-row,
-    > .section-toggle:not(:checked) ~ .distinct-operator,
     > .section-toggle:not(:checked) ~ .tab-sync-operator {
       display: none;
     }
@@ -574,12 +591,16 @@ $action-column-width: calc(
           box-sizing: border-box;
         }
 
-        &.promise-controls .button.promise-terminal {
-          flex-basis: $action-button-width * 0.4;
+        &.hydrate-controls .button.hydrate-terminal,
+        &.promise-controls .button.promise-terminal,
+        &.observable-controls .button.observable-terminal {
+          flex-basis: $action-button-width * 0.49;
           width: $action-button-width * 0.4;
         }
 
-        &.promise-controls {
+        &.hydrate-controls,
+        &.promise-controls,
+        &.observable-controls {
           width: 100%;
           justify-content: space-between;
         }
@@ -673,7 +694,8 @@ $action-column-width: calc(
       padding-top: $spacing-lg;
       border-top: 1px solid $sdux-primary-base;
 
-      > .section-toggle:not(:checked) ~ .operator-actions {
+      > .section-toggle:not(:checked) ~ .operator-actions,
+      > .section-toggle:not(:checked) ~ .comparison-function-column {
         display: none;
       }
 
@@ -683,34 +705,124 @@ $action-column-width: calc(
         gap: $spacing-md;
         justify-content: space-between;
 
-        .payload-column {
-          display: grid;
-          grid-template-rows: auto 1fr;
-          gap: $spacing-sm;
-          width: $action-column-width;
+        .tab-sync-action-row {
+          grid-column: 1 / -1;
+          width: 100%;
 
-          .payload-header {
-            > span {
-              font-size: $font-size-md;
+          .button-container {
+            justify-content: flex-start;
+          }
+        }
+      }
+
+      .comparison-function-column {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: $spacing-sm;
+        width: 100%;
+
+        .tap-toggle {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0 0 0 0);
+          white-space: nowrap;
+        }
+
+        .tap-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          h3 {
+            margin: 0;
+            font-size: $font-size-md;
+          }
+
+          .tap-chevron {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: $action-chevron-hit-area;
+            min-width: $action-chevron-hit-area;
+            height: $action-chevron-hit-area;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            color: $sdux-text-white;
+            line-height: 0;
+            background: transparent;
+            border: 0;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+
+            &:hover {
+              transform: translateY(-2px);
+
+              &::after {
+                background: $sdux-primary-dark;
+              }
+            }
+
+            &:active {
+              transform: scale(0.95);
+            }
+
+            &::before {
+              position: relative;
+              z-index: 1;
+              display: block;
+              width: 6px;
+              height: 6px;
+              box-sizing: border-box;
+              content: '';
+              border-right: 2px solid currentColor;
+              border-bottom: 2px solid currentColor;
+              transform: rotate(45deg);
+              transition: transform 150ms ease;
+            }
+
+            &::after {
+              position: absolute;
+              width: $action-chevron-size;
+              height: $action-chevron-size;
+              content: '';
+              background: $sdux-primary-base;
+              border: 1px solid transparent;
+              border-radius: 50%;
+              transition: background-color 0.2s ease;
             }
           }
+        }
 
-          textarea {
-            width: 100%;
-            min-height: 160px;
-            padding: $spacing-md;
-            box-sizing: border-box;
-            color: $sdux-text-inverse;
-            background: $sdux-surface-light;
-            border: 1px solid $sdux-surface-outline;
-            border-radius: $border-radius-sm;
-            font: inherit;
-            resize: vertical;
-          }
+        textarea {
+          width: 100%;
+          height: calc(320px / 3);
+          min-height: calc(320px / 3);
+          padding: $spacing-md;
+          box-sizing: border-box;
+          color: $sdux-text-inverse;
+          background: $sdux-surface-light;
+          border: 1px solid $sdux-surface-outline;
+          border-radius: $border-radius-sm;
+          font: inherit;
+          resize: vertical;
+        }
 
-          > .section-toggle:not(:checked) ~ textarea {
-            display: none;
-          }
+        > .tap-toggle:focus-visible ~ .tap-header .tap-chevron {
+          outline: 2px solid $sdux-primary-light;
+          outline-offset: 3px;
+        }
+
+        > .tap-toggle:not(:checked) ~ .tap-header .tap-chevron::before {
+          transform: rotate(-45deg);
+        }
+
+        > .tap-toggle:not(:checked) ~ textarea {
+          display: none;
         }
       }
     }
@@ -934,6 +1046,12 @@ $action-column-width: calc(
         h3 {
           margin: 0;
           font-size: $font-size-md;
+        }
+
+        .stepwise-actions {
+          display: flex;
+          gap: $spacing-sm;
+          align-items: center;
         }
 
         .button {

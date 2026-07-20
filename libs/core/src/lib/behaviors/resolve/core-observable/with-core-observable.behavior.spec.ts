@@ -116,8 +116,9 @@ describe('Behavior: CoreObservableResolve', () => {
   // ERROR PATH
   // ------------------------------------------------------------------------------------------
 
-  it('should wrap observable errors in a VaultError', async () => {
-    ctx.incoming = throwError(() => new Error('Boom'));
+  it('should preserve an Error thrown by an Observable', async () => {
+    const thrownError = new Error('Boom');
+    ctx.incoming = throwError(() => thrownError);
 
     let caught: any;
 
@@ -128,7 +129,23 @@ describe('Behavior: CoreObservableResolve', () => {
       caught = err;
     }
 
-    expect(caught.message).toBe('Boom');
+    expect(caught).toBe(thrownError);
+  });
+
+  it('should preserve a non-Error value thrown by an Observable', async () => {
+    const thrownValue = { code: 'OBSERVABLE_FAILURE' };
+    ctx.incoming = throwError(() => thrownValue);
+
+    let caught: unknown;
+
+    try {
+      await behavior.computeResolve(ctx);
+      fail('Expected error to be thrown');
+    } catch (err) {
+      caught = err;
+    }
+
+    expect(caught).toBe(thrownValue);
   });
 
   // ------------------------------------------------------------------------------------------

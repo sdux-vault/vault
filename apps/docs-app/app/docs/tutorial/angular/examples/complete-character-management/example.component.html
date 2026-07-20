@@ -47,6 +47,35 @@
     </div>
   }
 
+  @if (!hydrationSettled()) {
+    <!-- Teaching point: Hydration (ex-023) -->
+    <div class="feedback info" role="status" aria-live="polite">
+      The initial state hydrate method is awaiting resolve or reject in the
+      Action section
+    </div>
+  }
+
+  @if (isStepwiseResolvePending()) {
+    <!-- Teaching point: Stepwise Resolve (ex-038) -->
+    <div class="feedback info" role="status" aria-live="polite">
+      Stepwise Resolve is awaiting confirmation.
+    </div>
+  }
+
+  @if (isStepwiseFilterPending()) {
+    <!-- Teaching point: Stepwise Filter (ex-039) -->
+    <div class="feedback info" role="status" aria-live="polite">
+      Stepwise Filter is awaiting confirmation.
+    </div>
+  }
+
+  @if (isStepwiseReducerPending()) {
+    <!-- Teaching point: Stepwise Reducer (ex-040) -->
+    <div class="feedback info" role="status" aria-live="polite">
+      Stepwise Reducer is awaiting confirmation.
+    </div>
+  }
+
   <fieldset class="feature-cell-controls" [disabled]="featureCellDestroyed()">
     @if (deleteCandidate(); as character) {
       <!-- Teaching point: Remove (ex-006) -->
@@ -111,6 +140,11 @@
             role="status"
             aria-label="Loading characters">
             <span class="spinner" aria-hidden="true"></span>
+            <p class="loading-guidance">
+              <strong>State is loading.</strong>
+              Complete the pending State change request by selecting Resolve or
+              Reject in the Actions section.
+            </p>
           </div>
         }
 
@@ -574,18 +608,36 @@
           id="hydrate-description"
           class="description-toggle"
           type="checkbox"
-          aria-label="Show Hydrate Model description" />
-        <div class="button-container">
+          aria-label="Show Hydration description" />
+        <div class="button-container hydrate-controls">
           <!-- Teaching point: Hydration (ex-023) -->
-          <button type="button" class="button">Hydrate Model</button>
+          <button
+            type="button"
+            class="button hydrate-terminal"
+            [disabled]="hydrationSettled()"
+            (click)="resolveHydration()">
+            Resolve
+          </button>
+          <button
+            type="button"
+            class="button danger hydrate-terminal"
+            [disabled]="hydrationSettled()"
+            (click)="rejectHydration()">
+            Reject
+          </button>
           <label
             class="description-chevron"
             for="hydrate-description"
-            title="Show or hide Hydrate Model description"></label>
+            title="Show or hide Hydration description"></label>
         </div>
         <div class="description-container">
-          Hydrates a character model from serialized data before adding it to
-          the collection.
+          The service registers a deferred hydration factory before initialize()
+          makes it the authoritative initial State source. Resolve sends five
+          characters through the full Replace pipeline, including the configured
+          Filter, Taps, and Reducers. Reject emits an initialization Error and
+          leaves the FeatureCell without a value; configured initial State is
+          not used as a fallback. Hydration runs once during initialization and
+          does not run again when State is reset.
         </div>
       </div>
 
@@ -637,9 +689,29 @@
           class="description-toggle"
           type="checkbox"
           aria-label="Show Add by Observable description" />
-        <div class="button-container">
+        <div class="button-container observable-controls">
           <!-- Teaching point: Observable (ex-025) -->
-          <button type="button" class="button">Add by Observable</button>
+          <button
+            type="button"
+            class="button"
+            [hidden]="observablePending()"
+            (click)="addByObservable()">
+            Add by Observable
+          </button>
+          <button
+            type="button"
+            class="button observable-terminal"
+            [hidden]="!observablePending()"
+            (click)="emitObservable()">
+            Emit
+          </button>
+          <button
+            type="button"
+            class="button danger observable-terminal"
+            [hidden]="!observablePending()"
+            (click)="errorObservable()">
+            Error
+          </button>
           <label
             class="description-chevron"
             for="observable-description"
@@ -647,7 +719,7 @@
         </div>
         <div class="description-container">
           Adds character data emitted by an Observable to the current
-          collection.
+          collection, or sends an error through the FeatureCell error pipeline.
         </div>
       </div>
 
@@ -657,18 +729,29 @@
           id="resource-description"
           class="description-toggle"
           type="checkbox"
-          aria-label="Show Fetch with httpResource description" />
+          aria-label="Show Replace with httpResource description" />
         <div class="button-container">
           <!-- Teaching point: HTTP Resource (ex-026) -->
-          <button type="button" class="button">Fetch with httpResource</button>
+          <button
+            type="button"
+            class="button"
+            (click)="fetchWithHttpResource()">
+            Replace with httpResource
+          </button>
           <label
             class="description-chevron"
             for="resource-description"
-            title="Show or hide Fetch with httpResource description"></label>
+            title="Show or hide Replace with httpResource description"></label>
         </div>
         <div class="description-container">
-          Loads character data with Angular's HTTP resource API and updates the
-          collection when the resource resolves.
+          Creates an Angular HttpResourceRef for the public SWAPI people
+          endpoint and passes it directly to replaceState(). Vault preserves the
+          current collection while the request is loading, waits for Angular to
+          resolve and validate the response, then sends the selected characters
+          through the configured Filter, Taps, and Reducers. The finalized
+          collection replaces the previous FeatureCell value atomically;
+          transport, parsing, and HTTP failures enter the same error lifecycle
+          without committing a partial response.
         </div>
       </div>
 
@@ -681,15 +764,22 @@
           aria-label="Show Throw Error description" />
         <div class="button-container">
           <!-- Teaching point: Errors (ex-004) -->
-          <button type="button" class="button danger">Throw Error</button>
+          <button
+            type="button"
+            class="button danger"
+            (click)="toggleFilterError()">
+            {{ isThrowError() ? 'Reset Error' : 'Throw Error' }}
+          </button>
           <label
             class="description-chevron"
             for="error-description"
             title="Show or hide Throw Error description"></label>
         </div>
         <div class="description-container">
-          Triggers an intentional error to demonstrate how a failed state
-          operation is presented to the user.
+          Arms an inline filter and calls <code>replaceState()</code> with a new
+          Darth Maul candidate. The filter throws before State commitment. After
+          the failure, Reset Error disarms the filter and clears the global
+          error without starting another pipeline request.
         </div>
       </div>
 
@@ -747,16 +837,19 @@
               aria-label="Show Submit Same State description" />
             <div class="button-container">
               <!-- Teaching point: Distinct Until Changed (ex-027) -->
-              <button type="button" class="button">Submit Same State</button>
+              <button type="button" class="button" (click)="submitSameState()">
+                Submit Same State
+              </button>
               <label
                 class="description-chevron"
                 for="same-state-description"
                 title="Show or hide Submit Same State description"></label>
             </div>
             <div class="description-container">
-              Resubmits the current state. The operator recognizes the
-              equivalent value, stops the pipeline run, and prevents a redundant
-              snapshot.
+              Reconstructs Rey as a new object on every click and merges that
+              one-character delta into the collection. The custom comparison
+              checks every incoming identity against the previous collection, so
+              another Rey returns VAULT_NOOP regardless of reducer sorting.
             </div>
           </div>
 
@@ -769,39 +862,46 @@
               aria-label="Show Submit Changed State description" />
             <div class="button-container">
               <!-- Teaching point: Distinct Until Changed (ex-027) -->
-              <button type="button" class="button">Submit Changed State</button>
+              <button
+                type="button"
+                class="button"
+                (click)="submitChangedState()">
+                Submit Changed State
+              </button>
               <label
                 class="description-chevron"
                 for="changed-state-description"
                 title="Show or hide Submit Changed State description"></label>
             </div>
             <div class="description-container">
-              Submits an updated state. The operator accepts the meaningful
-              change, allowing downstream stages to run and emit a new snapshot.
+              Cycles through four Jedi with a modulo index and merges the next
+              one-character delta into the collection. The first four unique IDs
+              proceed through the pipeline; after the modulo wraps, the repeated
+              identity is suppressed without depending on collection order.
             </div>
           </div>
+        </div>
 
-          <!-- Teaching point: Distinct Until Changed state payload (ex-028) -->
-          <div class="payload-column">
-            <input
-              id="state-payload-toggle"
-              class="section-toggle"
-              type="checkbox"
-              aria-label="Toggle State Payload visibility"
-              checked />
-            <div class="section-header payload-header">
-              <span>State Payload</span>
-              <label
-                class="section-chevron"
-                for="state-payload-toggle"
-                title="Show or hide State Payload"></label>
-            </div>
-            <!-- Teaching point: Distinct Until Changed state payload (ex-028) -->
-            <textarea
-              readonly
-              rows="8"
-              aria-label="State Payload output"></textarea>
+        <!-- Teaching point: Distinct Until Changed comparison function (ex-028) -->
+        <div class="comparison-function-column">
+          <input
+            id="comparison-function-output-toggle"
+            class="tap-toggle"
+            type="checkbox"
+            aria-label="Toggle Comparison Function output visibility"
+            checked />
+          <div class="tap-header">
+            <h3>Comparison Function</h3>
+            <label
+              class="tap-chevron"
+              for="comparison-function-output-toggle"
+              title="Show or hide Comparison Function output"></label>
           </div>
+          <textarea
+            readonly
+            rows="6"
+            aria-label="Comparison Function output"
+            [value]="comparisonFunctionSource"></textarea>
         </div>
       </div>
 
@@ -822,7 +922,7 @@
         </div>
 
         <div class="operator-actions">
-          <div class="action-row">
+          <div class="action-row tab-sync-action-row">
             <input
               id="tab-sync-description"
               class="description-toggle"
@@ -840,8 +940,15 @@
             </div>
             <div class="description-container">
               Opens this example in another tab to demonstrate initial state
-              negotiation and ongoing synchronization of finalized FeatureCell
-              snapshots through withTabSyncController and withTabSyncBehavior.
+              negotiation and ongoing synchronization through
+              withTabSyncController and withTabSyncBehavior. Successful Pipeline
+              executions synchronize committed FeatureCell State values and
+              shared resets; failed Pipeline executions leave the peer tab
+              unchanged. Loading status, Error, Controller outcomes, form
+              values, and other page interactions remain local to the tab where
+              they occur. A new tab receives the last committed State with
+              loading status set to false and Error set to null, without
+              inheriting transient metadata from its peer.
             </div>
           </div>
         </div>
@@ -917,11 +1024,21 @@
         <div class="delay-fields">
           <label>
             Delay (ms)
-            <input type="number" min="0" />
+            <input
+              type="number"
+              min="0"
+              readonly
+              aria-label="Configured delay in milliseconds"
+              [value]="delayMilliseconds" />
           </label>
           <label>
             Timer (ms)
-            <input type="number" min="0" />
+            <input
+              type="number"
+              min="0"
+              readonly
+              aria-label="Elapsed delay timer in milliseconds"
+              [value]="delayTimerMilliseconds()" />
           </label>
         </div>
       </div>
@@ -939,7 +1056,8 @@
         <textarea
           readonly
           rows="8"
-          aria-label="Encrypted State output"></textarea>
+          aria-label="Encrypted State output"
+          [value]="encryptedState()"></textarea>
       </div>
 
       <!-- Teaching point: State Emission (ex-035) -->
@@ -992,46 +1110,97 @@
           title="Show or hide Stepwise Requests"></label>
       </div>
 
-      <!-- Teaching point: Stepwise Merge (ex-038) -->
+      <!-- Teaching point: Stepwise Resolve (ex-038) -->
       <div class="stepwise-column">
         <div class="stepwise-header">
-          <h3>Stepwise Merge</h3>
-          <!-- Teaching point: Stepwise Merge (ex-038) -->
-          <button type="button" class="button">Accept</button>
+          <h3>Stepwise Resolve</h3>
+          <div class="stepwise-actions">
+            <!-- Teaching point: Stepwise Resolve (ex-038) -->
+            <button
+              type="button"
+              class="button"
+              [disabled]="!isStepwiseResolvePending()"
+              (click)="acceptStepwiseResolve()">
+              Accept
+            </button>
+            <!-- Teaching point: Stepwise Resolve (ex-038) -->
+            <button
+              type="button"
+              class="button danger"
+              [disabled]="!isStepwiseResolvePending()"
+              (click)="cancelStepwiseResolve()">
+              Cancel
+            </button>
+          </div>
         </div>
-        <!-- Teaching point: Stepwise Merge (ex-038) -->
+        <!-- Teaching point: Stepwise Resolve (ex-038) -->
         <textarea
           readonly
           rows="8"
-          aria-label="Stepwise Merge output"></textarea>
+          aria-label="Stepwise Resolve output"
+          [value]="stepwiseResolveRequestJson()"></textarea>
       </div>
 
       <!-- Teaching point: Stepwise Filter (ex-039) -->
       <div class="stepwise-column">
         <div class="stepwise-header">
           <h3>Stepwise Filter</h3>
-          <!-- Teaching point: Stepwise Filter (ex-039) -->
-          <button type="button" class="button">Accept</button>
+          <div class="stepwise-actions">
+            <!-- Teaching point: Stepwise Filter (ex-039) -->
+            <button
+              type="button"
+              class="button"
+              [disabled]="!isStepwiseFilterPending()"
+              (click)="acceptStepwiseFilter()">
+              Accept
+            </button>
+            <!-- Teaching point: Stepwise Filter (ex-039) -->
+            <button
+              type="button"
+              class="button danger"
+              [disabled]="!isStepwiseFilterPending()"
+              (click)="cancelStepwiseFilter()">
+              Cancel
+            </button>
+          </div>
         </div>
         <!-- Teaching point: Stepwise Filter (ex-039) -->
         <textarea
           readonly
           rows="8"
-          aria-label="Stepwise Filter output"></textarea>
+          aria-label="Stepwise Filter output"
+          [value]="stepwiseFilterRequestJson()"></textarea>
       </div>
 
       <!-- Teaching point: Stepwise Reducer (ex-040) -->
       <div class="stepwise-column">
         <div class="stepwise-header">
           <h3>Stepwise Reducer</h3>
-          <!-- Teaching point: Stepwise Reducer (ex-040) -->
-          <button type="button" class="button">Accept</button>
+          <div class="stepwise-actions">
+            <!-- Teaching point: Stepwise Reducer (ex-040) -->
+            <button
+              type="button"
+              class="button"
+              [disabled]="!isStepwiseReducerPending()"
+              (click)="acceptStepwiseReducer()">
+              Accept
+            </button>
+            <!-- Teaching point: Stepwise Reducer (ex-040) -->
+            <button
+              type="button"
+              class="button danger"
+              [disabled]="!isStepwiseReducerPending()"
+              (click)="cancelStepwiseReducer()">
+              Cancel
+            </button>
+          </div>
         </div>
         <!-- Teaching point: Stepwise Reducer (ex-040) -->
         <textarea
           readonly
           rows="8"
-          aria-label="Stepwise Reducer output"></textarea>
+          aria-label="Stepwise Reducer output"
+          [value]="stepwiseReducerRequestJson()"></textarea>
       </div>
     </div>
   </fieldset>

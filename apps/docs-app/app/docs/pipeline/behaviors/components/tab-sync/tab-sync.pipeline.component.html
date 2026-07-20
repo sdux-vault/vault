@@ -65,6 +65,24 @@
       broadcasting.
     </p>
 
+    <h4>Synchronization Contract</h4>
+    <p>
+      Tab Sync synchronizes committed
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> State
+      values and shared reset operations across browser tabs that share the same
+      origin. Loading status, Error, global Error, Controller outcomes, and
+      destruction remain local to the tab where they occur. A successful
+      Pipeline execution broadcasts its committed State value. A failed Pipeline
+      execution leaves peer tabs unchanged.
+    </p>
+
+    <p>
+      During initial synchronization, a new tab receives the last committed
+      State value from an established peer. The receiving State begins with its
+      loading status set to false and its Error set to null. Transient metadata
+      from the peer tab is not inherited.
+    </p>
+
     <div class="callout callout-info">
       <div class="title">Degraded Mode</div>
       <p>
@@ -104,11 +122,9 @@
     <p>
       Not all state emission types are broadcast. Destroy, incoming pipeline,
       error, abort, and deny emission types are filtered from cross-tab
-      propagation. However, the state changes produced by these emissions are
-      still written to the local snapshot. Because broadcasts transmit the
-      <strong>full snapshot</strong>, any state change — including an error
-      value set by a prior non-broadcast emission — will be included in the next
-      broadcastable emission.
+      propagation. The State changes produced by these emissions remain local to
+      the originating tab and are not carried into a later broadcastable
+      emission.
     </p>
 
     <div class="callout callout-warning">
@@ -382,12 +398,14 @@
       <h4>Full-State Broadcasts</h4>
       <p>
         Tab Sync broadcasts the
-        <strong>entire finalized state snapshot</strong> (<a
+        <strong>entire synchronized state snapshot</strong> (<a
           href="/docs/references/shapes/state-snapshot-shape"
           >StateSnapshotShape</a
         >), not a delta or diff of what changed. Each broadcast message contains
-        the complete state value at the time of commit. Receiving tabs replace
-        their local state with the incoming snapshot in its entirety.
+        the complete committed State value at the time of the successful
+        Pipeline execution. Receiving tabs replace their synchronized State
+        value with the incoming value while retaining tab-local operational
+        metadata.
       </p>
 
       <p>
@@ -398,16 +416,13 @@
         messages it may have missed.
       </p>
 
-      <div class="callout callout-warning">
-        <strong>Error State in Broadcasts</strong>
+      <div class="callout callout-info">
+        <strong>Tab-Local Operational State</strong>
         <p>
-          Because broadcasts contain the full snapshot, an error value that was
-          set by a prior <code>PipelineError</code> emission will be included in
-          subsequent broadcasts. The error emission type itself is filtered from
-          broadcasting, but the error value persists in the snapshot until
-          explicitly cleared. Applications that need to prevent error
-          propagation across tabs should clear the error before committing new
-          state.
+          Loading status and Error describe work performed by one tab. They are
+          not synchronized, even when that work later produces a successful
+          committed State value. Peer tabs receive the committed value without
+          inheriting the originating tab's loading or Error lifecycle.
         </p>
       </div>
 

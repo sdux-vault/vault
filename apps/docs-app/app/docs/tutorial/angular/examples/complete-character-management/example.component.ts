@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   effect,
   inject,
   signal
@@ -15,11 +16,22 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { VaultErrorService, VaultErrorShape } from '@sdux-vault/shared';
+import {
+  StateEmitTypes,
+  VaultErrorService,
+  VaultErrorShape
+} from '@sdux-vault/shared';
 import { STAR_WARS_CHARACTERS } from '../../../examples/star-wars-character.constant';
 import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import { ElapsedTimer } from './example.elapsed-timer';
+import { exampleHydrate } from './example.hydrate';
+import { exampleObservable } from './example.observable';
 import { examplePromise } from './example.promise';
-import { ExampleService } from './example.service';
+import {
+  EXAMPLE_ENCRYPTED_STORAGE_KEY,
+  EXAMPLE_DELAY_MILLISECONDS,
+  ExampleService
+} from './example.service';
 
 /**
  * Identifies whether the form is creating a new character or editing an existing one.
@@ -99,6 +111,21 @@ export class ExampleComponent {
   /** Exposes the FeatureCell loading signal so the template can cover the current selection. */
   protected readonly state = this.#exampleService.state;
 
+  /** Reflects whether the tutorial's intentional inline-filter failure is armed. */
+  protected readonly isThrowError = this.#exampleService.isThrowError;
+
+  /** Enables Stepwise controls only while the Resolve callback awaits a decision. */
+  protected readonly isStepwiseResolvePending =
+    this.#exampleService.isStepwiseResolvePending;
+
+  /** Enables Filter controls only while its Stepwise callback awaits a decision. */
+  protected readonly isStepwiseFilterPending =
+    this.#exampleService.isStepwiseFilterPending;
+
+  /** Enables Reducer controls only while its Stepwise callback awaits a decision. */
+  protected readonly isStepwiseReducerPending =
+    this.#exampleService.isStepwiseReducerPending;
+
   /** Displays the immutable tutorial constant before any FeatureCell operations modify state. */
   protected readonly originalStateJson = JSON.stringify(
     STAR_WARS_CHARACTERS,
@@ -126,6 +153,68 @@ export class ExampleComponent {
       left.lastName.localeCompare(right.lastName)
     );
 }`;
+
+  /** Displays the custom comparison passed to Distinct Until Changed. */
+  protected readonly comparisonFunctionSource = `withDistinctUntilChanged<readonly StarWarsCharacterState[]>(
+  (incoming, previous) =>
+    incoming.every(({ id }) =>
+      previous.some((character) => character.id === id)
+    )
+)`;
+
+  /** Serializes the current and candidate values supplied to the Stepwise Resolve callback. */
+  protected readonly stepwiseResolveRequestJson = computed(() => {
+    const request = this.#exampleService.stepwiseResolveRequest();
+
+    if (!request) {
+      return 'undefined';
+    }
+
+    return JSON.stringify(
+      {
+        ...request,
+        current: request.current ?? 'undefined'
+      },
+      null,
+      2
+    );
+  });
+
+  /** Serializes the current and filtered candidate values from Stepwise Filter. */
+  protected readonly stepwiseFilterRequestJson = computed(() => {
+    const request = this.#exampleService.stepwiseFilterRequest();
+
+    if (!request) {
+      return 'undefined';
+    }
+
+    return JSON.stringify(
+      {
+        ...request,
+        current: request.current ?? 'undefined'
+      },
+      null,
+      2
+    );
+  });
+
+  /** Serializes the current and fully reduced candidate from Stepwise Reducer. */
+  protected readonly stepwiseReducerRequestJson = computed(() => {
+    const request = this.#exampleService.stepwiseReducerRequest();
+
+    if (!request) {
+      return 'undefined';
+    }
+
+    return JSON.stringify(
+      {
+        ...request,
+        current: request.current ?? 'undefined'
+      },
+      null,
+      2
+    );
+  });
 
   /** Serializes the filtered candidate observed by the latest Before Tap callback. */
   protected readonly beforeTapInputJson = computed(
@@ -220,8 +309,30 @@ export class ExampleComponent {
   /** Tracks permanent FeatureCell teardown so the UI can explain the required recovery. */
   protected readonly featureCellDestroyed = signal(false);
 
+  /** Prevents the one-time hydration source from being settled more than once. */
+  protected readonly hydrationSettled = signal(false);
+
   /** Tracks the manually controlled request so only its valid next action is visible. */
   protected readonly promisePending = signal(false);
+
+  /** Tracks the manually controlled Observable so only its valid next action is visible. */
+  protected readonly observablePending = signal(false);
+
+  // Teaching point: Delay (ex-033)
+  /** Displays the fixed controller configuration beside the live elapsed timer. */
+  protected readonly delayMilliseconds = EXAMPLE_DELAY_MILLISECONDS;
+
+  /** Publishes whole elapsed milliseconds for the Delay Timer teaching output. */
+  protected readonly delayTimerMilliseconds = signal(0);
+
+  // Teaching point: Encryption (ex-034)
+  /** Displays the exact encrypted envelope persisted by the latest finalized State. */
+  protected readonly encryptedState = signal('undefined');
+
+  /** Measures elapsed wall-clock time from each user-initiated pipeline request. */
+  readonly #delayTimer = new ElapsedTimer((milliseconds) => {
+    this.delayTimerMilliseconds.set(Math.floor(milliseconds));
+  });
 
   /** Holds the character awaiting explicit confirmation before removal. */
   protected readonly deleteCandidate = signal<StarWarsCharacterState | null>(
@@ -263,9 +374,11 @@ export class ExampleComponent {
    * The one-time guard preserves later user selections and does not interrupt create mode.
    */
   constructor() {
+    inject(DestroyRef).onDestroy(() => this.#delayTimer.destroy());
+
     this.#exampleService.state$
       .pipe(takeUntilDestroyed())
-      .subscribe(({ snapshot }) => {
+      .subscribe(({ snapshot, type }) => {
         this.rawStateStreamJson.set(
           JSON.stringify(
             {
@@ -276,6 +389,17 @@ export class ExampleComponent {
             2
           )
         );
+        this.encryptedState.set(
+          localStorage.getItem(EXAMPLE_ENCRYPTED_STORAGE_KEY) ?? 'undefined'
+        );
+
+        if (
+          this.#delayTimer.running &&
+          (type === StateEmitTypes.FinalizePipeline ||
+            type === StateEmitTypes.PipelineError)
+        ) {
+          this.#delayTimer.destroy();
+        }
       });
 
     this.#globalErrorService.error$
@@ -448,6 +572,7 @@ export class ExampleComponent {
     };
 
     if (this.editorMode() === 'create') {
+      this.#startDelayTimer();
       const character =
         this.#exampleService.createCharacter(normalizedCharacter);
 
@@ -472,6 +597,7 @@ export class ExampleComponent {
       return;
     }
 
+    this.#startDelayTimer();
     const updatedCharacter = this.#exampleService.updateCharacter(
       selectedId,
       normalizedCharacter
@@ -518,6 +644,7 @@ export class ExampleComponent {
       return;
     }
 
+    this.#startDelayTimer();
     this.#exampleService.removeCharacter(character.id);
 
     this.deleteCandidate.set(null);
@@ -537,6 +664,7 @@ export class ExampleComponent {
    * @returns Nothing; the resulting undefined value is exposed through the reactive state APIs.
    */
   protected persistNullValue(): void {
+    this.#startDelayTimer();
     this.#exampleService.persistNullValue();
     this.#clearCharacterForm();
   }
@@ -546,8 +674,41 @@ export class ExampleComponent {
    * @returns Nothing; the cleared state propagates through the reactive state APIs.
    */
   protected resetState(): void {
+    this.#delayTimer.reset();
     this.#exampleService.resetState();
     this.#clearCharacterForm();
+  }
+
+  /**
+   * Resolves the authoritative hydration source and completes FeatureCell initialization.
+   * A missing resolver preserves the pending UI because no hydration cycle was completed.
+   * @returns Nothing; the hydrated characters continue through the full pipeline automatically.
+   */
+  protected resolveHydration(): void {
+    const resolveHydration = exampleHydrate.getResolve();
+
+    if (!resolveHydration) {
+      return;
+    }
+
+    resolveHydration();
+    this.hydrationSettled.set(true);
+  }
+
+  /**
+   * Rejects the authoritative hydration source and completes initialization with an Error.
+   * Vault exposes the failure without evaluating configured initial State as a fallback.
+   * @returns Nothing; loading and Error State update through pipeline finalization.
+   */
+  protected rejectHydration(): void {
+    const rejectHydration = exampleHydrate.getReject();
+
+    if (!rejectHydration) {
+      return;
+    }
+
+    rejectHydration();
+    this.hydrationSettled.set(true);
   }
 
   /**
@@ -556,6 +717,7 @@ export class ExampleComponent {
    * @returns Nothing; button visibility and FeatureCell state update reactively.
    */
   protected fetchWithPromise(): void {
+    this.#startDelayTimer();
     this.promisePending.set(true);
     this.#exampleService.fetchWithPromise();
   }
@@ -593,10 +755,148 @@ export class ExampleComponent {
   }
 
   /**
+   * Starts the Observable merge and exposes its Emit and Error controls.
+   * Vault owns the corresponding StateSnapshot loading state until the user
+   * explicitly selects the source's terminal outcome.
+   * @returns Nothing; button visibility and FeatureCell state update reactively.
+   */
+  protected addByObservable(): void {
+    this.#startDelayTimer();
+    this.observablePending.set(true);
+    this.#exampleService.addByObservable();
+  }
+
+  /**
+   * Emits the active Observable character collection and restores the Add control.
+   * A missing emitter leaves the pending UI intact because no source was completed.
+   * @returns Nothing; emitted characters continue through the pipeline automatically.
+   */
+  protected emitObservable(): void {
+    const emitObservable = exampleObservable.getEmit();
+
+    if (!emitObservable) {
+      return;
+    }
+
+    emitObservable();
+    this.observablePending.set(false);
+  }
+
+  /**
+   * Errors the active Observable and restores the Add control.
+   * Vault normalizes the source error and preserves the current character collection.
+   * @returns Nothing; the error continues through pipeline finalization.
+   */
+  protected errorObservable(): void {
+    const errorObservable = exampleObservable.getError();
+
+    if (!errorObservable) {
+      return;
+    }
+
+    errorObservable();
+    this.observablePending.set(false);
+  }
+
+  /**
+   * Delegates the remote character request to the FeatureCell service.
+   * Angular owns the HTTP resource lifecycle while the component reacts to the
+   * FeatureCell's existing loading, value, and error signals.
+   * @returns Nothing; the resolved collection is rendered from reactive State.
+   */
+  protected fetchWithHttpResource(): void {
+    this.#startDelayTimer();
+    this.#exampleService.fetchWithHttpResource();
+  }
+
+  /**
+   * Arms and executes the intentional filter failure, or resets it after demonstration.
+   * Resetting also clears the application-level error without submitting another State request.
+   * @returns Nothing; the service signal drives the button's next available action.
+   */
+  protected toggleFilterError(): void {
+    if (this.isThrowError()) {
+      this.#exampleService.resetFilterError();
+      this.#globalErrorService.clear();
+      return;
+    }
+
+    this.#startDelayTimer();
+    this.#exampleService.throwFilterError();
+  }
+
+  /**
+   * Starts timing and merges a newly allocated instance of the same character.
+   * @returns Nothing; Distinct Until Changed decides whether downstream stages execute.
+   */
+  protected submitSameState(): void {
+    this.#startDelayTimer();
+    this.#exampleService.submitSameState();
+  }
+
+  /**
+   * Starts timing and merges the next Jedi in the service's four-value cycle.
+   * @returns Nothing; the accepted collection is exposed through reactive State.
+   */
+  protected submitChangedState(): void {
+    this.#startDelayTimer();
+    this.#exampleService.submitChangedState();
+  }
+
+  /**
+   * Accepts the pending Stepwise Resolve candidate and resumes its pipeline.
+   * @returns Nothing; the resulting State arrives through the existing reactive stream.
+   */
+  protected acceptStepwiseResolve(): void {
+    this.#exampleService.acceptStepwiseResolve();
+  }
+
+  /**
+   * Blocks the pending Stepwise Resolve candidate and preserves committed State.
+   * @returns Nothing; the suspended pipeline terminates as a controlled no-op.
+   */
+  protected cancelStepwiseResolve(): void {
+    this.#exampleService.cancelStepwiseResolve();
+  }
+
+  /**
+   * Accepts the candidate produced by the Filter stage and resumes its pipeline.
+   * @returns Nothing; downstream reducers and State commitment remain reactive.
+   */
+  protected acceptStepwiseFilter(): void {
+    this.#exampleService.acceptStepwiseFilter();
+  }
+
+  /**
+   * Blocks the candidate produced by the Filter stage and preserves committed State.
+   * @returns Nothing; the suspended attempt terminates as a controlled no-op.
+   */
+  protected cancelStepwiseFilter(): void {
+    this.#exampleService.cancelStepwiseFilter();
+  }
+
+  /**
+   * Accepts the fully reduced candidate and allows State commitment to continue.
+   * @returns Nothing; the finalized State arrives through the reactive stream.
+   */
+  protected acceptStepwiseReducer(): void {
+    this.#exampleService.acceptStepwiseReducer();
+  }
+
+  /**
+   * Blocks the fully reduced candidate and preserves committed State.
+   * @returns Nothing; the suspended pipeline terminates as a controlled no-op.
+   */
+  protected cancelStepwiseReducer(): void {
+    this.#exampleService.cancelStepwiseReducer();
+  }
+
+  /**
    * Delegates permanent FeatureCell teardown, clears the form, and exposes the terminal UI state.
    * @returns Nothing; the FeatureCell and its runtime resources are permanently finalized.
    */
   protected destroyFeatureCell(): void {
+    this.#delayTimer.destroy();
     this.#exampleService.destroyFeatureCell();
     this.#clearCharacterForm();
     this.featureCellDestroyed.set(true);
@@ -608,6 +908,7 @@ export class ExampleComponent {
    * @returns Nothing; collection restoration occurs through the service and editor state is synchronized.
    */
   protected restoreInitialCharacters(): void {
+    this.#startDelayTimer();
     const firstCharacter = this.#exampleService.restoreInitialCharacters();
 
     this.selectedCharacterId.set(firstCharacter?.id ?? null);
@@ -635,6 +936,15 @@ export class ExampleComponent {
     if (typeof window !== 'undefined') {
       window.open(window.location.href, '_blank', 'noopener');
     }
+  }
+
+  /**
+   * Resets and starts the visual timer immediately before a pipeline request.
+   * The timer is observational only and has no authority over controller timing.
+   */
+  #startDelayTimer(): void {
+    this.#delayTimer.reset();
+    this.#delayTimer.start();
   }
 
   /**
