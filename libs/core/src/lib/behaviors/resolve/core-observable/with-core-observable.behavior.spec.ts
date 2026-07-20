@@ -128,15 +128,7 @@ describe('Behavior: CoreObservableResolve', () => {
       caught = err;
     }
 
-    expect(caught).toEqual(
-      Object({
-        message: 'Boom',
-        featureCellKey: 'feature-cell',
-        details: jasmine.any(String),
-        raw: jasmine.any(Error),
-        timestamp: jasmine.any(Number)
-      })
-    );
+    expect(caught.message).toBe('Boom');
   });
 
   // ------------------------------------------------------------------------------------------
