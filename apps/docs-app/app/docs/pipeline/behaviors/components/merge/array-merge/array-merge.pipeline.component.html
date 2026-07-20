@@ -131,69 +131,7 @@
         cleared.
       </p>
 
-      <div class="table-title">Example 1: Array Replacement</div>
-      <table aria-label="Example 1: Array Replacement">
-        <thead>
-          <tr>
-            <th scope="col" class="column-300">Inputs</th>
-            <th scope="col" class="column-auto">Merged Result</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>
-              current: [1, 2, 3]
-              <p>next: [9, 9]</p>
-            </td>
-            <td>[9, 9] — incoming array replaces the existing array</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="table-title">
-        Example 2: Undefined Incoming Value (Preserve)
-      </div>
-      <table aria-label="Example 2: Undefined Incoming Value (Preserve)">
-        <thead>
-          <tr>
-            <th scope="col" class="column-300">Inputs</th>
-            <th scope="col" class="column-auto">Merged Result</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>
-              current: [1, 2, 3]
-              <p>next: undefined</p>
-              <p>clearUndefined: false</p>
-            </td>
-            <td>[1, 2, 3] — existing state is preserved</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="table-title">Example 3: Undefined Incoming Value (Clear)</div>
-      <table aria-label="Example 3: Undefined Incoming Value (Clear)">
-        <thead>
-          <tr>
-            <th scope="col" class="column-300">Inputs</th>
-            <th scope="col" class="column-auto">Merged Result</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>
-              current: [1, 2, 3]
-              <p>next: undefined</p>
-              <p>clearUndefined: true</p>
-            </td>
-            <td>undefined — state is intentionally cleared</td>
-          </tr>
-        </tbody>
-      </table>
+      <sdux-vault-array-merge-comparison-common />
     </div>
   </section>
 

@@ -111,7 +111,7 @@
     "sitemap:create": "node tools/sitemap/generate-sitemap.mjs",
     "sitemap:generate": "run-s sitemap:mine sitemap:create",
     "sitemap:mine": "node tools/sitemap/mine-sitemap-urls.mjs",
-    "start": "run-s clean start:enterprise",
+    "start": "run-s clean start:dev",
     "start:enterprise": "ng serve docs-app --configuration enterprise",
     "start:pro": "ng serve docs-app --configuration pro",
     "start:dev": "ng serve docs-app --configuration development",

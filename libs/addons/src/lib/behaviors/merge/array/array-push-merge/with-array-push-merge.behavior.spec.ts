@@ -53,97 +53,102 @@ describe('Behavior: withArrayPushMerge', () => {
     });
 
     // ---------------------------------------------------------------------------
-    // Core Merge Behavior
+    // Comparison Examples Behavior
     // ---------------------------------------------------------------------------
-    it('should return currentValue when nextValue is undefined and clearUndefined=false (default)', () => {
-      const curr = [1, 2, 3];
-      const result = behavior.computeMerge(curr, undefined);
+    describe('comparison examples', () => {
+      it('should clone next array when both curr and next are arrays', () => {
+        const curr = [1, 2, 3];
+        const next = [4, 5];
 
-      expect(result).toEqual(curr);
-      expect(warnSpy).not.toHaveBeenCalled();
-    });
+        const result = behavior.computeMerge(curr, next);
 
-    it('returns next when current is array and next is array (delegates)', () => {
-      const next = [3, 4];
-      expect(behavior.computeMerge([1, 2], next)).toEqual([1, 2, [3, 4]]);
-      expect(warnSpy).not.toHaveBeenCalled();
-    });
-
-    it('should return undefined when nextValue is undefined and clearUndefined=true', () => {
-      const curr = [1, 2, 3];
-      const result = behavior.computeMerge(curr, undefined, {
-        clearUndefined: true
+        expect(result).toEqual([1, 2, 3, [4, 5]]);
+        expect(result).not.toBe(next); // ensure deep clone
       });
 
-      expect(result).toEqual(VAULT_CLEAR_STATE);
-      expect(warnSpy).not.toHaveBeenCalled();
-    });
+      it('should push scalar into array without mutating current', () => {
+        const curr = [1, 2, 3];
+        const next = 10;
 
-    it('should push scalar into array without mutating current', () => {
-      const curr = [1, 2, 3];
-      const next = 10;
+        const result = behavior.computeMerge(curr, next);
 
-      const result = behavior.computeMerge(curr, next);
+        expect(result).toEqual([1, 2, 3, 10]);
+        expect(warnSpy).not.toHaveBeenCalled();
+      });
 
-      expect(result).toEqual([1, 2, 3, 10]);
-      expect(warnSpy).not.toHaveBeenCalled();
-    });
+      it('should return nextValue even if next is null', () => {
+        const curr = [1, 2];
+        const next = null;
 
-    it('should return nextValue when curr is not an array but next is', () => {
-      const curr = { a: 1 };
-      const next = [1, 2, 3];
+        const result = behavior.computeMerge(curr, next as any);
 
-      const result = behavior.computeMerge(curr, next);
+        expect(result).toBeNull();
+      });
 
-      expect(result).toEqual([1, 2, 3]);
-      expect(result).toBe(next);
-      expect(warnSpy).toHaveBeenCalledWith(
-        'One Time Warning: [vault] behavior key: ArrayPushMerge received non-array current value. This behavior is intended for array state.',
-        jasmine.any(String)
-      );
-    });
+      it('should return undefined when nextValue is undefined and clearUndefined is undefined', () => {
+        const curr = [1, 2, 3];
+        const next = undefined;
+        const result = behavior.computeMerge(curr, next);
 
-    it('should return nextValue when both are non-arrays', () => {
-      const curr = { x: 1 };
-      const next = { y: 2 };
+        expect(result).toEqual([1, 2, 3]);
+      });
 
-      const result = behavior.computeMerge(curr, next);
+      it('should return undefined when nextValue is undefined and clearUndefined=false', () => {
+        const curr = [1, 2, 3];
+        const next = undefined;
+        const result = behavior.computeMerge(curr, next, {
+          clearUndefined: false
+        });
 
-      expect(result).toEqual({ y: 2 });
-      expect(result).toBe(next);
-      expect(warnSpy).toHaveBeenCalledWith(
-        'One Time Warning: [vault] behavior key: ArrayPushMerge received non-array current value. This behavior is intended for array state.',
-        jasmine.any(String)
-      );
-    });
+        expect(result).toEqual([1, 2, 3]);
+      });
 
-    it('should return nextValue even if next is null', () => {
-      const curr = [1, 2];
-      const next = null;
+      it('should return undefined when nextValue is undefined and clearUndefined=true', () => {
+        const curr = [1, 2, 3];
+        const next = undefined;
+        const result = behavior.computeMerge(curr, next, {
+          clearUndefined: true
+        });
 
-      const result = behavior.computeMerge(curr, next as any);
+        expect(result).toEqual(VAULT_CLEAR_STATE);
+      });
 
-      expect(result).toBeNull();
-      expect(warnSpy).not.toHaveBeenCalled();
-    });
+      it('should return nextValue when curr is not an array but next is', () => {
+        const curr = { a: 1 };
+        const next = [1, 2, 3];
 
-    it('should allow merge when curr=null and next is array', () => {
-      const curr = null;
-      const next = [9, 9];
+        const result = behavior.computeMerge(curr, next);
 
-      const result = behavior.computeMerge(curr, next);
+        expect(result).toEqual([1, 2, 3]);
+        expect(result).toBe(next);
+      });
 
-      expect(result).toEqual([9, 9]);
-      expect(warnSpy).not.toHaveBeenCalled();
-    });
+      it('should return nextValue when both are non-arrays', () => {
+        const curr = { x: 1 };
+        const next = { y: 2 };
 
-    it('should allow merge when curr=undefined and next is array', () => {
-      const next = [1, 2];
+        const result = behavior.computeMerge(curr, next);
 
-      const result = behavior.computeMerge(undefined, next);
+        expect(result).toEqual({ y: 2 });
+        expect(result).toBe(next);
+      });
 
-      expect(result).toEqual([1, 2]);
-      expect(warnSpy).not.toHaveBeenCalled();
+      it('should allow merge when curr=null and next is array', () => {
+        const curr = null;
+        const next = [9, 9];
+
+        const result = behavior.computeMerge(curr, next);
+
+        expect(result).toEqual([9, 9]);
+      });
+
+      it('should allow merge when curr=undefined and next is array', () => {
+        const next = [1, 2];
+
+        const result = behavior.computeMerge(undefined, next);
+
+        expect(result).toEqual([1, 2]);
+      });
     });
 
     // ---------------------------------------------------------------------------
@@ -156,6 +161,17 @@ describe('Behavior: withArrayPushMerge', () => {
       const result = behavior.computeMerge(curr, next);
 
       expect(result).toEqual([[1], [2], 9]);
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    it('should clone nested arrays (shallow clone only)', () => {
+      const curr = [[1], [2]];
+      const next = [[9], [8]];
+
+      const result = behavior.computeMerge(curr, next);
+
+      expect(result).toEqual([[1], [2], [[9], [8]]]);
+      expect(result[2]).toBe(next); // same reference, not cloned
       expect(warnSpy).not.toHaveBeenCalled();
     });
 

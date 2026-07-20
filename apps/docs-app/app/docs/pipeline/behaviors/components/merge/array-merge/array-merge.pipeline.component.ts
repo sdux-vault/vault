@@ -6,6 +6,7 @@ import {
 import { VaultArrayMergeCommonComponent } from 'apps/docs-app/app/docs/common/merge/array-merge-behaviors.component';
 import { VaultMergeFluentApiCommonComponent } from 'apps/docs-app/app/docs/common/merge/merge-flient-api.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { VaultArrayMergeComparisonCommonComponent } from '../../../../../common/merge/array-merge-comparison.component';
 
 /**
  * The pipeline array merge documentation
@@ -18,7 +19,8 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     PipelineRelatedTopicComponent,
     MultiFrameworkExampleComponent,
     VaultArrayMergeCommonComponent,
-    VaultMergeFluentApiCommonComponent
+    VaultMergeFluentApiCommonComponent,
+    VaultArrayMergeComparisonCommonComponent
   ],
   templateUrl: './array-merge.pipeline.component.html',
   styleUrls: ['../../../../../scss/documentation.scss'],
