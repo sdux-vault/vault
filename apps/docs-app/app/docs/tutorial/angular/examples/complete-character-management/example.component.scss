@@ -574,6 +574,16 @@ $action-column-width: calc(
           box-sizing: border-box;
         }
 
+        &.promise-controls .button.promise-terminal {
+          flex-basis: $action-button-width * 0.4;
+          width: $action-button-width * 0.4;
+        }
+
+        &.promise-controls {
+          width: 100%;
+          justify-content: space-between;
+        }
+
         .description-chevron {
           position: relative;
           display: inline-flex;

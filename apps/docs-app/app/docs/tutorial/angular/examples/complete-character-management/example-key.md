@@ -33,7 +33,7 @@
 | Delay                                | ex-033 |       | ✅      |
 | Encryption                           | ex-034 |       | ✅      |
 | State Emission                       | ex-035 | ✅    | ✅      |
-| Error Emission                       | ex-036 |       | ✅      |
+| Error Emission                       | ex-036 | ✅    | ✅      |
 | Stepwise Merge                       | ex-038 |       | ✅      |
 | Stepwise Filter                      | ex-039 |       | ✅      |
 | Stepwise Reducer                     | ex-040 |       | ✅      |

@@ -3,7 +3,6 @@ import {
   BehaviorContext,
   BehaviorType,
   BehaviorTypes,
-  createVaultError,
   defineBehaviorKey,
   PipelineUpstreamValue,
   ResolveBehaviorContract,
@@ -116,13 +115,13 @@ export class withCoreObservableBehavior<
 
       return value;
     } catch (err) {
-      const vaultError = createVaultError(err, ctx.featureCellKey);
-
       vaultDebug(
-        `${this.key} computeResolve caught error: ${vaultError.message}`
+        `${this.key} computeResolve caught error: ${
+          err instanceof Error ? err.message : safeStringify(err)
+        }`
       );
 
-      throw vaultError;
+      throw err;
     }
   }
 

@@ -596,7 +596,7 @@
           class="description-toggle"
           type="checkbox"
           aria-label="Show Fetch with Promise description" />
-        <div class="button-container">
+        <div class="button-container promise-controls">
           <!-- Teaching point: Promise (ex-024) -->
           <button
             type="button"
@@ -607,10 +607,17 @@
           </button>
           <button
             type="button"
-            class="button"
+            class="button promise-terminal"
             [hidden]="!promisePending()"
             (click)="resolvePromise()">
-            Resolve Promise
+            Resolve
+          </button>
+          <button
+            type="button"
+            class="button danger promise-terminal"
+            [hidden]="!promisePending()"
+            (click)="rejectPromise()">
+            Reject
           </button>
           <label
             class="description-chevron"
@@ -965,7 +972,8 @@
         <textarea
           readonly
           rows="8"
-          aria-label="Error Emission output"></textarea>
+          aria-label="Error Emission output"
+          [value]="errorEmissionJson()"></textarea>
       </div>
     </div>
 

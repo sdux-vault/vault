@@ -5,8 +5,10 @@ import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import { of } from 'rxjs';
+import { VaultPrivateErrorService } from '@sdux-vault/shared';
 import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import { removeUnknownLastNameFilter } from './example.filter';
+import { examplePromise } from './example.promise';
 import {
   ExampleService,
   withCharactersSortedByLastName
@@ -85,6 +87,7 @@ describe('ExampleService', () => {
       'reducers',
       'afterTaps',
       'emitStates',
+      'errors',
       'initialize',
       'replaceState'
     ]);
@@ -98,6 +101,7 @@ describe('ExampleService', () => {
     vault.reducers.and.returnValue(vault);
     vault.afterTaps.and.returnValue(vault);
     vault.emitStates.and.returnValue(vault);
+    vault.errors.and.returnValue(vault);
 
     await TestBed.configureTestingModule({
       providers: [
@@ -217,6 +221,7 @@ describe('ExampleService', () => {
     });
     expect(service.emittedState()?.value).toEqual(service.afterTapInput());
     expect(service.emittedState()?.value).toEqual(service.characters());
+    expect(service.emittedError()).toBeUndefined();
   });
 
   it('should append new characters and assign IDs after the initial maximum', async () => {
@@ -329,7 +334,7 @@ describe('ExampleService', () => {
     expect(service.state.isLoading()).toBeTrue();
     expect(service.characters()).toEqual(initialCharactersWithDisplay);
 
-    const resolvePromise = service.getPromiseResolver();
+    const resolvePromise = examplePromise.getResolve();
     expect(resolvePromise).not.toBeNull();
     resolvePromise!();
     await vaultSettled(key);
@@ -357,7 +362,40 @@ describe('ExampleService', () => {
     expect(
       service.characters().some(({ lastName }) => lastName === 'unknown')
     ).toBeFalse();
-    expect(service.getPromiseResolver()).toBeNull();
+    expect(examplePromise.getResolve()).toBeNull();
+    expect(examplePromise.getReject()).toBeNull();
+  });
+
+  it('should clear loading and preserve characters when the deferred Promise rejects', async () => {
+    const service = await configureService();
+
+    service.fetchWithPromise();
+    await new Promise((resolve) => setTimeout(resolve));
+
+    expect(service.state.isLoading()).toBeTrue();
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
+
+    const rejectPromise = examplePromise.getReject();
+    expect(rejectPromise).not.toBeNull();
+    rejectPromise!();
+    await vaultSettled(key);
+
+    expect(service.state.isLoading()).toBeFalse();
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
+    expect(service.state.error()?.message).toBe('Unexpected error');
+    expect(service.emittedError()).toEqual({
+      error: service.state.error()!,
+      state: {
+        isLoading: false,
+        value: initialCharactersWithDisplay,
+        error: service.state.error()!,
+        hasValue: true
+      }
+    });
+    expect(examplePromise.getResolve()).toBeNull();
+    expect(examplePromise.getReject()).toBeNull();
+
+    VaultPrivateErrorService().clear();
   });
 
   it('should complete the state stream when destroying the FeatureCell', async () => {

@@ -18,6 +18,7 @@ import {
 import { VaultErrorService, VaultErrorShape } from '@sdux-vault/shared';
 import { STAR_WARS_CHARACTERS } from '../../../examples/star-wars-character.constant';
 import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import { examplePromise } from './example.promise';
 import { ExampleService } from './example.service';
 
 /**
@@ -152,6 +153,30 @@ export class ExampleComponent {
       {
         ...snapshot,
         value: snapshot.value === undefined ? 'undefined' : snapshot.value
+      },
+      null,
+      2
+    );
+  });
+
+  /** Serializes the finalized error and StateSnapshot observed by the latest error callback. */
+  protected readonly errorEmissionJson = computed(() => {
+    const emission = this.#exampleService.emittedError();
+
+    if (!emission) {
+      return 'undefined';
+    }
+
+    return JSON.stringify(
+      {
+        error: emission.error,
+        state: {
+          ...emission.state,
+          value:
+            emission.state.value === undefined
+              ? 'undefined'
+              : emission.state.value
+        }
       },
       null,
       2
@@ -526,7 +551,7 @@ export class ExampleComponent {
   }
 
   /**
-   * Starts the deferred Promise merge and exposes its Resolve Promise control.
+   * Starts the deferred Promise merge and exposes its Resolve and Reject controls.
    * Vault owns the corresponding StateSnapshot loading state while the Promise is pending.
    * @returns Nothing; button visibility and FeatureCell state update reactively.
    */
@@ -541,13 +566,29 @@ export class ExampleComponent {
    * @returns Nothing; the resolved characters continue through the pipeline automatically.
    */
   protected resolvePromise(): void {
-    const resolvePromise = this.#exampleService.getPromiseResolver();
+    const resolvePromise = examplePromise.getResolve();
 
     if (!resolvePromise) {
       return;
     }
 
     resolvePromise();
+    this.promisePending.set(false);
+  }
+
+  /**
+   * Rejects the active Promise request and restores the Fetch with Promise control.
+   * Vault normalizes the thrown rejection into error state and preserves the collection.
+   * @returns Nothing; loading and error state update through pipeline finalization.
+   */
+  protected rejectPromise(): void {
+    const rejectPromise = examplePromise.getReject();
+
+    if (!rejectPromise) {
+      return;
+    }
+
+    rejectPromise();
     this.promisePending.set(false);
   }
 

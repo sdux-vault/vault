@@ -5,7 +5,9 @@ import type {
   CoreEmitStateCallback,
   ReducerFunction,
   StateSnapshotShape,
-  TapCallback
+  TapCallback,
+  VaultErrorCallback,
+  VaultErrorShape
 } from '@sdux-vault/shared';
 import { filter, take } from 'rxjs';
 import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
@@ -17,6 +19,17 @@ import { examplePromise } from './example.promise';
  * Omitting identity keeps component forms from choosing or changing the collection key.
  */
 export type StarWarsCharacterDraft = Omit<StarWarsCharacterState, 'id'>;
+
+/** Inputs observed by the tutorial's finalized error callback. */
+interface ErrorEmission {
+  /** Normalized Vault error committed by the Error stage. */
+  readonly error: VaultErrorShape;
+
+  /** Immutable FeatureCell snapshot associated with the finalized error. */
+  readonly state: Readonly<
+    StateSnapshotShape<readonly StarWarsCharacterState[]>
+  >;
+}
 
 /**
  * Creates a pure reducer that orders characters alphabetically by last name.
@@ -140,6 +153,30 @@ export class ExampleService {
     this.#emittedState.set(snapshot);
   };
 
+  /** Stores the latest finalized error and associated FeatureCell snapshot. */
+  readonly #emittedError = signal<ErrorEmission | undefined>(undefined);
+
+  // Teaching point: Error Emission (ex-036)
+  /**
+   * Exposes the latest error-callback inputs as a read-only signal for the teaching output.
+   * Consumers can inspect the finalized error and snapshot without influencing either one.
+   */
+  readonly emittedError = this.#emittedError.asReadonly();
+
+  /**
+   * Observes a finalized Vault error after it has been normalized and committed to state.
+   * This VaultErrorCallback records both immutable inputs for the tutorial display and returns
+   * no value, so it cannot transform the error, recover the pipeline, or mutate state.
+   * @param error - Finalized Vault error produced by the Error stage.
+   * @param state - Immutable FeatureCell snapshot at the time of the error.
+   * @returns Nothing; the callback only updates the read-only teaching signal.
+   */
+  readonly #captureEmittedError: VaultErrorCallback<
+    readonly StarWarsCharacterState[]
+  > = (error, state) => {
+    this.#emittedError.set({ error, state });
+  };
+
   // Teaching point: Raw StateSnapshot (ex-013)
   /**
    * Exposes the FeatureCell's Angular signal state for value, loading, error, and presence checks.
@@ -242,6 +279,17 @@ export class ExampleService {
        * cannot replace state, restart the pipeline, or change the committed result.
        */
       .emitStates([this.#captureEmittedState])
+
+      // Teaching point: Error Emission (ex-036)
+      /*
+       * `.errors()` registers a
+       * `VaultErrorCallback<readonly StarWarsCharacterState[]>` that receives the
+       * finalized Vault error and immutable StateSnapshot after error commitment.
+       *
+       * The callback publishes both observational inputs for the tutorial display;
+       * it cannot transform the error, replace state, or alter pipeline control.
+       */
+      .errors([this.#captureEmittedError])
 
       /*
        * `.initialize()` finalizes the pipeline configuration and activates the
@@ -353,16 +401,6 @@ export class ExampleService {
     this.#vault.mergeState({
       value: () => deferredPromise
     });
-  }
-
-  /**
-   * Retrieves the controller action that completes the active simulated request.
-   * Keeping resolution separate from request creation lets the tutorial hold the
-   * FeatureCell in its loading state until the user explicitly resolves the Promise.
-   * @returns The active Promise resolver, or `null` when no request is pending.
-   */
-  getPromiseResolver(): (() => void) | null {
-    return examplePromise.getResolve();
   }
 
   // Teaching point: FeatureCell destruction (ex-005)

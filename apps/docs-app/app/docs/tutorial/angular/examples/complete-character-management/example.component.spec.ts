@@ -11,6 +11,7 @@ import type { VaultErrorShape } from '@sdux-vault/shared';
 import { STAR_WARS_CHARACTERS } from '../../../examples/star-wars-character.constant';
 import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import { ExampleComponent } from './example.component';
+import { examplePromise } from './example.promise';
 import { ExampleService } from './example.service';
 
 describe('ExampleComponent', () => {
@@ -237,6 +238,7 @@ describe('ExampleComponent', () => {
       error: null,
       hasValue: true
     });
+    expect(component['errorEmissionJson']()).toBe('undefined');
   });
 
   it('should serialize an absent state value as undefined', async () => {
@@ -578,10 +580,9 @@ describe('ExampleComponent', () => {
     await configureComponent();
     const fetchWithPromise = spyOn(service, 'fetchWithPromise');
     const resolve = jasmine.createSpy('resolvePromise');
-    const getPromiseResolver = spyOn(
-      service,
-      'getPromiseResolver'
-    ).and.returnValue(resolve);
+    const getResolve = spyOn(examplePromise, 'getResolve').and.returnValue(
+      resolve
+    );
 
     component['fetchWithPromise']();
 
@@ -590,17 +591,42 @@ describe('ExampleComponent', () => {
 
     component['resolvePromise']();
 
-    expect(getPromiseResolver).toHaveBeenCalledOnceWith();
+    expect(getResolve).toHaveBeenCalledOnceWith();
     expect(resolve).toHaveBeenCalledOnceWith();
+    expect(component['promisePending']()).toBeFalse();
+  });
+
+  it('should delegate Promise rejection while tracking its pending state', async () => {
+    await configureComponent();
+    const reject = jasmine.createSpy('rejectPromise');
+    const getReject = spyOn(examplePromise, 'getReject').and.returnValue(
+      reject
+    );
+    component['promisePending'].set(true);
+
+    component['rejectPromise']();
+
+    expect(getReject).toHaveBeenCalledOnceWith();
+    expect(reject).toHaveBeenCalledOnceWith();
     expect(component['promisePending']()).toBeFalse();
   });
 
   it('should keep the Resolve Promise action visible when no resolver is available', async () => {
     await configureComponent();
-    spyOn(service, 'getPromiseResolver').and.returnValue(null);
+    spyOn(examplePromise, 'getResolve').and.returnValue(null);
     component['promisePending'].set(true);
 
     component['resolvePromise']();
+
+    expect(component['promisePending']()).toBeTrue();
+  });
+
+  it('should keep the Promise actions visible when no rejecter is available', async () => {
+    await configureComponent();
+    spyOn(examplePromise, 'getReject').and.returnValue(null);
+    component['promisePending'].set(true);
+
+    component['rejectPromise']();
 
     expect(component['promisePending']()).toBeTrue();
   });
@@ -613,11 +639,18 @@ describe('ExampleComponent', () => {
       ({ textContent }) => textContent?.trim() === 'Fetch with Promise'
     )!;
     const resolveButton = buttons.find(
-      ({ textContent }) => textContent?.trim() === 'Resolve Promise'
+      ({ textContent }) => textContent?.trim() === 'Resolve'
     )!;
+    const rejectButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Reject'
+    )!;
+    const promiseControls = element.querySelector(
+      '.promise-controls'
+    ) as HTMLElement;
 
     expect(fetchButton.hidden).toBeFalse();
     expect(resolveButton.hidden).toBeTrue();
+    expect(rejectButton.hidden).toBeTrue();
 
     fetchButton.click();
     await new Promise((resolve) => setTimeout(resolve));
@@ -625,6 +658,16 @@ describe('ExampleComponent', () => {
 
     expect(fetchButton.hidden).toBeTrue();
     expect(resolveButton.hidden).toBeFalse();
+    expect(rejectButton.hidden).toBeFalse();
+    expect(resolveButton.getBoundingClientRect().width).toBe(100);
+    expect(rejectButton.getBoundingClientRect().width).toBe(100);
+    expect(rejectButton.classList).toContain('danger');
+    expect(promiseControls.getBoundingClientRect().width).toBe(
+      promiseControls.parentElement!.getBoundingClientRect().width
+    );
+    expect(getComputedStyle(promiseControls).justifyContent).toBe(
+      'space-between'
+    );
     expect(service.state.isLoading()).toBeTrue();
     expect(
       element.querySelector('[aria-label="Loading characters"]')
@@ -635,6 +678,7 @@ describe('ExampleComponent', () => {
 
     expect(fetchButton.hidden).toBeFalse();
     expect(resolveButton.hidden).toBeTrue();
+    expect(rejectButton.hidden).toBeTrue();
 
     await vaultSettled(key);
     fixture.detectChanges();
@@ -662,6 +706,67 @@ describe('ExampleComponent', () => {
         forceSensitiveDisplay: 'Yes'
       }
     ]);
+  });
+
+  it('should reject a pending Promise, clear the spinner, and expose the error', async () => {
+    VaultPrivateErrorService().clear();
+    await configureComponent(initialCharacters, true);
+    const element = fixture.nativeElement as HTMLElement;
+    const buttons = Array.from(element.querySelectorAll('button'));
+    const fetchButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Fetch with Promise'
+    )!;
+    const resolveButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Resolve'
+    )!;
+    const rejectButton = buttons.find(
+      ({ textContent }) => textContent?.trim() === 'Reject'
+    )!;
+
+    fetchButton.click();
+    await new Promise((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    expect(service.state.isLoading()).toBeTrue();
+    expect(fetchButton.hidden).toBeTrue();
+    expect(resolveButton.hidden).toBeFalse();
+    expect(rejectButton.hidden).toBeFalse();
+
+    rejectButton.click();
+    fixture.detectChanges();
+
+    expect(fetchButton.hidden).toBeFalse();
+    expect(resolveButton.hidden).toBeTrue();
+    expect(rejectButton.hidden).toBeTrue();
+
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    expect(service.state.isLoading()).toBeFalse();
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
+    expect(service.state.error()?.message).toBe('Unexpected error');
+    expect(component['globalError']()?.message).toBe('Unexpected error');
+    expect(JSON.parse(component['errorEmissionJson']())).toEqual({
+      error: jasmine.objectContaining({ message: 'Unexpected error' }),
+      state: {
+        isLoading: false,
+        value: initialCharactersWithDisplay,
+        error: jasmine.objectContaining({ message: 'Unexpected error' }),
+        hasValue: true
+      }
+    });
+    expect(
+      (
+        element.querySelector(
+          '[aria-label="Error Emission output"]'
+        ) as HTMLTextAreaElement
+      ).value
+    ).toBe(component['errorEmissionJson']());
+    expect(
+      element.querySelector('[aria-label="Loading characters"]')
+    ).toBeNull();
+
+    VaultPrivateErrorService().clear();
   });
 
   it('should delegate FeatureCell destruction to the service', async () => {
