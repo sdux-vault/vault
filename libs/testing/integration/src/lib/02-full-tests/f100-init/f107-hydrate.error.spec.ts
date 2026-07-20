@@ -94,7 +94,7 @@ describe('f107: Hydrate - Error Test', () => {
     expect(state.hasValue()).toBeFalse();
     expect(state.error()).toEqual(
       Object({
-        message: 'Unexpected error',
+        message: 'this is a hydration error',
         details: jasmine.anything(),
         raw: jasmine.anything(),
         timestamp: jasmine.anything(),
@@ -113,21 +113,9 @@ describe('f107: Hydrate - Error Test', () => {
     expect(globalErrors).toEqual([
       null,
       Object({
-        message: 'Unexpected error',
-        details: Object({
-          message: 'this is a hydration error',
-          details: 'this is a hydration error',
-          raw: 'this is a hydration error',
-          timestamp: 1704067201000,
-          featureCellKey: 'full-test'
-        }),
-        raw: Object({
-          message: 'this is a hydration error',
-          details: 'this is a hydration error',
-          raw: 'this is a hydration error',
-          timestamp: 1704067201000,
-          featureCellKey: 'full-test'
-        }),
+        message: 'this is a hydration error',
+        details: 'this is a hydration error',
+        raw: 'this is a hydration error',
         timestamp: 1704067201000,
         featureCellKey: 'full-test'
       })

@@ -214,7 +214,7 @@ export const f107Snapshot = [
     type: 'lifecycle',
     boundary: 'notification',
     error: {
-      message: 'Unexpected error',
+      message: 'this is a hydration error',
       details: 'details-removed',
       raw: 'raw-removed',
       timestamp: 'ts-removed',
@@ -568,7 +568,7 @@ export const f107Snapshot = [
     type: 'lifecycle',
     boundary: 'notification',
     error: {
-      message: 'Unexpected error',
+      message: 'this is a hydration error',
       details: 'details-removed',
       raw: 'raw-removed',
       timestamp: 'ts-removed',

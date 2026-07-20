@@ -141,16 +141,10 @@ describe('f704: Promise - Replace - With encryption - Error Test', () => {
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toEqual(
       Object({
-        message: 'Unexpected error',
+        message: 'The reject error',
         featureCellKey: key,
-        details: Object({
-          message: 'The reject error',
-          featureCellKey: key,
-          details: 'The reject error',
-          raw: 'The reject error',
-          timestamp: jasmine.any(Number)
-        }),
-        raw: jasmine.any(Object),
+        details: 'The reject error',
+        raw: 'The reject error',
         timestamp: jasmine.any(Number)
       })
     );
@@ -159,16 +153,10 @@ describe('f704: Promise - Replace - With encryption - Error Test', () => {
     expect(globalErrors).toEqual([
       null,
       Object({
-        message: 'Unexpected error',
+        message: 'The reject error',
         featureCellKey: key,
-        details: Object({
-          message: 'The reject error',
-          featureCellKey: key,
-          details: 'The reject error',
-          raw: 'The reject error',
-          timestamp: jasmine.any(Number)
-        }),
-        raw: jasmine.any(Object),
+        details: 'The reject error',
+        raw: 'The reject error',
         timestamp: jasmine.any(Number)
       })
     ]);
@@ -185,16 +173,10 @@ describe('f704: Promise - Replace - With encryption - Error Test', () => {
     expect(globalErrors).toEqual([
       null,
       Object({
-        message: 'Unexpected error',
+        message: 'The reject error',
+        details: 'The reject error',
         featureCellKey: key,
-        details: Object({
-          message: 'The reject error',
-          featureCellKey: key,
-          details: 'The reject error',
-          raw: 'The reject error',
-          timestamp: jasmine.any(Number)
-        }),
-        raw: jasmine.any(Object),
+        raw: 'The reject error',
         timestamp: jasmine.any(Number)
       }),
       null

@@ -204,7 +204,7 @@ describe('p014: Resolve - Merge - With Initial State Error Test', () => {
     expect(state.value()).toBeUndefined();
     expect(state.hasValue()).toBeFalse();
 
-    expect(state.isLoading()).toBeTrue();
+    expect(state.isLoading()).toBeFalse();
     expect(state.error()).toEqual(
       Object({
         message: 'new error',

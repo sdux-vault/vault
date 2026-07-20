@@ -1229,15 +1229,6 @@ describe('Behavior: CoreState', () => {
             type: 'Finalize Pipeline',
             snapshot: Object({
               isLoading: false,
-              value: undefined,
-              error: null,
-              hasValue: false
-            })
-          }),
-          Object({
-            type: 'Finalize Pipeline',
-            snapshot: Object({
-              isLoading: false,
               value: [Object({ id: 1 })],
               error: null,
               hasValue: true
@@ -1246,7 +1237,7 @@ describe('Behavior: CoreState', () => {
         ]);
       });
 
-      it('finalizePipelineState should clear loading after Promise resolution', async () => {
+      it('finalizePipelineState should atomically clear loading and set a Promise value', () => {
         mockCtx.incoming = { value: () => Promise.resolve([{ id: 1 }]) };
         mockCtx.resolveType = ResolveTypes.Promise;
         mockCtx.lastSnapshot.isLoading = true;
@@ -1269,11 +1260,38 @@ describe('Behavior: CoreState', () => {
             type: 'Finalize Pipeline',
             snapshot: Object({
               isLoading: false,
-              value: undefined,
+              value: [Object({ id: 1 })],
               error: null,
-              hasValue: false
+              hasValue: true
             })
-          }),
+          })
+        ]);
+      });
+
+      it('finalizePipelineState should clear loading once and preserve the value when a Promise resolves undefined', () => {
+        const previous = [{ id: 1 }];
+        mockCtx.incoming = { value: () => Promise.resolve(undefined) };
+        mockCtx.resolveType = ResolveTypes.Promise;
+        mockCtx.lastSnapshot = {
+          isLoading: true,
+          value: previous,
+          error: null,
+          hasValue: true
+        };
+
+        behavior.finalizePipelineState(undefined, mockCtx);
+
+        expect(mockCtx.lastSnapshot).toEqual(
+          Object({
+            isLoading: false,
+            value: previous,
+            error: null,
+            hasValue: true
+          })
+        );
+        expect(warnSpy).not.toHaveBeenCalled();
+        expect(errorSpy).not.toHaveBeenCalled();
+        expect(emitted).toEqual([
           Object({
             type: 'Finalize Pipeline',
             snapshot: Object({
@@ -1447,12 +1465,34 @@ describe('Behavior: CoreState', () => {
             type: 'Finalize Pipeline',
             snapshot: Object({
               isLoading: false,
-              value: undefined,
+              value: [Object({ id: 1 })],
               error: null,
-              hasValue: false
+              hasValue: true
             }),
             options: Object({ value: false })
-          }),
+          })
+        ]);
+      });
+
+      it('finalizePipelineState should atomically clear loading and set a Promise value with options', () => {
+        mockCtx.incoming = { value: () => Promise.resolve([{ id: 1 }]) };
+        mockCtx.resolveType = ResolveTypes.Promise;
+        mockCtx.lastSnapshot.isLoading = true;
+        const value = [{ id: 1 }];
+
+        behavior.finalizePipelineState(value, mockCtx);
+
+        expect(mockCtx.lastSnapshot).toEqual(
+          Object({
+            isLoading: false,
+            value,
+            error: null,
+            hasValue: true
+          })
+        );
+        expect(warnSpy).not.toHaveBeenCalled();
+        expect(errorSpy).not.toHaveBeenCalled();
+        expect(emitted).toEqual([
           Object({
             type: 'Finalize Pipeline',
             snapshot: Object({

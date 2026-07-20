@@ -4,6 +4,4 @@ import type { FeatureCellExtensionContext } from '../contexts/feature-cell-exten
 
 /** Union of context types accepted by VaultMonitor lifecycle methods. */
 export type VaultMonitorContext<T> =
-  | BehaviorContext<T>
-  | ControllerContext<T>
-  | FeatureCellExtensionContext<T>;
+  BehaviorContext<T> | ControllerContext<T> | FeatureCellExtensionContext<T>;

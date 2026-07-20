@@ -989,7 +989,7 @@ export const f504Snapshot = [
     type: 'lifecycle',
     boundary: 'notification',
     error: {
-      message: 'Unexpected error',
+      message: 'Boom',
       details: 'details-removed',
       raw: 'raw-removed',
       timestamp: 'ts-removed',

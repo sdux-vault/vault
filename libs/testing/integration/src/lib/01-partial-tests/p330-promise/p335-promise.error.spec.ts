@@ -114,15 +114,9 @@ describe('f335: From Promise - Error Test', () => {
     expect(state.hasValue()).toBeTrue();
     expect(state.error()).toEqual(
       Object({
-        message: 'Unexpected error',
-        details: Object({
-          message: 'reject error',
-          details: 'reject error',
-          raw: 'reject error',
-          timestamp: jasmine.any(Number),
-          featureCellKey: 'partial-promise'
-        }),
-        raw: jasmine.any(Object),
+        message: 'reject error',
+        details: 'reject error',
+        raw: 'reject error',
         timestamp: jasmine.any(Number),
         featureCellKey: 'partial-promise'
       })
@@ -156,21 +150,9 @@ describe('f335: From Promise - Error Test', () => {
     expect(state.hasValue()).toBeTrue();
     expect(state.error()).toEqual(
       Object({
-        message: 'Unexpected error',
-        details: Object({
-          message: 'reject error',
-          details: 'reject error',
-          raw: 'reject error',
-          timestamp: jasmine.any(Number),
-          featureCellKey: 'partial-promise'
-        }),
-        raw: Object({
-          message: 'reject error',
-          details: 'reject error',
-          raw: 'reject error',
-          timestamp: jasmine.any(Number),
-          featureCellKey: 'partial-promise'
-        }),
+        message: 'reject error',
+        details: 'reject error',
+        raw: 'reject error',
         timestamp: jasmine.any(Number),
         featureCellKey: 'partial-promise'
       })
