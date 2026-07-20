@@ -6,8 +6,6 @@ import {
   createVaultError,
   defineBehaviorKey,
   FeatureCellExtensionContext,
-  ResolveType,
-  ResolveTypes,
   safeStringify,
   StateInputShape,
   VaultBehavior,
@@ -34,8 +32,7 @@ import { FromObservableBehaviorExtension } from './interface/from-observable-beh
 @VaultBehavior({
   type: BehaviorTypes.FromObservable,
   key: defineBehaviorKey('Core', 'FromObservable'),
-  critical: false,
-  resolveType: ResolveTypes.Observable
+  critical: false
 })
 export class withCoreFromObservableBehavior<T> implements BehaviorContract<
   T,
@@ -50,9 +47,6 @@ export class withCoreFromObservableBehavior<T> implements BehaviorContract<
   /** Static behavior key used for diagnostics and introspection. */
   static readonly key: string;
 
-  /** Resolve type associated with observable-based resolution. */
-  static readonly resolveType: ResolveType;
-
   /** Indicates whether this behavior is required by the pipeline. */
   static readonly critical: boolean;
 
@@ -64,9 +58,6 @@ export class withCoreFromObservableBehavior<T> implements BehaviorContract<
 
   /** Indicates that this behavior is optional within the pipeline. */
   readonly critical = withCoreFromObservableBehavior.critical;
-
-  /** Resolve type for this behavior instance. */
-  readonly resolveType = withCoreFromObservableBehavior.resolveType;
 
   /**
    * Creates a new observable extension behavior instance.

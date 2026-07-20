@@ -74,7 +74,6 @@ describe('Behavior: withCoreFromObservableBehavior (fetch)', () => {
     expect(withCoreFromObservableBehavior.key).toBe(
       'SDUX::Behavior::Core::FromObservable'
     );
-    expect(withCoreFromObservableBehavior.resolveType).toBe('observable');
   });
 
   it('should expose fromObservable', () => {

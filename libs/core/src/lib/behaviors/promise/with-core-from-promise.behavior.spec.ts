@@ -35,7 +35,6 @@ describe('Behavior: withCoreFromPromiseBehavior', () => {
     expect(behavior.critical).toBeFalse();
     expect(behavior.type).toBe(BehaviorTypes.FromPromise);
     expect(behavior.key).toBe('behavior key');
-    expect(behavior.resolveType).toBe('promise');
   });
 
   it('should have correct static metadata', () => {
@@ -44,7 +43,6 @@ describe('Behavior: withCoreFromPromiseBehavior', () => {
     expect(withCoreFromPromiseBehavior.key).toBe(
       'SDUX::Behavior::Core::FromPromise'
     );
-    expect(withCoreFromPromiseBehavior.resolveType).toBe('promise');
     expect((withCoreFromPromiseBehavior as any).wantsConfig).toBeFalse();
     expect((withCoreFromPromiseBehavior as any).needsLicense).toBeFalse();
     expect((withCoreFromPromiseBehavior as any).configKey).toBeUndefined();
