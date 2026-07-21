@@ -252,7 +252,11 @@ cell
       totalLoaded: current.users.filter((u) => u.status === 'loaded').length
     &#125;)
   ])
-  .initialize();</code></pre>
+  .initialize();
+
+// Any state changes — including async fetches — go through the pipeline,
+// which runs the reducer during the reducer stage. 
+cell.mergeState(&#123;value : &#123; users: [users] &#125; &#125;);</code></pre>
             </sdux-example-viewer-tab>
           </sdux-example-viewer-source>
 
