@@ -342,6 +342,28 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-20-fluent-api-predictable-state-interaction/fluent-api-predictable-state-interaction.component').then(
         (m) => m.BlogFluentApiPredictableStateInteractionComponent
       )
+  },
+  {
+    path: 'state-management-without-a-ui-on-deno',
+    data: {
+      category: 'blogs',
+      type: 'state-management-without-a-ui-on-deno'
+    },
+    loadComponent: () =>
+      import('./posts/2026-07-21-state-management-without-a-ui-on-deno/state-management-without-a-ui-on-deno.component').then(
+        (m) => m.BlogStateManagementWithoutAUiOnDenoComponent
+      )
+  },
+  {
+    path: 'a-featurecell-in-plain-javascript',
+    data: {
+      category: 'blogs',
+      type: 'a-featurecell-in-plain-javascript'
+    },
+    loadComponent: () =>
+      import('./posts/2026-07-22-a-featurecell-in-plain-javascript/a-featurecell-in-plain-javascript.component').then(
+        (m) => m.BlogAFeatureCellInPlainJavascriptComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //
