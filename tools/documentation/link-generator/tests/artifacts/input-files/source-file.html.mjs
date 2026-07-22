@@ -61,5 +61,14 @@ export const SOURCE_HTML = `<div>
       <pre class="code-inline"><code class="language-ts">FeatureCellConfig</code></pre>
     </ng-template>
   </sdux-multi-framework-example>
+
+  <sdux-example-viewer-source
+    [displayTabs]="false"
+    [displayCopyPaste]="false">
+    <sdux-example-viewer-tab
+      [label]="'Reading committed snapshots off provideFeatureCell'">
+      <pre class="code-inline"><code class="language-ts">provideFeatureCell({ key: 'safe-label' })</code></pre>
+    </sdux-example-viewer-tab>
+  </sdux-example-viewer-source>
 </div>
 `;

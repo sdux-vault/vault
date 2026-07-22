@@ -1,0 +1,26 @@
+export const SOURCE_TS = `import { Component } from '@angular/core';
+
+@Component({
+  template: \`
+    <sdux-example-viewer-source
+      [displayTabs]="false"
+      [displayCopyPaste]="false">
+      <sdux-example-viewer-tab
+        [label]="'Reading committed snapshots off state$'">
+        <pre
+          class="code-inline"><code class="language-ts">// state$ emits every committed snapshot - read the value and render it
+cell.state$.subscribe((emit) =&gt; &#123;
+  const snapshot = emit.snapshot.value;
+  render(snapshot);
+&#125;);
+
+// render() is yours - plain DOM, a web component, or a framework binding
+function render(snapshot) &#123;
+  document.querySelector('#count').textContent = String(snapshot.count);
+&#125;</code></pre>
+      </sdux-example-viewer-tab>
+    </sdux-example-viewer-source>
+  \`
+})
+export class ExampleComponent {}
+`;
