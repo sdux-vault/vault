@@ -387,6 +387,12 @@ $action-column-width: calc(
       > .selection {
         grid-row: 1;
         grid-column: 1;
+        display: flex;
+        flex-direction: row;
+
+        .select-timer {
+          width: 100px;
+        }
       }
 
       > .character-details {

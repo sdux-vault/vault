@@ -23,37 +23,20 @@ import {
 } from '@sdux-vault/shared';
 import { STAR_WARS_CHARACTERS } from '../../../examples/star-wars-character.constant';
 import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import {
+  EditorMode,
+  ExampleCharacterEditor,
+  OperationFeedback
+} from './example.character-editor';
 import { ElapsedTimer } from './example.elapsed-timer';
 import { exampleHydrate } from './example.hydrate';
 import { exampleObservable } from './example.observable';
 import { examplePromise } from './example.promise';
 import {
-  EXAMPLE_ENCRYPTED_STORAGE_KEY,
   EXAMPLE_DELAY_MILLISECONDS,
+  EXAMPLE_ENCRYPTED_STORAGE_KEY,
   ExampleService
 } from './example.service';
-import {
-  characterAddedFeedback,
-  characterRemovedFeedback,
-  characterUpdatedFeedback,
-  COMPARISON_FUNCTION_SOURCE,
-  displayName,
-  EditorMode,
-  FACTIONS,
-  FEEDBACK,
-  FILTER_SOURCE,
-  normalizeCharacterDraft,
-  OperationFeedback,
-  REDUCER_1_SOURCE,
-  REDUCER_2_SOURCE,
-  resolveCharacter,
-  serializeErrorEmission,
-  serializeRawState,
-  serializeSnapshot,
-  serializeStepwiseRequest,
-  serializeTapInput,
-  validateTrimmedText
-} from './example.character-editor';
 
 /**
  * Coordinates the reactive character editor presented by this tutorial example.
@@ -73,6 +56,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExampleComponent {
+  /** Exposes the character editor instance for template and internal use. */
+  readonly editor = new ExampleCharacterEditor();
+
   /**
    * Provides the component-facing character use cases and reactive collection signal.
    * The component never reaches through this service to access the FeatureCell directly.
@@ -80,6 +66,7 @@ export class ExampleComponent {
   readonly #exampleService = inject(ExampleService);
 
   /** Provides the singleton stream and controls for application-level Vault errors. */
+  /** Teachiing Point: Global Error Service: Ex-011 */
   readonly #globalErrorService = VaultErrorService();
 
   /** Creates the non-nullable reactive form used by the character editor. */
@@ -88,11 +75,17 @@ export class ExampleComponent {
   /** Prevents later collection emissions from replacing the user's current selection. */
   #hasInitializedSelection = false;
 
+  /** Prevents duplicate native confirm prompts for the same pending Stepwise Resolve request. */
+  #hasPromptedStepwiseResolve = false;
+
+  /** Prevents duplicate native confirm prompts for the same pending Stepwise Filter request. */
+  #hasPromptedStepwiseFilter = false;
+
+  /** Prevents duplicate native confirm prompts for the same pending Stepwise Reducer request. */
+  #hasPromptedStepwiseReducer = false;
+
   /** Remembers the selected identity so canceling create mode can restore the prior editor. */
   #selectedCharacterBeforeCreate: number | null = null;
-
-  /** Supplies the fixed faction choices rendered by both create and edit modes. */
-  protected readonly factions = FACTIONS;
 
   /**
    * References the service's computed character collection for direct reactive template reads.
@@ -125,51 +118,45 @@ export class ExampleComponent {
     2
   );
 
-  /** Displays the executable pure filter source*/
-  protected readonly filterSource = FILTER_SOURCE;
-
-  /** Displays the executable delegating-reducer source */
-  protected readonly reducer1Source = REDUCER_1_SOURCE;
-
-  /** Displays the executable factory-generated reducer source. */
-  protected readonly reducer2Source = REDUCER_2_SOURCE;
-
-  /** Displays the custom comparison passed to Distinct Until Changed. */
-  protected readonly comparisonFunctionSource = COMPARISON_FUNCTION_SOURCE;
-
   /** Serializes the current and candidate values supplied to the Stepwise Resolve callback. */
   protected readonly stepwiseResolveRequestJson = computed(() =>
-    serializeStepwiseRequest(this.#exampleService.stepwiseResolveRequest())
+    this.editor.serializeStepwiseRequest(
+      this.#exampleService.stepwiseResolveRequest()
+    )
   );
 
   /** Serializes the current and filtered candidate values from Stepwise Filter. */
   protected readonly stepwiseFilterRequestJson = computed(() =>
-    serializeStepwiseRequest(this.#exampleService.stepwiseFilterRequest())
+    this.editor.serializeStepwiseRequest(
+      this.#exampleService.stepwiseFilterRequest()
+    )
   );
 
   /** Serializes the current and fully reduced candidate from Stepwise Reducer. */
   protected readonly stepwiseReducerRequestJson = computed(() =>
-    serializeStepwiseRequest(this.#exampleService.stepwiseReducerRequest())
+    this.editor.serializeStepwiseRequest(
+      this.#exampleService.stepwiseReducerRequest()
+    )
   );
 
   /** Serializes the filtered candidate observed by the latest Before Tap callback. */
   protected readonly beforeTapInputJson = computed(() =>
-    serializeTapInput(this.#exampleService.beforeTapInput())
+    this.editor.serializeTapInput(this.#exampleService.beforeTapInput())
   );
 
   /** Serializes the transformed candidate observed by the latest After Tap callback. */
   protected readonly afterTapInputJson = computed(() =>
-    serializeTapInput(this.#exampleService.afterTapInput())
+    this.editor.serializeTapInput(this.#exampleService.afterTapInput())
   );
 
   /** Serializes the finalized StateSnapshot observed by the latest emit-state callback. */
   protected readonly emittedStateJson = computed(() =>
-    serializeSnapshot(this.#exampleService.emittedState())
+    this.editor.serializeSnapshot(this.#exampleService.emittedState())
   );
 
   /** Serializes the finalized error and StateSnapshot observed by the latest error callback. */
   protected readonly errorEmissionJson = computed(() =>
-    serializeErrorEmission(this.#exampleService.emittedError())
+    this.editor.serializeErrorEmission(this.#exampleService.emittedError())
   );
 
   /**
@@ -177,7 +164,7 @@ export class ExampleComponent {
    * Reading each state signal keeps the value, loading, error, and presence fields reactive.
    */
   protected readonly rawStateJson = computed(() =>
-    serializeRawState({
+    this.editor.serializeRawState({
       isLoading: this.state.isLoading(),
       value: this.state.value(),
       error: this.state.error(),
@@ -273,7 +260,7 @@ export class ExampleComponent {
     this.#exampleService.state$
       .pipe(takeUntilDestroyed())
       .subscribe(({ snapshot, type }) => {
-        this.rawStateStreamJson.set(serializeSnapshot(snapshot));
+        this.rawStateStreamJson.set(this.editor.serializeSnapshot(snapshot));
         this.encryptedState.set(
           localStorage.getItem(EXAMPLE_ENCRYPTED_STORAGE_KEY) ?? 'undefined'
         );
@@ -311,6 +298,18 @@ export class ExampleComponent {
         this.#patchForm(firstCharacter);
       }
     });
+
+    effect(() => {
+      this.processStepwiseResolvePending(this.isStepwiseResolvePending());
+    });
+
+    effect(() => {
+      this.processStepwiseFilterPending(this.isStepwiseFilterPending());
+    });
+
+    effect(() => {
+      this.processStepwiseReducerPending(this.isStepwiseReducerPending());
+    });
   }
 
   /**
@@ -318,6 +317,7 @@ export class ExampleComponent {
    * The singleton emits `null`, which also removes the error message from the template.
    * @returns Nothing; the global error service and reactive UI state are cleared.
    */
+  /** Teachiing Point: Global Error Service: Ex-011 */
   protected clearGlobalError(): void {
     this.#globalErrorService.clear();
   }
@@ -330,7 +330,7 @@ export class ExampleComponent {
    */
   #trimmedTextLength(minimum: number, maximum: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null =>
-      validateTrimmedText(control.value, minimum, maximum);
+      this.editor.validateTrimmedText(control.value, minimum, maximum);
   }
 
   /**
@@ -340,7 +340,7 @@ export class ExampleComponent {
    * @returns Nothing; selection, form, and feedback signals are updated in place.
    */
   protected selectCharacter(value: string): void {
-    const character = resolveCharacter(this.characters(), value);
+    const character = this.editor.resolveCharacter(this.characters(), value);
 
     if (!character) {
       return;
@@ -387,7 +387,7 @@ export class ExampleComponent {
         this.#selectedCharacterBeforeCreate = null;
         this.editorMode.set('edit');
         this.#patchForm(character);
-        this.feedback.set(FEEDBACK.newCharacterDiscarded);
+        this.feedback.set(this.editor.feedback['newCharacterDiscarded']);
         return;
       }
     }
@@ -397,7 +397,7 @@ export class ExampleComponent {
     if (character) {
       this.editorMode.set('edit');
       this.#patchForm(character);
-      this.feedback.set(FEEDBACK.unsavedChangesDiscarded);
+      this.feedback.set(this.editor.feedback['unsavedChangesDiscarded']);
       return;
     }
 
@@ -413,12 +413,12 @@ export class ExampleComponent {
   protected saveCharacter(): void {
     if (this.characterForm.invalid) {
       this.characterForm.markAllAsTouched();
-      this.feedback.set(FEEDBACK.invalidForm);
+      this.feedback.set(this.editor.feedback['invalidForm']);
       return;
     }
 
     const formValue = this.characterForm.getRawValue();
-    const normalizedCharacter = normalizeCharacterDraft(formValue);
+    const normalizedCharacter = this.editor.normalizeCharacterDraft(formValue);
 
     if (this.editorMode() === 'create') {
       this.#startDelayTimer();
@@ -429,14 +429,16 @@ export class ExampleComponent {
       this.#selectedCharacterBeforeCreate = null;
       this.editorMode.set('edit');
       this.#patchForm(character);
-      this.feedback.set(characterAddedFeedback(this.#displayName(character)));
+      this.feedback.set(
+        this.editor.characterAddedFeedback(this.#displayName(character))
+      );
       return;
     }
 
     const selectedId = this.selectedCharacterId();
 
     if (selectedId === null) {
-      this.feedback.set(FEEDBACK.selectBeforeSave);
+      this.feedback.set(this.editor.feedback['selectBeforeSave']);
       return;
     }
 
@@ -448,7 +450,7 @@ export class ExampleComponent {
 
     this.#patchForm(updatedCharacter);
     this.feedback.set(
-      characterUpdatedFeedback(this.#displayName(updatedCharacter))
+      this.editor.characterUpdatedFeedback(this.#displayName(updatedCharacter))
     );
   }
 
@@ -495,7 +497,9 @@ export class ExampleComponent {
     this.editorMode.set('create');
     this.#clearCharacterForm();
 
-    this.feedback.set(characterRemovedFeedback(this.#displayName(character)));
+    this.feedback.set(
+      this.editor.characterRemovedFeedback(this.#displayName(character))
+    );
   }
 
   /**
@@ -759,7 +763,7 @@ export class ExampleComponent {
       this.#patchForm(firstCharacter);
     }
 
-    this.feedback.set(FEEDBACK.initialCollectionRestored);
+    this.feedback.set(this.editor.feedback['initialCollectionRestored']);
   }
 
   /**
@@ -784,6 +788,121 @@ export class ExampleComponent {
   }
 
   /**
+   * Reports whether a pending Stepwise stage should open its native confirmation prompt.
+   * @param isPending - Whether the current Stepwise stage is awaiting a decision.
+   * @param hasPrompted - Whether this pending request has already shown its dialog.
+   * @returns True when a browser prompt can be shown for the pending request.
+   */
+  protected shouldPromptForPendingStepwise(
+    isPending: boolean,
+    hasPrompted: boolean
+  ): boolean {
+    return isPending && !hasPrompted && typeof window !== 'undefined';
+  }
+
+  /** Processes the current Stepwise Resolve pending state and opens its prompt at most once. */
+  protected processStepwiseResolvePending(isPending: boolean): void {
+    if (!isPending) {
+      this.#hasPromptedStepwiseResolve = false;
+      return;
+    }
+
+    if (
+      !this.shouldPromptForPendingStepwise(
+        isPending,
+        this.#hasPromptedStepwiseResolve
+      )
+    ) {
+      return;
+    }
+
+    this.#hasPromptedStepwiseResolve = true;
+    this.handleStepwiseResolvePrompt();
+  }
+
+  /** Processes the current Stepwise Filter pending state and opens its prompt at most once. */
+  protected processStepwiseFilterPending(isPending: boolean): void {
+    if (!isPending) {
+      this.#hasPromptedStepwiseFilter = false;
+      return;
+    }
+
+    if (
+      !this.shouldPromptForPendingStepwise(
+        isPending,
+        this.#hasPromptedStepwiseFilter
+      )
+    ) {
+      return;
+    }
+
+    this.#hasPromptedStepwiseFilter = true;
+    this.handleStepwiseFilterPrompt();
+  }
+
+  /** Processes the current Stepwise Reducer pending state and opens its prompt at most once. */
+  protected processStepwiseReducerPending(isPending: boolean): void {
+    if (!isPending) {
+      this.#hasPromptedStepwiseReducer = false;
+      return;
+    }
+
+    if (
+      !this.shouldPromptForPendingStepwise(
+        isPending,
+        this.#hasPromptedStepwiseReducer
+      )
+    ) {
+      return;
+    }
+
+    this.#hasPromptedStepwiseReducer = true;
+    this.handleStepwiseReducerPrompt();
+  }
+
+  /** Opens the native confirmation flow for a pending Stepwise Resolve request. */
+  protected handleStepwiseResolvePrompt(): void {
+    if (
+      window.confirm(
+        'Stepwise Resolve is pending. Press OK to accept or Cancel to block the candidate.'
+      )
+    ) {
+      this.acceptStepwiseResolve();
+      return;
+    }
+
+    this.cancelStepwiseResolve();
+  }
+
+  /** Opens the native confirmation flow for a pending Stepwise Filter request. */
+  protected handleStepwiseFilterPrompt(): void {
+    if (
+      window.confirm(
+        'Stepwise Filter is pending. Press OK to accept or Cancel to block the candidate.'
+      )
+    ) {
+      this.acceptStepwiseFilter();
+      return;
+    }
+
+    this.cancelStepwiseFilter();
+  }
+
+  /** Opens the native confirmation flow for a pending Stepwise Reducer request. */
+  protected handleStepwiseReducerPrompt(): void {
+    if (
+      window.confirm(
+        'Stepwise Reducer is pending. Press OK to accept or Cancel to block the candidate.'
+      )
+    ) {
+      this.acceptStepwiseReducer();
+      return;
+    }
+
+    this.cancelStepwiseReducer();
+  }
+
+  /**
    * Exposes character-name formatting to the template without exposing a private helper.
    * @param character - Character whose first and last names should be combined.
    * @returns The display name used in picker options, messages, and headings.
@@ -798,7 +917,7 @@ export class ExampleComponent {
    * @returns The character's first and last names separated by one space.
    */
   #displayName(character: StarWarsCharacterState): string {
-    return displayName(character);
+    return this.editor.displayName(character);
   }
 
   /**

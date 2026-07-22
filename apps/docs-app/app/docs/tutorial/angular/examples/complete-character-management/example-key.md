@@ -12,6 +12,7 @@
 | isLoading                                  | ex-008 | ✅    | ✅      |
 | Create                                     | ex-009 | ✅    | ✅      |
 | Create / Update                            | ex-010 | ✅    | ✅      |
+| Global Error                               | ex-011 | ✅    | ✅      |
 | Initial State                              | ex-012 | ✅    | ✅      |
 | Raw StateSnapshot                          | ex-013 | ✅    | ✅      |
 | Raw StateSnapshot$                         | ex-014 | ✅    | ✅      |

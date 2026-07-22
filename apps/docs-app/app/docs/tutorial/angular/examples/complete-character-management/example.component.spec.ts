@@ -9,11 +9,11 @@ import {
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
+import type { VaultErrorShape } from '@sdux-vault/shared';
 import {
   VaultErrorService,
   VaultPrivateErrorService
 } from '@sdux-vault/shared';
-import type { VaultErrorShape } from '@sdux-vault/shared';
 import { STAR_WARS_CHARACTERS } from '../../../examples/star-wars-character.constant';
 import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import { ExampleComponent } from './example.component';
@@ -57,6 +57,7 @@ describe('ExampleComponent', () => {
   let component: ExampleComponent;
   let fixture: ComponentFixture<ExampleComponent>;
   let service: ExampleService;
+  let confirmSpy: jasmine.Spy<(message?: string) => boolean>;
 
   const acceptStepwiseAndSettle = async (): Promise<void> => {
     let settled = false;
@@ -127,6 +128,7 @@ describe('ExampleComponent', () => {
     fixture = TestBed.createComponent(ExampleComponent);
     component = fixture.componentInstance;
     service = TestBed.inject(ExampleService);
+    confirmSpy = spyOn(window, 'confirm').and.returnValue(true);
     fixture.detectChanges();
 
     if (!deferHydration) {
@@ -186,28 +188,40 @@ describe('ExampleComponent', () => {
     );
   });
 
+  it('should report when a pending stepwise prompt should open', async () => {
+    await configureComponent();
+
+    expect(
+      component['shouldPromptForPendingStepwise'](false, false)
+    ).toBeFalse();
+    expect(component['shouldPromptForPendingStepwise'](true, true)).toBeFalse();
+    expect(component['shouldPromptForPendingStepwise'](true, false)).toBeTrue();
+  });
+
   it('should expose the State, filter, reducer, and comparison teaching sources', async () => {
     await configureComponent();
     const replaceNewLines = (value: string): string =>
-      value.replace(/\r?\n/g, ' ');
+      value.replace(/\r?\n/g, ' ').trimEnd();
 
     expect(replaceNewLines(component['originalStateJson'])).toBe(
       replaceNewLines(JSON.stringify(STAR_WARS_CHARACTERS, null, 2))
     );
-    expect(replaceNewLines(component['filterSource'])).toBe(
+    expect(replaceNewLines(component.editor.filterSource)).toBe(
       replaceNewLines(`export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacterState[]> =
   (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');"
  `)
     );
-    expect(replaceNewLines(component['reducer1Source'])).toBe(
+    expect(replaceNewLines(component.editor.reducer1Source)).toBe(
       replaceNewLines(`#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacterState[]): readonly StarWarsCharacterState[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
   }));
+  }); 
+}
 `)
     );
-    expect(replaceNewLines(component['reducer2Source'])).toBe(
+    expect(replaceNewLines(component.editor.reducer2Source)).toBe(
       replaceNewLines(`export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacterState[]> {
   return (characters) =>
     [...characters].sort((left, right) =>
@@ -215,7 +229,7 @@ describe('ExampleComponent', () => {
     );
 }`)
     );
-    expect(replaceNewLines(component['comparisonFunctionSource'])).toBe(
+    expect(replaceNewLines(component.editor.comparisonFunctionSource)).toBe(
       replaceNewLines(`withDistinctUntilChanged<readonly StarWarsCharacterState[]>(
   (incoming, previous) =>
     incoming.every(({ id }) =>
@@ -230,73 +244,86 @@ describe('ExampleComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
     const resolveColumn =
       element.querySelector<HTMLElement>('.stepwise-column')!;
-    const buttons = Array.from(resolveColumn.querySelectorAll('button'));
-    const acceptButton = buttons.find(
-      ({ textContent }) => textContent?.trim() === 'Accept'
-    )!;
-    const cancelButton = buttons.find(
-      ({ textContent }) => textContent?.trim() === 'Cancel'
-    )!;
     const output = resolveColumn.querySelector<HTMLTextAreaElement>(
       '[aria-label="Stepwise Resolve output"]'
     )!;
 
-    expect(acceptButton.disabled).toBeTrue();
-    expect(cancelButton.disabled).toBeTrue();
     expect(output.value).not.toBe('');
-    expect(element.textContent).not.toContain(
-      'Stepwise Resolve is awaiting confirmation.'
-    );
 
+    confirmSpy.calls.reset();
+    confirmSpy.and.returnValue(false);
     const han = service.createCharacter({
       name: 'Han',
       lastName: 'Solo',
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    await new Promise((resolve) => setTimeout(resolve));
+    await vaultSettled(key);
     fixture.detectChanges();
 
-    expect(acceptButton.disabled).toBeFalse();
-    expect(cancelButton.disabled).toBeFalse();
-    expect(JSON.parse(output.value)).toEqual({
-      current: initialCharactersWithDisplay,
-      candidate: [...initialCharactersWithDisplay, han]
-    });
-    expect(element.textContent).toContain(
-      'Stepwise Resolve is awaiting confirmation.'
+    expect(confirmSpy.calls.count()).toBe(1);
+    expect(confirmSpy.calls.argsFor(0)[0]).toContain(
+      'Stepwise Resolve is pending.'
     );
-
-    acceptButton.click();
-    await acceptStepwiseAndSettle();
-    fixture.detectChanges();
-
-    expect(acceptButton.disabled).toBeTrue();
-    expect(cancelButton.disabled).toBeTrue();
-    expect(element.textContent).not.toContain(
-      'Stepwise Resolve is awaiting confirmation.'
-    );
-    expect(service.characters()).toContain(
+    expect(service.characters()).not.toContain(
       jasmine.objectContaining({ id: han.id, forceSensitiveDisplay: 'No' })
     );
 
     const committed = service.characters();
+    confirmSpy.calls.reset();
+    confirmSpy.and.returnValue(false);
+
     service.createCharacter({
       name: 'Chewbacca',
       lastName: 'Wookiee',
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    await new Promise((resolve) => setTimeout(resolve));
-    fixture.detectChanges();
-
-    cancelButton.click();
     await vaultSettled(key);
     fixture.detectChanges();
 
+    expect(confirmSpy.calls.count()).toBe(1);
+    expect(confirmSpy.calls.argsFor(0)[0]).toContain(
+      'Stepwise Resolve is pending.'
+    );
     expect(service.characters()).toEqual(committed);
-    expect(acceptButton.disabled).toBeTrue();
-    expect(cancelButton.disabled).toBeTrue();
+  });
+
+  it('should accept Stepwise Resolve when the native prompt returns true', async () => {
+    await configureComponent(initialCharacters, true);
+    const acceptResolve = spyOn<any>(
+      component,
+      'acceptStepwiseResolve'
+    ).and.callThrough();
+    const cancelResolve = spyOn<any>(
+      component,
+      'cancelStepwiseResolve'
+    ).and.callThrough();
+
+    confirmSpy.calls.reset();
+    confirmSpy.and.returnValue(true);
+
+    component['handleStepwiseResolvePrompt']();
+
+    expect(acceptResolve).toHaveBeenCalled();
+    expect(cancelResolve).not.toHaveBeenCalled();
+  });
+
+  it('should process the Stepwise Resolve pending state', async () => {
+    await configureComponent(initialCharacters, true);
+    const resolvePrompt = spyOn<any>(
+      component,
+      'handleStepwiseResolvePrompt'
+    ).and.stub();
+
+    component['processStepwiseResolvePending'](true);
+
+    expect(resolvePrompt).toHaveBeenCalled();
+    component['processStepwiseResolvePending'](true);
+    expect(resolvePrompt).toHaveBeenCalledTimes(1);
+    component['processStepwiseResolvePending'](false);
+    component['processStepwiseResolvePending'](true);
+    expect(resolvePrompt).toHaveBeenCalledTimes(2);
   });
 
   it('should display and control the active Stepwise Filter callback', async () => {
@@ -304,76 +331,92 @@ describe('ExampleComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
     const filterColumn =
       element.querySelectorAll<HTMLElement>('.stepwise-column')[1]!;
-    const buttons = Array.from(filterColumn.querySelectorAll('button'));
-    const acceptButton = buttons.find(
-      ({ textContent }) => textContent?.trim() === 'Accept'
-    )!;
-    const cancelButton = buttons.find(
-      ({ textContent }) => textContent?.trim() === 'Cancel'
-    )!;
     const output = filterColumn.querySelector<HTMLTextAreaElement>(
       '[aria-label="Stepwise Filter output"]'
     )!;
 
-    expect(acceptButton.disabled).toBeTrue();
-    expect(cancelButton.disabled).toBeTrue();
-    expect(element.textContent).not.toContain(
-      'Stepwise Filter is awaiting confirmation.'
-    );
-
+    confirmSpy.calls.reset();
+    confirmSpy.and.returnValues(true, false);
     const han = service.createCharacter({
       name: 'Han',
       lastName: 'Solo',
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    await new Promise((resolve) => setTimeout(resolve));
-    component['acceptStepwiseResolve']();
-    await new Promise((resolve) => setTimeout(resolve));
+    await vaultSettled(key);
     fixture.detectChanges();
 
-    expect(acceptButton.disabled).toBeFalse();
-    expect(cancelButton.disabled).toBeFalse();
+    expect(confirmSpy.calls.count()).toBe(2);
+    expect(confirmSpy.calls.argsFor(0)[0]).toContain(
+      'Stepwise Resolve is pending.'
+    );
+    expect(confirmSpy.calls.argsFor(1)[0]).toContain(
+      'Stepwise Filter is pending.'
+    );
     expect(JSON.parse(output.value)).toEqual({
       current: initialCharactersWithDisplay,
       candidate: [...initialCharactersWithDisplay, han]
     });
-    expect(element.textContent).toContain(
-      'Stepwise Filter is awaiting confirmation.'
-    );
-
-    acceptButton.click();
-    await acceptStepwiseAndSettle();
-    fixture.detectChanges();
-
-    expect(service.characters()).toContain(
-      jasmine.objectContaining({ id: han.id, forceSensitiveDisplay: 'No' })
-    );
-    expect(acceptButton.disabled).toBeTrue();
-    expect(cancelButton.disabled).toBeTrue();
-    expect(element.textContent).not.toContain(
-      'Stepwise Filter is awaiting confirmation.'
-    );
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
 
     const committed = service.characters();
+    confirmSpy.calls.reset();
+    confirmSpy.and.returnValues(true, false);
+
     service.createCharacter({
       name: 'Chewbacca',
       lastName: 'Wookiee',
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    await new Promise((resolve) => setTimeout(resolve));
-    component['acceptStepwiseResolve']();
-    await new Promise((resolve) => setTimeout(resolve));
-    fixture.detectChanges();
-
-    cancelButton.click();
     await vaultSettled(key);
     fixture.detectChanges();
 
+    expect(confirmSpy.calls.count()).toBe(2);
+    expect(confirmSpy.calls.argsFor(0)[0]).toContain(
+      'Stepwise Resolve is pending.'
+    );
+    expect(confirmSpy.calls.argsFor(1)[0]).toContain(
+      'Stepwise Filter is pending.'
+    );
     expect(service.characters()).toEqual(committed);
-    expect(acceptButton.disabled).toBeTrue();
-    expect(cancelButton.disabled).toBeTrue();
+  });
+
+  it('should accept Stepwise Filter when the native prompt returns true', async () => {
+    await configureComponent(initialCharacters, true);
+    const acceptFilter = spyOn<any>(
+      component,
+      'acceptStepwiseFilter'
+    ).and.callThrough();
+    const cancelFilter = spyOn<any>(
+      component,
+      'cancelStepwiseFilter'
+    ).and.callThrough();
+
+    confirmSpy.calls.reset();
+    confirmSpy.and.returnValue(true);
+
+    component['handleStepwiseFilterPrompt']();
+
+    expect(acceptFilter).toHaveBeenCalled();
+    expect(cancelFilter).not.toHaveBeenCalled();
+  });
+
+  it('should process the Stepwise Filter pending state', async () => {
+    await configureComponent(initialCharacters, true);
+    const filterPrompt = spyOn<any>(
+      component,
+      'handleStepwiseFilterPrompt'
+    ).and.stub();
+
+    component['processStepwiseFilterPending'](true);
+
+    expect(filterPrompt).toHaveBeenCalled();
+    component['processStepwiseFilterPending'](true);
+    expect(filterPrompt).toHaveBeenCalledTimes(1);
+    component['processStepwiseFilterPending'](false);
+    component['processStepwiseFilterPending'](true);
+    expect(filterPrompt).toHaveBeenCalledTimes(2);
   });
 
   it('should display and control the active Stepwise Reducer callback', async () => {
@@ -381,38 +424,31 @@ describe('ExampleComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
     const reducerColumn =
       element.querySelectorAll<HTMLElement>('.stepwise-column')[2]!;
-    const buttons = Array.from(reducerColumn.querySelectorAll('button'));
-    const acceptButton = buttons.find(
-      ({ textContent }) => textContent?.trim() === 'Accept'
-    )!;
-    const cancelButton = buttons.find(
-      ({ textContent }) => textContent?.trim() === 'Cancel'
-    )!;
     const output = reducerColumn.querySelector<HTMLTextAreaElement>(
       '[aria-label="Stepwise Reducer output"]'
     )!;
 
-    expect(acceptButton.disabled).toBeTrue();
-    expect(cancelButton.disabled).toBeTrue();
-    expect(element.textContent).not.toContain(
-      'Stepwise Reducer is awaiting confirmation.'
-    );
-
+    confirmSpy.calls.reset();
+    confirmSpy.and.returnValues(true, true, false);
     const han = service.createCharacter({
       name: 'Han',
       lastName: 'Solo',
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    await new Promise((resolve) => setTimeout(resolve));
-    component['acceptStepwiseResolve']();
-    await new Promise((resolve) => setTimeout(resolve));
-    component['acceptStepwiseFilter']();
-    await new Promise((resolve) => setTimeout(resolve));
+    await vaultSettled(key);
     fixture.detectChanges();
 
-    expect(acceptButton.disabled).toBeFalse();
-    expect(cancelButton.disabled).toBeFalse();
+    expect(confirmSpy.calls.count()).toBe(3);
+    expect(confirmSpy.calls.argsFor(0)[0]).toContain(
+      'Stepwise Resolve is pending.'
+    );
+    expect(confirmSpy.calls.argsFor(1)[0]).toContain(
+      'Stepwise Filter is pending.'
+    );
+    expect(confirmSpy.calls.argsFor(2)[0]).toContain(
+      'Stepwise Reducer is pending.'
+    );
     expect(JSON.parse(output.value)).toEqual({
       current: initialCharactersWithDisplay,
       candidate: [
@@ -420,45 +456,70 @@ describe('ExampleComponent', () => {
         { ...han, forceSensitiveDisplay: 'No' }
       ]
     });
-    expect(element.textContent).toContain(
-      'Stepwise Reducer is awaiting confirmation.'
-    );
 
-    acceptButton.click();
-    await vaultSettled(key);
-    fixture.detectChanges();
-
-    expect(service.characters()).toEqual([
-      ...initialCharactersWithDisplay,
-      { ...han, forceSensitiveDisplay: 'No' }
-    ]);
-    expect(acceptButton.disabled).toBeTrue();
-    expect(cancelButton.disabled).toBeTrue();
-    expect(element.textContent).not.toContain(
-      'Stepwise Reducer is awaiting confirmation.'
-    );
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
 
     const committed = service.characters();
+    confirmSpy.calls.reset();
+    confirmSpy.and.returnValues(true, true, false);
+
     service.createCharacter({
       name: 'Chewbacca',
       lastName: 'Wookiee',
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    await new Promise((resolve) => setTimeout(resolve));
-    component['acceptStepwiseResolve']();
-    await new Promise((resolve) => setTimeout(resolve));
-    component['acceptStepwiseFilter']();
-    await new Promise((resolve) => setTimeout(resolve));
-    fixture.detectChanges();
-
-    cancelButton.click();
     await vaultSettled(key);
     fixture.detectChanges();
 
+    expect(confirmSpy.calls.count()).toBe(3);
+    expect(confirmSpy.calls.argsFor(0)[0]).toContain(
+      'Stepwise Resolve is pending.'
+    );
+    expect(confirmSpy.calls.argsFor(1)[0]).toContain(
+      'Stepwise Filter is pending.'
+    );
+    expect(confirmSpy.calls.argsFor(2)[0]).toContain(
+      'Stepwise Reducer is pending.'
+    );
     expect(service.characters()).toEqual(committed);
-    expect(acceptButton.disabled).toBeTrue();
-    expect(cancelButton.disabled).toBeTrue();
+  });
+
+  it('should accept Stepwise Reducer when the native prompt returns true', async () => {
+    await configureComponent(initialCharacters, true);
+    const acceptReducer = spyOn<any>(
+      component,
+      'acceptStepwiseReducer'
+    ).and.callThrough();
+    const cancelReducer = spyOn<any>(
+      component,
+      'cancelStepwiseReducer'
+    ).and.callThrough();
+
+    confirmSpy.calls.reset();
+    confirmSpy.and.returnValue(true);
+
+    component['handleStepwiseReducerPrompt']();
+
+    expect(acceptReducer).toHaveBeenCalled();
+    expect(cancelReducer).not.toHaveBeenCalled();
+  });
+
+  it('should process the Stepwise Reducer pending state', async () => {
+    await configureComponent(initialCharacters, true);
+    const reducerPrompt = spyOn<any>(
+      component,
+      'handleStepwiseReducerPrompt'
+    ).and.stub();
+
+    component['processStepwiseReducerPending'](true);
+
+    expect(reducerPrompt).toHaveBeenCalled();
+    component['processStepwiseReducerPending'](true);
+    expect(reducerPrompt).toHaveBeenCalledTimes(1);
+    component['processStepwiseReducerPending'](false);
+    component['processStepwiseReducerPending'](true);
+    expect(reducerPrompt).toHaveBeenCalledTimes(2);
   });
 
   it('should display the comparison function source in its textarea', async () => {
@@ -470,7 +531,9 @@ describe('ExampleComponent', () => {
     );
 
     expect(comparisonOutput).not.toBeNull();
-    expect(comparisonOutput!.value).toBe(component['comparisonFunctionSource']);
+    expect(comparisonOutput!.value).toBe(
+      component.editor.comparisonFunctionSource
+    );
   });
 
   it('should recompute the serialized raw state after a state change', async () => {

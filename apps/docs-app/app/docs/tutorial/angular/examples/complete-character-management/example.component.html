@@ -25,7 +25,7 @@
   }
 
   @if (globalError(); as error) {
-    <!-- Teaching point: Errors (ex-004) -->
+    <!-- Teaching point: Global Error (ex-011) -->
     <div class="feedback error global-error" role="alert" aria-live="assertive">
       <span>{{ error.message }}</span>
       <!-- Teaching point: Errors (ex-004) -->
@@ -109,26 +109,41 @@
     <div class="workspace">
       <!-- Teaching point: Collection Selection (ex-001) -->
       <div class="field selection">
-        <label for="character-selection">
-          Character ({{ characters().length }} total)
-        </label>
         <!-- Teaching point: Collection Selection (ex-001) -->
-        <select
-          #characterSelection
-          id="character-selection"
-          [disabled]="characters().length === 0"
-          (change)="selectCharacter(characterSelection.value)">
-          <option value="" disabled [selected]="selectedCharacterId() === null">
-            Select a character
-          </option>
-          @for (character of characters(); track character.id) {
+        <div>
+          <label for="character-selection">
+            Character ({{ characters().length }} total)
+          </label>
+          <select
+            #characterSelection
+            id="character-selection"
+            [disabled]="characters().length === 0"
+            (change)="selectCharacter(characterSelection.value)">
             <option
-              [value]="character.id"
-              [selected]="character.id === selectedCharacterId()">
-              {{ displayName(character) }}
+              value=""
+              disabled
+              [selected]="selectedCharacterId() === null">
+              Select a character
             </option>
-          }
-        </select>
+            @for (character of characters(); track character.id) {
+              <option
+                [value]="character.id"
+                [selected]="character.id === selectedCharacterId()">
+                {{ displayName(character) }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="select-timer">
+          <label> Timer (ms) </label>
+          <input
+            type="number"
+            min="0"
+            readonly
+            aria-label="Elapsed delay timer in milliseconds"
+            [value]="delayTimerMilliseconds()" />
+        </div>
       </div>
 
       <!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
@@ -301,7 +316,7 @@
                     : null
                 ">
                 <option value="" disabled>Select a faction</option>
-                @for (faction of factions; track faction) {
+                @for (faction of editor.factions; track faction) {
                   <option [value]="faction">{{ faction }}</option>
                 }
               </select>
@@ -352,163 +367,6 @@
         </form>
       </section>
     </div>
-
-    <div class="state-output">
-      <input
-        id="state-section-toggle"
-        class="section-toggle"
-        type="checkbox"
-        aria-label="Toggle State visibility"
-        checked />
-      <div class="section-header">
-        <span>State</span>
-        <label
-          class="section-chevron"
-          for="state-section-toggle"
-          title="Show or hide State"></label>
-      </div>
-
-      <input
-        id="raw-state-output-toggle"
-        class="tap-toggle"
-        type="checkbox"
-        aria-label="Toggle State output visibility"
-        checked />
-
-      <!-- Teaching point: Initial State (ex-012) -->
-      <div class="tap-column">
-        <div class="tap-header">
-          <h3>Initial State</h3>
-          <label
-            class="tap-chevron"
-            for="raw-state-output-toggle"
-            title="Show or hide Initial State output"></label>
-        </div>
-        <textarea
-          readonly
-          rows="8"
-          aria-label="Initial State output"
-          [value]="originalStateJson"></textarea>
-      </div>
-
-      <!-- Teaching point: Raw StateSnapshot (ex-013) -->
-      <div class="tap-column">
-        <div class="tap-header">
-          <h3>Raw StateSnapshot</h3>
-          <label
-            class="tap-chevron"
-            for="raw-state-output-toggle"
-            title="Show or hide Raw StateSnapshot output"></label>
-        </div>
-        <!-- Teaching point: Raw StateSnapshot (ex-013) -->
-        <textarea
-          readonly
-          rows="8"
-          aria-label="Raw StateSnapshot output"
-          [value]="rawStateJson()"></textarea>
-      </div>
-
-      <!-- Teaching point: Raw StateSnapshot$ (ex-014) -->
-      <div class="tap-column">
-        <div class="tap-header">
-          <h3>Raw StateSnapshot$</h3>
-          <label
-            class="tap-chevron"
-            for="raw-state-output-toggle"
-            title="Show or hide Raw StateSnapshot$ output"></label>
-        </div>
-        <!-- Teaching point: Raw StateSnapshot$ (ex-014) -->
-        <textarea
-          readonly
-          rows="8"
-          aria-label="Raw StateSnapshot$ output"
-          [value]="rawStateStreamJson()"></textarea>
-      </div>
-    </div>
-
-    <div class="filter-reducer-output">
-      <input
-        id="filters-reducers-section-toggle"
-        class="section-toggle"
-        type="checkbox"
-        aria-label="Toggle Filters and Reducers visibility"
-        checked />
-      <div class="section-header">
-        <span>Filters and Reducers</span>
-        <label
-          class="section-chevron"
-          for="filters-reducers-section-toggle"
-          title="Show or hide Filters and Reducers"></label>
-      </div>
-
-      <!-- Teaching point: Filter (ex-016) -->
-      <div class="tap-column">
-        <input
-          id="filter-output-toggle"
-          class="tap-toggle"
-          type="checkbox"
-          aria-label="Toggle Filter source visibility"
-          checked />
-        <div class="tap-header">
-          <h3>Filter</h3>
-          <label
-            class="tap-chevron"
-            for="filter-output-toggle"
-            title="Show or hide Filter output"></label>
-        </div>
-        <textarea
-          readonly
-          rows="6"
-          aria-label="Filter source"
-          [value]="filterSource"></textarea>
-      </div>
-
-      <!-- Teaching point: Reducer 1 (ex-017) -->
-      <div class="tap-column">
-        <input
-          id="reducer-one-output-toggle"
-          class="tap-toggle"
-          type="checkbox"
-          aria-label="Toggle Reducer 1 output visibility"
-          checked />
-        <div class="tap-header">
-          <h3>Reducer 1</h3>
-          <label
-            class="tap-chevron"
-            for="reducer-one-output-toggle"
-            title="Show or hide Reducer 1 output"></label>
-        </div>
-        <textarea
-          readonly
-          rows="6"
-          aria-label="Reducer 1 output"
-          [value]="reducer1Source"></textarea>
-      </div>
-
-      <!-- Teaching point: Reducer 2 (ex-018) -->
-      <div class="tap-column">
-        <input
-          id="reducer-two-output-toggle"
-          class="tap-toggle"
-          type="checkbox"
-          aria-label="Toggle Reducer 2 output visibility"
-          checked />
-        <div class="tap-header">
-          <h3>Reducer 2</h3>
-          <label
-            class="tap-chevron"
-            for="reducer-two-output-toggle"
-            title="Show or hide Reducer 2 output"></label>
-        </div>
-        <textarea
-          readonly
-          rows="6"
-          aria-label="Reducer 2 output"
-          [value]="reducer2Source"></textarea>
-      </div>
-    </div>
-
-    <!-- Milestone: CRUD Foundation -->
 
     <div class="pipeline-actions">
       <input
@@ -901,7 +759,7 @@
             readonly
             rows="6"
             aria-label="Comparison Function output"
-            [value]="comparisonFunctionSource"></textarea>
+            [value]="editor.comparisonFunctionSource"></textarea>
         </div>
       </div>
 
@@ -954,6 +812,163 @@
         </div>
       </div>
     </div>
+
+    <div class="state-output">
+      <input
+        id="state-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle State visibility"
+        checked />
+      <div class="section-header">
+        <span>State</span>
+        <label
+          class="section-chevron"
+          for="state-section-toggle"
+          title="Show or hide State"></label>
+      </div>
+
+      <input
+        id="raw-state-output-toggle"
+        class="tap-toggle"
+        type="checkbox"
+        aria-label="Toggle State output visibility"
+        checked />
+
+      <!-- Teaching point: Initial State (ex-012) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>Initial State</h3>
+          <label
+            class="tap-chevron"
+            for="raw-state-output-toggle"
+            title="Show or hide Initial State output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Initial State output"
+          [value]="originalStateJson"></textarea>
+      </div>
+
+      <!-- Teaching point: Raw StateSnapshot (ex-013) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>Raw StateSnapshot</h3>
+          <label
+            class="tap-chevron"
+            for="raw-state-output-toggle"
+            title="Show or hide Raw StateSnapshot output"></label>
+        </div>
+        <!-- Teaching point: Raw StateSnapshot (ex-013) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Raw StateSnapshot output"
+          [value]="rawStateJson()"></textarea>
+      </div>
+
+      <!-- Teaching point: Raw StateSnapshot$ (ex-014) -->
+      <div class="tap-column">
+        <div class="tap-header">
+          <h3>Raw StateSnapshot$</h3>
+          <label
+            class="tap-chevron"
+            for="raw-state-output-toggle"
+            title="Show or hide Raw StateSnapshot$ output"></label>
+        </div>
+        <!-- Teaching point: Raw StateSnapshot$ (ex-014) -->
+        <textarea
+          readonly
+          rows="8"
+          aria-label="Raw StateSnapshot$ output"
+          [value]="rawStateStreamJson()"></textarea>
+      </div>
+    </div>
+
+    <div class="filter-reducer-output">
+      <input
+        id="filters-reducers-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Filters and Reducers visibility"
+        checked />
+      <div class="section-header">
+        <span>Filters and Reducers</span>
+        <label
+          class="section-chevron"
+          for="filters-reducers-section-toggle"
+          title="Show or hide Filters and Reducers"></label>
+      </div>
+
+      <!-- Teaching point: Filter (ex-016) -->
+      <div class="tap-column">
+        <input
+          id="filter-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle Filter source visibility"
+          checked />
+        <div class="tap-header">
+          <h3>Filter</h3>
+          <label
+            class="tap-chevron"
+            for="filter-output-toggle"
+            title="Show or hide Filter output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="6"
+          aria-label="Filter source"
+          [value]="editor.filterSource"></textarea>
+      </div>
+
+      <!-- Teaching point: Reducer 1 (ex-017) -->
+      <div class="tap-column">
+        <input
+          id="reducer-one-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle Reducer 1 output visibility"
+          checked />
+        <div class="tap-header">
+          <h3>Reducer 1</h3>
+          <label
+            class="tap-chevron"
+            for="reducer-one-output-toggle"
+            title="Show or hide Reducer 1 output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="6"
+          aria-label="Reducer 1 output"
+          [value]="editor.reducer1Source"></textarea>
+      </div>
+
+      <!-- Teaching point: Reducer 2 (ex-018) -->
+      <div class="tap-column">
+        <input
+          id="reducer-two-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle Reducer 2 output visibility"
+          checked />
+        <div class="tap-header">
+          <h3>Reducer 2</h3>
+          <label
+            class="tap-chevron"
+            for="reducer-two-output-toggle"
+            title="Show or hide Reducer 2 output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="6"
+          aria-label="Reducer 2 output"
+          [value]="editor.reducer2Source"></textarea>
+      </div>
+    </div>
+
+    <!-- Milestone: CRUD Foundation -->
 
     <div class="tap-output">
       <input
@@ -1031,15 +1046,6 @@
               aria-label="Configured delay in milliseconds"
               [value]="delayMilliseconds" />
           </label>
-          <label>
-            Timer (ms)
-            <input
-              type="number"
-              min="0"
-              readonly
-              aria-label="Elapsed delay timer in milliseconds"
-              [value]="delayTimerMilliseconds()" />
-          </label>
         </div>
       </div>
 
@@ -1114,24 +1120,6 @@
       <div class="stepwise-column">
         <div class="stepwise-header">
           <h3>Stepwise Resolve</h3>
-          <div class="stepwise-actions">
-            <!-- Teaching point: Stepwise Resolve (ex-038) -->
-            <button
-              type="button"
-              class="button"
-              [disabled]="!isStepwiseResolvePending()"
-              (click)="acceptStepwiseResolve()">
-              Accept
-            </button>
-            <!-- Teaching point: Stepwise Resolve (ex-038) -->
-            <button
-              type="button"
-              class="button danger"
-              [disabled]="!isStepwiseResolvePending()"
-              (click)="cancelStepwiseResolve()">
-              Cancel
-            </button>
-          </div>
         </div>
         <!-- Teaching point: Stepwise Resolve (ex-038) -->
         <textarea
@@ -1145,24 +1133,6 @@
       <div class="stepwise-column">
         <div class="stepwise-header">
           <h3>Stepwise Filter</h3>
-          <div class="stepwise-actions">
-            <!-- Teaching point: Stepwise Filter (ex-039) -->
-            <button
-              type="button"
-              class="button"
-              [disabled]="!isStepwiseFilterPending()"
-              (click)="acceptStepwiseFilter()">
-              Accept
-            </button>
-            <!-- Teaching point: Stepwise Filter (ex-039) -->
-            <button
-              type="button"
-              class="button danger"
-              [disabled]="!isStepwiseFilterPending()"
-              (click)="cancelStepwiseFilter()">
-              Cancel
-            </button>
-          </div>
         </div>
         <!-- Teaching point: Stepwise Filter (ex-039) -->
         <textarea
@@ -1176,24 +1146,6 @@
       <div class="stepwise-column">
         <div class="stepwise-header">
           <h3>Stepwise Reducer</h3>
-          <div class="stepwise-actions">
-            <!-- Teaching point: Stepwise Reducer (ex-040) -->
-            <button
-              type="button"
-              class="button"
-              [disabled]="!isStepwiseReducerPending()"
-              (click)="acceptStepwiseReducer()">
-              Accept
-            </button>
-            <!-- Teaching point: Stepwise Reducer (ex-040) -->
-            <button
-              type="button"
-              class="button danger"
-              [disabled]="!isStepwiseReducerPending()"
-              (click)="cancelStepwiseReducer()">
-              Cancel
-            </button>
-          </div>
         </div>
         <!-- Teaching point: Stepwise Reducer (ex-040) -->
         <textarea

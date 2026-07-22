@@ -1,27 +1,10 @@
 import type { StateSnapshotShape, VaultErrorShape } from '@sdux-vault/shared';
 import type { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
-import {
-  characterAddedFeedback,
-  characterRemovedFeedback,
-  characterUpdatedFeedback,
-  COMPARISON_FUNCTION_SOURCE,
-  displayName,
-  FACTIONS,
-  FEEDBACK,
-  FILTER_SOURCE,
-  normalizeCharacterDraft,
-  REDUCER_1_SOURCE,
-  REDUCER_2_SOURCE,
-  resolveCharacter,
-  serializeErrorEmission,
-  serializeRawState,
-  serializeSnapshot,
-  serializeStepwiseRequest,
-  serializeTapInput,
-  validateTrimmedText
-} from './example.character-editor';
+import { ExampleCharacterEditor } from './example.character-editor';
 
 describe('Character editor', () => {
+  const editor = new ExampleCharacterEditor();
+
   const leia: StarWarsCharacterState = {
     id: 10,
     name: 'Leia',
@@ -46,7 +29,7 @@ describe('Character editor', () => {
 
   describe('constants', () => {
     it('should expose the fixed faction choices', () => {
-      expect(FACTIONS).toEqual([
+      expect(editor.factions).toEqual([
         'Galactic Empire',
         'Jedi Order',
         'Rebel Alliance',
@@ -56,30 +39,32 @@ describe('Character editor', () => {
     });
 
     it('should expose the filter, reducer, and comparison teaching sources', () => {
-      expect(FILTER_SOURCE).toContain('removeUnknownLastNameFilter');
-      expect(REDUCER_1_SOURCE).toContain('#deriveForceSensitiveDisplay');
-      expect(REDUCER_2_SOURCE).toContain('withCharactersSortedByLastName');
-      expect(COMPARISON_FUNCTION_SOURCE).toContain('withDistinctUntilChanged');
+      expect(editor.filterSource).toContain('removeUnknownLastNameFilter');
+      expect(editor.reducer1Source).toContain('#deriveForceSensitiveDisplay');
+      expect(editor.reducer2Source).toContain('withCharactersSortedByLastName');
+      expect(editor.comparisonFunctionSource).toContain(
+        'withDistinctUntilChanged'
+      );
     });
 
     it('should expose constant feedback messages', () => {
-      expect(FEEDBACK.invalidForm).toEqual({
+      expect(editor.feedback['invalidForm']).toEqual({
         message: 'Correct the highlighted fields before saving.',
         tone: 'error'
       });
-      expect(FEEDBACK.selectBeforeSave).toEqual({
+      expect(editor.feedback['selectBeforeSave']).toEqual({
         message: 'Select a character before saving changes.',
         tone: 'error'
       });
-      expect(FEEDBACK.newCharacterDiscarded).toEqual({
+      expect(editor.feedback['newCharacterDiscarded']).toEqual({
         message: 'The new character was discarded.',
         tone: 'info'
       });
-      expect(FEEDBACK.unsavedChangesDiscarded).toEqual({
+      expect(editor.feedback['unsavedChangesDiscarded']).toEqual({
         message: 'Unsaved changes were discarded.',
         tone: 'info'
       });
-      expect(FEEDBACK.initialCollectionRestored).toEqual({
+      expect(editor.feedback['initialCollectionRestored']).toEqual({
         message: 'The initial character collection was restored.',
         tone: 'success'
       });
@@ -88,62 +73,68 @@ describe('Character editor', () => {
 
   describe('displayName', () => {
     it('should combine the first and last names with a single space', () => {
-      expect(displayName(leia)).toBe('Leia Organa');
-      expect(displayName(luke)).toBe('Luke Skywalker');
+      expect(editor.displayName(leia)).toBe('Leia Organa');
+      expect(editor.displayName(luke)).toBe('Luke Skywalker');
     });
   });
 
   describe('feedback builders', () => {
     it('should build the created feedback message', () => {
-      expect(characterAddedFeedback('Han Solo')).toEqual({
+      expect(editor.characterAddedFeedback('Han Solo')).toEqual({
         message: 'Han Solo was added and selected.',
         tone: 'success'
       });
     });
 
     it('should build the updated feedback message', () => {
-      expect(characterUpdatedFeedback('Leia Organa')).toEqual({
+      expect(editor.characterUpdatedFeedback('Leia Organa')).toEqual({
         message: 'Leia Organa was updated.',
         tone: 'success'
       });
     });
 
     it('should build the removed feedback message', () => {
-      expect(characterRemovedFeedback('Luke Skywalker')).toEqual({
+      expect(editor.characterRemovedFeedback('Luke Skywalker')).toEqual({
         message: 'Luke Skywalker was removed.',
         tone: 'success'
       });
     });
   });
 
-  describe('validateTrimmedText', () => {
+  describe('ExampleCharacterEditor.validateTrimmedText', () => {
     it('should require a non-empty trimmed value', () => {
-      expect(validateTrimmedText('   ', 2, 40)).toEqual({ required: true });
-      expect(validateTrimmedText(null, 2, 40)).toEqual({ required: true });
-      expect(validateTrimmedText(undefined, 2, 40)).toEqual({ required: true });
+      expect(editor.validateTrimmedText('   ', 2, 40)).toEqual({
+        required: true
+      });
+      expect(editor.validateTrimmedText(null, 2, 40)).toEqual({
+        required: true
+      });
+      expect(editor.validateTrimmedText(undefined, 2, 40)).toEqual({
+        required: true
+      });
     });
 
     it('should enforce the minimum trimmed length', () => {
-      expect(validateTrimmedText(' a ', 2, 40)).toEqual({
+      expect(editor.validateTrimmedText(' a ', 2, 40)).toEqual({
         minlength: { actualLength: 1, requiredLength: 2 }
       });
     });
 
     it('should enforce the maximum trimmed length', () => {
-      expect(validateTrimmedText('abcd', 2, 3)).toEqual({
+      expect(editor.validateTrimmedText('abcd', 2, 3)).toEqual({
         maxlength: { actualLength: 4, requiredLength: 3 }
       });
     });
 
     it('should accept a value within the trimmed bounds', () => {
-      expect(validateTrimmedText('  Leia  ', 2, 40)).toBeNull();
+      expect(editor.validateTrimmedText('  Leia  ', 2, 40)).toBeNull();
     });
   });
 
-  describe('normalizeCharacterDraft', () => {
+  describe('ExampleCharacterEditor.normalizeCharacterDraft', () => {
     it('should trim the name fields and preserve the remaining values', () => {
       expect(
-        normalizeCharacterDraft({
+        editor.normalizeCharacterDraft({
           name: '  Han  ',
           lastName: '  Solo  ',
           faction: 'Rebel Alliance',
@@ -160,22 +151,25 @@ describe('Character editor', () => {
 
   describe('resolveCharacter', () => {
     it('should resolve a matching character from a string identity', () => {
-      expect(resolveCharacter([leia, luke], '20')).toBe(luke);
+      expect(editor.resolveCharacter([leia, luke], '20')).toBe(luke);
     });
 
     it('should resolve a matching character from a numeric identity', () => {
-      expect(resolveCharacter([leia, luke], 10)).toBe(leia);
+      expect(editor.resolveCharacter([leia, luke], 10)).toBe(leia);
     });
 
     it('should return null when no character matches', () => {
-      expect(resolveCharacter([leia, luke], '999')).toBeNull();
+      expect(editor.resolveCharacter([leia, luke], '999')).toBeNull();
     });
   });
 
   describe('serializeStepwiseRequest', () => {
     it('should serialize a pending request with an existing current value', () => {
       expect(
-        serializeStepwiseRequest({ current: [leia], candidate: [leia, luke] })
+        editor.serializeStepwiseRequest({
+          current: [leia],
+          candidate: [leia, luke]
+        })
       ).toBe(
         JSON.stringify({ current: [leia], candidate: [leia, luke] }, null, 2)
       );
@@ -183,24 +177,29 @@ describe('Character editor', () => {
 
     it('should substitute an absent current value', () => {
       expect(
-        serializeStepwiseRequest({ current: undefined, candidate: [luke] })
+        editor.serializeStepwiseRequest({
+          current: undefined,
+          candidate: [luke]
+        })
       ).toBe(
         JSON.stringify({ current: 'undefined', candidate: [luke] }, null, 2)
       );
     });
 
     it('should render a missing request as undefined', () => {
-      expect(serializeStepwiseRequest(undefined)).toBe('undefined');
+      expect(editor.serializeStepwiseRequest(undefined)).toBe('undefined');
     });
   });
 
   describe('serializeTapInput', () => {
     it('should serialize a present value', () => {
-      expect(serializeTapInput([leia])).toBe(JSON.stringify([leia], null, 2));
+      expect(editor.serializeTapInput([leia])).toBe(
+        JSON.stringify([leia], null, 2)
+      );
     });
 
     it('should render an absent value as undefined', () => {
-      expect(serializeTapInput(undefined)).toBe('undefined');
+      expect(editor.serializeTapInput(undefined)).toBe('undefined');
     });
   });
 
@@ -213,7 +212,7 @@ describe('Character editor', () => {
         hasValue: true
       };
 
-      expect(serializeSnapshot(snapshot)).toBe(
+      expect(editor.serializeSnapshot(snapshot)).toBe(
         JSON.stringify(snapshot, null, 2)
       );
     });
@@ -226,7 +225,7 @@ describe('Character editor', () => {
         hasValue: false
       };
 
-      expect(serializeSnapshot(snapshot)).toBe(
+      expect(editor.serializeSnapshot(snapshot)).toBe(
         JSON.stringify(
           {
             isLoading: false,
@@ -241,7 +240,7 @@ describe('Character editor', () => {
     });
 
     it('should render a missing snapshot as undefined', () => {
-      expect(serializeSnapshot(undefined)).toBe('undefined');
+      expect(editor.serializeSnapshot(undefined)).toBe('undefined');
     });
   });
 
@@ -254,7 +253,7 @@ describe('Character editor', () => {
         hasValue: true
       };
 
-      expect(serializeErrorEmission({ error, state })).toBe(
+      expect(editor.serializeErrorEmission({ error, state })).toBe(
         JSON.stringify({ error, state }, null, 2)
       );
     });
@@ -267,7 +266,7 @@ describe('Character editor', () => {
         hasValue: false
       };
 
-      expect(serializeErrorEmission({ error, state })).toBe(
+      expect(editor.serializeErrorEmission({ error, state })).toBe(
         JSON.stringify(
           {
             error,
@@ -285,14 +284,14 @@ describe('Character editor', () => {
     });
 
     it('should render a missing emission as undefined', () => {
-      expect(serializeErrorEmission(undefined)).toBe('undefined');
+      expect(editor.serializeErrorEmission(undefined)).toBe('undefined');
     });
   });
 
   describe('serializeRawState', () => {
     it('should serialize present raw state fields', () => {
       expect(
-        serializeRawState({
+        editor.serializeRawState({
           isLoading: true,
           value: [leia],
           error: null,
@@ -309,7 +308,7 @@ describe('Character editor', () => {
 
     it('should substitute an absent raw state value', () => {
       expect(
-        serializeRawState({
+        editor.serializeRawState({
           isLoading: false,
           value: undefined,
           error,
