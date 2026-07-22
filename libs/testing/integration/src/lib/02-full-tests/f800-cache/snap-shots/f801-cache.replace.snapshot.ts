@@ -4509,6 +4509,17 @@ export const f801Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-test',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:operator',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-test',
     behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
     name: 'stage:end:operator',
     timestamp: 'ts-removed',

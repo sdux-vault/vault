@@ -1253,6 +1253,17 @@ export const f21Snapshot = [
   {
     id: 'id-removed',
     cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:operator',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
     behaviorKey: 'SDUX::Behavior::Addon::DistinctUntilChanged',
     name: 'stage:end:operator',
     timestamp: 'ts-removed',
@@ -2392,6 +2403,17 @@ export const f21Snapshot = [
     monotonicTimestamp: 'mts-removed',
     type: 'stage',
     boundary: 'start',
+    traceId: 'trace-id-removed'
+  },
+  {
+    id: 'id-removed',
+    cell: 'full-utility',
+    behaviorKey: 'vault-orchestrator',
+    name: 'pipeline:candidate:operator',
+    timestamp: 'ts-removed',
+    monotonicTimestamp: 'mts-removed',
+    type: 'pipeline',
+    boundary: 'candidate',
     traceId: 'trace-id-removed'
   },
   {
