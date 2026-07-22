@@ -3575,6 +3575,36 @@
       "url": "/blog/the-boilerplate-audit",
       "symbols": ["the-boilerplate-audit"],
       "content": "The Boilerplate Audit — Counting the Files Redux Requires for One Feature the-boilerplate-audit TA"
+    },
+    {
+      "id": "blog:fluent-api-predictable-state-interaction",
+      "title": "The Fluent API That Makes State Interaction Predictable by Design",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/fluent-api-predictable-state-interaction",
+      "symbols": ["fluent-api-predictable-state-interaction"],
+      "content": "The Fluent API That Makes State Interaction Predictable by Design fluent-api-predictable-state-interaction TA"
+    },
+    {
+      "id": "blog:state-management-without-a-ui-on-deno",
+      "title": "State Management Without a UI — Running SDuX Vault on Deno",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/state-management-without-a-ui-on-deno",
+      "symbols": ["state-management-without-a-ui-on-deno"],
+      "content": "State Management Without a UI — Running SDuX Vault on Deno state-management-without-a-ui-on-deno TA"
+    },
+    {
+      "id": "blog:a-featurecell-in-plain-javascript",
+      "title": "A FeatureCell in Plain JavaScript — No Framework, No Build Step",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/a-featurecell-in-plain-javascript",
+      "symbols": ["a-featurecell-in-plain-javascript"],
+      "content": "A FeatureCell in Plain JavaScript — No Framework, No Build Step a-featurecell-in-plain-javascript TA"
     }
   ]
 }

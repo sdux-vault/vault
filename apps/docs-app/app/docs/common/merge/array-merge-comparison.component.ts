@@ -267,13 +267,25 @@ import { Component, computed, input, ViewEncapsulation } from '@angular/core';
           @for (type of order(); track type) {
             <td>
               @if (type === 'Default') {
-                <span class="code">VAULT_CLEAR_STATE</span>
+                <span class="code"
+                  ><a href="/docs/references/const/vault_clear_state"
+                    >VAULT_CLEAR_STATE</a
+                  ></span
+                >
                 <p>state is intentionally set to undefined</p>
               } @else if (type === 'Append') {
-                <span class="code">VAULT_CLEAR_STATE</span>
+                <span class="code"
+                  ><a href="/docs/references/const/vault_clear_state"
+                    >VAULT_CLEAR_STATE</a
+                  ></span
+                >
                 <p>state is intentionally set to undefined</p>
               } @else if (type === 'Push') {
-                <span class="code">VAULT_CLEAR_STATE</span>
+                <span class="code"
+                  ><a href="/docs/references/const/vault_clear_state"
+                    >VAULT_CLEAR_STATE</a
+                  ></span
+                >
                 <p>state is intentionally set to undefined</p>
               }
             </td>

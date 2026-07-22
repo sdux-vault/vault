@@ -24,9 +24,11 @@ export class DemoAppComponent {
     // Activate global insights so the monitor emits complete state,
     // payload, and error data — mirroring the Chrome extension bridge.
     const monitor = (window as unknown as Record<string, unknown>)['sdux'] as
-      Record<string, unknown> | undefined;
+      | Record<string, unknown>
+      | undefined;
     const instance = monitor?.['vaultMonitorInstance'] as
-      { activateGlobalInsights: (config: unknown) => void } | undefined;
+      | { activateGlobalInsights: (config: unknown) => void }
+      | undefined;
     instance?.activateGlobalInsights({
       id: 'devtools-standalone',
       wantsState: true,

@@ -28,11 +28,13 @@ class KeyGeneratorAbstract {
 
     this.keyType = keyType.toLowerCase();
 
-    if (!(
-      this.keyType === 'pro' ||
-      this.keyType === 'development' ||
-      this.keyType === 'enterprise'
-    )) {
+    if (
+      !(
+        this.keyType === 'pro' ||
+        this.keyType === 'development' ||
+        this.keyType === 'enterprise'
+      )
+    ) {
       throw new Error(
         `Invalid keyType "${keyType}". Must be "pro", "development" or "enterprise".`
       );

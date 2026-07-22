@@ -1,2 +1,5 @@
 export type CoreRoadmapSortKey =
-  'feature' | 'isExtendable' | 'package' | 'behavior';
+  | 'feature'
+  | 'isExtendable'
+  | 'package'
+  | 'behavior';

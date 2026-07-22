@@ -176,7 +176,8 @@ export class ExampleViewerSourceComponent implements AfterContentInit {
    */
   copyCode(index: number): void {
     const codeElement = this.codeBlocks.get(index)?.nativeElement as
-      HTMLElement | undefined;
+      | HTMLElement
+      | undefined;
 
     const textToCopy = codeElement?.innerText?.trim() ?? '';
 

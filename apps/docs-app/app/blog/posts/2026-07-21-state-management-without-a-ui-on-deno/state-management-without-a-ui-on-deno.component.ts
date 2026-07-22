@@ -133,7 +133,13 @@ cell.initialize();</code></pre>
               <tr>
                 <td>Where state lives</td>
                 <td>One global store wired to the component tree</td>
-                <td>The owning FeatureCell instance — no tree required</td>
+                <td>
+                  The owning
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  instance — no tree required
+                </td>
               </tr>
               <tr>
                 <td>Reading state</td>
@@ -163,11 +169,16 @@ cell.initialize();</code></pre>
           <p>
             A script that accumulates records — log lines, imported rows,
             discovered files — needs append semantics, not replacement. Register
-            <span class="code">withArrayAppendMergeBehavior</span> at cell
-            creation and every <span class="code">mergeState()</span> call
-            concatenates the incoming array onto the committed collection
-            instead of overwriting it. Previous entries are never discarded,
-            only extended.
+            <span class="code"
+              ><a
+                href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+                >withArrayAppendMergeBehavior</a
+              ></span
+            >
+            at cell creation and every
+            <span class="code">mergeState()</span> call concatenates the
+            incoming array onto the committed collection instead of overwriting
+            it. Previous entries are never discarded, only extended.
           </p>
 
           <sdux-example-viewer-source

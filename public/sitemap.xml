@@ -16,6 +16,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/a-featurecell-in-plain-javascript</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/actions-are-ceremony</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -57,6 +62,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/featurecells-changed-how-i-think-about-state-ownership</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/fluent-api-predictable-state-interaction</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -147,6 +157,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/state-management-in-vue-without-a-store</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/state-management-without-a-ui-on-deno</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
