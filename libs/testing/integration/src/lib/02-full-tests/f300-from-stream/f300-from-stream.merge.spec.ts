@@ -1655,6 +1655,15 @@ describe('f300: From Stream - Merge', () => {
   it('should have the correct global state$ events', async () => {
     expect(globalStates).toEqual([
       Object({
+        type: 'Incoming Pipeline',
+        snapshot: Object({
+          isLoading: false,
+          value: undefined,
+          error: null,
+          hasValue: false
+        })
+      }),
+      Object({
         type: 'Finalize Pipeline',
         snapshot: Object({
           isLoading: false,
@@ -2421,13 +2430,31 @@ describe('f300: From Stream - Merge', () => {
         options: Object({ withStateCacheBehavior: Object({ id: 'be-002' }) })
       }),
       Object({
+        type: 'Incoming Pipeline',
+        snapshot: Object({
+          isLoading: false,
+          value: undefined,
+          error: null,
+          hasValue: false
+        })
+      }),
+      Object({
+        type: 'Finalize Pipeline',
         snapshot: Object({
           isLoading: false,
           value: [],
           error: null,
           hasValue: true
-        }),
-        type: 'Finalize Pipeline'
+        })
+      }),
+      Object({
+        type: 'Incoming Pipeline',
+        snapshot: Object({
+          isLoading: false,
+          value: undefined,
+          error: null,
+          hasValue: false
+        })
       })
     ]);
   });

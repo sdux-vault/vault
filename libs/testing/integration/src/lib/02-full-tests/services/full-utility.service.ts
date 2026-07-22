@@ -121,8 +121,6 @@ export class f0xUtilityService extends PrimaryPartialAbstractClass<
    * - `withDebounce(1000)` — delays incoming writes by 1 second.
    */
   #addIntereptors(): InterceptorBehaviorClassContract<BankEmployeeShape[]>[] {
-    return [
-      /*withCooldown(1000)*/
-    ];
+    return [/*withCooldown(1000)*/];
   }
 }

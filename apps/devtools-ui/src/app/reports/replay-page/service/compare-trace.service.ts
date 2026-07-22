@@ -280,11 +280,9 @@ export class CompareTraceService {
       if (diffIndices && !diffIndices.has(i)) continue;
       if (cats.size > 0) {
         const beforeEvent = beforeEvents[i] as
-          | Record<string, unknown>
-          | undefined;
+          Record<string, unknown> | undefined;
         const afterEvent = afterEvents[i] as
-          | Record<string, unknown>
-          | undefined;
+          Record<string, unknown> | undefined;
         const beforeCat =
           typeof beforeEvent?.['name'] === 'string'
             ? (beforeEvent['name'] as string).split(':')[0]
@@ -325,8 +323,7 @@ export class CompareTraceService {
       (t) => t.traceId === this.compareAfterId()
     );
     const afterEvent = this.compareAfterEvents()[this.compareEventIndex()] as
-      | Record<string, unknown>
-      | undefined;
+      Record<string, unknown> | undefined;
     return this.stripNoiseFields(
       event,
       trace?.startedAt,
@@ -344,8 +341,7 @@ export class CompareTraceService {
       (t) => t.traceId === this.compareBeforeId()
     );
     const beforeEvent = this.compareBeforeEvents()[this.compareEventIndex()] as
-      | Record<string, unknown>
-      | undefined;
+      Record<string, unknown> | undefined;
     return this.stripNoiseFields(
       event,
       trace?.startedAt,

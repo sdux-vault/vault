@@ -122,10 +122,7 @@ export class withCoreFromPromiseBehavior<T> implements BehaviorContract<
 
         try {
           result = incoming.value?.() as
-            | T
-            | undefined
-            | null
-            | Promise<T | undefined | null>;
+            T | undefined | null | Promise<T | undefined | null>;
         } catch (err) {
           const error = createVaultError(err, ctx.featureCellKey);
           reject(error);
