@@ -10,6 +10,7 @@ import { DocumentationLinkGenerator } from '../link-generator.class.mjs';
 import { ARTIFACTS } from './artifacts/input-files/artifacts-file.ts.mjs';
 import { NO_CHANGE_HTML } from './artifacts/input-files/no-change-file.html.mjs';
 import { SOURCE_HTML } from './artifacts/input-files/source-file.html.mjs';
+import { SOURCE_TS } from './artifacts/input-files/source-file.ts.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,6 +49,8 @@ describe('CLI: link-generator', () => {
         return JSON.stringify(ARTIFACTS);
       } else if (filename === 'docs/no-change.html') {
         return NO_CHANGE_HTML;
+      } else if (filename === 'docs/page.ts') {
+        return SOURCE_TS;
       } else {
         return SOURCE_HTML;
       }
@@ -105,6 +108,32 @@ describe('CLI: link-generator', () => {
     expect(infoSpy).toHaveBeenCalledWith('✔ Documentation linking complete');
   });
 
+  it('should preserve Angular example-viewer bindings inside TypeScript template literals', () => {
+    readFiles = ['page.ts'];
+    generator = new DocumentationLinkGenerator({
+      typeIndexPath: '/index.json',
+      sourceDirs: ['/docs']
+    });
+
+    generator.run();
+
+    expect(readFileSync)
+      .withContext('readFileSync')
+      .toEqual(['index.json', 'docs/page.ts']);
+
+    expect(writeFileSync).withContext('writeFileSync').toEqual([]);
+
+    expect(output).withContext('output').toEqual([]);
+
+    expect(generator.linkContent(SOURCE_TS))
+      .withContext('linkContent')
+      .toEqual(SOURCE_TS);
+
+    expect(infoSpy).toHaveBeenCalledWith('\tIgnored');
+    expect(infoSpy).toHaveBeenCalledWith('✔ Documentation linking complete');
+    expect(infoSpy).toHaveBeenCalledWith('Processing File: /docs/page.ts');
+  });
+
   it('should build symbol map sorted longest-first', () => {
     generator = new DocumentationLinkGenerator({
       typeIndexPath: '/index.json',
@@ -118,7 +147,8 @@ describe('CLI: link-generator', () => {
       'provideFeatureCell',
       'FeatureCellConfig',
       'InsightConfig',
-      'withDebounce'
+      'withDebounce',
+      'state'
     ]);
   });
 

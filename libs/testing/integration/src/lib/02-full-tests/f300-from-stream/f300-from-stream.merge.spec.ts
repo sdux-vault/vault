@@ -2421,13 +2421,13 @@ describe('f300: From Stream - Merge', () => {
         options: Object({ withStateCacheBehavior: Object({ id: 'be-002' }) })
       }),
       Object({
+        type: 'Finalize Pipeline',
         snapshot: Object({
           isLoading: false,
           value: [],
           error: null,
           hasValue: true
-        }),
-        type: 'Finalize Pipeline'
+        })
       })
     ]);
   });

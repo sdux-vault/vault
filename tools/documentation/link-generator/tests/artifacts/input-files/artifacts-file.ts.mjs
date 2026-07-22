@@ -18,6 +18,10 @@ export const ARTIFACTS = {
       name: 'FeatureCellConfig',
       docLink: 'interfaces'
     },
+    state: {
+      name: 'state',
+      docLink: 'interfaces'
+    },
     InsightConfig: {
       name: 'insightConfig',
       docLink: 'interfaces'

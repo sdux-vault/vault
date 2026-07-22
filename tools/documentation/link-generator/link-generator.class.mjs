@@ -17,6 +17,14 @@ export class DocumentationLinkGenerator {
     this.symbolMap = new Map();
   }
 
+  getHardPlaceholder(index) {
+    return `%%HARD_${index}%%`;
+  }
+
+  getSoftPlaceholder(index) {
+    return `%%SOFT_${index}%%`;
+  }
+
   // Symbols that should ONLY be linked in identifier-like contexts
   excludedSymbols = new Set([
     'Vault'
@@ -113,9 +121,9 @@ export class DocumentationLinkGenerator {
 
     // 1️⃣ Protect HARD blocks (pre, code, script, style)
     let result = content.replace(
-      /<(sdux-multi-framework-example|sdux-example-viewer-tab|sdux-diagram|h3|h4|pre|code|script|style)\b[\s\S]*?<\/\1\s*>/gi,
+      /<(sdux-multi-framework-example|sdux-example-viewer-source|sdux-example-viewer-tab|sdux-diagram|h3|h4|pre|code|script|style)\b[\s\S]*?<\/\1\s*>/gi,
       (match) => {
-        const key = `__HARD_${hardBlocks.length}__`;
+        const key = this.getHardPlaceholder(hardBlocks.length);
         hardBlocks.push(match);
         return key;
       }
@@ -125,7 +133,7 @@ export class DocumentationLinkGenerator {
     result = result.replace(
       /<div\s+class="section-title"[\s\S]*?<\/div\s*>/gi,
       (match) => {
-        const key = `__HARD_${hardBlocks.length}__`;
+        const key = this.getHardPlaceholder(hardBlocks.length);
         hardBlocks.push(match);
         return key;
       }
@@ -133,27 +141,24 @@ export class DocumentationLinkGenerator {
 
     // 1b️⃣ Protect self-closing elements (sdux-diagram)
     result = result.replace(/<sdux-diagram\b[^>]*\/>/gi, (match) => {
-      const key = `__HARD_${hardBlocks.length}__`;
+      const key = this.getHardPlaceholder(hardBlocks.length);
       hardBlocks.push(match);
       return key;
     });
 
     // 2️⃣ Protect existing anchors (formatter-safe)
     result = result.replace(/<a\b[\s\S]*?>[\s\S]*?<\/a\s*>/gi, (match) => {
-      const key = `__SOFT_${softBlocks.length}__`;
+      const key = this.getSoftPlaceholder(softBlocks.length);
       softBlocks.push(match);
       return key;
     });
 
-    // 2b️⃣ Protect HTML attribute values (aria-label, title, alt, [tooltip], etc.)
-    result = result.replace(
-      /(?:aria-label|aria-describedby|title|alt|\[tooltip\])="[^"]*"/gi,
-      (match) => {
-        const key = `__SOFT_${softBlocks.length}__`;
-        softBlocks.push(match);
-        return key;
-      }
-    );
+    // 2b️⃣ Protect any remaining tag markup so linking only touches text nodes.
+    result = result.replace(/<[^>]+>/g, (match) => {
+      const key = this.getSoftPlaceholder(softBlocks.length);
+      softBlocks.push(match);
+      return key;
+    });
 
     // 3️⃣ Apply symbol linking ONLY to unprotected content
     for (const symbol of this.symbols) {
@@ -164,12 +169,12 @@ export class DocumentationLinkGenerator {
 
     // 4️⃣ Restore SOFT blocks (anchors)
     softBlocks.forEach((block, i) => {
-      result = result.replace(`__SOFT_${i}__`, block);
+      result = result.replace(this.getSoftPlaceholder(i), () => block);
     });
 
     // 5️⃣ Restore HARD blocks LAST (never touched)
     hardBlocks.forEach((block, i) => {
-      result = result.replace(`__HARD_${i}__`, block);
+      result = result.replace(this.getHardPlaceholder(i), () => block);
     });
 
     return result;

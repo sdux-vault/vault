@@ -425,7 +425,12 @@ employeeCell.state$.subscribe((employees) =&gt; &#123;
                 <td>
                   Spread across dispatch, connect, useSelector, middleware
                 </td>
-                <td>One typed FeatureCellShape&lt;T&gt; contract</td>
+                <td>
+                  One typed
+                  <a href="/docs/references/shapes/feature-cell-shape"
+                    >FeatureCellShape</a
+                  >&lt;T&gt; contract
+                </td>
               </tr>
             </tbody>
           </table>

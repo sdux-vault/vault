@@ -270,5 +270,19 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-07-20',
     readingTime: 7,
     active: true
+  },
+  {
+    slug: 'state-management-without-a-ui-on-deno',
+    title: 'State Management Without a UI — Running SDuX Vault on Deno',
+    date: '2026-07-21',
+    readingTime: 6,
+    active: true
+  },
+  {
+    slug: 'a-featurecell-in-plain-javascript',
+    title: 'A FeatureCell in Plain JavaScript — No Framework, No Build Step',
+    date: '2026-07-22',
+    readingTime: 7,
+    active: true
   }
 ];
