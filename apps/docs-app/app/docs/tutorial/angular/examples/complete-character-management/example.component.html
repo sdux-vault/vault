@@ -49,30 +49,9 @@
 
   @if (!hydrationSettled()) {
     <!-- Teaching point: Hydration (ex-023) -->
-    <div class="feedback info" role="status" aria-live="polite">
+    <div class="feedback caution" role="status" aria-live="polite">
       The initial state hydrate method is awaiting resolve or reject in the
-      Action section
-    </div>
-  }
-
-  @if (isStepwiseResolvePending()) {
-    <!-- Teaching point: Stepwise Resolve (ex-038) -->
-    <div class="feedback info" role="status" aria-live="polite">
-      Stepwise Resolve is awaiting confirmation.
-    </div>
-  }
-
-  @if (isStepwiseFilterPending()) {
-    <!-- Teaching point: Stepwise Filter (ex-039) -->
-    <div class="feedback info" role="status" aria-live="polite">
-      Stepwise Filter is awaiting confirmation.
-    </div>
-  }
-
-  @if (isStepwiseReducerPending()) {
-    <!-- Teaching point: Stepwise Reducer (ex-040) -->
-    <div class="feedback info" role="status" aria-live="polite">
-      Stepwise Reducer is awaiting confirmation.
+      <strong>Actions</strong> section
     </div>
   }
 
@@ -133,16 +112,6 @@
               </option>
             }
           </select>
-        </div>
-
-        <div class="select-timer">
-          <label> Timer (ms) </label>
-          <input
-            type="number"
-            min="0"
-            readonly
-            aria-label="Elapsed delay timer in milliseconds"
-            [value]="delayTimerMilliseconds()" />
         </div>
       </div>
 
@@ -383,80 +352,35 @@
           title="Show or hide Actions"></label>
       </div>
 
-      <!-- Teaching point: Persist Null (ex-020) -->
-      <div class="action-row">
-        <input
-          id="persist-null-description"
-          class="description-toggle"
-          type="checkbox"
-          aria-label="Show Persist Null description" />
-        <div class="button-container">
-          <!-- Teaching point: Persist Null (ex-020) -->
-          <button
-            type="button"
-            class="button danger"
-            (click)="persistNullValue()">
-            Persist Null Value
-          </button>
-          <label
-            class="description-chevron"
-            for="persist-null-description"
-            title="Show or hide Persist Null Value description"></label>
-        </div>
-        <div class="description-container">
-          Calls <code>replaceState(&#123; value: null &#125;)</code> to
-          demonstrate null normalization. The FeatureCell intentionally persists
-          the value as <code>undefined</code>, clearing the current state.
-        </div>
-      </div>
-
-      <!-- Teaching point: Reset (ex-021) -->
-      <div class="action-row">
-        <input
-          id="reset-description"
-          class="description-toggle"
-          type="checkbox"
-          aria-label="Show Reset Data description" />
-        <div class="button-container">
-          <!-- Teaching point: Reset (ex-021) -->
-          <button type="button" class="button danger" (click)="resetState()">
-            Reset State
-          </button>
-          <label
-            class="description-chevron"
-            for="reset-description"
-            title="Show or hide Reset Data description"></label>
-        </div>
-        <div class="description-container">
-          Calls the FeatureCell's dedicated <code>reset()</code> API to
-          explicitly clear the current state value to
-          <code>undefined</code> without submitting replacement state.
-        </div>
-      </div>
-
       <!-- Teaching point: Restore (ex-022) -->
       <div class="action-row">
         <input
-          id="restore-description"
+          id="delay-description"
           class="description-toggle"
           type="checkbox"
-          aria-label="Show Restore Initial Data description" />
+          aria-label="Show Delay timer Data description" />
         <div class="button-container">
-          <!-- Teaching point: Restore (ex-022) -->
-          <button
-            type="button"
-            class="button warn"
-            (click)="restoreInitialCharacters()">
-            Restore Initial Data
-          </button>
+          <!-- Teaching point: Delay (ex-033) -->
+          <span>Delay Timer</span>
+          <div class="delay-timer field">
+            <input
+              type="number"
+              min="0"
+              readonly
+              aria-label="Elapsed delay timer in milliseconds"
+              [value]="delayTimerMilliseconds()" />
+          </div>
           <label
             class="description-chevron"
-            for="restore-description"
-            title="Show or hide Restore Initial Data description"></label>
+            for="delay-description"
+            title="Show or hide Delay Timer Data description"></label>
         </div>
         <div class="description-container">
-          Replaces the current collection with its captured initial values and
-          selects the first restored character.
+          The delay timer demonstrates the elapsed time the state request has
+          been pending in the controller. The timer starts when the state
+          request is submitted and stops when the request is resolved or
+          rejected. The timer is reset to zero when a new state request is
+          submitted.
         </div>
       </div>
 
@@ -613,6 +537,59 @@
         </div>
       </div>
 
+      <!-- Teaching point: Restore (ex-022) -->
+      <div class="action-row">
+        <input
+          id="restore-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Restore Initial Data description" />
+        <div class="button-container">
+          <!-- Teaching point: Restore (ex-022) -->
+          <button
+            type="button"
+            class="button warn"
+            (click)="restoreInitialCharacters()">
+            Restore Initial Data
+          </button>
+          <label
+            class="description-chevron"
+            for="restore-description"
+            title="Show or hide Restore Initial Data description"></label>
+        </div>
+        <div class="description-container">
+          Replaces the current collection with its captured initial values and
+          selects the first restored character.
+        </div>
+      </div>
+
+      <!-- Teaching point: Persist Null (ex-020) -->
+      <div class="action-row">
+        <input
+          id="persist-null-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Persist Null description" />
+        <div class="button-container">
+          <!-- Teaching point: Persist Null (ex-020) -->
+          <button
+            type="button"
+            class="button danger"
+            (click)="persistNullValue()">
+            Persist Null Value
+          </button>
+          <label
+            class="description-chevron"
+            for="persist-null-description"
+            title="Show or hide Persist Null Value description"></label>
+        </div>
+        <div class="description-container">
+          Calls <code>replaceState(&#123; value: null &#125;)</code> to
+          demonstrate null normalization. The FeatureCell intentionally persists
+          the value as <code>undefined</code>, clearing the current state.
+        </div>
+      </div>
+
       <!-- Teaching point: Errors (ex-004) -->
       <div class="action-row">
         <input
@@ -638,6 +615,30 @@
           Darth Maul candidate. The filter throws before State commitment. After
           the failure, Reset Error disarms the filter and clears the global
           error without starting another pipeline request.
+        </div>
+      </div>
+
+      <!-- Teaching point: Reset (ex-021) -->
+      <div class="action-row">
+        <input
+          id="reset-description"
+          class="description-toggle"
+          type="checkbox"
+          aria-label="Show Reset Data description" />
+        <div class="button-container">
+          <!-- Teaching point: Reset (ex-021) -->
+          <button type="button" class="button danger" (click)="resetState()">
+            Reset State
+          </button>
+          <label
+            class="description-chevron"
+            for="reset-description"
+            title="Show or hide Reset Data description"></label>
+        </div>
+        <div class="description-container">
+          Calls the FeatureCell's dedicated <code>reset()</code> API to
+          explicitly clear the current state value to
+          <code>undefined</code> without submitting replacement state.
         </div>
       </div>
 
@@ -1045,6 +1046,15 @@
               readonly
               aria-label="Configured delay in milliseconds"
               [value]="delayMilliseconds" />
+          </label>
+          <label>
+            Delay Timer
+            <input
+              type="number"
+              min="0"
+              readonly
+              aria-label="Elapsed delay timer in milliseconds"
+              [value]="delayTimerMilliseconds()" />
           </label>
         </div>
       </div>
