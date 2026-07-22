@@ -24,25 +24,29 @@ import {
   withCharactersSortedByLastName
 } from './example.character-domain';
 import { removeUnknownLastNameFilter } from './example.filter';
-import { exampleHydrate } from './example.hydrate';
 import { exampleHttpResource } from './example.http-resource';
+import { exampleHydrate } from './example.hydrate';
 import { exampleObservable } from './example.observable';
 import { examplePromise } from './example.promise';
 
 /** Fixed Policy-stage hold applied to every tutorial pipeline attempt. */
+/** Teaching Point: ex-033 */
 export const EXAMPLE_DELAY_MILLISECONDS = 3_000;
 
 /** Stable tutorial salt required to decrypt persisted State across reloads. */
+/** Teaching Point: ex-034 */
 export const EXAMPLE_AES256_SALT = new Uint8Array([
   0x53, 0x44, 0x75, 0x58, 0x2d, 0x56, 0x61, 0x75, 0x6c, 0x74, 0x2d, 0x54, 0x75,
   0x74, 0x6f, 0x72
 ]);
 
 /** Namespaced key written by the Local Storage Persist behavior. */
+/** Teaching Point: ex-034 */
 export const EXAMPLE_ENCRYPTED_STORAGE_KEY =
   'vault::localstorage::star-wars-character::SDUX::Behavior::Persist::LocalStorage';
 
 /** Structurally identical merge delta reconstructed for every Same State request. */
+/** Teaching Point: ex-027 */
 const DISTINCT_SAME_STATE_CHARACTER: StarWarsCharacterState = {
   id: 501,
   name: 'Rey',
@@ -52,6 +56,7 @@ const DISTINCT_SAME_STATE_CHARACTER: StarWarsCharacterState = {
 };
 
 /** Inputs observed by the tutorial's finalized error callback. */
+/** Teaching Point: ex-036 */
 interface ErrorEmission {
   /** Normalized Vault error committed by the Error stage. */
   readonly error: VaultErrorShape;
@@ -63,6 +68,7 @@ interface ErrorEmission {
 }
 
 /** Values exposed while a Resolve-stage candidate awaits a tutorial decision. */
+/** Teaching Point: ex-038 */
 export interface StepwiseResolveRequest {
   /** Last value committed before the pending pipeline attempt began. */
   readonly current: readonly StarWarsCharacterState[] | undefined;
@@ -72,6 +78,7 @@ export interface StepwiseResolveRequest {
 }
 
 /** Values exposed while a filtered candidate awaits a tutorial decision. */
+/** Teaching Point: ex-039 */
 export interface StepwiseFilterRequest {
   /** Last value committed before the pending pipeline attempt began. */
   readonly current: readonly StarWarsCharacterState[] | undefined;
@@ -81,6 +88,7 @@ export interface StepwiseFilterRequest {
 }
 
 /** Values exposed while a reduced candidate awaits a tutorial decision. */
+/** Teaching Point: ex-040 */
 export interface StepwiseReducerRequest {
   /** Last value committed before the pending pipeline attempt began. */
   readonly current: readonly StarWarsCharacterState[] | undefined;
@@ -125,31 +133,39 @@ export class ExampleService {
   #nextCharacterId = 1;
 
   /** Selects the next meaningful Distinct Until Changed replacement. */
+  /** Teaching Point: ex-027 */
   #distinctChangedStateIndex = 0;
 
   /** Arms the tutorial's intentional inline-filter failure. */
+  /** Teaching Point: ex-004 */
   readonly #isThrowError = signal(false);
 
   /** Exposes whether the intentional filter failure is currently armed. */
+  /** Teaching Point: ex-004 */
   readonly isThrowError = this.#isThrowError.asReadonly();
 
   /** Retains the latest Resolve-stage comparison shown by the tutorial. */
+  /** Teaching Point: ex-038 */
   readonly #stepwiseResolveRequest = signal<StepwiseResolveRequest | undefined>(
     undefined
   );
 
   // Teaching point: Stepwise Resolve (ex-038)
   /** Exposes the current and candidate values supplied to the Stepwise callback. */
+  /** Teaching Point: ex-038 */
   readonly stepwiseResolveRequest = this.#stepwiseResolveRequest.asReadonly();
 
   /** Tracks whether the active callback is waiting for a user decision. */
+  /** Teaching Point: ex-038 */
   readonly #isStepwiseResolvePending = signal(false);
 
   /** Enables the Accept and Cancel controls only while a callback is suspended. */
+  /** Teaching Point: ex-038 */
   readonly isStepwiseResolvePending =
     this.#isStepwiseResolvePending.asReadonly();
 
   /** Holds the one-use decision functions for the active Stepwise request. */
+  /** Teaching Point: ex-038 */
   #stepwiseResolveDecisions: StepwiseBehaviorDecisionShape | undefined;
 
   /**
@@ -157,6 +173,7 @@ export class ExampleService {
    * The pipeline remains paused until the component delegates either an Accept
    * (`continue`) or Cancel (`block`) decision back to this service.
    */
+  /** Teaching Point: ex-038 */
   readonly #captureStepwiseResolve = (
     current: readonly StarWarsCharacterState[] | undefined,
     candidate: readonly StarWarsCharacterState[],
@@ -168,27 +185,33 @@ export class ExampleService {
   };
 
   /** Retains the latest filtered candidate comparison shown by the tutorial. */
+  /** Teaching Point: ex-039 */
   readonly #stepwiseFilterRequest = signal<StepwiseFilterRequest | undefined>(
     undefined
   );
 
   // Teaching point: Stepwise Filter (ex-039)
   /** Exposes the current and filtered candidate values supplied to the callback. */
+  /** Teaching Point: ex-039 */
   readonly stepwiseFilterRequest = this.#stepwiseFilterRequest.asReadonly();
 
   /** Tracks whether the Filter-stage callback is waiting for a user decision. */
+  /** Teaching Point: ex-039 */
   readonly #isStepwiseFilterPending = signal(false);
 
   /** Enables the Filter Accept and Cancel controls only while the stage is suspended. */
+  /** Teaching Point: ex-039 */
   readonly isStepwiseFilterPending = this.#isStepwiseFilterPending.asReadonly();
 
   /** Holds the one-use decision functions for the active Filter-stage request. */
+  /** Teaching Point: ex-039 */
   #stepwiseFilterDecisions: StepwiseBehaviorDecisionShape | undefined;
 
   /**
    * Suspends the filtered candidate and publishes both callback values for inspection.
    * The pipeline remains paused until the component delegates an explicit decision.
    */
+  /** Teaching Point: ex-039 */
   readonly #captureStepwiseFilter = (
     current: readonly StarWarsCharacterState[] | undefined,
     candidate: readonly StarWarsCharacterState[],
@@ -200,28 +223,34 @@ export class ExampleService {
   };
 
   /** Retains the latest reduced candidate comparison shown by the tutorial. */
+  /** Teaching Point: ex-040 */
   readonly #stepwiseReducerRequest = signal<StepwiseReducerRequest | undefined>(
     undefined
   );
 
   // Teaching point: Stepwise Reducer (ex-040)
   /** Exposes the current and reduced candidate values supplied to the callback. */
+  /** Teaching Point: ex-040 */
   readonly stepwiseReducerRequest = this.#stepwiseReducerRequest.asReadonly();
 
   /** Tracks whether the Reducer-stage callback is waiting for a user decision. */
+  /** Teaching Point: ex-040 */
   readonly #isStepwiseReducerPending = signal(false);
 
   /** Enables Reducer controls only while the stage is suspended. */
+  /** Teaching Point: ex-040 */
   readonly isStepwiseReducerPending =
     this.#isStepwiseReducerPending.asReadonly();
 
   /** Holds the one-use decision functions for the active Reducer-stage request. */
+  /** Teaching Point: ex-040 */
   #stepwiseReducerDecisions: StepwiseBehaviorDecisionShape | undefined;
 
   /**
    * Suspends the reduced candidate and publishes both callback values for inspection.
    * The pipeline remains paused until the component delegates an explicit decision.
    */
+  /** Teaching Point: ex-040 */
   readonly #captureStepwiseReducer = (
     current: readonly StarWarsCharacterState[] | undefined,
     candidate: readonly StarWarsCharacterState[],
@@ -231,8 +260,10 @@ export class ExampleService {
     this.#stepwiseReducerDecisions = decisions;
     this.#isStepwiseReducerPending.set(true);
   };
-
+  /** Teaching Point: ex-031 */
   /** Stores the latest filtered collection observed immediately before reducer execution. */
+
+  /** Teaching Point: ex-031 */
   readonly #beforeTapInput = signal<
     readonly StarWarsCharacterState[] | undefined
   >(undefined);
@@ -242,6 +273,7 @@ export class ExampleService {
    * Exposes the latest Before Tap input as a read-only signal for the teaching output.
    * Consumers can inspect this value but cannot use the signal to alter pipeline state.
    */
+  /** Teaching Point: ex-031 */
   readonly beforeTapInput = this.#beforeTapInput.asReadonly();
 
   /**
@@ -251,6 +283,7 @@ export class ExampleService {
    * @param characters - Filtered character collection entering the Before Tap stage.
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
+  /** Teaching Point: ex-031 */
   readonly #captureBeforeTapInput: TapCallback<
     readonly StarWarsCharacterState[]
   > = (characters) => {
@@ -258,6 +291,7 @@ export class ExampleService {
   };
 
   /** Stores the latest transformed collection observed immediately after reducer execution. */
+  /** Teaching Point: ex-032 */
   readonly #afterTapInput = signal<
     readonly StarWarsCharacterState[] | undefined
   >(undefined);
@@ -267,6 +301,7 @@ export class ExampleService {
    * Exposes the latest After Tap input as a read-only signal for the teaching output.
    * Consumers can inspect this value but cannot use the signal to alter pipeline state.
    */
+  /** Teaching Point: ex-032 */
   readonly afterTapInput = this.#afterTapInput.asReadonly();
 
   /**
@@ -276,6 +311,7 @@ export class ExampleService {
    * @param characters - Reduced character collection entering the After Tap stage.
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
+  /** Teaching Point: ex-032 */
   readonly #captureAfterTapInput: TapCallback<
     readonly StarWarsCharacterState[]
   > = (characters) => {
@@ -283,6 +319,7 @@ export class ExampleService {
   };
 
   /** Stores the latest finalized StateSnapshot observed after state commitment. */
+  /** Teaching Point: ex-035 */
   readonly #emittedState = signal<
     StateSnapshotShape<readonly StarWarsCharacterState[]> | undefined
   >(undefined);
@@ -292,6 +329,7 @@ export class ExampleService {
    * Exposes the latest emit-state callback input as a read-only signal for the teaching output.
    * Consumers can inspect the finalized snapshot but cannot use the signal to alter committed state.
    */
+  /** Teaching Point: ex-035 */
   readonly emittedState = this.#emittedState.asReadonly();
 
   /**
@@ -301,6 +339,7 @@ export class ExampleService {
    * @param snapshot - Finalized value, loading, error, and presence state after commitment.
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
+  /** Teaching Point: ex-035 */
   readonly #captureEmittedState: CoreEmitStateCallback<
     readonly StarWarsCharacterState[]
   > = (snapshot) => {
@@ -308,6 +347,7 @@ export class ExampleService {
   };
 
   /** Stores the latest finalized error and associated FeatureCell snapshot. */
+  /** Teaching Point: ex-036 */
   readonly #emittedError = signal<ErrorEmission | undefined>(undefined);
 
   // Teaching point: Error Emission (ex-036)
@@ -315,6 +355,7 @@ export class ExampleService {
    * Exposes the latest error-callback inputs as a read-only signal for the teaching output.
    * Consumers can inspect the finalized error and snapshot without influencing either one.
    */
+  /** Teaching Point: ex-036 */
   readonly emittedError = this.#emittedError.asReadonly();
 
   /**
@@ -325,30 +366,34 @@ export class ExampleService {
    * @param state - Immutable FeatureCell snapshot at the time of the error.
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
+  /** Teaching Point: ex-036 */
   readonly #captureEmittedError: VaultErrorCallback<
     readonly StarWarsCharacterState[]
   > = (error, state) => {
     this.#emittedError.set({ error, state });
   };
 
-  // Teaching point: Raw StateSnapshot (ex-013)
+  // Teaching point: Raw StateSnapshot (ex-016)
   /**
    * Exposes the FeatureCell's Angular signal state for value, loading, error, and presence checks.
    * Consumers can bind to these reactive accessors without subscribing manually.
    */
+  /** Teaching Point: ex-016 */
   readonly state = this.#vault.state;
 
-  // Teaching point: Raw StateSnapshot$ (ex-014)
+  // Teaching point: Raw StateSnapshot$ (ex-017)
   /**
    * Exposes committed FeatureCell snapshots for consumers that teach observable state access.
    * Each emission carries the same state value available through the Angular signal API.
    */
+  /** Teaching Point: ex-017 */
   readonly state$ = this.#vault.state$;
 
   /**
    * Projects the current FeatureCell value into a read-only Angular computed signal.
    * The empty-array fallback gives templates a stable collection before a value is available.
    */
+  /** Teaching Point: ex-001 */
   readonly characters = computed<readonly StarWarsCharacterState[]>(
     () => this.state.value() ?? []
   );
@@ -357,6 +402,7 @@ export class ExampleService {
    * Captures the first committed collection, then configures and initializes the FeatureCell pipeline.
    */
   constructor() {
+    /** Teaching Point: ex-022 */
     this.#vault.state$
       .pipe(
         filter(({ snapshot }) => snapshot.hasValue),
@@ -376,10 +422,16 @@ export class ExampleService {
      * performs no value transformation, and releases each trace unchanged after
      * its deterministic hold expires.
      */
+    /** Teaching Point: ex-033 */
     this.#vault.withDelay?.({
       millisecondDelay: EXAMPLE_DELAY_MILLISECONDS
     });
 
+    /*
+     * Local Storage Persist has no fluent configuration. Registering the
+     * behavior is sufficient: after AES-256 produces its authenticated envelope,
+     * the Persist stage writes that envelope under the FeatureCell-scoped key.
+     */
     // Teaching point: Encryption (ex-034)
     /*
      * `.setAes256Secret()` configures the registered AES-256-GCM behavior before
@@ -390,51 +442,13 @@ export class ExampleService {
      * applications must obtain secret material from an appropriate secure design
      * rather than treating bundled JavaScript as a confidential key store.
      */
+    /** Teaching Point: ex-034 */
     this.#vault.setAes256Secret?.({
       aes256Secret: 'sdux-vault-tutorial-only-secret',
       salt: EXAMPLE_AES256_SALT,
       iterations: 250_000
     });
 
-    /*
-     * Local Storage Persist has no fluent configuration. Registering the
-     * behavior is sufficient: after AES-256 produces its authenticated envelope,
-     * the Persist stage writes that envelope under the FeatureCell-scoped key.
-     */
-
-    // Teaching point: Stepwise Resolve (ex-038)
-    /*
-     * `.withStepwiseResolve()` installs an explicit approval boundary at the
-     * Resolve stage. Its `StepwiseFunction` receives the last committed State,
-     * the fully resolved candidate, and a one-use decision contract.
-     *
-     * This callback deliberately makes no immediate decision. It publishes both
-     * values for inspection and leaves the pipeline suspended until the tutorial
-     * UI calls `continue()` through Accept or `block()` through Cancel. Exactly
-     * one terminal decision is consumed for each pending request.
-     */
-    // Teaching point: Stepwise Filter (ex-039)
-    /*
-     * `.withStepwiseFilter()` installs a second explicit approval boundary
-     * immediately after the Filter stage. Its `StepwiseFunction` receives the
-     * last committed State, the already-filtered candidate, and the same
-     * one-use decision contract demonstrated by Stepwise Resolve.
-     *
-     * The callback publishes its isolated inputs without mutating them. Accept
-     * invokes `continue()` so reducers may process the filtered candidate;
-     * Cancel invokes `block()` so the attempt ends without changing State.
-     */
-    // Teaching point: Stepwise Reducer (ex-040)
-    /*
-     * `.withStepwiseReducer()` installs the final approval boundary after all
-     * reducers have completed. Its `StepwiseFunction` receives the last committed
-     * State and the fully reduced candidate, including the derived force display
-     * values and deterministic last-name ordering produced above.
-     *
-     * Accept invokes `continue()` so the reduced candidate may proceed toward
-     * commitment; Cancel invokes `block()` so the attempt ends without replacing
-     * the current State. The callback observes isolated inputs and mutates neither.
-     */
     this.#vault
       // Teaching point: Hydration (ex-023)
       /*
@@ -447,83 +461,126 @@ export class ExampleService {
        * emits an initialization Error without falling back to configured initial
        * State or persistence because hydration has the highest precedence.
        */
-      .hydrate(() => exampleHydrate.getPromise()).withStepwiseResolve!({
+      .hydrate(() => exampleHydrate.getPromise());
+
+    // Teaching point: Stepwise Resolve (ex-038)
+    /*
+     * `.withStepwiseResolve()` installs an explicit approval boundary at the
+     * Resolve stage. Its `StepwiseFunction` receives the last committed State,
+     * the fully resolved candidate, and a one-use decision contract.
+     *
+     * This callback deliberately makes no immediate decision. It publishes both
+     * values for inspection and leaves the pipeline suspended until the tutorial
+     * UI calls `continue()` through Accept or `block()` through Cancel. Exactly
+     * one terminal decision is consumed for each pending request.
+     */
+    this.#vault.withStepwiseResolve!({
       stepwiseCallback: this.#captureStepwiseResolve
-    })
-      // Teaching point: Distinct Until Changed (ex-027)
-      /*
-       * `.operators()` installs a domain-specific Distinct Until Changed comparator
-       * at the Operator stage. Array Append Merge has already materialized the full
-       * candidate, so the callback compares stable character identities without relying
-       * on array position. A candidate containing no new IDs returns `VAULT_NOOP`, even
-       * when a downstream reducer sorted the previously committed collection.
-       */
-      .operators([
-        withDistinctUntilChanged<readonly StarWarsCharacterState[]>(
-          (incoming, previous) =>
-            incoming.every(({ id }) =>
-              previous.some((character) => character.id === id)
-            )
-        )
-      ])
+    });
 
-      // Teaching point: Filter (ex-016)
-      /*
-       * `.filters()` registers `removeUnknownLastNameFilter` as a
-       * `FilterFunction<readonly StarWarsCharacterState[]>`.
-       *
-       * This pure function runs before reducers and returns a new candidate
-       * collection without characters whose last name is exactly `unknown`.
-       * The inline second filter normally returns that collection unchanged. When
-       * the teaching flag is armed, it throws deliberately so the example can show
-       * pipeline error normalization without allowing the candidate to commit.
-       */
-      .filters([
-        removeUnknownLastNameFilter,
-        (characters) => {
-          if (this.#isThrowError()) {
-            throw new Error(
-              'The intentional character filter error was thrown.'
-            );
-          }
+    // Teaching point: Distinct Until Changed (ex-028)
+    /*
+     * `.operators()` installs a domain-specific Distinct Until Changed comparator
+     * at the Operator stage. Array Append Merge has already materialized the full
+     * candidate, so the callback compares stable character identities without relying
+     * on array position. A candidate containing no new IDs returns `VAULT_NOOP`, even
+     * when a downstream reducer sorted the previously committed collection.
+     */
+    this.#vault.operators([
+      withDistinctUntilChanged<readonly StarWarsCharacterState[]>(
+        (incoming, previous) =>
+          incoming.every(({ id }) =>
+            previous.some((character) => character.id === id)
+          )
+      )
+    ]);
 
-          return characters;
+    // Teaching point: Filter (ex-016)
+    /*
+     * `.filters()` registers `removeUnknownLastNameFilter` as a
+     * `FilterFunction<readonly StarWarsCharacterState[]>`.
+     *
+     * This pure function runs before reducers and returns a new candidate
+     * collection without characters whose last name is exactly `unknown`.
+     * The inline second filter normally returns that collection unchanged. When
+     * the teaching flag is armed, it throws deliberately so the example can show
+     * pipeline error normalization without allowing the candidate to commit.
+     */
+    this.#vault.filters([
+      removeUnknownLastNameFilter,
+      (characters) => {
+        if (this.#isThrowError()) {
+          throw new Error('The intentional character filter error was thrown.');
         }
-      ]).withStepwiseFilter!({
+
+        return characters;
+      }
+    ]);
+
+    // Teaching point: Stepwise Filter (ex-039)
+    /*
+     * `.withStepwiseFilter()` installs a second explicit approval boundary
+     * immediately after the Filter stage. Its `StepwiseFunction` receives the
+     * last committed State, the already-filtered candidate, and the same
+     * one-use decision contract demonstrated by Stepwise Resolve.
+     *
+     * The callback publishes its isolated inputs without mutating them. Accept
+     * invokes `continue()` so reducers may process the filtered candidate;
+     * Cancel invokes `block()` so the attempt ends without changing State.
+     */
+
+    this.#vault.withStepwiseFilter!({
       stepwiseCallback: this.#captureStepwiseFilter
-    })
-      // Teaching point: Before Taps (ex-031)
-      /*
-       * `.beforeTaps()` registers a `TapCallback<readonly StarWarsCharacterState[]>`
-       * that observes the filtered candidate immediately before reducer execution.
-       *
-       * The callback publishes that immutable input for the tutorial display, returns
-       * no replacement value, and cannot change the value passed to Reducer 1.
-       */
-      .beforeTaps([this.#captureBeforeTapInput])
+    });
+    // Teaching point: Before Taps (ex-031)
+    /*
+     * `.beforeTaps()` registers a `TapCallback<readonly StarWarsCharacterState[]>`
+     * that observes the filtered candidate immediately before reducer execution.
+     *
+     * The callback publishes that immutable input for the tutorial display, returns
+     * no replacement value, and cannot change the value passed to Reducer 1.
+     */
+    this.#vault.beforeTaps([this.#captureBeforeTapInput]);
 
-      // Teaching point: Reducer 1 (ex-017)
-      /*
-       * The first `.reducers()` entry is a delegating
-       * `ReducerFunction<readonly StarWarsCharacterState[]>`.
-       *
-       * After filtering, this imported pure function performs an immutable transformation
-       * through `deriveForceSensitiveDisplay()`, producing a new collection in which
-       * every retained character has a `Yes` or `No` display value.
-       */
+    // Teaching point: Reducer 1 (ex-017)
+    /*
+     * The first `.reducers()` entry is a delegating
+     * `ReducerFunction<readonly StarWarsCharacterState[]>`.
+     *
+     * After filtering, this imported pure function performs an immutable transformation
+     * through `deriveForceSensitiveDisplay()`, producing a new collection in which
+     * every retained character has a `Yes` or `No` display value.
+     */
 
-      // Teaching point: Reducer 2 (ex-018)
-      /*
-       * The second entry uses a factory-generated pure reducer, a different function
-       * pattern that still returns the same `ReducerFunction` contract.
-       *
-       * It runs after Reducer 1, clones the transformed collection, and sorts characters
-       * alphabetically by `lastName` without mutating the incoming array.
-       */
-      .reducers([deriveForceSensitiveDisplay, withCharactersSortedByLastName()])
-      .withStepwiseReducer!({
+    // Teaching point: Reducer 2 (ex-018)
+    /*
+     * The second entry uses a factory-generated pure reducer, a different function
+     * pattern that still returns the same `ReducerFunction` contract.
+     *
+     * It runs after Reducer 1, clones the transformed collection, and sorts characters
+     * alphabetically by `lastName` without mutating the incoming array.
+     */
+    this.#vault.reducers([
+      deriveForceSensitiveDisplay,
+      withCharactersSortedByLastName()
+    ]);
+
+    // Teaching point: Stepwise Reducer (ex-040)
+    /*
+     * `.withStepwiseReducer()` installs the final approval boundary after all
+     * reducers have completed. Its `StepwiseFunction` receives the last committed
+     * State and the fully reduced candidate, including the derived force display
+     * values and deterministic last-name ordering produced above.
+     *
+     * Accept invokes `continue()` so the reduced candidate may proceed toward
+     * commitment; Cancel invokes `block()` so the attempt ends without replacing
+     * the current State. The callback observes isolated inputs and mutates neither.
+     */
+    this.#vault.withStepwiseReducer!({
       stepwiseCallback: this.#captureStepwiseReducer
-    })
+    });
+
+    this.#vault
       // Teaching point: After Taps (ex-032)
       /*
        * `.afterTaps()` registers a `TapCallback<readonly StarWarsCharacterState[]>`
@@ -532,43 +589,44 @@ export class ExampleService {
        * The callback publishes that immutable input for the tutorial display, returns
        * no replacement value, and cannot change the value committed as FeatureCell State.
        */
-      .afterTaps([this.#captureAfterTapInput])
+      .afterTaps([this.#captureAfterTapInput]);
 
-      // Teaching point: State Emission (ex-035)
-      /*
-       * `.emitStates()` registers a
-       * `CoreEmitStateCallback<readonly StarWarsCharacterState[]>` that receives the
-       * finalized `StateSnapshotShape` after the FeatureCell commits and exposes it.
-       *
-       * The callback publishes that immutable snapshot for the tutorial display and
-       * cannot replace state, restart the pipeline, or change the committed result.
-       */
-      .emitStates([this.#captureEmittedState])
+    // Teaching point: State Emission (ex-035)
+    /*
+     * `.emitStates()` registers a
+     * `CoreEmitStateCallback<readonly StarWarsCharacterState[]>` that receives the
+     * finalized `StateSnapshotShape` after the FeatureCell commits and exposes it.
+     *
+     * The callback publishes that immutable snapshot for the tutorial display and
+     * cannot replace state, restart the pipeline, or change the committed result.
+     */
+    this.#vault.emitStates([this.#captureEmittedState]);
 
-      // Teaching point: Error Emission (ex-036)
-      /*
-       * `.errors()` registers a
-       * `VaultErrorCallback<readonly StarWarsCharacterState[]>` that receives the
-       * finalized Vault error and immutable StateSnapshot after error commitment.
-       *
-       * The callback publishes both observational inputs for the tutorial display;
-       * it cannot transform the error, replace state, or alter pipeline control.
-       */
-      .errors([this.#captureEmittedError])
+    // Teaching point: Error Emission (ex-036)
+    /*
+     * `.errors()` registers a
+     * `VaultErrorCallback<readonly StarWarsCharacterState[]>` that receives the
+     * finalized Vault error and immutable StateSnapshot after error commitment.
+     *
+     * The callback publishes both observational inputs for the tutorial display;
+     * it cannot transform the error, replace state, or alter pipeline control.
+     */
+    this.#vault.errors([this.#captureEmittedError]);
 
-      /*
-       * `.initialize()` finalizes the pipeline configuration and activates the
-       * FeatureCell. Its initial value and subsequent updates now pass through the
-       * registered Filter → Before Tap → Reducer → After Tap stages before becoming committed
-       * reactive State, which is then observed by the State Emission callback.
-       */
-      .initialize();
+    /*
+     * `.initialize()` finalizes the pipeline configuration and activates the
+     * FeatureCell. Its initial value and subsequent updates now pass through the
+     * registered Filter → Before Tap → Reducer → After Tap stages before becoming committed
+     * reactive State, which is then observed by the State Emission callback.
+     */
+    this.#vault.initialize();
   }
 
   /**
    * Accepts the active Resolve-stage candidate and resumes its pipeline.
    * A call made without a pending callback is safely ignored.
    */
+  /** Teaching point: Accept Stepwise Resolve (ex-038) */
   acceptStepwiseResolve(): void {
     this.#completeStepwiseResolve('continue');
   }
@@ -577,31 +635,37 @@ export class ExampleService {
    * Cancels the active Resolve-stage candidate while preserving committed State.
    * A call made without a pending callback is safely ignored.
    */
+  /** Teaching point: Accept Stepwise Resolve (ex-038) */
   cancelStepwiseResolve(): void {
     this.#completeStepwiseResolve('block');
   }
 
   /** Accepts the active filtered candidate and allows reducers to continue. */
+  /** Teaching point: Accept Stepwise Filter (ex-039) */
   acceptStepwiseFilter(): void {
     this.#completeStepwiseFilter('continue');
   }
 
   /** Cancels the active filtered candidate while preserving committed State. */
+  /** Teaching point: Cancel Stepwise Filter (ex-039) */
   cancelStepwiseFilter(): void {
     this.#completeStepwiseFilter('block');
   }
 
   /** Accepts the fully reduced candidate and allows commitment to continue. */
+  /** Teaching point: Accept Stepwise Reducer (ex-040) */
   acceptStepwiseReducer(): void {
     this.#completeStepwiseReducer('continue');
   }
 
   /** Cancels the fully reduced candidate while preserving committed State. */
+  /** Teaching point: Cancel Stepwise Reducer (ex-040) */
   cancelStepwiseReducer(): void {
     this.#completeStepwiseReducer('block');
   }
 
   /** Consumes exactly one pending decision before allowing another request. */
+  /** Teaching point: Complete Stepwise Resolve (ex-038) */
   #completeStepwiseResolve(decision: 'continue' | 'block'): void {
     const decisions = this.#stepwiseResolveDecisions;
 
@@ -615,6 +679,7 @@ export class ExampleService {
   }
 
   /** Consumes exactly one pending Filter-stage decision. */
+  /** Teaching point: Complete Stepwise Filter (ex-039) */
   #completeStepwiseFilter(decision: 'continue' | 'block'): void {
     const decisions = this.#stepwiseFilterDecisions;
 
@@ -627,6 +692,7 @@ export class ExampleService {
     decisions[decision]();
   }
 
+  /** Teaching point: Complete Stepwise Reducer (ex-040) */
   /** Consumes exactly one pending Reducer-stage decision. */
   #completeStepwiseReducer(decision: 'continue' | 'block'): void {
     const decisions = this.#stepwiseReducerDecisions;
@@ -783,6 +849,7 @@ export class ExampleService {
    * Disarms the intentional inline-filter failure without starting a pipeline request.
    * @returns Nothing; subsequent State changes pass through the filter normally.
    */
+  // Teaching point: Errors (ex-004)
   resetFilterError(): void {
     this.#isThrowError.set(false);
   }
@@ -846,6 +913,7 @@ export class ExampleService {
    * @param characters - Read-only collection that should become the FeatureCell value.
    * @returns Nothing; the FeatureCell exposes the resulting value through reactive state.
    */
+  // abstract
   #replaceCharacters(characters: readonly StarWarsCharacterState[]): void {
     this.#vault.replaceState({
       value: characters

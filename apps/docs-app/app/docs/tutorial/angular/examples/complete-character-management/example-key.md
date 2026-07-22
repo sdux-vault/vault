@@ -6,7 +6,7 @@
 | Minimal Read-Only FeatureCell              | ex-002 | ✅    | ✅      |
 | CRUD Foundation feedback                   | ex-003 |       | ✅      |
 | Errors                                     | ex-004 | ✅    | ✅      |
-| FeatureCell destruction                    | ex-005 | ✅    | ✅      |
+| Destroy                                    | ex-005 | ✅    | ✅      |
 | Remove                                     | ex-006 | ✅    | ✅      |
 | CRUD Foundation                            | ex-007 | ✅    | ✅      |
 | isLoading                                  | ex-008 | ✅    | ✅      |
@@ -31,7 +31,7 @@
 | Before Taps                                | ex-031 | ✅    | ✅      |
 | After Taps                                 | ex-032 | ✅    | ✅      |
 | Delay                                      | ex-033 | ✅    | ✅      |
-| Encryption                                 | ex-034 | ✅    | ✅      |
+| Encryption & Persist                       | ex-034 | ✅    | ✅      |
 | State Emission                             | ex-035 | ✅    | ✅      |
 | Error Emission                             | ex-036 | ✅    | ✅      |
 | Stepwise Resolve                           | ex-038 | ✅    | ✅      |
