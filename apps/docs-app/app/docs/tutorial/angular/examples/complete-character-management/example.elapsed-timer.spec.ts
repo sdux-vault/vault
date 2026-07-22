@@ -69,4 +69,21 @@ describe('ElapsedTimer', () => {
     expect(timer.elapsed).toBe(500);
     expect(cancelAnimationFrameSpy).toHaveBeenCalledOnceWith(42);
   });
+
+  it('should ignore a queued frame that runs after the timer stops', () => {
+    const onChange = jasmine.createSpy('onChange');
+    const timer = new ElapsedTimer(onChange);
+
+    timer.start();
+    onChange.calls.reset();
+    requestAnimationFrameSpy.calls.reset();
+    timer.destroy();
+
+    currentTime = 900;
+    animationFrame(0);
+
+    expect(onChange).not.toHaveBeenCalled();
+    expect(requestAnimationFrameSpy).not.toHaveBeenCalled();
+    expect(timer.elapsed).toBe(0);
+  });
 });

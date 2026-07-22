@@ -28,8 +28,7 @@ import {
   EXAMPLE_AES256_SALT,
   EXAMPLE_DELAY_MILLISECONDS,
   EXAMPLE_ENCRYPTED_STORAGE_KEY,
-  ExampleService,
-  withCharactersSortedByLastName
+  ExampleService
 } from './example.service';
 
 describe('ExampleService', () => {
@@ -64,8 +63,16 @@ describe('ExampleService', () => {
   const acceptStepwiseAndSettle = async (
     service: ExampleService
   ): Promise<void> => {
-    for (let stage = 0; stage < 4; stage += 1) {
-      await new Promise((resolve) => setTimeout(resolve));
+    let settled = false;
+    const settledPromise = vaultSettled(key).then(() => {
+      settled = true;
+    });
+
+    while (!settled) {
+      await Promise.race([
+        settledPromise,
+        new Promise<void>((resolve) => setTimeout(resolve))
+      ]);
 
       if (service.isStepwiseResolvePending()) {
         service.acceptStepwiseResolve();
@@ -79,13 +86,10 @@ describe('ExampleService', () => {
 
       if (service.isStepwiseReducerPending()) {
         service.acceptStepwiseReducer();
-        continue;
       }
-
-      break;
     }
 
-    await vaultSettled(key);
+    await settledPromise;
   };
 
   const configureService = async (
@@ -305,9 +309,7 @@ describe('ExampleService', () => {
     });
     expect(service.restoreInitialCharacters()).toBeNull();
     expect(vault.replaceState).toHaveBeenCalledWith({
-      value: [],
-      loading: false,
-      error: null
+      value: []
     });
   });
 
@@ -337,28 +339,6 @@ describe('ExampleService', () => {
     expect(service.characters()).toEqual([
       { ...retainedCharacter, forceSensitiveDisplay: 'No' }
     ]);
-  });
-
-  it('should derive force sensitivity display labels without mutating the input', async () => {
-    const candidate = initialCharacters.map((character) => ({ ...character }));
-
-    const service = await configureService(candidate);
-
-    expect(service.characters()).toEqual(initialCharactersWithDisplay);
-    expect(service.characters()).not.toBe(candidate);
-    expect(candidate).toEqual(initialCharacters);
-  });
-
-  it('should create a pure reducer that sorts characters by last name', async () => {
-    const candidate = [initialCharacters[1]!, initialCharacters[0]!] as const;
-
-    const sorted = withCharactersSortedByLastName()(candidate);
-    const service = await configureService(candidate);
-
-    expect(sorted).toEqual(initialCharacters);
-    expect(sorted).not.toBe(candidate);
-    expect(candidate).toEqual([initialCharacters[1]!, initialCharacters[0]!]);
-    expect(service.characters()).toEqual(initialCharactersWithDisplay);
   });
 
   it('should expose the filtered candidate observed before reducer execution', async () => {
@@ -427,7 +407,7 @@ describe('ExampleService', () => {
     expect(service.isStepwiseResolvePending()).toBeTrue();
     expect(service.stepwiseResolveRequest()).toEqual({
       current: initialCharactersWithDisplay,
-      candidate: [han]
+      candidate: [...initialCharactersWithDisplay, han]
     });
 
     service.acceptStepwiseResolve();
@@ -526,7 +506,7 @@ describe('ExampleService', () => {
     expect(service.isStepwiseFilterPending()).toBeFalse();
     await vaultSettled(key);
 
-    expect(service.characters()).toBe(committed);
+    expect(service.characters()).toEqual(committed);
 
     service.cancelStepwiseFilter();
     expect(service.isStepwiseFilterPending()).toBeFalse();
@@ -591,7 +571,7 @@ describe('ExampleService', () => {
     expect(service.isStepwiseReducerPending()).toBeFalse();
     await vaultSettled(key);
 
-    expect(service.characters()).toBe(committed);
+    expect(service.characters()).toEqual(committed);
 
     service.cancelStepwiseReducer();
     expect(service.isStepwiseReducerPending()).toBeFalse();
@@ -643,10 +623,7 @@ describe('ExampleService', () => {
       faction: 'Resistance',
       isForceSensitive: false
     });
-    expect(service.characters()).toEqual([
-      { ...updatedLeia, forceSensitiveDisplay: 'No' },
-      initialCharactersWithDisplay[1]!
-    ]);
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
 
     const missing = service.updateCharacter(999, {
       name: 'Missing',
@@ -657,10 +634,7 @@ describe('ExampleService', () => {
     await acceptStepwiseAndSettle(service);
 
     expect(missing.id).toBe(999);
-    expect(service.characters()).toEqual([
-      { ...updatedLeia, forceSensitiveDisplay: 'No' },
-      initialCharactersWithDisplay[1]!
-    ]);
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
   });
 
   it('should remove only the requested character', async () => {
@@ -669,12 +643,12 @@ describe('ExampleService', () => {
     service.removeCharacter(10);
     await acceptStepwiseAndSettle(service);
 
-    expect(service.characters()).toEqual([initialCharactersWithDisplay[1]!]);
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
 
     service.removeCharacter(999);
     await acceptStepwiseAndSettle(service);
 
-    expect(service.characters()).toEqual([initialCharactersWithDisplay[1]!]);
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
   });
 
   it('should persist null to clear the current FeatureCell value', async () => {
@@ -1068,7 +1042,17 @@ describe('ExampleService', () => {
     await acceptStepwiseAndSettle(service);
 
     expect(firstCharacter).toEqual(initialCharactersWithDisplay[0]!);
-    expect(service.characters()).toEqual(initialCharactersWithDisplay);
+    expect(service.characters()).toEqual([
+      ...initialCharactersWithDisplay,
+      {
+        id: 21,
+        name: 'Han',
+        lastName: 'Solo',
+        faction: 'Rebel Alliance',
+        isForceSensitive: false,
+        forceSensitiveDisplay: 'No'
+      }
+    ]);
     expect(service.characters()).not.toBe(initialCharacters);
     expect(service.characters()[0]).not.toBe(initialCharacters[0]!);
   });

@@ -7,7 +7,6 @@ import {
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import type {
   CoreEmitStateCallback,
-  ReducerFunction,
   StateSnapshotShape,
   TapCallback,
   VaultErrorCallback,
@@ -15,17 +14,20 @@ import type {
 } from '@sdux-vault/shared';
 import { filter, take } from 'rxjs';
 import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import {
+  cloneCharacters,
+  createCharacterState,
+  deriveForceSensitiveDisplay,
+  getDistinctChangedStateCharacter,
+  getNextCharacterId,
+  type StarWarsCharacterDraft,
+  withCharactersSortedByLastName
+} from './example.character-domain';
 import { removeUnknownLastNameFilter } from './example.filter';
 import { exampleHydrate } from './example.hydrate';
 import { exampleHttpResource } from './example.http-resource';
 import { exampleObservable } from './example.observable';
 import { examplePromise } from './example.promise';
-
-/**
- * Describes the editable character fields accepted before the service assigns an ID.
- * Omitting identity keeps component forms from choosing or changing the collection key.
- */
-export type StarWarsCharacterDraft = Omit<StarWarsCharacterState, 'id'>;
 
 /** Fixed Policy-stage hold applied to every tutorial pipeline attempt. */
 export const EXAMPLE_DELAY_MILLISECONDS = 3_000;
@@ -48,38 +50,6 @@ const DISTINCT_SAME_STATE_CHARACTER: StarWarsCharacterState = {
   faction: 'Jedi Order',
   isForceSensitive: true
 };
-
-/** Four meaningful merge deltas cycled by the Changed State teaching action. */
-const DISTINCT_CHANGED_STATE_CHARACTERS: readonly StarWarsCharacterState[] = [
-  {
-    id: 601,
-    name: 'Qui-Gon',
-    lastName: 'Jinn',
-    faction: 'Jedi Order',
-    isForceSensitive: true
-  },
-  {
-    id: 602,
-    name: 'Plo',
-    lastName: 'Koon',
-    faction: 'Jedi Order',
-    isForceSensitive: true
-  },
-  {
-    id: 603,
-    name: 'Aayla',
-    lastName: 'Secura',
-    faction: 'Jedi Order',
-    isForceSensitive: true
-  },
-  {
-    id: 604,
-    name: 'Kit',
-    lastName: 'Fisto',
-    faction: 'Jedi Order',
-    isForceSensitive: true
-  }
-];
 
 /** Inputs observed by the tutorial's finalized error callback. */
 interface ErrorEmission {
@@ -117,21 +87,6 @@ export interface StepwiseReducerRequest {
 
   /** Candidate produced by all reducers and awaiting policy approval. */
   readonly candidate: readonly StarWarsCharacterState[];
-}
-
-/**
- * Creates a pure reducer that orders characters alphabetically by last name.
- * Returning the reducer from a factory demonstrates reusable pipeline configuration while the
- * cloned array preserves the immutable collection received from the previous reducer.
- * @returns A ReducerFunction that produces a newly sorted character collection.
- */
-export function withCharactersSortedByLastName(): ReducerFunction<
-  readonly StarWarsCharacterState[]
-> {
-  return (characters) =>
-    [...characters].sort((left, right) =>
-      left.lastName.localeCompare(right.lastName)
-    );
 }
 
 // Teaching point: CRUD Foundation (ex-007)
@@ -408,10 +363,8 @@ export class ExampleService {
         take(1)
       )
       .subscribe(({ snapshot }) => {
-        this.#initialCharacters =
-          snapshot.value?.map((character) => ({ ...character })) ?? [];
-        this.#nextCharacterId =
-          Math.max(...this.#initialCharacters.map(({ id }) => id), 0) + 1;
+        this.#initialCharacters = cloneCharacters(snapshot.value ?? []);
+        this.#nextCharacterId = getNextCharacterId(this.#initialCharacters);
       });
 
     // Teaching point: Delay (ex-033)
@@ -554,8 +507,8 @@ export class ExampleService {
        * The first `.reducers()` entry is a delegating
        * `ReducerFunction<readonly StarWarsCharacterState[]>`.
        *
-       * After filtering, this pure function delegates its immutable transformation
-       * to `#deriveForceSensitiveDisplay()`, producing a new collection in which
+       * After filtering, this imported pure function performs an immutable transformation
+       * through `deriveForceSensitiveDisplay()`, producing a new collection in which
        * every retained character has a `Yes` or `No` display value.
        */
 
@@ -567,10 +520,8 @@ export class ExampleService {
        * It runs after Reducer 1, clones the transformed collection, and sorts characters
        * alphabetically by `lastName` without mutating the incoming array.
        */
-      .reducers([
-        (characters) => this.#deriveForceSensitiveDisplay(characters),
-        withCharactersSortedByLastName()
-      ]).withStepwiseReducer!({
+      .reducers([deriveForceSensitiveDisplay, withCharactersSortedByLastName()])
+      .withStepwiseReducer!({
       stepwiseCallback: this.#captureStepwiseReducer
     })
       // Teaching point: After Taps (ex-032)
@@ -697,15 +648,10 @@ export class ExampleService {
    * @returns The character submitted to the FeatureCell with its assigned ID.
    */
   createCharacter(draft: StarWarsCharacterDraft): StarWarsCharacterState {
-    const character: StarWarsCharacterState = {
-      id: this.#nextCharacterId++,
-      ...draft
-    };
+    const character = createCharacterState(this.#nextCharacterId++, draft);
 
     this.#vault.mergeState({
-      value: [character],
-      loading: false,
-      error: null
+      value: [character]
     });
 
     return character;
@@ -723,7 +669,7 @@ export class ExampleService {
     id: number,
     changes: StarWarsCharacterDraft
   ): StarWarsCharacterState {
-    const updatedCharacter: StarWarsCharacterState = { id, ...changes };
+    const updatedCharacter = createCharacterState(id, changes);
 
     this.#vault.replaceState({
       value: () =>
@@ -731,9 +677,7 @@ export class ExampleService {
           .value()
           ?.map((character) =>
             character.id === id ? updatedCharacter : character
-          ),
-      loading: false,
-      error: null
+          )
     });
 
     return updatedCharacter;
@@ -750,9 +694,7 @@ export class ExampleService {
     this.#vault.replaceState({
       value: () =>
         this.#vault.state.value()?.filter((character) => character.id !== id) ??
-        [],
-      loading: false,
-      error: null
+        []
     });
   }
 
@@ -866,14 +808,13 @@ export class ExampleService {
    * @returns Nothing; consumers observe accepted merged collections reactively.
    */
   submitChangedState(): void {
-    const character =
-      DISTINCT_CHANGED_STATE_CHARACTERS[this.#distinctChangedStateIndex]!;
+    const { character, nextIndex } = getDistinctChangedStateCharacter(
+      this.#distinctChangedStateIndex
+    );
 
-    this.#distinctChangedStateIndex =
-      (this.#distinctChangedStateIndex + 1) %
-      DISTINCT_CHANGED_STATE_CHARACTERS.length;
+    this.#distinctChangedStateIndex = nextIndex;
 
-    this.#vault.mergeState([{ ...character }]);
+    this.#vault.mergeState([character]);
   }
 
   // Teaching point: FeatureCell destruction (ex-005)
@@ -893,29 +834,11 @@ export class ExampleService {
    * @returns The first restored character, or `null` when the initial collection was empty.
    */
   restoreInitialCharacters(): StarWarsCharacterState | null {
-    const initialCharacters = this.#initialCharacters.map((character) => ({
-      ...character
-    }));
+    const initialCharacters = cloneCharacters(this.#initialCharacters);
 
     this.#replaceCharacters(initialCharacters);
 
     return initialCharacters[0] ?? null;
-  }
-
-  /**
-   * Derives a display-friendly force-sensitivity label for every character.
-   * Delegating the reducer to this pure method keeps registration concise while
-   * preserving the incoming collection and character objects.
-   * @param characters - Current character collection supplied by the reducer stage.
-   * @returns A new collection whose characters display force sensitivity as Yes or No.
-   */
-  #deriveForceSensitiveDisplay(
-    characters: readonly StarWarsCharacterState[]
-  ): readonly StarWarsCharacterState[] {
-    return characters.map((character) => ({
-      ...character,
-      forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
-    }));
   }
 
   /**
@@ -925,9 +848,7 @@ export class ExampleService {
    */
   #replaceCharacters(characters: readonly StarWarsCharacterState[]): void {
     this.#vault.replaceState({
-      value: characters,
-      loading: false,
-      error: null
+      value: characters
     });
   }
 }

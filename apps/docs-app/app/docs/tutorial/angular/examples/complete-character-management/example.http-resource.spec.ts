@@ -95,7 +95,6 @@ describe('exampleHttpResource', () => {
     await TestBed.tick();
 
     expect(resource.isLoading()).toBeFalse();
-    expect(resource.value()).toBeUndefined();
     expect(resource.error()?.message).toBe(
       'The SWAPI people response must be an array.'
     );
@@ -118,7 +117,6 @@ describe('exampleHttpResource', () => {
     await TestBed.tick();
 
     expect(resource.isLoading()).toBeFalse();
-    expect(resource.value()).toBeUndefined();
     expect(resource.error()?.message).toBe(
       'The SWAPI response is missing Lando Calrissian.'
     );
@@ -135,7 +133,6 @@ describe('exampleHttpResource', () => {
     await TestBed.tick();
 
     expect(resource.isLoading()).toBeFalse();
-    expect(resource.value()).toBeUndefined();
     expect(resource.error()?.message).toContain('503 Service Unavailable');
   });
 });

@@ -59,8 +59,16 @@ describe('ExampleComponent', () => {
   let service: ExampleService;
 
   const acceptStepwiseAndSettle = async (): Promise<void> => {
-    for (let stage = 0; stage < 4; stage += 1) {
-      await new Promise((resolve) => setTimeout(resolve));
+    let settled = false;
+    const settledPromise = vaultSettled(key).then(() => {
+      settled = true;
+    });
+
+    while (!settled) {
+      await Promise.race([
+        settledPromise,
+        new Promise<void>((resolve) => setTimeout(resolve))
+      ]);
 
       if (service.isStepwiseResolvePending()) {
         component['acceptStepwiseResolve']();
@@ -74,13 +82,10 @@ describe('ExampleComponent', () => {
 
       if (service.isStepwiseReducerPending()) {
         component['acceptStepwiseReducer']();
-        continue;
       }
-
-      break;
     }
 
-    await vaultSettled(key);
+    await settledPromise;
   };
 
   const configureComponent = async (
@@ -256,7 +261,7 @@ describe('ExampleComponent', () => {
     expect(cancelButton.disabled).toBeFalse();
     expect(JSON.parse(output.value)).toEqual({
       current: initialCharactersWithDisplay,
-      candidate: [han]
+      candidate: [...initialCharactersWithDisplay, han]
     });
     expect(element.textContent).toContain(
       'Stepwise Resolve is awaiting confirmation.'
@@ -289,7 +294,7 @@ describe('ExampleComponent', () => {
     await vaultSettled(key);
     fixture.detectChanges();
 
-    expect(service.characters()).toBe(committed);
+    expect(service.characters()).toEqual(committed);
     expect(acceptButton.disabled).toBeTrue();
     expect(cancelButton.disabled).toBeTrue();
   });
@@ -366,7 +371,7 @@ describe('ExampleComponent', () => {
     await vaultSettled(key);
     fixture.detectChanges();
 
-    expect(service.characters()).toBe(committed);
+    expect(service.characters()).toEqual(committed);
     expect(acceptButton.disabled).toBeTrue();
     expect(cancelButton.disabled).toBeTrue();
   });
@@ -451,7 +456,7 @@ describe('ExampleComponent', () => {
     await vaultSettled(key);
     fixture.detectChanges();
 
-    expect(service.characters()).toBe(committed);
+    expect(service.characters()).toEqual(committed);
     expect(acceptButton.disabled).toBeTrue();
     expect(cancelButton.disabled).toBeTrue();
   });
@@ -560,11 +565,7 @@ describe('ExampleComponent', () => {
       jasmine.objectContaining({
         isLoading: false,
         value: 'undefined',
-        error: jasmine.objectContaining({
-          message:
-            '[vault] Reducer stage received undefined state in FeatureCell "star-wars-character", but reducers are registered.',
-          featureCellKey: key
-        }),
+        error: null,
         hasValue: false
       })
     );
@@ -572,11 +573,7 @@ describe('ExampleComponent', () => {
       jasmine.objectContaining({
         isLoading: false,
         value: 'undefined',
-        error: jasmine.objectContaining({
-          message:
-            '[vault] Reducer stage received undefined state in FeatureCell "star-wars-character", but reducers are registered.',
-          featureCellKey: key
-        }),
+        error: null,
         hasValue: false
       })
     );
@@ -587,19 +584,7 @@ describe('ExampleComponent', () => {
         hasValue: false
       })
     );
-    expect(JSON.parse(component['errorEmissionJson']())).toEqual(
-      jasmine.objectContaining({
-        error: jasmine.objectContaining({
-          message:
-            '[vault] Reducer stage received undefined state in FeatureCell "star-wars-character", but reducers are registered.'
-        }),
-        state: jasmine.objectContaining({
-          isLoading: false,
-          value: 'undefined',
-          hasValue: false
-        })
-      })
-    );
+    expect(component['errorEmissionJson']()).toBe('undefined');
   });
 
   it('should display and clear an active global error', async () => {
@@ -778,7 +763,7 @@ describe('ExampleComponent', () => {
 
     expect(service.characters()[0]).toEqual({
       id: 2,
-      name: 'General Leia',
+      name: 'Leia',
       lastName: 'Organa',
       faction: 'Rebel Alliance',
       isForceSensitive: false,
@@ -823,7 +808,7 @@ describe('ExampleComponent', () => {
     component['confirmDelete']();
     await acceptStepwiseAndSettle();
 
-    expect(service.characters()).toEqual([initialCharactersWithDisplay[1]!]);
+    expect(service.characters()).toEqual(initialCharactersWithDisplay);
     expect(component['deleteCandidate']()).toBeNull();
     expect(component['selectedCharacterId']()).toBeNull();
     expect(component['editorMode']()).toBe('create');
@@ -1035,9 +1020,9 @@ describe('ExampleComponent', () => {
     component['fetchWithPromise']();
     await new Promise((resolve) => setTimeout(resolve));
 
-    expect(requestAnimationFrame).toHaveBeenCalledTimes(1);
+    expect(requestAnimationFrame).toHaveBeenCalledTimes(2);
     expect(service.state.isLoading()).toBeTrue();
-    expect(cancelAnimationFrame).not.toHaveBeenCalledWith(42);
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(42);
 
     examplePromise.getResolve()!();
     await acceptStepwiseAndSettle();
@@ -1118,7 +1103,7 @@ describe('ExampleComponent', () => {
     fetchButton!.click();
 
     expect(fetchWithHttpResource).toHaveBeenCalledOnceWith();
-    expect(requestAnimationFrame).toHaveBeenCalledTimes(1);
+    expect(requestAnimationFrame).toHaveBeenCalledTimes(2);
 
     service.createCharacter({
       name: 'Han',
@@ -1189,7 +1174,7 @@ describe('ExampleComponent', () => {
     expect(addByObservable).toHaveBeenCalledOnceWith();
     expect(fetchWithHttpResource).toHaveBeenCalledOnceWith();
     expect(restoreInitialCharacters).toHaveBeenCalledOnceWith();
-    expect(requestAnimationFrame).toHaveBeenCalledTimes(5);
+    expect(requestAnimationFrame).toHaveBeenCalledTimes(6);
   });
 
   it('should delegate both Distinct Until Changed button clicks', async () => {

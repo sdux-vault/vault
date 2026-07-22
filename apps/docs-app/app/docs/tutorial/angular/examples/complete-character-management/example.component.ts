@@ -32,30 +32,28 @@ import {
   EXAMPLE_DELAY_MILLISECONDS,
   ExampleService
 } from './example.service';
-
-/**
- * Identifies whether the form is creating a new character or editing an existing one.
- * The mode controls labels, selection behavior, and which service operation runs on save.
- */
-type EditorMode = 'create' | 'edit';
-
-/**
- * Limits operation messages to the visual states supported by the template.
- * Each tone also determines the status class and accessibility role rendered to the user.
- */
-type FeedbackTone = 'error' | 'info' | 'success';
-
-/**
- * Carries user-facing feedback after a form or collection operation.
- * The template combines the message and tone to present an accessible status update.
- */
-interface OperationFeedback {
-  /** Text that explains the result of the latest user operation. */
-  readonly message: string;
-
-  /** Visual and accessibility category applied to the feedback message. */
-  readonly tone: FeedbackTone;
-}
+import {
+  characterAddedFeedback,
+  characterRemovedFeedback,
+  characterUpdatedFeedback,
+  COMPARISON_FUNCTION_SOURCE,
+  displayName,
+  EditorMode,
+  FACTIONS,
+  FEEDBACK,
+  FILTER_SOURCE,
+  normalizeCharacterDraft,
+  OperationFeedback,
+  REDUCER_1_SOURCE,
+  REDUCER_2_SOURCE,
+  resolveCharacter,
+  serializeErrorEmission,
+  serializeRawState,
+  serializeSnapshot,
+  serializeStepwiseRequest,
+  serializeTapInput,
+  validateTrimmedText
+} from './example.character-editor';
 
 /**
  * Coordinates the reactive character editor presented by this tutorial example.
@@ -94,13 +92,7 @@ export class ExampleComponent {
   #selectedCharacterBeforeCreate: number | null = null;
 
   /** Supplies the fixed faction choices rendered by both create and edit modes. */
-  protected readonly factions = [
-    'Galactic Empire',
-    'Jedi Order',
-    'Rebel Alliance',
-    'Sith Order',
-    'Unaffiliated'
-  ] as const;
+  protected readonly factions = FACTIONS;
 
   /**
    * References the service's computed character collection for direct reactive template reads.
@@ -134,162 +126,64 @@ export class ExampleComponent {
   );
 
   /** Displays the executable pure filter source*/
-  protected readonly filterSource = `export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacterState[]> =
-  (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');"
- `;
+  protected readonly filterSource = FILTER_SOURCE;
 
   /** Displays the executable delegating-reducer source */
-  protected readonly reducer1Source = `#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacterState[]): readonly StarWarsCharacterState[] {
-  return characters.map((character) => ({
-    ...character,
-    forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
-  }));
-`;
+  protected readonly reducer1Source = REDUCER_1_SOURCE;
 
   /** Displays the executable factory-generated reducer source. */
-  protected readonly reducer2Source = `export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacterState[]> {
-  return (characters) =>
-    [...characters].sort((left, right) =>
-      left.lastName.localeCompare(right.lastName)
-    );
-}`;
+  protected readonly reducer2Source = REDUCER_2_SOURCE;
 
   /** Displays the custom comparison passed to Distinct Until Changed. */
-  protected readonly comparisonFunctionSource = `withDistinctUntilChanged<readonly StarWarsCharacterState[]>(
-  (incoming, previous) =>
-    incoming.every(({ id }) =>
-      previous.some((character) => character.id === id)
-    )
-)`;
+  protected readonly comparisonFunctionSource = COMPARISON_FUNCTION_SOURCE;
 
   /** Serializes the current and candidate values supplied to the Stepwise Resolve callback. */
-  protected readonly stepwiseResolveRequestJson = computed(() => {
-    const request = this.#exampleService.stepwiseResolveRequest();
-
-    if (!request) {
-      return 'undefined';
-    }
-
-    return JSON.stringify(
-      {
-        ...request,
-        current: request.current ?? 'undefined'
-      },
-      null,
-      2
-    );
-  });
+  protected readonly stepwiseResolveRequestJson = computed(() =>
+    serializeStepwiseRequest(this.#exampleService.stepwiseResolveRequest())
+  );
 
   /** Serializes the current and filtered candidate values from Stepwise Filter. */
-  protected readonly stepwiseFilterRequestJson = computed(() => {
-    const request = this.#exampleService.stepwiseFilterRequest();
-
-    if (!request) {
-      return 'undefined';
-    }
-
-    return JSON.stringify(
-      {
-        ...request,
-        current: request.current ?? 'undefined'
-      },
-      null,
-      2
-    );
-  });
+  protected readonly stepwiseFilterRequestJson = computed(() =>
+    serializeStepwiseRequest(this.#exampleService.stepwiseFilterRequest())
+  );
 
   /** Serializes the current and fully reduced candidate from Stepwise Reducer. */
-  protected readonly stepwiseReducerRequestJson = computed(() => {
-    const request = this.#exampleService.stepwiseReducerRequest();
-
-    if (!request) {
-      return 'undefined';
-    }
-
-    return JSON.stringify(
-      {
-        ...request,
-        current: request.current ?? 'undefined'
-      },
-      null,
-      2
-    );
-  });
+  protected readonly stepwiseReducerRequestJson = computed(() =>
+    serializeStepwiseRequest(this.#exampleService.stepwiseReducerRequest())
+  );
 
   /** Serializes the filtered candidate observed by the latest Before Tap callback. */
-  protected readonly beforeTapInputJson = computed(
-    () =>
-      JSON.stringify(this.#exampleService.beforeTapInput(), null, 2) ??
-      'undefined'
+  protected readonly beforeTapInputJson = computed(() =>
+    serializeTapInput(this.#exampleService.beforeTapInput())
   );
 
   /** Serializes the transformed candidate observed by the latest After Tap callback. */
-  protected readonly afterTapInputJson = computed(
-    () =>
-      JSON.stringify(this.#exampleService.afterTapInput(), null, 2) ??
-      'undefined'
+  protected readonly afterTapInputJson = computed(() =>
+    serializeTapInput(this.#exampleService.afterTapInput())
   );
 
   /** Serializes the finalized StateSnapshot observed by the latest emit-state callback. */
-  protected readonly emittedStateJson = computed(() => {
-    const snapshot = this.#exampleService.emittedState();
-
-    if (!snapshot) {
-      return 'undefined';
-    }
-
-    return JSON.stringify(
-      {
-        ...snapshot,
-        value: snapshot.value === undefined ? 'undefined' : snapshot.value
-      },
-      null,
-      2
-    );
-  });
+  protected readonly emittedStateJson = computed(() =>
+    serializeSnapshot(this.#exampleService.emittedState())
+  );
 
   /** Serializes the finalized error and StateSnapshot observed by the latest error callback. */
-  protected readonly errorEmissionJson = computed(() => {
-    const emission = this.#exampleService.emittedError();
-
-    if (!emission) {
-      return 'undefined';
-    }
-
-    return JSON.stringify(
-      {
-        error: emission.error,
-        state: {
-          ...emission.state,
-          value:
-            emission.state.value === undefined
-              ? 'undefined'
-              : emission.state.value
-        }
-      },
-      null,
-      2
-    );
-  });
+  protected readonly errorEmissionJson = computed(() =>
+    serializeErrorEmission(this.#exampleService.emittedError())
+  );
 
   /**
    * Serializes the complete FeatureCell StateSnapshot for the Raw StateSnapshot teaching output.
    * Reading each state signal keeps the value, loading, error, and presence fields reactive.
    */
-  protected readonly rawStateJson = computed(() => {
-    const value = this.state.value();
-
-    return JSON.stringify(
-      {
-        isLoading: this.state.isLoading(),
-        value: value === undefined ? 'undefined' : value,
-        error: this.state.error(),
-        hasValue: this.state.hasValue()
-      },
-      null,
-      2
-    );
-  });
+  protected readonly rawStateJson = computed(() =>
+    serializeRawState({
+      isLoading: this.state.isLoading(),
+      value: this.state.value(),
+      error: this.state.error(),
+      hasValue: this.state.hasValue()
+    })
+  );
 
   /** Holds the complete serialized StateSnapshot received from the latest FeatureCell `state$` emission. */
   protected readonly rawStateStreamJson = signal('undefined');
@@ -379,16 +273,7 @@ export class ExampleComponent {
     this.#exampleService.state$
       .pipe(takeUntilDestroyed())
       .subscribe(({ snapshot, type }) => {
-        this.rawStateStreamJson.set(
-          JSON.stringify(
-            {
-              ...snapshot,
-              value: snapshot.value === undefined ? 'undefined' : snapshot.value
-            },
-            null,
-            2
-          )
-        );
+        this.rawStateStreamJson.set(serializeSnapshot(snapshot));
         this.encryptedState.set(
           localStorage.getItem(EXAMPLE_ENCRYPTED_STORAGE_KEY) ?? 'undefined'
         );
@@ -444,27 +329,8 @@ export class ExampleComponent {
    * @returns An Angular validator that reports the matching validation error or `null`.
    */
   #trimmedTextLength(minimum: number, maximum: number): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = String(control.value ?? '').trim();
-
-      if (!value) {
-        return { required: true };
-      }
-
-      if (value.length < minimum) {
-        return {
-          minlength: { actualLength: value.length, requiredLength: minimum }
-        };
-      }
-
-      if (value.length > maximum) {
-        return {
-          maxlength: { actualLength: value.length, requiredLength: maximum }
-        };
-      }
-
-      return null;
-    };
+    return (control: AbstractControl): ValidationErrors | null =>
+      validateTrimmedText(control.value, minimum, maximum);
   }
 
   /**
@@ -474,10 +340,7 @@ export class ExampleComponent {
    * @returns Nothing; selection, form, and feedback signals are updated in place.
    */
   protected selectCharacter(value: string): void {
-    const id = Number(value);
-    const character = this.characters().find(
-      (candidate) => candidate.id === id
-    );
+    const character = resolveCharacter(this.characters(), value);
 
     if (!character) {
       return;
@@ -524,10 +387,7 @@ export class ExampleComponent {
         this.#selectedCharacterBeforeCreate = null;
         this.editorMode.set('edit');
         this.#patchForm(character);
-        this.feedback.set({
-          message: 'The new character was discarded.',
-          tone: 'info'
-        });
+        this.feedback.set(FEEDBACK.newCharacterDiscarded);
         return;
       }
     }
@@ -537,10 +397,7 @@ export class ExampleComponent {
     if (character) {
       this.editorMode.set('edit');
       this.#patchForm(character);
-      this.feedback.set({
-        message: 'Unsaved changes were discarded.',
-        tone: 'info'
-      });
+      this.feedback.set(FEEDBACK.unsavedChangesDiscarded);
       return;
     }
 
@@ -556,20 +413,12 @@ export class ExampleComponent {
   protected saveCharacter(): void {
     if (this.characterForm.invalid) {
       this.characterForm.markAllAsTouched();
-      this.feedback.set({
-        message: 'Correct the highlighted fields before saving.',
-        tone: 'error'
-      });
+      this.feedback.set(FEEDBACK.invalidForm);
       return;
     }
 
     const formValue = this.characterForm.getRawValue();
-    const normalizedCharacter = {
-      name: formValue.name.trim(),
-      lastName: formValue.lastName.trim(),
-      faction: formValue.faction,
-      isForceSensitive: formValue.isForceSensitive
-    };
+    const normalizedCharacter = normalizeCharacterDraft(formValue);
 
     if (this.editorMode() === 'create') {
       this.#startDelayTimer();
@@ -580,20 +429,14 @@ export class ExampleComponent {
       this.#selectedCharacterBeforeCreate = null;
       this.editorMode.set('edit');
       this.#patchForm(character);
-      this.feedback.set({
-        message: `${this.#displayName(character)} was added and selected.`,
-        tone: 'success'
-      });
+      this.feedback.set(characterAddedFeedback(this.#displayName(character)));
       return;
     }
 
     const selectedId = this.selectedCharacterId();
 
     if (selectedId === null) {
-      this.feedback.set({
-        message: 'Select a character before saving changes.',
-        tone: 'error'
-      });
+      this.feedback.set(FEEDBACK.selectBeforeSave);
       return;
     }
 
@@ -604,10 +447,9 @@ export class ExampleComponent {
     );
 
     this.#patchForm(updatedCharacter);
-    this.feedback.set({
-      message: `${this.#displayName(updatedCharacter)} was updated.`,
-      tone: 'success'
-    });
+    this.feedback.set(
+      characterUpdatedFeedback(this.#displayName(updatedCharacter))
+    );
   }
 
   /**
@@ -653,10 +495,7 @@ export class ExampleComponent {
     this.editorMode.set('create');
     this.#clearCharacterForm();
 
-    this.feedback.set({
-      message: `${this.#displayName(character)} was removed.`,
-      tone: 'success'
-    });
+    this.feedback.set(characterRemovedFeedback(this.#displayName(character)));
   }
 
   /**
@@ -920,10 +759,7 @@ export class ExampleComponent {
       this.#patchForm(firstCharacter);
     }
 
-    this.feedback.set({
-      message: 'The initial character collection was restored.',
-      tone: 'success'
-    });
+    this.feedback.set(FEEDBACK.initialCollectionRestored);
   }
 
   /**
@@ -962,7 +798,7 @@ export class ExampleComponent {
    * @returns The character's first and last names separated by one space.
    */
   #displayName(character: StarWarsCharacterState): string {
-    return `${character.name} ${character.lastName}`;
+    return displayName(character);
   }
 
   /**
