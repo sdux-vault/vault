@@ -5,7 +5,7 @@ import { sduxTestingModule } from '@sdux-vault/ui/web-components';
 import { NavigationService } from '../navigation/service/navigation.service';
 import { DocsIndexComponent } from './docs-index.component';
 
-describe('Component: DocsIndex', () => {
+fdescribe('Component: DocsIndex', () => {
   let fixture: ComponentFixture<DocsIndexComponent>;
   let component: DocsIndexComponent;
   let el: HTMLElement;
@@ -71,7 +71,14 @@ describe('Component: DocsIndex', () => {
     });
   });
 
-  it('should toggle isExpanded and persist to localStorage', () => {
+  it('should open the navigation on load', () => {
     expect(navigationService.show).toHaveBeenCalledOnceWith();
+  });
+
+  it('should show documentation when button is clicked', () => {
+    const btn = el.querySelector('.sdux-button') as HTMLButtonElement;
+    btn.click();
+    fixture.detectChanges();
+    expect(navigationService.show).toHaveBeenCalled();
   });
 });

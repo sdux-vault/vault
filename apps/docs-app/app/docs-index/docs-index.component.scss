@@ -1,5 +1,12 @@
 @use 'global' as global;
 
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: global.$spacing-md;
+}
+
 .docs-index-toolbar {
   display: flex;
   justify-content: flex-end;
@@ -9,13 +16,58 @@
   }
 }
 
+.documentation-highlight-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: global.$spacing-md;
+  margin-top: global.$spacing-sm;
+
+  .documentation-highlight {
+    > a {
+      cursor: pointer;
+      text-decoration: none;
+      color: global.$sdux-text-black;
+    }
+
+    border: 1px solid var(--sdux-surface-light);
+    border-radius: global.$border-radius-md;
+    width: 230px;
+    height: 100px;
+    overflow: hidden;
+
+    .title {
+      font-size: global.$font-size-md;
+      font-weight: global.$font-weight-semibold;
+      padding: global.$spacing-sm;
+      background-color: var(--sdux-surface-light);
+      color: global.$sdux-text-white;
+    }
+
+    .body {
+      padding: global.$spacing-sm;
+      font-size: global.$font-size-sm;
+      height: 58px;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: global.$sdux-shadow-hover;
+
+      .title {
+        background-color: var(--sdux-primary);
+      }
+    }
+  }
+}
+
 .docs-index-grid {
   display: flex;
   flex-direction: column;
 }
 
 .docs-index-section {
-  border: 1px solid var(--sdux-border);
+  border: 1px solid global.$sdux-border-color;
   border-radius: global.$border-radius-md;
   padding: global.$spacing-sm global.$spacing-md;
 
@@ -65,7 +117,7 @@
 
         // Only show border-top on nested panels that are NOT first-child
         &:not(:first-child) {
-          border-top: 1px solid var(--sdux-border);
+          border-top: 1px solid global.$sdux-border-color;
           padding-top: global.$spacing-xs;
           margin-top: global.$spacing-xs;
         }
