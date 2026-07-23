@@ -187,6 +187,9 @@ export class ExampleComponent {
   /** Holds the active application-level Vault error until the user clears it. */
   protected readonly globalError = signal<VaultErrorShape | null>(null);
 
+  /** Holds the readMe display until the user clears it. */
+  protected readonly readMeDisplay = signal<boolean>(true);
+
   /** Tracks permanent FeatureCell teardown so the UI can explain the required recovery. */
   protected readonly featureCellDestroyed = signal(false);
 
@@ -320,6 +323,10 @@ export class ExampleComponent {
   /** Teachiing Point: Global Error Service: Ex-011 */
   protected clearGlobalError(): void {
     this.#globalErrorService.clear();
+  }
+
+  protected clearReadMeDisplay(): void {
+    this.readMeDisplay.set(false);
   }
 
   /**

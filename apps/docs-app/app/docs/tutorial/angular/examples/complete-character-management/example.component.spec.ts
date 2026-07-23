@@ -673,6 +673,16 @@ describe('ExampleComponent', () => {
     expect(component['globalError']()).toBeNull();
   });
 
+  it('should display and clear the readMeDisplay', async () => {
+    await configureComponent();
+
+    expect(component['readMeDisplay']()).toBe(true);
+
+    component['clearReadMeDisplay']();
+
+    expect(component['readMeDisplay']()).toBe(false);
+  });
+
   it('should select a valid character and ignore an unknown ID', async () => {
     await configureComponent();
     component['deleteCandidate'].set(initialCharacters[0]!);

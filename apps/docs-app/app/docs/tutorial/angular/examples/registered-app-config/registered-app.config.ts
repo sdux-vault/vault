@@ -8,7 +8,7 @@ import {
   withAes256EncryptBehavior,
   withArrayAppendMergeBehavior,
   withDelayController,
-  withLocalStoragePersistBehavior,
+  withSessionStoragePersistBehavior,
   withStepwiseController,
   withStepwiseFilterBehavior,
   withStepwiseReducerBehavior,
@@ -64,13 +64,13 @@ export const appConfig: ApplicationConfig = {
 
         /**
          * Persists the encrypted envelope under a deterministic, FeatureCell-scoped
-         * localStorage key after upstream computation and encryption complete. The
+         * sessionStorage key after upstream computation and encryption complete. The
          * behavior supplies durable browser-session recovery without transforming
          * live State, and removes its entry when the finalized value is undefined.
          * Pairing it after AES-256 ensures storage never receives the plaintext
          * character collection from this FeatureCell.
          */
-        withLocalStoragePersistBehavior,
+        withSessionStoragePersistBehavior,
 
         /**
          * Establishes an explicit approval boundary after asynchronous inputs

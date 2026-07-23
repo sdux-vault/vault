@@ -24,6 +24,76 @@
     </div>
   }
 
+  @if (readMeDisplay()) {
+    <div class="feedback error" role="alert" aria-live="assertive">
+      <p>
+        This "fully-armed and operation" Star Wars tutorial example of the
+        complete SDuX pipeline is very complex. It is intended to demonstrate
+        the full range of SDuX Vault capabilities. There are
+        <strong>5 pipeline stages</strong> that will cause you to believe the
+        tutorial is not working correctly. You will need to carefully review the
+        following learning points to understand how the pipeline is configured
+        and working correctly.
+      </p>
+
+      <ul>
+        <li>
+          The <strong>hydrate</strong> FeatureCell api method is enabled and
+          will load the initial state asynchronously from a promise when the
+          "Resolve" button it clicked. The "Reject" button will simulate a
+          failed initial state load. The "loading spinner" will be displayed
+          until the promise is resolved or rejected.
+        </li>
+        <li>
+          The <strong>withSessionStoragePersistBehavior</strong> is enabled and
+          will retain the state across page loads. Check the
+          <em>Encrypted State</em> textarea to see the encrypted state that is
+          persisted in sessionStorage. The <strong>Reset State</strong> button
+          will clear the persisted state and a browser reload will trigger the
+          <em>hydrate</em> promise again.
+        </li>
+        <li>
+          The <strong>withDelayController</strong> is enabled and will introduce
+          artificial delays in state changes especially when clicking action
+          buttons multiple times to trigger state changes. Each state change
+          will be delayed by 3 seconds before the state candidate is allowed
+          into the pipeline.
+        </li>
+        <li>
+          The <strong>withDistinctUntilChangedBehavior</strong> is configured
+          and will block state changes if they are not distinct even when
+          clicking action buttons multiple times. That is the responsibility of
+          the behavior.
+        </li>
+        <li>
+          The
+          <strong>withStepwiseResolveBehavior</strong>&nbsp;
+          <strong>withStepwiseFilterBehavior</strong>
+          and <strong>withStepwiseReducerBehavior</strong> are all configured
+          and will block state changes until the alert "Ok" button is clicked.
+          With the <strong>withDistinctUntilChangedBehavior</strong> enabled
+          only the <strong>withStepwiseResolveBehavior</strong> will prompt if
+          the values are not distinct. The other two stepwise prompts will not
+          be displayed because the state change candidate was blocked by the
+          distinct until changed behavior and aborted. The
+          <strong>withDistinctUntilChangedBehavior</strong> stage is executed in
+          the pipeline only after a state candidate has been resolved.
+          Evaluating if the state candidate is distinct before the
+          <em>resolve</em> stage would be comparing values, promises,
+          observables, deferred values, etc. that are not yet resolved and would
+          not be a valid comparison.
+        </li>
+      </ul>
+
+      <button
+        type="button"
+        class="button secondary"
+        (click)="clearReadMeDisplay()">
+        I am ready to proceed with the tutorial
+      </button>
+    </div>
+  }
+
   @if (globalError(); as error) {
     <!-- Teaching point: Global Error (ex-011) -->
     <div class="feedback error global-error" role="alert" aria-live="assertive">

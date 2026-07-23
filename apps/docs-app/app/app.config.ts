@@ -18,7 +18,7 @@ import {
   withAes256EncryptBehavior,
   withArrayAppendMergeBehavior,
   withDelayController,
-  withLocalStoragePersistBehavior,
+  withSessionStoragePersistBehavior,
   withStepwiseController,
   withStepwiseFilterBehavior,
   withStepwiseReducerBehavior,
@@ -206,7 +206,7 @@ export const appConfig: ApplicationConfig = {
       },
       [
         withAes256EncryptBehavior,
-        withLocalStoragePersistBehavior,
+        withSessionStoragePersistBehavior,
         withStepwiseResolveBehavior,
         withStepwiseFilterBehavior,
         withStepwiseReducerBehavior,
