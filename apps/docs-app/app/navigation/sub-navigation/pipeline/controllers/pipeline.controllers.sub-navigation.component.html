@@ -1,10 +1,18 @@
 <nav aria-label="Pipeline Controllers">
-  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+  <mat-expansion-panel
+    class="nav-expansion"
+    routerLinkActive
+    #controllerRla="routerLinkActive"
+    [expanded]="forceExpanded() || controllerRla.isActive">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Pipeline Controllers</span>
     </mat-expansion-panel-header>
 
-    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+    <mat-expansion-panel
+      class="nav-expansion"
+      routerLinkActive
+      #controllerArchitectureRla="routerLinkActive"
+      [expanded]="forceExpanded() || controllerArchitectureRla.isActive">
       <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header"
           >Architecture Overview</span

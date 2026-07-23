@@ -109,7 +109,11 @@
         <mat-divider></mat-divider>
 
         <nav aria-label="Get Involved">
-          <mat-expansion-panel class="nav-expansion">
+          <mat-expansion-panel
+            class="nav-expansion"
+            routerLinkActive
+            #getInvolvedRla="routerLinkActive"
+            [expanded]="getInvolvedRla.isActive">
             <mat-expansion-panel-header>
               <span class="nav-section-label">Get Involved</span>
             </mat-expansion-panel-header>

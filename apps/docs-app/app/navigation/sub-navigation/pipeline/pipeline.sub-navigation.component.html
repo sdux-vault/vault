@@ -1,5 +1,10 @@
 <nav aria-label="Pipeline">
-  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+  <mat-expansion-panel
+    class="nav-expansion"
+    #pipelineRla="routerLinkActive"
+    routerLinkActive
+    [routerLinkActiveOptions]="{ exact: true }"
+    [expanded]="forceExpanded() || pipelineRla.isActive">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Pipeline</span>
     </mat-expansion-panel-header>

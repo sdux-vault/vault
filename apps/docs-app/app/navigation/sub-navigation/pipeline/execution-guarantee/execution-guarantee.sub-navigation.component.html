@@ -1,5 +1,9 @@
 <nav aria-label="Execution Guarantees">
-  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+  <mat-expansion-panel
+    class="nav-expansion"
+    routerLinkActive
+    #executionGuaranteeRla="routerLinkActive"
+    [expanded]="forceExpanded() || executionGuaranteeRla.isActive">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Execution Guarantees</span>
     </mat-expansion-panel-header>

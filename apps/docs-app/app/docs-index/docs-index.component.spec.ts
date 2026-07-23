@@ -5,7 +5,7 @@ import { sduxTestingModule } from '@sdux-vault/ui/web-components';
 import { NavigationService } from '../navigation/service/navigation.service';
 import { DocsIndexComponent } from './docs-index.component';
 
-fdescribe('Component: DocsIndex', () => {
+describe('Component: DocsIndex', () => {
   let fixture: ComponentFixture<DocsIndexComponent>;
   let component: DocsIndexComponent;
   let el: HTMLElement;

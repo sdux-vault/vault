@@ -1,5 +1,9 @@
 <nav aria-label="DevTools">
-  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+  <mat-expansion-panel
+    class="nav-expansion"
+    routerLinkActive
+    #devtoolsRla="routerLinkActive"
+    [expanded]="forceExpanded() || devtoolsRla.isActive">
     <mat-expansion-panel-header>
       <span class="nav-section-label">DevTools</span>
     </mat-expansion-panel-header>
