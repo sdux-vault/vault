@@ -2,12 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideVaultTesting } from '@sdux-vault/angular';
 import { sduxTestingModule } from '@sdux-vault/ui/web-components';
+import { NavigationService } from '../navigation/service/navigation.service';
 import { DocsIndexComponent } from './docs-index.component';
 
 describe('Component: DocsIndex', () => {
   let fixture: ComponentFixture<DocsIndexComponent>;
   let component: DocsIndexComponent;
   let el: HTMLElement;
+  let navigationService: NavigationService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,6 +17,8 @@ describe('Component: DocsIndex', () => {
       providers: [provideRouter([]), provideVaultTesting()]
     }).compileComponents();
 
+    navigationService = TestBed.inject(NavigationService);
+    spyOn(navigationService, 'show');
     fixture = TestBed.createComponent(DocsIndexComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -65,5 +69,9 @@ describe('Component: DocsIndex', () => {
     panels.forEach((panel) => {
       expect(panel.classList.contains('mat-expanded')).toBe(false);
     });
+  });
+
+  it('should toggle isExpanded and persist to localStorage', () => {
+    expect(navigationService.show).toHaveBeenCalledOnceWith();
   });
 });
