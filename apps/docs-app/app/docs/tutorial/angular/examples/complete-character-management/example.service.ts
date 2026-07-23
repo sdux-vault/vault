@@ -449,19 +449,18 @@ export class ExampleService {
       iterations: 250_000
     });
 
-    this.#vault
-      // Teaching point: Hydration (ex-023)
-      /*
-       * `.hydrate()` registers a deferred factory as the authoritative source for
-       * this FeatureCell's initial State. The factory is declared before
-       * `.initialize()` but does not execute until initialization begins.
-       *
-       * Resolving the Promise sends the hydrated collection through the complete
-       * Replace → Resolve → Filter → Tap → Reducer → Emit pipeline. Rejecting it
-       * emits an initialization Error without falling back to configured initial
-       * State or persistence because hydration has the highest precedence.
-       */
-      .hydrate(() => exampleHydrate.getPromise());
+    // Teaching point: Hydration (ex-023)
+    /*
+     * `.hydrate()` registers a deferred factory as the authoritative source for
+     * this FeatureCell's initial State. The factory is declared before
+     * `.initialize()` but does not execute until initialization begins.
+     *
+     * Resolving the Promise sends the hydrated collection through the complete
+     * Replace → Resolve → Filter → Tap → Reducer → Emit pipeline. Rejecting it
+     * emits an initialization Error without falling back to configured initial
+     * State or persistence because hydration has the highest precedence.
+     */
+    this.#vault.hydrate(() => exampleHydrate.getPromise());
 
     // Teaching point: Stepwise Resolve (ex-038)
     /*
@@ -532,6 +531,7 @@ export class ExampleService {
     this.#vault.withStepwiseFilter!({
       stepwiseCallback: this.#captureStepwiseFilter
     });
+
     // Teaching point: Before Taps (ex-031)
     /*
      * `.beforeTaps()` registers a `TapCallback<readonly StarWarsCharacterState[]>`
@@ -580,16 +580,15 @@ export class ExampleService {
       stepwiseCallback: this.#captureStepwiseReducer
     });
 
-    this.#vault
-      // Teaching point: After Taps (ex-032)
-      /*
-       * `.afterTaps()` registers a `TapCallback<readonly StarWarsCharacterState[]>`
-       * that observes the transformed candidate immediately after reducer execution.
-       *
-       * The callback publishes that immutable input for the tutorial display, returns
-       * no replacement value, and cannot change the value committed as FeatureCell State.
-       */
-      .afterTaps([this.#captureAfterTapInput]);
+    // Teaching point: After Taps (ex-032)
+    /*
+     * `.afterTaps()` registers a `TapCallback<readonly StarWarsCharacterState[]>`
+     * that observes the transformed candidate immediately after reducer execution.
+     *
+     * The callback publishes that immutable input for the tutorial display, returns
+     * no replacement value, and cannot change the value committed as FeatureCell State.
+     */
+    this.#vault.afterTaps([this.#captureAfterTapInput]);
 
     // Teaching point: State Emission (ex-035)
     /*

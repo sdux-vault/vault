@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import {
   withAes256EncryptBehavior,
+  withArrayAppendMergeBehavior,
   withDelayController,
   withLocalStoragePersistBehavior,
   withStepwiseController,
@@ -108,7 +109,9 @@ export const appConfig: ApplicationConfig = {
          * browser tabs. Finalized local snapshots are shared with peer tabs,
          * and received snapshots update this FeatureCell's reactive State.
          */
-        withTabSyncStateBehavior
+        withTabSyncStateBehavior,
+
+        withArrayAppendMergeBehavior
       ],
       [
         /**

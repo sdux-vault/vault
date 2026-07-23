@@ -205,44 +205,15 @@ export const appConfig: ApplicationConfig = {
         initialState: STAR_WARS_CHARACTERS
       },
       [
-        /** Encrypts finalized character State before it reaches persistence. */
         withAes256EncryptBehavior,
-
-        /** Stores the AES-256 envelope for durable browser-session recovery. */
         withLocalStoragePersistBehavior,
-
-        /** Gates resolved tutorial candidates behind an explicit UI decision. */
         withStepwiseResolveBehavior,
-
-        /** Gates filtered tutorial candidates behind a second UI decision. */
         withStepwiseFilterBehavior,
-
-        /** Gates fully reduced tutorial candidates before State commitment. */
         withStepwiseReducerBehavior,
-
         withArrayAppendMergeBehavior,
-        /**
-         * Synchronizes finalized character snapshots across browser tabs while
-         * retaining the FeatureCell's configured array-append merge semantics.
-         */
         withTabSyncStateBehavior
       ],
-      [
-        /**
-         * Enables the service's three-second Policy-stage delay configuration
-         * for every character FeatureCell pipeline attempt.
-         */
-        withDelayController,
-
-        /** Coordinates pending Stepwise requests with their UI responses. */
-        withStepwiseController,
-
-        /**
-         * Coordinates Tab Sync startup so a newly opened tutorial tab can
-         * adopt an existing tab's character snapshot before local updates.
-         */
-        withTabSyncController
-      ]
+      [withDelayController, withStepwiseController, withTabSyncController]
     )
   ]
 };
