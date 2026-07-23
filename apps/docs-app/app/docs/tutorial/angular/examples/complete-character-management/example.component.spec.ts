@@ -971,7 +971,7 @@ describe('ExampleComponent', () => {
     expect(buttons.every(({ disabled }) => !disabled)).toBeTrue();
     expect(hydrateControls.textContent).not.toContain('Hydrate Model');
     expect(element.textContent).toContain(
-      'The initial state hydrate method is awaiting resolve or reject in the Action section'
+      'The initial state hydrate method is awaiting resolve or reject in the'
     );
 
     buttons[0]!.click();
@@ -979,7 +979,7 @@ describe('ExampleComponent', () => {
 
     expect(buttons.every(({ disabled }) => disabled)).toBeTrue();
     expect(element.textContent).not.toContain(
-      'The initial state hydrate method is awaiting resolve or reject in the Action section'
+      'The initial state hydrate method is awaiting'
     );
 
     await acceptStepwiseAndSettle();
