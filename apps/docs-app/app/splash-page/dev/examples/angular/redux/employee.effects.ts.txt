@@ -1,0 +1,33 @@
+import { Injectable, inject } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { EmployeeActions } from './employee.actions';
+import { Employee } from './employee.model';
+import { catchError, exhaustMap, from, map, of } from 'rxjs';
+
+@Injectable()
+export class EmployeeEffects {
+  readonly #actions$ = inject(Actions);
+
+  readonly replaceAsync$ = createEffect(() => {
+    return this.#actions$.pipe(
+      ofType(EmployeeActions.replaceAsync),
+      exhaustMap(() => {
+        return from(
+          fetch('/api/employees').then((response) => {
+            return response.json() as Promise<Employee[]>;
+          })
+        ).pipe(
+          map((employees) => EmployeeActions.replaceAsyncSuccess({ employees })),
+          catchError((error: unknown) => {
+            return of(
+              EmployeeActions.replaceAsyncFailure({
+                error:
+                  error instanceof Error ? error.message : 'Failed to load employees'
+              })
+            );
+          })
+        );
+      })
+    );
+  });
+}

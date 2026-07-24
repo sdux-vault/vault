@@ -23,6 +23,10 @@ export class ExampleComponent {
     this.#employeeFacade.replace(this.sample);
   }
 
+  loadSampleAsync(): void {
+    this.#employeeFacade.replaceAsync();
+  }
+
   resetState(): void {
     this.#employeeFacade.reset();
   }

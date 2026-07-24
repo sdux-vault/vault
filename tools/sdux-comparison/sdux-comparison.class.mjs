@@ -42,6 +42,7 @@ const FRAMEWORK_FILE_ORDER = {
     ],
     ['example.component.html'],
     ['employee.model.ts'],
+    ['employee.effects.ts'],
     ['employee.actions.ts'],
     ['employee.state.ts'],
     ['employee.reducer.ts'],

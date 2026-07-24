@@ -31,6 +31,12 @@ export class EmployeeCell {
     });
   }
 
+  replaceAsync(): void {
+    this.#vault.replaceState({
+      value: () => fetch('/api/employees').then((response) => response.json())
+    });
+  }
+
   reset(): void {
     this.#vault.reset();
   }

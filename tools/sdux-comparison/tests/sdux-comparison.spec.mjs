@@ -155,6 +155,7 @@ describe('CLI: SduxComparisonSourceGenerator', () => {
       file('employee.model.ts.txt'),
       file('app.config.ts.txt'),
       file('employee.facade.ts.txt'),
+      file('employee.effects.ts.txt'),
       file('employee.selectors.ts.txt'),
       file('employee.actions.ts.txt'),
       file('employee.state.ts.txt'),
@@ -170,6 +171,8 @@ describe('CLI: SduxComparisonSourceGenerator', () => {
     fileContents['/repo/examples/angular/redux/app.config.ts.txt'] = 'config';
     fileContents['/repo/examples/angular/redux/employee.facade.ts.txt'] =
       'facade';
+    fileContents['/repo/examples/angular/redux/employee.effects.ts.txt'] =
+      'effects';
     fileContents['/repo/examples/angular/redux/employee.selectors.ts.txt'] =
       'selectors';
     fileContents['/repo/examples/angular/redux/employee.actions.ts.txt'] =
@@ -192,6 +195,7 @@ describe('CLI: SduxComparisonSourceGenerator', () => {
       'example.component.ts',
       'example.component.html',
       'employee.model.ts',
+      'employee.effects.ts',
       'employee.actions.ts',
       'employee.state.ts',
       'employee.reducer.ts',

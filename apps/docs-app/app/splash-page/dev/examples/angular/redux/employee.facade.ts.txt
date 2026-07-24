@@ -25,12 +25,12 @@ export class EmployeeFacade {
     })
   };
 
-  constructor() {
-    this.#store.dispatch(EmployeeActions.seed());
-  }
-
   replace(employees: Employee[]): void {
     this.#store.dispatch(EmployeeActions.replace({ employees }));
+  }
+
+  replaceAsync(): void {
+    this.#store.dispatch(EmployeeActions.replaceAsync());
   }
 
   reset(): void {

@@ -5,11 +5,6 @@ import { EmployeeState, initialEmployeeState } from './employee.state';
 
 export const employeeFeatureKey = 'employees';
 
-const seededEmployees = [
-  { id: 1, name: 'Ada' },
-  { id: 2, name: 'Brian' }
-];
-
 const filterOddEmployees = (employees: Employee[]): Employee[] => {
   return employees.filter((employee) => employee.id % 2 !== 0);
 };
@@ -28,17 +23,27 @@ const prepareEmployees = (employees: Employee[]): Employee[] => {
 
 export const employeeReducer = createReducer<EmployeeState>(
   initialEmployeeState,
-  on(EmployeeActions.seed, (state) => ({
-    ...state,
-    loading: false,
-    value: prepareEmployees(seededEmployees),
-    error: null
-  })),
   on(EmployeeActions.replace, (state, { employees }) => ({
     ...state,
     loading: false,
     value: prepareEmployees(employees),
     error: null
+  })),
+  on(EmployeeActions.replaceAsync, (state) => ({
+    ...state,
+    loading: true,
+    error: null
+  })),
+  on(EmployeeActions.replaceAsyncSuccess, (state, { employees }) => ({
+    ...state,
+    loading: false,
+    value: prepareEmployees(employees),
+    error: null
+  })),
+  on(EmployeeActions.replaceAsyncFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error
   })),
   on(EmployeeActions.reset, () => initialEmployeeState)
 );
