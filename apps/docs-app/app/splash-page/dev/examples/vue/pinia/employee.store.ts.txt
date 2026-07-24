@@ -30,6 +30,25 @@ export const useEmployeeStore = defineStore('employees', {
       this.error = null;
     },
 
+    async replaceAsync(): Promise<void> {
+      this.loading = true;
+      this.error = null;
+
+      try {
+        const employees = (await fetch('/api/employees').then((response) => {
+          return response.json();
+        })) as Employee[];
+
+        this.loading = false;
+        this.value = prepareEmployees(employees);
+        this.error = null;
+      } catch (error: unknown) {
+        this.loading = false;
+        this.error =
+          error instanceof Error ? error.message : 'Failed to load employees';
+      }
+    },
+
     reset(): void {
       this.loading = false;
       this.value = [];

@@ -851,7 +851,7 @@ $splash-success: global.$sdux-success-base;
     }
 
     &-preview {
-      background: $splash-code-bg;
+      background: global.$sdux-surface-default;
       // padding: global.$spacing-lg;
       font-family: global.$sdux-code-font;
       font-size: global.$font-size-xs;

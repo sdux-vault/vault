@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { employeeCell } from './employee.cell';
+import {
+  employeeCell,
+  replaceEmployees,
+  replaceEmployeesAsync,
+  resetEmployees
+} from './employee.cell';
 import { Employee } from './employee.model';
 
 const sample: Employee[] = [
@@ -11,11 +16,15 @@ const sample: Employee[] = [
 const snapshot = employeeCell.useReactiveState();
 
 function loadSample(): void {
-  employeeCell.replaceState({ value: sample });
+  replaceEmployees(sample);
+}
+
+function loadSampleAsync(): void {
+  replaceEmployeesAsync();
 }
 
 function resetState(): void {
-  employeeCell.reset();
+  resetEmployees();
 }
 </script>
 
@@ -29,6 +38,8 @@ function resetState(): void {
 
     <div>
       <button type="button" @click="loadSample">Load Sample State</button>
+
+      <button type="button" @click="loadSampleAsync">Load Async State</button>
 
       <button type="button" @click="resetState">Reset State</button>
     </div>

@@ -28,5 +28,18 @@ export const employeeReducer = createReducer(initialEmployeeState, (builder) => 
       state.value = prepareEmployees(action.payload);
       state.error = null;
     })
+    .addCase(EmployeeActions.replaceAsync, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(EmployeeActions.replaceAsyncSuccess, (state, action) => {
+      state.loading = false;
+      state.value = prepareEmployees(action.payload);
+      state.error = null;
+    })
+    .addCase(EmployeeActions.replaceAsyncFailure, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
     .addCase(EmployeeActions.reset, () => initialEmployeeState);
 });

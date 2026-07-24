@@ -22,3 +22,19 @@ employeeCell
     }
   ])
   .initialize();
+
+export function replaceEmployees(employees: Employee[]): void {
+  employeeCell.replaceState({
+    value: employees
+  });
+}
+
+export function replaceEmployeesAsync(): void {
+  employeeCell.replaceState({
+    value: () => fetch('/api/employees').then((response) => response.json())
+  });
+}
+
+export function resetEmployees(): void {
+  employeeCell.reset();
+}

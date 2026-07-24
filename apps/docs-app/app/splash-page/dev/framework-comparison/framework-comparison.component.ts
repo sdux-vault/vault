@@ -86,12 +86,6 @@ export class FrameworkComparisonComponent {
       case 'svelte':
       case 'vue':
         return 'language-markup';
-      case 'scss':
-        return 'language-css';
-      case 'json':
-        return 'language-json';
-      case 'markdown':
-        return 'language-markdown';
       default:
         return 'language-typescript';
     }

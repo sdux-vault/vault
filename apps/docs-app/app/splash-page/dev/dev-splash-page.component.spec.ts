@@ -34,10 +34,6 @@ describe('Component: Dev Splash Page', () => {
     spyOn(navigationService, 'show');
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should default to the Angular comparison', () => {
     expect((component as any).activeComparison().id).toBe('angular');
   });
@@ -70,65 +66,11 @@ describe('Component: Dev Splash Page', () => {
     });
   });
 
-  describe('openBuilder', () => {
-    it('should navigate to the pipeline builder', () => {
-      component.openBuilder();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/docs/pipeline/builder']);
-    });
-  });
-
   describe('openTesting', () => {
     it('should navigate to the testing page', () => {
       component.openTesting();
       expect(navigationService.show).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith(['/docs/welcome/testing']);
-    });
-  });
-
-  describe('openMigration', () => {
-    it('should navigate to the migration page', () => {
-      component.openMigration();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/docs/migration']);
-    });
-  });
-
-  describe('openArchitecture', () => {
-    it('should navigate to the pipeline architecture page', () => {
-      component.openArchitecture();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/pipeline/pipeline-architecture'
-      ]);
-    });
-  });
-
-  describe('openFeatureCells', () => {
-    it('should navigate to the feature cells page', () => {
-      component.openFeatureCells();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/pipeline/apis/feature-cells'
-      ]);
-    });
-  });
-
-  describe('openComparisons', () => {
-    it('should navigate to the sdux redux similarities page', () => {
-      component.openComparisons();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/welcome/sdux-redux-similarities'
-      ]);
-    });
-  });
-
-  describe('openStackBlitz', () => {
-    it('should navigate to the stackblitz page', () => {
-      component.openStackBlitz();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/docs/stackblitz']);
     });
   });
 
@@ -139,94 +81,6 @@ describe('Component: Dev Splash Page', () => {
       expect(router.navigate).toHaveBeenCalledWith(['/docs/stackblitz'], {
         fragment: 'counter-pipeline'
       });
-    });
-  });
-
-  describe('openControllers', () => {
-    it('should navigate to the controllers behavior page', () => {
-      component.openControllers();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/pipeline/behaviors/controllers'
-      ]);
-    });
-  });
-
-  describe('openInterceptors', () => {
-    it('should navigate to the interceptors behavior page', () => {
-      component.openInterceptors();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/pipeline/behaviors/interceptors'
-      ]);
-    });
-  });
-
-  describe('openResolvers', () => {
-    it('should navigate to the resolve behavior page', () => {
-      component.openResolvers();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/pipeline/behaviors/resolve'
-      ]);
-    });
-  });
-
-  describe('openFilters', () => {
-    it('should navigate to the filters behavior page', () => {
-      component.openFilters();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/pipeline/behaviors/filters'
-      ]);
-    });
-  });
-
-  describe('openReducers', () => {
-    it('should navigate to the reducers behavior page', () => {
-      component.openReducers();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/pipeline/behaviors/reducers'
-      ]);
-    });
-  });
-
-  describe('openTaps', () => {
-    it('should navigate to the taps behavior page', () => {
-      component.openTaps();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/pipeline/behaviors/taps'
-      ]);
-    });
-  });
-
-  describe('openExtensions', () => {
-    it('should navigate to the persist behavior page', () => {
-      component.openExtensions();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/pipeline/behaviors/persist'
-      ]);
-    });
-  });
-
-  describe('openEnterprise', () => {
-    it('should navigate to the enterprise page', () => {
-      component.openEnterprise();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/sdux/enterprise']);
-    });
-  });
-
-  describe('openStartHere', () => {
-    it('should navigate to the getting started page', () => {
-      component.openStartHere();
-      expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/welcome/getting-started'
-      ]);
     });
   });
 });

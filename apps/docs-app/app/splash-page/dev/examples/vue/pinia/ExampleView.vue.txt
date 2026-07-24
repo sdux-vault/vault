@@ -16,6 +16,10 @@ function loadSample(): void {
   employeeStore.replace(sample);
 }
 
+async function loadSampleAsync(): Promise<void> {
+  await employeeStore.replaceAsync();
+}
+
 function resetState(): void {
   employeeStore.reset();
 }
@@ -31,6 +35,8 @@ function resetState(): void {
 
     <div>
       <button type="button" @click="loadSample">Load Sample State</button>
+
+      <button type="button" @click="loadSampleAsync">Load Async State</button>
 
       <button type="button" @click="resetState">Reset State</button>
     </div>

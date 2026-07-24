@@ -149,7 +149,7 @@ it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">a
 <!-- ─── StackBlitz Live Examples ─── -->
 <section class="section section-tinted">
   <div class="section-inner">
-    <p class="section-summary">Live examples</p>
+    <p class="section-summary">Stackblitz Examples</p>
 
     <div class="stackblitz">
       <article class="stackblitz-card">
@@ -159,12 +159,12 @@ it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">a
   &#123;
     key: 'example-feature-cell-key',
     initialState: [],
-  &#125;,
-  [],
-  []
+  &#125;
 );
 
-cell.initialize();</code></pre>
+cell.initialize();
+
+cell.replaceState([ newCandidate ]);</code></pre>
         </div>
         <div class="stackblitz-card-info">
           <h3 class="stackblitz-card-title">Replace State</h3>
@@ -193,7 +193,9 @@ cell.initialize();</code></pre>
 cell
   .filters([ filterFn ])
   .reducers([ reducerFn ])
-  .initialize();</code></pre>
+  .initialize();
+
+cell.replaceState([ newCandidate ]);</code></pre>
         </div>
         <div class="stackblitz-card-info">
           <h3 class="stackblitz-card-title">Filter &amp; Reducer Pipeline</h3>

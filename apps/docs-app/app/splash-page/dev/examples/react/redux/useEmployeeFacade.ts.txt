@@ -26,6 +26,23 @@ export function useEmployeeFacade() {
     replace(employees: Employee[]): void {
       dispatch(EmployeeActions.replace(employees));
     },
+    async replaceAsync(): Promise<void> {
+      dispatch(EmployeeActions.replaceAsync());
+
+      try {
+        const employees = (await fetch('/api/employees').then((response) => {
+          return response.json();
+        })) as Employee[];
+
+        dispatch(EmployeeActions.replaceAsyncSuccess(employees));
+      } catch (error: unknown) {
+        dispatch(
+          EmployeeActions.replaceAsyncFailure(
+            error instanceof Error ? error.message : 'Failed to load employees'
+          )
+        );
+      }
+    },
     reset(): void {
       dispatch(EmployeeActions.reset());
     }

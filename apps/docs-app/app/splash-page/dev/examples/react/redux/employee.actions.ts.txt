@@ -3,5 +3,8 @@ import { Employee } from './employee.model';
 
 export const EmployeeActions = {
   replace: createAction<Employee[]>('[Employees] Replace'),
+  replaceAsync: createAction('[Employees] Replace Async'),
+  replaceAsyncSuccess: createAction<Employee[]>('[Employees] Replace Async Success'),
+  replaceAsyncFailure: createAction<string>('[Employees] Replace Async Failure'),
   reset: createAction('[Employees] Reset')
 } as const;

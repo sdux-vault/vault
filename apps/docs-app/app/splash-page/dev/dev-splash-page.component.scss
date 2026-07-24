@@ -327,6 +327,7 @@ $splash-code-panel-text: global.$sdux-text-primary;
 
 .button-width {
   width: 250px;
+  font-size: global.$font-size-xs !important;
 }
 
 .comparison-framework-selector {
@@ -445,7 +446,7 @@ $splash-code-panel-text: global.$sdux-text-primary;
     }
 
     &-preview {
-      background: $splash-code-panel-bg;
+      background: global.$sdux-surface-default;
       padding: global.$spacing-sm;
       font-family: global.$sdux-code-font;
       font-size: global.$font-size-xs;

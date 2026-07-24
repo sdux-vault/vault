@@ -98,6 +98,41 @@ describe('Component: FrameworkComparisonComponent', () => {
     }
   };
 
+  const noBrandComparison: FrameworkComparisonPair = {
+    id: 'vue',
+    selectorLabel: 'Vue',
+    left: {
+      frameworkLabel: 'Vue',
+      libraryLabel: 'Pinia',
+      files: [
+        {
+          type: 'typescript',
+          fileName: 'main.ts',
+          source: 'vue-main',
+          numberedSource: '1 | vue-main'
+        }
+      ]
+    },
+    right: {
+      frameworkLabel: 'Vue',
+      libraryLabel: 'Pinia',
+      files: [
+        {
+          type: 'vue',
+          fileName: 'App.vue',
+          source: '<template />',
+          numberedSource: '1 | <template />'
+        },
+        {
+          type: 'typescript',
+          fileName: 'main.ts',
+          source: 'vue-main',
+          numberedSource: '1 | vue-main'
+        }
+      ]
+    }
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FrameworkComparisonComponent, sduxTestingModule]
@@ -158,6 +193,35 @@ describe('Component: FrameworkComparisonComponent', () => {
 
   it('should use comparison-specific shared setup file names', () => {
     fixture.componentRef.setInput('comparison', reactComparison);
+    fixture.detectChanges();
+
+    const notes = fixture.nativeElement.textContent ?? '';
+
+    expect(notes).toContain('1 shared setup files');
+    expect(notes).toContain('1 core feature files');
+  });
+
+  it('should map html, svelte, and vue sources to Prism markup language', () => {
+    const component = fixture.componentInstance as any;
+
+    expect(component.getCodeLanguage('html')).toBe('language-markup');
+    expect(component.getCodeLanguage('svelte')).toBe('language-markup');
+    expect(component.getCodeLanguage('vue')).toBe('language-markup');
+  });
+
+  it('should render the right library label when sdux branding is disabled', () => {
+    fixture.componentRef.setInput('comparison', noBrandComparison);
+    fixture.detectChanges();
+
+    const titles = Array.from<HTMLElement>(
+      fixture.nativeElement.querySelectorAll('.comparison-panel-title')
+    ).map((node) => node.textContent?.replace(/\s+/g, ' ').trim() ?? '');
+
+    expect(titles).toContain('Pinia + Vue');
+  });
+
+  it('should fall back to default shared setup file names when none are provided', () => {
+    fixture.componentRef.setInput('comparison', noBrandComparison);
     fixture.detectChanges();
 
     const notes = fixture.nativeElement.textContent ?? '';

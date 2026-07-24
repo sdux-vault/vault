@@ -1,4 +1,9 @@
-import { employeeCell } from './employee.cell';
+import {
+  employeeCell,
+  replaceEmployees,
+  replaceEmployeesAsync,
+  resetEmployees
+} from './employee.cell';
 import { Employee } from './employee.model';
 
 const sample: Employee[] = [
@@ -11,11 +16,15 @@ export function ExampleView() {
   const snapshot = employeeCell.useSyncExternalStore();
 
   const loadSample = () => {
-    employeeCell.replaceState({ value: sample });
+    replaceEmployees(sample);
+  };
+
+  const loadSampleAsync = () => {
+    replaceEmployeesAsync();
   };
 
   const resetState = () => {
-    employeeCell.reset();
+    resetEmployees();
   };
 
   return (
@@ -33,6 +42,10 @@ export function ExampleView() {
       <div>
         <button type="button" onClick={loadSample}>
           Load Sample State
+        </button>
+
+        <button type="button" onClick={loadSampleAsync}>
+          Load Async State
         </button>
 
         <button type="button" onClick={resetState}>

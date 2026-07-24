@@ -122,9 +122,6 @@ export class DevSplashPageComponent implements AfterViewInit {
   protected readonly activeComparison = computed(
     () => this.comparisonRegistry[this.selectedComparisonFramework()]
   );
-  protected readonly supportedLanguages = SupportedLanguagesConstants.filter(
-    (lang) => lang.showInEcosystemStrip
-  );
   protected readonly frameworkLanguages = SupportedLanguagesConstants.filter(
     (lang) => lang.showInFrameworkTiles
   );
@@ -137,87 +134,14 @@ export class DevSplashPageComponent implements AfterViewInit {
     Prism.highlightAllUnder(this.#elementRef.nativeElement);
   }
 
-  openBuilder() {
-    this.openMenu();
-    this.#router.navigate(['/docs/pipeline/builder']);
-  }
-
   openTesting() {
     this.openMenu();
     this.#router.navigate(['/docs/welcome/testing']);
   }
 
-  openMigration() {
-    this.openMenu();
-    this.#router.navigate(['/docs/migration']);
-  }
-
-  openArchitecture() {
-    this.openMenu();
-    this.#router.navigate(['/docs/pipeline/pipeline-architecture']);
-  }
-
-  openFeatureCells() {
-    this.openMenu();
-    this.#router.navigate(['/docs/pipeline/apis/feature-cells']);
-  }
-
-  openComparisons() {
-    this.openMenu();
-    this.#router.navigate(['/docs/welcome/sdux-redux-similarities']);
-  }
-
-  openStackBlitz() {
-    this.openMenu();
-    this.#router.navigate(['/docs/stackblitz']);
-  }
-
   viewExamples(fragment: string) {
     this.openMenu();
     this.#router.navigate(['/docs/stackblitz'], { fragment });
-  }
-
-  openControllers() {
-    this.#openBehavior('controllers');
-  }
-
-  openInterceptors() {
-    this.#openBehavior('interceptors');
-  }
-
-  openResolvers() {
-    this.#openBehavior('resolve');
-  }
-
-  openFilters() {
-    this.#openBehavior('filters');
-  }
-
-  openReducers() {
-    this.#openBehavior('reducers');
-  }
-
-  openTaps() {
-    this.#openBehavior('taps');
-  }
-
-  #openBehavior(route: string) {
-    this.openMenu();
-    this.#router.navigate([`/docs/pipeline/behaviors/${route}`]);
-  }
-
-  openExtensions() {
-    this.#openBehavior('persist');
-  }
-
-  openEnterprise() {
-    this.openMenu();
-    this.#router.navigate(['/sdux/enterprise']);
-  }
-
-  openStartHere() {
-    this.openMenu();
-    this.#router.navigate(['/docs/welcome/getting-started']);
   }
 
   openMenu() {

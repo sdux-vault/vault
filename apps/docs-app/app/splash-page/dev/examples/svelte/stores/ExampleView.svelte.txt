@@ -1,6 +1,11 @@
 <script lang="ts">
   import type { Employee } from './employee.model';
-  import { employeeState, replaceEmployees, resetEmployees } from './employee.store';
+  import {
+    employeeState,
+    replaceEmployees,
+    replaceEmployeesAsync,
+    resetEmployees
+  } from './employee.store';
 
   const sample: Employee[] = [
     { id: 11, name: 'Luke' },
@@ -10,6 +15,10 @@
 
   function loadSample(): void {
     replaceEmployees(sample);
+  }
+
+  async function loadSampleAsync(): Promise<void> {
+    await replaceEmployeesAsync();
   }
 
   function resetState(): void {
@@ -30,6 +39,8 @@
 
   <div>
     <button type="button" on:click={loadSample}>Load Sample State</button>
+
+    <button type="button" on:click={loadSampleAsync}>Load Async State</button>
 
     <button type="button" on:click={resetState}>Reset State</button>
   </div>

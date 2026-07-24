@@ -8,10 +8,14 @@ const sample: Employee[] = [
 ];
 
 export function ExampleView() {
-  const { state, replace, reset } = useEmployeeFacade();
+  const { state, replace, replaceAsync, reset } = useEmployeeFacade();
 
   const loadSample = () => {
     replace(sample);
+  };
+
+  const loadSampleAsync = () => {
+    void replaceAsync();
   };
 
   const resetState = () => {
@@ -33,6 +37,10 @@ export function ExampleView() {
       <div>
         <button type="button" onClick={loadSample}>
           Load Sample State
+        </button>
+
+        <button type="button" onClick={loadSampleAsync}>
+          Load Async State
         </button>
 
         <button type="button" onClick={resetState}>
