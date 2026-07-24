@@ -48,6 +48,7 @@ export const routes: Routes = [
     path: 'press-kit',
     redirectTo: 'press'
   },
+  /*
   {
     path: 'tutorial',
     data: { category: 'tutorial' },
@@ -75,6 +76,7 @@ export const routes: Routes = [
       }
     ]
   },
+  */
   {
     path: 'sdux',
     children: [
