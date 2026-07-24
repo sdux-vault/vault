@@ -671,7 +671,7 @@ $splash-success: global.$sdux-success-base;
 // ─── Framework Support ───
 .frameworks {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: global.$spacing-lg;
   text-align: center;
   justify-items: center;
@@ -686,7 +686,7 @@ $splash-success: global.$sdux-success-base;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 200px;
+  width: 150px;
   padding: global.$spacing-xl global.$spacing-md;
   border-radius: global.$border-radius-lg;
   border: 1px solid $splash-border;

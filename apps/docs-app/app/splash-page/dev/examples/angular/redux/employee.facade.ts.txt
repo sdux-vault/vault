@@ -1,0 +1,39 @@
+import { Injectable, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Store } from '@ngrx/store';
+import { EmployeeActions } from './employee.actions';
+import { Employee } from './employee.model';
+import {
+  selectEmployees,
+  selectEmployeesError,
+  selectEmployeesLoading
+} from './employee.selectors';
+
+@Injectable({ providedIn: 'root' })
+export class EmployeeFacade {
+  readonly #store = inject(Store);
+
+  readonly state = {
+    value: toSignal(this.#store.select(selectEmployees), {
+      initialValue: [] as Employee[]
+    }),
+    loading: toSignal(this.#store.select(selectEmployeesLoading), {
+      initialValue: false
+    }),
+    error: toSignal(this.#store.select(selectEmployeesError), {
+      initialValue: null as string | null
+    })
+  };
+
+  constructor() {
+    this.#store.dispatch(EmployeeActions.seed());
+  }
+
+  replace(employees: Employee[]): void {
+    this.#store.dispatch(EmployeeActions.replace({ employees }));
+  }
+
+  reset(): void {
+    this.#store.dispatch(EmployeeActions.reset());
+  }
+}

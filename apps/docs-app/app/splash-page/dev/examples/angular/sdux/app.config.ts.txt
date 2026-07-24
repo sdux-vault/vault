@@ -1,0 +1,13 @@
+import { ApplicationConfig } from '@angular/core';
+import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
+import { EmployeeCell } from './employee.cell';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+    provideFeatureCell(EmployeeCell, {
+      key: 'employees',
+      initialState: []
+    })
+  ]
+};

@@ -1,0 +1,21 @@
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { employeeFeatureKey } from './employee.reducer';
+import { EmployeeState } from './employee.state';
+
+export const selectEmployeeState =
+  createFeatureSelector<EmployeeState>(employeeFeatureKey);
+
+export const selectEmployees = createSelector(
+  selectEmployeeState,
+  (state) => state.value
+);
+
+export const selectEmployeesLoading = createSelector(
+  selectEmployeeState,
+  (state) => state.loading
+);
+
+export const selectEmployeesError = createSelector(
+  selectEmployeeState,
+  (state) => state.error
+);

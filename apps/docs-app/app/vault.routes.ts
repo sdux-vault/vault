@@ -10,6 +10,23 @@ export const routes: Routes = [
       )
   },
   {
+    path: 'developer',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'index.html'
+      },
+      {
+        path: 'index.html',
+        loadComponent: () =>
+          import('./splash-page/dev/dev-splash-page.component').then(
+            (m) => m.DevSplashPageComponent
+          )
+      }
+    ]
+  },
+  {
     path: 'about',
     loadComponent: () =>
       import('./splash-page/splash-page.component').then(

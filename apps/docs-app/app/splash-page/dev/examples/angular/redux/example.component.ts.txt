@@ -1,0 +1,29 @@
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { EmployeeFacade } from './employee.facade';
+
+@Component({
+  selector: 'example-view',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './example.component.html'
+})
+export class ExampleComponent {
+  #employeeFacade = inject(EmployeeFacade);
+
+  readonly state = this.#employeeFacade.state;
+
+  readonly sample = [
+    { id: 11, name: 'Luke' },
+    { id: 38, name: 'Leia' },
+    { id: 9, name: 'Han' }
+  ];
+
+  loadSample(): void {
+    this.#employeeFacade.replace(this.sample);
+  }
+
+  resetState(): void {
+    this.#employeeFacade.reset();
+  }
+}
