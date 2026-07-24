@@ -7,7 +7,7 @@ const sample: Employee[] = [
   { id: 9, name: 'Han' }
 ];
 
-export function ExampleComponent() {
+export function ExampleView() {
   const snapshot = employeeCell.useSyncExternalStore();
 
   const loadSample = () => {

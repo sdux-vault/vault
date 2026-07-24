@@ -38,6 +38,17 @@ describe('Component: Dev Splash Page', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should default to the Angular comparison', () => {
+    expect((component as any).activeComparison().id).toBe('angular');
+  });
+
+  it('should switch to the React comparison', () => {
+    component.selectComparisonFramework('react');
+    fixture.detectChanges();
+
+    expect((component as any).activeComparison().id).toBe('react');
+  });
+
   describe('openMenu', () => {
     it('should call navigationService.show', () => {
       component.openMenu();

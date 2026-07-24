@@ -22,93 +22,24 @@
 
 <section class="section section-tinted">
   <div class="section-inner">
-    <p class="section-summary">
-      Angular Redux vs <span class="sdux-brand-name"><sdux-brand-name /></span>
-    </p>
+    <p class="section-summary">State library comparison</p>
 
-    <div class="comparison-header-grid">
-      <article class="comparison-panel comparison-panel-header-card">
-        <header class="comparison-panel-header">
-          <div class="comparison-panel-header-top-row">
-            <h2 class="comparison-panel-title">Redux + Angular</h2>
-            <span class="comparison-panel-count"
-              >{{ reduxExampleFiles.length }} files</span
-            >
-          </div>
-
-          <div class="comparison-panel-header-bottom-row">
-            <div class="comparison-panel-note">
-              The feature surface is:
-              <ul>
-                <li>{{ sharedSetupFileCount }} shared setup files</li>
-                <li>{{ sduxFeatureFileCount }} core feature files</li>
-
-                <li>
-                  <span class="note-callout"
-                    >{{ reduxOnlySupportFileCount }} extra Redux-only ceremony
-                    files
-                  </span>
-                  that <em>scale linearly</em> with every new feature
-                </li>
-              </ul>
-            </div>
-          </div>
-        </header>
-      </article>
-
-      <article class="comparison-panel comparison-panel-header-card">
-        <header class="comparison-panel-header">
-          <div class="comparison-panel-header-top-row">
-            <h2 class="comparison-panel-title">
-              <span class="sdux-brand-name"><sdux-brand-name /></span> + Angular
-            </h2>
-            <span class="comparison-panel-count"
-              >{{ sduxExampleFiles.length }} files</span
-            >
-          </div>
-
-          <div class="comparison-panel-header-bottom-row">
-            <div class="comparison-panel-note">
-              The feature surface is
-              <ul>
-                <li>{{ sharedSetupFileCount }} shared setup files</li>
-                <li>{{ sduxFeatureFileCount }} core feature files</li>
-
-                <li>
-                  <span class="note-callout">no extra ceremony files</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </header>
-      </article>
-    </div>
-
-    <div class="comparison-rows">
-      @for (
-        reduxFile of reduxExampleFiles;
-        track reduxFile.fileName;
-        let index = $index
-      ) {
-        <div class="comparison-row-grid">
-          <section class="comparison-panel comparison-file-panel">
-            <div class="comparison-file-name">{{ reduxFile.fileName }}</div>
-            <pre
-              class="comparison-file-source"><code [class]="getCodeLanguage(reduxFile.type)">{{ reduxFile.numberedSource }}</code></pre>
-          </section>
-
-          <section class="comparison-panel comparison-file-panel">
-            @if (sduxExampleFiles[index]; as sduxFile) {
-              <div class="comparison-file-name">{{ sduxFile.fileName }}</div>
-              <pre
-                class="comparison-file-source"><code [class]="getCodeLanguage(sduxFile.type)">{{ sduxFile.numberedSource }}</code></pre>
-            } @else {
-              <div class="comparison-file-empty">&nbsp;</div>
-            }
-          </section>
-        </div>
+    <div
+      class="comparison-framework-selector"
+      role="group"
+      aria-label="Framework comparison selector">
+      @for (framework of comparisonFrameworks; track framework.id) {
+        <button
+          type="button"
+          class="btn-ghost comparison-framework-button"
+          [class.is-active]="framework.id === selectedComparisonFramework()"
+          (click)="selectComparisonFramework(framework.id)">
+          {{ framework.label }}
+        </button>
       }
     </div>
+
+    <sdux-framework-comparison [comparison]="activeComparison()" />
   </div>
 </section>
 

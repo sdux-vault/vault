@@ -17,6 +17,8 @@ const SOURCE_FILE_TYPES = [
   { type: 'typescript', suffix: '.ts.txt' },
   { type: 'typescript', suffix: '.tsx.txt' },
   { type: 'html', suffix: '.html.txt' },
+  { type: 'svelte', suffix: '.svelte.txt' },
+  { type: 'vue', suffix: '.vue.txt' },
   { type: 'scss', suffix: '.scss.txt' },
   { type: 'json', suffix: '.json.txt' },
   { type: 'markdown', suffix: '.md.txt' }
@@ -30,9 +32,9 @@ const SOURCE_FILE_TYPE_UNION = SOURCE_FILE_TYPES.map(({ type }) => `'${type}'`)
 const FRAMEWORK_FILE_ORDER = {
   redux: [
     ['main.ts', 'main.tsx'],
-    ['app.config.ts'],
-    ['employee.facade.ts', 'employee.hook.ts'],
-    ['example.component.ts', 'example.component.tsx'],
+    ['app.config.ts', 'store.ts'],
+    ['employee.facade.ts', 'employee.hook.ts', 'useEmployeeFacade.ts'],
+    ['example.component.ts', 'example.component.tsx', 'ExampleView.tsx'],
     ['example.component.html'],
     ['employee.model.ts'],
     ['employee.actions.ts'],
@@ -44,7 +46,20 @@ const FRAMEWORK_FILE_ORDER = {
     ['main.ts', 'main.tsx'],
     ['app.config.ts'],
     ['employee.service.ts', 'employee.cell.ts', 'employee.hook.ts'],
-    ['example.component.ts', 'example.component.tsx'],
+    [
+      'example.component.ts',
+      'example.component.tsx',
+      'example.component.svelte',
+      'ExampleView.tsx'
+    ],
+    ['example.component.html'],
+    ['employee.model.ts']
+  ],
+  pinia: [
+    ['main.ts'],
+    ['app.config.ts'],
+    ['employee.store.ts'],
+    ['example.component.ts', 'example.component.vue'],
     ['example.component.html'],
     ['employee.model.ts']
   ]

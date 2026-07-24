@@ -1,5 +1,0 @@
-import { Vault } from '@sdux-vault/react';
-
-Vault({
-  logLevel: 'off'
-});

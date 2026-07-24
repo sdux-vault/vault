@@ -51,7 +51,8 @@ export const ANGULAR_SDUX_OUTPUT = [
       '1 | export interface Employee {\n2 |   id: number;\n3 |   name: string;\n4 | }'
   }
 ] as const satisfies ReadonlyArray<{
-  readonly type: 'typescript' | 'html' | 'scss' | 'json' | 'markdown';
+  readonly type:
+    'typescript' | 'html' | 'svelte' | 'vue' | 'scss' | 'json' | 'markdown';
   readonly fileName: string;
   readonly source: string;
   readonly numberedSource: string;

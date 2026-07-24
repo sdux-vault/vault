@@ -1,5 +1,5 @@
 import { Employee } from './employee.model';
-import { useEmployeeFacade } from './employee.hook';
+import { useEmployeeFacade } from './useEmployeeFacade';
 
 const sample: Employee[] = [
   { id: 11, name: 'Luke' },
@@ -7,7 +7,7 @@ const sample: Employee[] = [
   { id: 9, name: 'Han' }
 ];
 
-export function ExampleComponent() {
+export function ExampleView() {
   const { state, replace, reset } = useEmployeeFacade();
 
   const loadSample = () => {

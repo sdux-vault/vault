@@ -1,4 +1,4 @@
-import { RootState } from './app.config';
+import { RootState } from './store';
 import { employeeFeatureKey } from './employee.reducer';
 
 export const selectEmployeeState = (state: RootState) => {

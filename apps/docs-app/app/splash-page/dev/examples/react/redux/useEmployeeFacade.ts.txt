@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from './app.config';
+import { AppDispatch, RootState } from './store';
 import { EmployeeActions } from './employee.actions';
 import { Employee } from './employee.model';
 import {

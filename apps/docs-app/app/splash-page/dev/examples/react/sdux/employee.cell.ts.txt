@@ -1,6 +1,9 @@
-import { FeatureCell } from '@sdux-vault/react';
-import './app.config';
+import { FeatureCell, Vault } from '@sdux-vault/react';
 import { Employee } from './employee.model';
+
+Vault({
+  logLevel: 'off'
+});
 
 export const employeeCell = FeatureCell<Employee[]>({
   key: 'employees',

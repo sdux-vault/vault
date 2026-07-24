@@ -83,7 +83,8 @@ export const ANGULAR_REDUX_OUTPUT = [
       " 1 | import { createFeatureSelector, createSelector } from '@ngrx/store';\n 2 | import { employeeFeatureKey } from './employee.reducer';\n 3 | import { EmployeeState } from './employee.state';\n 4 | \n 5 | export const selectEmployeeState =\n 6 |   createFeatureSelector<EmployeeState>(employeeFeatureKey);\n 7 | \n 8 | export const selectEmployees = createSelector(\n 9 |   selectEmployeeState,\n10 |   (state) => state.value\n11 | );\n12 | \n13 | export const selectEmployeesLoading = createSelector(\n14 |   selectEmployeeState,\n15 |   (state) => state.loading\n16 | );\n17 | \n18 | export const selectEmployeesError = createSelector(\n19 |   selectEmployeeState,\n20 |   (state) => state.error\n21 | );"
   }
 ] as const satisfies ReadonlyArray<{
-  readonly type: 'typescript' | 'html' | 'scss' | 'json' | 'markdown';
+  readonly type:
+    'typescript' | 'html' | 'svelte' | 'vue' | 'scss' | 'json' | 'markdown';
   readonly fileName: string;
   readonly source: string;
   readonly numberedSource: string;

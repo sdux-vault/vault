@@ -1,50 +1,89 @@
-import { AfterViewInit, Component, ElementRef, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  computed,
+  inject,
+  signal
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import {
-  BrandNameComponent,
-  VaultBrandNameComponent
-} from '@sdux-vault/ui/web-components';
+import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
 import Prism from 'prismjs';
 import { SupportedLanguagesConstants } from '../../docs/top-tier/supported-languages/constants/supported-languages.constant';
 import { NavigationService } from '../../navigation/service/navigation.service';
-import { SplashPageExampleComponent } from '../splash-page-example/splash-page-example.component';
 import { ANGULAR_REDUX_OUTPUT } from './examples/angular/redux/redux-output';
 import { ANGULAR_SDUX_OUTPUT } from './examples/angular/sdux/sdux-output';
+import { REACT_REDUX_OUTPUT } from './examples/react/redux/redux-output';
+import { REACT_SDUX_OUTPUT } from './examples/react/sdux/sdux-output';
+import { FrameworkComparisonComponent } from './framework-comparison/framework-comparison.component';
+import { FrameworkComparisonPair } from './framework-comparison/framework-comparison.types';
 
-type ComparisonSourceFile = {
-  readonly type: 'typescript' | 'html' | 'scss' | 'json' | 'markdown';
-  readonly fileName: string;
-  readonly source: string;
-  readonly numberedSource: string;
-};
+type ComparisonFrameworkId = 'angular' | 'react';
 
-const SHARED_SETUP_FILE_NAMES = new Set(['main.ts', 'app.config.ts']);
+const COMPARISON_FRAMEWORKS: readonly {
+  readonly id: ComparisonFrameworkId;
+  readonly label: string;
+}[] = [
+  { id: 'angular', label: 'Angular' },
+  { id: 'react', label: 'React' }
+];
 
 @Component({
   selector: 'sdux-dev-splash-page',
   standalone: true,
   imports: [
     MatIconModule,
-    BrandNameComponent,
-    SplashPageExampleComponent,
-    VaultBrandNameComponent
+    VaultBrandNameComponent,
+    FrameworkComparisonComponent
   ],
   templateUrl: './dev-splash-page.component.html',
   styleUrls: ['./dev-splash-page.component.scss']
 })
 export class DevSplashPageComponent implements AfterViewInit {
-  protected readonly reduxExampleFiles: readonly ComparisonSourceFile[] =
-    ANGULAR_REDUX_OUTPUT;
-  protected readonly sduxExampleFiles: readonly ComparisonSourceFile[] =
-    ANGULAR_SDUX_OUTPUT;
-  protected readonly sharedSetupFileCount = this.countSharedSetupFiles(
-    this.sduxExampleFiles
+  protected readonly comparisonFrameworks = COMPARISON_FRAMEWORKS;
+  protected readonly comparisonRegistry: Record<
+    ComparisonFrameworkId,
+    FrameworkComparisonPair
+  > = {
+    angular: {
+      id: 'angular',
+      selectorLabel: 'Angular',
+      sharedSetupFileNames: ['main.ts', 'app.config.ts'],
+      left: {
+        frameworkLabel: 'Angular',
+        libraryLabel: 'Redux',
+        files: ANGULAR_REDUX_OUTPUT
+      },
+      right: {
+        frameworkLabel: 'Angular',
+        libraryLabel: 'SDuX',
+        usesSduxBrandName: true,
+        files: ANGULAR_SDUX_OUTPUT
+      }
+    },
+    react: {
+      id: 'react',
+      selectorLabel: 'React',
+      sharedSetupFileNames: ['main.tsx'],
+      left: {
+        frameworkLabel: 'React',
+        libraryLabel: 'Redux',
+        files: REACT_REDUX_OUTPUT
+      },
+      right: {
+        frameworkLabel: 'React',
+        libraryLabel: 'SDuX',
+        usesSduxBrandName: true,
+        files: REACT_SDUX_OUTPUT
+      }
+    }
+  };
+  protected readonly selectedComparisonFramework =
+    signal<ComparisonFrameworkId>('angular');
+  protected readonly activeComparison = computed(
+    () => this.comparisonRegistry[this.selectedComparisonFramework()]
   );
-  protected readonly sduxFeatureFileCount =
-    this.sduxExampleFiles.length - this.sharedSetupFileCount;
-  protected readonly reduxOnlySupportFileCount =
-    this.reduxExampleFiles.length - this.sduxExampleFiles.length;
   protected readonly supportedLanguages = SupportedLanguagesConstants.filter(
     (lang) => lang.showInEcosystemStrip
   );
@@ -147,25 +186,7 @@ export class DevSplashPageComponent implements AfterViewInit {
     this.#navigationService.show();
   }
 
-  protected getCodeLanguage(type: ComparisonSourceFile['type']): string {
-    switch (type) {
-      case 'html':
-        return 'language-markup';
-      case 'scss':
-        return 'language-css';
-      case 'json':
-        return 'language-json';
-      case 'markdown':
-        return 'language-markdown';
-      default:
-        return 'language-typescript';
-    }
-  }
-
-  protected countSharedSetupFiles(
-    files: readonly ComparisonSourceFile[]
-  ): number {
-    return files.filter((file) => SHARED_SETUP_FILE_NAMES.has(file.fileName))
-      .length;
+  selectComparisonFramework(frameworkId: ComparisonFrameworkId): void {
+    this.selectedComparisonFramework.set(frameworkId);
   }
 }
