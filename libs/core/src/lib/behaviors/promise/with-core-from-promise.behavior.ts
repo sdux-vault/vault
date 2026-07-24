@@ -9,8 +9,6 @@ import {
   FeatureCellExtensionContext,
   isDeferredFactory,
   isUndefined,
-  ResolveType,
-  ResolveTypes,
   safeStringify,
   StateInputType,
   VaultBehavior,
@@ -37,8 +35,7 @@ import { FromPromiseBehaviorExtension } from './interface/from-promise-behavior.
 @VaultBehavior({
   type: BehaviorTypes.FromPromise,
   key: defineBehaviorKey('Core', 'FromPromise'),
-  critical: false,
-  resolveType: ResolveTypes.Promise
+  critical: false
 })
 export class withCoreFromPromiseBehavior<T> implements BehaviorContract<
   T,
@@ -56,9 +53,6 @@ export class withCoreFromPromiseBehavior<T> implements BehaviorContract<
   /** Indicates whether this behavior is required by the pipeline. */
   static readonly critical: boolean;
 
-  /** Resolve type identifier for promise-based resolution. */
-  static readonly resolveType: ResolveType;
-
   /** Instance-level behavior type identifier. */
   readonly type = withCoreFromPromiseBehavior.type;
 
@@ -67,9 +61,6 @@ export class withCoreFromPromiseBehavior<T> implements BehaviorContract<
 
   /** Indicates that this behavior is optional within the pipeline. */
   readonly critical = withCoreFromPromiseBehavior.critical;
-
-  /** Resolve type identifier for this behavior instance. */
-  readonly resolveType = withCoreFromPromiseBehavior.resolveType;
 
   /**
    * Creates a new instance of the promise resolution behavior.
@@ -122,10 +113,7 @@ export class withCoreFromPromiseBehavior<T> implements BehaviorContract<
 
         try {
           result = incoming.value?.() as
-            | T
-            | undefined
-            | null
-            | Promise<T | undefined | null>;
+            T | undefined | null | Promise<T | undefined | null>;
         } catch (err) {
           const error = createVaultError(err, ctx.featureCellKey);
           reject(error);

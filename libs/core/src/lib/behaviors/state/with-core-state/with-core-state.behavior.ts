@@ -17,6 +17,7 @@ import {
   isUndefined,
   isVaultClearState,
   isVaultNoop,
+  ResolveTypes,
   safeStringify,
   StateEmitSnapshotShape,
   StateEmitType,
@@ -188,7 +189,11 @@ export class withCoreStateBehavior<T>
       return VAULT_NOOP;
     }
 
-    if (isHttpResourceRef(incoming)) {
+    if (
+      isHttpResourceRef(incoming) ||
+      ctx.resolveType === ResolveTypes.Promise ||
+      ctx.resolveType === ResolveTypes.Observable
+    ) {
       changes.isLoading = true;
     } else if (isStateInputShape(incoming)) {
       if (!isNullish(incoming?.loading)) {
@@ -218,23 +223,27 @@ export class withCoreStateBehavior<T>
   finalizePipelineState(value: FinalState<T>, ctx: BehaviorContext<T>): void {
     vaultDebug(`${this.key} - finalizeVaultState`);
 
-    if (isHttpResourceRef(ctx.incoming)) {
-      this.commitState(
-        ctx,
-        { isLoading: false },
-        StateEmitTypes.FinalizePipeline
-      );
-    }
+    const shouldClearLoading =
+      isHttpResourceRef(ctx.incoming) ||
+      ctx.resolveType === ResolveTypes.Promise ||
+      ctx.resolveType === ResolveTypes.Observable;
 
     if (isVaultNoop(value)) {
-      this.commitState(ctx, null, StateEmitTypes.FinalizePipeline);
+      this.commitState(
+        ctx,
+        shouldClearLoading ? { isLoading: false } : null,
+        StateEmitTypes.FinalizePipeline
+      );
       return;
     }
 
     if (isNull(value) || isVaultClearState(value)) {
       this.commitState(
         ctx,
-        { value: undefined },
+        {
+          value: undefined,
+          ...(shouldClearLoading ? { isLoading: false } : {})
+        },
         StateEmitTypes.FinalizePipeline
       );
       return;
@@ -243,7 +252,19 @@ export class withCoreStateBehavior<T>
     if (!isNullish(value) && !isPipelineTerminal(value)) {
       this.commitState(
         ctx,
-        { value: value as T },
+        {
+          value: value as T,
+          ...(shouldClearLoading ? { isLoading: false } : {})
+        },
+        StateEmitTypes.FinalizePipeline
+      );
+      return;
+    }
+
+    if (shouldClearLoading) {
+      this.commitState(
+        ctx,
+        { isLoading: false },
         StateEmitTypes.FinalizePipeline
       );
     }
@@ -256,7 +277,11 @@ export class withCoreStateBehavior<T>
    */
   finalizePipelineVaultStop(ctx: BehaviorContext<T>): void {
     vaultDebug(`${this.key} - finalizePipelineVaultStop`);
-    this.commitState(ctx, null, StateEmitTypes.FinalizePipeline);
+    this.commitState(
+      ctx,
+      { isLoading: false },
+      StateEmitTypes.FinalizePipeline
+    );
   }
 
   /**

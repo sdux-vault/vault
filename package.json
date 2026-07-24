@@ -104,7 +104,7 @@
     "ng": "ng",
     "prepare": "husky",
     "version": "node tools/release/release.update-version.mjs",
-    "release": "run-s lint test:tools seo:audit docs:enterprise sitemap:generate stackblitz:inline",
+    "release": "run-s lint test:tools seo:audit tutorial:generate docs:enterprise sitemap:generate stackblitz:inline",
     "release:chrome": "run-s build:devtools-ui copy:devtools-ui zip:chrome",
     "zip:chrome": "rimraf dist/chrome-release && mkdir -p dist/chrome-release && cd apps/chrome-extension && zip -r ../../dist/chrome-release/sdux-vault-devtools.zip . -x 'tests/*' '.DS_Store'",
     "seo:audit": "node tools/seo/seo.mjs",
@@ -152,6 +152,7 @@
     "test:coverage:web-components": "ng test web-components --watch=false --browsers=ChromeHeadless --code-coverage --source-map=false",
     "test:coverage:clean": "rimraf coverage",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "tutorial:generate": "node tools/tutorial/generate-tutorial-source.mjs",
     "verify": "npm run lint && npm run format:check && npm run typecheck && npm run test:coverage && npm run docs:coverage",
     "watch": "ng build --watch --configuration development",
     "watch:tools": "npm-watch test:tools"

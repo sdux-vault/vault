@@ -123,6 +123,36 @@ describe('Behavior: withArrayAppendMerge', () => {
       expect(result).toBe(next);
     });
 
+    it('should return nextValue when both are non-arrays', () => {
+      let curr = [{ x: 1 }];
+      let next = [{ y: 2 }] as any;
+
+      curr = behavior.computeMerge(curr, next);
+
+      expect(curr).toEqual([Object({ x: 1 }), Object({ y: 2 })]);
+      expect(next).toEqual([Object({ y: 2 })]);
+
+      next = [{ y: 2, z: 3 }];
+
+      curr = behavior.computeMerge(curr, next);
+
+      expect(curr).toEqual([
+        Object({ x: 1 }),
+        Object({ y: 2 }),
+        Object({ y: 2, z: 3 })
+      ]);
+      expect(next).toEqual([Object({ y: 2, z: 3 })]);
+    });
+
+    it('should return nextValue even if next is null', () => {
+      const curr = [1, 2];
+      const next = null;
+
+      const result = behavior.computeMerge(curr, next as any);
+
+      expect(result).toBeNull();
+    });
+
     it('should allow merge when curr=null and next is array', () => {
       const curr = null;
       const next = [9, 9];

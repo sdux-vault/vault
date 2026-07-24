@@ -14,7 +14,8 @@ export class RelatedTopicsService {
   #aliases: Record<string, string> = {
     react: 'feature-cell-api',
     svelte: 'feature-cell-api',
-    vue: 'feature-cell-api'
+    vue: 'feature-cell-api',
+    tutorial: 'welcome'
   };
 
   #buildSeenLink(link: RelatedTopicLinkShape): string {

@@ -26,7 +26,8 @@ const rawSourceDirs = [
   'apps/docs-app/app/docs/pipeline',
   'apps/docs-app/app/docs/references',
   'apps/docs-app/app/docs/sdux/sdux-vault',
-  'apps/docs-app/app/docs/top-tier'
+  'apps/docs-app/app/docs/top-tier',
+  'apps/docs-app/app/docs/tutorial'
 ];
 
 const sourceDirs = rawSourceDirs.map((directory) => {

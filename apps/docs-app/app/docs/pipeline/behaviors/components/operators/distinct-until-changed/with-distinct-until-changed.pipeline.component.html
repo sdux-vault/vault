@@ -58,8 +58,12 @@
       </p>
     </div>
 
-    <pre
-      class="code-inline"><code class="language-ts">JSON.stringify(incoming) === JSON.stringify(lastEmittedValue);</code></pre>
+    <sdux-example-viewer-source [displayTabs]="false">
+      <sdux-example-viewer-tab [label]="'Example: Vault Initialization'">
+        <pre
+          class="code-inline"><code class="language-ts">{{`JSON.stringify(incoming) === JSON.stringify(lastEmittedValue);`}}</code></pre>
+      </sdux-example-viewer-tab>
+    </sdux-example-viewer-source>
   </header>
 
   <section class="section">

@@ -62,6 +62,86 @@
     </p>
   </header>
 
+  <section class="section">
+    <div class="section-title">Best Practices</div>
+
+    <div class="section-body">
+      <h4>Avoid Pre-Computing State in Replace Payloads</h4>
+
+      <p>
+        A common anti-pattern when using Replace is reading the current State,
+        combining it with new data in consumer code, and passing the
+        pre-computed result to the <sdux-brand-name /> as the replace payload.
+      </p>
+
+      <div class="table-title">Anti-Pattern</div>
+      <sdux-multi-framework-example description="Anti-Pattern">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`replace(entry: Example): void {
+  const current = this.state.value() ?? [];
+  this.#vault.replaceState({
+    loading: false,
+    value: [...current, entry],
+    error: null
+  });
+}
+`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`function replace(entry: Example): void {
+  const current = exampleCell.state.value ?? [];
+  exampleCell.replaceState({
+    loading: false,
+    value: [...current, entry],
+    error: null
+  });
+}
+`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <p>
+        This pattern reads State at call time and freezes the Snapshot into the
+        replace payload. When Controllers that govern execution timing are
+        attached to the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> — such
+        as those that throttle, debounce, or delay Pipeline execution — the
+        State may change between the moment the payload is constructed and the
+        moment the Pipeline processes it. The pre-computed payload then replaces
+        against a State that no longer matches the Snapshot it was built from,
+        producing incorrect results.
+      </p>
+
+      <div class="table-title">Recommended Pattern</div>
+      <sdux-multi-framework-example description="Recommended">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`replace(entry: Example[]): void {
+  this.#vault.replaceState({
+    loading: false,
+    value: entry,
+    error: null
+  });
+}
+`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`function replace(entry: Example[]): void {
+  exampleCell.replaceState({
+    loading: false,
+    value: entry,
+    error: null
+  });
+}
+`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+    </div>
+  </section>
+
   <!-- ====================================================== -->
   <!-- DIAGRAMS -->
   <!-- ====================================================== -->

@@ -70,7 +70,6 @@ describe('Behavior: withCoreFromStream', () => {
     expect(withCoreFromStreamBehavior.key).toBe(
       'SDUX::Behavior::Core::FromStream'
     );
-    expect(withCoreFromStreamBehavior.resolveType).toBe('observable');
   });
 
   // ------------------------------------------------------------------------------------------

@@ -3,8 +3,36 @@
 $padding-width: global.$spacing-md * 2;
 $info-height: 25px;
 
+:host {
+  position: relative;
+  display: block;
+}
+
+.environment-banner {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, auto);
+  align-content: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: global.$spacing-xs global.$spacing-md;
+  background-color: global.$sdux-success-light;
+  color: global.$sdux-text-black;
+  font-size: global.$font-size-xs;
+  gap: global.$spacing-xs global.$spacing-md;
+  overflow: auto;
+}
+
 .footer {
   position: relative;
+  z-index: 0;
   height: global.$footer-height;
   width: calc(100% - $padding-width);
   display: flex;

@@ -8,7 +8,7 @@ export interface StarWarsShape {
   name: string;
   /** Last name of the entity. */
   lastName: string;
-  /** Whether the entity is a Jedi; assigned by the reducer. */
+  /** Whether the entity is force-sensitive; assigned by the reducer. */
   jedi?: boolean;
   /** Whether the entity is a senator; assigned by the reducer. */
   senator?: boolean;

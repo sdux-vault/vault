@@ -141,16 +141,10 @@ describe('f504: Observable - Replace - With encryption - Error Test', () => {
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toEqual(
       Object({
-        message: 'Unexpected error',
+        message: 'Boom',
         featureCellKey: key,
-        details: Object({
-          message: 'Boom',
-          featureCellKey: key,
-          details: jasmine.any(String),
-          raw: jasmine.any(Error),
-          timestamp: jasmine.any(Number)
-        }),
-        raw: jasmine.any(Object),
+        details: jasmine.any(String),
+        raw: jasmine.any(Error),
         timestamp: jasmine.any(Number)
       })
     );
@@ -159,16 +153,10 @@ describe('f504: Observable - Replace - With encryption - Error Test', () => {
     expect(globalErrors).toEqual([
       null,
       Object({
-        message: 'Unexpected error',
+        message: 'Boom',
         featureCellKey: key,
-        details: Object({
-          message: 'Boom',
-          featureCellKey: key,
-          details: jasmine.any(String),
-          raw: jasmine.any(Error),
-          timestamp: jasmine.any(Number)
-        }),
-        raw: jasmine.any(Object),
+        details: jasmine.any(String),
+        raw: jasmine.any(Error),
         timestamp: jasmine.any(Number)
       })
     ]);
@@ -185,16 +173,10 @@ describe('f504: Observable - Replace - With encryption - Error Test', () => {
     expect(globalErrors).toEqual([
       null,
       Object({
-        message: 'Unexpected error',
+        message: 'Boom',
         featureCellKey: key,
-        details: Object({
-          message: 'Boom',
-          featureCellKey: key,
-          details: jasmine.any(String),
-          raw: jasmine.any(Error),
-          timestamp: jasmine.any(Number)
-        }),
-        raw: jasmine.any(Object),
+        details: jasmine.any(String),
+        raw: jasmine.any(Error),
         timestamp: jasmine.any(Number)
       }),
       null

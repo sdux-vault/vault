@@ -43,13 +43,8 @@ export const RELATED_TOPICS_REGISTRY: RelatedTopicRegistryShape = {
       { link: '/docs/welcome/best-practices', display: 'Best Practices' },
       { link: '/docs/diagrams', display: 'SDuX Diagrams' },
       { link: '/docs/videos', display: 'SDuX Videos' },
-      { link: '/docs/welcome/license', display: 'SDuX License' },
-      {
-        link: '/docs/pipeline/extensions/licensing-and-monetization',
-        display: 'Licensing & Monetization'
-      },
-      { link: '/docs/welcome/testing', display: 'Testing Strategies' },
-      { link: '/docs/dev-tools/overview', display: 'DevTools' }
+      { link: '/docs/dev-tools/overview', display: 'DevTools' },
+      { link: '/tutorial', display: 'Tutorial' }
     ],
     behavior: [
       {

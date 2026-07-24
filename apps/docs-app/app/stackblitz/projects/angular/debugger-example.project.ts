@@ -741,7 +741,7 @@ export interface Example {
   /** Last name of the character. */
   lastName: string;
 
-  /** Whether the character is a Jedi, set by the jediReducer. */
+  /** Whether the character is force-sensitive, set by the jediReducer. */
   jedi?: boolean;
 
   /** Whether the character is a Senator, set by the jediReducer. */

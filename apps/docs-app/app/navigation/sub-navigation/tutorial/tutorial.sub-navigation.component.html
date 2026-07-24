@@ -1,0 +1,21 @@
+<nav aria-label="Tutorial Sub Navigation">
+  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+    <mat-expansion-panel-header>
+      <span class="nav-section-label">Tutorial</span>
+    </mat-expansion-panel-header>
+
+    <a
+      mat-list-item
+      routerLink="/tutorial/angular"
+      routerLinkActive="active"
+      (click)="closeSidenav()">
+      <span class="menu-content menu-icon"
+        >Angular
+        <img
+          src="assets/brand/angular/angular-icon.png"
+          class="image-15"
+          alt="Angular" />
+      </span>
+    </a>
+  </mat-expansion-panel>
+</nav>

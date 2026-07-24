@@ -91,7 +91,7 @@ describe('Decorator: VaultBehavior', () => {
 
   it('should allow multiple behavior decorators; the last one wins', () => {
     const meta1: BehaviorMetaShape = {
-      type: BehaviorTypes.Merge,
+      type: BehaviorTypes.Resolve,
       key: defineBehaviorKey('A', 'One'),
       critical: false,
       resolveType: ResolveTypes.HttpResource,

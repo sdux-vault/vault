@@ -8,8 +8,6 @@ import {
   createVaultError,
   defineBehaviorKey,
   FeatureCellExtensionContext,
-  ResolveType,
-  ResolveTypes,
   safeStringify,
   StateInputType,
   VaultBehavior,
@@ -28,8 +26,7 @@ import { FromStreamOptions } from './options/from-stream.options';
 @VaultBehavior({
   type: BehaviorTypes.FromStream,
   key: defineBehaviorKey('Core', 'FromStream'),
-  critical: false,
-  resolveType: ResolveTypes.Observable
+  critical: false
 })
 export class withCoreFromStreamBehavior<T> implements BehaviorContract<
   T,
@@ -47,9 +44,6 @@ export class withCoreFromStreamBehavior<T> implements BehaviorContract<
   /** Indicates whether this behavior is required by the pipeline. */
   static readonly critical: boolean;
 
-  /** Static resolve type assigned by the behavior system. */
-  static readonly resolveType: ResolveType;
-
   /** The extension behavior type identifier. */
   readonly type = withCoreFromStreamBehavior.type;
 
@@ -58,9 +52,6 @@ export class withCoreFromStreamBehavior<T> implements BehaviorContract<
 
   /** Indicates that this behavior is optional within the pipeline. */
   public readonly critical = withCoreFromStreamBehavior.critical;
-
-  /** Instance-level resolve type identifier. */
-  public readonly resolveType = withCoreFromStreamBehavior.resolveType;
 
   /**
    * Creates a new fromStream behavior instance.

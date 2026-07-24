@@ -151,8 +151,8 @@ describe('p354: Promise - Merge Error Test', () => {
     expect(state.hasValue()).toBeTrue();
     expect(state.error()).toEqual(
       Object({
-        message: 'Unexpected error',
-        details: jasmine.any(Object),
+        message: 'This is the reject error',
+        details: jasmine.any(String),
         raw: jasmine.any(Object),
         timestamp: jasmine.any(Number),
         featureCellKey: 'partial-lookup'
@@ -206,8 +206,8 @@ describe('p354: Promise - Merge Error Test', () => {
     expect(state.hasValue()).toBeTrue();
     expect(state.error()).toEqual(
       Object({
-        message: 'Unexpected error',
-        details: jasmine.any(Object),
+        message: 'This is the reject error',
+        details: jasmine.any(String),
         raw: jasmine.any(Object),
         timestamp: jasmine.any(Number),
         featureCellKey: 'partial-lookup'

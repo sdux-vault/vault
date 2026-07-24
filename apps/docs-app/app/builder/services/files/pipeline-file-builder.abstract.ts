@@ -602,12 +602,10 @@ ${this.#vaultParenthesisTabSpacer})`
 
         if (example.framework && example.framework !== framework) continue;
 
-        if (
-          !(
-            example.updateStrategy === selectedStrategy ||
-            selectedStrategy === null
-          )
-        ) {
+        if (!(
+          example.updateStrategy === selectedStrategy ||
+          selectedStrategy === null
+        )) {
           continue;
         }
 

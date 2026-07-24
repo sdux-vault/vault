@@ -48,6 +48,35 @@ export const routes: Routes = [
     path: 'press-kit',
     redirectTo: 'press'
   },
+  /*
+  {
+    path: 'tutorial',
+    data: { category: 'tutorial' },
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./docs/tutorial/tutorial.component').then(
+            (m) => m.TutorialComponent
+          )
+      },
+      {
+        path: 'angular',
+        loadComponent: () =>
+          import('./docs/tutorial/angular/tutorial.angular.component').then(
+            (m) => m.TutorialAngularComponent
+          )
+      },
+      {
+        path: 'example',
+        loadComponent: () =>
+          import('./docs/tutorial/angular/examples/complete-character-management/example.component').then(
+            (m) => m.ExampleComponent
+          )
+      }
+    ]
+  },
+  */
   {
     path: 'sdux',
     children: [

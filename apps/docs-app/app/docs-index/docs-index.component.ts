@@ -18,6 +18,7 @@ import { PipelineBehaviorSubNavigationComponent } from '../navigation/sub-naviga
 import { PipelineControllersSubNavigationComponent } from '../navigation/sub-navigation/pipeline/controllers/pipeline.controllers.sub-navigation.component';
 import { PipelineExtensionsSubNavigationComponent } from '../navigation/sub-navigation/pipeline/extensions/pipeline.extensions.sub-navigation.component';
 import { PipelineSubNavigationComponent } from '../navigation/sub-navigation/pipeline/pipeline.sub-navigation.component';
+import { TutorialSubNavigationComponent } from '../navigation/sub-navigation/tutorial/tutorial.sub-navigation.component';
 import { VaultFeatureCellApiSubNavigationComponent } from '../navigation/sub-navigation/vault-feature-cell-api/vault-feature-cell-api.sub-navigation.component';
 
 /**
@@ -42,6 +43,7 @@ import { VaultFeatureCellApiSubNavigationComponent } from '../navigation/sub-nav
     PipelineExtensionsSubNavigationComponent,
     DevToolsSubNavigationComponent,
     PipelineRelatedTopicComponent,
+    TutorialSubNavigationComponent,
     BrandNameComponent
   ],
   templateUrl: './docs-index.component.html',
