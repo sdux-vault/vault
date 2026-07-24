@@ -275,14 +275,16 @@ describe('CLI: SduxComparisonSourceGenerator', () => {
     directories['/repo/examples/svelte/sdux'] = [
       file('employee.model.ts.txt'),
       file('main.ts.txt'),
-      file('example.component.svelte.txt'),
-      file('employee.cell.ts.txt')
+      file('ExampleView.svelte.txt'),
+      file('employee.cell.ts.txt'),
+      file('App.svelte.txt')
     ];
     fileContents['/repo/examples/svelte/sdux/employee.model.ts.txt'] = 'model';
     fileContents['/repo/examples/svelte/sdux/main.ts.txt'] = 'main';
-    fileContents['/repo/examples/svelte/sdux/example.component.svelte.txt'] =
+    fileContents['/repo/examples/svelte/sdux/ExampleView.svelte.txt'] =
       'component';
     fileContents['/repo/examples/svelte/sdux/employee.cell.ts.txt'] = 'cell';
+    fileContents['/repo/examples/svelte/sdux/App.svelte.txt'] = 'app';
 
     const files = createGenerator().collectFiles(
       '/repo/examples/svelte/sdux',
@@ -292,8 +294,70 @@ describe('CLI: SduxComparisonSourceGenerator', () => {
 
     expect(files.map((fileEntry) => fileEntry.fileName)).toEqual([
       'main.ts',
+      'App.svelte',
       'employee.cell.ts',
-      'example.component.svelte',
+      'ExampleView.svelte',
+      'employee.model.ts'
+    ]);
+  });
+
+  it('should order future Svelte store files using the store comparison sequence aliases', () => {
+    directories['/repo/examples/svelte/stores'] = [
+      file('employee.model.ts.txt'),
+      file('ExampleView.svelte.txt'),
+      file('employee.store.ts.txt'),
+      file('App.svelte.txt'),
+      file('main.ts.txt')
+    ];
+    fileContents['/repo/examples/svelte/stores/employee.model.ts.txt'] =
+      'model';
+    fileContents['/repo/examples/svelte/stores/ExampleView.svelte.txt'] =
+      'component';
+    fileContents['/repo/examples/svelte/stores/employee.store.ts.txt'] =
+      'store';
+    fileContents['/repo/examples/svelte/stores/App.svelte.txt'] = 'app';
+    fileContents['/repo/examples/svelte/stores/main.ts.txt'] = 'main';
+
+    const files = createGenerator().collectFiles(
+      '/repo/examples/svelte/stores',
+      '/repo/examples/svelte/stores',
+      'stores'
+    );
+
+    expect(files.map((fileEntry) => fileEntry.fileName)).toEqual([
+      'main.ts',
+      'App.svelte',
+      'employee.store.ts',
+      'ExampleView.svelte',
+      'employee.model.ts'
+    ]);
+  });
+
+  it('should order future Vue SDuX files using the shared SDuX comparison sequence aliases', () => {
+    directories['/repo/examples/vue/sdux'] = [
+      file('employee.model.ts.txt'),
+      file('ExampleView.vue.txt'),
+      file('employee.cell.ts.txt'),
+      file('App.vue.txt'),
+      file('main.ts.txt')
+    ];
+    fileContents['/repo/examples/vue/sdux/employee.model.ts.txt'] = 'model';
+    fileContents['/repo/examples/vue/sdux/ExampleView.vue.txt'] = 'component';
+    fileContents['/repo/examples/vue/sdux/employee.cell.ts.txt'] = 'cell';
+    fileContents['/repo/examples/vue/sdux/App.vue.txt'] = 'app';
+    fileContents['/repo/examples/vue/sdux/main.ts.txt'] = 'main';
+
+    const files = createGenerator().collectFiles(
+      '/repo/examples/vue/sdux',
+      '/repo/examples/vue/sdux',
+      'sdux'
+    );
+
+    expect(files.map((fileEntry) => fileEntry.fileName)).toEqual([
+      'main.ts',
+      'App.vue',
+      'employee.cell.ts',
+      'ExampleView.vue',
       'employee.model.ts'
     ]);
   });
@@ -301,14 +365,15 @@ describe('CLI: SduxComparisonSourceGenerator', () => {
   it('should order future Vue Pinia files using the Pinia comparison sequence aliases', () => {
     directories['/repo/examples/vue/pinia'] = [
       file('employee.model.ts.txt'),
-      file('example.component.vue.txt'),
+      file('ExampleView.vue.txt'),
       file('employee.store.ts.txt'),
+      file('App.vue.txt'),
       file('main.ts.txt')
     ];
     fileContents['/repo/examples/vue/pinia/employee.model.ts.txt'] = 'model';
-    fileContents['/repo/examples/vue/pinia/example.component.vue.txt'] =
-      'component';
+    fileContents['/repo/examples/vue/pinia/ExampleView.vue.txt'] = 'component';
     fileContents['/repo/examples/vue/pinia/employee.store.ts.txt'] = 'store';
+    fileContents['/repo/examples/vue/pinia/App.vue.txt'] = 'app';
     fileContents['/repo/examples/vue/pinia/main.ts.txt'] = 'main';
 
     const files = createGenerator().collectFiles(
@@ -319,8 +384,9 @@ describe('CLI: SduxComparisonSourceGenerator', () => {
 
     expect(files.map((fileEntry) => fileEntry.fileName)).toEqual([
       'main.ts',
+      'App.vue',
       'employee.store.ts',
-      'example.component.vue',
+      'ExampleView.vue',
       'employee.model.ts'
     ]);
   });

@@ -32,9 +32,14 @@ const SOURCE_FILE_TYPE_UNION = SOURCE_FILE_TYPES.map(({ type }) => `'${type}'`)
 const FRAMEWORK_FILE_ORDER = {
   redux: [
     ['main.ts', 'main.tsx'],
-    ['app.config.ts', 'store.ts'],
+    ['app.config.ts', 'App.vue'],
     ['employee.facade.ts', 'employee.hook.ts', 'useEmployeeFacade.ts'],
-    ['example.component.ts', 'example.component.tsx', 'ExampleView.tsx'],
+    [
+      'example.component.ts',
+      'example.component.tsx',
+      'ExampleView.tsx',
+      'ExampleView.vue'
+    ],
     ['example.component.html'],
     ['employee.model.ts'],
     ['employee.actions.ts'],
@@ -44,23 +49,32 @@ const FRAMEWORK_FILE_ORDER = {
   ],
   sdux: [
     ['main.ts', 'main.tsx'],
-    ['app.config.ts'],
+    ['app.config.ts', 'App.svelte', 'App.vue'],
     ['employee.service.ts', 'employee.cell.ts', 'employee.hook.ts'],
     [
       'example.component.ts',
       'example.component.tsx',
       'example.component.svelte',
-      'ExampleView.tsx'
+      'ExampleView.svelte',
+      'ExampleView.tsx',
+      'ExampleView.vue'
     ],
     ['example.component.html'],
     ['employee.model.ts']
   ],
   pinia: [
     ['main.ts'],
-    ['app.config.ts'],
+    ['App.vue'],
     ['employee.store.ts'],
-    ['example.component.ts', 'example.component.vue'],
+    ['example.component.ts', 'example.component.vue', 'ExampleView.vue'],
     ['example.component.html'],
+    ['employee.model.ts']
+  ],
+  stores: [
+    ['main.ts'],
+    ['App.svelte'],
+    ['employee.store.ts'],
+    ['example.component.svelte', 'ExampleView.svelte'],
     ['employee.model.ts']
   ]
 };

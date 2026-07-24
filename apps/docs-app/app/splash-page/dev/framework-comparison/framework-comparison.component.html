@@ -73,7 +73,7 @@
         @if (row.leftFile; as leftFile) {
           <div class="comparison-file-name">{{ leftFile.fileName }}</div>
           <pre
-            class="comparison-file-source"><code [class]="getCodeLanguage(leftFile.type)">{{ leftFile.numberedSource }}</code></pre>
+            class="comparison-file-source"><code [class]="getCodeLanguage(leftFile.type)" [textContent]="leftFile.numberedSource"></code></pre>
         } @else {
           <div class="comparison-file-empty">&nbsp;</div>
         }
@@ -83,7 +83,7 @@
         @if (row.rightFile; as rightFile) {
           <div class="comparison-file-name">{{ rightFile.fileName }}</div>
           <pre
-            class="comparison-file-source"><code [class]="getCodeLanguage(rightFile.type)">{{ rightFile.numberedSource }}</code></pre>
+            class="comparison-file-source"><code [class]="getCodeLanguage(rightFile.type)" [textContent]="rightFile.numberedSource"></code></pre>
         } @else {
           <div class="comparison-file-empty">&nbsp;</div>
         }

@@ -1,0 +1,36 @@
+<script lang="ts">
+  import type { Employee } from './employee.model';
+  import { employeeState, replaceEmployees, resetEmployees } from './employee.store';
+
+  const sample: Employee[] = [
+    { id: 11, name: 'Luke' },
+    { id: 38, name: 'Leia' },
+    { id: 9, name: 'Han' }
+  ];
+
+  function loadSample(): void {
+    replaceEmployees(sample);
+  }
+
+  function resetState(): void {
+    resetEmployees();
+  }
+</script>
+
+<div>
+  <div>
+    {#if $employeeState.loading}
+      <div>Loading...</div>
+    {:else if $employeeState.error}
+      <div>{$employeeState.error}</div>
+    {:else}
+      <textarea readonly>{JSON.stringify($employeeState.value, null, 2)}</textarea>
+    {/if}
+  </div>
+
+  <div>
+    <button type="button" on:click={loadSample}>Load Sample State</button>
+
+    <button type="button" on:click={resetState}>Reset State</button>
+  </div>
+</div>

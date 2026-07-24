@@ -1,5 +1,13 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  computed,
+  effect,
+  inject,
+  input
+} from '@angular/core';
 import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
+import Prism from 'prismjs';
 import {
   ComparisonSourceFile,
   FrameworkComparisonImplementation,
@@ -17,6 +25,18 @@ const DEFAULT_SHARED_SETUP_FILE_NAMES = ['main.ts', 'app.config.ts'];
 })
 export class FrameworkComparisonComponent {
   readonly comparison = input.required<FrameworkComparisonPair>();
+
+  readonly #elementRef = inject(ElementRef<HTMLElement>);
+
+  constructor() {
+    effect(() => {
+      this.comparison();
+
+      queueMicrotask(() => {
+        Prism.highlightAllUnder(this.#elementRef.nativeElement);
+      });
+    });
+  }
 
   protected readonly sharedSetupFileCount = computed(() =>
     this.countSharedSetupFiles(this.comparison().right.files)

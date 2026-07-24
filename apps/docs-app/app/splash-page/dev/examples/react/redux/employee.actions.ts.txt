@@ -2,7 +2,6 @@ import { createAction } from '@reduxjs/toolkit';
 import { Employee } from './employee.model';
 
 export const EmployeeActions = {
-  seed: createAction('[Employees] Seed'),
   replace: createAction<Employee[]>('[Employees] Replace'),
   reset: createAction('[Employees] Reset')
 } as const;

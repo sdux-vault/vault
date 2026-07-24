@@ -11,11 +11,7 @@ export function ExampleView() {
   const snapshot = employeeCell.useSyncExternalStore();
 
   const loadSample = () => {
-    employeeCell.replaceState({
-      loading: false,
-      value: sample,
-      error: null
-    });
+    employeeCell.replaceState({ value: sample });
   };
 
   const resetState = () => {

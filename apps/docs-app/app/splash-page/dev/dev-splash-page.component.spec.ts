@@ -49,6 +49,20 @@ describe('Component: Dev Splash Page', () => {
     expect((component as any).activeComparison().id).toBe('react');
   });
 
+  it('should switch to the Vue comparison', () => {
+    component.selectComparisonFramework('vue');
+    fixture.detectChanges();
+
+    expect((component as any).activeComparison().id).toBe('vue');
+  });
+
+  it('should switch to the Svelte comparison', () => {
+    component.selectComparisonFramework('svelte');
+    fixture.detectChanges();
+
+    expect((component as any).activeComparison().id).toBe('svelte');
+  });
+
   describe('openMenu', () => {
     it('should call navigationService.show', () => {
       component.openMenu();

@@ -1,0 +1,39 @@
+import { defineStore } from 'pinia';
+import { Employee } from './employee.model';
+
+const filterOddEmployees = (employees: Employee[]): Employee[] => {
+  return employees.filter((employee) => employee.id % 2 !== 0);
+};
+
+const sortEmployeesByName = (employees: Employee[]): Employee[] => {
+  const sortedEmployees = [...employees];
+
+  sortedEmployees.sort((left, right) => left.name.localeCompare(right.name));
+
+  return sortedEmployees;
+};
+
+const prepareEmployees = (employees: Employee[]): Employee[] => {
+  return sortEmployeesByName(filterOddEmployees(employees));
+};
+
+export const useEmployeeStore = defineStore('employees', {
+  state: () => ({
+    loading: false,
+    value: [] as Employee[],
+    error: null as string | null
+  }),
+  actions: {
+    replace(employees: Employee[]): void {
+      this.loading = false;
+      this.value = prepareEmployees(employees);
+      this.error = null;
+    },
+
+    reset(): void {
+      this.loading = false;
+      this.value = [];
+      this.error = null;
+    }
+  }
+});

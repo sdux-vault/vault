@@ -17,8 +17,8 @@ describe('Component: FrameworkComparisonComponent', () => {
         {
           type: 'typescript',
           fileName: 'main.ts',
-          source: 'main',
-          numberedSource: '1 | main'
+          source: 'angular-main',
+          numberedSource: '1 | angular-main'
         },
         {
           type: 'typescript',
@@ -42,8 +42,8 @@ describe('Component: FrameworkComparisonComponent', () => {
         {
           type: 'typescript',
           fileName: 'main.ts',
-          source: 'main',
-          numberedSource: '1 | main'
+          source: 'angular-main',
+          numberedSource: '1 | angular-main'
         },
         {
           type: 'typescript',
@@ -66,8 +66,8 @@ describe('Component: FrameworkComparisonComponent', () => {
         {
           type: 'typescript',
           fileName: 'main.tsx',
-          source: 'main',
-          numberedSource: '1 | main'
+          source: 'react-main',
+          numberedSource: '1 | react-main'
         },
         {
           type: 'typescript',
@@ -85,8 +85,8 @@ describe('Component: FrameworkComparisonComponent', () => {
         {
           type: 'typescript',
           fileName: 'main.tsx',
-          source: 'main',
-          numberedSource: '1 | main'
+          source: 'react-main',
+          numberedSource: '1 | react-main'
         },
         {
           type: 'typescript',
@@ -147,6 +147,13 @@ describe('Component: FrameworkComparisonComponent', () => {
     expect(fileNames).toContain('useEmployeeFacade.ts');
     expect(fileNames).toContain('employee.cell.ts');
     expect(fileNames).not.toContain('employee.facade.ts');
+
+    const codeBlocks = Array.from(
+      element.querySelectorAll<HTMLElement>('.comparison-file-source code')
+    ).map((node) => node.textContent?.trim() ?? '');
+
+    expect(codeBlocks).toContain('1 | react-main');
+    expect(codeBlocks).not.toContain('1 | angular-main');
   });
 
   it('should use comparison-specific shared setup file names', () => {
