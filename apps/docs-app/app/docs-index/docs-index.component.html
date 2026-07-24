@@ -3,6 +3,193 @@
     <h2>Documentation</h2>
   </div>
 
+  <header class="docs-header">
+    <p class="lead">
+      Welcome to <strong><sdux-brand-name /> Documentation</strong> landing
+      page. All the documentation is organized into sections and sub-sections.
+      You can navigate to the documentation pages using the navigation panel on
+      the left or by clicking on the links in the sections below.
+    </p>
+    <p class="button-container">
+      <span> If the navigation panel is not visible </span>
+      <button
+        type="button"
+        class="sdux-button"
+        (click)="showDocumentation()"
+        matTooltip="Show Documentation Panel"
+        aria-label="View documentation">
+        View Documentation
+      </button>
+    </p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Documentation Highlights</div>
+    <div class="section-body documentation-highlight-container">
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to get started on your journey">
+        <a
+          routerLink="/docs/welcome/getting-started"
+          (click)="showDocumentation()">
+          <div class="title">Getting Started</div>
+          <div class="body">
+            What you need to know to get started with <sdux-brand-name />
+          </div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to read topics in the blog">
+        <a routerLink="/blog">
+          <div class="title">Blog</div>
+          <div class="body">
+            Kick back and read the latest
+            <sdux-brand-name /> topics
+          </div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to understand the execution guarantees of the pipeline">
+        <a routerLink="/docs/pipeline/execution-guarantee">
+          <div class="title">Execution Guarantees</div>
+          <div class="body">
+            Understand the execution guarantees of
+            <sdux-brand-name />
+          </div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the migration documentation">
+        <a routerLink="/docs/migration">
+          <div class="title">Migration Guide</div>
+          <div class="body">Learn how to migrate your current state</div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the diagrams documentation">
+        <a routerLink="/docs/diagrams">
+          <div class="title">Diagrams</div>
+          <div class="body">
+            Deep dive into the <sdux-brand-name /> execution diagrams
+          </div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the videos documentation">
+        <a routerLink="/docs/videos">
+          <div class="title">Videos</div>
+          <div class="body">
+            Watch the informative <sdux-brand-name /> videos
+          </div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the testing documentation">
+        <a routerLink="/docs/welcome/testing">
+          <div class="title">Testing</div>
+          <div class="body">
+            Like to test? It's 1, 2, 3 easy with <sdux-brand-name />
+          </div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the Pipeline Builder">
+        <a routerLink="/builder">
+          <div class="title">Pipeline Builder</div>
+          <div class="body">Build your first pipeline</div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the StackBlitz examples">
+        <a routerLink="/stackblitz">
+          <div class="title">StackBlitz Examples</div>
+          <div class="body">Explore StackBlitz examples</div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the Pipeline Overview">
+        <a routerLink="/docs/pipeline">
+          <div class="title">Pipeline Overview</div>
+          <div class="body">Understanding the <sdux-brand-name /> pipeline</div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the FeatureCell API documentation">
+        <a routerLink="/docs/pipeline/apis/feature-cell-api">
+          <div class="title">FeatureCell API</div>
+          <div class="body">Learn how to use the FeatureCell API</div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the Controller Overview">
+        <a routerLink="/docs/pipeline/controllers/what-is-a-controller">
+          <div class="title">Controller Overview</div>
+          <div class="body">How a controller works in the pipeline</div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the Behavior Overview">
+        <a routerLink="/docs/pipeline/behaviors/what-is-a-behavior">
+          <div class="title">Behavior Overview</div>
+          <div class="body">How a behavior works in the pipeline</div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the Global Error Handler Overview">
+        <a routerLink="/docs/global-error-handler">
+          <div class="title">Global Error Handler</div>
+          <div class="body">
+            How the global error handler reacts to pipeline errors
+          </div>
+        </a>
+      </div>
+
+      <div
+        class="documentation-highlight"
+        matTooltip="Click to open the DevTools Overview">
+        <a routerLink="/docs/dev-tools/overview">
+          <div class="title">DevTools Overview</div>
+          <div class="body">Learn how to use the DevTools</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Everything Else</div>
+    <div class="section-body">
+      If nothing caught your attention above, you can also explore the all the
+      documentation links in the following section. It is the same content as
+      the navigation panel just expanded in a single page view.
+    </div>
+  </section>
+
   <div class="docs-index-toolbar">
     <button
       type="button"

@@ -1,5 +1,9 @@
 <nav aria-label="Licensing">
-  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+  <mat-expansion-panel
+    class="nav-expansion"
+    routerLinkActive
+    #licensingRla="routerLinkActive"
+    [expanded]="forceExpanded() || licensingRla.isActive">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Licensing</span>
     </mat-expansion-panel-header>

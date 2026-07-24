@@ -1,5 +1,10 @@
 <nav aria-label="Vault Creation API">
-  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+  <mat-expansion-panel
+    class="nav-expansion"
+    #vaultFeatureCellApiRla="routerLinkActive"
+    routerLinkActive
+    [routerLinkActiveOptions]="{ exact: true }"
+    [expanded]="forceExpanded() || vaultFeatureCellApiRla.isActive">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Vault Creation API</span>
     </mat-expansion-panel-header>
@@ -22,7 +27,12 @@
       <span class="menu-content">FeatureCell</span>
     </a>
 
-    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+    <mat-expansion-panel
+      class="nav-expansion"
+      #vaultFeatureCellApiOverviewRla="routerLinkActive"
+      routerLinkActive
+      [routerLinkActiveOptions]="{ exact: true }"
+      [expanded]="forceExpanded() || vaultFeatureCellApiOverviewRla.isActive">
       <mat-expansion-panel-header>
         <div class="menu-icon">
           <span class="sub-menu-content sub-item sub-header"

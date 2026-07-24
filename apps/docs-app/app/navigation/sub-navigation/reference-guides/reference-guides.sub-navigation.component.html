@@ -1,5 +1,9 @@
 <nav aria-label="Reference Guides">
-  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+  <mat-expansion-panel
+    class="nav-expansion"
+    routerLinkActive
+    #referenceGuideRla="routerLinkActive"
+    [expanded]="forceExpanded() || referenceGuideRla.isActive">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Reference Guides</span>
     </mat-expansion-panel-header>

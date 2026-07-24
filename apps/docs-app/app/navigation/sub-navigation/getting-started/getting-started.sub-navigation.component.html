@@ -1,5 +1,9 @@
 <nav aria-label="Getting Started">
-  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+  <mat-expansion-panel
+    class="nav-expansion"
+    routerLinkActive
+    #gettingStartedRla="routerLinkActive"
+    [expanded]="forceExpanded() || gettingStartedRla.isActive">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Getting Started</span>
     </mat-expansion-panel-header>

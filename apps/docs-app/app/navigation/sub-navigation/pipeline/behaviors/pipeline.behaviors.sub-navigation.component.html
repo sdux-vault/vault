@@ -1,10 +1,18 @@
 <nav aria-label="Pipeline Behaviors">
-  <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+  <mat-expansion-panel
+    class="nav-expansion"
+    routerLinkActive
+    #behaviorRla="routerLinkActive"
+    [expanded]="forceExpanded() || behaviorRla.isActive">
     <mat-expansion-panel-header>
       <span class="nav-section-label">Pipeline Behaviors</span>
     </mat-expansion-panel-header>
 
-    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
+    <mat-expansion-panel
+      class="nav-expansion"
+      routerLinkActive
+      #behaviorArchitectureRla="routerLinkActive"
+      [expanded]="forceExpanded() || behaviorArchitectureRla.isActive">
       <mat-expansion-panel-header>
         <span class="sub-menu-content sub-item sub-header"
           >Architecture Overview</span
