@@ -1,0 +1,48 @@
+import { employeeCell } from './employee.cell';
+import { Employee } from './employee.model';
+
+const sample: Employee[] = [
+  { id: 11, name: 'Luke' },
+  { id: 38, name: 'Leia' },
+  { id: 9, name: 'Han' }
+];
+
+export function ExampleComponent() {
+  const snapshot = employeeCell.useSyncExternalStore();
+
+  const loadSample = () => {
+    employeeCell.replaceState({
+      loading: false,
+      value: sample,
+      error: null
+    });
+  };
+
+  const resetState = () => {
+    employeeCell.reset();
+  };
+
+  return (
+    <div>
+      <div>
+        {snapshot.isLoading ? (
+          <div>Loading...</div>
+        ) : snapshot.error ? (
+          <div>{String(snapshot.error)}</div>
+        ) : (
+          <textarea readOnly value={JSON.stringify(snapshot.value ?? [], null, 2)} />
+        )}
+      </div>
+
+      <div>
+        <button type="button" onClick={loadSample}>
+          Load Sample State
+        </button>
+
+        <button type="button" onClick={resetState}>
+          Reset State
+        </button>
+      </div>
+    </div>
+  );
+}

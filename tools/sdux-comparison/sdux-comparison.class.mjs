@@ -15,6 +15,7 @@ const EXCLUDED_DIRECTORIES = new Set([
 const EXCLUDED_FILES = new Set(['.DS_Store']);
 const SOURCE_FILE_TYPES = [
   { type: 'typescript', suffix: '.ts.txt' },
+  { type: 'typescript', suffix: '.tsx.txt' },
   { type: 'html', suffix: '.html.txt' },
   { type: 'scss', suffix: '.scss.txt' },
   { type: 'json', suffix: '.json.txt' },
@@ -23,29 +24,29 @@ const SOURCE_FILE_TYPES = [
 const SOURCE_FILE_TYPE_ORDER = new Map(
   SOURCE_FILE_TYPES.map(({ type }, index) => [type, index])
 );
-const SOURCE_FILE_TYPE_UNION = SOURCE_FILE_TYPES.map(
-  ({ type }) => `'${type}'`
-).join(' | ');
+const SOURCE_FILE_TYPE_UNION = SOURCE_FILE_TYPES.map(({ type }) => `'${type}'`)
+  .filter((type, index, values) => values.indexOf(type) === index)
+  .join(' | ');
 const FRAMEWORK_FILE_ORDER = {
   redux: [
-    'main.ts',
-    'app.config.ts',
-    'employee.facade.ts',
-    'example.component.ts',
-    'example.component.html',
-    'employee.model.ts',
-    'employee.actions.ts',
-    'employee.state.ts',
-    'employee.reducer.ts',
-    'employee.selectors.ts'
+    ['main.ts', 'main.tsx'],
+    ['app.config.ts'],
+    ['employee.facade.ts', 'employee.hook.ts'],
+    ['example.component.ts', 'example.component.tsx'],
+    ['example.component.html'],
+    ['employee.model.ts'],
+    ['employee.actions.ts'],
+    ['employee.state.ts'],
+    ['employee.reducer.ts'],
+    ['employee.selectors.ts']
   ],
   sdux: [
-    'main.ts',
-    'app.config.ts',
-    'employee.service.ts',
-    'example.component.ts',
-    'example.component.html',
-    'employee.model.ts'
+    ['main.ts', 'main.tsx'],
+    ['app.config.ts'],
+    ['employee.service.ts', 'employee.cell.ts', 'employee.hook.ts'],
+    ['example.component.ts', 'example.component.tsx'],
+    ['example.component.html'],
+    ['employee.model.ts']
   ]
 };
 
@@ -157,10 +158,12 @@ export class SduxComparisonSourceGenerator {
       return Number.POSITIVE_INFINITY;
     }
 
-    const matchingIndex = orderedFiles.findIndex(
-      (orderedFile) =>
-        fileName === orderedFile || fileName.endsWith(`/${orderedFile}`)
-    );
+    const matchingIndex = orderedFiles.findIndex((orderedFileGroup) => {
+      return orderedFileGroup.some(
+        (orderedFile) =>
+          fileName === orderedFile || fileName.endsWith(`/${orderedFile}`)
+      );
+    });
 
     return matchingIndex === -1 ? Number.POSITIVE_INFINITY : matchingIndex;
   }

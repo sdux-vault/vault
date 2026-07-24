@@ -1,0 +1,38 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from './app.config';
+import { EmployeeActions } from './employee.actions';
+import { Employee } from './employee.model';
+import {
+  selectEmployees,
+  selectEmployeesError,
+  selectEmployeesLoading
+} from './employee.selectors';
+
+const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+const useAppSelector = useSelector.withTypes<RootState>();
+
+export function useEmployeeFacade() {
+  const dispatch = useAppDispatch();
+  const value = useAppSelector(selectEmployees);
+  const loading = useAppSelector(selectEmployeesLoading);
+  const error = useAppSelector(selectEmployeesError);
+
+  useEffect(() => {
+    dispatch(EmployeeActions.seed());
+  }, [dispatch]);
+
+  return {
+    state: {
+      value,
+      loading,
+      error
+    },
+    replace(employees: Employee[]): void {
+      dispatch(EmployeeActions.replace(employees));
+    },
+    reset(): void {
+      dispatch(EmployeeActions.reset());
+    }
+  };
+}

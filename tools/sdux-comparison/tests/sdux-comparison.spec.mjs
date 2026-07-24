@@ -118,6 +118,35 @@ describe('CLI: SduxComparisonSourceGenerator', () => {
     ]);
   });
 
+  it('should collect tsx-backed files as typescript sources', () => {
+    directories['/repo/examples/react/redux'] = [
+      file('main.tsx.txt'),
+      file('example.component.tsx.txt')
+    ];
+    fileContents['/repo/examples/react/redux/main.tsx.txt'] =
+      'createRoot(document.getElementById("root")!).render(<App />);';
+    fileContents['/repo/examples/react/redux/example.component.tsx.txt'] =
+      'export function App() { return <div />; }';
+
+    const files = createGenerator().collectFiles('/repo/examples/react/redux');
+
+    expect(files).toEqual([
+      {
+        type: 'typescript',
+        fileName: 'example.component.tsx',
+        source: 'export function App() { return <div />; }',
+        numberedSource: '1 | export function App() { return <div />; }'
+      },
+      {
+        type: 'typescript',
+        fileName: 'main.tsx',
+        source: 'createRoot(document.getElementById("root")!).render(<App />);',
+        numberedSource:
+          '1 | createRoot(document.getElementById("root")!).render(<App />);'
+      }
+    ]);
+  });
+
   it('should order files using the framework-specific comparison sequence', () => {
     directories['/repo/examples/angular/redux'] = [
       file('example.component.ts.txt'),
@@ -162,6 +191,51 @@ describe('CLI: SduxComparisonSourceGenerator', () => {
       'employee.facade.ts',
       'example.component.ts',
       'example.component.html',
+      'employee.model.ts',
+      'employee.actions.ts',
+      'employee.state.ts',
+      'employee.reducer.ts',
+      'employee.selectors.ts'
+    ]);
+  });
+
+  it('should order React Redux files using the same comparison sequence aliases', () => {
+    directories['/repo/examples/react/redux'] = [
+      file('employee.reducer.ts.txt'),
+      file('main.tsx.txt'),
+      file('employee.model.ts.txt'),
+      file('app.config.ts.txt'),
+      file('employee.hook.ts.txt'),
+      file('employee.selectors.ts.txt'),
+      file('employee.actions.ts.txt'),
+      file('employee.state.ts.txt'),
+      file('example.component.tsx.txt')
+    ];
+    fileContents['/repo/examples/react/redux/employee.reducer.ts.txt'] =
+      'reducer';
+    fileContents['/repo/examples/react/redux/main.tsx.txt'] = 'main';
+    fileContents['/repo/examples/react/redux/employee.model.ts.txt'] = 'model';
+    fileContents['/repo/examples/react/redux/app.config.ts.txt'] = 'config';
+    fileContents['/repo/examples/react/redux/employee.hook.ts.txt'] = 'hook';
+    fileContents['/repo/examples/react/redux/employee.selectors.ts.txt'] =
+      'selectors';
+    fileContents['/repo/examples/react/redux/employee.actions.ts.txt'] =
+      'actions';
+    fileContents['/repo/examples/react/redux/employee.state.ts.txt'] = 'state';
+    fileContents['/repo/examples/react/redux/example.component.tsx.txt'] =
+      'component';
+
+    const files = createGenerator().collectFiles(
+      '/repo/examples/react/redux',
+      '/repo/examples/react/redux',
+      'redux'
+    );
+
+    expect(files.map((fileEntry) => fileEntry.fileName)).toEqual([
+      'main.tsx',
+      'app.config.ts',
+      'employee.hook.ts',
+      'example.component.tsx',
       'employee.model.ts',
       'employee.actions.ts',
       'employee.state.ts',

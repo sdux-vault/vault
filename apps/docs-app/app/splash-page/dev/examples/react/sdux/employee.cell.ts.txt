@@ -1,0 +1,21 @@
+import { FeatureCell } from '@sdux-vault/react';
+import './app.config';
+import { Employee } from './employee.model';
+
+export const employeeCell = FeatureCell<Employee[]>({
+  key: 'employees',
+  initialState: []
+});
+
+employeeCell
+  .filters([
+    (examples: Employee[]) =>
+      examples.filter((example) => example.id % 2 !== 0)
+  ])
+  .reducers([
+    (examples: Employee[]) => {
+      examples.sort((left, right) => left.name.localeCompare(right.name));
+      return examples;
+    }
+  ])
+  .initialize();

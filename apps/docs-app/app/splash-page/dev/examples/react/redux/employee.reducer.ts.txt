@@ -1,0 +1,42 @@
+import { createReducer } from '@reduxjs/toolkit';
+import { EmployeeActions } from './employee.actions';
+import { Employee } from './employee.model';
+import { EmployeeState, initialEmployeeState } from './employee.state';
+
+export const employeeFeatureKey = 'employees';
+
+const seededEmployees = [
+  { id: 1, name: 'Ada' },
+  { id: 2, name: 'Brian' }
+];
+
+const filterOddEmployees = (employees: Employee[]): Employee[] => {
+  return employees.filter((employee) => employee.id % 2 !== 0);
+};
+
+const sortEmployeesByName = (employees: Employee[]): Employee[] => {
+  const sortedEmployees = [...employees];
+
+  sortedEmployees.sort((left, right) => left.name.localeCompare(right.name));
+
+  return sortedEmployees;
+};
+
+const prepareEmployees = (employees: Employee[]): Employee[] => {
+  return sortEmployeesByName(filterOddEmployees(employees));
+};
+
+export const employeeReducer = createReducer(initialEmployeeState, (builder) => {
+  builder
+    .addCase(EmployeeActions.seed, (state) => {
+      state.loading = false;
+      state.value = prepareEmployees(seededEmployees);
+      state.error = null;
+    })
+    .addCase(EmployeeActions.replace, (state, action) => {
+      state.loading = false;
+      state.value = prepareEmployees(action.payload);
+      state.error = null;
+    })
+    .addCase(EmployeeActions.reset, () => initialEmployeeState);
+});
