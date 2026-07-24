@@ -42,7 +42,7 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to read topics in the blog">
-        <a routerLink="/blog">
+        <a (click)="showDocumentation()" routerLink="/blog">
           <div class="title">Blog</div>
           <div class="body">
             Kick back and read the latest
@@ -54,7 +54,9 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to understand the execution guarantees of the pipeline">
-        <a routerLink="/docs/pipeline/execution-guarantee">
+        <a
+          (click)="showDocumentation()"
+          routerLink="/docs/pipeline/execution-guarantee">
           <div class="title">Execution Guarantees</div>
           <div class="body">
             Understand the execution guarantees of
@@ -66,7 +68,7 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the migration documentation">
-        <a routerLink="/docs/migration">
+        <a (click)="showDocumentation()" routerLink="/docs/migration">
           <div class="title">Migration Guide</div>
           <div class="body">Learn how to migrate your current state</div>
         </a>
@@ -75,7 +77,7 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the diagrams documentation">
-        <a routerLink="/docs/diagrams">
+        <a (click)="showDocumentation()" routerLink="/docs/diagrams">
           <div class="title">Diagrams</div>
           <div class="body">
             Deep dive into the <sdux-brand-name /> execution diagrams
@@ -86,7 +88,7 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the videos documentation">
-        <a routerLink="/docs/videos">
+        <a (click)="showDocumentation()" routerLink="/docs/videos">
           <div class="title">Videos</div>
           <div class="body">
             Watch the informative <sdux-brand-name /> videos
@@ -97,7 +99,7 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the testing documentation">
-        <a routerLink="/docs/welcome/testing">
+        <a (click)="showDocumentation()" routerLink="/docs/welcome/testing">
           <div class="title">Testing</div>
           <div class="body">
             Like to test? It's 1, 2, 3 easy with <sdux-brand-name />
@@ -108,7 +110,7 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the Pipeline Builder">
-        <a routerLink="/builder">
+        <a (click)="showDocumentation()" routerLink="/builder">
           <div class="title">Pipeline Builder</div>
           <div class="body">Build your first pipeline</div>
         </a>
@@ -117,7 +119,7 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the StackBlitz examples">
-        <a routerLink="/stackblitz">
+        <a (click)="showDocumentation()" routerLink="/stackblitz">
           <div class="title">StackBlitz Examples</div>
           <div class="body">Explore StackBlitz examples</div>
         </a>
@@ -126,7 +128,7 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the Pipeline Overview">
-        <a routerLink="/docs/pipeline">
+        <a (click)="showDocumentation()" routerLink="/docs/pipeline">
           <div class="title">Pipeline Overview</div>
           <div class="body">Understanding the <sdux-brand-name /> pipeline</div>
         </a>
@@ -135,7 +137,9 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the FeatureCell API documentation">
-        <a routerLink="/docs/pipeline/apis/feature-cell-api">
+        <a
+          (click)="showDocumentation()"
+          routerLink="/docs/pipeline/apis/feature-cell-api">
           <div class="title">FeatureCell API</div>
           <div class="body">Learn how to use the FeatureCell API</div>
         </a>
@@ -144,7 +148,9 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the Controller Overview">
-        <a routerLink="/docs/pipeline/controllers/what-is-a-controller">
+        <a
+          (click)="showDocumentation()"
+          routerLink="/docs/pipeline/controllers/what-is-a-controller">
           <div class="title">Controller Overview</div>
           <div class="body">How a controller works in the pipeline</div>
         </a>
@@ -153,7 +159,9 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the Behavior Overview">
-        <a routerLink="/docs/pipeline/behaviors/what-is-a-behavior">
+        <a
+          (click)="showDocumentation()"
+          routerLink="/docs/pipeline/behaviors/what-is-a-behavior">
           <div class="title">Behavior Overview</div>
           <div class="body">How a behavior works in the pipeline</div>
         </a>
@@ -162,7 +170,9 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the Global Error Handler Overview">
-        <a routerLink="/docs/global-error-handler">
+        <a
+          (click)="showDocumentation()"
+          routerLink="/docs/global-error-handler">
           <div class="title">Global Error Handler</div>
           <div class="body">
             How the global error handler reacts to pipeline errors
@@ -173,7 +183,7 @@
       <div
         class="documentation-highlight"
         matTooltip="Click to open the DevTools Overview">
-        <a routerLink="/docs/dev-tools/overview">
+        <a (click)="showDocumentation()" routerLink="/docs/dev-tools/overview">
           <div class="title">DevTools Overview</div>
           <div class="body">Learn how to use the DevTools</div>
         </a>
@@ -233,7 +243,7 @@
           <span class="nav-section-label">Global Error Handler</span>
         </mat-expansion-panel-header>
         <a
-          mat-list-item
+          (click)="showDocumentation()"
           routerLink="/docs/global-error-handler"
           routerLinkActive="active">
           Overview
@@ -247,20 +257,20 @@
           <span class="nav-section-label">Execution Guarantees</span>
         </mat-expansion-panel-header>
         <a
-          mat-list-item
+          (click)="showDocumentation()"
           routerLink="/docs/pipeline/execution-guarantee"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }">
           Overview
         </a>
         <a
-          mat-list-item
+          (click)="showDocumentation()"
           routerLink="/docs/pipeline/execution-guarantee/conductor-queue"
           routerLinkActive="active">
           Conductor Queue
         </a>
         <a
-          mat-list-item
+          (click)="showDocumentation()"
           routerLink="/docs/pipeline/execution-guarantee/isolation"
           routerLinkActive="active">
           Pipeline Isolation
