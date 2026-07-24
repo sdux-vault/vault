@@ -7,6 +7,7 @@ import {
   signal
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
 import Prism from 'prismjs';
@@ -41,10 +42,14 @@ const COMPARISON_FRAMEWORKS: readonly {
   imports: [
     MatIconModule,
     VaultBrandNameComponent,
-    FrameworkComparisonComponent
+    FrameworkComparisonComponent,
+    MatTooltip
   ],
   templateUrl: './dev-splash-page.component.html',
-  styleUrls: ['./dev-splash-page.component.scss']
+  styleUrls: [
+    '../splash-page.component.scss',
+    './dev-splash-page.component.scss'
+  ]
 })
 export class DevSplashPageComponent implements AfterViewInit {
   protected readonly comparisonFrameworks = COMPARISON_FRAMEWORKS;
@@ -139,7 +144,20 @@ export class DevSplashPageComponent implements AfterViewInit {
     this.#router.navigate(['/docs/welcome/testing']);
   }
 
-  viewExamples(fragment: string) {
+  viewStackblitz(fragment: string, hasStackblitzExample?: boolean): void {
+    if (hasStackblitzExample) {
+      if (fragment.match(/^(angular|react|svelte|vue)$/i)) {
+        fragment = 'web';
+      }
+
+      this.openMenu();
+      this.#router.navigate(['/docs/stackblitz'], {
+        fragment: fragment.toLowerCase()
+      });
+    }
+  }
+
+  viewExamples(fragment: string): void {
     this.openMenu();
     this.#router.navigate(['/docs/stackblitz'], { fragment });
   }

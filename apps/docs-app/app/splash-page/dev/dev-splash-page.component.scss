@@ -99,9 +99,10 @@ $splash-code-panel-text: global.$sdux-text-primary;
     z-index: 1;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
+    // flex-direction: row;
     gap: global.$spacing-lg;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     width: calc(100% - 2 * global.$spacing-lg);
     align-self: flex-start;
     padding: global.$spacing-md global.$spacing-lg;
@@ -114,63 +115,23 @@ $splash-code-panel-text: global.$sdux-text-primary;
       color-mix(in srgb, global.$sdux-primary-light 6%, $splash-bg)
     );
     box-shadow: inset 0 0 0 1px color-mix(in srgb, $splash-text 4%, transparent);
-  }
 
-  &-release-text {
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-sm;
     font-weight: global.$font-weight-semibold;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: $splash-text;
-  }
 
-  &-terminal {
-    border-radius: global.$border-radius-lg;
-    overflow: hidden;
-    border: 1px solid $splash-border;
-  }
-
-  &-terminal-chrome {
-    display: flex;
-    align-items: center;
-    gap: global.$spacing-xs;
-    padding: global.$spacing-sm global.$spacing-md;
-    background: color-mix(in srgb, $splash-code-bg 95%, $splash-primary);
-    border-bottom: 1px solid $splash-border;
-  }
-
-  &-terminal-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: color-mix(in srgb, $splash-text 20%, transparent);
-
-    &:first-child {
-      background: global.$sdux-warn-base;
+    > button {
+      width: 250px;
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-semibold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: $splash-text;
     }
-
-    &:nth-child(2) {
-      background: global.$sdux-success-base;
-    }
-  }
-
-  &-terminal-title {
-    font-family: global.$sdux-code-font;
-    font-size: global.$font-size-xxs;
-    color: $splash-muted;
-    margin-left: auto;
-  }
-
-  &-terminal-code {
-    background: $splash-code-bg;
-    padding: global.$spacing-xl;
-    font-family: global.$sdux-code-font;
-    font-size: global.$font-size-sm;
-    color: $splash-code-text;
-    line-height: 1.7;
-    margin: 0;
-    overflow-x: auto;
   }
 }
 
@@ -258,68 +219,20 @@ $splash-code-panel-text: global.$sdux-text-primary;
 // ─── Ownership Model ───
 .ownership {
   &-point {
-    display: flex;
     gap: global.$spacing-md;
-    align-items: flex-start;
     padding-top: global.$spacing-sm;
-    border-top: 1px solid color-mix(in srgb, $splash-text 10%, transparent);
   }
 
   &-bullet {
-    flex-shrink: 0;
-    width: global.$spacing-sm;
-    height: global.$spacing-sm;
     border-radius: 0;
-    background: $splash-primary;
-    margin-top: 0.45em;
-  }
-
-  &-point-text {
-    font-size: global.$font-size-md;
-    color: $splash-text;
-    margin: 0;
-
-    strong {
-      font-weight: global.$font-weight-semibold;
-    }
   }
 }
 
 // ─── Deterministic / Testing ───
 .deterministic {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: global.$spacing-2xl;
   align-items: start;
 
-  @media (max-width: global.$breakpoint-md) {
-    grid-template-columns: 1fr;
-  }
-
-  &-code {
-    background: $splash-code-panel-bg;
-    border-radius: 0;
-    border: 1px solid $splash-border;
-    padding: global.$spacing-xl;
-    font-family: global.$sdux-code-font;
-    font-size: global.$font-size-sm;
-    color: $splash-code-panel-text;
-    line-height: 1.7;
-    margin: 0;
-    overflow-x: auto;
-  }
-
-  &-points {
-    display: flex;
-    flex-direction: column;
-    gap: global.$spacing-md;
-  }
-
   &-label {
-    font-size: global.$font-size-lg;
-    font-weight: global.$font-weight-semibold;
-    color: $splash-primary;
-    margin: 0 0 global.$spacing-md;
     font-family: global.$sdux-code-font;
     text-transform: uppercase;
   }
@@ -357,132 +270,67 @@ $splash-code-panel-text: global.$sdux-text-primary;
   @media (max-width: global.$breakpoint-sm) {
     grid-template-columns: 1fr;
   }
-}
 
-.framework-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  gap: global.$spacing-sm;
-  width: 150px;
-  min-width: 150px;
-  padding: global.$spacing-md;
-  border-radius: 0;
-  border: 1px solid $splash-border;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, global.$sdux-surface-light-accent 50%, $splash-code-bg),
-    $splash-code-bg
-  );
-  transition: border-color 0.2s ease;
-
-  @media (max-width: global.$breakpoint-md) {
-    width: 150px;
-  }
-
-  &:hover {
-    border-color: $splash-primary;
-  }
-
-  &-header {
+  .framework-tile {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
     gap: global.$spacing-sm;
-    min-height: 24px;
-  }
-
-  img {
-    flex-shrink: 0;
-  }
-
-  &-name {
-    font-size: global.$font-size-md;
-    font-weight: global.$font-weight-semibold;
-    margin: 0;
-    text-align: left;
-    line-height: 1.3;
-  }
-
-  &-note {
-    font-size: global.$font-size-xs;
-    color: $splash-muted;
-    margin: 0;
-    text-align: left;
-    line-height: 1.5;
-  }
-}
-
-// ─── StackBlitz ───
-.stackblitz {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: global.$spacing-lg;
-
-  @media (max-width: global.$breakpoint-md) {
-    grid-template-columns: 1fr;
-  }
-
-  .stackblitz-card {
-    border: 1px solid $splash-border;
+    width: 150px;
+    min-width: 150px;
+    padding: global.$spacing-md;
     border-radius: 0;
-    overflow: hidden;
+    border: 1px solid $splash-border;
     background: linear-gradient(
       180deg,
       color-mix(
         in srgb,
-        global.$sdux-surface-light-accent 36%,
+        global.$sdux-surface-light-accent 50%,
         $splash-code-bg
       ),
       $splash-code-bg
     );
-    transition:
-      border-color 0.2s ease,
-      background 0.2s ease;
+    transition: border-color 0.2s ease;
 
-    &:hover {
-      border-color: $splash-primary;
-      background: color-mix(in srgb, $splash-primary 6%, $splash-bg);
-    }
+    &.has-stackbliz {
+      width: 145px;
+      min-width: 145px;
+      border-right: 5px solid $splash-primary;
+      cursor: pointer;
 
-    &-preview {
-      background: global.$sdux-surface-default;
-      padding: global.$spacing-sm;
-      font-family: global.$sdux-code-font;
-      font-size: global.$font-size-xs;
-      color: $splash-code-panel-text;
-      line-height: 1.6;
-      min-height: 338px;
-      border-bottom: 1px solid $splash-border;
-
-      pre {
-        margin: 0;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-      }
-
-      code {
-        font-family: inherit;
-        font-size: inherit;
+      &:hover {
+        border-color: $splash-primary;
+        transform: translateY(-2px);
+        box-shadow: global.$sdux-shadow-hover;
       }
     }
 
-    &-info {
-      padding: global.$spacing-md global.$spacing-lg;
+    @media (max-width: global.$breakpoint-md) {
+      width: 150px;
     }
 
-    &-title {
+    &-header {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-sm;
+      min-height: 24px;
+    }
+
+    &-name {
       font-size: global.$font-size-md;
       font-weight: global.$font-weight-semibold;
-      margin: 0 0 global.$spacing-xs;
-      text-transform: uppercase;
+      margin: 0;
+      text-align: left;
+      line-height: 1.3;
     }
 
-    &-desc {
-      font-size: global.$font-size-sm;
+    &-note {
+      font-size: global.$font-size-xs;
       color: $splash-muted;
-      margin: 0 0 global.$spacing-md;
-      min-height: 50px;
+      margin: 0;
+      text-align: left;
+      line-height: 1.5;
     }
   }
 }
@@ -513,28 +361,4 @@ $splash-code-panel-text: global.$sdux-text-primary;
   display: flex;
   gap: global.$spacing-md;
   padding: global.$spacing-lg 0 0;
-}
-
-.video-showcase {
-  display: flex;
-  justify-content: center;
-  padding: global.$spacing-lg 0;
-
-  .video-embed {
-    position: relative;
-    width: 100%;
-    max-width: 800px;
-    aspect-ratio: 16 / 9;
-    border-radius: 0;
-    overflow: hidden;
-    border: 1px solid $splash-border;
-
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-  }
 }

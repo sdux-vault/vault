@@ -3,20 +3,12 @@
 
 <!-- ─── Hero (Split with Terminal) ─── -->
 <section class="hero">
-  <div
-    class="hero-release-banner"
-    aria-label="SDuX Vault 1.0 release announcement">
-    <span class="hero-release-text"
-      ><sdux-vault-brand-name [tm]="true" /> 1.0 is officially released</span
-    >
-    <a
-      class="btn-primary hero-release-cta"
-      href="https://www.npmjs.com/package/@sdux-vault/core"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Download SDuX Vault 1.0 from npm">
-      Download Now
-    </a>
+  <div class="hero-release-banner" aria-label="SDuX Vault documentation">
+    <div>Looking for Docs?</div>
+
+    <button type="button" class="sdux-button" (click)="openMenu()">
+      Show me the DOCS!
+    </button>
   </div>
 </section>
 
@@ -45,7 +37,7 @@
 
 <!-- ─── Pipeline Video ─── -->
 <section class="section">
-  <p class="section-summary">Pipeline overview</p>
+  <p class="section-summary">Pipeline overview video</p>
 
   <div class="video-showcase">
     <div class="video-embed">
@@ -129,7 +121,13 @@ it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">a
 
     <div class="frameworks">
       @for (language of frameworkLanguages; track language.name) {
-        <div class="framework-tile">
+        <div
+          class="framework-tile"
+          [class.has-stackbliz]="language.hasStackblitzExample"
+          [matTooltip]="language.tooltip"
+          (click)="
+            viewStackblitz(language.name, language.hasStackblitzExample)
+          ">
           <div class="framework-tile-header">
             <img
               [src]="'assets/' + language.logo"

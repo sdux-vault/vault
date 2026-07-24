@@ -7,4 +7,6 @@ export interface SupportedLanguageShape {
   logoAlt: string;
   showInEcosystemStrip?: boolean;
   showInFrameworkTiles?: boolean;
+  hasStackblitzExample?: boolean;
+  tooltip?: string;
 }

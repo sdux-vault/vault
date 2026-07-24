@@ -8,7 +8,9 @@ export const SupportedLanguagesConstants: SupportedLanguageShape[] = [
     logo: 'brand/angular/angular-icon.png',
     logoAlt: 'Angular logo',
     showInEcosystemStrip: true,
-    showInFrameworkTiles: true
+    showInFrameworkTiles: true,
+    hasStackblitzExample: true,
+    tooltip: 'View SDuX + Angular examples on StackBlitz'
   },
   {
     name: 'Astro',
@@ -26,7 +28,9 @@ export const SupportedLanguagesConstants: SupportedLanguageShape[] = [
     logo: 'brand/bun/bun-icon.svg',
     logoAlt: 'Bun logo',
     showInEcosystemStrip: true,
-    showInFrameworkTiles: true
+    showInFrameworkTiles: true,
+    hasStackblitzExample: true,
+    tooltip: 'View SDuX + Bun examples on StackBlitz'
   },
   {
     name: 'Capacitor',
@@ -44,7 +48,9 @@ export const SupportedLanguagesConstants: SupportedLanguageShape[] = [
     logo: 'brand/deno/deno-icon.svg',
     logoAlt: 'Deno logo',
     showInEcosystemStrip: true,
-    showInFrameworkTiles: true
+    showInFrameworkTiles: true,
+    hasStackblitzExample: true,
+    tooltip: 'View SDuX + Deno examples on StackBlitz'
   },
   {
     name: 'Edge Runtimes',
@@ -105,7 +111,9 @@ export const SupportedLanguagesConstants: SupportedLanguageShape[] = [
     logo: 'brand/nodejs/nodejs-icon.svg',
     logoAlt: 'NodeJs logo',
     showInEcosystemStrip: true,
-    showInFrameworkTiles: true
+    showInFrameworkTiles: true,
+    hasStackblitzExample: true,
+    tooltip: 'View SDuX + Node examples on StackBlitz'
   },
   {
     name: 'Nuxt',
@@ -133,7 +141,9 @@ export const SupportedLanguagesConstants: SupportedLanguageShape[] = [
     logo: 'brand/react/react-icon.svg',
     logoAlt: 'React logo',
     showInEcosystemStrip: true,
-    showInFrameworkTiles: true
+    showInFrameworkTiles: true,
+    hasStackblitzExample: true,
+    tooltip: 'View SDuX + React examples on StackBlitz'
   },
   {
     name: 'Service Workers',
@@ -158,7 +168,9 @@ export const SupportedLanguagesConstants: SupportedLanguageShape[] = [
     logo: 'brand/svelte/svelte-icon.svg',
     logoAlt: 'Svelte logo',
     showInEcosystemStrip: true,
-    showInFrameworkTiles: true
+    showInFrameworkTiles: true,
+    hasStackblitzExample: true,
+    tooltip: 'View SDuX + Svelte examples on StackBlitz'
   },
   {
     name: 'Tauri',
@@ -177,7 +189,9 @@ export const SupportedLanguagesConstants: SupportedLanguageShape[] = [
     logo: 'brand/typescript/typescript-icon.svg',
     logoAlt: 'TypeScript logo',
     showInEcosystemStrip: true,
-    showInFrameworkTiles: true
+    showInFrameworkTiles: true,
+    hasStackblitzExample: true,
+    tooltip: 'View SDuX + TypeScript examples on StackBlitz'
   },
   {
     name: 'VanillaJS',
@@ -186,7 +200,9 @@ export const SupportedLanguagesConstants: SupportedLanguageShape[] = [
     logo: 'brand/vanillajs/vanillajs-icon.svg',
     logoAlt: 'VanillaJS logo',
     showInEcosystemStrip: true,
-    showInFrameworkTiles: true
+    showInFrameworkTiles: true,
+    hasStackblitzExample: true,
+    tooltip: 'View SDuX + VanillaJS examples on StackBlitz'
   },
   {
     name: 'Vue',
@@ -195,7 +211,9 @@ export const SupportedLanguagesConstants: SupportedLanguageShape[] = [
     logo: 'brand/vue/vue-icon.svg',
     logoAlt: 'VueJs logo',
     showInEcosystemStrip: true,
-    showInFrameworkTiles: true
+    showInFrameworkTiles: true,
+    hasStackblitzExample: true,
+    tooltip: 'View SDuX + Vue examples on StackBlitz'
   },
   {
     name: 'Web Components',
