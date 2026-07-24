@@ -1,55 +1,21 @@
-<div class="example-container">
-  <div class="header">
-    <div class="title">Angular - Redux Initial State Example</div>
-    <div class="subtitle">
-      The same simple state example now needs store registration, actions,
-      reducer wiring, selectors, and a facade before the component can read or
-      replace employee state.
-    </div>
+<div>
+  <div>
+    @if (state.loading()) {
+      <div>Loading...</div>
+    } @else if (state.error()) {
+      <div>{{ state.error() }}</div>
+    } @else {
+      <textarea readonly>{{ state.value() | json }}</textarea>
+    }
   </div>
 
-  <div class="section">
-    <div class="label">Redux Flow</div>
-    <div class="flow-hint">Component → Facade → Action → Reducer → Selector → UI</div>
-  </div>
+  <div>
+    <button type="button" (click)="loadSample()">
+      Load Sample State
+    </button>
 
-  <div class="section column">
-    <div class="state-container">
-      <div class="label">Input State</div>
-      <div class="hint">Raw data before dispatch</div>
-      <div class="hint file">
-        <span class="emphasis">File:</span> app/example.component.ts
-      </div>
-      <textarea class="data-textarea">{{ sample | json }}</textarea>
-    </div>
-
-    <div class="state-container data-row">
-      <div class="label">Store State</div>
-      <div class="hint">Selected employees array</div>
-      <div class="hint file">
-        <span class="emphasis">Files:</span> employee.reducer.ts + employee.selectors.ts
-      </div>
-      <textarea class="data-textarea" readonly>{{ state.value() | json }}</textarea>
-      <div class="hint state">
-        <span class="emphasis">Loading:</span> {{ state.loading() }}
-      </div>
-      <div class="hint state">
-        <span class="emphasis">Error:</span> {{ state.error() ?? 'null' }}
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="actions">
-      <button type="button" class="sdux-button primary" (click)="loadSample()">
-        Load Sample State
-      </button>
-
-      <div class="secondary-actions">
-        <button type="button" class="sdux-button" (click)="resetState()">
-          Reset State
-        </button>
-      </div>
-    </div>
+    <button type="button" (click)="resetState()">
+      Reset State
+    </button>
   </div>
 </div>

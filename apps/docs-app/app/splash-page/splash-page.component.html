@@ -9,7 +9,7 @@
     class="hero-release-banner"
     aria-label="SDuX Vault 1.0 release announcement">
     <span class="hero-release-text"
-      >SDuX Vault™ 1.0 is officially released</span
+      ><sdux-vault-brand-name [tm]="true" /> 1.0 is officially released</span
     >
     <a
       class="btn-primary hero-release-cta"
@@ -384,7 +384,7 @@ cartCell.<span class="code-keyword">replaceState</span>(&#123;
   <div class="section-inner">
     <span class="section-label">Testing</span>
     <h2 class="section-heading">
-      Testing becomes stable because execution becomes stable.
+      Testing becomes stable because execution becomes stable. Easy as 1, 2, 3.
     </h2>
     <p class="section-subheading">
       No flaky tests. No timing hacks. No marble diagrams. Just deterministic
@@ -395,12 +395,15 @@ cartCell.<span class="code-keyword">replaceState</span>(&#123;
       <pre
         class="deterministic-code"><span class="code-comment">// act &rarr; settle &rarr; assert</span>
 it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">async</span> () =&gt; &#123;
+  // 1- Update the cart with a new set of items
   cartCell.<span class="code-keyword">mergeState</span>(&#123;
     value: mockItems
   &#125;);
 
+  // 2- Await the pipeline to settle and produce a new state
   <span class="code-keyword">await</span> cartCellSettled(&lt;cart-cell-key&gt;);
 
+  // 3- Assert the new state is as expected
   expect(cartCell.state.total).toBe(42);
 &#125;);</pre>
 

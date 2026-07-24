@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { EmployeeCell } from './employee.cell';
+import { EmployeeCell } from './employee.service';
 
 @Component({
   selector: 'example-view',

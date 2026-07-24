@@ -27,6 +27,10 @@ $splash-code-text: $splash-text;
 $splash-code-panel-bg: global.$sdux-text-black;
 $splash-code-panel-text: global.$sdux-text-primary;
 
+.sdux-brand-name {
+  color: global.$sdux-primary-base;
+}
+
 :host {
   display: block;
   background:
@@ -90,32 +94,6 @@ $splash-code-panel-text: global.$sdux-text-primary;
   max-width: 1200px;
   margin: 0 auto;
 
-  &-glow {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background:
-      linear-gradient(
-        135deg,
-        color-mix(in srgb, global.$sdux-primary-base 8%, transparent) 0%,
-        transparent 55%
-      ),
-      linear-gradient(
-        90deg,
-        transparent 0,
-        transparent calc(100% - 1px),
-        color-mix(in srgb, $splash-text 10%, transparent) calc(100% - 1px)
-      ),
-      linear-gradient(
-        180deg,
-        transparent 0,
-        transparent calc(100% - 1px),
-        color-mix(in srgb, $splash-text 8%, transparent) calc(100% - 1px)
-      );
-    opacity: 0.45;
-  }
-
   &-release-banner {
     position: relative;
     z-index: 1;
@@ -124,7 +102,7 @@ $splash-code-panel-text: global.$sdux-text-primary;
     justify-content: flex-start;
     gap: global.$spacing-lg;
     flex-wrap: wrap;
-    width: 100%;
+    width: calc(100% - 2 * global.$spacing-lg);
     align-self: flex-start;
     padding: global.$spacing-md global.$spacing-lg;
     margin-bottom: global.$spacing-lg;
@@ -147,86 +125,52 @@ $splash-code-panel-text: global.$sdux-text-primary;
     color: $splash-text;
   }
 
-  &-split {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-    gap: global.$spacing-2xl;
-    width: 100%;
-    align-items: start;
-
-    @media (max-width: global.$breakpoint-md) {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  &-copy {
-    display: flex;
-    flex-direction: column;
-    gap: global.$spacing-md;
-  }
-
-  &-eyebrow {
-    font-family: global.$sdux-code-font;
-    font-size: global.$font-size-xs;
-    font-weight: global.$font-weight-semibold;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: $splash-primary;
-    display: inline-flex;
-    align-items: center;
-    gap: global.$spacing-sm;
-
-    &::before,
-    &::after {
-      content: '';
-      width: global.$spacing-xl;
-      height: 1px;
-      background: color-mix(in srgb, $splash-primary 70%, $splash-border);
-    }
-  }
-
-  &-title {
-    font-size: clamp(2.6rem, 5vw, 4.2rem);
-    font-weight: global.$font-weight-bold;
-    line-height: 1.02;
-    letter-spacing: -0.02em;
-    margin: 0;
-    max-width: 12ch;
-    text-transform: uppercase;
-  }
-
-  &-subtitle {
-    font-size: clamp(global.$font-size-md, 1.4vw, global.$font-size-lg);
-    color: $splash-muted;
-    max-width: 52ch;
-    margin: 0;
-    font-weight: global.$font-weight-regular;
-  }
-
-  &-actions {
-    display: flex;
-    gap: global.$spacing-md;
-    flex-wrap: wrap;
-    margin-top: global.$spacing-md;
-  }
-
-  // Terminal chrome
   &-terminal {
-    border-radius: 0;
+    border-radius: global.$border-radius-lg;
     overflow: hidden;
     border: 1px solid $splash-border;
-    background: linear-gradient(
-      180deg,
-      color-mix(
-        in srgb,
-        global.$sdux-surface-light-accent 65%,
-        $splash-code-bg
-      ),
-      $splash-code-bg
-    );
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, $splash-text 4%, transparent);
+  }
+
+  &-terminal-chrome {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-xs;
+    padding: global.$spacing-sm global.$spacing-md;
+    background: color-mix(in srgb, $splash-code-bg 95%, $splash-primary);
+    border-bottom: 1px solid $splash-border;
+  }
+
+  &-terminal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: color-mix(in srgb, $splash-text 20%, transparent);
+
+    &:first-child {
+      background: global.$sdux-warn-base;
+    }
+
+    &:nth-child(2) {
+      background: global.$sdux-success-base;
+    }
+  }
+
+  &-terminal-title {
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xxs;
+    color: $splash-muted;
+    margin-left: auto;
+  }
+
+  &-terminal-code {
+    background: $splash-code-bg;
+    padding: global.$spacing-xl;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-sm;
+    color: $splash-code-text;
+    line-height: 1.7;
+    margin: 0;
+    overflow-x: auto;
   }
 }
 
@@ -383,6 +327,148 @@ $splash-code-panel-text: global.$sdux-text-primary;
 
 .button-width {
   width: 250px;
+}
+
+.comparison-header-grid,
+.comparison-row-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: global.$spacing-xl;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.comparison-rows {
+  display: flex;
+  flex-direction: column;
+  gap: global.$spacing-xl;
+  margin-top: global.$spacing-xl;
+}
+
+.comparison-panel {
+  border: 1px solid $splash-border;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, global.$sdux-surface-light-accent 38%, $splash-surface),
+    $splash-surface
+  );
+}
+
+.comparison-panel-header-card {
+  overflow: hidden;
+}
+
+.comparison-panel-header {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 25px 1fr;
+  padding: global.$spacing-lg;
+  border-bottom: 1px solid $splash-border;
+  min-height: 160px;
+}
+
+.comparison-panel-header-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: global.$spacing-md;
+}
+
+.comparison-panel-header-bottom-row {
+  display: block;
+}
+
+.comparison-panel-title {
+  margin: 0;
+  font-size: global.$font-size-lg;
+  font-weight: global.$font-weight-semibold;
+  line-height: 1.3;
+}
+
+.comparison-panel-note {
+  margin: global.$spacing-xs 0 0;
+  color: $splash-muted;
+  font-size: global.$font-size-sm;
+  line-height: 1.5;
+
+  li {
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  ul {
+    margin-top: global.$spacing-xs;
+    margin-bottom: 0;
+    padding-inline-start: global.$spacing-lg;
+    list-style-position: outside;
+  }
+
+  .note-callout {
+    font-weight: global.$font-weight-semibold;
+    color: global.$sdux-text-black;
+  }
+}
+
+.comparison-panel-count {
+  flex-shrink: 0;
+  padding: global.$spacing-xs global.$spacing-sm;
+  border: 1px solid $splash-border;
+  background: $splash-code-bg;
+  font-family: global.$sdux-code-font;
+  font-size: global.$font-size-xs;
+  font-weight: global.$font-weight-semibold;
+  text-transform: uppercase;
+}
+
+.comparison-file-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.comparison-file-panel {
+  overflow: hidden;
+}
+
+.comparison-file {
+  border-top: 1px solid color-mix(in srgb, $splash-text 8%, transparent);
+
+  &:first-child {
+    border-top: 0;
+  }
+}
+
+.comparison-file-name {
+  padding: global.$spacing-sm global.$spacing-lg;
+  font-family: global.$sdux-code-font;
+  font-size: global.$font-size-xs;
+  font-weight: global.$font-weight-semibold;
+  color: $splash-primary;
+  background: color-mix(in srgb, global.$sdux-primary-base 5%, transparent);
+}
+
+.comparison-file-source {
+  margin: 0;
+  padding: global.$spacing-md global.$spacing-lg;
+  overflow-x: auto;
+  background: $splash-code-panel-bg;
+  color: $splash-code-panel-text;
+  border-top: 1px solid color-mix(in srgb, $splash-text 8%, transparent);
+
+  code {
+    display: block;
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-xs;
+    line-height: 1.6;
+    white-space: pre;
+  }
+}
+
+.comparison-file-empty {
+  min-height: 100%;
+  padding: global.$spacing-xl global.$spacing-lg;
+  background: color-mix(in srgb, $splash-code-bg 65%, $splash-bg);
 }
 
 .frameworks {
