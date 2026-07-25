@@ -9,7 +9,6 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
 import Prism from 'prismjs';
 import { SupportedLanguagesConstants } from '../../docs/top-tier/supported-languages/constants/supported-languages.constant';
 import { NavigationService } from '../../navigation/service/navigation.service';
@@ -39,12 +38,7 @@ const COMPARISON_FRAMEWORKS: readonly {
 @Component({
   selector: 'sdux-dev-splash-page',
   standalone: true,
-  imports: [
-    MatIconModule,
-    VaultBrandNameComponent,
-    FrameworkComparisonComponent,
-    MatTooltip
-  ],
+  imports: [MatIconModule, FrameworkComparisonComponent, MatTooltip],
   templateUrl: './dev-splash-page.component.html',
   styleUrls: [
     '../splash-page.component.scss',
