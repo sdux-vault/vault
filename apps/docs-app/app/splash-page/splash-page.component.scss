@@ -3,30 +3,22 @@
 // ─── SDuX Splash Page — Final Composite ───
 // Layout: Stratum (Example 20) | Copy: best-copy.md | CSS: brian1 Horizon
 
-$splash-bg: global.$sdux-surface-light;
-$splash-surface: global.$sdux-surface-light-mid;
-$splash-text: global.$sdux-text-inverse;
 $splash-muted: color-mix(in srgb, global.$sdux-text-inverse 60%, transparent);
-$splash-primary: global.$sdux-primary-base;
 $splash-primary-soft: color-mix(
   in srgb,
   global.$sdux-primary-base 8%,
   global.$sdux-surface-light
 );
-$splash-accent: global.$sdux-primary-light;
 $splash-border: color-mix(
   in srgb,
   global.$sdux-primary-base 14%,
   global.$sdux-surface-light-mid
 );
-$splash-code-bg: global.$sdux-surface-dark;
-$splash-code-text: global.$sdux-text-primary;
-$splash-success: global.$sdux-success-base;
 
 :host {
   display: block;
-  background: $splash-bg;
-  color: $splash-text;
+  background: global.$sdux-surface-light;
+  color: global.$sdux-text-inverse;
   font-family: global.$sdux-font-family;
   line-height: global.$line-height;
   overflow-x: hidden;
@@ -60,7 +52,7 @@ $splash-success: global.$sdux-success-base;
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      color-mix(in srgb, $splash-primary 18%, transparent) 0%,
+      color-mix(in srgb, global.$sdux-primary-base 18%, transparent) 0%,
       transparent 70%
     );
     pointer-events: none;
@@ -79,15 +71,19 @@ $splash-success: global.$sdux-success-base;
     max-width: 1200px;
     padding: global.$spacing-md global.$spacing-lg;
     margin-bottom: global.$spacing-lg;
-    border: 2px solid $splash-primary;
+    border: 2px solid global.$sdux-primary-base;
     border-radius: global.$border-radius-md;
-    background: color-mix(in srgb, $splash-primary 6%, $splash-bg);
+    background: color-mix(
+      in srgb,
+      global.$sdux-primary-base 6%,
+      global.$sdux-surface-light
+    );
   }
 
   &-release-text {
     font-size: global.$font-size-xl;
     font-weight: global.$font-weight-bold;
-    color: $splash-primary;
+    color: global.$sdux-primary-base;
   }
 
   &-split {
@@ -117,7 +113,7 @@ $splash-success: global.$sdux-success-base;
     font-weight: global.$font-weight-semibold;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: $splash-primary;
+    color: global.$sdux-primary-base;
     display: inline-flex;
     align-items: center;
     gap: global.$spacing-sm;
@@ -127,7 +123,7 @@ $splash-success: global.$sdux-success-base;
       content: '';
       width: 2rem;
       height: 1px;
-      background: $splash-primary;
+      background: global.$sdux-primary-base;
     }
   }
 
@@ -166,7 +162,11 @@ $splash-success: global.$sdux-success-base;
     align-items: center;
     gap: global.$spacing-xs;
     padding: global.$spacing-sm global.$spacing-md;
-    background: color-mix(in srgb, $splash-code-bg 95%, $splash-primary);
+    background: color-mix(
+      in srgb,
+      global.$sdux-surface-dark 95%,
+      global.$sdux-primary-base
+    );
     border-bottom: 1px solid $splash-border;
   }
 
@@ -174,7 +174,7 @@ $splash-success: global.$sdux-success-base;
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: color-mix(in srgb, $splash-text 20%, transparent);
+    background: color-mix(in srgb, global.$sdux-text-inverse 20%, transparent);
 
     &:first-child {
       background: global.$sdux-warn-base;
@@ -193,11 +193,11 @@ $splash-success: global.$sdux-success-base;
   }
 
   &-terminal-code {
-    background: $splash-code-bg;
+    background: global.$sdux-surface-dark;
     padding: global.$spacing-xl;
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-sm;
-    color: $splash-code-text;
+    color: global.$sdux-text-inverse;
     line-height: 1.7;
     margin: 0;
     overflow-x: auto;
@@ -208,8 +208,8 @@ $splash-success: global.$sdux-success-base;
 .btn-primary {
   @include global.button-base(
     global.$sdux-surface-light,
-    $splash-primary,
-    $splash-primary
+    global.$sdux-primary-base,
+    global.$sdux-primary-base
   );
   font-size: global.$font-size-md;
   padding: global.$spacing-sm global.$spacing-xl;
@@ -224,14 +224,14 @@ $splash-success: global.$sdux-success-base;
   border-radius: global.$border-radius-md;
   border: 1px solid $splash-border;
   background: transparent;
-  color: $splash-text;
+  color: global.$sdux-text-inverse;
   cursor: pointer;
   transition:
     border-color 0.2s ease,
     background 0.2s ease;
 
   &:hover {
-    border-color: $splash-primary;
+    border-color: global.$sdux-primary-base;
     background: $splash-primary-soft;
   }
 }
@@ -243,7 +243,7 @@ $splash-success: global.$sdux-success-base;
   margin: 0 auto;
 
   &-tinted {
-    background: $splash-surface;
+    background: global.$sdux-surface-light-mid;
     max-width: none;
     padding-left: global.$spacing-xl;
     padding-right: global.$spacing-xl;
@@ -260,7 +260,7 @@ $splash-success: global.$sdux-success-base;
     font-weight: global.$font-weight-semibold;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: $splash-primary;
+    color: global.$sdux-primary-base;
     margin-bottom: global.$spacing-sm;
   }
 
@@ -320,7 +320,7 @@ $splash-success: global.$sdux-success-base;
     gap: global.$spacing-sm;
     font-size: global.$font-size-lg;
     font-weight: global.$font-weight-semibold;
-    color: color-mix(in srgb, $splash-text 50%, transparent);
+    color: color-mix(in srgb, global.$sdux-text-inverse 50%, transparent);
     transition: color 0.2s ease;
     text-align: center;
 
@@ -334,7 +334,7 @@ $splash-success: global.$sdux-success-base;
     }
 
     &:hover {
-      color: $splash-text;
+      color: global.$sdux-text-inverse;
     }
   }
 }
@@ -354,7 +354,7 @@ $splash-success: global.$sdux-success-base;
     padding: global.$spacing-xl;
     border-radius: global.$border-radius-lg;
     border: 1px solid $splash-border;
-    background: $splash-bg;
+    background: global.$sdux-surface-light;
     overflow: hidden;
     min-width: 0;
     word-wrap: break-word;
@@ -364,8 +364,8 @@ $splash-success: global.$sdux-success-base;
       box-shadow 0.25s ease;
 
     &:hover {
-      border-color: $splash-primary;
-      box-shadow: 0 0 0 1px $splash-primary;
+      border-color: global.$sdux-primary-base;
+      box-shadow: 0 0 0 1px global.$sdux-primary-base;
     }
 
     &-wide {
@@ -389,7 +389,7 @@ $splash-success: global.$sdux-success-base;
     height: 48px;
     border-radius: global.$border-radius-md;
     background: $splash-primary-soft;
-    color: $splash-primary;
+    color: global.$sdux-primary-base;
     margin-bottom: global.$spacing-md;
 
     mat-icon {
@@ -423,7 +423,7 @@ $splash-success: global.$sdux-success-base;
   &-pipeline-strip {
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-xs;
-    color: $splash-primary;
+    color: global.$sdux-primary-base;
     padding: global.$spacing-sm global.$spacing-md;
     background: $splash-primary-soft;
     border-radius: global.$border-radius-sm;
@@ -441,7 +441,7 @@ $splash-success: global.$sdux-success-base;
     code {
       font-family: global.$sdux-code-font;
       font-size: global.$font-size-sm;
-      color: $splash-primary;
+      color: global.$sdux-primary-base;
       background: $splash-primary-soft;
       padding: global.$spacing-xxs global.$spacing-sm;
       border-radius: global.$border-radius-sm;
@@ -465,8 +465,8 @@ $splash-success: global.$sdux-success-base;
     width: 2px;
     background: linear-gradient(
       to bottom,
-      $splash-primary,
-      color-mix(in srgb, $splash-primary 20%, transparent)
+      global.$sdux-primary-base,
+      color-mix(in srgb, global.$sdux-primary-base 20%, transparent)
     );
 
     @media (max-width: global.$breakpoint-md) {
@@ -488,15 +488,15 @@ $splash-success: global.$sdux-success-base;
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: $splash-bg;
-    border: 2px solid $splash-primary;
+    background: global.$sdux-surface-light;
+    border: 2px solid global.$sdux-primary-base;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-sm;
     font-weight: global.$font-weight-bold;
-    color: $splash-primary;
+    color: global.$sdux-primary-base;
 
     @media (max-width: global.$breakpoint-md) {
       width: 40px;
@@ -540,12 +540,12 @@ $splash-success: global.$sdux-success-base;
   }
 
   &-visual {
-    background: $splash-code-bg;
+    background: global.$sdux-surface-dark;
     border-radius: global.$border-radius-lg;
     padding: global.$spacing-xl;
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-sm;
-    color: $splash-code-text;
+    color: global.$sdux-text-inverse;
     line-height: 1.7;
     overflow-x: auto;
   }
@@ -567,13 +567,13 @@ $splash-success: global.$sdux-success-base;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: $splash-primary;
+    background: global.$sdux-primary-base;
     margin-top: 0.55em;
   }
 
   &-point-text {
     font-size: global.$font-size-md;
-    color: $splash-text;
+    color: global.$sdux-text-inverse;
     margin: 0;
 
     strong {
@@ -598,12 +598,12 @@ $splash-success: global.$sdux-success-base;
   }
 
   &-code {
-    background: $splash-code-bg;
+    background: global.$sdux-surface-dark;
     border-radius: global.$border-radius-lg;
     padding: global.$spacing-xl;
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-sm;
-    color: $splash-code-text;
+    color: global.$sdux-text-inverse;
     line-height: 1.7;
     margin: 0;
     overflow-x: auto;
@@ -618,7 +618,7 @@ $splash-success: global.$sdux-success-base;
   &-label {
     font-size: global.$font-size-lg;
     font-weight: global.$font-weight-semibold;
-    color: $splash-primary;
+    color: global.$sdux-primary-base;
     margin: 0 0 global.$spacing-md;
   }
 }
@@ -658,7 +658,7 @@ $splash-success: global.$sdux-success-base;
     }
 
     &-highlight {
-      color: $splash-primary;
+      color: global.$sdux-primary-base;
       font-weight: global.$font-weight-semibold;
     }
 
@@ -697,7 +697,7 @@ $splash-success: global.$sdux-success-base;
   }
 
   &:hover {
-    border-color: $splash-primary;
+    border-color: global.$sdux-primary-base;
   }
 
   &-name {
@@ -714,7 +714,7 @@ $splash-success: global.$sdux-success-base;
 
   mat-icon {
     font-size: 20px;
-    color: $splash-primary;
+    color: global.$sdux-primary-base;
     width: 28px;
     height: 28px;
   }
@@ -758,11 +758,11 @@ $splash-success: global.$sdux-success-base;
       flex-direction: column;
       gap: global.$spacing-xs;
       font-size: global.$font-size-sm;
-      color: $splash-text;
+      color: global.$sdux-text-inverse;
 
       li::before {
         content: '✓ ';
-        color: $splash-primary;
+        color: global.$sdux-primary-base;
         font-weight: global.$font-weight-bold;
       }
     }
@@ -791,7 +791,7 @@ $splash-success: global.$sdux-success-base;
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: $splash-primary;
+      background: global.$sdux-primary-base;
       color: global.$sdux-text-white;
       font-weight: global.$font-weight-bold;
       font-size: global.$font-size-sm;
@@ -814,12 +814,12 @@ $splash-success: global.$sdux-success-base;
   }
 
   &-preview {
-    background: $splash-code-bg;
+    background: global.$sdux-surface-dark;
     border-radius: global.$border-radius-lg;
     padding: global.$spacing-xl;
     font-family: global.$sdux-code-font;
     font-size: global.$font-size-sm;
-    color: $splash-code-text;
+    color: global.$sdux-text-inverse;
     line-height: 1.7;
     overflow-x: auto;
     position: sticky;
@@ -846,7 +846,7 @@ $splash-success: global.$sdux-success-base;
       transform 0.2s ease;
 
     &:hover {
-      border-color: $splash-primary;
+      border-color: global.$sdux-primary-base;
       transform: translateY(-2px);
     }
 
@@ -855,7 +855,7 @@ $splash-success: global.$sdux-success-base;
       // padding: global.$spacing-lg;
       font-family: global.$sdux-code-font;
       font-size: global.$font-size-xs;
-      color: $splash-code-text;
+      color: global.$sdux-text-inverse;
       line-height: 1.6;
       min-height: 338px;
 
@@ -891,7 +891,7 @@ $splash-success: global.$sdux-success-base;
     &-link {
       font-size: global.$font-size-sm;
       font-weight: global.$font-weight-medium;
-      color: $splash-primary;
+      color: global.$sdux-primary-base;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
@@ -924,7 +924,7 @@ $splash-success: global.$sdux-success-base;
 
     &-icon {
       flex-shrink: 0;
-      color: $splash-primary;
+      color: global.$sdux-primary-base;
 
       mat-icon {
         font-size: 24px;
@@ -964,14 +964,14 @@ $splash-success: global.$sdux-success-base;
 .testimonial {
   padding: global.$spacing-xl;
   border-radius: global.$border-radius-lg;
-  background: $splash-surface;
+  background: global.$sdux-surface-light-mid;
 
   &-quote {
     font-size: global.$font-size-md;
     font-style: italic;
     line-height: 1.7;
     margin: 0 0 global.$spacing-lg;
-    color: $splash-text;
+    color: global.$sdux-text-inverse;
   }
 
   &-author {
@@ -1013,7 +1013,7 @@ $splash-success: global.$sdux-success-base;
   background: global.$sdux-text-white;
 
   &:hover {
-    border-color: $splash-primary;
+    border-color: global.$sdux-primary-base;
   }
 
   &-title {
@@ -1031,7 +1031,7 @@ $splash-success: global.$sdux-success-base;
   &-link {
     font-size: global.$font-size-sm;
     font-weight: global.$font-weight-medium;
-    color: $splash-primary;
+    color: global.$sdux-primary-base;
     text-decoration: none;
 
     &:hover {
@@ -1046,8 +1046,8 @@ $splash-success: global.$sdux-success-base;
   padding: global.$spacing-3xl global.$spacing-xl;
   background: radial-gradient(
     ellipse at center bottom,
-    color-mix(in srgb, $splash-primary 12%, transparent) 0%,
-    $splash-bg 70%
+    color-mix(in srgb, global.$sdux-primary-base 12%, transparent) 0%,
+    global.$sdux-surface-light 70%
   );
 
   &-title {
@@ -1072,24 +1072,6 @@ $splash-success: global.$sdux-success-base;
     justify-content: center;
     flex-wrap: wrap;
   }
-}
-
-// ─── Code highlights ───
-.code-keyword {
-  color: color-mix(in srgb, global.$sdux-primary-light 90%, white);
-}
-
-.code-type {
-  color: global.$sdux-warn-light;
-}
-
-.code-string {
-  color: global.$sdux-success-light;
-}
-
-.code-comment {
-  color: global.$sdux-text-disabled;
-  font-style: italic;
 }
 
 .view-all-button {

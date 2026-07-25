@@ -358,24 +358,23 @@
       </button>
     </div>
 
-    <pre
-      class="ownership-visual"><span class="code-keyword">const</span> cartCell =
-  <span class="code-keyword">new</span> <span class="code-type">FeatureCell</span>&lt;<span class="code-type">CartState</span>&gt;(&#123;
-  name: <span class="code-string">'cart'</span>,
+    <pre><code class="language-ts">const cartCell =
+  new FeatureCell &lt; CartState &gt;(&#123;
+  name: 'cart',
   initialState: &#123;
     items: [],
     total: 0,
-    status: <span class="code-string">'idle'</span>
+    status: 'idle'
   &#125;
 &#125;);
 
-cartCell.<span class="code-keyword">replaceState</span>(&#123;
+cartCell.replaceState(&#123;
   value: &#123;
     items: updatedItems,
     total: computeTotal(items),
-    status: <span class="code-string">'ready'</span>
+    status: 'ready'
   &#125;
-&#125;);</pre>
+&#125;);</code></pre>
   </div>
 </section>
 
@@ -392,20 +391,19 @@ cartCell.<span class="code-keyword">replaceState</span>(&#123;
     </p>
 
     <div class="deterministic">
-      <pre
-        class="deterministic-code"><span class="code-comment">// act &rarr; settle &rarr; assert</span>
-it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">async</span> () =&gt; &#123;
+      <pre><code class="language-ts">// act &rarr; settle &rarr; assert
+it('updates cart'>, async () =&gt; &#123;
   // 1- Update the cart with a new set of items
-  cartCell.<span class="code-keyword">mergeState</span>(&#123;
+  cartCell.mergeState(&#123;
     value: mockItems
   &#125;);
 
   // 2- Await the pipeline to settle and produce a new state
-  <span class="code-keyword">await</span> cartCellSettled(&lt;cart-cell-key&gt;);
+  await cartCellSettled(&lt;cart-cell-key&gt;);
 
   // 3- Assert the new state is as expected
   expect(cartCell.state.total).toBe(42);
-&#125;);</pre>
+&#125;);</code></pre>
 
       <div class="deterministic-points">
         <h3 class="deterministic-label">Fast. Reliable. Repeatable.</h3>

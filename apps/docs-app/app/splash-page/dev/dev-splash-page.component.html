@@ -23,7 +23,7 @@
       @for (framework of comparisonFrameworks; track framework.id) {
         <button
           type="button"
-          class="btn-ghost comparison-framework-button"
+          class="ghost-button comparison-framework-button"
           [class.is-active]="framework.id === selectedComparisonFramework()"
           (click)="selectComparisonFramework(framework.id)">
           {{ framework.label }}
@@ -65,20 +65,19 @@
     <p class="section-summary">Testing is 1, 2, 3</p>
 
     <div class="deterministic">
-      <pre
-        class="deterministic-code"><span class="code-comment">// act &rarr; settle &rarr; assert</span>
-it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">async</span> () =&gt; &#123;
+      <pre><code class="language-ts">// act &rarr; settle &rarr; assert
+it('updates cart'>, async () =&gt; &#123;
   // 1- Update the cart with a new set of items
-  cartCell.<span class="code-keyword">mergeState</span>(&#123;
+  cartCell.mergeState(&#123;
     value: mockItems
   &#125;);
 
   // 2- Await the pipeline to settle and produce a new state
-  <span class="code-keyword">await</span> cartCellSettled(&lt;cart-cell-key&gt;);
+  await cartCellSettled(&lt;cart-cell-key&gt;);
 
   // 3- Assert the new state is as expected
   expect(cartCell.state.total).toBe(42);
-&#125;);</pre>
+&#125;);</code></pre>
 
       <div class="deterministic-points">
         <h3 class="deterministic-label">Fast. Reliable. Repeatable.</h3>
