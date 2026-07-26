@@ -49,7 +49,7 @@ Every add-on is a composable policy module that plugs into the controller and or
 - **Runtime decision hooks** — influence pipeline execution without mutation
 - **Composable extensions** — stack multiple policies safely
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+For full documentation, guides, and API references: [sdux-vault.dev](https://www.sdux-vault.dev)
 
 ---
 

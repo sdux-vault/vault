@@ -44,7 +44,7 @@ SDuX Vault is a **framework-agnostic, deterministic state management system** bu
 - **Snapshot-safe imperative access** — keep using `cell.state` outside render
 - **Reactive UI updates** — built on React's `useSyncExternalStore` contract
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+For full documentation, guides, and API references: [sdux-vault.dev](https://www.sdux-vault.dev)
 
 ---
 

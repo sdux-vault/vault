@@ -9,8 +9,7 @@ It enables reliable testing of controllers, behaviors, and runtime flows across 
 
 ## TL;DR
 
-For full documentation, guides, and API references:  
-https://www.sdux-vault.com
+For full documentation, guides, and API references: [sdux-vault.dev](https://www.sdux-vault.dev)
 
 ---
 

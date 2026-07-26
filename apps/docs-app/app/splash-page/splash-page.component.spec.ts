@@ -205,6 +205,14 @@ describe('Component: Splash Page', () => {
     });
   });
 
+  describe('openDeveloperView', () => {
+    it('should navigate to the developer view', () => {
+      component.openDeveloperView();
+      expect(navigationService.show).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalledWith(['/developer']);
+    });
+  });
+
   describe('viewStackblitz', () => {
     it('should not navigate to the stackblitz page without an example', () => {
       component.viewStackblitz('counter-pipeline');

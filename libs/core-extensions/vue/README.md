@@ -44,7 +44,7 @@ SDuX Vault is a **framework-agnostic, deterministic state management system** bu
 - **Snapshot-safe imperative access** — keep using `cell.state` outside Vue setup
 - **Automatic scope cleanup** — subscriptions end when the consuming Vue scope is disposed
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+For full documentation, guides, and API references: [sdux-vault.dev](https://www.sdux-vault.dev)
 
 ---
 

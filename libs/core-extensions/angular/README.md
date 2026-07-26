@@ -44,7 +44,7 @@ SDuX Vault is a **framework-agnostic, deterministic state management system** bu
 - **DI-compatible providers** — register and consume via Angular's injector
 - **Reactive state consumption** — automatic UI updates, no manual subscriptions
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+For full documentation, guides, and API references: [sdux-vault.dev](https://www.sdux-vault.dev)
 
 ---
 
