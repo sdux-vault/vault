@@ -31,7 +31,7 @@ const SOURCE_FILE_TYPE_UNION = SOURCE_FILE_TYPES.map(({ type }) => `'${type}'`)
   .join(' | ');
 const FRAMEWORK_FILE_ORDER = {
   redux: [
-    ['main.ts', 'main.tsx'],
+    ['main.ts', 'main.tsx', 'store.ts'],
     ['app.config.ts', 'App.vue'],
     ['employee.facade.ts', 'employee.hook.ts', 'useEmployeeFacade.ts'],
     [

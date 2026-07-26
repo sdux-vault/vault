@@ -13,6 +13,14 @@ export const REACT_REDUX_OUTPUT = [
   },
   {
     type: 'typescript',
+    fileName: 'store.ts',
+    source:
+      "import { configureStore } from '@reduxjs/toolkit';\nimport { employeeFeatureKey, employeeReducer } from './employee.reducer';\n\nexport const store = configureStore({\n  reducer: {\n    [employeeFeatureKey]: employeeReducer\n  }\n});\n\nexport type RootState = ReturnType<typeof store.getState>;\nexport type AppDispatch = typeof store.dispatch;",
+    numberedSource:
+      " 1 | import { configureStore } from '@reduxjs/toolkit';\n 2 | import { employeeFeatureKey, employeeReducer } from './employee.reducer';\n 3 | \n 4 | export const store = configureStore({\n 5 |   reducer: {\n 6 |     [employeeFeatureKey]: employeeReducer\n 7 |   }\n 8 | });\n 9 | \n10 | export type RootState = ReturnType<typeof store.getState>;\n11 | export type AppDispatch = typeof store.dispatch;"
+  },
+  {
+    type: 'typescript',
     fileName: 'useEmployeeFacade.ts',
     source:
       "import { useDispatch, useSelector } from 'react-redux';\nimport { AppDispatch, RootState } from './store';\nimport { EmployeeActions } from './employee.actions';\nimport { Employee } from './employee.model';\nimport {\n  selectEmployees,\n  selectEmployeesError,\n  selectEmployeesLoading\n} from './employee.selectors';\n\nconst useAppDispatch = useDispatch.withTypes<AppDispatch>();\nconst useAppSelector = useSelector.withTypes<RootState>();\n\nexport function useEmployeeFacade() {\n  const dispatch = useAppDispatch();\n  const value = useAppSelector(selectEmployees);\n  const loading = useAppSelector(selectEmployeesLoading);\n  const error = useAppSelector(selectEmployeesError);\n\n  return {\n    state: {\n      value,\n      loading,\n      error\n    },\n    replace(employees: Employee[]): void {\n      dispatch(EmployeeActions.replace(employees));\n    },\n    async replaceAsync(): Promise<void> {\n      dispatch(EmployeeActions.replaceAsync());\n\n      try {\n        const employees = (await fetch('/api/employees').then((response) => {\n          return response.json();\n        })) as Employee[];\n\n        dispatch(EmployeeActions.replaceAsyncSuccess(employees));\n      } catch (error: unknown) {\n        dispatch(\n          EmployeeActions.replaceAsyncFailure(\n            error instanceof Error ? error.message : 'Failed to load employees'\n          )\n        );\n      }\n    },\n    reset(): void {\n      dispatch(EmployeeActions.reset());\n    }\n  };\n}",
@@ -65,14 +73,6 @@ export const REACT_REDUX_OUTPUT = [
       "import { RootState } from './store';\nimport { employeeFeatureKey } from './employee.reducer';\n\nexport const selectEmployeeState = (state: RootState) => {\n  return state[employeeFeatureKey];\n};\n\nexport const selectEmployees = (state: RootState) => {\n  return selectEmployeeState(state).value;\n};\n\nexport const selectEmployeesLoading = (state: RootState) => {\n  return selectEmployeeState(state).loading;\n};\n\nexport const selectEmployeesError = (state: RootState) => {\n  return selectEmployeeState(state).error;\n};",
     numberedSource:
       " 1 | import { RootState } from './store';\n 2 | import { employeeFeatureKey } from './employee.reducer';\n 3 | \n 4 | export const selectEmployeeState = (state: RootState) => {\n 5 |   return state[employeeFeatureKey];\n 6 | };\n 7 | \n 8 | export const selectEmployees = (state: RootState) => {\n 9 |   return selectEmployeeState(state).value;\n10 | };\n11 | \n12 | export const selectEmployeesLoading = (state: RootState) => {\n13 |   return selectEmployeeState(state).loading;\n14 | };\n15 | \n16 | export const selectEmployeesError = (state: RootState) => {\n17 |   return selectEmployeeState(state).error;\n18 | };"
-  },
-  {
-    type: 'typescript',
-    fileName: 'store.ts',
-    source:
-      "import { configureStore } from '@reduxjs/toolkit';\nimport { employeeFeatureKey, employeeReducer } from './employee.reducer';\n\nexport const store = configureStore({\n  reducer: {\n    [employeeFeatureKey]: employeeReducer\n  }\n});\n\nexport type RootState = ReturnType<typeof store.getState>;\nexport type AppDispatch = typeof store.dispatch;",
-    numberedSource:
-      " 1 | import { configureStore } from '@reduxjs/toolkit';\n 2 | import { employeeFeatureKey, employeeReducer } from './employee.reducer';\n 3 | \n 4 | export const store = configureStore({\n 5 |   reducer: {\n 6 |     [employeeFeatureKey]: employeeReducer\n 7 |   }\n 8 | });\n 9 | \n10 | export type RootState = ReturnType<typeof store.getState>;\n11 | export type AppDispatch = typeof store.dispatch;"
   }
 ] as const satisfies ReadonlyArray<{
   readonly type:
