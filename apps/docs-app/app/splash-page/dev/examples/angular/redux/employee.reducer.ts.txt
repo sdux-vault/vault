@@ -26,7 +26,7 @@ export const employeeReducer = createReducer<EmployeeState>(
   on(EmployeeActions.replace, (state, { employees }) => ({
     ...state,
     loading: false,
-    value: prepareEmployees(employees),
+    employees: prepareEmployees(employees),
     error: null
   })),
   on(EmployeeActions.replaceAsync, (state) => ({
@@ -37,7 +37,7 @@ export const employeeReducer = createReducer<EmployeeState>(
   on(EmployeeActions.replaceAsyncSuccess, (state, { employees }) => ({
     ...state,
     loading: false,
-    value: prepareEmployees(employees),
+    employees: prepareEmployees(employees),
     error: null
   })),
   on(EmployeeActions.replaceAsyncFailure, (state, { error }) => ({

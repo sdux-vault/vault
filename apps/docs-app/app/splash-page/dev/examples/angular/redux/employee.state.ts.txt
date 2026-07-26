@@ -2,12 +2,12 @@ import { Employee } from './employee.model';
 
 export interface EmployeeState {
   loading: boolean;
-  value: Employee[];
+  employees: Employee[];
   error: string | null;
 }
 
 export const initialEmployeeState: EmployeeState = {
   loading: false,
-  value: [],
+  employees: [],
   error: null
 };

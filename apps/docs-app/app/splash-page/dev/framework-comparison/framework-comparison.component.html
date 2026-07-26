@@ -18,13 +18,15 @@
             <li>{{ sharedSetupFileCount() }} shared setup files</li>
             <li>{{ sduxFeatureFileCount() }} core feature files</li>
 
-            <li>
-              <span class="note-callout"
-                >{{ leftOnlySupportFileCount() }} extra
-                {{ comparison().left.libraryLabel }}-only ceremony files
-              </span>
-              that <em>scale linearly</em> with every new feature
-            </li>
+            @if (comparison().displayCeremony) {
+              <li>
+                <span class="note-callout"
+                  >{{ leftOnlySupportFileCount() }} extra
+                  {{ comparison().left.libraryLabel }}-only ceremony files
+                </span>
+                that <em>scale linearly</em> with every new feature
+              </li>
+            }
           </ul>
         </div>
       </div>
@@ -55,7 +57,9 @@
             <li>{{ sharedSetupFileCount() }} shared setup files</li>
             <li>{{ sduxFeatureFileCount() }} core feature files</li>
 
-            <li><span class="note-callout">no extra ceremony files</span></li>
+            @if (comparison().displayCeremony) {
+              <li><span class="note-callout">no extra ceremony files</span></li>
+            }
           </ul>
         </div>
       </div>

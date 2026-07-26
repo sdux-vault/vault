@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EmployeeActions } from './employee.actions';
 import { Employee } from './employee.model';
-import { catchError, exhaustMap, from, map, of } from 'rxjs';
+import { catchError, from, map, of, switchMap } from 'rxjs';
 
 @Injectable()
 export class EmployeeEffects {
@@ -11,9 +11,13 @@ export class EmployeeEffects {
   readonly replaceAsync$ = createEffect(() => {
     return this.#actions$.pipe(
       ofType(EmployeeActions.replaceAsync),
-      exhaustMap(() => {
+      switchMap(() => {
         return from(
           fetch('/api/employees').then((response) => {
+            if (!response.ok) {
+              throw new Error(`Failed to load employees (${response.status})`);
+            }
+
             return response.json() as Promise<Employee[]>;
           })
         ).pipe(

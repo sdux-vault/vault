@@ -51,8 +51,12 @@
 <section class="developer-view">
   <div
     class="developer-view-button"
+    role="button"
+    tabindex="0"
     matTooltip="Click to view the language comparison documentation"
-    (click)="openDeveloperView()">
+    (click)="openDeveloperView()"
+    (keydown.enter)="openDeveloperView()"
+    (keydown.space)="openDeveloperView()">
     Developer? See Language Comparisons Here
   </div>
 </section>
@@ -531,9 +535,15 @@ it('updates cart'>, async () =&gt; &#123;
       @for (language of frameworkLanguages; track language.name) {
         <div
           class="framework-tile"
+          role="button"
+          tabindex="0"
           [class.has-stackbliz]="language.hasStackblitzExample"
           [matTooltip]="language.tooltip"
-          (click)="
+          (click)="viewStackblitz(language.name, language.hasStackblitzExample)"
+          (keydown.enter)="
+            viewStackblitz(language.name, language.hasStackblitzExample)
+          "
+          (keydown.space)="
             viewStackblitz(language.name, language.hasStackblitzExample)
           ">
           <img

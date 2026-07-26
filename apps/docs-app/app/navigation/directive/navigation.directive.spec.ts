@@ -21,7 +21,7 @@ class MockBreakpointObserver {
 }
 
 // --- Begin Tests ---
-fdescribe('Directive: Navigation', () => {
+describe('Directive: Navigation', () => {
   let component: NavigationDirective;
   let breakpoint: MockBreakpointObserver;
 

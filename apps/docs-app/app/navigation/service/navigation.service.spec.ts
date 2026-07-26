@@ -2,7 +2,7 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { NavigationService } from './navigation.service';
 
-fdescribe('Service: Navigation', () => {
+describe('Service: Navigation', () => {
   let service: NavigationService;
 
   beforeEach(async () => {

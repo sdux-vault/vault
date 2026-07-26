@@ -142,7 +142,7 @@ $splash-code-bg: color-mix(
   font-family: global.$sdux-code-font;
   font-size: global.$font-size-md;
   font-weight: global.$font-weight-medium;
-  padding: global.$spacing-sm global.$spacing-xl;
+  padding: global.$spacing-sm global.$spacing-lg;
   border-radius: 0;
   border: 1px solid $splash-border;
   background: $splash-code-bg;
@@ -235,6 +235,12 @@ $splash-code-bg: color-mix(
   flex-wrap: wrap;
   gap: global.$spacing-md;
   margin-bottom: global.$spacing-xl;
+
+  .framework-sub-label {
+    font-size: global.$font-size-xs;
+    color: $splash-muted;
+    text-transform: none;
+  }
 }
 
 .comparison-framework-button {

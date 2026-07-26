@@ -25,7 +25,8 @@
           class="ghost-button comparison-framework-button"
           [class.is-active]="framework.id === selectedComparisonFramework()"
           (click)="selectComparisonFramework(framework.id)">
-          {{ framework.label }}
+          {{ framework.label }}<br />
+          <span class="framework-sub-label">{{ framework.subLabel }}</span>
         </button>
       }
     </div>
@@ -121,9 +122,15 @@ it('updates cart'>, async () =&gt; &#123;
       @for (language of frameworkLanguages; track language.name) {
         <div
           class="framework-tile"
+          role="button"
+          tabindex="0"
           [class.has-stackbliz]="language.hasStackblitzExample"
           [matTooltip]="language.tooltip"
-          (click)="
+          (click)="viewStackblitz(language.name, language.hasStackblitzExample)"
+          (keydown.enter)="
+            viewStackblitz(language.name, language.hasStackblitzExample)
+          "
+          (keydown.space)="
             viewStackblitz(language.name, language.hasStackblitzExample)
           ">
           <div class="framework-tile-header">

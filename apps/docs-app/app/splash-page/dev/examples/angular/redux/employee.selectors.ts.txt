@@ -7,7 +7,7 @@ export const selectEmployeeState =
 
 export const selectEmployees = createSelector(
   selectEmployeeState,
-  (state) => state.value
+  (state) => state.employees
 );
 
 export const selectEmployeesLoading = createSelector(

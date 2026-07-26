@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sduxTestingModule } from '@sdux-vault/ui/web-components';
+import { FrameworkComparisonPairShape } from '../shapes/framework-comparison-pair.shape';
 import { FrameworkComparisonComponent } from './framework-comparison.component';
-import { FrameworkComparisonPair } from './framework-comparison.types';
 
 describe('Component: FrameworkComparisonComponent', () => {
   let fixture: ComponentFixture<FrameworkComparisonComponent>;
 
-  const comparison: FrameworkComparisonPair = {
+  const comparison: FrameworkComparisonPairShape = {
     id: 'angular',
     selectorLabel: 'Angular',
     sharedSetupFileNames: ['main.ts', 'app.config.ts'],
@@ -55,7 +55,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     }
   };
 
-  const reactComparison: FrameworkComparisonPair = {
+  const reactComparison: FrameworkComparisonPairShape = {
     id: 'react',
     selectorLabel: 'React',
     sharedSetupFileNames: ['main.tsx'],
@@ -98,7 +98,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     }
   };
 
-  const noBrandComparison: FrameworkComparisonPair = {
+  const noBrandComparison: FrameworkComparisonPairShape = {
     id: 'vue',
     selectorLabel: 'Vue',
     left: {

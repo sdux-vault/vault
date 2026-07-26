@@ -5,7 +5,7 @@
     } @else if (state.error()) {
       <div>{{ state.error() }}</div>
     } @else {
-      <textarea readonly>{{ state.value() | json }}</textarea>
+      <textarea readonly>{{ state.employees() | json }}</textarea>
     }
   </div>
 
