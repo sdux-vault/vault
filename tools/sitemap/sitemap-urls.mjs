@@ -355,7 +355,7 @@ export const SITEMAP_URLS = [
   '/docs/references/options/with-max-failure-controller-options',
   '/docs/references/options/with-throttle-controller-options',
   '/docs/references/services/vault-error-service-class',
-  '/docs/references/shapes/behavior-meta-shape',
+  '/docs/references/shapes/behavior-meta-base-shape',
   '/docs/references/shapes/controller-attempt-message-shape',
   '/docs/references/shapes/controller-decision-shape',
   '/docs/references/shapes/controller-fail-message-shape',
@@ -375,6 +375,8 @@ export const SITEMAP_URLS = [
   '/docs/references/shapes/feature-cell-base-shape',
   '/docs/references/shapes/feature-cell-shape',
   '/docs/references/shapes/http-resource-ref-shape',
+  '/docs/references/shapes/non-resolve-behavior-meta-shape',
+  '/docs/references/shapes/resolve-behavior-meta-shape',
   '/docs/references/shapes/s-du-x-shape',
   '/docs/references/shapes/serialized-feature-cell-shape',
   '/docs/references/shapes/state-emit-snapshot-shape',
@@ -389,6 +391,7 @@ export const SITEMAP_URLS = [
   '/docs/references/shapes/vault-registration-shape',
   '/docs/references/types/behavior-ext-function',
   '/docs/references/types/behavior-extension',
+  '/docs/references/types/behavior-meta-shape',
   '/docs/references/types/behavior-type',
   '/docs/references/types/cache-ttl-type',
   '/docs/references/types/controller-message-shape',
@@ -502,5 +505,6 @@ export const SITEMAP_URLS = [
   '/sdux/training',
   '/sdux/vault',
   '/sitemap',
-  '/stackblitz'
+  '/stackblitz',
+  '/tutorial/angular'
 ];

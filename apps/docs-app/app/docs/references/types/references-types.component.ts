@@ -12,6 +12,7 @@ import { NotFoundComponent } from '../../../not-found/not-found.component';
 
 import { BehaviorExtensionComponent } from './behavior-extension.component';
 import { BehaviorExtFunctionComponent } from './behavior-ext-function.component';
+import { BehaviorMetaShapeComponent } from './behavior-meta-shape.component';
 import { BehaviorTypeComponent } from './behavior-type.component';
 import { CacheTTLTypeComponent } from './cache-ttl-type.component';
 import { ControllerMessageShapeComponent } from './controller-message-shape.component';
@@ -62,6 +63,7 @@ import { VaultRegistrationLicenseStatusTypeComponent } from './vault-registratio
     MatExpansionModule,
     BehaviorExtensionComponent,
     BehaviorExtFunctionComponent,
+    BehaviorMetaShapeComponent,
     BehaviorTypeComponent,
     CacheTTLTypeComponent,
     ControllerMessageShapeComponent,

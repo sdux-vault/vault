@@ -170,4 +170,43 @@ describe('CLI: link-generator', () => {
 
     expect(infoSpy).toHaveBeenCalledWith('✔ Documentation linking complete');
   });
+
+  it('should exclude configured directories from link mapping', () => {
+    readFiles = ['included.html', 'excluded'];
+    fs.readdirSync.and.callFake((directory) => {
+      if (directory === '/docs') return ['included.html', 'excluded'];
+      if (directory === '/docs/excluded') return ['excluded.html'];
+      return [];
+    });
+    fs.statSync.and.callFake((filename) => ({
+      isDirectory: () => filename === '/docs/excluded'
+    }));
+
+    generator = new DocumentationLinkGenerator({
+      typeIndexPath: '/index.json',
+      sourceDirs: ['/docs'],
+      excludeDirs: ['/docs/excluded']
+    });
+
+    generator.run();
+
+    expect(readFileSync).toEqual(['index.json', 'docs/included.html']);
+    expect(writeFileSync).toEqual(['docs/included.html']);
+    expect(infoSpy).not.toHaveBeenCalledWith(
+      'Processing File: /docs/excluded/excluded.html'
+    );
+  });
+
+  it('should skip a source directory when it is excluded', () => {
+    generator = new DocumentationLinkGenerator({
+      typeIndexPath: '/index.json',
+      sourceDirs: ['/docs'],
+      excludeDirs: ['/docs']
+    });
+
+    generator.run();
+
+    expect(readFileSync).toEqual(['index.json']);
+    expect(writeFileSync).toEqual([]);
+  });
 });

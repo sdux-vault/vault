@@ -356,6 +356,14 @@
       "relativePath": "libs/shared/src/lib/interfaces/behaviors/behavior/behavior.interface.ts",
       "docLink": "types"
     },
+    "BehaviorMetaShape": {
+      "kind": "type",
+      "docKind": "type",
+      "name": "BehaviorMetaShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/behavior-meta.shape.ts",
+      "docLink": "types"
+    },
     "BehaviorType": {
       "kind": "type",
       "docKind": "type",
@@ -936,10 +944,10 @@
     }
   },
   "shapes": {
-    "BehaviorMetaShape": {
+    "BehaviorMetaBaseShape": {
       "kind": "interface",
       "docKind": "shape",
-      "name": "BehaviorMetaShape",
+      "name": "BehaviorMetaBaseShape",
       "project": "shared",
       "relativePath": "libs/shared/src/lib/shapes/behavior-meta.shape.ts",
       "docLink": "shapes"
@@ -1094,6 +1102,22 @@
       "name": "HttpResourceRefShape",
       "project": "shared",
       "relativePath": "libs/shared/src/lib/shapes/http-resource-ref-shape.shape.ts",
+      "docLink": "shapes"
+    },
+    "NonResolveBehaviorMetaShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "NonResolveBehaviorMetaShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/behavior-meta.shape.ts",
+      "docLink": "shapes"
+    },
+    "ResolveBehaviorMetaShape": {
+      "kind": "interface",
+      "docKind": "shape",
+      "name": "ResolveBehaviorMetaShape",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/shapes/behavior-meta.shape.ts",
       "docLink": "shapes"
     },
     "SDuXShape": {

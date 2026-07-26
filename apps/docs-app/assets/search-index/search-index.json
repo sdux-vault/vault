@@ -529,6 +529,18 @@
       "description": ""
     },
     {
+      "id": "types:BehaviorMetaShape",
+      "title": "BehaviorMetaShape",
+      "kind": "type",
+      "project": "shared",
+      "docLink": "types",
+      "relativePath": "libs/shared/src/lib/shapes/behavior-meta.shape.ts",
+      "symbols": ["BehaviorMetaShape"],
+      "content": "BehaviorMetaShape BehaviorMetaShape types shared libs/shared/src/lib/shapes/behavior-meta.shape.ts",
+      "url": "/docs/references/types/behavior-meta-shape",
+      "description": ""
+    },
+    {
       "id": "types:BehaviorType",
       "title": "BehaviorType",
       "kind": "type",
@@ -1393,16 +1405,16 @@
       "description": "Cross-tab state synchronization behavior that extends core state management."
     },
     {
-      "id": "shapes:BehaviorMetaShape",
-      "title": "BehaviorMetaShape",
+      "id": "shapes:BehaviorMetaBaseShape",
+      "title": "BehaviorMetaBaseShape",
       "kind": "interface",
       "project": "shared",
       "docLink": "shapes",
       "relativePath": "libs/shared/src/lib/shapes/behavior-meta.shape.ts",
-      "symbols": ["BehaviorMetaShape"],
-      "content": "BehaviorMetaShape BehaviorMetaShape shapes shared libs/shared/src/lib/shapes/behavior-meta.shape.ts",
-      "url": "/docs/references/shapes/behavior-meta-shape",
-      "description": "Metadata shape describing a registered behavior's static configuration."
+      "symbols": ["BehaviorMetaBaseShape"],
+      "content": "BehaviorMetaBaseShape BehaviorMetaBaseShape shapes shared libs/shared/src/lib/shapes/behavior-meta.shape.ts",
+      "url": "/docs/references/shapes/behavior-meta-base-shape",
+      "description": "Metadata shared by every registered behavior."
     },
     {
       "id": "shapes:ControllerAttemptMessageShape",
@@ -1631,6 +1643,30 @@
       "content": "HttpResourceRefShape HttpResourceRefShape shapes shared libs/shared/src/lib/shapes/http-resource-ref-shape.shape.ts",
       "url": "/docs/references/shapes/http-resource-ref-shape",
       "description": "Structural interface representing a reactive, asynchronously resolved resource."
+    },
+    {
+      "id": "shapes:NonResolveBehaviorMetaShape",
+      "title": "NonResolveBehaviorMetaShape",
+      "kind": "interface",
+      "project": "shared",
+      "docLink": "shapes",
+      "relativePath": "libs/shared/src/lib/shapes/behavior-meta.shape.ts",
+      "symbols": ["NonResolveBehaviorMetaShape"],
+      "content": "NonResolveBehaviorMetaShape NonResolveBehaviorMetaShape shapes shared libs/shared/src/lib/shapes/behavior-meta.shape.ts",
+      "url": "/docs/references/shapes/non-resolve-behavior-meta-shape",
+      "description": "Metadata for every behavior outside the Resolve pipeline stage."
+    },
+    {
+      "id": "shapes:ResolveBehaviorMetaShape",
+      "title": "ResolveBehaviorMetaShape",
+      "kind": "interface",
+      "project": "shared",
+      "docLink": "shapes",
+      "relativePath": "libs/shared/src/lib/shapes/behavior-meta.shape.ts",
+      "symbols": ["ResolveBehaviorMetaShape"],
+      "content": "ResolveBehaviorMetaShape ResolveBehaviorMetaShape shapes shared libs/shared/src/lib/shapes/behavior-meta.shape.ts",
+      "url": "/docs/references/shapes/resolve-behavior-meta-shape",
+      "description": "Metadata for a behavior that participates in the Resolve pipeline stage."
     },
     {
       "id": "shapes:SDuXShape",

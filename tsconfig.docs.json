@@ -3,6 +3,7 @@
   "exclude": [
     "**/*.spec.ts",
     "**/*.spec.mjs",
+    "**/*.generated.ts",
     "*.md",
     "dist/**",
     "projects/testing/**",

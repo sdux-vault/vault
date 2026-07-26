@@ -60,7 +60,7 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
                 <ul>
                   <li>
                     meta:
-                    <a href="/docs/references/shapes/behavior-meta-shape"
+                    <a href="/docs/references/types/behavior-meta-shape"
                       >BehaviorMetaShape</a
                     >
                   </li>
