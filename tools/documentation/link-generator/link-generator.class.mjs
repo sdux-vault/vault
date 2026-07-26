@@ -11,9 +11,12 @@ import { setSafeNamePrefix } from '../../utils/get-safe-name.util.mjs';
 import { buildLink } from '../../utils/links/build-link.util.mjs';
 
 export class DocumentationLinkGenerator {
-  constructor({ typeIndexPath, sourceDirs }) {
+  constructor({ typeIndexPath, sourceDirs, excludeDirs = [] }) {
     this.typeIndexPath = typeIndexPath;
     this.sourceDirs = sourceDirs;
+    this.excludeDirs = new Set(
+      excludeDirs.map((directory) => path.resolve(directory))
+    );
     this.symbolMap = new Map();
   }
 
@@ -62,21 +65,29 @@ export class DocumentationLinkGenerator {
 
   walkSources() {
     for (const dir of this.sourceDirs) {
+      if (this.isExcludedDirectory(dir)) continue;
       this.walk(dir);
     }
   }
 
   walk(dir) {
+    if (this.isExcludedDirectory(dir)) return;
+
     for (const file of fs.readdirSync(dir)) {
       const full = path.join(dir, file);
       const stat = fs.statSync(full);
 
       if (stat.isDirectory()) {
+        if (this.isExcludedDirectory(full)) continue;
         this.walk(full);
       } else if (this.isTargetFile(file)) {
         this.processFile(full);
       }
     }
+  }
+
+  isExcludedDirectory(directory) {
+    return this.excludeDirs.has(path.resolve(directory));
   }
 
   isTargetFile(file) {

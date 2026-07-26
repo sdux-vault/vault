@@ -1,0 +1,33 @@
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { EmployeeCell } from './employee.service';
+
+@Component({
+  selector: 'example-view',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './example.component.html'
+})
+export class ExampleComponent {
+  #employeeCell = inject(EmployeeCell);
+
+  readonly state = this.#employeeCell.state;
+
+  readonly sample = [
+    { id: 11, name: 'Luke' },
+    { id: 38, name: 'Leia' },
+    { id: 9, name: 'Han' }
+  ];
+
+  loadSample(): void {
+    this.#employeeCell.replace(this.sample);
+  }
+
+  loadSampleAsync(): void {
+    this.#employeeCell.replaceAsync();
+  }
+
+  resetState(): void {
+    this.#employeeCell.reset();
+  }
+}

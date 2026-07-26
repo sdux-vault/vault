@@ -1,6 +1,3 @@
-<!-- <sdux-brand-name /> Splash Page — Best Layout + Best Copy -->
-<!-- Layout: Stratum (Example 20) | Copy: best-copy.md IDs | CSS: brian1 patterns -->
-
 <!-- ─── Hero (Split with Terminal) ─── -->
 <section class="hero">
   <div class="hero-glow"></div>
@@ -9,7 +6,7 @@
     class="hero-release-banner"
     aria-label="SDuX Vault 1.0 release announcement">
     <span class="hero-release-text"
-      >SDuX Vault™ 1.0 is officially released</span
+      ><sdux-vault-brand-name [tm]="true" /> 1.0 is officially released</span
     >
     <a
       class="btn-primary hero-release-cta"
@@ -51,6 +48,19 @@
   </div>
 </section>
 
+<section class="developer-view">
+  <div
+    class="developer-view-button"
+    role="button"
+    tabindex="0"
+    matTooltip="Click to view the language comparison documentation"
+    (click)="openDeveloperView()"
+    (keydown.enter)="openDeveloperView()"
+    (keydown.space)="openDeveloperView()">
+    Developer? Review Language Comparisons Here
+  </div>
+</section>
+
 <!-- ─── Ecosystem Strip ─── -->
 <section class="section">
   <div class="trusted">
@@ -59,7 +69,9 @@
     </span>
     <div class="trusted-grid">
       @for (language of supportedLanguages; track language.name) {
-        <span class="trusted-logo">
+        <span
+          class="trusted-logo"
+          [matTooltip]="'SDuX supports ' + language.name">
           <img
             [src]="'assets/' + language.logo"
             class="image-40"
@@ -358,24 +370,23 @@
       </button>
     </div>
 
-    <pre
-      class="ownership-visual"><span class="code-keyword">const</span> cartCell =
-  <span class="code-keyword">new</span> <span class="code-type">FeatureCell</span>&lt;<span class="code-type">CartState</span>&gt;(&#123;
-  name: <span class="code-string">'cart'</span>,
+    <pre><code class="language-ts">const cartCell =
+  new FeatureCell &lt; CartState &gt;(&#123;
+  name: 'cart',
   initialState: &#123;
     items: [],
     total: 0,
-    status: <span class="code-string">'idle'</span>
+    status: 'idle'
   &#125;
 &#125;);
 
-cartCell.<span class="code-keyword">replaceState</span>(&#123;
+cartCell.replaceState(&#123;
   value: &#123;
     items: updatedItems,
     total: computeTotal(items),
-    status: <span class="code-string">'ready'</span>
+    status: 'ready'
   &#125;
-&#125;);</pre>
+&#125;);</code></pre>
   </div>
 </section>
 
@@ -384,7 +395,7 @@ cartCell.<span class="code-keyword">replaceState</span>(&#123;
   <div class="section-inner">
     <span class="section-label">Testing</span>
     <h2 class="section-heading">
-      Testing becomes stable because execution becomes stable.
+      Testing becomes stable because execution becomes stable. Easy as 1, 2, 3.
     </h2>
     <p class="section-subheading">
       No flaky tests. No timing hacks. No marble diagrams. Just deterministic
@@ -392,17 +403,19 @@ cartCell.<span class="code-keyword">replaceState</span>(&#123;
     </p>
 
     <div class="deterministic">
-      <pre
-        class="deterministic-code"><span class="code-comment">// act &rarr; settle &rarr; assert</span>
-it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">async</span> () =&gt; &#123;
-  cartCell.<span class="code-keyword">mergeState</span>(&#123;
+      <pre><code class="language-ts">// act &rarr; settle &rarr; assert
+it('updates cart'>, async () =&gt; &#123;
+  // 1- Update the cart with a new set of items
+  cartCell.mergeState(&#123;
     value: mockItems
   &#125;);
 
-  <span class="code-keyword">await</span> cartCellSettled(&lt;cart-cell-key&gt;);
+  // 2- Await the pipeline to settle and produce a new state
+  await cartCellSettled(&lt;cart-cell-key&gt;);
 
+  // 3- Assert the new state is as expected
   expect(cartCell.state.total).toBe(42);
-&#125;);</pre>
+&#125;);</code></pre>
 
       <div class="deterministic-points">
         <h3 class="deterministic-label">Fast. Reliable. Repeatable.</h3>
@@ -520,7 +533,19 @@ it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">a
 
     <div class="frameworks">
       @for (language of frameworkLanguages; track language.name) {
-        <div class="framework-tile">
+        <div
+          class="framework-tile"
+          role="button"
+          tabindex="0"
+          [class.has-stackbliz]="language.hasStackblitzExample"
+          [matTooltip]="language.tooltip"
+          (click)="viewStackblitz(language.name, language.hasStackblitzExample)"
+          (keydown.enter)="
+            viewStackblitz(language.name, language.hasStackblitzExample)
+          "
+          (keydown.space)="
+            viewStackblitz(language.name, language.hasStackblitzExample)
+          ">
           <img
             [src]="'assets/' + language.logo"
             [alt]="language.logoAlt"
@@ -620,12 +645,12 @@ it(<span class="code-string">'updates cart'</span>, <span class="code-keyword">a
   &#123;
     key: 'example-feature-cell-key',
     initialState: [],
-  &#125;,
-  [],
-  []
+  &#125;
 );
 
-cell.initialize();</code></pre>
+cell.initialize();
+
+cell.replaceState([ newCandidate ]);</code></pre>
         </div>
         <div class="stackblitz-card-info">
           <h3 class="stackblitz-card-title">Replace State</h3>
@@ -654,7 +679,9 @@ cell.initialize();</code></pre>
 cell
   .filters([ filterFn ])
   .reducers([ reducerFn ])
-  .initialize();</code></pre>
+  .initialize();
+
+cell.replaceState([ newCandidate ]);</code></pre>
         </div>
         <div class="stackblitz-card-info">
           <h3 class="stackblitz-card-title">Filter &amp; Reducer Pipeline</h3>

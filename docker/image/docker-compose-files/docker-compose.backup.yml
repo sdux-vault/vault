@@ -9,6 +9,7 @@ services:
     # Expose port 5100 to host
     ports:
       - '5100:80'
+      - '5101:80'
 
     # Use bridge networking
     networks:

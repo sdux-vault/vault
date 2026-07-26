@@ -1,0 +1,13 @@
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Employee } from './employee.model';
+
+export const EmployeeActions = createActionGroup({
+  source: 'Employees',
+  events: {
+    Replace: props<{ employees: Employee[] }>(),
+    'Replace Async': emptyProps(),
+    'Replace Async Success': props<{ employees: Employee[] }>(),
+    'Replace Async Failure': props<{ error: string }>(),
+    Reset: emptyProps()
+  }
+});

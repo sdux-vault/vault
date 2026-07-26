@@ -1,0 +1,13 @@
+import { Employee } from './employee.model';
+
+export interface EmployeeState {
+  loading: boolean;
+  employees: Employee[];
+  error: string | null;
+}
+
+export const initialEmployeeState: EmployeeState = {
+  loading: false,
+  employees: [],
+  error: null
+};

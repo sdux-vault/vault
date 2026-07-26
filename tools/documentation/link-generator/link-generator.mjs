@@ -27,16 +27,26 @@ const rawSourceDirs = [
   'apps/docs-app/app/docs/references',
   'apps/docs-app/app/docs/sdux/sdux-vault',
   'apps/docs-app/app/docs/top-tier',
-  'apps/docs-app/app/docs/tutorial'
+  'apps/docs-app/app/docs/tutorial/angular'
+];
+
+const rawSourceExcludeDirs = [
+  'apps/docs-app/app/docs/tutorial/angular/examples',
+  'apps/docs-app/app/docs/tutorial/angular/generated'
 ];
 
 const sourceDirs = rawSourceDirs.map((directory) => {
   return path.join(projectRoot, directory);
 });
 
+const excludeDirs = rawSourceExcludeDirs.map((directory) => {
+  return path.join(projectRoot, directory);
+});
+
 const documentationLinkGenerator = new DocumentationLinkGenerator({
   typeIndexPath,
-  sourceDirs
+  sourceDirs,
+  excludeDirs
 });
 
 documentationLinkGenerator.run();

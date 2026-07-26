@@ -12,12 +12,12 @@ describe('Service: Navigation', () => {
     service = new NavigationService();
   });
 
-  it('should have initial state as false', () => {
-    expect(service.isOpen()).toBeFalse();
+  it('should have initial state as true', () => {
+    expect(service.isOpen()).toBeTrue();
   });
 
   it('should set loading to true when show() is called', () => {
-    expect(service.isOpen()).toBeFalse();
+    expect(service.isOpen()).toBeTrue();
     service.show();
     TestBed.tick();
     expect(service.isOpen()).toBeTrue();
@@ -25,19 +25,19 @@ describe('Service: Navigation', () => {
 
   describe('updateExpanded', () => {
     it('should handle an updateExpanded call - undefined', () => {
-      expect(service.isOpen()).toBeFalse();
-
-      service.updateExpanded();
-      TestBed.tick();
       expect(service.isOpen()).toBeTrue();
 
       service.updateExpanded();
       TestBed.tick();
       expect(service.isOpen()).toBeFalse();
+
+      service.updateExpanded();
+      TestBed.tick();
+      expect(service.isOpen()).toBeTrue();
     });
 
     it('should handle an updateExpanded call - defined', () => {
-      expect(service.isOpen()).toBeFalse();
+      expect(service.isOpen()).toBeTrue();
 
       service.updateExpanded(false);
       TestBed.tick();

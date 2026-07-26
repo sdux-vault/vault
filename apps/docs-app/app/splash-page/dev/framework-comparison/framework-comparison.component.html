@@ -1,0 +1,97 @@
+<div class="comparison-header-grid">
+  <article class="comparison-panel comparison-panel-header-card">
+    <header class="comparison-panel-header">
+      <div class="comparison-panel-header-top-row">
+        <h2 class="comparison-panel-title">
+          {{ comparison().left.libraryLabel }} +
+          {{ comparison().left.frameworkLabel }}
+        </h2>
+        <span class="comparison-panel-count"
+          >{{ comparison().left.files.length }} files</span
+        >
+      </div>
+
+      <div class="comparison-panel-header-bottom-row">
+        <div class="comparison-panel-note">
+          The feature surface is:
+          <ul>
+            <li>{{ sharedSetupFileCount() }} shared setup files</li>
+            <li>{{ sduxFeatureFileCount() }} core feature files</li>
+
+            @if (comparison().displayCeremony) {
+              <li>
+                <span class="note-callout"
+                  >{{ leftOnlySupportFileCount() }} extra
+                  {{ comparison().left.libraryLabel }}-only ceremony files
+                </span>
+                that <em>scale linearly</em> with every new feature
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </header>
+  </article>
+
+  <article class="comparison-panel comparison-panel-header-card">
+    <header class="comparison-panel-header">
+      <div class="comparison-panel-header-top-row">
+        <h2 class="comparison-panel-title">
+          @if (shouldRenderSduxBrandName(comparison().right)) {
+            <span class="sdux-brand-name"><sdux-vault-brand-name /></span> +
+            {{ comparison().right.frameworkLabel }}
+          } @else {
+            {{ comparison().right.libraryLabel }} +
+            {{ comparison().right.frameworkLabel }}
+          }
+        </h2>
+        <span class="comparison-panel-count"
+          >{{ comparison().right.files.length }} files</span
+        >
+      </div>
+
+      <div class="comparison-panel-header-bottom-row">
+        <div class="comparison-panel-note">
+          The feature surface is
+          <ul>
+            <li>{{ sharedSetupFileCount() }} shared setup files</li>
+            <li>{{ sduxFeatureFileCount() }} core feature files</li>
+
+            @if (comparison().displayCeremony) {
+              <li><span class="note-callout">no extra ceremony files</span></li>
+            }
+          </ul>
+        </div>
+      </div>
+    </header>
+  </article>
+</div>
+
+<div class="comparison-rows">
+  @for (
+    row of rows();
+    track getRowTrackKey($index, row.leftFile, row.rightFile)
+  ) {
+    <div class="comparison-row-grid">
+      <section class="comparison-panel comparison-file-panel">
+        @if (row.leftFile; as leftFile) {
+          <div class="comparison-file-name">{{ leftFile.fileName }}</div>
+          <pre
+            class="comparison-file-source"><code [class]="getCodeLanguage(leftFile.type)" [textContent]="leftFile.numberedSource"></code></pre>
+        } @else {
+          <div class="comparison-file-empty">&nbsp;</div>
+        }
+      </section>
+
+      <section class="comparison-panel comparison-file-panel">
+        @if (row.rightFile; as rightFile) {
+          <div class="comparison-file-name">{{ rightFile.fileName }}</div>
+          <pre
+            class="comparison-file-source"><code [class]="getCodeLanguage(rightFile.type)" [textContent]="rightFile.numberedSource"></code></pre>
+        } @else {
+          <div class="comparison-file-empty">&nbsp;</div>
+        }
+      </section>
+    </div>
+  }
+</div>

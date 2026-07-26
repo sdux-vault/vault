@@ -1,0 +1,5 @@
+<script lang="ts">
+  import ExampleView from './ExampleView.svelte';
+</script>
+
+<ExampleView />

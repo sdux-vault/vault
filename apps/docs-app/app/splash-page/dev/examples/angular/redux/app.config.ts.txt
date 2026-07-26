@@ -1,0 +1,14 @@
+import { ApplicationConfig } from '@angular/core';
+import { provideEffects } from '@ngrx/effects';
+import { provideStore } from '@ngrx/store';
+import { EmployeeEffects } from './employee.effects';
+import { employeeFeatureKey, employeeReducer } from './employee.reducer';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideEffects(EmployeeEffects),
+    provideStore({
+      [employeeFeatureKey]: employeeReducer
+    })
+  ]
+};

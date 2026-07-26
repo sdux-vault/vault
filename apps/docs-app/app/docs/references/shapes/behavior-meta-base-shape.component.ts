@@ -1,23 +1,22 @@
 /**
  * AUTO-GENERATED DOCUMENTATION COMPONENT
- * Symbol: <a href="/docs/references/shapes/behavior-meta-shape">BehaviorMetaShape</a>
+ * Symbol: <a href="/docs/references/shapes/behavior-meta-base-shape">BehaviorMetaBaseShape</a>
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { BrandNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
-  selector: 'sdux-behavior-meta-shape',
+  selector: 'sdux-behavior-meta-base-shape',
   standalone: true,
   imports: [BrandNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>BehaviorMetaShape</h3>
+      <h3>BehaviorMetaBaseShape</h3>
     </div>
     <header class="docs-header">
       <div class="lead">
-        Metadata shape describing a registered behavior&#39;s static
-        configuration.<br /><br />
+        Metadata shared by every registered behavior.<br /><br />
       </div>
     </header>
     <section class="section">
@@ -93,34 +92,6 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
             </tr>
             <tr>
               <td class="column-300">
-                <strong>resolveType?</strong>
-
-                <p class="type">
-                  type:
-                  <a href="/docs/references/types/resolve-type">ResolveType</a>
-                </p>
-              </td>
-              <td class="column-auto">
-                Optional resolve strategy associated with this behavior.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td class="column-300">
-                <strong>type</strong>
-
-                <p class="type">
-                  type:
-                  <a href="/docs/references/types/behavior-type"
-                    >BehaviorType</a
-                  >
-                </p>
-              </td>
-              <td class="column-auto">
-                Pipeline stage in which this behavior participates.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td class="column-300">
                 <strong>wantsConfig?</strong>
 
                 <p class="type">type: boolean</p>
@@ -149,4 +120,4 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
   styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class BehaviorMetaShapeComponent {}
+export class BehaviorMetaBaseShapeComponent {}

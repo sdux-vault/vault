@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, ElementRef, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import {
   BrandNameComponent,
-  CatchPhraseComponent
+  CatchPhraseComponent,
+  VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import Prism from 'prismjs';
 import { SupportedLanguagesConstants } from '../docs/top-tier/supported-languages/constants/supported-languages.constant';
@@ -15,9 +17,11 @@ import { SplashPageExampleComponent } from './splash-page-example/splash-page-ex
   standalone: true,
   imports: [
     MatIconModule,
+    MatTooltipModule,
     BrandNameComponent,
     CatchPhraseComponent,
-    SplashPageExampleComponent
+    SplashPageExampleComponent,
+    VaultBrandNameComponent
   ],
   templateUrl: './splash-page.component.html',
   styleUrls: ['./splash-page.component.scss']
@@ -123,5 +127,23 @@ export class SplashPageComponent implements AfterViewInit {
 
   openMenu() {
     this.#navigationService.show();
+  }
+
+  openDeveloperView() {
+    this.openMenu();
+    this.#router.navigate(['/developer']);
+  }
+
+  viewStackblitz(fragment: string, hasStackblitzExample?: boolean): void {
+    if (hasStackblitzExample) {
+      if (fragment.match(/^(angular|react|svelte|vue)$/i)) {
+        fragment = 'web';
+      }
+
+      this.openMenu();
+      this.#router.navigate(['/docs/stackblitz'], {
+        fragment: fragment.toLowerCase()
+      });
+    }
   }
 }

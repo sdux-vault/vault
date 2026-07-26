@@ -9,6 +9,7 @@ services:
     # Expose port 80 to host
     ports:
       - '3100:80'
+      - '3102:80'
 
     # Use bridge networking
     networks:

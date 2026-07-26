@@ -1,0 +1,50 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from './store';
+import { EmployeeActions } from './employee.actions';
+import { Employee } from './employee.model';
+import {
+  selectEmployees,
+  selectEmployeesError,
+  selectEmployeesLoading
+} from './employee.selectors';
+
+const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+const useAppSelector = useSelector.withTypes<RootState>();
+
+export function useEmployeeFacade() {
+  const dispatch = useAppDispatch();
+  const value = useAppSelector(selectEmployees);
+  const loading = useAppSelector(selectEmployeesLoading);
+  const error = useAppSelector(selectEmployeesError);
+
+  return {
+    state: {
+      value,
+      loading,
+      error
+    },
+    replace(employees: Employee[]): void {
+      dispatch(EmployeeActions.replace(employees));
+    },
+    async replaceAsync(): Promise<void> {
+      dispatch(EmployeeActions.replaceAsync());
+
+      try {
+        const employees = (await fetch('/api/employees').then((response) => {
+          return response.json();
+        })) as Employee[];
+
+        dispatch(EmployeeActions.replaceAsyncSuccess(employees));
+      } catch (error: unknown) {
+        dispatch(
+          EmployeeActions.replaceAsyncFailure(
+            error instanceof Error ? error.message : 'Failed to load employees'
+          )
+        );
+      }
+    },
+    reset(): void {
+      dispatch(EmployeeActions.reset());
+    }
+  };
+}

@@ -5,6 +5,7 @@
     "documentation/**/tests/**/*.spec.mjs",
     "release/**/tests/**/*.spec.mjs",
     "seo/**/tests/**/*.spec.mjs",
+    "sdux-comparison/**/tests/**/*.spec.mjs",
     "sitemap/**/tests/**/*.spec.mjs",
     "stackblitz/**/tests/**/*.spec.mjs",
     "tutorial/**/tests/**/*.spec.mjs"

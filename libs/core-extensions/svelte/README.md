@@ -44,7 +44,7 @@ SDuX Vault is a **framework-agnostic, deterministic state management system** bu
 - **Snapshot-safe imperative access** — keep reading `cell.state` synchronously outside Svelte reactivity
 - **Automatic effect cleanup** — State subscriptions follow the consuming Svelte effect lifecycle
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+For full documentation, guides, and API references: [sdux-vault.dev](https://www.sdux-vault.dev)
 
 ---
 

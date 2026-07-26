@@ -10,6 +10,13 @@ export const routes: Routes = [
       )
   },
   {
+    path: 'developer',
+    loadComponent: () =>
+      import('./splash-page/dev/dev-splash-page.component').then(
+        (m) => m.DevSplashPageComponent
+      )
+  },
+  {
     path: 'about',
     loadComponent: () =>
       import('./splash-page/splash-page.component').then(

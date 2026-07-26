@@ -1,0 +1,47 @@
+<script setup lang="ts">
+import {
+  employeeCell,
+  replaceEmployees,
+  replaceEmployeesAsync,
+  resetEmployees
+} from './employee.cell';
+import { Employee } from './employee.model';
+
+const sample: Employee[] = [
+  { id: 11, name: 'Luke' },
+  { id: 38, name: 'Leia' },
+  { id: 9, name: 'Han' }
+];
+
+const snapshot = employeeCell.useReactiveState();
+
+function loadSample(): void {
+  replaceEmployees(sample);
+}
+
+function loadSampleAsync(): void {
+  replaceEmployeesAsync();
+}
+
+function resetState(): void {
+  resetEmployees();
+}
+</script>
+
+<template>
+  <div>
+    <div>
+      <div v-if="snapshot.isLoading">Loading...</div>
+      <div v-else-if="snapshot.error" v-text="String(snapshot.error)" />
+      <textarea v-else readonly :value="JSON.stringify(snapshot.value ?? [], null, 2)" />
+    </div>
+
+    <div>
+      <button type="button" @click="loadSample">Load Sample State</button>
+
+      <button type="button" @click="loadSampleAsync">Load Async State</button>
+
+      <button type="button" @click="resetState">Reset State</button>
+    </div>
+  </div>
+</template>

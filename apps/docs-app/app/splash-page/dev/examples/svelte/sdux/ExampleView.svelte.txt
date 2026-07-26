@@ -1,0 +1,49 @@
+<script lang="ts">
+  import type { Employee } from './employee.model';
+  import {
+    employeeCell,
+    replaceEmployees,
+    replaceEmployeesAsync,
+    resetEmployees
+  } from './employee.cell';
+
+  const sample: Employee[] = [
+    { id: 11, name: 'Luke' },
+    { id: 38, name: 'Leia' },
+    { id: 9, name: 'Han' }
+  ];
+
+  let snapshot = $derived(employeeCell.state);
+
+  function loadSample(): void {
+    replaceEmployees(sample);
+  }
+
+  function loadSampleAsync(): void {
+    replaceEmployeesAsync();
+  }
+
+  function resetState(): void {
+    resetEmployees();
+  }
+</script>
+
+<div>
+  <div>
+    {#if snapshot.isLoading}
+      <div>Loading...</div>
+    {:else if snapshot.error}
+      <div>{String(snapshot.error)}</div>
+    {:else}
+      <textarea readonly>{JSON.stringify(snapshot.value ?? [], null, 2)}</textarea>
+    {/if}
+  </div>
+
+  <div>
+    <button type="button" on:click={loadSample}>Load Sample State</button>
+
+    <button type="button" on:click={loadSampleAsync}>Load Async State</button>
+
+    <button type="button" on:click={resetState}>Reset State</button>
+  </div>
+</div>

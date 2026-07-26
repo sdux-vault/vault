@@ -1,0 +1,10 @@
+export interface Employee {
+  id: number;
+  name: string;
+}
+
+export interface EmployeeState {
+  loading: boolean;
+  value: Employee[];
+  error: string | null;
+}

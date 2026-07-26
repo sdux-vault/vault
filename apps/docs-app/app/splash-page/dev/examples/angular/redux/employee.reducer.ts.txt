@@ -1,0 +1,49 @@
+import { createReducer, on } from '@ngrx/store';
+import { EmployeeActions } from './employee.actions';
+import { Employee } from './employee.model';
+import { EmployeeState, initialEmployeeState } from './employee.state';
+
+export const employeeFeatureKey = 'employees';
+
+const filterOddEmployees = (employees: Employee[]): Employee[] => {
+  return employees.filter((employee) => employee.id % 2 !== 0);
+};
+
+const sortEmployeesByName = (employees: Employee[]): Employee[] => {
+  const sortedEmployees = [...employees];
+
+  sortedEmployees.sort((left, right) => left.name.localeCompare(right.name));
+
+  return sortedEmployees;
+};
+
+const prepareEmployees = (employees: Employee[]): Employee[] => {
+  return sortEmployeesByName(filterOddEmployees(employees));
+};
+
+export const employeeReducer = createReducer<EmployeeState>(
+  initialEmployeeState,
+  on(EmployeeActions.replace, (state, { employees }) => ({
+    ...state,
+    loading: false,
+    employees: prepareEmployees(employees),
+    error: null
+  })),
+  on(EmployeeActions.replaceAsync, (state) => ({
+    ...state,
+    loading: true,
+    error: null
+  })),
+  on(EmployeeActions.replaceAsyncSuccess, (state, { employees }) => ({
+    ...state,
+    loading: false,
+    employees: prepareEmployees(employees),
+    error: null
+  })),
+  on(EmployeeActions.replaceAsyncFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error
+  })),
+  on(EmployeeActions.reset, () => initialEmployeeState)
+);

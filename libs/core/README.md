@@ -45,7 +45,16 @@ SDuX Vault is a **framework-agnostic, deterministic state management system** bu
 - **State emission** — publishes state changes as isolated copies
 - **FeatureCell factory** — creates and configures feature cells with typed state
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+For full documentation, guides, and API references: [sdux-vault.dev](https://www.sdux-vault.dev)
+
+---
+
+### Framework Core Extensions
+
+- Angular: [@sdux-vault/angular](https://www.npmjs.com/package/@sdux-vault/angular)
+- React: [@sdux-vault/react](https://www.npmjs.com/package/@sdux-vault/react)
+- Svelte: [@sdux-vault/svelte](https://www.npmjs.com/package/@sdux-vault/svelte)
+- Vue: [@sdux-vault/vue](https://www.npmjs.com/package/@sdux-vault/vue)
 
 ---
 

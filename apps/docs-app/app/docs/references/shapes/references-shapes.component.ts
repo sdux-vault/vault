@@ -10,7 +10,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { NotFoundComponent } from '../../../not-found/not-found.component';
 
-import { BehaviorMetaShapeComponent } from './behavior-meta-shape.component';
+import { BehaviorMetaBaseShapeComponent } from './behavior-meta-base-shape.component';
 import { ControllerAttemptMessageShapeComponent } from './controller-attempt-message-shape.component';
 import { ControllerDecisionShapeComponent } from './controller-decision-shape.component';
 import { ControllerFailMessageShapeComponent } from './controller-fail-message-shape.component';
@@ -30,6 +30,8 @@ import { EventShapeComponent } from './event-shape.component';
 import { FeatureCellBaseShapeComponent } from './feature-cell-base-shape.component';
 import { FeatureCellShapeComponent } from './feature-cell-shape.component';
 import { HttpResourceRefShapeComponent } from './http-resource-ref-shape.component';
+import { NonResolveBehaviorMetaShapeComponent } from './non-resolve-behavior-meta-shape.component';
+import { ResolveBehaviorMetaShapeComponent } from './resolve-behavior-meta-shape.component';
 import { SDuXShapeComponent } from './s-du-x-shape.component';
 import { SerializedFeatureCellShapeComponent } from './serialized-feature-cell-shape.component';
 import { StateEmitSnapshotShapeComponent } from './state-emit-snapshot-shape.component';
@@ -51,7 +53,7 @@ import { VaultRegistrationShapeComponent } from './vault-registration-shape.comp
     CommonModule,
     MatTabsModule,
     MatExpansionModule,
-    BehaviorMetaShapeComponent,
+    BehaviorMetaBaseShapeComponent,
     ControllerAttemptMessageShapeComponent,
     ControllerDecisionShapeComponent,
     ControllerFailMessageShapeComponent,
@@ -71,6 +73,8 @@ import { VaultRegistrationShapeComponent } from './vault-registration-shape.comp
     FeatureCellBaseShapeComponent,
     FeatureCellShapeComponent,
     HttpResourceRefShapeComponent,
+    NonResolveBehaviorMetaShapeComponent,
+    ResolveBehaviorMetaShapeComponent,
     SDuXShapeComponent,
     SerializedFeatureCellShapeComponent,
     StateEmitSnapshotShapeComponent,

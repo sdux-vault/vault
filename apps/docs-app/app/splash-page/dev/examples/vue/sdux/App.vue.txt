@@ -1,0 +1,7 @@
+<script setup lang="ts">
+import ExampleView from './ExampleView.vue';
+</script>
+
+<template>
+  <ExampleView />
+</template>

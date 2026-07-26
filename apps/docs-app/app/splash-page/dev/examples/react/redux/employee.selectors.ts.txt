@@ -1,0 +1,18 @@
+import { RootState } from './store';
+import { employeeFeatureKey } from './employee.reducer';
+
+export const selectEmployeeState = (state: RootState) => {
+  return state[employeeFeatureKey];
+};
+
+export const selectEmployees = (state: RootState) => {
+  return selectEmployeeState(state).value;
+};
+
+export const selectEmployeesLoading = (state: RootState) => {
+  return selectEmployeeState(state).loading;
+};
+
+export const selectEmployeesError = (state: RootState) => {
+  return selectEmployeeState(state).error;
+};

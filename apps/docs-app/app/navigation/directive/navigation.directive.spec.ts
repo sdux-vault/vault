@@ -91,24 +91,24 @@ describe('Directive: Navigation', () => {
 
     component.closeSidenav();
     TestBed.tick();
-    expect(component.isExpanded()).toBeTrue();
+    expect(component.isExpanded()).toBeFalse();
 
     component.closeSidenav();
     TestBed.tick();
-    expect(component.isExpanded()).toBeFalse();
+    expect(component.isExpanded()).toBeTrue();
 
     layoutService.isMobile.set(false);
     component.closeSidenav();
     TestBed.tick();
-    expect(component.isExpanded()).toBeFalse();
-
-    component.closeSidenav(true);
-    TestBed.tick();
     expect(component.isExpanded()).toBeTrue();
 
     component.closeSidenav(true);
     TestBed.tick();
     expect(component.isExpanded()).toBeFalse();
+
+    component.closeSidenav(true);
+    TestBed.tick();
+    expect(component.isExpanded()).toBeTrue();
   });
 
   // ---------------------------------------------------------

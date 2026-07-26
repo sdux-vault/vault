@@ -14,6 +14,10 @@ sudo certbot certonly --standalone --expand \
   -d enterprise.sdux-vault.com \
   -d staging.sdux-vault.com \
   -d api.staging.sdux-vault.com \
+  -d sdux-vault.dev\
+  -d www.sdux-vault.dev\
+  -d backup.sdux-vault.dev\
+  -d staging.sdux-vault.dev\
   -d sduxvault.com \
   -d www.sduxvault.com \
   -d staging.sduxvault.com \

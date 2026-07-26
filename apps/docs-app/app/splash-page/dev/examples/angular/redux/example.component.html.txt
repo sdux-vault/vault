@@ -1,0 +1,25 @@
+<div>
+  <div>
+    @if (state.loading()) {
+      <div>Loading...</div>
+    } @else if (state.error()) {
+      <div>{{ state.error() }}</div>
+    } @else {
+      <textarea readonly>{{ state.employees() | json }}</textarea>
+    }
+  </div>
+
+  <div>
+    <button type="button" (click)="loadSample()">
+      Load Sample State
+    </button>
+
+    <button type="button" (click)="loadSampleAsync()">
+      Load Async State
+    </button>
+
+    <button type="button" (click)="resetState()">
+      Reset State
+    </button>
+  </div>
+</div>

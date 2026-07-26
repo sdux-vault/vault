@@ -226,36 +226,6 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
             </tr>
             <tr>
               <td class="column-300">
-                <strong>resolveType</strong>
-                <p class="modifiers">static, readonly</p>
-                <p class="type">
-                  type:
-                  <a href="/docs/references/types/resolve-type">ResolveType</a>
-                </p>
-              </td>
-              <td class="column-auto">
-                Resolve type associated with observable-based resolution.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td class="column-300">
-                <strong>resolveType</strong>
-                <p class="modifiers">readonly</p>
-                <p class="type">type: unknown</p>
-                <p class="default">
-                  default:
-                  <a
-                    href="/docs/pipeline/behaviors/observable/with-core-from-observable-behavior"
-                    >withCoreFromObservableBehavior</a
-                  >.resolveType
-                </p>
-              </td>
-              <td class="column-auto">
-                Resolve type for this behavior instance.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td class="column-300">
                 <strong>type</strong>
                 <p class="modifiers">static, readonly</p>
                 <p class="type">

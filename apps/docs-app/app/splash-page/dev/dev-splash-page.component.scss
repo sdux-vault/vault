@@ -1,0 +1,347 @@
+@use 'global' as global;
+
+// ─── SDuX Splash Page — Final Composite ───
+// Layout: Stratum (Example 20) | Copy: best-copy.md | CSS: brian1 Horizon
+
+$splash-surface: color-mix(
+  in srgb,
+  global.$sdux-surface-light-mid 40%,
+  global.$sdux-text-white
+);
+$splash-muted: color-mix(in srgb, global.$sdux-text-inverse 62%, transparent);
+$splash-primary-soft: color-mix(
+  in srgb,
+  global.$sdux-primary-base 12%,
+  global.$sdux-text-white
+);
+$splash-border: color-mix(
+  in srgb,
+  global.$sdux-text-inverse 14%,
+  global.$sdux-text-white
+);
+$splash-code-bg: color-mix(
+  in srgb,
+  global.$sdux-surface-light-mid 72%,
+  global.$sdux-text-white
+);
+
+.sdux-brand-name {
+  color: global.$sdux-primary-base;
+}
+
+:host {
+  display: block;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(
+          in srgb,
+          global.$sdux-primary-light 10%,
+          global.$sdux-surface-light
+        )
+        0%,
+      color-mix(
+          in srgb,
+          global.$sdux-surface-light-mid 35%,
+          global.$sdux-surface-light
+        )
+        12%,
+      global.$sdux-surface-light 28%
+    ),
+    global.$sdux-surface-light;
+  color: global.$sdux-text-inverse;
+  font-family: global.$sdux-font-family;
+  line-height: global.$line-height;
+  overflow-x: hidden;
+}
+
+// ─── Hero (Split with Terminal) ───
+.hero {
+  position: relative;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: global.$spacing-3xl global.$spacing-xl global.$spacing-2xl;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &-release-banner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // flex-direction: row;
+    gap: global.$spacing-lg;
+    // flex-wrap: wrap;
+    width: calc(100% - 2 * global.$spacing-lg);
+    align-self: flex-start;
+    padding: global.$spacing-md global.$spacing-lg;
+    margin-bottom: global.$spacing-lg;
+    border: 1px solid $splash-border;
+    border-radius: 0;
+    background: linear-gradient(
+      to right,
+      color-mix(in srgb, global.$sdux-primary-base 8%, $splash-code-bg),
+      color-mix(
+        in srgb,
+        global.$sdux-primary-light 6%,
+        global.$sdux-surface-light
+      )
+    );
+    box-shadow: inset 0 0 0 1px
+      color-mix(in srgb, global.$sdux-text-inverse 4%, transparent);
+
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-sm;
+    font-weight: global.$font-weight-semibold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: global.$sdux-text-inverse;
+
+    > button {
+      width: 250px;
+      font-family: global.$sdux-code-font;
+      font-size: global.$font-size-sm;
+      font-weight: global.$font-weight-semibold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: global.$sdux-text-inverse;
+    }
+  }
+}
+
+// ─── Buttons ───
+.btn-primary {
+  @include global.button-base(
+    global.$sdux-text-inverse,
+    $splash-primary-soft,
+    $splash-border
+  );
+  font-family: global.$sdux-code-font;
+  font-size: global.$font-size-md;
+  padding: global.$spacing-sm global.$spacing-xl;
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  &:hover {
+    background: color-mix(
+      in srgb,
+      global.$sdux-primary-base 16%,
+      global.$sdux-surface-light
+    );
+    border-color: global.$sdux-primary-base;
+  }
+}
+
+.ghost-button {
+  font-family: global.$sdux-code-font;
+  font-size: global.$font-size-md;
+  font-weight: global.$font-weight-medium;
+  padding: global.$spacing-sm global.$spacing-lg;
+  border-radius: 0;
+  border: 1px solid $splash-border;
+  background: $splash-code-bg;
+  color: global.$sdux-text-inverse;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+
+  &:hover {
+    border-color: global.$sdux-primary-base;
+    background: color-mix(
+      in srgb,
+      global.$sdux-primary-base 8%,
+      global.$sdux-surface-light
+    );
+  }
+}
+
+// ─── Section base ───
+.section {
+  padding: global.$spacing-3xl global.$spacing-xl;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &-tinted {
+    background: linear-gradient(
+      180deg,
+      color-mix(
+        in srgb,
+        global.$sdux-surface-light-accent 35%,
+        $splash-surface
+      ),
+      $splash-surface
+    );
+    max-width: none;
+    padding-left: global.$spacing-xl;
+    padding-right: global.$spacing-xl;
+    border-top: 1px solid $splash-border;
+    border-bottom: 1px solid $splash-border;
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+}
+
+.section-summary {
+  margin: 0 0 global.$spacing-xl;
+  max-width: 28ch;
+  font-size: global.$font-size-xl;
+  color: global.$sdux-text-inverse;
+  line-height: 1.3;
+  font-weight: global.$font-weight-semibold;
+  letter-spacing: -0.01em;
+}
+
+// ─── Ownership Model ───
+.ownership {
+  &-point {
+    gap: global.$spacing-md;
+    padding-top: global.$spacing-sm;
+  }
+
+  &-bullet {
+    border-radius: 0;
+  }
+}
+
+// ─── Deterministic / Testing ───
+.deterministic {
+  align-items: start;
+
+  &-label {
+    font-family: global.$sdux-code-font;
+    text-transform: uppercase;
+  }
+}
+
+.button-width {
+  width: 250px;
+  font-size: global.$font-size-xs !important;
+}
+
+.comparison-framework-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: global.$spacing-md;
+  margin-bottom: global.$spacing-xl;
+
+  .framework-sub-label {
+    font-size: global.$font-size-xs;
+    color: $splash-muted;
+    text-transform: none;
+  }
+}
+
+.comparison-framework-button {
+  &.is-active {
+    border-color: global.$sdux-primary-base;
+    background: color-mix(
+      in srgb,
+      global.$sdux-primary-base 8%,
+      global.$sdux-surface-light
+    );
+  }
+}
+
+.frameworks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: global.$spacing-lg;
+  justify-content: start;
+
+  @media (max-width: global.$breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: global.$breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+
+  .framework-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: global.$spacing-sm;
+    width: 150px;
+    min-width: 150px;
+    padding: global.$spacing-md;
+    border-radius: 0;
+    border: 1px solid $splash-border;
+    background: linear-gradient(
+      180deg,
+      color-mix(
+        in srgb,
+        global.$sdux-surface-light-accent 50%,
+        $splash-code-bg
+      ),
+      $splash-code-bg
+    );
+    transition: border-color 0.2s ease;
+
+    &.has-stackbliz {
+      width: 145px;
+      min-width: 145px;
+      border-right: 5px solid global.$sdux-primary-base;
+      cursor: pointer;
+
+      &:hover {
+        border-color: global.$sdux-primary-base;
+        transform: translateY(-2px);
+        box-shadow: global.$sdux-shadow-hover;
+      }
+    }
+
+    @media (max-width: global.$breakpoint-md) {
+      width: 150px;
+    }
+
+    &-header {
+      display: flex;
+      align-items: center;
+      gap: global.$spacing-sm;
+      height: 24px;
+    }
+
+    &-name {
+      font-size: global.$font-size-md;
+      font-weight: global.$font-weight-semibold;
+      margin: 0;
+      text-align: left;
+      line-height: 1.3;
+    }
+
+    &-note {
+      font-size: global.$font-size-xs;
+      color: $splash-muted;
+      margin: 0;
+      text-align: left;
+      line-height: 1.5;
+    }
+  }
+}
+
+// ─── Footer CTA ───
+.footer-cta {
+  text-align: left;
+  padding: global.$spacing-3xl global.$spacing-xl;
+  background: $splash-surface;
+  border-top: 1px solid $splash-border;
+}
+
+.view-all-button {
+  display: flex;
+  gap: global.$spacing-md;
+  padding: global.$spacing-lg 0 0;
+}

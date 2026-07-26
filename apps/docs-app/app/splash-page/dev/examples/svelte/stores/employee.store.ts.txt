@@ -1,0 +1,68 @@
+import { writable } from 'svelte/store';
+import { Employee, EmployeeState } from './employee.model';
+
+const filterOddEmployees = (employees: Employee[]): Employee[] => {
+  return employees.filter((employee) => employee.id % 2 !== 0);
+};
+
+const sortEmployeesByName = (employees: Employee[]): Employee[] => {
+  const sortedEmployees = [...employees];
+
+  sortedEmployees.sort((left, right) => left.name.localeCompare(right.name));
+
+  return sortedEmployees;
+};
+
+const prepareEmployees = (employees: Employee[]): Employee[] => {
+  return sortEmployeesByName(filterOddEmployees(employees));
+};
+
+const initialEmployeeState: EmployeeState = {
+  loading: false,
+  value: [],
+  error: null
+};
+
+const { subscribe, set, update } = writable<EmployeeState>(initialEmployeeState);
+
+export const employeeState = {
+  subscribe
+};
+
+export function replaceEmployees(employees: Employee[]): void {
+  update(() => ({
+    loading: false,
+    value: prepareEmployees(employees),
+    error: null
+  }));
+}
+
+export async function replaceEmployeesAsync(): Promise<void> {
+  update((state) => ({
+    ...state,
+    loading: true,
+    error: null
+  }));
+
+  try {
+    const employees = (await fetch('/api/employees').then((response) => {
+      return response.json();
+    })) as Employee[];
+
+    update(() => ({
+      loading: false,
+      value: prepareEmployees(employees),
+      error: null
+    }));
+  } catch (error: unknown) {
+    update((state) => ({
+      ...state,
+      loading: false,
+      error: error instanceof Error ? error.message : 'Failed to load employees'
+    }));
+  }
+}
+
+export function resetEmployees(): void {
+  set(initialEmployeeState);
+}

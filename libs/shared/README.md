@@ -53,7 +53,7 @@ SDuX Vault is a **framework-agnostic, deterministic state management system** bu
 - ✅ **SSR-safe and browser-safe** — works everywhere
 - ✅ **Stable public API** — domain-driven, designed for composition
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+For full documentation, guides, and API references: [sdux-vault.dev](https://www.sdux-vault.dev)
 
 ---
 

@@ -1,0 +1,43 @@
+import { Injectable } from '@angular/core';
+import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { Employee } from './employee.model';
+
+@FeatureCell<Employee[]>('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeCell {
+  readonly #vault = injectVault<Employee[]>(EmployeeCell);
+  readonly state = this.#vault.state;
+
+  constructor() {
+    this.#vault.
+    .filters([
+      (examples: Example[]) =>
+        examples.filter((example) => example.id % 2 !== 0)
+    ])
+    .reducers([
+      (examples: Example[]) => {
+        examples.sort((left, right) => left.name.localeCompare(right.name));
+        return examples;
+      }
+    ])
+    .initialize();
+  }
+
+  replace(employees: Employee[]): void {
+    this.#vault.replaceState({
+      loading: false,
+      value: employees,
+      error: null
+    });
+  }
+
+  replaceAsync(): void {
+    this.#vault.replaceState({
+      value: () => fetch('/api/employees').then((response) => response.json())
+    });
+  }
+
+  reset(): void {
+    this.#vault.reset();
+  }
+}

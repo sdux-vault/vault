@@ -53,7 +53,7 @@ SDuX Vault is a **framework-agnostic, deterministic state management system** bu
 - ✅ **SSR-safe** — guarded for server-side rendering environments
 - ✅ **Traceable** — every pipeline run is tracked via `traceId`
 
-For full documentation, guides, and API references: [sdux-vault.com](https://www.sdux-vault.com)
+For full documentation, guides, and API references: [sdux-vault.dev](https://www.sdux-vault.dev)
 
 ---
 

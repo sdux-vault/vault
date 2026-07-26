@@ -1,0 +1,40 @@
+import { FeatureCell, Vault } from '@sdux-vault/vue';
+import { Employee } from './employee.model';
+
+Vault({
+  logLevel: 'off'
+});
+
+export const employeeCell = FeatureCell<Employee[]>({
+  key: 'employees',
+  initialState: []
+});
+
+employeeCell
+  .filters([
+    (examples: Employee[]) =>
+      examples.filter((example) => example.id % 2 !== 0)
+  ])
+  .reducers([
+    (examples: Employee[]) => {
+      examples.sort((left, right) => left.name.localeCompare(right.name));
+      return examples;
+    }
+  ])
+  .initialize();
+
+export function replaceEmployees(employees: Employee[]): void {
+  employeeCell.replaceState({
+    value: employees
+  });
+}
+
+export function replaceEmployeesAsync(): void {
+  employeeCell.replaceState({
+    value: () => fetch('/api/employees').then((response) => response.json())
+  });
+}
+
+export function resetEmployees(): void {
+  employeeCell.reset();
+}

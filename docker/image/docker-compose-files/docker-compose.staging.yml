@@ -9,6 +9,7 @@ services:
     # Expose port 4100 to host
     ports:
       - '4100:80'
+      - '4101:80'
 
     # Use bridge networking
     networks:

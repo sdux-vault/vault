@@ -1741,7 +1741,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.sdux-vault.com/docs/references/shapes/behavior-meta-shape</loc>
+    <loc>https://www.sdux-vault.com/docs/references/shapes/behavior-meta-base-shape</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1841,6 +1841,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/references/shapes/non-resolve-behavior-meta-shape</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/shapes/resolve-behavior-meta-shape</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/references/shapes/s-du-x-shape</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1907,6 +1917,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/references/types/behavior-extension</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/types/behavior-meta-shape</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2477,6 +2492,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/stackblitz</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/tutorial/angular</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
