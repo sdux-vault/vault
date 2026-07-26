@@ -31,6 +31,49 @@ $splash-border: color-mix(
   background-repeat: no-repeat;
 }
 
+.developer-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+
+  &-button {
+    font-family: global.$sdux-code-font;
+    font-size: global.$font-size-md;
+    font-weight: global.$font-weight-medium;
+    padding: global.$spacing-sm global.$spacing-xl;
+    border-radius: 0;
+    border: 1px solid
+      color-mix(
+        in srgb,
+        global.$sdux-primary-base 14%,
+        global.$sdux-surface-light-mid
+      );
+    background: color-mix(
+      in srgb,
+      global.$sdux-surface-light-mid 72%,
+      global.$sdux-text-white
+    );
+    color: global.$sdux-text-inverse;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+
+    &:hover {
+      border-color: global.$sdux-primary-base;
+      background: color-mix(
+        in srgb,
+        global.$sdux-primary-base 8%,
+        global.$sdux-surface-light
+      );
+    }
+  }
+}
+
 // ─── Hero (Split with Terminal) ───
 .hero {
   position: relative;
@@ -155,19 +198,6 @@ $splash-border: color-mix(
     border-radius: global.$border-radius-lg;
     overflow: hidden;
     border: 1px solid $splash-border;
-  }
-
-  &-terminal-chrome {
-    display: flex;
-    align-items: center;
-    gap: global.$spacing-xs;
-    padding: global.$spacing-sm global.$spacing-md;
-    background: color-mix(
-      in srgb,
-      global.$sdux-surface-dark 95%,
-      global.$sdux-primary-base
-    );
-    border-bottom: 1px solid $splash-border;
   }
 
   &-terminal-dot {
@@ -299,7 +329,7 @@ $splash-border: color-mix(
 
   &-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: global.$spacing-lg;
     width: 100%;
 
@@ -692,12 +722,21 @@ $splash-border: color-mix(
   border: 1px solid $splash-border;
   transition: border-color 0.2s ease;
 
-  @media (max-width: global.$breakpoint-md) {
-    width: 200px;
+  &.has-stackbliz {
+    width: 145px;
+    min-width: 145px;
+    border-right: 5px solid global.$sdux-primary-base;
+    cursor: pointer;
+
+    &:hover {
+      border-color: global.$sdux-primary-base;
+      transform: translateY(-2px);
+      box-shadow: global.$sdux-shadow-hover;
+    }
   }
 
-  &:hover {
-    border-color: global.$sdux-primary-base;
+  @media (max-width: global.$breakpoint-md) {
+    width: 200px;
   }
 
   &-name {

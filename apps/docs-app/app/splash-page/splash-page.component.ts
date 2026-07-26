@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import {
   BrandNameComponent,
@@ -16,6 +17,7 @@ import { SplashPageExampleComponent } from './splash-page-example/splash-page-ex
   standalone: true,
   imports: [
     MatIconModule,
+    MatTooltipModule,
     BrandNameComponent,
     CatchPhraseComponent,
     SplashPageExampleComponent,
@@ -125,5 +127,23 @@ export class SplashPageComponent implements AfterViewInit {
 
   openMenu() {
     this.#navigationService.show();
+  }
+
+  openDeveloperView() {
+    this.openMenu();
+    this.#router.navigate(['/developer']);
+  }
+
+  viewStackblitz(fragment: string, hasStackblitzExample?: boolean): void {
+    if (hasStackblitzExample) {
+      if (fragment.match(/^(angular|react|svelte|vue)$/i)) {
+        fragment = 'web';
+      }
+
+      this.openMenu();
+      this.#router.navigate(['/docs/stackblitz'], {
+        fragment: fragment.toLowerCase()
+      });
+    }
   }
 }

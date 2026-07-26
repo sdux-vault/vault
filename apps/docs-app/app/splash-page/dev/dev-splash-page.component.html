@@ -1,15 +1,14 @@
-<!-- <sdux-brand-name /> Splash Page — Best Layout + Best Copy -->
-<!-- Layout: Stratum (Example 20) | Copy: best-copy.md IDs | CSS: brian1 patterns -->
-
 <!-- ─── Hero (Split with Terminal) ─── -->
 <section class="hero">
-  <div class="hero-release-banner" aria-label="SDuX Vault documentation">
-    <div>Looking for Docs?</div>
+  @if (!isDocsOpen()) {
+    <div class="hero-release-banner" aria-label="SDuX Vault documentation">
+      <div>Looking for Docs?</div>
 
-    <button type="button" class="sdux-button" (click)="openMenu()">
-      Show me the DOCS!
-    </button>
-  </div>
+      <button type="button" class="sdux-button" (click)="openMenu()">
+        Show me the DOCS!
+      </button>
+    </div>
+  }
 </section>
 
 <section class="section section-tinted">

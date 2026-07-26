@@ -129,6 +129,8 @@ export class DevSplashPageComponent implements AfterViewInit {
   #navigationService = inject(NavigationService);
   #router = inject(Router);
 
+  protected readonly isDocsOpen = this.#navigationService.isOpen;
+
   ngAfterViewInit(): void {
     Prism.highlightAllUnder(this.#elementRef.nativeElement);
   }

@@ -1,6 +1,3 @@
-<!-- <sdux-brand-name /> Splash Page — Best Layout + Best Copy -->
-<!-- Layout: Stratum (Example 20) | Copy: best-copy.md IDs | CSS: brian1 patterns -->
-
 <!-- ─── Hero (Split with Terminal) ─── -->
 <section class="hero">
   <div class="hero-glow"></div>
@@ -51,6 +48,15 @@
   </div>
 </section>
 
+<section class="developer-view">
+  <div
+    class="developer-view-button"
+    matTooltip="Click to view the language comparison documentation"
+    (click)="openDeveloperView()">
+    Developer? See Language Comparisons Here
+  </div>
+</section>
+
 <!-- ─── Ecosystem Strip ─── -->
 <section class="section">
   <div class="trusted">
@@ -59,7 +65,9 @@
     </span>
     <div class="trusted-grid">
       @for (language of supportedLanguages; track language.name) {
-        <span class="trusted-logo">
+        <span
+          class="trusted-logo"
+          [matTooltip]="'SDuX supports ' + language.name">
           <img
             [src]="'assets/' + language.logo"
             class="image-40"
@@ -521,7 +529,13 @@ it('updates cart'>, async () =&gt; &#123;
 
     <div class="frameworks">
       @for (language of frameworkLanguages; track language.name) {
-        <div class="framework-tile">
+        <div
+          class="framework-tile"
+          [class.has-stackbliz]="language.hasStackblitzExample"
+          [matTooltip]="language.tooltip"
+          (click)="
+            viewStackblitz(language.name, language.hasStackblitzExample)
+          ">
           <img
             [src]="'assets/' + language.logo"
             [alt]="language.logoAlt"

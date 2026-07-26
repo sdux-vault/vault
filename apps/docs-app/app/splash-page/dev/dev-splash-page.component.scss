@@ -53,40 +53,6 @@ $splash-code-bg: color-mix(
   font-family: global.$sdux-font-family;
   line-height: global.$line-height;
   overflow-x: hidden;
-
-  &::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(
-        to right,
-        color-mix(in srgb, global.$sdux-text-inverse 4%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        color-mix(in srgb, global.$sdux-text-inverse 4%, transparent) 1px,
-        transparent 1px
-      );
-    background-size: global.$spacing-xl global.$spacing-xl;
-    opacity: 0.12;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 22rem;
-    pointer-events: none;
-    background: linear-gradient(
-      to right,
-      color-mix(in srgb, global.$sdux-primary-base 16%, transparent),
-      color-mix(in srgb, global.$sdux-primary-light 18%, transparent)
-    );
-    opacity: 0.3;
-  }
 }
 
 // ─── Hero (Split with Terminal) ───
