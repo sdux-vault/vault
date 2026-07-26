@@ -10,6 +10,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     id: 'angular',
     selectorLabel: 'Angular',
     sharedSetupFileNames: ['main.ts', 'app.config.ts'],
+    displayCeremony: true,
     left: {
       frameworkLabel: 'Angular',
       libraryLabel: 'Redux',
@@ -59,6 +60,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     id: 'react',
     selectorLabel: 'React',
     sharedSetupFileNames: ['main.tsx'],
+    displayCeremony: true,
     left: {
       frameworkLabel: 'React',
       libraryLabel: 'Redux',
@@ -101,6 +103,7 @@ describe('Component: FrameworkComparisonComponent', () => {
   const noBrandComparison: FrameworkComparisonPairShape = {
     id: 'vue',
     selectorLabel: 'Vue',
+    displayCeremony: true,
     left: {
       frameworkLabel: 'Vue',
       libraryLabel: 'Pinia',
