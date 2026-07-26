@@ -1,6 +1,6 @@
 {
   "name": "@sdux-vault/react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "author": {
     "name": "SDuX Vault",
@@ -32,7 +32,7 @@
     "devtools"
   ],
   "dependencies": {
-    "@sdux-vault/core": "^1.0.5",
+    "@sdux-vault/core": "^1.0.6",
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
@@ -40,8 +40,8 @@
     "rxjs": "^7.0.0"
   },
   "devDependencies": {
-    "@sdux-vault/engine": "^1.0.5",
-    "@sdux-vault/shared": "^1.0.4",
+    "@sdux-vault/engine": "^1.0.6",
+    "@sdux-vault/shared": "^1.0.5",
     "rxjs": "^7.0.0"
   },
   "files": [

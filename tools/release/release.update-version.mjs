@@ -102,6 +102,18 @@ const LIBRARIES = {
     versionFile: 'src/lib/version/version.register.ts'
   },
 
+  '@sdux-vault/svelte': {
+    packageName: '@sdux-vault/svelte',
+    packagePath: 'libs/core-extensions/svelte',
+    versionFile: 'src/lib/version/version.register.ts'
+  },
+
+  '@sdux-vault/vue': {
+    packageName: '@sdux-vault/vue',
+    packagePath: 'libs/core-extensions/vue',
+    versionFile: 'src/lib/version/version.register.ts'
+  },
+
   '@sdux-vault/devtools': {
     packageName: '@sdux-vault/devtools',
     packagePath: 'libs/devtools/tooling',

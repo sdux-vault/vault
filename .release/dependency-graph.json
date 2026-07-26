@@ -4,7 +4,12 @@
     ["@sdux-vault/devtools"],
     ["@sdux-vault/engine"],
     ["@sdux-vault/addons", "@sdux-vault/core"],
-    ["@sdux-vault/angular", "@sdux-vault/react", "@sdux-vault/svelte"]
+    [
+      "@sdux-vault/angular",
+      "@sdux-vault/react",
+      "@sdux-vault/svelte",
+      "@sdux-vault/vue"
+    ]
   ],
 
   "libraries": {
@@ -19,7 +24,8 @@
         "@sdux-vault/core",
         "@sdux-vault/angular",
         "@sdux-vault/react",
-        "@sdux-vault/svelte"
+        "@sdux-vault/svelte",
+        "@sdux-vault/vue"
       ]
     },
 
@@ -84,6 +90,16 @@
     },
 
     "@sdux-vault/svelte": {
+      "type": "library",
+      "source": "npm",
+      "dependencies": [
+        "@sdux-vault/core",
+        "@sdux-vault/engine",
+        "@sdux-vault/shared"
+      ],
+      "dependents": []
+    },
+    "@sdux-vault/vue": {
       "type": "library",
       "source": "npm",
       "dependencies": [
