@@ -256,7 +256,7 @@ $splash-code-bg: color-mix(
 
 .frameworks {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: global.$spacing-lg;
   justify-content: start;
 
@@ -274,8 +274,8 @@ $splash-code-bg: color-mix(
     align-items: stretch;
     justify-content: flex-start;
     gap: global.$spacing-sm;
-    width: 150px;
-    min-width: 150px;
+    width: 175px;
+    min-width: 175px;
     padding: global.$spacing-md;
     border-radius: 0;
     border: 1px solid $splash-border;
@@ -291,8 +291,8 @@ $splash-code-bg: color-mix(
     transition: border-color 0.2s ease;
 
     &.has-stackbliz {
-      width: 145px;
-      min-width: 145px;
+      width: 170px;
+      min-width: 170px;
       border-right: 5px solid global.$sdux-primary-base;
       cursor: pointer;
 
