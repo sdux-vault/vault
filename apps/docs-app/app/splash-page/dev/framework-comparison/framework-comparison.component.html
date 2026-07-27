@@ -27,6 +27,11 @@
                 that <em>scale linearly</em> with every new feature
               </li>
             }
+
+            <li>
+              {{ comparison().left.metadata?.competitorTotalLines ?? 0 }} total
+              lines of code
+            </li>
           </ul>
         </div>
       </div>
@@ -60,6 +65,20 @@
             @if (comparison().displayCeremony) {
               <li><span class="note-callout">no extra ceremony files</span></li>
             }
+
+            <li>
+              {{ comparison().right.metadata?.sduxTotalLines ?? 0 }} total lines
+              of code
+            </li>
+            <li>
+              <strong>
+                <span class="primary">
+                  {{ comparison().right.metadata?.percentageSavings ?? 0 }}%
+                  code savings
+                </span>
+              </strong>
+              <span class="black"><em>per feature</em></span>
+            </li>
           </ul>
         </div>
       </div>

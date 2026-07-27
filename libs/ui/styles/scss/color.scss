@@ -5,6 +5,10 @@
  * These provide quick contextual colors for warnings, success, and caution states.
  */
 
+.primary {
+  color: global.$sdux-primary-base; // blue / primary
+}
+
 .warn {
   color: global.$sdux-accent-base; // red / danger
 }
