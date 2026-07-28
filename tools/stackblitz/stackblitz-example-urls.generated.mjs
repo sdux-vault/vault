@@ -7,6 +7,7 @@
 export const STACKBLITZ_EXAMPLE_URLS = [
   '/examples/angular/array-append-merge',
   '/examples/angular/basic-filter-reducer',
+  '/examples/angular/comparison',
   '/examples/angular/debugger',
   '/examples/angular/http-resource',
   '/examples/angular/hydrate-state',

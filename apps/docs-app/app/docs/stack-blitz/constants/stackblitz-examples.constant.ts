@@ -173,6 +173,13 @@ export function createExampleGroups(brandName: string) {
           ]
         },
         {
+          title: 'Comparison',
+          id: 'comparison',
+          exampleName: 'comparison-example',
+          description: `Compares a concise ${brandName} FeatureCell implementation with the equivalent state-management flow, including filtering, reduction, replacement, and reset operations. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
+        },
+        {
           title: 'Tab Sync',
           id: 'tab-sync',
           exampleName: 'tab-sync-example',
