@@ -364,6 +364,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-22-a-featurecell-in-plain-javascript/a-featurecell-in-plain-javascript.component').then(
         (m) => m.BlogAFeatureCellInPlainJavascriptComponent
       )
+  },
+  {
+    path: 'state-management-without-framework-lock-in',
+    data: {
+      category: 'blogs',
+      type: 'state-management-without-framework-lock-in'
+    },
+    loadComponent: () =>
+      import('./posts/2026-07-28-state-management-without-framework-lock-in/state-management-without-framework-lock-in.component').then(
+        (m) => m.BlogStateManagementWithoutFrameworkLockInComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //
