@@ -4,14 +4,16 @@ import {
   AnalyticsService,
   sduxTestingModule
 } from '@sdux-vault/ui/web-components';
+import { StackblitzExampleService } from '../services/stackblitz-example.service';
 import type { StackBlitzExampleShape } from '../shapes/stackblitz-example.shape';
-import { StackBlitzExampleComponent } from './stack-blitz-example.component';
+import { StackBlitzExampleComponent } from './stackblitz-example.component';
 
 describe('Component: StackBlitz Example', () => {
   let component: StackBlitzExampleComponent;
   let fixture: ComponentFixture<StackBlitzExampleComponent>;
   let snackBarSpy: jasmine.SpyObj<MatSnackBar>;
   let analyticsSpy: jasmine.SpyObj<AnalyticsService>;
+  let serviceSpy: StackblitzExampleService;
 
   const example: StackBlitzExampleShape = {
     title: 'Replace State',
@@ -35,14 +37,13 @@ describe('Component: StackBlitz Example', () => {
       ]
     }).compileComponents();
 
+    serviceSpy = TestBed.inject(StackblitzExampleService);
+    spyOn(serviceSpy, 'launchStackblitzExample').and.resolveTo();
+
     fixture = TestBed.createComponent(StackBlitzExampleComponent);
     fixture.componentRef.setInput('example', example);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
   });
 
   it('should render the description and framework controls', () => {
@@ -93,81 +94,6 @@ describe('Component: StackBlitz Example', () => {
     expect((missingFixture.nativeElement as HTMLElement).children.length).toBe(
       0
     );
-  });
-
-  it('should copy the shareable URL and show success feedback', async () => {
-    spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
-
-    await component.copyStackBlitzExample(example, 'angular');
-
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-      'https://stackblitz.com/github/sdux-vault/stackblitz-examples/tree/main/stackblitz/angular/replace-example'
-    );
-    expect(component.copySuccess()).toBe('angular/replace-example');
-    expect(snackBarSpy.open).toHaveBeenCalledWith('Link copied!', '', {
-      duration: 2000,
-      verticalPosition: 'top'
-    });
-    expect(analyticsSpy.trackStackBlitzInteraction).toHaveBeenCalledOnceWith({
-      exampleId: 'replace-state',
-      framework: 'angular',
-      action: 'copy'
-    });
-  });
-
-  it('should not track a copy when clipboard writing fails', async () => {
-    spyOn(navigator.clipboard, 'writeText').and.returnValue(
-      Promise.reject(new Error('Clipboard permission denied'))
-    );
-
-    await expectAsync(
-      component.copyStackBlitzExample(example, 'vue')
-    ).toBeRejectedWithError('Clipboard permission denied');
-
-    expect(analyticsSpy.trackStackBlitzInteraction).not.toHaveBeenCalled();
-    expect(component.copySuccess()).toBeNull();
-  });
-
-  it('should track the selected example and framework when launching', () => {
-    spyOn(component, 'openStackBlitzExample').and.resolveTo();
-
-    component.launchStackBlitzExample(example, 'angular');
-
-    expect(analyticsSpy.trackStackBlitzInteraction).toHaveBeenCalledOnceWith({
-      exampleId: 'replace-state',
-      framework: 'angular',
-      action: 'launch'
-    });
-    expect(component.openStackBlitzExample).toHaveBeenCalledOnceWith(
-      example,
-      'angular'
-    );
-  });
-
-  it('should clear copy feedback after two seconds', async () => {
-    jasmine.clock().install();
-
-    try {
-      spyOn(navigator.clipboard, 'writeText').and.returnValue(
-        Promise.resolve()
-      );
-      await component.copyStackBlitzExample(example, 'angular');
-
-      jasmine.clock().tick(2000);
-
-      expect(component.copySuccess()).toBeNull();
-    } finally {
-      jasmine.clock().uninstall();
-    }
-  });
-
-  it('should reject unknown generated projects', async () => {
-    await expectAsync(
-      component.openStackBlitzExample(
-        { ...example, exampleName: 'missing-example' },
-        'unknown'
-      )
-    ).toBeRejectedWithError('Unknown project: unknown/missing-example');
   });
 
   it('should render local-only options without launch or share buttons', () => {

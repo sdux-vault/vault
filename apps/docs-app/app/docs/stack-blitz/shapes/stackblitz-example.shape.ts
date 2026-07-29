@@ -38,4 +38,9 @@ export interface StackBlitzExampleShape {
    * Provides an optional notice displayed with the example.
    */
   notice?: string;
+
+  /**
+   * Indicates whether the example is local-only and not viable via StackBlitz.
+   */
+  localOnly?: boolean;
 }

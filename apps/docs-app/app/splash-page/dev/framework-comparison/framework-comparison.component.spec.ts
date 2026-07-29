@@ -1,10 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sduxTestingModule } from '@sdux-vault/ui/web-components';
+import { StackblitzExampleService } from '../../../docs/stack-blitz/services/stackblitz-example.service';
+import type { StackBlitzExampleLanguageShape } from '../../../docs/stack-blitz/shapes/stackblitz-example.language.shape';
+import type { StackBlitzExampleShape } from '../../../docs/stack-blitz/shapes/stackblitz-example.shape';
 import { FrameworkComparisonPairShape } from '../shapes/framework-comparison-pair.shape';
 import { FrameworkComparisonComponent } from './framework-comparison.component';
 
 describe('Component: FrameworkComparisonComponent', () => {
   let fixture: ComponentFixture<FrameworkComparisonComponent>;
+  let serviceSpy: StackblitzExampleService;
 
   const comparison: FrameworkComparisonPairShape = {
     id: 'angular',
@@ -141,6 +145,7 @@ describe('Component: FrameworkComparisonComponent', () => {
       imports: [FrameworkComparisonComponent, sduxTestingModule]
     }).compileComponents();
 
+    serviceSpy = TestBed.inject(StackblitzExampleService);
     fixture = TestBed.createComponent(FrameworkComparisonComponent);
     fixture.componentRef.setInput('comparison', comparison);
     fixture.detectChanges();
@@ -231,5 +236,45 @@ describe('Component: FrameworkComparisonComponent', () => {
 
     expect(notes).toContain('1 shared setup files');
     expect(notes).toContain('1 core feature files');
+  });
+
+  it('should fall back to empty example and language metadata when comparison example is missing', () => {
+    spyOn(serviceSpy, 'getExample').and.returnValue(undefined);
+
+    const fallbackFixture = TestBed.createComponent(
+      FrameworkComparisonComponent
+    );
+    fallbackFixture.componentRef.setInput('comparison', comparison);
+    fallbackFixture.detectChanges();
+
+    expect(fallbackFixture.componentInstance.example()).toEqual(
+      {} as StackBlitzExampleShape
+    );
+    expect(fallbackFixture.componentInstance.lang()).toEqual(
+      {} as StackBlitzExampleLanguageShape
+    );
+  });
+
+  it('should fall back to empty language metadata when the comparison language is missing', () => {
+    const stackblitzExample: StackBlitzExampleShape = {
+      id: 'comparison',
+      title: 'Framework Comparison',
+      exampleName: 'comparison',
+      description: 'Compares framework integrations.',
+      languages: [{ name: 'Vue', key: 'vue' }]
+    };
+
+    spyOn(serviceSpy, 'getExample').and.returnValue(stackblitzExample);
+
+    const fallbackFixture = TestBed.createComponent(
+      FrameworkComparisonComponent
+    );
+    fallbackFixture.componentRef.setInput('comparison', comparison);
+    fallbackFixture.detectChanges();
+
+    expect(fallbackFixture.componentInstance.example()).toBe(stackblitzExample);
+    expect(fallbackFixture.componentInstance.lang()).toEqual(
+      {} as StackBlitzExampleLanguageShape
+    );
   });
 });

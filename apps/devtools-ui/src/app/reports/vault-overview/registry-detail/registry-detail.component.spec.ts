@@ -89,10 +89,6 @@ describe('Component: RegistryDetail', () => {
     fixture.detectChanges();
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('behaviors', () => {
     it('should return all behaviors from cell', () => {
       expect(component.behaviors().length).toBe(14);

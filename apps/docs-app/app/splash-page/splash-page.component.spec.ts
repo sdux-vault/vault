@@ -34,10 +34,6 @@ describe('Component: Splash Page', () => {
     spyOn(navigationService, 'show');
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('openMenu', () => {
     it('should call navigationService.show', () => {
       component.openMenu();

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { sduxTestingModule } from '../../../../../libs/ui/web-components/src/public-api';
-import { StackBlitzOverviewComponent } from './stack-blitz.component';
+import { StackBlitzOverviewComponent } from './stackblitz.component';
 
 describe('Component: StackBlitz Overview', () => {
   let component: StackBlitzOverviewComponent;
@@ -25,10 +25,6 @@ describe('Component: StackBlitz Overview', () => {
     fixture = TestBed.createComponent(StackBlitzOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
   });
 
   it('should define examples', () => {

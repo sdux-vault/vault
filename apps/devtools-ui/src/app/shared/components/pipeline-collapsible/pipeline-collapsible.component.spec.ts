@@ -18,10 +18,6 @@ describe('Component: PipelineCollapsible', () => {
     fixture.detectChanges();
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('label', () => {
     it('should accept a required label input', () => {
       expect(component.label()).toBe('Test Label');

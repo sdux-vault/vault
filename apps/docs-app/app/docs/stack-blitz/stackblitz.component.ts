@@ -10,7 +10,7 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
 import { PipelineRoutingDirective } from '../pipeline/directives/pipeline-routing.directive';
 import { createExampleGroups } from './constants/stackblitz-examples.constant';
 import { createLanguageSections } from './constants/stackblitz-language-sections.constant';
-import { StackBlitzExampleComponent } from './example/stack-blitz-example.component';
+import { StackBlitzExampleComponent } from './example/stackblitz-example.component';
 
 /**
  * The stack-blitz documentation
@@ -26,8 +26,8 @@ import { StackBlitzExampleComponent } from './example/stack-blitz-example.compon
     FeatureCellBrandNameComponent,
     StackBlitzExampleComponent
   ],
-  templateUrl: './stack-blitz.component.html',
-  styleUrls: ['../scss/documentation.scss', './stack-blitz.component.scss'],
+  templateUrl: './stackblitz.component.html',
+  styleUrls: ['../scss/documentation.scss', './stackblitz.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class StackBlitzOverviewComponent extends PipelineRoutingDirective {

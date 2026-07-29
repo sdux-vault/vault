@@ -1,0 +1,22 @@
+@if (resolvedExample(); as example) {
+  <div class="section-body">
+    <p [innerHTML]="example.description"></p>
+
+    <div
+      class="framework-icon-row"
+      role="group"
+      [attr.aria-label]="example.title + ' framework options'">
+      @for (lang of example.languages; track lang.key) {
+        <sdux-stackblitz-language-example [example]="example" [lang]="lang" />
+      }
+    </div>
+
+    @if (example.notice) {
+      <div class="callout callout-warning">
+        <strong>StackBlitz Limitation</strong>
+        <!-- trusted: static HTML from constants, not user-generated -->
+        <div [innerHTML]="example.notice"></div>
+      </div>
+    }
+  </div>
+}

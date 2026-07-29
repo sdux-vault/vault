@@ -38,7 +38,7 @@ export class AnalyticsService {
    *
    * @param interaction Supplies the example identifier, framework, and action to record.
    */
-  trackStackBlitzInteraction(interaction: AnalyticsStackBlitzShape): void {
+  trackStackblitzInteraction(interaction: AnalyticsStackBlitzShape): void {
     if (!this.#isGtagAvailable()) {
       return;
     }

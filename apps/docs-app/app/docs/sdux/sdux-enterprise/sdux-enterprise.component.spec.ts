@@ -43,9 +43,6 @@ describe('Component: SDuXEnterpriseOverview', () => {
    * Initial State
    * --------------------------------------------
    */
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
 
   it('should initialize submitted as false', () => {
     expect(component.submitted()).toBeFalse();
