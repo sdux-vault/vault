@@ -54,6 +54,8 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/react/array-append-merge-example.project'),
   'react/basic-filter-reducer-example': () =>
     import('../../../stackblitz/projects/react/basic-filter-reducer-example.project'),
+  'react/comparison-example': () =>
+    import('../../../stackblitz/projects/react/comparison-example.project'),
   'react/debugger-example': () =>
     import('../../../stackblitz/projects/react/debugger-example.project'),
   'react/hydrate-state-example': () =>
@@ -74,6 +76,8 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/svelte/array-append-merge-example.project'),
   'svelte/basic-filter-reducer-example': () =>
     import('../../../stackblitz/projects/svelte/basic-filter-reducer-example.project'),
+  'svelte/comparison-example': () =>
+    import('../../../stackblitz/projects/svelte/comparison-example.project'),
   'svelte/debugger-example': () =>
     import('../../../stackblitz/projects/svelte/debugger-example.project'),
   'svelte/hydrate-state-example': () =>
@@ -100,6 +104,8 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
     import('../../../stackblitz/projects/vue/array-append-merge-example.project'),
   'vue/basic-filter-reducer-example': () =>
     import('../../../stackblitz/projects/vue/basic-filter-reducer-example.project'),
+  'vue/comparison-example': () =>
+    import('../../../stackblitz/projects/vue/comparison-example.project'),
   'vue/debugger-example': () =>
     import('../../../stackblitz/projects/vue/debugger-example.project'),
   'vue/hydrate-state-example': () =>

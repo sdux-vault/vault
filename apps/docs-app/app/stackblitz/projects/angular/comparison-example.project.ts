@@ -58,89 +58,6 @@ export const comparisonExampleProject: Project = {
   }
 }
 `,
-    'dist/angular-demo/browser/example.component.css.map': `{
-  "version": 3,
-  "sources": ["src/app/example.component.scss"],
-  "sourcesContent": ["\$gap: 0.75rem;\\n\$padding: 1rem;\\n\$data-height: 300px;\\n\$text-area-height: 175px;\\n\$border: 1px solid rgba(0, 0, 0, 0.08);\\n\$radius: 8px;\\n\$text-muted: #666;\\n\$title-font-size: 2rem;\\n\$sub-title-font-size: 1rem;\\n\$label-font-size: 1.1rem;\\n\$text-area-font-size: 0.8rem;\\n\$hint-font-size: 1rem;\\n\$hint-file-font-size: 0.9rem;\\n\$status-font-size: 0.85rem;\\n\\n.example-container {\\n  display: flex;\\n  flex-direction: column;\\n  gap: \$gap;\\n  padding: \$padding;\\n\\n  .header {\\n    display: flex;\\n    flex-direction: column;\\n    gap: 0.25rem;\\n\\n    .title {\\n      font-size: \$title-font-size;\\n      font-weight: 600;\\n      letter-spacing: 0.3px;\\n    }\\n\\n    .subtitle {\\n      font-size: \$sub-title-font-size;\\n      color: \$text-muted;\\n      max-width: 600px;\\n    }\\n  }\\n\\n  .section {\\n    padding: \$padding;\\n\\n    &.column {\\n      border: \$border;\\n      border-radius: \$radius;\\n      display: flex;\\n      gap: \$gap;\\n\\n      @media (max-width: 768px) {\\n        flex-direction: column;\\n\\n        .state-container {\\n          width: 100%;\\n        }\\n      }\\n    }\\n\\n    .state-container {\\n      flex: 1;\\n      display: flex;\\n      flex-direction: column;\\n      gap: 0.35rem;\\n      min-width: 0;\\n\\n      &.data-row {\\n        height: 430px;\\n      }\\n\\n      .textarea,\\n      .data-textarea {\\n        width: 100%;\\n        box-sizing: border-box;\\n        height: \$data-height;\\n        padding: 0.5rem;\\n        border: \$border;\\n        border-radius: 6px;\\n        font-family: monospace;\\n        font-size: \$text-area-font-size;\\n        background: #fafafa;\\n        color: #222;\\n\\n        &.empty {\\n          font-style: italic;\\n        }\\n\\n        &.error {\\n          color: #d33;\\n        }\\n      }\\n\\n      .textarea {\\n        height: \$text-area-height;\\n      }\\n    }\\n\\n    .label {\\n      font-size: \$label-font-size;\\n      font-weight: 600;\\n      text-transform: uppercase;\\n      letter-spacing: 0.5px;\\n      color: \$text-muted;\\n    }\\n\\n    .flow-hint {\\n      margin-top: 0.25rem;\\n      font-size: 1rem;\\n      letter-spacing: 0.3px;\\n      color: \$text-muted;\\n    }\\n\\n    .hint {\\n      font-size: \$hint-font-size;\\n      color: #777;\\n      margin-top: -0.15rem;\\n      margin-left: 0.5rem;\\n\\n      &.file {\\n        color: #999;\\n        font-family: monospace;\\n        font-size: \$hint-file-font-size;\\n        min-height: 16px;\\n      }\\n\\n      &.state {\\n        margin-top: 0.15rem;\\n      }\\n\\n      .emphasis {\\n        font-weight: 600;\\n        color: #555;\\n      }\\n    }\\n\\n    .actions {\\n      justify-content: flex-start;\\n      display: flex;\\n      align-items: center;\\n      gap: 3rem;\\n\\n      @media (max-width: 768px) {\\n        flex-direction: column;\\n        align-items: flex-start;\\n        gap: 2rem;\\n      }\\n\\n      .secondary-actions {\\n        display: flex;\\n        gap: 2rem;\\n\\n        @media (max-width: 768px) {\\n          gap: 1.5rem;\\n          flex-direction: column;\\n          align-items: flex-start;\\n        }\\n      }\\n    }\\n  }\\n\\n  .status {\\n    height: 300px;\\n    font-size: \$status-font-size;\\n    color: \$text-muted;\\n    display: flex;\\n    align-items: center;\\n    justify-content: center;\\n  }\\n\\n  .learn-more {\\n    display: flex;\\n    flex-direction: column;\\n    gap: 0.35rem;\\n\\n    .learn-more-links {\\n      display: flex;\\n      align-items: center;\\n      gap: 0.75rem;\\n      font-size: \$hint-font-size;\\n\\n      a {\\n        color: #555;\\n        text-decoration: none;\\n\\n        &:hover {\\n          text-decoration: underline;\\n          color: #222;\\n        }\\n      }\\n\\n      .separator {\\n        color: #ccc;\\n      }\\n    }\\n  }\\n}\\n"],
-  "mappings": "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",
-  "names": []
-}
-`,
-    'dist/angular-demo/browser/index.html': `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <title>SDuX Angular Example</title>
-    <base href="/"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-  <link rel="stylesheet" href="styles.css"></head>
-  <body>
-    <example-view></example-view>
-  <link rel="modulepreload" href="chunk-WA5JJV5Y.js"><script src="main.js" type="module"></script></body>
-</html>
-`,
-    'dist/angular-demo/browser/styles.css': `/* src/styles.scss */
-.example-container {
-  padding: 0.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-.sdux-button {
-  height: 40px !important;
-  color: #ffffff !important;
-  background-color: #1976d2 !important;
-  border: 1px solid #004ba0 !important;
-  border-radius: 0.3125rem !important;
-  font-size: 0.875rem !important;
-  padding: 0.5rem;
-  gap: 0.25rem;
-  font-weight: 600;
-  min-width: 125px !important;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.sdux-button .mat-icon {
-  transform: scale(0.75);
-}
-.sdux-button {
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.sdux-button .button-text {
-  height: 40px;
-}
-.sdux-button .mat-icon {
-  width: 22px !important;
-  height: 22px !important;
-  position: relative;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-  gap: 0.25rem;
-}
-.sdux-button:focus {
-  outline: none;
-}
-
-/* angular:styles/global:styles */
-/*# sourceMappingURL=styles.css.map */
-`,
-    'dist/angular-demo/browser/styles.css.map': `{
-  "version": 3,
-  "sources": ["src/styles.scss"],
-  "sourcesContent": ["/* You can add global styles to this file, and also import other style files */\\n\$button-height: 40px;\\n\$color: #ffffff;\\n\$background: #1976d2;\\n\$border: #004ba0;\\n\$radius: 0.3125rem;\\n\$font-size: 0.875rem; // 14px\\n\$spacing-xs: 0.25rem; // 4px\\n\$padding: 0.5rem;\\n\$font-weight-semibold: 600;\\n\\n\$button-icon-size: 22px;\\n\$min-width: 30px !important;\\n\\n.example-container {\\n  padding: \$spacing-xs;\\n  display: flex;\\n  flex-direction: column;\\n  gap: \$spacing-xs;\\n}\\n\\n.sdux-button {\\n  height: \$button-height !important;\\n  color: \$color !important;\\n  background-color: \$background !important;\\n  border: 1px solid \$border !important;\\n  border-radius: \$radius !important;\\n  font-size: \$font-size !important;\\n  padding: \$padding;\\n  gap: \$spacing-xs;\\n  font-weight: \$font-weight-semibold;\\n\\n  min-width: 125px !important;\\n  display: flex;\\n  flex-direction: row;\\n  justify-content: center;\\n  align-items: center;\\n\\n  .mat-icon {\\n    transform: scale(0.75);\\n  }\\n\\n  cursor: pointer;\\n  white-space: nowrap;\\n  overflow: hidden;\\n  text-overflow: ellipsis;\\n\\n  .button-text {\\n    height: \$button-height;\\n  }\\n\\n  .mat-icon {\\n    width: \$button-icon-size !important;\\n    height: \$button-icon-size !important;\\n    position: relative;\\n    padding-left: \$spacing-xs;\\n    padding-right: \$spacing-xs;\\n    gap: \$spacing-xs; // Ensures uniform spacing\\n  }\\n\\n  &:focus {\\n    outline: none;\\n  }\\n}\\n"],
-  "mappings": ";AAcA,CAAA;AACE,WARW;AASX,WAAA;AACA,kBAAA;AACA,OAXW;;AAcb,CAAA;AACE,UAAA;AACA,SAAA;AACA,oBAAA;AACA,UAAA,IAAA,MAAA;AACA,iBAAA;AACA,aAAA;AACA,WApBQ;AAqBR,OAtBW;AAuBX,eArBqB;AAuBrB,aAAA;AACA,WAAA;AACA,kBAAA;AACA,mBAAA;AACA,eAAA;;AAEA,CAjBF,YAiBE,CAAA;AACE,aAAA,MAAA;;AAlBJ,CAAA;AAqBE,UAAA;AACA,eAAA;AACA,YAAA;AACA,iBAAA;;AAEA,CA1BF,YA0BE,CAAA;AACE,UA/CY;;AAkDd,CA9BF,YA8BE,CAbA;AAcE,SAAA;AACA,UAAA;AACA,YAAA;AACA,gBAhDS;AAiDT,iBAjDS;AAkDT,OAlDS;;AAqDX,CAvCF,WAuCE;AACE,WAAA;;",
-  "names": []
-}
-`,
-    'dist/angular-demo/prerendered-routes.json': `{
-  "routes": {}
-}`,
     'package.json': `{
   "name": "angular-comparison-example",
   "version": "1.0.3",
@@ -166,105 +83,81 @@ export const comparisonExampleProject: Project = {
   }
 }
 `,
-    'src/app/app.config.ts': `import { ApplicationConfig } from '@angular/core';
+    'src/app.config.ts': `import { ApplicationConfig } from '@angular/core';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { EmployeeCell } from './employee.service';
 
 /**
- * Application-level configuration for the Angular standalone bootstrap.
- *
- * Registers the Vault runtime and the EmployeeCell FeatureCell
- * as dependency injection providers.
+ * Registers the Vault runtime and the employees FeatureCell for the standalone
+ * Angular application. The descriptor supplies the state key and its initial
+ * empty-array value before the component starts interacting with the cell.
  */
 export const appConfig: ApplicationConfig = {
   providers: [
-    // Creates the Vault runtime (state container + lifecycle)
-    provideVault({
-      /**
-       * Controls the verbosity of internal logging.
-       * Levels: \`'debug' | 'info' | 'warn' | 'error' | 'off'\`.
-       * Set to \`'debug'\` during development to trace pipeline activity.
-       */
-      logLevel: 'off',
-
-      /**
-       * Enables development-mode diagnostics.
-       * When \`true\`, the SDuX Debugger panel and Chrome Extension
-       * receive real-time pipeline trace events.
-       */
-      devMode: false
-    }),
-
-    // Define a FeatureCell (state + behaviors + controllers)
-    provideFeatureCell(
-      // Service class that owns the FeatureCell instance
-      EmployeeCell,
-
-      // FeatureCell descriptor (identity + initial state)
-      {
-        // Unique state key used by the Vault
-        key: 'employees',
-
-        // Fallback Initial value for the state
-        initialState: []
-      },
-
-      // Optional definition-time extensions
-      [
-        // --> Register add-on behaviors here <--
-      ],
-      [
-        // --> Register add-on controllers here <--
-      ]
-    )
+    provideVault({ logLevel: 'off' }),
+    provideFeatureCell(EmployeeCell, {
+      key: 'employees',
+      initialState: []
+    })
   ]
 };
 `,
-    'src/app/employee.model.ts': `/** Shape representing an employee in the comparison example. */
+    'src/employee.model.ts': `/**
+ * Describes the employee records used as the FeatureCell's array state. The
+ * filter and reducer pipeline use the identifier and name to process records.
+ */
 export interface Employee {
+  /** Identifies the employee and determines whether the filter keeps it. */
   id: number;
+
+  /** Supplies the employee name used by the sorting reducer. */
   name: string;
 }
 `,
-    'src/app/employee.service.ts': `import { Injectable } from '@angular/core';
+    'src/employee.service.ts': `import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.model';
 
 /**
- * FeatureCell service for the comparison example.
+ * Owns the employees FeatureCell and exposes its reactive state to the
+ * component. The configured pipeline filters out even identifiers, sorts the
+ * remaining records by name, and then publishes the processed array.
  *
- * The service owns the Vault-backed state and applies the filter and reducer
- * pipeline before exposing the resulting state to the component.
+ * ⚠️ Architectural Boundary:
+ * The Vault handle remains private to this service. Components request state
+ * changes through these methods so pipeline processing stays centralized.
  */
 @FeatureCell<Employee[]>('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeCell {
-  /** Internal Vault handle; components update state through service methods. */
+  /** Private Vault handle used to configure and update the FeatureCell. */
   readonly #vault = injectVault<Employee[]>(EmployeeCell);
 
-  /** Public reactive state snapshot consumed by the component. */
+  /** Reactive snapshot exposing the current value, loading, and error state. */
   readonly state = this.#vault.state;
 
+  /** Configures the filter and reducer stages before activating the cell. */
   constructor() {
-    // Runtime pipeline configuration.
     this.#vault
-      // Filters remove entries before they reach the reducer.
       .filters([
-        (employees: Employee[]) =>
-          employees.filter((employee) => employee.id % 2 !== 0)
+        (examples: Employee[]) =>
+          examples.filter((example) => example.id % 2 !== 0)
       ])
-      // Reducers transform the filtered working state.
       .reducers([
-        (employees: Employee[]) => {
-          employees.sort((left, right) => left.name.localeCompare(right.name));
-          return employees;
+        (examples: Employee[]) => {
+          examples.sort((left, right) => left.name.localeCompare(right.name));
+          return examples;
         }
       ])
-      // Finalizes the pipeline and activates the FeatureCell.
       .initialize();
   }
 
-  /** Replace the entire state synchronously. */
+  /**
+   * Replaces the current employees and sends the input through the pipeline.
+   *
+   * @param employees - Records to filter, sort, and publish as state.
+   * @returns Nothing; the resulting state is exposed through the reactive snapshot.
+   */
   replace(employees: Employee[]): void {
     this.#vault.replaceState({
       loading: false,
@@ -273,433 +166,194 @@ export class EmployeeCell {
     });
   }
 
-  /** Reset the FeatureCell to its configured initial state. */
+  /**
+   * Starts an asynchronous employee-state update from the example API.
+   *
+   * @returns Nothing; the Vault snapshot reports loading, success, or error state.
+   */
+  replaceAsync(): void {
+    this.#vault.replaceState({
+      value: () =>
+        fetch('https://jsonplaceholder.typicode.com/users').then((response) =>
+          response.json()
+        )
+    });
+  }
+
+  /**
+   * Restores the FeatureCell's configured initial state.
+   *
+   * @returns Nothing; consumers observe the reset through the reactive snapshot.
+   */
   reset(): void {
     this.#vault.reset();
   }
-
-  /** Toggle the loading flag while preserving the current value. */
-  toggleLoading(loading: boolean): void {
-    this.#vault.replaceState({ loading, value: this.state.value() });
-  }
-
-  /** Toggle an example error while preserving the current value. */
-  toggleError(error: Error | null): void {
-    this.#vault.replaceState({ error, value: this.state.value() });
-  }
 }
 `,
-    'src/app/example.component.html': `<div class="example-container">
-  <div class="header">
-    <div class="title">Angular - SDuX Vault Comparison Example</div>
-    <div class="subtitle">
-      This example shows how SDuX processes employee state through a pipeline:
-      odd-numbered employees are filtered, then the remaining entries are sorted
-      before becoming the final FeatureCell state.
-    </div>
+    'src/example.component.html': `<div class="example-container">
+  A few changes to this Angular example from the original comparison example:
+  <ol>
+    <li>CSS styling</li>
+    <li>
+      Async fetch changed to "https://jsonplaceholder.typicode.com/users". Note:
+      The live API causes a flash in the UI when the "Load Async State" button
+      is clicked because there is a "Loading..." message displayed while the
+      data is resolving. The API is too responsive to allow for reading the
+      message.
+    </li>
+  </ol>
+  <div>
+    @if (state.isLoading()) {
+      <div>Loading...</div>
+    } @else if (state.error()) {
+      <div>{{ state.error() }}</div>
+    } @else {
+      <textarea class="textarea" readonly>{{ state.value() | json }}</textarea>
+    }
   </div>
 
-  <div class="section">
-    <div class="label">FeatureCell Flow</div>
-    <div class="flow-hint">Input → Filter → Reducer → Output</div>
-  </div>
+  <div class="actions">
+    <button type="button" class="sdux-button" (click)="loadSample()">
+      Load Sample State
+    </button>
 
-  <div class="section column">
-    <div class="state-container">
-      <div class="label">Filter</div>
-      <div class="hint">
-        Removes or blocks data before it enters the pipeline
-      </div>
-      <div class="hint file">
-        <span class="emphasis">File:</span> app/example.service.ts
-      </div>
-      <textarea class="textarea">
-[
-  (employees: Employee[]) => {
-    return employees.filter(
-      (employee: Employee) => employee.id % 2 !== 0
-    );
-  }
-]
-      </textarea>
-    </div>
+    <button type="button" class="sdux-button" (click)="loadSampleAsync()">
+      Load Async State
+    </button>
 
-    <div class="state-container">
-      <div class="label">Reducer</div>
-      <div class="hint">Transforms each item in the state</div>
-      <div class="hint file">
-        <span class="emphasis">File:</span> app/example.service.ts
-      </div>
-      <textarea class="textarea">
-[
-  (employees: Employee[]) => {
-    return employees.sort(
-      (left, right) => left.name.localeCompare(right.name)
-    );
-  }
-]
-      </textarea>
-    </div>
-  </div>
-
-  <div class="section column">
-    <div class="state-container">
-      <div class="label">Input State</div>
-      <div class="hint">Raw data before processing</div>
-      <div class="hint file">
-        <span class="emphasis">File:</span> app/example.component.ts
-      </div>
-      <textarea class="data-textarea">{{ sample | json }}</textarea>
-    </div>
-
-    <div class="state-container data-row">
-      <div class="label">FeatureCell State</div>
-      <div class="hint">Final state after filters and reducers run</div>
-      <div class="hint file">
-        <span class="emphasis">File:</span> app/example.service.ts
-      </div>
-      @if (state.isLoading()) {
-        <div class="status">Loading...</div>
-      } @else if (state.error()) {
-        <textarea class="data-textarea error" readonly
-          >{{ state.error() | json }}
-        </textarea>
-        <div class="hint state">This is a VaultError display</div>
-      } @else if (state.hasValue()) {
-        <textarea class="data-textarea" readonly
-          >{{ state.value() | json }}
-        </textarea>
-        <div class="hint state">
-          <span class="emphasis">State:</span> {{ activeStateHint() }}
-        </div>
-        <div class="hint file">
-          @if (displayActiveStateHint()) {
-            <span class="emphasis">File:</span> app/app.config.ts
-          } @else {
-            &nbsp;
-          }
-        </div>
-      } @else {
-        <textarea class="data-textarea" readonly> </textarea>
-        <div class="hint state">
-          <span class="emphasis">State:</span> cleared - pipeline has no active
-          value, error or loading status.
-        </div>
-        <div class="hint file">
-          <span class="emphasis">File:</span> app/app.config.ts &nbsp;
-        </div>
-      }
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="actions">
-      <button class="sdux-button primary" (click)="loadSample()">
-        Load Sample State
-      </button>
-
-      <div class="secondary-actions">
-        <button class="sdux-button" (click)="resetState()">Reset State</button>
-        <button class="sdux-button" (click)="toggleLoading()">
-          Loading ({{ state.isLoading() }})
-        </button>
-        <button class="sdux-button" (click)="toggleError()">
-          Error ({{ hasError() }})
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="section learn-more">
-    <div class="label">Learn More</div>
-    <div class="learn-more-links">
-      <a
-        href="https://www.sdux-vault.com/docs/pipeline/behaviors/filters"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Filters</a
-      >
-      <span class="separator">·</span>
-      <a
-        href="https://www.sdux-vault.com/docs/pipeline/behaviors/reducers"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Reducers</a
-      >
-      <span class="separator">·</span>
-      <a
-        href="https://www.sdux-vault.com/docs/pipeline/apis/provide-feature-cell"
-        target="_blank"
-        rel="noopener noreferrer"
-        >FeatureCell</a
-      >
-    </div>
+    <button type="button" class="sdux-button" (click)="resetState()">
+      Reset State
+    </button>
   </div>
 </div>
 `,
-    'src/app/example.component.scss': `\$gap: 0.75rem;
+    'src/example.component.scss': `\$gap: 0.75rem;
 \$padding: 1rem;
-\$data-height: 300px;
 \$text-area-height: 175px;
 \$border: 1px solid rgba(0, 0, 0, 0.08);
-\$radius: 8px;
-\$text-muted: #666;
-\$title-font-size: 2rem;
-\$sub-title-font-size: 1rem;
-\$label-font-size: 1.1rem;
-\$text-area-font-size: 0.8rem;
-\$hint-font-size: 1rem;
-\$hint-file-font-size: 0.9rem;
-\$status-font-size: 0.85rem;
+\$button-height: 40px;
+\$button-color: #ffffff;
+\$button-background: #1976d2;
+\$button-border: #004ba0;
+\$button-radius: 0.3125rem;
+\$button-font-size: 0.875rem;
+\$button-spacing: 0.25rem;
+\$button-font-weight: 600;
 
 .example-container {
   display: flex;
   flex-direction: column;
   gap: \$gap;
   padding: \$padding;
+  width: 800px;
 
-  .header {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-
-    .title {
-      font-size: \$title-font-size;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-    }
-
-    .subtitle {
-      font-size: \$sub-title-font-size;
-      color: \$text-muted;
-      max-width: 600px;
-    }
+  .textarea {
+    width: 100%;
+    box-sizing: border-box;
+    height: \$text-area-height;
+    padding: 0.5rem;
+    border: \$border;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    background: #fafafa;
+    color: #222;
   }
 
-  .section {
-    padding: \$padding;
-
-    &.column {
-      border: \$border;
-      border-radius: \$radius;
-      display: flex;
-      gap: \$gap;
-
-      @media (max-width: 768px) {
-        flex-direction: column;
-
-        .state-container {
-          width: 100%;
-        }
-      }
-    }
-
-    .state-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      min-width: 0;
-
-      &.data-row {
-        height: 430px;
-      }
-
-      .textarea,
-      .data-textarea {
-        width: 100%;
-        box-sizing: border-box;
-        height: \$data-height;
-        padding: 0.5rem;
-        border: \$border;
-        border-radius: 6px;
-        font-family: monospace;
-        font-size: \$text-area-font-size;
-        background: #fafafa;
-        color: #222;
-
-        &.empty {
-          font-style: italic;
-        }
-
-        &.error {
-          color: #d33;
-        }
-      }
-
-      .textarea {
-        height: \$text-area-height;
-      }
-    }
-
-    .label {
-      font-size: \$label-font-size;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: \$text-muted;
-    }
-
-    .flow-hint {
-      margin-top: 0.25rem;
-      font-size: 1rem;
-      letter-spacing: 0.3px;
-      color: \$text-muted;
-    }
-
-    .hint {
-      font-size: \$hint-font-size;
-      color: #777;
-      margin-top: -0.15rem;
-      margin-left: 0.5rem;
-
-      &.file {
-        color: #999;
-        font-family: monospace;
-        font-size: \$hint-file-font-size;
-        min-height: 16px;
-      }
-
-      &.state {
-        margin-top: 0.15rem;
-      }
-
-      .emphasis {
-        font-weight: 600;
-        color: #555;
-      }
-    }
-
-    .actions {
-      justify-content: flex-start;
-      display: flex;
-      align-items: center;
-      gap: 3rem;
-
-      @media (max-width: 768px) {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 2rem;
-      }
-
-      .secondary-actions {
-        display: flex;
-        gap: 2rem;
-
-        @media (max-width: 768px) {
-          gap: 1.5rem;
-          flex-direction: column;
-          align-items: flex-start;
-        }
-      }
-    }
-  }
-
-  .status {
-    height: 300px;
-    font-size: \$status-font-size;
-    color: \$text-muted;
+  .actions {
+    justify-content: flex-start;
     display: flex;
     align-items: center;
-    justify-content: center;
-  }
+    gap: 3rem;
 
-  .learn-more {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-
-    .learn-more-links {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: \$hint-font-size;
-
-      a {
-        color: #555;
-        text-decoration: none;
-
-        &:hover {
-          text-decoration: underline;
-          color: #222;
-        }
-      }
-
-      .separator {
-        color: #ccc;
-      }
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
     }
   }
 }
+
+.sdux-button {
+  height: \$button-height;
+  color: \$button-color;
+  background-color: \$button-background;
+  border: 1px solid \$button-border;
+  border-radius: \$button-radius;
+  font-size: \$button-font-size;
+  padding: 0.5rem;
+  gap: \$button-spacing;
+  font-weight: \$button-font-weight;
+  min-width: 125px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:focus {
+    outline: none;
+  }
+}
 `,
-    'src/app/example.component.ts': `import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
-import { Employee } from './employee.model';
+    'src/example.component.ts': `import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { EmployeeCell } from './employee.service';
 
 /**
- * UI component responsible for rendering the comparison FeatureCell state.
- *
- * The component delegates state updates to EmployeeCell and reads the
- * resulting reactive snapshot for display.
+ * Renders the employees state and delegates user actions to EmployeeCell.
+ * The template reads the cell's reactive snapshot to display loading, errors,
+ * and the filtered and sorted employee value.
  */
 @Component({
   selector: 'example-view',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: 'example.component.html',
-  styleUrls: ['../styles.scss', 'example.component.scss']
+  templateUrl: './example.component.html',
+  styleUrls: ['./example.component.scss']
 })
 export class ExampleComponent {
-  /** Injected FeatureCell service that owns the state pipeline. */
+  /** Injected service that owns the employees FeatureCell and its pipeline. */
   #employeeCell = inject(EmployeeCell);
 
-  /** Reactive state exposed by the FeatureCell. */
-  state = this.#employeeCell.state;
+  /** Reactive state snapshot consumed by the Angular template. */
+  readonly state = this.#employeeCell.state;
 
-  /** Sample dataset used to demonstrate filter and reducer processing. */
-  sample: Employee[] = [
+  /** Sample records used to demonstrate synchronous pipeline processing. */
+  readonly sample = [
     { id: 11, name: 'Luke' },
     { id: 38, name: 'Leia' },
     { id: 9, name: 'Han' }
   ];
 
-  /** Hint text describing the current active state. */
-  readonly activeStateHint = signal('Initial value is [] (empty array)');
-
-  /** Whether to show the state hint file reference. */
-  readonly displayActiveStateHint = signal(true);
-
-  /** Whether the loading toggle is active. */
-  readonly isLoading = signal(false);
-
-  /** Whether the example error state is currently set. */
-  readonly hasError = computed<boolean>(() => this.state.error() !== null);
-
-  /** Delegate a state replacement to the FeatureCell service. */
+  /**
+   * Sends the sample records to the FeatureCell for filtering and sorting.
+   *
+   * @returns Nothing; the template refreshes from the updated reactive state.
+   */
   loadSample(): void {
-    this.displayActiveStateHint.set(false);
-    this.activeStateHint.set(
-      'State updated with sample data after filters and reducers run.'
-    );
     this.#employeeCell.replace(this.sample);
   }
 
-  /** Reset the FeatureCell to its initial value. */
+  /**
+   * Requests asynchronous state loading from the FeatureCell service.
+   *
+   * @returns Nothing; loading and settlement are reflected by the state snapshot.
+   */
+  loadSampleAsync(): void {
+    this.#employeeCell.replaceAsync();
+  }
+
+  /**
+   * Restores the FeatureCell's empty initial state.
+   *
+   * @returns Nothing; the template observes the reset reactively.
+   */
   resetState(): void {
     this.#employeeCell.reset();
-  }
-
-  /** Toggle the loading state for the UI demonstration. */
-  toggleLoading(): void {
-    this.isLoading.update((loading) => !loading);
-    this.#employeeCell.toggleLoading(this.isLoading());
-  }
-
-  /** Toggle an example error for the UI demonstration. */
-  toggleError(): void {
-    const error = this.hasError() ? null : new Error('Example error message');
-    this.#employeeCell.toggleError(error);
   }
 }
 `,
@@ -707,7 +361,7 @@ export class ExampleComponent {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>SDuX Angular Comparison Example</title>
+    <title>SDuX Angular Example</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
@@ -717,20 +371,13 @@ export class ExampleComponent {
   </body>
 </html>
 `,
-    'src/main.ts': `/**
- * Application bootstrap entry point.
- *
- * Bootstraps the root ExampleComponent as a standalone Angular application
- * using the provider configuration defined in appConfig.
- */
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { ExampleComponent } from './app/example.component';
+    'src/main.ts': `import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from './app.config';
+import { ExampleComponent } from './example.component';
 
-// eslint-disable-next-line
-bootstrapApplication(ExampleComponent, appConfig).catch((err: any) =>
-  console.error(err)
-);
+bootstrapApplication(ExampleComponent, appConfig).catch((error: unknown) => {
+  console.error(error);
+});
 `,
     'src/styles.scss': `/* You can add global styles to this file, and also import other style files */
 \$button-height: 40px;
