@@ -26,7 +26,7 @@ describe('Component: StackBlitz Example', () => {
   beforeEach(async () => {
     snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
     analyticsSpy = jasmine.createSpyObj('AnalyticsService', [
-      'trackStackBlitzInteraction'
+      'trackStackblitzInteraction'
     ]);
 
     await TestBed.configureTestingModule({

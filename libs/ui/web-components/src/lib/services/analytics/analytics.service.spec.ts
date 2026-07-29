@@ -25,7 +25,7 @@ describe('Service: Analytics', () => {
   });
 
   it('should track a launch', () => {
-    service.trackStackBlitzInteraction({
+    service.trackStackblitzInteraction({
       exampleId: 'hydrate-state',
       framework: 'angular',
       action: 'launch'
@@ -43,7 +43,7 @@ describe('Service: Analytics', () => {
   });
 
   it('should track a link copy', () => {
-    service.trackStackBlitzInteraction({
+    service.trackStackblitzInteraction({
       exampleId: 'hydrate-state',
       framework: 'vue',
       action: 'copy'
@@ -155,7 +155,7 @@ describe('Service: Analytics', () => {
     delete (window as unknown as Record<string, unknown>)['gtag'];
 
     expect(() =>
-      service.trackStackBlitzInteraction({
+      service.trackStackblitzInteraction({
         exampleId: 'hydrate-state',
         framework: 'angular',
         action: 'launch'
@@ -170,7 +170,7 @@ describe('Service: Analytics', () => {
     });
     service = TestBed.inject(AnalyticsService);
 
-    service.trackStackBlitzInteraction({
+    service.trackStackblitzInteraction({
       exampleId: 'hydrate-state',
       framework: 'angular',
       action: 'launch'
