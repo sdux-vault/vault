@@ -148,7 +148,7 @@ export const routes: Routes = [
     path: 'stackblitz',
     data: { category: 'stackblitz' },
     loadComponent: () =>
-      import('./docs/stack-blitz/stack-blitz.component').then(
+      import('./docs/stack-blitz/stackblitz.component').then(
         (m) => m.StackBlitzOverviewComponent
       )
   },
@@ -543,7 +543,7 @@ export const routes: Routes = [
         path: 'stackblitz',
         data: { category: 'stackblitz' },
         loadComponent: () =>
-          import('./docs/stack-blitz/stack-blitz.component').then(
+          import('./docs/stack-blitz/stackblitz.component').then(
             (m) => m.StackBlitzOverviewComponent
           )
       },

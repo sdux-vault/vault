@@ -284,5 +284,13 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-07-22',
     readingTime: 7,
     active: true
+  },
+  {
+    slug: 'state-management-without-framework-lock-in',
+    title:
+      'Plain TypeScript, Zero Magic: State Management Without Framework Lock-In',
+    date: '2026-07-28',
+    readingTime: 7,
+    active: true
   }
 ];

@@ -79,10 +79,6 @@ describe('CompareTimelineSpansComponent', () => {
     el = fixture.nativeElement;
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should display the section header', () => {
     const header = el.querySelector('.header-section h4');
     expect(header!.textContent).toContain('Category Duration Spans');

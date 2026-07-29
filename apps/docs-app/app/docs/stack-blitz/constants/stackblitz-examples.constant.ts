@@ -173,6 +173,18 @@ export function createExampleGroups(brandName: string) {
           ]
         },
         {
+          title: 'Comparison',
+          id: 'comparison',
+          exampleName: 'comparison-example',
+          description: `The example from the <a href="/developer">State library</a> comparison guide. The example includes filtering, reduction, replacement, async fetch, loading, error and reset operations. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
+        },
+        {
           title: 'Tab Sync',
           id: 'tab-sync',
           exampleName: 'tab-sync-example',

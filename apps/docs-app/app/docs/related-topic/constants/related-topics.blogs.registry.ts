@@ -306,6 +306,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'A FeatureCell in Plain JavaScript — SDuX Blog',
       description:
         'Learn how a SDuX Vault FeatureCell runs in raw node main.js with no framework and no build step, committing deterministic state you read from state$.'
+    },
+    {
+      link: '/blog/state-management-without-framework-lock-in',
+      display:
+        'Plain TypeScript, Zero Magic: State Management Without Framework Lock-In',
+      title: 'State Management Without Framework Lock-In — SDuX Blog',
+      description:
+        'Learn how SDuX Vault keeps state architecture portable across Angular, React, Vue, Svelte, Node.js, and Deno by using a plain TypeScript core with thin adapters.'
     }
   ]
 };

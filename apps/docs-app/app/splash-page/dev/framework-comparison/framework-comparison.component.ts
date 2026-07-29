@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -7,7 +8,11 @@ import {
   input
 } from '@angular/core';
 import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
+import { StackblitzLanguageExampleComponent } from 'apps/docs-app/app/docs/stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import Prism from 'prismjs';
+import { StackblitzExampleService } from '../../../docs/stack-blitz/services/stackblitz-example.service';
+import { StackBlitzExampleLanguageShape } from '../../../docs/stack-blitz/shapes/stackblitz-example.language.shape';
+import { StackBlitzExampleShape } from '../../../docs/stack-blitz/shapes/stackblitz-example.shape';
 import type { FrameworkComparisonImplementationShape } from '../shapes/framework-comparison-implementation.shape';
 import { FrameworkComparisonPairShape } from '../shapes/framework-comparison-pair.shape';
 import type { FrameworkComparisonSourceFileShape } from '../shapes/framework-comparison-source-file.shape';
@@ -17,7 +22,11 @@ const DEFAULT_SHARED_SETUP_FILE_NAMES = ['main.ts', 'app.config.ts'];
 @Component({
   selector: 'sdux-framework-comparison',
   standalone: true,
-  imports: [VaultBrandNameComponent],
+  imports: [
+    VaultBrandNameComponent,
+    StackblitzLanguageExampleComponent,
+    CommonModule
+  ],
   templateUrl: './framework-comparison.component.html',
   styleUrls: ['./framework-comparison.component.scss']
 })
@@ -25,6 +34,21 @@ export class FrameworkComparisonComponent {
   readonly comparison = input.required<FrameworkComparisonPairShape>();
 
   readonly #elementRef = inject(ElementRef<HTMLElement>);
+
+  readonly #stackblitzService = inject(StackblitzExampleService);
+
+  readonly example = computed<StackBlitzExampleShape>(
+    () =>
+      this.#stackblitzService.getExample('comparison') ??
+      ({} as StackBlitzExampleShape)
+  );
+
+  readonly lang = computed<StackBlitzExampleLanguageShape>(
+    () =>
+      this.example()?.languages?.find(
+        (lang) => lang.key === this.comparison()?.id
+      ) ?? ({} as StackBlitzExampleLanguageShape)
+  );
 
   constructor() {
     effect(() => {

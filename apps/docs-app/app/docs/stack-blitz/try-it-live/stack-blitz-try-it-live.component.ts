@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { StackBlitzExampleComponent } from '../example/stack-blitz-example.component';
+import { StackBlitzExampleComponent } from '../example/stackblitz-example.component';
 
 /**
  * Renders a reusable Try It Live section for a registered StackBlitz example.

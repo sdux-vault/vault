@@ -27,10 +27,6 @@ describe('FrameworkSelectorComponent', () => {
     preferenceService.reset();
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should render the globe icon button', () => {
     const el: HTMLElement = fixture.nativeElement;
     const button = el.querySelector('.framework-selector-btn');

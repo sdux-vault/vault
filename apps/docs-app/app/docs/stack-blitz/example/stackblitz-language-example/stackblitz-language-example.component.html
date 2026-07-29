@@ -1,0 +1,48 @@
+@if (example() && lang()) {
+  <div
+    class="framework-icon-group"
+    [class.framework-icon-group-local-only]="example().localOnly">
+    @if (example().localOnly) {
+      <div
+        class="framework-icon-button framework-icon-button-local-only"
+        [attr.aria-label]="
+          'Run ' + example().title + ' locally with ' + lang.name
+        "
+        [matTooltip]="
+          'Local-only example. Run with ' +
+          lang.name +
+          ' — see instructions below.'
+        ">
+        <img
+          [src]="getFrameworkIcon(lang().key)"
+          [alt]="lang().name"
+          class="framework-icon" />
+      </div>
+    } @else {
+      <button
+        type="button"
+        class="framework-icon-button"
+        [attr.aria-label]="'Launch ' + example().title + ' in ' + lang().name"
+        [matTooltip]="'Launch ' + example().title + ' in ' + lang().name"
+        (click)="launchStackblitzExample(example(), lang().key)">
+        <img
+          [src]="getFrameworkIcon(lang().key)"
+          [alt]="lang().name"
+          class="framework-icon" />
+        <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
+      </button>
+      <button
+        type="button"
+        class="share-link-button"
+        [attr.aria-label]="'Share ' + example().title + ' in ' + lang().name"
+        [matTooltip]="lang().name + ' shareable link'"
+        (click)="copyStackBlitzExample(example(), lang().key)">
+        @if (copySuccess() === lang().key + '/' + example().exampleName) {
+          <mat-icon class="share-link-icon copy-success">check</mat-icon>
+        } @else {
+          <mat-icon class="share-link-icon">content_copy</mat-icon>
+        }
+      </button>
+    }
+  </div>
+}

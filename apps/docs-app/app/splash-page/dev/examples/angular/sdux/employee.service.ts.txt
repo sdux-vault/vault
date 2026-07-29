@@ -11,11 +11,11 @@ export class EmployeeCell {
   constructor() {
     this.#vault.
     .filters([
-      (examples: Example[]) =>
+      (examples: Employee[]) =>
         examples.filter((example) => example.id % 2 !== 0)
     ])
     .reducers([
-      (examples: Example[]) => {
+      (examples: Employee[]) => {
         examples.sort((left, right) => left.name.localeCompare(right.name));
         return examples;
       }

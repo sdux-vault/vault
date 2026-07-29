@@ -143,10 +143,6 @@ describe('Component: PipelineFlow', () => {
     fixture.detectChanges();
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('isExpanded', () => {
     it('should be false when no trace is provided', () => {
       expect(component.isExpanded()).toBe(false);

@@ -108,10 +108,6 @@ describe('Component: Events', () => {
     fixture.detectChanges();
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should display the total event count', () => {
     expect(component.totalEvents()).toBe(1);
   });

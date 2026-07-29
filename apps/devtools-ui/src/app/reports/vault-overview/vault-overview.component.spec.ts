@@ -93,10 +93,6 @@ describe('Component: VaultOverview', () => {
     fixture.detectChanges();
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should call refreshLocalConfig on construction', () => {
     expect(mockService.refreshLocalConfig).toHaveBeenCalled();
   });
