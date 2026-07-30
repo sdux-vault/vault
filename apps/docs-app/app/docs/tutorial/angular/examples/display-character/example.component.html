@@ -13,30 +13,44 @@
 
   <fieldset class="feature-cell-controls">
     <div class="workspace">
-      <section class="panel character-details" aria-labelledby="details-title">
-        <div class="header">
-          <h3 id="details-title">Character details</h3>
-        </div>
+      <div class="workspace-row workspace-row-bottom">
+        <section
+          class="panel character-details"
+          aria-labelledby="details-title">
+          <div class="header">
+            <h3 id="details-title">Character details</h3>
+          </div>
 
-        <dl>
-          <div>
-            <dt>Name</dt>
-            <dd>{{ character()?.name }} {{ character()?.lastName }}</dd>
-          </div>
-          <div>
-            <dt>Identifier</dt>
-            <dd>{{ character()?.id }}</dd>
-          </div>
-          <div>
-            <dt>Faction</dt>
-            <dd>{{ character()?.faction }}</dd>
-          </div>
-          <div>
-            <dt class="force-sensitive">Force-sensitive</dt>
-            <dd>{{ character()?.forceSensitiveDisplay }}</dd>
-          </div>
-        </dl>
-      </section>
+          <dl>
+            <div>
+              <dt>Full name</dt>
+              <dd>
+                {{ character()?.fullName }}
+              </dd>
+            </div>
+            <div>
+              <dt>First name</dt>
+              <dd>{{ character()?.name }}</dd>
+            </div>
+            <div>
+              <dt>Last name</dt>
+              <dd>{{ character()?.lastName }}</dd>
+            </div>
+            <div>
+              <dt>Identifier</dt>
+              <dd>{{ character()?.id }}</dd>
+            </div>
+            <div>
+              <dt>Faction</dt>
+              <dd>{{ character()?.faction }}</dd>
+            </div>
+            <div>
+              <dt class="force-sensitive">Force-sensitive</dt>
+              <dd>{{ character()?.forceSensitiveDisplay }}</dd>
+            </div>
+          </dl>
+        </section>
+      </div>
     </div>
   </fieldset>
 </section>

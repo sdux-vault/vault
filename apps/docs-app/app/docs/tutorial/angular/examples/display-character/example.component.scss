@@ -42,6 +42,147 @@ $action-column-width: calc(
   $action-button-width + $action-chevron-hit-area + $spacing-xs
 );
 
+@mixin visually-hidden-control {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@mixin chevron-control($rotation: 45deg) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $action-chevron-hit-area;
+  min-width: $action-chevron-hit-area;
+  height: $action-chevron-hit-area;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: $sdux-text-white;
+  line-height: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    &::after {
+      background: $sdux-primary-dark;
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &::before {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 6px;
+    height: 6px;
+    box-sizing: border-box;
+    content: '';
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate($rotation);
+    transition: transform 150ms ease;
+  }
+
+  &::after {
+    position: absolute;
+    width: $action-chevron-size;
+    height: $action-chevron-size;
+    content: '';
+    background: $sdux-primary-base;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+  }
+}
+
+@mixin expandable-action-row {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: $spacing-sm;
+  width: min(100%, $action-column-width);
+
+  .button-container {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
+
+    .delay-timer {
+      width: 50%;
+
+      > input {
+        text-align: right;
+        padding-right: 0;
+      }
+    }
+
+    > span {
+      width: 50%;
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+    }
+
+    .button {
+      flex: 0 0 $action-button-width;
+      width: $action-button-width;
+      box-sizing: border-box;
+    }
+
+    &.hydrate-controls .button.hydrate-terminal,
+    &.promise-controls .button.promise-terminal,
+    &.observable-controls .button.observable-terminal {
+      flex-basis: $action-button-width * 0.49;
+      width: $action-button-width * 0.4;
+    }
+
+    &.hydrate-controls,
+    &.promise-controls,
+    &.observable-controls {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .description-chevron {
+      @include chevron-control(-45deg);
+    }
+  }
+
+  .description-container {
+    display: none;
+    color: var(--sdux-text-muted);
+    line-height: 1.5;
+  }
+
+  .description-toggle:focus-visible ~ .button-container {
+    .description-chevron {
+      outline: 2px solid $sdux-primary-light;
+      outline-offset: 3px;
+    }
+  }
+
+  .description-toggle:checked ~ .button-container {
+    .description-chevron::before {
+      transform: rotate(45deg);
+    }
+  }
+
+  .description-toggle:checked ~ .description-container {
+    display: block;
+  }
+}
+
 :host {
   display: block;
 }
@@ -72,14 +213,10 @@ $action-column-width: calc(
     gap: $spacing-sm;
   }
 
-  .section-toggle {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
+  .section-toggle,
+  .description-toggle,
+  .tap-toggle {
+    @include visually-hidden-control;
   }
 
   .section-header {
@@ -94,59 +231,7 @@ $action-column-width: calc(
     }
 
     .section-chevron {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: $action-chevron-hit-area;
-      min-width: $action-chevron-hit-area;
-      height: $action-chevron-hit-area;
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-      color: $sdux-text-white;
-      line-height: 0;
-      background: transparent;
-      border: 0;
-      cursor: pointer;
-      transition: transform 0.15s ease;
-
-      &:hover {
-        transform: translateY(-2px);
-
-        &::after {
-          background: $sdux-primary-dark;
-        }
-      }
-
-      &:active {
-        transform: scale(0.95);
-      }
-
-      &::before {
-        position: relative;
-        z-index: 1;
-        display: block;
-        width: 6px;
-        height: 6px;
-        box-sizing: border-box;
-        content: '';
-        border-right: 2px solid currentColor;
-        border-bottom: 2px solid currentColor;
-        transform: rotate(45deg);
-        transition: transform 150ms ease;
-      }
-
-      &::after {
-        position: absolute;
-        width: $action-chevron-size;
-        height: $action-chevron-size;
-        content: '';
-        background: $sdux-primary-base;
-        border: 1px solid transparent;
-        border-radius: 50%;
-        transition: background-color 0.2s ease;
-      }
+      @include chevron-control(45deg);
     }
   }
 
@@ -339,7 +424,7 @@ $action-column-width: calc(
   }
 
   > .feature-cell-controls {
-    display: contents;
+    display: block;
     min-width: 0;
     padding: 0;
     margin: 0;
@@ -384,36 +469,38 @@ $action-column-width: calc(
 
   > .feature-cell-controls > .workspace {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
     gap: $spacing-lg;
+    margin-bottom: $spacing-lg;
 
-    @media (min-width: $breakpoint-lg) {
-      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    > .workspace-row {
+      display: grid;
+      gap: $spacing-lg;
+      min-width: 0;
 
-      > .selection {
-        grid-row: 1;
-        grid-column: 1;
-      }
-
-      > .character-details {
-        grid-row: 2;
-        grid-column: 1;
-      }
-
-      > .add-action {
-        grid-row: 1;
-        grid-column: 2;
-        align-self: end;
-        justify-content: flex-end;
-      }
-
-      > .editor {
-        grid-row: 2;
-        grid-column: 2;
+      @media (min-width: $breakpoint-lg) {
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
       }
     }
 
-    > .panel {
+    > .workspace-row-top {
+      align-items: end;
+
+      @media (min-width: $breakpoint-lg) {
+        .add-action {
+          align-items: flex-end;
+          justify-content: flex-end;
+        }
+      }
+    }
+
+    > .workspace-row-bottom {
+      align-items: stretch;
+    }
+
+    .panel {
+      display: flex;
+      flex-direction: column;
+      align-self: stretch;
       min-width: 0;
       padding: $spacing-lg;
       background: var(--sdux-surface-elevated);
@@ -514,6 +601,12 @@ $action-column-width: calc(
       }
 
       &.editor {
+        > form {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+
         .form-grid {
           display: grid;
           grid-template-columns: minmax(0, 1fr);
@@ -521,10 +614,6 @@ $action-column-width: calc(
 
           @media (min-width: $breakpoint-md) {
             grid-template-columns: repeat(2, minmax(0, 1fr));
-          }
-
-          .full {
-            grid-column: 1 / -1;
           }
 
           .checkbox {
@@ -555,296 +644,157 @@ $action-column-width: calc(
         }
       }
     }
+
+    .add-action {
+      justify-content: flex-start;
+      margin: 0;
+
+      @media (min-width: $breakpoint-lg) {
+        align-items: flex-end;
+        justify-content: flex-end;
+      }
+
+      .button {
+        flex: 0 0 auto;
+        width: auto;
+        min-height: 42px;
+      }
+
+      @media (max-width: $breakpoint-lg) {
+        .button {
+          width: 100%;
+        }
+      }
+    }
   }
 
   > .feature-cell-controls > .pipeline-actions {
     display: grid;
-    grid-template-columns: repeat(3, $action-column-width);
-    gap: $spacing-md;
-    justify-content: space-between;
+    gap: $spacing-lg;
     padding-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
     border-top: 1px solid $sdux-primary-base;
 
-    > .section-toggle:not(:checked) ~ .action-row,
-    > .section-toggle:not(:checked) ~ .tab-sync-operator {
+    > .section-toggle:not(:checked) ~ .pipeline-content {
+      display: none;
+    }
+
+    .pipeline-content {
+      display: grid;
+      gap: $spacing-lg;
+    }
+
+    .action-groups {
+      display: grid;
+      gap: $spacing-md;
+    }
+
+    .action-group {
+      display: grid;
+      gap: $spacing-md;
+      min-width: 0;
+
+      @media (min-width: $breakpoint-lg) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: start;
+      }
+    }
+
+    .action-row {
+      @include expandable-action-row;
+    }
+  }
+
+  > .feature-cell-controls > .distinct-operator,
+  > .feature-cell-controls > .tab-sync-operator {
+    display: grid;
+    gap: $spacing-md;
+    padding-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
+    border-top: 1px solid $sdux-primary-base;
+
+    > .section-toggle:not(:checked) ~ .operator-actions,
+    > .section-toggle:not(:checked) ~ .comparison-function-column {
       display: none;
     }
 
     .action-row {
+      @include expandable-action-row;
+    }
+
+    .operator-actions {
       display: grid;
-      grid-template-rows: auto 1fr;
-      gap: $spacing-sm;
-      width: $action-column-width;
+      gap: $spacing-md;
+      align-items: start;
 
-      .description-toggle {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        white-space: nowrap;
+      @media (max-width: $breakpoint-lg) {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       }
 
-      .button-container {
-        display: flex;
-        gap: $spacing-xs;
-        align-items: center;
+      @media (min-width: $breakpoint-lg) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
 
-        .delay-timer {
-          width: 50%;
-
-          > input {
-            text-align: right;
-            padding-right: 0;
-          }
-        }
-
-        > span {
-          width: 50%;
-          font-size: $font-size-md;
-          font-weight: $font-weight-semibold;
-        }
-
-        .button {
-          flex: 0 0 $action-button-width;
-          width: $action-button-width;
-          box-sizing: border-box;
-        }
-
-        &.hydrate-controls .button.hydrate-terminal,
-        &.promise-controls .button.promise-terminal,
-        &.observable-controls .button.observable-terminal {
-          flex-basis: $action-button-width * 0.49;
-          width: $action-button-width * 0.4;
-        }
-
-        &.hydrate-controls,
-        &.promise-controls,
-        &.observable-controls {
-          width: 100%;
-          justify-content: space-between;
-        }
-
-        .description-chevron {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: $action-chevron-hit-area;
-          min-width: $action-chevron-hit-area;
-          height: $action-chevron-hit-area;
-          padding: 0;
-          margin: 0;
-          box-sizing: border-box;
-          color: $sdux-text-white;
-          background: transparent;
-          border: 0;
-          cursor: pointer;
-          line-height: 0;
-          transition: transform 0.15s ease;
-
-          &:hover {
-            transform: translateY(-2px);
-
-            &::after {
-              background: $sdux-primary-dark;
-            }
-          }
-
-          &:active {
-            transform: scale(0.95);
-          }
-
-          &::before {
-            position: relative;
-            z-index: 1;
-            display: block;
-            width: 6px;
-            height: 6px;
-            box-sizing: border-box;
-            content: '';
-            border-right: 2px solid currentColor;
-            border-bottom: 2px solid currentColor;
-            transform: rotate(-45deg);
-            transition: transform 150ms ease;
-          }
-
-          &::after {
-            position: absolute;
-            width: $action-chevron-size;
-            height: $action-chevron-size;
-            content: '';
-            background: $sdux-primary-base;
-            border: 1px solid transparent;
-            border-radius: 50%;
-            transition: background-color 0.2s ease;
-          }
+        .submit-changed-action-row {
+          grid-column: 2;
         }
       }
 
-      .description-container {
-        display: none;
-        color: var(--sdux-text-muted);
-        line-height: 1.5;
-      }
+      .tab-sync-action-row {
+        grid-column: 1 / -1;
+        width: 100%;
 
-      .description-toggle:focus-visible ~ .button-container {
-        .description-chevron {
-          outline: 2px solid $sdux-primary-light;
-          outline-offset: 3px;
+        .button-container {
+          justify-content: flex-start;
         }
-      }
-
-      .description-toggle:checked ~ .button-container {
-        .description-chevron::before {
-          transform: rotate(45deg);
-        }
-      }
-
-      .description-toggle:checked ~ .description-container {
-        display: block;
       }
     }
 
-    .distinct-operator,
-    .tab-sync-operator {
+    .comparison-function-column {
       display: grid;
-      grid-column: 1 / -1;
-      gap: $spacing-md;
-      padding-top: $spacing-lg;
-      border-top: 1px solid $sdux-primary-base;
+      grid-template-rows: auto 1fr;
+      gap: $spacing-sm;
+      width: 100%;
 
-      > .section-toggle:not(:checked) ~ .operator-actions,
-      > .section-toggle:not(:checked) ~ .comparison-function-column {
-        display: none;
-      }
-
-      .operator-actions {
-        display: grid;
-        grid-template-columns: repeat(3, $action-column-width);
-        gap: $spacing-md;
+      .tap-header {
+        display: flex;
+        align-items: center;
         justify-content: space-between;
 
-        .tab-sync-action-row {
-          grid-column: 1 / -1;
-          width: 100%;
+        h3 {
+          margin: 0;
+          font-size: $font-size-md;
+        }
 
-          .button-container {
-            justify-content: flex-start;
-          }
+        .tap-chevron {
+          @include chevron-control(45deg);
         }
       }
 
-      .comparison-function-column {
-        display: grid;
-        grid-template-rows: auto 1fr;
-        gap: $spacing-sm;
+      textarea {
         width: 100%;
+        height: calc(320px / 3);
+        min-height: calc(320px / 3);
+        padding: $spacing-md;
+        box-sizing: border-box;
+        color: $sdux-text-inverse;
+        background: $sdux-surface-light;
+        border: 1px solid $sdux-surface-outline;
+        border-radius: $border-radius-sm;
+        font: inherit;
+        resize: vertical;
+      }
 
-        .tap-toggle {
-          position: absolute;
-          width: 1px;
-          height: 1px;
-          margin: -1px;
-          overflow: hidden;
-          clip: rect(0 0 0 0);
-          white-space: nowrap;
-        }
+      > .tap-toggle:focus-visible ~ .tap-header .tap-chevron {
+        outline: 2px solid $sdux-primary-light;
+        outline-offset: 3px;
+      }
 
-        .tap-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+      > .tap-toggle:not(:checked) ~ .tap-header .tap-chevron::before {
+        transform: rotate(-45deg);
+      }
 
-          h3 {
-            margin: 0;
-            font-size: $font-size-md;
-          }
-
-          .tap-chevron {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: $action-chevron-hit-area;
-            min-width: $action-chevron-hit-area;
-            height: $action-chevron-hit-area;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            color: $sdux-text-white;
-            line-height: 0;
-            background: transparent;
-            border: 0;
-            cursor: pointer;
-            transition: transform 0.15s ease;
-
-            &:hover {
-              transform: translateY(-2px);
-
-              &::after {
-                background: $sdux-primary-dark;
-              }
-            }
-
-            &:active {
-              transform: scale(0.95);
-            }
-
-            &::before {
-              position: relative;
-              z-index: 1;
-              display: block;
-              width: 6px;
-              height: 6px;
-              box-sizing: border-box;
-              content: '';
-              border-right: 2px solid currentColor;
-              border-bottom: 2px solid currentColor;
-              transform: rotate(45deg);
-              transition: transform 150ms ease;
-            }
-
-            &::after {
-              position: absolute;
-              width: $action-chevron-size;
-              height: $action-chevron-size;
-              content: '';
-              background: $sdux-primary-base;
-              border: 1px solid transparent;
-              border-radius: 50%;
-              transition: background-color 0.2s ease;
-            }
-          }
-        }
-
-        textarea {
-          width: 100%;
-          height: calc(320px / 3);
-          min-height: calc(320px / 3);
-          padding: $spacing-md;
-          box-sizing: border-box;
-          color: $sdux-text-inverse;
-          background: $sdux-surface-light;
-          border: 1px solid $sdux-surface-outline;
-          border-radius: $border-radius-sm;
-          font: inherit;
-          resize: vertical;
-        }
-
-        > .tap-toggle:focus-visible ~ .tap-header .tap-chevron {
-          outline: 2px solid $sdux-primary-light;
-          outline-offset: 3px;
-        }
-
-        > .tap-toggle:not(:checked) ~ .tap-header .tap-chevron::before {
-          transform: rotate(-45deg);
-        }
-
-        > .tap-toggle:not(:checked) ~ textarea {
-          display: none;
-        }
+      > .tap-toggle:not(:checked) ~ textarea {
+        display: none;
       }
     }
   }
@@ -853,23 +803,27 @@ $action-column-width: calc(
   > .feature-cell-controls > .state-output,
   > .feature-cell-controls > .filter-reducer-output {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: $spacing-lg;
     padding-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
     border-top: 1px solid $sdux-primary-base;
 
-    > .section-toggle:not(:checked) ~ .tap-column {
+    > .section-toggle:not(:checked) ~ .state-content,
+    > .section-toggle:not(:checked) ~ .filter-reducer-content,
+    > .section-toggle:not(:checked) ~ .tap-content {
       display: none;
     }
 
-    .tap-toggle {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
+    .state-content,
+    .filter-reducer-content,
+    .tap-content {
+      display: grid;
+      gap: $spacing-lg;
+    }
+
+    .state-content,
+    .tap-content {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .tap-column {
@@ -888,59 +842,7 @@ $action-column-width: calc(
         }
 
         .tap-chevron {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: $action-chevron-hit-area;
-          min-width: $action-chevron-hit-area;
-          height: $action-chevron-hit-area;
-          padding: 0;
-          margin: 0;
-          box-sizing: border-box;
-          color: $sdux-text-white;
-          line-height: 0;
-          background: transparent;
-          border: 0;
-          cursor: pointer;
-          transition: transform 0.15s ease;
-
-          &:hover {
-            transform: translateY(-2px);
-
-            &::after {
-              background: $sdux-primary-dark;
-            }
-          }
-
-          &:active {
-            transform: scale(0.95);
-          }
-
-          &::before {
-            position: relative;
-            z-index: 1;
-            display: block;
-            width: 6px;
-            height: 6px;
-            box-sizing: border-box;
-            content: '';
-            border-right: 2px solid currentColor;
-            border-bottom: 2px solid currentColor;
-            transform: rotate(45deg);
-            transition: transform 150ms ease;
-          }
-
-          &::after {
-            position: absolute;
-            width: $action-chevron-size;
-            height: $action-chevron-size;
-            content: '';
-            background: $sdux-primary-base;
-            border: 1px solid transparent;
-            border-radius: 50%;
-            transition: background-color 0.2s ease;
-          }
+          @include chevron-control(45deg);
         }
       }
 
@@ -1012,7 +914,9 @@ $action-column-width: calc(
   }
 
   > .feature-cell-controls > .filter-reducer-output {
-    grid-template-columns: minmax(0, 1fr);
+    .filter-reducer-content {
+      grid-template-columns: minmax(0, 1fr);
+    }
 
     .tap-column {
       width: 100%;
@@ -1044,13 +948,19 @@ $action-column-width: calc(
 
   > .feature-cell-controls > .stepwise-output {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: $spacing-lg;
     padding-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
     border-top: 1px solid $sdux-primary-base;
 
-    > .section-toggle:not(:checked) ~ .stepwise-column {
+    > .section-toggle:not(:checked) ~ .stepwise-content {
       display: none;
+    }
+
+    .stepwise-content {
+      display: grid;
+      gap: $spacing-lg;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .stepwise-column {
@@ -1067,17 +977,6 @@ $action-column-width: calc(
         h3 {
           margin: 0;
           font-size: $font-size-md;
-        }
-
-        .stepwise-actions {
-          display: flex;
-          gap: $spacing-sm;
-          align-items: center;
-        }
-
-        .button {
-          min-height: 30px;
-          padding: $spacing-xs $spacing-sm;
         }
       }
 
@@ -1096,40 +995,6 @@ $action-column-width: calc(
     }
   }
 
-  @media (max-width: $breakpoint-lg) {
-    .pipeline-actions {
-      grid-template-columns: repeat(2, $action-column-width);
-
-      .distinct-operator,
-      .tab-sync-operator {
-        .operator-actions {
-          grid-template-columns: repeat(2, $action-column-width);
-        }
-      }
-    }
-  }
-
-  @media (max-width: $breakpoint-md) {
-    .pipeline-actions {
-      grid-template-columns: $action-column-width;
-      justify-content: center;
-
-      .action-row {
-        width: $action-column-width;
-      }
-
-      .distinct-operator,
-      .tab-sync-operator {
-        width: $action-column-width;
-
-        .operator-actions {
-          grid-template-columns: $action-column-width;
-          justify-content: center;
-        }
-      }
-    }
-  }
-
   @media (max-width: $breakpoint-sm) {
     padding: $spacing-md;
 
@@ -1144,11 +1009,17 @@ $action-column-width: calc(
     .tap-output,
     .state-output,
     .filter-reducer-output {
-      grid-template-columns: minmax(0, 1fr);
+      .tap-content,
+      .state-content,
+      .filter-reducer-content {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
     .stepwise-output {
-      grid-template-columns: minmax(0, 1fr);
+      .stepwise-content {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
   }
 }
