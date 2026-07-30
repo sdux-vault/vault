@@ -2,6 +2,7 @@ import {
   cloneCharacters,
   createCharacterState,
   deriveForceSensitiveDisplay,
+  deriveFullName,
   getDistinctChangedStateCharacter,
   getNextCharacterId,
   withCharactersSortedByLastName
@@ -67,6 +68,19 @@ describe('Character domain', () => {
     ]);
     expect(derived).not.toBe(characters);
     expect(derived[0]).not.toBe(leia);
+    expect(characters).toEqual([leia, luke]);
+  });
+
+  it('should derive full names without mutating the input', () => {
+    const characters = [leia, luke] as const;
+    const derived = deriveFullName(characters);
+
+    expect(derived).toEqual([
+      { ...leia, fullName: 'Leia Organa' },
+      { ...luke, fullName: 'Luke Skywalker' }
+    ]);
+    expect(derived).not.toBe(characters);
+    expect(derived[1]).not.toBe(luke);
     expect(characters).toEqual([leia, luke]);
   });
 

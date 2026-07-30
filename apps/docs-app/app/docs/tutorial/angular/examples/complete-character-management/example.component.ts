@@ -435,7 +435,7 @@ export class ExampleComponent {
       this.editorMode.set('edit');
       this.#patchForm(character);
       this.feedback.set(
-        this.editor.characterAddedFeedback(this.#displayName(character))
+        this.editor.characterAddedFeedback(this.#characterLabel(character))
       );
       return;
     }
@@ -455,7 +455,9 @@ export class ExampleComponent {
 
     this.#patchForm(updatedCharacter);
     this.feedback.set(
-      this.editor.characterUpdatedFeedback(this.#displayName(updatedCharacter))
+      this.editor.characterUpdatedFeedback(
+        this.#characterLabel(updatedCharacter)
+      )
     );
   }
 
@@ -503,7 +505,7 @@ export class ExampleComponent {
     this.#clearCharacterForm();
 
     this.feedback.set(
-      this.editor.characterRemovedFeedback(this.#displayName(character))
+      this.editor.characterRemovedFeedback(this.#characterLabel(character))
     );
   }
 
@@ -908,21 +910,12 @@ export class ExampleComponent {
   }
 
   /**
-   * Exposes character-name formatting to the template without exposing a private helper.
-   * @param character - Character whose first and last names should be combined.
-   * @returns The display name used in picker options, messages, and headings.
+   * Resolves the stable label used in messages and template fallbacks.
+   * @param character - Character whose derived or fallback full name should be returned.
+   * @returns The post-reducer full name when present, otherwise a local fallback.
    */
-  protected displayName(character: StarWarsCharacter): string {
-    return this.#displayName(character);
-  }
-
-  /**
-   * Combines the character's name fields into the consistent label used by the component.
-   * @param character - Character whose name fields should be formatted.
-   * @returns The character's first and last names separated by one space.
-   */
-  #displayName(character: StarWarsCharacter): string {
-    return this.editor.displayName(character);
+  #characterLabel(character: StarWarsCharacter): string {
+    return character.fullName ?? `${character.name} ${character.lastName}`;
   }
 
   /**

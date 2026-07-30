@@ -134,7 +134,10 @@
         role="alert">
         <div>
           <h3 id="delete-confirmation-title">
-            Remove {{ displayName(character) }}?
+            Remove
+            {{
+              character.fullName ?? character.name + ' ' + character.lastName
+            }}?
           </h3>
           <p>This action removes the character from the current collection.</p>
         </div>
@@ -178,7 +181,10 @@
               <option
                 [value]="character.id"
                 [selected]="character.id === selectedCharacterId()">
-                {{ displayName(character) }}
+                {{
+                  character.fullName ??
+                    character.name + ' ' + character.lastName
+                }}
               </option>
             }
           </select>
@@ -223,8 +229,21 @@
             <!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
             <dl>
               <div>
-                <dt>Name</dt>
-                <dd>{{ displayName(character) }}</dd>
+                <dt>Full name</dt>
+                <dd>
+                  {{
+                    character.fullName ??
+                      character.name + ' ' + character.lastName
+                  }}
+                </dd>
+              </div>
+              <div>
+                <dt>First name</dt>
+                <dd>{{ character.name }}</dd>
+              </div>
+              <div>
+                <dt>Last name</dt>
+                <dd>{{ character.lastName }}</dd>
               </div>
               <div>
                 <dt>Identifier</dt>
@@ -1040,6 +1059,28 @@
             rows="6"
             aria-label="Reducer 2 output"
             [value]="editor.reducer2Source"></textarea>
+        </div>
+
+        <!-- Teaching point: Reducer 3 (ex-019) -->
+        <div class="tap-column">
+          <input
+            id="reducer-three-output-toggle"
+            class="tap-toggle"
+            type="checkbox"
+            aria-label="Toggle Reducer 3 output visibility"
+            checked />
+          <div class="tap-header">
+            <h3>Reducer 3</h3>
+            <label
+              class="tap-chevron"
+              for="reducer-three-output-toggle"
+              title="Show or hide Reducer 3 output"></label>
+          </div>
+          <textarea
+            readonly
+            rows="6"
+            aria-label="Reducer 3 output"
+            [value]="editor.reducer3Source"></textarea>
         </div>
       </div>
     </div>

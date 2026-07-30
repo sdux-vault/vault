@@ -68,6 +68,16 @@ export function deriveForceSensitiveDisplay(
   }));
 }
 
+/** Derives a display-ready full name for each character without mutating the input. */
+export function deriveFullName(
+  characters: readonly StarWarsCharacter[]
+): readonly StarWarsCharacter[] {
+  return characters.map((character) => ({
+    ...character,
+    fullName: `${character.name} ${character.lastName}`
+  }));
+}
+
 /** Creates a pure reducer that orders a cloned collection by last name. */
 export function withCharactersSortedByLastName(): ReducerFunction<
   readonly StarWarsCharacter[]

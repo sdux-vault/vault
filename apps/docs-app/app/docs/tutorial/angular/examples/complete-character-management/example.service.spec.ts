@@ -53,13 +53,23 @@ describe('ExampleService', () => {
   const initialCharactersWithDisplay: readonly StarWarsCharacter[] = [
     {
       ...initialCharacters[0]!,
+      fullName: 'Leia Organa',
       forceSensitiveDisplay: 'No'
     },
     {
       ...initialCharacters[1]!,
+      fullName: 'Luke Skywalker',
       forceSensitiveDisplay: 'Yes'
     }
   ];
+
+  const withDerivedDisplay = (
+    character: StarWarsCharacter
+  ): StarWarsCharacter => ({
+    ...character,
+    fullName: `${character.name} ${character.lastName}`,
+    forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
+  });
 
   const acceptStepwiseAndSettle = async (
     service: ExampleService
@@ -171,6 +181,7 @@ describe('ExampleService', () => {
         id: 302,
         name: 'Jyn',
         lastName: 'Erso',
+        fullName: 'Jyn Erso',
         faction: 'Rebel Alliance',
         isForceSensitive: false,
         forceSensitiveDisplay: 'No'
@@ -179,6 +190,7 @@ describe('ExampleService', () => {
         id: 301,
         name: 'Cal',
         lastName: 'Kestis',
+        fullName: 'Cal Kestis',
         faction: 'Jedi Order',
         isForceSensitive: true,
         forceSensitiveDisplay: 'Yes'
@@ -187,6 +199,7 @@ describe('ExampleService', () => {
         id: 303,
         name: 'Bo-Katan',
         lastName: 'Kryze',
+        fullName: 'Bo-Katan Kryze',
         faction: 'Mandalorians',
         isForceSensitive: false,
         forceSensitiveDisplay: 'No'
@@ -195,6 +208,7 @@ describe('ExampleService', () => {
         id: 304,
         name: 'Mace',
         lastName: 'Windu',
+        fullName: 'Mace Windu',
         faction: 'Jedi Order',
         isForceSensitive: true,
         forceSensitiveDisplay: 'Yes'
@@ -336,7 +350,7 @@ describe('ExampleService', () => {
     expect(filtered).not.toBe(candidate);
     expect(candidate).toEqual([unknownCharacter, retainedCharacter]);
     expect(service.characters()).toEqual([
-      { ...retainedCharacter, forceSensitiveDisplay: 'No' }
+      withDerivedDisplay(retainedCharacter)
     ]);
   });
 
@@ -415,7 +429,7 @@ describe('ExampleService', () => {
 
     expect(service.characters()).toEqual([
       ...initialCharactersWithDisplay,
-      { ...han, forceSensitiveDisplay: 'No' }
+      withDerivedDisplay(han)
     ]);
 
     service.acceptStepwiseResolve();
@@ -529,10 +543,7 @@ describe('ExampleService', () => {
     expect(service.isStepwiseReducerPending()).toBeTrue();
     expect(service.stepwiseReducerRequest()).toEqual({
       current: initialCharactersWithDisplay,
-      candidate: [
-        ...initialCharactersWithDisplay,
-        { ...han, forceSensitiveDisplay: 'No' }
-      ]
+      candidate: [...initialCharactersWithDisplay, withDerivedDisplay(han)]
     });
 
     service.acceptStepwiseReducer();
@@ -541,7 +552,7 @@ describe('ExampleService', () => {
 
     expect(service.characters()).toEqual([
       ...initialCharactersWithDisplay,
-      { ...han, forceSensitiveDisplay: 'No' }
+      withDerivedDisplay(han)
     ]);
 
     service.acceptStepwiseReducer();
@@ -599,8 +610,8 @@ describe('ExampleService', () => {
     expect(chewbacca.id).toBe(22);
     expect(service.characters()).toEqual([
       ...initialCharactersWithDisplay,
-      { ...han, forceSensitiveDisplay: 'No' },
-      { ...chewbacca, forceSensitiveDisplay: 'No' }
+      withDerivedDisplay(han),
+      withDerivedDisplay(chewbacca)
     ]);
   });
 
@@ -691,6 +702,7 @@ describe('ExampleService', () => {
         id: 102,
         name: 'Din',
         lastName: 'Djarin',
+        fullName: 'Din Djarin',
         faction: 'Unaffiliated',
         isForceSensitive: false,
         forceSensitiveDisplay: 'No'
@@ -700,6 +712,7 @@ describe('ExampleService', () => {
         id: 101,
         name: 'Ahsoka',
         lastName: 'Tano',
+        fullName: 'Ahsoka Tano',
         faction: 'Jedi Order',
         isForceSensitive: true,
         forceSensitiveDisplay: 'Yes'
@@ -766,6 +779,7 @@ describe('ExampleService', () => {
         id: 201,
         name: 'Ezra',
         lastName: 'Bridger',
+        fullName: 'Ezra Bridger',
         faction: 'Jedi Order',
         isForceSensitive: true,
         forceSensitiveDisplay: 'Yes'
@@ -775,6 +789,7 @@ describe('ExampleService', () => {
         id: 202,
         name: 'Hera',
         lastName: 'Syndulla',
+        fullName: 'Hera Syndulla',
         faction: 'Rebel Alliance',
         isForceSensitive: false,
         forceSensitiveDisplay: 'No'
@@ -855,6 +870,7 @@ describe('ExampleService', () => {
         id: 25,
         name: 'Lando',
         lastName: 'Calrissian',
+        fullName: 'Lando Calrissian',
         faction: 'Rebel Alliance',
         isForceSensitive: false,
         forceSensitiveDisplay: 'No'
@@ -863,6 +879,7 @@ describe('ExampleService', () => {
         id: 14,
         name: 'Han',
         lastName: 'Solo',
+        fullName: 'Han Solo',
         faction: 'Rebel Alliance',
         isForceSensitive: false,
         forceSensitiveDisplay: 'No'
@@ -880,6 +897,7 @@ describe('ExampleService', () => {
       id: 501,
       name: 'Rey',
       lastName: 'Skywalker',
+      fullName: 'Rey Skywalker',
       faction: 'Jedi Order',
       isForceSensitive: true,
       forceSensitiveDisplay: 'Yes'
@@ -938,6 +956,7 @@ describe('ExampleService', () => {
         id: 601,
         name: 'Qui-Gon',
         lastName: 'Jinn',
+        fullName: 'Qui-Gon Jinn',
         faction: 'Jedi Order',
         isForceSensitive: true,
         forceSensitiveDisplay: 'Yes'
@@ -946,6 +965,7 @@ describe('ExampleService', () => {
         id: 602,
         name: 'Plo',
         lastName: 'Koon',
+        fullName: 'Plo Koon',
         faction: 'Jedi Order',
         isForceSensitive: true,
         forceSensitiveDisplay: 'Yes'
@@ -954,6 +974,7 @@ describe('ExampleService', () => {
         id: 603,
         name: 'Aayla',
         lastName: 'Secura',
+        fullName: 'Aayla Secura',
         faction: 'Jedi Order',
         isForceSensitive: true,
         forceSensitiveDisplay: 'Yes'
@@ -962,6 +983,7 @@ describe('ExampleService', () => {
         id: 604,
         name: 'Kit',
         lastName: 'Fisto',
+        fullName: 'Kit Fisto',
         faction: 'Jedi Order',
         isForceSensitive: true,
         forceSensitiveDisplay: 'Yes'
@@ -1047,6 +1069,7 @@ describe('ExampleService', () => {
         id: 21,
         name: 'Han',
         lastName: 'Solo',
+        fullName: 'Han Solo',
         faction: 'Rebel Alliance',
         isForceSensitive: false,
         forceSensitiveDisplay: 'No'

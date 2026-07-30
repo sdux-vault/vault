@@ -135,6 +135,18 @@ export class ExampleCharacterEditor {
 }`;
   }
 
+  /** Executable full-name reducer source displayed by the Reducer 3 teaching output. */
+  get reducer3Source(): string {
+    return `export function deriveFullName(
+  characters: readonly StarWarsCharacter[]
+): readonly StarWarsCharacter[] {
+  return characters.map((character) => ({
+    ...character,
+    fullName: \`${'${character.name} ${character.lastName}'}\`
+  }));
+}`;
+  }
+
   /** Custom comparison source passed to Distinct Until Changed for the teaching output. */
   get comparisonFunctionSource(): string {
     return `withDistinctUntilChanged<readonly StarWarsCharacter[]>(
@@ -178,15 +190,6 @@ export class ExampleCharacterEditor {
         tone: 'success'
       }
     } as const satisfies Record<string, OperationFeedback>;
-  }
-  /**
-   * Combines a character's name fields into the consistent label used across every view.
-   * @param character - Character whose name fields should be formatted.
-   * @returns The character's first and last names separated by one space.
-   */
-  get displayName(): (character: StarWarsCharacter) => string {
-    return (character: StarWarsCharacter): string =>
-      `${character.name} ${character.lastName}`;
   }
   /**
    * Builds the success feedback shown after an existing character is updated.

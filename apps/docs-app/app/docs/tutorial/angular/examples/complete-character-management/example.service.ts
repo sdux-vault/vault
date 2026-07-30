@@ -17,6 +17,7 @@ import {
   cloneCharacters,
   createCharacterState,
   deriveForceSensitiveDisplay,
+  deriveFullName,
   getDistinctChangedStateCharacter,
   getNextCharacterId,
   type StarWarsCharacterDraft,
@@ -557,9 +558,18 @@ export class ExampleService {
      * It runs after Reducer 1, clones the transformed collection, and sorts characters
      * alphabetically by `lastName` without mutating the incoming array.
      */
+
+    // Teaching point: Reducer 3 (ex-019)
+    /*
+     * The third entry is another delegating pure reducer.
+     *
+     * It runs after sorting and derives a display-ready `fullName` from the existing
+     * `name` and `lastName` fields so every view can reuse the same post-pipeline label.
+     */
     this.#vault.reducers([
       deriveForceSensitiveDisplay,
-      withCharactersSortedByLastName()
+      withCharactersSortedByLastName(),
+      deriveFullName
     ]);
 
     // Teaching point: Stepwise Reducer (ex-040)
@@ -567,7 +577,8 @@ export class ExampleService {
      * `.withStepwiseReducer()` installs the final approval boundary after all
      * reducers have completed. Its `StepwiseFunction` receives the last committed
      * State and the fully reduced candidate, including the derived force display
-     * values and deterministic last-name ordering produced above.
+     * values, deterministic last-name ordering, and display-ready full names
+     * produced above.
      *
      * Accept invokes `continue()` so the reduced candidate may proceed toward
      * commitment; Cancel invokes `block()` so the attempt ends without replacing

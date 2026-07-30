@@ -42,6 +42,7 @@ describe('Character editor', () => {
       expect(editor.filterSource).toContain('removeUnknownLastNameFilter');
       expect(editor.reducer1Source).toContain('#deriveForceSensitiveDisplay');
       expect(editor.reducer2Source).toContain('withCharactersSortedByLastName');
+      expect(editor.reducer3Source).toContain('deriveFullName');
       expect(editor.comparisonFunctionSource).toContain(
         'withDistinctUntilChanged'
       );
@@ -68,13 +69,6 @@ describe('Character editor', () => {
         message: 'The initial character collection was restored.',
         tone: 'success'
       });
-    });
-  });
-
-  describe('displayName', () => {
-    it('should combine the first and last names with a single space', () => {
-      expect(editor.displayName(leia)).toBe('Leia Organa');
-      expect(editor.displayName(luke)).toBe('Luke Skywalker');
     });
   });
 

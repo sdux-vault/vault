@@ -46,13 +46,23 @@ describe('ExampleComponent', () => {
   const initialCharactersWithDisplay: readonly StarWarsCharacter[] = [
     {
       ...initialCharacters[1]!,
+      fullName: 'Leia Organa',
       forceSensitiveDisplay: 'No'
     },
     {
       ...initialCharacters[0]!,
+      fullName: 'Luke Skywalker',
       forceSensitiveDisplay: 'Yes'
     }
   ];
+
+  const withDerivedDisplay = (
+    character: StarWarsCharacter
+  ): StarWarsCharacter => ({
+    ...character,
+    fullName: `${character.name} ${character.lastName}`,
+    forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
+  });
 
   let component: ExampleComponent;
   let fixture: ComponentFixture<ExampleComponent>;
@@ -183,9 +193,7 @@ describe('ExampleComponent', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(component['displayName'](initialCharacters[0]!)).toBe(
-      'Luke Skywalker'
-    );
+    expect(component['selectedCharacter']()?.fullName).toBe('Leia Organa');
   });
 
   it('should report when a pending stepwise prompt should open', async () => {
@@ -227,6 +235,16 @@ describe('ExampleComponent', () => {
     [...characters].sort((left, right) =>
       left.lastName.localeCompare(right.lastName)
     );
+}`)
+    );
+    expect(replaceNewLines(component.editor.reducer3Source)).toBe(
+      replaceNewLines(`export function deriveFullName(
+  characters: readonly StarWarsCharacter[]
+): readonly StarWarsCharacter[] {
+  return characters.map((character) => ({
+    ...character,
+    fullName: \`${'${character.name} ${character.lastName}'}\`
+  }));
 }`)
     );
     expect(replaceNewLines(component.editor.comparisonFunctionSource)).toBe(
@@ -451,10 +469,7 @@ describe('ExampleComponent', () => {
     );
     expect(JSON.parse(output.value)).toEqual({
       current: initialCharactersWithDisplay,
-      candidate: [
-        ...initialCharactersWithDisplay,
-        { ...han, forceSensitiveDisplay: 'No' }
-      ]
+      candidate: [...initialCharactersWithDisplay, withDerivedDisplay(han)]
     });
 
     expect(service.characters()).toEqual(initialCharactersWithDisplay);
@@ -556,10 +571,7 @@ describe('ExampleComponent', () => {
 
     expect(JSON.parse(component['rawStateJson']())).toEqual({
       isLoading: false,
-      value: [
-        ...initialCharactersWithDisplay,
-        { ...character, forceSensitiveDisplay: 'No' }
-      ],
+      value: [...initialCharactersWithDisplay, withDerivedDisplay(character)],
       error: null,
       hasValue: true
     });
@@ -580,7 +592,7 @@ describe('ExampleComponent', () => {
       isLoading: false,
       value: [
         initialCharactersWithDisplay[0]!,
-        { ...character, forceSensitiveDisplay: 'Yes' },
+        withDerivedDisplay(character),
         initialCharactersWithDisplay[1]!
       ],
       error: null,
@@ -804,6 +816,7 @@ describe('ExampleComponent', () => {
       id: 3,
       name: 'Han',
       lastName: 'Solo',
+      fullName: 'Han Solo',
       faction: 'Rebel Alliance',
       isForceSensitive: false,
       forceSensitiveDisplay: 'No'
@@ -838,6 +851,7 @@ describe('ExampleComponent', () => {
       id: 2,
       name: 'Leia',
       lastName: 'Organa',
+      fullName: 'Leia Organa',
       faction: 'Rebel Alliance',
       isForceSensitive: false,
       forceSensitiveDisplay: 'No'
@@ -1394,6 +1408,7 @@ describe('ExampleComponent', () => {
         id: 102,
         name: 'Din',
         lastName: 'Djarin',
+        fullName: 'Din Djarin',
         faction: 'Unaffiliated',
         isForceSensitive: false,
         forceSensitiveDisplay: 'No'
@@ -1403,6 +1418,7 @@ describe('ExampleComponent', () => {
         id: 101,
         name: 'Ahsoka',
         lastName: 'Tano',
+        fullName: 'Ahsoka Tano',
         faction: 'Jedi Order',
         isForceSensitive: true,
         forceSensitiveDisplay: 'Yes'
@@ -1542,6 +1558,7 @@ describe('ExampleComponent', () => {
         id: 201,
         name: 'Ezra',
         lastName: 'Bridger',
+        fullName: 'Ezra Bridger',
         faction: 'Jedi Order',
         isForceSensitive: true,
         forceSensitiveDisplay: 'Yes'
@@ -1551,6 +1568,7 @@ describe('ExampleComponent', () => {
         id: 202,
         name: 'Hera',
         lastName: 'Syndulla',
+        fullName: 'Hera Syndulla',
         faction: 'Rebel Alliance',
         isForceSensitive: false,
         forceSensitiveDisplay: 'No'
