@@ -156,8 +156,8 @@
 
     <!-- Teaching point: CRUD Foundation (ex-007) -->
     <div class="workspace">
-      <!-- Teaching template: Keep this column for collection selection and read-only detail lessons. -->
-      <div class="workspace-column">
+      <div class="workspace-row workspace-row-top">
+        <!-- Teaching template: Keep this block for collection selection lessons. -->
         <!-- Teaching point: Collection Selection (ex-001) -->
         <div class="field selection">
           <label for="character-selection">
@@ -184,6 +184,18 @@
           </select>
         </div>
 
+        <!-- Teaching template: Safe to remove this block for read-only lessons that stop before create. -->
+        <!-- Teaching point: Create (ex-009) -->
+        <div class="actions add-action" aria-label="Character actions">
+          <!-- Teaching point: Create (ex-009) -->
+          <button type="button" class="button" (click)="startCreate()">
+            Add character
+          </button>
+        </div>
+      </div>
+
+      <div class="workspace-row workspace-row-bottom">
+        <!-- Teaching template: Keep this block for read-only detail lessons. -->
         <!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
         <section
           class="panel character-details"
@@ -246,18 +258,8 @@
             </div>
           }
         </section>
-      </div>
 
-      <!-- Teaching template: Safe to remove this column for read-only lessons that stop before create or update. -->
-      <div class="workspace-column">
-        <!-- Teaching point: Create (ex-009) -->
-        <div class="actions add-action" aria-label="Character actions">
-          <!-- Teaching point: Create (ex-009) -->
-          <button type="button" class="button" (click)="startCreate()">
-            Add character
-          </button>
-        </div>
-
+        <!-- Teaching template: Safe to remove this block for read-only lessons that stop before create or update. -->
         <!-- Teaching point: Create / Update (ex-010) -->
         <section class="panel editor" aria-labelledby="editor-title">
           <div class="header">

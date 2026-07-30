@@ -108,6 +108,81 @@ $action-column-width: calc(
   }
 }
 
+@mixin expandable-action-row {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: $spacing-sm;
+  width: min(100%, $action-column-width);
+
+  .button-container {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
+
+    .delay-timer {
+      width: 50%;
+
+      > input {
+        text-align: right;
+        padding-right: 0;
+      }
+    }
+
+    > span {
+      width: 50%;
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+    }
+
+    .button {
+      flex: 0 0 $action-button-width;
+      width: $action-button-width;
+      box-sizing: border-box;
+    }
+
+    &.hydrate-controls .button.hydrate-terminal,
+    &.promise-controls .button.promise-terminal,
+    &.observable-controls .button.observable-terminal {
+      flex-basis: $action-button-width * 0.49;
+      width: $action-button-width * 0.4;
+    }
+
+    &.hydrate-controls,
+    &.promise-controls,
+    &.observable-controls {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .description-chevron {
+      @include chevron-control(-45deg);
+    }
+  }
+
+  .description-container {
+    display: none;
+    color: var(--sdux-text-muted);
+    line-height: 1.5;
+  }
+
+  .description-toggle:focus-visible ~ .button-container {
+    .description-chevron {
+      outline: 2px solid $sdux-primary-light;
+      outline-offset: 3px;
+    }
+  }
+
+  .description-toggle:checked ~ .button-container {
+    .description-chevron::before {
+      transform: rotate(45deg);
+    }
+  }
+
+  .description-toggle:checked ~ .description-container {
+    display: block;
+  }
+}
+
 :host {
   display: block;
 }
@@ -349,7 +424,7 @@ $action-column-width: calc(
   }
 
   > .feature-cell-controls {
-    display: contents;
+    display: block;
     min-width: 0;
     padding: 0;
     margin: 0;
@@ -394,34 +469,32 @@ $action-column-width: calc(
 
   > .feature-cell-controls > .workspace {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
     gap: $spacing-lg;
+    margin-bottom: $spacing-lg;
 
-    @media (min-width: $breakpoint-lg) {
-      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-      grid-template-areas:
-        'selection add-action'
-        'details editor';
-      grid-template-rows: auto 1fr;
-      align-items: stretch;
-    }
-
-    > .workspace-column {
+    > .workspace-row {
       display: grid;
       gap: $spacing-lg;
-      align-content: start;
       min-width: 0;
 
       @media (min-width: $breakpoint-lg) {
-        display: contents;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
       }
     }
 
-    .selection {
+    > .workspace-row-top {
+      align-items: end;
+
       @media (min-width: $breakpoint-lg) {
-        grid-area: selection;
-        align-self: stretch;
+        .add-action {
+          align-items: flex-end;
+          justify-content: flex-end;
+        }
       }
+    }
+
+    > .workspace-row-bottom {
+      align-items: stretch;
     }
 
     .panel {
@@ -449,10 +522,6 @@ $action-column-width: calc(
 
       &.character-details {
         position: relative;
-
-        @media (min-width: $breakpoint-lg) {
-          grid-area: details;
-        }
 
         .loading-overlay {
           position: absolute;
@@ -532,10 +601,6 @@ $action-column-width: calc(
       }
 
       &.editor {
-        @media (min-width: $breakpoint-lg) {
-          grid-area: editor;
-        }
-
         > form {
           display: flex;
           flex-direction: column;
@@ -582,10 +647,9 @@ $action-column-width: calc(
 
     .add-action {
       justify-content: flex-start;
+      margin: 0;
 
       @media (min-width: $breakpoint-lg) {
-        grid-area: add-action;
-        align-self: end;
         align-items: flex-end;
         justify-content: flex-end;
       }
@@ -608,6 +672,7 @@ $action-column-width: calc(
     display: grid;
     gap: $spacing-lg;
     padding-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
     border-top: 1px solid $sdux-primary-base;
 
     > .section-toggle:not(:checked) ~ .pipeline-content {
@@ -636,78 +701,7 @@ $action-column-width: calc(
     }
 
     .action-row {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      gap: $spacing-sm;
-      width: min(100%, $action-column-width);
-
-      .button-container {
-        display: flex;
-        gap: $spacing-xs;
-        align-items: center;
-
-        .delay-timer {
-          width: 50%;
-
-          > input {
-            text-align: right;
-            padding-right: 0;
-          }
-        }
-
-        > span {
-          width: 50%;
-          font-size: $font-size-md;
-          font-weight: $font-weight-semibold;
-        }
-
-        .button {
-          flex: 0 0 $action-button-width;
-          width: $action-button-width;
-          box-sizing: border-box;
-        }
-
-        &.hydrate-controls .button.hydrate-terminal,
-        &.promise-controls .button.promise-terminal,
-        &.observable-controls .button.observable-terminal {
-          flex-basis: $action-button-width * 0.49;
-          width: $action-button-width * 0.4;
-        }
-
-        &.hydrate-controls,
-        &.promise-controls,
-        &.observable-controls {
-          width: 100%;
-          justify-content: space-between;
-        }
-
-        .description-chevron {
-          @include chevron-control(-45deg);
-        }
-      }
-
-      .description-container {
-        display: none;
-        color: var(--sdux-text-muted);
-        line-height: 1.5;
-      }
-
-      .description-toggle:focus-visible ~ .button-container {
-        .description-chevron {
-          outline: 2px solid $sdux-primary-light;
-          outline-offset: 3px;
-        }
-      }
-
-      .description-toggle:checked ~ .button-container {
-        .description-chevron::before {
-          transform: rotate(45deg);
-        }
-      }
-
-      .description-toggle:checked ~ .description-container {
-        display: block;
-      }
+      @include expandable-action-row;
     }
   }
 
@@ -716,6 +710,7 @@ $action-column-width: calc(
     display: grid;
     gap: $spacing-md;
     padding-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
     border-top: 1px solid $sdux-primary-base;
 
     > .section-toggle:not(:checked) ~ .operator-actions,
@@ -724,49 +719,7 @@ $action-column-width: calc(
     }
 
     .action-row {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      gap: $spacing-sm;
-      width: min(100%, $action-column-width);
-
-      .button-container {
-        display: flex;
-        gap: $spacing-xs;
-        align-items: center;
-
-        .button {
-          flex: 0 0 $action-button-width;
-          width: $action-button-width;
-          box-sizing: border-box;
-        }
-
-        .description-chevron {
-          @include chevron-control(-45deg);
-        }
-      }
-
-      .description-container {
-        display: none;
-        color: var(--sdux-text-muted);
-        line-height: 1.5;
-      }
-
-      .description-toggle:focus-visible ~ .button-container {
-        .description-chevron {
-          outline: 2px solid $sdux-primary-light;
-          outline-offset: 3px;
-        }
-      }
-
-      .description-toggle:checked ~ .button-container {
-        .description-chevron::before {
-          transform: rotate(45deg);
-        }
-      }
-
-      .description-toggle:checked ~ .description-container {
-        display: block;
-      }
+      @include expandable-action-row;
     }
 
     .operator-actions {
@@ -850,9 +803,9 @@ $action-column-width: calc(
   > .feature-cell-controls > .state-output,
   > .feature-cell-controls > .filter-reducer-output {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: $spacing-lg;
     padding-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
     border-top: 1px solid $sdux-primary-base;
 
     > .section-toggle:not(:checked) ~ .state-content,
@@ -864,7 +817,13 @@ $action-column-width: calc(
     .state-content,
     .filter-reducer-content,
     .tap-content {
-      display: contents;
+      display: grid;
+      gap: $spacing-lg;
+    }
+
+    .state-content,
+    .tap-content {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .tap-column {
@@ -955,10 +914,8 @@ $action-column-width: calc(
   }
 
   > .feature-cell-controls > .filter-reducer-output {
-    grid-template-columns: minmax(0, 1fr);
-
     .filter-reducer-content {
-      display: contents;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .tap-column {
@@ -991,9 +948,9 @@ $action-column-width: calc(
 
   > .feature-cell-controls > .stepwise-output {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: $spacing-lg;
     padding-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
     border-top: 1px solid $sdux-primary-base;
 
     > .section-toggle:not(:checked) ~ .stepwise-content {
@@ -1001,7 +958,9 @@ $action-column-width: calc(
     }
 
     .stepwise-content {
-      display: contents;
+      display: grid;
+      gap: $spacing-lg;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .stepwise-column {
@@ -1050,11 +1009,17 @@ $action-column-width: calc(
     .tap-output,
     .state-output,
     .filter-reducer-output {
-      grid-template-columns: minmax(0, 1fr);
+      .tap-content,
+      .state-content,
+      .filter-reducer-content {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
     .stepwise-output {
-      grid-template-columns: minmax(0, 1fr);
+      .stepwise-content {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
   }
 }
