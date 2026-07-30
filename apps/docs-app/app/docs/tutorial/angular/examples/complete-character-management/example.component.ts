@@ -36,7 +36,7 @@ import {
   ExampleService
 } from './example.service';
 import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
-import { StarWarsCharacter } from './star-wars-character.shape';
+import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
  * Coordinates the reactive character editor presented by this tutorial example.
@@ -56,6 +56,8 @@ import { StarWarsCharacter } from './star-wars-character.shape';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExampleComponent {
+  // Reactive state: shared services and framework utilities.
+
   /** Exposes the character editor instance for template and internal use. */
   readonly editor = new ExampleCharacterEditor();
 
@@ -66,11 +68,13 @@ export class ExampleComponent {
   readonly #exampleService = inject(ExampleService);
 
   /** Provides the singleton stream and controls for application-level Vault errors. */
-  /** Teachiing Point: Global Error Service: Ex-011 */
+  /** Teaching Point: Global Error Service: Ex-011 */
   readonly #globalErrorService = VaultErrorService();
 
   /** Creates the non-nullable reactive form used by the character editor. */
   readonly #formBuilder = inject(FormBuilder);
+
+  // Lifecycle guards: one-time selection and one-prompt-per-request coordination.
 
   /** Prevents later collection emissions from replacing the user's current selection. */
   #hasInitializedSelection = false;
@@ -86,6 +90,8 @@ export class ExampleComponent {
 
   /** Remembers the selected identity so canceling create mode can restore the prior editor. */
   #selectedCharacterBeforeCreate: number | null = null;
+
+  // Reactive state: direct service projections consumed by the template.
 
   /**
    * References the service's computed character collection for direct reactive template reads.
@@ -110,6 +116,8 @@ export class ExampleComponent {
   /** Enables Reducer controls only while its Stepwise callback awaits a decision. */
   protected readonly isStepwiseReducerPending =
     this.#exampleService.isStepwiseReducerPending;
+
+  // Derived teaching outputs: serialized pipeline snapshots for the tutorial UI.
 
   /** Displays the immutable tutorial constant before any FeatureCell operations modify state. */
   protected readonly originalStateJson = JSON.stringify(
@@ -175,6 +183,8 @@ export class ExampleComponent {
   /** Holds the complete serialized StateSnapshot received from the latest FeatureCell `state$` emission. */
   protected readonly rawStateStreamJson = signal('undefined');
 
+  // Local presentation state: editor selection, mode, feedback, and teaching toggles.
+
   /** Holds the identity currently selected by the character picker, or `null` when none is selected. */
   protected readonly selectedCharacterId = signal<number | null>(null);
 
@@ -203,6 +213,8 @@ export class ExampleComponent {
   protected readonly observablePending = signal(false);
 
   // Teaching point: Delay (ex-033)
+  // Delay Controller teaching state.
+
   /** Displays the fixed controller configuration beside the live elapsed timer. */
   protected readonly delayMilliseconds = EXAMPLE_DELAY_MILLISECONDS;
 
@@ -220,6 +232,8 @@ export class ExampleComponent {
 
   /** Holds the character awaiting explicit confirmation before removal. */
   protected readonly deleteCandidate = signal<StarWarsCharacter | null>(null);
+
+  // Derived presentation state: selected record and mode-specific labels.
 
   /**
    * Resolves the selected identity against the latest reactive character collection.
@@ -331,7 +345,7 @@ export class ExampleComponent {
    * The singleton emits `null`, which also removes the error message from the template.
    * @returns Nothing; the global error service and reactive UI state are cleared.
    */
-  /** Teachiing Point: Global Error Service: Ex-011 */
+  /** Teaching Point: Global Error Service: Ex-011 */
   protected clearGlobalError(): void {
     this.#globalErrorService.clear();
   }
@@ -924,7 +938,7 @@ export class ExampleComponent {
 
   /**
    * Resolves the stable label used in messages and template fallbacks.
-   * @param character - Character whose derived or fallback full name should be returned.
+   * @param character - Raw or reduced character whose display label should be returned.
    * @returns The post-reducer full name when present, otherwise a local fallback.
    */
   #characterLabel(character: StarWarsCharacter): string {

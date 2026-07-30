@@ -1,83 +1,89 @@
 import { exampleHydrate } from './example.hydrate';
 
 describe('exampleHydrate', () => {
-  it('should not expose terminal controllers before hydration is requested', () => {
-    expect(exampleHydrate.getResolve()).toBeNull();
-    expect(exampleHydrate.getReject()).toBeNull();
+  describe('controller availability', () => {
+    it('should not expose terminal controllers before hydration is requested', () => {
+      expect(exampleHydrate.getResolve()).toBeNull();
+      expect(exampleHydrate.getReject()).toBeNull();
+    });
   });
 
-  it('should resolve the authoritative collection and clear its controllers', async () => {
-    const promise = exampleHydrate.getPromise();
-    const resolve = exampleHydrate.getResolve();
+  describe('active request lifecycle', () => {
+    it('should resolve the authoritative collection and clear its controllers', async () => {
+      const promise = exampleHydrate.getPromise();
+      const resolve = exampleHydrate.getResolve();
 
-    expect(resolve).not.toBeNull();
+      expect(resolve).not.toBeNull();
 
-    resolve!();
-    const characters = await promise;
+      resolve!();
+      const characters = await promise;
 
-    expect(characters.length).toBe(5);
-    expect(exampleHydrate.getResolve()).toBeNull();
-  });
-
-  it('should reject the authoritative source and clear its controllers', async () => {
-    const promise = exampleHydrate.getPromise();
-    const reject = exampleHydrate.getReject();
-
-    expect(reject).not.toBeNull();
-
-    reject!();
-
-    await expectAsync(promise).toBeRejectedWithError(
-      'The character hydration was rejected.'
-    );
-    expect(exampleHydrate.getReject()).toBeNull();
-  });
-
-  it('should ignore a stale resolver captured from a previous cycle', async () => {
-    const firstPromise = exampleHydrate.getPromise();
-    const staleResolve = exampleHydrate.getResolve()!;
-
-    staleResolve();
-    await firstPromise;
-
-    const secondPromise = exampleHydrate.getPromise();
-    let secondSettled = false;
-    void secondPromise.then(() => {
-      secondSettled = true;
+      expect(characters.length).toBe(5);
+      expect(exampleHydrate.getResolve()).toBeNull();
     });
 
-    staleResolve();
-    await Promise.resolve();
+    it('should reject the authoritative source and clear its controllers', async () => {
+      const promise = exampleHydrate.getPromise();
+      const reject = exampleHydrate.getReject();
 
-    expect(secondSettled).toBeFalse();
+      expect(reject).not.toBeNull();
 
-    exampleHydrate.getResolve()!();
+      reject!();
 
-    await expectAsync(secondPromise).toBeResolved();
+      await expectAsync(promise).toBeRejectedWithError(
+        'The character hydration was rejected.'
+      );
+      expect(exampleHydrate.getReject()).toBeNull();
+    });
   });
 
-  it('should ignore a stale rejecter captured from a previous cycle', async () => {
-    const firstPromise = exampleHydrate.getPromise();
-    const staleReject = exampleHydrate.getReject()!;
+  describe('stale controller safety', () => {
+    it('should ignore a stale resolver captured from a previous cycle', async () => {
+      const firstPromise = exampleHydrate.getPromise();
+      const staleResolve = exampleHydrate.getResolve()!;
 
-    staleReject();
-    await expectAsync(firstPromise).toBeRejected();
+      staleResolve();
+      await firstPromise;
 
-    const secondPromise = exampleHydrate.getPromise();
-    let secondSettled = false;
-    void secondPromise.catch(() => {
-      secondSettled = true;
+      const secondPromise = exampleHydrate.getPromise();
+      let secondSettled = false;
+      void secondPromise.then(() => {
+        secondSettled = true;
+      });
+
+      staleResolve();
+      await Promise.resolve();
+
+      expect(secondSettled).toBeFalse();
+
+      exampleHydrate.getResolve()!();
+
+      await expectAsync(secondPromise).toBeResolved();
     });
 
-    staleReject();
-    await Promise.resolve();
+    it('should ignore a stale rejecter captured from a previous cycle', async () => {
+      const firstPromise = exampleHydrate.getPromise();
+      const staleReject = exampleHydrate.getReject()!;
 
-    expect(secondSettled).toBeFalse();
+      staleReject();
+      await expectAsync(firstPromise).toBeRejected();
 
-    exampleHydrate.getReject()!();
+      const secondPromise = exampleHydrate.getPromise();
+      let secondSettled = false;
+      void secondPromise.catch(() => {
+        secondSettled = true;
+      });
 
-    await expectAsync(secondPromise).toBeRejectedWithError(
-      'The character hydration was rejected.'
-    );
+      staleReject();
+      await Promise.resolve();
+
+      expect(secondSettled).toBeFalse();
+
+      exampleHydrate.getReject()!();
+
+      await expectAsync(secondPromise).toBeRejectedWithError(
+        'The character hydration was rejected.'
+      );
+    });
   });
 });

@@ -1,7 +1,10 @@
-import type { StarWarsCharacter } from './star-wars-character.shape';
+import type {
+  RawStarWarsCharacter,
+  StarWarsCharacter
+} from './star-wars-character.shape';
 
-/** Characters supplied by the tutorial's authoritative hydration source. */
-const HYDRATED_CHARACTERS: readonly StarWarsCharacter[] = [
+/** Raw characters supplied by the tutorial's authoritative hydration source. */
+const HYDRATED_CHARACTERS: readonly RawStarWarsCharacter[] = [
   {
     id: 301,
     name: 'Cal',

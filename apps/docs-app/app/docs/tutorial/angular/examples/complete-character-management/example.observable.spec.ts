@@ -8,7 +8,7 @@ describe('exampleObservable', () => {
     });
   });
 
-  describe('active source lifecycle', () => {
+  describe('active request lifecycle', () => {
     it('should reuse the pending Observable until its emitter completes it', () => {
       const pendingObservable = exampleObservable.getObservable();
       const emitted: unknown[] = [];

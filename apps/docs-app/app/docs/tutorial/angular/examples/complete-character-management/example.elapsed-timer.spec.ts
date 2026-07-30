@@ -19,8 +19,8 @@ describe('ElapsedTimer', () => {
     cancelAnimationFrameSpy = spyOn(window, 'cancelAnimationFrame');
   });
 
-  describe('running state', () => {
-    it('should publish elapsed milliseconds on animation frames', () => {
+  describe('idle state', () => {
+    it('should publish elapsed milliseconds on animation frames after start', () => {
       const elapsedValues: number[] = [];
       const timer = new ElapsedTimer((milliseconds) =>
         elapsedValues.push(milliseconds)
@@ -40,8 +40,10 @@ describe('ElapsedTimer', () => {
       expect(elapsedValues).toEqual([0, 1_250.75]);
       expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(2);
     });
+  });
 
-    it('should ignore repeated starts and reset the active timer', () => {
+  describe('running state', () => {
+    it('should ignore repeated starts', () => {
       const onChange = jasmine.createSpy('onChange');
       const timer = new ElapsedTimer(onChange);
 
@@ -49,7 +51,15 @@ describe('ElapsedTimer', () => {
       timer.start();
 
       expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 
+  describe('reset state', () => {
+    it('should stop the active timer and publish zero elapsed time', () => {
+      const onChange = jasmine.createSpy('onChange');
+      const timer = new ElapsedTimer(onChange);
+
+      timer.start();
       timer.reset();
 
       expect(timer.running).toBeFalse();
@@ -88,6 +98,21 @@ describe('ElapsedTimer', () => {
       expect(onChange).not.toHaveBeenCalled();
       expect(requestAnimationFrameSpy).not.toHaveBeenCalled();
       expect(timer.elapsed).toBe(0);
+    });
+  });
+
+  describe('destroyed state', () => {
+    it('should cancel future frames while preserving the latest elapsed value', () => {
+      const timer = new ElapsedTimer(() => {});
+
+      timer.start();
+      currentTime = 725;
+      animationFrame(0);
+      timer.destroy();
+
+      expect(timer.running).toBeFalse();
+      expect(timer.elapsed).toBe(625);
+      expect(cancelAnimationFrameSpy).toHaveBeenCalledOnceWith(42);
     });
   });
 });

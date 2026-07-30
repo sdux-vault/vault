@@ -1,11 +1,15 @@
 import type { ReducerFunction } from '@sdux-vault/shared';
-import type { StarWarsCharacter } from './star-wars-character.shape';
+import type {
+  RawStarWarsCharacter,
+  StarWarsCharacter,
+  StarWarsCharacterDisplayFields
+} from './star-wars-character.shape';
 
 /** Editable character fields accepted before application code assigns an ID. */
-export type StarWarsCharacterDraft = Omit<StarWarsCharacter, 'id'>;
+export type StarWarsCharacterDraft = Omit<RawStarWarsCharacter, 'id'>;
 
 /** Characters cycled by the Changed State teaching action. */
-const DISTINCT_CHANGED_STATE_CHARACTERS: readonly StarWarsCharacter[] = [
+const DISTINCT_CHANGED_STATE_CHARACTERS: readonly RawStarWarsCharacter[] = [
   {
     id: 601,
     name: 'Qui-Gon',
@@ -40,7 +44,7 @@ const DISTINCT_CHANGED_STATE_CHARACTERS: readonly StarWarsCharacter[] = [
 export function createCharacterState(
   id: number,
   draft: StarWarsCharacterDraft
-): StarWarsCharacter {
+): RawStarWarsCharacter {
   return { id, ...draft };
 }
 
@@ -81,7 +85,8 @@ export function deriveForceSensitiveDisplay(
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
-  }));
+  })) satisfies readonly (RawStarWarsCharacter &
+    Pick<StarWarsCharacterDisplayFields, 'forceSensitiveDisplay'>)[];
 }
 
 /** Derives a display-ready full name for each character without mutating the input. */
@@ -91,7 +96,8 @@ export function deriveFullName(
   return characters.map((character) => ({
     ...character,
     fullName: `${character.name} ${character.lastName}`
-  }));
+  })) satisfies readonly (RawStarWarsCharacter &
+    Pick<StarWarsCharacterDisplayFields, 'fullName'>)[];
 }
 
 /** Creates a pure reducer that orders a cloned collection by last name. */

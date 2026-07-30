@@ -1,8 +1,11 @@
 import { Observable, ReplaySubject } from 'rxjs';
-import type { StarWarsCharacter } from './star-wars-character.shape';
+import type {
+  RawStarWarsCharacter,
+  StarWarsCharacter
+} from './star-wars-character.shape';
 
-/** Characters emitted by the tutorial's simulated asynchronous source. */
-const OBSERVABLE_CHARACTERS: readonly StarWarsCharacter[] = [
+/** Raw characters emitted by the tutorial's simulated asynchronous source. */
+const OBSERVABLE_CHARACTERS: readonly RawStarWarsCharacter[] = [
   {
     id: 201,
     name: 'Ezra',

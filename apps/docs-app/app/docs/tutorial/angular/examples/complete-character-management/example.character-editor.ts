@@ -108,36 +108,29 @@ export class ExampleCharacterEditor {
   }
 
   /** Executable pure filter source displayed by the Filter teaching output. */
-  get filterSource(): string {
-    return `export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacter[]> =
+  readonly filterSource = `export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacter[]> =
   (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');"
  `;
-  }
 
   /** Executable delegating-reducer source displayed by the Reducer 1 teaching output. */
-  get reducer1Source(): string {
-    return `#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacter[]): readonly StarWarsCharacter[] {
+  readonly reducer1Source = `#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacter[]): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
   }));
   }); 
 }`;
-  }
 
   /** Executable factory-generated reducer source displayed by the Reducer 2 teaching output. */
-  get reducer2Source(): string {
-    return `export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacter[]> {
+  readonly reducer2Source = `export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacter[]> {
   return (characters) =>
     [...characters].sort((left, right) =>
       left.lastName.localeCompare(right.lastName)
     );
 }`;
-  }
 
   /** Executable full-name reducer source displayed by the Reducer 3 teaching output. */
-  get reducer3Source(): string {
-    return `export function deriveFullName(
+  readonly reducer3Source = `export function deriveFullName(
   characters: readonly StarWarsCharacter[]
 ): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
@@ -145,17 +138,14 @@ export class ExampleCharacterEditor {
     fullName: \`${'${character.name} ${character.lastName}'}\`
   }));
 }`;
-  }
 
   /** Custom comparison source passed to Distinct Until Changed for the teaching output. */
-  get comparisonFunctionSource(): string {
-    return `withDistinctUntilChanged<readonly StarWarsCharacter[]>(
+  readonly comparisonFunctionSource = `withDistinctUntilChanged<readonly StarWarsCharacter[]>(
   (incoming, previous) =>
     incoming.every(({ id }) =>
       previous.some((character) => character.id === id)
     )
 )`;
-  }
 
   /** Constant feedback messages that do not depend on a specific character. */
   readonly feedback = {

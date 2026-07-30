@@ -1,7 +1,10 @@
-import type { StarWarsCharacter } from './star-wars-character.shape';
+import type {
+  RawStarWarsCharacter,
+  StarWarsCharacter
+} from './star-wars-character.shape';
 
-/** Characters returned by the tutorial's simulated asynchronous request. */
-const PROMISE_CHARACTERS: readonly StarWarsCharacter[] = [
+/** Raw characters returned by the tutorial's simulated asynchronous request. */
+const PROMISE_CHARACTERS: readonly RawStarWarsCharacter[] = [
   {
     id: 101,
     name: 'Ahsoka',
