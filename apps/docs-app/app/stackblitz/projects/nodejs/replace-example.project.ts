@@ -4,6 +4,25 @@ export const replaceExampleProject: Project = {
   title: 'node-typescript-replace-example',
   template: 'node',
   files: {
+    'package.json': `{
+  "name": "node-typescript-replace-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/main.ts"
+  },
+  "dependencies": {
+    "@sdux-vault/core": "latest",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "tsx": "^4.19.4",
+    "typescript": "~5.9.2"
+  }
+}
+`,
     'README.md': `# SDuX Vault TypeScript Replace Example
 
 A script demonstrating atomic full-state replacement with SDuX Vault in plain
@@ -120,25 +139,6 @@ SDuX Vault is a plain TypeScript library with no browser dependencies. The same
 \`FeatureCell\` API that manages UI state in Angular, React, Vue, or Svelte works
 identically here — no adaptation needed. The conductor queue serializes writes in
 both environments, so the correctness guarantees are the same.
-`,
-    'package.json': `{
-  "name": "node-typescript-replace-example",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "tsx src/main.ts"
-  },
-  "dependencies": {
-    "@sdux-vault/core": "latest",
-    "rxjs": "^7.8.2"
-  },
-  "devDependencies": {
-    "@types/node": "latest",
-    "tsx": "^4.19.4",
-    "typescript": "~5.9.2"
-  }
-}
 `,
     'src/main.ts': `import { FeatureCell, Vault } from '@sdux-vault/core';
 import { firstValueFrom } from 'rxjs';

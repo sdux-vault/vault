@@ -4,6 +4,26 @@ export const replaceExampleProject: Project = {
   title: 'bun-replace-example',
   template: 'node',
   files: {
+    'package.json': `{
+  "name": "bun-replace-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun src/main.ts",
+    "dev": "bun --watch src/main.ts",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@sdux-vault/core": "latest",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "~5.9.2"
+  }
+}
+`,
     'README.md': `# SDuX Vault Bun Replace Example
 
 A simple HTTP server demonstrating state replacement with SDuX Vault running on Bun.
@@ -151,26 +171,6 @@ curl http://localhost:3000/state
 curl -X POST http://localhost:3000/reset
 curl http://localhost:3000/state
 \`\`\`
-`,
-    'package.json': `{
-  "name": "bun-replace-example",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "bun src/main.ts",
-    "dev": "bun --watch src/main.ts",
-    "test": "bun test"
-  },
-  "dependencies": {
-    "@sdux-vault/core": "latest",
-    "rxjs": "^7.8.2"
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "typescript": "~5.9.2"
-  }
-}
 `,
     'src/main.ts': `declare const Bun: {
   serve(options: {

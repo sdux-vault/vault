@@ -4,6 +4,70 @@ export const arrayAppendExampleProject: Project = {
   title: 'array-append-example',
   template: 'node',
   files: {
+    'deno.json': `{
+  "tasks": {
+    "start": "deno run src/main.ts"
+  }
+}
+`,
+    'deno.lock': `{
+  "version": "5",
+  "specifiers": {
+    "npm:@sdux-vault/addons@*": "1.0.3_rxjs@7.8.2",
+    "npm:@sdux-vault/core@*": "1.0.5_rxjs@7.8.2",
+    "npm:rxjs@*": "7.8.2"
+  },
+  "npm": {
+    "@sdux-vault/addons@1.0.3_rxjs@7.8.2": {
+      "integrity": "sha512-DnI/w/QOPEIJswvKkSMLhNnD+6IuWH2WKyFcG24qpcmWGeqN0Y0sNhQpTtLn/hjMQW2p7IaHtw/44FIwZprOTg==",
+      "dependencies": [
+        "rxjs",
+        "tslib"
+      ]
+    },
+    "@sdux-vault/core@1.0.5_rxjs@7.8.2": {
+      "integrity": "sha512-g3FBzzSYc3UFK9VhOvJQjYq41YoiHgjbCp801rBcJEKAivpk1/bj96JrqGKfQPtdzu+pXXjJ9WBUwUOAi+Sfgg==",
+      "dependencies": [
+        "@sdux-vault/engine",
+        "rxjs",
+        "tslib"
+      ]
+    },
+    "@sdux-vault/devtools@1.0.6_rxjs@7.8.2": {
+      "integrity": "sha512-Hpn+7huQow7QQzOBfA63JVzFsw0Y7b1ctFtltjjE4R33Pi1k59yNY79lW5rrX7viTGYk5vno7xmXiI8315lTLw==",
+      "dependencies": [
+        "rxjs",
+        "tslib"
+      ]
+    },
+    "@sdux-vault/engine@1.0.5_rxjs@7.8.2": {
+      "integrity": "sha512-qa8OsLbOOgaZfBYQzZy1cQLm+SIWlz5/bdolTrNsuxQFdqKCeVJwYFwV61Ei4pGbrOG0Sg8zKuvwfHeMOYUc7w==",
+      "dependencies": [
+        "@sdux-vault/devtools",
+        "@sdux-vault/shared",
+        "rxjs",
+        "tslib"
+      ]
+    },
+    "@sdux-vault/shared@1.0.4_rxjs@7.8.2": {
+      "integrity": "sha512-Q0mH4gHBlSN1Ir0YYX82fUbNsKrKMUbKV6mtvmL8UbVL43cqByxGgH5Xifivto2k1rHfZMFPtGJQ593rBfX/Ww==",
+      "dependencies": [
+        "rxjs",
+        "tslib"
+      ]
+    },
+    "rxjs@7.8.2": {
+      "integrity": "sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==",
+      "dependencies": [
+        "tslib"
+      ]
+    },
+    "tslib@2.8.1": {
+      "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="
+    }
+  }
+}
+`,
     'README.md': `# SDuX Vault Deno Array Append Example
 
 A script demonstrating array append merge behavior with SDuX Vault in plain
@@ -116,70 +180,6 @@ class ArrayAppendExample {
 SDuX Vault is a plain TypeScript library with no browser dependencies. Add-on
 behaviors from \`npm:@sdux-vault/addons\` run directly in Deno — the same behavior
 registered in an Angular or Svelte app configures the pipeline the same way here.
-`,
-    'deno.json': `{
-  "tasks": {
-    "start": "deno run src/main.ts"
-  }
-}
-`,
-    'deno.lock': `{
-  "version": "5",
-  "specifiers": {
-    "npm:@sdux-vault/addons@*": "1.0.3_rxjs@7.8.2",
-    "npm:@sdux-vault/core@*": "1.0.5_rxjs@7.8.2",
-    "npm:rxjs@*": "7.8.2"
-  },
-  "npm": {
-    "@sdux-vault/addons@1.0.3_rxjs@7.8.2": {
-      "integrity": "sha512-DnI/w/QOPEIJswvKkSMLhNnD+6IuWH2WKyFcG24qpcmWGeqN0Y0sNhQpTtLn/hjMQW2p7IaHtw/44FIwZprOTg==",
-      "dependencies": [
-        "rxjs",
-        "tslib"
-      ]
-    },
-    "@sdux-vault/core@1.0.5_rxjs@7.8.2": {
-      "integrity": "sha512-g3FBzzSYc3UFK9VhOvJQjYq41YoiHgjbCp801rBcJEKAivpk1/bj96JrqGKfQPtdzu+pXXjJ9WBUwUOAi+Sfgg==",
-      "dependencies": [
-        "@sdux-vault/engine",
-        "rxjs",
-        "tslib"
-      ]
-    },
-    "@sdux-vault/devtools@1.0.6_rxjs@7.8.2": {
-      "integrity": "sha512-Hpn+7huQow7QQzOBfA63JVzFsw0Y7b1ctFtltjjE4R33Pi1k59yNY79lW5rrX7viTGYk5vno7xmXiI8315lTLw==",
-      "dependencies": [
-        "rxjs",
-        "tslib"
-      ]
-    },
-    "@sdux-vault/engine@1.0.5_rxjs@7.8.2": {
-      "integrity": "sha512-qa8OsLbOOgaZfBYQzZy1cQLm+SIWlz5/bdolTrNsuxQFdqKCeVJwYFwV61Ei4pGbrOG0Sg8zKuvwfHeMOYUc7w==",
-      "dependencies": [
-        "@sdux-vault/devtools",
-        "@sdux-vault/shared",
-        "rxjs",
-        "tslib"
-      ]
-    },
-    "@sdux-vault/shared@1.0.4_rxjs@7.8.2": {
-      "integrity": "sha512-Q0mH4gHBlSN1Ir0YYX82fUbNsKrKMUbKV6mtvmL8UbVL43cqByxGgH5Xifivto2k1rHfZMFPtGJQ593rBfX/Ww==",
-      "dependencies": [
-        "rxjs",
-        "tslib"
-      ]
-    },
-    "rxjs@7.8.2": {
-      "integrity": "sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==",
-      "dependencies": [
-        "tslib"
-      ]
-    },
-    "tslib@2.8.1": {
-      "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="
-    }
-  }
-}
 `,
     'src/main.ts': `import { withArrayAppendMergeBehavior } from 'npm:@sdux-vault/addons';
 import { FeatureCell, Vault } from 'npm:@sdux-vault/core';
