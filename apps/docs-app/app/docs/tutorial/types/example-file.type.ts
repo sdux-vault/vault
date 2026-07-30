@@ -11,6 +11,7 @@ export const ExampleFileTypes = {
   HttpResource: 'httpResource',
   HttpResourceSpec: 'httpResourceSpec',
   Hydrate: 'hydrate',
+  Main: 'main',
   Observable: 'observable',
   ObservableSpec: 'observableSpec',
   Promise: 'promise',

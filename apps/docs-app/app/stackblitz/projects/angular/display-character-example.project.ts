@@ -118,8 +118,7 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 `,
-    'src/app/example.component.html': `<!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
-<section class="character-example" aria-labelledby="character-example-title">
+    'src/app/example.component.html': `<section class="character-example" aria-labelledby="character-example-title">
   <header class="header">
     <div>
       <p class="eyebrow">Interactive example</p>
@@ -1400,6 +1399,15 @@ export class ExampleService {
     this.#vault.initialize();
   }
 }
+`,
+    'src/app/main.ts': `import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from './app.config';
+import { ExampleComponent } from './example.component';
+
+bootstrapApplication(ExampleComponent, appConfig).catch((error) => {
+  // eslint-disable-next-line no-console
+  console.error(error);
+});
 `,
     'src/app/star-wars-character.constant.ts': `import type { RawStarWarsCharacter } from './star-wars-character.shape';
 

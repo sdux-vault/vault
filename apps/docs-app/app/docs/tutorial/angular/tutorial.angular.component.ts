@@ -66,11 +66,21 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
 
   protected readonly initialAppConfigSource = INITIAL_APP_CONFIG;
 
-  protected readonly registeredAppConfigSource =
+  protected readonly registeredAppConfigSource = [
     this.#exampleFileService.getFile(
       this.displayCharacterSource,
       ExampleFileTypes.AppConfig
-    );
+    ),
+    this.#exampleFileService.getFile(
+      this.displayCharacterSource,
+      ExampleFileTypes.Constant
+    )
+  ];
+
+  protected readonly mainSource = this.#exampleFileService.getFile(
+    this.displayCharacterSource,
+    ExampleFileTypes.Main
+  );
 
   protected readonly starWarsCharacterStateSource =
     this.#exampleFileService.getFile(
@@ -108,6 +118,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     { id: 6, label: `Register the ${this.#brandName.featureCellValue}` },
     { id: 7, label: `Connect the service to ${this.#brandName.value}` },
     { id: 8, label: 'Display Character State' },
-    { id: 9, label: 'Complete Initial Tutorial' }
+    { id: 9, label: 'Start the Application' },
+    { id: 10, label: 'Complete Initial Tutorial' }
   ];
 }

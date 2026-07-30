@@ -23,6 +23,7 @@ const SOURCE_FILE_TYPES = [
   { type: 'promise', suffix: '.promise.ts' },
   { type: 'httpResource', suffix: '.http-resource.ts' },
   { type: 'scss', suffix: '.component.scss' },
+  { type: 'main', suffix: 'main.ts' },
   { type: 'appConfig', suffix: '.config.ts' },
   { type: 'constant', suffix: '.constant.ts' },
   { type: 'shape', suffix: '.shape.ts' },
