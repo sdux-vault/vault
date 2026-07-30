@@ -1,4 +1,4 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
@@ -11,6 +11,10 @@ import {
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { StackblitzLanguageExampleComponent } from '../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
+import { StackblitzExampleService } from '../../stack-blitz/services/stackblitz-example.service';
+import { StackBlitzExampleLanguageShape } from '../../stack-blitz/shapes/stackblitz-example.language.shape';
+import { StackBlitzExampleShape } from '../../stack-blitz/shapes/stackblitz-example.shape';
 import { TutorialNavigationDirective } from '../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../services/example-file.service';
 import { TutorialStepShape } from '../shape/tutorial-step.shape';
@@ -31,7 +35,8 @@ import { INITIAL_SERVICE } from './generated/initial-service.generated';
     SDuXVideoComponent,
     PackageNameComponent,
     FeatureCellBrandNameComponent,
-    VaultBrandNameComponent
+    VaultBrandNameComponent,
+    StackblitzLanguageExampleComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -40,6 +45,20 @@ import { INITIAL_SERVICE } from './generated/initial-service.generated';
 export class TutorialAngularComponent extends TutorialNavigationDirective {
   #brandName = inject(BrandNameService);
   #exampleFileService = inject(ExampleFileService);
+
+  readonly #stackblitzService = inject(StackblitzExampleService);
+
+  readonly example = computed<StackBlitzExampleShape>(
+    () =>
+      this.#stackblitzService.getExample('display-character') ??
+      ({} as StackBlitzExampleShape)
+  );
+
+  readonly lang = computed<StackBlitzExampleLanguageShape>(
+    () =>
+      this.example()?.languages?.find((lang) => lang.key === 'angular') ??
+      ({} as StackBlitzExampleLanguageShape)
+  );
 
   protected readonly displayCharacterSource = STAR_WARS_DISPLAY_CHARACTER;
 

@@ -31,18 +31,20 @@
           class="framework-icon" />
         <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>
       </button>
-      <button
-        type="button"
-        class="share-link-button"
-        [attr.aria-label]="'Share ' + example().title + ' in ' + lang().name"
-        [matTooltip]="lang().name + ' shareable link'"
-        (click)="copyStackBlitzExample(example(), lang().key)">
-        @if (copySuccess() === lang().key + '/' + example().exampleName) {
-          <mat-icon class="share-link-icon copy-success">check</mat-icon>
-        } @else {
-          <mat-icon class="share-link-icon">content_copy</mat-icon>
-        }
-      </button>
+      @if (example().displayCopyIcon) {
+        <button
+          type="button"
+          class="share-link-button"
+          [attr.aria-label]="'Share ' + example().title + ' in ' + lang().name"
+          [matTooltip]="lang().name + ' shareable link'"
+          (click)="copyStackBlitzExample(example(), lang().key)">
+          @if (copySuccess() === lang().key + '/' + example().exampleName) {
+            <mat-icon class="share-link-icon copy-success">check</mat-icon>
+          } @else {
+            <mat-icon class="share-link-icon">content_copy</mat-icon>
+          }
+        </button>
+      }
     }
   </div>
 }

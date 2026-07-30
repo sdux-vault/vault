@@ -778,6 +778,26 @@ npm start;
         </div>
       </section>
 
+      <section
+        class="tutorial-shortcut"
+        aria-label="Launch the completed tutorial example">
+        <div class="tutorial-shortcut-copy">
+          <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+          <h2>Want the finished example without all nine steps?</h2>
+          <p>
+            The full tutorial is above. If you just want to open the completed
+            result, launch the live example in StackBlitz and inspect the final
+            working implementation directly.
+          </p>
+        </div>
+
+        <div class="tutorial-shortcut-launcher">
+          <sdux-stackblitz-language-example
+            [example]="example()"
+            [lang]="lang()" />
+        </div>
+      </section>
+
       <sdux-pipeline-related-topics />
     </main>
   </div>

@@ -98,5 +98,65 @@
     flex-direction: column;
     gap: global.$spacing-md;
     min-width: 0;
+
+    .tutorial-shortcut {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: global.$spacing-md;
+      padding: global.$spacing-lg;
+      border: 1px solid
+        color-mix(in srgb, global.$sdux-primary-base 35%, transparent);
+      border-radius: global.$border-radius-lg;
+      background:
+        linear-gradient(
+          135deg,
+          color-mix(in srgb, global.$sdux-primary-base 10%, transparent),
+          color-mix(in srgb, global.$sdux-primary-base 4%, transparent)
+        ),
+        var(--sdux-surface-bg);
+
+      @media (min-width: global.$breakpoint-md) {
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+      }
+
+      .tutorial-shortcut-copy {
+        display: flex;
+        flex-direction: column;
+        gap: global.$spacing-sm;
+
+        .tutorial-shortcut-eyebrow {
+          margin: 0;
+          color: global.$sdux-primary-base;
+          font-size: global.$font-size-sm;
+          font-weight: global.$font-weight-bold;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+
+        h2,
+        p {
+          margin: 0;
+        }
+
+        h2 {
+          color: var(--sdux-text-default);
+          font-size: global.$font-size-xl;
+          font-weight: global.$font-weight-bold;
+          line-height: global.$line-height;
+        }
+
+        p {
+          color: var(--sdux-text-default);
+          max-width: 60ch;
+        }
+      }
+
+      .tutorial-shortcut-launcher {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+    }
   }
 }
