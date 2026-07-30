@@ -42,6 +42,72 @@ $action-column-width: calc(
   $action-button-width + $action-chevron-hit-area + $spacing-xs
 );
 
+@mixin visually-hidden-control {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@mixin chevron-control($rotation: 45deg) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $action-chevron-hit-area;
+  min-width: $action-chevron-hit-area;
+  height: $action-chevron-hit-area;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: $sdux-text-white;
+  line-height: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    &::after {
+      background: $sdux-primary-dark;
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &::before {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 6px;
+    height: 6px;
+    box-sizing: border-box;
+    content: '';
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate($rotation);
+    transition: transform 150ms ease;
+  }
+
+  &::after {
+    position: absolute;
+    width: $action-chevron-size;
+    height: $action-chevron-size;
+    content: '';
+    background: $sdux-primary-base;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+  }
+}
+
 :host {
   display: block;
 }
@@ -72,14 +138,10 @@ $action-column-width: calc(
     gap: $spacing-sm;
   }
 
-  .section-toggle {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
+  .section-toggle,
+  .description-toggle,
+  .tap-toggle {
+    @include visually-hidden-control;
   }
 
   .section-header {
@@ -94,59 +156,7 @@ $action-column-width: calc(
     }
 
     .section-chevron {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: $action-chevron-hit-area;
-      min-width: $action-chevron-hit-area;
-      height: $action-chevron-hit-area;
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-      color: $sdux-text-white;
-      line-height: 0;
-      background: transparent;
-      border: 0;
-      cursor: pointer;
-      transition: transform 0.15s ease;
-
-      &:hover {
-        transform: translateY(-2px);
-
-        &::after {
-          background: $sdux-primary-dark;
-        }
-      }
-
-      &:active {
-        transform: scale(0.95);
-      }
-
-      &::before {
-        position: relative;
-        z-index: 1;
-        display: block;
-        width: 6px;
-        height: 6px;
-        box-sizing: border-box;
-        content: '';
-        border-right: 2px solid currentColor;
-        border-bottom: 2px solid currentColor;
-        transform: rotate(45deg);
-        transition: transform 150ms ease;
-      }
-
-      &::after {
-        position: absolute;
-        width: $action-chevron-size;
-        height: $action-chevron-size;
-        content: '';
-        background: $sdux-primary-base;
-        border: 1px solid transparent;
-        border-radius: 50%;
-        transition: background-color 0.2s ease;
-      }
+      @include chevron-control(45deg);
     }
   }
 
@@ -625,26 +635,11 @@ $action-column-width: calc(
       }
     }
 
-    .operator-sections {
-      display: grid;
-      gap: $spacing-lg;
-    }
-
     .action-row {
       display: grid;
       grid-template-rows: auto 1fr;
       gap: $spacing-sm;
       width: min(100%, $action-column-width);
-
-      .description-toggle {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        white-space: nowrap;
-      }
 
       .button-container {
         display: flex;
@@ -687,59 +682,66 @@ $action-column-width: calc(
         }
 
         .description-chevron {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: $action-chevron-hit-area;
-          min-width: $action-chevron-hit-area;
-          height: $action-chevron-hit-area;
-          padding: 0;
-          margin: 0;
+          @include chevron-control(-45deg);
+        }
+      }
+
+      .description-container {
+        display: none;
+        color: var(--sdux-text-muted);
+        line-height: 1.5;
+      }
+
+      .description-toggle:focus-visible ~ .button-container {
+        .description-chevron {
+          outline: 2px solid $sdux-primary-light;
+          outline-offset: 3px;
+        }
+      }
+
+      .description-toggle:checked ~ .button-container {
+        .description-chevron::before {
+          transform: rotate(45deg);
+        }
+      }
+
+      .description-toggle:checked ~ .description-container {
+        display: block;
+      }
+    }
+  }
+
+  > .feature-cell-controls > .distinct-operator,
+  > .feature-cell-controls > .tab-sync-operator {
+    display: grid;
+    gap: $spacing-md;
+    padding-top: $spacing-lg;
+    border-top: 1px solid $sdux-primary-base;
+
+    > .section-toggle:not(:checked) ~ .operator-actions,
+    > .section-toggle:not(:checked) ~ .comparison-function-column {
+      display: none;
+    }
+
+    .action-row {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: $spacing-sm;
+      width: min(100%, $action-column-width);
+
+      .button-container {
+        display: flex;
+        gap: $spacing-xs;
+        align-items: center;
+
+        .button {
+          flex: 0 0 $action-button-width;
+          width: $action-button-width;
           box-sizing: border-box;
-          color: $sdux-text-white;
-          background: transparent;
-          border: 0;
-          cursor: pointer;
-          line-height: 0;
-          transition: transform 0.15s ease;
+        }
 
-          &:hover {
-            transform: translateY(-2px);
-
-            &::after {
-              background: $sdux-primary-dark;
-            }
-          }
-
-          &:active {
-            transform: scale(0.95);
-          }
-
-          &::before {
-            position: relative;
-            z-index: 1;
-            display: block;
-            width: 6px;
-            height: 6px;
-            box-sizing: border-box;
-            content: '';
-            border-right: 2px solid currentColor;
-            border-bottom: 2px solid currentColor;
-            transform: rotate(-45deg);
-            transition: transform 150ms ease;
-          }
-
-          &::after {
-            position: absolute;
-            width: $action-chevron-size;
-            height: $action-chevron-size;
-            content: '';
-            background: $sdux-primary-base;
-            border: 1px solid transparent;
-            border-radius: 50%;
-            transition: background-color 0.2s ease;
-          }
+        .description-chevron {
+          @include chevron-control(-45deg);
         }
       }
 
@@ -767,154 +769,79 @@ $action-column-width: calc(
       }
     }
 
-    .distinct-operator,
-    .tab-sync-operator {
+    .operator-actions {
       display: grid;
       gap: $spacing-md;
-      padding-top: $spacing-lg;
-      border-top: 1px solid $sdux-primary-base;
+      align-items: start;
 
-      > .section-toggle:not(:checked) ~ .operator-actions,
-      > .section-toggle:not(:checked) ~ .comparison-function-column {
-        display: none;
+      @media (max-width: $breakpoint-lg) {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       }
 
-      .operator-actions {
-        display: grid;
-        gap: $spacing-md;
-        align-items: start;
+      @media (min-width: $breakpoint-lg) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
 
-        @media (max-width: $breakpoint-lg) {
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        }
-
-        @media (min-width: $breakpoint-lg) {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-
-          .submit-changed-action-row {
-            grid-column: 2;
-          }
-        }
-
-        .tab-sync-action-row {
-          grid-column: 1 / -1;
-          width: 100%;
-
-          .button-container {
-            justify-content: flex-start;
-          }
+        .submit-changed-action-row {
+          grid-column: 2;
         }
       }
 
-      .comparison-function-column {
-        display: grid;
-        grid-template-rows: auto 1fr;
-        gap: $spacing-sm;
+      .tab-sync-action-row {
+        grid-column: 1 / -1;
         width: 100%;
 
-        .tap-toggle {
-          position: absolute;
-          width: 1px;
-          height: 1px;
-          margin: -1px;
-          overflow: hidden;
-          clip: rect(0 0 0 0);
-          white-space: nowrap;
+        .button-container {
+          justify-content: flex-start;
+        }
+      }
+    }
+
+    .comparison-function-column {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: $spacing-sm;
+      width: 100%;
+
+      .tap-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h3 {
+          margin: 0;
+          font-size: $font-size-md;
         }
 
-        .tap-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          h3 {
-            margin: 0;
-            font-size: $font-size-md;
-          }
-
-          .tap-chevron {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: $action-chevron-hit-area;
-            min-width: $action-chevron-hit-area;
-            height: $action-chevron-hit-area;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            color: $sdux-text-white;
-            line-height: 0;
-            background: transparent;
-            border: 0;
-            cursor: pointer;
-            transition: transform 0.15s ease;
-
-            &:hover {
-              transform: translateY(-2px);
-
-              &::after {
-                background: $sdux-primary-dark;
-              }
-            }
-
-            &:active {
-              transform: scale(0.95);
-            }
-
-            &::before {
-              position: relative;
-              z-index: 1;
-              display: block;
-              width: 6px;
-              height: 6px;
-              box-sizing: border-box;
-              content: '';
-              border-right: 2px solid currentColor;
-              border-bottom: 2px solid currentColor;
-              transform: rotate(45deg);
-              transition: transform 150ms ease;
-            }
-
-            &::after {
-              position: absolute;
-              width: $action-chevron-size;
-              height: $action-chevron-size;
-              content: '';
-              background: $sdux-primary-base;
-              border: 1px solid transparent;
-              border-radius: 50%;
-              transition: background-color 0.2s ease;
-            }
-          }
+        .tap-chevron {
+          @include chevron-control(45deg);
         }
+      }
 
-        textarea {
-          width: 100%;
-          height: calc(320px / 3);
-          min-height: calc(320px / 3);
-          padding: $spacing-md;
-          box-sizing: border-box;
-          color: $sdux-text-inverse;
-          background: $sdux-surface-light;
-          border: 1px solid $sdux-surface-outline;
-          border-radius: $border-radius-sm;
-          font: inherit;
-          resize: vertical;
-        }
+      textarea {
+        width: 100%;
+        height: calc(320px / 3);
+        min-height: calc(320px / 3);
+        padding: $spacing-md;
+        box-sizing: border-box;
+        color: $sdux-text-inverse;
+        background: $sdux-surface-light;
+        border: 1px solid $sdux-surface-outline;
+        border-radius: $border-radius-sm;
+        font: inherit;
+        resize: vertical;
+      }
 
-        > .tap-toggle:focus-visible ~ .tap-header .tap-chevron {
-          outline: 2px solid $sdux-primary-light;
-          outline-offset: 3px;
-        }
+      > .tap-toggle:focus-visible ~ .tap-header .tap-chevron {
+        outline: 2px solid $sdux-primary-light;
+        outline-offset: 3px;
+      }
 
-        > .tap-toggle:not(:checked) ~ .tap-header .tap-chevron::before {
-          transform: rotate(-45deg);
-        }
+      > .tap-toggle:not(:checked) ~ .tap-header .tap-chevron::before {
+        transform: rotate(-45deg);
+      }
 
-        > .tap-toggle:not(:checked) ~ textarea {
-          display: none;
-        }
+      > .tap-toggle:not(:checked) ~ textarea {
+        display: none;
       }
     }
   }
@@ -940,16 +867,6 @@ $action-column-width: calc(
       display: contents;
     }
 
-    .tap-toggle {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-    }
-
     .tap-column {
       display: grid;
       grid-template-rows: auto 1fr;
@@ -966,59 +883,7 @@ $action-column-width: calc(
         }
 
         .tap-chevron {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: $action-chevron-hit-area;
-          min-width: $action-chevron-hit-area;
-          height: $action-chevron-hit-area;
-          padding: 0;
-          margin: 0;
-          box-sizing: border-box;
-          color: $sdux-text-white;
-          line-height: 0;
-          background: transparent;
-          border: 0;
-          cursor: pointer;
-          transition: transform 0.15s ease;
-
-          &:hover {
-            transform: translateY(-2px);
-
-            &::after {
-              background: $sdux-primary-dark;
-            }
-          }
-
-          &:active {
-            transform: scale(0.95);
-          }
-
-          &::before {
-            position: relative;
-            z-index: 1;
-            display: block;
-            width: 6px;
-            height: 6px;
-            box-sizing: border-box;
-            content: '';
-            border-right: 2px solid currentColor;
-            border-bottom: 2px solid currentColor;
-            transform: rotate(45deg);
-            transition: transform 150ms ease;
-          }
-
-          &::after {
-            position: absolute;
-            width: $action-chevron-size;
-            height: $action-chevron-size;
-            content: '';
-            background: $sdux-primary-base;
-            border: 1px solid transparent;
-            border-radius: 50%;
-            transition: background-color 0.2s ease;
-          }
+          @include chevron-control(45deg);
         }
       }
 
@@ -1153,11 +1018,6 @@ $action-column-width: calc(
         h3 {
           margin: 0;
           font-size: $font-size-md;
-        }
-
-        .button {
-          min-height: 30px;
-          padding: $spacing-xs $spacing-sm;
         }
       }
 

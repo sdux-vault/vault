@@ -738,155 +738,144 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Teaching template: Safe to remove this entire block until you teach custom operators or cross-tab sync. -->
-        <div class="operator-sections">
-          <!-- Teaching point: Distinct Until Changed (ex-027) -->
-          <div class="distinct-operator">
-            <input
-              id="distinct-operator-toggle"
-              class="section-toggle"
-              type="checkbox"
-              aria-label="Toggle Distinct Until Changed Operator visibility"
-              checked />
-            <div class="section-header">
-              <span>Distinct Until Changed Operator</span>
-              <label
-                class="section-chevron"
-                for="distinct-operator-toggle"
-                title="Show or hide Distinct Until Changed Operator"></label>
-            </div>
+    <!-- Teaching template: Safe to remove this entire section until you teach custom comparison logic. -->
+    <div class="distinct-operator">
+      <input
+        id="distinct-operator-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Distinct Until Changed Operator visibility"
+        checked />
+      <div class="section-header">
+        <span>Distinct Until Changed Operator</span>
+        <label
+          class="section-chevron"
+          for="distinct-operator-toggle"
+          title="Show or hide Distinct Until Changed Operator"></label>
+      </div>
 
-            <div class="operator-actions">
-              <!-- Teaching point: Distinct Until Changed (ex-027) -->
-              <div class="action-row">
-                <input
-                  id="same-state-description"
-                  class="description-toggle"
-                  type="checkbox"
-                  aria-label="Show Submit Same State description" />
-                <div class="button-container">
-                  <!-- Teaching point: Distinct Until Changed (ex-027) -->
-                  <button
-                    type="button"
-                    class="button"
-                    (click)="submitSameState()">
-                    Submit Same State
-                  </button>
-                  <label
-                    class="description-chevron"
-                    for="same-state-description"
-                    title="Show or hide Submit Same State description"></label>
-                </div>
-                <div class="description-container">
-                  Reconstructs Rey as a new object on every click and merges
-                  that one-character delta into the collection. The custom
-                  comparison checks every incoming identity against the previous
-                  collection, so another Rey returns VAULT_NOOP regardless of
-                  reducer sorting.
-                </div>
-              </div>
-
-              <!-- Teaching point: Distinct Until Changed (ex-027) -->
-              <div class="action-row submit-changed-action-row">
-                <input
-                  id="changed-state-description"
-                  class="description-toggle"
-                  type="checkbox"
-                  aria-label="Show Submit Changed State description" />
-                <div class="button-container">
-                  <!-- Teaching point: Distinct Until Changed (ex-027) -->
-                  <button
-                    type="button"
-                    class="button"
-                    (click)="submitChangedState()">
-                    Submit Changed State
-                  </button>
-                  <label
-                    class="description-chevron"
-                    for="changed-state-description"
-                    title="Show or hide Submit Changed State description"></label>
-                </div>
-                <div class="description-container">
-                  Cycles through four Jedi with a modulo index and merges the
-                  next one-character delta into the collection. The first four
-                  unique IDs proceed through the pipeline; after the modulo
-                  wraps, the repeated identity is suppressed without depending
-                  on collection order.
-                </div>
-              </div>
-            </div>
-
-            <!-- Teaching point: Distinct Until Changed comparison function (ex-028) -->
-            <div class="comparison-function-column">
-              <input
-                id="comparison-function-output-toggle"
-                class="tap-toggle"
-                type="checkbox"
-                aria-label="Toggle Comparison Function output visibility"
-                checked />
-              <div class="tap-header">
-                <h3>Comparison Function</h3>
-                <label
-                  class="tap-chevron"
-                  for="comparison-function-output-toggle"
-                  title="Show or hide Comparison Function output"></label>
-              </div>
-              <textarea
-                readonly
-                rows="6"
-                aria-label="Comparison Function output"
-                [value]="editor.comparisonFunctionSource"></textarea>
-            </div>
+      <div class="operator-actions">
+        <!-- Teaching point: Distinct Until Changed (ex-027) -->
+        <div class="action-row">
+          <input
+            id="same-state-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Submit Same State description" />
+          <div class="button-container">
+            <!-- Teaching point: Distinct Until Changed (ex-027) -->
+            <button type="button" class="button" (click)="submitSameState()">
+              Submit Same State
+            </button>
+            <label
+              class="description-chevron"
+              for="same-state-description"
+              title="Show or hide Submit Same State description"></label>
           </div>
+          <div class="description-container">
+            Reconstructs Rey as a new object on every click and merges that
+            one-character delta into the collection. The custom comparison
+            checks every incoming identity against the previous collection, so
+            another Rey returns VAULT_NOOP regardless of reducer sorting.
+          </div>
+        </div>
 
-          <!-- Teaching point: Tab Sync (ex-029) -->
-          <div class="tab-sync-operator">
-            <input
-              id="tab-sync-operator-toggle"
-              class="section-toggle"
-              type="checkbox"
-              aria-label="Toggle Tab Sync Controller and Behavior visibility"
-              checked />
-            <div class="section-header">
-              <span>Tab Sync Controller and Behavior</span>
-              <label
-                class="section-chevron"
-                for="tab-sync-operator-toggle"
-                title="Show or hide Tab Sync Controller and Behavior"></label>
-            </div>
+        <!-- Teaching point: Distinct Until Changed (ex-027) -->
+        <div class="action-row submit-changed-action-row">
+          <input
+            id="changed-state-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Submit Changed State description" />
+          <div class="button-container">
+            <!-- Teaching point: Distinct Until Changed (ex-027) -->
+            <button type="button" class="button" (click)="submitChangedState()">
+              Submit Changed State
+            </button>
+            <label
+              class="description-chevron"
+              for="changed-state-description"
+              title="Show or hide Submit Changed State description"></label>
+          </div>
+          <div class="description-container">
+            Cycles through four Jedi with a modulo index and merges the next
+            one-character delta into the collection. The first four unique IDs
+            proceed through the pipeline; after the modulo wraps, the repeated
+            identity is suppressed without depending on collection order.
+          </div>
+        </div>
+      </div>
 
-            <div class="operator-actions">
-              <div class="action-row tab-sync-action-row">
-                <input
-                  id="tab-sync-description"
-                  class="description-toggle"
-                  type="checkbox"
-                  aria-label="Show View Tab Sync description" />
-                <div class="button-container">
-                  <!-- Teaching point: Tab Sync (ex-029) -->
-                  <button type="button" class="button" (click)="viewTabSync()">
-                    View Tab Sync
-                  </button>
-                  <label
-                    class="description-chevron"
-                    for="tab-sync-description"
-                    title="Show or hide View Tab Sync description"></label>
-                </div>
-                <div class="description-container">
-                  Opens this example in another tab to demonstrate initial state
-                  negotiation and ongoing synchronization through
-                  withTabSyncController and withTabSyncBehavior. Successful
-                  Pipeline executions synchronize committed FeatureCell State
-                  values and shared resets; failed Pipeline executions leave the
-                  peer tab unchanged. Loading status, Error, Controller
-                  outcomes, form values, and other page interactions remain
-                  local to the tab where they occur. A new tab receives the last
-                  committed State with loading status set to false and Error set
-                  to null, without inheriting transient metadata from its peer.
-                </div>
-              </div>
-            </div>
+      <!-- Teaching point: Distinct Until Changed comparison function (ex-028) -->
+      <div class="comparison-function-column">
+        <input
+          id="comparison-function-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle Comparison Function output visibility"
+          checked />
+        <div class="tap-header">
+          <h3>Comparison Function</h3>
+          <label
+            class="tap-chevron"
+            for="comparison-function-output-toggle"
+            title="Show or hide Comparison Function output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="6"
+          aria-label="Comparison Function output"
+          [value]="editor.comparisonFunctionSource"></textarea>
+      </div>
+    </div>
+
+    <!-- Teaching template: Safe to remove this entire section until you teach cross-tab synchronization. -->
+    <div class="tab-sync-operator">
+      <input
+        id="tab-sync-operator-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Tab Sync Controller and Behavior visibility"
+        checked />
+      <div class="section-header">
+        <span>Tab Sync Controller and Behavior</span>
+        <label
+          class="section-chevron"
+          for="tab-sync-operator-toggle"
+          title="Show or hide Tab Sync Controller and Behavior"></label>
+      </div>
+
+      <div class="operator-actions">
+        <div class="action-row tab-sync-action-row">
+          <input
+            id="tab-sync-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show View Tab Sync description" />
+          <div class="button-container">
+            <!-- Teaching point: Tab Sync (ex-029) -->
+            <button type="button" class="button" (click)="viewTabSync()">
+              View Tab Sync
+            </button>
+            <label
+              class="description-chevron"
+              for="tab-sync-description"
+              title="Show or hide View Tab Sync description"></label>
+          </div>
+          <div class="description-container">
+            Opens this example in another tab to demonstrate initial state
+            negotiation and ongoing synchronization through
+            withTabSyncController and withTabSyncBehavior. Successful Pipeline
+            executions synchronize committed FeatureCell State values and shared
+            resets; failed Pipeline executions leave the peer tab unchanged.
+            Loading status, Error, Controller outcomes, form values, and other
+            page interactions remain local to the tab where they occur. A new
+            tab receives the last committed State with loading status set to
+            false and Error set to null, without inheriting transient metadata
+            from its peer.
           </div>
         </div>
       </div>
