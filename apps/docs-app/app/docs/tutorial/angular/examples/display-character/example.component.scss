@@ -389,35 +389,31 @@ $action-column-width: calc(
 
     @media (min-width: $breakpoint-lg) {
       grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-      grid-template-areas:
-        'selection add-action'
-        'details editor';
-      grid-template-rows: auto 1fr;
-      align-items: stretch;
-    }
 
-    > .workspace-column {
-      display: grid;
-      gap: $spacing-lg;
-      align-content: start;
-      min-width: 0;
+      > .selection {
+        grid-row: 1;
+        grid-column: 1;
+      }
 
-      @media (min-width: $breakpoint-lg) {
-        display: contents;
+      > .character-details {
+        grid-row: 2;
+        grid-column: 1;
+      }
+
+      > .add-action {
+        grid-row: 1;
+        grid-column: 2;
+        align-self: end;
+        justify-content: flex-end;
+      }
+
+      > .editor {
+        grid-row: 2;
+        grid-column: 2;
       }
     }
 
-    .selection {
-      @media (min-width: $breakpoint-lg) {
-        grid-area: selection;
-        align-self: stretch;
-      }
-    }
-
-    .panel {
-      display: flex;
-      flex-direction: column;
-      align-self: stretch;
+    > .panel {
       min-width: 0;
       padding: $spacing-lg;
       background: var(--sdux-surface-elevated);
@@ -439,10 +435,6 @@ $action-column-width: calc(
 
       &.character-details {
         position: relative;
-
-        @media (min-width: $breakpoint-lg) {
-          grid-area: details;
-        }
 
         .loading-overlay {
           position: absolute;
@@ -522,16 +514,6 @@ $action-column-width: calc(
       }
 
       &.editor {
-        @media (min-width: $breakpoint-lg) {
-          grid-area: editor;
-        }
-
-        > form {
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-        }
-
         .form-grid {
           display: grid;
           grid-template-columns: minmax(0, 1fr);
@@ -573,72 +555,26 @@ $action-column-width: calc(
         }
       }
     }
-
-    .add-action {
-      justify-content: flex-start;
-
-      @media (min-width: $breakpoint-lg) {
-        grid-area: add-action;
-        align-self: end;
-        align-items: flex-end;
-        justify-content: flex-end;
-      }
-
-      .button {
-        flex: 0 0 auto;
-        width: auto;
-        min-height: 42px;
-      }
-
-      @media (max-width: $breakpoint-lg) {
-        .button {
-          width: 100%;
-        }
-      }
-    }
   }
 
   > .feature-cell-controls > .pipeline-actions {
     display: grid;
-    gap: $spacing-lg;
+    grid-template-columns: repeat(3, $action-column-width);
+    gap: $spacing-md;
+    justify-content: space-between;
     padding-top: $spacing-lg;
     border-top: 1px solid $sdux-primary-base;
 
-    > .section-toggle:not(:checked) ~ .pipeline-content {
+    > .section-toggle:not(:checked) ~ .action-row,
+    > .section-toggle:not(:checked) ~ .tab-sync-operator {
       display: none;
-    }
-
-    .pipeline-content {
-      display: grid;
-      gap: $spacing-lg;
-    }
-
-    .action-groups {
-      display: grid;
-      gap: $spacing-md;
-    }
-
-    .action-group {
-      display: grid;
-      gap: $spacing-md;
-      min-width: 0;
-
-      @media (min-width: $breakpoint-lg) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        align-items: start;
-      }
-    }
-
-    .operator-sections {
-      display: grid;
-      gap: $spacing-lg;
     }
 
     .action-row {
       display: grid;
       grid-template-rows: auto 1fr;
       gap: $spacing-sm;
-      width: min(100%, $action-column-width);
+      width: $action-column-width;
 
       .description-toggle {
         position: absolute;
@@ -774,6 +710,7 @@ $action-column-width: calc(
     .distinct-operator,
     .tab-sync-operator {
       display: grid;
+      grid-column: 1 / -1;
       gap: $spacing-md;
       padding-top: $spacing-lg;
       border-top: 1px solid $sdux-primary-base;
@@ -785,20 +722,9 @@ $action-column-width: calc(
 
       .operator-actions {
         display: grid;
+        grid-template-columns: repeat(3, $action-column-width);
         gap: $spacing-md;
-        align-items: start;
-
-        @media (max-width: $breakpoint-lg) {
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        }
-
-        @media (min-width: $breakpoint-lg) {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-
-          .submit-changed-action-row {
-            grid-column: 2;
-          }
-        }
+        justify-content: space-between;
 
         .tab-sync-action-row {
           grid-column: 1 / -1;
@@ -932,16 +858,8 @@ $action-column-width: calc(
     padding-top: $spacing-lg;
     border-top: 1px solid $sdux-primary-base;
 
-    > .section-toggle:not(:checked) ~ .state-content,
-    > .section-toggle:not(:checked) ~ .filter-reducer-content,
-    > .section-toggle:not(:checked) ~ .tap-content {
+    > .section-toggle:not(:checked) ~ .tap-column {
       display: none;
-    }
-
-    .state-content,
-    .filter-reducer-content,
-    .tap-content {
-      display: contents;
     }
 
     .tap-toggle {
@@ -1096,10 +1014,6 @@ $action-column-width: calc(
   > .feature-cell-controls > .filter-reducer-output {
     grid-template-columns: minmax(0, 1fr);
 
-    .filter-reducer-content {
-      display: contents;
-    }
-
     .tap-column {
       width: 100%;
 
@@ -1135,12 +1049,8 @@ $action-column-width: calc(
     padding-top: $spacing-lg;
     border-top: 1px solid $sdux-primary-base;
 
-    > .section-toggle:not(:checked) ~ .stepwise-content {
+    > .section-toggle:not(:checked) ~ .stepwise-column {
       display: none;
-    }
-
-    .stepwise-content {
-      display: contents;
     }
 
     .stepwise-column {
