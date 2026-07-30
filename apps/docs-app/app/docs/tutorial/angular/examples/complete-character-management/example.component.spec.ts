@@ -14,8 +14,6 @@ import {
   VaultErrorService,
   VaultPrivateErrorService
 } from '@sdux-vault/shared';
-import { STAR_WARS_CHARACTERS } from '../../../examples/star-wars-character.constant';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import { ExampleComponent } from './example.component';
 import { exampleHydrate } from './example.hydrate';
 import { exampleObservable } from './example.observable';
@@ -24,10 +22,12 @@ import {
   EXAMPLE_ENCRYPTED_STORAGE_KEY,
   ExampleService
 } from './example.service';
+import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
+import { StarWarsCharacter } from './star-wars-character.shape';
 
 describe('ExampleComponent', () => {
   const key = 'star-wars-character';
-  const initialCharacters: readonly StarWarsCharacterState[] = [
+  const initialCharacters: readonly StarWarsCharacter[] = [
     {
       id: 1,
       name: 'Luke',
@@ -43,7 +43,7 @@ describe('ExampleComponent', () => {
       isForceSensitive: false
     }
   ];
-  const initialCharactersWithDisplay: readonly StarWarsCharacterState[] = [
+  const initialCharactersWithDisplay: readonly StarWarsCharacter[] = [
     {
       ...initialCharacters[1]!,
       forceSensitiveDisplay: 'No'
@@ -90,7 +90,7 @@ describe('ExampleComponent', () => {
   };
 
   const configureComponent = async (
-    initialState: readonly StarWarsCharacterState[] = initialCharacters,
+    initialState: readonly StarWarsCharacter[] = initialCharacters,
     renderTemplate = false,
     deferHydration = false
   ): Promise<void> => {
@@ -207,12 +207,12 @@ describe('ExampleComponent', () => {
       replaceNewLines(JSON.stringify(STAR_WARS_CHARACTERS, null, 2))
     );
     expect(replaceNewLines(component.editor.filterSource)).toBe(
-      replaceNewLines(`export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacterState[]> =
+      replaceNewLines(`export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacter[]> =
   (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');"
  `)
     );
     expect(replaceNewLines(component.editor.reducer1Source)).toBe(
-      replaceNewLines(`#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacterState[]): readonly StarWarsCharacterState[] {
+      replaceNewLines(`#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacter[]): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
@@ -222,7 +222,7 @@ describe('ExampleComponent', () => {
 `)
     );
     expect(replaceNewLines(component.editor.reducer2Source)).toBe(
-      replaceNewLines(`export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacterState[]> {
+      replaceNewLines(`export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacter[]> {
   return (characters) =>
     [...characters].sort((left, right) =>
       left.lastName.localeCompare(right.lastName)
@@ -230,7 +230,7 @@ describe('ExampleComponent', () => {
 }`)
     );
     expect(replaceNewLines(component.editor.comparisonFunctionSource)).toBe(
-      replaceNewLines(`withDistinctUntilChanged<readonly StarWarsCharacterState[]>(
+      replaceNewLines(`withDistinctUntilChanged<readonly StarWarsCharacter[]>(
   (incoming, previous) =>
     incoming.every(({ id }) =>
       previous.some((character) => character.id === id)

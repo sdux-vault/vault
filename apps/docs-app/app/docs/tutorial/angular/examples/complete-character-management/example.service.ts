@@ -494,7 +494,7 @@ export class ExampleService {
     // Teaching point: Filter (ex-016)
     /*
      * `.filters()` registers `removeUnknownLastNameFilter` as a
-     * `FilterFunction<readonly StarWarsCharacterState[]>`.
+     * `FilterFunction<readonly StarWarsCharacter[]>`.
      *
      * This pure function runs before reducers and returns a new candidate
      * collection without characters whose last name is exactly `unknown`.
@@ -531,7 +531,7 @@ export class ExampleService {
 
     // Teaching point: Before Taps (ex-031)
     /*
-     * `.beforeTaps()` registers a `TapCallback<readonly StarWarsCharacterState[]>`
+     * `.beforeTaps()` registers a `TapCallback<readonly StarWarsCharacter[]>`
      * that observes the filtered candidate immediately before reducer execution.
      *
      * The callback publishes that immutable input for the tutorial display, returns
@@ -542,7 +542,7 @@ export class ExampleService {
     // Teaching point: Reducer 1 (ex-017)
     /*
      * The first `.reducers()` entry is a delegating
-     * `ReducerFunction<readonly StarWarsCharacterState[]>`.
+     * `ReducerFunction<readonly StarWarsCharacter[]>`.
      *
      * After filtering, this imported pure function performs an immutable transformation
      * through `deriveForceSensitiveDisplay()`, producing a new collection in which
@@ -579,7 +579,7 @@ export class ExampleService {
 
     // Teaching point: After Taps (ex-032)
     /*
-     * `.afterTaps()` registers a `TapCallback<readonly StarWarsCharacterState[]>`
+     * `.afterTaps()` registers a `TapCallback<readonly StarWarsCharacter[]>`
      * that observes the transformed candidate immediately after reducer execution.
      *
      * The callback publishes that immutable input for the tutorial display, returns
@@ -590,7 +590,7 @@ export class ExampleService {
     // Teaching point: State Emission (ex-035)
     /*
      * `.emitStates()` registers a
-     * `CoreEmitStateCallback<readonly StarWarsCharacterState[]>` that receives the
+     * `CoreEmitStateCallback<readonly StarWarsCharacter[]>` that receives the
      * finalized `StateSnapshotShape` after the FeatureCell commits and exposes it.
      *
      * The callback publishes that immutable snapshot for the tutorial display and
@@ -601,7 +601,7 @@ export class ExampleService {
     // Teaching point: Error Emission (ex-036)
     /*
      * `.errors()` registers a
-     * `VaultErrorCallback<readonly StarWarsCharacterState[]>` that receives the
+     * `VaultErrorCallback<readonly StarWarsCharacter[]>` that receives the
      * finalized Vault error and immutable StateSnapshot after error commitment.
      *
      * The callback publishes both observational inputs for the tutorial display;
@@ -812,7 +812,7 @@ export class ExampleService {
   /**
    * Replaces the current collection from an Angular `HttpResourceRef`.
    * The example adapter owns the remote endpoint and converts its untrusted JSON
-   * response into `StarWarsCharacterState`; Vault's HTTP Resource Resolve stage
+   * response into `StarWarsCharacter`; Vault's HTTP Resource Resolve stage
    * then represents loading, awaits the resource, and forwards the parsed value
    * through the configured filter, taps, and reducers before State commitment.
    * @returns Nothing; consumers observe loading, data, and errors reactively.

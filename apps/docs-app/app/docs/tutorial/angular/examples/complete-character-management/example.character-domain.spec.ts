@@ -1,4 +1,3 @@
-import type { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import {
   cloneCharacters,
   createCharacterState,
@@ -8,15 +7,17 @@ import {
   withCharactersSortedByLastName
 } from './example.character-domain';
 
+import { StarWarsCharacter } from './star-wars-character.shape';
+
 describe('Character domain', () => {
-  const leia: StarWarsCharacterState = {
+  const leia: StarWarsCharacter = {
     id: 10,
     name: 'Leia',
     lastName: 'Organa',
     faction: 'Rebel Alliance',
     isForceSensitive: false
   };
-  const luke: StarWarsCharacterState = {
+  const luke: StarWarsCharacter = {
     id: 20,
     name: 'Luke',
     lastName: 'Skywalker',

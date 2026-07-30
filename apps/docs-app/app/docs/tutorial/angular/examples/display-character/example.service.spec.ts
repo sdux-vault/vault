@@ -4,13 +4,13 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import { ExampleService } from './example.service';
+import { StarWarsCharacter } from './star-wars-character.shape';
 
 describe('ExampleService', () => {
   const key = 'star-wars-character';
   let service: ExampleService;
-  const initialCharacters: readonly StarWarsCharacterState[] = [
+  const initialCharacters: readonly StarWarsCharacter[] = [
     {
       id: 10,
       name: 'Leia',

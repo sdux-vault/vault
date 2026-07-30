@@ -67,7 +67,7 @@ const HTTP_RESOURCE_CHARACTERS: readonly HttpResourceCharacter[] = [
  * The adapter retains only the selected people, derives their numeric identities
  * from canonical URLs, and rejects incomplete responses before they enter Vault.
  * @param value - Raw JSON value returned by the SWAPI people endpoint.
- * @returns Three detached characters matching `StarWarsCharacterState`.
+ * @returns Three detached characters matching `StarWarsCharacter`.
  */
 function parseStarWarsCharacters(value: unknown): readonly StarWarsCharacter[] {
   if (!Array.isArray(value)) {

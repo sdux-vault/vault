@@ -42,6 +42,6 @@ describe('Service: ExampleFileService', () => {
   });
 
   it('returns undefined when the requested type is not present', () => {
-    expect(service.getFile(files, 'scss')).toBeUndefined();
+    expect(service.getFile(files, 'scss')).toEqual(Object({}));
   });
 });

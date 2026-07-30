@@ -3,8 +3,8 @@ import {
   HttpTestingController,
   provideHttpClientTesting
 } from '@angular/common/http/testing';
-import { provideZonelessChangeDetection, signal } from '@angular/core';
 import type { FactoryProvider } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   withAes256EncryptBehavior,
@@ -17,9 +17,9 @@ import {
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
-import { of } from 'rxjs';
 import { VaultPrivateErrorService } from '@sdux-vault/shared';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import { flushVaultPipeline } from '@sdux-vault/testing-utils';
+import { of } from 'rxjs';
 import { removeUnknownLastNameFilter } from './example.filter';
 import { exampleHydrate } from './example.hydrate';
 import { exampleObservable } from './example.observable';
@@ -30,10 +30,11 @@ import {
   EXAMPLE_ENCRYPTED_STORAGE_KEY,
   ExampleService
 } from './example.service';
+import { StarWarsCharacter } from './star-wars-character.shape';
 
 describe('ExampleService', () => {
   const key = 'star-wars-character';
-  const initialCharacters: readonly StarWarsCharacterState[] = [
+  const initialCharacters: readonly StarWarsCharacter[] = [
     {
       id: 10,
       name: 'Leia',
@@ -49,7 +50,7 @@ describe('ExampleService', () => {
       isForceSensitive: true
     }
   ];
-  const initialCharactersWithDisplay: readonly StarWarsCharacterState[] = [
+  const initialCharactersWithDisplay: readonly StarWarsCharacter[] = [
     {
       ...initialCharacters[0]!,
       forceSensitiveDisplay: 'No'
@@ -93,7 +94,7 @@ describe('ExampleService', () => {
   };
 
   const configureService = async (
-    initialState: readonly StarWarsCharacterState[] | null = initialCharacters,
+    initialState: readonly StarWarsCharacter[] | null = initialCharacters,
     deferHydration = false,
     withEncryptedPersistence = false
   ): Promise<ExampleService> => {
@@ -129,7 +130,7 @@ describe('ExampleService', () => {
       spyOn(exampleHydrate, 'getPromise').and.callFake(
         () =>
           Promise.resolve(initialState ?? undefined) as Promise<
-            readonly StarWarsCharacterState[]
+            readonly StarWarsCharacter[]
           >
       );
     }
@@ -154,7 +155,7 @@ describe('ExampleService', () => {
 
   it('should hydrate the authoritative initial State through the complete pipeline', async () => {
     const service = await configureService(initialCharacters, true);
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.state.hasValue()).toBeFalse();
 
@@ -208,7 +209,7 @@ describe('ExampleService', () => {
 
   it('should expose a rejected hydration without using configured initial State', async () => {
     const service = await configureService(initialCharacters, true);
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     const rejectHydration = exampleHydrate.getReject();
     expect(rejectHydration).not.toBeNull();
@@ -240,9 +241,7 @@ describe('ExampleService', () => {
       [withStepwiseController]
     );
     const featureCellProvider = featureCellProviders[0] as FactoryProvider;
-    const value = signal<readonly StarWarsCharacterState[] | undefined>(
-      undefined
-    );
+    const value = signal<readonly StarWarsCharacter[] | undefined>(undefined);
     const vault = jasmine.createSpyObj('FeatureCell', [
       'hydrate',
       'withStepwiseResolve',
@@ -314,14 +313,14 @@ describe('ExampleService', () => {
   });
 
   it('should purely filter characters whose last name is exactly unknown', async () => {
-    const unknownCharacter: StarWarsCharacterState = {
+    const unknownCharacter: StarWarsCharacter = {
       id: 30,
       name: 'Unknown',
       lastName: 'unknown',
       faction: 'Unaffiliated',
       isForceSensitive: false
     };
-    const retainedCharacter: StarWarsCharacterState = {
+    const retainedCharacter: StarWarsCharacter = {
       id: 31,
       name: 'Captain',
       lastName: 'Unknown',
@@ -342,7 +341,7 @@ describe('ExampleService', () => {
   });
 
   it('should expose the filtered candidate observed before reducer execution', async () => {
-    const unknownCharacter: StarWarsCharacterState = {
+    const unknownCharacter: StarWarsCharacter = {
       id: 30,
       name: 'Unknown',
       lastName: 'unknown',
@@ -402,7 +401,7 @@ describe('ExampleService', () => {
       isForceSensitive: false
     });
 
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.isStepwiseResolvePending()).toBeTrue();
     expect(service.stepwiseResolveRequest()).toEqual({
@@ -432,7 +431,7 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.isStepwiseResolvePending()).toBeTrue();
 
@@ -450,9 +449,9 @@ describe('ExampleService', () => {
     const service = await configureService();
 
     service.fetchWithPromise();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
     examplePromise.getResolve()!();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.isStepwiseResolvePending()).toBeTrue();
     expect(
@@ -462,7 +461,7 @@ describe('ExampleService', () => {
     ).toBeTrue();
 
     service.acceptStepwiseResolve();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.isStepwiseFilterPending()).toBeTrue();
     expect(service.stepwiseFilterRequest()?.current).toEqual(
@@ -496,9 +495,9 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
     service.acceptStepwiseResolve();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.isStepwiseFilterPending()).toBeTrue();
 
@@ -521,11 +520,11 @@ describe('ExampleService', () => {
       isForceSensitive: false
     });
 
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
     service.acceptStepwiseResolve();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
     service.acceptStepwiseFilter();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.isStepwiseReducerPending()).toBeTrue();
     expect(service.stepwiseReducerRequest()).toEqual({
@@ -559,11 +558,11 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
     service.acceptStepwiseResolve();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
     service.acceptStepwiseFilter();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.isStepwiseReducerPending()).toBeTrue();
 
@@ -676,7 +675,7 @@ describe('ExampleService', () => {
     const service = await configureService();
 
     service.fetchWithPromise();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.state.isLoading()).toBeTrue();
     expect(service.characters()).toEqual(initialCharactersWithDisplay);
@@ -717,7 +716,7 @@ describe('ExampleService', () => {
     const service = await configureService();
 
     service.fetchWithPromise();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.state.isLoading()).toBeTrue();
     expect(service.characters()).toEqual(initialCharactersWithDisplay);
@@ -751,7 +750,7 @@ describe('ExampleService', () => {
     const service = await configureService();
 
     service.addByObservable();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.state.isLoading()).toBeTrue();
     expect(service.characters()).toEqual(initialCharactersWithDisplay);
@@ -792,7 +791,7 @@ describe('ExampleService', () => {
     const service = await configureService();
 
     service.addByObservable();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.state.isLoading()).toBeTrue();
     expect(service.characters()).toEqual(initialCharactersWithDisplay);
@@ -828,7 +827,7 @@ describe('ExampleService', () => {
 
     service.fetchWithHttpResource();
     TestBed.tick();
-    await new Promise((resolve) => setTimeout(resolve));
+    await flushVaultPipeline();
 
     expect(service.state.isLoading()).toBeTrue();
     expect(service.characters()).toEqual(initialCharactersWithDisplay);
