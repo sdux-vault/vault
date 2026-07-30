@@ -1,7 +1,7 @@
-// star-wars-character.state.ts
+// star-wars-character.shape.ts
 
 // Defines the State contract for a Star Wars character.
-export interface StarWarsCharacterState {
+export interface StarWarsCharacter {
   /** Unique identifier for the character. */
   id: number;
 
@@ -10,6 +10,9 @@ export interface StarWarsCharacterState {
 
   /** Last name of the character. */
   lastName: string;
+
+  /** The First and last name of the character derived from a reducer. */
+  fullName?: string;
 
   /** Faction associated with the character. */
   faction: string;

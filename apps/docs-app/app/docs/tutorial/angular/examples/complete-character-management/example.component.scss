@@ -541,10 +541,6 @@ $action-column-width: calc(
             grid-template-columns: repeat(2, minmax(0, 1fr));
           }
 
-          .full {
-            grid-column: 1 / -1;
-          }
-
           .checkbox {
             display: inline-flex;
             gap: $spacing-sm;
@@ -1159,12 +1155,6 @@ $action-column-width: calc(
           font-size: $font-size-md;
         }
 
-        .stepwise-actions {
-          display: flex;
-          gap: $spacing-sm;
-          align-items: center;
-        }
-
         .button {
           min-height: 30px;
           padding: $spacing-xs $spacing-sm;
@@ -1182,40 +1172,6 @@ $action-column-width: calc(
         border-radius: $border-radius-sm;
         font: inherit;
         resize: vertical;
-      }
-    }
-  }
-
-  @media (max-width: $breakpoint-lg) {
-    .pipeline-actions {
-      grid-template-columns: repeat(2, $action-column-width);
-
-      .distinct-operator,
-      .tab-sync-operator {
-        .operator-actions {
-          grid-template-columns: repeat(2, $action-column-width);
-        }
-      }
-    }
-  }
-
-  @media (max-width: $breakpoint-md) {
-    .pipeline-actions {
-      grid-template-columns: $action-column-width;
-      justify-content: center;
-
-      .action-row {
-        width: $action-column-width;
-      }
-
-      .distinct-operator,
-      .tab-sync-operator {
-        width: $action-column-width;
-
-        .operator-actions {
-          grid-template-columns: $action-column-width;
-          justify-content: center;
-        }
       }
     }
   }

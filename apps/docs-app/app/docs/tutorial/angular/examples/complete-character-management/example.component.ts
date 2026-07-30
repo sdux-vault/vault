@@ -21,8 +21,6 @@ import {
   VaultErrorService,
   VaultErrorShape
 } from '@sdux-vault/shared';
-import { STAR_WARS_CHARACTERS } from '../../../examples/star-wars-character.constant';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import {
   EditorMode,
   ExampleCharacterEditor,
@@ -37,6 +35,8 @@ import {
   EXAMPLE_ENCRYPTED_STORAGE_KEY,
   ExampleService
 } from './example.service';
+import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
+import { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
  * Coordinates the reactive character editor presented by this tutorial example.
@@ -219,9 +219,7 @@ export class ExampleComponent {
   });
 
   /** Holds the character awaiting explicit confirmation before removal. */
-  protected readonly deleteCandidate = signal<StarWarsCharacterState | null>(
-    null
-  );
+  protected readonly deleteCandidate = signal<StarWarsCharacter | null>(null);
 
   /**
    * Resolves the selected identity against the latest reactive character collection.
@@ -914,7 +912,7 @@ export class ExampleComponent {
    * @param character - Character whose first and last names should be combined.
    * @returns The display name used in picker options, messages, and headings.
    */
-  protected displayName(character: StarWarsCharacterState): string {
+  protected displayName(character: StarWarsCharacter): string {
     return this.#displayName(character);
   }
 
@@ -923,7 +921,7 @@ export class ExampleComponent {
    * @param character - Character whose name fields should be formatted.
    * @returns The character's first and last names separated by one space.
    */
-  #displayName(character: StarWarsCharacterState): string {
+  #displayName(character: StarWarsCharacter): string {
     return this.editor.displayName(character);
   }
 
@@ -947,7 +945,7 @@ export class ExampleComponent {
    * @param character - Character whose values should populate the editor.
    * @returns Nothing; the existing reactive form is updated in place.
    */
-  #patchForm(character: StarWarsCharacterState): void {
+  #patchForm(character: StarWarsCharacter): void {
     this.characterForm.setValue({
       name: character.name,
       lastName: character.lastName,

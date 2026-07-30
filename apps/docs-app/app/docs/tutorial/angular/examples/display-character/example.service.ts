@@ -1,7 +1,7 @@
 // example.service.ts
 import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
  * Owns the character collection and exposes domain operations for the tutorial component.
@@ -11,7 +11,7 @@ import { StarWarsCharacterState } from '../../../examples/star-wars-character.st
  * ️**Architectural Boundary:** Components consume this service instead of accessing the
  * FeatureCell directly, keeping state ownership and character rules in one place.
  */
-@FeatureCell<readonly StarWarsCharacterState[]>('star-wars-character')
+@FeatureCell<readonly StarWarsCharacter[]>('star-wars-character')
 @Injectable({ providedIn: 'root' })
 export class ExampleService {
   // Teaching point: Minimal Read-Only FeatureCell (ex-002)
@@ -19,8 +19,7 @@ export class ExampleService {
    * Provides the strongly typed FeatureCell API associated with this decorated service.
    * Every collection update passes through this reference before reactive state changes.
    */
-  readonly #vault =
-    injectVault<readonly StarWarsCharacterState[]>(ExampleService);
+  readonly #vault = injectVault<readonly StarWarsCharacter[]>(ExampleService);
 
   /**
    * Exposes the FeatureCell's Angular signal state for value, loading, error, and presence checks.

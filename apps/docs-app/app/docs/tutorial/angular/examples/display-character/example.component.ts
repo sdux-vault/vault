@@ -5,8 +5,8 @@ import {
   inject
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import { ExampleService } from './example.service';
+import { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
  * Coordinates the reactive character editor presented by this tutorial example.
@@ -32,7 +32,7 @@ export class ExampleComponent {
    */
   readonly #exampleService = inject(ExampleService);
 
-  protected character = computed<StarWarsCharacterState | null>(() => {
+  protected character = computed<StarWarsCharacter | null>(() => {
     return this.#exampleService.state.value()?.[0] ?? null;
   });
 }

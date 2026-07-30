@@ -1,6 +1,6 @@
-import type { StarWarsCharacterState } from './star-wars-character.state';
+import type { StarWarsCharacter } from './star-wars-character.shape';
 
-export const STAR_WARS_CHARACTERS: readonly StarWarsCharacterState[] = [
+export const STAR_WARS_CHARACTERS: readonly StarWarsCharacter[] = [
   {
     id: 1,
     name: 'Luke',

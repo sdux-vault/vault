@@ -1,7 +1,7 @@
-import { httpResource } from '@angular/common/http';
 import type { HttpResourceRef } from '@angular/common/http';
+import { httpResource } from '@angular/common/http';
 import type { Injector } from '@angular/core';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /** Public SWAPI endpoint that returns the complete Star Wars people collection. */
 const SWAPI_PEOPLE_URL = 'https://swapi.info/api/people';
@@ -69,9 +69,7 @@ const HTTP_RESOURCE_CHARACTERS: readonly HttpResourceCharacter[] = [
  * @param value - Raw JSON value returned by the SWAPI people endpoint.
  * @returns Three detached characters matching `StarWarsCharacterState`.
  */
-function parseStarWarsCharacters(
-  value: unknown
-): readonly StarWarsCharacterState[] {
+function parseStarWarsCharacters(value: unknown): readonly StarWarsCharacter[] {
   if (!Array.isArray(value)) {
     throw new Error('The SWAPI people response must be an array.');
   }
@@ -120,14 +118,11 @@ class ExampleHttpResource {
    */
   getResource(
     injector: Injector
-  ): HttpResourceRef<readonly StarWarsCharacterState[] | undefined> {
-    return httpResource<readonly StarWarsCharacterState[]>(
-      () => SWAPI_PEOPLE_URL,
-      {
-        injector,
-        parse: parseStarWarsCharacters
-      }
-    );
+  ): HttpResourceRef<readonly StarWarsCharacter[] | undefined> {
+    return httpResource<readonly StarWarsCharacter[]>(() => SWAPI_PEOPLE_URL, {
+      injector,
+      parse: parseStarWarsCharacters
+    });
   }
 }
 

@@ -16,7 +16,6 @@
     <div
       class="feedback"
       [class.error]="operationFeedback.tone === 'error'"
-      [class.info]="operationFeedback.tone === 'info'"
       [class.success]="operationFeedback.tone === 'success'"
       [attr.role]="operationFeedback.tone === 'error' ? 'alert' : 'status'"
       aria-live="polite">
@@ -158,7 +157,7 @@
     <!-- Teaching point: CRUD Foundation (ex-007) -->
     <div class="workspace">
       <!-- Teaching template: Keep this column for collection selection and read-only detail lessons. -->
-      <div class="workspace-column workspace-column-primary">
+      <div class="workspace-column">
         <!-- Teaching point: Collection Selection (ex-001) -->
         <div class="field selection">
           <label for="character-selection">
@@ -250,7 +249,7 @@
       </div>
 
       <!-- Teaching template: Safe to remove this column for read-only lessons that stop before create or update. -->
-      <div class="workspace-column workspace-column-secondary">
+      <div class="workspace-column">
         <!-- Teaching point: Create (ex-009) -->
         <div class="actions add-action" aria-label="Character actions">
           <!-- Teaching point: Create (ex-009) -->

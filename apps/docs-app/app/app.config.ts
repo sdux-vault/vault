@@ -49,7 +49,7 @@ import { PIPELINE_BUILDER_STAGE_TOKEN } from './builder/tokens/pipeline-builder-
 import { FeatureCellInvocations } from './cells/feature-cells';
 import { SduxHttpClientInterceptor } from './dashboard/utils/sdux-http-client.interceptor';
 import { ExampleService } from './docs/tutorial/angular/examples/complete-character-management/example.service';
-import { STAR_WARS_CHARACTERS } from './docs/tutorial/examples/star-wars-character.constant';
+import { STAR_WARS_CHARACTERS } from './docs/tutorial/angular/examples/complete-character-management/star-wars-character.constant';
 import { routes } from './vault.routes';
 
 const appearance: MatFormFieldDefaultOptions = {

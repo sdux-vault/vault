@@ -36,17 +36,6 @@ const sourceGroups = [
     )
   },
   {
-    exportName: 'STAR_WARS_CHARACTER_STATE',
-    sourceFile: path.join(
-      projectRoot,
-      'apps/docs-app/app/docs/tutorial/examples/star-wars-character.state.ts'
-    ),
-    outputFile: path.join(
-      projectRoot,
-      'apps/docs-app/app/docs/tutorial/examples/generated/star-wars-character-state.generated.ts'
-    )
-  },
-  {
     exportName: 'INITIAL_SERVICE',
     sourceFile: path.join(
       projectRoot,
@@ -66,17 +55,6 @@ const sourceGroups = [
     outputFile: path.join(
       projectRoot,
       'apps/docs-app/app/docs/tutorial/angular/generated/initial-app-config.generated.ts'
-    )
-  },
-  {
-    exportName: 'REGISTERED_APP_CONFIG',
-    sourceFile: path.join(
-      projectRoot,
-      'apps/docs-app/app/docs/tutorial/angular/examples/registered-app-config/registered-app.config.ts'
-    ),
-    outputFile: path.join(
-      projectRoot,
-      'apps/docs-app/app/docs/tutorial/angular/generated/registered-app-config.generated.ts'
     )
   }
 ];

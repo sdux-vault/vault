@@ -1,6 +1,6 @@
 import type { StateSnapshotShape, VaultErrorShape } from '@sdux-vault/shared';
-import type { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import type { StarWarsCharacterDraft } from './example.character-domain';
+import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
  * Framework-agnostic presentation logic shared by the Angular, React, Vue, and Svelte
@@ -58,7 +58,7 @@ export interface RawStateFields {
   readonly isLoading: boolean;
 
   /** Current committed collection, or `undefined` when no value is present. */
-  readonly value: readonly StarWarsCharacterState[] | undefined;
+  readonly value: readonly StarWarsCharacter[] | undefined;
 
   /** Current normalized error, or `null` when the pipeline is healthy. */
   readonly error: VaultErrorShape | null;
@@ -109,14 +109,14 @@ export class ExampleCharacterEditor {
 
   /** Executable pure filter source displayed by the Filter teaching output. */
   get filterSource(): string {
-    return `export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacterState[]> =
+    return `export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacter[]> =
   (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');"
  `;
   }
 
   /** Executable delegating-reducer source displayed by the Reducer 1 teaching output. */
   get reducer1Source(): string {
-    return `#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacterState[]): readonly StarWarsCharacterState[] {
+    return `#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacter[]): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
@@ -127,7 +127,7 @@ export class ExampleCharacterEditor {
 
   /** Executable factory-generated reducer source displayed by the Reducer 2 teaching output. */
   get reducer2Source(): string {
-    return `export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacterState[]> {
+    return `export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacter[]> {
   return (characters) =>
     [...characters].sort((left, right) =>
       left.lastName.localeCompare(right.lastName)
@@ -137,7 +137,7 @@ export class ExampleCharacterEditor {
 
   /** Custom comparison source passed to Distinct Until Changed for the teaching output. */
   get comparisonFunctionSource(): string {
-    return `withDistinctUntilChanged<readonly StarWarsCharacterState[]>(
+    return `withDistinctUntilChanged<readonly StarWarsCharacter[]>(
   (incoming, previous) =>
     incoming.every(({ id }) =>
       previous.some((character) => character.id === id)
@@ -184,8 +184,8 @@ export class ExampleCharacterEditor {
    * @param character - Character whose name fields should be formatted.
    * @returns The character's first and last names separated by one space.
    */
-  get displayName(): (character: StarWarsCharacterState) => string {
-    return (character: StarWarsCharacterState): string =>
+  get displayName(): (character: StarWarsCharacter) => string {
+    return (character: StarWarsCharacter): string =>
       `${character.name} ${character.lastName}`;
   }
   /**
@@ -269,9 +269,9 @@ export class ExampleCharacterEditor {
    * @returns The matching character, or `null` when no character matches.
    */
   resolveCharacter(
-    characters: readonly StarWarsCharacterState[],
+    characters: readonly StarWarsCharacter[],
     value: string | number
-  ): StarWarsCharacterState | null {
+  ): StarWarsCharacter | null {
     const id = Number(value);
     return characters.find((character) => character.id === id) ?? null;
   }
