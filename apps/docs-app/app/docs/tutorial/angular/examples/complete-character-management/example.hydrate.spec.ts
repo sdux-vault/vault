@@ -1,6 +1,11 @@
 import { exampleHydrate } from './example.hydrate';
 
 describe('exampleHydrate', () => {
+  it('should not expose terminal controllers before hydration is requested', () => {
+    expect(exampleHydrate.getResolve()).toBeNull();
+    expect(exampleHydrate.getReject()).toBeNull();
+  });
+
   it('should resolve the authoritative collection and clear its controllers', async () => {
     const promise = exampleHydrate.getPromise();
     const resolve = exampleHydrate.getResolve();

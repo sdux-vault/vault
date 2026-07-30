@@ -258,6 +258,13 @@ export class ExampleComponent {
   constructor() {
     inject(DestroyRef).onDestroy(() => this.#delayTimer.destroy());
 
+    this.#observeStateStream();
+    this.#observeGlobalErrors();
+    this.#observeInitialSelection();
+    this.#observeStepwisePromptEffects();
+  }
+
+  #observeStateStream(): void {
     this.#exampleService.state$
       .pipe(takeUntilDestroyed())
       .subscribe(({ snapshot, type }) => {
@@ -271,10 +278,12 @@ export class ExampleComponent {
           (type === StateEmitTypes.FinalizePipeline ||
             type === StateEmitTypes.PipelineError)
         ) {
-          this.#delayTimer.destroy();
+          this.#delayTimer.stop();
         }
       });
+  }
 
+  #observeGlobalErrors(): void {
     this.#globalErrorService.error$
       .pipe(takeUntilDestroyed())
       .subscribe((error: VaultErrorShape | null) => {
@@ -282,7 +291,9 @@ export class ExampleComponent {
           error && this.#globalErrorService.hasError ? error : null
         );
       });
+  }
 
+  #observeInitialSelection(): void {
     effect(() => {
       const characters = this.characters();
 
@@ -299,7 +310,9 @@ export class ExampleComponent {
         this.#patchForm(firstCharacter);
       }
     });
+  }
 
+  #observeStepwisePromptEffects(): void {
     effect(() => {
       this.processStepwiseResolvePending(this.isStepwiseResolvePending());
     });

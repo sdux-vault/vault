@@ -87,25 +87,25 @@ export interface ErrorEmissionView<T> {
 
 export class ExampleCharacterEditor {
   /** Fixed faction choices rendered by both the create and edit flows. */
-  get factions() {
-    return [
-      'Galactic Empire',
-      'Jedi Order',
-      'Rebel Alliance',
-      'Sith Order',
-      'Unaffiliated'
-    ] as const;
-  }
+  readonly factions = [
+    'Galactic Empire',
+    'Jedi Order',
+    'Rebel Alliance',
+    'Sith Order',
+    'Unaffiliated'
+  ] as const;
 
   /**
    * Builds the success feedback shown after a character is created and selected.
    * @param name - Display name of the newly created character.
    * @returns The success feedback describing the completed create.
    */
-  characterAddedFeedback = (name: string): OperationFeedback => ({
-    message: `${name} was added and selected.`,
-    tone: 'success'
-  });
+  characterAddedFeedback(name: string): OperationFeedback {
+    return {
+      message: `${name} was added and selected.`,
+      tone: 'success'
+    };
+  }
 
   /** Executable pure filter source displayed by the Filter teaching output. */
   get filterSource(): string {
@@ -158,39 +158,37 @@ export class ExampleCharacterEditor {
   }
 
   /** Constant feedback messages that do not depend on a specific character. */
-  get feedback(): Record<string, OperationFeedback> {
-    return {
-      /** Reported when the form fails validation on save. */
-      invalidForm: {
-        message: 'Correct the highlighted fields before saving.',
-        tone: 'error'
-      },
+  readonly feedback = {
+    /** Reported when the form fails validation on save. */
+    invalidForm: {
+      message: 'Correct the highlighted fields before saving.',
+      tone: 'error'
+    },
 
-      /** Reported when an edit save runs without a selected character. */
-      selectBeforeSave: {
-        message: 'Select a character before saving changes.',
-        tone: 'error'
-      },
+    /** Reported when an edit save runs without a selected character. */
+    selectBeforeSave: {
+      message: 'Select a character before saving changes.',
+      tone: 'error'
+    },
 
-      /** Reported when a pending create is discarded by canceling. */
-      newCharacterDiscarded: {
-        message: 'The new character was discarded.',
-        tone: 'info'
-      },
+    /** Reported when a pending create is discarded by canceling. */
+    newCharacterDiscarded: {
+      message: 'The new character was discarded.',
+      tone: 'info'
+    },
 
-      /** Reported when unsaved edits are discarded by canceling. */
-      unsavedChangesDiscarded: {
-        message: 'Unsaved changes were discarded.',
-        tone: 'info'
-      },
+    /** Reported when unsaved edits are discarded by canceling. */
+    unsavedChangesDiscarded: {
+      message: 'Unsaved changes were discarded.',
+      tone: 'info'
+    },
 
-      /** Reported when the captured baseline collection is restored. */
-      initialCollectionRestored: {
-        message: 'The initial character collection was restored.',
-        tone: 'success'
-      }
-    } as const satisfies Record<string, OperationFeedback>;
-  }
+    /** Reported when the captured baseline collection is restored. */
+    initialCollectionRestored: {
+      message: 'The initial character collection was restored.',
+      tone: 'success'
+    }
+  } as const satisfies Record<string, OperationFeedback>;
   /**
    * Builds the success feedback shown after an existing character is updated.
    * @param name - Display name of the updated character.

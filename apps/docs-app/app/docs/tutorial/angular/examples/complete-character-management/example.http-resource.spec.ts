@@ -28,111 +28,115 @@ describe('exampleHttpResource', () => {
     httpTesting.verify();
   });
 
-  it('should fetch and adapt selected SWAPI people into character State', async () => {
-    resource = exampleHttpResource.getResource(injector);
+  describe('resource lifecycle', () => {
+    it('should fetch and adapt selected SWAPI people into character State', async () => {
+      resource = exampleHttpResource.getResource(injector);
 
-    expect(resource.value()).toBeUndefined();
-    expect(resource.isLoading()).toBeTrue();
+      expect(resource.value()).toBeUndefined();
+      expect(resource.isLoading()).toBeTrue();
 
-    await TestBed.tick();
+      await TestBed.tick();
 
-    const request = httpTesting.expectOne(apiUrl);
-    expect(request.request.method).toBe('GET');
+      const request = httpTesting.expectOne(apiUrl);
+      expect(request.request.method).toBe('GET');
 
-    request.flush([
-      {
-        name: 'Han Solo',
-        url: 'https://swapi.info/api/people/14/'
-      },
-      {
-        name: 'Yoda',
-        url: 'https://swapi.info/api/people/20/'
-      },
-      {
-        name: 'Lando Calrissian',
-        url: 'https://swapi.info/api/people/25/'
-      },
-      {
-        name: 'Luke Skywalker',
-        url: 'https://swapi.info/api/people/1/'
-      }
-    ]);
+      request.flush([
+        {
+          name: 'Han Solo',
+          url: 'https://swapi.info/api/people/14/'
+        },
+        {
+          name: 'Yoda',
+          url: 'https://swapi.info/api/people/20/'
+        },
+        {
+          name: 'Lando Calrissian',
+          url: 'https://swapi.info/api/people/25/'
+        },
+        {
+          name: 'Luke Skywalker',
+          url: 'https://swapi.info/api/people/1/'
+        }
+      ]);
 
-    await TestBed.tick();
+      await TestBed.tick();
 
-    expect(resource.isLoading()).toBeFalse();
-    expect(resource.error()).toBeUndefined();
-    expect(resource.value()).toEqual([
-      {
-        id: 14,
-        name: 'Han',
-        lastName: 'Solo',
-        faction: 'Rebel Alliance',
-        isForceSensitive: false
-      },
-      {
-        id: 20,
-        name: 'Yoda',
-        lastName: 'unknown',
-        faction: 'Jedi Order',
-        isForceSensitive: true
-      },
-      {
-        id: 25,
-        name: 'Lando',
-        lastName: 'Calrissian',
-        faction: 'Rebel Alliance',
-        isForceSensitive: false
-      }
-    ]);
-  });
-
-  it('should reject a response that is not a people collection', async () => {
-    resource = exampleHttpResource.getResource(injector);
-    await TestBed.tick();
-
-    httpTesting.expectOne(apiUrl).flush({ name: 'Han Solo' });
-    await TestBed.tick();
-
-    expect(resource.isLoading()).toBeFalse();
-    expect(resource.error()?.message).toBe(
-      'The SWAPI people response must be an array.'
-    );
-  });
-
-  it('should reject an incomplete people collection', async () => {
-    resource = exampleHttpResource.getResource(injector);
-    await TestBed.tick();
-
-    httpTesting.expectOne(apiUrl).flush([
-      {
-        name: 'Han Solo',
-        url: 'https://swapi.info/api/people/14/'
-      },
-      {
-        name: 'Yoda',
-        url: 'https://swapi.info/api/people/20/'
-      }
-    ]);
-    await TestBed.tick();
-
-    expect(resource.isLoading()).toBeFalse();
-    expect(resource.error()?.message).toBe(
-      'The SWAPI response is missing Lando Calrissian.'
-    );
-  });
-
-  it('should expose HTTP failures through the resource error signal', async () => {
-    resource = exampleHttpResource.getResource(injector);
-    await TestBed.tick();
-
-    httpTesting.expectOne(apiUrl).flush('Unavailable', {
-      status: 503,
-      statusText: 'Service Unavailable'
+      expect(resource.isLoading()).toBeFalse();
+      expect(resource.error()).toBeUndefined();
+      expect(resource.value()).toEqual([
+        {
+          id: 14,
+          name: 'Han',
+          lastName: 'Solo',
+          faction: 'Rebel Alliance',
+          isForceSensitive: false
+        },
+        {
+          id: 20,
+          name: 'Yoda',
+          lastName: 'unknown',
+          faction: 'Jedi Order',
+          isForceSensitive: true
+        },
+        {
+          id: 25,
+          name: 'Lando',
+          lastName: 'Calrissian',
+          faction: 'Rebel Alliance',
+          isForceSensitive: false
+        }
+      ]);
     });
-    await TestBed.tick();
+  });
 
-    expect(resource.isLoading()).toBeFalse();
-    expect(resource.error()?.message).toContain('503 Service Unavailable');
+  describe('response adaptation failures', () => {
+    it('should reject a response that is not a people collection', async () => {
+      resource = exampleHttpResource.getResource(injector);
+      await TestBed.tick();
+
+      httpTesting.expectOne(apiUrl).flush({ name: 'Han Solo' });
+      await TestBed.tick();
+
+      expect(resource.isLoading()).toBeFalse();
+      expect(resource.error()?.message).toBe(
+        'The SWAPI people response must be an array.'
+      );
+    });
+
+    it('should reject an incomplete people collection', async () => {
+      resource = exampleHttpResource.getResource(injector);
+      await TestBed.tick();
+
+      httpTesting.expectOne(apiUrl).flush([
+        {
+          name: 'Han Solo',
+          url: 'https://swapi.info/api/people/14/'
+        },
+        {
+          name: 'Yoda',
+          url: 'https://swapi.info/api/people/20/'
+        }
+      ]);
+      await TestBed.tick();
+
+      expect(resource.isLoading()).toBeFalse();
+      expect(resource.error()?.message).toBe(
+        'The SWAPI response is missing Lando Calrissian.'
+      );
+    });
+
+    it('should expose HTTP failures through the resource error signal', async () => {
+      resource = exampleHttpResource.getResource(injector);
+      await TestBed.tick();
+
+      httpTesting.expectOne(apiUrl).flush('Unavailable', {
+        status: 503,
+        statusText: 'Service Unavailable'
+      });
+      await TestBed.tick();
+
+      expect(resource.isLoading()).toBeFalse();
+      expect(resource.error()?.message).toContain('503 Service Unavailable');
+    });
   });
 });

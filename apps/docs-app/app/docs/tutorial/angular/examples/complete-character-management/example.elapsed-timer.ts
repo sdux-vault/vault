@@ -56,10 +56,14 @@ export class ElapsedTimer {
    * @returns Nothing; the timer is ready for a fresh pipeline attempt.
    */
   reset(): void {
-    this.#running = false;
-    cancelAnimationFrame(this.#frameId);
+    this.stop();
     this.#elapsed = 0;
     this.#onChange(0);
+  }
+
+  stop(): void {
+    this.#running = false;
+    cancelAnimationFrame(this.#frameId);
   }
 
   /**
@@ -67,8 +71,7 @@ export class ElapsedTimer {
    * @returns Nothing; no further callback values are produced.
    */
   destroy(): void {
-    this.#running = false;
-    cancelAnimationFrame(this.#frameId);
+    this.stop();
   }
 
   /** Publishes the current duration and schedules the next animation frame. */

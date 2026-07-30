@@ -40,12 +40,10 @@ const HYDRATED_CHARACTERS: readonly StarWarsCharacter[] = [
 ];
 
 /** Resolves the pending hydration with its authoritative character collection. */
-type CharacterHydrationResolver = (
-  characters: readonly StarWarsCharacter[]
-) => void;
+type CharacterResolver = (characters: readonly StarWarsCharacter[]) => void;
 
 /** Rejects the pending hydration with its simulated initialization failure. */
-type CharacterHydrationRejecter = (reason: Error) => void;
+type CharacterRejecter = (reason: Error) => void;
 
 /**
  * Coordinates the manually settled Promise used by the hydration teaching example.
@@ -57,10 +55,10 @@ class ExampleHydrate {
   #pendingPromise: Promise<readonly StarWarsCharacter[]> | null = null;
 
   /** Holds the native resolver until hydration completes successfully. */
-  #resolveCharacters: CharacterHydrationResolver | null = null;
+  #resolveCharacters: CharacterResolver | null = null;
 
   /** Holds the native rejecter until hydration terminates with an Error. */
-  #rejectCharacters: CharacterHydrationRejecter | null = null;
+  #rejectCharacters: CharacterRejecter | null = null;
 
   /**
    * Creates or returns the deferred source that `hydrate()` evaluates during `initialize()`.
@@ -94,7 +92,7 @@ class ExampleHydrate {
         return;
       }
 
-      this.#clearPendingHydration();
+      this.#clearPendingRequest();
       resolveCharacters(
         HYDRATED_CHARACTERS.map((character) => ({ ...character }))
       );
@@ -119,13 +117,13 @@ class ExampleHydrate {
         return;
       }
 
-      this.#clearPendingHydration();
+      this.#clearPendingRequest();
       rejectCharacters(new Error('The character hydration was rejected.'));
     };
   }
 
   /** Releases the completed Promise and both terminal controllers. */
-  #clearPendingHydration(): void {
+  #clearPendingRequest(): void {
     this.#resolveCharacters = null;
     this.#rejectCharacters = null;
     this.#pendingPromise = null;

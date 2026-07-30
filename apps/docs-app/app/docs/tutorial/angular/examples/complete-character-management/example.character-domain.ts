@@ -51,6 +51,22 @@ export function cloneCharacters(
   return characters.map((character) => ({ ...character }));
 }
 
+/** Returns the current Changed State character and the wrapped next index. */
+export function getDistinctChangedStateCharacter(index: number): {
+  readonly character: StarWarsCharacter;
+  readonly nextIndex: number;
+} {
+  const normalizedIndex =
+    ((index % DISTINCT_CHANGED_STATE_CHARACTERS.length) +
+      DISTINCT_CHANGED_STATE_CHARACTERS.length) %
+    DISTINCT_CHANGED_STATE_CHARACTERS.length;
+
+  return {
+    character: { ...DISTINCT_CHANGED_STATE_CHARACTERS[normalizedIndex]! },
+    nextIndex: (normalizedIndex + 1) % DISTINCT_CHANGED_STATE_CHARACTERS.length
+  };
+}
+
 /** Returns the first integer ID greater than every identity in the collection. */
 export function getNextCharacterId(
   characters: readonly StarWarsCharacter[]
@@ -86,20 +102,4 @@ export function withCharactersSortedByLastName(): ReducerFunction<
     [...characters].sort((left, right) =>
       left.lastName.localeCompare(right.lastName)
     );
-}
-
-/** Returns the current Changed State character and the wrapped next index. */
-export function getDistinctChangedStateCharacter(index: number): {
-  readonly character: StarWarsCharacter;
-  readonly nextIndex: number;
-} {
-  const normalizedIndex =
-    ((index % DISTINCT_CHANGED_STATE_CHARACTERS.length) +
-      DISTINCT_CHANGED_STATE_CHARACTERS.length) %
-    DISTINCT_CHANGED_STATE_CHARACTERS.length;
-
-  return {
-    character: { ...DISTINCT_CHANGED_STATE_CHARACTERS[normalizedIndex]! },
-    nextIndex: (normalizedIndex + 1) % DISTINCT_CHANGED_STATE_CHARACTERS.length
-  };
 }
