@@ -31,7 +31,7 @@ export const STAR_WARS_DISPLAY_CHARACTER = [
     type: 'main',
     fileName: 'main.ts',
     source:
-      "import { bootstrapApplication } from '@angular/platform-browser';\nimport { appConfig } from './app.config';\nimport { ExampleComponent } from './example.component';\n\nbootstrapApplication(ExampleComponent, appConfig).catch((error) => {\n  console.error(error);\n});\n"
+      "import { bootstrapApplication } from '@angular/platform-browser';\nimport { appConfig } from './app/app.config';\nimport { ExampleComponent } from './app/example.component';\n\nbootstrapApplication(ExampleComponent, appConfig).catch((error) => {\n  console.error(error);\n});\n"
   },
   {
     type: 'appConfig',
