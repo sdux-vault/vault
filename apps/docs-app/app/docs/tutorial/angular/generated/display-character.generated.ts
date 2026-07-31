@@ -82,7 +82,11 @@ export const STAR_WARS_DISPLAY_CHARACTER = [
     | 'serviceSpec'
     | 'observableSpec'
     | 'promiseSpec'
-    | 'httpResourceSpec';
+    | 'httpResourceSpec'
+    | 'characterDomain'
+    | 'characterDomainSpec'
+    | 'characterEditor'
+    | 'characterEditorSpec';
   readonly fileName: string;
   readonly source: string;
 }>;

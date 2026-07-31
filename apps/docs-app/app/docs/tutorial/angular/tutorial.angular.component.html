@@ -665,7 +665,7 @@ cd sdux-tutorial;
 
           <sdux-example-viewer-source>
             @for (file of initialComponentAndHtmlFiles; track file?.type) {
-              <sdux-example-viewer-tab [label]="file?.fileName || 'file'">
+              <sdux-example-viewer-tab [label]="file.fileName">
                 <pre
                   class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
               </sdux-example-viewer-tab>
@@ -907,7 +907,7 @@ cd sdux-tutorial;
 
           <sdux-example-viewer-source>
             @for (file of dropdownStepFiles; track file?.type) {
-              <sdux-example-viewer-tab [label]="file?.fileName || 'file'">
+              <sdux-example-viewer-tab [label]="file.fileName">
                 <pre
                   class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
               </sdux-example-viewer-tab>
@@ -999,6 +999,192 @@ cd sdux-tutorial;
           <sdux-stackblitz-language-example
             [example]="dropdownTutorialExample()"
             [lang]="dropdownTutorialLang()" />
+        </div>
+      </section>
+
+      <section class="section" id="step-13">
+        <div class="section-title-navigation">
+          <div class="section-title">
+            Step 13: Add the Add/Edit Service Slice
+          </div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            This step turns the user-directed read example into the first
+            mutation slice. The SDuX lesson is still the same: the service owns
+            the <sdux-feature-cell />, while the component owns only temporary
+            editor state. What changes now is the write path. The service gains
+            the create and update methods that mutate the registered collection,
+            and a small domain helper keeps ID assignment and draft creation out
+            of the Angular service body.
+          </p>
+
+          <p>
+            Assume the Angular form primitives are already familiar. Focus on
+            the SDuX boundary: the service assigns IDs, routes creates through
+            <span class="code">mergeState()</span>, routes updates through
+            <span class="code">replaceState()</span>, and keeps every SDuX write
+            inside the service instead of spreading mutation logic across the
+            component and template.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>
+                Update <span class="code">example.service.ts</span> to add the
+                create and update methods.
+              </li>
+              <li>
+                Keep the service as the only place that calls SDuX mutation
+                APIs.
+              </li>
+            </ol>
+          </div>
+
+          <div class="callout callout-warning">
+            <div class="title">Why This Helper Exists</div>
+            <p>
+              Create <span class="code">example.character-domain.ts</span> to
+              hold the draft type, next-ID helper, and character factory used by
+              this add/edit slice.
+            </p>
+            <p>
+              This file exists only to keep the service minimal so the tutorial
+              can focus on SDuX teaching principles instead of helper logic.
+            </p>
+          </div>
+
+          <div class="callout callout-learn-more">
+            <div class="title">What to Look For</div>
+
+            <ul>
+              <li>
+                The service owns the write path just as completely as it owned
+                the read path.
+              </li>
+              <li>
+                Create uses <span class="code">mergeState()</span> because it
+                appends a new record to the existing collection.
+              </li>
+              <li>
+                Update uses <span class="code">replaceState()</span> because it
+                replaces one existing record by identity.
+              </li>
+              <li>
+                The domain helper supports add/edit mechanics, but it does not
+                own any SDuX behavior. The service still owns the FeatureCell.
+              </li>
+            </ul>
+          </div>
+
+          <sdux-example-viewer-source>
+            @for (file of addEditServiceFiles; track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </div>
+      </section>
+
+      <section class="section" id="step-14">
+        <div class="section-title-navigation">
+          <div class="section-title">Step 14: Complete Add/Edit Tutorial</div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            The add/edit tutorial is complete once the page can enter create
+            mode, validate editor input, save a new character into the managed
+            collection, and reopen an existing character for updates without
+            moving Feature ownership out of the service. The collection picker,
+            detail panel, and form now all react to the same SDuX-managed
+            collection.
+          </p>
+
+          <p>
+            This is the first full CRUD-style expansion that still keeps the
+            tutorial disciplined. The component gains form state, mode state,
+            and feedback state, but the service remains the only place that
+            creates or replaces Feature State. That is the important SDuX
+            boundary to preserve before a later destructive-action step adds
+            deletion.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>
+                Update <span class="code">example.component.ts</span> to add the
+                form, editor mode, feedback state, and save/cancel flows.
+              </li>
+              <li>
+                Update <span class="code">example.component.html</span> to add
+                the editor panel, the add action, and the empty-state guidance
+                for create mode.
+              </li>
+              <li>
+                Return to the running Angular application and verify that you
+                can add a character, select it, edit it, and see the detail
+                panel react to the saved State.
+              </li>
+            </ol>
+          </div>
+
+          <div class="callout callout-warning">
+            <div class="title">Why This Helper Exists</div>
+            <p>
+              Create <span class="code">example.character-editor.ts</span> to
+              hold the shared validation, normalization, and feedback rules for
+              the add/edit flow.
+            </p>
+            <p>
+              This file exists only to keep the component minimal so the
+              tutorial can focus on SDuX teaching principles instead of helper
+              logic.
+            </p>
+          </div>
+
+          <div class="callout callout-learn-more">
+            <div class="title">What Changed From the Dropdown Example</div>
+
+            <ul>
+              <li>
+                The component now owns local editor state in addition to local
+                selection state.
+              </li>
+              <li>
+                The template adds a form and feedback region, but it still does
+                not call SDuX APIs directly.
+              </li>
+              <li>
+                Saving a new record and saving an edited record both flow
+                through the same service-owned FeatureCell.
+              </li>
+              <li>
+                Delete is still intentionally absent so this slice can focus on
+                non-destructive mutation only.
+              </li>
+            </ul>
+          </div>
+
+          <sdux-example-viewer-source>
+            @for (file of addEditComponentFiles; track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </div>
       </section>
 

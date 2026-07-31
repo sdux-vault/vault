@@ -131,6 +131,31 @@ describe('CLI: TutorialSourceGenerator', () => {
     expect(fs.readFileSync).toHaveBeenCalledTimes(6);
   });
 
+  it('should prefer the most specific suffix when classifying tutorial helper files', () => {
+    directories['/repo/source'] = [
+      file('example.character-domain.ts'),
+      file('main.ts')
+    ];
+    fileContents['/repo/source/example.character-domain.ts'] =
+      'export const characterDomain = true;';
+    fileContents['/repo/source/main.ts'] = 'export const main = true;';
+
+    const files = createGenerator().collectFiles('/repo/source');
+
+    expect(files).toEqual([
+      {
+        type: 'main',
+        fileName: 'main.ts',
+        source: 'export const main = true;'
+      },
+      {
+        type: 'characterDomain',
+        fileName: 'example.character-domain.ts',
+        source: 'export const characterDomain = true;'
+      }
+    ]);
+  });
+
   it('should exclude generated and operating-system directories and files', () => {
     directories['/repo/source'] = [
       directory('node_modules'),

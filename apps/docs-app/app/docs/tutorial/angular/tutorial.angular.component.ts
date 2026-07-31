@@ -20,8 +20,9 @@ import { ExampleFileService } from '../services/example-file.service';
 import { TutorialGroupShape } from '../shape/tutorial-group.shape';
 import { TutorialStepShape } from '../shape/tutorial-step.shape';
 import { ExampleFileTypes } from '../types/example-file.type';
+import { STAR_WARS_ADD_EDIT_CHARACTERS } from './generated/add-edit-characters.generated';
 import { STAR_WARS_DISPLAY_CHARACTER } from './generated/display-character.generated';
-import { STAR_WARS_DISPLAY_CHARACTERs as STAR_WARS_DISPLAY_CHARACTERS } from './generated/display-characters.generated';
+import { STAR_WARS_DISPLAY_CHARACTERS } from './generated/display-characters.generated';
 import { INITIAL_APP_CONFIG } from './generated/initial-app-config.generated';
 import { INITIAL_SERVICE } from './generated/initial-service.generated';
 
@@ -79,6 +80,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   protected readonly displayCharacterSource = STAR_WARS_DISPLAY_CHARACTER;
 
   protected readonly displayCharactersSource = STAR_WARS_DISPLAY_CHARACTERS;
+
+  protected readonly addEditCharactersSource = STAR_WARS_ADD_EDIT_CHARACTERS;
 
   protected readonly initialServiceSource = INITIAL_SERVICE;
 
@@ -142,6 +145,48 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     )
   ];
 
+  protected readonly addEditServiceFiles = [
+    this.#exampleFileService.getFile(
+      this.addEditCharactersSource,
+      ExampleFileTypes.Service
+    ),
+    this.#exampleFileService.getFile(
+      this.addEditCharactersSource,
+      ExampleFileTypes.ServiceSpec
+    ),
+    this.#exampleFileService.getFile(
+      this.addEditCharactersSource,
+      ExampleFileTypes.CharacterDomain
+    ),
+    this.#exampleFileService.getFile(
+      this.addEditCharactersSource,
+      ExampleFileTypes.CharacterDomainSpec
+    )
+  ];
+
+  protected readonly addEditComponentFiles = [
+    this.#exampleFileService.getFile(
+      this.addEditCharactersSource,
+      ExampleFileTypes.Component
+    ),
+    this.#exampleFileService.getFile(
+      this.addEditCharactersSource,
+      ExampleFileTypes.ComponentSpec
+    ),
+    this.#exampleFileService.getFile(
+      this.addEditCharactersSource,
+      ExampleFileTypes.Html
+    ),
+    this.#exampleFileService.getFile(
+      this.addEditCharactersSource,
+      ExampleFileTypes.CharacterEditor
+    ),
+    this.#exampleFileService.getFile(
+      this.addEditCharactersSource,
+      ExampleFileTypes.CharacterEditorSpec
+    )
+  ];
+
   getStepId(groupIndex: number, stepIndex: number): number {
     const completedSteps = this.tutorialGroups
       .slice(0, groupIndex)
@@ -173,6 +218,14 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       steps: [
         { id: 1, label: 'Add a Dropdown' },
         { id: 2, label: 'Complete Dropdown Tutorial' }
+      ] satisfies TutorialStepShape[]
+    },
+    {
+      id: 3,
+      label: 'Mutation Steps',
+      steps: [
+        { id: 1, label: 'Add/Edit Capabilities' },
+        { id: 2, label: 'Complete Add/Edit Tutorial' }
       ] satisfies TutorialStepShape[]
     }
   ];

@@ -3,6 +3,10 @@
  */
 export const ExampleFileTypes = {
   AppConfig: 'appConfig',
+  CharacterDomain: 'characterDomain',
+  CharacterDomainSpec: 'characterDomainSpec',
+  CharacterEditor: 'characterEditor',
+  CharacterEditorSpec: 'characterEditorSpec',
   Component: 'component',
   ComponentSpec: 'componentSpec',
   Constant: 'constant',

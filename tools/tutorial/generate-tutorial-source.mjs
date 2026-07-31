@@ -36,7 +36,7 @@ const sourceGroups = [
     )
   },
   {
-    exportName: 'STAR_WARS_DISPLAY_CHARACTERs',
+    exportName: 'STAR_WARS_DISPLAY_CHARACTERS',
     sourceDirectory: path.join(
       projectRoot,
       'apps/docs-app/app/docs/tutorial/angular/examples/display-characters'
@@ -44,6 +44,17 @@ const sourceGroups = [
     outputFile: path.join(
       projectRoot,
       'apps/docs-app/app/docs/tutorial/angular/generated/display-characters.generated.ts'
+    )
+  },
+  {
+    exportName: 'STAR_WARS_ADD_EDIT_CHARACTERS',
+    sourceDirectory: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/examples/add-edit-characters'
+    ),
+    outputFile: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/generated/add-edit-characters.generated.ts'
     )
   },
   {
