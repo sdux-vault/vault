@@ -88,11 +88,12 @@ describe('Component: StackBlitz Overview', () => {
 
   describe('exampleGroups property', () => {
     it('should have four groups: Getting Started, Core Patterns, Intermediate, Advanced', () => {
-      expect(component.exampleGroups.length).toBe(4);
+      expect(component.exampleGroups.length).toBe(5);
       expect(component.exampleGroups[0].id).toBe('getting-started');
       expect(component.exampleGroups[1].id).toBe('core-patterns');
       expect(component.exampleGroups[2].id).toBe('intermediate');
       expect(component.exampleGroups[3].id).toBe('advanced');
+      expect(component.exampleGroups[4].id).toBe('tutorial');
     });
 
     it('should have correct number of examples per group', () => {
