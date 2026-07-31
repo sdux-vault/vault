@@ -17,6 +17,7 @@ import { StackBlitzExampleLanguageShape } from '../../stack-blitz/shapes/stackbl
 import { StackBlitzExampleShape } from '../../stack-blitz/shapes/stackblitz-example.shape';
 import { TutorialNavigationDirective } from '../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../services/example-file.service';
+import { TutorialGroupShape } from '../shape/tutorial-group.shape';
 import { TutorialStepShape } from '../shape/tutorial-step.shape';
 import { ExampleFileTypes } from '../types/example-file.type';
 import { STAR_WARS_DISPLAY_CHARACTER } from './generated/display-character.generated';
@@ -109,16 +110,38 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     )
   ];
 
-  readonly tutorialSteps: readonly TutorialStepShape[] = [
-    { id: 1, label: 'Project Set-up' },
-    { id: 2, label: `Install ${this.#brandName.value}` },
-    { id: 3, label: 'Define Feature State' },
-    { id: 4, label: 'Build the Service' },
-    { id: 5, label: `Initialize the ${this.#brandName.vaultValue}` },
-    { id: 6, label: `Register the ${this.#brandName.featureCellValue}` },
-    { id: 7, label: `Connect the service to ${this.#brandName.value}` },
-    { id: 8, label: 'Display Character State' },
-    { id: 9, label: 'Start the Application' },
-    { id: 10, label: 'Complete Initial Tutorial' }
+  getStepId(groupIndex: number, stepIndex: number): number {
+    const completedSteps = this.tutorialGroups
+      .slice(0, groupIndex)
+      .reduce((count, group) => count + group.steps.length, 0);
+
+    return completedSteps + stepIndex + 1;
+  }
+
+  readonly tutorialGroups: readonly TutorialGroupShape[] = [
+    {
+      id: 1,
+      label: 'Tutorial Steps',
+      steps: [
+        { id: 1, label: 'Project Set-up' },
+        { id: 2, label: `Install ${this.#brandName.value}` },
+        { id: 3, label: 'Define Feature State' },
+        { id: 4, label: 'Build the Service' },
+        { id: 5, label: `Initialize the ${this.#brandName.vaultValue}` },
+        { id: 6, label: `Register the ${this.#brandName.featureCellValue}` },
+        { id: 7, label: `Connect the service to ${this.#brandName.value}` },
+        { id: 8, label: 'Display Character State' },
+        { id: 9, label: 'Start the Application' },
+        { id: 10, label: 'Complete Initial Tutorial' }
+      ] satisfies TutorialStepShape[]
+    },
+    {
+      id: 2,
+      label: 'Multiple Select Steps',
+      steps: [
+        { id: 1, label: 'Add a Dropdown' },
+        { id: 2, label: 'Complete DropdownTutorial' }
+      ] satisfies TutorialStepShape[]
+    }
   ];
 }

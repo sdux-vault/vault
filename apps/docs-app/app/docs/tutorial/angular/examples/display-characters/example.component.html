@@ -1,0 +1,95 @@
+<section class="character-example" aria-labelledby="character-example-title">
+  <header class="header">
+    <div>
+      <p class="eyebrow">Interactive example</p>
+      <h2 id="character-example-title">Star Wars character registry</h2>
+      <p>
+        Use SDuX Vault state management to display a single character from an
+        in-memory collection by dropdown selection.
+      </p>
+    </div>
+  </header>
+
+  <fieldset class="feature-cell-controls">
+    <div class="workspace">
+      <div class="workspace-row workspace-row-top">
+        <div class="field selection">
+          <label for="character-selection">
+            Character ({{ characters().length }} total)
+          </label>
+          <select
+            #characterSelection
+            id="character-selection"
+            [disabled]="characters().length === 0"
+            (change)="selectCharacter(characterSelection.value)">
+            <option
+              value=""
+              disabled
+              [selected]="selectedCharacterId() === null">
+              Select a character
+            </option>
+            @for (character of characters(); track character.id) {
+              <option
+                [value]="character.id"
+                [selected]="character.id === selectedCharacterId()">
+                {{
+                  character.fullName ??
+                    character.name + ' ' + character.lastName
+                }}
+              </option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="workspace-row workspace-row-bottom">
+        <section
+          class="panel character-details"
+          aria-labelledby="details-title">
+          <div class="header">
+            <h3 id="details-title">Character details</h3>
+          </div>
+
+          @if (selectedCharacter(); as character) {
+            <!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
+            <dl>
+              <div>
+                <dt>Full name</dt>
+                <dd>
+                  {{ character.fullName }}
+                </dd>
+              </div>
+              <div>
+                <dt>First name</dt>
+                <dd>{{ character.name }}</dd>
+              </div>
+              <div>
+                <dt>Last name</dt>
+                <dd>{{ character.lastName }}</dd>
+              </div>
+              <div>
+                <dt>Identifier</dt>
+                <dd>{{ character.id }}</dd>
+              </div>
+              <div>
+                <dt>Faction</dt>
+                <dd>{{ character.faction }}</dd>
+              </div>
+              <div>
+                <dt class="force-sensitive">Force-sensitive</dt>
+                <dd>{{ character.forceSensitiveDisplay }}</dd>
+              </div>
+            </dl>
+          } @else {
+            <div class="empty-state">
+              <h4>No character selected</h4>
+              <p>
+                Choose a character from the list or complete the form to add a
+                new one.
+              </p>
+            </div>
+          }
+        </section>
+      </div>
+    </div>
+  </fieldset>
+</section>

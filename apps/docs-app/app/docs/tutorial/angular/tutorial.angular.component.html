@@ -6,20 +6,33 @@
   <!-- ====================================================== -->
 
   <div class="tutorial-layout">
-    <nav class="tutorial-steps" aria-labelledby="tutorial-steps-title">
-      <h2 class="tutorial-steps-title" id="tutorial-steps-title">Steps</h2>
-      <ol class="tutorial-step-list">
-        @for (step of tutorialSteps; track step.id) {
-          <li [class.tutorial-step-active]="isActiveStep(step.id)">
-            <a
-              [routerLink]="[]"
-              [fragment]="'step-' + step.id"
-              [attr.aria-current]="isAriaStep(step.id)">
-              {{ step.label }}
-            </a>
-          </li>
-        }
-      </ol>
+    <nav class="tutorial-steps" aria-label="Tutorial steps">
+      @for (group of tutorialGroups; track group.id; let groupIndex = $index) {
+        <h2 class="tutorial-steps-title">
+          {{ group.label }}
+        </h2>
+        <div class="tutorial-step-list">
+          @for (step of group.steps; track step.id; let stepIndex = $index) {
+            <div
+              class="tutorial-step-item"
+              [class.tutorial-step-active]="
+                isActiveStep(getStepId(groupIndex, stepIndex))
+              ">
+              <span class="tutorial-step-number">
+                {{ getStepId(groupIndex, stepIndex) }}.
+              </span>
+              <a
+                [routerLink]="[]"
+                [fragment]="'step-' + getStepId(groupIndex, stepIndex)"
+                [attr.aria-current]="
+                  isAriaStep(getStepId(groupIndex, stepIndex))
+                ">
+                <span class="tutorial-step-label">{{ step.label }}</span>
+              </a>
+            </div>
+          }
+        </div>
+      }
     </nav>
 
     <main class="tutorial-content">

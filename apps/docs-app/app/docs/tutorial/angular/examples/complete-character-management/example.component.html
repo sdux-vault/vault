@@ -181,10 +181,7 @@
               <option
                 [value]="character.id"
                 [selected]="character.id === selectedCharacterId()">
-                {{
-                  character.fullName ??
-                    character.name + ' ' + character.lastName
-                }}
+                {{ character.fullName }}
               </option>
             }
           </select>

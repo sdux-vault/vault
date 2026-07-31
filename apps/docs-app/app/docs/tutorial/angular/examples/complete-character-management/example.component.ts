@@ -375,7 +375,9 @@ export class ExampleComponent {
    * @returns Nothing; selection, form, and feedback signals are updated in place.
    */
   protected selectCharacter(value: string): void {
-    const character = this.editor.resolveCharacter(this.characters(), value);
+    const character =
+      this.characters().find((character) => character.id === Number(value)) ??
+      null;
 
     if (!character) {
       return;

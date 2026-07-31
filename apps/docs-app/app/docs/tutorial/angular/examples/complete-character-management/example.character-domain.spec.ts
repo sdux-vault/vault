@@ -32,7 +32,7 @@ describe('Character domain', () => {
       lastName: 'Solo',
       faction: 'Rebel Alliance',
       isForceSensitive: false
-    } as const;
+    };
 
     expect(createCharacterState(30, draft)).toEqual({ id: 30, ...draft });
     expect(draft).toEqual({
@@ -44,7 +44,7 @@ describe('Character domain', () => {
   });
 
   it('should clone both the collection and its character objects', () => {
-    const characters = [leia, luke] as const;
+    const characters = [leia, luke];
     const cloned = cloneCharacters(characters);
 
     expect(cloned).toEqual(characters);
@@ -59,7 +59,7 @@ describe('Character domain', () => {
   });
 
   it('should derive force sensitivity labels without mutating the input', () => {
-    const characters = [leia, luke] as const;
+    const characters = [leia, luke];
     const derived = deriveForceSensitiveDisplay(characters);
 
     expect(derived).toEqual([
@@ -72,7 +72,7 @@ describe('Character domain', () => {
   });
 
   it('should derive full names without mutating the input', () => {
-    const characters = [leia, luke] as const;
+    const characters = [leia, luke];
     const derived = deriveFullName(characters);
 
     expect(derived).toEqual([
@@ -85,7 +85,7 @@ describe('Character domain', () => {
   });
 
   it('should create a reducer that sorts a cloned collection by last name', () => {
-    const characters = [luke, leia] as const;
+    const characters = [luke, leia];
     const sorted = withCharactersSortedByLastName()(characters);
 
     expect(sorted).toEqual([leia, luke]);

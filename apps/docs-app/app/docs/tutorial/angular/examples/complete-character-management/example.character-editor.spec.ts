@@ -143,20 +143,6 @@ describe('Character editor', () => {
     });
   });
 
-  describe('resolveCharacter', () => {
-    it('should resolve a matching character from a string identity', () => {
-      expect(editor.resolveCharacter([leia, luke], '20')).toBe(luke);
-    });
-
-    it('should resolve a matching character from a numeric identity', () => {
-      expect(editor.resolveCharacter([leia, luke], 10)).toBe(leia);
-    });
-
-    it('should return null when no character matches', () => {
-      expect(editor.resolveCharacter([leia, luke], '999')).toBeNull();
-    });
-  });
-
   describe('serializeStepwiseRequest', () => {
     it('should serialize a pending request with an existing current value', () => {
       expect(

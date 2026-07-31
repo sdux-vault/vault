@@ -63,7 +63,8 @@
       padding-left: global.$spacing-sm;
       box-sizing: border-box;
 
-      li {
+      .tutorial-step-item {
+        position: relative;
         width: 100%;
         padding: global.$spacing-xs global.$spacing-sm;
         padding-left: 0;
@@ -88,6 +89,21 @@
 
       a {
         @include global.a-link-primary;
+        display: block;
+        min-width: 0;
+      }
+
+      .tutorial-step-number {
+        position: absolute;
+        top: global.$spacing-xs;
+        left: calc((global.$spacing-sm + 2.5ch) * -1);
+        width: 2.5ch;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .tutorial-step-label {
+        display: block;
       }
     }
   }

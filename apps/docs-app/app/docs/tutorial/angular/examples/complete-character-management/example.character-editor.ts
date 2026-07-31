@@ -254,20 +254,6 @@ export class ExampleCharacterEditor {
   }
 
   /**
-   * Resolves a raw picker value to a known character in the current collection.
-   * @param characters - Latest character collection.
-   * @param value - Identity received from the picker, as text or number.
-   * @returns The matching character, or `null` when no character matches.
-   */
-  resolveCharacter(
-    characters: readonly StarWarsCharacter[],
-    value: string | number
-  ): StarWarsCharacter | null {
-    const id = Number(value);
-    return characters.find((character) => character.id === id) ?? null;
-  }
-
-  /**
    * Serializes a Stepwise request for a teaching output, substituting an absent current value.
    * @param request - Stepwise request to serialize, or `undefined` when none is pending.
    * @returns Indented JSON, or the literal `'undefined'` when no request is pending.
