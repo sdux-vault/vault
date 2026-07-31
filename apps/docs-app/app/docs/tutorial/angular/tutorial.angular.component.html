@@ -7,7 +7,7 @@
 
   <div class="tutorial-layout">
     <nav class="tutorial-steps" aria-label="Tutorial steps">
-      @for (group of tutorialGroups; track group.id; let groupIndex = $index) {
+      @for (group of chapters; track group.id; let groupIndex = $index) {
         <section
           class="tutorial-group"
           [attr.aria-labelledby]="'tutorial-group-' + group.id">
@@ -147,32 +147,92 @@
         </div>
       </section>
 
-      <section class="section" id="step-1">
-        <div class="section-title-navigation">
-          <div class="section-title">Step 1: Angular Project Set-up</div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
+      <section
+        class="chapter-break"
+        id="chapter-1"
+        aria-labelledby="chapter-1-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
+
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 1</p>
+          <div class="chapter-header">
+            <h2 id="chapter-1-title">Foundation Flow</h2>
+
+            <button
+              type="button"
+              class="chapter-toggle"
+              aria-controls="chapter-1-content"
+              [attr.aria-expanded]="isChapterExpanded(1)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'Foundation Flow',
+                  isChapterExpanded(1)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'Foundation Flow',
+                  isChapterExpanded(1)
+                )
+              "
+              (click)="toggleTutorialChapter(1)">
+              <mat-icon aria-hidden="true">
+                {{
+                  isChapterExpanded(1)
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                }}
+              </mat-icon>
+            </button>
           </div>
-        </div>
 
-        <div class="section-body">
           <p>
-            Begin with a new standalone Angular application so each tutorial
-            step uses the same project structure and configuration. The commands
-            below create the application and move into its directory so you can
-            add the tutorial files in the same layout used by Angular's
-            standalone starter.
+            The first tutorial builds the SDuX foundation from the first file
+            onward: project setup, feature contract definition, registration,
+            service ownership, and the first managed read path.
           </p>
+          <p>
+            This chapter stays focused on one controlled outcome: a
+            service-owned <sdux-feature-cell /> that can expose committed State
+            to the UI without pushing state-management mechanics into the
+            component.
+          </p>
+        </div>
+      </section>
 
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>Create an application</li>
-              <sdux-example-viewer-source [displayTabs]="false">
-                <sdux-example-viewer-tab
-                  [label]="'Create a new Angular project'">
-                  <pre
-                    class="code-inline"><code class="language-ts">npx @angular/cli@21 new sdux-tutorial \
+      <div
+        id="chapter-1-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(1)"
+        [attr.aria-hidden]="!isChapterExpanded(1)"
+        [attr.inert]="!isChapterExpanded(1) ? '' : null">
+        <div class="chapter-content-inner">
+          <section class="section" id="step-1">
+            <div class="section-title-navigation">
+              <div class="section-title">Step 1: Angular Project Set-up</div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                Begin with a new standalone Angular application so each tutorial
+                step uses the same project structure and configuration. The
+                commands below create the application and move into its
+                directory so you can add the tutorial files in the same layout
+                used by Angular's standalone starter.
+              </p>
+
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>Create an application</li>
+                  <sdux-example-viewer-source [displayTabs]="false">
+                    <sdux-example-viewer-tab
+                      [label]="'Create a new Angular project'">
+                      <pre
+                        class="code-inline"><code class="language-ts">npx @angular/cli@21 new sdux-tutorial \
   --standalone \
   --style=scss \
   --routing=false \
@@ -180,743 +240,767 @@
 
 cd sdux-tutorial;
 </code></pre>
-                </sdux-example-viewer-tab>
-              </sdux-example-viewer-source>
-            </ol>
-          </div>
-        </div>
-      </section>
+                    </sdux-example-viewer-tab>
+                  </sdux-example-viewer-source>
+                </ol>
+              </div>
+            </div>
+          </section>
 
-      <section class="section" id="step-2">
-        <div class="section-title-navigation">
-          <div class="section-title">Step 2: Install <sdux-brand-name /></div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
+          <section class="section" id="step-2">
+            <div class="section-title-navigation">
+              <div class="section-title">
+                Step 2: Install <sdux-brand-name />
+              </div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
 
-        <div class="section-body">
-          <p>
-            Install the <sdux-package-name />/angular package to add the Angular
-            integration to your project. The package installs the core runtime
-            and exposes the Angular providers, decorator, injector, and
-            Signal-based State access used throughout this tutorial.
-          </p>
+            <div class="section-body">
+              <p>
+                Install the <sdux-package-name />/angular package to add the
+                Angular integration to your project. The package installs the
+                core runtime and exposes the Angular providers, decorator,
+                injector, and Signal-based State access used throughout this
+                tutorial.
+              </p>
 
-          <p>The Angular integration includes:</p>
+              <p>The Angular integration includes:</p>
 
-          <ul>
-            <li>
-              <strong
-                ><a href="/docs/references/functions/provide-vault"
-                  >provideVault</a
-                ></strong
-              >
-              configures the application-level <sdux-vault-brand-name />.
-            </li>
-            <li>
-              <strong
-                ><a href="/docs/references/functions/provide-feature-cell"
-                  >provide<sdux-feature-cell /></a
-              ></strong>
-              registers a <sdux-feature-cell /> with Angular dependency
-              injection.
-            </li>
-            <li>
-              <strong
-                ><a href="/docs/pipeline/apis/angular/at-feature-cell"
-                  >&#64;<sdux-feature-cell /></a
-              ></strong>
-              associates an Angular service with its registered
-              <sdux-feature-cell />.
-            </li>
-            <li>
-              <strong
-                ><a href="/docs/references/functions/inject-vault"
-                  >injectVault</a
-                ></strong
-              >
-              provides the registered <sdux-feature-cell /> to its Angular
-              service.
-            </li>
-            <li>
-              <strong>state</strong> (<a
-                href="/docs/references/shapes/state-snapshot-shape"
-                >StateSnapshotShape</a
-              >) exposes Signal-based access to the current State:
               <ul>
-                <li><span class="code">this.vault.state.value()</span></li>
-                <li><span class="code">this.vault.state.error()</span></li>
-                <li><span class="code">this.vault.state.isLoading()</span></li>
-                <li><span class="code">this.vault.state.hasValue()</span></li>
+                <li>
+                  <strong
+                    ><a href="/docs/references/functions/provide-vault"
+                      >provideVault</a
+                    ></strong
+                  >
+                  configures the application-level <sdux-vault-brand-name />.
+                </li>
+                <li>
+                  <strong
+                    ><a href="/docs/references/functions/provide-feature-cell"
+                      >provide<sdux-feature-cell /></a
+                  ></strong>
+                  registers a <sdux-feature-cell /> with Angular dependency
+                  injection.
+                </li>
+                <li>
+                  <strong
+                    ><a href="/docs/pipeline/apis/angular/at-feature-cell"
+                      >&#64;<sdux-feature-cell /></a
+                  ></strong>
+                  associates an Angular service with its registered
+                  <sdux-feature-cell />.
+                </li>
+                <li>
+                  <strong
+                    ><a href="/docs/references/functions/inject-vault"
+                      >injectVault</a
+                    ></strong
+                  >
+                  provides the registered <sdux-feature-cell /> to its Angular
+                  service.
+                </li>
+                <li>
+                  <strong>state</strong> (<a
+                    href="/docs/references/shapes/state-snapshot-shape"
+                    >StateSnapshotShape</a
+                  >) exposes Signal-based access to the current State:
+                  <ul>
+                    <li><span class="code">this.vault.state.value()</span></li>
+                    <li><span class="code">this.vault.state.error()</span></li>
+                    <li>
+                      <span class="code">this.vault.state.isLoading()</span>
+                    </li>
+                    <li>
+                      <span class="code">this.vault.state.hasValue()</span>
+                    </li>
+                  </ul>
+                </li>
               </ul>
-            </li>
-          </ul>
 
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>Install the <sdux-package-name />/angular package</li>
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>Install the <sdux-package-name />/angular package</li>
+
+                  <sdux-example-viewer-source [displayTabs]="false">
+                    <sdux-example-viewer-tab
+                      [label]="'Install the @sdux-vault/angular package'">
+                      <pre
+                        class="code-inline"><code class="language-ts">npm install @sdux-vault/angular</code></pre>
+                    </sdux-example-viewer-tab>
+                  </sdux-example-viewer-source>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="step-3">
+            <div class="section-title-navigation">
+              <div class="section-title">Step 3: Define Feature State</div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                State is the feature-owned data that describes a feature at a
+                specific moment. Defining State means deciding which values
+                belong to the feature, assigning a type to each value, and
+                identifying which properties are required.
+              </p>
+
+              <p>
+                In TypeScript, an interface captures those decisions as a
+                compile-time contract for the
+                <a href="/docs/references/functions/feature-cell"
+                  ><sdux-feature-cell
+                /></a>
+                and its consumers. This contract makes the expected State shape
+                explicit, keeps State usage consistent, and allows TypeScript to
+                identify missing properties and incompatible values during
+                development. The interface defines the shape of State; it does
+                not create or load a State value.
+              </p>
+
+              <p>
+                In <sdux-brand-name />, each <sdux-feature-cell /> declares
+                State for a single Feature. This keeps the State definition
+                focused on the data owned by that Feature instead of combining
+                unrelated application data into one shared global store
+                definition.
+              </p>
+
+              <p class="callout callout-info">
+                In this tutorial, the <strong>Feature</strong> and the
+                <strong>State</strong> represents characters from the
+                <a href="https://www.starwars.com" target="_blank"
+                  >Star Wars universe</a
+                >.
+              </p>
+
+              <p>
+                Each character has an identifier, name, faction, and
+                force-sensitive status. Keeping these fields in one focused
+                State definition gives the
+                <sdux-feature-cell />, Pipeline, and Angular application a
+                consistent representation of the character data.
+              </p>
+
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>
+                    Create a new file named:
+                    <span class="code">star-wars-character.shape.ts</span>
+                  </li>
+                </ol>
+              </div>
 
               <sdux-example-viewer-source [displayTabs]="false">
                 <sdux-example-viewer-tab
-                  [label]="'Install the @sdux-vault/angular package'">
+                  [label]="'Define the State for a Star Wars character'">
                   <pre
-                    class="code-inline"><code class="language-ts">npm install @sdux-vault/angular</code></pre>
+                    class="code-inline"><code class="language-ts">{{ starWarsCharacterStateSource.source }}</code></pre>
                 </sdux-example-viewer-tab>
               </sdux-example-viewer-source>
-            </ol>
-          </div>
-        </div>
-      </section>
+            </div>
+            <div class="callout callout-warning">
+              <div class="title">Global Store vs. <sdux-feature-cell /></div>
+              <p>
+                In a global store, all application data is combined into one
+                shared State definition. This can lead to a large, complex State
+                shape that is difficult to manage and maintain. In contrast, a
+                <sdux-feature-cell /> defines State for a single Feature,
+                keeping the State definition focused and manageable.
+              </p>
+            </div>
+          </section>
 
-      <section class="section" id="step-3">
-        <div class="section-title-navigation">
-          <div class="section-title">Step 3: Define Feature State</div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
+          <section class="section" id="step-4">
+            <div class="section-title-navigation">
+              <div class="section-title">Step 4: Build the Angular Service</div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
 
-        <div class="section-body">
-          <p>
-            State is the feature-owned data that describes a feature at a
-            specific moment. Defining State means deciding which values belong
-            to the feature, assigning a type to each value, and identifying
-            which properties are required.
-          </p>
+            <div class="section-body">
+              <p>
+                Begin with the Feature boundary, not the integration details.
+                This service is the <sdux-brand-name />-facing home for the Star
+                Wars character use case, so it gives the feature one place to
+                expose reads and later state changes.
+              </p>
 
-          <p>
-            In TypeScript, an interface captures those decisions as a
-            compile-time contract for the
-            <a href="/docs/references/functions/feature-cell"
-              ><sdux-feature-cell
-            /></a>
-            and its consumers. This contract makes the expected State shape
-            explicit, keeps State usage consistent, and allows TypeScript to
-            identify missing properties and incompatible values during
-            development. The interface defines the shape of State; it does not
-            create or load a State value.
-          </p>
+              <p>
+                At this stage, keep it as a plain Angular service. The goal here
+                is to name the Feature boundary before <sdux-brand-name /> is
+                introduced, so the next steps can connect that existing service
+                to a <sdux-feature-cell /> instead of mixing setup and design at
+                the same time.
+              </p>
 
-          <p>
-            In <sdux-brand-name />, each <sdux-feature-cell /> declares State
-            for a single Feature. This keeps the State definition focused on the
-            data owned by that Feature instead of combining unrelated
-            application data into one shared global store definition.
-          </p>
+              <p>
+                The implementation is intentionally minimal. You are creating
+                the service that <sdux-brand-name /> will later register,
+                decorate, and initialize.
+              </p>
 
-          <p class="callout callout-info">
-            In this tutorial, the <strong>Feature</strong> and the
-            <strong>State</strong> represents characters from the
-            <a href="https://www.starwars.com" target="_blank"
-              >Star Wars universe</a
-            >.
-          </p>
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>
+                    Create
+                    <span class="code">example.service.ts</span> in the same
+                    directory as the State definition.
+                  </li>
+                  <li>
+                    Add the initial Angular service code to establish the
+                    service boundary before connecting it to
+                    <sdux-brand-name />.
+                  </li>
+                </ol>
+              </div>
 
-          <p>
-            Each character has an identifier, name, faction, and force-sensitive
-            status. Keeping these fields in one focused State definition gives
-            the
-            <sdux-feature-cell />, Pipeline, and Angular application a
-            consistent representation of the character data.
-          </p>
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'example.service.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{ initialServiceSource }}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </section>
 
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>
-                Create a new file named:
-                <span class="code">star-wars-character.shape.ts</span>
-              </li>
-            </ol>
-          </div>
+          <section class="section" id="step-5">
+            <div class="section-title-navigation">
+              <div class="section-title">
+                Step 5: Initialize the <sdux-vault-brand-name />
+              </div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
 
-          <sdux-example-viewer-source [displayTabs]="false">
-            <sdux-example-viewer-tab
-              [label]="'Define the State for a Star Wars character'">
-              <pre
-                class="code-inline"><code class="language-ts">{{ starWarsCharacterStateSource.source }}</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
-        </div>
-        <div class="callout callout-warning">
-          <div class="title">Global Store vs. <sdux-feature-cell /></div>
-          <p>
-            In a global store, all application data is combined into one shared
-            State definition. This can lead to a large, complex State shape that
-            is difficult to manage and maintain. In contrast, a
-            <sdux-feature-cell /> defines State for a single Feature, keeping
-            the State definition focused and manageable.
-          </p>
-        </div>
-      </section>
+            <div class="section-body">
+              <p>
+                Initialize the <sdux-vault-brand-name /> once during Angular
+                application bootstrap, before registering or activating any
+                <sdux-feature-cell />. This establishes the application-scoped
+                runtime services required by every <sdux-feature-cell /> without
+                defining or modifying Feature State.
+              </p>
 
-      <section class="section" id="step-4">
-        <div class="section-title-navigation">
-          <div class="section-title">Step 4: Build the Angular Service</div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>
+                    Open <span class="code">app.config.ts</span> and keep the
+                    providers generated by Angular.
+                  </li>
+                  <li>
+                    Add
+                    <span class="code"
+                      ><a href="/docs/references/functions/provide-vault"
+                        >provideVault</a
+                      >()</span
+                    >
+                    to the <span class="code">providers</span> without a
+                    configuration object to apply the default runtime
+                    configuration.
+                  </li>
+                </ol>
+              </div>
 
-        <div class="section-body">
-          <p>
-            Begin with the Feature boundary, not the integration details. This
-            service is the <sdux-brand-name />-facing home for the Star Wars
-            character use case, so it gives the feature one place to expose
-            reads and later state changes.
-          </p>
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab
+                  [label]="'Add provideVault() to app.config.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{ initialAppConfigSource }}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
 
-          <p>
-            At this stage, keep it as a plain Angular service. The goal here is
-            to name the Feature boundary before <sdux-brand-name /> is
-            introduced, so the next steps can connect that existing service to a
-            <sdux-feature-cell /> instead of mixing setup and design at the same
-            time.
-          </p>
+              <div class="callout callout-learn-more">
+                <div class="title">Explore the Docs</div>
 
-          <p>
-            The implementation is intentionally minimal. You are creating the
-            service that <sdux-brand-name /> will later register, decorate, and
-            initialize.
-          </p>
+                <ul>
+                  <li>
+                    <a href="/docs/pipeline/apis/angular/provide-vault"
+                      >provideVault()</a
+                    >
+                  </li>
+                  <li>
+                    <a href="/docs/references/config/vault-config"
+                      >VaultConfig</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
 
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>
-                Create
-                <span class="code">example.service.ts</span> in the same
-                directory as the State definition.
-              </li>
-              <li>
-                Add the initial Angular service code to establish the service
-                boundary before connecting it to <sdux-brand-name />.
-              </li>
-            </ol>
-          </div>
+          <section class="section" id="step-6">
+            <div class="section-title-navigation">
+              <div class="section-title">
+                Step 6: Register the <sdux-feature-cell />
+              </div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
 
-          <sdux-example-viewer-source [displayTabs]="false">
-            <sdux-example-viewer-tab [label]="'example.service.ts'">
-              <pre
-                class="code-inline"><code class="language-ts">{{ initialServiceSource }}</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
-        </div>
-      </section>
-
-      <section class="section" id="step-5">
-        <div class="section-title-navigation">
-          <div class="section-title">
-            Step 5: Initialize the <sdux-vault-brand-name />
-          </div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
-
-        <div class="section-body">
-          <p>
-            Initialize the <sdux-vault-brand-name /> once during Angular
-            application bootstrap, before registering or activating any
-            <sdux-feature-cell />. This establishes the application-scoped
-            runtime services required by every <sdux-feature-cell /> without
-            defining or modifying Feature State.
-          </p>
-
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>
-                Open <span class="code">app.config.ts</span> and keep the
-                providers generated by Angular.
-              </li>
-              <li>
-                Add
-                <span class="code"
-                  ><a href="/docs/references/functions/provide-vault"
-                    >provideVault</a
-                  >()</span
-                >
-                to the <span class="code">providers</span> without a
-                configuration object to apply the default runtime configuration.
-              </li>
-            </ol>
-          </div>
-
-          <sdux-example-viewer-source [displayTabs]="false">
-            <sdux-example-viewer-tab
-              [label]="'Add provideVault() to app.config.ts'">
-              <pre
-                class="code-inline"><code class="language-ts">{{ initialAppConfigSource }}</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
-
-          <div class="callout callout-learn-more">
-            <div class="title">Explore the Docs</div>
-
-            <ul>
-              <li>
-                <a href="/docs/pipeline/apis/angular/provide-vault"
-                  >provideVault()</a
-                >
-              </li>
-              <li>
-                <a href="/docs/references/config/vault-config">VaultConfig</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="step-6">
-        <div class="section-title-navigation">
-          <div class="section-title">
-            Step 6: Register the <sdux-feature-cell />
-          </div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
-
-        <div class="section-body">
-          <p>
-            The
-            <span class="code"
-              ><a href="/docs/references/functions/provide-feature-cell"
-                >provide<sdux-feature-cell /></a
-              >()</span
-            >
-            provider registers
-            <span class="code">ExampleService</span> with the application-scoped
-            <sdux-vault-brand-name />. Its descriptor assigns the unique
-            <span class="code">star-wars-character</span> key and supplies an
-            initial character collection whose entries satisfy
-            <span class="code">StarWarsCharacter</span>. Registration
-            establishes the <sdux-feature-cell /> contract for a typed
-            collection before the Pipeline is activated or any State is rendered
-            in the UI.
-          </p>
-
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>
-                Create
-                <span class="code">star-wars-character.constant.ts</span>.
-              </li>
-              <li>Open <span class="code">app.config.ts</span>.</li>
-              <li>
-                Import
+            <div class="section-body">
+              <p>
+                The
                 <span class="code"
                   ><a href="/docs/references/functions/provide-feature-cell"
                     >provide<sdux-feature-cell /></a
                   >()</span
                 >
-                and <span class="code">ExampleService</span>.
-              </li>
-              <li>
-                Add the
-                <span class="code"
-                  ><a href="/docs/references/functions/provide-feature-cell"
-                    >provide<sdux-feature-cell /></a
-                  >()</span
-                >
-                registration after
-                <span class="code"
-                  ><a href="/docs/references/functions/provide-vault"
-                    >provideVault</a
-                  >()</span
-                >.
-              </li>
-              <li>
-                Assign the <span class="code">star-wars-character</span> key and
-                provide the initial character collection.
-              </li>
-            </ol>
-          </div>
+                provider registers
+                <span class="code">ExampleService</span> with the
+                application-scoped <sdux-vault-brand-name />. Its descriptor
+                assigns the unique
+                <span class="code">star-wars-character</span> key and supplies
+                an initial character collection whose entries satisfy
+                <span class="code">StarWarsCharacter</span>. Registration
+                establishes the <sdux-feature-cell /> contract for a typed
+                collection before the Pipeline is activated or any State is
+                rendered in the UI.
+              </p>
 
-          <sdux-example-viewer-source>
-            @for (file of registeredAppConfigSource; track file.type) {
-              <sdux-example-viewer-tab [label]="file.fileName">
-                <pre
-                  class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
-              </sdux-example-viewer-tab>
-            }
-          </sdux-example-viewer-source>
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>
+                    Create
+                    <span class="code">star-wars-character.constant.ts</span>.
+                  </li>
+                  <li>Open <span class="code">app.config.ts</span>.</li>
+                  <li>
+                    Import
+                    <span class="code"
+                      ><a href="/docs/references/functions/provide-feature-cell"
+                        >provide<sdux-feature-cell /></a
+                      >()</span
+                    >
+                    and <span class="code">ExampleService</span>.
+                  </li>
+                  <li>
+                    Add the
+                    <span class="code"
+                      ><a href="/docs/references/functions/provide-feature-cell"
+                        >provide<sdux-feature-cell /></a
+                      >()</span
+                    >
+                    registration after
+                    <span class="code"
+                      ><a href="/docs/references/functions/provide-vault"
+                        >provideVault</a
+                      >()</span
+                    >.
+                  </li>
+                  <li>
+                    Assign the <span class="code">star-wars-character</span> key
+                    and provide the initial character collection.
+                  </li>
+                </ol>
+              </div>
 
-          <div class="callout callout-learn-more">
-            <div class="title">Explore the Docs</div>
+              <sdux-example-viewer-source>
+                @for (file of registeredAppConfigSource; track file.type) {
+                  <sdux-example-viewer-tab [label]="file.fileName">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
+                  </sdux-example-viewer-tab>
+                }
+              </sdux-example-viewer-source>
 
-            <ul>
-              <li>
-                <a href="/docs/references/functions/provide-feature-cell"
-                  >provide<sdux-feature-cell
-                /></a>
-              </li>
-            </ul>
-          </div>
+              <div class="callout callout-learn-more">
+                <div class="title">Explore the Docs</div>
+
+                <ul>
+                  <li>
+                    <a href="/docs/references/functions/provide-feature-cell"
+                      >provide<sdux-feature-cell
+                    /></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="step-7">
+            <div class="section-title-navigation">
+              <div class="section-title">
+                Step 7: Connect the Service to <sdux-brand-name />
+              </div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                This is the step where the plain Angular service becomes an
+                <sdux-brand-name />
+                Feature service. The goal is straightforward: connect
+                <span class="code">ExampleService</span> to the registered
+                <sdux-feature-cell /> so the service owns access to the typed
+                feature State.
+              </p>
+
+              <p>
+                <sdux-brand-name /> adds three pieces here: the
+                <span class="code">@<sdux-feature-cell />()</span> decorator to
+                associate the service with its key,
+                <span class="code">injectVault()</span> to access the typed
+                <sdux-feature-cell /> API, and
+                <span class="code">initialize()</span> to activate the
+                <sdux-feature-cell />
+                at runtime.
+              </p>
+
+              <p>
+                After this step, the component will no longer need to know
+                anything about <sdux-feature-cell /> registration or
+                initialization. It will read from the service's exposed
+                <span class="code">state</span>, while the service remains the
+                only place that talks directly to <sdux-brand-name />.
+              </p>
+
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>
+                    Create the
+                    <span class="code">example.service.ts</span> in the same
+                    directory as the State definition.
+                  </li>
+                  <li>
+                    Decorate <span class="code">ExampleService</span> with the
+                    <span class="code">star-wars-character</span> key.
+                  </li>
+                  <li>
+                    Inject the <sdux-vault-brand-name /> for
+                    <span class="code">readonly StarWarsCharacter[]</span>.
+                  </li>
+                  <li>
+                    Expose the reactive <span class="code">state</span> property
+                    from the service.
+                  </li>
+                  <li>
+                    Call <span class="code">initialize()</span> in the
+                    constructor.
+                  </li>
+                </ol>
+              </div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'example.service.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{ registeredFeatureCellService.source }}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <div class="callout callout-learn-more">
+                <div class="title">Explore the Docs</div>
+
+                <ul>
+                  <li>
+                    <a href="/docs/pipeline/apis/angular/at-feature-cell"
+                      >&#64;<sdux-feature-cell
+                    /></a>
+                  </li>
+                  <li>
+                    <a href="/docs/references/functions/inject-vault"
+                      >injectVault</a
+                    >
+                  </li>
+                  <li>
+                    <a href="/docs/references/shapes/state-snapshot-shape"
+                      >StateSnapshotShape</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="step-8">
+            <div class="section-title-navigation">
+              <div class="section-title">Step 8: Display Character State</div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                This step narrows the tutorial to the UI-facing files that
+                complete the first read path. The service boundary is already in
+                place; now the component, template, and stylesheet turn that
+                registered character collection into a visible detail view.
+              </p>
+
+              <p>
+                For <sdux-brand-name />, the important separation is simple: the
+                component reads display-ready State, and the service owns the
+                <sdux-feature-cell />.
+              </p>
+
+              <p>
+                In this example, the component reads the service's reactive
+                State, derives one displayed character, and passes only
+                template-ready values to the view. The stylesheet is included
+                here because later tutorial expansions reuse the same
+                presentation base.
+              </p>
+
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>
+                    Create
+                    <span class="code">example.component.ts</span> in the same
+                    directory as the State definition.
+                  </li>
+                  <li>
+                    Create the
+                    <span class="code">example.component.html</span> (same
+                    directory)
+                  </li>
+                  <li>
+                    Create the
+                    <span class="code">example.component.scss</span> (yep, same
+                    place)
+                  </li>
+                </ol>
+              </div>
+
+              <div class="callout callout-learn-more">
+                <div class="title">What to Look For</div>
+
+                <ul>
+                  <li>
+                    The component uses a computed Signal to project one
+                    displayed character from the service-owned collection State.
+                  </li>
+                  <li>
+                    The template stays declarative and renders only controller
+                    state, not <sdux-feature-cell /> APIs.
+                  </li>
+                  <li>
+                    The SCSS is larger than this single view requires because
+                    the same styling foundation is reused by the later tutorial
+                    steps.
+                  </li>
+                </ul>
+              </div>
+
+              <sdux-example-viewer-source>
+                @for (file of initialComponentAndHtmlFiles; track file?.type) {
+                  <sdux-example-viewer-tab [label]="file.fileName">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+                  </sdux-example-viewer-tab>
+                }
+              </sdux-example-viewer-source>
+
+              <div class="callout callout-warning">
+                <div class="title">About the Stylesheet</div>
+
+                <ul>
+                  <li>
+                    If the SCSS file looks larger than expected for this step,
+                    that is intentional. You only need to include it once, and
+                    the same stylesheet is reused by the later tutorial
+                    expansions.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="step-9">
+            <div class="section-title-navigation">
+              <div class="section-title">Step 9: Start the Application</div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                You are now ready to bootstrap the application with the
+                <span class="code">ExampleComponent</span> and view the first
+                character from the registered collection.
+              </p>
+
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>Open the <span class="code">main.ts</span> file.</li>
+                  <li>
+                    Import
+                    <span class="code">ExampleComponent</span> from
+                    <span class="code">./app/example.component</span>.
+                  </li>
+                  <li>
+                    Pass <span class="code">ExampleComponent</span> as the root
+                    component in
+                    <span class="code">bootstrapApplication()</span>.
+                  </li>
+                  <li>Run <span class="code">npm start</span>.</li>
+                  <li>
+                    Open <span class="code">http://localhost:4200</span> to
+                    confirm the character detail view renders.
+                  </li>
+                </ol>
+              </div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'main.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{ mainSource.source }}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+            </div>
+          </section>
+
+          <section class="section" id="step-10">
+            <div class="section-title-navigation">
+              <div class="section-title">
+                Step 10: Complete Initial Tutorial
+              </div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                You now have a working <sdux-brand-name />
+                <sdux-feature-cell /> feature: the State contract is defined,
+                the Angular service owns the Feature boundary, the application
+                has registered the feature, and the UI can render one character
+                from managed State.
+              </p>
+
+              <p>
+                Review the remaining supporting files as one connected
+                reference. This final section gathers the seed data,
+                registration config, and tests that complete the tutorial
+                example.
+              </p>
+
+              <p>
+                By this point, the runtime path is already established. The
+                focus here is on the remaining <sdux-brand-name /> support files
+                that make the example complete and verifiable.
+              </p>
+
+              <p>
+                The test files show how to verify the two critical
+                responsibilities introduced in this tutorial. The service test
+                confirms that the registered <sdux-feature-cell /> initializes
+                with the expected collection State and exposes the correct
+                Signal accessors. The component test confirms that the
+                controller binds to that State and derives the single displayed
+                character the template renders.
+              </p>
+
+              <div class="callout callout-learn-more">
+                <div class="title">What This Final Reference Includes</div>
+
+                <ul>
+                  <li>
+                    The constant and shape files define the initial character
+                    data and its contract.
+                  </li>
+                  <li>
+                    The app config shows how the feature is registered with
+                    <span class="code">provide<sdux-feature-cell />()</span>.
+                  </li>
+                  <li>
+                    The tests verify both State initialization and the displayed
+                    character projection.
+                  </li>
+                  <li>
+                    Together, these files turn the minimal read example into a
+                    complete tutorial slice you can reason about and extend.
+                  </li>
+                </ul>
+              </div>
+
+              <sdux-example-viewer-source>
+                @for (file of displayCharacterSource; track file.type) {
+                  <sdux-example-viewer-tab [label]="file.fileName">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
+                  </sdux-example-viewer-tab>
+                }
+              </sdux-example-viewer-source>
+            </div>
+          </section>
+
+          <section
+            class="tutorial-shortcut"
+            aria-label="Launch the completed initial tutorial example">
+            <div class="tutorial-shortcut-copy">
+              <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+              <h2>Want the finished initial example without all ten steps?</h2>
+              <p>
+                If you want the completed single-character read example, launch
+                the live StackBlitz project and inspect the finished
+                implementation directly.
+              </p>
+            </div>
+
+            <div class="tutorial-shortcut-launcher">
+              <sdux-stackblitz-language-example
+                [example]="initialTutorialExample()"
+                [lang]="initialTutorialLang()" />
+            </div>
+          </section>
         </div>
-      </section>
-
-      <section class="section" id="step-7">
-        <div class="section-title-navigation">
-          <div class="section-title">
-            Step 7: Connect the Service to <sdux-brand-name />
-          </div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
-
-        <div class="section-body">
-          <p>
-            This is the step where the plain Angular service becomes an
-            <sdux-brand-name />
-            Feature service. The goal is straightforward: connect
-            <span class="code">ExampleService</span> to the registered
-            <sdux-feature-cell /> so the service owns access to the typed
-            feature State.
-          </p>
-
-          <p>
-            <sdux-brand-name /> adds three pieces here: the
-            <span class="code">@<sdux-feature-cell />()</span> decorator to
-            associate the service with its key,
-            <span class="code">injectVault()</span> to access the typed
-            <sdux-feature-cell /> API, and
-            <span class="code">initialize()</span> to activate the
-            <sdux-feature-cell />
-            at runtime.
-          </p>
-
-          <p>
-            After this step, the component will no longer need to know anything
-            about <sdux-feature-cell /> registration or initialization. It will
-            read from the service's exposed <span class="code">state</span>,
-            while the service remains the only place that talks directly to
-            <sdux-brand-name />.
-          </p>
-
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>
-                Create the
-                <span class="code">example.service.ts</span> in the same
-                directory as the State definition.
-              </li>
-              <li>
-                Decorate <span class="code">ExampleService</span> with the
-                <span class="code">star-wars-character</span> key.
-              </li>
-              <li>
-                Inject the <sdux-vault-brand-name /> for
-                <span class="code">readonly StarWarsCharacter[]</span>.
-              </li>
-              <li>
-                Expose the reactive <span class="code">state</span> property
-                from the service.
-              </li>
-              <li>
-                Call <span class="code">initialize()</span> in the constructor.
-              </li>
-            </ol>
-          </div>
-
-          <sdux-example-viewer-source [displayTabs]="false">
-            <sdux-example-viewer-tab [label]="'example.service.ts'">
-              <pre
-                class="code-inline"><code class="language-ts">{{ registeredFeatureCellService.source }}</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
-
-          <div class="callout callout-learn-more">
-            <div class="title">Explore the Docs</div>
-
-            <ul>
-              <li>
-                <a href="/docs/pipeline/apis/angular/at-feature-cell"
-                  >&#64;<sdux-feature-cell
-                /></a>
-              </li>
-              <li>
-                <a href="/docs/references/functions/inject-vault"
-                  >injectVault</a
-                >
-              </li>
-              <li>
-                <a href="/docs/references/shapes/state-snapshot-shape"
-                  >StateSnapshotShape</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="step-8">
-        <div class="section-title-navigation">
-          <div class="section-title">Step 8: Display Character State</div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
-
-        <div class="section-body">
-          <p>
-            This step narrows the tutorial to the UI-facing files that complete
-            the first read path. The service boundary is already in place; now
-            the component, template, and stylesheet turn that registered
-            character collection into a visible detail view.
-          </p>
-
-          <p>
-            For <sdux-brand-name />, the important separation is simple: the
-            component reads display-ready State, and the service owns the
-            <sdux-feature-cell />.
-          </p>
-
-          <p>
-            In this example, the component reads the service's reactive State,
-            derives one displayed character, and passes only template-ready
-            values to the view. The stylesheet is included here because later
-            tutorial expansions reuse the same presentation base.
-          </p>
-
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>
-                Create
-                <span class="code">example.component.ts</span> in the same
-                directory as the State definition.
-              </li>
-              <li>
-                Create the
-                <span class="code">example.component.html</span> (same
-                directory)
-              </li>
-              <li>
-                Create the
-                <span class="code">example.component.scss</span> (yep, same
-                place)
-              </li>
-            </ol>
-          </div>
-
-          <div class="callout callout-learn-more">
-            <div class="title">What to Look For</div>
-
-            <ul>
-              <li>
-                The component uses a computed Signal to project one displayed
-                character from the service-owned collection State.
-              </li>
-              <li>
-                The template stays declarative and renders only controller
-                state, not <sdux-feature-cell /> APIs.
-              </li>
-              <li>
-                The SCSS is larger than this single view requires because the
-                same styling foundation is reused by the later tutorial steps.
-              </li>
-            </ul>
-          </div>
-
-          <sdux-example-viewer-source>
-            @for (file of initialComponentAndHtmlFiles; track file?.type) {
-              <sdux-example-viewer-tab [label]="file.fileName">
-                <pre
-                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-              </sdux-example-viewer-tab>
-            }
-          </sdux-example-viewer-source>
-
-          <div class="callout callout-warning">
-            <div class="title">About the Stylesheet</div>
-
-            <ul>
-              <li>
-                If the SCSS file looks larger than expected for this step, that
-                is intentional. You only need to include it once, and the same
-                stylesheet is reused by the later tutorial expansions.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="step-9">
-        <div class="section-title-navigation">
-          <div class="section-title">Step 9: Start the Application</div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
-
-        <div class="section-body">
-          <p>
-            You are now ready to bootstrap the application with the
-            <span class="code">ExampleComponent</span> and view the first
-            character from the registered collection.
-          </p>
-
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>Open the <span class="code">main.ts</span> file.</li>
-              <li>
-                Import
-                <span class="code">ExampleComponent</span> from
-                <span class="code">./app/example.component</span>.
-              </li>
-              <li>
-                Pass <span class="code">ExampleComponent</span> as the root
-                component in <span class="code">bootstrapApplication()</span>.
-              </li>
-              <li>Run <span class="code">npm start</span>.</li>
-              <li>
-                Open <span class="code">http://localhost:4200</span> to confirm
-                the character detail view renders.
-              </li>
-            </ol>
-          </div>
-
-          <sdux-example-viewer-source [displayTabs]="false">
-            <sdux-example-viewer-tab [label]="'main.ts'">
-              <pre
-                class="code-inline"><code class="language-ts">{{ mainSource.source }}</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
-        </div>
-      </section>
-
-      <section class="section" id="step-10">
-        <div class="section-title-navigation">
-          <div class="section-title">Step 10: Complete Initial Tutorial</div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
-
-        <div class="section-body">
-          <p>
-            You now have a working <sdux-brand-name />
-            <sdux-feature-cell /> feature: the State contract is defined, the
-            Angular service owns the Feature boundary, the application has
-            registered the feature, and the UI can render one character from
-            managed State.
-          </p>
-
-          <p>
-            Review the remaining supporting files as one connected reference.
-            This final section gathers the seed data, registration config, and
-            tests that complete the tutorial example.
-          </p>
-
-          <p>
-            By this point, the runtime path is already established. The focus
-            here is on the remaining <sdux-brand-name /> support files that make
-            the example complete and verifiable.
-          </p>
-
-          <p>
-            The test files show how to verify the two critical responsibilities
-            introduced in this tutorial. The service test confirms that the
-            registered <sdux-feature-cell /> initializes with the expected
-            collection State and exposes the correct Signal accessors. The
-            component test confirms that the controller binds to that State and
-            derives the single displayed character the template renders.
-          </p>
-
-          <div class="callout callout-learn-more">
-            <div class="title">What This Final Reference Includes</div>
-
-            <ul>
-              <li>
-                The constant and shape files define the initial character data
-                and its contract.
-              </li>
-              <li>
-                The app config shows how the feature is registered with
-                <span class="code">provide<sdux-feature-cell />()</span>.
-              </li>
-              <li>
-                The tests verify both State initialization and the displayed
-                character projection.
-              </li>
-              <li>
-                Together, these files turn the minimal read example into a
-                complete tutorial slice you can reason about and extend.
-              </li>
-            </ul>
-          </div>
-
-          <sdux-example-viewer-source>
-            @for (file of displayCharacterSource; track file.type) {
-              <sdux-example-viewer-tab [label]="file.fileName">
-                <pre
-                  class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
-              </sdux-example-viewer-tab>
-            }
-          </sdux-example-viewer-source>
-        </div>
-      </section>
+      </div>
 
       <section
-        class="tutorial-shortcut"
-        aria-label="Launch the completed initial tutorial example">
-        <div class="tutorial-shortcut-copy">
-          <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
-          <h2>Want the finished initial example without all ten steps?</h2>
-          <p>
-            If you want the completed single-character read example, launch the
-            live StackBlitz project and inspect the finished implementation
-            directly.
-          </p>
-        </div>
+        class="chapter-break"
+        id="chapter-2"
+        aria-labelledby="chapter-2-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
 
-        <div class="tutorial-shortcut-launcher">
-          <sdux-stackblitz-language-example
-            [example]="initialTutorialExample()"
-            [lang]="initialTutorialLang()" />
-        </div>
-      </section>
-
-      <section
-        class="tutorial-phase-break"
-        id="tutorial-2"
-        aria-labelledby="tutorial-2-title">
-        <div class="tutorial-phase-rule" aria-hidden="true"></div>
-
-        <div class="tutorial-phase-copy">
-          <p class="tutorial-phase-eyebrow">Tutorial 2</p>
-          <div class="tutorial-phase-header">
-            <h2 id="tutorial-2-title">User-Directed Read Flow</h2>
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 2</p>
+          <div class="chapter-header">
+            <h2 id="chapter-2-title">Multi-Select Flow</h2>
 
             <button
               type="button"
-              class="tutorial-phase-toggle"
-              aria-controls="tutorial-2-content"
-              [attr.aria-expanded]="isTutorialChapterExpanded(2)"
+              class="chapter-toggle"
+              aria-controls="chapter-2-content"
+              [attr.aria-expanded]="isChapterExpanded(2)"
               [matTooltip]="
                 getTutorialChapterToggleAriaLabel(
-                  'User-Directed Read Flow',
-                  isTutorialChapterExpanded(2)
+                  'Multi-Select Flow',
+                  isChapterExpanded(2)
                 )
               "
               [attr.aria-label]="
                 getTutorialChapterToggleAriaLabel(
-                  'User-Directed Read Flow',
-                  isTutorialChapterExpanded(2)
+                  'Multi-Select Flow',
+                  isChapterExpanded(2)
                 )
               "
               (click)="toggleTutorialChapter(2)">
               <mat-icon aria-hidden="true">
                 {{
-                  isTutorialChapterExpanded(2)
+                  isChapterExpanded(2)
                     ? 'keyboard_arrow_down'
                     : 'keyboard_arrow_right'
                 }}
@@ -940,240 +1024,50 @@ cd sdux-tutorial;
       </section>
 
       <div
-        id="tutorial-2-content"
-        class="tutorial-phase-content"
-        [class.tutorial-phase-content-collapsed]="!isTutorialChapterExpanded(2)"
-        [attr.aria-hidden]="!isTutorialChapterExpanded(2)"
-        [attr.inert]="!isTutorialChapterExpanded(2) ? '' : null">
-        <div class="tutorial-phase-content-inner">
-          <section class="section" id="step-11">
-            <div class="section-title-navigation">
-              <div class="section-title">Step 11: Add a Dropdown</div>
-              <div class="section-top-link">
-                <a [routerLink]="[]" fragment="top">↑ top</a>
-              </div>
-            </div>
-
-            <div class="section-body">
-              <p>
-                This step upgrades the initial <sdux-brand-name /> read path
-                from showing the first committed record automatically to letting
-                the user choose which committed record to inspect. The Feature
-                registration, service-owned <sdux-feature-cell />, and managed
-                collection stay the same; only the UI-facing selection logic
-                changes.
-              </p>
-
-              <p>
-                Assume the Angular mechanics are already familiar. The
-                <sdux-brand-name /> lesson here is narrower: keep Feature State
-                in the service, keep selection state in the component, and
-                derive the displayed record from the latest service-owned
-                collection. To do that, replace the single displayed-character
-                computed Signal with a read-only character collection, a
-                <span class="code">selectedCharacterId</span> Signal, a computed
-                lookup for the selected record, and a small selection handler.
-                In the template, add a <span class="code">select</span> element
-                that lists the registered characters and keep the detail panel
-                bound to computed controller state instead of reaching into
-                <sdux-brand-name /> directly. The verification for this step
-                belongs alongside that delta: the updated component spec should
-                prove the controller starts empty, accepts a valid selection,
-                ignores unknown ids, and renders the selected record without
-                moving <sdux-brand-name /> ownership out of the service.
-              </p>
-
-              <div class="callout callout-action">
-                <div class="title">Take Action</div>
-                <ol>
-                  <li>Open <span class="code">example.component.ts</span>.</li>
-                  <li>
-                    Expose the committed collection and add Signals for the
-                    selected character id and selected character.
-                  </li>
-                  <li>
-                    Add a method that maps the dropdown value to a known
-                    character id from the current <sdux-brand-name />-managed
-                    collection.
-                  </li>
-                  <li>
-                    Open <span class="code">example.component.html</span>.
-                  </li>
-                  <li>
-                    Add a dropdown above the details panel and render an empty
-                    state until the user selects a character from the managed
-                    collection.
-                  </li>
-                  <li>
-                    Update
-                    <span class="code">example.component.spec.ts</span> to
-                    verify both the empty state and the selected-record state.
-                  </li>
-                </ol>
-              </div>
-
-              <div class="callout callout-learn-more">
-                <div class="title">What to Look For</div>
-
-                <ul>
-                  <li>
-                    The service still owns the <sdux-feature-cell /> and does
-                    not change for this UI enhancement.
-                  </li>
-                  <li>
-                    The selection Signal is presentation state owned by the
-                    component, not <sdux-brand-name /> Feature State owned by
-                    the service.
-                  </li>
-                  <li>
-                    The template continues to render computed, display-ready
-                    values instead of reading <sdux-feature-cell /> APIs
-                    directly.
-                  </li>
-                  <li>
-                    The spec verifies the new UI behavior without changing the
-                    <sdux-brand-name />-owned Feature State contract.
-                  </li>
-                </ul>
-              </div>
-
-              <sdux-example-viewer-source>
-                @for (file of dropdownStepFiles; track file?.type) {
-                  <sdux-example-viewer-tab [label]="file.fileName">
-                    <pre
-                      class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-                  </sdux-example-viewer-tab>
-                }
-              </sdux-example-viewer-source>
-            </div>
-          </section>
-
-          <section class="section" id="step-12">
-            <div class="section-title-navigation">
-              <div class="section-title">
-                Step 12: Complete Dropdown Tutorial
-              </div>
-              <div class="section-top-link">
-                <a [routerLink]="[]" fragment="top">↑ top</a>
-              </div>
-            </div>
-
-            <div class="section-body">
-              <p>
-                The dropdown tutorial is complete once the page starts with no
-                selected character, lists the registered collection in the
-                picker, and updates the detail panel when the selection changes.
-                The
-                <sdux-brand-name /> boundary has not moved: the service still
-                owns the <sdux-feature-cell /> and the component still owns only
-                UI selection state.
-              </p>
-
-              <p>
-                This is the smallest useful <sdux-brand-name /> expansion of the
-                initial tutorial: the application moves from one fixed read path
-                to one user-directed read path without changing
-                <sdux-feature-cell />
-                registration, service ownership, or application bootstrap
-                structure. What changed is the proof that the same service-owned
-                State can now support both an initial empty state and a
-                selected-record view.
-              </p>
-
-              <div class="callout callout-action">
-                <div class="title">Take Action</div>
-                <ol>
-                  <li>Return to the running Angular application.</li>
-                  <li>
-                    Confirm the details panel shows the empty state before a
-                    character is selected.
-                  </li>
-                  <li>
-                    Open the dropdown, choose a character, and confirm the
-                    details panel updates to the selected record.
-                  </li>
-                  <li>
-                    Choose a different character to verify the same read path
-                    reacts to the new selection.
-                  </li>
-                </ol>
-              </div>
-
-              <div class="callout callout-learn-more">
-                <div class="title">What Changed From the Initial Example</div>
-
-                <ul>
-                  <li>
-                    The component now reads the full collection instead of
-                    assuming the first item is always the displayed record.
-                  </li>
-                  <li>
-                    The selected character is derived from a local UI Signal and
-                    the latest reactive collection State.
-                  </li>
-                  <li>
-                    The template now teaches user-directed selection on top of
-                    the same service-owned State.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <section
-            class="tutorial-shortcut"
-            aria-label="Launch the completed dropdown tutorial example">
-            <div class="tutorial-shortcut-copy">
-              <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
-              <h2>Want the finished example without all twelve steps?</h2>
-              <p>
-                If you want the completed dropdown tutorial, launch the live
-                StackBlitz project and inspect the final working implementation
-                directly.
-              </p>
-            </div>
-
-            <div class="tutorial-shortcut-launcher">
-              <sdux-stackblitz-language-example
-                [example]="dropdownTutorialExample()"
-                [lang]="dropdownTutorialLang()" />
-            </div>
-          </section>
+        id="chapter-2-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(2)"
+        [attr.aria-hidden]="!isChapterExpanded(2)"
+        [attr.inert]="!isChapterExpanded(2) ? '' : null">
+        <div class="chapter-content-inner">
+          <sdux-display-characters-chapter
+            [files]="displayCharactersFiles()"
+            [stackblitz]="displayCharactersExample()" />
         </div>
       </div>
 
       <section
-        class="tutorial-phase-break"
-        id="tutorial-3"
-        aria-labelledby="tutorial-3-title">
-        <div class="tutorial-phase-rule" aria-hidden="true"></div>
+        class="chapter-break"
+        id="chapter-3"
+        aria-labelledby="chapter-3-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
 
-        <div class="tutorial-phase-copy">
-          <p class="tutorial-phase-eyebrow">Tutorial 3</p>
-          <div class="tutorial-phase-header">
-            <h2 id="tutorial-3-title">Add/Edit Mutation Flow</h2>
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 3</p>
+          <div class="chapter-header">
+            <h2 id="chapter-3-title">Add/Edit Flow</h2>
 
             <button
               type="button"
-              class="tutorial-phase-toggle"
-              aria-controls="tutorial-3-content"
-              [attr.aria-expanded]="isTutorialChapterExpanded(3)"
+              class="chapter-toggle"
+              aria-controls="chapter-3-content"
+              [attr.aria-expanded]="isChapterExpanded(3)"
               [matTooltip]="
                 getTutorialChapterToggleAriaLabel(
-                  'Add/Edit Mutation Flow',
-                  isTutorialChapterExpanded(3)
+                  'Add/Edit Flow',
+                  isChapterExpanded(3)
                 )
               "
               [attr.aria-label]="
                 getTutorialChapterToggleAriaLabel(
-                  'Add/Edit Mutation Flow',
-                  isTutorialChapterExpanded(3)
+                  'Add/Edit Flow',
+                  isChapterExpanded(3)
                 )
               "
               (click)="toggleTutorialChapter(3)">
               <mat-icon aria-hidden="true">
                 {{
-                  isTutorialChapterExpanded(3)
+                  isChapterExpanded(3)
                     ? 'keyboard_arrow_down'
                     : 'keyboard_arrow_right'
                 }}
@@ -1199,12 +1093,12 @@ cd sdux-tutorial;
       </section>
 
       <div
-        id="tutorial-3-content"
-        class="tutorial-phase-content"
-        [class.tutorial-phase-content-collapsed]="!isTutorialChapterExpanded(3)"
-        [attr.aria-hidden]="!isTutorialChapterExpanded(3)"
-        [attr.inert]="!isTutorialChapterExpanded(3) ? '' : null">
-        <div class="tutorial-phase-content-inner">
+        id="chapter-3-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(3)"
+        [attr.aria-hidden]="!isChapterExpanded(3)"
+        [attr.inert]="!isChapterExpanded(3) ? '' : null">
+        <div class="chapter-content-inner">
           <section class="section" id="step-13">
             <div class="section-title-navigation">
               <div class="section-title">
@@ -1437,7 +1331,7 @@ cd sdux-tutorial;
           <section class="section" id="step-15">
             <div class="section-title-navigation">
               <div class="section-title">
-                Step 15: Complete Add/Edit Tutorial
+                Step 15: Complete Add/Edit Chapter
               </div>
               <div class="section-top-link">
                 <a [routerLink]="[]" fragment="top">↑ top</a>
@@ -1555,8 +1449,8 @@ cd sdux-tutorial;
 
             <div class="tutorial-shortcut-launcher">
               <sdux-stackblitz-language-example
-                [example]="addEditTutorialExample()"
-                [lang]="addEditTutorialLang()" />
+                [example]="addEditExample()"
+                [lang]="addEditLang()" />
             </div>
           </section>
         </div>

@@ -4,6 +4,7 @@ import {
   effect,
   inject,
   signal,
+  untracked,
   ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -27,12 +28,13 @@ import { StackBlitzExampleLanguageShape } from '../../stack-blitz/shapes/stackbl
 import { StackBlitzExampleShape } from '../../stack-blitz/shapes/stackblitz-example.shape';
 import { TutorialNavigationDirective } from '../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../services/example-file.service';
-import { TutorialGroupShape } from '../shape/tutorial-group.shape';
-import { TutorialStepShape } from '../shape/tutorial-step.shape';
+import { ChapterStepShape } from '../shape/chapter-step.shape';
+import { ChapterShape } from '../shape/chapter.shape';
 import { ExampleFileTypes } from '../types/example-file.type';
+import { DisplayCharactersChapterComponent } from './chapters/display-characters.chapter.component';
+import { DisplayCharactersService } from './chapters/services/display-characters.service';
 import { STAR_WARS_ADD_EDIT_CHARACTERS } from './generated/add-edit-characters.generated';
 import { STAR_WARS_DISPLAY_CHARACTER } from './generated/display-character.generated';
-import { STAR_WARS_DISPLAY_CHARACTERS } from './generated/display-characters.generated';
 import { INITIAL_APP_CONFIG } from './generated/initial-app-config.generated';
 import { INITIAL_SERVICE } from './generated/initial-service.generated';
 
@@ -51,24 +53,28 @@ import { INITIAL_SERVICE } from './generated/initial-service.generated';
     PackageNameComponent,
     FeatureCellBrandNameComponent,
     VaultBrandNameComponent,
-    StackblitzLanguageExampleComponent
+    StackblitzLanguageExampleComponent,
+    DisplayCharactersChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class TutorialAngularComponent extends TutorialNavigationDirective {
-  #brandName = inject(BrandNameService);
-  #exampleFileService = inject(ExampleFileService);
-  #route = inject(ActivatedRoute);
+  readonly #brandName = inject(BrandNameService);
+  readonly #exampleFileService = inject(ExampleFileService);
+  readonly #route = inject(ActivatedRoute);
+  readonly #selectCharactersService = inject(DisplayCharactersService);
+  readonly #stackblitzService = inject(StackblitzExampleService);
 
-  readonly #expandedTutorialGroups = signal<Record<number, boolean>>({
+  readonly #expandedChapterGroups = signal<Record<number, boolean>>({
     1: true,
     2: false,
     3: false
   });
 
-  readonly #expandedTutorialChapters = signal<Record<number, boolean>>({
+  readonly #expandedChapters = signal<Record<number, boolean>>({
+    1: true,
     2: false,
     3: false
   });
@@ -92,10 +98,10 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
         return;
       }
 
-      this.setExpandedTutorialGroups(activeGroupId);
-      this.setExpandedTutorialChapters(
-        activeGroupId >= 2 ? activeGroupId : null
-      );
+      untracked(() => {
+        this.setExpandedTutorialGroups(activeGroupId);
+        this.setExpandedChapters(activeGroupId);
+      });
     });
 
     this.#route.fragment.pipe(takeUntilDestroyed()).subscribe((fragment) => {
@@ -106,13 +112,9 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       }
 
       this.setExpandedTutorialGroups(targetGroupId);
-      this.setExpandedTutorialChapters(
-        targetGroupId >= 2 ? targetGroupId : null
-      );
+      this.setExpandedChapters(targetGroupId);
     });
   }
-
-  readonly #stackblitzService = inject(StackblitzExampleService);
 
   readonly initialTutorialExample = computed<StackBlitzExampleShape>(
     () =>
@@ -127,35 +129,23 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       ) ?? ({} as StackBlitzExampleLanguageShape)
   );
 
-  readonly dropdownTutorialExample = computed<StackBlitzExampleShape>(
-    () =>
-      this.#stackblitzService.getExample('display-characters') ??
-      ({} as StackBlitzExampleShape)
-  );
+  readonly displayCharactersExample =
+    this.#selectCharactersService.displayCharactersStackblitz;
 
-  readonly dropdownTutorialLang = computed<StackBlitzExampleLanguageShape>(
-    () =>
-      this.dropdownTutorialExample()?.languages?.find(
-        (lang) => lang.key === 'angular'
-      ) ?? ({} as StackBlitzExampleLanguageShape)
-  );
-
-  readonly addEditTutorialExample = computed<StackBlitzExampleShape>(
+  readonly addEditExample = computed<StackBlitzExampleShape>(
     () =>
       this.#stackblitzService.getExample('add-edit-characters') ??
       ({} as StackBlitzExampleShape)
   );
 
-  readonly addEditTutorialLang = computed<StackBlitzExampleLanguageShape>(
+  readonly addEditLang = computed<StackBlitzExampleLanguageShape>(
     () =>
-      this.addEditTutorialExample()?.languages?.find(
+      this.addEditExample()?.languages?.find(
         (lang) => lang.key === 'angular'
       ) ?? ({} as StackBlitzExampleLanguageShape)
   );
 
   protected readonly displayCharacterSource = STAR_WARS_DISPLAY_CHARACTER;
-
-  protected readonly displayCharactersSource = STAR_WARS_DISPLAY_CHARACTERS;
 
   protected readonly addEditCharactersSource = STAR_WARS_ADD_EDIT_CHARACTERS;
 
@@ -206,20 +196,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     )
   ];
 
-  protected readonly dropdownStepFiles = [
-    this.#exampleFileService.getFile(
-      this.displayCharactersSource,
-      ExampleFileTypes.Component
-    ),
-    this.#exampleFileService.getFile(
-      this.displayCharactersSource,
-      ExampleFileTypes.Html
-    ),
-    this.#exampleFileService.getFile(
-      this.displayCharactersSource,
-      ExampleFileTypes.ComponentSpec
-    )
-  ];
+  protected readonly displayCharactersFiles =
+    this.#selectCharactersService.displayCharactersFiles;
 
   protected readonly addEditServiceFiles = [
     this.#exampleFileService.getFile(
@@ -268,7 +246,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   ];
 
   getStepId(groupIndex: number, stepIndex: number): number {
-    const completedSteps = this.tutorialGroups
+    const completedSteps = this.chapters
       .slice(0, groupIndex)
       .reduce((count, group) => count + group.steps.length, 0);
 
@@ -288,29 +266,29 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   }
 
   isTutorialGroupExpanded(groupId: number): boolean {
-    return this.#expandedTutorialGroups()[groupId] ?? false;
+    return this.#expandedChapterGroups()[groupId] ?? false;
   }
 
   toggleTutorialGroup(groupId: number): void {
-    this.#expandedTutorialGroups.update((expandedGroups) => ({
+    this.#expandedChapterGroups.update((expandedGroups) => ({
       ...expandedGroups,
       [groupId]: !expandedGroups[groupId]
     }));
   }
 
-  isTutorialChapterExpanded(groupId: number): boolean {
-    return this.#expandedTutorialChapters()[groupId] ?? false;
+  isChapterExpanded(groupId: number): boolean {
+    return this.#expandedChapters()[groupId] ?? false;
   }
 
   toggleTutorialChapter(groupId: number): void {
-    if (this.isTutorialChapterExpanded(groupId)) {
-      this.setExpandedTutorialChapters(null);
+    if (this.isChapterExpanded(groupId)) {
+      this.setExpandedChapters(null);
 
       return;
     }
 
     this.setExpandedTutorialGroups(groupId);
-    this.setExpandedTutorialChapters(groupId);
+    this.setExpandedChapters(groupId);
   }
 
   getTutorialGroupToggleAriaLabel(
@@ -330,7 +308,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   private getTutorialGroupIdForStepId(stepId: number): number | null {
     let completedSteps = 0;
 
-    for (const group of this.tutorialGroups) {
+    for (const group of this.chapters) {
       completedSteps += group.steps.length;
 
       if (stepId <= completedSteps) {
@@ -352,11 +330,15 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       return 1;
     }
 
-    if (fragment === 'tutorial-2' || fragment === 'tutorial-2-content') {
+    if (fragment === 'chapter-1' || fragment === 'chapter-1-content') {
+      return 1;
+    }
+
+    if (fragment === 'chapter-2' || fragment === 'chapter-2-content') {
       return 2;
     }
 
-    if (fragment === 'tutorial-3' || fragment === 'tutorial-3-content') {
+    if (fragment === 'chapter-3' || fragment === 'chapter-3-content') {
       return 3;
     }
 
@@ -369,41 +351,46 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
 
   private setExpandedTutorialGroups(activeGroupId: number): void {
     const nextExpandedGroups = Object.fromEntries(
-      this.tutorialGroups.map((tutorialGroup) => [
+      this.chapters.map((tutorialGroup) => [
         tutorialGroup.id,
         tutorialGroup.id === activeGroupId
       ])
     ) as Record<number, boolean>;
 
     if (
-      this.tutorialGroups.some(
+      this.chapters.some(
         (tutorialGroup) =>
           this.isTutorialGroupExpanded(tutorialGroup.id) !==
           nextExpandedGroups[tutorialGroup.id]
       )
     ) {
-      this.#expandedTutorialGroups.set(nextExpandedGroups);
+      this.#expandedChapterGroups.set(nextExpandedGroups);
     }
   }
 
-  private setExpandedTutorialChapters(activeGroupId: number | null): void {
-    const nextExpandedChapters = {
-      2: activeGroupId === 2,
-      3: activeGroupId === 3
-    } satisfies Record<number, boolean>;
+  private setExpandedChapters(activeGroupId: number | null): void {
+    const nextExpandedChapters = Object.fromEntries(
+      this.chapters.map((tutorialGroup) => [
+        tutorialGroup.id,
+        tutorialGroup.id === activeGroupId
+      ])
+    ) as Record<number, boolean>;
 
     if (
-      this.isTutorialChapterExpanded(2) !== nextExpandedChapters[2] ||
-      this.isTutorialChapterExpanded(3) !== nextExpandedChapters[3]
+      this.chapters.some(
+        (tutorialGroup) =>
+          this.isChapterExpanded(tutorialGroup.id) !==
+          nextExpandedChapters[tutorialGroup.id]
+      )
     ) {
-      this.#expandedTutorialChapters.set(nextExpandedChapters);
+      this.#expandedChapters.set(nextExpandedChapters);
     }
   }
 
-  readonly tutorialGroups: readonly TutorialGroupShape[] = [
+  readonly chapters: readonly ChapterShape[] = [
     {
       id: 1,
-      label: 'Foundation Steps',
+      label: 'Foundation Chapter',
       fragment: 'top',
       steps: [
         { id: 1, label: 'Project Set-up' },
@@ -416,26 +403,18 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
         { id: 8, label: 'Display Character State' },
         { id: 9, label: 'Start the Application' },
         { id: 10, label: 'Complete Initial Tutorial' }
-      ] satisfies TutorialStepShape[]
+      ] satisfies ChapterStepShape[]
     },
-    {
-      id: 2,
-      label: 'Multi-select Steps',
-      fragment: 'tutorial-2',
-      steps: [
-        { id: 1, label: 'Add a Dropdown' },
-        { id: 2, label: 'Complete Dropdown Tutorial' }
-      ] satisfies TutorialStepShape[]
-    },
+    this.#selectCharactersService.getChapter(),
     {
       id: 3,
-      label: 'Add/Edit Steps',
-      fragment: 'tutorial-3',
+      label: 'Add/Edit Chapter',
+      fragment: 'chapter-3',
       steps: [
         { id: 1, label: 'Configure Merge Behavior' },
         { id: 2, label: 'Add/Edit Capabilities' },
         { id: 3, label: 'Complete Add/Edit Tutorial' }
-      ] satisfies TutorialStepShape[]
+      ] satisfies ChapterStepShape[]
     }
   ];
 }

@@ -11,7 +11,7 @@ export function createTutorialExampleGroups() {
         'Tutorial examples — explore finished tutorial implementations and launch them directly in StackBlitz.',
       examples: [
         {
-          title: 'Level 1: Display Character',
+          title: 'Chapter 1: Display Character',
           id: 'display-character',
           exampleName: 'display-character-example',
           displayCopyIcon: false,
@@ -19,7 +19,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Level 2: Display Characters',
+          title: 'Chapter 2: Display Characters',
           id: 'display-characters',
           exampleName: 'display-characters-example',
           displayCopyIcon: false,
@@ -27,7 +27,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Level 3: Add/Edit Characters',
+          title: 'Chapter 3: Add/Edit Characters',
           id: 'add-edit-characters',
           exampleName: 'add-edit-characters-example',
           displayCopyIcon: false,
