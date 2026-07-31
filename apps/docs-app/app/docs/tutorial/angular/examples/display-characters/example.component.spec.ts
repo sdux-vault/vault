@@ -87,9 +87,12 @@ describe('ExampleComponent', () => {
     fixture.detectChanges();
 
     const host = fixture.nativeElement as HTMLElement;
+    const detailsPanel = host.querySelector(
+      '.character-details'
+    ) as HTMLElement;
 
-    expect(host.textContent).toContain('No character selected');
-    expect(host.textContent).not.toContain('Leia');
+    expect(detailsPanel.textContent).toContain('No character selected');
+    expect(detailsPanel.textContent).not.toContain('Leia');
   });
 
   it('should render the selected character details after selection', async () => {
