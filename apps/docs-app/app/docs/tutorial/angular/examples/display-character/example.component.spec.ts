@@ -32,24 +32,16 @@ describe('ExampleComponent', () => {
           initialState: initialCharacters
         })
       ]
-    }).compileComponents;
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ExampleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should initialize its read state', async () => {
+  it('should project the first committed character from the FeatureCell state', async () => {
     await vaultSettled(key);
 
-    expect(component['character']()).toEqual(
-      Object({
-        id: 1,
-        name: 'Luke',
-        lastName: 'Skywalker',
-        faction: 'Jedi Order',
-        isForceSensitive: true
-      })
-    );
+    expect(component['character']()).toEqual(initialCharacters[0]);
   });
 });

@@ -47,6 +47,14 @@ export const INLINE_PROJECT_EXAMPLES = [
       'apps/docs-app/app/docs/tutorial/angular/examples/display-character'
     ),
     name: 'display-character-example'
+  },
+  {
+    language: 'angular',
+    directory: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/examples/display-characters'
+    ),
+    name: 'display-characters-example'
   }
 ];
 
@@ -59,7 +67,7 @@ const EXCLUDE_FILES = new Set([
 const EXCLUDE_EXTENSIONS = new Set(['.js', '.js.map', '.d.ts']);
 const FRAMEWORK_ALIASES = new Map([['typescript', 'nodejs']]);
 const FRAMEWORK_APP_TARGETS = new Map([
-  ['angular', 'src/app'],
+  ['angular', 'src'],
   ['react', 'src'],
   ['svelte', 'src'],
   ['vue', 'src']
@@ -87,7 +95,11 @@ function isReservedExampleDirectory(entryName) {
 
 export function collectFiles(
   dirPath,
-  { basePath = dirPath, targetBasePath = '' } = {}
+  {
+    basePath = dirPath,
+    targetBasePath = '',
+    excludedRelativePaths = new Set()
+  } = {}
 ) {
   const files = {};
 
@@ -117,8 +129,16 @@ export function collectFiles(
       continue;
     }
 
+    const sourceRelativePath = normalizeProjectPath(
+      path.relative(basePath, fullPath)
+    );
+
+    if (excludedRelativePaths.has(sourceRelativePath)) {
+      continue;
+    }
+
     const relativePath = normalizeProjectPath(
-      path.join(targetBasePath, path.relative(basePath, fullPath))
+      path.join(targetBasePath, sourceRelativePath)
     );
     files[relativePath] = fs.readFileSync(fullPath, 'utf-8');
   }
@@ -216,7 +236,8 @@ export function buildProject(definition) {
 
   const artifactFiles = collectFiles(definition.artifactDirectory);
   const exampleFiles = collectFiles(definition.sourceDirectory, {
-    targetBasePath: definition.exampleTargetBasePath
+    targetBasePath: definition.exampleTargetBasePath,
+    excludedRelativePaths: new Set(['main.ts'])
   });
   const files = {
     ...artifactFiles,

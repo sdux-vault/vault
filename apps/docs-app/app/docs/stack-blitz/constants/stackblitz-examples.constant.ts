@@ -249,6 +249,14 @@ export function createExampleGroups(brandName: string) {
           displayCopyIcon: false,
           description: `Demonstrates the completed <strong>Display Character</strong> tutorial example — a standalone component reads one selected record from FeatureCell state through a service boundary. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
+        },
+        {
+          title: 'Display Characters',
+          id: 'display-characters',
+          exampleName: 'display-characters-example',
+          displayCopyIcon: false,
+          description: `Demonstrates the completed <strong>Display Characters</strong> tutorial example — a standalone component reads a character collection from FeatureCell state, lets the user choose a record from a dropdown, and renders the selected details through a service boundary. Launch the live example directly in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
         }
       ] satisfies StackBlitzExampleShape[]
     }

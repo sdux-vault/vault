@@ -10,6 +10,7 @@ export const STACKBLITZ_EXAMPLE_URLS = [
   '/examples/angular/comparison',
   '/examples/angular/debugger',
   '/examples/angular/display-character',
+  '/examples/angular/display-characters',
   '/examples/angular/http-resource',
   '/examples/angular/hydrate-state',
   '/examples/angular/initial-state',

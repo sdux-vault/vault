@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
@@ -32,6 +33,7 @@ describe('ExampleComponent', () => {
       imports: [ExampleComponent],
       providers: [
         provideVaultTesting(),
+        provideZonelessChangeDetection(),
         provideFeatureCell(ExampleService, {
           key,
           initialState: initialCharacters
@@ -41,6 +43,7 @@ describe('ExampleComponent', () => {
 
     fixture = TestBed.createComponent(ExampleComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should expose the latest character collection from the service', async () => {
@@ -71,11 +74,33 @@ describe('ExampleComponent', () => {
     expect(component['selectedCharacter']()).toBeNull();
   });
 
-  it('should clear the selected character when the selected id no longer exists', async () => {
+  it('should keep the empty state when a selected id is not found', async () => {
     await vaultSettled(key);
     component['selectCharacter']('3');
 
     expect(component['selectedCharacterId']()).toBeNull();
     expect(component['selectedCharacter']()).toBeNull();
+  });
+
+  it('should render the empty state until a character is selected', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+
+    expect(host.textContent).toContain('No character selected');
+    expect(host.textContent).not.toContain('Leia');
+  });
+
+  it('should render the selected character details after selection', async () => {
+    await vaultSettled(key);
+    component['selectCharacter']('2');
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+
+    expect(host.textContent).toContain('Leia');
+    expect(host.textContent).toContain('Rebel Alliance');
+    expect(host.textContent).not.toContain('No character selected');
   });
 });

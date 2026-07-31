@@ -10,13 +10,11 @@ import { ExampleService } from './example.service';
 import { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
- * Coordinates the reactive character editor presented by this tutorial example.
- * It consumes the service's computed character collection and keeps selection, form,
- * confirmation, and feedback state in Angular signals.
- * Computed signals derive the selected character and mode-specific labels for the template.
- * User actions delegate collection changes to `ExampleService`, then reactive state refreshes the view.
+ * Projects SDuX-managed character State into template-ready selection data.
+ * The component reads the service-owned FeatureCell State, keeps only the selected
+ * character identity locally, and derives the displayed record from that identity.
  * **Architectural Boundary:** The component owns presentation state while the service owns
- * FeatureCell access and character collection mutations.
+ * FeatureCell access and committed collection State.
  */
 @Component({
   selector: 'sdux-star-wars-character-example',
@@ -54,10 +52,10 @@ export class ExampleComponent {
   });
 
   /**
-   * Resolves a picker value to a known character and opens that character in edit mode.
-   * Unknown identities are ignored so stale or invalid option values cannot disturb the editor.
+   * Resolves a picker value to a known character identity in the current SDuX-managed collection.
+   * Unknown identities are ignored so stale or invalid option values cannot change the displayed State.
    * @param value - Character identity received from the select element.
-   * @returns Nothing; selection, form, and feedback signals are updated in place.
+   * @returns Nothing; the selected identity signal is updated in place.
    */
   protected selectCharacter(value: string): void {
     const character =
