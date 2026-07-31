@@ -141,15 +141,27 @@ describe('generate-inline-projects', () => {
 
   describe('project definition discovery', () => {
     it('should register the default display-character artifact-backed example', () => {
-      expect(INLINE_PROJECT_EXAMPLES).toContain(
+      const example = INLINE_PROJECT_EXAMPLES.find(
+        ({ language, name }) =>
+          language === 'angular' && name === 'display-character-example'
+      );
+
+      expect(example).toEqual(
         jasmine.objectContaining({
           language: 'angular',
-          name: 'display-character-example',
-          directory: path.join(
-            '/Users/brianpilati/code/sdux-vault/vault',
-            'apps/docs-app/app/docs/tutorial/angular/examples/display-character'
-          )
+          name: 'display-character-example'
         })
+      );
+      expect(path.normalize(example?.directory ?? '')).toEqual(
+        jasmine.stringMatching(
+          new RegExp(
+            `${path
+              .normalize(
+                'apps/docs-app/app/docs/tutorial/angular/examples/display-character'
+              )
+              .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`
+          )
+        )
       );
     });
 
