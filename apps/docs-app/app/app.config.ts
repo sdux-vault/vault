@@ -15,20 +15,20 @@ import {
 } from '@angular/material/form-field';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import {
-  //   withAes256EncryptBehavior,
-  withArrayAppendMergeBehavior
-  //   withDelayController,
-  //   withSessionStoragePersistBehavior,
-  //   withStepwiseController,
-  //   withStepwiseFilterBehavior,
-  //   withStepwiseReducerBehavior,
-  //   withStepwiseResolveBehavior
+  withAes256EncryptBehavior,
+  withArrayAppendMergeBehavior,
+  withDelayController,
+  withSessionStoragePersistBehavior,
+  withStepwiseController,
+  withStepwiseFilterBehavior,
+  withStepwiseReducerBehavior,
+  withStepwiseResolveBehavior
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
-// import {
-//   withTabSyncController,
-//   withTabSyncStateBehavior
-// } from '@sdux-vault/core';
+import {
+  withTabSyncController,
+  withTabSyncStateBehavior
+} from '@sdux-vault/core';
 import {
   ANALYTICS_ENABLED,
   SDUX_BRAND_NAME,
@@ -205,15 +205,15 @@ export const appConfig: ApplicationConfig = {
         initialState: STAR_WARS_CHARACTERS
       },
       [
-        //   withAes256EncryptBehavior,
-        //   withSessionStoragePersistBehavior,
-        //   withStepwiseResolveBehavior,
-        //   withStepwiseFilterBehavior,
-        //   withStepwiseReducerBehavior,
-        withArrayAppendMergeBehavior
-        //   withTabSyncStateBehavior
-      ]
-      // [withDelayController, withStepwiseController, withTabSyncController]
+        withAes256EncryptBehavior,
+        withSessionStoragePersistBehavior,
+        withStepwiseResolveBehavior,
+        withStepwiseFilterBehavior,
+        withStepwiseReducerBehavior,
+        withArrayAppendMergeBehavior,
+        withTabSyncStateBehavior
+      ],
+      [withDelayController, withStepwiseController, withTabSyncController]
     )
   ]
 };

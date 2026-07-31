@@ -63,6 +63,14 @@ export const INLINE_PROJECT_EXAMPLES = [
       'apps/docs-app/app/docs/tutorial/angular/examples/add-edit-characters'
     ),
     name: 'add-edit-characters-example'
+  },
+  {
+    language: 'angular',
+    directory: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/examples/delete-characters'
+    ),
+    name: 'delete-characters-example'
   }
 ];
 

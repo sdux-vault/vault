@@ -1,0 +1,181 @@
+<section class="section" id="step-16">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 16: Add Delete Capabilities</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This is the point where the tutorial adds delete behavior. The service
+      still owns the <sdux-feature-cell />, the component still owns temporary
+      UI state, and the managed collection still flows through the same
+      pipeline. The new part is the write path: you are now removing a selected
+      record while keeping Feature ownership in the same place.
+    </p>
+
+    <p>
+      Focus on the <sdux-brand-name /> boundary: keep deletion policy in the
+      service, keep confirmation state in the component, and route the removal
+      through a normal Feature update instead of an ad hoc mutable array
+      operation. To do that, add a
+      <span class="code">removeCharacter()</span> method that filters the
+      current collection through <span class="code">replaceState()</span>, and
+      keep the confirmation flow in a local delete-candidate Signal. The
+      important constraint does not change: the component coordinates the
+      destructive action, but it still does not mutate committed Feature State
+      directly.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Open <span class="code">example.service.ts</span> and add a
+          <span class="code">removeCharacter()</span> method.
+        </li>
+        <li>
+          Keep the service as the only place that calls the destructive
+          <sdux-brand-name /> update API.
+        </li>
+        <li>
+          Filter the latest collection by identity so unknown IDs leave the
+          visible State unchanged.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          Delete remains a service-owned write path just like add and edit.
+        </li>
+        <li>
+          <span class="code">replaceState()</span> is the right operation for
+          removal because the next collection is derived from the current
+          committed collection.
+        </li>
+        <li>
+          The removal rule is identity-based, so one matching record is removed
+          while every other record is preserved.
+        </li>
+        <li>
+          The component will request deletion, but the service still owns the
+          actual <sdux-feature-cell /> mutation.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of serviceFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+</section>
+
+<section class="section" id="step-17">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 17: Complete Delete Tutorial</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The delete tutorial is complete once the page can stage a pending delete,
+      cancel that destructive action, confirm removal of the selected record,
+      and react cleanly when the collection becomes smaller or empty. The
+      <sdux-brand-name /> boundary still has not moved: the service owns the
+      <sdux-feature-cell />, and the component owns only local selection,
+      editor, confirmation, and feedback state.
+    </p>
+
+    <p>
+      This final chapter keeps the tutorial disciplined even while it adds a
+      destructive action. The component now presents a confirmation panel,
+      clears local selection after a confirmed removal, and returns the editor
+      to a safe create-ready state. What did not change is the architectural
+      rule established in the earlier chapters: the component does not call
+      <sdux-brand-name /> APIs directly, and it does not own committed Feature
+      State. Delete is still routed through the same service-owned boundary as
+      every other mutation.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Update <span class="code">example.component.ts</span> to add the
+          delete-candidate Signal plus the request, cancel, and confirm delete
+          methods.
+        </li>
+        <li>
+          Update <span class="code">example.component.html</span> to add the
+          confirmation panel and the delete action button.
+        </li>
+        <li>
+          Return to the running Angular application and verify that cancel keeps
+          the selected character, confirm removes it, and the empty-state
+          guidance appears when the collection is cleared.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What Changed From the Add/Edit Example</div>
+
+      <ul>
+        <li>
+          The component now owns a delete-confirmation state in addition to its
+          existing selection and editor state.
+        </li>
+        <li>
+          The template adds an explicit destructive-action checkpoint instead of
+          deleting immediately from the current selection.
+        </li>
+        <li>
+          The service now supports full create, update, and delete operations
+          through the same <sdux-feature-cell /> boundary.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of componentFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+</section>
+
+<section
+  class="tutorial-shortcut"
+  aria-label="Launch the completed delete tutorial example">
+  <div class="tutorial-shortcut-copy">
+    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <h2>Want the finished delete example without the final 2 steps?</h2>
+    <p>
+      If you want the completed delete tutorial, launch the live StackBlitz
+      project and inspect the finished implementation directly.
+    </p>
+  </div>
+
+  @if (stackblitz(); as stackblitz) {
+    <div class="tutorial-shortcut-launcher">
+      <sdux-stackblitz-language-example
+        [example]="stackblitz.example"
+        [lang]="stackblitz.language" />
+    </div>
+  }
+</section>

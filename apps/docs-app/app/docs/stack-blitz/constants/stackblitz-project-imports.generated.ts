@@ -10,6 +10,7 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<string, () => Promise<unknown>> 
   'angular/basic-filter-reducer-example': () => import('../../../stackblitz/projects/angular/basic-filter-reducer-example.project'),
   'angular/comparison-example': () => import('../../../stackblitz/projects/angular/comparison-example.project'),
   'angular/debugger-example': () => import('../../../stackblitz/projects/angular/debugger-example.project'),
+  'angular/delete-characters-example': () => import('../../../stackblitz/projects/angular/delete-characters-example.project'),
   'angular/display-character-example': () => import('../../../stackblitz/projects/angular/display-character-example.project'),
   'angular/display-characters-example': () => import('../../../stackblitz/projects/angular/display-characters-example.project'),
   'angular/http-resource-example': () => import('../../../stackblitz/projects/angular/http-resource-example.project'),
