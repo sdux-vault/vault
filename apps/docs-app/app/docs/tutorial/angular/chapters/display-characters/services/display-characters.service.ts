@@ -1,13 +1,13 @@
 import { computed, inject, Injectable } from '@angular/core';
-import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
-import { StackBlitzExampleLanguageShape } from '../../../../stack-blitz/shapes/stackblitz-example.language.shape';
-import { StackBlitzExampleShape } from '../../../../stack-blitz/shapes/stackblitz-example.shape';
-import { ExampleFileService } from '../../../services/example-file.service';
-import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
-import { ChapterStepShape } from '../../../shape/chapter-step.shape';
-import { ChapterShape } from '../../../shape/chapter.shape';
-import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DISPLAY_CHARACTERS } from '../../generated/display-characters.generated';
+import { StackblitzExampleService } from '../../../../../stack-blitz/services/stackblitz-example.service';
+import { StackBlitzExampleLanguageShape } from '../../../../../stack-blitz/shapes/stackblitz-example.language.shape';
+import { StackBlitzExampleShape } from '../../../../../stack-blitz/shapes/stackblitz-example.shape';
+import { ExampleFileService } from '../../../../services/example-file.service';
+import { ChapterStackBlitzShape } from '../../../../shape/chapter-stackblitz.shape';
+import { ChapterStepShape } from '../../../../shape/chapter-step.shape';
+import { ChapterShape } from '../../../../shape/chapter.shape';
+import { ExampleFileTypes } from '../../../../types/example-file.type';
+import { STAR_WARS_DISPLAY_CHARACTERS } from '../../../generated/display-characters.generated';
 
 @Injectable({ providedIn: 'root' })
 export class DisplayCharactersService {

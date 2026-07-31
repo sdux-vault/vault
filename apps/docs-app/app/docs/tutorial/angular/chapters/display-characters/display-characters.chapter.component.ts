@@ -6,9 +6,9 @@ import {
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent
 } from '@sdux-vault/ui/web-components';
-import { StackblitzLanguageExampleComponent } from '../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
-import { ChapterStackBlitzShape } from '../../shape/chapter-stackblitz.shape';
-import { ExampleFileShape } from '../../shape/example-file.shape';
+import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
+import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
+import { ExampleFileShape } from '../../../shape/example-file.shape';
 
 @Component({
   selector: 'sdux-display-characters-chapter',
