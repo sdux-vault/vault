@@ -81,7 +81,7 @@ export function getNextCharacterId(
 /** Derives display-friendly force sensitivity labels without mutating the input. */
 export function deriveForceSensitiveDisplay(
   characters: readonly StarWarsCharacter[]
-): StarWarsCharacter[] {
+): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
@@ -92,7 +92,7 @@ export function deriveForceSensitiveDisplay(
 /** Derives a display-ready full name for each character without mutating the input. */
 export function deriveFullName(
   characters: readonly StarWarsCharacter[]
-): StarWarsCharacter[] {
+): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     fullName: `${character.name} ${character.lastName}`

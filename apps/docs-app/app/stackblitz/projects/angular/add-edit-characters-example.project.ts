@@ -1294,6 +1294,7 @@ export class ExampleCharacterEditor {
 \$action-column-width: calc(
   \$action-button-width + \$action-chevron-hit-area + \$spacing-xs
 );
+\$example-min-width: calc(\$action-column-width + (\$spacing-lg * 2));
 
 @mixin visually-hidden-control {
   position: absolute;
@@ -1438,6 +1439,7 @@ export class ExampleCharacterEditor {
 
 :host {
   display: block;
+  min-width: \$example-min-width;
 }
 
 .character-example {
@@ -1445,6 +1447,7 @@ export class ExampleCharacterEditor {
   flex-direction: column;
   gap: \$spacing-lg;
   width: 100%;
+  min-width: \$example-min-width;
   padding: \$spacing-lg;
   box-sizing: border-box;
   color: var(--sdux-text-default);

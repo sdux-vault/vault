@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const deleteCharactersExampleProject: Project = {
-  title: 'delete-characters-example',
+export const filtersAndReducersExampleProject: Project = {
+  title: 'filters-and-reducers-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const deleteCharactersExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "delete-characters-example",
+  "name": "filters-and-reducers-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -330,8 +330,8 @@ export function getNextCharacterId(
 
 /** Derives display-friendly force sensitivity labels without mutating the input. */
 export function deriveForceSensitiveDisplay(
-  characters: StarWarsCharacter[]
-): StarWarsCharacter[] {
+  characters: readonly StarWarsCharacter[]
+): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
@@ -342,7 +342,7 @@ export function deriveForceSensitiveDisplay(
 /** Derives a display-ready full name for each character without mutating the input. */
 export function deriveFullName(
   characters: readonly StarWarsCharacter[]
-): StarWarsCharacter[] {
+): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     fullName: \`\${character.name} \${character.lastName}\`
@@ -352,7 +352,7 @@ export function deriveFullName(
 
 /** Creates a pure reducer that orders a cloned collection by last name. */
 export function withCharactersSortedByLastName(): ReducerFunction<
-  StarWarsCharacter[]
+  readonly StarWarsCharacter[]
 > {
   return (characters) =>
     [...characters].sort((left, right) =>
@@ -1121,10 +1121,7 @@ export class ExampleCharacterEditor {
               <div>
                 <dt>Full name</dt>
                 <dd>
-                  {{
-                    character.fullName ??
-                      character.name + ' ' + character.lastName
-                  }}
+                  {{ character.fullName }}
                 </dd>
               </div>
               <div>
@@ -1145,7 +1142,7 @@ export class ExampleCharacterEditor {
               </div>
               <div>
                 <dt class="force-sensitive">Force-sensitive</dt>
-                <dd>{{ character.forceSensitiveDisplay ? 'Yes' : 'No' }}</dd>
+                <dd>{{ character.forceSensitiveDisplay }}</dd>
               </div>
             </dl>
           } @else {
@@ -1282,6 +1279,107 @@ export class ExampleCharacterEditor {
             </div>
           </form>
         </section>
+      </div>
+    </div>
+    <div class="filter-reducer-output">
+      <input
+        id="filters-reducers-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Filters and Reducers visibility"
+        checked />
+      <div class="section-header">
+        <span>Filters and Reducers</span>
+        <label
+          class="section-chevron"
+          for="filters-reducers-section-toggle"
+          title="Show or hide Filters and Reducers"></label>
+      </div>
+
+      <div class="filter-reducer-content">
+        <div class="tap-column">
+          <input
+            id="filter-output-toggle"
+            class="tap-toggle"
+            type="checkbox"
+            aria-label="Toggle Filter source visibility"
+            checked />
+          <div class="tap-header">
+            <h3>Filter</h3>
+            <label
+              class="tap-chevron"
+              for="filter-output-toggle"
+              title="Show or hide Filter output"></label>
+          </div>
+          <textarea
+            readonly
+            rows="6"
+            aria-label="Filter source"
+            [value]="editor.filterSource"></textarea>
+        </div>
+
+        <div class="tap-column">
+          <input
+            id="reducer-one-output-toggle"
+            class="tap-toggle"
+            type="checkbox"
+            aria-label="Toggle Reducer 1 output visibility"
+            checked />
+          <div class="tap-header">
+            <h3>Reducer 1</h3>
+            <label
+              class="tap-chevron"
+              for="reducer-one-output-toggle"
+              title="Show or hide Reducer 1 output"></label>
+          </div>
+          <textarea
+            readonly
+            rows="6"
+            aria-label="Reducer 1 output"
+            [value]="editor.reducer1Source"></textarea>
+        </div>
+
+        <div class="tap-column">
+          <input
+            id="reducer-two-output-toggle"
+            class="tap-toggle"
+            type="checkbox"
+            aria-label="Toggle Reducer 2 output visibility"
+            checked />
+          <div class="tap-header">
+            <h3>Reducer 2</h3>
+            <label
+              class="tap-chevron"
+              for="reducer-two-output-toggle"
+              title="Show or hide Reducer 2 output"></label>
+          </div>
+          <textarea
+            readonly
+            rows="6"
+            aria-label="Reducer 2 output"
+            [value]="editor.reducer2Source"></textarea>
+        </div>
+
+        <div class="tap-column">
+          <input
+            id="reducer-three-output-toggle"
+            class="tap-toggle"
+            type="checkbox"
+            aria-label="Toggle Reducer 3 output visibility"
+            checked />
+          <div class="tap-header">
+            <h3>Reducer 3</h3>
+            <label
+              class="tap-chevron"
+              for="reducer-three-output-toggle"
+              title="Show or hide Reducer 3 output"></label>
+          </div>
+          <textarea
+            readonly
+            rows="6"
+            aria-label="Reducer 3 output"
+            [value]="editor.reducer3Source"></textarea>
+        </div>
       </div>
     </div>
   </fieldset>
@@ -2367,6 +2465,19 @@ describe('ExampleComponent', () => {
     }
   ];
 
+  const withDerivedFields = (
+    characters: readonly StarWarsCharacter[]
+  ): readonly StarWarsCharacter[] =>
+    [...characters]
+      .map((character) => ({
+        ...character,
+        forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
+        fullName: \`\${character.name} \${character.lastName}\`
+      }))
+      .sort((left, right) => left.lastName.localeCompare(right.lastName));
+
+  const reducedCharacters = withDerivedFields(initialCharacters);
+
   let component: ExampleComponent;
   let fixture: ComponentFixture<ExampleComponent>;
   let service: ExampleService;
@@ -2393,7 +2504,7 @@ describe('ExampleComponent', () => {
   it('should expose the latest character collection from the service', async () => {
     expect(component.characters()).toEqual([]);
     await vaultSettled(key);
-    expect(component.characters()).toEqual(initialCharacters);
+    expect(component.characters()).toEqual(reducedCharacters);
   });
 
   it('should expose no selected character before a valid selection is made', async () => {
@@ -2407,7 +2518,7 @@ describe('ExampleComponent', () => {
     component['selectCharacter']('2');
 
     expect(component['selectedCharacterId']()).toBe(2);
-    expect(component['selectedCharacter']()).toEqual(initialCharacters[1]);
+    expect(component['selectedCharacter']()).toEqual(reducedCharacters[0]);
   });
 
   it('should ignore an unknown character id', async () => {
@@ -2435,8 +2546,8 @@ describe('ExampleComponent', () => {
       '.character-details'
     ) as HTMLElement;
 
-    expect(detailsPanel.textContent).toContain('Luke Skywalker');
-    expect(detailsPanel.textContent).toContain('Jedi Order');
+    expect(detailsPanel.textContent).toContain('Leia Organa');
+    expect(detailsPanel.textContent).toContain('Rebel Alliance');
     expect(detailsPanel.textContent).not.toContain('No character selected');
   });
 
@@ -2486,12 +2597,12 @@ describe('ExampleComponent', () => {
     component['cancelEdit']();
 
     expect(component['editorMode']()).toBe('edit');
-    expect(component['selectedCharacterId']()).toBe(1);
+    expect(component['selectedCharacterId']()).toBe(2);
     expect(component['characterForm'].getRawValue()).toEqual({
-      name: 'Luke',
-      lastName: 'Skywalker',
-      faction: 'Jedi Order',
-      isForceSensitive: true
+      name: 'Leia',
+      lastName: 'Organa',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
     });
     expect(component['feedback']()).toEqual(
       component.editor.feedback['newCharacterDiscarded']
@@ -2685,7 +2796,7 @@ describe('ExampleComponent', () => {
 
     component['requestDelete']();
 
-    expect(component['deleteCandidate']()).toEqual(initialCharacters[1]);
+    expect(component['deleteCandidate']()).toEqual(reducedCharacters[0]);
     expect(component['feedback']()).toBeNull();
   });
 
@@ -2755,7 +2866,9 @@ describe('ExampleComponent', () => {
       message: 'Leia Organa was removed.',
       tone: 'success'
     });
-    expect(component.characters()).toEqual([initialCharacters[0]!]);
+    expect(component.characters()).toEqual(
+      withDerivedFields([initialCharacters[0]!])
+    );
   });
 });
 `,
@@ -3107,6 +3220,19 @@ export class ExampleComponent {
   }
 }
 `,
+    'src/example.filter.ts': `// example.filter.ts
+import { FilterFunction } from '@sdux-vault/shared';
+import type { StarWarsCharacter } from './star-wars-character.shape';
+
+/**
+ * Removes characters whose last name is exactly \`"unknown"\` without mutating the candidate collection.
+ * @param characters - Candidate character collection entering the Filter stage.
+ * @returns A new collection containing every character with a known last name.
+ */
+export const removeUnknownLastNameFilter: FilterFunction<
+  readonly StarWarsCharacter[]
+> = (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');
+`,
     'src/example.service.spec.ts': `import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -3135,6 +3261,15 @@ describe('ExampleService', () => {
     }
   ];
 
+  const withDerivedFields = (
+    characters: readonly StarWarsCharacter[]
+  ): readonly StarWarsCharacter[] =>
+    characters.map((character) => ({
+      ...character,
+      forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
+      fullName: \`\${character.name} \${character.lastName}\`
+    }));
+
   const configureService = async (
     initialState: readonly StarWarsCharacter[] | null = initialCharacters
   ): Promise<ExampleService> => {
@@ -3161,7 +3296,7 @@ describe('ExampleService', () => {
   it('should initialize with the configured FeatureCell State', async () => {
     const service = await configureService();
 
-    expect(service.state.value()).toEqual(initialCharacters);
+    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
     expect(service.state.isLoading()).toBeFalse();
     expect(service.state.error()).toBeNull();
     expect(service.state.hasValue()).toBeTrue();
@@ -3186,7 +3321,9 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([createdCharacter]);
+    expect(service.state.value()).toEqual(
+      withDerivedFields([createdCharacter])
+    );
   });
 
   it('should create the first character with id 1 when no value exists', async () => {
@@ -3208,7 +3345,9 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([{ ...createdCharacter }]);
+    expect(service.state.value()).toEqual(
+      withDerivedFields([createdCharacter])
+    );
   });
 
   it('should replace the matching character without changing the others', async () => {
@@ -3231,8 +3370,7 @@ describe('ExampleService', () => {
       isForceSensitive: false
     });
     expect(service.state.value()).toEqual([
-      updatedCharacter,
-      initialCharacters[1]!
+      ...withDerivedFields([updatedCharacter, initialCharacters[1]!])
     ]);
   });
 
@@ -3255,7 +3393,7 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(initialCharacters);
+    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
   });
 
   it('should safely update against an empty collection when no value exists', async () => {
@@ -3287,7 +3425,9 @@ describe('ExampleService', () => {
 
     await vaultSettled(key);
 
-    expect(service.state.value()).toEqual([initialCharacters[1]!]);
+    expect(service.state.value()).toEqual(
+      withDerivedFields([initialCharacters[1]!])
+    );
   });
 
   it('should safely remove against an empty collection when no value exists', async () => {
@@ -3305,9 +3445,13 @@ describe('ExampleService', () => {
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import {
   createCharacterState,
+  deriveForceSensitiveDisplay,
+  deriveFullName,
   getNextCharacterId,
+  withCharactersSortedByLastName,
   type StarWarsCharacterDraft
 } from './example.character-domain';
+import { removeUnknownLastNameFilter } from './example.filter';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
@@ -3336,6 +3480,52 @@ export class ExampleService {
    * Initializes the FeatureCell for the add/edit tutorial slice.
    */
   constructor() {
+    /*
+     * \`.filters()\` registers \`removeUnknownLastNameFilter\` as a
+     * \`FilterFunction<readonly StarWarsCharacter[]>\`.
+     *
+     * This pure function runs before reducers and returns a new candidate
+     * collection without characters whose last name is exactly \`unknown\`.
+     * The inline second filter normally returns that collection unchanged. When
+     * the teaching flag is armed, it throws deliberately so the example can show
+     * pipeline error normalization without allowing the candidate to commit.
+     */
+    this.#vault.filters([
+      removeUnknownLastNameFilter,
+      (characters) => {
+        return characters;
+      }
+    ]);
+
+    /*
+     * The first \`.reducers()\` entry is a delegating
+     * \`ReducerFunction<readonly StarWarsCharacter[]>\`.
+     *
+     * After filtering, this imported pure function performs an immutable transformation
+     * through \`deriveForceSensitiveDisplay()\`, producing a new collection in which
+     * every retained character has a \`Yes\` or \`No\` display value.
+     */
+
+    /*
+     * The second entry uses a factory-generated pure reducer, a different function
+     * pattern that still returns the same \`ReducerFunction\` contract.
+     *
+     * It runs after Reducer 1, clones the transformed collection, and sorts characters
+     * alphabetically by \`lastName\` without mutating the incoming array.
+     */
+
+    /*
+     * The third entry is another delegating pure reducer.
+     *
+     * It runs after sorting and derives a display-ready \`fullName\` from the existing
+     * \`name\` and \`lastName\` fields so every view can reuse the same post-pipeline label.
+     */
+    this.#vault.reducers([
+      deriveForceSensitiveDisplay,
+      withCharactersSortedByLastName(),
+      deriveFullName
+    ]);
+
     this.#vault.initialize();
   }
 

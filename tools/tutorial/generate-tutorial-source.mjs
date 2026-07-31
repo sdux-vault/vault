@@ -80,6 +80,17 @@ const sourceGroups = [
     )
   },
   {
+    exportName: 'STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS',
+    sourceDirectory: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/examples/filters-and-reducers'
+    ),
+    outputFile: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/generated/filters-and-reducers.generated.ts'
+    )
+  },
+  {
     exportName: 'INITIAL_SERVICE',
     sourceFile: path.join(
       projectRoot,

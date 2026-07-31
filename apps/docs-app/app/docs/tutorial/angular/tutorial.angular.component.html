@@ -99,7 +99,7 @@
           feature with <sdux-brand-name /> from the ground up. You will move
           step by step from project setup, to Feature State definition, to
           registration and initialization, and finally to a working UI that
-          reads, selects, creates, updates, deletes, resets, and finalizes
+          reads, selects, creates, updates, deletes, filters, and derives
           managed State.
         </p>
 
@@ -108,7 +108,8 @@
           <sdux-feature-cell />, an Angular service that owns the Feature
           boundary, a component that binds to reactive State, and a complete
           character workflow that can render, select, create, update, delete,
-          reset, and permanently tear down records from a managed collection.
+          filter, sort, and derive display-ready values from a managed
+          collection.
         </p>
 
         <div class="callout callout-info">
@@ -252,10 +253,10 @@
           </div>
 
           <p>
-            The first tutorial established a minimal
-            <sdux-brand-name /> boundary for reading managed State. This next
-            section keeps that same service-owned <sdux-feature-cell />, but
-            upgrades the UI from one fixed record to a user-selected read path.
+            This chapter turns a fixed read view into a user-selected read path.
+            The same service-owned <sdux-feature-cell /> now exposes a managed
+            collection that the component can present through a dropdown-driven
+            selection flow.
           </p>
           <p>
             The important shift is architectural, not mechanical: selection
@@ -317,18 +318,16 @@
           </div>
 
           <p>
-            The dropdown tutorial proved that the same service-owned collection
-            can support user-directed reads. This next section turns that read
-            model into a mutation workflow by adding merge configuration, create
-            behavior, and update behavior on top of the same
-            <sdux-feature-cell /> boundary.
+            This chapter introduces mutation by adding merge configuration,
+            create behavior, and update behavior to the same
+            <sdux-feature-cell /> boundary. The workflow expands from reading
+            data to saving new and edited records through the service.
           </p>
           <p>
-            The teaching goal here is to keep mutation policy inside the
-            <sdux-brand-name /> pipeline and committed Feature State inside the
-            service, while the component owns only local form, mode, and
-            feedback state. That separation is what makes the add/edit slice
-            extensible instead of ad hoc.
+            Keep mutation policy inside the <sdux-brand-name /> pipeline and
+            committed Feature State inside the service, while the component owns
+            only local form, mode, and feedback state. That separation makes the
+            add/edit flow extensible instead of ad hoc.
           </p>
         </div>
       </section>
@@ -384,17 +383,17 @@
           </div>
 
           <p>
-            The add/edit tutorial showed how the same service-owned collection
-            can handle create and update work. This section adds delete behavior
-            without moving collection ownership, delete rules, or confirmation
-            logic into the template.
+            This chapter adds delete behavior without moving collection
+            ownership, delete rules, or confirmation logic into the template.
+            The workflow now supports destructive updates through the same
+            service-owned <sdux-feature-cell /> boundary.
           </p>
           <p>
-            The goal is to keep the same split you have used throughout the
-            tutorial: the service is still the only place that updates committed
-            Feature State, while the component owns local selection,
-            confirmation, editor, and feedback state. Keeping that line clear
-            makes delete behavior easier to follow and easier to maintain.
+            Keep the same split in place: the service is still the only place
+            that updates committed Feature State, while the component owns local
+            selection, confirmation, editor, and feedback state. Keeping that
+            line clear makes delete behavior easier to follow and easier to
+            maintain.
           </p>
         </div>
       </section>
@@ -450,16 +449,14 @@
           </div>
 
           <p>
-            The delete tutorial completed the CRUD story. This final chapter
-            shifts from record mutation to lifecycle control by teaching the
-            difference between persisting <span class="code">null</span>,
-            resetting runtime State, and permanently destroying the
-            <sdux-feature-cell />.
+            This chapter shifts from record mutation to lifecycle control by
+            distinguishing persisted <span class="code">null</span>, runtime
+            reset, and permanent destruction of the <sdux-feature-cell />.
           </p>
           <p>
-            The boundary does not move. The service still owns every lifecycle
-            API, while the component responds by clearing or disabling local UI
-            state. That separation lets the tutorial explain why
+            The service still owns every lifecycle API, while the component
+            responds by clearing or disabling local UI state. That separation
+            makes it clear why
             <span class="code"
               >replaceState({{ '{' }} value: null {{ '}' }})</span
             >, <span class="code">reset()</span>, and
@@ -477,6 +474,71 @@
         [attr.inert]="!isChapterExpanded(5) ? '' : null">
         <div class="chapter-content-inner">
           <sdux-lifecycle-chapter></sdux-lifecycle-chapter>
+        </div>
+      </div>
+
+      <section
+        class="chapter-break"
+        id="chapter-6"
+        aria-labelledby="chapter-6-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
+
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 6</p>
+          <div class="chapter-header">
+            <h2 id="chapter-6-title">Filters and Reducers Flow</h2>
+
+            <button
+              type="button"
+              class="chapter-toggle"
+              aria-controls="chapter-6-content"
+              [attr.aria-expanded]="isChapterExpanded(6)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'Filters and Reducers Flow',
+                  isChapterExpanded(6)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'Filters and Reducers Flow',
+                  isChapterExpanded(6)
+                )
+              "
+              (click)="toggleTutorialChapter(6)">
+              <mat-icon aria-hidden="true">
+                {{
+                  isChapterExpanded(6)
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                }}
+              </mat-icon>
+            </button>
+          </div>
+
+          <p>
+            This chapter focuses on pipeline shaping by introducing one filter
+            and three reducers. The service refines incoming candidates after
+            Resolve and derives display-ready values before the UI renders the
+            committed State.
+          </p>
+          <p>
+            The service registers the filter and reducers, and the component
+            renders the committed display-ready State. That separation makes it
+            clear why filtering, sorting, and display derivation belong in the
+            pipeline instead of inside the template.
+          </p>
+        </div>
+      </section>
+
+      <div
+        id="chapter-6-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(6)"
+        [attr.aria-hidden]="!isChapterExpanded(6)"
+        [attr.inert]="!isChapterExpanded(6) ? '' : null">
+        <div class="chapter-content-inner">
+          <sdux-filters-and-reducers-chapter></sdux-filters-and-reducers-chapter>
         </div>
       </div>
       <sdux-pipeline-related-topics></sdux-pipeline-related-topics>
