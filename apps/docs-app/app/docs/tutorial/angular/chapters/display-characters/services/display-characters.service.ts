@@ -5,13 +5,13 @@ import { ChapterStackBlitzShape } from '../../../../shape/chapter-stackblitz.sha
 import { ChapterStepShape } from '../../../../shape/chapter-step.shape';
 import { ChapterShape } from '../../../../shape/chapter.shape';
 import { ExampleFileTypes } from '../../../../types/example-file.type';
-import { STAR_WARS_ADD_EDIT_CHARACTERS } from '../../../generated/add-edit-characters.generated';
+import { STAR_WARS_DISPLAY_CHARACTERS } from '../../../generated/display-characters.generated';
 
 @Injectable({ providedIn: 'root' })
 export class DisplayCharactersService {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #characters = STAR_WARS_ADD_EDIT_CHARACTERS;
+  readonly #characters = STAR_WARS_DISPLAY_CHARACTERS;
 
   chapters(): ChapterShape {
     return {

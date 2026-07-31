@@ -1,6 +1,5 @@
 import {
   Component,
-  computed,
   effect,
   inject,
   signal,
@@ -13,31 +12,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
-  BrandNameService,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  PackageNameComponent,
-  SDuXVideoComponent,
-  VaultBrandNameComponent
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
-import { StackblitzLanguageExampleComponent } from '../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
-import { StackblitzExampleService } from '../../stack-blitz/services/stackblitz-example.service';
-import { StackBlitzExampleLanguageShape } from '../../stack-blitz/shapes/stackblitz-example.language.shape';
-import { StackBlitzExampleShape } from '../../stack-blitz/shapes/stackblitz-example.shape';
 import { TutorialNavigationDirective } from '../directive/tutorial-navigation.directive';
-import { ExampleFileService } from '../services/example-file.service';
-import { ChapterStepShape } from '../shape/chapter-step.shape';
 import { ChapterShape } from '../shape/chapter.shape';
-import { ExampleFileTypes } from '../types/example-file.type';
 import { AddEditCharactersChapterComponent } from './chapters/add-edit-characters/add-edit-characters.chapter.component';
 import { AddEditCharactersService } from './chapters/add-edit-characters/services/add-edit-characters.service';
+import { DisplayCharacterChapterComponent } from './chapters/display-character/display-character.chapter.component';
+import { DisplayCharacterService } from './chapters/display-character/services/display-character.service';
 import { DisplayCharactersChapterComponent } from './chapters/display-characters/display-characters.chapter.component';
 import { DisplayCharactersService } from './chapters/display-characters/services/display-characters.service';
-import { STAR_WARS_DISPLAY_CHARACTER } from './generated/display-character.generated';
-import { INITIAL_APP_CONFIG } from './generated/initial-app-config.generated';
-import { INITIAL_SERVICE } from './generated/initial-service.generated';
 
 @Component({
   selector: 'sdux-angular-tutorial',
@@ -48,14 +34,10 @@ import { INITIAL_SERVICE } from './generated/initial-service.generated';
     RouterModule,
     BrandNameComponent,
     PipelineRelatedTopicComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
     SDuXVideoComponent,
-    PackageNameComponent,
     FeatureCellBrandNameComponent,
-    VaultBrandNameComponent,
-    StackblitzLanguageExampleComponent,
     DisplayCharactersChapterComponent,
+    DisplayCharacterChapterComponent,
     AddEditCharactersChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
@@ -63,11 +45,9 @@ import { INITIAL_SERVICE } from './generated/initial-service.generated';
   encapsulation: ViewEncapsulation.None
 })
 export class TutorialAngularComponent extends TutorialNavigationDirective {
-  readonly #brandName = inject(BrandNameService);
-  readonly #exampleFileService = inject(ExampleFileService);
   readonly #route = inject(ActivatedRoute);
   readonly #displayCharactersService = inject(DisplayCharactersService);
-  readonly #stackblitzService = inject(StackblitzExampleService);
+  readonly #displayCharacterService = inject(DisplayCharacterService);
   readonly #addEditCharactersService = inject(AddEditCharactersService);
 
   readonly #expandedChapterGroups = signal<Record<number, boolean>>({
@@ -119,71 +99,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     });
   }
 
-  readonly initialTutorialExample = computed<StackBlitzExampleShape>(
-    () =>
-      this.#stackblitzService.getExample('display-character') ??
-      ({} as StackBlitzExampleShape)
-  );
-
-  readonly initialTutorialLang = computed<StackBlitzExampleLanguageShape>(
-    () =>
-      this.initialTutorialExample()?.languages?.find(
-        (lang) => lang.key === 'angular'
-      ) ?? ({} as StackBlitzExampleLanguageShape)
-  );
-
   readonly displayCharactersExample = this.#displayCharactersService.stackblitz;
-
-  readonly addEditExample = this.#addEditCharactersService;
-
-  protected readonly displayCharacterSource = STAR_WARS_DISPLAY_CHARACTER;
-
-  protected readonly initialServiceSource = INITIAL_SERVICE;
-
-  protected readonly initialAppConfigSource = INITIAL_APP_CONFIG;
-
-  protected readonly registeredAppConfigSource = [
-    this.#exampleFileService.getFile(
-      this.displayCharacterSource,
-      ExampleFileTypes.AppConfig
-    ),
-    this.#exampleFileService.getFile(
-      this.displayCharacterSource,
-      ExampleFileTypes.Constant
-    )
-  ];
-
-  protected readonly mainSource = this.#exampleFileService.getFile(
-    this.displayCharacterSource,
-    ExampleFileTypes.Main
-  );
-
-  protected readonly starWarsCharacterStateSource =
-    this.#exampleFileService.getFile(
-      this.displayCharacterSource,
-      ExampleFileTypes.Shape
-    );
-
-  protected readonly registeredFeatureCellService =
-    this.#exampleFileService.getFile(
-      this.displayCharacterSource,
-      ExampleFileTypes.Service
-    );
-
-  protected readonly initialComponentAndHtmlFiles = [
-    this.#exampleFileService.getFile(
-      this.displayCharacterSource,
-      ExampleFileTypes.Component
-    ),
-    this.#exampleFileService.getFile(
-      this.displayCharacterSource,
-      ExampleFileTypes.Html
-    ),
-    this.#exampleFileService.getFile(
-      this.displayCharacterSource,
-      ExampleFileTypes.Scss
-    )
-  ];
 
   protected readonly displayCharactersFiles =
     this.#displayCharactersService.displayCharactersFiles;
@@ -340,23 +256,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   }
 
   readonly chapters: readonly ChapterShape[] = [
-    {
-      id: 1,
-      label: 'Foundation Chapter',
-      fragment: 'top',
-      steps: [
-        { id: 1, label: 'Project Set-up' },
-        { id: 2, label: `Install ${this.#brandName.value}` },
-        { id: 3, label: 'Define Feature State' },
-        { id: 4, label: 'Build the Service' },
-        { id: 5, label: `Initialize the ${this.#brandName.vaultValue}` },
-        { id: 6, label: `Register the ${this.#brandName.featureCellValue}` },
-        { id: 7, label: `Connect the service to ${this.#brandName.value}` },
-        { id: 8, label: 'Display Character State' },
-        { id: 9, label: 'Start the Application' },
-        { id: 10, label: 'Complete Initial Tutorial' }
-      ] satisfies ChapterStepShape[]
-    },
+    this.#displayCharacterService.chapters(),
     this.#displayCharactersService.chapters(),
     this.#addEditCharactersService.chapters()
   ];
