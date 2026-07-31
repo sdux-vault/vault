@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const displayCharacterExampleProject: Project = {
-  title: 'display-character-example',
+export const displayCharactersExampleProject: Project = {
+  title: 'display-characters-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const displayCharacterExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "display-character-example",
+  "name": "display-characters-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -125,13 +125,42 @@ export const appConfig: ApplicationConfig = {
       <h2 id="character-example-title">Star Wars character registry</h2>
       <p>
         Use SDuX Vault state management to display a single character from an
-        in-memory collection.
+        in-memory collection by dropdown selection.
       </p>
     </div>
   </header>
 
   <fieldset class="feature-cell-controls">
     <div class="workspace">
+      <div class="workspace-row workspace-row-top">
+        <div class="field selection">
+          <label for="character-selection">
+            Character ({{ characters().length }} total)
+          </label>
+          <select
+            #characterSelection
+            id="character-selection"
+            [disabled]="characters().length === 0"
+            (change)="selectCharacter(characterSelection.value)">
+            <option
+              value=""
+              disabled
+              [selected]="selectedCharacterId() === null">
+              Select a character
+            </option>
+            @for (character of characters(); track character.id) {
+              <option
+                [value]="character.id"
+                [selected]="character.id === selectedCharacterId()">
+                {{
+                  character.fullName ??
+                    character.name + ' ' + character.lastName
+                }}
+              </option>
+            }
+          </select>
+        </div>
+      </div>
       <div class="workspace-row workspace-row-bottom">
         <section
           class="panel character-details"
@@ -140,34 +169,42 @@ export const appConfig: ApplicationConfig = {
             <h3 id="details-title">Character details</h3>
           </div>
 
-          <dl>
-            <div>
-              <dt>Full name</dt>
-              <dd>
-                {{ character()?.fullName }}
-              </dd>
+          @if (selectedCharacter(); as character) {
+            <!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
+            <dl>
+              <div>
+                <dt>Full name</dt>
+                <dd>
+                  {{ character.fullName }}
+                </dd>
+              </div>
+              <div>
+                <dt>First name</dt>
+                <dd>{{ character.name }}</dd>
+              </div>
+              <div>
+                <dt>Last name</dt>
+                <dd>{{ character.lastName }}</dd>
+              </div>
+              <div>
+                <dt>Identifier</dt>
+                <dd>{{ character.id }}</dd>
+              </div>
+              <div>
+                <dt>Faction</dt>
+                <dd>{{ character.faction }}</dd>
+              </div>
+              <div>
+                <dt class="force-sensitive">Force-sensitive</dt>
+                <dd>{{ character.forceSensitiveDisplay }}</dd>
+              </div>
+            </dl>
+          } @else {
+            <div class="empty-state">
+              <h4>No character selected</h4>
+              <p>Choose a character from the list.</p>
             </div>
-            <div>
-              <dt>First name</dt>
-              <dd>{{ character()?.name }}</dd>
-            </div>
-            <div>
-              <dt>Last name</dt>
-              <dd>{{ character()?.lastName }}</dd>
-            </div>
-            <div>
-              <dt>Identifier</dt>
-              <dd>{{ character()?.id }}</dd>
-            </div>
-            <div>
-              <dt>Faction</dt>
-              <dd>{{ character()?.faction }}</dd>
-            </div>
-            <div>
-              <dt class="force-sensitive">Force-sensitive</dt>
-              <dd>{{ character()?.forceSensitiveDisplay }}</dd>
-            </div>
-          </dl>
+          }
         </section>
       </div>
     </div>
@@ -1223,6 +1260,13 @@ describe('ExampleComponent', () => {
       lastName: 'Skywalker',
       faction: 'Jedi Order',
       isForceSensitive: true
+    },
+    {
+      id: 2,
+      name: 'Leia',
+      lastName: 'Organa',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
     }
   ];
 
@@ -1240,25 +1284,69 @@ describe('ExampleComponent', () => {
           initialState: initialCharacters
         })
       ]
-    }).compileComponents;
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ExampleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should initialize its read state', async () => {
+  it('should expose the latest character collection from the service', async () => {
+    expect(component.characters()).toEqual([]);
     await vaultSettled(key);
+    expect(component.characters()).toEqual(initialCharacters);
+  });
 
-    expect(component['character']()).toEqual(
-      Object({
-        id: 1,
-        name: 'Luke',
-        lastName: 'Skywalker',
-        faction: 'Jedi Order',
-        isForceSensitive: true
-      })
-    );
+  it('should expose no selected character before a valid selection is made', async () => {
+    await vaultSettled(key);
+    expect(component['selectedCharacterId']()).toBeNull();
+    expect(component['selectedCharacter']()).toBeNull();
+  });
+
+  it('should select a known character id and resolve the selected character', async () => {
+    await vaultSettled(key);
+    component['selectCharacter']('2');
+
+    expect(component['selectedCharacterId']()).toBe(2);
+    expect(component['selectedCharacter']()).toEqual(initialCharacters[1]);
+  });
+
+  it('should ignore an unknown character id', async () => {
+    await vaultSettled(key);
+    component['selectCharacter']('999');
+
+    expect(component['selectedCharacterId']()).toBeNull();
+    expect(component['selectedCharacter']()).toBeNull();
+  });
+
+  it('should keep the empty state when a selected id is not found', async () => {
+    await vaultSettled(key);
+    component['selectCharacter']('3');
+
+    expect(component['selectedCharacterId']()).toBeNull();
+    expect(component['selectedCharacter']()).toBeNull();
+  });
+
+  it('should render the empty state until a character is selected', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+
+    expect(host.textContent).toContain('No character selected');
+    expect(host.textContent).not.toContain('Leia');
+  });
+
+  it('should render the selected character details after selection', async () => {
+    await vaultSettled(key);
+    component['selectCharacter']('2');
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+
+    expect(host.textContent).toContain('Leia');
+    expect(host.textContent).toContain('Rebel Alliance');
+    expect(host.textContent).not.toContain('No character selected');
   });
 });
 `,
@@ -1266,20 +1354,19 @@ describe('ExampleComponent', () => {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject
+  inject,
+  signal
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExampleService } from './example.service';
 import { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
- * Coordinates the reactive character editor presented by this tutorial example.
- * It consumes the service's computed character collection and keeps selection, form,
- * confirmation, and feedback state in Angular signals.
- * Computed signals derive the selected character and mode-specific labels for the template.
- * User actions delegate collection changes to \`ExampleService\`, then reactive state refreshes the view.
+ * Projects SDuX-managed character State into template-ready selection data.
+ * The component reads the service-owned FeatureCell State, keeps only the selected
+ * character identity locally, and derives the displayed record from that identity.
  * **Architectural Boundary:** The component owns presentation state while the service owns
- * FeatureCell access and character collection mutations.
+ * FeatureCell access and committed collection State.
  */
 @Component({
   selector: 'sdux-star-wars-character-example',
@@ -1296,9 +1383,43 @@ export class ExampleComponent {
    */
   readonly #exampleService = inject(ExampleService);
 
-  protected character = computed<StarWarsCharacter | null>(() => {
-    return this.#exampleService.state.value()?.[0] ?? null;
+  /**
+   * Projects the current FeatureCell value into a read-only Angular computed signal.
+   * The empty-array fallback gives templates a stable collection before a value is available.
+   */
+  readonly characters = computed<readonly StarWarsCharacter[]>(
+    () => this.#exampleService.state.value() ?? []
+  );
+
+  /** Holds the identity currently selected by the character picker, or \`null\` when none is selected. */
+  protected readonly selectedCharacterId = signal<number | null>(null);
+
+  /**
+   * Resolves the selected identity against the latest reactive character collection.
+   * Returning \`null\` keeps the template safe when the character was removed or never existed.
+   */
+  protected readonly selectedCharacter = computed(() => {
+    const selectedId = this.selectedCharacterId();
+    return this.characters().find(({ id }) => id === selectedId) ?? null;
   });
+
+  /**
+   * Resolves a picker value to a known character identity in the current SDuX-managed collection.
+   * Unknown identities are ignored so stale or invalid option values cannot change the displayed State.
+   * @param value - Character identity received from the select element.
+   * @returns Nothing; the selected identity signal is updated in place.
+   */
+  protected selectCharacter(value: string): void {
+    const character =
+      this.characters().find((character) => character.id === Number(value)) ??
+      null;
+
+    if (!character) {
+      return;
+    }
+
+    this.selectedCharacterId.set(character.id);
+  }
 }
 `,
     'src/example.service.spec.ts': `import { provideHttpClient } from '@angular/common/http';

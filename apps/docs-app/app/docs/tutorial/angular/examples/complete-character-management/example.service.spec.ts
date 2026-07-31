@@ -34,7 +34,7 @@ import { StarWarsCharacter } from './star-wars-character.shape';
 
 describe('ExampleService', () => {
   const key = 'star-wars-character';
-  const initialCharacters: readonly StarWarsCharacter[] = [
+  const initialCharacters: StarWarsCharacter[] = [
     {
       id: 10,
       name: 'Leia',
@@ -50,7 +50,7 @@ describe('ExampleService', () => {
       isForceSensitive: true
     }
   ];
-  const initialCharactersWithDisplay: readonly StarWarsCharacter[] = [
+  const initialCharactersWithDisplay: StarWarsCharacter[] = [
     {
       ...initialCharacters[0]!,
       fullName: 'Leia Organa',
@@ -140,7 +140,7 @@ describe('ExampleService', () => {
       spyOn(exampleHydrate, 'getPromise').and.callFake(
         () =>
           Promise.resolve(initialState ?? undefined) as Promise<
-            readonly StarWarsCharacter[]
+            StarWarsCharacter[]
           >
       );
     }
@@ -161,7 +161,7 @@ describe('ExampleService', () => {
       expect(service.state.hasValue()).toBeTrue();
       expect(service.state.isLoading()).toBeFalse();
       expect(service.state.error()).toBeNull();
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
     });
 
     it('should hydrate the authoritative initial State through the complete pipeline', async () => {
@@ -177,7 +177,7 @@ describe('ExampleService', () => {
 
       expect(service.state.isLoading()).toBeFalse();
       expect(service.state.error()).toBeNull();
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         {
           id: 302,
           name: 'Jyn',
@@ -216,7 +216,7 @@ describe('ExampleService', () => {
         }
       ]);
       expect(
-        service.characters().some(({ lastName }) => lastName === 'unknown')
+        service.state.value()?.some(({ lastName }) => lastName === 'unknown')
       ).toBeFalse();
       expect(exampleHydrate.getResolve()).toBeNull();
       expect(exampleHydrate.getReject()).toBeNull();
@@ -233,7 +233,7 @@ describe('ExampleService', () => {
 
       expect(service.state.isLoading()).toBeFalse();
       expect(service.state.hasValue()).toBeFalse();
-      expect(service.characters()).toEqual([]);
+      expect(service.state.value()).toBeUndefined();
       expect(service.state.error()?.message).toBe(
         'The character hydration was rejected.'
       );
@@ -342,7 +342,7 @@ describe('ExampleService', () => {
         faction: 'Rebel Alliance',
         isForceSensitive: false
       };
-      const candidate = [unknownCharacter, retainedCharacter] as const;
+      const candidate = [unknownCharacter, retainedCharacter];
 
       const filtered = removeUnknownLastNameFilter(candidate);
       const service = await configureService(candidate);
@@ -350,7 +350,7 @@ describe('ExampleService', () => {
       expect(filtered).toEqual([retainedCharacter]);
       expect(filtered).not.toBe(candidate);
       expect(candidate).toEqual([unknownCharacter, retainedCharacter]);
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         withDerivedDisplay(retainedCharacter)
       ]);
     });
@@ -375,7 +375,7 @@ describe('ExampleService', () => {
         initialCharacters[1]!,
         initialCharacters[0]!
       ]);
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
       expect(candidate).toEqual([
         initialCharacters[1]!,
         unknownCharacter,
@@ -389,7 +389,7 @@ describe('ExampleService', () => {
       const service = await configureService(candidate);
 
       expect(service.afterTapInput()).toEqual(initialCharactersWithDisplay);
-      expect(service.afterTapInput()).toEqual(service.characters());
+      expect(service.afterTapInput()).toEqual(service.state.value());
       expect(candidate).toEqual([initialCharacters[1]!, initialCharacters[0]!]);
     });
 
@@ -403,7 +403,7 @@ describe('ExampleService', () => {
         hasValue: true
       });
       expect(service.emittedState()?.value).toEqual(service.afterTapInput());
-      expect(service.emittedState()?.value).toEqual(service.characters());
+      expect(service.emittedState()?.value).toEqual(service.state.value());
       expect(service.emittedError()).toBeUndefined();
     });
 
@@ -428,7 +428,7 @@ describe('ExampleService', () => {
       expect(service.isStepwiseResolvePending()).toBeFalse();
       await acceptStepwiseAndSettle(service);
 
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         ...initialCharactersWithDisplay,
         withDerivedDisplay(han)
       ]);
@@ -454,7 +454,7 @@ describe('ExampleService', () => {
       expect(service.isStepwiseResolvePending()).toBeFalse();
       await vaultSettled(key);
 
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
 
       service.cancelStepwiseResolve();
       expect(service.isStepwiseResolvePending()).toBeFalse();
@@ -492,7 +492,7 @@ describe('ExampleService', () => {
       expect(service.isStepwiseFilterPending()).toBeFalse();
       await acceptStepwiseAndSettle(service);
 
-      expect(service.characters().length).toBeGreaterThan(
+      expect(service.state.value()?.length).toBeGreaterThan(
         initialCharactersWithDisplay.length
       );
 
@@ -502,7 +502,7 @@ describe('ExampleService', () => {
 
     it('should cancel a pending Stepwise Filter request without committing it', async () => {
       const service = await configureService();
-      const committed = service.characters();
+      const committed = service.state.value();
 
       service.createCharacter({
         name: 'Han',
@@ -520,7 +520,7 @@ describe('ExampleService', () => {
       expect(service.isStepwiseFilterPending()).toBeFalse();
       await vaultSettled(key);
 
-      expect(service.characters()).toEqual(committed);
+      expect(service.state.value()).toEqual(committed);
 
       service.cancelStepwiseFilter();
       expect(service.isStepwiseFilterPending()).toBeFalse();
@@ -551,7 +551,7 @@ describe('ExampleService', () => {
       expect(service.isStepwiseReducerPending()).toBeFalse();
       await vaultSettled(key);
 
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         ...initialCharactersWithDisplay,
         withDerivedDisplay(han)
       ]);
@@ -562,7 +562,7 @@ describe('ExampleService', () => {
 
     it('should cancel a pending Stepwise Reducer request without committing it', async () => {
       const service = await configureService();
-      const committed = service.characters();
+      const committed = service.state.value();
 
       service.createCharacter({
         name: 'Han',
@@ -582,7 +582,7 @@ describe('ExampleService', () => {
       expect(service.isStepwiseReducerPending()).toBeFalse();
       await vaultSettled(key);
 
-      expect(service.characters()).toEqual(committed);
+      expect(service.state.value()).toEqual(committed);
 
       service.cancelStepwiseReducer();
       expect(service.isStepwiseReducerPending()).toBeFalse();
@@ -611,7 +611,7 @@ describe('ExampleService', () => {
 
       expect(han.id).toBe(21);
       expect(chewbacca.id).toBe(22);
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         ...initialCharactersWithDisplay,
         withDerivedDisplay(han),
         withDerivedDisplay(chewbacca)
@@ -636,7 +636,7 @@ describe('ExampleService', () => {
         faction: 'Resistance',
         isForceSensitive: false
       });
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
 
       const missing = service.updateCharacter(999, {
         name: 'Missing',
@@ -647,7 +647,7 @@ describe('ExampleService', () => {
       await acceptStepwiseAndSettle(service);
 
       expect(missing.id).toBe(999);
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
     });
 
     it('should remove only the requested character', async () => {
@@ -656,12 +656,12 @@ describe('ExampleService', () => {
       service.removeCharacter(10);
       await acceptStepwiseAndSettle(service);
 
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
 
       service.removeCharacter(999);
       await acceptStepwiseAndSettle(service);
 
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
     });
 
     it('should persist null to clear the current FeatureCell value', async () => {
@@ -672,7 +672,7 @@ describe('ExampleService', () => {
 
       expect(service.state.value()).toBeUndefined();
       expect(service.state.hasValue()).toBeFalse();
-      expect(service.characters()).toEqual([]);
+      expect(service.state.value()).toBeUndefined();
     });
 
     it('should reset the FeatureCell state through the reset API', async () => {
@@ -682,7 +682,7 @@ describe('ExampleService', () => {
 
       expect(service.state.value()).toBeUndefined();
       expect(service.state.hasValue()).toBeFalse();
-      expect(service.characters()).toEqual([]);
+      expect(service.state.value()).toBeUndefined();
     });
 
     it('should remain loading until the deferred Promise resolves through the pipeline', async () => {
@@ -692,7 +692,7 @@ describe('ExampleService', () => {
       await flushVaultPipeline();
 
       expect(service.state.isLoading()).toBeTrue();
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
 
       const resolvePromise = examplePromise.getResolve();
       expect(resolvePromise).not.toBeNull();
@@ -700,7 +700,7 @@ describe('ExampleService', () => {
       await acceptStepwiseAndSettle(service);
 
       expect(service.state.isLoading()).toBeFalse();
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         {
           id: 102,
           name: 'Din',
@@ -722,7 +722,7 @@ describe('ExampleService', () => {
         }
       ]);
       expect(
-        service.characters().some(({ lastName }) => lastName === 'unknown')
+        service.state.value()?.some(({ lastName }) => lastName === 'unknown')
       ).toBeFalse();
       expect(examplePromise.getResolve()).toBeNull();
       expect(examplePromise.getReject()).toBeNull();
@@ -735,7 +735,7 @@ describe('ExampleService', () => {
       await flushVaultPipeline();
 
       expect(service.state.isLoading()).toBeTrue();
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
 
       const rejectPromise = examplePromise.getReject();
       expect(rejectPromise).not.toBeNull();
@@ -743,7 +743,7 @@ describe('ExampleService', () => {
       await acceptStepwiseAndSettle(service);
 
       expect(service.state.isLoading()).toBeFalse();
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
       expect(service.state.error()?.message).toBe(
         'The character request was rejected.'
       );
@@ -769,7 +769,7 @@ describe('ExampleService', () => {
       await flushVaultPipeline();
 
       expect(service.state.isLoading()).toBeTrue();
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
 
       const emitObservable = exampleObservable.getEmit();
       expect(emitObservable).not.toBeNull();
@@ -777,7 +777,7 @@ describe('ExampleService', () => {
       await acceptStepwiseAndSettle(service);
 
       expect(service.state.isLoading()).toBeFalse();
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         {
           id: 201,
           name: 'Ezra',
@@ -799,7 +799,7 @@ describe('ExampleService', () => {
         }
       ]);
       expect(
-        service.characters().some(({ lastName }) => lastName === 'unknown')
+        service.state.value()?.some(({ lastName }) => lastName === 'unknown')
       ).toBeFalse();
       expect(exampleObservable.getEmit()).toBeNull();
       expect(exampleObservable.getError()).toBeNull();
@@ -812,7 +812,7 @@ describe('ExampleService', () => {
       await flushVaultPipeline();
 
       expect(service.state.isLoading()).toBeTrue();
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
 
       const errorObservable = exampleObservable.getError();
       expect(errorObservable).not.toBeNull();
@@ -820,7 +820,7 @@ describe('ExampleService', () => {
       await acceptStepwiseAndSettle(service);
 
       expect(service.state.isLoading()).toBeFalse();
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
       expect(service.state.error()?.message).toBe(
         'The character request was rejected.'
       );
@@ -848,7 +848,7 @@ describe('ExampleService', () => {
       await flushVaultPipeline();
 
       expect(service.state.isLoading()).toBeTrue();
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
 
       httpTesting.expectOne('https://swapi.info/api/people').flush([
         {
@@ -868,7 +868,7 @@ describe('ExampleService', () => {
 
       expect(service.state.isLoading()).toBeFalse();
       expect(service.state.error()).toBeNull();
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         {
           id: 25,
           name: 'Lando',
@@ -889,7 +889,7 @@ describe('ExampleService', () => {
         }
       ]);
       expect(
-        service.characters().some(({ lastName }) => lastName === 'unknown')
+        service.state.value()?.some(({ lastName }) => lastName === 'unknown')
       ).toBeFalse();
       httpTesting.verify();
     });
@@ -909,7 +909,7 @@ describe('ExampleService', () => {
       service.submitSameState();
       await acceptStepwiseAndSettle(service);
 
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         ...initialCharactersWithDisplay,
         rey
       ]);
@@ -920,7 +920,7 @@ describe('ExampleService', () => {
       service.submitSameState();
       await acceptStepwiseAndSettle(service);
 
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         ...initialCharactersWithDisplay,
         rey
       ]);
@@ -940,7 +940,7 @@ describe('ExampleService', () => {
       expect(service.isThrowError()).toBeTrue();
       await acceptStepwiseAndSettle(service);
 
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
       expect(service.state.error()?.message).toBe(
         'The intentional character filter error was thrown.'
       );
@@ -1002,7 +1002,7 @@ describe('ExampleService', () => {
         expectedState = [...expectedState, character].sort((left, right) =>
           left.lastName.localeCompare(right.lastName)
         );
-        expect(service.characters()).toEqual(expectedState);
+        expect(service.state.value()).toEqual(expectedState);
       }
 
       const beforeTapInput = service.beforeTapInput();
@@ -1011,7 +1011,7 @@ describe('ExampleService', () => {
       service.submitChangedState();
       await acceptStepwiseAndSettle(service);
 
-      expect(service.characters()).toEqual(expectedState);
+      expect(service.state.value()).toEqual(expectedState);
       expect(service.beforeTapInput()).toBe(beforeTapInput);
       expect(service.afterTapInput()).toBe(afterTapInput);
     });
@@ -1024,7 +1024,7 @@ describe('ExampleService', () => {
       const service = await configureService(initialCharacters, false, true);
       const persisted = localStorage.getItem(EXAMPLE_ENCRYPTED_STORAGE_KEY);
 
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(service.state.value()).toEqual(initialCharactersWithDisplay);
       expect(persisted).not.toBeNull();
       expect(JSON.parse(persisted!)).toEqual({
         v: 1,
@@ -1068,7 +1068,7 @@ describe('ExampleService', () => {
       await acceptStepwiseAndSettle(service);
 
       expect(firstCharacter).toEqual(initialCharactersWithDisplay[0]!);
-      expect(service.characters()).toEqual([
+      expect(service.state.value()).toEqual([
         ...initialCharactersWithDisplay,
         {
           id: 21,
@@ -1080,14 +1080,14 @@ describe('ExampleService', () => {
           forceSensitiveDisplay: 'No'
         }
       ]);
-      expect(service.characters()).not.toBe(initialCharacters);
-      expect(service.characters()[0]).not.toBe(initialCharacters[0]!);
+      expect(service.state.value()).not.toBe(initialCharacters);
+      expect(service.state.value()?.[0]).not.toBe(initialCharacters[0]!);
     });
 
     it('should safely update, remove, and restore when no initial value exists', async () => {
       const service = await configureService(null);
 
-      expect(service.characters()).toEqual([]);
+      expect(service.state.value()).toBeUndefined();
 
       service.updateCharacter(1, {
         name: 'Missing',
@@ -1102,7 +1102,7 @@ describe('ExampleService', () => {
       await acceptStepwiseAndSettle(service);
 
       expect(firstCharacter).toBeNull();
-      expect(service.characters()).toEqual([]);
+      expect(service.state.value()).toEqual([]);
     });
   });
 });

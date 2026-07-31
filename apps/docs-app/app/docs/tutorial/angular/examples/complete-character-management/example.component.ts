@@ -94,10 +94,13 @@ export class ExampleComponent {
   // Reactive state: direct service projections consumed by the template.
 
   /**
-   * References the service's computed character collection for direct reactive template reads.
-   * FeatureCell value changes therefore propagate without a manual subscription in this component.
+   * Projects the current FeatureCell value into a read-only Angular computed signal.
+   * The empty-array fallback gives templates a stable collection before a value is available.
    */
-  protected readonly characters = this.#exampleService.characters;
+  /** Teaching Point: ex-001 */
+  readonly characters = computed<readonly StarWarsCharacter[]>(
+    () => this.state.value() ?? []
+  );
 
   /** Exposes the FeatureCell loading signal so the template can cover the current selection. */
   protected readonly state = this.#exampleService.state;
@@ -372,7 +375,9 @@ export class ExampleComponent {
    * @returns Nothing; selection, form, and feedback signals are updated in place.
    */
   protected selectCharacter(value: string): void {
-    const character = this.editor.resolveCharacter(this.characters(), value);
+    const character =
+      this.characters().find((character) => character.id === Number(value)) ??
+      null;
 
     if (!character) {
       return;

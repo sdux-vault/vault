@@ -9,13 +9,11 @@ import { ExampleService } from './example.service';
 import { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
- * Coordinates the reactive character editor presented by this tutorial example.
- * It consumes the service's computed character collection and keeps selection, form,
- * confirmation, and feedback state in Angular signals.
- * Computed signals derive the selected character and mode-specific labels for the template.
- * User actions delegate collection changes to `ExampleService`, then reactive state refreshes the view.
- * **Architectural Boundary:** The component owns presentation state while the service owns
- * FeatureCell access and character collection mutations.
+ * Projects the first committed SDuX-managed character into a template-ready read model.
+ * The component reads the service-owned FeatureCell State and derives one display record
+ * without taking ownership of Feature State or duplicating SDuX access in the template.
+ * **Architectural Boundary:** The component owns only the view projection while the service owns
+ * FeatureCell access and committed collection State.
  */
 @Component({
   selector: 'sdux-star-wars-character-example',
@@ -27,11 +25,15 @@ import { StarWarsCharacter } from './star-wars-character.shape';
 })
 export class ExampleComponent {
   /**
-   * Provides the component-facing character use cases and reactive collection signal.
+   * Provides the component-facing reactive collection signal from the service-owned FeatureCell.
    * The component never reaches through this service to access the FeatureCell directly.
    */
   readonly #exampleService = inject(ExampleService);
 
+  /**
+   * Derives the first committed character from the latest SDuX-managed collection.
+   * Returning `null` keeps the template safe before the initial value is available.
+   */
   protected character = computed<StarWarsCharacter | null>(() => {
     return this.#exampleService.state.value()?.[0] ?? null;
   });

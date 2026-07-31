@@ -17,9 +17,11 @@ import { StackBlitzExampleLanguageShape } from '../../stack-blitz/shapes/stackbl
 import { StackBlitzExampleShape } from '../../stack-blitz/shapes/stackblitz-example.shape';
 import { TutorialNavigationDirective } from '../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../services/example-file.service';
+import { TutorialGroupShape } from '../shape/tutorial-group.shape';
 import { TutorialStepShape } from '../shape/tutorial-step.shape';
 import { ExampleFileTypes } from '../types/example-file.type';
 import { STAR_WARS_DISPLAY_CHARACTER } from './generated/display-character.generated';
+import { STAR_WARS_DISPLAY_CHARACTERs as STAR_WARS_DISPLAY_CHARACTERS } from './generated/display-characters.generated';
 import { INITIAL_APP_CONFIG } from './generated/initial-app-config.generated';
 import { INITIAL_SERVICE } from './generated/initial-service.generated';
 
@@ -48,19 +50,35 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
 
   readonly #stackblitzService = inject(StackblitzExampleService);
 
-  readonly example = computed<StackBlitzExampleShape>(
+  readonly initialTutorialExample = computed<StackBlitzExampleShape>(
     () =>
       this.#stackblitzService.getExample('display-character') ??
       ({} as StackBlitzExampleShape)
   );
 
-  readonly lang = computed<StackBlitzExampleLanguageShape>(
+  readonly initialTutorialLang = computed<StackBlitzExampleLanguageShape>(
     () =>
-      this.example()?.languages?.find((lang) => lang.key === 'angular') ??
-      ({} as StackBlitzExampleLanguageShape)
+      this.initialTutorialExample()?.languages?.find(
+        (lang) => lang.key === 'angular'
+      ) ?? ({} as StackBlitzExampleLanguageShape)
+  );
+
+  readonly dropdownTutorialExample = computed<StackBlitzExampleShape>(
+    () =>
+      this.#stackblitzService.getExample('display-characters') ??
+      ({} as StackBlitzExampleShape)
+  );
+
+  readonly dropdownTutorialLang = computed<StackBlitzExampleLanguageShape>(
+    () =>
+      this.dropdownTutorialExample()?.languages?.find(
+        (lang) => lang.key === 'angular'
+      ) ?? ({} as StackBlitzExampleLanguageShape)
   );
 
   protected readonly displayCharacterSource = STAR_WARS_DISPLAY_CHARACTER;
+
+  protected readonly displayCharactersSource = STAR_WARS_DISPLAY_CHARACTERS;
 
   protected readonly initialServiceSource = INITIAL_SERVICE;
 
@@ -109,16 +127,53 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     )
   ];
 
-  readonly tutorialSteps: readonly TutorialStepShape[] = [
-    { id: 1, label: 'Project Set-up' },
-    { id: 2, label: `Install ${this.#brandName.value}` },
-    { id: 3, label: 'Define Feature State' },
-    { id: 4, label: 'Build the Service' },
-    { id: 5, label: `Initialize the ${this.#brandName.vaultValue}` },
-    { id: 6, label: `Register the ${this.#brandName.featureCellValue}` },
-    { id: 7, label: `Connect the service to ${this.#brandName.value}` },
-    { id: 8, label: 'Display Character State' },
-    { id: 9, label: 'Start the Application' },
-    { id: 10, label: 'Complete Initial Tutorial' }
+  protected readonly dropdownStepFiles = [
+    this.#exampleFileService.getFile(
+      this.displayCharactersSource,
+      ExampleFileTypes.Component
+    ),
+    this.#exampleFileService.getFile(
+      this.displayCharactersSource,
+      ExampleFileTypes.Html
+    ),
+    this.#exampleFileService.getFile(
+      this.displayCharactersSource,
+      ExampleFileTypes.ComponentSpec
+    )
+  ];
+
+  getStepId(groupIndex: number, stepIndex: number): number {
+    const completedSteps = this.tutorialGroups
+      .slice(0, groupIndex)
+      .reduce((count, group) => count + group.steps.length, 0);
+
+    return completedSteps + stepIndex + 1;
+  }
+
+  readonly tutorialGroups: readonly TutorialGroupShape[] = [
+    {
+      id: 1,
+      label: 'Tutorial Steps',
+      steps: [
+        { id: 1, label: 'Project Set-up' },
+        { id: 2, label: `Install ${this.#brandName.value}` },
+        { id: 3, label: 'Define Feature State' },
+        { id: 4, label: 'Build the Service' },
+        { id: 5, label: `Initialize the ${this.#brandName.vaultValue}` },
+        { id: 6, label: `Register the ${this.#brandName.featureCellValue}` },
+        { id: 7, label: `Connect the service to ${this.#brandName.value}` },
+        { id: 8, label: 'Display Character State' },
+        { id: 9, label: 'Start the Application' },
+        { id: 10, label: 'Complete Initial Tutorial' }
+      ] satisfies TutorialStepShape[]
+    },
+    {
+      id: 2,
+      label: 'User-Directed Read Steps',
+      steps: [
+        { id: 1, label: 'Add a Dropdown' },
+        { id: 2, label: 'Complete Dropdown Tutorial' }
+      ] satisfies TutorialStepShape[]
+    }
   ];
 }

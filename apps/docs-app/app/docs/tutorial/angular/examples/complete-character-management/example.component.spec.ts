@@ -27,7 +27,7 @@ import { StarWarsCharacter } from './star-wars-character.shape';
 
 describe('ExampleComponent', () => {
   const key = 'star-wars-character';
-  const initialCharacters: readonly StarWarsCharacter[] = [
+  const initialCharacters: StarWarsCharacter[] = [
     {
       id: 1,
       name: 'Luke',
@@ -100,7 +100,7 @@ describe('ExampleComponent', () => {
   };
 
   const configureComponent = async (
-    initialState: readonly StarWarsCharacter[] = initialCharacters,
+    initialState: StarWarsCharacter[] = initialCharacters,
     renderTemplate = false,
     deferHydration = false
   ): Promise<void> => {
@@ -290,11 +290,11 @@ describe('ExampleComponent', () => {
       expect(confirmSpy.calls.argsFor(0)[0]).toContain(
         'Stepwise Resolve is pending.'
       );
-      expect(service.characters()).not.toContain(
+      expect(component['characters']()).not.toContain(
         jasmine.objectContaining({ id: han.id, forceSensitiveDisplay: 'No' })
       );
 
-      const committed = service.characters();
+      const committed = component['characters']();
       confirmSpy.calls.reset();
       confirmSpy.and.returnValue(false);
 
@@ -311,7 +311,7 @@ describe('ExampleComponent', () => {
       expect(confirmSpy.calls.argsFor(0)[0]).toContain(
         'Stepwise Resolve is pending.'
       );
-      expect(service.characters()).toEqual(committed);
+      expect(component['characters']()).toEqual(committed);
     });
 
     it('should accept Stepwise Resolve when the native prompt returns true', async () => {
@@ -382,9 +382,9 @@ describe('ExampleComponent', () => {
         current: initialCharactersWithDisplay,
         candidate: [...initialCharactersWithDisplay, han]
       });
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(component.characters()).toEqual(initialCharactersWithDisplay);
 
-      const committed = service.characters();
+      const committed = component.characters();
       confirmSpy.calls.reset();
       confirmSpy.and.returnValues(true, false);
 
@@ -404,7 +404,7 @@ describe('ExampleComponent', () => {
       expect(confirmSpy.calls.argsFor(1)[0]).toContain(
         'Stepwise Filter is pending.'
       );
-      expect(service.characters()).toEqual(committed);
+      expect(component.characters()).toEqual(committed);
     });
 
     it('should accept Stepwise Filter when the native prompt returns true', async () => {
@@ -479,9 +479,9 @@ describe('ExampleComponent', () => {
         candidate: [...initialCharactersWithDisplay, withDerivedDisplay(han)]
       });
 
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(component.characters()).toEqual(initialCharactersWithDisplay);
 
-      const committed = service.characters();
+      const committed = component.characters();
       confirmSpy.calls.reset();
       confirmSpy.and.returnValues(true, true, false);
 
@@ -504,7 +504,7 @@ describe('ExampleComponent', () => {
       expect(confirmSpy.calls.argsFor(2)[0]).toContain(
         'Stepwise Reducer is pending.'
       );
-      expect(service.characters()).toEqual(committed);
+      expect(component.characters()).toEqual(committed);
     });
 
     it('should accept Stepwise Reducer when the native prompt returns true', async () => {
@@ -819,7 +819,7 @@ describe('ExampleComponent', () => {
       component['saveCharacter']();
       await acceptStepwiseAndSettle();
 
-      const createdCharacter = service.characters()[2];
+      const createdCharacter = component['characters']()[2];
 
       expect(createdCharacter).toEqual({
         id: 3,
@@ -856,7 +856,7 @@ describe('ExampleComponent', () => {
       component['saveCharacter']();
       await acceptStepwiseAndSettle();
 
-      expect(service.characters()[0]).toEqual({
+      expect(component['characters']()[0]).toEqual({
         id: 2,
         name: 'Leia',
         lastName: 'Organa',
@@ -904,7 +904,7 @@ describe('ExampleComponent', () => {
       component['confirmDelete']();
       await acceptStepwiseAndSettle();
 
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(component['characters']()).toEqual(initialCharactersWithDisplay);
       expect(component['deleteCandidate']()).toBeNull();
       expect(component['selectedCharacterId']()).toBeNull();
       expect(component['editorMode']()).toBe('create');
@@ -935,7 +935,7 @@ describe('ExampleComponent', () => {
       component['restoreInitialCharacters']();
       await acceptStepwiseAndSettle();
 
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(component['characters']()).toEqual(initialCharactersWithDisplay);
       expect(component['selectedCharacterId']()).toBe(2);
       expect(component['editorMode']()).toBe('edit');
       expect(component['deleteCandidate']()).toBeNull();
@@ -1414,7 +1414,7 @@ describe('ExampleComponent', () => {
       expect(
         element.querySelector('[aria-label="Loading characters"]')
       ).toBeNull();
-      expect(service.characters()).toEqual([
+      expect(component['characters']()).toEqual([
         {
           id: 102,
           name: 'Din',
@@ -1474,7 +1474,7 @@ describe('ExampleComponent', () => {
       fixture.detectChanges();
 
       expect(service.state.isLoading()).toBeFalse();
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(component['characters']()).toEqual(initialCharactersWithDisplay);
       expect(service.state.error()?.message).toBe(
         'The character request was rejected.'
       );
@@ -1564,7 +1564,7 @@ describe('ExampleComponent', () => {
       expect(
         element.querySelector('[aria-label="Loading characters"]')
       ).toBeNull();
-      expect(service.characters()).toEqual([
+      expect(component['characters']()).toEqual([
         {
           id: 201,
           name: 'Ezra',
@@ -1628,7 +1628,7 @@ describe('ExampleComponent', () => {
       expect(
         element.querySelector('[aria-label="Loading characters"]')
       ).toBeNull();
-      expect(service.characters()).toEqual(initialCharactersWithDisplay);
+      expect(component['characters']()).toEqual(initialCharactersWithDisplay);
       expect(service.state.error()?.message).toBe(
         'The character request was rejected.'
       );

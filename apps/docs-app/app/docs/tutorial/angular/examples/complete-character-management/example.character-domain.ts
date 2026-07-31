@@ -50,8 +50,8 @@ export function createCharacterState(
 
 /** Produces a detached collection and detached character objects. */
 export function cloneCharacters(
-  characters: readonly StarWarsCharacter[]
-): readonly StarWarsCharacter[] {
+  characters: StarWarsCharacter[]
+): StarWarsCharacter[] {
   return characters.map((character) => ({ ...character }));
 }
 
@@ -72,37 +72,35 @@ export function getDistinctChangedStateCharacter(index: number): {
 }
 
 /** Returns the first integer ID greater than every identity in the collection. */
-export function getNextCharacterId(
-  characters: readonly StarWarsCharacter[]
-): number {
+export function getNextCharacterId(characters: StarWarsCharacter[]): number {
   return Math.max(...characters.map(({ id }) => id), 0) + 1;
 }
 
 /** Derives display-friendly force sensitivity labels without mutating the input. */
 export function deriveForceSensitiveDisplay(
-  characters: readonly StarWarsCharacter[]
-): readonly StarWarsCharacter[] {
+  characters: StarWarsCharacter[]
+): StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
-  })) satisfies readonly (RawStarWarsCharacter &
+  })) satisfies (RawStarWarsCharacter &
     Pick<StarWarsCharacterDisplayFields, 'forceSensitiveDisplay'>)[];
 }
 
 /** Derives a display-ready full name for each character without mutating the input. */
 export function deriveFullName(
-  characters: readonly StarWarsCharacter[]
-): readonly StarWarsCharacter[] {
+  characters: StarWarsCharacter[]
+): StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     fullName: `${character.name} ${character.lastName}`
-  })) satisfies readonly (RawStarWarsCharacter &
+  })) satisfies (RawStarWarsCharacter &
     Pick<StarWarsCharacterDisplayFields, 'fullName'>)[];
 }
 
 /** Creates a pure reducer that orders a cloned collection by last name. */
 export function withCharactersSortedByLastName(): ReducerFunction<
-  readonly StarWarsCharacter[]
+  StarWarsCharacter[]
 > {
   return (characters) =>
     [...characters].sort((left, right) =>

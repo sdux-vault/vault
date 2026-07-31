@@ -8,5 +8,5 @@ import type { StarWarsCharacter } from './star-wars-character.shape';
  * @returns A new collection containing every character with a known last name.
  */
 export const removeUnknownLastNameFilter: FilterFunction<
-  readonly StarWarsCharacter[]
+  StarWarsCharacter[]
 > = (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');

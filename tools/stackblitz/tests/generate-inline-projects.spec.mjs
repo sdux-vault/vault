@@ -199,7 +199,7 @@ describe('generate-inline-projects', () => {
           sourceType: 'artifact-merge',
           sourceDirectory: tutorialDirectory,
           artifactDirectory: path.join(ARTIFACTS_ROOT, 'angular'),
-          exampleTargetBasePath: 'src/app'
+          exampleTargetBasePath: 'src'
         }),
         jasmine.objectContaining({
           language: 'angular',
@@ -254,6 +254,7 @@ describe('generate-inline-projects', () => {
         fileEntry('styles.scss')
       ];
       readdirSyncMock[exampleDirectory] = [
+        fileEntry('main.ts'),
         fileEntry('example.component.ts'),
         fileEntry('example.component.html')
       ];
@@ -271,6 +272,8 @@ describe('generate-inline-projects', () => {
         'bootstrapApplication(AppComponent);';
       readFileSyncMock[path.join(artifactDirectory, 'src/styles.scss')] =
         'body {}';
+      readFileSyncMock[path.join(exampleDirectory, 'main.ts')] =
+        "import { ExampleComponent } from './app/example.component';";
       readFileSyncMock[path.join(exampleDirectory, 'example.component.ts')] =
         'export class ExampleComponent {}';
       readFileSyncMock[path.join(exampleDirectory, 'example.component.html')] =
@@ -282,7 +285,7 @@ describe('generate-inline-projects', () => {
         sourceDirectory: exampleDirectory,
         sourceType: 'artifact-merge',
         artifactDirectory,
-        exampleTargetBasePath: 'src/app'
+        exampleTargetBasePath: 'src'
       });
 
       expect(project.packageJson).toEqual({
@@ -294,8 +297,8 @@ describe('generate-inline-projects', () => {
           '{\n  "name": "complete-character-management-example",\n  "private": true\n}\n',
         'src/main.ts': 'bootstrapApplication(AppComponent);',
         'src/styles.scss': 'body {}',
-        'src/app/example.component.ts': 'export class ExampleComponent {}',
-        'src/app/example.component.html': '<p>Example</p>'
+        'src/example.component.ts': 'export class ExampleComponent {}',
+        'src/example.component.html': '<p>Example</p>'
       });
     });
   });
@@ -394,7 +397,10 @@ describe('generate-inline-projects', () => {
       readdirSyncMock[path.join(artifactDirectory, 'src')] = [
         fileEntry('main.ts')
       ];
-      readdirSyncMock[tutorialDirectory] = [fileEntry('example.component.ts')];
+      readdirSyncMock[tutorialDirectory] = [
+        fileEntry('main.ts'),
+        fileEntry('example.component.ts')
+      ];
 
       const fullDemoPackageJsonPath = path.join(
         sourceRoot,
@@ -435,6 +441,8 @@ describe('generate-inline-projects', () => {
       });
       readFileSyncMock[path.join(artifactDirectory, 'src', 'main.ts')] =
         'bootstrapApplication(AppComponent);';
+      readFileSyncMock[path.join(tutorialDirectory, 'main.ts')] =
+        "import { ExampleComponent } from './app/example.component';";
       readFileSyncMock[path.join(tutorialDirectory, 'example.component.ts')] =
         'export class ExampleComponent {}';
 
@@ -470,8 +478,9 @@ describe('generate-inline-projects', () => {
         "'src/main.ts': `bootstrapApplication(AppComponent);`"
       );
       expect(projectWrites[0].content).toContain(
-        "'src/app/example.component.ts': `export class ExampleComponent {}`"
+        "'src/example.component.ts': `export class ExampleComponent {}`"
       );
+      expect(projectWrites[0].content).not.toContain('./app/example.component');
       expect(projectWrites[0].content).toContain(
         "title: 'complete-character-management-example'"
       );

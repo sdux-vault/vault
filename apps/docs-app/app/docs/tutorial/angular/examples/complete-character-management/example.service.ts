@@ -1,5 +1,5 @@
 // example.service.ts
-import { computed, inject, Injectable, Injector, signal } from '@angular/core';
+import { inject, Injectable, Injector, signal } from '@angular/core';
 import {
   type StepwiseBehaviorDecisionShape,
   withDistinctUntilChanged
@@ -32,8 +32,6 @@ import type {
   RawStarWarsCharacter,
   StarWarsCharacter
 } from './star-wars-character.shape';
-
-type CharacterCollection = readonly StarWarsCharacter[];
 
 /** Fixed Policy-stage hold applied to every tutorial pipeline attempt. */
 /** Teaching Point: ex-033 */
@@ -68,37 +66,37 @@ interface ErrorEmission {
   readonly error: VaultErrorShape;
 
   /** Immutable FeatureCell snapshot associated with the finalized error. */
-  readonly state: Readonly<StateSnapshotShape<CharacterCollection>>;
+  readonly state: Readonly<StateSnapshotShape<StarWarsCharacter[]>>;
 }
 
 /** Values exposed while a Resolve-stage candidate awaits a tutorial decision. */
 /** Teaching Point: ex-038 */
 export interface StepwiseResolveRequest {
   /** Last value committed before the pending pipeline attempt began. */
-  readonly current: CharacterCollection | undefined;
+  readonly current: StarWarsCharacter[] | undefined;
 
   /** Fully resolved pre-filter candidate waiting for an explicit continue or block decision. */
-  readonly candidate: CharacterCollection;
+  readonly candidate: StarWarsCharacter[];
 }
 
 /** Values exposed while a filtered candidate awaits a tutorial decision. */
 /** Teaching Point: ex-039 */
 export interface StepwiseFilterRequest {
   /** Last value committed before the pending pipeline attempt began. */
-  readonly current: CharacterCollection | undefined;
+  readonly current: StarWarsCharacter[] | undefined;
 
   /** Candidate produced by the Filter stage and awaiting policy approval. */
-  readonly candidate: CharacterCollection;
+  readonly candidate: StarWarsCharacter[];
 }
 
 /** Values exposed while a reduced candidate awaits a tutorial decision. */
 /** Teaching Point: ex-040 */
 export interface StepwiseReducerRequest {
   /** Last value committed before the pending pipeline attempt began. */
-  readonly current: CharacterCollection | undefined;
+  readonly current: StarWarsCharacter[] | undefined;
 
   /** Candidate produced by all reducers and awaiting policy approval. */
-  readonly candidate: CharacterCollection;
+  readonly candidate: StarWarsCharacter[];
 }
 
 // Teaching point: CRUD Foundation (ex-007)
@@ -110,7 +108,7 @@ export interface StepwiseReducerRequest {
  * ️**Architectural Boundary:** Components consume this service instead of accessing the
  * FeatureCell directly, keeping state ownership and character rules in one place.
  */
-@FeatureCell<CharacterCollection>('star-wars-character')
+@FeatureCell<StarWarsCharacter[]>('star-wars-character')
 @Injectable({ providedIn: 'root' })
 export class ExampleService {
   // Teaching point: Minimal Read-Only FeatureCell (ex-002)
@@ -118,7 +116,7 @@ export class ExampleService {
    * Provides the strongly typed FeatureCell API associated with this decorated service.
    * Every collection update passes through this reference before reactive state changes.
    */
-  readonly #vault = injectVault<CharacterCollection>(ExampleService);
+  readonly #vault = injectVault<StarWarsCharacter[]>(ExampleService);
 
   /** Supplies the Angular injection context required to create an HTTP resource. */
   readonly #injector = inject(Injector);
@@ -127,7 +125,7 @@ export class ExampleService {
    * Stores a detached copy of the first resolved character collection.
    * Restore operations use this baseline instead of any later edited state.
    */
-  #initialCharacters: CharacterCollection = [];
+  #initialCharacters: StarWarsCharacter[] = [];
 
   /**
    * Tracks the identity assigned to the next newly created character.
@@ -178,8 +176,8 @@ export class ExampleService {
    */
   /** Teaching Point: ex-038 */
   readonly #captureStepwiseResolve = (
-    current: readonly StarWarsCharacter[] | undefined,
-    candidate: CharacterCollection,
+    current: StarWarsCharacter[] | undefined,
+    candidate: StarWarsCharacter[],
     decisions: StepwiseBehaviorDecisionShape
   ): void => {
     this.#stepwiseResolveRequest.set({ current, candidate });
@@ -216,8 +214,8 @@ export class ExampleService {
    */
   /** Teaching Point: ex-039 */
   readonly #captureStepwiseFilter = (
-    current: readonly StarWarsCharacter[] | undefined,
-    candidate: CharacterCollection,
+    current: StarWarsCharacter[] | undefined,
+    candidate: StarWarsCharacter[],
     decisions: StepwiseBehaviorDecisionShape
   ): void => {
     this.#stepwiseFilterRequest.set({ current, candidate });
@@ -255,8 +253,8 @@ export class ExampleService {
    */
   /** Teaching Point: ex-040 */
   readonly #captureStepwiseReducer = (
-    current: readonly StarWarsCharacter[] | undefined,
-    candidate: CharacterCollection,
+    current: StarWarsCharacter[] | undefined,
+    candidate: StarWarsCharacter[],
     decisions: StepwiseBehaviorDecisionShape
   ): void => {
     this.#stepwiseReducerRequest.set({ current, candidate });
@@ -267,7 +265,7 @@ export class ExampleService {
   /** Stores the latest filtered collection observed immediately before reducer execution. */
 
   /** Teaching Point: ex-031 */
-  readonly #beforeTapInput = signal<CharacterCollection | undefined>(undefined);
+  readonly #beforeTapInput = signal<StarWarsCharacter[] | undefined>(undefined);
 
   // Teaching point: Before Taps (ex-031)
   /**
@@ -285,7 +283,7 @@ export class ExampleService {
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
   /** Teaching Point: ex-031 */
-  readonly #captureBeforeTapInput: TapCallback<CharacterCollection> = (
+  readonly #captureBeforeTapInput: TapCallback<StarWarsCharacter[]> = (
     characters
   ) => {
     this.#beforeTapInput.set(characters);
@@ -293,7 +291,7 @@ export class ExampleService {
 
   /** Stores the latest transformed collection observed immediately after reducer execution. */
   /** Teaching Point: ex-032 */
-  readonly #afterTapInput = signal<CharacterCollection | undefined>(undefined);
+  readonly #afterTapInput = signal<StarWarsCharacter[] | undefined>(undefined);
 
   // Teaching point: After Taps (ex-032)
   /**
@@ -311,7 +309,7 @@ export class ExampleService {
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
   /** Teaching Point: ex-032 */
-  readonly #captureAfterTapInput: TapCallback<CharacterCollection> = (
+  readonly #captureAfterTapInput: TapCallback<StarWarsCharacter[]> = (
     characters
   ) => {
     this.#afterTapInput.set(characters);
@@ -320,7 +318,7 @@ export class ExampleService {
   /** Stores the latest finalized StateSnapshot observed after state commitment. */
   /** Teaching Point: ex-035 */
   readonly #emittedState = signal<
-    StateSnapshotShape<CharacterCollection> | undefined
+    StateSnapshotShape<StarWarsCharacter[]> | undefined
   >(undefined);
 
   // Teaching point: State Emission (ex-035)
@@ -339,7 +337,7 @@ export class ExampleService {
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
   /** Teaching Point: ex-035 */
-  readonly #captureEmittedState: CoreEmitStateCallback<CharacterCollection> = (
+  readonly #captureEmittedState: CoreEmitStateCallback<StarWarsCharacter[]> = (
     snapshot
   ) => {
     this.#emittedState.set(snapshot);
@@ -366,7 +364,7 @@ export class ExampleService {
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
   /** Teaching Point: ex-036 */
-  readonly #captureEmittedError: VaultErrorCallback<CharacterCollection> = (
+  readonly #captureEmittedError: VaultErrorCallback<StarWarsCharacter[]> = (
     error,
     state
   ) => {
@@ -388,15 +386,6 @@ export class ExampleService {
    */
   /** Teaching Point: ex-017 */
   readonly state$ = this.#vault.state$;
-
-  /**
-   * Projects the current FeatureCell value into a read-only Angular computed signal.
-   * The empty-array fallback gives templates a stable collection before a value is available.
-   */
-  /** Teaching Point: ex-001 */
-  readonly characters = computed<CharacterCollection>(
-    () => this.state.value() ?? []
-  );
 
   /**
    * Captures the first committed collection, then configures and initializes the FeatureCell pipeline.
@@ -514,7 +503,7 @@ export class ExampleService {
    */
   #configureOperators(): void {
     this.#vault.operators([
-      withDistinctUntilChanged<CharacterCollection>((incoming, previous) =>
+      withDistinctUntilChanged<StarWarsCharacter[]>((incoming, previous) =>
         incoming.every(({ id }) =>
           previous.some((character) => character.id === id)
         )
@@ -967,7 +956,7 @@ export class ExampleService {
    * @returns Nothing; the FeatureCell exposes the resulting value through reactive state.
    */
   // abstract
-  #replaceCharacters(characters: readonly StarWarsCharacter[]): void {
+  #replaceCharacters(characters: StarWarsCharacter[]): void {
     this.#vault.replaceState({
       value: characters
     });

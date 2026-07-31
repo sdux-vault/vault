@@ -36,6 +36,17 @@ const sourceGroups = [
     )
   },
   {
+    exportName: 'STAR_WARS_DISPLAY_CHARACTERs',
+    sourceDirectory: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/examples/display-characters'
+    ),
+    outputFile: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/generated/display-characters.generated.ts'
+    )
+  },
+  {
     exportName: 'INITIAL_SERVICE',
     sourceFile: path.join(
       projectRoot,

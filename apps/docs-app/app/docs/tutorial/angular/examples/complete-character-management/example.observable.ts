@@ -30,7 +30,7 @@ const OBSERVABLE_CHARACTERS: readonly RawStarWarsCharacter[] = [
 ];
 
 /** Emits or errors the pending Observable through its active Subject. */
-type CharacterSubject = ReplaySubject<readonly StarWarsCharacter[]>;
+type CharacterSubject = ReplaySubject<StarWarsCharacter[]>;
 
 /**
  * Coordinates one manually controlled Observable for the Observable teaching example.
@@ -39,7 +39,7 @@ type CharacterSubject = ReplaySubject<readonly StarWarsCharacter[]>;
  */
 class ExampleObservable {
   /** Reuses the active Observable until its Subject reaches a terminal state. */
-  #pendingObservable: Observable<readonly StarWarsCharacter[]> | null = null;
+  #pendingObservable: Observable<StarWarsCharacter[]> | null = null;
 
   /** Holds the replaying Subject that controls the active Observable subscription. */
   #characterSubject: CharacterSubject | null = null;
@@ -48,11 +48,9 @@ class ExampleObservable {
    * Creates or returns the source that the FeatureCell Observable stage will await.
    * @returns The active Observable for the simulated character response.
    */
-  getObservable(): Observable<readonly StarWarsCharacter[]> {
+  getObservable(): Observable<StarWarsCharacter[]> {
     if (!this.#pendingObservable) {
-      this.#characterSubject = new ReplaySubject<readonly StarWarsCharacter[]>(
-        1
-      );
+      this.#characterSubject = new ReplaySubject<StarWarsCharacter[]>(1);
       this.#pendingObservable = this.#characterSubject.asObservable();
     }
 

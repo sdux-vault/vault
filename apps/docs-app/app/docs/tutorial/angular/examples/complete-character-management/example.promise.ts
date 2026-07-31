@@ -29,7 +29,7 @@ const PROMISE_CHARACTERS: readonly RawStarWarsCharacter[] = [
 ];
 
 /** Resolves the pending request with its character collection. */
-type CharacterResolver = (characters: readonly StarWarsCharacter[]) => void;
+type CharacterResolver = (characters: StarWarsCharacter[]) => void;
 
 /** Rejects the pending request with its simulated failure. */
 type CharacterRejecter = (reason: Error) => void;
@@ -41,7 +41,7 @@ type CharacterRejecter = (reason: Error) => void;
  */
 class ExamplePromise {
   /** Reuses the active Promise when the request has already started. */
-  #pendingPromise: Promise<readonly StarWarsCharacter[]> | null = null;
+  #pendingPromise: Promise<StarWarsCharacter[]> | null = null;
 
   /** Holds the native Promise resolver until the simulated request completes. */
   #resolveCharacters: CharacterResolver | null = null;
@@ -53,7 +53,7 @@ class ExamplePromise {
    * Creates or returns the request that the FeatureCell Promise stage will await.
    * @returns The active Promise for the simulated character response.
    */
-  getPromise(): Promise<readonly StarWarsCharacter[]> {
+  getPromise(): Promise<StarWarsCharacter[]> {
     if (!this.#pendingPromise) {
       this.#pendingPromise = new Promise((resolve, reject) => {
         this.#resolveCharacters = resolve;

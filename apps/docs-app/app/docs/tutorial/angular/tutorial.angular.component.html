@@ -6,20 +6,33 @@
   <!-- ====================================================== -->
 
   <div class="tutorial-layout">
-    <nav class="tutorial-steps" aria-labelledby="tutorial-steps-title">
-      <h2 class="tutorial-steps-title" id="tutorial-steps-title">Steps</h2>
-      <ol class="tutorial-step-list">
-        @for (step of tutorialSteps; track step.id) {
-          <li [class.tutorial-step-active]="isActiveStep(step.id)">
-            <a
-              [routerLink]="[]"
-              [fragment]="'step-' + step.id"
-              [attr.aria-current]="isAriaStep(step.id)">
-              {{ step.label }}
-            </a>
-          </li>
-        }
-      </ol>
+    <nav class="tutorial-steps" aria-label="Tutorial steps">
+      @for (group of tutorialGroups; track group.id; let groupIndex = $index) {
+        <h2 class="tutorial-steps-title">
+          {{ group.label }}
+        </h2>
+        <div class="tutorial-step-list">
+          @for (step of group.steps; track step.id; let stepIndex = $index) {
+            <div
+              class="tutorial-step-item"
+              [class.tutorial-step-active]="
+                isActiveStep(getStepId(groupIndex, stepIndex))
+              ">
+              <span class="tutorial-step-number">
+                {{ getStepId(groupIndex, stepIndex) }}.
+              </span>
+              <a
+                [routerLink]="[]"
+                [fragment]="'step-' + getStepId(groupIndex, stepIndex)"
+                [attr.aria-current]="
+                  isAriaStep(getStepId(groupIndex, stepIndex))
+                ">
+                <span class="tutorial-step-label">{{ step.label }}</span>
+              </a>
+            </div>
+          }
+        </div>
+      }
     </nav>
 
     <main class="tutorial-content">
@@ -792,21 +805,200 @@ cd sdux-tutorial;
 
       <section
         class="tutorial-shortcut"
-        aria-label="Launch the completed tutorial example">
+        aria-label="Launch the completed initial tutorial example">
         <div class="tutorial-shortcut-copy">
           <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
-          <h2>Want the finished example without all ten steps?</h2>
+          <h2>Want the finished initial example without all ten steps?</h2>
           <p>
-            The full tutorial is above. If you just want to open the completed
-            result, launch the live example in StackBlitz and inspect the final
-            working implementation directly.
+            If you want the completed single-character read example, launch the
+            live StackBlitz project and inspect the finished implementation
+            directly.
           </p>
         </div>
 
         <div class="tutorial-shortcut-launcher">
           <sdux-stackblitz-language-example
-            [example]="example()"
-            [lang]="lang()" />
+            [example]="initialTutorialExample()"
+            [lang]="initialTutorialLang()" />
+        </div>
+      </section>
+
+      <section class="section" id="step-11">
+        <div class="section-title-navigation">
+          <div class="section-title">Step 11: Add a Dropdown</div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            This step upgrades the initial SDuX read path from showing the first
+            committed record automatically to letting the user choose which
+            committed record to inspect. The Feature registration, service-owned
+            <sdux-feature-cell />, and managed collection stay the same; only
+            the UI-facing selection logic changes.
+          </p>
+
+          <p>
+            Assume the Angular mechanics are already familiar. The SDuX lesson
+            here is narrower: keep Feature State in the service, keep selection
+            state in the component, and derive the displayed record from the
+            latest service-owned collection. To do that, replace the single
+            displayed-character computed Signal with a read-only character
+            collection, a
+            <span class="code">selectedCharacterId</span> Signal, a computed
+            lookup for the selected record, and a small selection handler. In
+            the template, add a <span class="code">select</span> element that
+            lists the registered characters and keep the detail panel bound to
+            computed controller state instead of reaching into SDuX directly.
+            The verification for this step belongs alongside that delta: the
+            updated component spec should prove the controller starts empty,
+            accepts a valid selection, ignores unknown ids, and renders the
+            selected record without moving SDuX ownership out of the service.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>Open <span class="code">example.component.ts</span>.</li>
+              <li>
+                Expose the committed collection and add Signals for the selected
+                character id and selected character.
+              </li>
+              <li>
+                Add a method that maps the dropdown value to a known character
+                id from the current SDuX-managed collection.
+              </li>
+              <li>Open <span class="code">example.component.html</span>.</li>
+              <li>
+                Add a dropdown above the details panel and render an empty state
+                until the user selects a character from the managed collection.
+              </li>
+              <li>
+                Update <span class="code">example.component.spec.ts</span> to
+                verify both the empty state and the selected-record state.
+              </li>
+            </ol>
+          </div>
+
+          <div class="callout callout-learn-more">
+            <div class="title">What to Look For</div>
+
+            <ul>
+              <li>
+                The service still owns the <sdux-feature-cell /> and does not
+                change for this UI enhancement.
+              </li>
+              <li>
+                The selection Signal is presentation state owned by the
+                component, not SDuX Feature State owned by the service.
+              </li>
+              <li>
+                The template continues to render computed, display-ready values
+                instead of reading FeatureCell APIs directly.
+              </li>
+              <li>
+                The spec verifies the new UI behavior without changing the
+                SDuX-owned Feature State contract.
+              </li>
+            </ul>
+          </div>
+
+          <sdux-example-viewer-source>
+            @for (file of dropdownStepFiles; track file?.type) {
+              <sdux-example-viewer-tab [label]="file?.fileName || 'file'">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </div>
+      </section>
+
+      <section class="section" id="step-12">
+        <div class="section-title-navigation">
+          <div class="section-title">Step 12: Complete Dropdown Tutorial</div>
+          <div class="section-top-link">
+            <a [routerLink]="[]" fragment="top">↑ top</a>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            The dropdown tutorial is complete once the page starts with no
+            selected character, lists the registered collection in the picker,
+            and updates the detail panel when the selection changes. The SDuX
+            boundary has not moved: the service still owns the FeatureCell and
+            the component still owns only UI selection state.
+          </p>
+
+          <p>
+            This is the smallest useful SDuX expansion of the initial tutorial:
+            the application moves from one fixed read path to one user-directed
+            read path without changing FeatureCell registration, service
+            ownership, or application bootstrap structure. What changed is the
+            proof that the same service-owned State can now support both an
+            initial empty state and a selected-record view.
+          </p>
+
+          <div class="callout callout-action">
+            <div class="title">Take Action</div>
+            <ol>
+              <li>Return to the running Angular application.</li>
+              <li>
+                Confirm the details panel shows the empty state before a
+                character is selected.
+              </li>
+              <li>
+                Open the dropdown, choose a character, and confirm the details
+                panel updates to the selected record.
+              </li>
+              <li>
+                Choose a different character to verify the same read path reacts
+                to the new selection.
+              </li>
+            </ol>
+          </div>
+
+          <div class="callout callout-learn-more">
+            <div class="title">What Changed From the Initial Example</div>
+
+            <ul>
+              <li>
+                The component now reads the full collection instead of assuming
+                the first item is always the displayed record.
+              </li>
+              <li>
+                The selected character is derived from a local UI Signal and the
+                latest reactive collection State.
+              </li>
+              <li>
+                The template now teaches user-directed selection on top of the
+                same service-owned State.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="tutorial-shortcut"
+        aria-label="Launch the completed dropdown tutorial example">
+        <div class="tutorial-shortcut-copy">
+          <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+          <h2>Want the finished example without all twelve steps?</h2>
+          <p>
+            If you want the completed dropdown tutorial, launch the live
+            StackBlitz project and inspect the final working implementation
+            directly.
+          </p>
+        </div>
+
+        <div class="tutorial-shortcut-launcher">
+          <sdux-stackblitz-language-example
+            [example]="dropdownTutorialExample()"
+            [lang]="dropdownTutorialLang()" />
         </div>
       </section>
 

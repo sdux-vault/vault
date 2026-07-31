@@ -60,9 +60,7 @@ const HTTP_RESOURCE_CHARACTERS: readonly HttpResourceCharacter[] = [
  * @param value - Raw JSON value returned by the SWAPI people endpoint.
  * @returns Three detached raw characters before reducer-derived display fields are added.
  */
-function parseStarWarsCharacters(
-  value: unknown
-): readonly RawStarWarsCharacter[] {
+function parseStarWarsCharacters(value: unknown): RawStarWarsCharacter[] {
   if (!Array.isArray(value)) {
     throw new Error('The SWAPI people response must be an array.');
   }
@@ -111,8 +109,8 @@ class ExampleHttpResource {
    */
   getResource(
     injector: Injector
-  ): HttpResourceRef<readonly StarWarsCharacter[] | undefined> {
-    return httpResource<readonly StarWarsCharacter[]>(() => SWAPI_PEOPLE_URL, {
+  ): HttpResourceRef<StarWarsCharacter[] | undefined> {
+    return httpResource<StarWarsCharacter[]>(() => SWAPI_PEOPLE_URL, {
       injector,
       parse: parseStarWarsCharacters
     });
