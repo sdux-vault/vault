@@ -41,6 +41,7 @@ $action-chevron-hit-area: 44px;
 $action-column-width: calc(
   $action-button-width + $action-chevron-hit-area + $spacing-xs
 );
+$example-min-width: calc($action-column-width + ($spacing-lg * 2));
 
 @mixin visually-hidden-control {
   position: absolute;
@@ -185,6 +186,7 @@ $action-column-width: calc(
 
 :host {
   display: block;
+  min-width: $example-min-width;
 }
 
 .character-example {
@@ -192,6 +194,7 @@ $action-column-width: calc(
   flex-direction: column;
   gap: $spacing-lg;
   width: 100%;
+  min-width: $example-min-width;
   padding: $spacing-lg;
   box-sizing: border-box;
   color: var(--sdux-text-default);
@@ -668,6 +671,34 @@ $action-column-width: calc(
     }
   }
 
+  > .feature-cell-controls > .lifecycle-actions {
+    display: grid;
+    gap: $spacing-md;
+    padding-top: $spacing-lg;
+    margin-top: $spacing-sm;
+    margin-bottom: $spacing-lg;
+    border-top: 1px solid $sdux-primary-base;
+
+    > .section-toggle:not(:checked) ~ .operator-actions {
+      display: none;
+    }
+
+    .operator-actions {
+      display: grid;
+      gap: $spacing-md;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, $action-column-width), 1fr)
+      );
+      align-items: start;
+    }
+
+    .lifecycle-action-row {
+      @include expandable-action-row;
+      min-width: $action-column-width;
+    }
+  }
+
   > .feature-cell-controls > .pipeline-actions {
     display: grid;
     gap: $spacing-lg;
@@ -687,17 +718,15 @@ $action-column-width: calc(
     .action-groups {
       display: grid;
       gap: $spacing-md;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, $action-column-width), 1fr)
+      );
+      align-items: start;
     }
 
     .action-group {
-      display: grid;
-      gap: $spacing-md;
-      min-width: 0;
-
-      @media (min-width: $breakpoint-lg) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        align-items: start;
-      }
+      display: contents;
     }
 
     .action-row {
@@ -727,16 +756,8 @@ $action-column-width: calc(
       gap: $spacing-md;
       align-items: start;
 
-      @media (max-width: $breakpoint-lg) {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      }
-
-      @media (min-width: $breakpoint-lg) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-
-        .submit-changed-action-row {
-          grid-column: 2;
-        }
+      @media (min-width: $breakpoint-md) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .tab-sync-action-row {

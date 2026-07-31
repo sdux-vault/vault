@@ -1921,6 +1921,34 @@ export class ExampleCharacterEditor {
     }
   }
 
+  > .feature-cell-controls > .lifecycle-actions {
+    display: grid;
+    gap: \$spacing-md;
+    padding-top: \$spacing-lg;
+    margin-top: \$spacing-sm;
+    margin-bottom: \$spacing-lg;
+    border-top: 1px solid \$sdux-primary-base;
+
+    > .section-toggle:not(:checked) ~ .operator-actions {
+      display: none;
+    }
+
+    .operator-actions {
+      display: grid;
+      gap: \$spacing-md;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, \$action-column-width), 1fr)
+      );
+      align-items: start;
+    }
+
+    .lifecycle-action-row {
+      @include expandable-action-row;
+      min-width: \$action-column-width;
+    }
+  }
+
   > .feature-cell-controls > .pipeline-actions {
     display: grid;
     gap: \$spacing-lg;
@@ -1940,17 +1968,15 @@ export class ExampleCharacterEditor {
     .action-groups {
       display: grid;
       gap: \$spacing-md;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, \$action-column-width), 1fr)
+      );
+      align-items: start;
     }
 
     .action-group {
-      display: grid;
-      gap: \$spacing-md;
-      min-width: 0;
-
-      @media (min-width: \$breakpoint-lg) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        align-items: start;
-      }
+      display: contents;
     }
 
     .action-row {
@@ -1980,16 +2006,8 @@ export class ExampleCharacterEditor {
       gap: \$spacing-md;
       align-items: start;
 
-      @media (max-width: \$breakpoint-lg) {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      }
-
-      @media (min-width: \$breakpoint-lg) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-
-        .submit-changed-action-row {
-          grid-column: 2;
-        }
+      @media (min-width: \$breakpoint-md) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .tab-sync-action-row {

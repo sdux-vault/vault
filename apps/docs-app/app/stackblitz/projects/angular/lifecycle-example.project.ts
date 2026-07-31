@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const deleteCharactersExampleProject: Project = {
-  title: 'delete-characters-example',
+export const lifecycleExampleProject: Project = {
+  title: 'lifecycle-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const deleteCharactersExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "delete-characters-example",
+  "name": "lifecycle-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -1043,7 +1043,14 @@ export class ExampleCharacterEditor {
     </div>
   }
 
-  <fieldset class="feature-cell-controls">
+  @if (featureCellDestroyed()) {
+    <div class="feedback error" role="alert" aria-live="assertive">
+      The FeatureCell is intentionally catastrophic and inoperable after a
+      destroy(). You will need to reload the page to continue.
+    </div>
+  }
+
+  <fieldset class="feature-cell-controls" [disabled]="featureCellDestroyed()">
     @if (deleteCandidate(); as character) {
       <section
         class="delete-confirmation"
@@ -1284,6 +1291,101 @@ export class ExampleCharacterEditor {
         </section>
       </div>
     </div>
+
+    <div class="lifecycle-actions">
+      <input
+        id="lifecycle-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Lifecycle visibility"
+        checked />
+      <div class="section-header">
+        <span>Lifecycle</span>
+        <label
+          class="section-chevron"
+          for="lifecycle-section-toggle"
+          title="Show or hide Lifecycle"></label>
+      </div>
+
+      <div class="operator-actions">
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="persist-null-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Persist Null Value description" />
+          <div class="button-container">
+            <!-- Teaching point: Persist Null (ex-020) -->
+            <button
+              type="button"
+              class="button danger"
+              (click)="persistNullValue()">
+              Persist Null Value
+            </button>
+            <label
+              class="description-chevron"
+              for="persist-null-description"
+              title="Show or hide Persist Null Value description"></label>
+          </div>
+          <div class="description-container">
+            Calls <code>replaceState(&#123; value: null &#125;)</code> to
+            demonstrate null normalization. The FeatureCell intentionally
+            persists the value as <code>undefined</code>, clearing the current
+            state.
+          </div>
+        </div>
+
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="reset-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Reset State description" />
+          <div class="button-container">
+            <!-- Teaching point: Reset (ex-021) -->
+            <button type="button" class="button danger" (click)="resetState()">
+              Reset State
+            </button>
+            <label
+              class="description-chevron"
+              for="reset-description"
+              title="Show or hide Reset State description"></label>
+          </div>
+          <div class="description-container">
+            Calls the FeatureCell's dedicated <code>reset()</code> API to
+            explicitly clear the current state value to
+            <code>undefined</code> without submitting replacement state.
+          </div>
+        </div>
+
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="destroy-feature-cell-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Destroy FeatureCell description" />
+          <div class="button-container">
+            <!-- Teaching point: FeatureCell destruction (ex-005) -->
+            <button
+              type="button"
+              class="button danger"
+              (click)="destroyFeatureCell()">
+              Destroy FeatureCell
+            </button>
+            <label
+              class="description-chevron"
+              for="destroy-feature-cell-description"
+              title="Show or hide Destroy FeatureCell description"></label>
+          </div>
+          <div class="description-container">
+            Permanently tears down the FeatureCell, releases its runtime
+            resources, destroys attached behaviors and controllers, completes
+            internal streams, and prevents further pipeline execution, state
+            updates, or emissions.
+          </div>
+        </div>
+      </div>
+    </div>
   </fieldset>
 </section>
 `,
@@ -1330,6 +1432,7 @@ export class ExampleCharacterEditor {
 \$action-column-width: calc(
   \$action-button-width + \$action-chevron-hit-area + \$spacing-xs
 );
+\$example-min-width: calc(\$action-column-width + (\$spacing-lg * 2));
 
 @mixin visually-hidden-control {
   position: absolute;
@@ -1474,6 +1577,7 @@ export class ExampleCharacterEditor {
 
 :host {
   display: block;
+  min-width: \$example-min-width;
 }
 
 .character-example {
@@ -1481,6 +1585,7 @@ export class ExampleCharacterEditor {
   flex-direction: column;
   gap: \$spacing-lg;
   width: 100%;
+  min-width: \$example-min-width;
   padding: \$spacing-lg;
   box-sizing: border-box;
   color: var(--sdux-text-default);
@@ -2894,6 +2999,37 @@ export class ExampleComponent {
     this.#patchForm(character);
   }
 
+  /** Tracks permanent FeatureCell teardown so the UI can explain the required recovery. */
+  protected readonly featureCellDestroyed = signal(false);
+
+  /**
+   * Delegates permanent FeatureCell teardown, clears the form, and exposes the terminal UI state.
+   * @returns Nothing; the FeatureCell and its runtime resources are permanently finalized.
+   */
+  protected destroyFeatureCell(): void {
+    this.#exampleService.destroyFeatureCell();
+    this.#clearCharacterForm();
+    this.featureCellDestroyed.set(true);
+  }
+
+  /**
+   * Delegates FeatureCell reset behavior to the service and clears the character form.
+   * @returns Nothing; the cleared state propagates through the reactive state APIs.
+   */
+  protected resetState(): void {
+    this.#exampleService.resetState();
+    this.#clearCharacterForm();
+  }
+
+  /**
+   * Delegates a null replacement to the service and clears the character form.
+   * @returns Nothing; the resulting undefined value is exposed through the reactive state APIs.
+   */
+  protected persistNullValue(): void {
+    this.#exampleService.persistNullValue();
+    this.#clearCharacterForm();
+  }
+
   /**
    * Validates and normalizes form values before delegating create or update work to the service.
    * Invalid input or a missing edit selection produces feedback without changing collection state.
@@ -3390,6 +3526,33 @@ export class ExampleService {
         this.#vault.state.value()?.filter((character) => character.id !== id) ??
         []
     });
+  }
+
+  /**
+   * Permanently tears down the FeatureCell and releases its runtime resources.
+   * Destruction completes its streams and prevents any further pipeline execution.
+   * @returns Nothing; the FeatureCell lifecycle is permanently finalized.
+   */
+  destroyFeatureCell(): void {
+    this.#vault.destroy();
+  }
+
+  /**
+   * Resets the FeatureCell through its dedicated lifecycle API.
+   * Consumers observe the cleared value as \`undefined\` through the reactive state APIs.
+   * @returns Nothing; the FeatureCell performs the reset operation internally.
+   */
+  resetState(): void {
+    this.#vault.reset();
+  }
+
+  /**
+   * Persists \`null\` through \`replaceState\` to clear the FeatureCell's current value.
+   * The resulting state value resolves to \`undefined\` for consumers of the read model.
+   * @returns Nothing; consumers observe the cleared value through the reactive state APIs.
+   */
+  persistNullValue(): void {
+    this.#vault.replaceState({ value: null });
   }
 }
 `,

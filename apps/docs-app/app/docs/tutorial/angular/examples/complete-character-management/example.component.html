@@ -403,6 +403,126 @@
       </div>
     </div>
 
+    <div class="lifecycle-actions">
+      <input
+        id="lifecycle-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Lifecycle visibility"
+        checked />
+      <div class="section-header">
+        <span>Lifecycle</span>
+        <label
+          class="section-chevron"
+          for="lifecycle-section-toggle"
+          title="Show or hide Lifecycle"></label>
+      </div>
+
+      <div class="operator-actions">
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="restore-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Restore Initial Data description" />
+          <div class="button-container">
+            <!-- Teaching point: Restore (ex-022) -->
+            <button
+              type="button"
+              class="button warn"
+              (click)="restoreInitialCharacters()">
+              Restore Initial Data
+            </button>
+            <label
+              class="description-chevron"
+              for="restore-description"
+              title="Show or hide Restore Initial Data description"></label>
+          </div>
+          <div class="description-container">
+            Replaces the current collection with its captured initial values and
+            selects the first restored character.
+          </div>
+        </div>
+
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="persist-null-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Persist Null Value description" />
+          <div class="button-container">
+            <!-- Teaching point: Persist Null (ex-020) -->
+            <button
+              type="button"
+              class="button danger"
+              (click)="persistNullValue()">
+              Persist Null Value
+            </button>
+            <label
+              class="description-chevron"
+              for="persist-null-description"
+              title="Show or hide Persist Null Value description"></label>
+          </div>
+          <div class="description-container">
+            Calls <code>replaceState(&#123; value: null &#125;)</code> to
+            demonstrate null normalization. The FeatureCell intentionally
+            persists the value as <code>undefined</code>, clearing the current
+            state.
+          </div>
+        </div>
+
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="reset-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Reset State description" />
+          <div class="button-container">
+            <!-- Teaching point: Reset (ex-021) -->
+            <button type="button" class="button danger" (click)="resetState()">
+              Reset State
+            </button>
+            <label
+              class="description-chevron"
+              for="reset-description"
+              title="Show or hide Reset State description"></label>
+          </div>
+          <div class="description-container">
+            Calls the FeatureCell's dedicated <code>reset()</code> API to
+            explicitly clear the current state value to
+            <code>undefined</code> without submitting replacement state.
+          </div>
+        </div>
+
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="destroy-feature-cell-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Destroy FeatureCell description" />
+          <div class="button-container">
+            <!-- Teaching point: FeatureCell destruction (ex-005) -->
+            <button
+              type="button"
+              class="button danger"
+              (click)="destroyFeatureCell()">
+              Destroy FeatureCell
+            </button>
+            <label
+              class="description-chevron"
+              for="destroy-feature-cell-description"
+              title="Show or hide Destroy FeatureCell description"></label>
+          </div>
+          <div class="description-container">
+            Permanently tears down the FeatureCell, releases its runtime
+            resources, destroys attached behaviors and controllers, completes
+            internal streams, and prevents further pipeline execution, state
+            updates, or emissions.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="pipeline-actions">
       <input
         id="actions-section-toggle"
@@ -613,64 +733,10 @@
                 a partial response.
               </div>
             </div>
-
-            <!-- Teaching point: Restore (ex-022) -->
-            <div class="action-row">
-              <input
-                id="restore-description"
-                class="description-toggle"
-                type="checkbox"
-                aria-label="Show Restore Initial Data description" />
-              <div class="button-container">
-                <!-- Teaching point: Restore (ex-022) -->
-                <button
-                  type="button"
-                  class="button warn"
-                  (click)="restoreInitialCharacters()">
-                  Restore Initial Data
-                </button>
-                <label
-                  class="description-chevron"
-                  for="restore-description"
-                  title="Show or hide Restore Initial Data description"></label>
-              </div>
-              <div class="description-container">
-                Replaces the current collection with its captured initial values
-                and selects the first restored character.
-              </div>
-            </div>
           </div>
 
           <!-- Teaching template: Keep this group for null persistence, error, reset, and teardown lessons. -->
           <div class="action-group">
-            <!-- Teaching point: Persist Null (ex-020) -->
-            <div class="action-row">
-              <input
-                id="persist-null-description"
-                class="description-toggle"
-                type="checkbox"
-                aria-label="Show Persist Null description" />
-              <div class="button-container">
-                <!-- Teaching point: Persist Null (ex-020) -->
-                <button
-                  type="button"
-                  class="button danger"
-                  (click)="persistNullValue()">
-                  Persist Null Value
-                </button>
-                <label
-                  class="description-chevron"
-                  for="persist-null-description"
-                  title="Show or hide Persist Null Value description"></label>
-              </div>
-              <div class="description-container">
-                Calls <code>replaceState(&#123; value: null &#125;)</code> to
-                demonstrate null normalization. The FeatureCell intentionally
-                persists the value as <code>undefined</code>, clearing the
-                current state.
-              </div>
-            </div>
-
             <!-- Teaching point: Errors (ex-004) -->
             <div class="action-row">
               <input
@@ -697,61 +763,6 @@
                 commitment. After the failure, Reset Error disarms the filter
                 and clears the global error without starting another pipeline
                 request.
-              </div>
-            </div>
-
-            <!-- Teaching point: Reset (ex-021) -->
-            <div class="action-row">
-              <input
-                id="reset-description"
-                class="description-toggle"
-                type="checkbox"
-                aria-label="Show Reset Data description" />
-              <div class="button-container">
-                <!-- Teaching point: Reset (ex-021) -->
-                <button
-                  type="button"
-                  class="button danger"
-                  (click)="resetState()">
-                  Reset State
-                </button>
-                <label
-                  class="description-chevron"
-                  for="reset-description"
-                  title="Show or hide Reset Data description"></label>
-              </div>
-              <div class="description-container">
-                Calls the FeatureCell's dedicated <code>reset()</code> API to
-                explicitly clear the current state value to
-                <code>undefined</code> without submitting replacement state.
-              </div>
-            </div>
-
-            <!-- Teaching point: FeatureCell destruction (ex-005) -->
-            <div class="action-row">
-              <input
-                id="destroy-feature-cell-description"
-                class="description-toggle"
-                type="checkbox"
-                aria-label="Show Destroy FeatureCell description" />
-              <div class="button-container">
-                <!-- Teaching point: FeatureCell destruction (ex-005) -->
-                <button
-                  type="button"
-                  class="button danger"
-                  (click)="destroyFeatureCell()">
-                  Destroy FeatureCell
-                </button>
-                <label
-                  class="description-chevron"
-                  for="destroy-feature-cell-description"
-                  title="Show or hide Destroy FeatureCell description"></label>
-              </div>
-              <div class="description-container">
-                Permanently tears down the FeatureCell, releases its runtime
-                resources, destroys attached behaviors and controllers,
-                completes internal streams, and prevents further pipeline
-                execution, state updates, or emissions.
               </div>
             </div>
           </div>

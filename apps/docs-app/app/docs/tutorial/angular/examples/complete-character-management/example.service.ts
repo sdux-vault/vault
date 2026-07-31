@@ -945,20 +945,10 @@ export class ExampleService {
   restoreInitialCharacters(): StarWarsCharacter | null {
     const initialCharacters = cloneCharacters(this.#initialCharacters);
 
-    this.#replaceCharacters(initialCharacters);
+    this.#vault.replaceState({
+      value: initialCharacters
+    });
 
     return initialCharacters[0] ?? null;
-  }
-
-  /**
-   * Sends a complete character collection through `replaceState` and clears transient status fields.
-   * @param characters - Read-only collection that should become the FeatureCell value.
-   * @returns Nothing; the FeatureCell exposes the resulting value through reactive state.
-   */
-  // abstract
-  #replaceCharacters(characters: StarWarsCharacter[]): void {
-    this.#vault.replaceState({
-      value: characters
-    });
   }
 }

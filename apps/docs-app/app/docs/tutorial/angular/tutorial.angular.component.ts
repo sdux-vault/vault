@@ -26,6 +26,8 @@ import { DisplayCharacterChapterComponent } from './chapters/display-character/d
 import { DisplayCharacterService } from './chapters/display-character/services/display-character.service';
 import { DisplayCharactersChapterComponent } from './chapters/display-characters/display-characters.chapter.component';
 import { DisplayCharactersService } from './chapters/display-characters/services/display-characters.service';
+import { LifecycleChapterComponent } from './chapters/lifecycle/lifecycle.chapter.component';
+import { LifecycleService } from './chapters/lifecycle/services/lifecycle.service';
 
 @Component({
   selector: 'sdux-angular-tutorial',
@@ -41,7 +43,8 @@ import { DisplayCharactersService } from './chapters/display-characters/services
     DisplayCharactersChapterComponent,
     DisplayCharacterChapterComponent,
     AddEditCharactersChapterComponent,
-    DeleteCharactersChapterComponent
+    DeleteCharactersChapterComponent,
+    LifecycleChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -53,19 +56,22 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly #displayCharacterService = inject(DisplayCharacterService);
   readonly #addEditCharactersService = inject(AddEditCharactersService);
   readonly #deleteCharactersService = inject(DeleteCharactersService);
+  readonly #lifeCycleService = inject(LifecycleService);
 
   readonly #expandedChapterGroups = signal<Record<number, boolean>>({
     1: true,
     2: false,
     3: false,
-    4: false
+    4: false,
+    5: false
   });
 
   readonly #expandedChapters = signal<Record<number, boolean>>({
     1: true,
     2: false,
     3: false,
-    4: false
+    4: false,
+    5: false
   });
 
   constructor() {
@@ -190,20 +196,10 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       return 1;
     }
 
-    if (fragment === 'chapter-1' || fragment === 'chapter-1-content') {
-      return 1;
-    }
+    const chapterMatch = /^chapter-(\d+)(?:-content)?$/.exec(fragment);
 
-    if (fragment === 'chapter-2' || fragment === 'chapter-2-content') {
-      return 2;
-    }
-
-    if (fragment === 'chapter-3' || fragment === 'chapter-3-content') {
-      return 3;
-    }
-
-    if (fragment === 'chapter-4' || fragment === 'chapter-4-content') {
-      return 4;
+    if (chapterMatch) {
+      return Number(chapterMatch[1]);
     }
 
     const stepMatch = /^step-(\d+)$/.exec(fragment);
@@ -255,6 +251,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     this.#displayCharacterService.chapters(),
     this.#displayCharactersService.chapters(),
     this.#addEditCharactersService.chapters(),
-    this.#deleteCharactersService.chapters()
+    this.#deleteCharactersService.chapters(),
+    this.#lifeCycleService.chapters()
   ];
 }
