@@ -272,9 +272,7 @@
         [attr.aria-hidden]="!isChapterExpanded(2)"
         [attr.inert]="!isChapterExpanded(2) ? '' : null">
         <div class="chapter-content-inner">
-          <sdux-display-characters-chapter
-            [files]="displayCharactersFiles()"
-            [stackblitz]="displayCharactersExample()" />
+          <sdux-display-characters-chapter />
         </div>
       </div>
 
@@ -345,7 +343,7 @@
             [appConfigFile]="addEditAppConfigFile()"
             [serviceFiles]="addEditServiceFiles()"
             [componentFiles]="addEditComponentFiles()"
-            [stackblitz]="displayCharactersExample()" />
+            [stackblitz]="addEditCharacterExample()" />
         </div>
       </div>
 

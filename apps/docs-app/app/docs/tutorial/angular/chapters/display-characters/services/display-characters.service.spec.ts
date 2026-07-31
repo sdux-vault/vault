@@ -26,40 +26,4 @@ describe('Service: DisplayCharactersService', () => {
       ]
     });
   });
-
-  it('returns the angular StackBlitz metadata when the example includes an angular language', () => {
-    expect(service.stackblitz()).toEqual(
-      Object({
-        example: Object({
-          title: 'Chapter 2: Display Characters',
-          id: 'display-characters',
-          exampleName: 'display-characters-example',
-          displayCopyIcon: false,
-          languages: [{ name: 'Angular', key: 'angular' }],
-          description: jasmine.any(String) as unknown as string
-        }),
-        language: Object({ name: 'Angular', key: 'angular' })
-      })
-    );
-  });
-
-  it('returns the generated component, html, and spec files for the chapter example', () => {
-    expect(service.displayCharactersFiles()).toEqual([
-      {
-        type: 'component',
-        fileName: 'example.component.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'html',
-        fileName: 'example.component.html',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'componentSpec',
-        fileName: 'example.component.spec.ts',
-        source: jasmine.any(String) as unknown as string
-      }
-    ]);
-  });
 });

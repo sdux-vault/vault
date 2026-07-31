@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
@@ -7,8 +7,11 @@ import {
   FeatureCellBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
+import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
+import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
-import { ExampleFileShape } from '../../../shape/example-file.shape';
+import { ExampleFileTypes } from '../../../types/example-file.type';
+import { STAR_WARS_DISPLAY_CHARACTERS } from '../../generated/display-characters.generated';
 
 @Component({
   selector: 'sdux-display-characters-chapter',
@@ -24,7 +27,28 @@ import { ExampleFileShape } from '../../../shape/example-file.shape';
   templateUrl: './display-characters.chapter.component.html'
 })
 export class DisplayCharactersChapterComponent {
-  readonly files = input.required<readonly ExampleFileShape[]>();
+  readonly #stackblitzService = inject(StackblitzExampleService);
+  readonly #exampleFileService = inject(ExampleFileService);
+  readonly #characters = STAR_WARS_DISPLAY_CHARACTERS;
 
-  readonly stackblitz = input.required<ChapterStackBlitzShape>();
+  readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
+    const example = this.#stackblitzService.getExample('display-characters')!;
+
+    return {
+      example,
+      language: example.languages.find((lang) => lang.key === 'angular')!
+    };
+  });
+
+  readonly files = computed(() => [
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.Component
+    ),
+    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.ComponentSpec
+    )
+  ]);
 }

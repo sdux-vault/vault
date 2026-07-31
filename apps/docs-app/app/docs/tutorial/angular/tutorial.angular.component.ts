@@ -99,10 +99,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     });
   }
 
-  readonly displayCharactersExample = this.#displayCharactersService.stackblitz;
-
-  protected readonly displayCharactersFiles =
-    this.#displayCharactersService.displayCharactersFiles;
+  readonly addEditCharacterExample = this.#addEditCharactersService.stackblitz;
 
   protected readonly addEditAppConfigFile =
     this.#addEditCharactersService.appConfigFile;
