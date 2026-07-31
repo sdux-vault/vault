@@ -8,25 +8,26 @@ import { ExampleFileTypes } from '../../../../types/example-file.type';
 import { STAR_WARS_ADD_EDIT_CHARACTERS } from '../../../generated/add-edit-characters.generated';
 
 @Injectable({ providedIn: 'root' })
-export class DisplayCharactersService {
+export class AddEditCharactersService {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_ADD_EDIT_CHARACTERS;
 
   chapters(): ChapterShape {
     return {
-      id: 2,
-      label: 'Multi-select Chapter',
-      fragment: 'chapter-2',
+      id: 3,
+      label: 'Add/Edit Chapter',
+      fragment: 'chapter-3',
       steps: [
-        { id: 1, label: 'Add a Dropdown' },
-        { id: 2, label: 'Complete Dropdown Tutorial' }
+        { id: 1, label: 'Configure Merge Behavior' },
+        { id: 2, label: 'Add/Edit Capabilities' },
+        { id: 3, label: 'Complete Add/Edit Tutorial' }
       ] satisfies ChapterStepShape[]
     };
   }
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
-    const example = this.#stackblitzService.getExample('display-characters')!;
+    const example = this.#stackblitzService.getExample('add-edit-characters')!;
 
     return {
       example,
@@ -34,15 +35,49 @@ export class DisplayCharactersService {
     };
   });
 
-  readonly displayCharactersFiles = computed(() => [
+  readonly appConfigFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.AppConfig
+    );
+  });
+
+  readonly serviceFiles = computed(() => [
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.Service
+    ),
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.ServiceSpec
+    ),
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.CharacterDomain
+    ),
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.CharacterDomainSpec
+    )
+  ]);
+
+  readonly componentFiles = computed(() => [
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.Component
     ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.ComponentSpec
+    ),
+    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.CharacterEditor
+    ),
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.CharacterEditorSpec
     )
   ]);
 }

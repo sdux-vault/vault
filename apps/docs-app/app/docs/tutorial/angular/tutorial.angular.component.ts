@@ -31,9 +31,10 @@ import { ExampleFileService } from '../services/example-file.service';
 import { ChapterStepShape } from '../shape/chapter-step.shape';
 import { ChapterShape } from '../shape/chapter.shape';
 import { ExampleFileTypes } from '../types/example-file.type';
+import { AddEditCharactersChapterComponent } from './chapters/add-edit-characters/add-edit-characters.chapter.component';
+import { AddEditCharactersService } from './chapters/add-edit-characters/services/add-edit-characters.service';
 import { DisplayCharactersChapterComponent } from './chapters/display-characters/display-characters.chapter.component';
 import { DisplayCharactersService } from './chapters/display-characters/services/display-characters.service';
-import { STAR_WARS_ADD_EDIT_CHARACTERS } from './generated/add-edit-characters.generated';
 import { STAR_WARS_DISPLAY_CHARACTER } from './generated/display-character.generated';
 import { INITIAL_APP_CONFIG } from './generated/initial-app-config.generated';
 import { INITIAL_SERVICE } from './generated/initial-service.generated';
@@ -54,7 +55,8 @@ import { INITIAL_SERVICE } from './generated/initial-service.generated';
     FeatureCellBrandNameComponent,
     VaultBrandNameComponent,
     StackblitzLanguageExampleComponent,
-    DisplayCharactersChapterComponent
+    DisplayCharactersChapterComponent,
+    AddEditCharactersChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -64,8 +66,9 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly #brandName = inject(BrandNameService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #route = inject(ActivatedRoute);
-  readonly #selectCharactersService = inject(DisplayCharactersService);
+  readonly #displayCharactersService = inject(DisplayCharactersService);
   readonly #stackblitzService = inject(StackblitzExampleService);
+  readonly #addEditCharactersService = inject(AddEditCharactersService);
 
   readonly #expandedChapterGroups = signal<Record<number, boolean>>({
     1: true,
@@ -129,25 +132,11 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       ) ?? ({} as StackBlitzExampleLanguageShape)
   );
 
-  readonly displayCharactersExample =
-    this.#selectCharactersService.displayCharactersStackblitz;
+  readonly displayCharactersExample = this.#displayCharactersService.stackblitz;
 
-  readonly addEditExample = computed<StackBlitzExampleShape>(
-    () =>
-      this.#stackblitzService.getExample('add-edit-characters') ??
-      ({} as StackBlitzExampleShape)
-  );
-
-  readonly addEditLang = computed<StackBlitzExampleLanguageShape>(
-    () =>
-      this.addEditExample()?.languages?.find(
-        (lang) => lang.key === 'angular'
-      ) ?? ({} as StackBlitzExampleLanguageShape)
-  );
+  readonly addEditExample = this.#addEditCharactersService;
 
   protected readonly displayCharacterSource = STAR_WARS_DISPLAY_CHARACTER;
-
-  protected readonly addEditCharactersSource = STAR_WARS_ADD_EDIT_CHARACTERS;
 
   protected readonly initialServiceSource = INITIAL_SERVICE;
 
@@ -197,53 +186,16 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   ];
 
   protected readonly displayCharactersFiles =
-    this.#selectCharactersService.displayCharactersFiles;
+    this.#displayCharactersService.displayCharactersFiles;
 
-  protected readonly addEditServiceFiles = [
-    this.#exampleFileService.getFile(
-      this.addEditCharactersSource,
-      ExampleFileTypes.AppConfig
-    ),
-    this.#exampleFileService.getFile(
-      this.addEditCharactersSource,
-      ExampleFileTypes.Service
-    ),
-    this.#exampleFileService.getFile(
-      this.addEditCharactersSource,
-      ExampleFileTypes.ServiceSpec
-    ),
-    this.#exampleFileService.getFile(
-      this.addEditCharactersSource,
-      ExampleFileTypes.CharacterDomain
-    ),
-    this.#exampleFileService.getFile(
-      this.addEditCharactersSource,
-      ExampleFileTypes.CharacterDomainSpec
-    )
-  ];
+  protected readonly addEditAppConfigFile =
+    this.#addEditCharactersService.appConfigFile;
 
-  protected readonly addEditComponentFiles = [
-    this.#exampleFileService.getFile(
-      this.addEditCharactersSource,
-      ExampleFileTypes.Component
-    ),
-    this.#exampleFileService.getFile(
-      this.addEditCharactersSource,
-      ExampleFileTypes.ComponentSpec
-    ),
-    this.#exampleFileService.getFile(
-      this.addEditCharactersSource,
-      ExampleFileTypes.Html
-    ),
-    this.#exampleFileService.getFile(
-      this.addEditCharactersSource,
-      ExampleFileTypes.CharacterEditor
-    ),
-    this.#exampleFileService.getFile(
-      this.addEditCharactersSource,
-      ExampleFileTypes.CharacterEditorSpec
-    )
-  ];
+  protected readonly addEditServiceFiles =
+    this.#addEditCharactersService.serviceFiles;
+
+  protected readonly addEditComponentFiles =
+    this.#addEditCharactersService.componentFiles;
 
   getStepId(groupIndex: number, stepIndex: number): number {
     const completedSteps = this.chapters
@@ -405,16 +357,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
         { id: 10, label: 'Complete Initial Tutorial' }
       ] satisfies ChapterStepShape[]
     },
-    this.#selectCharactersService.getChapter(),
-    {
-      id: 3,
-      label: 'Add/Edit Chapter',
-      fragment: 'chapter-3',
-      steps: [
-        { id: 1, label: 'Configure Merge Behavior' },
-        { id: 2, label: 'Add/Edit Capabilities' },
-        { id: 3, label: 'Complete Add/Edit Tutorial' }
-      ] satisfies ChapterStepShape[]
-    }
+    this.#displayCharactersService.chapters(),
+    this.#addEditCharactersService.chapters()
   ];
 }

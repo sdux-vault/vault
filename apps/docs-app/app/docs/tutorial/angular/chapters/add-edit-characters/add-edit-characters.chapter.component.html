@@ -1,0 +1,335 @@
+<section class="section" id="step-13">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 13: Configure Array Append Merge</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Before the service can add a new character correctly, the registered
+      <sdux-feature-cell /> needs append-style merge semantics. The default
+      merge path replaces the existing array with the incoming array. That is
+      correct for full replacement updates, but it is wrong for this tutorial's
+      create flow because <span class="code">createCharacter()</span> submits
+      one new character through <span class="code">mergeState()</span> and
+      expects that record to be appended to the existing collection.
+    </p>
+
+    <p>
+      To change that Merge-stage behavior, install
+      <span class="code">&#64;sdux-vault/addons</span> and register
+      <span class="code">withArrayAppendMergeBehavior</span> in
+      <span class="code">app.config.ts</span>. This makes
+      <span class="code">mergeState()</span> concatenate the incoming one-item
+      array with the current committed collection, which is the exact behavior
+      needed when adding a new character without replacing the others.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Install the
+          <span class="code">&#64;sdux-vault/addons</span> package.
+        </li>
+        <li>Open <span class="code">app.config.ts</span>.</li>
+        <li>
+          Import
+          <span class="code">withArrayAppendMergeBehavior</span> from
+          <span class="code">&#64;sdux-vault/addons</span>.
+        </li>
+        <li>
+          Pass
+          <span class="code">[withArrayAppendMergeBehavior]</span> as the
+          behavior list for
+          <span class="code">provide<sdux-feature-cell />()</span>.
+        </li>
+      </ol>
+    </div>
+
+    <sdux-example-viewer-source [displayTabs]="false">
+      <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+        <pre
+          class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+      </sdux-example-viewer-tab>
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Why This Behavior Is Required</div>
+
+      <ul>
+        <li>
+          <span class="code">mergeState()</span> is the right API for adding a
+          new record to an existing collection.
+        </li>
+        <li>
+          Without array-append merge behavior, the incoming one-item array would
+          replace the entire current collection.
+        </li>
+        <li>
+          With
+          <span class="code">withArrayAppendMergeBehavior</span>, that same
+          one-item array is appended immutably to the committed collection.
+        </li>
+        <li>
+          This keeps add and edit distinct: create uses
+          <span class="code">mergeState()</span> to append, while update will
+          use <span class="code">replaceState()</span> to swap one existing
+          character by identity.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source [displayTabs]="false">
+      <sdux-example-viewer-tab [label]="'app.config.ts'">
+        <pre
+          class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
+      </sdux-example-viewer-tab>
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-warning">
+      <div class="title">Avoid Manual Array Merging</div>
+
+      <p>
+        You could build the next collection manually with an old-school spread
+        expression such as
+        <span class="code">[...currentCharacters, newCharacter]</span>, but that
+        is the wrong lesson for this tutorial.
+      </p>
+
+      <p>
+        The spread operator itself does not mutate the array. The anti-pattern
+        is pushing merge policy into the service instead of configuring it in
+        the <sdux-brand-name /> pipeline. In <sdux-brand-name />, append
+        behavior belongs to the Merge stage so
+        <span class="code">mergeState()</span> can apply that rule consistently
+        instead of forcing application code to reimplement it by hand.
+      </p>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+
+      <ul>
+        <li>
+          <a href="/docs/pipeline/addons/with-array-append-merge-behavior"
+            >withArrayAppendMergeBehavior</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-14">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 14: Add the Add/Edit Service Slice</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This step turns the user-directed read example into the first mutation
+      slice. The <sdux-brand-name /> lesson is still the same: the service owns
+      the <sdux-feature-cell />, while the component owns only temporary editor
+      state. What changes now is the write path. The service gains the create
+      and update methods that mutate the registered collection, and a small
+      domain helper keeps ID assignment and draft creation out of the Angular
+      service body.
+    </p>
+
+    <p>
+      Assume the Angular form primitives are already familiar. Focus on the
+      <sdux-brand-name /> boundary: the service assigns IDs, routes creates
+      through <span class="code">mergeState()</span>, routes updates through
+      <span class="code">replaceState()</span>, and keeps every
+      <sdux-brand-name /> write inside the service instead of spreading mutation
+      logic across the component and template.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Update <span class="code">example.service.ts</span> to add the create
+          and update methods.
+        </li>
+        <li>
+          Keep the service as the only place that calls
+          <sdux-brand-name /> mutation APIs.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          The service owns the write path just as completely as it owned the
+          read path.
+        </li>
+        <li>
+          Create uses <span class="code">mergeState()</span> because it appends
+          a new record to the existing collection.
+        </li>
+        <li>
+          Update uses <span class="code">replaceState()</span> because it
+          replaces one existing record by identity.
+        </li>
+        <li>
+          The domain helper supports add/edit mechanics, but it does not own any
+          <sdux-brand-name /> behavior. The service still owns the
+          <sdux-feature-cell />.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of serviceFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-warning">
+      <div class="title">Why This Helper Exists</div>
+      <p>
+        Create
+        <span class="code">example.character-domain.ts</span> to hold the draft
+        type, next-ID helper, and character factory used by this add/edit slice.
+      </p>
+      <p>
+        This file exists only to keep the service minimal so the tutorial can
+        focus on <sdux-brand-name /> teaching principles instead of helper
+        logic.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-15">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 15: Complete Add/Edit Chapter</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The add/edit tutorial is complete once the page can enter create mode,
+      validate editor input, save a new character into the managed collection,
+      and reopen an existing character for updates without moving Feature
+      ownership out of the service. The collection picker, detail panel, and
+      form now all react to the same
+      <sdux-brand-name />-managed collection.
+    </p>
+
+    <p>
+      This is the first full CRUD-style expansion that still keeps the tutorial
+      disciplined. The component gains form state, mode state, and feedback
+      state, but the service remains the only place that creates or replaces
+      Feature State. That is the important
+      <sdux-brand-name /> lesson: the service owns the <sdux-feature-cell />,
+      and the component owns only temporary UI state. The component does not
+      call <sdux-brand-name /> APIs directly, and it does not mutate the
+      registered collection. The service remains the single source of truth for
+      all Feature State. That is the boundary to preserve before a later
+      destructive-action step adds deletion.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Update <span class="code">example.component.ts</span> to add the form,
+          editor mode, feedback state, and save/cancel flows.
+        </li>
+        <li>
+          Update <span class="code">example.component.html</span> to add the
+          editor panel, the add action, and the empty-state guidance for create
+          mode.
+        </li>
+        <li>
+          Return to the running Angular application and verify that you can add
+          a character, select it, edit it, and see the detail panel react to the
+          saved State.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What Changed From the Dropdown Example</div>
+
+      <ul>
+        <li>
+          The component now owns local editor state in addition to local
+          selection state.
+        </li>
+        <li>
+          The template adds a form and feedback region, but it still does not
+          call <sdux-brand-name /> APIs directly.
+        </li>
+        <li>
+          Saving a new record and saving an edited record both flow through the
+          same service-owned <sdux-feature-cell />.
+        </li>
+        <li>
+          Delete is still intentionally absent so this slice can focus on
+          non-destructive mutation only.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of componentFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-warning">
+      <div class="title">Why This Helper Exists</div>
+      <p>
+        Create
+        <span class="code">example.character-editor.ts</span> to hold the shared
+        validation, normalization, and feedback rules for the add/edit flow.
+      </p>
+      <p>
+        This file exists only to keep the component minimal so the tutorial can
+        focus on <sdux-brand-name /> teaching principles instead of helper
+        logic.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section
+  class="tutorial-shortcut"
+  aria-label="Launch the completed initial Add/Edit example">
+  <div class="tutorial-shortcut-copy">
+    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <h2>Want the finished Add/Edit example without the 3 steps?</h2>
+    <p>
+      If you want the completed add/edit example, launch the live StackBlitz
+      project and inspect the finished implementation directly.
+    </p>
+  </div>
+
+  @if (stackblitz(); as stackblitz) {
+    <div class="tutorial-shortcut-launcher">
+      <sdux-stackblitz-language-example
+        [example]="stackblitz.example"
+        [lang]="stackblitz.language" />
+    </div>
+  }
+</section>
