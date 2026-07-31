@@ -4,6 +4,20 @@ export const promiseExampleProject: Project = {
   title: 'vanillajs-promise-example',
   template: 'node',
   files: {
+    'package.json': `{
+  "name": "vanillajs-promise-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "dependencies": {
+    "@sdux-vault/core": "latest",
+    "rxjs": "^7.8.2"
+  }
+}
+`,
     'README.md': `# SDuX Vault Vanilla JavaScript Promise Example
 
 A script demonstrating async promise resolution with SDuX Vault running in
@@ -151,20 +165,6 @@ SDuX Vault's npm packages ship as compiled JavaScript. TypeScript types are
 entirely optional. This example proves that every pipeline concept — \`Vault()\`,
 \`FeatureCell()\`, reducers, \`replaceState()\`, \`state\$\` emissions — works with
 zero compilation and zero type annotations.
-`,
-    'package.json': `{
-  "name": "vanillajs-promise-example",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "node src/main.js"
-  },
-  "dependencies": {
-    "@sdux-vault/core": "latest",
-    "rxjs": "^7.8.2"
-  }
-}
 `,
     'tsconfig.json': `{
   "compilerOptions": {

@@ -1,6 +1,6 @@
 import type { StateSnapshotShape, VaultErrorShape } from '@sdux-vault/shared';
-import type { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import type { StarWarsCharacterDraft } from './example.character-domain';
+import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
  * Framework-agnostic presentation logic shared by the Angular, React, Vue, and Svelte
@@ -58,7 +58,7 @@ export interface RawStateFields {
   readonly isLoading: boolean;
 
   /** Current committed collection, or `undefined` when no value is present. */
-  readonly value: readonly StarWarsCharacterState[] | undefined;
+  readonly value: readonly StarWarsCharacter[] | undefined;
 
   /** Current normalized error, or `null` when the pipeline is healthy. */
   readonly error: VaultErrorShape | null;
@@ -87,107 +87,98 @@ export interface ErrorEmissionView<T> {
 
 export class ExampleCharacterEditor {
   /** Fixed faction choices rendered by both the create and edit flows. */
-  get factions() {
-    return [
-      'Galactic Empire',
-      'Jedi Order',
-      'Rebel Alliance',
-      'Sith Order',
-      'Unaffiliated'
-    ] as const;
-  }
+  readonly factions = [
+    'Galactic Empire',
+    'Jedi Order',
+    'Rebel Alliance',
+    'Sith Order',
+    'Unaffiliated'
+  ] as const;
 
   /**
    * Builds the success feedback shown after a character is created and selected.
    * @param name - Display name of the newly created character.
    * @returns The success feedback describing the completed create.
    */
-  characterAddedFeedback = (name: string): OperationFeedback => ({
-    message: `${name} was added and selected.`,
-    tone: 'success'
-  });
-
-  /** Executable pure filter source displayed by the Filter teaching output. */
-  get filterSource(): string {
-    return `export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacterState[]> =
-  (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');"
- `;
+  characterAddedFeedback(name: string): OperationFeedback {
+    return {
+      message: `${name} was added and selected.`,
+      tone: 'success'
+    };
   }
 
+  /** Executable pure filter source displayed by the Filter teaching output. */
+  readonly filterSource = `export const removeUnknownLastNameFilter: FilterFunction<readonly StarWarsCharacter[]> =
+  (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');"
+ `;
+
   /** Executable delegating-reducer source displayed by the Reducer 1 teaching output. */
-  get reducer1Source(): string {
-    return `#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacterState[]): readonly StarWarsCharacterState[] {
+  readonly reducer1Source = `#deriveForceSensitiveDisplay(characters: readonly StarWarsCharacter[]): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
   }));
   }); 
 }`;
-  }
 
   /** Executable factory-generated reducer source displayed by the Reducer 2 teaching output. */
-  get reducer2Source(): string {
-    return `export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacterState[]> {
+  readonly reducer2Source = `export function withCharactersSortedByLastName(): ReducerFunction<readonly StarWarsCharacter[]> {
   return (characters) =>
     [...characters].sort((left, right) =>
       left.lastName.localeCompare(right.lastName)
     );
 }`;
-  }
+
+  /** Executable full-name reducer source displayed by the Reducer 3 teaching output. */
+  readonly reducer3Source = `export function deriveFullName(
+  characters: readonly StarWarsCharacter[]
+): readonly StarWarsCharacter[] {
+  return characters.map((character) => ({
+    ...character,
+    fullName: \`${'${character.name} ${character.lastName}'}\`
+  }));
+}`;
 
   /** Custom comparison source passed to Distinct Until Changed for the teaching output. */
-  get comparisonFunctionSource(): string {
-    return `withDistinctUntilChanged<readonly StarWarsCharacterState[]>(
+  readonly comparisonFunctionSource = `withDistinctUntilChanged<readonly StarWarsCharacter[]>(
   (incoming, previous) =>
     incoming.every(({ id }) =>
       previous.some((character) => character.id === id)
     )
 )`;
-  }
 
   /** Constant feedback messages that do not depend on a specific character. */
-  get feedback(): Record<string, OperationFeedback> {
-    return {
-      /** Reported when the form fails validation on save. */
-      invalidForm: {
-        message: 'Correct the highlighted fields before saving.',
-        tone: 'error'
-      },
+  readonly feedback = {
+    /** Reported when the form fails validation on save. */
+    invalidForm: {
+      message: 'Correct the highlighted fields before saving.',
+      tone: 'error'
+    },
 
-      /** Reported when an edit save runs without a selected character. */
-      selectBeforeSave: {
-        message: 'Select a character before saving changes.',
-        tone: 'error'
-      },
+    /** Reported when an edit save runs without a selected character. */
+    selectBeforeSave: {
+      message: 'Select a character before saving changes.',
+      tone: 'error'
+    },
 
-      /** Reported when a pending create is discarded by canceling. */
-      newCharacterDiscarded: {
-        message: 'The new character was discarded.',
-        tone: 'info'
-      },
+    /** Reported when a pending create is discarded by canceling. */
+    newCharacterDiscarded: {
+      message: 'The new character was discarded.',
+      tone: 'info'
+    },
 
-      /** Reported when unsaved edits are discarded by canceling. */
-      unsavedChangesDiscarded: {
-        message: 'Unsaved changes were discarded.',
-        tone: 'info'
-      },
+    /** Reported when unsaved edits are discarded by canceling. */
+    unsavedChangesDiscarded: {
+      message: 'Unsaved changes were discarded.',
+      tone: 'info'
+    },
 
-      /** Reported when the captured baseline collection is restored. */
-      initialCollectionRestored: {
-        message: 'The initial character collection was restored.',
-        tone: 'success'
-      }
-    } as const satisfies Record<string, OperationFeedback>;
-  }
-  /**
-   * Combines a character's name fields into the consistent label used across every view.
-   * @param character - Character whose name fields should be formatted.
-   * @returns The character's first and last names separated by one space.
-   */
-  get displayName(): (character: StarWarsCharacterState) => string {
-    return (character: StarWarsCharacterState): string =>
-      `${character.name} ${character.lastName}`;
-  }
+    /** Reported when the captured baseline collection is restored. */
+    initialCollectionRestored: {
+      message: 'The initial character collection was restored.',
+      tone: 'success'
+    }
+  } as const satisfies Record<string, OperationFeedback>;
   /**
    * Builds the success feedback shown after an existing character is updated.
    * @param name - Display name of the updated character.
@@ -269,9 +260,9 @@ export class ExampleCharacterEditor {
    * @returns The matching character, or `null` when no character matches.
    */
   resolveCharacter(
-    characters: readonly StarWarsCharacterState[],
+    characters: readonly StarWarsCharacter[],
     value: string | number
-  ): StarWarsCharacterState | null {
+  ): StarWarsCharacter | null {
     const id = Number(value);
     return characters.find((character) => character.id === id) ?? null;
   }

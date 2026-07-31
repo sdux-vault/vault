@@ -18,6 +18,7 @@ describe('Component: StackBlitz Example', () => {
   const example: StackBlitzExampleShape = {
     title: 'Replace State',
     id: 'replace-state',
+    displayCopyIcon: true,
     exampleName: 'replace-example',
     description: 'Replaces the complete FeatureCell state.',
     languages: [{ name: 'Angular', key: 'angular' }]

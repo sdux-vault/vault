@@ -4,6 +4,26 @@ export const httpResourceExampleProject: Project = {
   title: 'bun-http-resource-example',
   template: 'node',
   files: {
+    'package.json': `{
+  "name": "bun-http-resource-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun src/main.ts",
+    "dev": "bun --watch src/main.ts",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@sdux-vault/core": "latest",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "~5.9.2"
+  }
+}
+`,
     'README.md': `# SDuX Vault Bun HTTP Resource Example
 
 A REST API demonstrating stateful HTTP resource management with deterministic pipeline orchestration using SDuX Vault on Bun.
@@ -248,26 +268,6 @@ This example is a foundation for:
 - **Refresh**: Mark specific resources as stale, refresh on demand
 - **Mutations**: POST/PUT endpoints that trigger update-and-refetch flows
 - **Subscriptions**: Real-time updates push new posts to clients
-`,
-    'package.json': `{
-  "name": "bun-http-resource-example",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "bun src/main.ts",
-    "dev": "bun --watch src/main.ts",
-    "test": "bun test"
-  },
-  "dependencies": {
-    "@sdux-vault/core": "latest",
-    "rxjs": "^7.8.2"
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "typescript": "~5.9.2"
-  }
-}
 `,
     'src/main.ts': `declare const Bun: {
   serve(options: {

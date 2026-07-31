@@ -43,4 +43,9 @@ export interface StackBlitzExampleShape {
    * Indicates whether the example is local-only and not viable via StackBlitz.
    */
   localOnly?: boolean;
+
+  /**
+   * Indicates whether the example should have the copy icon displayed.
+   */
+  displayCopyIcon: boolean;
 }

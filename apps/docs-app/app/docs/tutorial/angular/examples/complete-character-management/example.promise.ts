@@ -1,7 +1,10 @@
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import type {
+  RawStarWarsCharacter,
+  StarWarsCharacter
+} from './star-wars-character.shape';
 
-/** Characters returned by the tutorial's simulated asynchronous request. */
-const PROMISE_CHARACTERS: readonly StarWarsCharacterState[] = [
+/** Raw characters returned by the tutorial's simulated asynchronous request. */
+const PROMISE_CHARACTERS: readonly RawStarWarsCharacter[] = [
   {
     id: 101,
     name: 'Ahsoka',
@@ -26,9 +29,7 @@ const PROMISE_CHARACTERS: readonly StarWarsCharacterState[] = [
 ];
 
 /** Resolves the pending request with its character collection. */
-type CharacterResolver = (
-  characters: readonly StarWarsCharacterState[]
-) => void;
+type CharacterResolver = (characters: readonly StarWarsCharacter[]) => void;
 
 /** Rejects the pending request with its simulated failure. */
 type CharacterRejecter = (reason: Error) => void;
@@ -40,7 +41,7 @@ type CharacterRejecter = (reason: Error) => void;
  */
 class ExamplePromise {
   /** Reuses the active Promise when the request has already started. */
-  #pendingPromise: Promise<readonly StarWarsCharacterState[]> | null = null;
+  #pendingPromise: Promise<readonly StarWarsCharacter[]> | null = null;
 
   /** Holds the native Promise resolver until the simulated request completes. */
   #resolveCharacters: CharacterResolver | null = null;
@@ -52,7 +53,7 @@ class ExamplePromise {
    * Creates or returns the request that the FeatureCell Promise stage will await.
    * @returns The active Promise for the simulated character response.
    */
-  getPromise(): Promise<readonly StarWarsCharacterState[]> {
+  getPromise(): Promise<readonly StarWarsCharacter[]> {
     if (!this.#pendingPromise) {
       this.#pendingPromise = new Promise((resolve, reject) => {
         this.#resolveCharacters = resolve;

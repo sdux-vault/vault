@@ -4,6 +4,21 @@ export const arrayAppendExampleProject: Project = {
   title: 'vanillajs-array-append-example',
   template: 'node',
   files: {
+    'package.json': `{
+  "name": "vanillajs-array-append-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "dependencies": {
+    "@sdux-vault/addons": "latest",
+    "@sdux-vault/core": "latest",
+    "rxjs": "^7.8.2"
+  }
+}
+`,
     'README.md': `# SDuX Vault Vanilla JavaScript Array Append Example
 
 A script demonstrating array append merge behavior with SDuX Vault running in
@@ -135,21 +150,6 @@ SDuX Vault's npm packages ship as compiled JavaScript. TypeScript types are
 entirely optional. This example proves that every pipeline concept — \`Vault()\`,
 \`FeatureCell()\`, behaviors, \`mergeState()\`, \`state\$\` emissions — works with zero
 compilation and zero type annotations.
-`,
-    'package.json': `{
-  "name": "vanillajs-array-append-example",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "node src/main.js"
-  },
-  "dependencies": {
-    "@sdux-vault/addons": "latest",
-    "@sdux-vault/core": "latest",
-    "rxjs": "^7.8.2"
-  }
-}
 `,
     'tsconfig.json': `{
   "compilerOptions": {

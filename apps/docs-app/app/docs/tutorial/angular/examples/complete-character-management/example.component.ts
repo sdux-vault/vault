@@ -21,8 +21,6 @@ import {
   VaultErrorService,
   VaultErrorShape
 } from '@sdux-vault/shared';
-import { STAR_WARS_CHARACTERS } from '../../../examples/star-wars-character.constant';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import {
   EditorMode,
   ExampleCharacterEditor,
@@ -37,6 +35,8 @@ import {
   EXAMPLE_ENCRYPTED_STORAGE_KEY,
   ExampleService
 } from './example.service';
+import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
+import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
  * Coordinates the reactive character editor presented by this tutorial example.
@@ -56,6 +56,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExampleComponent {
+  // Reactive state: shared services and framework utilities.
+
   /** Exposes the character editor instance for template and internal use. */
   readonly editor = new ExampleCharacterEditor();
 
@@ -66,11 +68,13 @@ export class ExampleComponent {
   readonly #exampleService = inject(ExampleService);
 
   /** Provides the singleton stream and controls for application-level Vault errors. */
-  /** Teachiing Point: Global Error Service: Ex-011 */
+  /** Teaching Point: Global Error Service: Ex-011 */
   readonly #globalErrorService = VaultErrorService();
 
   /** Creates the non-nullable reactive form used by the character editor. */
   readonly #formBuilder = inject(FormBuilder);
+
+  // Lifecycle guards: one-time selection and one-prompt-per-request coordination.
 
   /** Prevents later collection emissions from replacing the user's current selection. */
   #hasInitializedSelection = false;
@@ -86,6 +90,8 @@ export class ExampleComponent {
 
   /** Remembers the selected identity so canceling create mode can restore the prior editor. */
   #selectedCharacterBeforeCreate: number | null = null;
+
+  // Reactive state: direct service projections consumed by the template.
 
   /**
    * References the service's computed character collection for direct reactive template reads.
@@ -110,6 +116,8 @@ export class ExampleComponent {
   /** Enables Reducer controls only while its Stepwise callback awaits a decision. */
   protected readonly isStepwiseReducerPending =
     this.#exampleService.isStepwiseReducerPending;
+
+  // Derived teaching outputs: serialized pipeline snapshots for the tutorial UI.
 
   /** Displays the immutable tutorial constant before any FeatureCell operations modify state. */
   protected readonly originalStateJson = JSON.stringify(
@@ -175,6 +183,8 @@ export class ExampleComponent {
   /** Holds the complete serialized StateSnapshot received from the latest FeatureCell `state$` emission. */
   protected readonly rawStateStreamJson = signal('undefined');
 
+  // Local presentation state: editor selection, mode, feedback, and teaching toggles.
+
   /** Holds the identity currently selected by the character picker, or `null` when none is selected. */
   protected readonly selectedCharacterId = signal<number | null>(null);
 
@@ -203,6 +213,8 @@ export class ExampleComponent {
   protected readonly observablePending = signal(false);
 
   // Teaching point: Delay (ex-033)
+  // Delay Controller teaching state.
+
   /** Displays the fixed controller configuration beside the live elapsed timer. */
   protected readonly delayMilliseconds = EXAMPLE_DELAY_MILLISECONDS;
 
@@ -219,9 +231,9 @@ export class ExampleComponent {
   });
 
   /** Holds the character awaiting explicit confirmation before removal. */
-  protected readonly deleteCandidate = signal<StarWarsCharacterState | null>(
-    null
-  );
+  protected readonly deleteCandidate = signal<StarWarsCharacter | null>(null);
+
+  // Derived presentation state: selected record and mode-specific labels.
 
   /**
    * Resolves the selected identity against the latest reactive character collection.
@@ -260,6 +272,13 @@ export class ExampleComponent {
   constructor() {
     inject(DestroyRef).onDestroy(() => this.#delayTimer.destroy());
 
+    this.#observeStateStream();
+    this.#observeGlobalErrors();
+    this.#observeInitialSelection();
+    this.#observeStepwisePromptEffects();
+  }
+
+  #observeStateStream(): void {
     this.#exampleService.state$
       .pipe(takeUntilDestroyed())
       .subscribe(({ snapshot, type }) => {
@@ -273,10 +292,12 @@ export class ExampleComponent {
           (type === StateEmitTypes.FinalizePipeline ||
             type === StateEmitTypes.PipelineError)
         ) {
-          this.#delayTimer.destroy();
+          this.#delayTimer.stop();
         }
       });
+  }
 
+  #observeGlobalErrors(): void {
     this.#globalErrorService.error$
       .pipe(takeUntilDestroyed())
       .subscribe((error: VaultErrorShape | null) => {
@@ -284,7 +305,9 @@ export class ExampleComponent {
           error && this.#globalErrorService.hasError ? error : null
         );
       });
+  }
 
+  #observeInitialSelection(): void {
     effect(() => {
       const characters = this.characters();
 
@@ -301,7 +324,9 @@ export class ExampleComponent {
         this.#patchForm(firstCharacter);
       }
     });
+  }
 
+  #observeStepwisePromptEffects(): void {
     effect(() => {
       this.processStepwiseResolvePending(this.isStepwiseResolvePending());
     });
@@ -320,7 +345,7 @@ export class ExampleComponent {
    * The singleton emits `null`, which also removes the error message from the template.
    * @returns Nothing; the global error service and reactive UI state are cleared.
    */
-  /** Teachiing Point: Global Error Service: Ex-011 */
+  /** Teaching Point: Global Error Service: Ex-011 */
   protected clearGlobalError(): void {
     this.#globalErrorService.clear();
   }
@@ -437,7 +462,7 @@ export class ExampleComponent {
       this.editorMode.set('edit');
       this.#patchForm(character);
       this.feedback.set(
-        this.editor.characterAddedFeedback(this.#displayName(character))
+        this.editor.characterAddedFeedback(this.#characterLabel(character))
       );
       return;
     }
@@ -457,7 +482,9 @@ export class ExampleComponent {
 
     this.#patchForm(updatedCharacter);
     this.feedback.set(
-      this.editor.characterUpdatedFeedback(this.#displayName(updatedCharacter))
+      this.editor.characterUpdatedFeedback(
+        this.#characterLabel(updatedCharacter)
+      )
     );
   }
 
@@ -505,7 +532,7 @@ export class ExampleComponent {
     this.#clearCharacterForm();
 
     this.feedback.set(
-      this.editor.characterRemovedFeedback(this.#displayName(character))
+      this.editor.characterRemovedFeedback(this.#characterLabel(character))
     );
   }
 
@@ -910,21 +937,12 @@ export class ExampleComponent {
   }
 
   /**
-   * Exposes character-name formatting to the template without exposing a private helper.
-   * @param character - Character whose first and last names should be combined.
-   * @returns The display name used in picker options, messages, and headings.
+   * Resolves the stable label used in messages and template fallbacks.
+   * @param character - Raw or reduced character whose display label should be returned.
+   * @returns The post-reducer full name when present, otherwise a local fallback.
    */
-  protected displayName(character: StarWarsCharacterState): string {
-    return this.#displayName(character);
-  }
-
-  /**
-   * Combines the character's name fields into the consistent label used by the component.
-   * @param character - Character whose name fields should be formatted.
-   * @returns The character's first and last names separated by one space.
-   */
-  #displayName(character: StarWarsCharacterState): string {
-    return this.editor.displayName(character);
+  #characterLabel(character: StarWarsCharacter): string {
+    return character.fullName ?? `${character.name} ${character.lastName}`;
   }
 
   /**
@@ -947,7 +965,7 @@ export class ExampleComponent {
    * @param character - Character whose values should populate the editor.
    * @returns Nothing; the existing reactive form is updated in place.
    */
-  #patchForm(character: StarWarsCharacterState): void {
+  #patchForm(character: StarWarsCharacter): void {
     this.characterForm.setValue({
       name: character.name,
       lastName: character.lastName,

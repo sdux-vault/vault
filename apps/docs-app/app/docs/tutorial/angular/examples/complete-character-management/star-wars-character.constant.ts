@@ -1,6 +1,7 @@
-import type { StarWarsCharacterState } from './star-wars-character.state';
+import type { RawStarWarsCharacter } from './star-wars-character.shape';
 
-export const STAR_WARS_CHARACTERS: readonly StarWarsCharacterState[] = [
+/** Raw tutorial seed data captured before filters and reducers add display-only fields. */
+export const STAR_WARS_CHARACTERS: readonly RawStarWarsCharacter[] = [
   {
     id: 1,
     name: 'Luke',

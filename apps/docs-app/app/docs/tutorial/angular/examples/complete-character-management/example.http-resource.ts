@@ -1,7 +1,10 @@
-import { httpResource } from '@angular/common/http';
 import type { HttpResourceRef } from '@angular/common/http';
+import { httpResource } from '@angular/common/http';
 import type { Injector } from '@angular/core';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import type {
+  RawStarWarsCharacter,
+  StarWarsCharacter
+} from './star-wars-character.shape';
 
 /** Public SWAPI endpoint that returns the complete Star Wars people collection. */
 const SWAPI_PEOPLE_URL = 'https://swapi.info/api/people';
@@ -16,21 +19,9 @@ interface SwapiPerson {
 }
 
 /** Tutorial metadata not supplied by SWAPI's people response. */
-interface HttpResourceCharacter {
+interface HttpResourceCharacter extends Omit<RawStarWarsCharacter, 'id'> {
   /** Canonical SWAPI name used to locate the remote record. */
   readonly apiName: string;
-
-  /** Given or display name used by the tutorial's character model. */
-  readonly name: string;
-
-  /** Family name evaluated by the tutorial's filter and sorting reducer. */
-  readonly lastName: string;
-
-  /** Domain-specific allegiance derived by the tutorial application. */
-  readonly faction: string;
-
-  /** Domain-specific Force classification derived by the tutorial application. */
-  readonly isForceSensitive: boolean;
 }
 
 /**
@@ -63,15 +54,15 @@ const HTTP_RESOURCE_CHARACTERS: readonly HttpResourceCharacter[] = [
 ];
 
 /**
- * Converts the untrusted HTTP payload into the tutorial's character State.
+ * Converts the untrusted HTTP payload into the tutorial's raw character State.
  * The adapter retains only the selected people, derives their numeric identities
  * from canonical URLs, and rejects incomplete responses before they enter Vault.
  * @param value - Raw JSON value returned by the SWAPI people endpoint.
- * @returns Three detached characters matching `StarWarsCharacterState`.
+ * @returns Three detached raw characters before reducer-derived display fields are added.
  */
 function parseStarWarsCharacters(
   value: unknown
-): readonly StarWarsCharacterState[] {
+): readonly RawStarWarsCharacter[] {
   if (!Array.isArray(value)) {
     throw new Error('The SWAPI people response must be an array.');
   }
@@ -120,14 +111,11 @@ class ExampleHttpResource {
    */
   getResource(
     injector: Injector
-  ): HttpResourceRef<readonly StarWarsCharacterState[] | undefined> {
-    return httpResource<readonly StarWarsCharacterState[]>(
-      () => SWAPI_PEOPLE_URL,
-      {
-        injector,
-        parse: parseStarWarsCharacters
-      }
-    );
+  ): HttpResourceRef<readonly StarWarsCharacter[] | undefined> {
+    return httpResource<readonly StarWarsCharacter[]>(() => SWAPI_PEOPLE_URL, {
+      injector,
+      parse: parseStarWarsCharacters
+    });
   }
 }
 

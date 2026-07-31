@@ -13,11 +13,11 @@ import type {
   VaultErrorShape
 } from '@sdux-vault/shared';
 import { filter, take } from 'rxjs';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import {
   cloneCharacters,
   createCharacterState,
   deriveForceSensitiveDisplay,
+  deriveFullName,
   getDistinctChangedStateCharacter,
   getNextCharacterId,
   type StarWarsCharacterDraft,
@@ -28,6 +28,12 @@ import { exampleHttpResource } from './example.http-resource';
 import { exampleHydrate } from './example.hydrate';
 import { exampleObservable } from './example.observable';
 import { examplePromise } from './example.promise';
+import type {
+  RawStarWarsCharacter,
+  StarWarsCharacter
+} from './star-wars-character.shape';
+
+type CharacterCollection = readonly StarWarsCharacter[];
 
 /** Fixed Policy-stage hold applied to every tutorial pipeline attempt. */
 /** Teaching Point: ex-033 */
@@ -47,7 +53,7 @@ export const EXAMPLE_ENCRYPTED_STORAGE_KEY =
 
 /** Structurally identical merge delta reconstructed for every Same State request. */
 /** Teaching Point: ex-027 */
-const DISTINCT_SAME_STATE_CHARACTER: StarWarsCharacterState = {
+const DISTINCT_SAME_STATE_CHARACTER: RawStarWarsCharacter = {
   id: 501,
   name: 'Rey',
   lastName: 'Skywalker',
@@ -62,39 +68,37 @@ interface ErrorEmission {
   readonly error: VaultErrorShape;
 
   /** Immutable FeatureCell snapshot associated with the finalized error. */
-  readonly state: Readonly<
-    StateSnapshotShape<readonly StarWarsCharacterState[]>
-  >;
+  readonly state: Readonly<StateSnapshotShape<CharacterCollection>>;
 }
 
 /** Values exposed while a Resolve-stage candidate awaits a tutorial decision. */
 /** Teaching Point: ex-038 */
 export interface StepwiseResolveRequest {
   /** Last value committed before the pending pipeline attempt began. */
-  readonly current: readonly StarWarsCharacterState[] | undefined;
+  readonly current: CharacterCollection | undefined;
 
-  /** Fully resolved candidate waiting for an explicit continue or block decision. */
-  readonly candidate: readonly StarWarsCharacterState[];
+  /** Fully resolved pre-filter candidate waiting for an explicit continue or block decision. */
+  readonly candidate: CharacterCollection;
 }
 
 /** Values exposed while a filtered candidate awaits a tutorial decision. */
 /** Teaching Point: ex-039 */
 export interface StepwiseFilterRequest {
   /** Last value committed before the pending pipeline attempt began. */
-  readonly current: readonly StarWarsCharacterState[] | undefined;
+  readonly current: CharacterCollection | undefined;
 
   /** Candidate produced by the Filter stage and awaiting policy approval. */
-  readonly candidate: readonly StarWarsCharacterState[];
+  readonly candidate: CharacterCollection;
 }
 
 /** Values exposed while a reduced candidate awaits a tutorial decision. */
 /** Teaching Point: ex-040 */
 export interface StepwiseReducerRequest {
   /** Last value committed before the pending pipeline attempt began. */
-  readonly current: readonly StarWarsCharacterState[] | undefined;
+  readonly current: CharacterCollection | undefined;
 
   /** Candidate produced by all reducers and awaiting policy approval. */
-  readonly candidate: readonly StarWarsCharacterState[];
+  readonly candidate: CharacterCollection;
 }
 
 // Teaching point: CRUD Foundation (ex-007)
@@ -106,7 +110,7 @@ export interface StepwiseReducerRequest {
  * ️**Architectural Boundary:** Components consume this service instead of accessing the
  * FeatureCell directly, keeping state ownership and character rules in one place.
  */
-@FeatureCell<readonly StarWarsCharacterState[]>('star-wars-character')
+@FeatureCell<CharacterCollection>('star-wars-character')
 @Injectable({ providedIn: 'root' })
 export class ExampleService {
   // Teaching point: Minimal Read-Only FeatureCell (ex-002)
@@ -114,8 +118,7 @@ export class ExampleService {
    * Provides the strongly typed FeatureCell API associated with this decorated service.
    * Every collection update passes through this reference before reactive state changes.
    */
-  readonly #vault =
-    injectVault<readonly StarWarsCharacterState[]>(ExampleService);
+  readonly #vault = injectVault<CharacterCollection>(ExampleService);
 
   /** Supplies the Angular injection context required to create an HTTP resource. */
   readonly #injector = inject(Injector);
@@ -124,7 +127,7 @@ export class ExampleService {
    * Stores a detached copy of the first resolved character collection.
    * Restore operations use this baseline instead of any later edited state.
    */
-  #initialCharacters: readonly StarWarsCharacterState[] = [];
+  #initialCharacters: CharacterCollection = [];
 
   /**
    * Tracks the identity assigned to the next newly created character.
@@ -175,8 +178,8 @@ export class ExampleService {
    */
   /** Teaching Point: ex-038 */
   readonly #captureStepwiseResolve = (
-    current: readonly StarWarsCharacterState[] | undefined,
-    candidate: readonly StarWarsCharacterState[],
+    current: readonly StarWarsCharacter[] | undefined,
+    candidate: CharacterCollection,
     decisions: StepwiseBehaviorDecisionShape
   ): void => {
     this.#stepwiseResolveRequest.set({ current, candidate });
@@ -213,8 +216,8 @@ export class ExampleService {
    */
   /** Teaching Point: ex-039 */
   readonly #captureStepwiseFilter = (
-    current: readonly StarWarsCharacterState[] | undefined,
-    candidate: readonly StarWarsCharacterState[],
+    current: readonly StarWarsCharacter[] | undefined,
+    candidate: CharacterCollection,
     decisions: StepwiseBehaviorDecisionShape
   ): void => {
     this.#stepwiseFilterRequest.set({ current, candidate });
@@ -252,8 +255,8 @@ export class ExampleService {
    */
   /** Teaching Point: ex-040 */
   readonly #captureStepwiseReducer = (
-    current: readonly StarWarsCharacterState[] | undefined,
-    candidate: readonly StarWarsCharacterState[],
+    current: readonly StarWarsCharacter[] | undefined,
+    candidate: CharacterCollection,
     decisions: StepwiseBehaviorDecisionShape
   ): void => {
     this.#stepwiseReducerRequest.set({ current, candidate });
@@ -264,9 +267,7 @@ export class ExampleService {
   /** Stores the latest filtered collection observed immediately before reducer execution. */
 
   /** Teaching Point: ex-031 */
-  readonly #beforeTapInput = signal<
-    readonly StarWarsCharacterState[] | undefined
-  >(undefined);
+  readonly #beforeTapInput = signal<CharacterCollection | undefined>(undefined);
 
   // Teaching point: Before Taps (ex-031)
   /**
@@ -284,17 +285,15 @@ export class ExampleService {
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
   /** Teaching Point: ex-031 */
-  readonly #captureBeforeTapInput: TapCallback<
-    readonly StarWarsCharacterState[]
-  > = (characters) => {
+  readonly #captureBeforeTapInput: TapCallback<CharacterCollection> = (
+    characters
+  ) => {
     this.#beforeTapInput.set(characters);
   };
 
   /** Stores the latest transformed collection observed immediately after reducer execution. */
   /** Teaching Point: ex-032 */
-  readonly #afterTapInput = signal<
-    readonly StarWarsCharacterState[] | undefined
-  >(undefined);
+  readonly #afterTapInput = signal<CharacterCollection | undefined>(undefined);
 
   // Teaching point: After Taps (ex-032)
   /**
@@ -312,16 +311,16 @@ export class ExampleService {
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
   /** Teaching Point: ex-032 */
-  readonly #captureAfterTapInput: TapCallback<
-    readonly StarWarsCharacterState[]
-  > = (characters) => {
+  readonly #captureAfterTapInput: TapCallback<CharacterCollection> = (
+    characters
+  ) => {
     this.#afterTapInput.set(characters);
   };
 
   /** Stores the latest finalized StateSnapshot observed after state commitment. */
   /** Teaching Point: ex-035 */
   readonly #emittedState = signal<
-    StateSnapshotShape<readonly StarWarsCharacterState[]> | undefined
+    StateSnapshotShape<CharacterCollection> | undefined
   >(undefined);
 
   // Teaching point: State Emission (ex-035)
@@ -340,9 +339,9 @@ export class ExampleService {
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
   /** Teaching Point: ex-035 */
-  readonly #captureEmittedState: CoreEmitStateCallback<
-    readonly StarWarsCharacterState[]
-  > = (snapshot) => {
+  readonly #captureEmittedState: CoreEmitStateCallback<CharacterCollection> = (
+    snapshot
+  ) => {
     this.#emittedState.set(snapshot);
   };
 
@@ -367,9 +366,10 @@ export class ExampleService {
    * @returns Nothing; the callback only updates the read-only teaching signal.
    */
   /** Teaching Point: ex-036 */
-  readonly #captureEmittedError: VaultErrorCallback<
-    readonly StarWarsCharacterState[]
-  > = (error, state) => {
+  readonly #captureEmittedError: VaultErrorCallback<CharacterCollection> = (
+    error,
+    state
+  ) => {
     this.#emittedError.set({ error, state });
   };
 
@@ -394,7 +394,7 @@ export class ExampleService {
    * The empty-array fallback gives templates a stable collection before a value is available.
    */
   /** Teaching Point: ex-001 */
-  readonly characters = computed<readonly StarWarsCharacterState[]>(
+  readonly characters = computed<CharacterCollection>(
     () => this.state.value() ?? []
   );
 
@@ -402,7 +402,25 @@ export class ExampleService {
    * Captures the first committed collection, then configures and initializes the FeatureCell pipeline.
    */
   constructor() {
-    /** Teaching Point: ex-022 */
+    this.#captureInitialCharacters();
+    this.#configureDelay();
+    this.#configureEncryption();
+    this.#configureHydration();
+    this.#configureStepwiseResolve();
+    this.#configureOperators();
+    this.#configureFilters();
+    this.#configureStepwiseFilter();
+    this.#configureBeforeTaps();
+    this.#configureReducers();
+    this.#configureStepwiseReducer();
+    this.#configureAfterTaps();
+    this.#configureStateEmission();
+    this.#configureErrorEmission();
+    this.#initializeVault();
+  }
+
+  /** Teaching Point: ex-022 */
+  #captureInitialCharacters(): void {
     this.#vault.state$
       .pipe(
         filter(({ snapshot }) => snapshot.hasValue),
@@ -412,99 +430,110 @@ export class ExampleService {
         this.#initialCharacters = cloneCharacters(snapshot.value ?? []);
         this.#nextCharacterId = getNextCharacterId(this.#initialCharacters);
       });
+  }
 
-    // Teaching point: Delay (ex-033)
-    /*
-     * `.withDelay()` configures the registered Delay Controller to pause every
-     * pipeline attempt for exactly three seconds at the Policy stage.
-     *
-     * The controller changes execution timing only: it preserves every candidate,
-     * performs no value transformation, and releases each trace unchanged after
-     * its deterministic hold expires.
-     */
-    /** Teaching Point: ex-033 */
+  // Teaching point: Delay (ex-033)
+  /*
+   * `.withDelay()` configures the registered Delay Controller to pause every
+   * pipeline attempt for exactly three seconds at the Policy stage.
+   *
+   * The controller changes execution timing only: it preserves every candidate,
+   * performs no value transformation, and releases each trace unchanged after
+   * its deterministic hold expires.
+   */
+  /** Teaching Point: ex-033 */
+  #configureDelay(): void {
     this.#vault.withDelay?.({
       millisecondDelay: EXAMPLE_DELAY_MILLISECONDS
     });
+  }
 
-    /*
-     * Local Storage Persist has no fluent configuration. Registering the
-     * behavior is sufficient: after AES-256 produces its authenticated envelope,
-     * the Persist stage writes that envelope under the FeatureCell-scoped key.
-     */
-    // Teaching point: Encryption (ex-034)
-    /*
-     * `.setAes256Secret()` configures the registered AES-256-GCM behavior before
-     * initialization. The stable salt allows ciphertext persisted in one browser
-     * session to be authenticated and decrypted during a later hydration cycle.
-     *
-     * This client-visible secret is intentionally tutorial-only. Production
-     * applications must obtain secret material from an appropriate secure design
-     * rather than treating bundled JavaScript as a confidential key store.
-     */
-    /** Teaching Point: ex-034 */
+  /*
+   * Local Storage Persist has no fluent configuration. Registering the
+   * behavior is sufficient: after AES-256 produces its authenticated envelope,
+   * the Persist stage writes that envelope under the FeatureCell-scoped key.
+   */
+  // Teaching point: Encryption (ex-034)
+  /*
+   * `.setAes256Secret()` configures the registered AES-256-GCM behavior before
+   * initialization. The stable salt allows ciphertext persisted in one browser
+   * session to be authenticated and decrypted during a later hydration cycle.
+   *
+   * This client-visible secret is intentionally tutorial-only. Production
+   * applications must obtain secret material from an appropriate secure design
+   * rather than treating bundled JavaScript as a confidential key store.
+   */
+  /** Teaching Point: ex-034 */
+  #configureEncryption(): void {
     this.#vault.setAes256Secret?.({
       aes256Secret: 'sdux-vault-tutorial-only-secret',
       salt: EXAMPLE_AES256_SALT,
       iterations: 250_000
     });
+  }
 
-    // Teaching point: Hydration (ex-023)
-    /*
-     * `.hydrate()` registers a deferred factory as the authoritative source for
-     * this FeatureCell's initial State. The factory is declared before
-     * `.initialize()` but does not execute until initialization begins.
-     *
-     * Resolving the Promise sends the hydrated collection through the complete
-     * Replace → Resolve → Filter → Tap → Reducer → Emit pipeline. Rejecting it
-     * emits an initialization Error without falling back to configured initial
-     * State or persistence because hydration has the highest precedence.
-     */
+  // Teaching point: Hydration (ex-023)
+  /*
+   * `.hydrate()` registers a deferred factory as the authoritative source for
+   * this FeatureCell's initial State. The factory is declared before
+   * `.initialize()` but does not execute until initialization begins.
+   *
+   * Resolving the Promise sends the hydrated collection through the complete
+   * Replace → Resolve → Filter → Tap → Reducer → Emit pipeline. Rejecting it
+   * emits an initialization Error without falling back to configured initial
+   * State or persistence because hydration has the highest precedence.
+   */
+  #configureHydration(): void {
     this.#vault.hydrate(() => exampleHydrate.getPromise());
+  }
 
-    // Teaching point: Stepwise Resolve (ex-038)
-    /*
-     * `.withStepwiseResolve()` installs an explicit approval boundary at the
-     * Resolve stage. Its `StepwiseFunction` receives the last committed State,
-     * the fully resolved candidate, and a one-use decision contract.
-     *
-     * This callback deliberately makes no immediate decision. It publishes both
-     * values for inspection and leaves the pipeline suspended until the tutorial
-     * UI calls `continue()` through Accept or `block()` through Cancel. Exactly
-     * one terminal decision is consumed for each pending request.
-     */
+  // Teaching point: Stepwise Resolve (ex-038)
+  /*
+   * `.withStepwiseResolve()` installs an explicit approval boundary at the
+   * Resolve stage. Its `StepwiseFunction` receives the last committed State,
+   * the fully resolved candidate, and a one-use decision contract.
+   *
+   * This callback deliberately makes no immediate decision. It publishes both
+   * values for inspection and leaves the pipeline suspended until the tutorial
+   * UI calls `continue()` through Accept or `block()` through Cancel. Exactly
+   * one terminal decision is consumed for each pending request.
+   */
+  #configureStepwiseResolve(): void {
     this.#vault.withStepwiseResolve!({
       stepwiseCallback: this.#captureStepwiseResolve
     });
+  }
 
-    // Teaching point: Distinct Until Changed (ex-028)
-    /*
-     * `.operators()` installs a domain-specific Distinct Until Changed comparator
-     * at the Operator stage. Array Append Merge has already materialized the full
-     * candidate, so the callback compares stable character identities without relying
-     * on array position. A candidate containing no new IDs returns `VAULT_NOOP`, even
-     * when a downstream reducer sorted the previously committed collection.
-     */
+  // Teaching point: Distinct Until Changed (ex-028)
+  /*
+   * `.operators()` installs a domain-specific Distinct Until Changed comparator
+   * at the Operator stage. Array Append Merge has already materialized the full
+   * candidate, so the callback compares stable character identities without relying
+   * on array position. A candidate containing no new IDs returns `VAULT_NOOP`, even
+   * when a downstream reducer sorted the previously committed collection.
+   */
+  #configureOperators(): void {
     this.#vault.operators([
-      withDistinctUntilChanged<readonly StarWarsCharacterState[]>(
-        (incoming, previous) =>
-          incoming.every(({ id }) =>
-            previous.some((character) => character.id === id)
-          )
+      withDistinctUntilChanged<CharacterCollection>((incoming, previous) =>
+        incoming.every(({ id }) =>
+          previous.some((character) => character.id === id)
+        )
       )
     ]);
+  }
 
-    // Teaching point: Filter (ex-016)
-    /*
-     * `.filters()` registers `removeUnknownLastNameFilter` as a
-     * `FilterFunction<readonly StarWarsCharacterState[]>`.
-     *
-     * This pure function runs before reducers and returns a new candidate
-     * collection without characters whose last name is exactly `unknown`.
-     * The inline second filter normally returns that collection unchanged. When
-     * the teaching flag is armed, it throws deliberately so the example can show
-     * pipeline error normalization without allowing the candidate to commit.
-     */
+  // Teaching point: Filter (ex-016)
+  /*
+   * `.filters()` registers `removeUnknownLastNameFilter` as a
+   * `FilterFunction<readonly StarWarsCharacter[]>`.
+   *
+   * This pure function runs before reducers and returns a new candidate
+   * collection without characters whose last name is exactly `unknown`.
+   * The inline second filter normally returns that collection unchanged. When
+   * the teaching flag is armed, it throws deliberately so the example can show
+   * pipeline error normalization without allowing the candidate to commit.
+   */
+  #configureFilters(): void {
     this.#vault.filters([
       removeUnknownLastNameFilter,
       (characters) => {
@@ -515,109 +544,134 @@ export class ExampleService {
         return characters;
       }
     ]);
+  }
 
-    // Teaching point: Stepwise Filter (ex-039)
-    /*
-     * `.withStepwiseFilter()` installs a second explicit approval boundary
-     * immediately after the Filter stage. Its `StepwiseFunction` receives the
-     * last committed State, the already-filtered candidate, and the same
-     * one-use decision contract demonstrated by Stepwise Resolve.
-     *
-     * The callback publishes its isolated inputs without mutating them. Accept
-     * invokes `continue()` so reducers may process the filtered candidate;
-     * Cancel invokes `block()` so the attempt ends without changing State.
-     */
-
+  // Teaching point: Stepwise Filter (ex-039)
+  /*
+   * `.withStepwiseFilter()` installs a second explicit approval boundary
+   * immediately after the Filter stage. Its `StepwiseFunction` receives the
+   * last committed State, the already-filtered candidate, and the same
+   * one-use decision contract demonstrated by Stepwise Resolve.
+   *
+   * The callback publishes its isolated inputs without mutating them. Accept
+   * invokes `continue()` so reducers may process the filtered candidate;
+   * Cancel invokes `block()` so the attempt ends without changing State.
+   */
+  #configureStepwiseFilter(): void {
     this.#vault.withStepwiseFilter!({
       stepwiseCallback: this.#captureStepwiseFilter
     });
+  }
 
-    // Teaching point: Before Taps (ex-031)
-    /*
-     * `.beforeTaps()` registers a `TapCallback<readonly StarWarsCharacterState[]>`
-     * that observes the filtered candidate immediately before reducer execution.
-     *
-     * The callback publishes that immutable input for the tutorial display, returns
-     * no replacement value, and cannot change the value passed to Reducer 1.
-     */
+  // Teaching point: Before Taps (ex-031)
+  /*
+   * `.beforeTaps()` registers a `TapCallback<readonly StarWarsCharacter[]>`
+   * that observes the filtered candidate immediately before reducer execution.
+   *
+   * The callback publishes that immutable pre-reducer candidate for the tutorial display,
+   * returns no replacement value, and cannot change the value passed to Reducer 1.
+   */
+  #configureBeforeTaps(): void {
     this.#vault.beforeTaps([this.#captureBeforeTapInput]);
+  }
 
-    // Teaching point: Reducer 1 (ex-017)
-    /*
-     * The first `.reducers()` entry is a delegating
-     * `ReducerFunction<readonly StarWarsCharacterState[]>`.
-     *
-     * After filtering, this imported pure function performs an immutable transformation
-     * through `deriveForceSensitiveDisplay()`, producing a new collection in which
-     * every retained character has a `Yes` or `No` display value.
-     */
+  // Teaching point: Reducer 1 (ex-017)
+  /*
+   * The first `.reducers()` entry is a delegating
+   * `ReducerFunction<readonly StarWarsCharacter[]>`.
+   *
+   * After filtering, this imported pure function performs an immutable transformation
+   * through `deriveForceSensitiveDisplay()`, producing a new collection in which
+   * every retained character has a `Yes` or `No` display value.
+   */
 
-    // Teaching point: Reducer 2 (ex-018)
-    /*
-     * The second entry uses a factory-generated pure reducer, a different function
-     * pattern that still returns the same `ReducerFunction` contract.
-     *
-     * It runs after Reducer 1, clones the transformed collection, and sorts characters
-     * alphabetically by `lastName` without mutating the incoming array.
-     */
+  // Teaching point: Reducer 2 (ex-018)
+  /*
+   * The second entry uses a factory-generated pure reducer, a different function
+   * pattern that still returns the same `ReducerFunction` contract.
+   *
+   * It runs after Reducer 1, clones the transformed collection, and sorts characters
+   * alphabetically by `lastName` without mutating the incoming array.
+   */
+
+  // Teaching point: Reducer 3 (ex-019)
+  /*
+   * The third entry is another delegating pure reducer.
+   *
+   * It runs after sorting and derives a display-ready `fullName` from the existing
+   * `name` and `lastName` fields so every view can reuse the same post-pipeline label.
+   */
+  #configureReducers(): void {
     this.#vault.reducers([
       deriveForceSensitiveDisplay,
-      withCharactersSortedByLastName()
+      withCharactersSortedByLastName(),
+      deriveFullName
     ]);
+  }
 
-    // Teaching point: Stepwise Reducer (ex-040)
-    /*
-     * `.withStepwiseReducer()` installs the final approval boundary after all
-     * reducers have completed. Its `StepwiseFunction` receives the last committed
-     * State and the fully reduced candidate, including the derived force display
-     * values and deterministic last-name ordering produced above.
-     *
-     * Accept invokes `continue()` so the reduced candidate may proceed toward
-     * commitment; Cancel invokes `block()` so the attempt ends without replacing
-     * the current State. The callback observes isolated inputs and mutates neither.
-     */
+  // Teaching point: Stepwise Reducer (ex-040)
+  /*
+   * `.withStepwiseReducer()` installs the final approval boundary after all
+   * reducers have completed. Its `StepwiseFunction` receives the last committed
+   * State and the fully reduced candidate, including the derived force display
+   * values, deterministic last-name ordering, and display-ready full names
+   * produced above.
+   *
+   * Accept invokes `continue()` so the reduced candidate may proceed toward
+   * commitment; Cancel invokes `block()` so the attempt ends without replacing
+   * the current State. The callback observes isolated inputs and mutates neither.
+   */
+  #configureStepwiseReducer(): void {
     this.#vault.withStepwiseReducer!({
       stepwiseCallback: this.#captureStepwiseReducer
     });
+  }
 
-    // Teaching point: After Taps (ex-032)
-    /*
-     * `.afterTaps()` registers a `TapCallback<readonly StarWarsCharacterState[]>`
-     * that observes the transformed candidate immediately after reducer execution.
-     *
-     * The callback publishes that immutable input for the tutorial display, returns
-     * no replacement value, and cannot change the value committed as FeatureCell State.
-     */
+  // Teaching point: After Taps (ex-032)
+  /*
+   * `.afterTaps()` registers a `TapCallback<readonly StarWarsCharacter[]>`
+   * that observes the transformed candidate immediately after reducer execution.
+   *
+   * The callback publishes that immutable reduced candidate for the tutorial display,
+   * returns no replacement value, and cannot change the value committed as FeatureCell State.
+   */
+  #configureAfterTaps(): void {
     this.#vault.afterTaps([this.#captureAfterTapInput]);
+  }
 
-    // Teaching point: State Emission (ex-035)
-    /*
-     * `.emitStates()` registers a
-     * `CoreEmitStateCallback<readonly StarWarsCharacterState[]>` that receives the
-     * finalized `StateSnapshotShape` after the FeatureCell commits and exposes it.
-     *
-     * The callback publishes that immutable snapshot for the tutorial display and
-     * cannot replace state, restart the pipeline, or change the committed result.
-     */
+  // Teaching point: State Emission (ex-035)
+  /*
+   * `.emitStates()` registers a
+   * `CoreEmitStateCallback<readonly StarWarsCharacter[]>` that receives the
+   * finalized `StateSnapshotShape` after the FeatureCell commits and exposes it.
+   *
+   * The callback publishes that immutable snapshot for the tutorial display and
+   * cannot replace state, restart the pipeline, or change the committed result.
+   */
+  #configureStateEmission(): void {
     this.#vault.emitStates([this.#captureEmittedState]);
+  }
 
-    // Teaching point: Error Emission (ex-036)
-    /*
-     * `.errors()` registers a
-     * `VaultErrorCallback<readonly StarWarsCharacterState[]>` that receives the
-     * finalized Vault error and immutable StateSnapshot after error commitment.
-     *
-     * The callback publishes both observational inputs for the tutorial display;
-     * it cannot transform the error, replace state, or alter pipeline control.
-     */
+  // Teaching point: Error Emission (ex-036)
+  /*
+   * `.errors()` registers a
+   * `VaultErrorCallback<readonly StarWarsCharacter[]>` that receives the
+   * finalized Vault error and immutable StateSnapshot after error commitment.
+   *
+   * The callback publishes both observational inputs for the tutorial display;
+   * it cannot transform the error, replace state, or alter pipeline control.
+   */
+  #configureErrorEmission(): void {
     this.#vault.errors([this.#captureEmittedError]);
+  }
 
-    /*
-     * `.initialize()` finalizes the pipeline configuration and activates the
-     * FeatureCell. Its initial value and subsequent updates now pass through the
-     * registered Filter → Before Tap → Reducer → After Tap stages before becoming committed
-     * reactive State, which is then observed by the State Emission callback.
-     */
+  /*
+   * `.initialize()` finalizes the pipeline configuration and activates the
+   * FeatureCell. Its initial value and subsequent updates now pass through the
+   * registered Filter → Before Tap → Reducer → After Tap stages before becoming committed
+   * reactive State, which is then observed by the State Emission callback.
+   */
+  #initializeVault(): void {
     this.#vault.initialize();
   }
 
@@ -712,7 +766,7 @@ export class ExampleService {
    * @param draft - Editable character fields collected from the component form.
    * @returns The character submitted to the FeatureCell with its assigned ID.
    */
-  createCharacter(draft: StarWarsCharacterDraft): StarWarsCharacterState {
+  createCharacter(draft: StarWarsCharacterDraft): StarWarsCharacter {
     const character = createCharacterState(this.#nextCharacterId++, draft);
 
     this.#vault.mergeState({
@@ -733,7 +787,7 @@ export class ExampleService {
   updateCharacter(
     id: number,
     changes: StarWarsCharacterDraft
-  ): StarWarsCharacterState {
+  ): StarWarsCharacter {
     const updatedCharacter = createCharacterState(id, changes);
 
     this.#vault.replaceState({
@@ -815,7 +869,7 @@ export class ExampleService {
   /**
    * Replaces the current collection from an Angular `HttpResourceRef`.
    * The example adapter owns the remote endpoint and converts its untrusted JSON
-   * response into `StarWarsCharacterState`; Vault's HTTP Resource Resolve stage
+   * response into `StarWarsCharacter`; Vault's HTTP Resource Resolve stage
    * then represents loading, awaits the resource, and forwards the parsed value
    * through the configured filter, taps, and reducers before State commitment.
    * @returns Nothing; consumers observe loading, data, and errors reactively.
@@ -899,7 +953,7 @@ export class ExampleService {
    * Returning the first restored character lets the component restore its selection as well.
    * @returns The first restored character, or `null` when the initial collection was empty.
    */
-  restoreInitialCharacters(): StarWarsCharacterState | null {
+  restoreInitialCharacters(): StarWarsCharacter | null {
     const initialCharacters = cloneCharacters(this.#initialCharacters);
 
     this.#replaceCharacters(initialCharacters);
@@ -913,7 +967,7 @@ export class ExampleService {
    * @returns Nothing; the FeatureCell exposes the resulting value through reactive state.
    */
   // abstract
-  #replaceCharacters(characters: readonly StarWarsCharacterState[]): void {
+  #replaceCharacters(characters: readonly StarWarsCharacter[]): void {
     this.#vault.replaceState({
       value: characters
     });

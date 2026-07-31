@@ -19,71 +19,100 @@ describe('ElapsedTimer', () => {
     cancelAnimationFrameSpy = spyOn(window, 'cancelAnimationFrame');
   });
 
-  it('should publish elapsed milliseconds on animation frames', () => {
-    const elapsedValues: number[] = [];
-    const timer = new ElapsedTimer((milliseconds) =>
-      elapsedValues.push(milliseconds)
-    );
+  describe('idle state', () => {
+    it('should publish elapsed milliseconds on animation frames after start', () => {
+      const elapsedValues: number[] = [];
+      const timer = new ElapsedTimer((milliseconds) =>
+        elapsedValues.push(milliseconds)
+      );
 
-    timer.start();
+      timer.start();
 
-    expect(timer.running).toBeTrue();
-    expect(timer.elapsed).toBe(0);
-    expect(elapsedValues).toEqual([0]);
-    expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(1);
+      expect(timer.running).toBeTrue();
+      expect(timer.elapsed).toBe(0);
+      expect(elapsedValues).toEqual([0]);
+      expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(1);
 
-    currentTime = 1_350.75;
-    animationFrame(0);
+      currentTime = 1_350.75;
+      animationFrame(0);
 
-    expect(timer.elapsed).toBe(1_250.75);
-    expect(elapsedValues).toEqual([0, 1_250.75]);
-    expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(2);
+      expect(timer.elapsed).toBe(1_250.75);
+      expect(elapsedValues).toEqual([0, 1_250.75]);
+      expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(2);
+    });
   });
 
-  it('should ignore repeated starts and reset the active timer', () => {
-    const onChange = jasmine.createSpy('onChange');
-    const timer = new ElapsedTimer(onChange);
+  describe('running state', () => {
+    it('should ignore repeated starts', () => {
+      const onChange = jasmine.createSpy('onChange');
+      const timer = new ElapsedTimer(onChange);
 
-    timer.start();
-    timer.start();
+      timer.start();
+      timer.start();
 
-    expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(1);
-
-    timer.reset();
-
-    expect(timer.running).toBeFalse();
-    expect(timer.elapsed).toBe(0);
-    expect(cancelAnimationFrameSpy).toHaveBeenCalledOnceWith(42);
-    expect(onChange).toHaveBeenCalledWith(0);
+      expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it('should cancel future frames without clearing the elapsed value', () => {
-    const timer = new ElapsedTimer(() => {});
+  describe('reset state', () => {
+    it('should stop the active timer and publish zero elapsed time', () => {
+      const onChange = jasmine.createSpy('onChange');
+      const timer = new ElapsedTimer(onChange);
 
-    timer.start();
-    currentTime = 600;
-    animationFrame(0);
-    timer.destroy();
+      timer.start();
+      timer.reset();
 
-    expect(timer.running).toBeFalse();
-    expect(timer.elapsed).toBe(500);
-    expect(cancelAnimationFrameSpy).toHaveBeenCalledOnceWith(42);
+      expect(timer.running).toBeFalse();
+      expect(timer.elapsed).toBe(0);
+      expect(cancelAnimationFrameSpy).toHaveBeenCalledOnceWith(42);
+      expect(onChange).toHaveBeenCalledWith(0);
+    });
   });
 
-  it('should ignore a queued frame that runs after the timer stops', () => {
-    const onChange = jasmine.createSpy('onChange');
-    const timer = new ElapsedTimer(onChange);
+  describe('stopped state', () => {
+    it('should cancel future frames without clearing the elapsed value', () => {
+      const timer = new ElapsedTimer(() => {});
 
-    timer.start();
-    onChange.calls.reset();
-    requestAnimationFrameSpy.calls.reset();
-    timer.destroy();
+      timer.start();
+      currentTime = 600;
+      animationFrame(0);
+      timer.stop();
 
-    currentTime = 900;
-    animationFrame(0);
+      expect(timer.running).toBeFalse();
+      expect(timer.elapsed).toBe(500);
+      expect(cancelAnimationFrameSpy).toHaveBeenCalledOnceWith(42);
+    });
 
-    expect(onChange).not.toHaveBeenCalled();
-    expect(requestAnimationFrameSpy).not.toHaveBeenCalled();
-    expect(timer.elapsed).toBe(0);
+    it('should ignore a queued frame that runs after the timer stops', () => {
+      const onChange = jasmine.createSpy('onChange');
+      const timer = new ElapsedTimer(onChange);
+
+      timer.start();
+      onChange.calls.reset();
+      requestAnimationFrameSpy.calls.reset();
+      timer.stop();
+
+      currentTime = 900;
+      animationFrame(0);
+
+      expect(onChange).not.toHaveBeenCalled();
+      expect(requestAnimationFrameSpy).not.toHaveBeenCalled();
+      expect(timer.elapsed).toBe(0);
+    });
+  });
+
+  describe('destroyed state', () => {
+    it('should cancel future frames while preserving the latest elapsed value', () => {
+      const timer = new ElapsedTimer(() => {});
+
+      timer.start();
+      currentTime = 725;
+      animationFrame(0);
+      timer.destroy();
+
+      expect(timer.running).toBeFalse();
+      expect(timer.elapsed).toBe(625);
+      expect(cancelAnimationFrameSpy).toHaveBeenCalledOnceWith(42);
+    });
   });
 });

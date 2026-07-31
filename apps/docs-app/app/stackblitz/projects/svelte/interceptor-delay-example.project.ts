@@ -49,6 +49,238 @@ export const interceptorDelayExampleProject: Project = {
 
 <ExampleView />
 `,
+    'src/app/elapsed-timer.ts': `/**
+ * Framework-agnostic elapsed timer used to visualize the delay
+ * interceptor's hold window in the StackBlitz example UI.
+ *
+ * This class has no dependency on Angular, React, Vue, or Svelte.
+ * It accepts an onChange callback so each framework can wire it
+ * to its own reactive primitive (Angular signal, React setState,
+ * Vue ref, or Svelte store). To port this timer, instantiate it
+ * with the target framework's state setter and call start/reset
+ * from event handlers.
+ */
+export class ElapsedTimer {
+  /** Timestamp (via performance.now) when the timer was last started. */
+  #startTime = 0;
+
+  /** Accumulated elapsed milliseconds since the last start. */
+  #elapsed = 0;
+
+  /** Whether the timer is currently running. */
+  #running = false;
+
+  /** Active requestAnimationFrame handle for cancellation. */
+  #frameId = 0;
+
+  /** Callback invoked on every animation frame with the current elapsed ms. */
+  #onChange: (ms: number) => void;
+
+  /**
+   * Creates a new ElapsedTimer bound to the given change callback.
+   *
+   * @param onChange - Invoked on each animation frame with the elapsed
+   *   milliseconds. Use this to push the value into the framework's
+   *   reactive layer.
+   */
+  constructor(onChange: (ms: number) => void) {
+    this.#onChange = onChange;
+  }
+
+  /**
+   * Current elapsed time in milliseconds.
+   *
+   * @returns The accumulated elapsed milliseconds.
+   */
+  get elapsed(): number {
+    return this.#elapsed;
+  }
+
+  /**
+   * Whether the timer is actively counting.
+   *
+   * @returns True if the timer is running.
+   */
+  get running(): boolean {
+    return this.#running;
+  }
+
+  /**
+   * Starts the timer. If already running, the call is ignored.
+   * Resumes from the current elapsed value, allowing pause/resume
+   * semantics if needed.
+   *
+   * @returns Void.
+   */
+  start(): void {
+    if (this.#running) return;
+    this.#running = true;
+    this.#startTime = performance.now() - this.#elapsed;
+    this.#tick();
+  }
+
+  /**
+   * Stops the timer and resets elapsed time to zero. Fires the
+   * onChange callback with 0 so the UI reflects the reset immediately.
+   *
+   * @returns Void.
+   */
+  reset(): void {
+    this.#running = false;
+    cancelAnimationFrame(this.#frameId);
+    this.#elapsed = 0;
+    this.#onChange(0);
+  }
+
+  /**
+   * Stops the timer without resetting elapsed time. Use this in
+   * component teardown (e.g., Angular DestroyRef, React useEffect
+   * cleanup, or Svelte onDestroy) to prevent orphaned animation frames.
+   *
+   * @returns Void.
+   */
+  destroy(): void {
+    this.#running = false;
+    cancelAnimationFrame(this.#frameId);
+  }
+
+  /**
+   * Internal animation loop that recalculates elapsed time and
+   * notifies the consumer on each frame.
+   *
+   * @returns Void.
+   */
+  #tick(): void {
+    if (!this.#running) return;
+    this.#elapsed = performance.now() - this.#startTime;
+    this.#onChange(this.#elapsed);
+    this.#frameId = requestAnimationFrame(() => this.#tick());
+  }
+
+  /**
+   * Formats a millisecond value as a human-readable seconds string
+   * with three-digit millisecond precision (e.g. "3.142").
+   *
+   * @param ms - The elapsed time in milliseconds.
+   * @returns A formatted string in "s.mmm" format.
+   */
+  static format(ms: number): string {
+    const seconds = Math.floor(ms / 1000);
+    const millis = Math.floor(ms % 1000)
+      .toString()
+      .padStart(3, '0');
+    return \`\${seconds}.\${millis}\`;
+  }
+}
+`,
+    'src/app/example.cell.ts': `import { withDelayController } from '@sdux-vault/addons';
+import { FeatureCell, Vault } from '@sdux-vault/svelte';
+
+/**
+ * Shape representing a single example entity in the FeatureCell state.
+ */
+export interface Example {
+  /** Unique identifier for the example entry. */
+  id: number;
+
+  /** First name of the character. */
+  name: string;
+
+  /** Last name of the character. */
+  lastName: string;
+
+  /** Whether the character is a Jedi, set by the jediReducer. */
+  jedi?: boolean;
+
+  /** Whether the character is a Senator, set by the jediReducer. */
+  senator?: boolean;
+}
+
+// Initialize the Vault once at application startup
+Vault({
+  /**
+   * Controls the verbosity of internal logging.
+   * Levels: \`'debug' | 'info' | 'warn' | 'error' | 'off'\`.
+   * Set to \`'debug'\` during development to trace pipeline activity.
+   */
+  logLevel: 'off',
+
+  /**
+   * Enables development-mode diagnostics.
+   * When \`true\`, the SDuX Debugger panel and Chrome Extension
+   * receive real-time pipeline trace events.
+   */
+  devMode: false
+});
+
+// Register the FeatureCell at module scope
+export const exampleCell = FeatureCell<Example[]>(
+  // FeatureCell descriptor (identity + initial state)
+  {
+    // Unique state key used by the Vault
+    key: 'example-feature-cell-key',
+
+    // Fallback Initial value for the state
+    initialState: []
+  },
+
+  // Optional definition-time extensions
+  [
+    // --> Register add-on behaviors here <--
+  ],
+  [
+    // Register the withDelayController add-on controller to enable delay behavior in this FeatureCell
+    withDelayController
+    // --> Register add-on controllers here <--
+  ]
+);
+
+/**
+ * Configures the Vault runtime pipeline with a delay interceptor,
+ * and finalizes the FeatureCell initialization.
+ *
+ * Pipeline execution order:
+ *
+ * 1. \`.withDelay?.({ millisecondDelay: 3_000 })\` — Holds all state
+ *    updates for 3 seconds before releasing them into the pipeline.
+ *    The UI will not reflect new data until the delay expires.
+ *
+ * 2. \`.initialize()\` — Locks the pipeline. No further behaviors can
+ *    be registered after this call. State updates are only processed
+ *    after initialization completes.
+ */
+exampleCell.withDelay?.({ millisecondDelay: 3_000 }).initialize();
+
+/** Replaces the entire FeatureCell state with the provided input. */
+export function replaceExamples(input: Example[]): void {
+  exampleCell.replaceState({
+    loading: false,
+    value: input,
+    error: null
+  });
+}
+
+/** Resets the FeatureCell state to its initial value. */
+export function resetExamples(): void {
+  exampleCell.reset();
+}
+
+/** Toggles the loading flag on the current state. */
+export function toggleLoading(loading: boolean): void {
+  exampleCell.replaceState({
+    loading,
+    value: exampleCell.state.value
+  });
+}
+
+/** Toggles the error state between an Error instance and null. */
+export function toggleError(error: Error | null): void {
+  exampleCell.replaceState({
+    error,
+    value: exampleCell.state.value
+  });
+}
+`,
     'src/app/ExampleView.svelte': `<script lang="ts">
   import { onDestroy } from 'svelte';
   import { ElapsedTimer } from './elapsed-timer';
@@ -433,238 +665,6 @@ export const interceptorDelayExampleProject: Project = {
     color: #ccc;
   }
 </style>
-`,
-    'src/app/elapsed-timer.ts': `/**
- * Framework-agnostic elapsed timer used to visualize the delay
- * interceptor's hold window in the StackBlitz example UI.
- *
- * This class has no dependency on Angular, React, Vue, or Svelte.
- * It accepts an onChange callback so each framework can wire it
- * to its own reactive primitive (Angular signal, React setState,
- * Vue ref, or Svelte store). To port this timer, instantiate it
- * with the target framework's state setter and call start/reset
- * from event handlers.
- */
-export class ElapsedTimer {
-  /** Timestamp (via performance.now) when the timer was last started. */
-  #startTime = 0;
-
-  /** Accumulated elapsed milliseconds since the last start. */
-  #elapsed = 0;
-
-  /** Whether the timer is currently running. */
-  #running = false;
-
-  /** Active requestAnimationFrame handle for cancellation. */
-  #frameId = 0;
-
-  /** Callback invoked on every animation frame with the current elapsed ms. */
-  #onChange: (ms: number) => void;
-
-  /**
-   * Creates a new ElapsedTimer bound to the given change callback.
-   *
-   * @param onChange - Invoked on each animation frame with the elapsed
-   *   milliseconds. Use this to push the value into the framework's
-   *   reactive layer.
-   */
-  constructor(onChange: (ms: number) => void) {
-    this.#onChange = onChange;
-  }
-
-  /**
-   * Current elapsed time in milliseconds.
-   *
-   * @returns The accumulated elapsed milliseconds.
-   */
-  get elapsed(): number {
-    return this.#elapsed;
-  }
-
-  /**
-   * Whether the timer is actively counting.
-   *
-   * @returns True if the timer is running.
-   */
-  get running(): boolean {
-    return this.#running;
-  }
-
-  /**
-   * Starts the timer. If already running, the call is ignored.
-   * Resumes from the current elapsed value, allowing pause/resume
-   * semantics if needed.
-   *
-   * @returns Void.
-   */
-  start(): void {
-    if (this.#running) return;
-    this.#running = true;
-    this.#startTime = performance.now() - this.#elapsed;
-    this.#tick();
-  }
-
-  /**
-   * Stops the timer and resets elapsed time to zero. Fires the
-   * onChange callback with 0 so the UI reflects the reset immediately.
-   *
-   * @returns Void.
-   */
-  reset(): void {
-    this.#running = false;
-    cancelAnimationFrame(this.#frameId);
-    this.#elapsed = 0;
-    this.#onChange(0);
-  }
-
-  /**
-   * Stops the timer without resetting elapsed time. Use this in
-   * component teardown (e.g., Angular DestroyRef, React useEffect
-   * cleanup, or Svelte onDestroy) to prevent orphaned animation frames.
-   *
-   * @returns Void.
-   */
-  destroy(): void {
-    this.#running = false;
-    cancelAnimationFrame(this.#frameId);
-  }
-
-  /**
-   * Internal animation loop that recalculates elapsed time and
-   * notifies the consumer on each frame.
-   *
-   * @returns Void.
-   */
-  #tick(): void {
-    if (!this.#running) return;
-    this.#elapsed = performance.now() - this.#startTime;
-    this.#onChange(this.#elapsed);
-    this.#frameId = requestAnimationFrame(() => this.#tick());
-  }
-
-  /**
-   * Formats a millisecond value as a human-readable seconds string
-   * with three-digit millisecond precision (e.g. "3.142").
-   *
-   * @param ms - The elapsed time in milliseconds.
-   * @returns A formatted string in "s.mmm" format.
-   */
-  static format(ms: number): string {
-    const seconds = Math.floor(ms / 1000);
-    const millis = Math.floor(ms % 1000)
-      .toString()
-      .padStart(3, '0');
-    return \`\${seconds}.\${millis}\`;
-  }
-}
-`,
-    'src/app/example.cell.ts': `import { withDelayController } from '@sdux-vault/addons';
-import { FeatureCell, Vault } from '@sdux-vault/svelte';
-
-/**
- * Shape representing a single example entity in the FeatureCell state.
- */
-export interface Example {
-  /** Unique identifier for the example entry. */
-  id: number;
-
-  /** First name of the character. */
-  name: string;
-
-  /** Last name of the character. */
-  lastName: string;
-
-  /** Whether the character is a Jedi, set by the jediReducer. */
-  jedi?: boolean;
-
-  /** Whether the character is a Senator, set by the jediReducer. */
-  senator?: boolean;
-}
-
-// Initialize the Vault once at application startup
-Vault({
-  /**
-   * Controls the verbosity of internal logging.
-   * Levels: \`'debug' | 'info' | 'warn' | 'error' | 'off'\`.
-   * Set to \`'debug'\` during development to trace pipeline activity.
-   */
-  logLevel: 'off',
-
-  /**
-   * Enables development-mode diagnostics.
-   * When \`true\`, the SDuX Debugger panel and Chrome Extension
-   * receive real-time pipeline trace events.
-   */
-  devMode: false
-});
-
-// Register the FeatureCell at module scope
-export const exampleCell = FeatureCell<Example[]>(
-  // FeatureCell descriptor (identity + initial state)
-  {
-    // Unique state key used by the Vault
-    key: 'example-feature-cell-key',
-
-    // Fallback Initial value for the state
-    initialState: []
-  },
-
-  // Optional definition-time extensions
-  [
-    // --> Register add-on behaviors here <--
-  ],
-  [
-    // Register the withDelayController add-on controller to enable delay behavior in this FeatureCell
-    withDelayController
-    // --> Register add-on controllers here <--
-  ]
-);
-
-/**
- * Configures the Vault runtime pipeline with a delay interceptor,
- * and finalizes the FeatureCell initialization.
- *
- * Pipeline execution order:
- *
- * 1. \`.withDelay?.({ millisecondDelay: 3_000 })\` — Holds all state
- *    updates for 3 seconds before releasing them into the pipeline.
- *    The UI will not reflect new data until the delay expires.
- *
- * 2. \`.initialize()\` — Locks the pipeline. No further behaviors can
- *    be registered after this call. State updates are only processed
- *    after initialization completes.
- */
-exampleCell.withDelay?.({ millisecondDelay: 3_000 }).initialize();
-
-/** Replaces the entire FeatureCell state with the provided input. */
-export function replaceExamples(input: Example[]): void {
-  exampleCell.replaceState({
-    loading: false,
-    value: input,
-    error: null
-  });
-}
-
-/** Resets the FeatureCell state to its initial value. */
-export function resetExamples(): void {
-  exampleCell.reset();
-}
-
-/** Toggles the loading flag on the current state. */
-export function toggleLoading(loading: boolean): void {
-  exampleCell.replaceState({
-    loading,
-    value: exampleCell.state.value
-  });
-}
-
-/** Toggles the error state between an Error instance and null. */
-export function toggleError(error: Error | null): void {
-  exampleCell.replaceState({
-    error,
-    value: exampleCell.state.value
-  });
-}
 `,
     'src/main.ts': `import { mount } from 'svelte';
 import App from './app/App.svelte';

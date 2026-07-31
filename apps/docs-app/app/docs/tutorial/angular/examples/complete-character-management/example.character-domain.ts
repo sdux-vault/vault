@@ -1,11 +1,15 @@
 import type { ReducerFunction } from '@sdux-vault/shared';
-import type { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import type {
+  RawStarWarsCharacter,
+  StarWarsCharacter,
+  StarWarsCharacterDisplayFields
+} from './star-wars-character.shape';
 
 /** Editable character fields accepted before application code assigns an ID. */
-export type StarWarsCharacterDraft = Omit<StarWarsCharacterState, 'id'>;
+export type StarWarsCharacterDraft = Omit<RawStarWarsCharacter, 'id'>;
 
 /** Characters cycled by the Changed State teaching action. */
-const DISTINCT_CHANGED_STATE_CHARACTERS: readonly StarWarsCharacterState[] = [
+const DISTINCT_CHANGED_STATE_CHARACTERS: readonly RawStarWarsCharacter[] = [
   {
     id: 601,
     name: 'Qui-Gon',
@@ -40,47 +44,20 @@ const DISTINCT_CHANGED_STATE_CHARACTERS: readonly StarWarsCharacterState[] = [
 export function createCharacterState(
   id: number,
   draft: StarWarsCharacterDraft
-): StarWarsCharacterState {
+): RawStarWarsCharacter {
   return { id, ...draft };
 }
 
 /** Produces a detached collection and detached character objects. */
 export function cloneCharacters(
-  characters: readonly StarWarsCharacterState[]
-): readonly StarWarsCharacterState[] {
+  characters: readonly StarWarsCharacter[]
+): readonly StarWarsCharacter[] {
   return characters.map((character) => ({ ...character }));
-}
-
-/** Returns the first integer ID greater than every identity in the collection. */
-export function getNextCharacterId(
-  characters: readonly StarWarsCharacterState[]
-): number {
-  return Math.max(...characters.map(({ id }) => id), 0) + 1;
-}
-
-/** Derives display-friendly force sensitivity labels without mutating the input. */
-export function deriveForceSensitiveDisplay(
-  characters: readonly StarWarsCharacterState[]
-): readonly StarWarsCharacterState[] {
-  return characters.map((character) => ({
-    ...character,
-    forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
-  }));
-}
-
-/** Creates a pure reducer that orders a cloned collection by last name. */
-export function withCharactersSortedByLastName(): ReducerFunction<
-  readonly StarWarsCharacterState[]
-> {
-  return (characters) =>
-    [...characters].sort((left, right) =>
-      left.lastName.localeCompare(right.lastName)
-    );
 }
 
 /** Returns the current Changed State character and the wrapped next index. */
 export function getDistinctChangedStateCharacter(index: number): {
-  readonly character: StarWarsCharacterState;
+  readonly character: StarWarsCharacter;
   readonly nextIndex: number;
 } {
   const normalizedIndex =
@@ -92,4 +69,43 @@ export function getDistinctChangedStateCharacter(index: number): {
     character: { ...DISTINCT_CHANGED_STATE_CHARACTERS[normalizedIndex]! },
     nextIndex: (normalizedIndex + 1) % DISTINCT_CHANGED_STATE_CHARACTERS.length
   };
+}
+
+/** Returns the first integer ID greater than every identity in the collection. */
+export function getNextCharacterId(
+  characters: readonly StarWarsCharacter[]
+): number {
+  return Math.max(...characters.map(({ id }) => id), 0) + 1;
+}
+
+/** Derives display-friendly force sensitivity labels without mutating the input. */
+export function deriveForceSensitiveDisplay(
+  characters: readonly StarWarsCharacter[]
+): readonly StarWarsCharacter[] {
+  return characters.map((character) => ({
+    ...character,
+    forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
+  })) satisfies readonly (RawStarWarsCharacter &
+    Pick<StarWarsCharacterDisplayFields, 'forceSensitiveDisplay'>)[];
+}
+
+/** Derives a display-ready full name for each character without mutating the input. */
+export function deriveFullName(
+  characters: readonly StarWarsCharacter[]
+): readonly StarWarsCharacter[] {
+  return characters.map((character) => ({
+    ...character,
+    fullName: `${character.name} ${character.lastName}`
+  })) satisfies readonly (RawStarWarsCharacter &
+    Pick<StarWarsCharacterDisplayFields, 'fullName'>)[];
+}
+
+/** Creates a pure reducer that orders a cloned collection by last name. */
+export function withCharactersSortedByLastName(): ReducerFunction<
+  readonly StarWarsCharacter[]
+> {
+  return (characters) =>
+    [...characters].sort((left, right) =>
+      left.lastName.localeCompare(right.lastName)
+    );
 }

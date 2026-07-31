@@ -14,6 +14,7 @@ describe('Service: StackblitzExampleService', () => {
   const example: StackBlitzExampleShape = {
     title: 'Replace State',
     id: 'replace-state',
+    displayCopyIcon: true,
     exampleName: 'replace-example',
     description: 'Replaces the complete FeatureCell state.',
     languages: [{ name: 'Angular', key: 'angular' }]
@@ -58,6 +59,7 @@ describe('Service: StackblitzExampleService', () => {
         description:
           'Demonstrates <strong>replaceState</strong> — the simplest way to update a FeatureCell. The entire previous state is discarded and replaced with the new value in a single atomic operation. Choose your framework and launch the example directly in StackBlitz.',
         title: 'Replace State',
+        displayCopyIcon: true,
         id: 'replace-state',
         exampleName: 'replace-example',
         languages: [

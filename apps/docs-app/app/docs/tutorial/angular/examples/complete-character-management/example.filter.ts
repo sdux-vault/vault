@@ -1,6 +1,6 @@
 // example.filter.ts
 import { FilterFunction } from '@sdux-vault/shared';
-import { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
+import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
  * Removes characters whose last name is exactly `"unknown"` without mutating the candidate collection.
@@ -8,5 +8,5 @@ import { StarWarsCharacterState } from '../../../examples/star-wars-character.st
  * @returns A new collection containing every character with a known last name.
  */
 export const removeUnknownLastNameFilter: FilterFunction<
-  readonly StarWarsCharacterState[]
+  readonly StarWarsCharacter[]
 > = (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');

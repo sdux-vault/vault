@@ -1,18 +1,18 @@
 import type { StateSnapshotShape, VaultErrorShape } from '@sdux-vault/shared';
-import type { StarWarsCharacterState } from '../../../examples/star-wars-character.state';
 import { ExampleCharacterEditor } from './example.character-editor';
+import { StarWarsCharacter } from './star-wars-character.shape';
 
 describe('Character editor', () => {
   const editor = new ExampleCharacterEditor();
 
-  const leia: StarWarsCharacterState = {
+  const leia: StarWarsCharacter = {
     id: 10,
     name: 'Leia',
     lastName: 'Organa',
     faction: 'Rebel Alliance',
     isForceSensitive: false
   };
-  const luke: StarWarsCharacterState = {
+  const luke: StarWarsCharacter = {
     id: 20,
     name: 'Luke',
     lastName: 'Skywalker',
@@ -42,6 +42,7 @@ describe('Character editor', () => {
       expect(editor.filterSource).toContain('removeUnknownLastNameFilter');
       expect(editor.reducer1Source).toContain('#deriveForceSensitiveDisplay');
       expect(editor.reducer2Source).toContain('withCharactersSortedByLastName');
+      expect(editor.reducer3Source).toContain('deriveFullName');
       expect(editor.comparisonFunctionSource).toContain(
         'withDistinctUntilChanged'
       );
@@ -68,13 +69,6 @@ describe('Character editor', () => {
         message: 'The initial character collection was restored.',
         tone: 'success'
       });
-    });
-  });
-
-  describe('displayName', () => {
-    it('should combine the first and last names with a single space', () => {
-      expect(editor.displayName(leia)).toBe('Leia Organa');
-      expect(editor.displayName(luke)).toBe('Luke Skywalker');
     });
   });
 
@@ -205,7 +199,7 @@ describe('Character editor', () => {
 
   describe('serializeSnapshot', () => {
     it('should serialize a snapshot with a present value', () => {
-      const snapshot: StateSnapshotShape<readonly StarWarsCharacterState[]> = {
+      const snapshot: StateSnapshotShape<readonly StarWarsCharacter[]> = {
         isLoading: false,
         value: [leia],
         error: null,
@@ -218,7 +212,7 @@ describe('Character editor', () => {
     });
 
     it('should substitute an absent snapshot value', () => {
-      const snapshot: StateSnapshotShape<readonly StarWarsCharacterState[]> = {
+      const snapshot: StateSnapshotShape<readonly StarWarsCharacter[]> = {
         isLoading: false,
         value: undefined,
         error: null,
@@ -246,7 +240,7 @@ describe('Character editor', () => {
 
   describe('serializeErrorEmission', () => {
     it('should serialize an emission with a present state value', () => {
-      const state: StateSnapshotShape<readonly StarWarsCharacterState[]> = {
+      const state: StateSnapshotShape<readonly StarWarsCharacter[]> = {
         isLoading: false,
         value: [leia],
         error,
@@ -259,7 +253,7 @@ describe('Character editor', () => {
     });
 
     it('should substitute an absent state value', () => {
-      const state: StateSnapshotShape<readonly StarWarsCharacterState[]> = {
+      const state: StateSnapshotShape<readonly StarWarsCharacter[]> = {
         isLoading: false,
         value: undefined,
         error,

@@ -4,6 +4,26 @@ export const promiseExampleProject: Project = {
   title: 'bun-promise-example',
   template: 'node',
   files: {
+    'package.json': `{
+  "name": "bun-promise-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun src/main.ts",
+    "dev": "bun --watch src/main.ts",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@sdux-vault/core": "latest",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "~5.9.2"
+  }
+}
+`,
     'README.md': `# SDuX Vault Bun Promise Example
 
 A server demonstrating async promise resolution with deterministic pipeline execution using SDuX Vault on Bun.
@@ -226,26 +246,6 @@ bun --watch src/main.ts
 \`\`\`
 
 Server auto-restarts on file changes.
-`,
-    'package.json': `{
-  "name": "bun-promise-example",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "bun src/main.ts",
-    "dev": "bun --watch src/main.ts",
-    "test": "bun test"
-  },
-  "dependencies": {
-    "@sdux-vault/core": "latest",
-    "rxjs": "^7.8.2"
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "typescript": "~5.9.2"
-  }
-}
 `,
     'src/main.ts': `declare const Bun: {
   serve(options: {

@@ -259,6 +259,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     const stackblitzExample: StackBlitzExampleShape = {
       id: 'comparison',
       title: 'Framework Comparison',
+      displayCopyIcon: true,
       exampleName: 'comparison',
       description: 'Compares framework integrations.',
       languages: [{ name: 'Vue', key: 'vue' }]

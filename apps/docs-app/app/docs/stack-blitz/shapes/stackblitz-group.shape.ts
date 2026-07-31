@@ -20,6 +20,11 @@ export interface StackBlitzGroupShape {
   description: string;
 
   /**
+   * Indicates whether the example is only used for tutorial purposes and not viable via StackBlitz.
+   */
+  tutorialOnly: boolean;
+
+  /**
    * Provides the examples included in the group.
    */
   examples: StackBlitzExampleShape[];
