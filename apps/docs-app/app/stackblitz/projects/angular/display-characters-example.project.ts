@@ -897,15 +897,16 @@ export const appConfig: ApplicationConfig = {
     .operator-actions {
       display: grid;
       gap: \$spacing-md;
-
-      @media (min-width: \$breakpoint-md) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        align-items: start;
-      }
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, \$action-column-width), 1fr)
+      );
+      align-items: start;
     }
 
     .lifecycle-action-row {
       @include expandable-action-row;
+      min-width: \$action-column-width;
     }
   }
 
@@ -928,11 +929,11 @@ export const appConfig: ApplicationConfig = {
     .action-groups {
       display: grid;
       gap: \$spacing-md;
-
-      @media (min-width: \$breakpoint-md) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        align-items: start;
-      }
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, \$action-column-width), 1fr)
+      );
+      align-items: start;
     }
 
     .action-group {

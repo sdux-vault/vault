@@ -99,15 +99,16 @@
           feature with <sdux-brand-name /> from the ground up. You will move
           step by step from project setup, to Feature State definition, to
           registration and initialization, and finally to a working UI that
-          reads, selects, adds, and updates managed State.
+          reads, selects, creates, updates, deletes, resets, and finalizes
+          managed State.
         </p>
 
         <p class="lead">
           By the end of the page, you will have a typed
           <sdux-feature-cell />, an Angular service that owns the Feature
           boundary, a component that binds to reactive State, and a complete
-          character workflow that can render, select, create, and update records
-          from a managed collection.
+          character workflow that can render, select, create, update, delete,
+          reset, and permanently tear down records from a managed collection.
         </p>
 
         <div class="callout callout-info">
@@ -317,7 +318,7 @@
 
           <p>
             The dropdown tutorial proved that the same service-owned collection
-            can support user-directed reads. This final section turns that read
+            can support user-directed reads. This next section turns that read
             model into a mutation workflow by adding merge configuration, create
             behavior, and update behavior on top of the same
             <sdux-feature-cell /> boundary.
@@ -384,9 +385,9 @@
 
           <p>
             The add/edit tutorial showed how the same service-owned collection
-            can handle create and update work. This final section adds delete
-            behavior without moving collection ownership, delete rules, or
-            confirmation logic into the template.
+            can handle create and update work. This section adds delete behavior
+            without moving collection ownership, delete rules, or confirmation
+            logic into the template.
           </p>
           <p>
             The goal is to keep the same split you have used throughout the
@@ -409,7 +410,76 @@
         </div>
       </div>
 
-      <sdux-pipeline-related-topics />
+      <section
+        class="chapter-break"
+        id="chapter-5"
+        aria-labelledby="chapter-5-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
+
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 5</p>
+          <div class="chapter-header">
+            <h2 id="chapter-5-title">Lifecycle Flow</h2>
+
+            <button
+              type="button"
+              class="chapter-toggle"
+              aria-controls="chapter-5-content"
+              [attr.aria-expanded]="isChapterExpanded(5)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'Lifecycle Flow',
+                  isChapterExpanded(5)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'Lifecycle Flow',
+                  isChapterExpanded(5)
+                )
+              "
+              (click)="toggleTutorialChapter(5)">
+              <mat-icon aria-hidden="true">
+                {{
+                  isChapterExpanded(5)
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                }}
+              </mat-icon>
+            </button>
+          </div>
+
+          <p>
+            The delete tutorial completed the CRUD story. This final chapter
+            shifts from record mutation to lifecycle control by teaching the
+            difference between persisting <span class="code">null</span>,
+            resetting runtime State, and permanently destroying the
+            <sdux-feature-cell />.
+          </p>
+          <p>
+            The boundary does not move. The service still owns every lifecycle
+            API, while the component responds by clearing or disabling local UI
+            state. That separation lets the tutorial explain why
+            <span class="code"
+              >replaceState({{ '{' }} value: null {{ '}' }})</span
+            >, <span class="code">reset()</span>, and
+            <span class="code">destroy()</span> are related but not
+            interchangeable.
+          </p>
+        </div>
+      </section>
+
+      <div
+        id="chapter-5-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(5)"
+        [attr.aria-hidden]="!isChapterExpanded(5)"
+        [attr.inert]="!isChapterExpanded(5) ? '' : null">
+        <div class="chapter-content-inner">
+          <sdux-lifecycle-chapter></sdux-lifecycle-chapter>
+        </div>
+      </div>
+      <sdux-pipeline-related-topics></sdux-pipeline-related-topics>
     </main>
   </div>
 </div>

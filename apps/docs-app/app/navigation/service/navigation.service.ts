@@ -20,7 +20,7 @@ import { Injectable, Signal, signal, WritableSignal } from '@angular/core';
 })
 export class NavigationService {
   /** Internal writable signal tracking the sidenav's expanded/collapsed state. */
-  private open: WritableSignal<boolean> = signal<boolean>(true);
+  private open: WritableSignal<boolean> = signal<boolean>(false);
 
   /** Readonly signal exposing the current expanded/collapsed state. */
   public readonly isOpen: Signal<boolean> = this.open.asReadonly();

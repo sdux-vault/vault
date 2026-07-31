@@ -91,4 +91,31 @@ export class ExampleService {
         []
     });
   }
+
+  /**
+   * Permanently tears down the FeatureCell and releases its runtime resources.
+   * Destruction completes its streams and prevents any further pipeline execution.
+   * @returns Nothing; the FeatureCell lifecycle is permanently finalized.
+   */
+  destroyFeatureCell(): void {
+    this.#vault.destroy();
+  }
+
+  /**
+   * Resets the FeatureCell through its dedicated lifecycle API.
+   * Consumers observe the cleared value as `undefined` through the reactive state APIs.
+   * @returns Nothing; the FeatureCell performs the reset operation internally.
+   */
+  resetState(): void {
+    this.#vault.reset();
+  }
+
+  /**
+   * Persists `null` through `replaceState` to clear the FeatureCell's current value.
+   * The resulting state value resolves to `undefined` for consumers of the read model.
+   * @returns Nothing; consumers observe the cleared value through the reactive state APIs.
+   */
+  persistNullValue(): void {
+    this.#vault.replaceState({ value: null });
+  }
 }

@@ -21,7 +21,14 @@
     </div>
   }
 
-  <fieldset class="feature-cell-controls">
+  @if (featureCellDestroyed()) {
+    <div class="feedback error" role="alert" aria-live="assertive">
+      The FeatureCell is intentionally catastrophic and inoperable after a
+      destroy(). You will need to reload the page to continue.
+    </div>
+  }
+
+  <fieldset class="feature-cell-controls" [disabled]="featureCellDestroyed()">
     @if (deleteCandidate(); as character) {
       <section
         class="delete-confirmation"
@@ -260,6 +267,101 @@
             </div>
           </form>
         </section>
+      </div>
+    </div>
+
+    <div class="lifecycle-actions">
+      <input
+        id="lifecycle-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Lifecycle visibility"
+        checked />
+      <div class="section-header">
+        <span>Lifecycle</span>
+        <label
+          class="section-chevron"
+          for="lifecycle-section-toggle"
+          title="Show or hide Lifecycle"></label>
+      </div>
+
+      <div class="operator-actions">
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="persist-null-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Persist Null Value description" />
+          <div class="button-container">
+            <!-- Teaching point: Persist Null (ex-020) -->
+            <button
+              type="button"
+              class="button danger"
+              (click)="persistNullValue()">
+              Persist Null Value
+            </button>
+            <label
+              class="description-chevron"
+              for="persist-null-description"
+              title="Show or hide Persist Null Value description"></label>
+          </div>
+          <div class="description-container">
+            Calls <code>replaceState(&#123; value: null &#125;)</code> to
+            demonstrate null normalization. The FeatureCell intentionally
+            persists the value as <code>undefined</code>, clearing the current
+            state.
+          </div>
+        </div>
+
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="reset-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Reset State description" />
+          <div class="button-container">
+            <!-- Teaching point: Reset (ex-021) -->
+            <button type="button" class="button danger" (click)="resetState()">
+              Reset State
+            </button>
+            <label
+              class="description-chevron"
+              for="reset-description"
+              title="Show or hide Reset State description"></label>
+          </div>
+          <div class="description-container">
+            Calls the FeatureCell's dedicated <code>reset()</code> API to
+            explicitly clear the current state value to
+            <code>undefined</code> without submitting replacement state.
+          </div>
+        </div>
+
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="destroy-feature-cell-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Destroy FeatureCell description" />
+          <div class="button-container">
+            <!-- Teaching point: FeatureCell destruction (ex-005) -->
+            <button
+              type="button"
+              class="button danger"
+              (click)="destroyFeatureCell()">
+              Destroy FeatureCell
+            </button>
+            <label
+              class="description-chevron"
+              for="destroy-feature-cell-description"
+              title="Show or hide Destroy FeatureCell description"></label>
+          </div>
+          <div class="description-container">
+            Permanently tears down the FeatureCell, releases its runtime
+            resources, destroys attached behaviors and controllers, completes
+            internal streams, and prevents further pipeline execution, state
+            updates, or emissions.
+          </div>
+        </div>
       </div>
     </div>
   </fieldset>

@@ -136,6 +136,37 @@ export class ExampleComponent {
     this.#patchForm(character);
   }
 
+  /** Tracks permanent FeatureCell teardown so the UI can explain the required recovery. */
+  protected readonly featureCellDestroyed = signal(false);
+
+  /**
+   * Delegates permanent FeatureCell teardown, clears the form, and exposes the terminal UI state.
+   * @returns Nothing; the FeatureCell and its runtime resources are permanently finalized.
+   */
+  protected destroyFeatureCell(): void {
+    this.#exampleService.destroyFeatureCell();
+    this.#clearCharacterForm();
+    this.featureCellDestroyed.set(true);
+  }
+
+  /**
+   * Delegates FeatureCell reset behavior to the service and clears the character form.
+   * @returns Nothing; the cleared state propagates through the reactive state APIs.
+   */
+  protected resetState(): void {
+    this.#exampleService.resetState();
+    this.#clearCharacterForm();
+  }
+
+  /**
+   * Delegates a null replacement to the service and clears the character form.
+   * @returns Nothing; the resulting undefined value is exposed through the reactive state APIs.
+   */
+  protected persistNullValue(): void {
+    this.#exampleService.persistNullValue();
+    this.#clearCharacterForm();
+  }
+
   /**
    * Validates and normalizes form values before delegating create or update work to the service.
    * Invalid input or a missing edit selection produces feedback without changing collection state.
