@@ -8,30 +8,84 @@
   <div class="tutorial-layout">
     <nav class="tutorial-steps" aria-label="Tutorial steps">
       @for (group of tutorialGroups; track group.id; let groupIndex = $index) {
-        <h2 class="tutorial-steps-title">
-          {{ group.label }}
-        </h2>
-        <div class="tutorial-step-list">
-          @for (step of group.steps; track step.id; let stepIndex = $index) {
-            <div
-              class="tutorial-step-item"
-              [class.tutorial-step-active]="
-                isActiveStep(getStepId(groupIndex, stepIndex))
-              ">
-              <span class="tutorial-step-number">
-                {{ getStepId(groupIndex, stepIndex) }}.
-              </span>
+        <section
+          class="tutorial-group"
+          [attr.aria-labelledby]="'tutorial-group-' + group.id">
+          <div class="tutorial-steps-heading">
+            <h2
+              class="tutorial-steps-title"
+              [id]="'tutorial-group-' + group.id">
               <a
                 [routerLink]="[]"
-                [fragment]="'step-' + getStepId(groupIndex, stepIndex)"
-                [attr.aria-current]="
-                  isAriaStep(getStepId(groupIndex, stepIndex))
+                [fragment]="group.fragment"
+                [attr.aria-label]="
+                  getTutorialGroupAriaLabel(groupIndex, group.label)
                 ">
-                <span class="tutorial-step-label">{{ step.label }}</span>
+                {{ group.label }}
               </a>
+            </h2>
+
+            <button
+              type="button"
+              class="tutorial-group-chevron"
+              [attr.aria-controls]="'tutorial-step-list-' + group.id"
+              [attr.aria-expanded]="isTutorialGroupExpanded(group.id)"
+              [matTooltip]="
+                getTutorialGroupToggleAriaLabel(
+                  group.label,
+                  isTutorialGroupExpanded(group.id)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialGroupToggleAriaLabel(
+                  group.label,
+                  isTutorialGroupExpanded(group.id)
+                )
+              "
+              (click)="toggleTutorialGroup(group.id)">
+              <mat-icon aria-hidden="true">
+                {{
+                  isTutorialGroupExpanded(group.id)
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                }}
+              </mat-icon>
+            </button>
+          </div>
+
+          @if (isTutorialGroupExpanded(group.id)) {
+            <div
+              class="tutorial-step-list"
+              [id]="'tutorial-step-list-' + group.id">
+              @for (
+                step of group.steps;
+                track step.id;
+                let stepIndex = $index
+              ) {
+                <div
+                  class="tutorial-step-item"
+                  [class.tutorial-step-active]="
+                    isActiveStep(getStepId(groupIndex, stepIndex))
+                  ">
+                  <span class="tutorial-step-number">
+                    {{ getStepId(groupIndex, stepIndex) }}.
+                  </span>
+                  <a
+                    [routerLink]="[]"
+                    [fragment]="'step-' + getStepId(groupIndex, stepIndex)"
+                    [attr.aria-label]="
+                      getStepAriaLabel(groupIndex, stepIndex, step.label)
+                    "
+                    [attr.aria-current]="
+                      isAriaStep(getStepId(groupIndex, stepIndex))
+                    ">
+                    <span class="tutorial-step-label">{{ step.label }}</span>
+                  </a>
+                </div>
+              }
             </div>
           }
-        </div>
+        </section>
       }
     </nav>
 
@@ -45,14 +99,15 @@
           feature with <sdux-brand-name /> from the ground up. You will move
           step by step from project setup, to Feature State definition, to
           registration and initialization, and finally to a working UI that
-          reads managed State.
+          reads, selects, adds, and updates managed State.
         </p>
 
         <p class="lead">
           By the end of the page, you will have a typed
           <sdux-feature-cell />, an Angular service that owns the Feature
-          boundary, a component that binds to reactive State, and a focused
-          detail view that renders a single character from a managed collection.
+          boundary, a component that binds to reactive State, and a complete
+          character workflow that can render, select, create, and update records
+          from a managed collection.
         </p>
 
         <div class="callout callout-info">
@@ -162,9 +217,8 @@ cd sdux-tutorial;
             <li>
               <strong
                 ><a href="/docs/references/functions/provide-feature-cell"
-                  >provideFeatureCell</a
-                ></strong
-              >
+                  >provide<sdux-feature-cell /></a
+              ></strong>
               registers a <sdux-feature-cell /> with Angular dependency
               injection.
             </li>
@@ -235,7 +289,9 @@ cd sdux-tutorial;
           <p>
             In TypeScript, an interface captures those decisions as a
             compile-time contract for the
-            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            <a href="/docs/references/functions/feature-cell"
+              ><sdux-feature-cell
+            /></a>
             and its consumers. This contract makes the expected State shape
             explicit, keeps State usage consistent, and allows TypeScript to
             identify missing properties and incompatible values during
@@ -307,22 +363,23 @@ cd sdux-tutorial;
         <div class="section-body">
           <p>
             Begin with the Feature boundary, not the integration details. This
-            service is the SDuX-facing home for the Star Wars character use
-            case, so it gives the feature one place to expose reads and later
-            state changes.
+            service is the <sdux-brand-name />-facing home for the Star Wars
+            character use case, so it gives the feature one place to expose
+            reads and later state changes.
           </p>
 
           <p>
             At this stage, keep it as a plain Angular service. The goal here is
-            to name the Feature boundary before SDuX is introduced, so the next
-            steps can connect that existing service to a
+            to name the Feature boundary before <sdux-brand-name /> is
+            introduced, so the next steps can connect that existing service to a
             <sdux-feature-cell /> instead of mixing setup and design at the same
             time.
           </p>
 
           <p>
             The implementation is intentionally minimal. You are creating the
-            service that SDuX will later register, decorate, and initialize.
+            service that <sdux-brand-name /> will later register, decorate, and
+            initialize.
           </p>
 
           <div class="callout callout-action">
@@ -428,7 +485,7 @@ cd sdux-tutorial;
             The
             <span class="code"
               ><a href="/docs/references/functions/provide-feature-cell"
-                >provideFeatureCell</a
+                >provide<sdux-feature-cell /></a
               >()</span
             >
             provider registers
@@ -454,7 +511,7 @@ cd sdux-tutorial;
                 Import
                 <span class="code"
                   ><a href="/docs/references/functions/provide-feature-cell"
-                    >provideFeatureCell</a
+                    >provide<sdux-feature-cell /></a
                   >()</span
                 >
                 and <span class="code">ExampleService</span>.
@@ -463,7 +520,7 @@ cd sdux-tutorial;
                 Add the
                 <span class="code"
                   ><a href="/docs/references/functions/provide-feature-cell"
-                    >provideFeatureCell</a
+                    >provide<sdux-feature-cell /></a
                   >()</span
                 >
                 registration after
@@ -495,8 +552,8 @@ cd sdux-tutorial;
             <ul>
               <li>
                 <a href="/docs/references/functions/provide-feature-cell"
-                  >provideFeatureCell</a
-                >
+                  >provide<sdux-feature-cell
+                /></a>
               </li>
             </ul>
           </div>
@@ -515,7 +572,8 @@ cd sdux-tutorial;
 
         <div class="section-body">
           <p>
-            This is the step where the plain Angular service becomes an SDuX
+            This is the step where the plain Angular service becomes an
+            <sdux-brand-name />
             Feature service. The goal is straightforward: connect
             <span class="code">ExampleService</span> to the registered
             <sdux-feature-cell /> so the service owns access to the typed
@@ -523,19 +581,22 @@ cd sdux-tutorial;
           </p>
 
           <p>
-            SDuX adds three pieces here: the
-            <span class="code">@FeatureCell()</span> decorator to associate the
-            service with its key, <span class="code">injectVault()</span> to
-            access the typed FeatureCell API, and
-            <span class="code">initialize()</span> to activate the FeatureCell
+            <sdux-brand-name /> adds three pieces here: the
+            <span class="code">@<sdux-feature-cell />()</span> decorator to
+            associate the service with its key,
+            <span class="code">injectVault()</span> to access the typed
+            <sdux-feature-cell /> API, and
+            <span class="code">initialize()</span> to activate the
+            <sdux-feature-cell />
             at runtime.
           </p>
 
           <p>
             After this step, the component will no longer need to know anything
-            about FeatureCell registration or initialization. It will read from
-            the service's exposed <span class="code">state</span>, while the
-            service remains the only place that talks directly to SDuX.
+            about <sdux-feature-cell /> registration or initialization. It will
+            read from the service's exposed <span class="code">state</span>,
+            while the service remains the only place that talks directly to
+            <sdux-brand-name />.
           </p>
 
           <div class="callout callout-action">
@@ -612,8 +673,9 @@ cd sdux-tutorial;
           </p>
 
           <p>
-            For SDuX, the important separation is simple: the component reads
-            display-ready State, and the service owns the FeatureCell.
+            For <sdux-brand-name />, the important separation is simple: the
+            component reads display-ready State, and the service owns the
+            <sdux-feature-cell />.
           </p>
 
           <p>
@@ -756,8 +818,8 @@ cd sdux-tutorial;
 
           <p>
             By this point, the runtime path is already established. The focus
-            here is on the remaining SDuX support files that make the example
-            complete and verifiable.
+            here is on the remaining <sdux-brand-name /> support files that make
+            the example complete and verifiable.
           </p>
 
           <p>
@@ -779,7 +841,7 @@ cd sdux-tutorial;
               </li>
               <li>
                 The app config shows how the feature is registered with
-                <span class="code">provideFeatureCell()</span>.
+                <span class="code">provide<sdux-feature-cell />()</span>.
               </li>
               <li>
                 The tests verify both State initialization and the displayed
@@ -823,370 +885,682 @@ cd sdux-tutorial;
         </div>
       </section>
 
-      <section class="section" id="step-11">
-        <div class="section-title-navigation">
-          <div class="section-title">Step 11: Add a Dropdown</div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
+      <section
+        class="tutorial-phase-break"
+        id="tutorial-2"
+        aria-labelledby="tutorial-2-title">
+        <div class="tutorial-phase-rule" aria-hidden="true"></div>
 
-        <div class="section-body">
+        <div class="tutorial-phase-copy">
+          <p class="tutorial-phase-eyebrow">Tutorial 2</p>
+          <div class="tutorial-phase-header">
+            <h2 id="tutorial-2-title">User-Directed Read Flow</h2>
+
+            <button
+              type="button"
+              class="tutorial-phase-toggle"
+              aria-controls="tutorial-2-content"
+              [attr.aria-expanded]="isTutorialChapterExpanded(2)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'User-Directed Read Flow',
+                  isTutorialChapterExpanded(2)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'User-Directed Read Flow',
+                  isTutorialChapterExpanded(2)
+                )
+              "
+              (click)="toggleTutorialChapter(2)">
+              <mat-icon aria-hidden="true">
+                {{
+                  isTutorialChapterExpanded(2)
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                }}
+              </mat-icon>
+            </button>
+          </div>
+
           <p>
-            This step upgrades the initial SDuX read path from showing the first
-            committed record automatically to letting the user choose which
-            committed record to inspect. The Feature registration, service-owned
-            <sdux-feature-cell />, and managed collection stay the same; only
-            the UI-facing selection logic changes.
+            The first tutorial established a minimal
+            <sdux-brand-name /> boundary for reading managed State. This next
+            section keeps that same service-owned <sdux-feature-cell />, but
+            upgrades the UI from one fixed record to a user-selected read path.
           </p>
-
           <p>
-            Assume the Angular mechanics are already familiar. The SDuX lesson
-            here is narrower: keep Feature State in the service, keep selection
-            state in the component, and derive the displayed record from the
-            latest service-owned collection. To do that, replace the single
-            displayed-character computed Signal with a read-only character
-            collection, a
-            <span class="code">selectedCharacterId</span> Signal, a computed
-            lookup for the selected record, and a small selection handler. In
-            the template, add a <span class="code">select</span> element that
-            lists the registered characters and keep the detail panel bound to
-            computed controller state instead of reaching into SDuX directly.
-            The verification for this step belongs alongside that delta: the
-            updated component spec should prove the controller starts empty,
-            accepts a valid selection, ignores unknown ids, and renders the
-            selected record without moving SDuX ownership out of the service.
+            The important shift is architectural, not mechanical: selection
+            stays local to the component, while Feature State remains owned by
+            the service. The result is a more interactive read experience
+            without moving State ownership out of the existing boundary.
           </p>
-
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>Open <span class="code">example.component.ts</span>.</li>
-              <li>
-                Expose the committed collection and add Signals for the selected
-                character id and selected character.
-              </li>
-              <li>
-                Add a method that maps the dropdown value to a known character
-                id from the current SDuX-managed collection.
-              </li>
-              <li>Open <span class="code">example.component.html</span>.</li>
-              <li>
-                Add a dropdown above the details panel and render an empty state
-                until the user selects a character from the managed collection.
-              </li>
-              <li>
-                Update <span class="code">example.component.spec.ts</span> to
-                verify both the empty state and the selected-record state.
-              </li>
-            </ol>
-          </div>
-
-          <div class="callout callout-learn-more">
-            <div class="title">What to Look For</div>
-
-            <ul>
-              <li>
-                The service still owns the <sdux-feature-cell /> and does not
-                change for this UI enhancement.
-              </li>
-              <li>
-                The selection Signal is presentation state owned by the
-                component, not SDuX Feature State owned by the service.
-              </li>
-              <li>
-                The template continues to render computed, display-ready values
-                instead of reading FeatureCell APIs directly.
-              </li>
-              <li>
-                The spec verifies the new UI behavior without changing the
-                SDuX-owned Feature State contract.
-              </li>
-            </ul>
-          </div>
-
-          <sdux-example-viewer-source>
-            @for (file of dropdownStepFiles; track file?.type) {
-              <sdux-example-viewer-tab [label]="file.fileName">
-                <pre
-                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-              </sdux-example-viewer-tab>
-            }
-          </sdux-example-viewer-source>
         </div>
       </section>
 
-      <section class="section" id="step-12">
-        <div class="section-title-navigation">
-          <div class="section-title">Step 12: Complete Dropdown Tutorial</div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
+      <div
+        id="tutorial-2-content"
+        class="tutorial-phase-content"
+        [class.tutorial-phase-content-collapsed]="!isTutorialChapterExpanded(2)"
+        [attr.aria-hidden]="!isTutorialChapterExpanded(2)"
+        [attr.inert]="!isTutorialChapterExpanded(2) ? '' : null">
+        <div class="tutorial-phase-content-inner">
+          <section class="section" id="step-11">
+            <div class="section-title-navigation">
+              <div class="section-title">Step 11: Add a Dropdown</div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                This step upgrades the initial <sdux-brand-name /> read path
+                from showing the first committed record automatically to letting
+                the user choose which committed record to inspect. The Feature
+                registration, service-owned <sdux-feature-cell />, and managed
+                collection stay the same; only the UI-facing selection logic
+                changes.
+              </p>
+
+              <p>
+                Assume the Angular mechanics are already familiar. The
+                <sdux-brand-name /> lesson here is narrower: keep Feature State
+                in the service, keep selection state in the component, and
+                derive the displayed record from the latest service-owned
+                collection. To do that, replace the single displayed-character
+                computed Signal with a read-only character collection, a
+                <span class="code">selectedCharacterId</span> Signal, a computed
+                lookup for the selected record, and a small selection handler.
+                In the template, add a <span class="code">select</span> element
+                that lists the registered characters and keep the detail panel
+                bound to computed controller state instead of reaching into
+                <sdux-brand-name /> directly. The verification for this step
+                belongs alongside that delta: the updated component spec should
+                prove the controller starts empty, accepts a valid selection,
+                ignores unknown ids, and renders the selected record without
+                moving <sdux-brand-name /> ownership out of the service.
+              </p>
+
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>Open <span class="code">example.component.ts</span>.</li>
+                  <li>
+                    Expose the committed collection and add Signals for the
+                    selected character id and selected character.
+                  </li>
+                  <li>
+                    Add a method that maps the dropdown value to a known
+                    character id from the current <sdux-brand-name />-managed
+                    collection.
+                  </li>
+                  <li>
+                    Open <span class="code">example.component.html</span>.
+                  </li>
+                  <li>
+                    Add a dropdown above the details panel and render an empty
+                    state until the user selects a character from the managed
+                    collection.
+                  </li>
+                  <li>
+                    Update
+                    <span class="code">example.component.spec.ts</span> to
+                    verify both the empty state and the selected-record state.
+                  </li>
+                </ol>
+              </div>
+
+              <div class="callout callout-learn-more">
+                <div class="title">What to Look For</div>
+
+                <ul>
+                  <li>
+                    The service still owns the <sdux-feature-cell /> and does
+                    not change for this UI enhancement.
+                  </li>
+                  <li>
+                    The selection Signal is presentation state owned by the
+                    component, not <sdux-brand-name /> Feature State owned by
+                    the service.
+                  </li>
+                  <li>
+                    The template continues to render computed, display-ready
+                    values instead of reading <sdux-feature-cell /> APIs
+                    directly.
+                  </li>
+                  <li>
+                    The spec verifies the new UI behavior without changing the
+                    <sdux-brand-name />-owned Feature State contract.
+                  </li>
+                </ul>
+              </div>
+
+              <sdux-example-viewer-source>
+                @for (file of dropdownStepFiles; track file?.type) {
+                  <sdux-example-viewer-tab [label]="file.fileName">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+                  </sdux-example-viewer-tab>
+                }
+              </sdux-example-viewer-source>
+            </div>
+          </section>
+
+          <section class="section" id="step-12">
+            <div class="section-title-navigation">
+              <div class="section-title">
+                Step 12: Complete Dropdown Tutorial
+              </div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                The dropdown tutorial is complete once the page starts with no
+                selected character, lists the registered collection in the
+                picker, and updates the detail panel when the selection changes.
+                The
+                <sdux-brand-name /> boundary has not moved: the service still
+                owns the <sdux-feature-cell /> and the component still owns only
+                UI selection state.
+              </p>
+
+              <p>
+                This is the smallest useful <sdux-brand-name /> expansion of the
+                initial tutorial: the application moves from one fixed read path
+                to one user-directed read path without changing
+                <sdux-feature-cell />
+                registration, service ownership, or application bootstrap
+                structure. What changed is the proof that the same service-owned
+                State can now support both an initial empty state and a
+                selected-record view.
+              </p>
+
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>Return to the running Angular application.</li>
+                  <li>
+                    Confirm the details panel shows the empty state before a
+                    character is selected.
+                  </li>
+                  <li>
+                    Open the dropdown, choose a character, and confirm the
+                    details panel updates to the selected record.
+                  </li>
+                  <li>
+                    Choose a different character to verify the same read path
+                    reacts to the new selection.
+                  </li>
+                </ol>
+              </div>
+
+              <div class="callout callout-learn-more">
+                <div class="title">What Changed From the Initial Example</div>
+
+                <ul>
+                  <li>
+                    The component now reads the full collection instead of
+                    assuming the first item is always the displayed record.
+                  </li>
+                  <li>
+                    The selected character is derived from a local UI Signal and
+                    the latest reactive collection State.
+                  </li>
+                  <li>
+                    The template now teaches user-directed selection on top of
+                    the same service-owned State.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="tutorial-shortcut"
+            aria-label="Launch the completed dropdown tutorial example">
+            <div class="tutorial-shortcut-copy">
+              <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+              <h2>Want the finished example without all twelve steps?</h2>
+              <p>
+                If you want the completed dropdown tutorial, launch the live
+                StackBlitz project and inspect the final working implementation
+                directly.
+              </p>
+            </div>
+
+            <div class="tutorial-shortcut-launcher">
+              <sdux-stackblitz-language-example
+                [example]="dropdownTutorialExample()"
+                [lang]="dropdownTutorialLang()" />
+            </div>
+          </section>
         </div>
-
-        <div class="section-body">
-          <p>
-            The dropdown tutorial is complete once the page starts with no
-            selected character, lists the registered collection in the picker,
-            and updates the detail panel when the selection changes. The SDuX
-            boundary has not moved: the service still owns the FeatureCell and
-            the component still owns only UI selection state.
-          </p>
-
-          <p>
-            This is the smallest useful SDuX expansion of the initial tutorial:
-            the application moves from one fixed read path to one user-directed
-            read path without changing FeatureCell registration, service
-            ownership, or application bootstrap structure. What changed is the
-            proof that the same service-owned State can now support both an
-            initial empty state and a selected-record view.
-          </p>
-
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>Return to the running Angular application.</li>
-              <li>
-                Confirm the details panel shows the empty state before a
-                character is selected.
-              </li>
-              <li>
-                Open the dropdown, choose a character, and confirm the details
-                panel updates to the selected record.
-              </li>
-              <li>
-                Choose a different character to verify the same read path reacts
-                to the new selection.
-              </li>
-            </ol>
-          </div>
-
-          <div class="callout callout-learn-more">
-            <div class="title">What Changed From the Initial Example</div>
-
-            <ul>
-              <li>
-                The component now reads the full collection instead of assuming
-                the first item is always the displayed record.
-              </li>
-              <li>
-                The selected character is derived from a local UI Signal and the
-                latest reactive collection State.
-              </li>
-              <li>
-                The template now teaches user-directed selection on top of the
-                same service-owned State.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+      </div>
 
       <section
-        class="tutorial-shortcut"
-        aria-label="Launch the completed dropdown tutorial example">
-        <div class="tutorial-shortcut-copy">
-          <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
-          <h2>Want the finished example without all twelve steps?</h2>
-          <p>
-            If you want the completed dropdown tutorial, launch the live
-            StackBlitz project and inspect the final working implementation
-            directly.
-          </p>
-        </div>
+        class="tutorial-phase-break"
+        id="tutorial-3"
+        aria-labelledby="tutorial-3-title">
+        <div class="tutorial-phase-rule" aria-hidden="true"></div>
 
-        <div class="tutorial-shortcut-launcher">
-          <sdux-stackblitz-language-example
-            [example]="dropdownTutorialExample()"
-            [lang]="dropdownTutorialLang()" />
+        <div class="tutorial-phase-copy">
+          <p class="tutorial-phase-eyebrow">Tutorial 3</p>
+          <div class="tutorial-phase-header">
+            <h2 id="tutorial-3-title">Add/Edit Mutation Flow</h2>
+
+            <button
+              type="button"
+              class="tutorial-phase-toggle"
+              aria-controls="tutorial-3-content"
+              [attr.aria-expanded]="isTutorialChapterExpanded(3)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'Add/Edit Mutation Flow',
+                  isTutorialChapterExpanded(3)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'Add/Edit Mutation Flow',
+                  isTutorialChapterExpanded(3)
+                )
+              "
+              (click)="toggleTutorialChapter(3)">
+              <mat-icon aria-hidden="true">
+                {{
+                  isTutorialChapterExpanded(3)
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                }}
+              </mat-icon>
+            </button>
+          </div>
+
+          <p>
+            The dropdown tutorial proved that the same service-owned collection
+            can support user-directed reads. This final section turns that read
+            model into a mutation workflow by adding merge configuration, create
+            behavior, and update behavior on top of the same
+            <sdux-feature-cell /> boundary.
+          </p>
+          <p>
+            The teaching goal here is to keep mutation policy inside the
+            <sdux-brand-name /> pipeline and committed Feature State inside the
+            service, while the component owns only local form, mode, and
+            feedback state. That separation is what makes the add/edit slice
+            extensible instead of ad hoc.
+          </p>
         </div>
       </section>
 
-      <section class="section" id="step-13">
-        <div class="section-title-navigation">
-          <div class="section-title">
-            Step 13: Add the Add/Edit Service Slice
-          </div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
+      <div
+        id="tutorial-3-content"
+        class="tutorial-phase-content"
+        [class.tutorial-phase-content-collapsed]="!isTutorialChapterExpanded(3)"
+        [attr.aria-hidden]="!isTutorialChapterExpanded(3)"
+        [attr.inert]="!isTutorialChapterExpanded(3) ? '' : null">
+        <div class="tutorial-phase-content-inner">
+          <section class="section" id="step-13">
+            <div class="section-title-navigation">
+              <div class="section-title">
+                Step 13: Configure Array Append Merge
+              </div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                Before the service can add a new character correctly, the
+                registered
+                <sdux-feature-cell /> needs append-style merge semantics. The
+                default merge path replaces the existing array with the incoming
+                array. That is correct for full replacement updates, but it is
+                wrong for this tutorial's create flow because
+                <span class="code">createCharacter()</span> submits one new
+                character through <span class="code">mergeState()</span> and
+                expects that record to be appended to the existing collection.
+              </p>
+
+              <p>
+                To change that Merge-stage behavior, install
+                <span class="code">&#64;sdux-vault/addons</span> and register
+                <span class="code">withArrayAppendMergeBehavior</span> in
+                <span class="code">app.config.ts</span>. This makes
+                <span class="code">mergeState()</span> concatenate the incoming
+                one-item array with the current committed collection, which is
+                the exact behavior needed when adding a new character without
+                replacing the others.
+              </p>
+
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>
+                    Install the
+                    <span class="code">&#64;sdux-vault/addons</span> package.
+                  </li>
+                  <li>Open <span class="code">app.config.ts</span>.</li>
+                  <li>
+                    Import
+                    <span class="code">withArrayAppendMergeBehavior</span> from
+                    <span class="code">&#64;sdux-vault/addons</span>.
+                  </li>
+                  <li>
+                    Pass
+                    <span class="code">[withArrayAppendMergeBehavior]</span> as
+                    the behavior list for
+                    <span class="code">provide<sdux-feature-cell />()</span>.
+                  </li>
+                </ol>
+              </div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+                  <pre
+                    class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <div class="callout callout-learn-more">
+                <div class="title">Why This Behavior Is Required</div>
+
+                <ul>
+                  <li>
+                    <span class="code">mergeState()</span> is the right API for
+                    adding a new record to an existing collection.
+                  </li>
+                  <li>
+                    Without array-append merge behavior, the incoming one-item
+                    array would replace the entire current collection.
+                  </li>
+                  <li>
+                    With
+                    <span class="code">withArrayAppendMergeBehavior</span>, that
+                    same one-item array is appended immutably to the committed
+                    collection.
+                  </li>
+                  <li>
+                    This keeps add and edit distinct: create uses
+                    <span class="code">mergeState()</span> to append, while
+                    update will use <span class="code">replaceState()</span> to
+                    swap one existing character by identity.
+                  </li>
+                </ul>
+              </div>
+
+              <sdux-example-viewer-source [displayTabs]="false">
+                <sdux-example-viewer-tab [label]="'app.config.ts'">
+                  <pre
+                    class="code-inline"><code class="language-ts">{{ addEditServiceFiles[0]?.source }}</code></pre>
+                </sdux-example-viewer-tab>
+              </sdux-example-viewer-source>
+
+              <div class="callout callout-warning">
+                <div class="title">Avoid Manual Array Merging</div>
+
+                <p>
+                  You could build the next collection manually with an
+                  old-school spread expression such as
+                  <span class="code">[...currentCharacters, newCharacter]</span
+                  >, but that is the wrong lesson for this tutorial.
+                </p>
+
+                <p>
+                  The spread operator itself does not mutate the array. The
+                  anti-pattern is pushing merge policy into the service instead
+                  of configuring it in the <sdux-brand-name /> pipeline. In
+                  <sdux-brand-name />, append behavior belongs to the Merge
+                  stage so <span class="code">mergeState()</span> can apply that
+                  rule consistently instead of forcing application code to
+                  reimplement it by hand.
+                </p>
+              </div>
+
+              <div class="callout callout-learn-more">
+                <div class="title">Explore the Docs</div>
+
+                <ul>
+                  <li>
+                    <a
+                      href="/docs/pipeline/addons/with-array-append-merge-behavior"
+                      >withArrayAppendMergeBehavior</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="step-14">
+            <div class="section-title-navigation">
+              <div class="section-title">
+                Step 14: Add the Add/Edit Service Slice
+              </div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                This step turns the user-directed read example into the first
+                mutation slice. The <sdux-brand-name /> lesson is still the
+                same: the service owns the <sdux-feature-cell />, while the
+                component owns only temporary editor state. What changes now is
+                the write path. The service gains the create and update methods
+                that mutate the registered collection, and a small domain helper
+                keeps ID assignment and draft creation out of the Angular
+                service body.
+              </p>
+
+              <p>
+                Assume the Angular form primitives are already familiar. Focus
+                on the <sdux-brand-name /> boundary: the service assigns IDs,
+                routes creates through <span class="code">mergeState()</span>,
+                routes updates through <span class="code">replaceState()</span>,
+                and keeps every <sdux-brand-name /> write inside the service
+                instead of spreading mutation logic across the component and
+                template.
+              </p>
+
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>
+                    Update <span class="code">example.service.ts</span> to add
+                    the create and update methods.
+                  </li>
+                  <li>
+                    Keep the service as the only place that calls
+                    <sdux-brand-name /> mutation APIs.
+                  </li>
+                </ol>
+              </div>
+
+              <div class="callout callout-learn-more">
+                <div class="title">What to Look For</div>
+
+                <ul>
+                  <li>
+                    The service owns the write path just as completely as it
+                    owned the read path.
+                  </li>
+                  <li>
+                    Create uses <span class="code">mergeState()</span> because
+                    it appends a new record to the existing collection.
+                  </li>
+                  <li>
+                    Update uses <span class="code">replaceState()</span> because
+                    it replaces one existing record by identity.
+                  </li>
+                  <li>
+                    The domain helper supports add/edit mechanics, but it does
+                    not own any <sdux-brand-name /> behavior. The service still
+                    owns the <sdux-feature-cell />.
+                  </li>
+                </ul>
+              </div>
+
+              <sdux-example-viewer-source>
+                @for (file of addEditServiceFiles.slice(1); track file?.type) {
+                  <sdux-example-viewer-tab [label]="file.fileName">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+                  </sdux-example-viewer-tab>
+                }
+              </sdux-example-viewer-source>
+
+              <div class="callout callout-warning">
+                <div class="title">Why This Helper Exists</div>
+                <p>
+                  Create
+                  <span class="code">example.character-domain.ts</span> to hold
+                  the draft type, next-ID helper, and character factory used by
+                  this add/edit slice.
+                </p>
+                <p>
+                  This file exists only to keep the service minimal so the
+                  tutorial can focus on <sdux-brand-name /> teaching principles
+                  instead of helper logic.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="step-15">
+            <div class="section-title-navigation">
+              <div class="section-title">
+                Step 15: Complete Add/Edit Tutorial
+              </div>
+              <div class="section-top-link">
+                <a [routerLink]="[]" fragment="top">↑ top</a>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <p>
+                The add/edit tutorial is complete once the page can enter create
+                mode, validate editor input, save a new character into the
+                managed collection, and reopen an existing character for updates
+                without moving Feature ownership out of the service. The
+                collection picker, detail panel, and form now all react to the
+                same
+                <sdux-brand-name />-managed collection.
+              </p>
+
+              <p>
+                This is the first full CRUD-style expansion that still keeps the
+                tutorial disciplined. The component gains form state, mode
+                state, and feedback state, but the service remains the only
+                place that creates or replaces Feature State. That is the
+                important
+                <sdux-brand-name /> lesson: the service owns the
+                <sdux-feature-cell />, and the component owns only temporary UI
+                state. The component does not call <sdux-brand-name /> APIs
+                directly, and it does not mutate the registered collection. The
+                service remains the single source of truth for all Feature
+                State. That is the boundary to preserve before a later
+                destructive-action step adds deletion.
+              </p>
+
+              <div class="callout callout-action">
+                <div class="title">Take Action</div>
+                <ol>
+                  <li>
+                    Update <span class="code">example.component.ts</span> to add
+                    the form, editor mode, feedback state, and save/cancel
+                    flows.
+                  </li>
+                  <li>
+                    Update <span class="code">example.component.html</span> to
+                    add the editor panel, the add action, and the empty-state
+                    guidance for create mode.
+                  </li>
+                  <li>
+                    Return to the running Angular application and verify that
+                    you can add a character, select it, edit it, and see the
+                    detail panel react to the saved State.
+                  </li>
+                </ol>
+              </div>
+
+              <div class="callout callout-learn-more">
+                <div class="title">What Changed From the Dropdown Example</div>
+
+                <ul>
+                  <li>
+                    The component now owns local editor state in addition to
+                    local selection state.
+                  </li>
+                  <li>
+                    The template adds a form and feedback region, but it still
+                    does not call <sdux-brand-name /> APIs directly.
+                  </li>
+                  <li>
+                    Saving a new record and saving an edited record both flow
+                    through the same service-owned <sdux-feature-cell />.
+                  </li>
+                  <li>
+                    Delete is still intentionally absent so this slice can focus
+                    on non-destructive mutation only.
+                  </li>
+                </ul>
+              </div>
+
+              <sdux-example-viewer-source>
+                @for (file of addEditComponentFiles; track file?.type) {
+                  <sdux-example-viewer-tab [label]="file.fileName">
+                    <pre
+                      class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+                  </sdux-example-viewer-tab>
+                }
+              </sdux-example-viewer-source>
+
+              <div class="callout callout-warning">
+                <div class="title">Why This Helper Exists</div>
+                <p>
+                  Create
+                  <span class="code">example.character-editor.ts</span> to hold
+                  the shared validation, normalization, and feedback rules for
+                  the add/edit flow.
+                </p>
+                <p>
+                  This file exists only to keep the component minimal so the
+                  tutorial can focus on <sdux-brand-name /> teaching principles
+                  instead of helper logic.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="tutorial-shortcut"
+            aria-label="Launch the completed initial Add/Edit example">
+            <div class="tutorial-shortcut-copy">
+              <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+              <h2>Want the finished Add/Edit example without the 3 steps?</h2>
+              <p>
+                If you want the completed add/edit example, launch the live
+                StackBlitz project and inspect the finished implementation
+                directly.
+              </p>
+            </div>
+
+            <div class="tutorial-shortcut-launcher">
+              <sdux-stackblitz-language-example
+                [example]="addEditTutorialExample()"
+                [lang]="addEditTutorialLang()" />
+            </div>
+          </section>
         </div>
-
-        <div class="section-body">
-          <p>
-            This step turns the user-directed read example into the first
-            mutation slice. The SDuX lesson is still the same: the service owns
-            the <sdux-feature-cell />, while the component owns only temporary
-            editor state. What changes now is the write path. The service gains
-            the create and update methods that mutate the registered collection,
-            and a small domain helper keeps ID assignment and draft creation out
-            of the Angular service body.
-          </p>
-
-          <p>
-            Assume the Angular form primitives are already familiar. Focus on
-            the SDuX boundary: the service assigns IDs, routes creates through
-            <span class="code">mergeState()</span>, routes updates through
-            <span class="code">replaceState()</span>, and keeps every SDuX write
-            inside the service instead of spreading mutation logic across the
-            component and template.
-          </p>
-
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>
-                Update <span class="code">example.service.ts</span> to add the
-                create and update methods.
-              </li>
-              <li>
-                Keep the service as the only place that calls SDuX mutation
-                APIs.
-              </li>
-            </ol>
-          </div>
-
-          <div class="callout callout-warning">
-            <div class="title">Why This Helper Exists</div>
-            <p>
-              Create <span class="code">example.character-domain.ts</span> to
-              hold the draft type, next-ID helper, and character factory used by
-              this add/edit slice.
-            </p>
-            <p>
-              This file exists only to keep the service minimal so the tutorial
-              can focus on SDuX teaching principles instead of helper logic.
-            </p>
-          </div>
-
-          <div class="callout callout-learn-more">
-            <div class="title">What to Look For</div>
-
-            <ul>
-              <li>
-                The service owns the write path just as completely as it owned
-                the read path.
-              </li>
-              <li>
-                Create uses <span class="code">mergeState()</span> because it
-                appends a new record to the existing collection.
-              </li>
-              <li>
-                Update uses <span class="code">replaceState()</span> because it
-                replaces one existing record by identity.
-              </li>
-              <li>
-                The domain helper supports add/edit mechanics, but it does not
-                own any SDuX behavior. The service still owns the FeatureCell.
-              </li>
-            </ul>
-          </div>
-
-          <sdux-example-viewer-source>
-            @for (file of addEditServiceFiles; track file?.type) {
-              <sdux-example-viewer-tab [label]="file.fileName">
-                <pre
-                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-              </sdux-example-viewer-tab>
-            }
-          </sdux-example-viewer-source>
-        </div>
-      </section>
-
-      <section class="section" id="step-14">
-        <div class="section-title-navigation">
-          <div class="section-title">Step 14: Complete Add/Edit Tutorial</div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
-        </div>
-
-        <div class="section-body">
-          <p>
-            The add/edit tutorial is complete once the page can enter create
-            mode, validate editor input, save a new character into the managed
-            collection, and reopen an existing character for updates without
-            moving Feature ownership out of the service. The collection picker,
-            detail panel, and form now all react to the same SDuX-managed
-            collection.
-          </p>
-
-          <p>
-            This is the first full CRUD-style expansion that still keeps the
-            tutorial disciplined. The component gains form state, mode state,
-            and feedback state, but the service remains the only place that
-            creates or replaces Feature State. That is the important SDuX
-            boundary to preserve before a later destructive-action step adds
-            deletion.
-          </p>
-
-          <div class="callout callout-action">
-            <div class="title">Take Action</div>
-            <ol>
-              <li>
-                Update <span class="code">example.component.ts</span> to add the
-                form, editor mode, feedback state, and save/cancel flows.
-              </li>
-              <li>
-                Update <span class="code">example.component.html</span> to add
-                the editor panel, the add action, and the empty-state guidance
-                for create mode.
-              </li>
-              <li>
-                Return to the running Angular application and verify that you
-                can add a character, select it, edit it, and see the detail
-                panel react to the saved State.
-              </li>
-            </ol>
-          </div>
-
-          <div class="callout callout-warning">
-            <div class="title">Why This Helper Exists</div>
-            <p>
-              Create <span class="code">example.character-editor.ts</span> to
-              hold the shared validation, normalization, and feedback rules for
-              the add/edit flow.
-            </p>
-            <p>
-              This file exists only to keep the component minimal so the
-              tutorial can focus on SDuX teaching principles instead of helper
-              logic.
-            </p>
-          </div>
-
-          <div class="callout callout-learn-more">
-            <div class="title">What Changed From the Dropdown Example</div>
-
-            <ul>
-              <li>
-                The component now owns local editor state in addition to local
-                selection state.
-              </li>
-              <li>
-                The template adds a form and feedback region, but it still does
-                not call SDuX APIs directly.
-              </li>
-              <li>
-                Saving a new record and saving an edited record both flow
-                through the same service-owned FeatureCell.
-              </li>
-              <li>
-                Delete is still intentionally absent so this slice can focus on
-                non-destructive mutation only.
-              </li>
-            </ul>
-          </div>
-
-          <sdux-example-viewer-source>
-            @for (file of addEditComponentFiles; track file?.type) {
-              <sdux-example-viewer-tab [label]="file.fileName">
-                <pre
-                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-              </sdux-example-viewer-tab>
-            }
-          </sdux-example-viewer-source>
-        </div>
-      </section>
+      </div>
 
       <sdux-pipeline-related-topics />
     </main>

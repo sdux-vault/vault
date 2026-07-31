@@ -8,6 +8,8 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<
   string,
   () => Promise<unknown>
 > = {
+  'angular/add-edit-characters-example': () =>
+    import('../../../stackblitz/projects/angular/add-edit-characters-example.project'),
   'angular/array-append-merge-example': () =>
     import('../../../stackblitz/projects/angular/array-append-merge-example.project'),
   'angular/basic-filter-reducer-example': () =>

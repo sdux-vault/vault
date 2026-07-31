@@ -1,7 +1,9 @@
 import type { StackBlitzExampleShape } from '../shapes/stackblitz-example.shape';
+import { createTutorialExampleGroups } from './stackblitz-tutorial-examples.constant';
 
 /** StackBlitz example group definitions. */
 export function createExampleGroups(brandName: string) {
+  const tutorialGroups = createTutorialExampleGroups();
   const groups = [
     {
       heading: 'Getting Started',
@@ -235,31 +237,7 @@ export function createExampleGroups(brandName: string) {
         }
       ] satisfies StackBlitzExampleShape[]
     },
-    {
-      heading: 'Tutorial',
-      tutorialOnly: true,
-      id: 'tutorial',
-      description:
-        'Tutorial examples — explore finished tutorial implementations and launch them directly in StackBlitz.',
-      examples: [
-        {
-          title: 'Display Character',
-          id: 'display-character',
-          exampleName: 'display-character-example',
-          displayCopyIcon: false,
-          description: `Demonstrates the completed <strong>Display Character</strong> tutorial example — a standalone component reads one selected record from FeatureCell state through a service boundary. Launch the live example directly in StackBlitz.`,
-          languages: [{ name: 'Angular', key: 'angular' }]
-        },
-        {
-          title: 'Display Characters',
-          id: 'display-characters',
-          exampleName: 'display-characters-example',
-          displayCopyIcon: false,
-          description: `Demonstrates the completed <strong>Display Characters</strong> tutorial example — a standalone component reads a character collection from FeatureCell state, lets the user choose a record from a dropdown, and renders the selected details through a service boundary. Launch the live example directly in StackBlitz.`,
-          languages: [{ name: 'Angular', key: 'angular' }]
-        }
-      ] satisfies StackBlitzExampleShape[]
-    }
+    ...tutorialGroups
   ];
 
   return groups.map((group) => ({

@@ -66,6 +66,7 @@ export const displayCharactersExampleProject: Project = {
     "@angular/core": "21.2.13",
     "@angular/forms": "21.2.13",
     "@angular/platform-browser": "21.2.13",
+    "@sdux-vault/addons": "latest",
     "@sdux-vault/angular": "latest",
     "rxjs": "~7.8.0",
     "tslib": "^2.8.0"
@@ -1332,9 +1333,12 @@ describe('ExampleComponent', () => {
     fixture.detectChanges();
 
     const host = fixture.nativeElement as HTMLElement;
+    const detailsPanel = host.querySelector(
+      '.character-details'
+    ) as HTMLElement;
 
-    expect(host.textContent).toContain('No character selected');
-    expect(host.textContent).not.toContain('Leia');
+    expect(detailsPanel.textContent).toContain('No character selected');
+    expect(detailsPanel.textContent).not.toContain('Leia');
   });
 
   it('should render the selected character details after selection', async () => {

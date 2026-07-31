@@ -4,6 +4,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
+import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { ExampleService } from './example.service';
 import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
@@ -32,9 +33,21 @@ export const appConfig: ApplicationConfig = {
      * while the initialState property sets the initial character State
      * from a list of constants.
      */
-    provideFeatureCell(ExampleService, {
-      key: 'star-wars-character',
-      initialState: STAR_WARS_CHARACTERS
-    })
+    provideFeatureCell(
+      ExampleService,
+      {
+        key: 'star-wars-character',
+        initialState: STAR_WARS_CHARACTERS
+      },
+      [
+        /**
+         * `provideFeatureCell()` accepts an optional behaviors array as its third argument.
+         * Registering `withArrayAppendMergeBehavior` here changes the Merge stage so
+         * `mergeState()` appends the incoming one-item character array to the current
+         * collection instead of replacing the entire FeatureCell value.
+         */
+        withArrayAppendMergeBehavior
+      ]
+    )
   ]
 };

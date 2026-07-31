@@ -14,9 +14,7 @@ import { SDUX_CATCH_PHRASE } from '../../tokens/catch-phrase.token';
         {{ phrase }}<span class="trademark" aria-hidden="true">&trade;</span>
       </span>
     } @else {
-      <span class="catch-phrase">
-        {{ phrase }}
-      </span>
+      <span class="catch-phrase">{{ phrase }}</span>
     }
   `,
   styles: `

@@ -1,5 +1,15 @@
-import { Component, computed, inject, ViewEncapsulation } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+  ViewEncapsulation
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   BrandNameService,
@@ -30,6 +40,8 @@ import { INITIAL_SERVICE } from './generated/initial-service.generated';
   selector: 'sdux-angular-tutorial',
   standalone: true,
   imports: [
+    MatIconModule,
+    MatTooltipModule,
     RouterModule,
     BrandNameComponent,
     PipelineRelatedTopicComponent,
@@ -48,6 +60,57 @@ import { INITIAL_SERVICE } from './generated/initial-service.generated';
 export class TutorialAngularComponent extends TutorialNavigationDirective {
   #brandName = inject(BrandNameService);
   #exampleFileService = inject(ExampleFileService);
+  #route = inject(ActivatedRoute);
+
+  readonly #expandedTutorialGroups = signal<Record<number, boolean>>({
+    1: true,
+    2: false,
+    3: false
+  });
+
+  readonly #expandedTutorialChapters = signal<Record<number, boolean>>({
+    2: false,
+    3: false
+  });
+
+  constructor() {
+    super();
+
+    effect(() => {
+      const activeStepMatch = /^step-(\d+)$/.exec(this.activeStep());
+      const activeStepId = activeStepMatch
+        ? Number(activeStepMatch[1])
+        : Number.NaN;
+
+      if (Number.isNaN(activeStepId)) {
+        return;
+      }
+
+      const activeGroupId = this.getTutorialGroupIdForStepId(activeStepId);
+
+      if (activeGroupId === null) {
+        return;
+      }
+
+      this.setExpandedTutorialGroups(activeGroupId);
+      this.setExpandedTutorialChapters(
+        activeGroupId >= 2 ? activeGroupId : null
+      );
+    });
+
+    this.#route.fragment.pipe(takeUntilDestroyed()).subscribe((fragment) => {
+      const targetGroupId = this.getTutorialGroupIdForFragment(fragment);
+
+      if (targetGroupId === null) {
+        return;
+      }
+
+      this.setExpandedTutorialGroups(targetGroupId);
+      this.setExpandedTutorialChapters(
+        targetGroupId >= 2 ? targetGroupId : null
+      );
+    });
+  }
 
   readonly #stackblitzService = inject(StackblitzExampleService);
 
@@ -73,6 +136,19 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly dropdownTutorialLang = computed<StackBlitzExampleLanguageShape>(
     () =>
       this.dropdownTutorialExample()?.languages?.find(
+        (lang) => lang.key === 'angular'
+      ) ?? ({} as StackBlitzExampleLanguageShape)
+  );
+
+  readonly addEditTutorialExample = computed<StackBlitzExampleShape>(
+    () =>
+      this.#stackblitzService.getExample('add-edit-characters') ??
+      ({} as StackBlitzExampleShape)
+  );
+
+  readonly addEditTutorialLang = computed<StackBlitzExampleLanguageShape>(
+    () =>
+      this.addEditTutorialExample()?.languages?.find(
         (lang) => lang.key === 'angular'
       ) ?? ({} as StackBlitzExampleLanguageShape)
   );
@@ -148,6 +224,10 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   protected readonly addEditServiceFiles = [
     this.#exampleFileService.getFile(
       this.addEditCharactersSource,
+      ExampleFileTypes.AppConfig
+    ),
+    this.#exampleFileService.getFile(
+      this.addEditCharactersSource,
       ExampleFileTypes.Service
     ),
     this.#exampleFileService.getFile(
@@ -195,10 +275,136 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     return completedSteps + stepIndex + 1;
   }
 
+  getTutorialGroupAriaLabel(groupIndex: number, groupLabel: string): string {
+    return `Go to Tutorial ${groupIndex + 1}: ${groupLabel}`;
+  }
+
+  getStepAriaLabel(
+    groupIndex: number,
+    stepIndex: number,
+    stepLabel: string
+  ): string {
+    return `Go to Step ${this.getStepId(groupIndex, stepIndex)}: ${stepLabel}`;
+  }
+
+  isTutorialGroupExpanded(groupId: number): boolean {
+    return this.#expandedTutorialGroups()[groupId] ?? false;
+  }
+
+  toggleTutorialGroup(groupId: number): void {
+    this.#expandedTutorialGroups.update((expandedGroups) => ({
+      ...expandedGroups,
+      [groupId]: !expandedGroups[groupId]
+    }));
+  }
+
+  isTutorialChapterExpanded(groupId: number): boolean {
+    return this.#expandedTutorialChapters()[groupId] ?? false;
+  }
+
+  toggleTutorialChapter(groupId: number): void {
+    if (this.isTutorialChapterExpanded(groupId)) {
+      this.setExpandedTutorialChapters(null);
+
+      return;
+    }
+
+    this.setExpandedTutorialGroups(groupId);
+    this.setExpandedTutorialChapters(groupId);
+  }
+
+  getTutorialGroupToggleAriaLabel(
+    groupLabel: string,
+    isExpanded: boolean
+  ): string {
+    return `${isExpanded ? 'Collapse' : 'Expand'} ${groupLabel} steps`;
+  }
+
+  getTutorialChapterToggleAriaLabel(
+    tutorialTitle: string,
+    isExpanded: boolean
+  ): string {
+    return `${isExpanded ? 'Collapse' : 'Expand'} ${tutorialTitle}`;
+  }
+
+  private getTutorialGroupIdForStepId(stepId: number): number | null {
+    let completedSteps = 0;
+
+    for (const group of this.tutorialGroups) {
+      completedSteps += group.steps.length;
+
+      if (stepId <= completedSteps) {
+        return group.id;
+      }
+    }
+
+    return null;
+  }
+
+  private getTutorialGroupIdForFragment(
+    fragment: string | null
+  ): number | null {
+    if (!fragment) {
+      return null;
+    }
+
+    if (fragment === 'top') {
+      return 1;
+    }
+
+    if (fragment === 'tutorial-2' || fragment === 'tutorial-2-content') {
+      return 2;
+    }
+
+    if (fragment === 'tutorial-3' || fragment === 'tutorial-3-content') {
+      return 3;
+    }
+
+    const stepMatch = /^step-(\d+)$/.exec(fragment);
+
+    return stepMatch
+      ? this.getTutorialGroupIdForStepId(Number(stepMatch[1]))
+      : null;
+  }
+
+  private setExpandedTutorialGroups(activeGroupId: number): void {
+    const nextExpandedGroups = Object.fromEntries(
+      this.tutorialGroups.map((tutorialGroup) => [
+        tutorialGroup.id,
+        tutorialGroup.id === activeGroupId
+      ])
+    ) as Record<number, boolean>;
+
+    if (
+      this.tutorialGroups.some(
+        (tutorialGroup) =>
+          this.isTutorialGroupExpanded(tutorialGroup.id) !==
+          nextExpandedGroups[tutorialGroup.id]
+      )
+    ) {
+      this.#expandedTutorialGroups.set(nextExpandedGroups);
+    }
+  }
+
+  private setExpandedTutorialChapters(activeGroupId: number | null): void {
+    const nextExpandedChapters = {
+      2: activeGroupId === 2,
+      3: activeGroupId === 3
+    } satisfies Record<number, boolean>;
+
+    if (
+      this.isTutorialChapterExpanded(2) !== nextExpandedChapters[2] ||
+      this.isTutorialChapterExpanded(3) !== nextExpandedChapters[3]
+    ) {
+      this.#expandedTutorialChapters.set(nextExpandedChapters);
+    }
+  }
+
   readonly tutorialGroups: readonly TutorialGroupShape[] = [
     {
       id: 1,
-      label: 'Tutorial Steps',
+      label: 'Foundation Steps',
+      fragment: 'top',
       steps: [
         { id: 1, label: 'Project Set-up' },
         { id: 2, label: `Install ${this.#brandName.value}` },
@@ -214,7 +420,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     },
     {
       id: 2,
-      label: 'User-Directed Read Steps',
+      label: 'Multi-select Steps',
+      fragment: 'tutorial-2',
       steps: [
         { id: 1, label: 'Add a Dropdown' },
         { id: 2, label: 'Complete Dropdown Tutorial' }
@@ -222,10 +429,12 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     },
     {
       id: 3,
-      label: 'Mutation Steps',
+      label: 'Add/Edit Steps',
+      fragment: 'tutorial-3',
       steps: [
-        { id: 1, label: 'Add/Edit Capabilities' },
-        { id: 2, label: 'Complete Add/Edit Tutorial' }
+        { id: 1, label: 'Configure Merge Behavior' },
+        { id: 2, label: 'Add/Edit Capabilities' },
+        { id: 3, label: 'Complete Add/Edit Tutorial' }
       ] satisfies TutorialStepShape[]
     }
   ];

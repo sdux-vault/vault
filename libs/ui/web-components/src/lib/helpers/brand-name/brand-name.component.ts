@@ -14,9 +14,7 @@ import { SDUX_BRAND_NAME } from '../../tokens/brand-name.token';
         {{ brandName }}<span class="trademark" aria-hidden="true">&trade;</span>
       </span>
     } @else {
-      <span class="brand-name">
-        {{ brandName }}
-      </span>
+      <span class="brand-name">{{ brandName }}</span>
     }
   `,
   styles: `
