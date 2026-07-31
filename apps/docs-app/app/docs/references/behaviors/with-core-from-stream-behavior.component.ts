@@ -208,36 +208,6 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
             </tr>
             <tr>
               <td class="column-300">
-                <strong>resolveType</strong>
-                <p class="modifiers">static, readonly</p>
-                <p class="type">
-                  type:
-                  <a href="/docs/references/types/resolve-type">ResolveType</a>
-                </p>
-              </td>
-              <td class="column-auto">
-                Static resolve type assigned by the behavior system.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td class="column-300">
-                <strong>resolveType</strong>
-                <p class="modifiers">readonly</p>
-                <p class="type">type: unknown</p>
-                <p class="default">
-                  default:
-                  <a
-                    href="/docs/pipeline/behaviors/resolve/with-core-from-stream-behavior"
-                    >withCoreFromStreamBehavior</a
-                  >.resolveType
-                </p>
-              </td>
-              <td class="column-auto">
-                Instance-level resolve type identifier.<br /><br />
-              </td>
-            </tr>
-            <tr>
-              <td class="column-300">
                 <strong>type</strong>
                 <p class="modifiers">static, readonly</p>
                 <p class="type">

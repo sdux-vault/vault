@@ -339,11 +339,7 @@
         [attr.aria-hidden]="!isChapterExpanded(3)"
         [attr.inert]="!isChapterExpanded(3) ? '' : null">
         <div class="chapter-content-inner">
-          <sdux-add-edit-characters-chapter
-            [appConfigFile]="addEditAppConfigFile()"
-            [serviceFiles]="addEditServiceFiles()"
-            [componentFiles]="addEditComponentFiles()"
-            [stackblitz]="addEditCharacterExample()" />
+          <sdux-add-edit-characters-chapter />
         </div>
       </div>
 

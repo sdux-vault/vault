@@ -99,17 +99,6 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     });
   }
 
-  readonly addEditCharacterExample = this.#addEditCharactersService.stackblitz;
-
-  protected readonly addEditAppConfigFile =
-    this.#addEditCharactersService.appConfigFile;
-
-  protected readonly addEditServiceFiles =
-    this.#addEditCharactersService.serviceFiles;
-
-  protected readonly addEditComponentFiles =
-    this.#addEditCharactersService.componentFiles;
-
   getStepId(groupIndex: number, stepIndex: number): number {
     const completedSteps = this.chapters
       .slice(0, groupIndex)

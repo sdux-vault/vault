@@ -1,3 +1,4 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
 <section class="section" id="step-13">
   <div class="section-title-navigation">
     <div class="section-title">Step 13: Configure Array Append Merge</div>
@@ -20,8 +21,12 @@
     <p>
       To change that Merge-stage behavior, install
       <span class="code">&#64;sdux-vault/addons</span> and register
-      <span class="code">withArrayAppendMergeBehavior</span> in
-      <span class="code">app.config.ts</span>. This makes
+      <span class="code"
+        ><a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+          >withArrayAppendMergeBehavior</a
+        ></span
+      >
+      in <span class="code">app.config.ts</span>. This makes
       <span class="code">mergeState()</span> concatenate the incoming one-item
       array with the current committed collection, which is the exact behavior
       needed when adding a new character without replacing the others.
@@ -37,13 +42,23 @@
         <li>Open <span class="code">app.config.ts</span>.</li>
         <li>
           Import
-          <span class="code">withArrayAppendMergeBehavior</span> from
-          <span class="code">&#64;sdux-vault/addons</span>.
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+              >withArrayAppendMergeBehavior</a
+            ></span
+          >
+          from <span class="code">&#64;sdux-vault/addons</span>.
         </li>
         <li>
           Pass
-          <span class="code">[withArrayAppendMergeBehavior]</span> as the
-          behavior list for
+          <span class="code"
+            >[<a
+              href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+              >withArrayAppendMergeBehavior</a
+            >]</span
+          >
+          as the behavior list for
           <span class="code">provide<sdux-feature-cell />()</span>.
         </li>
       </ol>
@@ -70,8 +85,13 @@
         </li>
         <li>
           With
-          <span class="code">withArrayAppendMergeBehavior</span>, that same
-          one-item array is appended immutably to the committed collection.
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+              >withArrayAppendMergeBehavior</a
+            ></span
+          >, that same one-item array is appended immutably to the committed
+          collection.
         </li>
         <li>
           This keeps add and edit distinct: create uses
