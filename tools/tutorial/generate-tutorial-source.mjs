@@ -58,6 +58,17 @@ const sourceGroups = [
     )
   },
   {
+    exportName: 'STAR_WARS_DELETE_CHARACTERS',
+    sourceDirectory: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/examples/delete-characters'
+    ),
+    outputFile: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/generated/delete-characters.generated.ts'
+    )
+  },
+  {
     exportName: 'INITIAL_SERVICE',
     sourceFile: path.join(
       projectRoot,

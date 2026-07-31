@@ -20,6 +20,8 @@ import { TutorialNavigationDirective } from '../directive/tutorial-navigation.di
 import { ChapterShape } from '../shape/chapter.shape';
 import { AddEditCharactersChapterComponent } from './chapters/add-edit-characters/add-edit-characters.chapter.component';
 import { AddEditCharactersService } from './chapters/add-edit-characters/services/add-edit-characters.service';
+import { DeleteCharactersChapterComponent } from './chapters/delete-characters/delete-characters.chapter.component';
+import { DeleteCharactersService } from './chapters/delete-characters/services/delete-characters.service';
 import { DisplayCharacterChapterComponent } from './chapters/display-character/display-character.chapter.component';
 import { DisplayCharacterService } from './chapters/display-character/services/display-character.service';
 import { DisplayCharactersChapterComponent } from './chapters/display-characters/display-characters.chapter.component';
@@ -38,7 +40,8 @@ import { DisplayCharactersService } from './chapters/display-characters/services
     FeatureCellBrandNameComponent,
     DisplayCharactersChapterComponent,
     DisplayCharacterChapterComponent,
-    AddEditCharactersChapterComponent
+    AddEditCharactersChapterComponent,
+    DeleteCharactersChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -49,17 +52,20 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly #displayCharactersService = inject(DisplayCharactersService);
   readonly #displayCharacterService = inject(DisplayCharacterService);
   readonly #addEditCharactersService = inject(AddEditCharactersService);
+  readonly #deleteCharactersService = inject(DeleteCharactersService);
 
   readonly #expandedChapterGroups = signal<Record<number, boolean>>({
     1: true,
     2: false,
-    3: false
+    3: false,
+    4: false
   });
 
   readonly #expandedChapters = signal<Record<number, boolean>>({
     1: true,
     2: false,
-    3: false
+    3: false,
+    4: false
   });
 
   constructor() {
@@ -196,6 +202,10 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       return 3;
     }
 
+    if (fragment === 'chapter-4' || fragment === 'chapter-4-content') {
+      return 4;
+    }
+
     const stepMatch = /^step-(\d+)$/.exec(fragment);
 
     return stepMatch
@@ -244,6 +254,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly chapters: readonly ChapterShape[] = [
     this.#displayCharacterService.chapters(),
     this.#displayCharactersService.chapters(),
-    this.#addEditCharactersService.chapters()
+    this.#addEditCharactersService.chapters(),
+    this.#deleteCharactersService.chapters()
   ];
 }

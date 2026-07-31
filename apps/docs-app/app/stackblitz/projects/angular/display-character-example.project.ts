@@ -815,7 +815,7 @@ export const appConfig: ApplicationConfig = {
           justify-content: flex-end;
           margin-top: \$spacing-lg;
 
-          .remove {
+          .delete {
             margin-right: auto;
           }
         }

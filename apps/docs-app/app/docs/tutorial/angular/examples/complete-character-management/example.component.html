@@ -142,16 +142,16 @@
           <p>This action removes the character from the current collection.</p>
         </div>
         <div class="actions">
-          <!-- Teaching point: Remove (ex-006) -->
+          <!-- Teaching point: Delete (ex-006) -->
           <button
             type="button"
             class="button secondary"
             (click)="cancelDelete()">
-            Keep character
+            Cancel
           </button>
-          <!-- Teaching point: Remove (ex-006) -->
+          <!-- Teaching point: Delete (ex-006) -->
           <button type="button" class="button danger" (click)="confirmDelete()">
-            Confirm removal
+            Ok
           </button>
         </div>
       </section>
@@ -187,7 +187,7 @@
           </select>
         </div>
 
-        <!-- Teaching template: Safe to remove this block for read-only lessons that stop before create. -->
+        <!-- Teaching template: Safe to delete this block for read-only lessons that stop before create. -->
         <!-- Teaching point: Create (ex-009) -->
         <div class="actions add-action" aria-label="Character actions">
           <!-- Teaching point: Create (ex-009) -->
@@ -275,7 +275,7 @@
           }
         </section>
 
-        <!-- Teaching template: Safe to remove this block for read-only lessons that stop before create or update. -->
+        <!-- Teaching template: Safe to delete this block for read-only lessons that stop before create or update. -->
         <!-- Teaching point: Create / Update (ex-010) -->
         <section class="panel editor" aria-labelledby="editor-title">
           <div class="header">
@@ -374,13 +374,13 @@
 
             <div class="actions">
               @if (editorMode() === 'edit') {
-                <!-- Teaching point: Remove (ex-006) -->
+                <!-- Teaching point: Delete (ex-006) -->
                 <button
                   type="button"
-                  class="button danger remove"
+                  class="button danger delete"
                   [disabled]="!selectedCharacter()"
                   (click)="requestDelete()">
-                  Remove Character
+                  Delete Character
                 </button>
               }
               <!-- Teaching point: Create / Update (ex-010) -->
@@ -418,7 +418,7 @@
           title="Show or hide Actions"></label>
       </div>
 
-      <!-- Teaching template: Safe to remove this entire block for read-only or CRUD-only lesson copies. -->
+      <!-- Teaching template: Safe to delete this entire block for read-only or CRUD-only lesson copies. -->
       <div class="pipeline-content">
         <div class="action-groups">
           <!-- Teaching template: Keep this group for delay, hydration, and Promise lessons. -->

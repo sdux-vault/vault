@@ -1,17 +1,17 @@
 # Example Key
 
-| Feature                                    | Id     | In Ts | In Html |
-| ------------------------------------------ | ------ | ----- | ------- |
-| Collection Selection                       | ex-001 |       | ✅      |
-| Minimal Read-Only FeatureCell              | ex-002 | ✅    | ✅      |
-| CRUD Foundation feedback                   | ex-003 |       | ✅      |
+| Feature                                    | Id     | In Ts | In Html | In Tutorial |
+| ------------------------------------------ | ------ | ----- | ------- | ----------- |
+| Collection Selection                       | ex-001 |       | ✅      | ✅          |
+| Minimal Read-Only FeatureCell              | ex-002 | ✅    | ✅      | ✅          |
+| CRUD Foundation feedback                   | ex-003 |       | ✅      | ✅          |
 | Errors                                     | ex-004 | ✅    | ✅      |
 | Destroy                                    | ex-005 | ✅    | ✅      |
-| Remove                                     | ex-006 | ✅    | ✅      |
-| CRUD Foundation                            | ex-007 | ✅    | ✅      |
-| isLoading                                  | ex-008 | ✅    | ✅      |
-| Create                                     | ex-009 | ✅    | ✅      |
-| Create / Update                            | ex-010 | ✅    | ✅      |
+| Delete                                     | ex-006 | ✅    | ✅      | ✅          |
+| CRUD Foundation                            | ex-007 | ✅    | ✅      | ✅          |
+| isLoading                                  | ex-008 | ✅    | ✅      | ✅          |
+| Create                                     | ex-009 | ✅    | ✅      | ✅          |
+| Create / Update                            | ex-010 | ✅    | ✅ ✅   |
 | Global Error                               | ex-011 | ✅    | ✅      |
 | Initial State                              | ex-012 | ✅    | ✅      |
 | Raw StateSnapshot                          | ex-013 | ✅    | ✅      |
