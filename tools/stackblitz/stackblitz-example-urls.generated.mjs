@@ -17,6 +17,7 @@ export const STACKBLITZ_EXAMPLE_URLS = [
   '/examples/angular/hydrate-state',
   '/examples/angular/initial-state',
   '/examples/angular/interceptor-delay',
+  '/examples/angular/lifecycle',
   '/examples/angular/observable',
   '/examples/angular/promise',
   '/examples/angular/replace',

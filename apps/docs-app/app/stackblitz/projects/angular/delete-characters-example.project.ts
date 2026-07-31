@@ -1957,6 +1957,33 @@ export class ExampleCharacterEditor {
     }
   }
 
+  > .feature-cell-controls > .lifecycle-actions {
+    display: grid;
+    gap: \$spacing-md;
+    padding-top: \$spacing-lg;
+    margin-top: \$spacing-sm;
+    margin-bottom: \$spacing-lg;
+    border-top: 1px solid \$sdux-primary-base;
+
+    > .section-toggle:not(:checked) ~ .operator-actions {
+      display: none;
+    }
+
+    .operator-actions {
+      display: grid;
+      gap: \$spacing-md;
+
+      @media (min-width: \$breakpoint-md) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+      }
+    }
+
+    .lifecycle-action-row {
+      @include expandable-action-row;
+    }
+  }
+
   > .feature-cell-controls > .pipeline-actions {
     display: grid;
     gap: \$spacing-lg;
@@ -1976,17 +2003,15 @@ export class ExampleCharacterEditor {
     .action-groups {
       display: grid;
       gap: \$spacing-md;
+
+      @media (min-width: \$breakpoint-md) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+      }
     }
 
     .action-group {
-      display: grid;
-      gap: \$spacing-md;
-      min-width: 0;
-
-      @media (min-width: \$breakpoint-lg) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        align-items: start;
-      }
+      display: contents;
     }
 
     .action-row {
@@ -2016,16 +2041,8 @@ export class ExampleCharacterEditor {
       gap: \$spacing-md;
       align-items: start;
 
-      @media (max-width: \$breakpoint-lg) {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      }
-
-      @media (min-width: \$breakpoint-lg) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-
-        .submit-changed-action-row {
-          grid-column: 2;
-        }
+      @media (min-width: \$breakpoint-md) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .tab-sync-action-row {
@@ -2651,6 +2668,91 @@ describe('ExampleComponent', () => {
       tone: 'success'
     });
   });
+
+  it('should open delete confirmation for the selected character and clear feedback', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['feedback'].set({
+      message: 'Old feedback',
+      tone: 'info'
+    });
+    component['selectCharacter']('2');
+
+    component['requestDelete']();
+
+    expect(component['deleteCandidate']()).toEqual(initialCharacters[1]);
+    expect(component['feedback']()).toBeNull();
+  });
+
+  it('should ignore delete requests when no character is selected', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['selectedCharacterId'].set(null);
+    component['deleteCandidate'].set(null);
+
+    component['requestDelete']();
+
+    expect(component['deleteCandidate']()).toBeNull();
+  });
+
+  it('should clear the pending delete candidate when delete is canceled', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['deleteCandidate'].set(initialCharacters[0]!);
+
+    component['cancelDelete']();
+
+    expect(component['deleteCandidate']()).toBeNull();
+  });
+
+  it('should ignore confirm delete when there is no pending candidate', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const removeCharacterSpy = spyOn(service, 'removeCharacter');
+
+    component['deleteCandidate'].set(null);
+
+    component['confirmDelete']();
+
+    expect(removeCharacterSpy).not.toHaveBeenCalled();
+    expect(component['editorMode']()).toBe('edit');
+  });
+
+  it('should remove the pending character and reset the editor after delete confirmation', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const removeCharacterSpy = spyOn(
+      service,
+      'removeCharacter'
+    ).and.callThrough();
+
+    component['selectCharacter']('2');
+    component['requestDelete']();
+
+    component['confirmDelete']();
+    await vaultSettled(key);
+
+    expect(removeCharacterSpy).toHaveBeenCalledOnceWith(2);
+    expect(component['deleteCandidate']()).toBeNull();
+    expect(component['selectedCharacterId']()).toBeNull();
+    expect(component['editorMode']()).toBe('create');
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    expect(component['characterForm'].pristine).toBeTrue();
+    expect(component['characterForm'].untouched).toBeTrue();
+    expect(component['feedback']()).toEqual({
+      message: 'Leia Organa was removed.',
+      tone: 'success'
+    });
+    expect(component.characters()).toEqual([initialCharacters[0]!]);
+  });
 });
 `,
     'src/example.component.ts': `import {
@@ -3171,6 +3273,26 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
+    expect(service.state.value()).toEqual([]);
+  });
+
+  it('should remove the matching character from the current collection', async () => {
+    const service = await configureService();
+
+    service.removeCharacter(10);
+
+    await vaultSettled(key);
+
+    expect(service.state.value()).toEqual([initialCharacters[1]!]);
+  });
+
+  it('should safely remove against an empty collection when no value exists', async () => {
+    const service = await configureService(null);
+
+    service.removeCharacter(10);
+
+    await vaultSettled(key);
+
     expect(service.state.value()).toEqual([]);
   });
 });

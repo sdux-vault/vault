@@ -41,6 +41,14 @@ export function createTutorialExampleGroups() {
           displayCopyIcon: false,
           description: `Demonstrates the completed <strong>Delete Characters</strong> tutorial example — a standalone component reads a character collection from FeatureCell state, lets the user stage and confirm deletion of a selected record, and keeps the actual state update inside the same service-owned SDuX boundary used throughout the earlier tutorial flows. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
+        },
+        {
+          title: 'Chapter 5: Lifecycle',
+          id: 'lifecycle-example',
+          exampleName: 'lifecycle-example',
+          displayCopyIcon: false,
+          description: `Demonstrates the completed <strong>Lifecycle</strong> tutorial example — a standalone component reads a character collection from FeatureCell state, lets the user stage and confirm deletion of a selected record, and keeps the actual state update inside the same service-owned SDuX boundary used throughout the earlier tutorial flows. Launch the live example directly in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
         }
       ] satisfies StackBlitzExampleShape[]
     }

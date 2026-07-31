@@ -71,6 +71,14 @@ export const INLINE_PROJECT_EXAMPLES = [
       'apps/docs-app/app/docs/tutorial/angular/examples/delete-characters'
     ),
     name: 'delete-characters-example'
+  },
+  {
+    language: 'angular',
+    directory: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/examples/lifecycle'
+    ),
+    name: 'lifecycle-example'
   }
 ];
 

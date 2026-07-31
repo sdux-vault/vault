@@ -17,6 +17,7 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<string, () => Promise<unknown>> 
   'angular/hydrate-state-example': () => import('../../../stackblitz/projects/angular/hydrate-state-example.project'),
   'angular/initial-state-example': () => import('../../../stackblitz/projects/angular/initial-state-example.project'),
   'angular/interceptor-delay-example': () => import('../../../stackblitz/projects/angular/interceptor-delay-example.project'),
+  'angular/lifecycle-example': () => import('../../../stackblitz/projects/angular/lifecycle-example.project'),
   'angular/observable-example': () => import('../../../stackblitz/projects/angular/observable-example.project'),
   'angular/promise-example': () => import('../../../stackblitz/projects/angular/promise-example.project'),
   'angular/replace-example': () => import('../../../stackblitz/projects/angular/replace-example.project'),

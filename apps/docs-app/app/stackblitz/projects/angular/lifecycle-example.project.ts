@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const addEditCharactersExampleProject: Project = {
-  title: 'add-edit-characters-example',
+export const lifecycleExampleProject: Project = {
+  title: 'lifecycle-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const addEditCharactersExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "add-edit-characters-example",
+  "name": "lifecycle-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -1044,6 +1044,33 @@ export class ExampleCharacterEditor {
   }
 
   <fieldset class="feature-cell-controls">
+    @if (deleteCandidate(); as character) {
+      <section
+        class="delete-confirmation"
+        aria-labelledby="delete-confirmation-title"
+        role="alert">
+        <div>
+          <h3 id="delete-confirmation-title">
+            Delete
+            {{
+              character.fullName ?? character.name + ' ' + character.lastName
+            }}?
+          </h3>
+          <p>This action removes the character from the current collection.</p>
+        </div>
+        <div class="actions">
+          <button
+            type="button"
+            class="button secondary"
+            (click)="cancelDelete()">
+            Cancel
+          </button>
+          <button type="button" class="button danger" (click)="confirmDelete()">
+            Ok
+          </button>
+        </div>
+      </section>
+    }
     <div class="workspace">
       <div class="workspace-row workspace-row-top">
         <div class="field selection">
@@ -1231,6 +1258,15 @@ export class ExampleCharacterEditor {
             </div>
 
             <div class="actions">
+              @if (editorMode() === 'edit') {
+                <button
+                  type="button"
+                  class="button danger delete"
+                  [disabled]="!selectedCharacter()"
+                  (click)="requestDelete()">
+                  Delete Character
+                </button>
+              }
               <button
                 type="submit"
                 class="button"
@@ -2632,6 +2668,91 @@ describe('ExampleComponent', () => {
       tone: 'success'
     });
   });
+
+  it('should open delete confirmation for the selected character and clear feedback', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['feedback'].set({
+      message: 'Old feedback',
+      tone: 'info'
+    });
+    component['selectCharacter']('2');
+
+    component['requestDelete']();
+
+    expect(component['deleteCandidate']()).toEqual(initialCharacters[1]);
+    expect(component['feedback']()).toBeNull();
+  });
+
+  it('should ignore delete requests when no character is selected', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['selectedCharacterId'].set(null);
+    component['deleteCandidate'].set(null);
+
+    component['requestDelete']();
+
+    expect(component['deleteCandidate']()).toBeNull();
+  });
+
+  it('should clear the pending delete candidate when delete is canceled', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['deleteCandidate'].set(initialCharacters[0]!);
+
+    component['cancelDelete']();
+
+    expect(component['deleteCandidate']()).toBeNull();
+  });
+
+  it('should ignore confirm delete when there is no pending candidate', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const removeCharacterSpy = spyOn(service, 'removeCharacter');
+
+    component['deleteCandidate'].set(null);
+
+    component['confirmDelete']();
+
+    expect(removeCharacterSpy).not.toHaveBeenCalled();
+    expect(component['editorMode']()).toBe('edit');
+  });
+
+  it('should remove the pending character and reset the editor after delete confirmation', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const removeCharacterSpy = spyOn(
+      service,
+      'removeCharacter'
+    ).and.callThrough();
+
+    component['selectCharacter']('2');
+    component['requestDelete']();
+
+    component['confirmDelete']();
+    await vaultSettled(key);
+
+    expect(removeCharacterSpy).toHaveBeenCalledOnceWith(2);
+    expect(component['deleteCandidate']()).toBeNull();
+    expect(component['selectedCharacterId']()).toBeNull();
+    expect(component['editorMode']()).toBe('create');
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    expect(component['characterForm'].pristine).toBeTrue();
+    expect(component['characterForm'].untouched).toBeTrue();
+    expect(component['feedback']()).toEqual({
+      message: 'Leia Organa was removed.',
+      tone: 'success'
+    });
+    expect(component.characters()).toEqual([initialCharacters[0]!]);
+  });
 });
 `,
     'src/example.component.ts': `import {
@@ -2700,14 +2821,6 @@ export class ExampleComponent {
     () => this.#exampleService.state.value() ?? []
   );
 
-  /** Defines the non-nullable form model and validation rules shared by create and edit flows. */
-  protected readonly characterForm = this.#formBuilder.nonNullable.group({
-    name: ['', [this.#trimmedTextLength(2, 40)]],
-    lastName: ['', [this.#trimmedTextLength(2, 40)]],
-    faction: ['', Validators.required],
-    isForceSensitive: [false]
-  });
-
   /** Holds the identity currently selected by the character picker, or \`null\` when none is selected. */
   protected readonly selectedCharacterId = signal<number | null>(null);
 
@@ -2726,15 +2839,13 @@ export class ExampleComponent {
     return this.characters().find(({ id }) => id === selectedId) ?? null;
   });
 
-  /** Derives the editor heading from the current mode so the template stays declarative. */
-  protected readonly editorTitle = computed(() =>
-    this.editorMode() === 'create' ? 'Add a character' : 'Update character'
-  );
-
-  /** Derives the submit-button label from the operation that saving will perform. */
-  protected readonly submitLabel = computed(() =>
-    this.editorMode() === 'create' ? 'Add character' : 'Save changes'
-  );
+  /** Defines the non-nullable form model and validation rules shared by create and edit flows. */
+  protected readonly characterForm = this.#formBuilder.nonNullable.group({
+    name: ['', [this.#trimmedTextLength(2, 40)]],
+    lastName: ['', [this.#trimmedTextLength(2, 40)]],
+    faction: ['', Validators.required],
+    isForceSensitive: [false]
+  });
 
   /** Watches the reactive collection and selects its first character when initial state arrives. */
   constructor() {
@@ -2761,17 +2872,6 @@ export class ExampleComponent {
   }
 
   /**
-   * Creates a validator that trims text before enforcing required, minimum, and maximum lengths.
-   * @param minimum - Smallest accepted number of non-whitespace characters.
-   * @param maximum - Largest accepted number of non-whitespace characters.
-   * @returns An Angular validator that reports the matching validation error or \`null\`.
-   */
-  #trimmedTextLength(minimum: number, maximum: number): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null =>
-      this.editor.validateTrimmedText(control.value, minimum, maximum);
-  }
-
-  /**
    * Resolves a picker value to a known character identity in the current SDuX-managed collection.
    * Unknown identities are ignored so stale or invalid option values cannot disturb the editor.
    * @param value - Character identity received from the select element.
@@ -2791,55 +2891,6 @@ export class ExampleComponent {
     this.editorMode.set('edit');
     this.feedback.set(null);
     this.#patchForm(character);
-  }
-
-  /**
-   * Enters create mode, remembers the prior selection, and resets the form to clean defaults.
-   * Repeated calls preserve the original selection so cancel can still return to it.
-   * @returns Nothing; the editor signals and form state are reset in place.
-   */
-  protected startCreate(): void {
-    if (this.editorMode() !== 'create') {
-      this.#selectedCharacterBeforeCreate = this.selectedCharacterId();
-    }
-
-    this.selectedCharacterId.set(null);
-    this.editorMode.set('create');
-    this.feedback.set(null);
-    this.#clearCharacterForm();
-  }
-
-  /**
-   * Discards current edits and restores the character selected before editing or creating began.
-   * When no valid selection exists, it falls back to a clean create form.
-   * @returns Nothing; editor mode, form values, and feedback are updated in place.
-   */
-  protected cancelEdit(): void {
-    if (this.editorMode() === 'create') {
-      const character = this.characters().find(
-        ({ id }) => id === this.#selectedCharacterBeforeCreate
-      );
-
-      if (character) {
-        this.selectedCharacterId.set(character.id);
-        this.#selectedCharacterBeforeCreate = null;
-        this.editorMode.set('edit');
-        this.#patchForm(character);
-        this.feedback.set(this.editor.feedback['newCharacterDiscarded']);
-        return;
-      }
-    }
-
-    const character = this.selectedCharacter();
-
-    if (character) {
-      this.editorMode.set('edit');
-      this.#patchForm(character);
-      this.feedback.set(this.editor.feedback['unsavedChangesDiscarded']);
-      return;
-    }
-
-    this.startCreate();
   }
 
   /**
@@ -2892,6 +2943,55 @@ export class ExampleComponent {
   }
 
   /**
+   * Enters create mode, remembers the prior selection, and resets the form to clean defaults.
+   * Repeated calls preserve the original selection so cancel can still return to it.
+   * @returns Nothing; the editor signals and form state are reset in place.
+   */
+  protected startCreate(): void {
+    if (this.editorMode() !== 'create') {
+      this.#selectedCharacterBeforeCreate = this.selectedCharacterId();
+    }
+
+    this.selectedCharacterId.set(null);
+    this.editorMode.set('create');
+    this.feedback.set(null);
+    this.#clearCharacterForm();
+  }
+
+  /**
+   * Discards current edits and restores the character selected before editing or creating began.
+   * When no valid selection exists, it falls back to a clean create form.
+   * @returns Nothing; editor mode, form values, and feedback are updated in place.
+   */
+  protected cancelEdit(): void {
+    if (this.editorMode() === 'create') {
+      const character = this.characters().find(
+        ({ id }) => id === this.#selectedCharacterBeforeCreate
+      );
+
+      if (character) {
+        this.selectedCharacterId.set(character.id);
+        this.#selectedCharacterBeforeCreate = null;
+        this.editorMode.set('edit');
+        this.#patchForm(character);
+        this.feedback.set(this.editor.feedback['newCharacterDiscarded']);
+        return;
+      }
+    }
+
+    const character = this.selectedCharacter();
+
+    if (character) {
+      this.editorMode.set('edit');
+      this.#patchForm(character);
+      this.feedback.set(this.editor.feedback['unsavedChangesDiscarded']);
+      return;
+    }
+
+    this.startCreate();
+  }
+
+  /**
    * Resolves the stable label used in messages and template fallbacks.
    * @param character - Raw or reduced character whose display label should be returned.
    * @returns A stable full-name label composed from the current character fields.
@@ -2929,6 +3029,77 @@ export class ExampleComponent {
     });
     this.characterForm.markAsPristine();
     this.characterForm.markAsUntouched();
+  }
+
+  /** Holds the character awaiting explicit confirmation before removal. */
+  protected readonly deleteCandidate = signal<StarWarsCharacter | null>(null);
+
+  /**
+   * Opens the confirmation state for the currently selected character.
+   * No confirmation is shown when the selection cannot resolve to a character.
+   * @returns Nothing; the delete candidate and feedback signals are updated in place.
+   */
+  protected requestDelete(): void {
+    const character = this.selectedCharacter();
+
+    if (character) {
+      this.deleteCandidate.set(character);
+      this.feedback.set(null);
+    }
+  }
+
+  /**
+   * Closes the removal confirmation without changing the character collection.
+   * @returns Nothing; the pending delete candidate is cleared.
+   */
+  protected cancelDelete(): void {
+    this.deleteCandidate.set(null);
+  }
+
+  /**
+   * Delegates confirmed removal to the service, then resets the component to create mode.
+   * The flow is confirmation → service removal → FeatureCell pipeline → reactive collection update.
+   * @returns Nothing; selection, form, confirmation, and feedback state are updated in place.
+   */
+  protected confirmDelete(): void {
+    const character = this.deleteCandidate();
+
+    if (!character) {
+      return;
+    }
+
+    this.#exampleService.removeCharacter(character.id);
+
+    this.deleteCandidate.set(null);
+    this.selectedCharacterId.set(null);
+    this.#selectedCharacterBeforeCreate = null;
+    this.editorMode.set('create');
+    this.#clearCharacterForm();
+
+    this.feedback.set(
+      this.editor.characterRemovedFeedback(this.#characterLabel(character))
+    );
+  }
+
+  /** Derives the editor heading from the current mode so the template stays declarative. */
+  protected readonly editorTitle = computed(() =>
+    this.editorMode() === 'create' ? 'Add a character' : 'Update character'
+  );
+
+  /** Derives the submit-button label from the operation that saving will perform. */
+  protected readonly submitLabel = computed(() =>
+    this.editorMode() === 'create' ? 'Add character' : 'Save changes'
+  );
+
+  /**
+   * Creates a validator that trims text before enforcing required, minimum, and maximum lengths.
+   * @param minimum - Smallest accepted number of non-whitespace characters.
+   * @param maximum - Largest accepted number of non-whitespace characters.
+   * @returns An Angular validator that reports the matching validation error or \`null\`.
+   */
+  #trimmedTextLength(minimum: number, maximum: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null =>
+      this.editor.validateTrimmedText(control.value, minimum, maximum);
   }
 }
 `,
@@ -3104,6 +3275,26 @@ describe('ExampleService', () => {
     });
     expect(service.state.value()).toEqual([]);
   });
+
+  it('should remove the matching character from the current collection', async () => {
+    const service = await configureService();
+
+    service.removeCharacter(10);
+
+    await vaultSettled(key);
+
+    expect(service.state.value()).toEqual([initialCharacters[1]!]);
+  });
+
+  it('should safely remove against an empty collection when no value exists', async () => {
+    const service = await configureService(null);
+
+    service.removeCharacter(10);
+
+    await vaultSettled(key);
+
+    expect(service.state.value()).toEqual([]);
+  });
 });
 `,
     'src/example.service.ts': `import { Injectable } from '@angular/core';
@@ -3184,6 +3375,20 @@ export class ExampleService {
     });
 
     return updatedCharacter;
+  }
+
+  /**
+   * Filters the requested identity from the latest collection through \`replaceState\`.
+   * An unknown ID leaves the visible collection unchanged.
+   * @param id - Identity of the character to remove.
+   * @returns Nothing; consumers observe the resulting collection through \`characters\`.
+   */
+  removeCharacter(id: number): void {
+    this.#vault.replaceState({
+      value: () =>
+        this.#vault.state.value()?.filter((character) => character.id !== id) ??
+        []
+    });
   }
 }
 `,
