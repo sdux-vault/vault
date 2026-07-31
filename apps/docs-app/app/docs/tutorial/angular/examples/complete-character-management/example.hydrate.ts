@@ -43,7 +43,7 @@ const HYDRATED_CHARACTERS: readonly RawStarWarsCharacter[] = [
 ];
 
 /** Resolves the pending hydration with its authoritative character collection. */
-type CharacterResolver = (characters: readonly StarWarsCharacter[]) => void;
+type CharacterResolver = (characters: StarWarsCharacter[]) => void;
 
 /** Rejects the pending hydration with its simulated initialization failure. */
 type CharacterRejecter = (reason: Error) => void;
@@ -55,7 +55,7 @@ type CharacterRejecter = (reason: Error) => void;
  */
 class ExampleHydrate {
   /** Reuses the hydration Promise requested during the active initialization cycle. */
-  #pendingPromise: Promise<readonly StarWarsCharacter[]> | null = null;
+  #pendingPromise: Promise<StarWarsCharacter[]> | null = null;
 
   /** Holds the native resolver until hydration completes successfully. */
   #resolveCharacters: CharacterResolver | null = null;
@@ -67,7 +67,7 @@ class ExampleHydrate {
    * Creates or returns the deferred source that `hydrate()` evaluates during `initialize()`.
    * @returns The active Promise for the authoritative initial character State.
    */
-  getPromise(): Promise<readonly StarWarsCharacter[]> {
+  getPromise(): Promise<StarWarsCharacter[]> {
     if (!this.#pendingPromise) {
       this.#pendingPromise = new Promise((resolve, reject) => {
         this.#resolveCharacters = resolve;
