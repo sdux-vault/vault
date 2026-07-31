@@ -34,3 +34,5 @@ Thumbs.db
 **/compodoc/**
 docs/**
 apps/chrome-extension/panel/*
+apps/docs-app/app/docs/tutorial/**/generated/*
+apps/docs-app/app/docs/stack-blitz/constants/stackblitz-project-imports.generated.ts

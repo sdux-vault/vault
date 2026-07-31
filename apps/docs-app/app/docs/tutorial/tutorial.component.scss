@@ -50,6 +50,40 @@
       color: var(--sdux-text-default);
       font-size: global.$font-size-lg;
       font-weight: global.$font-weight-semibold;
+
+      a {
+        @include global.a-link-primary;
+        display: block;
+      }
+    }
+
+    .tutorial-group {
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-xs;
+      width: 100%;
+    }
+
+    .tutorial-steps-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: global.$spacing-xs;
+      width: 100%;
+    }
+
+    .tutorial-group-chevron {
+      @include global.sdux-icon-button(1.40625rem);
+
+      flex-shrink: 0;
+      min-width: 1.40625rem;
+      margin-top: calc(
+        (global.$font-size-lg * global.$line-height - 1.40625rem) / 2
+      );
+
+      mat-icon {
+        font-size: global.$font-size-md;
+      }
     }
 
     .tutorial-step-list {
@@ -59,8 +93,7 @@
       gap: global.$spacing-xs;
       width: 100%;
       margin: 0;
-      margin-left: global.$spacing-sm;
-      padding-left: global.$spacing-sm;
+      padding-left: global.$spacing-lg;
       box-sizing: border-box;
 
       .tutorial-step-item {
@@ -114,6 +147,106 @@
     flex-direction: column;
     gap: global.$spacing-md;
     min-width: 0;
+
+    .chapter-break {
+      display: flex;
+      flex-direction: column;
+      gap: global.$spacing-md;
+      margin: global.$spacing-sm 0;
+
+      .chapter-rule {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          color-mix(in srgb, global.$sdux-primary-base 55%, transparent) 18%,
+          global.$sdux-primary-base 50%,
+          color-mix(in srgb, global.$sdux-primary-base 55%, transparent) 82%,
+          transparent 100%
+        );
+        box-shadow: 0 0 18px rgb(25 118 210 / 12%);
+      }
+
+      .chapter-copy {
+        display: flex;
+        flex-direction: column;
+        gap: global.$spacing-sm;
+        padding: global.$spacing-lg;
+        border: 1px solid
+          color-mix(in srgb, global.$sdux-primary-base 35%, transparent);
+        border-radius: global.$border-radius-lg;
+        background:
+          linear-gradient(
+            180deg,
+            color-mix(in srgb, global.$sdux-primary-base 8%, transparent),
+            color-mix(in srgb, global.$sdux-primary-base 2%, transparent)
+          ),
+          var(--sdux-surface-bg);
+
+        .chapter-header {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: global.$spacing-md;
+          width: 100%;
+        }
+
+        .chapter-eyebrow {
+          margin: 0;
+          color: global.$sdux-primary-base;
+          font-size: global.$font-size-sm;
+          font-weight: global.$font-weight-bold;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        h2,
+        p {
+          margin: 0;
+        }
+
+        h2 {
+          flex: 1 1 auto;
+          color: var(--sdux-text-default);
+          font-size: global.$font-size-2xl;
+          font-weight: global.$font-weight-bold;
+          line-height: 1.2;
+        }
+
+        p {
+          max-width: 72ch;
+          color: var(--sdux-text-default);
+        }
+
+        .chapter-toggle {
+          @include global.sdux-icon-button();
+
+          flex-shrink: 0;
+        }
+      }
+    }
+
+    .chapter-content {
+      display: grid;
+      grid-template-rows: 1fr;
+      transition:
+        grid-template-rows 200ms ease,
+        opacity 150ms ease;
+
+      .chapter-content-inner {
+        display: flex;
+        flex-direction: column;
+        gap: global.$spacing-md;
+        overflow: hidden;
+        min-height: 0;
+      }
+
+      &.chapter-content-collapsed {
+        grid-template-rows: 0fr;
+        opacity: 0.72;
+      }
+    }
 
     .tutorial-shortcut {
       display: grid;

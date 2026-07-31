@@ -166,6 +166,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/state-management-without-framework-lock-in</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/tab-sync-state</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2186,6 +2191,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/angular/add-edit-characters</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/angular/array-append-merge</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2196,7 +2206,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/angular/comparison</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/angular/debugger</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/angular/display-character</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/angular/display-characters</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2296,6 +2321,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/react/comparison</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/react/debugger</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2342,6 +2372,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/examples/svelte/basic-filter-reducer</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/svelte/comparison</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2422,6 +2457,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/examples/vue/basic-filter-reducer</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/vue/comparison</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

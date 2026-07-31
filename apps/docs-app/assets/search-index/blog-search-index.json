@@ -389,6 +389,16 @@
       "url": "/blog/a-featurecell-in-plain-javascript",
       "symbols": ["a-featurecell-in-plain-javascript"],
       "content": "A FeatureCell in Plain JavaScript — No Framework, No Build Step a-featurecell-in-plain-javascript TA"
+    },
+    {
+      "id": "blog:state-management-without-framework-lock-in",
+      "title": "Plain TypeScript, Zero Magic: State Management Without Framework Lock-In",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/state-management-without-framework-lock-in",
+      "symbols": ["state-management-without-framework-lock-in"],
+      "content": "Plain TypeScript, Zero Magic: State Management Without Framework Lock-In state-management-without-framework-lock-in TA"
     }
   ]
 }

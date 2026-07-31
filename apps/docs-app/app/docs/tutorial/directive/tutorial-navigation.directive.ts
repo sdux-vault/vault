@@ -21,7 +21,7 @@ export abstract class TutorialNavigationDirective implements AfterViewInit {
     afterNextRender(() => {
       const sections = Array.from(
         this.elementRef.nativeElement.querySelectorAll<HTMLElement>(
-          '.tutorial-content > .section[id]'
+          '.tutorial-content .section[id]'
         )
       );
 

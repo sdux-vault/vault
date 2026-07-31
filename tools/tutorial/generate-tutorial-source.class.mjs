@@ -31,10 +31,17 @@ const SOURCE_FILE_TYPES = [
   { type: 'serviceSpec', suffix: '.service.spec.ts' },
   { type: 'observableSpec', suffix: '.observable.spec.ts' },
   { type: 'promiseSpec', suffix: '.promise.spec.ts' },
-  { type: 'httpResourceSpec', suffix: '.http-resource.spec.ts' }
+  { type: 'httpResourceSpec', suffix: '.http-resource.spec.ts' },
+  { type: 'characterDomain', suffix: '.character-domain.ts' },
+  { type: 'characterDomainSpec', suffix: '.character-domain.spec.ts' },
+  { type: 'characterEditor', suffix: '.character-editor.ts' },
+  { type: 'characterEditorSpec', suffix: '.character-editor.spec.ts' }
 ];
 const SOURCE_FILE_TYPE_ORDER = new Map(
   SOURCE_FILE_TYPES.map(({ type }, index) => [type, index])
+);
+const SOURCE_FILE_TYPE_MATCH_ORDER = [...SOURCE_FILE_TYPES].sort(
+  (left, right) => right.suffix.length - left.suffix.length
 );
 const SOURCE_FILE_TYPE_UNION = SOURCE_FILE_TYPES.map(
   ({ type }) => `'${type}'`
@@ -75,7 +82,7 @@ export class TutorialSourceGenerator {
         continue;
       }
 
-      const sourceFileType = SOURCE_FILE_TYPES.find(({ suffix }) =>
+      const sourceFileType = SOURCE_FILE_TYPE_MATCH_ORDER.find(({ suffix }) =>
         entry.name.endsWith(suffix)
       );
 

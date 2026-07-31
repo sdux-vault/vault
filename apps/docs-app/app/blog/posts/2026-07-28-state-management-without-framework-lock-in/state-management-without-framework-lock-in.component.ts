@@ -197,7 +197,13 @@ employeeCell.initialize();</code></pre>
               <tr>
                 <td>Primary architecture</td>
                 <td>Global store and dispatch-centric integration</td>
-                <td>Scoped FeatureCell ownership and direct state intent</td>
+                <td>
+                  Scoped
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  ownership and direct state intent
+                </td>
               </tr>
               <tr>
                 <td>Framework relationship</td>
@@ -272,7 +278,10 @@ employeeCell.initialize();</code></pre>
               <tr>
                 <td>Angular</td>
                 <td>
-                  DI registration, decorators, injectVault, Signals support
+                  DI registration, decorators,
+                  <a href="/docs/references/functions/inject-vault"
+                    >injectVault</a
+                  >, Signals support
                 </td>
                 <td>
                   Explicit init, deterministic pipeline, immutable snapshots
@@ -282,7 +291,10 @@ employeeCell.initialize();</code></pre>
                 <td>React</td>
                 <td>Hook-based consumption of committed state</td>
                 <td>
-                  FeatureCell ownership, lifecycle rules, pipeline semantics
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  ownership, lifecycle rules, pipeline semantics
                 </td>
               </tr>
               <tr>
