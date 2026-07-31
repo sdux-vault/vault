@@ -8,12 +8,9 @@
 
   <div class="section-body">
     <p>
-      The delete chapter completed the full CRUD surface, but it still treated
-      the managed collection as if the next step were always another record
-      mutation. This lifecycle chapter changes the lesson. Instead of adding,
-      updating, or removing one character, you now need to clear the Feature in
-      two distinct ways while keeping the same service-owned
-      <sdux-feature-cell /> boundary intact.
+      This chapter focuses on lifecycle clearing instead of record mutation. You
+      will clear the Feature in two distinct ways while keeping the same
+      service-owned <sdux-feature-cell /> boundary intact.
     </p>
 
     <p>
@@ -73,9 +70,8 @@
           <sdux-brand-name /> APIs directly.
         </li>
         <li>
-          This step teaches the semantic difference between an intentional empty
-          value and a runtime reset before the chapter moves to permanent
-          teardown.
+          Use this step to distinguish an intentional empty value from a runtime
+          reset before you move to permanent teardown.
         </li>
       </ul>
     </div>
@@ -115,10 +111,10 @@
       That means the component needs one more responsibility: when the service
       destroys the Feature, the UI must stop pretending the collection is still
       interactive. Clear local editor state, disable later actions, and render
-      an explicit lifecycle message so the example teaches finalization instead
-      of silently failing. The architectural line still does not move: the
-      service owns <span class="code">destroy()</span>, and the component owns
-      the visual response to that final state.
+      an explicit lifecycle message so you can see finalization instead of a
+      silent failure. The architectural line still does not move: the service
+      owns <span class="code">destroy()</span>, and the component owns the
+      visual response to that final state.
     </p>
 
     <div class="callout callout-action">
@@ -134,8 +130,7 @@
           messaging.
         </li>
         <li>
-          Update <span class="code">example.component.spec.ts</span> so the
-          chapter proves the UI resets safely for
+          Verify that the UI resets safely for
           <span class="code">null</span> and <span class="code">reset()</span>,
           then disables later interaction after
           <span class="code">destroy()</span>.
@@ -144,17 +139,17 @@
     </div>
 
     <div class="callout callout-learn-more">
-      <div class="title">What Changed From the Delete Example</div>
+      <div class="title">Lifecycle Flow Summary</div>
 
       <ul>
         <li>
-          The component now teaches three lifecycle outcomes: intentional
+          The component now shows three lifecycle outcomes: intentional
           <span class="code">null</span> persistence, runtime reset, and
           permanent teardown.
         </li>
         <li>
-          The template now exposes the raw lifecycle result so the reader can
-          see the difference between <span class="code">null</span> and
+          The template now exposes the raw lifecycle result so you can see the
+          difference between <span class="code">null</span> and
           <span class="code">undefined</span> instead of inferring it.
         </li>
         <li>

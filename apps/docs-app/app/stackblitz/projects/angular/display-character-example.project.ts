@@ -218,6 +218,7 @@ export const appConfig: ApplicationConfig = {
 \$action-column-width: calc(
   \$action-button-width + \$action-chevron-hit-area + \$spacing-xs
 );
+\$example-min-width: calc(\$action-column-width + (\$spacing-lg * 2));
 
 @mixin visually-hidden-control {
   position: absolute;
@@ -362,6 +363,7 @@ export const appConfig: ApplicationConfig = {
 
 :host {
   display: block;
+  min-width: \$example-min-width;
 }
 
 .character-example {
@@ -369,6 +371,7 @@ export const appConfig: ApplicationConfig = {
   flex-direction: column;
   gap: \$spacing-lg;
   width: 100%;
+  min-width: \$example-min-width;
   padding: \$spacing-lg;
   box-sizing: border-box;
   color: var(--sdux-text-default);

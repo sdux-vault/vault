@@ -16,19 +16,19 @@
     </p>
 
     <p>
-      Assume the Angular mechanics are already familiar. The
-      <sdux-brand-name /> lesson here is narrower: keep Feature State in the
-      service, keep selection state in the component, and derive the displayed
-      record from the latest service-owned collection. To do that, replace the
-      single displayed-character computed Signal with a read-only character
-      collection, a <span class="code">selectedCharacterId</span> Signal, a
-      computed lookup for the selected record, and a small selection handler. In
-      the template, add a <span class="code">select</span> element that lists
-      the registered characters and keep the detail panel bound to computed
-      controller state instead of reaching into <sdux-brand-name /> directly.
-      The matching verification belongs in this same step: the updated component
-      spec should prove the controller starts empty, accepts a valid selection,
-      ignores unknown ids, and renders the selected record without moving
+      Assume the Angular mechanics are already familiar. Here, keep Feature
+      State in the service, keep selection state in the component, and derive
+      the displayed record from the latest service-owned collection. To do that,
+      replace the single displayed-character computed Signal with a read-only
+      character collection, a
+      <span class="code">selectedCharacterId</span> Signal, a computed lookup
+      for the selected record, and a small selection handler. In the template,
+      add a <span class="code">select</span> element that lists the registered
+      characters and keep the detail panel bound to computed controller state
+      instead of reaching into <sdux-brand-name /> directly. The matching
+      verification belongs in this same step: the updated component spec should
+      prove the controller starts empty, accepts a valid selection, ignores
+      unknown ids, and renders the selected record without moving
       <sdux-brand-name /> ownership out of the service.
     </p>
 
@@ -48,10 +48,6 @@
         <li>
           Add a dropdown above the details panel and render an empty state until
           the user selects a character from the managed collection.
-        </li>
-        <li>
-          Update <span class="code">example.component.spec.ts</span> to verify
-          both the empty state and the selected-record state.
         </li>
       </ol>
     </div>
@@ -136,7 +132,7 @@
     </div>
 
     <div class="callout callout-learn-more">
-      <div class="title">What Changed From the Initial Example</div>
+      <div class="title">Dropdown Flow Summary</div>
 
       <ul>
         <li>
@@ -148,7 +144,7 @@
           latest reactive collection State.
         </li>
         <li>
-          The template now teaches user-directed selection on top of the same
+          The template now supports user-directed selection on top of the same
           service-owned State.
         </li>
       </ul>

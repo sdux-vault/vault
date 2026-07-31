@@ -116,7 +116,7 @@
         You could build the next collection manually with a spread expression
         such as
         <span class="code">[...currentCharacters, newCharacter]</span>, but that
-        is the wrong lesson for this tutorial.
+        is the wrong approach for this tutorial.
       </p>
 
       <p>
@@ -154,8 +154,8 @@
   <div class="section-body">
     <p>
       This step turns the user-directed read example into the first mutation
-      slice. The <sdux-brand-name /> lesson is still the same: the service owns
-      the <sdux-feature-cell />, while the component owns only temporary editor
+      slice. Keep the same boundary: the service owns the
+      <sdux-feature-cell />, while the component owns only temporary editor
       state. What changes now is the write path. The service gains the create
       and update methods that mutate the registered collection, and a small
       domain helper keeps ID assignment and draft creation out of the Angular
@@ -226,9 +226,8 @@
         type, next-ID helper, and character factory used by this add/edit slice.
       </p>
       <p>
-        This file exists only to keep the service minimal so the tutorial can
-        focus on <sdux-brand-name /> teaching principles instead of helper
-        logic.
+        Keep this file separate so the service stays minimal and the chapter
+        stays focused on the state boundary instead of helper logic.
       </p>
     </div>
   </div>
@@ -256,13 +255,12 @@
       This is the first full CRUD-style expansion that still keeps the tutorial
       disciplined. The component gains form state, mode state, and feedback
       state, but the service remains the only place that creates or replaces
-      Feature State. That is the important
-      <sdux-brand-name /> lesson: the service owns the <sdux-feature-cell />,
-      and the component owns only temporary UI state. The component does not
-      call <sdux-brand-name /> APIs directly, and it does not mutate the
-      registered collection. The service remains the single source of truth for
-      all Feature State. That is the boundary to preserve before a later
-      destructive-action step adds deletion.
+      Feature State. Keep that same boundary in place: the service owns the
+      <sdux-feature-cell />, and the component owns only temporary UI state. The
+      component does not call <sdux-brand-name /> APIs directly, and it does not
+      mutate the registered collection. The service remains the single source of
+      truth for all Feature State. That is the boundary to preserve before a
+      later destructive-action step adds deletion.
     </p>
 
     <div class="callout callout-action">
@@ -286,7 +284,7 @@
     </div>
 
     <div class="callout callout-learn-more">
-      <div class="title">What Changed From the Dropdown Example</div>
+      <div class="title">Add/Edit Flow Summary</div>
 
       <ul>
         <li>
@@ -325,9 +323,8 @@
         validation, normalization, and feedback rules for the add/edit flow.
       </p>
       <p>
-        This file exists only to keep the component minimal so the tutorial can
-        focus on <sdux-brand-name /> teaching principles instead of helper
-        logic.
+        Keep this file separate so the component stays minimal and the chapter
+        stays focused on the state boundary instead of helper logic.
       </p>
     </div>
   </div>

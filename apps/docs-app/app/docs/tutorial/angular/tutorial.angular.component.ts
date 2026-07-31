@@ -26,6 +26,8 @@ import { DisplayCharacterChapterComponent } from './chapters/display-character/d
 import { DisplayCharacterService } from './chapters/display-character/services/display-character.service';
 import { DisplayCharactersChapterComponent } from './chapters/display-characters/display-characters.chapter.component';
 import { DisplayCharactersService } from './chapters/display-characters/services/display-characters.service';
+import { FiltersAndReducersChapterComponent } from './chapters/filters-and-reducers/filters-and-reducers.chapter.component';
+import { FiltersAndReducersService } from './chapters/filters-and-reducers/services/filters-and-reducers.service';
 import { LifecycleChapterComponent } from './chapters/lifecycle/lifecycle.chapter.component';
 import { LifecycleService } from './chapters/lifecycle/services/lifecycle.service';
 
@@ -44,7 +46,8 @@ import { LifecycleService } from './chapters/lifecycle/services/lifecycle.servic
     DisplayCharacterChapterComponent,
     AddEditCharactersChapterComponent,
     DeleteCharactersChapterComponent,
-    LifecycleChapterComponent
+    LifecycleChapterComponent,
+    FiltersAndReducersChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -57,13 +60,15 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly #addEditCharactersService = inject(AddEditCharactersService);
   readonly #deleteCharactersService = inject(DeleteCharactersService);
   readonly #lifeCycleService = inject(LifecycleService);
+  readonly #filtersAndReducersService = inject(FiltersAndReducersService);
 
   readonly #expandedChapterGroups = signal<Record<number, boolean>>({
     1: true,
     2: false,
     3: false,
     4: false,
-    5: false
+    5: false,
+    6: false
   });
 
   readonly #expandedChapters = signal<Record<number, boolean>>({
@@ -71,7 +76,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     2: false,
     3: false,
     4: false,
-    5: false
+    5: false,
+    6: false
   });
 
   constructor() {
@@ -252,6 +258,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     this.#displayCharactersService.chapters(),
     this.#addEditCharactersService.chapters(),
     this.#deleteCharactersService.chapters(),
-    this.#lifeCycleService.chapters()
+    this.#lifeCycleService.chapters(),
+    this.#filtersAndReducersService.chapters()
   ];
 }

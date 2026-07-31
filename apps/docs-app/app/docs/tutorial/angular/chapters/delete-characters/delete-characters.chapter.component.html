@@ -99,14 +99,13 @@
     </p>
 
     <p>
-      This final chapter keeps the tutorial disciplined even while it adds a
-      destructive action. The component now presents a confirmation panel,
-      clears local selection after a confirmed removal, and returns the editor
-      to a safe create-ready state. What did not change is the architectural
-      rule established in the earlier chapters: the component does not call
-      <sdux-brand-name /> APIs directly, and it does not own committed Feature
-      State. Delete is still routed through the same service-owned boundary as
-      every other mutation.
+      This chapter keeps the implementation disciplined even while it adds a
+      destructive action. The component presents a confirmation panel, clears
+      local selection after a confirmed removal, and returns the editor to a
+      safe create-ready state. The architectural rule stays fixed: the component
+      does not call <sdux-brand-name /> APIs directly, and it does not own
+      committed Feature State. Delete is routed through the same service-owned
+      boundary as every other mutation.
     </p>
 
     <div class="callout callout-action">
@@ -130,7 +129,7 @@
     </div>
 
     <div class="callout callout-learn-more">
-      <div class="title">What Changed From the Add/Edit Chapter</div>
+      <div class="title">Delete Flow Summary</div>
 
       <ul>
         <li>

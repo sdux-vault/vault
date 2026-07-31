@@ -91,7 +91,7 @@ export function deriveForceSensitiveDisplay(
 
 /** Derives a display-ready full name for each character without mutating the input. */
 export function deriveFullName(
-  characters: StarWarsCharacter[]
+  characters: readonly StarWarsCharacter[]
 ): StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,

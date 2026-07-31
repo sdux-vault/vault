@@ -88,7 +88,10 @@ export const routes: Routes = [
           // import('./docs/tutorial/angular/examples/delete-characters/example.component').then(
           //   (m) => m.ExampleComponent
           // )
-          import('./docs/tutorial/angular/examples/lifecycle/example.component').then(
+          // import('./docs/tutorial/angular/examples/lifecycle/example.component').then(
+          //   (m) => m.ExampleComponent
+          // )
+          import('./docs/tutorial/angular/examples/filters-and-reducers/example.component').then(
             (m) => m.ExampleComponent
           )
         // import('./docs/tutorial/angular/examples/complete-character-management/example.component').then(
