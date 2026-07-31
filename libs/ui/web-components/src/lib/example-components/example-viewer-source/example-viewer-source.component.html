@@ -1,4 +1,7 @@
-<div class="example-viewer-source" [class.tabs]="displayTabs()">
+<div
+  class="example-viewer-source"
+  [class.tabs]="displayTabs()"
+  [style.--sdux-example-viewer-source-max-height.px]="sourcePaneMaxHeight()">
   @if (displayTabs()) {
     <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false">
       @for (tab of tabs(); let i = $index; track tab) {
@@ -8,26 +11,58 @@
           <div
             class="source-row"
             [class.isMobile]="mobileLayoutService.isMobile()">
-            <pre><code #codeBlock><ng-container *ngTemplateOutlet="tab.template"></ng-container></code></pre>
+            <pre
+              #sourcePane
+              class="source-pane"
+              [class.source-pane-collapsed]="isSourceCollapsed(i)">
+              <code #codeBlock><ng-container *ngTemplateOutlet="tab.template"></ng-container></code>
+            </pre>
 
-            @if (displayCopyPaste()) {
+            @if (
+              displayCopyPaste() ||
+              showFrameworkSelector() ||
+              isSourceOverflowing(i)
+            ) {
               <div class="action-buttons">
-                <button
-                  type="button"
-                  mat-icon-button
-                  matTooltip="Copy {{ tab.label() }} source"
-                  aria-label="Copy {{ tab.label() }} source"
-                  class="copy-btn"
-                  (click)="copyCode(i)">
-                  @if (copySuccess()) {
-                    <mat-icon class="check-mark">check</mat-icon>
-                  } @else {
-                    <mat-icon>content_copy</mat-icon>
-                  }
-                </button>
+                @if (displayCopyPaste()) {
+                  <button
+                    type="button"
+                    mat-icon-button
+                    matTooltip="Copy {{ tab.label() }} source"
+                    aria-label="Copy {{ tab.label() }} source"
+                    class="copy-btn"
+                    (click)="copyCode(i)">
+                    @if (copySuccess()) {
+                      <mat-icon class="check-mark">check</mat-icon>
+                    } @else {
+                      <mat-icon>content_copy</mat-icon>
+                    }
+                  </button>
+                }
                 @if (showFrameworkSelector()) {
                   <sdux-framework-selector
                     [availableFrameworks]="availableFrameworks()" />
+                }
+                @if (isSourceOverflowing(i)) {
+                  <button
+                    type="button"
+                    mat-icon-button
+                    class="expand-btn"
+                    [attr.aria-label]="
+                      (isSourceExpanded(i) ? 'Collapse' : 'Show full') +
+                      ' source for ' +
+                      tab.label()
+                    "
+                    [matTooltip]="
+                      isSourceExpanded(i) ? 'Collapse file' : 'Show full file'
+                    "
+                    (click)="toggleSourceExpansion(i)">
+                    <mat-icon>
+                      {{
+                        isSourceExpanded(i) ? 'fullscreen_exit' : 'fullscreen'
+                      }}
+                    </mat-icon>
+                  </button>
                 }
               </div>
             }
@@ -40,26 +75,56 @@
       <ng-template mat-tab-label>{{ tab.label() }}</ng-template>
 
       <div class="source-row" [class.isMobile]="mobileLayoutService.isMobile()">
-        <pre><code #codeBlock><ng-container *ngTemplateOutlet="tab.template"></ng-container></code></pre>
+        <pre
+          #sourcePane
+          class="source-pane"
+          [class.source-pane-collapsed]="isSourceCollapsed(i)">
+          <code #codeBlock><ng-container *ngTemplateOutlet="tab.template"></ng-container></code>
+        </pre>
 
-        @if (displayCopyPaste()) {
+        @if (
+          displayCopyPaste() ||
+          showFrameworkSelector() ||
+          isSourceOverflowing(i)
+        ) {
           <div class="action-buttons">
-            <button
-              type="button"
-              mat-icon-button
-              matTooltip="Copy {{ tab.label() }} source"
-              aria-label="Copy {{ tab.label() }} source"
-              class="copy-btn"
-              (click)="copyCode(i)">
-              @if (copySuccess()) {
-                <mat-icon class="check-mark">check</mat-icon>
-              } @else {
-                <mat-icon>content_copy</mat-icon>
-              }
-            </button>
+            @if (displayCopyPaste()) {
+              <button
+                type="button"
+                mat-icon-button
+                matTooltip="Copy {{ tab.label() }} source"
+                aria-label="Copy {{ tab.label() }} source"
+                class="copy-btn"
+                (click)="copyCode(i)">
+                @if (copySuccess()) {
+                  <mat-icon class="check-mark">check</mat-icon>
+                } @else {
+                  <mat-icon>content_copy</mat-icon>
+                }
+              </button>
+            }
             @if (showFrameworkSelector()) {
               <sdux-framework-selector
                 [availableFrameworks]="availableFrameworks()" />
+            }
+            @if (isSourceOverflowing(i)) {
+              <button
+                type="button"
+                mat-icon-button
+                class="expand-btn"
+                [attr.aria-label]="
+                  (isSourceExpanded(i) ? 'Collapse' : 'Show full') +
+                  ' source for ' +
+                  tab.label()
+                "
+                [matTooltip]="
+                  isSourceExpanded(i) ? 'Collapse file' : 'Show full file'
+                "
+                (click)="toggleSourceExpansion(i)">
+                <mat-icon>
+                  {{ isSourceExpanded(i) ? 'fullscreen_exit' : 'fullscreen' }}
+                </mat-icon>
+              </button>
             }
           </div>
         }

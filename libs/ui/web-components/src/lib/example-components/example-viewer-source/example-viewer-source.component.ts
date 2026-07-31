@@ -17,6 +17,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
+  AfterViewInit,
   Component,
   ContentChildren,
   ElementRef,
@@ -52,7 +53,9 @@ import { ExampleViewerService } from '../services/example-viewer.service';
   templateUrl: './example-viewer-source.component.html',
   styleUrls: ['./example-viewer-source.component.scss']
 })
-export class ExampleViewerSourceComponent implements AfterContentInit {
+export class ExampleViewerSourceComponent
+  implements AfterContentInit, AfterViewInit
+{
   /**
    * All `<sdux-example-viewer-tab>` elements projected into this component.
    * These represent each source-code panel (HTML, TS, Service, Model, etc.).
@@ -68,9 +71,22 @@ export class ExampleViewerSourceComponent implements AfterContentInit {
   codeBlocks!: QueryList<ElementRef>;
 
   /**
+   * All rendered source pane `<pre>` containers.
+   * These are measured to decide whether the max-height cap should apply.
+   */
+  @ViewChildren('sourcePane', { read: ElementRef })
+  sourcePanes!: QueryList<ElementRef<HTMLElement>>;
+
+  /**
    * Whether the source code should be in a tab.
    */
   readonly displayTabs = input<boolean>(true);
+
+  /**
+   * Default vertical size cap for long source panes.
+   * Source taller than this value starts collapsed and can be expanded per tab.
+   */
+  readonly sourcePaneMaxHeight = input<number>(640);
 
   /**
    * Whether the copy/paste buttons should be displayed.
@@ -136,6 +152,16 @@ export class ExampleViewerSourceComponent implements AfterContentInit {
   readonly tabs = signal<ExampleViewerTabComponent[]>([]);
 
   /**
+   * Tracks which source panes exceed the configured height threshold.
+   */
+  readonly overflowingTabs = signal<Record<number, boolean>>({});
+
+  /**
+   * Tracks whether a given source pane is expanded to its full height.
+   */
+  readonly expandedTabs = signal<Record<number, boolean>>({});
+
+  /**
    * Snack bar service used for showing success/error notifications
    * when copying source code to the clipboard.
    */
@@ -155,10 +181,60 @@ export class ExampleViewerSourceComponent implements AfterContentInit {
   }
 
   /**
+   * Measures rendered code panes once the view exists and whenever the set of
+   * code panes changes.
+   */
+  ngAfterViewInit(): void {
+    this.scheduleOverflowMeasurement();
+    /* istanbul ignore next */
+    this.sourcePanes.changes.subscribe(() =>
+      this.scheduleOverflowMeasurement()
+    );
+  }
+
+  /**
    * Whether the copy icon should display a “success” variant.
    * Automatically resets after a brief timeout when the user copies source code.
    */
   copySuccess = signal(false);
+
+  /**
+   * Returns true when the source pane at the given index exceeds the default height cap.
+   * @param index - Source pane index.
+   * @returns Whether the pane should support expand/collapse behavior.
+   */
+  isSourceOverflowing(index: number): boolean {
+    return this.overflowingTabs()[index] ?? false;
+  }
+
+  /**
+   * Returns true when the source pane at the given index is expanded to full height.
+   * @param index - Source pane index.
+   * @returns Whether the pane is currently expanded.
+   */
+  isSourceExpanded(index: number): boolean {
+    return this.expandedTabs()[index] ?? false;
+  }
+
+  /**
+   * Returns true when the source pane should be rendered with the default height cap.
+   * @param index - Source pane index.
+   * @returns Whether the source pane should render in collapsed mode.
+   */
+  isSourceCollapsed(index: number): boolean {
+    return this.isSourceOverflowing(index) && !this.isSourceExpanded(index);
+  }
+
+  /**
+   * Expands or collapses a source pane while leaving other tabs unchanged.
+   * @param index - Source pane index.
+   */
+  toggleSourceExpansion(index: number): void {
+    this.expandedTabs.update((state) => ({
+      ...state,
+      [index]: !this.isSourceExpanded(index)
+    }));
+  }
 
   /**
    * Copies the content of the given code tab to the clipboard.
@@ -201,6 +277,41 @@ export class ExampleViewerSourceComponent implements AfterContentInit {
 
       // Reset success indicator
       setTimeout(() => this.copySuccess.set(false), 2000);
+    });
+  }
+
+  /**
+   * Schedules a layout pass so pane heights are measured after Angular and Prism have rendered content.
+   */
+  private scheduleOverflowMeasurement(): void {
+    requestAnimationFrame(() => this.updateOverflowState());
+  }
+
+  /**
+   * Records whether each source pane exceeds the configured max-height.
+   */
+  private updateOverflowState(): void {
+    const maxHeight = this.sourcePaneMaxHeight();
+    const nextState = this.sourcePanes
+      .toArray()
+      .reduce<Record<number, boolean>>((overflowMap, paneRef, index) => {
+        overflowMap[index] = paneRef.nativeElement.scrollHeight > maxHeight;
+        return overflowMap;
+      }, {});
+
+    this.overflowingTabs.set(nextState);
+    this.expandedTabs.update((state) => {
+      const nextExpandedState = { ...state };
+
+      Object.entries(nextExpandedState).forEach(([indexKey]) => {
+        const index = Number(indexKey);
+
+        if (!nextState[index]) {
+          delete nextExpandedState[index];
+        }
+      });
+
+      return nextExpandedState;
     });
   }
 }

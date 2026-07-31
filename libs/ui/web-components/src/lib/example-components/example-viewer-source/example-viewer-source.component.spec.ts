@@ -185,4 +185,37 @@ describe('ExampleViewerSourceComponent', () => {
     expect(renderedSources).toEqual(expectedSources);
     expect(highlightedSources).toEqual(expectedSources);
   });
+
+  it('should mark panes as overflowing only when they exceed the max height', () => {
+    component.sourcePanes = {
+      toArray: () => [
+        { nativeElement: { scrollHeight: 800 } },
+        { nativeElement: { scrollHeight: 320 } }
+      ]
+    } as any;
+
+    fixture.componentRef.setInput('sourcePaneMaxHeight', 640);
+    fixture.detectChanges();
+
+    (component as any).updateOverflowState();
+
+    expect(component.isSourceOverflowing(0)).toBeTrue();
+    expect(component.isSourceOverflowing(1)).toBeFalse();
+    expect(component.isSourceCollapsed(0)).toBeTrue();
+    expect(component.isSourceCollapsed(1)).toBeFalse();
+  });
+
+  it('should toggle expanded state per overflowing pane', () => {
+    component.overflowingTabs.set({ 0: true });
+
+    expect(component.isSourceCollapsed(0)).toBeTrue();
+
+    component.toggleSourceExpansion(0);
+    expect(component.isSourceExpanded(0)).toBeTrue();
+    expect(component.isSourceCollapsed(0)).toBeFalse();
+
+    component.toggleSourceExpansion(0);
+    expect(component.isSourceExpanded(0)).toBeFalse();
+    expect(component.isSourceCollapsed(0)).toBeTrue();
+  });
 });
