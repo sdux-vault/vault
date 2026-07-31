@@ -6,12 +6,12 @@ import {
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent
 } from '@sdux-vault/ui/web-components';
-import { lifecycleExampleProject } from '../../../../../stackblitz/projects/angular/lifecycle-example.project';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
+import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
-import type { ExampleFileShape } from '../../../shape/example-file.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
+import { STAR_WARS_LIFECYCLE_CHARACTERS } from '../../generated/lifecycle.generated';
 
 @Component({
   selector: 'sdux-lifecycle-chapter',
@@ -28,7 +28,8 @@ import { ExampleFileTypes } from '../../../types/example-file.type';
 })
 export class LifecycleChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
-  readonly #files = lifecycleExampleProject.files as Record<string, string>;
+  readonly #exampleFileService = inject(ExampleFileService);
+  readonly #characters = STAR_WARS_LIFECYCLE_CHARACTERS;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('lifecycle')!;
@@ -40,45 +41,25 @@ export class LifecycleChapterComponent {
   });
 
   readonly serviceFiles = computed(() => [
-    this.#getFile(
-      ExampleFileTypes.Service,
-      'example.service.ts',
-      'src/example.service.ts'
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.Service
     ),
-    this.#getFile(
-      ExampleFileTypes.ServiceSpec,
-      'example.service.spec.ts',
-      'src/example.service.spec.ts'
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.ServiceSpec
     )
   ]);
 
   readonly componentFiles = computed(() => [
-    this.#getFile(
-      ExampleFileTypes.Component,
-      'example.component.ts',
-      'src/example.component.ts'
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.Component
     ),
-    this.#getFile(
-      ExampleFileTypes.ComponentSpec,
-      'example.component.spec.ts',
-      'src/example.component.spec.ts'
-    ),
-    this.#getFile(
-      ExampleFileTypes.Html,
-      'example.component.html',
-      'src/example.component.html'
+    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.ComponentSpec
     )
   ]);
-
-  #getFile(
-    type: (typeof ExampleFileTypes)[keyof typeof ExampleFileTypes],
-    fileName: string,
-    path: string
-  ): ExampleFileShape {
-    return {
-      type,
-      fileName,
-      source: this.#files[path] ?? ''
-    };
-  }
 }

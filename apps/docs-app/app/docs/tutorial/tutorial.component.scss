@@ -32,8 +32,7 @@
     min-width: 0;
     height: fit-content;
     max-height: none;
-    padding: global.$spacing-md;
-    padding-right: global.$spacing-sm;
+    padding: global.$spacing-sm;
     overflow: visible;
     box-sizing: border-box;
     border: 1px solid global.$sdux-primary-base;
@@ -48,7 +47,7 @@
     .tutorial-steps-title {
       margin: 0;
       color: var(--sdux-text-default);
-      font-size: global.$font-size-lg;
+      font-size: global.$font-size-md;
       font-weight: global.$font-weight-semibold;
 
       a {
@@ -100,6 +99,7 @@
         position: relative;
         width: 100%;
         padding: global.$spacing-xs global.$spacing-sm;
+        font-size: global.$font-size-sm;
         padding-left: 0;
         box-sizing: border-box;
         border-left: 3px solid transparent;
@@ -137,6 +137,7 @@
 
       .tutorial-step-label {
         display: block;
+        font-size: global.$font-size-sm;
       }
     }
   }

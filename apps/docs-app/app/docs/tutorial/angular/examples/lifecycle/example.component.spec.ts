@@ -110,6 +110,14 @@ describe('ExampleComponent', () => {
     expect(host.textContent).not.toContain('No character selected');
   });
 
+  it('should expose edit-mode labels before create mode begins', async () => {
+    await vaultSettled(key);
+
+    expect(component['editorMode']()).toBe('edit');
+    expect(component['editorTitle']()).toBe('Update character');
+    expect(component['submitLabel']()).toBe('Save changes');
+  });
+
   it('should enter create mode and clear the form', async () => {
     await vaultSettled(key);
     fixture.detectChanges();
@@ -128,6 +136,40 @@ describe('ExampleComponent', () => {
     });
     expect(component['characterForm'].pristine).toBeTrue();
     expect(component['characterForm'].untouched).toBeTrue();
+  });
+
+  it('should preserve the original selection when create mode is started twice', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['startCreate']();
+    component['selectedCharacterId'].set(2);
+
+    component['startCreate']();
+    component['cancelEdit']();
+
+    expect(component['selectedCharacterId']()).toBe(1);
+    expect(component['editorMode']()).toBe('edit');
+    expect(component['feedback']()).toEqual(
+      component.editor.feedback['newCharacterDiscarded']
+    );
+  });
+
+  it('should return to edit mode and clear feedback when selecting from create mode', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['startCreate']();
+    component['feedback'].set({
+      message: 'Temporary feedback',
+      tone: 'info'
+    });
+
+    component['selectCharacter']('2');
+
+    expect(component['selectedCharacterId']()).toBe(2);
+    expect(component['editorMode']()).toBe('edit');
+    expect(component['feedback']()).toBeNull();
   });
 
   it('should restore the previous selection when canceling create mode', async () => {
@@ -368,6 +410,90 @@ describe('ExampleComponent', () => {
     component['cancelDelete']();
 
     expect(component['deleteCandidate']()).toBeNull();
+  });
+
+  it('should reset the form and delegate persist-null lifecycle updates to the service', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const persistNullValueSpy = spyOn(service, 'persistNullValue');
+
+    component['characterForm'].setValue({
+      name: 'Temp',
+      lastName: 'Character',
+      faction: 'Unaffiliated',
+      isForceSensitive: false
+    });
+    component['characterForm'].markAsDirty();
+    component['characterForm'].markAllAsTouched();
+
+    component['persistNullValue']();
+
+    expect(persistNullValueSpy).toHaveBeenCalledTimes(1);
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    expect(component['characterForm'].pristine).toBeTrue();
+    expect(component['characterForm'].untouched).toBeTrue();
+    expect(component['featureCellDestroyed']()).toBeFalse();
+  });
+
+  it('should reset the form and delegate reset lifecycle updates to the service', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const resetStateSpy = spyOn(service, 'resetState');
+
+    component['characterForm'].setValue({
+      name: 'Temp',
+      lastName: 'Character',
+      faction: 'Unaffiliated',
+      isForceSensitive: true
+    });
+    component['characterForm'].markAsDirty();
+    component['characterForm'].markAllAsTouched();
+
+    component['resetState']();
+
+    expect(resetStateSpy).toHaveBeenCalledTimes(1);
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    expect(component['characterForm'].pristine).toBeTrue();
+    expect(component['characterForm'].untouched).toBeTrue();
+    expect(component['featureCellDestroyed']()).toBeFalse();
+  });
+
+  it('should mark the feature as destroyed, clear the form, and delegate teardown to the service', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const destroyFeatureCellSpy = spyOn(service, 'destroyFeatureCell');
+
+    component['characterForm'].setValue({
+      name: 'Temp',
+      lastName: 'Character',
+      faction: 'Unaffiliated',
+      isForceSensitive: true
+    });
+    component['characterForm'].markAsDirty();
+    component['characterForm'].markAllAsTouched();
+
+    component['destroyFeatureCell']();
+
+    expect(destroyFeatureCellSpy).toHaveBeenCalledTimes(1);
+    expect(component['featureCellDestroyed']()).toBeTrue();
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    expect(component['characterForm'].pristine).toBeTrue();
+    expect(component['characterForm'].untouched).toBeTrue();
   });
 
   it('should ignore confirm delete when there is no pending candidate', async () => {

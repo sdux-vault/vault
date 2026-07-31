@@ -56,13 +56,13 @@ describe('Component: LifecycleChapterComponent', () => {
         source: jasmine.any(String) as unknown as string
       },
       {
-        type: 'componentSpec',
-        fileName: 'example.component.spec.ts',
+        type: 'html',
+        fileName: 'example.component.html',
         source: jasmine.any(String) as unknown as string
       },
       {
-        type: 'html',
-        fileName: 'example.component.html',
+        type: 'componentSpec',
+        fileName: 'example.component.spec.ts',
         source: jasmine.any(String) as unknown as string
       }
     ]);

@@ -26,11 +26,10 @@
       the template, add a <span class="code">select</span> element that lists
       the registered characters and keep the detail panel bound to computed
       controller state instead of reaching into <sdux-brand-name /> directly.
-      The verification for this step belongs alongside that delta: the updated
-      component spec should prove the controller starts empty, accepts a valid
-      selection, ignores unknown ids, and renders the selected record without
-      moving <sdux-brand-name />
-      ownership out of the service.
+      The matching verification belongs in this same step: the updated component
+      spec should prove the controller starts empty, accepts a valid selection,
+      ignores unknown ids, and renders the selected record without moving
+      <sdux-brand-name /> ownership out of the service.
     </p>
 
     <div class="callout callout-action">
@@ -162,7 +161,7 @@
   aria-label="Launch the completed dropdown tutorial example">
   <div class="tutorial-shortcut-copy">
     <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
-    <h2>Want the finished example without all twelve steps?</h2>
+    <h2>Want the finished dropdown example without these two steps?</h2>
     <p>
       If you want the completed dropdown tutorial, launch the live StackBlitz
       project and inspect the final working implementation directly.

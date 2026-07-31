@@ -190,4 +190,32 @@ describe('ExampleService', () => {
 
     expect(service.state.value()).toEqual([]);
   });
+
+  it('should persist a null lifecycle value through replaceState', async () => {
+    const service = await configureService();
+
+    service.persistNullValue();
+
+    await vaultSettled(key);
+
+    expect(service.state.value()).toBeUndefined();
+    expect(service.state.hasValue()).toBeFalse();
+    expect(service.state.error()).toBeNull();
+  });
+
+  it('should reset the lifecycle state to an undefined value', async () => {
+    const service = await configureService();
+
+    service.resetState();
+
+    expect(service.state.value()).toBeUndefined();
+    expect(service.state.hasValue()).toBeFalse();
+    expect(service.state.error()).toBeNull();
+  });
+
+  it('should finalize the FeatureCell lifecycle with destroy()', async () => {
+    const service = await configureService();
+
+    expect(() => service.destroyFeatureCell()).not.toThrow();
+  });
 });
