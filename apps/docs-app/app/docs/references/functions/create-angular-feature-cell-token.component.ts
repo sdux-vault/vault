@@ -4,12 +4,15 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import {
+  BrandNameComponent,
+  PackageNameComponent
+} from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-create-angular-feature-cell-token',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
       <h3>createAngularFeatureCellToken</h3>
@@ -24,10 +27,13 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
     <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-        Part of the <strong>@sdux-vault/angular</strong> project.
+        <p>
+          Part of the
+          <strong><sdux-package-name [package]="'angular'" /></strong> project.
+        </p>
 
         <pre
-          class="code-inline"><code class="language-ts">npm install @sdux-vault/angular</code></pre>
+          class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'angular'" /></code></pre>
       </div>
     </section>
     <section class="section">

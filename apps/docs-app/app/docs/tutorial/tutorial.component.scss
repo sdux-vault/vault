@@ -301,11 +301,8 @@
       .tutorial-download {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
         gap: global.$spacing-xs;
-      }
-
-      .tutorial-download {
         p {
           margin: 0;
         }

@@ -43,7 +43,7 @@ html {
   --sdux-text-inverse: #{global.$sdux-text-inverse};
   --sdux-text-default: var(--sdux-text-inverse);
   --sdux-text-black: #{global.$sdux-text-black};
-  --sdux-text-black-white: #{global.$sdux-text-black};
+  --sdux-text-white: #{global.$sdux-text-white};
 
   /* Icons */
   --sdux-icon-dark-filter: none;
@@ -171,7 +171,7 @@ html[data-theme='dark'] {
   --sdux-text-secondary: #{global.$sdux-text-secondary};
   --sdux-text-inverse: #{global.$sdux-text-inverse};
   --sdux-text-default: var(--sdux-text-primary);
-  --sdux-text-black-white: #{global.$sdux-text-white};
+  --sdux-text-white: #{global.$sdux-text-white};
 
   /* Toolbar */
   --toolbar-bg: #{global.$sdux-surface-dark};

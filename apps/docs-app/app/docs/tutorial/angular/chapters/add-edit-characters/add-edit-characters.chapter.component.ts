@@ -5,6 +5,7 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  PackageNameComponent,
   SDuXDownloadComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
@@ -24,7 +25,8 @@ import { STAR_WARS_ADD_EDIT_CHARACTERS } from '../../generated/add-edit-characte
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     StackblitzLanguageExampleComponent,
-    SDuXDownloadComponent
+    SDuXDownloadComponent,
+    PackageNameComponent
   ],
   templateUrl: './add-edit-characters.chapter.component.html'
 })

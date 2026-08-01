@@ -4,12 +4,15 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import {
+  BrandNameComponent,
+  PackageNameComponent
+} from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-vault-reactive-state-ref',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
       <h3>VaultReactiveStateRef</h3>
@@ -29,10 +32,13 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
     <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-        Part of the <strong>@sdux-vault/vue</strong> project.
+        <p>
+          Part of the
+          <strong><sdux-package-name [package]="'vue'" /></strong> project.
+        </p>
 
         <pre
-          class="code-inline"><code class="language-ts">npm install @sdux-vault/vue</code></pre>
+          class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'vue'" /></code></pre>
       </div>
     </section>
     <section class="section">

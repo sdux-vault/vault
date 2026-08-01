@@ -141,12 +141,12 @@ export class ComponentGenerator {
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-${kebab}',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: \`${await renderClassDocumentation(entry, this.findCompodocEntry(symbolName, entry.relativePath))}\`,
   styleUrl: '../../scss/documentation.scss',
   encapsulation: ViewEncapsulation.None

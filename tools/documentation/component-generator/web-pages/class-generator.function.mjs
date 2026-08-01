@@ -548,9 +548,11 @@ export async function renderClassDocumentation(entry, documentation) {
   const installation = `<section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/${sanitizeHtml(entry.project)}</strong> project.
+        <p>
+         Part of the <strong><sdux-package-name [package]="'${sanitizeHtml(entry.project)}'" /></strong> project.
+        </p>
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/${sanitizeHtml(entry.project)}</code></pre>
+        <pre class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'${sanitizeHtml(entry.project)}'" /></code></pre>
       </div>
     </section>`;
 

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sduxTestingModule } from '@sdux-vault/ui/web-components';
 import { EncryptAndPersistChapterComponent } from './encrypt-and-persist.chapter.component';
 
-fdescribe('Component: EncryptAndPersistChapterComponent', () => {
+describe('Component: EncryptAndPersistChapterComponent', () => {
   let fixture: ComponentFixture<EncryptAndPersistChapterComponent>;
   let component: EncryptAndPersistChapterComponent;
 
@@ -39,29 +39,20 @@ fdescribe('Component: EncryptAndPersistChapterComponent', () => {
     );
   });
 
-  it('returns the app config and service files for the chapter example', () => {
+  it('returns the app config files for the chapter example', () => {
     expect(component.appConfigFile()).toEqual({
       type: 'appConfig',
       fileName: 'app.config.ts',
       source: jasmine.any(String) as unknown as string
     });
-    expect(component.serviceFiles()).toEqual([
-      {
-        type: 'service',
-        fileName: 'example.service.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'serviceSpec',
-        fileName: 'example.service.spec.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'filter',
-        fileName: 'example.filter.ts',
-        source: jasmine.any(String) as unknown as string
-      }
-    ]);
+  });
+
+  it('returns the service files for the chapter example', () => {
+    expect(component.serviceFiles()).toEqual({
+      type: 'service',
+      fileName: 'example.service.ts',
+      source: jasmine.any(String) as unknown as string
+    });
   });
 
   it('returns the generated component files for the chapter example', () => {
@@ -72,8 +63,28 @@ fdescribe('Component: EncryptAndPersistChapterComponent', () => {
         source: jasmine.any(String) as unknown as string
       },
       {
-        type: 'componentSpec',
-        fileName: 'example.component.spec.ts',
+        type: 'html',
+        fileName: 'example.component.html',
+        source: jasmine.any(String) as unknown as string
+      }
+    ]);
+  });
+
+  it('returns the generated chapter files for the chapter example', () => {
+    expect(component.chapterFiles()).toEqual([
+      {
+        type: 'appConfig',
+        fileName: 'app.config.ts',
+        source: jasmine.any(String) as unknown as string
+      },
+      {
+        type: 'service',
+        fileName: 'example.service.ts',
+        source: jasmine.any(String) as unknown as string
+      },
+      {
+        type: 'component',
+        fileName: 'example.component.ts',
         source: jasmine.any(String) as unknown as string
       },
       {
@@ -82,13 +93,13 @@ fdescribe('Component: EncryptAndPersistChapterComponent', () => {
         source: jasmine.any(String) as unknown as string
       },
       {
-        type: 'characterEditor',
-        fileName: 'example.character-editor.ts',
+        type: 'serviceSpec',
+        fileName: 'example.service.spec.ts',
         source: jasmine.any(String) as unknown as string
       },
       {
-        type: 'characterEditorSpec',
-        fileName: 'example.character-editor.spec.ts',
+        type: 'componentSpec',
+        fileName: 'example.component.spec.ts',
         source: jasmine.any(String) as unknown as string
       }
     ]);

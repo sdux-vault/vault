@@ -4,12 +4,15 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import {
+  BrandNameComponent,
+  PackageNameComponent
+} from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-devtools_aggregate_key_constant',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
       <h3>DEVTOOLS_AGGREGATE_KEY_CONSTANT</h3>
@@ -31,10 +34,13 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
     <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-        Part of the <strong>@sdux-vault/shared</strong> project.
+        <p>
+          Part of the
+          <strong><sdux-package-name [package]="'shared'" /></strong> project.
+        </p>
 
         <pre
-          class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+          class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'shared'" /></code></pre>
       </div>
     </section>
     <section class="section">

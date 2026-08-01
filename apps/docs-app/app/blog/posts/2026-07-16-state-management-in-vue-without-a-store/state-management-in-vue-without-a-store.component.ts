@@ -6,6 +6,7 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  PackageNameComponent,
   SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -21,7 +22,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BrandNameComponent,
     FeatureCellBrandNameComponent,
     SDuXVideoComponent,
-    DiagramComponent
+    DiagramComponent,
+    PackageNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -34,18 +36,18 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           Reaching for Pinia or Vuex the moment two Vue components need to share
           state has become reflex. But cross-component state does not actually
           require a global store. <sdux-brand-name [tm]="true" /> runs the same
-          deterministic pipeline in Vue through a universal core API &mdash;
-          <span class="code">&#64;sdux-vault/core</span> paired with the thin
-          <span class="code">&#64;sdux-vault/vue</span> reactive surface. No
-          adapter ceremony, no Provider tree, no store singleton. You own
+          deterministic pipeline in Vue through a universal core API &mdash; npm
+          install <sdux-package-name [package]="'core'" /> paired with the thin
+          npm install <sdux-package-name [package]="'vue'" /> reactive surface.
+          No adapter ceremony, no Provider tree, no store singleton. You own
           scoped, reactive, atomically-committed state in a few lines that plug
           straight into Vue's composition API.
         </p>
         <div class="callout callout-info">
           <p>
-            <strong>Key takeaway:</strong> Installing
-            <span class="code">&#64;sdux-vault/vue</span> is all you need. It
-            pulls in <span class="code">&#64;sdux-vault/core</span> as a
+            <strong>Key takeaway:</strong> Installing npm install
+            <sdux-package-name [package]="'vue'" /> is all you need. It pulls in
+            npm install <sdux-package-name [package]="'core'" /> as a
             dependency, so the full runtime and API surface come with it &mdash;
             one install, nothing else to wire up.
           </p>
@@ -113,11 +115,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             no Vue-specific reimplementation, no behavior that only exists here.
           </p>
           <p>
-            Vue integration is delivered as a thin wrapper,
-            <span class="code">&#64;sdux-vault/vue</span>, that preserves the
-            core <sdux-feature-cell /> contract and adds one Vue-native
-            addition: <span class="code">useReactiveState()</span>. That single
-            composable connects a
+            Vue integration is delivered as a thin wrapper, npm install
+            <sdux-package-name [package]="'vue'" />, that preserves the core
+            <sdux-feature-cell /> contract and adds one Vue-native addition:
+            <span class="code">useReactiveState()</span>. That single composable
+            connects a
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>'s
             committed state to Vue's effect scope, so your component re-renders
             reactively with no manual subscription and no cleanup code.

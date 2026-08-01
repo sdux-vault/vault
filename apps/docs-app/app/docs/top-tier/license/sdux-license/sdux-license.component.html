@@ -682,9 +682,9 @@
                 <sdux-vault-brand-name /> <br />(Runtime)
 
                 <ul>
-                  <li><sdux-package-name />/vault</li>
-                  <li><sdux-package-name />/persist</li>
-                  <li><sdux-package-name />/encrypt</li>
+                  <li><sdux-package-name [package]="'core'" />/</li>
+                  <li><sdux-package-name [package]="'addons'" />/persist</li>
+                  <li><sdux-package-name [package]="'addons'" />/encrypt</li>
                 </ul>
               </td>
               <td>Vault Community + <br />Commercial License</td>
@@ -718,7 +718,7 @@
               <td>
                 <sdux-vault-brand-name /> <br />(Source Code)
                 <ul>
-                  <li><sdux-package-name />/vault</li>
+                  <li><sdux-package-name [package]="'core'" />/vault</li>
                 </ul>
               </td>
               <td>
@@ -749,11 +749,10 @@
                 <sdux-brand-name /> <br />(Framework Source)
                 <ul>
                   <li><sdux-package-name [package]="'core'" /></li>
-                  <li><sdux-package-name />/add-ons</li>
+                  <li><sdux-package-name [package]="'addons'" /></li>
                   <li><sdux-package-name [package]="'shared'" /></li>
-                  <li><sdux-package-name />/dev-tools</li>
-                  <li><sdux-package-name />/dev-tools-ui</li>
-                  <li><sdux-package-name />/web-components</li>
+                  <li><sdux-package-name [package]="'devtools'" />-ui</li>
+                  <li><sdux-package-name [package]="'ui/web-components'" /></li>
                 </ul>
               </td>
               <td>MIT License <br />(with clarification)</td>
@@ -787,11 +786,11 @@
                 (npm packages)
                 <ul>
                   <li><sdux-package-name [package]="'core'" /></li>
-                  <li><sdux-package-name />/add-ons</li>
+                  <li><sdux-package-name [package]="'addons'" /></li>
                   <li><sdux-package-name [package]="'shared'" /></li>
-                  <li><sdux-package-name />/dev-tools</li>
-                  <li><sdux-package-name />/dev-tools-ui</li>
-                  <li><sdux-package-name />/web-components</li>
+                  <li><sdux-package-name [package]="'devtools'" /></li>
+                  <li><sdux-package-name [package]="'devtools'" />-ui</li>
+                  <li><sdux-package-name [package]="'ui/web-components'" /></li>
                 </ul>
               </td>
               <td>MIT License</td>
