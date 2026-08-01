@@ -5,22 +5,22 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import {
-  ARTIFACTS_ROOT,
-  INLINE_PROJECT_EXAMPLES,
-  applyFrameworkAliases,
-  buildProject,
-  buildProjectDefinitions,
-  collectFiles,
-  discoverExamples,
-  generateNavComponent,
-  generateNavHtml,
-  generateProjectImports,
-  generateSitemapUrls,
-  generateTsFile,
-  run,
-  toExportName
-} from '../generate-inline-projects.mjs';
+import { fileURLToPath } from 'node:url';
+import { InlineProjectsGenerator } from '../generate-inline-projects.class.mjs';
+
+const TEST_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.resolve(TEST_DIRECTORY, '../../..');
+const ARTIFACTS_ROOT = path.join(TEST_DIRECTORY, '../artifacts');
+const INLINE_PROJECT_EXAMPLES = [
+  {
+    language: 'angular',
+    directory: path.join(
+      PROJECT_ROOT,
+      'apps/docs-app/app/docs/tutorial/angular/examples/display-character'
+    ),
+    name: 'display-character-example'
+  }
+];
 
 function directoryEntry(name) {
   return {
@@ -35,6 +35,39 @@ function fileEntry(name) {
     isDirectory: () => false
   };
 }
+
+function createGenerator(overrides = {}) {
+  return new InlineProjectsGenerator({
+    sourceRoot: '/workspace/stackblitz',
+    outputDir: '/workspace/output',
+    projectRootPath: '/workspace',
+    navDir: '/workspace/nav',
+    importsOutput: '/workspace/generated/imports.ts',
+    urlsOutput: '/workspace/generated/urls.mjs',
+    artifactsRoot: ARTIFACTS_ROOT,
+    configuredExamples: [],
+    ...overrides
+  });
+}
+
+const generator = createGenerator();
+const collectFiles = (...args) => generator.collectFiles(...args);
+const toExportName = (...args) => generator.toExportName(...args);
+const generateTsFile = (...args) => generator.generateTsFile(...args);
+const buildProject = (...args) => generator.buildProject(...args);
+const generateNavComponent = (...args) =>
+  generator.generateNavComponent(...args);
+const generateNavHtml = (...args) => generator.generateNavHtml(...args);
+const generateProjectImports = (...args) =>
+  generator.generateProjectImports(...args);
+const generateSitemapUrls = (...args) => generator.generateSitemapUrls(...args);
+const applyFrameworkAliases = (...args) =>
+  generator.applyFrameworkAliases(...args);
+const buildProjectDefinitions = ({ sourceRoot, configuredExamples }) =>
+  createGenerator({ sourceRoot, configuredExamples }).buildProjectDefinitions();
+const discoverExamples = ({ sourceRoot, configuredExamples }) =>
+  createGenerator({ sourceRoot, configuredExamples }).discoverExamples();
+const run = (options) => createGenerator(options).run();
 
 describe('generate-inline-projects', () => {
   let readdirSyncMock;

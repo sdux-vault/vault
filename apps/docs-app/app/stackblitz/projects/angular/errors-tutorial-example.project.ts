@@ -1917,6 +1917,7 @@ export class ExampleCharacterEditor {
 
       &.character-details {
         position: relative;
+        min-height: 200px;
 
         .loading-overlay {
           position: absolute;

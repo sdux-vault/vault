@@ -32,6 +32,7 @@ const SOURCE_FILE_TYPES = [
   { type: 'observableSpec', suffix: '.observable.spec.ts' },
   { type: 'promiseSpec', suffix: '.promise.spec.ts' },
   { type: 'httpResourceSpec', suffix: '.http-resource.spec.ts' },
+  { type: 'hydrateSpec', suffix: '.hydrate.spec.ts' },
   { type: 'characterDomain', suffix: '.character-domain.ts' },
   { type: 'characterDomainSpec', suffix: '.character-domain.spec.ts' },
   { type: 'characterEditor', suffix: '.character-editor.ts' },

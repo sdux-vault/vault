@@ -102,6 +102,17 @@ const sourceGroups = [
     )
   },
   {
+    exportName: 'STAR_WARS_ASYNC_INPUT',
+    sourceDirectory: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/examples/async-input'
+    ),
+    outputFile: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/generated/async-input.generated.ts'
+    )
+  },
+  {
     exportName: 'INITIAL_SERVICE',
     sourceFile: path.join(
       projectRoot,

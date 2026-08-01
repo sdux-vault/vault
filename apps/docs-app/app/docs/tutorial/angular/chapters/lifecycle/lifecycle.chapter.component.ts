@@ -32,7 +32,7 @@ export class LifecycleChapterComponent {
   readonly #characters = STAR_WARS_LIFECYCLE_CHARACTERS;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
-    const example = this.#stackblitzService.getExample('lifecycle')!;
+    const example = this.#stackblitzService.getExample('lifecycle-tutorial')!;
 
     return {
       example,

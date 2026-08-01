@@ -202,15 +202,15 @@ echo "Starting SDuX Enterprise Documentation..."
 DOCS_DIR="$(cd "$(dirname "$0")" && pwd)"
 PORT=4321
 URL="http://localhost:$PORT"
-LOG_FILE="$DOCS_DIR/start-docs.log"
+info_FILE="$DOCS_DIR/start-docs.info"
 
 cd "$DOCS_DIR"
 
 echo "Docs directory: $DOCS_DIR"
-echo "Log file: $LOG_FILE"
+echo "info file: $info_FILE"
 
 # Start static server in SPA mode from the docs directory
-nohup npx serve "$DOCS_DIR" -l "$PORT" -s > "$LOG_FILE" 2>&1 &
+nohup npx serve "$DOCS_DIR" -l "$PORT" -s > "$info_FILE" 2>&1 &
 
 # Wait for server to come up
 for i in {1..20}; do
@@ -227,8 +227,8 @@ done
 
 echo ""
 echo "Failed to start SDuX Enterprise Docs."
-echo "Check log file:"
-echo "$LOG_FILE"
+echo "Check info file:"
+echo "$info_FILE"
 exit 1
 `;
 
@@ -246,7 +246,7 @@ const os = require('os');
 const port = 4321;
 const url = "http://localhost:" + port;
 
-console.log("Starting SDuX Enterprise Docs...");
+console.info("Starting SDuX Enterprise Docs...");
 
 exec("npx serve . -p " + port, { stdio: "inherit" });
 
@@ -261,7 +261,7 @@ setTimeout(() => {
     exec("xdg-open " + url);
   }
 
-  console.log("Docs available at " + url);
+  console.info("Docs available at " + url);
 }, 1500);
 `;
 

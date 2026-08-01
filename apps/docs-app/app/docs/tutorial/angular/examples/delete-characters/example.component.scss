@@ -525,6 +525,7 @@ $example-min-width: calc($action-column-width + ($spacing-lg * 2));
 
       &.character-details {
         position: relative;
+        min-height: 200px;
 
         .loading-overlay {
           position: absolute;
@@ -840,11 +841,8 @@ $example-min-width: calc($action-column-width + ($spacing-lg * 2));
     .tap-content {
       display: grid;
       gap: $spacing-lg;
-    }
-
-    .state-content,
-    .tap-content {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
     }
 
     .tap-column {
@@ -935,10 +933,6 @@ $example-min-width: calc($action-column-width + ($spacing-lg * 2));
   }
 
   > .feature-cell-controls > .filter-reducer-output {
-    .filter-reducer-content {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
     .tap-column {
       width: 100%;
 
@@ -981,7 +975,8 @@ $example-min-width: calc($action-column-width + ($spacing-lg * 2));
     .stepwise-content {
       display: grid;
       gap: $spacing-lg;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
     }
 
     .stepwise-column {

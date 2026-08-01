@@ -22,7 +22,7 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
       Object({
         example: Object({
           title: 'Chapter 6: Filters and Reducers',
-          id: 'filters-and-reducers',
+          id: 'filters-and-reducers-tutorial',
           exampleName: 'filters-and-reducers-tutorial-example',
           displayCopyIcon: false,
           languages: [{ name: 'Angular', key: 'angular' }],

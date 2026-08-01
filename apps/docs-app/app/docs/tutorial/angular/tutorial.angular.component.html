@@ -608,6 +608,73 @@
           <sdux-errors-chapter></sdux-errors-chapter>
         </div>
       </div>
+
+      <section
+        class="chapter-break"
+        id="chapter-8"
+        aria-labelledby="chapter-8-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
+
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 8</p>
+          <div class="chapter-header">
+            <h2 id="chapter-8-title">Async Input Flow</h2>
+
+            <button
+              type="button"
+              class="chapter-toggle"
+              aria-controls="chapter-8-content"
+              [attr.aria-expanded]="isChapterExpanded(8)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'Async Input Flow',
+                  isChapterExpanded(8)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'Async Input Flow',
+                  isChapterExpanded(8)
+                )
+              "
+              (click)="toggleTutorialChapter(8)">
+              <mat-icon aria-hidden="true">
+                {{
+                  isChapterExpanded(8)
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                }}
+              </mat-icon>
+            </button>
+          </div>
+
+          <p>
+            This chapter introduces asynchronous inputs without changing the
+            service-owned <sdux-feature-cell /> boundary. You will hydrate
+            initial State and then resolve Promise, Observable, and Angular HTTP
+            Resource inputs through the same
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            pipeline.
+          </p>
+          <p>
+            The component owns only the controls and presentation state, while
+            the service owns source registration and state updates. The active
+            loading and error State in the template makes each asynchronous
+            lifecycle visible as you work through the examples.
+          </p>
+        </div>
+      </section>
+
+      <div
+        id="chapter-8-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(8)"
+        [attr.aria-hidden]="!isChapterExpanded(8)"
+        [attr.inert]="!isChapterExpanded(8) ? '' : null">
+        <div class="chapter-content-inner">
+          <sdux-async-input-chapter></sdux-async-input-chapter>
+        </div>
+      </div>
       <sdux-pipeline-related-topics></sdux-pipeline-related-topics>
     </main>
   </div>

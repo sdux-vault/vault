@@ -102,11 +102,16 @@
     <p>
       Now surface the failure in two separate teaching outputs. First, the
       component observes the singleton
-      <span class="code">VaultErrorService()</span> so the UI can render the
-      current global Vault error and clear it after acknowledgement. Second, the
-      component renders the serialized output from the service-owned
-      <span class="code">errors()</span> callback so you can see the finalized
-      error and snapshot that were emitted after error commitment.
+      <span class="code"
+        ><a href="/docs/references/functions/vault-error-service"
+          >VaultErrorService</a
+        >()</span
+      >
+      so the UI can render the current global Vault error and clear it after
+      acknowledgement. Second, the component renders the serialized output from
+      the service-owned <span class="code">errors()</span> callback so you can
+      see the finalized error and snapshot that were emitted after error
+      commitment.
     </p>
 
     <p>
@@ -141,8 +146,13 @@
 
       <ul>
         <li>
-          <span class="code">VaultErrorService()</span> is a singleton service,
-          not a property of this chapter's <sdux-feature-cell />.
+          <span class="code"
+            ><a href="/docs/references/functions/vault-error-service"
+              >VaultErrorService</a
+            >()</span
+          >
+          is a singleton service, not a property of this chapter's
+          <sdux-feature-cell />.
         </li>
         <li>
           Clicking <span class="code">Clear</span> acknowledges the current

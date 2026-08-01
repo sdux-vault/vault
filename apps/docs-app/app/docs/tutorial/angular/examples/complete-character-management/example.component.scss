@@ -525,6 +525,7 @@ $example-min-width: calc($action-column-width + ($spacing-lg * 2));
 
       &.character-details {
         position: relative;
+        min-height: 200px;
 
         .loading-overlay {
           position: absolute;

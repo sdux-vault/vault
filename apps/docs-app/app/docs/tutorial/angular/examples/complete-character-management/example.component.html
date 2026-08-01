@@ -216,62 +216,62 @@
                 or Reject in the Actions section.
               </p>
             </div>
-          }
-
-          <div class="header">
-            <h3 id="details-title">Character details</h3>
-          </div>
-
-          @if (selectedCharacter(); as character) {
-            <!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
-            <dl>
-              <div>
-                <dt>Full name</dt>
-                <dd>
-                  {{
-                    character.fullName ??
-                      character.name + ' ' + character.lastName
-                  }}
-                </dd>
-              </div>
-              <div>
-                <dt>First name</dt>
-                <dd>{{ character.name }}</dd>
-              </div>
-              <div>
-                <dt>Last name</dt>
-                <dd>{{ character.lastName }}</dd>
-              </div>
-              <div>
-                <dt>Identifier</dt>
-                <dd>{{ character.id }}</dd>
-              </div>
-              <div>
-                <dt>Faction</dt>
-                <dd>{{ character.faction }}</dd>
-              </div>
-              <div>
-                <dt class="force-sensitive">Force-sensitive</dt>
-                <dd>{{ character.forceSensitiveDisplay }}</dd>
-              </div>
-            </dl>
           } @else {
-            <div class="empty-state">
-              @if (characters().length === 0) {
-                <h4>The collection is empty</h4>
-                <p>Add a character to continue the example.</p>
-                <!-- Teaching point: Create (ex-009) -->
-                <button type="button" class="button" (click)="startCreate()">
-                  Add the first character
-                </button>
-              } @else {
-                <h4>No character selected</h4>
-                <p>
-                  Choose a character from the list or complete the form to add a
-                  new one.
-                </p>
-              }
+            <div class="header">
+              <h3 id="details-title">Character details</h3>
             </div>
+
+            @if (selectedCharacter(); as character) {
+              <!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
+              <dl>
+                <div>
+                  <dt>Full name</dt>
+                  <dd>
+                    {{
+                      character.fullName ??
+                        character.name + ' ' + character.lastName
+                    }}
+                  </dd>
+                </div>
+                <div>
+                  <dt>First name</dt>
+                  <dd>{{ character.name }}</dd>
+                </div>
+                <div>
+                  <dt>Last name</dt>
+                  <dd>{{ character.lastName }}</dd>
+                </div>
+                <div>
+                  <dt>Identifier</dt>
+                  <dd>{{ character.id }}</dd>
+                </div>
+                <div>
+                  <dt>Faction</dt>
+                  <dd>{{ character.faction }}</dd>
+                </div>
+                <div>
+                  <dt class="force-sensitive">Force-sensitive</dt>
+                  <dd>{{ character.forceSensitiveDisplay }}</dd>
+                </div>
+              </dl>
+            } @else {
+              <div class="empty-state">
+                @if (characters().length === 0) {
+                  <h4>The collection is empty</h4>
+                  <p>Add a character to continue the example.</p>
+                  <!-- Teaching point: Create (ex-009) -->
+                  <button type="button" class="button" (click)="startCreate()">
+                    Add the first character
+                  </button>
+                } @else {
+                  <h4>No character selected</h4>
+                  <p>
+                    Choose a character from the list or complete the form to add
+                    a new one.
+                  </p>
+                }
+              </div>
+            }
           }
         </section>
 

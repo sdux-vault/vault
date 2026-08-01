@@ -1,6 +1,6 @@
 {
   "name": "@sdux-vault/vault",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "engines": {
     "node": ">=24.0.0",
     "npm": ">=11.0.0"
@@ -177,7 +177,7 @@
     "@angular/material": "^21.2.12",
     "@angular/platform-browser": "^21.2.13",
     "@angular/router": "^21.2.13",
-    "@sdux-vault/engine": "^1.0.1",
+    "@sdux-vault/engine": "^1.0.6",
     "@stackblitz/sdk": "^1.11.0",
     "diff": "^9.0.0",
     "flexsearch": "^0.8.212",

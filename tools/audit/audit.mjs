@@ -47,7 +47,7 @@ function classifyFile(filePath) {
 }
 
 // ---------------------------------------------
-// Meter logic
+// Meter infoic
 // ---------------------------------------------
 function getTypeMeter(type, count) {
   switch (type) {
@@ -78,7 +78,7 @@ function getOverallMeter(total) {
 }
 
 // ---------------------------------------------
-// Copy logic
+// Copy infoic
 // ---------------------------------------------
 function copyTsFiles(srcDir, outDir, statsMap) {
   if (!fs.existsSync(srcDir)) return;
@@ -114,7 +114,7 @@ function zipDirectory(sourceDir, outPath) {
     const archive = archiver('zip', { zlib: { level: 9 } });
 
     output.on('close', () => {
-      console.log(`📦 Zipped: ${outPath} (${archive.pointer()} bytes)`);
+      console.info(`📦 Zipped: ${outPath} (${archive.pointer()} bytes)`);
       resolve();
     });
 
@@ -144,7 +144,7 @@ async function main() {
     fs.mkdirSync(resolvedOut, { recursive: true });
   }
 
-  console.log('\n🚀 Processing Domains...\n');
+  console.info('\n🚀 Processing Domains...\n');
 
   for (const domain of DOMAINS) {
     const srcDir = path.join(resolvedSrc, domain.dir);
@@ -152,35 +152,35 @@ async function main() {
 
     const statsMap = {};
 
-    console.log(`\n📦 Domain: ${domain.name}`);
+    console.info(`\n📦 Domain: ${domain.name}`);
 
     copyTsFiles(srcDir, outDir, statsMap);
 
     // ---- Stats ----
     let total = 0;
 
-    console.log('\n📊 File Types:');
+    console.info('\n📊 File Types:');
 
     for (const [type, count] of Object.entries(statsMap)) {
       const meter = getTypeMeter(type, count);
       total += count;
 
-      console.log(
+      console.info(
         `  ${type.padEnd(12)} : ${String(count).padStart(4)} → ${meter}`
       );
     }
 
     const overall = getOverallMeter(total);
 
-    console.log(`\n  TOTAL FILES : ${total}`);
-    console.log(`  AI LOAD     : ${overall}`);
+    console.info(`\n  TOTAL FILES : ${total}`);
+    console.info(`  AI LOAD     : ${overall}`);
 
     // ---- Zip ----
     const zipPath = path.join(resolvedOut, `${domain.name}.zip`);
     await zipDirectory(outDir, zipPath);
   }
 
-  console.log('\n✅ All domains processed and archived.\n');
+  console.info('\n✅ All domains processed and archived.\n');
 }
 
 main();

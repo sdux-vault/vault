@@ -7,6 +7,7 @@
 export const STACKBLITZ_PROJECT_IMPORTS: Record<string, () => Promise<unknown>> = {
   'angular/add-edit-characters-example': () => import('../../../stackblitz/projects/angular/add-edit-characters-example.project'),
   'angular/array-append-merge-example': () => import('../../../stackblitz/projects/angular/array-append-merge-example.project'),
+  'angular/async-input-tutorial-example': () => import('../../../stackblitz/projects/angular/async-input-tutorial-example.project'),
   'angular/basic-filter-reducer-example': () => import('../../../stackblitz/projects/angular/basic-filter-reducer-example.project'),
   'angular/comparison-example': () => import('../../../stackblitz/projects/angular/comparison-example.project'),
   'angular/debugger-example': () => import('../../../stackblitz/projects/angular/debugger-example.project'),
