@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const addEditCharactersExampleProject: Project = {
-  title: 'add-edit-characters-example',
+export const delayTutorialExampleProject: Project = {
+  title: 'delay-tutorial-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const addEditCharactersExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "add-edit-characters-example",
+  "name": "delay-tutorial-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -84,7 +84,16 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
-import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
+import {
+  // withAes256EncryptBehavior,
+  withArrayAppendMergeBehavior,
+  withDelayController
+  // withSessionStoragePersistBehavior,
+  // withStepwiseController,
+  // withStepwiseFilterBehavior,
+  // withStepwiseReducerBehavior,
+  // withStepwiseResolveBehavior
+} from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { ExampleService } from './example.service';
 import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
@@ -127,6 +136,17 @@ export const appConfig: ApplicationConfig = {
          * collection instead of replacing the entire FeatureCell value.
          */
         withArrayAppendMergeBehavior
+      ],
+      [
+        /**
+         * Attaches the Delay Controller to the FeatureCell's Policy stage.
+         * This structural registration makes \`.withDelay()\` available to the
+         * service, where the example configures the three-second interval.
+         * Each state update attempt waits for that interval before continuing
+         * unchanged through the remaining pipeline; the controller does not
+         * filter, merge, reorder, or transform the candidate value.
+         */
+        withDelayController
       ]
     )
   ]
@@ -330,8 +350,8 @@ export function getNextCharacterId(
 
 /** Derives display-friendly force sensitivity labels without mutating the input. */
 export function deriveForceSensitiveDisplay(
-  characters: StarWarsCharacter[]
-): StarWarsCharacter[] {
+  characters: readonly StarWarsCharacter[]
+): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
@@ -341,8 +361,8 @@ export function deriveForceSensitiveDisplay(
 
 /** Derives a display-ready full name for each character without mutating the input. */
 export function deriveFullName(
-  characters: StarWarsCharacter[]
-): StarWarsCharacter[] {
+  characters: readonly StarWarsCharacter[]
+): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     fullName: \`\${character.name} \${character.lastName}\`
@@ -352,7 +372,7 @@ export function deriveFullName(
 
 /** Creates a pure reducer that orders a cloned collection by last name. */
 export function withCharactersSortedByLastName(): ReducerFunction<
-  StarWarsCharacter[]
+  readonly StarWarsCharacter[]
 > {
   return (characters) =>
     [...characters].sort((left, right) =>
@@ -1044,6 +1064,33 @@ export class ExampleCharacterEditor {
   }
 
   <fieldset class="feature-cell-controls">
+    @if (deleteCandidate(); as character) {
+      <section
+        class="delete-confirmation"
+        aria-labelledby="delete-confirmation-title"
+        role="alert">
+        <div>
+          <h3 id="delete-confirmation-title">
+            Delete
+            {{
+              character.fullName ?? character.name + ' ' + character.lastName
+            }}?
+          </h3>
+          <p>This action removes the character from the current collection.</p>
+        </div>
+        <div class="actions">
+          <button
+            type="button"
+            class="button secondary"
+            (click)="cancelDelete()">
+            Cancel
+          </button>
+          <button type="button" class="button danger" (click)="confirmDelete()">
+            Ok
+          </button>
+        </div>
+      </section>
+    }
     <div class="workspace">
       <div class="workspace-row workspace-row-top">
         <div class="field selection">
@@ -1094,10 +1141,7 @@ export class ExampleCharacterEditor {
               <div>
                 <dt>Full name</dt>
                 <dd>
-                  {{
-                    character.fullName ??
-                      character.name + ' ' + character.lastName
-                  }}
+                  {{ character.fullName }}
                 </dd>
               </div>
               <div>
@@ -1118,7 +1162,7 @@ export class ExampleCharacterEditor {
               </div>
               <div>
                 <dt class="force-sensitive">Force-sensitive</dt>
-                <dd>{{ character.forceSensitiveDisplay ? 'Yes' : 'No' }}</dd>
+                <dd>{{ character.forceSensitiveDisplay }}</dd>
               </div>
             </dl>
           } @else {
@@ -1231,6 +1275,15 @@ export class ExampleCharacterEditor {
             </div>
 
             <div class="actions">
+              @if (editorMode() === 'edit') {
+                <button
+                  type="button"
+                  class="button danger delete"
+                  [disabled]="!selectedCharacter()"
+                  (click)="requestDelete()">
+                  Delete Character
+                </button>
+              }
               <button
                 type="submit"
                 class="button"
@@ -1246,6 +1299,62 @@ export class ExampleCharacterEditor {
             </div>
           </form>
         </section>
+      </div>
+    </div>
+
+    <div class="tap-output">
+      <input
+        id="results-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Results visibility"
+        checked />
+      <div class="section-header">
+        <span>Results</span>
+        <label
+          class="section-chevron"
+          for="results-section-toggle"
+          title="Show or hide Results"></label>
+      </div>
+
+      <div class="tap-content">
+        <input
+          id="tap-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle pipeline output visibility"
+          checked />
+
+        <div class="tap-column">
+          <div class="tap-header">
+            <h3>Delay Timer</h3>
+            <label
+              class="tap-chevron"
+              for="tap-output-toggle"
+              title="Show or hide pipeline output"></label>
+          </div>
+          <!-- Teaching point: Delay (ex-033) -->
+          <div class="delay-fields">
+            <label>
+              Delay (ms)
+              <input
+                type="number"
+                min="0"
+                readonly
+                aria-label="Configured delay in milliseconds"
+                [value]="delayMilliseconds" />
+            </label>
+            <label>
+              Delay Timer
+              <input
+                type="number"
+                min="0"
+                readonly
+                aria-label="Elapsed delay timer in milliseconds"
+                [value]="delayTimerMilliseconds()" />
+            </label>
+          </div>
+        </div>
       </div>
     </div>
   </fieldset>
@@ -2326,6 +2435,19 @@ describe('ExampleComponent', () => {
     }
   ];
 
+  const withDerivedFields = (
+    characters: readonly StarWarsCharacter[]
+  ): readonly StarWarsCharacter[] =>
+    [...characters]
+      .map((character) => ({
+        ...character,
+        forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
+        fullName: \`\${character.name} \${character.lastName}\`
+      }))
+      .sort((left, right) => left.lastName.localeCompare(right.lastName));
+
+  const reducedCharacters = withDerivedFields(initialCharacters);
+
   let component: ExampleComponent;
   let fixture: ComponentFixture<ExampleComponent>;
   let service: ExampleService;
@@ -2352,7 +2474,7 @@ describe('ExampleComponent', () => {
   it('should expose the latest character collection from the service', async () => {
     expect(component.characters()).toEqual([]);
     await vaultSettled(key);
-    expect(component.characters()).toEqual(initialCharacters);
+    expect(component.characters()).toEqual(reducedCharacters);
   });
 
   it('should expose no selected character before a valid selection is made', async () => {
@@ -2366,7 +2488,7 @@ describe('ExampleComponent', () => {
     component['selectCharacter']('2');
 
     expect(component['selectedCharacterId']()).toBe(2);
-    expect(component['selectedCharacter']()).toEqual(initialCharacters[1]);
+    expect(component['selectedCharacter']()).toEqual(reducedCharacters[0]);
   });
 
   it('should ignore an unknown character id', async () => {
@@ -2394,8 +2516,8 @@ describe('ExampleComponent', () => {
       '.character-details'
     ) as HTMLElement;
 
-    expect(detailsPanel.textContent).toContain('Luke Skywalker');
-    expect(detailsPanel.textContent).toContain('Jedi Order');
+    expect(detailsPanel.textContent).toContain('Leia Organa');
+    expect(detailsPanel.textContent).toContain('Rebel Alliance');
     expect(detailsPanel.textContent).not.toContain('No character selected');
   });
 
@@ -2445,12 +2567,12 @@ describe('ExampleComponent', () => {
     component['cancelEdit']();
 
     expect(component['editorMode']()).toBe('edit');
-    expect(component['selectedCharacterId']()).toBe(1);
+    expect(component['selectedCharacterId']()).toBe(2);
     expect(component['characterForm'].getRawValue()).toEqual({
-      name: 'Luke',
-      lastName: 'Skywalker',
-      faction: 'Jedi Order',
-      isForceSensitive: true
+      name: 'Leia',
+      lastName: 'Organa',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
     });
     expect(component['feedback']()).toEqual(
       component.editor.feedback['newCharacterDiscarded']
@@ -2631,16 +2753,105 @@ describe('ExampleComponent', () => {
       tone: 'success'
     });
   });
+
+  it('should open delete confirmation for the selected character and clear feedback', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['feedback'].set({
+      message: 'Old feedback',
+      tone: 'info'
+    });
+    component['selectCharacter']('2');
+
+    component['requestDelete']();
+
+    expect(component['deleteCandidate']()).toEqual(reducedCharacters[0]);
+    expect(component['feedback']()).toBeNull();
+  });
+
+  it('should ignore delete requests when no character is selected', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['selectedCharacterId'].set(null);
+    component['deleteCandidate'].set(null);
+
+    component['requestDelete']();
+
+    expect(component['deleteCandidate']()).toBeNull();
+  });
+
+  it('should clear the pending delete candidate when delete is canceled', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['deleteCandidate'].set(initialCharacters[0]!);
+
+    component['cancelDelete']();
+
+    expect(component['deleteCandidate']()).toBeNull();
+  });
+
+  it('should ignore confirm delete when there is no pending candidate', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const removeCharacterSpy = spyOn(service, 'removeCharacter');
+
+    component['deleteCandidate'].set(null);
+
+    component['confirmDelete']();
+
+    expect(removeCharacterSpy).not.toHaveBeenCalled();
+    expect(component['editorMode']()).toBe('edit');
+  });
+
+  it('should remove the pending character and reset the editor after delete confirmation', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const removeCharacterSpy = spyOn(
+      service,
+      'removeCharacter'
+    ).and.callThrough();
+
+    component['selectCharacter']('2');
+    component['requestDelete']();
+
+    component['confirmDelete']();
+    await vaultSettled(key);
+
+    expect(removeCharacterSpy).toHaveBeenCalledOnceWith(2);
+    expect(component['deleteCandidate']()).toBeNull();
+    expect(component['selectedCharacterId']()).toBeNull();
+    expect(component['editorMode']()).toBe('create');
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    expect(component['characterForm'].pristine).toBeTrue();
+    expect(component['characterForm'].untouched).toBeTrue();
+    expect(component['feedback']()).toEqual({
+      message: 'Leia Organa was removed.',
+      tone: 'success'
+    });
+    expect(component.characters()).toEqual(
+      withDerivedFields([initialCharacters[0]!])
+    );
+  });
 });
 `,
     'src/example.component.ts': `import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   effect,
   inject,
   signal
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   FormBuilder,
@@ -2649,11 +2860,14 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
+import { StateEmitTypes } from '@sdux-vault/shared';
+import { EXAMPLE_DELAY_MILLISECONDS } from '../complete-character-management/example.service';
 import {
   EditorMode,
   ExampleCharacterEditor,
   OperationFeedback
 } from './example.character-editor';
+import { ElapsedTimer } from './example.elapsed-timer';
 import { ExampleService } from './example.service';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
@@ -2699,14 +2913,6 @@ export class ExampleComponent {
     () => this.#exampleService.state.value() ?? []
   );
 
-  /** Defines the non-nullable form model and validation rules shared by create and edit flows. */
-  protected readonly characterForm = this.#formBuilder.nonNullable.group({
-    name: ['', [this.#trimmedTextLength(2, 40)]],
-    lastName: ['', [this.#trimmedTextLength(2, 40)]],
-    faction: ['', Validators.required],
-    isForceSensitive: [false]
-  });
-
   /** Holds the identity currently selected by the character picker, or \`null\` when none is selected. */
   protected readonly selectedCharacterId = signal<number | null>(null);
 
@@ -2725,20 +2931,60 @@ export class ExampleComponent {
     return this.characters().find(({ id }) => id === selectedId) ?? null;
   });
 
-  /** Derives the editor heading from the current mode so the template stays declarative. */
-  protected readonly editorTitle = computed(() =>
-    this.editorMode() === 'create' ? 'Add a character' : 'Update character'
-  );
-
-  /** Derives the submit-button label from the operation that saving will perform. */
-  protected readonly submitLabel = computed(() =>
-    this.editorMode() === 'create' ? 'Add character' : 'Save changes'
-  );
+  /** Defines the non-nullable form model and validation rules shared by create and edit flows. */
+  protected readonly characterForm = this.#formBuilder.nonNullable.group({
+    name: ['', [this.#trimmedTextLength(2, 40)]],
+    lastName: ['', [this.#trimmedTextLength(2, 40)]],
+    faction: ['', Validators.required],
+    isForceSensitive: [false]
+  });
 
   /** Watches the reactive collection and selects its first character when initial state arrives. */
   constructor() {
+    inject(DestroyRef).onDestroy(() => this.#delayTimer.destroy());
+
+    this.#observeStateStream();
     this.#observeInitialSelection();
   }
+
+  /** Publishes whole elapsed milliseconds for the Delay Timer teaching output. */
+  protected readonly delayTimerMilliseconds = signal(0);
+
+  /** Measures elapsed wall-clock time from each user-initiated pipeline request. */
+  readonly #delayTimer = new ElapsedTimer((milliseconds) => {
+    this.delayTimerMilliseconds.set(Math.floor(milliseconds));
+  });
+
+  /**
+   * Watches FeatureCell emissions to synchronize the teaching timer with the
+   * Delay Controller lifecycle. A controller denial starts elapsed-time
+   * tracking, while pipeline finalization or an error stops it; the
+   * subscription is released automatically when the component is destroyed.
+   * @returns Nothing; the subscription updates the local timer signals.
+   */
+  #observeStateStream(): void {
+    this.#exampleService.state\$
+      .pipe(takeUntilDestroyed())
+      .subscribe(({ type }) => {
+        if (
+          !this.#delayTimer.running &&
+          type === StateEmitTypes.DenyController
+        ) {
+          this.#delayTimer.reset();
+          this.#delayTimer.start();
+        }
+        if (
+          this.#delayTimer.running &&
+          (type === StateEmitTypes.FinalizePipeline ||
+            type === StateEmitTypes.PipelineError)
+        ) {
+          this.#delayTimer.stop();
+        }
+      });
+  }
+
+  /** Displays the fixed controller configuration beside the live elapsed timer. */
+  protected readonly delayMilliseconds = EXAMPLE_DELAY_MILLISECONDS;
 
   /**
    * Selects and patches the first character when the reactive collection first
@@ -2766,17 +3012,6 @@ export class ExampleComponent {
   }
 
   /**
-   * Creates a validator that trims text before enforcing required, minimum, and maximum lengths.
-   * @param minimum - Smallest accepted number of non-whitespace characters.
-   * @param maximum - Largest accepted number of non-whitespace characters.
-   * @returns An Angular validator that reports the matching validation error or \`null\`.
-   */
-  #trimmedTextLength(minimum: number, maximum: number): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null =>
-      this.editor.validateTrimmedText(control.value, minimum, maximum);
-  }
-
-  /**
    * Resolves a picker value to a known character identity in the current SDuX-managed collection.
    * Unknown identities are ignored so stale or invalid option values cannot disturb the editor.
    * @param value - Character identity received from the select element.
@@ -2796,55 +3031,6 @@ export class ExampleComponent {
     this.editorMode.set('edit');
     this.feedback.set(null);
     this.#patchForm(character);
-  }
-
-  /**
-   * Enters create mode, remembers the prior selection, and resets the form to clean defaults.
-   * Repeated calls preserve the original selection so cancel can still return to it.
-   * @returns Nothing; the editor signals and form state are reset in place.
-   */
-  protected startCreate(): void {
-    if (this.editorMode() !== 'create') {
-      this.#selectedCharacterBeforeCreate = this.selectedCharacterId();
-    }
-
-    this.selectedCharacterId.set(null);
-    this.editorMode.set('create');
-    this.feedback.set(null);
-    this.#clearCharacterForm();
-  }
-
-  /**
-   * Discards current edits and restores the character selected before editing or creating began.
-   * When no valid selection exists, it falls back to a clean create form.
-   * @returns Nothing; editor mode, form values, and feedback are updated in place.
-   */
-  protected cancelEdit(): void {
-    if (this.editorMode() === 'create') {
-      const character = this.characters().find(
-        ({ id }) => id === this.#selectedCharacterBeforeCreate
-      );
-
-      if (character) {
-        this.selectedCharacterId.set(character.id);
-        this.#selectedCharacterBeforeCreate = null;
-        this.editorMode.set('edit');
-        this.#patchForm(character);
-        this.feedback.set(this.editor.feedback['newCharacterDiscarded']);
-        return;
-      }
-    }
-
-    const character = this.selectedCharacter();
-
-    if (character) {
-      this.editorMode.set('edit');
-      this.#patchForm(character);
-      this.feedback.set(this.editor.feedback['unsavedChangesDiscarded']);
-      return;
-    }
-
-    this.startCreate();
   }
 
   /**
@@ -2897,6 +3083,55 @@ export class ExampleComponent {
   }
 
   /**
+   * Enters create mode, remembers the prior selection, and resets the form to clean defaults.
+   * Repeated calls preserve the original selection so cancel can still return to it.
+   * @returns Nothing; the editor signals and form state are reset in place.
+   */
+  protected startCreate(): void {
+    if (this.editorMode() !== 'create') {
+      this.#selectedCharacterBeforeCreate = this.selectedCharacterId();
+    }
+
+    this.selectedCharacterId.set(null);
+    this.editorMode.set('create');
+    this.feedback.set(null);
+    this.#clearCharacterForm();
+  }
+
+  /**
+   * Discards current edits and restores the character selected before editing or creating began.
+   * When no valid selection exists, it falls back to a clean create form.
+   * @returns Nothing; editor mode, form values, and feedback are updated in place.
+   */
+  protected cancelEdit(): void {
+    if (this.editorMode() === 'create') {
+      const character = this.characters().find(
+        ({ id }) => id === this.#selectedCharacterBeforeCreate
+      );
+
+      if (character) {
+        this.selectedCharacterId.set(character.id);
+        this.#selectedCharacterBeforeCreate = null;
+        this.editorMode.set('edit');
+        this.#patchForm(character);
+        this.feedback.set(this.editor.feedback['newCharacterDiscarded']);
+        return;
+      }
+    }
+
+    const character = this.selectedCharacter();
+
+    if (character) {
+      this.editorMode.set('edit');
+      this.#patchForm(character);
+      this.feedback.set(this.editor.feedback['unsavedChangesDiscarded']);
+      return;
+    }
+
+    this.startCreate();
+  }
+
+  /**
    * Resolves the stable label used in messages and template fallbacks.
    * @param character - Raw or reduced character whose display label should be returned.
    * @returns A stable full-name label composed from the current character fields.
@@ -2935,7 +3170,298 @@ export class ExampleComponent {
     this.characterForm.markAsPristine();
     this.characterForm.markAsUntouched();
   }
+
+  /** Holds the character awaiting explicit confirmation before removal. */
+  protected readonly deleteCandidate = signal<StarWarsCharacter | null>(null);
+
+  /**
+   * Opens the confirmation state for the currently selected character.
+   * No confirmation is shown when the selection cannot resolve to a character.
+   * @returns Nothing; the delete candidate and feedback signals are updated in place.
+   */
+  protected requestDelete(): void {
+    const character = this.selectedCharacter();
+
+    if (character) {
+      this.deleteCandidate.set(character);
+      this.feedback.set(null);
+    }
+  }
+
+  /**
+   * Closes the removal confirmation without changing the character collection.
+   * @returns Nothing; the pending delete candidate is cleared.
+   */
+  protected cancelDelete(): void {
+    this.deleteCandidate.set(null);
+  }
+
+  /**
+   * Delegates confirmed removal to the service, then resets the component to create mode.
+   * The flow is confirmation → service removal → FeatureCell pipeline → reactive collection update.
+   * @returns Nothing; selection, form, confirmation, and feedback state are updated in place.
+   */
+  protected confirmDelete(): void {
+    const character = this.deleteCandidate();
+
+    if (!character) {
+      return;
+    }
+
+    this.#exampleService.removeCharacter(character.id);
+
+    this.deleteCandidate.set(null);
+    this.selectedCharacterId.set(null);
+    this.#selectedCharacterBeforeCreate = null;
+    this.editorMode.set('create');
+    this.#clearCharacterForm();
+
+    this.feedback.set(
+      this.editor.characterRemovedFeedback(this.#characterLabel(character))
+    );
+  }
+
+  /** Derives the editor heading from the current mode so the template stays declarative. */
+  protected readonly editorTitle = computed(() =>
+    this.editorMode() === 'create' ? 'Add a character' : 'Update character'
+  );
+
+  /** Derives the submit-button label from the operation that saving will perform. */
+  protected readonly submitLabel = computed(() =>
+    this.editorMode() === 'create' ? 'Add character' : 'Save changes'
+  );
+
+  /**
+   * Creates a validator that trims text before enforcing required, minimum, and maximum lengths.
+   * @param minimum - Smallest accepted number of non-whitespace characters.
+   * @param maximum - Largest accepted number of non-whitespace characters.
+   * @returns An Angular validator that reports the matching validation error or \`null\`.
+   */
+  #trimmedTextLength(minimum: number, maximum: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null =>
+      this.editor.validateTrimmedText(control.value, minimum, maximum);
+  }
 }
+`,
+    'src/example.elapsed-timer.spec.ts': `import { ElapsedTimer } from './example.elapsed-timer';
+
+describe('ElapsedTimer', () => {
+  let animationFrame: FrameRequestCallback;
+  let currentTime: number;
+  let cancelAnimationFrameSpy: jasmine.Spy;
+  let requestAnimationFrameSpy: jasmine.Spy;
+
+  beforeEach(() => {
+    currentTime = 100;
+    spyOn(performance, 'now').and.callFake(() => currentTime);
+    requestAnimationFrameSpy = spyOn(
+      window,
+      'requestAnimationFrame'
+    ).and.callFake((callback: FrameRequestCallback) => {
+      animationFrame = callback;
+      return 42;
+    });
+    cancelAnimationFrameSpy = spyOn(window, 'cancelAnimationFrame');
+  });
+
+  describe('idle state', () => {
+    it('should publish elapsed milliseconds on animation frames after start', () => {
+      const elapsedValues: number[] = [];
+      const timer = new ElapsedTimer((milliseconds) =>
+        elapsedValues.push(milliseconds)
+      );
+
+      timer.start();
+
+      expect(timer.running).toBeTrue();
+      expect(timer.elapsed).toBe(0);
+      expect(elapsedValues).toEqual([0]);
+      expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(1);
+
+      currentTime = 1_350.75;
+      animationFrame(0);
+
+      expect(timer.elapsed).toBe(1_250.75);
+      expect(elapsedValues).toEqual([0, 1_250.75]);
+      expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('running state', () => {
+    it('should ignore repeated starts', () => {
+      const onChange = jasmine.createSpy('onChange');
+      const timer = new ElapsedTimer(onChange);
+
+      timer.start();
+      timer.start();
+
+      expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('reset state', () => {
+    it('should stop the active timer and publish zero elapsed time', () => {
+      const onChange = jasmine.createSpy('onChange');
+      const timer = new ElapsedTimer(onChange);
+
+      timer.start();
+      timer.reset();
+
+      expect(timer.running).toBeFalse();
+      expect(timer.elapsed).toBe(0);
+      expect(cancelAnimationFrameSpy).toHaveBeenCalledOnceWith(42);
+      expect(onChange).toHaveBeenCalledWith(0);
+    });
+  });
+
+  describe('stopped state', () => {
+    it('should cancel future frames without clearing the elapsed value', () => {
+      const timer = new ElapsedTimer(() => {});
+
+      timer.start();
+      currentTime = 600;
+      animationFrame(0);
+      timer.stop();
+
+      expect(timer.running).toBeFalse();
+      expect(timer.elapsed).toBe(500);
+      expect(cancelAnimationFrameSpy).toHaveBeenCalledOnceWith(42);
+    });
+
+    it('should ignore a queued frame that runs after the timer stops', () => {
+      const onChange = jasmine.createSpy('onChange');
+      const timer = new ElapsedTimer(onChange);
+
+      timer.start();
+      onChange.calls.reset();
+      requestAnimationFrameSpy.calls.reset();
+      timer.stop();
+
+      currentTime = 900;
+      animationFrame(0);
+
+      expect(onChange).not.toHaveBeenCalled();
+      expect(requestAnimationFrameSpy).not.toHaveBeenCalled();
+      expect(timer.elapsed).toBe(0);
+    });
+  });
+
+  describe('destroyed state', () => {
+    it('should cancel future frames while preserving the latest elapsed value', () => {
+      const timer = new ElapsedTimer(() => {});
+
+      timer.start();
+      currentTime = 725;
+      animationFrame(0);
+      timer.destroy();
+
+      expect(timer.running).toBeFalse();
+      expect(timer.elapsed).toBe(625);
+      expect(cancelAnimationFrameSpy).toHaveBeenCalledOnceWith(42);
+    });
+  });
+});
+`,
+    'src/example.elapsed-timer.ts': `/**
+ * Framework-independent elapsed timer used to visualize the Delay Controller's
+ * hold interval. A callback bridges animation-frame timing into Angular signals
+ * without coupling this utility to the component or FeatureCell.
+ */
+export class ElapsedTimer {
+  /** Timestamp from which the current elapsed interval is measured. */
+  #startTime = 0;
+
+  /** Accumulated elapsed milliseconds since the latest reset. */
+  #elapsed = 0;
+
+  /** Prevents duplicate animation loops when start is requested repeatedly. */
+  #running = false;
+
+  /** Active animation-frame handle used for deterministic cleanup. */
+  #frameId = 0;
+
+  /** Publishes elapsed values into the consuming framework's reactive state. */
+  readonly #onChange: (milliseconds: number) => void;
+
+  /**
+   * Creates a timer that publishes its elapsed duration after every frame.
+   * @param onChange - Consumer callback receiving elapsed milliseconds.
+   */
+  constructor(onChange: (milliseconds: number) => void) {
+    this.#onChange = onChange;
+  }
+
+  /** Current elapsed duration in milliseconds. */
+  get elapsed(): number {
+    return this.#elapsed;
+  }
+
+  /** Whether an animation-frame timing loop is currently active. */
+  get running(): boolean {
+    return this.#running;
+  }
+
+  /**
+   * Starts or resumes elapsed-time measurement without creating duplicate loops.
+   * @returns Nothing; elapsed values are published through the callback.
+   */
+  start(): void {
+    if (this.#running) {
+      return;
+    }
+
+    this.#running = true;
+    this.#startTime = performance.now() - this.#elapsed;
+    this.#tick();
+  }
+
+  /**
+   * Stops measurement, clears elapsed time, and publishes the zero value.
+   * @returns Nothing; the timer is ready for a fresh pipeline attempt.
+   */
+  reset(): void {
+    this.stop();
+    this.#elapsed = 0;
+    this.#onChange(0);
+  }
+
+  stop(): void {
+    this.#running = false;
+    cancelAnimationFrame(this.#frameId);
+  }
+
+  /**
+   * Cancels future animation frames while retaining the latest elapsed value.
+   * @returns Nothing; no further callback values are produced.
+   */
+  destroy(): void {
+    this.stop();
+  }
+
+  /** Publishes the current duration and schedules the next animation frame. */
+  #tick(): void {
+    if (!this.#running) {
+      return;
+    }
+
+    this.#elapsed = performance.now() - this.#startTime;
+    this.#onChange(this.#elapsed);
+    this.#frameId = requestAnimationFrame(() => this.#tick());
+  }
+}
+`,
+    'src/example.filter.ts': `// example.filter.ts
+import { FilterFunction } from '@sdux-vault/shared';
+import type { StarWarsCharacter } from './star-wars-character.shape';
+
+/**
+ * Removes characters whose last name is exactly \`"unknown"\` without mutating the candidate collection.
+ * @param characters - Candidate character collection entering the Filter stage.
+ * @returns A new collection containing every character with a known last name.
+ */
+export const removeUnknownLastNameFilter: FilterFunction<
+  readonly StarWarsCharacter[]
+> = (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');
 `,
     'src/example.service.spec.ts': `import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
@@ -2965,6 +3491,15 @@ describe('ExampleService', () => {
     }
   ];
 
+  const withDerivedFields = (
+    characters: readonly StarWarsCharacter[]
+  ): readonly StarWarsCharacter[] =>
+    characters.map((character) => ({
+      ...character,
+      forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
+      fullName: \`\${character.name} \${character.lastName}\`
+    }));
+
   const configureService = async (
     initialState: readonly StarWarsCharacter[] | null = initialCharacters
   ): Promise<ExampleService> => {
@@ -2991,7 +3526,7 @@ describe('ExampleService', () => {
   it('should initialize with the configured FeatureCell State', async () => {
     const service = await configureService();
 
-    expect(service.state.value()).toEqual(initialCharacters);
+    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
     expect(service.state.isLoading()).toBeFalse();
     expect(service.state.error()).toBeNull();
     expect(service.state.hasValue()).toBeTrue();
@@ -3016,7 +3551,9 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([createdCharacter]);
+    expect(service.state.value()).toEqual(
+      withDerivedFields([createdCharacter])
+    );
   });
 
   it('should create the first character with id 1 when no value exists', async () => {
@@ -3038,7 +3575,9 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([{ ...createdCharacter }]);
+    expect(service.state.value()).toEqual(
+      withDerivedFields([createdCharacter])
+    );
   });
 
   it('should replace the matching character without changing the others', async () => {
@@ -3061,8 +3600,7 @@ describe('ExampleService', () => {
       isForceSensitive: false
     });
     expect(service.state.value()).toEqual([
-      updatedCharacter,
-      initialCharacters[1]!
+      ...withDerivedFields([updatedCharacter, initialCharacters[1]!])
     ]);
   });
 
@@ -3085,7 +3623,7 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(initialCharacters);
+    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
   });
 
   it('should safely update against an empty collection when no value exists', async () => {
@@ -3109,15 +3647,42 @@ describe('ExampleService', () => {
     });
     expect(service.state.value()).toEqual([]);
   });
+
+  it('should remove the matching character from the current collection', async () => {
+    const service = await configureService();
+
+    service.removeCharacter(10);
+
+    await vaultSettled(key);
+
+    expect(service.state.value()).toEqual(
+      withDerivedFields([initialCharacters[1]!])
+    );
+  });
+
+  it('should safely remove against an empty collection when no value exists', async () => {
+    const service = await configureService(null);
+
+    service.removeCharacter(10);
+
+    await vaultSettled(key);
+
+    expect(service.state.value()).toEqual([]);
+  });
 });
 `,
     'src/example.service.ts': `import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { EXAMPLE_DELAY_MILLISECONDS } from '../complete-character-management/example.service';
 import {
   createCharacterState,
+  deriveForceSensitiveDisplay,
+  deriveFullName,
   getNextCharacterId,
+  withCharactersSortedByLastName,
   type StarWarsCharacterDraft
 } from './example.character-domain';
+import { removeUnknownLastNameFilter } from './example.filter';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
@@ -3137,6 +3702,12 @@ export class ExampleService {
   readonly #vault = injectVault<readonly StarWarsCharacter[]>(ExampleService);
 
   /**
+   * Exposes committed FeatureCell snapshots for consumers that teach observable state access.
+   * Each emission carries the same state value available through the Angular signal API.
+   */
+  readonly state\$ = this.#vault.state\$;
+
+  /**
    * Exposes the FeatureCell's Angular signal state for value, loading, error, and presence checks.
    * Consumers can bind to these reactive accessors without subscribing manually.
    */
@@ -3146,6 +3717,64 @@ export class ExampleService {
    * Initializes the FeatureCell for the add/edit tutorial slice.
    */
   constructor() {
+    /*
+     * \`.filters()\` registers \`removeUnknownLastNameFilter\` as a
+     * \`FilterFunction<readonly StarWarsCharacter[]>\`.
+     *
+     * This pure function runs before reducers and returns a new candidate
+     * collection without characters whose last name is exactly \`unknown\`.
+     * The inline second filter normally returns that collection unchanged. When
+     * the teaching flag is enabled, it throws deliberately so the example can show
+     * pipeline error normalization without allowing the candidate to commit.
+     */
+    this.#vault.filters([
+      removeUnknownLastNameFilter,
+      (characters) => {
+        return characters;
+      }
+    ]);
+
+    /*
+     * The first \`.reducers()\` entry is a delegating
+     * \`ReducerFunction<readonly StarWarsCharacter[]>\`.
+     *
+     * After filtering, this imported pure function performs an immutable transformation
+     * through \`deriveForceSensitiveDisplay()\`, producing a new collection in which
+     * every retained character has a \`Yes\` or \`No\` display value.
+     */
+
+    /*
+     * The second entry uses a factory-generated pure reducer, a different function
+     * pattern that still returns the same \`ReducerFunction\` contract.
+     *
+     * It runs after Reducer 1, clones the transformed collection, and sorts characters
+     * alphabetically by \`lastName\` without mutating the incoming array.
+     */
+
+    /*
+     * The third entry is another delegating pure reducer.
+     *
+     * It runs after sorting and derives a display-ready \`fullName\` from the existing
+     * \`name\` and \`lastName\` fields so every view can reuse the same post-pipeline label.
+     */
+    this.#vault.reducers([
+      deriveForceSensitiveDisplay,
+      withCharactersSortedByLastName(),
+      deriveFullName
+    ]);
+
+    /*
+     * \`.withDelay()\` configures the registered Delay Controller to pause every
+     * pipeline attempt for exactly three seconds at the Policy stage.
+     *
+     * The controller changes execution timing only: it preserves every candidate,
+     * performs no value transformation, and releases each trace unchanged after
+     * its deterministic hold expires.
+     */
+    this.#vault.withDelay?.({
+      millisecondDelay: EXAMPLE_DELAY_MILLISECONDS
+    });
+
     this.#vault.initialize();
   }
 
@@ -3189,6 +3818,20 @@ export class ExampleService {
     });
 
     return updatedCharacter;
+  }
+
+  /**
+   * Filters the requested identity from the latest collection through \`replaceState\`.
+   * An unknown ID leaves the visible collection unchanged.
+   * @param id - Identity of the character to remove.
+   * @returns Nothing; consumers observe the resulting collection through \`characters\`.
+   */
+  removeCharacter(id: number): void {
+    this.#vault.replaceState({
+      value: () =>
+        this.#vault.state.value()?.filter((character) => character.id !== id) ??
+        []
+    });
   }
 }
 `,

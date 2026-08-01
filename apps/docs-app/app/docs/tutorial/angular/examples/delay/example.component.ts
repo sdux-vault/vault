@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   effect,
   inject,
   signal
@@ -15,15 +16,14 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { VaultErrorService, VaultErrorShape } from '@sdux-vault/shared';
+import { StateEmitTypes } from '@sdux-vault/shared';
+import { EXAMPLE_DELAY_MILLISECONDS } from '../complete-character-management/example.service';
 import {
   EditorMode,
   ExampleCharacterEditor,
   OperationFeedback
 } from './example.character-editor';
-import { exampleHydrate } from './example.hydrate';
-import { exampleObservable } from './example.observable';
-import { examplePromise } from './example.promise';
+import { ElapsedTimer } from './example.elapsed-timer';
 import { ExampleService } from './example.service';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
@@ -97,186 +97,50 @@ export class ExampleComponent {
 
   /** Watches the reactive collection and selects its first character when initial state arrives. */
   constructor() {
+    inject(DestroyRef).onDestroy(() => this.#delayTimer.destroy());
+
+    this.#observeStateStream();
     this.#observeInitialSelection();
-    this.#observeGlobalErrors();
   }
 
-  /** Exposes the FeatureCell loading signal so the template can cover the current selection. */
-  protected readonly state = this.#exampleService.state;
+  /** Publishes whole elapsed milliseconds for the Delay Timer teaching output. */
+  protected readonly delayTimerMilliseconds = signal(0);
 
-  /** Prevents the one-time hydration source from being settled more than once. */
-  protected readonly hydrationSettled = signal(false);
-
-  /**
-   * Resolves the authoritative hydration source and completes FeatureCell initialization.
-   * A missing resolver preserves the pending UI because no hydration cycle was completed.
-   * @returns Nothing; the hydrated characters continue through the full pipeline automatically.
-   */
-  protected resolveHydration(): void {
-    const resolveHydration = exampleHydrate.getResolve();
-
-    if (!resolveHydration) {
-      return;
-    }
-
-    resolveHydration();
-    this.hydrationSettled.set(true);
-  }
+  /** Measures elapsed wall-clock time from each user-initiated pipeline request. */
+  readonly #delayTimer = new ElapsedTimer((milliseconds) => {
+    this.delayTimerMilliseconds.set(Math.floor(milliseconds));
+  });
 
   /**
-   * Rejects the authoritative hydration source and completes initialization with an Error.
-   * Vault exposes the failure without evaluating configured initial State as a fallback.
-   * @returns Nothing; loading and Error State update through pipeline finalization.
+   * Watches FeatureCell emissions to synchronize the teaching timer with the
+   * Delay Controller lifecycle. A controller denial starts elapsed-time
+   * tracking, while pipeline finalization or an error stops it; the
+   * subscription is released automatically when the component is destroyed.
+   * @returns Nothing; the subscription updates the local timer signals.
    */
-  protected rejectHydration(): void {
-    const rejectHydration = exampleHydrate.getReject();
-
-    if (!rejectHydration) {
-      return;
-    }
-
-    rejectHydration();
-    this.hydrationSettled.set(true);
-  }
-
-  /** Tracks the manually controlled request so only its valid next action is visible. */
-  protected readonly promisePending = signal(false);
-
-  /**
-   * Starts the deferred Promise merge and exposes its Resolve and Reject controls.
-   * Vault owns the corresponding StateSnapshot loading state while the Promise is pending.
-   * @returns Nothing; button visibility and FeatureCell state update reactively.
-   */
-  protected fetchWithPromise(): void {
-    this.promisePending.set(true);
-    this.#exampleService.fetchWithPromise();
-  }
-
-  /**
-   * Completes the active Promise request and restores the Fetch with Promise control.
-   * A missing resolver leaves the pending UI intact because no request was completed.
-   * @returns Nothing; the resolved characters continue through the pipeline automatically.
-   */
-  protected resolvePromise(): void {
-    const resolvePromise = examplePromise.getResolve();
-
-    if (!resolvePromise) {
-      return;
-    }
-
-    resolvePromise();
-    this.promisePending.set(false);
-  }
-
-  /**
-   * Rejects the active Promise request and restores the Fetch with Promise control.
-   * Vault normalizes the thrown rejection into error state and preserves the collection.
-   * @returns Nothing; loading and error state update through pipeline finalization.
-   */
-  protected rejectPromise(): void {
-    const rejectPromise = examplePromise.getReject();
-
-    if (!rejectPromise) {
-      return;
-    }
-
-    rejectPromise();
-    this.promisePending.set(false);
-  }
-
-  /** Tracks the manually controlled Observable so only its valid next action is visible. */
-  protected readonly observablePending = signal(false);
-
-  /**
-   * Starts the Observable merge and exposes its Emit and Error controls.
-   * Vault owns the corresponding StateSnapshot loading state until the user
-   * explicitly selects the source's terminal outcome.
-   * @returns Nothing; button visibility and FeatureCell state update reactively.
-   */
-  protected addByObservable(): void {
-    this.observablePending.set(true);
-    this.#exampleService.addByObservable();
-  }
-
-  /**
-   * Emits the active Observable character collection and restores the Add control.
-   * A missing emitter leaves the pending UI intact because no source was completed.
-   * @returns Nothing; emitted characters continue through the pipeline automatically.
-   */
-  protected emitObservable(): void {
-    const emitObservable = exampleObservable.getEmit();
-
-    if (!emitObservable) {
-      return;
-    }
-
-    emitObservable();
-    this.observablePending.set(false);
-  }
-
-  /**
-   * Errors the active Observable and restores the Add control.
-   * Vault normalizes the source error and preserves the current character collection.
-   * @returns Nothing; the error continues through pipeline finalization.
-   */
-  protected errorObservable(): void {
-    const errorObservable = exampleObservable.getError();
-
-    if (!errorObservable) {
-      return;
-    }
-
-    errorObservable();
-    this.observablePending.set(false);
-  }
-
-  /**
-   * Delegates the remote character request to the FeatureCell service.
-   * Angular owns the HTTP resource lifecycle while the component reacts to the
-   * FeatureCell's existing loading, value, and error signals.
-   * @returns Nothing; the resolved collection is rendered from reactive State.
-   */
-  protected fetchWithHttpResource(): void {
-    this.#exampleService.fetchWithHttpResource();
-  }
-  /**
-   * Subscribes to the application-level Vault error stream and mirrors its
-   * current error into the component's accessible feedback state. Clearing the
-   * service error removes the message from the rendered example without
-   * changing the FeatureCell collection.
-   * @returns Nothing; the subscription updates the global error signal.
-   */
-  #observeGlobalErrors(): void {
-    this.#globalErrorService.error$
+  #observeStateStream(): void {
+    this.#exampleService.state$
       .pipe(takeUntilDestroyed())
-      .subscribe((error: VaultErrorShape | null) => {
-        this.globalError.set(
-          error && this.#globalErrorService.hasError ? error : null
-        );
+      .subscribe(({ type }) => {
+        if (
+          !this.#delayTimer.running &&
+          type === StateEmitTypes.DenyController
+        ) {
+          this.#delayTimer.reset();
+          this.#delayTimer.start();
+        }
+        if (
+          this.#delayTimer.running &&
+          (type === StateEmitTypes.FinalizePipeline ||
+            type === StateEmitTypes.PipelineError)
+        ) {
+          this.#delayTimer.stop();
+        }
       });
   }
 
-  /** Provides the singleton stream and controls for application-level Vault errors. */
-  readonly #globalErrorService = VaultErrorService();
-
-  /** Holds the active application-level Vault error until the user clears it. */
-  protected readonly globalError = signal<VaultErrorShape | null>(null);
-
-  /**
-   * Clears the active application-level error after the user acknowledges it.
-   * The singleton emits `null`, which also removes the error message from the template.
-   * @returns Nothing; the global error service and reactive UI state are cleared.
-   */
-  /** Teaching Point: Global Error Service: Ex-011 */
-  protected clearGlobalError(): void {
-    this.#exampleService.clearEmittedError();
-    this.#globalErrorService.clear();
-  }
-
-  /** Serializes the finalized error and StateSnapshot observed by the latest error callback. */
-  protected readonly errorEmissionJson = computed(() =>
-    this.editor.serializeErrorEmission(this.#exampleService.emittedError())
-  );
+  /** Displays the fixed controller configuration beside the live elapsed timer. */
+  protected readonly delayMilliseconds = EXAMPLE_DELAY_MILLISECONDS;
 
   /**
    * Selects and patches the first character when the reactive collection first

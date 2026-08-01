@@ -16,8 +16,8 @@ import {
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import {
   // withAes256EncryptBehavior,
-  withArrayAppendMergeBehavior
-  // withDelayController,
+  withArrayAppendMergeBehavior,
+  withDelayController
   // withSessionStoragePersistBehavior,
   // withStepwiseController,
   // withStepwiseFilterBehavior,
@@ -212,8 +212,12 @@ export const appConfig: ApplicationConfig = {
         // withStepwiseFilterBehavior,
         // withStepwiseReducerBehavior,
         // withTabSyncStateBehavior
+      ],
+      [
+        withDelayController
+        // withStepwiseController,
+        // withTabSyncController
       ]
-      // [withDelayController, withStepwiseController, withTabSyncController]
     )
   ]
 };

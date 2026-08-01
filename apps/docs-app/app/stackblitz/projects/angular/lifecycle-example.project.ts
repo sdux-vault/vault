@@ -3079,6 +3079,12 @@ export class ExampleComponent {
     this.#observeInitialSelection();
   }
 
+  /**
+   * Selects and patches the first character when the reactive collection first
+   * becomes available. The one-time guard preserves later user selections and
+   * prevents asynchronous state emissions from interrupting create mode.
+   * @returns Nothing; the effect updates local selection and form state.
+   */
   #observeInitialSelection(): void {
     effect(() => {
       const characters = this.characters();
