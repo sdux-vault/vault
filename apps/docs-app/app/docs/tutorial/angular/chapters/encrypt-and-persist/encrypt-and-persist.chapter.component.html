@@ -1,0 +1,337 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section" id="step-23">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 23: Encrypt Feature State</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      You can encrypt finalized Feature State at the persistence boundary with
+      the AES-256-GCM Encrypt behavior. The pipeline continues to work with
+      plain in-memory values; encryption runs after Resolve, Merge, Operators,
+      Filters, and Reducers have completed and before the value is persisted.
+    </p>
+    <p>
+      Configure <span class="code">withAes256EncryptBehavior</span> and call
+      <span class="code">setAes256Secret()</span> before initialization. The
+      example uses a static salt so you can inspect and repeat the tutorial. In
+      a secure application, create and retrieve salt material dynamically from
+      an appropriate secure configuration source and keep it stable for data
+      that must be decrypted later.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Open <span class="code">app.config.ts</span> and register the AES-256
+          Encrypt behavior.
+        </li>
+        <li>
+          Open <span class="code">example.service.ts</span> and configure the
+          tutorial secret and static salt before
+          <span class="code">initialize()</span>.
+        </li>
+        <li>
+          Use the Results panel to compare plain Feature State with the
+          encrypted envelope.
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Encryption does not change the value exposed by the FeatureCell.
+        </li>
+        <li>
+          AES-256-GCM provides confidentiality and integrity for persisted data.
+        </li>
+        <li>
+          The salt must be stable when previously persisted ciphertext must be
+          restored.
+        </li>
+      </ul>
+    </div>
+    <sdux-example-viewer-source [displayTabs]="false"
+      ><sdux-example-viewer-tab [label]="'app.config.ts'">
+        <pre
+          class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
+      </sdux-example-viewer-tab></sdux-example-viewer-source
+    >
+    <div class="callout callout-warning">
+      <div class="title">Pro Feature</div>
+      <p>
+        AES-256 encryption is a Pro feature.
+        <a href="/sdux/vault">Explore Pro</a> for production-ready access and
+        guidance.
+      </p>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a
+            routerLink="/docs/pipeline/behaviors/encrypt/with-aes256-encrypt-behavior"
+            >AES-256 Encrypt behavior</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/addons/with-aes256-encrypt-behavior"
+            >withAes256EncryptBehavior</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-24">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 24: Persist Feature State</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Add <span class="code">withSessionStoragePersistBehavior</span> after
+      encryption to store the encrypted envelope in browser
+      <span class="code">sessionStorage</span>. Refresh the page and the
+      persisted state remains available in that same tab. Close the tab and the
+      session storage is cleared, so it is not durable application storage.
+    </p>
+    <p>
+      The example intentionally provides
+      <span class="code">initialState</span> while allowing persisted State to
+      take priority. During hydration the persisted value is used by design; the
+      initial value is not loaded into the active FeatureCell and is overwritten
+      with <span class="code">undefined</span>
+      when no persisted value is available. This makes the persistence boundary
+      explicit instead of silently mixing two sources of truth.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Register
+          <span class="code">withSessionStoragePersistBehavior</span> after the
+          Encrypt behavior.
+        </li>
+        <li>Make a character change and inspect the persisted output.</li>
+        <li>
+          Refresh the page in the same tab and verify that the collection is
+          restored.
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Persist observes the finalized value after encryption and does not
+          participate in state computation.
+        </li>
+        <li>
+          Session storage is scoped to one tab and survives reloads only within
+          that tab.
+        </li>
+        <li>
+          Persisted State takes priority over
+          <span class="code">initialState</span> by design.
+        </li>
+      </ul>
+    </div>
+    <sdux-example-viewer-source [displayTabs]="false"
+      ><sdux-example-viewer-tab [label]="'example.service.ts'">
+        <pre
+          class="code-inline"><code class="language-ts">{{ serviceFiles()[0].source }}</code></pre>
+      </sdux-example-viewer-tab></sdux-example-viewer-source
+    >
+    <div class="callout callout-warning">
+      <div class="title">Pro Feature</div>
+      <p>
+        Encrypted session persistence is a Pro feature.
+        <a href="/sdux/vault">Explore Pro</a> for production-ready access and
+        guidance.
+      </p>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a
+            routerLink="/docs/pipeline/behaviors/persist/with-session-storage-persist-behavior"
+            >Session Storage Persist behavior</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/addons/with-session-storage-persist-behavior"
+            >withSessionStoragePersistBehavior</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-25">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 25: Observe Pipeline Errors</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Extend the Filter stage with a simulated error and enable the global error
+      service. When <span class="code">Throw Error</span> is enabled, delete,
+      add, and update candidates all fail in the filter before they can commit,
+      encrypt, or persist. The current committed collection remains unchanged.
+    </p>
+    <p>
+      Observe the same failure in two independent ways. The global error service
+      supports application-wide monitoring or a global error display and can be
+      reset without changing Feature State. The fluent API's
+      <span class="code">errors()</span> callback receives the finalized error
+      and snapshot for feature-specific observation.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>Enable <span class="code">Throw Error</span>.</li>
+        <li>
+          Try adding, editing, or deleting a character and observe the unchanged
+          collection.
+        </li>
+        <li>
+          Compare the global error display with the
+          <span class="code">errors()</span> emission output.
+        </li>
+        <li>
+          Choose <span class="code">Reset Error</span> to clear the global error
+          and allow candidates through again.
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>The global error service is independent of the FeatureCell.</li>
+        <li>
+          <span class="code">errors()</span> observes finalized errors; it does
+          not recover or transform the pipeline.
+        </li>
+        <li>
+          Resetting the global error is separate from resetting Feature State.
+        </li>
+      </ul>
+    </div>
+    <sdux-example-viewer-source
+      ><sdux-example-viewer-tab [label]="'example.service.ts'">
+        <pre
+          class="code-inline"><code class="language-ts">{{ serviceFiles()[0].source }}</code></pre></sdux-example-viewer-tab
+      ><sdux-example-viewer-tab [label]="'example.component.ts'">
+        <pre
+          class="code-inline"><code class="language-ts">{{ componentFiles()[0].source }}</code></pre>
+      </sdux-example-viewer-tab></sdux-example-viewer-source
+    >
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/errors-method"
+            >errors()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/references/functions/vault-error-service"
+            >VaultErrorService</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-26">
+  <div class="section-title-navigation">
+    <div class="section-title">
+      Step 26: Complete Encrypt and Persist Tutorial
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      You now have a complete persistence boundary: pipeline stages compute and
+      validate plain Feature State, AES-256 encrypts the finalized value, and
+      session storage preserves it for reloads in the current tab. Errors stop
+      the candidate before persistence while both global and feature-local
+      observers can display what happened.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Refresh the page and confirm the session-scoped collection is
+          restored.
+        </li>
+        <li>
+          Close the tab, open the example again, and confirm that the tab-scoped
+          value is gone.
+        </li>
+        <li>
+          Trigger and reset the simulated error, then verify normal add, edit,
+          and delete behavior.
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">Tutorial Summary</div>
+      <ul>
+        <li>Encrypt and Persist behaviors run at the persistence boundary.</li>
+        <li>Static salt is acceptable only for this teaching example.</li>
+        <li>
+          Global errors and <span class="code">errors()</span> provide
+          independent observation paths.
+        </li>
+      </ul>
+    </div>
+    <sdux-example-viewer-source>
+      @for (file of componentFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+</section>
+
+<section
+  class="tutorial-shortcut"
+  aria-label="Launch the completed encrypt and persist tutorial example">
+  <div class="tutorial-shortcut-copy">
+    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <h2>Want the finished encrypt and persist example?</h2>
+  </div>
+  @if (stackblitz(); as stackblitz) {
+    <div class="tutorial-shortcut-launcher">
+      <p>
+        Launch the live StackBlitz project and inspect the completed
+        implementation directly.
+      </p>
+      <sdux-stackblitz-language-example
+        [example]="stackblitz.example"
+        [lang]="stackblitz.language" />
+    </div>
+  }
+  <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
+    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
+</section>

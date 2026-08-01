@@ -81,6 +81,14 @@ export function createTutorialExampleGroups() {
           displayCopyIcon: false,
           description: `Demonstrates the completed <strong>Delay Controller</strong> tutorial example — a standalone component keeps the same service-owned character collection, configures a fixed execution pause, and makes the elapsed interval visible while every pipeline attempt continues unchanged after the delay. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
+        },
+        {
+          title: 'Chapter 10: Encrypt and Persist',
+          id: 'encrypt-and-persist-tutorial',
+          exampleName: 'encrypt-and-persist-tutorial-example',
+          displayCopyIcon: false,
+          description: `Demonstrates the completed <strong>Encrypt and Persist</strong> tutorial example — a standalone component encrypts finalized FeatureCell state with AES-256-GCM, persists the encrypted envelope in tab-scoped session storage, and observes simulated Filter-stage failures through both the global error service and the fluent API <strong>errors()</strong> callback. Launch the live example directly in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
         }
       ] satisfies StackBlitzExampleShape[]
     }

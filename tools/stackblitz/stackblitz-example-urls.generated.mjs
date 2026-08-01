@@ -15,6 +15,7 @@ export const STACKBLITZ_EXAMPLE_URLS = [
   '/examples/angular/delete-characters',
   '/examples/angular/display-character',
   '/examples/angular/display-characters',
+  '/examples/angular/encrypt-and-persist',
   '/examples/angular/errors-tutorial',
   '/examples/angular/filters-and-reducers',
   '/examples/angular/http-resource',

@@ -15,10 +15,10 @@ import {
 } from '@angular/material/form-field';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import {
-  // withAes256EncryptBehavior,
+  withAes256EncryptBehavior,
   withArrayAppendMergeBehavior,
-  withDelayController
-  // withSessionStoragePersistBehavior,
+  // withDelayController
+  withSessionStoragePersistBehavior
   // withStepwiseController,
   // withStepwiseFilterBehavior,
   // withStepwiseReducerBehavior,
@@ -205,16 +205,16 @@ export const appConfig: ApplicationConfig = {
         initialState: STAR_WARS_CHARACTERS
       },
       [
-        withArrayAppendMergeBehavior
-        // withAes256EncryptBehavior,
-        // withSessionStoragePersistBehavior,
+        withArrayAppendMergeBehavior,
+        withAes256EncryptBehavior,
+        withSessionStoragePersistBehavior
         // withStepwiseResolveBehavior,
         // withStepwiseFilterBehavior,
         // withStepwiseReducerBehavior,
         // withTabSyncStateBehavior
       ],
       [
-        withDelayController
+        // withDelayController
         // withStepwiseController,
         // withTabSyncController
       ]

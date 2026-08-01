@@ -15,6 +15,7 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<string, () => Promise<unknown>> 
   'angular/delete-characters-example': () => import('../../../stackblitz/projects/angular/delete-characters-example.project'),
   'angular/display-character-example': () => import('../../../stackblitz/projects/angular/display-character-example.project'),
   'angular/display-characters-example': () => import('../../../stackblitz/projects/angular/display-characters-example.project'),
+  'angular/encrypt-and-persist-example': () => import('../../../stackblitz/projects/angular/encrypt-and-persist-example.project'),
   'angular/errors-tutorial-example': () => import('../../../stackblitz/projects/angular/errors-tutorial-example.project'),
   'angular/filters-and-reducers-example': () => import('../../../stackblitz/projects/angular/filters-and-reducers-example.project'),
   'angular/http-resource-example': () => import('../../../stackblitz/projects/angular/http-resource-example.project'),

@@ -20,7 +20,8 @@ export const AngularTutorialExamplesConstants = (projectRoot) =>
     ['filters-and-reducers', 'filters-and-reducers-example'],
     ['errors', 'errors-tutorial-example'],
     ['async-input', 'async-input-tutorial-example'],
-    ['delay', 'delay-tutorial-example']
+    ['delay', 'delay-tutorial-example'],
+    ['encrypt-and-persist', 'encrypt-and-persist-example']
   ].map(([directoryName, name]) => ({
     language: 'angular',
     directory: path.join(
