@@ -10,7 +10,7 @@ import path from 'node:path';
  * @param {string} projectRoot - The root path of the project
  * @returns {Array<{language: string, directory: string, name: string}>} - An array of configured examples  
  */
-export const AngularTutorialExamples = (projectRoot) =>
+export const AngularTutorialExamplesConstants = (projectRoot) =>
   [
     ['display-character', 'display-character-example'],
     ['display-characters', 'display-characters-example'],
@@ -19,7 +19,8 @@ export const AngularTutorialExamples = (projectRoot) =>
     ['lifecycle', 'lifecycle-example'],
     ['filters-and-reducers', 'filters-and-reducers-example'],
     ['errors', 'errors-tutorial-example'],
-    ['async-input', 'async-input-tutorial-example']
+    ['async-input', 'async-input-tutorial-example'],
+    ['delay', 'delay-tutorial-example']
   ].map(([directoryName, name]) => ({
     language: 'angular',
     directory: path.join(

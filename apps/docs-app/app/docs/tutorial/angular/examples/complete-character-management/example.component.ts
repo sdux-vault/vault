@@ -18,6 +18,7 @@ import {
 } from '@angular/forms';
 import {
   StateEmitTypes,
+  type StateEmitType,
   VaultErrorService,
   VaultErrorShape
 } from '@sdux-vault/shared';
@@ -281,6 +282,14 @@ export class ExampleComponent {
     this.#observeStepwisePromptEffects();
   }
 
+  /**
+   * Watches FeatureCell emissions and projects each snapshot into the
+   * diagnostic output used by the tutorial. It also starts the elapsed timer
+   * when a delayed attempt is observed and stops it when the pipeline
+   * finalizes or reports an error; the subscription ends with the component.
+   * @returns Nothing; the subscription updates snapshot, encryption, and timer
+   * signals.
+   */
   #observeStateStream(): void {
     this.#exampleService.state$
       .pipe(takeUntilDestroyed())
@@ -290,16 +299,37 @@ export class ExampleComponent {
           localStorage.getItem(EXAMPLE_ENCRYPTED_STORAGE_KEY) ?? 'undefined'
         );
 
-        if (
-          this.#delayTimer.running &&
-          (type === StateEmitTypes.FinalizePipeline ||
-            type === StateEmitTypes.PipelineError)
-        ) {
-          this.#delayTimer.stop();
-        }
+        this.handleDelayStateEmission(type);
       });
   }
 
+  /**
+   * Synchronizes the elapsed display with Delay Controller state emissions.
+   * @param type - State emission type used to start or stop the display timer.
+   * @returns Nothing; the timer updates its local elapsed-time signal.
+   */
+  protected handleDelayStateEmission(type: StateEmitType): void {
+    if (!this.#delayTimer.running && type === StateEmitTypes.DenyController) {
+      this.#delayTimer.reset();
+      this.#delayTimer.start();
+    }
+
+    if (
+      this.#delayTimer.running &&
+      (type === StateEmitTypes.FinalizePipeline ||
+        type === StateEmitTypes.PipelineError)
+    ) {
+      this.#delayTimer.stop();
+    }
+  }
+
+  /**
+   * Subscribes to the application-level Vault error stream and mirrors its
+   * current error into the component's accessible feedback state. Clearing the
+   * service error removes the message from the rendered example without
+   * changing the FeatureCell collection.
+   * @returns Nothing; the subscription updates the global error signal.
+   */
   #observeGlobalErrors(): void {
     this.#globalErrorService.error$
       .pipe(takeUntilDestroyed())
@@ -310,6 +340,12 @@ export class ExampleComponent {
       });
   }
 
+  /**
+   * Selects and patches the first character when the reactive collection first
+   * becomes available. The one-time guard preserves later user selections and
+   * prevents asynchronous state emissions from interrupting create mode.
+   * @returns Nothing; the effect updates local selection and form state.
+   */
   #observeInitialSelection(): void {
     effect(() => {
       const characters = this.characters();
@@ -329,6 +365,13 @@ export class ExampleComponent {
     });
   }
 
+  /**
+   * Watches the three stepwise request signals and forwards each pending
+   * request to its matching presentation method. This keeps Resolve, Filter,
+   * and Reducer approval prompts in the component layer while the service and
+   * pipeline retain ownership of FeatureCell State.
+   * @returns Nothing; the effects coordinate the component's stepwise prompt state.
+   */
   #observeStepwisePromptEffects(): void {
     effect(() => {
       this.processStepwiseResolvePending(this.isStepwiseResolvePending());
@@ -354,6 +397,9 @@ export class ExampleComponent {
     this.#globalErrorService.clear();
   }
 
+  /**
+   * Clears the readMe display after the user acknowledges it.
+   */
   protected clearReadMeDisplay(): void {
     this.readMeDisplay.set(false);
   }
@@ -459,7 +505,6 @@ export class ExampleComponent {
     const normalizedCharacter = this.editor.normalizeCharacterDraft(formValue);
 
     if (this.editorMode() === 'create') {
-      this.#startDelayTimer();
       const character =
         this.#exampleService.createCharacter(normalizedCharacter);
 
@@ -480,7 +525,6 @@ export class ExampleComponent {
       return;
     }
 
-    this.#startDelayTimer();
     const updatedCharacter = this.#exampleService.updateCharacter(
       selectedId,
       normalizedCharacter
@@ -528,7 +572,6 @@ export class ExampleComponent {
       return;
     }
 
-    this.#startDelayTimer();
     this.#exampleService.removeCharacter(character.id);
 
     this.deleteCandidate.set(null);
@@ -547,7 +590,6 @@ export class ExampleComponent {
    * @returns Nothing; the resulting undefined value is exposed through the reactive state APIs.
    */
   protected persistNullValue(): void {
-    this.#startDelayTimer();
     this.#exampleService.persistNullValue();
     this.#clearCharacterForm();
   }
@@ -600,7 +642,6 @@ export class ExampleComponent {
    * @returns Nothing; button visibility and FeatureCell state update reactively.
    */
   protected fetchWithPromise(): void {
-    this.#startDelayTimer();
     this.promisePending.set(true);
     this.#exampleService.fetchWithPromise();
   }
@@ -644,7 +685,6 @@ export class ExampleComponent {
    * @returns Nothing; button visibility and FeatureCell state update reactively.
    */
   protected addByObservable(): void {
-    this.#startDelayTimer();
     this.observablePending.set(true);
     this.#exampleService.addByObservable();
   }
@@ -688,7 +728,10 @@ export class ExampleComponent {
    * @returns Nothing; the resolved collection is rendered from reactive State.
    */
   protected fetchWithHttpResource(): void {
-    this.#startDelayTimer();
+    this.selectedCharacterId.set(null);
+    this.#selectedCharacterBeforeCreate = null;
+    this.editorMode.set('create');
+    this.#clearCharacterForm();
     this.#exampleService.fetchWithHttpResource();
   }
 
@@ -704,7 +747,6 @@ export class ExampleComponent {
       return;
     }
 
-    this.#startDelayTimer();
     this.#exampleService.throwFilterError();
   }
 
@@ -713,7 +755,6 @@ export class ExampleComponent {
    * @returns Nothing; Distinct Until Changed decides whether downstream stages execute.
    */
   protected submitSameState(): void {
-    this.#startDelayTimer();
     this.#exampleService.submitSameState();
   }
 
@@ -722,7 +763,6 @@ export class ExampleComponent {
    * @returns Nothing; the accepted collection is exposed through reactive State.
    */
   protected submitChangedState(): void {
-    this.#startDelayTimer();
     this.#exampleService.submitChangedState();
   }
 
@@ -791,7 +831,6 @@ export class ExampleComponent {
    * @returns Nothing; collection restoration occurs through the service and editor state is synchronized.
    */
   protected restoreInitialCharacters(): void {
-    this.#startDelayTimer();
     const firstCharacter = this.#exampleService.restoreInitialCharacters();
 
     this.selectedCharacterId.set(firstCharacter?.id ?? null);
@@ -816,15 +855,6 @@ export class ExampleComponent {
     if (typeof window !== 'undefined') {
       window.open(window.location.href, '_blank', 'noopener');
     }
-  }
-
-  /**
-   * Resets and starts the visual timer immediately before a pipeline request.
-   * The timer is observational only and has no authority over controller timing.
-   */
-  #startDelayTimer(): void {
-    this.#delayTimer.reset();
-    this.#delayTimer.start();
   }
 
   /**

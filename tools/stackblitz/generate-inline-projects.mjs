@@ -7,7 +7,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { InlineProjectsGenerator } from './generate-inline-projects.class.mjs';
-import { AngularTutorialExamples } from './constants/angular-tutorial-examples.constant.mjs';
+import { AngularTutorialExamplesConstants } from './constants/angular-tutorial-examples.constant.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,7 +35,7 @@ const urlsOutput = path.join(
 );
 const artifactsRoot = path.join(__dirname, 'artifacts');
 
-const configuredExamples = AngularTutorialExamples(projectRoot);
+const configuredExamples = AngularTutorialExamplesConstants(projectRoot);
 
 const generator = new InlineProjectsGenerator({
   sourceRoot,

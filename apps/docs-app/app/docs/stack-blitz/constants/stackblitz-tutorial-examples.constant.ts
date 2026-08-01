@@ -73,6 +73,14 @@ export function createTutorialExampleGroups() {
           displayCopyIcon: false,
           description: `Demonstrates the completed <strong>Async Input</strong> tutorial example — a standalone component keeps the same service-owned character collection, hydrates initial State, and resolves Promise, Observable, and Angular HTTP Resource inputs through the service-owned FeatureCell pipeline while the template reflects loading and error State. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
+        },
+        {
+          title: 'Chapter 9: Delay Controller',
+          id: 'delay-tutorial',
+          exampleName: 'delay-tutorial-example',
+          displayCopyIcon: false,
+          description: `Demonstrates the completed <strong>Delay Controller</strong> tutorial example — a standalone component keeps the same service-owned character collection, configures a fixed execution pause, and makes the elapsed interval visible while every pipeline attempt continues unchanged after the delay. Launch the live example directly in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
         }
       ] satisfies StackBlitzExampleShape[]
     }

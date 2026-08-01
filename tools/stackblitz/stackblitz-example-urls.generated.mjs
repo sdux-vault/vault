@@ -11,6 +11,7 @@ export const STACKBLITZ_EXAMPLE_URLS = [
   '/examples/angular/basic-filter-reducer',
   '/examples/angular/comparison',
   '/examples/angular/debugger',
+  '/examples/angular/delay-tutorial',
   '/examples/angular/delete-characters',
   '/examples/angular/display-character',
   '/examples/angular/display-characters',

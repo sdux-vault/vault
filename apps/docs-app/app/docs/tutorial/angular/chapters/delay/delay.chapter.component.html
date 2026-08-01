@@ -1,0 +1,327 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section" id="step-31">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 31: Configure the Delay Controller</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This step adds time-based execution control to the same service-owned
+      <sdux-feature-cell /> character collection. The Delay Controller pauses
+      each pipeline attempt for a fixed interval before allowing it to continue.
+      It does not inspect, transform, filter, merge, reorder, or discard the
+      candidate State.
+    </p>
+
+    <p>
+      Register
+      <span class="code"
+        ><a href="/docs/pipeline/controllers/with-delay-controller"
+          >withDelayController</a
+        ></span
+      >
+      when you provide the <sdux-feature-cell />, then configure the interval
+      through <span class="code">withDelay()</span> in
+      <span class="code">example.service.ts</span>. Keep that configuration in
+      the service so the component remains responsible for presentation and user
+      interaction while the service owns the <sdux-feature-cell /> boundary.
+    </p>
+
+    <p>
+      A fixed delay is useful when a State transition needs controlled timing.
+      You might use it to coordinate a UI transition or animation, simulate
+      network latency while developing a loading experience, stage a visible
+      State change, or align pipeline execution with an external timing
+      constraint. In each case, the Delay Controller pauses execution without
+      changing which candidate State is processed.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Install the
+          <span class="code"><sdux-package-name />/addons</span> package.
+        </li>
+        <li>Open <span class="code">app.config.ts</span>.</li>
+        <li>
+          Import
+          <span class="code"
+            ><a href="/docs/pipeline/controllers/with-delay-controller"
+              >withDelayController</a
+            ></span
+          >
+          from <span class="code"><sdux-package-name />/addons</span>.
+        </li>
+        <li>
+          Add
+          <span class="code"
+            ><a href="/docs/pipeline/controllers/with-delay-controller"
+              >withDelayController</a
+            ></span
+          >
+          to the controller list passed to
+          <span class="code"
+            ><a href="/docs/references/functions/provide-feature-cell"
+              >provideFeatureCell</a
+            >()</span
+          >.
+        </li>
+        <li>
+          Open <span class="code">example.service.ts</span> and configure
+          <span class="code">withDelay()</span> with the delay option before
+          calling <span class="code">initialize()</span>.
+        </li>
+      </ol>
+    </div>
+
+    <sdux-example-viewer-source [displayTabs]="false">
+      <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+        <pre
+          class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+      </sdux-example-viewer-tab>
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Structural registration makes the Delay Controller available to the
+          <sdux-feature-cell />.
+        </li>
+        <li>
+          The configured interval applies uniformly to each pipeline attempt.
+        </li>
+        <li>
+          The controller changes when execution continues, not what State the
+          pipeline processes.
+        </li>
+        <li>
+          The service remains the only example layer that configures or calls
+          the <sdux-feature-cell /> APIs.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of configurationFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/controllers/with-delay-controller"
+            >withDelayController</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-32">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 32: Observe Delayed Execution</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The completed example makes the pause visible beside the character editor.
+      Start an add, edit, or delete request and watch the elapsed value increase
+      while the Delay Controller holds the pipeline attempt. When the interval
+      expires, the attempt continues and the committed State updates.
+    </p>
+
+    <p>
+      In this example, <span class="code">example.elapsed-timer.ts</span> is
+      only a teaching helper. It measures wall-clock time with animation frames
+      and publishes that measurement to the component so you can see the
+      controller's hold interval. A real application would not use this helper
+      to implement delay behavior or to decide when State may continue. The
+      Delay Controller owns the pause and release decision. The helper does not
+      represent a production timing service; it exists only for display
+      purposes.
+    </p>
+
+    <p>
+      The component observes the service's State emissions to start and stop
+      that display timer. It does not pause the pipeline, subscribe to a
+      candidate source, or mutate committed State. The service and
+      <sdux-feature-cell /> remain responsible for execution and State.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Open <span class="code">example.component.ts</span> and follow the
+          State emission handling for the elapsed display.
+        </li>
+        <li>
+          Open <span class="code">example.component.html</span> and identify the
+          fixed delay value and live elapsed value.
+        </li>
+        <li>
+          Run the example and perform one collection update while watching the
+          timer return to zero after the pipeline completes.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Every update attempt is delayed; no attempt is debounced, collapsed,
+          or dropped.
+        </li>
+        <li>
+          The elapsed timer is presentation-only and does not determine when the
+          pipeline resumes.
+        </li>
+        <li>
+          The candidate continues through the configured pipeline unchanged
+          after the delay expires.
+        </li>
+        <li>
+          The timer stops when the pipeline finalizes or enters Error State.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of timingFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a
+            routerLink="/docs/pipeline/apis/feature-cell-api/state-stream-method"
+            >state$</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-33">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 33: Complete Delay Tutorial</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The Delay Controller tutorial is complete when the example registers the
+      controller, configures a fixed interval, and demonstrates that each update
+      attempt pauses before the same candidate continues through the pipeline.
+      The character collection still uses the service-owned
+      <sdux-feature-cell /> boundary from the earlier workflow.
+    </p>
+
+    <p>
+      The important result is a clear ownership boundary. The controller owns
+      timing, the service owns pipeline configuration and State updates, and the
+      component owns the editor, feedback, and elapsed-time display. The
+      <span class="code">example.elapsed-timer.ts</span> file remains a display
+      helper only; removing it would remove the visual measurement, not the
+      Delay Controller behavior.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Confirm that the configured interval appears in the interactive
+          example.
+        </li>
+        <li>
+          Add or edit a character and verify that the elapsed display tracks the
+          pause before the committed collection changes.
+        </li>
+        <li>
+          Review the completed source to confirm that the component does not
+          implement delay behavior itself.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Delay Controller Summary</div>
+      <ul>
+        <li>
+          <span class="code"
+            ><a href="/docs/pipeline/controllers/with-delay-controller"
+              >withDelayController</a
+            ></span
+          >
+          attaches the controller to the <sdux-feature-cell />.
+        </li>
+        <li>
+          <span class="code">withDelay()</span> supplies the fixed interval
+          through the service-owned Fluent API.
+        </li>
+        <li>
+          Every attempt is paused and later released without value
+          transformation or suppression.
+        </li>
+        <li>
+          <span class="code">example.elapsed-timer.ts</span> only makes the
+          timing visible for teaching purposes.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of completedFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+</section>
+
+<section
+  class="tutorial-shortcut"
+  aria-label="Launch the completed delay tutorial example">
+  <div class="tutorial-shortcut-copy">
+    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <h2>Want the finished Delay Controller example?</h2>
+    <p>
+      Launch the live StackBlitz project to inspect the completed timing
+      configuration and interactive example directly.
+    </p>
+  </div>
+
+  @if (stackblitz(); as stackblitz) {
+    <div class="tutorial-shortcut-launcher">
+      <sdux-stackblitz-language-example
+        [example]="stackblitz.example"
+        [lang]="stackblitz.language" />
+    </div>
+  }
+</section>

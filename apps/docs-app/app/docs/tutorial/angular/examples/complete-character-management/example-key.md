@@ -32,7 +32,7 @@
 | Tab Sync                                   | ex-029 | ✅    | ✅      |
 | Before Taps                                | ex-031 | ✅    | ✅      |
 | After Taps                                 | ex-032 | ✅    | ✅      |
-| Delay                                      | ex-033 | ✅    | ✅      |
+| Delay                                      | ex-033 | ✅    | ✅      | ✅          |
 | Encryption & Persist                       | ex-034 | ✅    | ✅      |
 | State Emission                             | ex-035 | ✅    | ✅      |
 | Error Emission                             | ex-036 | ✅    | ✅      | ✅          |

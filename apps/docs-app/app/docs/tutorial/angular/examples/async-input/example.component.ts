@@ -237,9 +237,19 @@ export class ExampleComponent {
    * @returns Nothing; the resolved collection is rendered from reactive State.
    */
   protected fetchWithHttpResource(): void {
+    this.selectedCharacterId.set(null);
+    this.#selectedCharacterBeforeCreate = null;
+    this.editorMode.set('create');
+    this.#clearCharacterForm();
     this.#exampleService.fetchWithHttpResource();
   }
-
+  /**
+   * Subscribes to the application-level Vault error stream and mirrors its
+   * current error into the component's accessible feedback state. Clearing the
+   * service error removes the message from the rendered example without
+   * changing the FeatureCell collection.
+   * @returns Nothing; the subscription updates the global error signal.
+   */
   #observeGlobalErrors(): void {
     this.#globalErrorService.error$
       .pipe(takeUntilDestroyed())
@@ -272,6 +282,12 @@ export class ExampleComponent {
     this.editor.serializeErrorEmission(this.#exampleService.emittedError())
   );
 
+  /**
+   * Selects and patches the first character when the reactive collection first
+   * becomes available. The one-time guard preserves later user selections and
+   * prevents asynchronous state emissions from interrupting create mode.
+   * @returns Nothing; the effect updates local selection and form state.
+   */
   #observeInitialSelection(): void {
     effect(() => {
       const characters = this.characters();
