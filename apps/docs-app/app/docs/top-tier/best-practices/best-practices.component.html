@@ -422,8 +422,8 @@ export class EmployeeService &#123;
                 <sdux-example-viewer-tab label="React: employee.cell.ts">
                   <pre
                     class="code-inline"><code class="language-ts">// employee.cell.ts
-import &#123; Vault, FeatureCell &#125; from '<sdux-package-name />/react';
-import &#123; withArrayPushMergeBehavior &#125; from '<sdux-package-name />/addons';
+import &#123; Vault, FeatureCell &#125; from '<sdux-package-name [package]="'react'" />';
+import &#123; withArrayPushMergeBehavior &#125; from '<sdux-package-name [package]="'addons'" />';
 
 // 1️⃣ Initialize global runtime
 Vault(&#123; logLevel: 'off' &#125;);
@@ -472,8 +472,8 @@ export const employeeState$ = employeeCell.state$;</code></pre>
                 <sdux-example-viewer-tab [label]="'Svelte: employee.cell.ts'">
                   <pre
                     class="code-inline"><code class="language-ts">// employee.cell.ts
-import &#123; Vault, FeatureCell &#125; from '<sdux-package-name />/core';
-import &#123; withArrayPushMergeBehavior &#125; from '<sdux-package-name />/addons';
+import &#123; Vault, FeatureCell &#125; from '<sdux-package-name [package]="'core'" />';
+import &#123; withArrayPushMergeBehavior &#125; from '<sdux-package-name [package]="'addons'" />';
 
 Vault(&#123; logLevel: 'off' &#125;);
 
@@ -516,8 +516,8 @@ export const employeeState$ = employeeCell.state$;</code></pre>
                 <sdux-example-viewer-tab [label]="'Vue: employee.cell.ts'">
                   <pre
                     class="code-inline"><code class="language-ts">// employee.cell.ts
-import &#123; Vault, FeatureCell &#125; from '<sdux-package-name />/core';
-import &#123; withArrayPushMergeBehavior &#125; from '<sdux-package-name />/addons';
+import &#123; Vault, FeatureCell &#125; from '<sdux-package-name [package]="'core'" />';
+import &#123; withArrayPushMergeBehavior &#125; from '<sdux-package-name [package]="'addons'" />';
 
 Vault(&#123; logLevel: 'off' &#125;);
 

@@ -106,9 +106,9 @@
         during
         <a href="/docs/references/functions/feature-cell">FeatureCell</a>
         initialization. Interceptors may be sourced from
-        <em><sdux-package-name />/addons</em> or implemented directly by
-        engineers to address feature-specific or domain-specific timing
-        requirements.
+        <em><sdux-package-name [package]="'addons'" /></em> or implemented
+        directly by engineers to address feature-specific or domain-specific
+        timing requirements.
       </p>
 
       <p>
@@ -144,7 +144,7 @@
             rate limiting bursty interactions such as scrolling or repeated user
             actions.
           </td>
-          <td><sdux-package-name />/addons</td>
+          <td><sdux-package-name [package]="'addons'" /></td>
         </tr>
       </tbody>
     </table>

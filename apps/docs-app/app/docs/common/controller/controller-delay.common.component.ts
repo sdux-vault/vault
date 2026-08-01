@@ -44,7 +44,7 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
             suppressing, coalescing, or modifying values.
           </td>
 
-          <td><sdux-package-name />/addons</td>
+          <td><sdux-package-name [package]="'addons'" /></td>
         </tr>
       </tbody>
     </table>

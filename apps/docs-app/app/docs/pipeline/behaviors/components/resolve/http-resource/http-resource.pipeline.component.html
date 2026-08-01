@@ -22,7 +22,8 @@
       This behavior operates exclusively in the
       <strong>Resolve stage</strong> and is available
       <strong
-        >only when using <code><sdux-package-name />/angular</code></strong
+        >only when using
+        <code><sdux-package-name [package]="'angular'" /></code></strong
       >. It affects <em>how</em> an incoming HTTP resource is resolved, never
       <em>when</em> it enters the pipeline or <em>how</em> it is later
       processed.
@@ -77,8 +78,8 @@
         is installed automatically as part of the Resolve stage when running
         under
         <strong
-          ><code><sdux-package-name />/angular</code></strong
-        >
+          ><code><sdux-package-name [package]="'angular'" /></code
+        ></strong>
         and participates conditionally based on the incoming state input type.
       </p>
 

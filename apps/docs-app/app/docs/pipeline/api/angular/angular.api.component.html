@@ -7,9 +7,9 @@
   <header class="docs-header">
     <p class="lead">
       <sdux-brand-name [tm]="true" /> integrates with Angular through
-      <strong><sdux-package-name />/angular</strong>. The package extends the
-      core <sdux-feature-cell [tm]="true" /> contract with Angular State
-      Signals, application providers, class metadata, and typed dependency
+      <strong><sdux-package-name [package]="'angular'" /></strong>. The package
+      extends the core <sdux-feature-cell [tm]="true" /> contract with Angular
+      State Signals, application providers, class metadata, and typed dependency
       injection.
     </p>
 
@@ -17,9 +17,9 @@
       <div class="title">Angular package usage</div>
       <p>
         <sdux-brand-name /> can run in an Angular application without
-        <strong><sdux-package-name />/angular</strong>. The core APIs remain
-        available, but Angular-specific State Signals, providers, decorators,
-        and injection APIs are supplied only by the Angular package.
+        <strong><sdux-package-name [package]="'angular'" /></strong>. The core
+        APIs remain available, but Angular-specific State Signals, providers,
+        decorators, and injection APIs are supplied only by the Angular package.
       </p>
     </div>
   </header>
@@ -29,11 +29,11 @@
 
     <div class="section-body">
       <p>
-        <strong><sdux-package-name />/angular</strong> is an Angular integration
-        wrapper around the core <sdux-brand-name /> APIs. It preserves the core
-        <sdux-feature-cell /> contract and adds Angular-specific surfaces for
-        Signals, application configuration, class registration, dependency
-        injection, and lifecycle ownership.
+        <strong><sdux-package-name [package]="'angular'" /></strong> is an
+        Angular integration wrapper around the core <sdux-brand-name /> APIs. It
+        preserves the core <sdux-feature-cell /> contract and adds
+        Angular-specific surfaces for Signals, application configuration, class
+        registration, dependency injection, and lifecycle ownership.
       </p>
     </div>
   </section>
@@ -44,7 +44,8 @@
     <div class="section-body">
       <p>
         The Angular extension is available from the
-        <strong><sdux-package-name />/angular</strong> package on npm.
+        <strong><sdux-package-name [package]="'angular'" /></strong> package on
+        npm.
       </p>
       <sdux-example-viewer-source [displayTabs]="false">
         <sdux-example-viewer-tab [label]="'Angular'">
@@ -58,7 +59,7 @@
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Download @sdux-vault/angular from npm in a new window"
-          >Download <sdux-package-name />/angular from npm →</a
+          >Download <sdux-package-name [package]="'angular'" /> from npm →</a
         >
       </p>
     </div>

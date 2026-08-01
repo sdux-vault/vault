@@ -145,7 +145,7 @@ const selectActiveUsers = (state: RootState) =&gt;
             </li>
             <li>
               <span class="code">.state.value()</span> — Angular signal (when
-              using <sdux-package-name />/angular)
+              using <sdux-package-name [package]="'angular'" />)
             </li>
           </ul>
 

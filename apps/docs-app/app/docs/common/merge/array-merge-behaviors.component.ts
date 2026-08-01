@@ -27,7 +27,7 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
               </p>
               <p>stage: Merge</p>
               <p>strategy: append</p>
-              <p>package: <sdux-package-name />/addons</p>
+              <p>package: <sdux-package-name [package]="'addons'" /></p>
             </td>
             <td>
               <p>
@@ -69,7 +69,7 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
               </p>
               <p>stage: Merge</p>
               <p>strategy: replace</p>
-              <p>package: <sdux-package-name />/add-core</p>
+              <p>package: <sdux-package-name [package]="'addons'" /></p>
               <p>default</p>
             </td>
             <td>
@@ -110,7 +110,7 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
               </p>
               <p>stage: Merge</p>
               <p>strategy: push</p>
-              <p>package: <sdux-package-name />/addons</p>
+              <p>package: <sdux-package-name [package]="'addons'" /></p>
             </td>
             <td>
               <p>

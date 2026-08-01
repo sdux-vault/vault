@@ -27,7 +27,7 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
               </p>
               <p>stage: Merge</p>
               <p>strategy: deep object merge</p>
-              <p>package: <sdux-package-name />/addons</p>
+              <p>package: <sdux-package-name [package]="'addons'" /></p>
             </td>
             <td>
               <p>
@@ -74,7 +74,7 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
               </p>
               <p>stage: Merge</p>
               <p>strategy: shallow object merge</p>
-              <p>package: <sdux-package-name />/core</p>
+              <p>package: <sdux-package-name [package]="'core'" /></p>
             </td>
             <td>
               <p>

@@ -128,8 +128,8 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
                 This behavior is provided
                 <strong
                   >by default only in
-                  <code><sdux-package-name />/angular</code></strong
-                >
+                  <code><sdux-package-name [package]="'angular'" /></code
+                ></strong>
                 and participates in the Resolve stage exclusively when an
                 Angular
                 <strong>HttpResourceRef</strong> input is supplied. It is not

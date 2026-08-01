@@ -303,10 +303,10 @@
       <p>
         Language wrappers (for example, framework- or language-specific packages
         such as
-        <code><sdux-package-name />/angular</code>) extend
-        <code><sdux-package-name />/core</code> by providing idiomatic APIs,
-        metadata, or integration layers while delegating core execution to
-        <sdux-brand-name />.
+        <code><sdux-package-name [package]="'angular'" /></code>) extend
+        <code><sdux-package-name [package]="'core'" /></code> by providing
+        idiomatic APIs, metadata, or integration layers while delegating core
+        execution to <sdux-brand-name />.
       </p>
 
       <p>
@@ -330,7 +330,8 @@
         </li>
         <li>
           <strong>Language wrappers</strong> — Framework- or language-specific
-          adapters that extend <code><sdux-package-name />/core</code>.
+          adapters that extend
+          <code><sdux-package-name [package]="'core'" /></code>.
         </li>
         <li>
           <strong>Third-party packages</strong> — Created and distributed
@@ -403,7 +404,7 @@
             <tr>
               <td>
                 Language wrappers <br />(e.g.
-                <code><sdux-package-name />/angular</code>)
+                <code><sdux-package-name [package]="'angular'" /></code>)
               </td>
               <td><sdux-brand-name /> project or approved contributors</td>
               <td>MIT</td>
@@ -601,7 +602,7 @@
               <td>
                 <sdux-brand-name /> Engine
                 <ul>
-                  <li><sdux-package-name />/engine</li>
+                  <li><sdux-package-name [package]="'engine'" /></li>
                 </ul>
               </td>
               <td>
@@ -643,7 +644,7 @@
                 <sdux-brand-name /> Engine <br />
                 (npm distribution)
                 <ul>
-                  <li><sdux-package-name />/engine</li>
+                  <li><sdux-package-name [package]="'engine'" /></li>
                 </ul>
               </td>
               <td>
@@ -747,9 +748,9 @@
               <td>
                 <sdux-brand-name /> <br />(Framework Source)
                 <ul>
-                  <li><sdux-package-name />/core</li>
+                  <li><sdux-package-name [package]="'core'" /></li>
                   <li><sdux-package-name />/add-ons</li>
-                  <li><sdux-package-name />/shared</li>
+                  <li><sdux-package-name [package]="'shared'" /></li>
                   <li><sdux-package-name />/dev-tools</li>
                   <li><sdux-package-name />/dev-tools-ui</li>
                   <li><sdux-package-name />/web-components</li>
@@ -785,9 +786,9 @@
                 <sdux-brand-name /> <br />
                 (npm packages)
                 <ul>
-                  <li><sdux-package-name />/core</li>
+                  <li><sdux-package-name [package]="'core'" /></li>
                   <li><sdux-package-name />/add-ons</li>
-                  <li><sdux-package-name />/shared</li>
+                  <li><sdux-package-name [package]="'shared'" /></li>
                   <li><sdux-package-name />/dev-tools</li>
                   <li><sdux-package-name />/dev-tools-ui</li>
                   <li><sdux-package-name />/web-components</li>
