@@ -99,4 +99,20 @@ export class AnalyticsService {
       action: interaction.action
     });
   }
+
+  /**
+   * Records a file download interaction.
+   *
+   * @param fileName Supplies the name of the downloaded file to record.
+   */
+  trackDownloadInteraction(fileName: string): void {
+    if (!this.#isGtagAvailable()) {
+      return;
+    }
+
+    gtag('event', 'download_interaction', {
+      file_name: fileName,
+      action: 'download'
+    });
+  }
 }

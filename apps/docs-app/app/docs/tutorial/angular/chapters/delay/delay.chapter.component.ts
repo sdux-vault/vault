@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  DownloadComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
@@ -23,7 +24,8 @@ import { STAR_WARS_DELAY } from '../../generated/delay.generated';
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     StackblitzLanguageExampleComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    DownloadComponent
   ],
   templateUrl: './delay.chapter.component.html'
 })
@@ -31,6 +33,7 @@ export class DelayChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #files = STAR_WARS_DELAY;
+  readonly downloadUrl = '/assets/examples/delay-tutorial.zip';
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('delay-tutorial')!;

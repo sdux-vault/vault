@@ -138,6 +138,23 @@ describe('Service: Analytics', () => {
     });
   });
 
+  it('should track a file download', () => {
+    service.trackDownloadInteraction('sdux-wordmark.svg');
+
+    expect(gtagSpy).toHaveBeenCalledOnceWith('event', 'download_interaction', {
+      file_name: 'sdux-wordmark.svg',
+      action: 'download'
+    });
+  });
+
+  it('should not throw when tracking a download without gtag', () => {
+    delete (window as unknown as Record<string, unknown>)['gtag'];
+
+    expect(() =>
+      service.trackDownloadInteraction('sdux-wordmark.svg')
+    ).not.toThrow();
+  });
+
   it('should not throw when tracking a share without gtag', () => {
     delete (window as unknown as Record<string, unknown>)['gtag'];
 
@@ -189,6 +206,7 @@ describe('Service: Analytics', () => {
       platform: 'x',
       action: 'share'
     });
+    service.trackDownloadInteraction('sdux-wordmark.svg');
 
     expect(gtagSpy).not.toHaveBeenCalled();
   });

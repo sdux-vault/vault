@@ -315,9 +315,9 @@ describe('CLI: TutorialSourceGenerator', () => {
 
     expect(fs.mkdirSync.calls.allArgs()).toEqual([
       ['/repo/output', { recursive: true }],
-      ['/repo/output/zip-files', { recursive: true }],
+      ['/repo/apps/docs-app/assets/tutorial', { recursive: true }],
       ['/repo/second-output', { recursive: true }],
-      ['/repo/second-output/zip-files', { recursive: true }]
+      ['/repo/apps/docs-app/assets/tutorial', { recursive: true }]
     ]);
     expect(writtenFiles.length).toBe(2);
     expect(writtenFiles[0]).toEqual({
@@ -337,17 +337,18 @@ describe('CLI: TutorialSourceGenerator', () => {
     expect(archive.directory).toHaveBeenCalledTimes(2);
   });
 
-  it('should zip a source directory into the generated zip-files directory', async () => {
+  it('should zip a source directory into the tutorial assets directory', async () => {
     await createGenerator().zipDirectory(
       '/repo/source',
-      '/repo/generated/zip-files'
+      '/repo/apps/docs-app/assets/tutorial'
     );
 
-    expect(fs.mkdirSync).toHaveBeenCalledOnceWith('/repo/generated/zip-files', {
-      recursive: true
-    });
+    expect(fs.mkdirSync).toHaveBeenCalledOnceWith(
+      '/repo/apps/docs-app/assets/tutorial',
+      { recursive: true }
+    );
     expect(fs.createWriteStream).toHaveBeenCalledOnceWith(
-      '/repo/generated/zip-files/source.tutorial.zip'
+      '/repo/apps/docs-app/assets/tutorial/source.tutorial.zip'
     );
     expect(ArchiveModule.create).toHaveBeenCalledOnceWith('zip', {
       zlib: { level: 9 }
@@ -368,7 +369,7 @@ describe('CLI: TutorialSourceGenerator', () => {
 
     const zipPromise = createGenerator().zipDirectory(
       '/repo/source',
-      '/repo/generated/zip-files'
+      '/repo/apps/docs-app/assets/tutorial'
     );
     const error = new Error('archive failed');
     archiveError(error);

@@ -202,7 +202,7 @@ export const ${exportName} = ${JSON.stringify(source)};
       if (hasSourceDirectory) {
         await this.zipDirectory(
           sourceGroup.sourceDirectory,
-          path.join(path.dirname(sourceGroup.outputFile), 'zip-files')
+          path.join(this.projectRoot, 'apps/docs-app/assets/tutorial')
         );
       }
 
