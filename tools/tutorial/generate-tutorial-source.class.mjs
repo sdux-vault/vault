@@ -146,7 +146,7 @@ export const ${exportName} = ${JSON.stringify(source)};
   zipDirectory(sourceDirectory, outputDirectory) {
     const zipFile = path.join(
       outputDirectory,
-      `${path.basename(sourceDirectory)}.tutorial.zip`
+      `sdux-${path.basename(sourceDirectory)}.tutorial.zip`
     );
 
     fs.mkdirSync(outputDirectory, { recursive: true });

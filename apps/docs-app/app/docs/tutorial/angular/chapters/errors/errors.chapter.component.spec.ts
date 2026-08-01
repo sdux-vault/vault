@@ -17,6 +17,12 @@ describe('Component: ErrorsChapterComponent', () => {
     fixture.detectChanges();
   });
 
+  it('exposes the tutorial download URL', () => {
+    expect(component.downloadUrl).toBe(
+      '/assets/tutorial/sdux-errors.tutorial.zip'
+    );
+  });
+
   it('returns the angular StackBlitz metadata when the example includes an angular language', () => {
     expect(component.stackblitz()).toEqual(
       Object({

@@ -1,20 +1,44 @@
 @use 'global' as global;
 
-.download-button {
+.framework-icon-group {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: none;
-  border: none;
-  border-radius: global.$border-radius-md;
-  padding: 0;
-  cursor: pointer;
-  transition: transform 0.15s ease;
+  gap: global.$spacing-xs;
+  border: 1px solid global.$sdux-surface-outline;
+  border-radius: global.$border-radius-lg;
+  padding: global.$spacing-xs;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 
   &:hover {
     transform: translateY(-2px);
+    box-shadow: global.$sdux-shadow-hover;
+  }
+}
+
+.framework-icon-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: global.$border-radius-md;
+  padding: global.$spacing-sm;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: global.$sdux-surface-raised-md;
+
+    .framework-icon {
+      opacity: 0;
+    }
+
+    .launch-overlay-icon {
+      opacity: 1;
+    }
   }
 
   &:focus-visible {
@@ -23,12 +47,19 @@
   }
 }
 
-.download-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.framework-icon {
   width: 40px;
   height: 40px;
-  font-size: global.$font-size-md;
-  color: global.$sdux-text-secondary;
+  font-size: 40px;
+  transition: opacity 0.2s;
+}
+
+.launch-overlay-icon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  color: global.$sdux-primary-base;
+  opacity: 0;
+  transition: opacity 0.2s;
 }

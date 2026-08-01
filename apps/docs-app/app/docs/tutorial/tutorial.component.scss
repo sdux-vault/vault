@@ -265,11 +265,6 @@
         ),
         var(--sdux-surface-bg);
 
-      @media (min-width: global.$breakpoint-md) {
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: center;
-      }
-
       .tutorial-shortcut-copy {
         display: flex;
         flex-direction: column;
@@ -302,10 +297,18 @@
         }
       }
 
-      .tutorial-shortcut-launcher {
+      .tutorial-shortcut-launcher,
+      .tutorial-download {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
+        gap: global.$spacing-xs;
+      }
+
+      .tutorial-download {
+        p {
+          margin: 0;
+        }
       }
     }
   }

@@ -637,17 +637,22 @@
   <div class="tutorial-shortcut-copy">
     <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
     <h2>Want the finished async input example without these five steps?</h2>
-    <p>
-      Launch the live StackBlitz project to inspect the completed hydration,
-      Promise, Observable, and HTTP Resource implementation directly.
-    </p>
   </div>
 
   @if (stackblitz(); as stackblitz) {
     <div class="tutorial-shortcut-launcher">
+      <p>
+        Launch the live StackBlitz project to inspect the completed hydration,
+        Promise, Observable, and HTTP Resource implementation directly.
+      </p>
       <sdux-stackblitz-language-example
         [example]="stackblitz.example"
         [lang]="stackblitz.language" />
+    </div>
+
+    <div class="tutorial-download">
+      <p>Download the complete chapter source code as a ZIP archive.</p>
+      <sdux-download [url]="downloadUrl"></sdux-download>
     </div>
   }
 </section>

@@ -348,7 +348,7 @@ describe('CLI: TutorialSourceGenerator', () => {
       { recursive: true }
     );
     expect(fs.createWriteStream).toHaveBeenCalledOnceWith(
-      '/repo/apps/docs-app/assets/tutorial/source.tutorial.zip'
+      '/repo/apps/docs-app/assets/tutorial/sdux-source.tutorial.zip'
     );
     expect(ArchiveModule.create).toHaveBeenCalledOnceWith('zip', {
       zlib: { level: 9 }

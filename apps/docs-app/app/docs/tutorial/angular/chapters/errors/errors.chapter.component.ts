@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  SDuXDownloadComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
@@ -20,7 +21,8 @@ import { STAR_WARS_ERRORS_CHARACTERS } from '../../generated/errors.generated';
     FeatureCellBrandNameComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    StackblitzLanguageExampleComponent
+    StackblitzLanguageExampleComponent,
+    SDuXDownloadComponent
   ],
   templateUrl: './errors.chapter.component.html'
 })
@@ -28,6 +30,7 @@ export class ErrorsChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_ERRORS_CHARACTERS;
+  readonly downloadUrl = '/assets/tutorial/sdux-errors.tutorial.zip';
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('errors-tutorial')!;

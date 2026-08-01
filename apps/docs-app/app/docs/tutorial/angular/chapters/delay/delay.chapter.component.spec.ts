@@ -17,6 +17,12 @@ describe('Component: DelayChapterComponent', () => {
     fixture.detectChanges();
   });
 
+  it('exposes the tutorial download URL', () => {
+    expect(component.downloadUrl).toBe(
+      '/assets/tutorial/sdux-delay.tutorial.zip'
+    );
+  });
+
   it('returns the angular StackBlitz metadata for the delay tutorial', () => {
     expect(component.stackblitz()).toEqual(
       Object({

@@ -311,14 +311,14 @@
   <div class="tutorial-shortcut-copy">
     <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
     <h2>Want the finished Delay Controller example?</h2>
-    <p>
-      Launch the live StackBlitz project to inspect the completed timing
-      configuration and interactive example directly.
-    </p>
   </div>
 
   @if (stackblitz(); as stackblitz) {
     <div class="tutorial-shortcut-launcher">
+      <p>
+        Launch the live StackBlitz project to inspect the completed timing
+        configuration and interactive example directly.
+      </p>
       <sdux-stackblitz-language-example
         [example]="stackblitz.example"
         [lang]="stackblitz.language" />
@@ -326,6 +326,7 @@
   }
 
   <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
     <sdux-download [url]="downloadUrl"></sdux-download>
   </div>
 </section>

@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatTooltip } from '@angular/material/tooltip';
 import { AnalyticsService } from '../../services/analytics/analytics.service';
-import { DownloadComponent } from './download.component';
+import { SDuXDownloadComponent } from './download.component';
 
 describe('Component: Download', () => {
-  let fixture: ComponentFixture<DownloadComponent>;
+  let fixture: ComponentFixture<SDuXDownloadComponent>;
   let analyticsService: jasmine.SpyObj<AnalyticsService>;
 
   beforeEach(async () => {
@@ -14,11 +14,11 @@ describe('Component: Download', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      imports: [DownloadComponent],
+      imports: [SDuXDownloadComponent],
       providers: [{ provide: AnalyticsService, useValue: analyticsService }]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DownloadComponent);
+    fixture = TestBed.createComponent(SDuXDownloadComponent);
     fixture.componentRef.setInput('url', '/downloads/example.tutorial.zip');
     fixture.detectChanges();
   });
@@ -31,9 +31,17 @@ describe('Component: Download', () => {
       .injector.get(MatTooltip);
 
     expect(button.type).toBe('button');
-    expect(button.className).toContain('download-button');
+    expect(
+      fixture.debugElement.query(By.css('.framework-icon-group'))
+    ).not.toBeNull();
+    expect(button.className).toContain('framework-icon-button');
     expect(button.getAttribute('aria-label')).toBe('Download');
+    expect(icon.className).toContain('framework-icon');
     expect(icon.textContent.trim()).toBe('download');
+    const overlay = fixture.debugElement.queryAll(By.css('mat-icon'))[1]
+      .nativeElement as HTMLElement;
+    expect(overlay.className).toContain('launch-overlay-icon');
+    expect(overlay.textContent?.trim()).toBe('file_download');
     expect(tooltip.message).toBe('Download');
   });
 
@@ -69,6 +77,31 @@ describe('Component: Download', () => {
 
   it('should use a fallback name for a URL without a file path', () => {
     fixture.componentRef.setInput('url', 'https://example.com/');
+    fixture.detectChanges();
+    spyOn(HTMLAnchorElement.prototype, 'click');
+
+    fixture.componentInstance.download();
+
+    expect(analyticsService.trackDownloadInteraction).toHaveBeenCalledWith(
+      'download'
+    );
+  });
+
+  it('should use an empty filename fallback when the pathname has no segments', () => {
+    spyOn(window, 'URL').and.returnValue({
+      pathname: { split: () => [] }
+    } as unknown as URL);
+    spyOn(HTMLAnchorElement.prototype, 'click');
+
+    fixture.componentInstance.download();
+
+    expect(analyticsService.trackDownloadInteraction).toHaveBeenCalledWith(
+      'download'
+    );
+  });
+
+  it('should use a fallback name when the URL filename is not decodable', () => {
+    fixture.componentRef.setInput('url', '/downloads/%E0%A4%A');
     fixture.detectChanges();
     spyOn(HTMLAnchorElement.prototype, 'click');
 
