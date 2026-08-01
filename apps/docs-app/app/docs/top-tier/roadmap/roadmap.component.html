@@ -81,24 +81,24 @@
 
       <ul>
         <li>
-          <strong><sdux-package-name />/addons</strong><br />
+          <strong><sdux-package-name [package]="'addons'" /></strong><br />
           Addon behaviors and controllers. Framework-agnostic.
         </li>
         <li>
-          <strong><sdux-package-name />/core</strong><br />
+          <strong><sdux-package-name [package]="'core'" /></strong><br />
           Core runtime, pipeline,
           <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
           Vault, behaviors, and contracts. Framework-agnostic.
         </li>
 
         <li>
-          <strong><sdux-package-name />/angular</strong><br />
+          <strong><sdux-package-name [package]="'angular'" /></strong><br />
           Angular integration, Signals support, DI adapters, and
           Angular-specific tooling.
         </li>
 
         <li>
-          <strong><sdux-package-name />/devtools</strong><br />
+          <strong><sdux-package-name [package]="'devtools'" /></strong><br />
           Chrome DevTools extension, InsightService consumers, and observability
           tooling.
         </li>

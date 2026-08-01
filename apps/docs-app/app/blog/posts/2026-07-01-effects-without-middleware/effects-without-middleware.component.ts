@@ -177,7 +177,10 @@ function* rootSaga() &#123;
                 <td>Unwrapped and normalized</td>
               </tr>
               <tr>
-                <td>Angular HttpResourceRef (<sdux-package-name />/angular)</td>
+                <td>
+                  Angular HttpResourceRef (<sdux-package-name
+                    [package]="'angular'" />)
+                </td>
                 <td>Observed until a concrete value emits, then resolved</td>
               </tr>
             </tbody>

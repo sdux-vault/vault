@@ -283,17 +283,21 @@
     <h2>
       Want the finished filters and reducers example without these three steps?
     </h2>
-    <p>
-      If you want the completed filters and reducers tutorial, launch the live
-      StackBlitz project and inspect the finished implementation directly.
-    </p>
   </div>
 
   @if (stackblitz(); as stackblitz) {
     <div class="tutorial-shortcut-launcher">
+      <p>
+        If you want the completed filters and reducers tutorial, launch the live
+        StackBlitz project and inspect the finished implementation directly.
+      </p>
       <sdux-stackblitz-language-example
         [example]="stackblitz.example"
         [lang]="stackblitz.language" />
     </div>
   }
+  <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
+    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
 </section>

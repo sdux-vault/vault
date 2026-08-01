@@ -17,6 +17,12 @@ describe('Component: LifecycleChapterComponent', () => {
     fixture.detectChanges();
   });
 
+  it('exposes the tutorial download URL', () => {
+    expect(component.downloadUrl).toBe(
+      '/assets/tutorial/sdux-lifecycle.tutorial.zip'
+    );
+  });
+
   it('returns the angular StackBlitz metadata when the example includes an angular language', () => {
     expect(component.stackblitz()).toEqual(
       Object({

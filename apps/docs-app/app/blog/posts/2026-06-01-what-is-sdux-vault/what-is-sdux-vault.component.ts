@@ -216,45 +216,73 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
               <tr>
                 <td>Angular</td>
                 <td>
-                  Decorator + DI adapter via <sdux-package-name />/angular
+                  Decorator + DI adapter via
+                  <sdux-package-name [package]="'angular'" />
                   including signal support
                 </td>
               </tr>
               <tr>
                 <td>Bun</td>
-                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+                <td>
+                  Direct <sdux-package-name [package]="'core'" /> — no adapter
+                  needed
+                </td>
               </tr>
               <tr>
                 <td>Deno</td>
-                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+                <td>
+                  Direct <sdux-package-name [package]="'core'" /> — no adapter
+                  needed
+                </td>
               </tr>
               <tr>
                 <td>Node.js</td>
-                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+                <td>
+                  Direct <sdux-package-name [package]="'core'" /> — no adapter
+                  needed
+                </td>
               </tr>
               <tr>
                 <td>React</td>
-                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+                <td>
+                  Direct <sdux-package-name [package]="'core'" /> — no adapter
+                  needed
+                </td>
               </tr>
               <tr>
                 <td>Solid</td>
-                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+                <td>
+                  Direct <sdux-package-name [package]="'core'" /> — no adapter
+                  needed
+                </td>
               </tr>
               <tr>
                 <td>Svelte</td>
-                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+                <td>
+                  Direct <sdux-package-name [package]="'core'" /> — no adapter
+                  needed
+                </td>
               </tr>
               <tr>
                 <td>Vanilla JS</td>
-                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+                <td>
+                  Direct <sdux-package-name [package]="'core'" /> — no adapter
+                  needed
+                </td>
               </tr>
               <tr>
                 <td>Vue</td>
-                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+                <td>
+                  Direct <sdux-package-name [package]="'core'" /> — no adapter
+                  needed
+                </td>
               </tr>
               <tr>
                 <td>Web Components</td>
-                <td>Direct <sdux-package-name />/core — no adapter needed</td>
+                <td>
+                  Direct <sdux-package-name [package]="'core'" /> — no adapter
+                  needed
+                </td>
               </tr>
             </tbody>
           </table>

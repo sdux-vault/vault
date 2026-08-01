@@ -447,6 +447,7 @@ export class ExampleService {
    * behavior is sufficient: after AES-256 produces its authenticated envelope,
    * the Persist stage writes that envelope under the FeatureCell-scoped key.
    */
+
   // Teaching point: Encryption (ex-034)
   /*
    * `.setAes256Secret()` configures the registered AES-256-GCM behavior before

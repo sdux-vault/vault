@@ -4,12 +4,15 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import {
+  BrandNameComponent,
+  PackageNameComponent
+} from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-debug-widget-event-instant-scope-types',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
       <h3>DebugWidgetEventInstantScopeTypes</h3>
@@ -22,10 +25,14 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
     <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-        Part of the <strong>@sdux-vault/dev-tools</strong> project.
+        <p>
+          Part of the
+          <strong><sdux-package-name [package]="'dev-tools'" /></strong>
+          project.
+        </p>
 
         <pre
-          class="code-inline"><code class="language-ts">npm install @sdux-vault/dev-tools</code></pre>
+          class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'dev-tools'" /></code></pre>
       </div>
     </section>
     <section class="section">

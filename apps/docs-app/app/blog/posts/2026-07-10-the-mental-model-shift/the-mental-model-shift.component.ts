@@ -4,6 +4,7 @@ import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
+  PackageNameComponent,
   SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -18,7 +19,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     ExampleViewerTabComponent,
     RouterModule,
     BrandNameComponent,
-    SDuXVideoComponent
+    SDuXVideoComponent,
+    PackageNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -387,7 +389,8 @@ function addItem(cell: CartCell, item: CartItem) &#123;
               pipeline execution, the state may change before the pipeline runs
               — your pre-computed spread then merges against stale data,
               producing incorrect results. Instead, pass only the new data and
-              let a Merge Behavior from <strong>&#64;sdux-vault/addons</strong>
+              let a Merge Behavior from
+              <strong><sdux-package-name [package]="'addons'" /></strong>
               combine it at the correct execution point inside the pipeline,
               always against the current committed state.
             </p>

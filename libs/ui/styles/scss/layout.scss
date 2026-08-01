@@ -103,9 +103,6 @@ pre.pre-wrapper {
   padding-right: global.$spacing-xs;
   border-radius: global.$border-radius-xs;
   font-size: calc(1em - 1px);
-  font-style: italic;
-
-  // margin-left: global.$spacing-xs;
 }
 
 .code {
@@ -114,21 +111,22 @@ pre.pre-wrapper {
 
 .code-inline {
   display: block;
-  @include code-block(var(--sdux-surface-elevated), var(--sdux-text-black));
-  margin-left: 0;
+  @include code-block(var(--sdux-text-black), var(--sdux-text-white));
+  margin: 0;
+  padding: global.$spacing-md;
 
   white-space: pre;
   overflow-x: auto;
   overflow-y: hidden;
   width: calc(
-    100% - #{global.$spacing-sm} * 2
+    100% - #{global.$spacing-md} * 2
   ); // account for horizontal padding
 
   /* Smooth scroll bar */
   scrollbar-width: thin;
 
   .language-ts {
-    color: var(--sdux-text-black); // readable in dark mode too
+    color: (--sdux-text-white); // readable in dark mode too
   }
 
   &:hover {

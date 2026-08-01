@@ -4,12 +4,12 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-value-resolve-example-component',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>ValueResolveExampleComponent</h3>
@@ -23,9 +23,11 @@ how cache misses are resolved through the state pipeline.<br/><br/></div>
       <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/core</strong> project.
+        <p>
+         Part of the <strong><sdux-package-name [package]="'core'" /></strong> project.
+        </p>
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/core</code></pre>
+        <pre class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'core'" /></code></pre>
       </div>
     </section>
 <section class="section">
@@ -102,12 +104,12 @@ export class ValueResolveExampleComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-abstract-active-controller',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>ValueResolveExampleComponent</h3>
@@ -119,9 +121,11 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
       <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/core</strong> project.
+        <p>
+         Part of the <strong><sdux-package-name [package]="'core'" /></strong> project.
+        </p>
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/core</code></pre>
+        <pre class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'core'" /></code></pre>
       </div>
     </section>
 <section class="section">
@@ -234,12 +238,12 @@ export class AbstractActiveControllerComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-bank-employee-model',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
         <div class="header">
           <h3>BankEmployeeModel</h3>
@@ -258,12 +262,12 @@ export class BankEmployeeModelComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-dev-mode',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>DevMode</h3>
@@ -275,9 +279,11 @@ import { BrandNameComponent } from '@sdux-vault/ui/web-components';
       <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/shared</strong> project.
+        <p>
+         Part of the <strong><sdux-package-name [package]="'shared'" /></strong> project.
+        </p>
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+        <pre class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'shared'" /></code></pre>
       </div>
     </section>
 <section class="section">
@@ -372,12 +378,12 @@ export class DevModeComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-cache-ttl',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>CacheTTL</h3>
@@ -391,9 +397,11 @@ validity and refresh behavior.<br/><br/></div>
       <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/addons</strong> project.
+        <p>
+         Part of the <strong><sdux-package-name [package]="'addons'" /></strong> project.
+        </p>
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+        <pre class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'addons'" /></code></pre>
       </div>
     </section>
 <section class="section">
@@ -476,12 +484,12 @@ export class CacheTTLComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-behavior_meta',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>BEHAVIOR_META</h3>
@@ -499,9 +507,11 @@ on a behavior class and is required for correct pipeline registration.<br/><br/>
       <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/shared</strong> project.
+        <p>
+         Part of the <strong><sdux-package-name [package]="'shared'" /></strong> project.
+        </p>
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+        <pre class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'shared'" /></code></pre>
       </div>
     </section>
 <section class="section">
@@ -532,12 +542,12 @@ export class BEHAVIOR_METAComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-is-defined',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>isDefined</h3>
@@ -550,9 +560,11 @@ Note: This intentionally does *not* exclude null.<br/><br/></div>
       <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/shared</strong> project.
+        <p>
+         Part of the <strong><sdux-package-name [package]="'shared'" /></strong> project.
+        </p>
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+        <pre class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'shared'" /></code></pre>
       </div>
     </section>
 <section class="section">
@@ -606,12 +618,12 @@ export class isDefinedComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-is-http-resource-ref',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>isHttpResourceRef</h3>
@@ -629,9 +641,11 @@ and does not validate the internal content of those properties.<br/><br/></div>
       <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/shared</strong> project.
+        <p>
+         Part of the <strong><sdux-package-name [package]="'shared'" /></strong> project.
+        </p>
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+        <pre class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'shared'" /></code></pre>
       </div>
     </section>
 <section class="section">
@@ -693,12 +707,12 @@ export class isHttpResourceRefComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-vault-behavior',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>VaultBehavior</h3>
@@ -718,9 +732,11 @@ management.<br/><br/></div>
       <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/shared</strong> project.
+        <p>
+         Part of the <strong><sdux-package-name [package]="'shared'" /></strong> project.
+        </p>
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+        <pre class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'shared'" /></code></pre>
       </div>
     </section>
 <section class="section">
@@ -784,12 +800,12 @@ export class VaultBehaviorComponent{}
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { BrandNameComponent } from '@sdux-vault/ui/web-components';
+import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-components';
 
 @Component({
   selector: 'sdux-behavior-type',
   standalone: true,
-  imports: [BrandNameComponent],
+  imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
         <h3>BehaviorType</h3>
@@ -803,9 +819,11 @@ strong typing while preserving full runtime compatibility.<br/><br/></div>
       <section class="section">
       <div class="section-title">Installation</div>
       <div class="section-body">
-         Part of the <strong>@sdux-vault/shared</strong> project.
+        <p>
+         Part of the <strong><sdux-package-name [package]="'shared'" /></strong> project.
+        </p>
 
-        <pre class="code-inline"><code class="language-ts">npm install @sdux-vault/shared</code></pre>
+        <pre class="code-inline"><code class="language-ts">npm install <sdux-package-name [package]="'shared'" /></code></pre>
       </div>
     </section>
 <section class="section">

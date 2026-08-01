@@ -26,4 +26,28 @@ describe('Component: PackageName', () => {
     const span = fixture.nativeElement.querySelector('.package-name');
     expect(span.textContent.replace(/\s+/g, '')).toBe('MockPN');
   });
+
+  it('should omit the package suffix when the optional input is not provided', () => {
+    expect(fixture.componentInstance.getPackage()).toBe('');
+
+    const span = fixture.nativeElement.querySelector('.package-name');
+    expect(span.textContent.replace(/\s+/g, '')).toBe('MockPN');
+  });
+
+  it('should render the optional package suffix', () => {
+    fixture.componentRef.setInput('package', 'addons');
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.getPackage()).toBe('/addons');
+
+    const span = fixture.nativeElement.querySelector('.package-name');
+    expect(span.textContent.replace(/\s+/g, '')).toBe('MockPN/addons');
+  });
+
+  it('should omit the package suffix when the optional input is empty', () => {
+    fixture.componentRef.setInput('package', '');
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.getPackage()).toBe('');
+  });
 });

@@ -11,6 +11,7 @@ export { BrandNameComponent } from './lib/helpers/brand-name/brand-name.componen
 export { CatchPhraseComponent } from './lib/helpers/catch-phrase/catch-phrase.component';
 export { DeprecatedComponent } from './lib/helpers/deprecated/deprecated.component';
 export { DiagramComponent } from './lib/helpers/diagram/diagram.component';
+export { SDuXDownloadComponent } from './lib/helpers/download/download.component';
 export { FeatureCellBrandNameComponent } from './lib/helpers/feature-cell-brand-name/feature-cell-brand-name.component';
 export { ImageComponent } from './lib/helpers/image/image.component';
 export { InfoDialogComponent } from './lib/helpers/info-dialog/info-dialog.component';

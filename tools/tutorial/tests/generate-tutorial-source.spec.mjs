@@ -1,5 +1,8 @@
 import fs from 'node:fs';
-import { TutorialSourceGenerator } from '../generate-tutorial-source.class.mjs';
+import {
+  ArchiveModule,
+  TutorialSourceGenerator
+} from '../generate-tutorial-source.class.mjs';
 
 describe('CLI: TutorialSourceGenerator', () => {
   const projectRoot = '/repo';
@@ -18,6 +21,9 @@ describe('CLI: TutorialSourceGenerator', () => {
   let fileContents;
   let writtenFiles;
   let consoleInfo;
+  let archive;
+  let output;
+  let outputClose;
 
   const file = (name) => ({
     name,
@@ -37,6 +43,23 @@ describe('CLI: TutorialSourceGenerator', () => {
     fileContents = {};
     writtenFiles = [];
     consoleInfo = [];
+    outputClose = undefined;
+
+    output = {
+      on: jasmine.createSpy('output.on').and.callFake((event, callback) => {
+        if (event === 'close') {
+          outputClose = callback;
+        }
+      })
+    };
+    archive = {
+      on: jasmine.createSpy('archive.on'),
+      pipe: jasmine.createSpy('archive.pipe'),
+      directory: jasmine.createSpy('archive.directory'),
+      finalize: jasmine
+        .createSpy('archive.finalize')
+        .and.callFake(() => outputClose())
+    };
 
     spyOn(fs, 'existsSync').and.returnValue(true);
     spyOn(fs, 'readdirSync').and.callFake(
@@ -49,6 +72,8 @@ describe('CLI: TutorialSourceGenerator', () => {
     spyOn(fs, 'writeFileSync').and.callFake((filePath, content, encoding) => {
       writtenFiles.push({ filePath, content, encoding });
     });
+    spyOn(fs, 'createWriteStream').and.returnValue(output);
+    spyOn(ArchiveModule, 'create').and.returnValue(archive);
     spyOn(console, 'info').and.callFake((message) => {
       consoleInfo.push(message);
     });
@@ -212,44 +237,44 @@ describe('CLI: TutorialSourceGenerator', () => {
     );
   });
 
-  it('should require exactly one source path for each source group', () => {
-    expect(() =>
+  it('should require exactly one source path for each source group', async () => {
+    await expectAsync(
       createGenerator([
         {
           ...sourceGroup,
           sourceFile: '/repo/source/example.component.ts'
         }
       ]).run()
-    ).toThrowError(
+    ).toBeRejectedWithError(
       'Tutorial source group "TUTORIAL_SOURCE" must define exactly one sourceDirectory or sourceFile'
     );
 
-    expect(() =>
+    await expectAsync(
       createGenerator([
         {
           exportName: 'NO_SOURCE',
           outputFile: '/repo/output/no-source.generated.ts'
         }
       ]).run()
-    ).toThrowError(
+    ).toBeRejectedWithError(
       'Tutorial source group "NO_SOURCE" must define exactly one sourceDirectory or sourceFile'
     );
   });
 
-  it('should fail when a configured source directory does not exist', () => {
+  it('should fail when a configured source directory does not exist', async () => {
     fs.existsSync.and.returnValue(false);
 
-    expect(() => createGenerator().run()).toThrowError(
+    await expectAsync(createGenerator().run()).toBeRejectedWithError(
       'Tutorial source directory was not found: /repo/source'
     );
     expect(fs.writeFileSync).not.toHaveBeenCalled();
   });
 
-  it('should generate, write, and report a configured source file', () => {
+  it('should generate, write, and report a configured source file', async () => {
     const source = 'export interface StarWarsCharacterState {}';
     fileContents[sourceFileGroup.sourceFile] = source;
 
-    createGenerator([sourceFileGroup]).run();
+    await createGenerator([sourceFileGroup]).run();
 
     expect(fs.readdirSync).not.toHaveBeenCalled();
     expect(fs.readFileSync).toHaveBeenCalledOnceWith(
@@ -273,7 +298,7 @@ describe('CLI: TutorialSourceGenerator', () => {
     ]);
   });
 
-  it('should generate, write, and report every configured source group', () => {
+  it('should generate, write, and report every configured source group', async () => {
     const secondSourceGroup = {
       exportName: 'SECOND_SOURCE',
       sourceDirectory: '/repo/second-source',
@@ -286,11 +311,13 @@ describe('CLI: TutorialSourceGenerator', () => {
     fileContents['/repo/second-source/example.component.html'] =
       '<p>Example</p>';
 
-    createGenerator([sourceGroup, secondSourceGroup]).run();
+    await createGenerator([sourceGroup, secondSourceGroup]).run();
 
     expect(fs.mkdirSync.calls.allArgs()).toEqual([
       ['/repo/output', { recursive: true }],
-      ['/repo/second-output', { recursive: true }]
+      ['/repo/apps/docs-app/assets/tutorial', { recursive: true }],
+      ['/repo/second-output', { recursive: true }],
+      ['/repo/apps/docs-app/assets/tutorial', { recursive: true }]
     ]);
     expect(writtenFiles.length).toBe(2);
     expect(writtenFiles[0]).toEqual({
@@ -307,5 +334,46 @@ describe('CLI: TutorialSourceGenerator', () => {
       'Generated 1 tutorial source file(s): output/tutorial-source.generated.ts',
       'Generated 1 tutorial source file(s): second-output/second.generated.ts'
     ]);
+    expect(archive.directory).toHaveBeenCalledTimes(2);
+  });
+
+  it('should zip a source directory into the tutorial assets directory', async () => {
+    await createGenerator().zipDirectory(
+      '/repo/source',
+      '/repo/apps/docs-app/assets/tutorial'
+    );
+
+    expect(fs.mkdirSync).toHaveBeenCalledOnceWith(
+      '/repo/apps/docs-app/assets/tutorial',
+      { recursive: true }
+    );
+    expect(fs.createWriteStream).toHaveBeenCalledOnceWith(
+      '/repo/apps/docs-app/assets/tutorial/sdux-source.tutorial.zip'
+    );
+    expect(ArchiveModule.create).toHaveBeenCalledOnceWith('zip', {
+      zlib: { level: 9 }
+    });
+    expect(archive.pipe).toHaveBeenCalledOnceWith(output);
+    expect(archive.directory).toHaveBeenCalledOnceWith('/repo/source', false);
+    expect(archive.finalize).toHaveBeenCalledOnceWith();
+  });
+
+  it('should reject when the archive reports an error', async () => {
+    let archiveError;
+    archive.on.and.callFake((event, callback) => {
+      if (event === 'error') {
+        archiveError = callback;
+      }
+    });
+    archive.finalize.and.stub();
+
+    const zipPromise = createGenerator().zipDirectory(
+      '/repo/source',
+      '/repo/apps/docs-app/assets/tutorial'
+    );
+    const error = new Error('archive failed');
+    archiveError(error);
+
+    await expectAsync(zipPromise).toBeRejectedWith(error);
   });
 });

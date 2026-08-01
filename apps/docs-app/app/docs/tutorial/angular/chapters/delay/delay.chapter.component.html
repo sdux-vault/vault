@@ -44,7 +44,8 @@
       <ol>
         <li>
           Install the
-          <span class="code"><sdux-package-name />/addons</span> package.
+          <span class="code"><sdux-package-name [package]="'addons'" /></span>
+          package.
         </li>
         <li>Open <span class="code">app.config.ts</span>.</li>
         <li>
@@ -54,7 +55,8 @@
               >withDelayController</a
             ></span
           >
-          from <span class="code"><sdux-package-name />/addons</span>.
+          from
+          <span class="code"><sdux-package-name [package]="'addons'" /></span>.
         </li>
         <li>
           Add
@@ -311,17 +313,22 @@
   <div class="tutorial-shortcut-copy">
     <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
     <h2>Want the finished Delay Controller example?</h2>
-    <p>
-      Launch the live StackBlitz project to inspect the completed timing
-      configuration and interactive example directly.
-    </p>
   </div>
 
   @if (stackblitz(); as stackblitz) {
     <div class="tutorial-shortcut-launcher">
+      <p>
+        Launch the live StackBlitz project to inspect the completed timing
+        configuration and interactive example directly.
+      </p>
       <sdux-stackblitz-language-example
         [example]="stackblitz.example"
         [lang]="stackblitz.language" />
     </div>
   }
+
+  <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
+    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
 </section>

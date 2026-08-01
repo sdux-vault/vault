@@ -20,4 +20,4 @@ const generator = new TutorialSourceGenerator({
   sourceGroups
 });
 
-generator.run();
+await generator.run();

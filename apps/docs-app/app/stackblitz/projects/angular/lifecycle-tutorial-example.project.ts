@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const asyncInputExampleProject: Project = {
-  title: 'async-input-example',
+export const lifecycleTutorialExampleProject: Project = {
+  title: 'lifecycle-tutorial-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const asyncInputExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "async-input-example",
+  "name": "lifecycle-tutorial-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -331,7 +331,7 @@ export function getNextCharacterId(
 /** Derives display-friendly force sensitivity labels without mutating the input. */
 export function deriveForceSensitiveDisplay(
   characters: readonly StarWarsCharacter[]
-): readonly StarWarsCharacter[] {
+): StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
@@ -342,7 +342,7 @@ export function deriveForceSensitiveDisplay(
 /** Derives a display-ready full name for each character without mutating the input. */
 export function deriveFullName(
   characters: readonly StarWarsCharacter[]
-): readonly StarWarsCharacter[] {
+): StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     fullName: \`\${character.name} \${character.lastName}\`
@@ -1043,28 +1043,14 @@ export class ExampleCharacterEditor {
     </div>
   }
 
-  @if (globalError(); as error) {
-    <!-- Teaching point: Global Error (ex-011) -->
-    <div class="feedback error global-error" role="alert" aria-live="assertive">
-      <span>{{ error.message }}</span>
-      <!-- Teaching point: Errors (ex-004) -->
-      <button
-        type="button"
-        class="button secondary"
-        (click)="clearGlobalError()">
-        Clear
-      </button>
+  @if (featureCellDestroyed()) {
+    <div class="feedback error" role="alert" aria-live="assertive">
+      The FeatureCell is intentionally catastrophic and inoperable after a
+      destroy(). You will need to reload the page to continue.
     </div>
   }
 
-  @if (!hydrationSettled()) {
-    <div class="feedback caution" role="status" aria-live="polite">
-      The initial state hydrate method is awaiting resolve or reject in the
-      <strong>Actions</strong> section
-    </div>
-  }
-
-  <fieldset class="feature-cell-controls">
+  <fieldset class="feature-cell-controls" [disabled]="featureCellDestroyed()">
     @if (deleteCandidate(); as character) {
       <section
         class="delete-confirmation"
@@ -1133,20 +1119,6 @@ export class ExampleCharacterEditor {
         <section
           class="panel character-details"
           aria-labelledby="details-title">
-          @if (state.isLoading()) {
-            <div
-              class="loading-overlay"
-              role="status"
-              aria-label="Loading characters">
-              <span class="spinner" aria-hidden="true"></span>
-              <p class="loading-guidance">
-                <strong>State is loading.</strong>
-                Complete the pending State change request by selecting Resolve
-                or Reject in the Actions section.
-              </p>
-            </div>
-          }
-
           <div class="header">
             <h3 id="details-title">Character details</h3>
           </div>
@@ -1156,7 +1128,10 @@ export class ExampleCharacterEditor {
               <div>
                 <dt>Full name</dt>
                 <dd>
-                  {{ character.fullName }}
+                  {{
+                    character.fullName ??
+                      character.name + ' ' + character.lastName
+                  }}
                 </dd>
               </div>
               <div>
@@ -1177,7 +1152,7 @@ export class ExampleCharacterEditor {
               </div>
               <div>
                 <dt class="force-sensitive">Force-sensitive</dt>
-                <dd>{{ character.forceSensitiveDisplay }}</dd>
+                <dd>{{ character.forceSensitiveDisplay ? 'Yes' : 'No' }}</dd>
               </div>
             </dl>
           } @else {
@@ -1316,223 +1291,98 @@ export class ExampleCharacterEditor {
         </section>
       </div>
     </div>
-    <div class="pipeline-actions">
+
+    <div class="lifecycle-actions">
       <input
-        id="actions-section-toggle"
+        id="lifecycle-section-toggle"
         class="section-toggle"
         type="checkbox"
-        aria-label="Toggle Actions visibility"
+        aria-label="Toggle Lifecycle visibility"
         checked />
       <div class="section-header">
-        <span>Actions</span>
+        <span>Lifecycle</span>
         <label
           class="section-chevron"
-          for="actions-section-toggle"
-          title="Show or hide Actions"></label>
+          for="lifecycle-section-toggle"
+          title="Show or hide Lifecycle"></label>
       </div>
 
-      <div class="pipeline-content">
-        <div class="action-groups">
-          <div class="action-group">
-            <div class="action-row">
-              <input
-                id="hydrate-description"
-                class="description-toggle"
-                type="checkbox"
-                aria-label="Show Hydration description" />
-              <div class="button-container hydrate-controls">
-                <!-- Teaching point: Hydration (ex-023) -->
-                <button
-                  type="button"
-                  class="button hydrate-terminal"
-                  [disabled]="hydrationSettled()"
-                  (click)="resolveHydration()">
-                  Resolve
-                </button>
-                <button
-                  type="button"
-                  class="button danger hydrate-terminal"
-                  [disabled]="hydrationSettled()"
-                  (click)="rejectHydration()">
-                  Reject
-                </button>
-                <label
-                  class="description-chevron"
-                  for="hydrate-description"
-                  title="Show or hide Hydration description"></label>
-              </div>
-              <div class="description-container">
-                The service registers a deferred hydration factory before
-                initialize() makes it the authoritative initial State source.
-                Resolve sends five characters through the full Replace pipeline,
-                including the configured Filter, Taps, and Reducers. Reject
-                emits an initialization Error and leaves the FeatureCell without
-                a value; configured initial State is not used as a fallback.
-                Hydration runs once during initialization and does not run again
-                when State is reset.
-              </div>
-            </div>
-
-            <div class="action-row">
-              <input
-                id="promise-description"
-                class="description-toggle"
-                type="checkbox"
-                aria-label="Show Fetch with Promise description" />
-              <div class="button-container promise-controls">
-                <!-- Teaching point: Promise (ex-024) -->
-                <button
-                  type="button"
-                  class="button"
-                  [hidden]="promisePending()"
-                  (click)="fetchWithPromise()">
-                  Fetch with Promise
-                </button>
-                <button
-                  type="button"
-                  class="button promise-terminal"
-                  [hidden]="!promisePending()"
-                  (click)="resolvePromise()">
-                  Resolve
-                </button>
-                <button
-                  type="button"
-                  class="button danger promise-terminal"
-                  [hidden]="!promisePending()"
-                  (click)="rejectPromise()">
-                  Reject
-                </button>
-                <label
-                  class="description-chevron"
-                  for="promise-description"
-                  title="Show or hide Fetch with Promise description"></label>
-              </div>
-              <div class="description-container">
-                Fetches character data with a Promise and updates the collection
-                when the request resolves.
-              </div>
-            </div>
+      <div class="operator-actions">
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="persist-null-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Persist Null Value description" />
+          <div class="button-container">
+            <!-- Teaching point: Persist Null (ex-020) -->
+            <button
+              type="button"
+              class="button danger"
+              (click)="persistNullValue()">
+              Persist Null Value
+            </button>
+            <label
+              class="description-chevron"
+              for="persist-null-description"
+              title="Show or hide Persist Null Value description"></label>
           </div>
-
-          <!-- Teaching template: Keep this group for Observable, httpResource, and restore lessons. -->
-          <div class="action-group">
-            <!-- Teaching point: Observable (ex-025) -->
-            <div class="action-row">
-              <input
-                id="observable-description"
-                class="description-toggle"
-                type="checkbox"
-                aria-label="Show Add by Observable description" />
-              <div class="button-container observable-controls">
-                <!-- Teaching point: Observable (ex-025) -->
-                <button
-                  type="button"
-                  class="button"
-                  [hidden]="observablePending()"
-                  (click)="addByObservable()">
-                  Add by Observable
-                </button>
-                <button
-                  type="button"
-                  class="button observable-terminal"
-                  [hidden]="!observablePending()"
-                  (click)="emitObservable()">
-                  Emit
-                </button>
-                <button
-                  type="button"
-                  class="button danger observable-terminal"
-                  [hidden]="!observablePending()"
-                  (click)="errorObservable()">
-                  Error
-                </button>
-                <label
-                  class="description-chevron"
-                  for="observable-description"
-                  title="Show or hide Add by Observable description"></label>
-              </div>
-              <div class="description-container">
-                Adds character data emitted by an Observable to the current
-                collection, or sends an error through the FeatureCell error
-                pipeline.
-              </div>
-            </div>
-
-            <!-- Teaching point: HTTP Resource (ex-026) -->
-            <div class="action-row">
-              <input
-                id="resource-description"
-                class="description-toggle"
-                type="checkbox"
-                aria-label="Show Replace with httpResource description" />
-              <div class="button-container">
-                <!-- Teaching point: HTTP Resource (ex-026) -->
-                <button
-                  type="button"
-                  class="button"
-                  (click)="fetchWithHttpResource()">
-                  Replace with httpResource
-                </button>
-                <label
-                  class="description-chevron"
-                  for="resource-description"
-                  title="Show or hide Replace with httpResource description"></label>
-              </div>
-              <div class="description-container">
-                Creates an Angular HttpResourceRef for the public SWAPI people
-                endpoint and passes it directly to replaceState(). Vault
-                preserves the current collection while the request is loading,
-                waits for Angular to resolve and validate the response, then
-                sends the selected characters through the configured Filter,
-                Taps, and Reducers. The finalized collection replaces the
-                previous FeatureCell value atomically; transport, parsing, and
-                HTTP failures enter the same error lifecycle without committing
-                a partial response.
-              </div>
-            </div>
+          <div class="description-container">
+            Calls <code>replaceState(&#123; value: null &#125;)</code> to
+            demonstrate null normalization. The FeatureCell intentionally
+            persists the value as <code>undefined</code>, clearing the current
+            state.
           </div>
         </div>
-      </div>
-    </div>
-    <!-- Teaching template: Safe to remove this entire section until you teach tap outputs or delay results. -->
-    <div class="tap-output">
-      <input
-        id="results-section-toggle"
-        class="section-toggle"
-        type="checkbox"
-        aria-label="Toggle Results visibility"
-        checked />
-      <div class="section-header">
-        <span>Results</span>
-        <label
-          class="section-chevron"
-          for="results-section-toggle"
-          title="Show or hide Results"></label>
-      </div>
 
-      <div class="tap-content">
-        <input
-          id="tap-output-toggle"
-          class="tap-toggle"
-          type="checkbox"
-          aria-label="Toggle pipeline output visibility"
-          checked />
-
-        <!-- Teaching point: Error Emission (ex-036) -->
-        <div class="tap-column">
-          <div class="tap-header">
-            <h3>Error Emission</h3>
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="reset-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Reset State description" />
+          <div class="button-container">
+            <!-- Teaching point: Reset (ex-021) -->
+            <button type="button" class="button danger" (click)="resetState()">
+              Reset State
+            </button>
             <label
-              class="tap-chevron"
-              for="tap-output-toggle"
-              title="Show or hide pipeline output"></label>
+              class="description-chevron"
+              for="reset-description"
+              title="Show or hide Reset State description"></label>
           </div>
-          <!-- Teaching point: Error Emission (ex-036) -->
-          <textarea
-            readonly
-            rows="8"
-            aria-label="Error Emission output"
-            [value]="errorEmissionJson()"></textarea>
+          <div class="description-container">
+            Calls the FeatureCell's dedicated <code>reset()</code> API to
+            explicitly clear the current state value to
+            <code>undefined</code> without submitting replacement state.
+          </div>
+        </div>
+
+        <div class="action-row lifecycle-action-row">
+          <input
+            id="destroy-feature-cell-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Destroy FeatureCell description" />
+          <div class="button-container">
+            <!-- Teaching point: FeatureCell destruction (ex-005) -->
+            <button
+              type="button"
+              class="button danger"
+              (click)="destroyFeatureCell()">
+              Destroy FeatureCell
+            </button>
+            <label
+              class="description-chevron"
+              for="destroy-feature-cell-description"
+              title="Show or hide Destroy FeatureCell description"></label>
+          </div>
+          <div class="description-container">
+            Permanently tears down the FeatureCell, releases its runtime
+            resources, destroys attached behaviors and controllers, completes
+            internal streams, and prevents further pipeline execution, state
+            updates, or emissions.
+          </div>
         </div>
       </div>
     </div>
@@ -2066,6 +1916,7 @@ export class ExampleCharacterEditor {
 
       &.character-details {
         position: relative;
+        min-height: 200px;
 
         .loading-overlay {
           position: absolute;
@@ -2613,19 +2464,6 @@ describe('ExampleComponent', () => {
     }
   ];
 
-  const withDerivedFields = (
-    characters: readonly StarWarsCharacter[]
-  ): readonly StarWarsCharacter[] =>
-    [...characters]
-      .map((character) => ({
-        ...character,
-        forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
-        fullName: \`\${character.name} \${character.lastName}\`
-      }))
-      .sort((left, right) => left.lastName.localeCompare(right.lastName));
-
-  const reducedCharacters = withDerivedFields(initialCharacters);
-
   let component: ExampleComponent;
   let fixture: ComponentFixture<ExampleComponent>;
   let service: ExampleService;
@@ -2652,7 +2490,7 @@ describe('ExampleComponent', () => {
   it('should expose the latest character collection from the service', async () => {
     expect(component.characters()).toEqual([]);
     await vaultSettled(key);
-    expect(component.characters()).toEqual(reducedCharacters);
+    expect(component.characters()).toEqual(initialCharacters);
   });
 
   it('should expose no selected character before a valid selection is made', async () => {
@@ -2666,7 +2504,7 @@ describe('ExampleComponent', () => {
     component['selectCharacter']('2');
 
     expect(component['selectedCharacterId']()).toBe(2);
-    expect(component['selectedCharacter']()).toEqual(reducedCharacters[0]);
+    expect(component['selectedCharacter']()).toEqual(initialCharacters[1]);
   });
 
   it('should ignore an unknown character id', async () => {
@@ -2694,8 +2532,8 @@ describe('ExampleComponent', () => {
       '.character-details'
     ) as HTMLElement;
 
-    expect(detailsPanel.textContent).toContain('Leia Organa');
-    expect(detailsPanel.textContent).toContain('Rebel Alliance');
+    expect(detailsPanel.textContent).toContain('Luke Skywalker');
+    expect(detailsPanel.textContent).toContain('Jedi Order');
     expect(detailsPanel.textContent).not.toContain('No character selected');
   });
 
@@ -2709,6 +2547,14 @@ describe('ExampleComponent', () => {
     expect(host.textContent).toContain('Leia');
     expect(host.textContent).toContain('Rebel Alliance');
     expect(host.textContent).not.toContain('No character selected');
+  });
+
+  it('should expose edit-mode labels before create mode begins', async () => {
+    await vaultSettled(key);
+
+    expect(component['editorMode']()).toBe('edit');
+    expect(component['editorTitle']()).toBe('Update character');
+    expect(component['submitLabel']()).toBe('Save changes');
   });
 
   it('should enter create mode and clear the form', async () => {
@@ -2731,6 +2577,40 @@ describe('ExampleComponent', () => {
     expect(component['characterForm'].untouched).toBeTrue();
   });
 
+  it('should preserve the original selection when create mode is started twice', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['startCreate']();
+    component['selectedCharacterId'].set(2);
+
+    component['startCreate']();
+    component['cancelEdit']();
+
+    expect(component['selectedCharacterId']()).toBe(1);
+    expect(component['editorMode']()).toBe('edit');
+    expect(component['feedback']()).toEqual(
+      component.editor.feedback['newCharacterDiscarded']
+    );
+  });
+
+  it('should return to edit mode and clear feedback when selecting from create mode', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    component['startCreate']();
+    component['feedback'].set({
+      message: 'Temporary feedback',
+      tone: 'info'
+    });
+
+    component['selectCharacter']('2');
+
+    expect(component['selectedCharacterId']()).toBe(2);
+    expect(component['editorMode']()).toBe('edit');
+    expect(component['feedback']()).toBeNull();
+  });
+
   it('should restore the previous selection when canceling create mode', async () => {
     await vaultSettled(key);
     fixture.detectChanges();
@@ -2745,12 +2625,12 @@ describe('ExampleComponent', () => {
     component['cancelEdit']();
 
     expect(component['editorMode']()).toBe('edit');
-    expect(component['selectedCharacterId']()).toBe(2);
+    expect(component['selectedCharacterId']()).toBe(1);
     expect(component['characterForm'].getRawValue()).toEqual({
-      name: 'Leia',
-      lastName: 'Organa',
-      faction: 'Rebel Alliance',
-      isForceSensitive: false
+      name: 'Luke',
+      lastName: 'Skywalker',
+      faction: 'Jedi Order',
+      isForceSensitive: true
     });
     expect(component['feedback']()).toEqual(
       component.editor.feedback['newCharacterDiscarded']
@@ -2944,7 +2824,7 @@ describe('ExampleComponent', () => {
 
     component['requestDelete']();
 
-    expect(component['deleteCandidate']()).toEqual(reducedCharacters[0]);
+    expect(component['deleteCandidate']()).toEqual(initialCharacters[1]);
     expect(component['feedback']()).toBeNull();
   });
 
@@ -2969,6 +2849,90 @@ describe('ExampleComponent', () => {
     component['cancelDelete']();
 
     expect(component['deleteCandidate']()).toBeNull();
+  });
+
+  it('should reset the form and delegate persist-null lifecycle updates to the service', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const persistNullValueSpy = spyOn(service, 'persistNullValue');
+
+    component['characterForm'].setValue({
+      name: 'Temp',
+      lastName: 'Character',
+      faction: 'Unaffiliated',
+      isForceSensitive: false
+    });
+    component['characterForm'].markAsDirty();
+    component['characterForm'].markAllAsTouched();
+
+    component['persistNullValue']();
+
+    expect(persistNullValueSpy).toHaveBeenCalledTimes(1);
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    expect(component['characterForm'].pristine).toBeTrue();
+    expect(component['characterForm'].untouched).toBeTrue();
+    expect(component['featureCellDestroyed']()).toBeFalse();
+  });
+
+  it('should reset the form and delegate reset lifecycle updates to the service', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const resetStateSpy = spyOn(service, 'resetState');
+
+    component['characterForm'].setValue({
+      name: 'Temp',
+      lastName: 'Character',
+      faction: 'Unaffiliated',
+      isForceSensitive: true
+    });
+    component['characterForm'].markAsDirty();
+    component['characterForm'].markAllAsTouched();
+
+    component['resetState']();
+
+    expect(resetStateSpy).toHaveBeenCalledTimes(1);
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    expect(component['characterForm'].pristine).toBeTrue();
+    expect(component['characterForm'].untouched).toBeTrue();
+    expect(component['featureCellDestroyed']()).toBeFalse();
+  });
+
+  it('should mark the feature as destroyed, clear the form, and delegate teardown to the service', async () => {
+    await vaultSettled(key);
+    fixture.detectChanges();
+    const destroyFeatureCellSpy = spyOn(service, 'destroyFeatureCell');
+
+    component['characterForm'].setValue({
+      name: 'Temp',
+      lastName: 'Character',
+      faction: 'Unaffiliated',
+      isForceSensitive: true
+    });
+    component['characterForm'].markAsDirty();
+    component['characterForm'].markAllAsTouched();
+
+    component['destroyFeatureCell']();
+
+    expect(destroyFeatureCellSpy).toHaveBeenCalledTimes(1);
+    expect(component['featureCellDestroyed']()).toBeTrue();
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    expect(component['characterForm'].pristine).toBeTrue();
+    expect(component['characterForm'].untouched).toBeTrue();
   });
 
   it('should ignore confirm delete when there is no pending candidate', async () => {
@@ -3014,9 +2978,7 @@ describe('ExampleComponent', () => {
       message: 'Leia Organa was removed.',
       tone: 'success'
     });
-    expect(component.characters()).toEqual(
-      withDerivedFields([initialCharacters[0]!])
-    );
+    expect(component.characters()).toEqual([initialCharacters[0]!]);
   });
 });
 `,
@@ -3028,7 +2990,6 @@ describe('ExampleComponent', () => {
   inject,
   signal
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   FormBuilder,
@@ -3037,15 +2998,11 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { VaultErrorService, VaultErrorShape } from '@sdux-vault/shared';
 import {
   EditorMode,
   ExampleCharacterEditor,
   OperationFeedback
 } from './example.character-editor';
-import { exampleHydrate } from './example.hydrate';
-import { exampleObservable } from './example.observable';
-import { examplePromise } from './example.promise';
 import { ExampleService } from './example.service';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
@@ -3120,180 +3077,14 @@ export class ExampleComponent {
   /** Watches the reactive collection and selects its first character when initial state arrives. */
   constructor() {
     this.#observeInitialSelection();
-    this.#observeGlobalErrors();
-  }
-
-  /** Exposes the FeatureCell loading signal so the template can cover the current selection. */
-  protected readonly state = this.#exampleService.state;
-
-  /** Prevents the one-time hydration source from being settled more than once. */
-  protected readonly hydrationSettled = signal(false);
-
-  /**
-   * Resolves the authoritative hydration source and completes FeatureCell initialization.
-   * A missing resolver preserves the pending UI because no hydration cycle was completed.
-   * @returns Nothing; the hydrated characters continue through the full pipeline automatically.
-   */
-  protected resolveHydration(): void {
-    const resolveHydration = exampleHydrate.getResolve();
-
-    if (!resolveHydration) {
-      return;
-    }
-
-    resolveHydration();
-    this.hydrationSettled.set(true);
   }
 
   /**
-   * Rejects the authoritative hydration source and completes initialization with an Error.
-   * Vault exposes the failure without evaluating configured initial State as a fallback.
-   * @returns Nothing; loading and Error State update through pipeline finalization.
+   * Selects and patches the first character when the reactive collection first
+   * becomes available. The one-time guard preserves later user selections and
+   * prevents asynchronous state emissions from interrupting create mode.
+   * @returns Nothing; the effect updates local selection and form state.
    */
-  protected rejectHydration(): void {
-    const rejectHydration = exampleHydrate.getReject();
-
-    if (!rejectHydration) {
-      return;
-    }
-
-    rejectHydration();
-    this.hydrationSettled.set(true);
-  }
-
-  /** Tracks the manually controlled request so only its valid next action is visible. */
-  protected readonly promisePending = signal(false);
-
-  /**
-   * Starts the deferred Promise merge and exposes its Resolve and Reject controls.
-   * Vault owns the corresponding StateSnapshot loading state while the Promise is pending.
-   * @returns Nothing; button visibility and FeatureCell state update reactively.
-   */
-  protected fetchWithPromise(): void {
-    this.promisePending.set(true);
-    this.#exampleService.fetchWithPromise();
-  }
-
-  /**
-   * Completes the active Promise request and restores the Fetch with Promise control.
-   * A missing resolver leaves the pending UI intact because no request was completed.
-   * @returns Nothing; the resolved characters continue through the pipeline automatically.
-   */
-  protected resolvePromise(): void {
-    const resolvePromise = examplePromise.getResolve();
-
-    if (!resolvePromise) {
-      return;
-    }
-
-    resolvePromise();
-    this.promisePending.set(false);
-  }
-
-  /**
-   * Rejects the active Promise request and restores the Fetch with Promise control.
-   * Vault normalizes the thrown rejection into error state and preserves the collection.
-   * @returns Nothing; loading and error state update through pipeline finalization.
-   */
-  protected rejectPromise(): void {
-    const rejectPromise = examplePromise.getReject();
-
-    if (!rejectPromise) {
-      return;
-    }
-
-    rejectPromise();
-    this.promisePending.set(false);
-  }
-
-  /** Tracks the manually controlled Observable so only its valid next action is visible. */
-  protected readonly observablePending = signal(false);
-
-  /**
-   * Starts the Observable merge and exposes its Emit and Error controls.
-   * Vault owns the corresponding StateSnapshot loading state until the user
-   * explicitly selects the source's terminal outcome.
-   * @returns Nothing; button visibility and FeatureCell state update reactively.
-   */
-  protected addByObservable(): void {
-    this.observablePending.set(true);
-    this.#exampleService.addByObservable();
-  }
-
-  /**
-   * Emits the active Observable character collection and restores the Add control.
-   * A missing emitter leaves the pending UI intact because no source was completed.
-   * @returns Nothing; emitted characters continue through the pipeline automatically.
-   */
-  protected emitObservable(): void {
-    const emitObservable = exampleObservable.getEmit();
-
-    if (!emitObservable) {
-      return;
-    }
-
-    emitObservable();
-    this.observablePending.set(false);
-  }
-
-  /**
-   * Errors the active Observable and restores the Add control.
-   * Vault normalizes the source error and preserves the current character collection.
-   * @returns Nothing; the error continues through pipeline finalization.
-   */
-  protected errorObservable(): void {
-    const errorObservable = exampleObservable.getError();
-
-    if (!errorObservable) {
-      return;
-    }
-
-    errorObservable();
-    this.observablePending.set(false);
-  }
-
-  /**
-   * Delegates the remote character request to the FeatureCell service.
-   * Angular owns the HTTP resource lifecycle while the component reacts to the
-   * FeatureCell's existing loading, value, and error signals.
-   * @returns Nothing; the resolved collection is rendered from reactive State.
-   */
-  protected fetchWithHttpResource(): void {
-    this.#exampleService.fetchWithHttpResource();
-  }
-
-  #observeGlobalErrors(): void {
-    this.#globalErrorService.error\$
-      .pipe(takeUntilDestroyed())
-      .subscribe((error: VaultErrorShape | null) => {
-        this.globalError.set(
-          error && this.#globalErrorService.hasError ? error : null
-        );
-      });
-  }
-
-  /** Provides the singleton stream and controls for application-level Vault errors. */
-  readonly #globalErrorService = VaultErrorService();
-
-  /** Holds the active application-level Vault error until the user clears it. */
-  protected readonly globalError = signal<VaultErrorShape | null>(null);
-
-  /**
-   * Clears the active application-level error after the user acknowledges it.
-   * The singleton emits \`null\`, which also removes the error message from the template.
-   * @returns Nothing; the global error service and reactive UI state are cleared.
-   */
-  /** Teaching Point: Global Error Service: Ex-011 */
-  protected clearGlobalError(): void {
-    this.#exampleService.clearEmittedError();
-    this.#globalErrorService.clear();
-  }
-
-  /** Serializes the finalized error and StateSnapshot observed by the latest error callback. */
-  protected readonly errorEmissionJson = computed(() =>
-    this.editor.serializeErrorEmission(this.#exampleService.emittedError())
-  );
-
   #observeInitialSelection(): void {
     effect(() => {
       const characters = this.characters();
@@ -3333,6 +3124,37 @@ export class ExampleComponent {
     this.editorMode.set('edit');
     this.feedback.set(null);
     this.#patchForm(character);
+  }
+
+  /** Tracks permanent FeatureCell teardown so the UI can explain the required recovery. */
+  protected readonly featureCellDestroyed = signal(false);
+
+  /**
+   * Delegates permanent FeatureCell teardown, clears the form, and exposes the terminal UI state.
+   * @returns Nothing; the FeatureCell and its runtime resources are permanently finalized.
+   */
+  protected destroyFeatureCell(): void {
+    this.#exampleService.destroyFeatureCell();
+    this.#clearCharacterForm();
+    this.featureCellDestroyed.set(true);
+  }
+
+  /**
+   * Delegates FeatureCell reset behavior to the service and clears the character form.
+   * @returns Nothing; the cleared state propagates through the reactive state APIs.
+   */
+  protected resetState(): void {
+    this.#exampleService.resetState();
+    this.#clearCharacterForm();
+  }
+
+  /**
+   * Delegates a null replacement to the service and clears the character form.
+   * @returns Nothing; the resulting undefined value is exposed through the reactive state APIs.
+   */
+  protected persistNullValue(): void {
+    this.#exampleService.persistNullValue();
+    this.#clearCharacterForm();
   }
 
   /**
@@ -3545,945 +3367,6 @@ export class ExampleComponent {
   }
 }
 `,
-    'src/example.filter.ts': `// example.filter.ts
-import { FilterFunction } from '@sdux-vault/shared';
-import type { StarWarsCharacter } from './star-wars-character.shape';
-
-/**
- * Removes characters whose last name is exactly \`"unknown"\` without mutating the candidate collection.
- * @param characters - Candidate character collection entering the Filter stage.
- * @returns A new collection containing every character with a known last name.
- */
-export const removeUnknownLastNameFilter: FilterFunction<
-  readonly StarWarsCharacter[]
-> = (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');
-`,
-    'src/example.http-resource.spec.ts': `import { provideHttpClient } from '@angular/common/http';
-import {
-  HttpTestingController,
-  provideHttpClientTesting
-} from '@angular/common/http/testing';
-import { Injector } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { exampleHttpResource } from './example.http-resource';
-
-describe('exampleHttpResource', () => {
-  const apiUrl = 'https://swapi.info/api/people';
-
-  let httpTesting: HttpTestingController;
-  let injector: Injector;
-  let resource: ReturnType<typeof exampleHttpResource.getResource> | undefined;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting()]
-    });
-
-    httpTesting = TestBed.inject(HttpTestingController);
-    injector = TestBed.inject(Injector);
-  });
-
-  afterEach(() => {
-    resource?.destroy();
-    httpTesting.verify();
-  });
-
-  describe('resource lifecycle', () => {
-    it('should fetch and adapt selected SWAPI people into character State', async () => {
-      resource = exampleHttpResource.getResource(injector);
-
-      expect(resource.value()).toBeUndefined();
-      expect(resource.isLoading()).toBeTrue();
-
-      await TestBed.tick();
-
-      const request = httpTesting.expectOne(apiUrl);
-      expect(request.request.method).toBe('GET');
-
-      request.flush([
-        {
-          name: 'Han Solo',
-          url: 'https://swapi.info/api/people/14/'
-        },
-        {
-          name: 'Yoda',
-          url: 'https://swapi.info/api/people/20/'
-        },
-        {
-          name: 'Lando Calrissian',
-          url: 'https://swapi.info/api/people/25/'
-        },
-        {
-          name: 'Luke Skywalker',
-          url: 'https://swapi.info/api/people/1/'
-        }
-      ]);
-
-      await TestBed.tick();
-
-      expect(resource.isLoading()).toBeFalse();
-      expect(resource.error()).toBeUndefined();
-      expect(resource.value()).toEqual([
-        {
-          id: 14,
-          name: 'Han',
-          lastName: 'Solo',
-          faction: 'Rebel Alliance',
-          isForceSensitive: false
-        },
-        {
-          id: 20,
-          name: 'Yoda',
-          lastName: 'unknown',
-          faction: 'Jedi Order',
-          isForceSensitive: true
-        },
-        {
-          id: 25,
-          name: 'Lando',
-          lastName: 'Calrissian',
-          faction: 'Rebel Alliance',
-          isForceSensitive: false
-        }
-      ]);
-    });
-  });
-
-  describe('response adaptation failures', () => {
-    it('should reject a response that is not a people collection', async () => {
-      resource = exampleHttpResource.getResource(injector);
-      await TestBed.tick();
-
-      httpTesting.expectOne(apiUrl).flush({ name: 'Han Solo' });
-      await TestBed.tick();
-
-      expect(resource.isLoading()).toBeFalse();
-      expect(resource.error()?.message).toBe(
-        'The SWAPI people response must be an array.'
-      );
-    });
-
-    it('should reject an incomplete people collection', async () => {
-      resource = exampleHttpResource.getResource(injector);
-      await TestBed.tick();
-
-      httpTesting.expectOne(apiUrl).flush([
-        {
-          name: 'Han Solo',
-          url: 'https://swapi.info/api/people/14/'
-        },
-        {
-          name: 'Yoda',
-          url: 'https://swapi.info/api/people/20/'
-        }
-      ]);
-      await TestBed.tick();
-
-      expect(resource.isLoading()).toBeFalse();
-      expect(resource.error()?.message).toBe(
-        'The SWAPI response is missing Lando Calrissian.'
-      );
-    });
-
-    it('should expose HTTP failures through the resource error signal', async () => {
-      resource = exampleHttpResource.getResource(injector);
-      await TestBed.tick();
-
-      httpTesting.expectOne(apiUrl).flush('Unavailable', {
-        status: 503,
-        statusText: 'Service Unavailable'
-      });
-      await TestBed.tick();
-
-      expect(resource.isLoading()).toBeFalse();
-      expect(resource.error()?.message).toContain('503 Service Unavailable');
-    });
-  });
-});
-`,
-    'src/example.http-resource.ts': `import type { HttpResourceRef } from '@angular/common/http';
-import { httpResource } from '@angular/common/http';
-import type { Injector } from '@angular/core';
-import type {
-  RawStarWarsCharacter,
-  StarWarsCharacter
-} from './star-wars-character.shape';
-
-/** Public SWAPI endpoint that returns the complete Star Wars people collection. */
-const SWAPI_PEOPLE_URL = 'https://swapi.info/api/people';
-
-/** Minimal response fields required from each SWAPI person. */
-interface SwapiPerson {
-  /** Canonical full name used to match the tutorial's selected characters. */
-  readonly name: string;
-
-  /** Canonical resource URL whose final path segment supplies the character ID. */
-  readonly url: string;
-}
-
-/** Tutorial metadata not supplied by SWAPI's people response. */
-interface HttpResourceCharacter extends Omit<RawStarWarsCharacter, 'id'> {
-  /** Canonical SWAPI name used to locate the remote record. */
-  readonly apiName: string;
-}
-
-/**
- * Characters selected from the remote response for the HTTP Resource example.
- * Faction and Force sensitivity are application metadata because SWAPI does not
- * include either field in its people representation.
- */
-const HTTP_RESOURCE_CHARACTERS: readonly HttpResourceCharacter[] = [
-  {
-    apiName: 'Han Solo',
-    name: 'Han',
-    lastName: 'Solo',
-    faction: 'Rebel Alliance',
-    isForceSensitive: false
-  },
-  {
-    apiName: 'Yoda',
-    name: 'Yoda',
-    lastName: 'unknown',
-    faction: 'Jedi Order',
-    isForceSensitive: true
-  },
-  {
-    apiName: 'Lando Calrissian',
-    name: 'Lando',
-    lastName: 'Calrissian',
-    faction: 'Rebel Alliance',
-    isForceSensitive: false
-  }
-];
-
-/**
- * Converts the untrusted HTTP payload into the tutorial's raw character State.
- * The adapter retains only the selected people, derives their numeric identities
- * from canonical URLs, and rejects incomplete responses before they enter Vault.
- * @param value - Raw JSON value returned by the SWAPI people endpoint.
- * @returns Three detached raw characters before reducer-derived display fields are added.
- */
-function parseStarWarsCharacters(value: unknown): RawStarWarsCharacter[] {
-  if (!Array.isArray(value)) {
-    throw new Error('The SWAPI people response must be an array.');
-  }
-
-  const peopleByName = new Map<string, SwapiPerson>();
-
-  for (const person of value) {
-    if (
-      typeof person === 'object' &&
-      person !== null &&
-      'name' in person &&
-      typeof person.name === 'string' &&
-      'url' in person &&
-      typeof person.url === 'string'
-    ) {
-      peopleByName.set(person.name, { name: person.name, url: person.url });
-    }
-  }
-
-  return HTTP_RESOURCE_CHARACTERS.map(({ apiName, ...metadata }) => {
-    const person = peopleByName.get(apiName);
-    const idMatch = person?.url.match(/\\/people\\/(\\d+)\\/?\$/);
-    const id = Number(idMatch?.[1]);
-
-    if (!person || !Number.isInteger(id)) {
-      throw new Error(\`The SWAPI response is missing \${apiName}.\`);
-    }
-
-    return { id, ...metadata };
-  });
-}
-
-/**
- * Creates Angular HTTP resources for the remote-data teaching example.
- * Keeping resource construction behind this singleton separates transport and
- * response adaptation from the FeatureCell service that owns application State.
- */
-class ExampleHttpResource {
-  /**
-   * Starts a GET request and adapts its response to the FeatureCell collection type.
-   * No default value is configured: while the request is pending, the resource value
-   * remains \`undefined\`, allowing Vault's HTTP Resource Resolve stage to represent the
-   * complete loading interval before forwarding the parsed collection downstream.
-   * @param injector - Angular injector used to create and manage the HTTP resource.
-   * @returns A resource whose eventual value is the selected Star Wars collection.
-   */
-  getResource(
-    injector: Injector
-  ): HttpResourceRef<StarWarsCharacter[] | undefined> {
-    return httpResource<StarWarsCharacter[]>(() => SWAPI_PEOPLE_URL, {
-      injector,
-      parse: parseStarWarsCharacters
-    });
-  }
-}
-
-/** Shared HTTP resource factory used by the complete character-management example. */
-export const exampleHttpResource = new ExampleHttpResource();
-`,
-    'src/example.hydrate.spec.ts': `import { exampleHydrate } from './example.hydrate';
-
-describe('exampleHydrate', () => {
-  describe('controller availability', () => {
-    it('should not expose terminal controllers before hydration is requested', () => {
-      expect(exampleHydrate.getResolve()).toBeNull();
-      expect(exampleHydrate.getReject()).toBeNull();
-    });
-  });
-
-  describe('active request lifecycle', () => {
-    it('should resolve the authoritative collection and clear its controllers', async () => {
-      const promise = exampleHydrate.getPromise();
-      const resolve = exampleHydrate.getResolve();
-
-      expect(resolve).not.toBeNull();
-
-      resolve!();
-      const characters = await promise;
-
-      expect(characters.length).toBe(5);
-      expect(exampleHydrate.getResolve()).toBeNull();
-    });
-
-    it('should reject the authoritative source and clear its controllers', async () => {
-      const promise = exampleHydrate.getPromise();
-      const reject = exampleHydrate.getReject();
-
-      expect(reject).not.toBeNull();
-
-      reject!();
-
-      await expectAsync(promise).toBeRejectedWithError(
-        'The character hydration was rejected.'
-      );
-      expect(exampleHydrate.getReject()).toBeNull();
-    });
-  });
-
-  describe('stale controller safety', () => {
-    it('should ignore a stale resolver captured from a previous cycle', async () => {
-      const firstPromise = exampleHydrate.getPromise();
-      const staleResolve = exampleHydrate.getResolve()!;
-
-      staleResolve();
-      await firstPromise;
-
-      const secondPromise = exampleHydrate.getPromise();
-      let secondSettled = false;
-      void secondPromise.then(() => {
-        secondSettled = true;
-      });
-
-      staleResolve();
-      await Promise.resolve();
-
-      expect(secondSettled).toBeFalse();
-
-      exampleHydrate.getResolve()!();
-
-      await expectAsync(secondPromise).toBeResolved();
-    });
-
-    it('should ignore a stale rejecter captured from a previous cycle', async () => {
-      const firstPromise = exampleHydrate.getPromise();
-      const staleReject = exampleHydrate.getReject()!;
-
-      staleReject();
-      await expectAsync(firstPromise).toBeRejected();
-
-      const secondPromise = exampleHydrate.getPromise();
-      let secondSettled = false;
-      void secondPromise.catch(() => {
-        secondSettled = true;
-      });
-
-      staleReject();
-      await Promise.resolve();
-
-      expect(secondSettled).toBeFalse();
-
-      exampleHydrate.getReject()!();
-
-      await expectAsync(secondPromise).toBeRejectedWithError(
-        'The character hydration was rejected.'
-      );
-    });
-  });
-});
-`,
-    'src/example.hydrate.ts': `import type {
-  RawStarWarsCharacter,
-  StarWarsCharacter
-} from './star-wars-character.shape';
-
-/** Raw characters supplied by the tutorial's authoritative hydration source. */
-const HYDRATED_CHARACTERS: readonly RawStarWarsCharacter[] = [
-  {
-    id: 301,
-    name: 'Cal',
-    lastName: 'Kestis',
-    faction: 'Jedi Order',
-    isForceSensitive: true
-  },
-  {
-    id: 302,
-    name: 'Jyn',
-    lastName: 'Erso',
-    faction: 'Rebel Alliance',
-    isForceSensitive: false
-  },
-  {
-    id: 303,
-    name: 'Bo-Katan',
-    lastName: 'Kryze',
-    faction: 'Mandalorians',
-    isForceSensitive: false
-  },
-  {
-    id: 304,
-    name: 'Mace',
-    lastName: 'Windu',
-    faction: 'Jedi Order',
-    isForceSensitive: true
-  },
-  {
-    id: 305,
-    name: 'BB-8',
-    lastName: 'unknown',
-    faction: 'Resistance',
-    isForceSensitive: false
-  }
-];
-
-/** Resolves the pending hydration with its authoritative character collection. */
-type CharacterResolver = (characters: StarWarsCharacter[]) => void;
-
-/** Rejects the pending hydration with its simulated initialization failure. */
-type CharacterRejecter = (reason: Error) => void;
-
-/**
- * Coordinates the manually settled Promise used by the hydration teaching example.
- * The singleton lets the service register one deferred initialization source while
- * the component controls whether that authoritative source resolves or rejects.
- */
-class ExampleHydrate {
-  /** Reuses the hydration Promise requested during the active initialization cycle. */
-  #pendingPromise: Promise<StarWarsCharacter[]> | null = null;
-
-  /** Holds the native resolver until hydration completes successfully. */
-  #resolveCharacters: CharacterResolver | null = null;
-
-  /** Holds the native rejecter until hydration terminates with an Error. */
-  #rejectCharacters: CharacterRejecter | null = null;
-
-  /**
-   * Creates or returns the deferred source that \`hydrate()\` evaluates during \`initialize()\`.
-   * @returns The active Promise for the authoritative initial character State.
-   */
-  getPromise(): Promise<StarWarsCharacter[]> {
-    if (!this.#pendingPromise) {
-      this.#pendingPromise = new Promise((resolve, reject) => {
-        this.#resolveCharacters = resolve;
-        this.#rejectCharacters = reject;
-      });
-    }
-
-    return this.#pendingPromise;
-  }
-
-  /**
-   * Returns a controller-safe function that successfully completes hydration once.
-   * The resolved collection is cloned so the pipeline receives detached teaching data.
-   * @returns A zero-argument resolver, or \`null\` before hydration has started.
-   */
-  getResolve(): (() => void) | null {
-    const resolveCharacters = this.#resolveCharacters;
-
-    if (!resolveCharacters) {
-      return null;
-    }
-
-    return () => {
-      if (this.#resolveCharacters !== resolveCharacters) {
-        return;
-      }
-
-      this.#clearPendingRequest();
-      resolveCharacters(
-        HYDRATED_CHARACTERS.map((character) => ({ ...character }))
-      );
-    };
-  }
-
-  /**
-   * Returns a controller-safe function that fails the authoritative source once.
-   * The rejection enters Vault's initialization Error lifecycle without consulting
-   * configured initial State or persistence as a fallback.
-   * @returns A zero-argument rejecter, or \`null\` before hydration has started.
-   */
-  getReject(): (() => void) | null {
-    const rejectCharacters = this.#rejectCharacters;
-
-    if (!rejectCharacters) {
-      return null;
-    }
-
-    return () => {
-      if (this.#rejectCharacters !== rejectCharacters) {
-        return;
-      }
-
-      this.#clearPendingRequest();
-      rejectCharacters(new Error('The character hydration was rejected.'));
-    };
-  }
-
-  /** Releases the completed Promise and both terminal controllers. */
-  #clearPendingRequest(): void {
-    this.#resolveCharacters = null;
-    this.#rejectCharacters = null;
-    this.#pendingPromise = null;
-  }
-}
-
-/** Shared coordinator used by the service and component for the hydration example. */
-export const exampleHydrate = new ExampleHydrate();
-`,
-    'src/example.observable.spec.ts': `import { exampleObservable } from './example.observable';
-
-describe('exampleObservable', () => {
-  describe('controller availability', () => {
-    it('should not expose terminal controllers before an Observable is requested', () => {
-      expect(exampleObservable.getEmit()).toBeNull();
-      expect(exampleObservable.getError()).toBeNull();
-    });
-  });
-
-  describe('active request lifecycle', () => {
-    it('should reuse the pending Observable until its emitter completes it', () => {
-      const pendingObservable = exampleObservable.getObservable();
-      const emitted: unknown[] = [];
-      let completed = false;
-
-      expect(exampleObservable.getObservable()).toBe(pendingObservable);
-
-      pendingObservable.subscribe({
-        next: (characters) => emitted.push(characters),
-        complete: () => {
-          completed = true;
-        }
-      });
-
-      const emitObservable = exampleObservable.getEmit();
-      expect(emitObservable).not.toBeNull();
-      emitObservable!();
-
-      expect(emitted).toEqual([
-        [
-          {
-            id: 201,
-            name: 'Ezra',
-            lastName: 'Bridger',
-            faction: 'Jedi Order',
-            isForceSensitive: true
-          },
-          {
-            id: 202,
-            name: 'Hera',
-            lastName: 'Syndulla',
-            faction: 'Rebel Alliance',
-            isForceSensitive: false
-          },
-          {
-            id: 203,
-            name: 'R2-D2',
-            lastName: 'unknown',
-            faction: 'Rebel Alliance',
-            isForceSensitive: false
-          }
-        ]
-      ]);
-      expect(completed).toBeTrue();
-      expect(exampleObservable.getEmit()).toBeNull();
-      expect(exampleObservable.getError()).toBeNull();
-    });
-
-    it('should error the pending Observable and clear both terminal controllers', () => {
-      const pendingObservable = exampleObservable.getObservable();
-      let emittedError: unknown;
-
-      pendingObservable.subscribe({
-        error: (error) => {
-          emittedError = error;
-        }
-      });
-
-      const errorObservable = exampleObservable.getError();
-
-      expect(exampleObservable.getEmit()).not.toBeNull();
-      expect(errorObservable).not.toBeNull();
-
-      errorObservable!();
-
-      expect(emittedError).toEqual(
-        jasmine.objectContaining({
-          message: 'The character request was rejected.'
-        })
-      );
-      expect(exampleObservable.getEmit()).toBeNull();
-      expect(exampleObservable.getError()).toBeNull();
-    });
-  });
-
-  describe('stale controller safety', () => {
-    it('should create a fresh source and ignore repeated terminal calls', () => {
-      const pendingObservable = exampleObservable.getObservable();
-      const emitObservable = exampleObservable.getEmit()!;
-      const errorObservable = exampleObservable.getError()!;
-
-      pendingObservable.subscribe();
-      emitObservable();
-      emitObservable();
-      errorObservable();
-
-      const nextObservable = exampleObservable.getObservable();
-      expect(nextObservable).not.toBe(pendingObservable);
-
-      nextObservable.subscribe();
-      exampleObservable.getEmit()!();
-    });
-  });
-});
-`,
-    'src/example.observable.ts': `import { Observable, ReplaySubject } from 'rxjs';
-import type {
-  RawStarWarsCharacter,
-  StarWarsCharacter
-} from './star-wars-character.shape';
-
-/** Raw characters emitted by the tutorial's simulated asynchronous source. */
-const OBSERVABLE_CHARACTERS: readonly RawStarWarsCharacter[] = [
-  {
-    id: 201,
-    name: 'Ezra',
-    lastName: 'Bridger',
-    faction: 'Jedi Order',
-    isForceSensitive: true
-  },
-  {
-    id: 202,
-    name: 'Hera',
-    lastName: 'Syndulla',
-    faction: 'Rebel Alliance',
-    isForceSensitive: false
-  },
-  {
-    id: 203,
-    name: 'R2-D2',
-    lastName: 'unknown',
-    faction: 'Rebel Alliance',
-    isForceSensitive: false
-  }
-];
-
-/** Emits or errors the pending Observable through its active Subject. */
-type CharacterSubject = ReplaySubject<StarWarsCharacter[]>;
-
-/**
- * Coordinates one manually controlled Observable for the Observable teaching example.
- * The singleton separates creation of the pending Observable from the user action
- * that emits or errors it, making the asynchronous Resolve stage visible in the UI.
- */
-class ExampleObservable {
-  /** Reuses the active Observable until its Subject reaches a terminal state. */
-  #pendingObservable: Observable<StarWarsCharacter[]> | null = null;
-
-  /** Holds the replaying Subject that controls the active Observable subscription. */
-  #characterSubject: CharacterSubject | null = null;
-
-  /**
-   * Creates or returns the source that the FeatureCell Observable stage will await.
-   * @returns The active Observable for the simulated character response.
-   */
-  getObservable(): Observable<StarWarsCharacter[]> {
-    if (!this.#pendingObservable) {
-      this.#characterSubject = new ReplaySubject<StarWarsCharacter[]>(1);
-      this.#pendingObservable = this.#characterSubject.asObservable();
-    }
-
-    return this.#pendingObservable;
-  }
-
-  /**
-   * Returns a controller-safe function for emitting the active response.
-   * The returned closure is idempotent and completes the source for the next request.
-   * @returns A zero-argument emitter, or \`null\` before an Observable has been requested.
-   */
-  getEmit(): (() => void) | null {
-    const characterSubject = this.#characterSubject;
-
-    if (!characterSubject) {
-      return null;
-    }
-
-    return () => {
-      if (this.#characterSubject !== characterSubject) {
-        return;
-      }
-
-      this.#clearPendingRequest();
-      characterSubject.next(
-        OBSERVABLE_CHARACTERS.map((character) => ({ ...character }))
-      );
-      characterSubject.complete();
-    };
-  }
-
-  /**
-   * Returns a controller-safe function for erroring the active source.
-   * The error travels through the Observable Resolve stage so Vault can normalize
-   * it, preserve the current value, and finalize the pipeline error lifecycle.
-   * @returns A zero-argument error controller, or \`null\` before an Observable is requested.
-   */
-  getError(): (() => void) | null {
-    const characterSubject = this.#characterSubject;
-
-    if (!characterSubject) {
-      return null;
-    }
-
-    return () => {
-      if (this.#characterSubject !== characterSubject) {
-        return;
-      }
-
-      this.#clearPendingRequest();
-      characterSubject.error(new Error('The character request was rejected.'));
-    };
-  }
-
-  /** Clears the terminal controller and releases the completed Observable. */
-  #clearPendingRequest(): void {
-    this.#characterSubject = null;
-    this.#pendingObservable = null;
-  }
-}
-
-/** Shared coordinator used by the service and component for the Observable example. */
-export const exampleObservable = new ExampleObservable();
-`,
-    'src/example.promise.spec.ts': `import { examplePromise } from './example.promise';
-
-describe('examplePromise', () => {
-  describe('controller availability', () => {
-    it('should not expose a resolver before a Promise is requested', () => {
-      expect(examplePromise.getResolve()).toBeNull();
-      expect(examplePromise.getReject()).toBeNull();
-    });
-  });
-
-  describe('active request lifecycle', () => {
-    it('should reuse the pending Promise until its resolver completes it', async () => {
-      const pendingPromise = examplePromise.getPromise();
-
-      expect(examplePromise.getPromise()).toBe(pendingPromise);
-
-      const resolvePromise = examplePromise.getResolve();
-      expect(resolvePromise).not.toBeNull();
-      resolvePromise!();
-
-      expect(await pendingPromise).toEqual([
-        {
-          id: 101,
-          name: 'Ahsoka',
-          lastName: 'Tano',
-          faction: 'Jedi Order',
-          isForceSensitive: true
-        },
-        {
-          id: 102,
-          name: 'Din',
-          lastName: 'Djarin',
-          faction: 'Unaffiliated',
-          isForceSensitive: false
-        },
-        {
-          id: 103,
-          name: 'Grogu',
-          lastName: 'unknown',
-          faction: 'Jedi Order',
-          isForceSensitive: true
-        }
-      ]);
-      expect(examplePromise.getResolve()).toBeNull();
-      expect(examplePromise.getReject()).toBeNull();
-    });
-
-    it('should reject the pending Promise and clear both terminal controllers', async () => {
-      const pendingPromise = examplePromise.getPromise();
-      const rejected = expectAsync(pendingPromise).toBeRejectedWithError(
-        'The character request was rejected.'
-      );
-      const rejectPromise = examplePromise.getReject();
-
-      expect(examplePromise.getResolve()).not.toBeNull();
-      expect(rejectPromise).not.toBeNull();
-
-      rejectPromise!();
-      await rejected;
-
-      expect(examplePromise.getResolve()).toBeNull();
-      expect(examplePromise.getReject()).toBeNull();
-    });
-  });
-
-  describe('stale controller safety', () => {
-    it('should create a fresh request and ignore repeated resolver calls', async () => {
-      const pendingPromise = examplePromise.getPromise();
-      const resolvePromise = examplePromise.getResolve()!;
-      const rejectPromise = examplePromise.getReject()!;
-
-      resolvePromise();
-      resolvePromise();
-      rejectPromise();
-
-      await pendingPromise;
-
-      const nextPromise = examplePromise.getPromise();
-      expect(nextPromise).not.toBe(pendingPromise);
-
-      examplePromise.getResolve()!();
-      await nextPromise;
-    });
-  });
-});
-`,
-    'src/example.promise.ts': `import type {
-  RawStarWarsCharacter,
-  StarWarsCharacter
-} from './star-wars-character.shape';
-
-/** Raw characters returned by the tutorial's simulated asynchronous request. */
-const PROMISE_CHARACTERS: readonly RawStarWarsCharacter[] = [
-  {
-    id: 101,
-    name: 'Ahsoka',
-    lastName: 'Tano',
-    faction: 'Jedi Order',
-    isForceSensitive: true
-  },
-  {
-    id: 102,
-    name: 'Din',
-    lastName: 'Djarin',
-    faction: 'Unaffiliated',
-    isForceSensitive: false
-  },
-  {
-    id: 103,
-    name: 'Grogu',
-    lastName: 'unknown',
-    faction: 'Jedi Order',
-    isForceSensitive: true
-  }
-];
-
-/** Resolves the pending request with its character collection. */
-type CharacterResolver = (characters: StarWarsCharacter[]) => void;
-
-/** Rejects the pending request with its simulated failure. */
-type CharacterRejecter = (reason: Error) => void;
-
-/**
- * Coordinates one manually resolved Promise for the Promise teaching example.
- * The singleton separates creation of the pending Promise from the user action
- * that resolves it, making the FeatureCell loading interval visible in the UI.
- */
-class ExamplePromise {
-  /** Reuses the active Promise when the request has already started. */
-  #pendingPromise: Promise<StarWarsCharacter[]> | null = null;
-
-  /** Holds the native Promise resolver until the simulated request completes. */
-  #resolveCharacters: CharacterResolver | null = null;
-
-  /** Holds the native Promise rejecter until the simulated request completes. */
-  #rejectCharacters: CharacterRejecter | null = null;
-
-  /**
-   * Creates or returns the request that the FeatureCell Promise stage will await.
-   * @returns The active Promise for the simulated character response.
-   */
-  getPromise(): Promise<StarWarsCharacter[]> {
-    if (!this.#pendingPromise) {
-      this.#pendingPromise = new Promise((resolve, reject) => {
-        this.#resolveCharacters = resolve;
-        this.#rejectCharacters = reject;
-      });
-    }
-
-    return this.#pendingPromise;
-  }
-
-  /**
-   * Returns a controller-safe function for completing the active request.
-   * The returned closure is idempotent and clears the singleton for the next request.
-   * @returns A zero-argument resolver, or \`null\` before a Promise has been requested.
-   */
-  getResolve(): (() => void) | null {
-    const resolveCharacters = this.#resolveCharacters;
-
-    if (!resolveCharacters) {
-      return null;
-    }
-
-    return () => {
-      if (this.#resolveCharacters !== resolveCharacters) {
-        return;
-      }
-
-      this.#clearPendingRequest();
-      resolveCharacters(
-        PROMISE_CHARACTERS.map((character) => ({ ...character }))
-      );
-    };
-  }
-
-  /**
-   * Returns a controller-safe function for failing the active request.
-   * Rejecting throws through the Promise Resolve stage so Vault can normalize
-   * the error, preserve the current value, and complete the loading lifecycle.
-   * @returns A zero-argument rejecter, or \`null\` before a Promise has been requested.
-   */
-  getReject(): (() => void) | null {
-    const rejectCharacters = this.#rejectCharacters;
-
-    if (!rejectCharacters) {
-      return null;
-    }
-
-    return () => {
-      if (this.#rejectCharacters !== rejectCharacters) {
-        return;
-      }
-
-      this.#clearPendingRequest();
-      rejectCharacters(new Error('The character request was rejected.'));
-    };
-  }
-
-  /** Clears both terminal callbacks and releases the completed Promise. */
-  #clearPendingRequest(): void {
-    this.#resolveCharacters = null;
-    this.#rejectCharacters = null;
-    this.#pendingPromise = null;
-  }
-}
-
-/** Shared coordinator used by the service and component for the Promise example. */
-export const examplePromise = new ExamplePromise();
-`,
     'src/example.service.spec.ts': `import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -4512,15 +3395,6 @@ describe('ExampleService', () => {
     }
   ];
 
-  const withDerivedFields = (
-    characters: readonly StarWarsCharacter[]
-  ): readonly StarWarsCharacter[] =>
-    characters.map((character) => ({
-      ...character,
-      forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
-      fullName: \`\${character.name} \${character.lastName}\`
-    }));
-
   const configureService = async (
     initialState: readonly StarWarsCharacter[] | null = initialCharacters
   ): Promise<ExampleService> => {
@@ -4547,7 +3421,7 @@ describe('ExampleService', () => {
   it('should initialize with the configured FeatureCell State', async () => {
     const service = await configureService();
 
-    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
+    expect(service.state.value()).toEqual(initialCharacters);
     expect(service.state.isLoading()).toBeFalse();
     expect(service.state.error()).toBeNull();
     expect(service.state.hasValue()).toBeTrue();
@@ -4572,9 +3446,7 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(
-      withDerivedFields([createdCharacter])
-    );
+    expect(service.state.value()).toEqual([createdCharacter]);
   });
 
   it('should create the first character with id 1 when no value exists', async () => {
@@ -4596,9 +3468,7 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(
-      withDerivedFields([createdCharacter])
-    );
+    expect(service.state.value()).toEqual([{ ...createdCharacter }]);
   });
 
   it('should replace the matching character without changing the others', async () => {
@@ -4621,7 +3491,8 @@ describe('ExampleService', () => {
       isForceSensitive: false
     });
     expect(service.state.value()).toEqual([
-      ...withDerivedFields([updatedCharacter, initialCharacters[1]!])
+      updatedCharacter,
+      initialCharacters[1]!
     ]);
   });
 
@@ -4644,7 +3515,7 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
+    expect(service.state.value()).toEqual(initialCharacters);
   });
 
   it('should safely update against an empty collection when no value exists', async () => {
@@ -4676,9 +3547,7 @@ describe('ExampleService', () => {
 
     await vaultSettled(key);
 
-    expect(service.state.value()).toEqual(
-      withDerivedFields([initialCharacters[1]!])
-    );
+    expect(service.state.value()).toEqual([initialCharacters[1]!]);
   });
 
   it('should safely remove against an empty collection when no value exists', async () => {
@@ -4690,38 +3559,44 @@ describe('ExampleService', () => {
 
     expect(service.state.value()).toEqual([]);
   });
+
+  it('should persist a null lifecycle value through replaceState', async () => {
+    const service = await configureService();
+
+    service.persistNullValue();
+
+    await vaultSettled(key);
+
+    expect(service.state.value()).toBeUndefined();
+    expect(service.state.hasValue()).toBeFalse();
+    expect(service.state.error()).toBeNull();
+  });
+
+  it('should reset the lifecycle state to an undefined value', async () => {
+    const service = await configureService();
+
+    service.resetState();
+
+    expect(service.state.value()).toBeUndefined();
+    expect(service.state.hasValue()).toBeFalse();
+    expect(service.state.error()).toBeNull();
+  });
+
+  it('should finalize the FeatureCell lifecycle with destroy()', async () => {
+    const service = await configureService();
+
+    expect(() => service.destroyFeatureCell()).not.toThrow();
+  });
 });
 `,
-    'src/example.service.ts': `import { inject, Injectable, Injector, signal } from '@angular/core';
+    'src/example.service.ts': `import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
-import type {
-  StateSnapshotShape,
-  VaultErrorCallback,
-  VaultErrorShape
-} from '@sdux-vault/shared';
 import {
   createCharacterState,
-  deriveForceSensitiveDisplay,
-  deriveFullName,
   getNextCharacterId,
-  withCharactersSortedByLastName,
   type StarWarsCharacterDraft
 } from './example.character-domain';
-import { removeUnknownLastNameFilter } from './example.filter';
-import { exampleHttpResource } from './example.http-resource';
-import { exampleHydrate } from './example.hydrate';
-import { exampleObservable } from './example.observable';
-import { examplePromise } from './example.promise';
 import type { StarWarsCharacter } from './star-wars-character.shape';
-
-/** Inputs observed by the tutorial's finalized error callback. */
-interface ErrorEmission {
-  /** Normalized Vault error committed by the Error stage. */
-  readonly error: VaultErrorShape;
-
-  /** Immutable FeatureCell snapshot associated with the finalized error. */
-  readonly state: Readonly<StateSnapshotShape<readonly StarWarsCharacter[]>>;
-}
 
 /**
  * Owns the character collection and exposes domain operations for the tutorial component.
@@ -4739,9 +3614,6 @@ export class ExampleService {
    */
   readonly #vault = injectVault<readonly StarWarsCharacter[]>(ExampleService);
 
-  /** Supplies the Angular injection context required to create an HTTP resource. */
-  readonly #injector = inject(Injector);
-
   /**
    * Exposes the FeatureCell's Angular signal state for value, loading, error, and presence checks.
    * Consumers can bind to these reactive accessors without subscribing manually.
@@ -4752,147 +3624,7 @@ export class ExampleService {
    * Initializes the FeatureCell for the add/edit tutorial slice.
    */
   constructor() {
-    /*
-     * \`.filters()\` registers \`removeUnknownLastNameFilter\` as a
-     * \`FilterFunction<readonly StarWarsCharacter[]>\`.
-     *
-     * This pure function runs before reducers and returns a new candidate
-     * collection without characters whose last name is exactly \`unknown\`.
-     * The inline second filter normally returns that collection unchanged. When
-     * the teaching flag is enabled, it throws deliberately so the example can show
-     * pipeline error normalization without allowing the candidate to commit.
-     */
-    this.#vault.filters([
-      removeUnknownLastNameFilter,
-      (characters) => {
-        return characters;
-      }
-    ]);
-
-    /*
-     * The first \`.reducers()\` entry is a delegating
-     * \`ReducerFunction<readonly StarWarsCharacter[]>\`.
-     *
-     * After filtering, this imported pure function performs an immutable transformation
-     * through \`deriveForceSensitiveDisplay()\`, producing a new collection in which
-     * every retained character has a \`Yes\` or \`No\` display value.
-     */
-
-    /*
-     * The second entry uses a factory-generated pure reducer, a different function
-     * pattern that still returns the same \`ReducerFunction\` contract.
-     *
-     * It runs after Reducer 1, clones the transformed collection, and sorts characters
-     * alphabetically by \`lastName\` without mutating the incoming array.
-     */
-
-    /*
-     * The third entry is another delegating pure reducer.
-     *
-     * It runs after sorting and derives a display-ready \`fullName\` from the existing
-     * \`name\` and \`lastName\` fields so every view can reuse the same post-pipeline label.
-     */
-    this.#vault.reducers([
-      deriveForceSensitiveDisplay,
-      withCharactersSortedByLastName(),
-      deriveFullName
-    ]);
-
-    /*
-     * \`.errors()\` registers a
-     * \`VaultErrorCallback<readonly StarWarsCharacter[]>\` that receives the
-     * finalized Vault error and immutable StateSnapshot after error commitment.
-     *
-     * The callback publishes both observational inputs for the tutorial display;
-     * it cannot transform the error, replace state, or alter pipeline control.
-     */
-    this.#vault.errors([this.#captureEmittedError]);
-
-    /*
-     * \`.hydrate()\` registers a deferred factory as the authoritative source for
-     * this FeatureCell's initial State. The factory is declared before
-     * \`.initialize()\` but does not execute until initialization begins.
-     *
-     * Resolving the Promise sends the hydrated collection through the complete
-     * Replace → Resolve → Filter → Tap → Reducer → Emit pipeline. Rejecting it
-     * emits an initialization Error without falling back to configured initial
-     * State or persistence because hydration has the highest precedence.
-     */
-    this.#vault.hydrate(() => exampleHydrate.getPromise());
-
     this.#vault.initialize();
-  }
-
-  // Teaching point: Promise (ex-024)
-  /**
-   * Merges a deferred Promise factory into the FeatureCell pipeline.
-   * The factory is invoked by the Promise Resolve stage, which marks state as loading,
-   * awaits the manually controlled response, and forwards its characters through the
-   * configured filter, taps, and reducers before the collection is committed.
-   * @returns Nothing; consumers observe loading and the eventual collection reactively.
-   */
-  fetchWithPromise(): void {
-    const deferredPromise = examplePromise.getPromise();
-
-    this.#vault.mergeState({
-      value: () => deferredPromise
-    });
-  }
-
-  // Teaching point: Observable (ex-025)
-  /**
-   * Merges a manually controlled Observable into the FeatureCell pipeline.
-   * The Observable Resolve stage awaits its first emitted character collection,
-   * then forwards that value through the configured filter, taps, and reducers
-   * before committing the transformed collection to reactive state.
-   * @returns Nothing; consumers observe loading and the eventual collection reactively.
-   */
-  addByObservable(): void {
-    this.#vault.mergeState(exampleObservable.getObservable());
-  }
-
-  // Teaching point: HTTP Resource (ex-026)
-  /**
-   * Replaces the current collection from an Angular \`HttpResourceRef\`.
-   * The example adapter owns the remote endpoint and converts its untrusted JSON
-   * response into \`StarWarsCharacter\`; Vault's HTTP Resource Resolve stage
-   * then represents loading, awaits the resource, and forwards the parsed value
-   * through the configured filter, taps, and reducers before State commitment.
-   * @returns Nothing; consumers observe loading, data, and errors reactively.
-   */
-  fetchWithHttpResource(): void {
-    this.#vault.replaceState(exampleHttpResource.getResource(this.#injector));
-  }
-
-  /**
-   * Observes a finalized Vault error after it has been normalized and committed to state.
-   * This VaultErrorCallback records both immutable inputs for the tutorial display and returns
-   * no value, so it cannot transform the error, recover the pipeline, or mutate state.
-   * @param error - Finalized Vault error produced by the Error stage.
-   * @param state - Immutable FeatureCell snapshot at the time of the error.
-   * @returns Nothing; the callback only updates the read-only teaching signal.
-   */
-  /** Teaching Point: ex-036 */
-  readonly #captureEmittedError: VaultErrorCallback<
-    readonly StarWarsCharacter[]
-  > = (error, state) => {
-    this.#emittedError.set({ error, state });
-  };
-
-  /** Stores the latest finalized error and associated FeatureCell snapshot. */
-  /** Teaching Point: ex-036 */
-  readonly #emittedError = signal<ErrorEmission | undefined>(undefined);
-
-  /**
-   * Exposes the latest error-callback inputs as a read-only signal for the teaching output.
-   * Consumers can inspect the finalized error and snapshot without influencing either one.
-   */
-  /** Teaching Point: ex-036 */
-  readonly emittedError = this.#emittedError.asReadonly();
-
-  /** Clears the latest captured error-emission teaching output. */
-  clearEmittedError(): void {
-    this.#emittedError.set(undefined);
   }
 
   /**
@@ -4949,6 +3681,33 @@ export class ExampleService {
         this.#vault.state.value()?.filter((character) => character.id !== id) ??
         []
     });
+  }
+
+  /**
+   * Permanently tears down the FeatureCell and releases its runtime resources.
+   * Destruction completes its streams and prevents any further pipeline execution.
+   * @returns Nothing; the FeatureCell lifecycle is permanently finalized.
+   */
+  destroyFeatureCell(): void {
+    this.#vault.destroy();
+  }
+
+  /**
+   * Resets the FeatureCell through its dedicated lifecycle API.
+   * Consumers observe the cleared value as \`undefined\` through the reactive state APIs.
+   * @returns Nothing; the FeatureCell performs the reset operation internally.
+   */
+  resetState(): void {
+    this.#vault.reset();
+  }
+
+  /**
+   * Persists \`null\` through \`replaceState\` to clear the FeatureCell's current value.
+   * The resulting state value resolves to \`undefined\` for consumers of the read model.
+   * @returns Nothing; consumers observe the cleared value through the reactive state APIs.
+   */
+  persistNullValue(): void {
+    this.#vault.replaceState({ value: null });
   }
 }
 `,

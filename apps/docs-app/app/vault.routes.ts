@@ -94,7 +94,10 @@ export const routes: Routes = [
           // import('./docs/tutorial/angular/examples/async-input/example.component').then(
           //   (m) => m.ExampleComponent
           // )
-          import('./docs/tutorial/angular/examples/delay/example.component').then(
+          // import('./docs/tutorial/angular/examples/delay/example.component').then(
+          //   (m) => m.ExampleComponent
+          // )
+          import('./docs/tutorial/angular/examples/encrypt-and-persist/example.component').then(
             (m) => m.ExampleComponent
           )
         // import('./docs/tutorial/angular/examples/errors/example.component').then(

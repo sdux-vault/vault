@@ -4,7 +4,9 @@ import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  PackageNameComponent,
+  SDuXDownloadComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
@@ -22,7 +24,9 @@ import { STAR_WARS_ADD_EDIT_CHARACTERS } from '../../generated/add-edit-characte
     FeatureCellBrandNameComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    StackblitzLanguageExampleComponent
+    StackblitzLanguageExampleComponent,
+    SDuXDownloadComponent,
+    PackageNameComponent
   ],
   templateUrl: './add-edit-characters.chapter.component.html'
 })
@@ -30,6 +34,8 @@ export class AddEditCharactersChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_ADD_EDIT_CHARACTERS;
+  readonly downloadUrl =
+    '/assets/tutorial/sdux-add-edit-characters.tutorial.zip';
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('add-edit-characters')!;

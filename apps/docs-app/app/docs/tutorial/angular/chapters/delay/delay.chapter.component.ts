@@ -4,7 +4,8 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
-  PackageNameComponent
+  PackageNameComponent,
+  SDuXDownloadComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
@@ -23,7 +24,8 @@ import { STAR_WARS_DELAY } from '../../generated/delay.generated';
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     StackblitzLanguageExampleComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    SDuXDownloadComponent
   ],
   templateUrl: './delay.chapter.component.html'
 })
@@ -31,6 +33,7 @@ export class DelayChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #files = STAR_WARS_DELAY;
+  readonly downloadUrl = '/assets/tutorial/sdux-delay.tutorial.zip';
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('delay-tutorial')!;

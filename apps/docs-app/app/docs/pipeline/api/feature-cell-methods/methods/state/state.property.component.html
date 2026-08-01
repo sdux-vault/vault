@@ -162,8 +162,8 @@ console.info(snapshot.error);`}}</code></pre>
 
     <div class="section-body">
       <p>
-        When <strong><sdux-package-name />/angular</strong> is installed, the
-        <strong>state</strong> property is overridden with a
+        When <strong><sdux-package-name [package]="'angular'" /></strong> is
+        installed, the <strong>state</strong> property is overridden with a
         <strong>signal-based state reference</strong>. Instead of returning a
         snapshot object, <code>state</code> exposes reactive Angular
         <strong>Signals</strong> for each state field.
@@ -236,8 +236,8 @@ export class EmployeeComponent {
 
       <p>
         This override is automatic when
-        <strong><sdux-package-name />/angular</strong> is present. No
-        configuration changes are required.
+        <strong><sdux-package-name [package]="'angular'" /></strong> is present.
+        No configuration changes are required.
       </p>
     </div>
   </section>

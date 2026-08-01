@@ -451,7 +451,8 @@
           </li>
           <li>
             <a [routerLink]="[]" fragment="sdux-test-package"
-              ><sdux-package-name />/testing Package Overview</a
+              ><sdux-package-name [package]="'testing/utils'" /> Package
+              Overview</a
             >
           </li>
           <li>
@@ -3263,7 +3264,7 @@ LocalStorage storagekey is "vault::localstorage::..."
   <section class="section" id="sdux-test-package">
     <div class="section-title-navigation">
       <div class="section-title">
-        <sdux-package-name />/testing Package Overview
+        <sdux-package-name [package]="'testing/utils'" /> Package Overview
       </div>
       <div class="section-top-link">
         <a [routerLink]="[]" fragment="toc">↑ top</a>
@@ -3272,8 +3273,9 @@ LocalStorage storagekey is "vault::localstorage::..."
 
     <div class="section-body">
       <p>
-        The <code><sdux-package-name />/testing</code> package provides
-        framework-agnostic utilities for deterministic Vault and
+        The
+        <code><sdux-package-name [package]="'testing/utils'" /></code> package
+        provides framework-agnostic utilities for deterministic Vault and
         <a href="/docs/references/functions/feature-cell">FeatureCell</a>
         testing.
       </p>
@@ -3323,8 +3325,8 @@ LocalStorage storagekey is "vault::localstorage::..."
         Angular integration helpers such as
         <code>provideVaultTesting()</code> and
         <code>provideFeatureCellTesting()</code> are available from
-        <code><sdux-package-name />/angular</code> and integrate with Angular’s
-        dependency injection and application bootstrap lifecycle.
+        <code><sdux-package-name [package]="'angular'" /></code> and integrate
+        with Angular’s dependency injection and application bootstrap lifecycle.
       </p>
     </div>
   </section>

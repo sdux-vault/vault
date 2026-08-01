@@ -47,10 +47,10 @@ cd sdux-tutorial;
 
   <div class="section-body">
     <p>
-      Install the <sdux-package-name />/angular package to add the Angular
-      integration to your project. The package installs the core runtime and
-      exposes the Angular providers, decorator, injector, and Signal-based State
-      access used throughout this tutorial.
+      Install the <sdux-package-name [package]="'angular'" /> package to add the
+      Angular integration to your project. The package installs the core runtime
+      and exposes the Angular providers, decorator, injector, and Signal-based
+      State access used throughout this tutorial.
     </p>
 
     <p>The Angular integration includes:</p>
@@ -108,7 +108,7 @@ cd sdux-tutorial;
     <div class="callout callout-action">
       <div class="title">Take Action</div>
       <ol>
-        <li>Install the <sdux-package-name />/angular package</li>
+        <li>Install the <sdux-package-name [package]="'angular'" /> package</li>
 
         <sdux-example-viewer-source [displayTabs]="false">
           <sdux-example-viewer-tab
@@ -703,17 +703,22 @@ cd sdux-tutorial;
   <div class="tutorial-shortcut-copy">
     <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
     <h2>Want the finished initial example without all ten steps?</h2>
-    <p>
-      If you want the completed single-character read example, launch the live
-      StackBlitz project and inspect the finished implementation directly.
-    </p>
   </div>
 
   @if (stackblitz(); as stackblitz) {
     <div class="tutorial-shortcut-launcher">
+      <p>
+        If you want the completed single-character read example, launch the live
+        StackBlitz project and inspect the finished implementation directly.
+      </p>
       <sdux-stackblitz-language-example
         [example]="stackblitz.example"
         [lang]="stackblitz.language" />
+    </div>
+
+    <div class="tutorial-download">
+      <p>Download the complete chapter source code as a ZIP archive.</p>
+      <sdux-download [url]="downloadUrl"></sdux-download>
     </div>
   }
 </section>

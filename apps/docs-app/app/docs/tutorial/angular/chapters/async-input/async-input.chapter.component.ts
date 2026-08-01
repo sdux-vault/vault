@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  SDuXDownloadComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
@@ -21,7 +22,8 @@ import { STAR_WARS_ASYNC_INPUT } from '../../generated/async-input.generated';
     FeatureCellBrandNameComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    StackblitzLanguageExampleComponent
+    StackblitzLanguageExampleComponent,
+    SDuXDownloadComponent
   ],
   templateUrl: './async-input.chapter.component.html'
 })
@@ -29,6 +31,7 @@ export class AsyncInputChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #files = STAR_WARS_ASYNC_INPUT;
+  readonly downloadUrl = '/assets/tutorial/sdux-async-input.tutorial.zip';
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('async-input-tutorial')!;

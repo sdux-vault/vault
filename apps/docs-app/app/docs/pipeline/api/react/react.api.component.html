@@ -7,8 +7,8 @@
   <header class="docs-header">
     <p class="lead">
       <sdux-brand-name [tm]="true" /> integrates with React through
-      <strong><sdux-package-name />/react</strong>. The package preserves the
-      core <sdux-feature-cell [tm]="true" /> contract and adds
+      <strong><sdux-package-name [package]="'react'" /></strong>. The package
+      preserves the core <sdux-feature-cell [tm]="true" /> contract and adds
       <strong>useSyncExternalStore()</strong> for render-time State access.
     </p>
 
@@ -16,9 +16,9 @@
       <div class="title">React package usage</div>
       <p>
         <sdux-brand-name /> can run in a React application without
-        <strong><sdux-package-name />/react</strong>. The core APIs remain
-        available, but the React render-time State surface is supplied only by
-        the React package.
+        <strong><sdux-package-name [package]="'react'" /></strong>. The core
+        APIs remain available, but the React render-time State surface is
+        supplied only by the React package.
       </p>
     </div>
   </header>
@@ -28,11 +28,12 @@
 
     <div class="section-body">
       <p>
-        <strong><sdux-package-name />/react</strong> is a React integration
-        wrapper around the core <sdux-brand-name /> APIs. It preserves the core
-        <sdux-feature-cell /> FluentApi, synchronous State Snapshot, and State
-        Stream while adding <strong>useSyncExternalStore()</strong> as the React
-        render-time State surface.
+        <strong><sdux-package-name [package]="'react'" /></strong> is a React
+        integration wrapper around the core <sdux-brand-name /> APIs. It
+        preserves the core <sdux-feature-cell /> FluentApi, synchronous State
+        Snapshot, and State Stream while adding
+        <strong>useSyncExternalStore()</strong> as the React render-time State
+        surface.
       </p>
 
       <p>
@@ -71,7 +72,8 @@
     <div class="section-body">
       <p>
         The React extension is available from the
-        <strong><sdux-package-name />/react</strong> package on npm.
+        <strong><sdux-package-name [package]="'react'" /></strong> package on
+        npm.
       </p>
       <sdux-example-viewer-source [displayTabs]="false">
         <sdux-example-viewer-tab [label]="'React'">
@@ -85,7 +87,7 @@
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Download @sdux-vault/react from npm in a new window"
-          >Download <sdux-package-name />/react from npm →</a
+          >Download <sdux-package-name [package]="'react'" /> from npm →</a
         >
       </p>
     </div>

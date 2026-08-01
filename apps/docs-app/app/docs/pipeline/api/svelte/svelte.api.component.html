@@ -7,25 +7,26 @@
   <header class="docs-header">
     <p class="lead">
       <sdux-brand-name [tm]="true" /> integrates with Svelte through
-      <strong><sdux-package-name />/svelte</strong>. The package preserves the
-      core <sdux-feature-cell [tm]="true" /> contract and makes the existing
-      <strong>state</strong> Snapshot getter reactive within Svelte effects.
+      <strong><sdux-package-name [package]="'svelte'" /></strong>. The package
+      preserves the core <sdux-feature-cell [tm]="true" /> contract and makes
+      the existing <strong>state</strong> Snapshot getter reactive within Svelte
+      effects.
     </p>
 
     <div class="callout callout-info">
       <div class="title">Svelte package usage</div>
       <p>
         <sdux-brand-name /> can run in a Svelte application without
-        <strong><sdux-package-name />/svelte</strong>. The core APIs remain
-        available, but the Svelte-reactive State getter is supplied only by the
-        Svelte package.
+        <strong><sdux-package-name [package]="'svelte'" /></strong>. The core
+        APIs remain available, but the Svelte-reactive State getter is supplied
+        only by the Svelte package.
       </p>
     </div>
 
     <div class="callout callout-warning">
       <div class="title">Svelte version requirement</div>
       <p>
-        <strong><sdux-package-name />/svelte</strong> requires
+        <strong><sdux-package-name [package]="'svelte'" /></strong> requires
         <strong>Svelte 5.7 or a later Svelte 5 release</strong>. The reactive
         State getter uses <strong>createSubscriber()</strong>, which became
         available in Svelte 5.7.
@@ -38,11 +39,11 @@
 
     <div class="section-body">
       <p>
-        <strong><sdux-package-name />/svelte</strong> is a Svelte integration
-        wrapper around the core <sdux-brand-name /> APIs. It preserves the core
-        <sdux-feature-cell /> FluentApi, synchronous State Snapshot, and State
-        Stream while making the existing <strong>state</strong> getter the
-        Svelte reactive State surface.
+        <strong><sdux-package-name [package]="'svelte'" /></strong> is a Svelte
+        integration wrapper around the core <sdux-brand-name /> APIs. It
+        preserves the core <sdux-feature-cell /> FluentApi, synchronous State
+        Snapshot, and State Stream while making the existing
+        <strong>state</strong> getter the Svelte reactive State surface.
       </p>
 
       <p>
@@ -82,7 +83,8 @@
     <div class="section-body">
       <p>
         The Svelte extension is available from the
-        <strong><sdux-package-name />/svelte</strong> package on npm.
+        <strong><sdux-package-name [package]="'svelte'" /></strong> package on
+        npm.
       </p>
       <sdux-example-viewer-source [displayTabs]="false">
         <sdux-example-viewer-tab [label]="'Svelte'">
@@ -96,7 +98,7 @@
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Download @sdux-vault/svelte from npm in a new window"
-          >Download <sdux-package-name />/svelte from npm →</a
+          >Download <sdux-package-name [package]="'svelte'" /> from npm →</a
         >
       </p>
     </div>

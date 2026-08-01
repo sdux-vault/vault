@@ -1,0 +1,303 @@
+<section class="character-example" aria-labelledby="character-example-title">
+  <header class="header">
+    <div>
+      <p class="eyebrow">Interactive example</p>
+      <h2 id="character-example-title">Star Wars character registry</h2>
+      <p>
+        Use SDuX Vault state management to select, create, and update characters
+        from an in-memory collection.
+      </p>
+    </div>
+  </header>
+
+  @if (feedback(); as operationFeedback) {
+    <div
+      class="feedback"
+      [class.error]="operationFeedback.tone === 'error'"
+      [class.success]="operationFeedback.tone === 'success'"
+      [attr.role]="operationFeedback.tone === 'error' ? 'alert' : 'status'"
+      aria-live="polite">
+      {{ operationFeedback.message }}
+    </div>
+  }
+
+  <fieldset class="feature-cell-controls">
+    @if (deleteCandidate(); as character) {
+      <section
+        class="delete-confirmation"
+        aria-labelledby="delete-confirmation-title"
+        role="alert">
+        <div>
+          <h3 id="delete-confirmation-title">
+            Delete
+            {{
+              character.fullName ?? character.name + ' ' + character.lastName
+            }}?
+          </h3>
+          <p>This action removes the character from the current collection.</p>
+        </div>
+        <div class="actions">
+          <button
+            type="button"
+            class="button secondary"
+            (click)="cancelDelete()">
+            Cancel
+          </button>
+          <button type="button" class="button danger" (click)="confirmDelete()">
+            Ok
+          </button>
+        </div>
+      </section>
+    }
+    <div class="workspace">
+      <div class="workspace-row workspace-row-top">
+        <div class="field selection">
+          <label for="character-selection">
+            Character ({{ characters().length }} total)
+          </label>
+          <select
+            #characterSelection
+            id="character-selection"
+            [disabled]="characters().length === 0"
+            (change)="selectCharacter(characterSelection.value)">
+            <option
+              value=""
+              disabled
+              [selected]="selectedCharacterId() === null">
+              Select a character
+            </option>
+            @for (character of characters(); track character.id) {
+              <option
+                [value]="character.id"
+                [selected]="character.id === selectedCharacterId()">
+                {{
+                  character.fullName ??
+                    character.name + ' ' + character.lastName
+                }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="actions add-action" aria-label="Character actions">
+          <button type="button" class="button" (click)="startCreate()">
+            Add character
+          </button>
+        </div>
+      </div>
+
+      <div class="workspace-row workspace-row-bottom">
+        <section
+          class="panel character-details"
+          aria-labelledby="details-title">
+          <div class="header">
+            <h3 id="details-title">Character details</h3>
+          </div>
+
+          @if (selectedCharacter(); as character) {
+            <dl>
+              <div>
+                <dt>Full name</dt>
+                <dd>
+                  {{ character.fullName }}
+                </dd>
+              </div>
+              <div>
+                <dt>First name</dt>
+                <dd>{{ character.name }}</dd>
+              </div>
+              <div>
+                <dt>Last name</dt>
+                <dd>{{ character.lastName }}</dd>
+              </div>
+              <div>
+                <dt>Identifier</dt>
+                <dd>{{ character.id }}</dd>
+              </div>
+              <div>
+                <dt>Faction</dt>
+                <dd>{{ character.faction }}</dd>
+              </div>
+              <div>
+                <dt class="force-sensitive">Force-sensitive</dt>
+                <dd>{{ character.forceSensitiveDisplay }}</dd>
+              </div>
+            </dl>
+          } @else {
+            <div class="empty-state">
+              @if (characters().length === 0) {
+                <h4>The collection is empty</h4>
+                <p>Add a character to continue the example.</p>
+                <button type="button" class="button" (click)="startCreate()">
+                  Add the first character
+                </button>
+              } @else {
+                <h4>No character selected</h4>
+                <p>
+                  Choose a character from the list or complete the form to add a
+                  new one.
+                </p>
+              }
+            </div>
+          }
+        </section>
+
+        <section class="panel editor" aria-labelledby="editor-title">
+          <div class="header">
+            <h3 id="editor-title">{{ editorTitle() }}</h3>
+          </div>
+
+          <form
+            [formGroup]="characterForm"
+            (ngSubmit)="saveCharacter()"
+            novalidate>
+            <div class="form-grid">
+              @let nameControl = characterForm.controls.name;
+              @let showNameError =
+                nameControl.invalid &&
+                (nameControl.dirty || nameControl.touched);
+
+              <div class="field">
+                <label for="character-first-name">First name</label>
+                <input
+                  id="character-first-name"
+                  type="text"
+                  formControlName="name"
+                  autocomplete="off"
+                  maxlength="40"
+                  [attr.aria-invalid]="showNameError ? true : null"
+                  [attr.aria-describedby]="
+                    showNameError ? 'character-first-name-error' : null
+                  " />
+                @if (showNameError) {
+                  <p class="error" id="character-first-name-error">
+                    Enter a first name between 2 and 40 characters.
+                  </p>
+                }
+              </div>
+
+              @let lastNameControl = characterForm.controls.lastName;
+              @let showLastNameError =
+                lastNameControl.invalid &&
+                (lastNameControl.dirty || lastNameControl.touched);
+
+              <div class="field">
+                <label for="character-last-name">Last name</label>
+                <input
+                  id="character-last-name"
+                  type="text"
+                  formControlName="lastName"
+                  autocomplete="off"
+                  maxlength="40"
+                  [attr.aria-invalid]="showLastNameError ? true : null"
+                  [attr.aria-describedby]="
+                    showLastNameError ? 'character-last-name-error' : null
+                  " />
+                @if (showLastNameError) {
+                  <p class="error" id="character-last-name-error">
+                    Enter a last name between 2 and 40 characters.
+                  </p>
+                }
+              </div>
+
+              @let factionControl = characterForm.controls.faction;
+              @let showFactionError =
+                factionControl.invalid &&
+                (factionControl.dirty || factionControl.touched);
+
+              <div class="field">
+                <label for="character-faction">Faction</label>
+                <select
+                  id="character-faction"
+                  formControlName="faction"
+                  [attr.aria-invalid]="showFactionError ? true : null"
+                  [attr.aria-describedby]="
+                    showFactionError ? 'character-faction-error' : null
+                  ">
+                  <option value="" disabled>Select a faction</option>
+                  @for (faction of editor.factions; track faction) {
+                    <option [value]="faction">{{ faction }}</option>
+                  }
+                </select>
+                @if (showFactionError) {
+                  <p class="error" id="character-faction-error">
+                    Select a faction.
+                  </p>
+                }
+              </div>
+
+              <label class="checkbox">
+                <input type="checkbox" formControlName="isForceSensitive" />
+                <span>Character is force-sensitive</span>
+              </label>
+            </div>
+
+            <div class="actions">
+              @if (editorMode() === 'edit') {
+                <button
+                  type="button"
+                  class="button danger delete"
+                  [disabled]="!selectedCharacter()"
+                  (click)="requestDelete()">
+                  Delete Character
+                </button>
+              }
+              <button
+                type="submit"
+                class="button"
+                [disabled]="characterForm.invalid">
+                {{ submitLabel() }}
+              </button>
+              <button
+                type="button"
+                class="button secondary"
+                (click)="cancelEdit()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <div class="tap-output">
+      <input
+        id="results-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Results visibility"
+        checked />
+      <div class="section-header">
+        <span>Results</span>
+        <label
+          class="section-chevron"
+          for="results-section-toggle"
+          title="Show or hide Results"></label>
+      </div>
+
+      <div class="tap-content">
+        <input
+          id="tap-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle pipeline output visibility"
+          checked />
+
+        <div class="tap-column">
+          <div class="tap-header">
+            <h3>Encrypted State</h3>
+            <label
+              class="tap-chevron"
+              for="tap-output-toggle"
+              title="Show or hide pipeline output"></label>
+          </div>
+          <textarea
+            readonly
+            rows="8"
+            aria-label="Encrypted State output"
+            [value]="encryptedState()"></textarea>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</section>

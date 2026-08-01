@@ -7,8 +7,8 @@
   <header class="docs-header">
     <p class="lead">
       <sdux-brand-name [tm]="true" /> integrates with Vue through
-      <strong><sdux-package-name />/vue</strong>. The package preserves the core
-      <sdux-feature-cell [tm]="true" /> contract and adds
+      <strong><sdux-package-name [package]="'vue'" /></strong>. The package
+      preserves the core <sdux-feature-cell [tm]="true" /> contract and adds
       <strong>useReactiveState()</strong> for reactive State access within a Vue
       effect scope.
     </p>
@@ -17,9 +17,9 @@
       <div class="title">Vue package usage</div>
       <p>
         <sdux-brand-name /> can run in a Vue application without
-        <strong><sdux-package-name />/vue</strong>. The core APIs remain
-        available, but the Vue reactive State surface is supplied only by the
-        Vue package.
+        <strong><sdux-package-name [package]="'vue'" /></strong>. The core APIs
+        remain available, but the Vue reactive State surface is supplied only by
+        the Vue package.
       </p>
     </div>
   </header>
@@ -29,11 +29,11 @@
 
     <div class="section-body">
       <p>
-        <strong><sdux-package-name />/vue</strong> is a Vue integration wrapper
-        around the core <sdux-brand-name /> APIs. It preserves the core
-        <sdux-feature-cell /> FluentApi, synchronous State Snapshot, and State
-        Stream while adding <strong>useReactiveState()</strong> as the Vue
-        reactive State surface.
+        <strong><sdux-package-name [package]="'vue'" /></strong> is a Vue
+        integration wrapper around the core <sdux-brand-name /> APIs. It
+        preserves the core <sdux-feature-cell /> FluentApi, synchronous State
+        Snapshot, and State Stream while adding
+        <strong>useReactiveState()</strong> as the Vue reactive State surface.
       </p>
 
       <p>
@@ -73,7 +73,7 @@
     <div class="section-body">
       <p>
         The Vue extension is available from the
-        <strong><sdux-package-name />/vue</strong> package on npm.
+        <strong><sdux-package-name [package]="'vue'" /></strong> package on npm.
       </p>
       <sdux-example-viewer-source [displayTabs]="false">
         <sdux-example-viewer-tab [label]="'Vue'">
@@ -87,7 +87,7 @@
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Download @sdux-vault/vue from npm in a new window"
-          >Download <sdux-package-name />/vue from npm →</a
+          >Download <sdux-package-name [package]="'vue'" /> from npm →</a
         >
       </p>
     </div>

@@ -19,8 +19,8 @@
     </p>
 
     <p>
-      To change that Merge-stage behavior, install
-      <span class="code">&#64;sdux-vault/addons</span> and register
+      To change that Merge-stage behavior, install npm install
+      <sdux-package-name [package]="'addons'" /> and register
       <span class="code"
         ><a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
           >withArrayAppendMergeBehavior</a
@@ -36,8 +36,8 @@
       <div class="title">Take Action</div>
       <ol>
         <li>
-          Install the
-          <span class="code">&#64;sdux-vault/addons</span> package.
+          Install the npm install
+          <sdux-package-name [package]="'addons'" /> package.
         </li>
         <li>Open <span class="code">app.config.ts</span>.</li>
         <li>
@@ -48,7 +48,7 @@
               >withArrayAppendMergeBehavior</a
             ></span
           >
-          from <span class="code">&#64;sdux-vault/addons</span>.
+          from npm install <sdux-package-name [package]="'addons'" />.
         </li>
         <li>
           Pass
@@ -336,17 +336,22 @@
   <div class="tutorial-shortcut-copy">
     <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
     <h2>Want the finished add/edit example without these three steps?</h2>
-    <p>
-      If you want the completed add/edit example, launch the live StackBlitz
-      project and inspect the finished implementation directly.
-    </p>
   </div>
 
   @if (stackblitz(); as stackblitz) {
     <div class="tutorial-shortcut-launcher">
+      <p>
+        If you want the completed add/edit example, launch the live StackBlitz
+        project and inspect the finished implementation directly.
+      </p>
       <sdux-stackblitz-language-example
         [example]="stackblitz.example"
         [lang]="stackblitz.language" />
     </div>
   }
+
+  <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
+    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
 </section>

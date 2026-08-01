@@ -4,7 +4,8 @@ import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -17,7 +18,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BrandNameComponent,
     FeatureCellBrandNameComponent,
     ExampleViewerSourceComponent,
-    ExampleViewerTabComponent
+    ExampleViewerTabComponent,
+    PackageNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -31,8 +33,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           bolted onto a component tree. But a <sdux-feature-cell /> is plain
           TypeScript with no framework dependency, so it runs anywhere a runtime
           does. This post shows <sdux-brand-name /> orchestrating deterministic,
-          pipeline-committed state inside Deno with nothing but
-          <span class="code">&#64;sdux-vault/core</span>.
+          pipeline-committed state inside Deno with nothing but npm install
+          <sdux-package-name [package]="'core'" />.
         </p>
       </header>
 
@@ -65,8 +67,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             A <sdux-feature-cell /> is not a UI widget with state attached. It
-            is a typed state pipeline. On Deno, you import
-            <span class="code">&#64;sdux-vault/core</span> through an
+            is a typed state pipeline. On Deno, you import npm install
+            <sdux-package-name [package]="'core'" /> through an
             <span class="code">npm:</span> specifier, initialize the Vault
             runtime once, create a cell, and activate it. That is the entire
             bootstrap — the same runtime you would use inside a browser app.
@@ -99,10 +101,10 @@ cell.initialize();</code></pre>
           </sdux-example-viewer-source>
 
           <div class="callout callout-info">
-            <strong>Key takeaway:</strong> This snippet is the
-            <span class="code">&#64;sdux-vault/core</span> headless runtime — it
-            is identical whether it runs in a browser tab or a Deno process.
-            There is no framework-specific variant because there is no framework
+            <strong>Key takeaway:</strong> This snippet is the npm install
+            <sdux-package-name [package]="'core'" /> headless runtime — it is
+            identical whether it runs in a browser tab or a Deno process. There
+            is no framework-specific variant because there is no framework
             involved.
           </div>
         </div>

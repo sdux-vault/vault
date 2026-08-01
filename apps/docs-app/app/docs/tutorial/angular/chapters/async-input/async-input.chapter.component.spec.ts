@@ -17,6 +17,12 @@ describe('Component: AsyncInputChapterComponent', () => {
     fixture.detectChanges();
   });
 
+  it('exposes the tutorial download URL', () => {
+    expect(component.downloadUrl).toBe(
+      '/assets/tutorial/sdux-async-input.tutorial.zip'
+    );
+  });
+
   const file = (type: string, fileName: string) =>
     jasmine.objectContaining({ type, fileName });
 

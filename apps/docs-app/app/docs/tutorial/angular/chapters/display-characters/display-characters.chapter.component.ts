@@ -4,7 +4,8 @@ import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  SDuXDownloadComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
@@ -22,7 +23,8 @@ import { STAR_WARS_DISPLAY_CHARACTERS } from '../../generated/display-characters
     FeatureCellBrandNameComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    StackblitzLanguageExampleComponent
+    StackblitzLanguageExampleComponent,
+    SDuXDownloadComponent
   ],
   templateUrl: './display-characters.chapter.component.html'
 })
@@ -30,6 +32,8 @@ export class DisplayCharactersChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_DISPLAY_CHARACTERS;
+  readonly downloadUrl =
+    '/assets/tutorial/sdux-display-characters.tutorial.zip';
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('display-characters')!;

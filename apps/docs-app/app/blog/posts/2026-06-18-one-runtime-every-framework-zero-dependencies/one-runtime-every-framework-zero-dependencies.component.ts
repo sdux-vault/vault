@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   MultiFrameworkExampleComponent,
+  PackageNameComponent,
   SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -15,7 +16,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent,
     RouterModule,
     BrandNameComponent,
-    SDuXVideoComponent
+    SDuXVideoComponent,
+    PackageNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -68,7 +70,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             The engine is written in TypeScript with zero runtime dependencies.
             No RxJS. No framework imports. No polyfills. The core package
-            &mdash; <span class="code">&#64;sdux-vault/core</span> &mdash;
+            &mdash; npm install <sdux-package-name [package]="'core'" /> &mdash;
             contains the complete pipeline runtime: controllers, interceptors,
             resolvers, filters, reducers, taps, and extensions.
           </p>
@@ -104,22 +106,22 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             <tbody>
               <tr>
                 <td>Angular</td>
-                <td><span class="code">&#64;sdux-vault/angular</span></td>
+                <td>npm install <sdux-package-name [package]="'angular'" /></td>
                 <td>Injectable services</td>
               </tr>
               <tr>
                 <td>React</td>
-                <td><span class="code">&#64;sdux-vault/react</span></td>
+                <td>npm install <sdux-package-name [package]="'react'" /></td>
                 <td>Hooks + context</td>
               </tr>
               <tr>
                 <td>Vue</td>
-                <td><span class="code">&#64;sdux-vault/vue</span></td>
+                <td>npm install <sdux-package-name [package]="'vue'" /></td>
                 <td>Composition API</td>
               </tr>
               <tr>
                 <td>Node.js</td>
-                <td><span class="code">&#64;sdux-vault/core</span></td>
+                <td>npm install <sdux-package-name [package]="'core'" /></td>
                 <td>Direct instantiation</td>
               </tr>
             </tbody>
@@ -231,8 +233,8 @@ cartCell.initialize();</code></pre>
           </p>
           <!-- StackBlitz: one-runtime-every-framework -->
           <p>
-            Ready to install locally? The
-            <span class="code">&#64;sdux-vault/core</span>
+            Ready to install locally? The npm install
+            <sdux-package-name [package]="'core'" />
             package is available on
             <a
               href="https://www.npmjs.com/package/@sdux-vault/core"

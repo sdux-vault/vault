@@ -4,7 +4,8 @@ import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -17,7 +18,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BrandNameComponent,
     FeatureCellBrandNameComponent,
     ExampleViewerSourceComponent,
-    ExampleViewerTabComponent
+    ExampleViewerTabComponent,
+    PackageNameComponent
   ],
   template: `
     <sdux-blog-layout
@@ -57,9 +59,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             It isn't. A <sdux-feature-cell /> makes no assumption about a render
             loop or a component tree. It is a headless runtime primitive: you
             create it, you commit to it, and you read confirmed snapshots back —
-            with nothing but <span class="code">&#64;sdux-vault/core</span> and,
-            when you want append semantics,
-            <span class="code">&#64;sdux-vault/addons</span>.
+            with nothing but npm install
+            <sdux-package-name [package]="'core'" /> and, when you want append
+            semantics, npm install <sdux-package-name [package]="'addons'" />.
           </p>
         </div>
       </section>
@@ -68,8 +70,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-title">A FeatureCell in Plain node main.js</div>
         <div class="section-body">
           <p>
-            There is no bootstrap ceremony. You import from
-            <span class="code">&#64;sdux-vault/core</span>, initialize the Vault
+            There is no bootstrap ceremony. You import from npm install
+            <sdux-package-name [package]="'core'" />, initialize the Vault
             runtime once, create a cell, and activate it. The same three lines
             you would write inside a browser app run unchanged in a Node script
             executed with <span class="code">node main.js</span> — no
@@ -180,7 +182,7 @@ cell.initialize();</code></pre>
                 >withArrayAppendMergeBehavior</a
               ></span
             >
-            from <span class="code">&#64;sdux-vault/addons</span> as a
+            from npm install <sdux-package-name [package]="'addons'" /> as a
             definition-time behavior and every
             <span class="code">mergeState()</span> call concatenates the
             incoming array onto the committed collection instead of overwriting

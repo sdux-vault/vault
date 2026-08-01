@@ -45,7 +45,7 @@ import { PackageNameComponent } from '@sdux-vault/ui/web-components';
             modify values, and it does not intervene in successful executions.
           </td>
 
-          <td><sdux-package-name />/addons</td>
+          <td><sdux-package-name [package]="'addons'" /></td>
         </tr>
       </tbody>
     </table>
