@@ -31,6 +31,7 @@ projects/integration/src/testing/snapshot-output.log
 *.comparison.txt
 *.diff.txt
 *.zip
+!*.tutorial.zip
 test.txt
 
 # Node

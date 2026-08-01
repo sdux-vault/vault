@@ -5,6 +5,13 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import archiver from 'archiver';
+
+export const ArchiveModule = {
+  create(format, options) {
+    return archiver(format, options);
+  }
+};
 
 const EXCLUDED_DIRECTORIES = new Set([
   '.angular',
@@ -136,7 +143,27 @@ export const ${exportName} = ${JSON.stringify(source)};
 `;
   }
 
-  run() {
+  zipDirectory(sourceDirectory, outputDirectory) {
+    const zipFile = path.join(
+      outputDirectory,
+      `${path.basename(sourceDirectory)}.tutorial.zip`
+    );
+
+    fs.mkdirSync(outputDirectory, { recursive: true });
+
+    return new Promise((resolve, reject) => {
+      const output = fs.createWriteStream(zipFile);
+      const archive = ArchiveModule.create('zip', { zlib: { level: 9 } });
+
+      output.on('close', resolve);
+      archive.on('error', reject);
+      archive.pipe(output);
+      archive.directory(sourceDirectory, false);
+      archive.finalize();
+    });
+  }
+
+  async run() {
     for (const sourceGroup of this.sourceGroups) {
       const hasSourceDirectory = Boolean(sourceGroup.sourceDirectory);
       const hasSourceFile = Boolean(sourceGroup.sourceFile);
@@ -171,6 +198,13 @@ export const ${exportName} = ${JSON.stringify(source)};
 
       fs.mkdirSync(path.dirname(sourceGroup.outputFile), { recursive: true });
       fs.writeFileSync(sourceGroup.outputFile, generatedSource, 'utf8');
+
+      if (hasSourceDirectory) {
+        await this.zipDirectory(
+          sourceGroup.sourceDirectory,
+          path.join(path.dirname(sourceGroup.outputFile), 'zip-files')
+        );
+      }
 
       console.info(
         `Generated ${sourceCount ?? files.length} tutorial source file(s): ${path.relative(this.projectRoot, sourceGroup.outputFile)}`
