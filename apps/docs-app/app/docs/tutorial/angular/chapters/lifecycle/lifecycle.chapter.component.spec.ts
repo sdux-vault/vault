@@ -23,7 +23,7 @@ describe('Component: LifecycleChapterComponent', () => {
         example: Object({
           title: 'Chapter 5: Lifecycle',
           id: 'lifecycle',
-          exampleName: 'lifecycle-example',
+          exampleName: 'lifecycle-tutorial-example',
           displayCopyIcon: false,
           languages: [{ name: 'Angular', key: 'angular' }],
           description: jasmine.any(String) as unknown as string

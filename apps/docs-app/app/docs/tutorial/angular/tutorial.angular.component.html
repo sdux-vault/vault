@@ -541,6 +541,73 @@
           <sdux-filters-and-reducers-chapter></sdux-filters-and-reducers-chapter>
         </div>
       </div>
+
+      <section
+        class="chapter-break"
+        id="chapter-7"
+        aria-labelledby="chapter-7-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
+
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 7</p>
+          <div class="chapter-header">
+            <h2 id="chapter-7-title">Errors Flow</h2>
+
+            <button
+              type="button"
+              class="chapter-toggle"
+              aria-controls="chapter-7-content"
+              [attr.aria-expanded]="isChapterExpanded(7)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'Errors Flow',
+                  isChapterExpanded(7)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'Errors Flow',
+                  isChapterExpanded(7)
+                )
+              "
+              (click)="toggleTutorialChapter(7)">
+              <mat-icon aria-hidden="true">
+                {{
+                  isChapterExpanded(7)
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                }}
+              </mat-icon>
+            </button>
+          </div>
+
+          <p>
+            This chapter shifts from shaping successful candidates to observing
+            what happens when the pipeline rejects them. The same service-owned
+            <sdux-feature-cell /> now demonstrates a simulated filter failure, a
+            global error response, and a finalized
+            <span class="code">errors()</span> emission.
+          </p>
+          <p>
+            The service still owns the pipeline and the component still owns
+            local UI state, but now you also see the singleton global error
+            service operate independently from the feature itself. That
+            separation makes it clear why error observation belongs at both the
+            application boundary and the fluent API boundary.
+          </p>
+        </div>
+      </section>
+
+      <div
+        id="chapter-7-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(7)"
+        [attr.aria-hidden]="!isChapterExpanded(7)"
+        [attr.inert]="!isChapterExpanded(7) ? '' : null">
+        <div class="chapter-content-inner">
+          <sdux-errors-chapter></sdux-errors-chapter>
+        </div>
+      </div>
       <sdux-pipeline-related-topics></sdux-pipeline-related-topics>
     </main>
   </div>

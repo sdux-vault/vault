@@ -26,6 +26,8 @@ import { DisplayCharacterChapterComponent } from './chapters/display-character/d
 import { DisplayCharacterService } from './chapters/display-character/services/display-character.service';
 import { DisplayCharactersChapterComponent } from './chapters/display-characters/display-characters.chapter.component';
 import { DisplayCharactersService } from './chapters/display-characters/services/display-characters.service';
+import { ErrorsChapterComponent } from './chapters/errors/errors.chapter.component';
+import { ErrorsService } from './chapters/errors/services/errors.service';
 import { FiltersAndReducersChapterComponent } from './chapters/filters-and-reducers/filters-and-reducers.chapter.component';
 import { FiltersAndReducersService } from './chapters/filters-and-reducers/services/filters-and-reducers.service';
 import { LifecycleChapterComponent } from './chapters/lifecycle/lifecycle.chapter.component';
@@ -47,7 +49,8 @@ import { LifecycleService } from './chapters/lifecycle/services/lifecycle.servic
     AddEditCharactersChapterComponent,
     DeleteCharactersChapterComponent,
     LifecycleChapterComponent,
-    FiltersAndReducersChapterComponent
+    FiltersAndReducersChapterComponent,
+    ErrorsChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -61,6 +64,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly #deleteCharactersService = inject(DeleteCharactersService);
   readonly #lifeCycleService = inject(LifecycleService);
   readonly #filtersAndReducersService = inject(FiltersAndReducersService);
+  readonly #errorsService = inject(ErrorsService);
 
   readonly #expandedChapterGroups = signal<Record<number, boolean>>({
     1: true,
@@ -68,7 +72,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     3: false,
     4: false,
     5: false,
-    6: false
+    6: false,
+    7: false
   });
 
   readonly #expandedChapters = signal<Record<number, boolean>>({
@@ -77,7 +82,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     3: false,
     4: false,
     5: false,
-    6: false
+    6: false,
+    7: false
   });
 
   constructor() {
@@ -259,6 +265,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     this.#addEditCharactersService.chapters(),
     this.#deleteCharactersService.chapters(),
     this.#lifeCycleService.chapters(),
-    this.#filtersAndReducersService.chapters()
+    this.#filtersAndReducersService.chapters(),
+    this.#errorsService.chapters()
   ];
 }

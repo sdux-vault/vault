@@ -350,6 +350,7 @@ export class ExampleComponent {
    */
   /** Teaching Point: Global Error Service: Ex-011 */
   protected clearGlobalError(): void {
+    this.#exampleService.clearEmittedError();
     this.#globalErrorService.clear();
   }
 

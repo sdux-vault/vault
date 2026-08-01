@@ -91,9 +91,12 @@ export const routes: Routes = [
           // import('./docs/tutorial/angular/examples/lifecycle/example.component').then(
           //   (m) => m.ExampleComponent
           // )
-          import('./docs/tutorial/angular/examples/filters-and-reducers/example.component').then(
+          import('./docs/tutorial/angular/examples/errors/example.component').then(
             (m) => m.ExampleComponent
           )
+        // import('./docs/tutorial/angular/examples/filters-and-reducers/example.component').then(
+        //   (m) => m.ExampleComponent
+        // )
         // import('./docs/tutorial/angular/examples/complete-character-management/example.component').then(
         //   (m) => m.ExampleComponent
         // )

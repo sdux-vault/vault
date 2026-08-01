@@ -355,6 +355,11 @@ export class ExampleService {
   /** Teaching Point: ex-036 */
   readonly emittedError = this.#emittedError.asReadonly();
 
+  /** Clears the latest captured error-emission teaching output. */
+  clearEmittedError(): void {
+    this.#emittedError.set(undefined);
+  }
+
   /**
    * Observes a finalized Vault error after it has been normalized and committed to state.
    * This VaultErrorCallback records both immutable inputs for the tutorial display and returns

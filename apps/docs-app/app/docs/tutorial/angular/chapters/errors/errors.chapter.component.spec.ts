@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sduxTestingModule } from '@sdux-vault/ui/web-components';
-import { FiltersAndReducersChapterComponent } from './filters-and-reducers.chapter.component';
+import { ErrorsChapterComponent } from './errors.chapter.component';
 
-describe('Component: FiltersAndReducersChapterComponent', () => {
-  let fixture: ComponentFixture<FiltersAndReducersChapterComponent>;
-  let component: FiltersAndReducersChapterComponent;
+describe('Component: ErrorsChapterComponent', () => {
+  let fixture: ComponentFixture<ErrorsChapterComponent>;
+  let component: ErrorsChapterComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FiltersAndReducersChapterComponent, sduxTestingModule]
+      imports: [ErrorsChapterComponent, sduxTestingModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FiltersAndReducersChapterComponent);
+    fixture = TestBed.createComponent(ErrorsChapterComponent);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
@@ -21,9 +21,9 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 6: Filters and Reducers',
-          id: 'filters-and-reducers',
-          exampleName: 'filters-and-reducers-tutorial-example',
+          title: 'Chapter 7: Errors',
+          id: 'errors',
+          exampleName: 'errors-tutorial-example',
           displayCopyIcon: false,
           languages: [{ name: 'Angular', key: 'angular' }],
           description: jasmine.any(String) as unknown as string
@@ -33,8 +33,16 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
     );
   });
 
-  it('returns the filter-stage files for the chapter example', () => {
-    expect(component.filterFiles()).toEqual([
+  it('returns the app config file for the chapter example', () => {
+    expect(component.appConfigFile()).toEqual({
+      type: 'appConfig',
+      fileName: 'app.config.ts',
+      source: jasmine.any(String) as unknown as string
+    });
+  });
+
+  it('returns the service and filter files for the chapter example', () => {
+    expect(component.serviceFiles()).toEqual([
       {
         type: 'service',
         fileName: 'example.service.ts',
@@ -53,27 +61,7 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
     ]);
   });
 
-  it('returns the reducer-stage files for the chapter example', () => {
-    expect(component.reducerFiles()).toEqual([
-      {
-        type: 'service',
-        fileName: 'example.service.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterDomain',
-        fileName: 'example.character-domain.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterDomainSpec',
-        fileName: 'example.character-domain.spec.ts',
-        source: jasmine.any(String) as unknown as string
-      }
-    ]);
-  });
-
-  it('returns the generated component files for the chapter example', () => {
+  it('returns the component files for the chapter example', () => {
     expect(component.componentFiles()).toEqual([
       {
         type: 'component',
@@ -88,16 +76,6 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
       {
         type: 'html',
         fileName: 'example.component.html',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterEditor',
-        fileName: 'example.character-editor.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterEditorSpec',
-        fileName: 'example.character-editor.spec.ts',
         source: jasmine.any(String) as unknown as string
       }
     ]);
