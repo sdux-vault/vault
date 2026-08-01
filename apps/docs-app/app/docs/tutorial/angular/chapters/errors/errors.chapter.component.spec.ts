@@ -22,7 +22,7 @@ describe('Component: ErrorsChapterComponent', () => {
       Object({
         example: Object({
           title: 'Chapter 7: Errors',
-          id: 'errors',
+          id: 'errors-tutorial',
           exampleName: 'errors-tutorial-example',
           displayCopyIcon: false,
           languages: [{ name: 'Angular', key: 'angular' }],

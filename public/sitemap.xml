@@ -2201,6 +2201,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/angular/async-input-tutorial</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/angular/basic-filter-reducer</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2227,6 +2232,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/examples/angular/display-characters</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/angular/errors-tutorial</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

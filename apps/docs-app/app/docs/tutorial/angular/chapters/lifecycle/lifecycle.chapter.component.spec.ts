@@ -22,7 +22,7 @@ describe('Component: LifecycleChapterComponent', () => {
       Object({
         example: Object({
           title: 'Chapter 5: Lifecycle',
-          id: 'lifecycle',
+          id: 'lifecycle-tutorial',
           exampleName: 'lifecycle-tutorial-example',
           displayCopyIcon: false,
           languages: [{ name: 'Angular', key: 'angular' }],

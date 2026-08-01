@@ -19,6 +19,6 @@ mainIndex.documents.push(...blogIndex.documents);
 
 writeFileSync(mainIndexPath, JSON.stringify(mainIndex, null, 2) + '\n');
 
-console.log(
+console.info(
   `Merged ${blogIndex.documents.length} blog document(s) into search-index.json`
 );

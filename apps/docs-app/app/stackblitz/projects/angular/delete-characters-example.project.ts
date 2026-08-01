@@ -1814,6 +1814,7 @@ export class ExampleCharacterEditor {
 
       &.character-details {
         position: relative;
+        min-height: 200px;
 
         .loading-overlay {
           position: absolute;
@@ -2129,11 +2130,8 @@ export class ExampleCharacterEditor {
     .tap-content {
       display: grid;
       gap: \$spacing-lg;
-    }
-
-    .state-content,
-    .tap-content {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
     }
 
     .tap-column {
@@ -2224,10 +2222,6 @@ export class ExampleCharacterEditor {
   }
 
   > .feature-cell-controls > .filter-reducer-output {
-    .filter-reducer-content {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
     .tap-column {
       width: 100%;
 
@@ -2270,7 +2264,8 @@ export class ExampleCharacterEditor {
     .stepwise-content {
       display: grid;
       gap: \$spacing-lg;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
     }
 
     .stepwise-column {

@@ -136,5 +136,7 @@ if (result.hasErrors) {
   console.error(`\nSEO audit failed with ${result.errorCount} error(s).`);
   process.exit(1);
 } else {
-  console.log(`\nSEO audit passed. ${result.indexedCount} docs pages indexed.`);
+  console.info(
+    `\nSEO audit passed. ${result.indexedCount} docs pages indexed.`
+  );
 }

@@ -30,7 +30,9 @@ export class FiltersAndReducersChapterComponent {
   readonly #characters = STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
-    const example = this.#stackblitzService.getExample('filters-and-reducers')!;
+    const example = this.#stackblitzService.getExample(
+      'filters-and-reducers-tutorial'
+    )!;
 
     return {
       example,

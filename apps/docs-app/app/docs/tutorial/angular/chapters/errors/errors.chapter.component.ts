@@ -30,7 +30,7 @@ export class ErrorsChapterComponent {
   readonly #characters = STAR_WARS_ERRORS_CHARACTERS;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
-    const example = this.#stackblitzService.getExample('errors')!;
+    const example = this.#stackblitzService.getExample('errors-tutorial')!;
 
     return {
       example,

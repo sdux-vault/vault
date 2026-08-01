@@ -20,6 +20,8 @@ import { TutorialNavigationDirective } from '../directive/tutorial-navigation.di
 import { ChapterShape } from '../shape/chapter.shape';
 import { AddEditCharactersChapterComponent } from './chapters/add-edit-characters/add-edit-characters.chapter.component';
 import { AddEditCharactersService } from './chapters/add-edit-characters/services/add-edit-characters.service';
+import { AsyncInputChapterComponent } from './chapters/async-input/async-input.chapter.component';
+import { AsyncInputService } from './chapters/async-input/services/async-input.service';
 import { DeleteCharactersChapterComponent } from './chapters/delete-characters/delete-characters.chapter.component';
 import { DeleteCharactersService } from './chapters/delete-characters/services/delete-characters.service';
 import { DisplayCharacterChapterComponent } from './chapters/display-character/display-character.chapter.component';
@@ -47,6 +49,7 @@ import { LifecycleService } from './chapters/lifecycle/services/lifecycle.servic
     DisplayCharactersChapterComponent,
     DisplayCharacterChapterComponent,
     AddEditCharactersChapterComponent,
+    AsyncInputChapterComponent,
     DeleteCharactersChapterComponent,
     LifecycleChapterComponent,
     FiltersAndReducersChapterComponent,
@@ -61,6 +64,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly #displayCharactersService = inject(DisplayCharactersService);
   readonly #displayCharacterService = inject(DisplayCharacterService);
   readonly #addEditCharactersService = inject(AddEditCharactersService);
+  readonly #asyncInputService = inject(AsyncInputService);
   readonly #deleteCharactersService = inject(DeleteCharactersService);
   readonly #lifeCycleService = inject(LifecycleService);
   readonly #filtersAndReducersService = inject(FiltersAndReducersService);
@@ -73,7 +77,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     4: false,
     5: false,
     6: false,
-    7: false
+    7: false,
+    8: false
   });
 
   readonly #expandedChapters = signal<Record<number, boolean>>({
@@ -83,7 +88,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     4: false,
     5: false,
     6: false,
-    7: false
+    7: false,
+    8: false
   });
 
   constructor() {
@@ -266,6 +272,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     this.#deleteCharactersService.chapters(),
     this.#lifeCycleService.chapters(),
     this.#filtersAndReducersService.chapters(),
-    this.#errorsService.chapters()
+    this.#errorsService.chapters(),
+    this.#asyncInputService.chapters()
   ];
 }
