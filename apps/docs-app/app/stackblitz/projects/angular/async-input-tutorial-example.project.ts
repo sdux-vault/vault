@@ -3351,6 +3351,10 @@ export class ExampleComponent {
    * @returns Nothing; the resolved collection is rendered from reactive State.
    */
   protected fetchWithHttpResource(): void {
+    this.selectedCharacterId.set(null);
+    this.#selectedCharacterBeforeCreate = null;
+    this.editorMode.set('create');
+    this.#clearCharacterForm();
     this.#exampleService.fetchWithHttpResource();
   }
   /**

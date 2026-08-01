@@ -18,6 +18,7 @@ import {
 } from '@angular/forms';
 import {
   StateEmitTypes,
+  type StateEmitType,
   VaultErrorService,
   VaultErrorShape
 } from '@sdux-vault/shared';
@@ -298,22 +299,28 @@ export class ExampleComponent {
           localStorage.getItem(EXAMPLE_ENCRYPTED_STORAGE_KEY) ?? 'undefined'
         );
 
-        if (
-          !this.#delayTimer.running &&
-          type === StateEmitTypes.DenyController
-        ) {
-          this.#delayTimer.reset();
-          this.#delayTimer.start();
-        }
-
-        if (
-          this.#delayTimer.running &&
-          (type === StateEmitTypes.FinalizePipeline ||
-            type === StateEmitTypes.PipelineError)
-        ) {
-          this.#delayTimer.stop();
-        }
+        this.handleDelayStateEmission(type);
       });
+  }
+
+  /**
+   * Synchronizes the elapsed display with Delay Controller state emissions.
+   * @param type - State emission type used to start or stop the display timer.
+   * @returns Nothing; the timer updates its local elapsed-time signal.
+   */
+  protected handleDelayStateEmission(type: StateEmitType): void {
+    if (!this.#delayTimer.running && type === StateEmitTypes.DenyController) {
+      this.#delayTimer.reset();
+      this.#delayTimer.start();
+    }
+
+    if (
+      this.#delayTimer.running &&
+      (type === StateEmitTypes.FinalizePipeline ||
+        type === StateEmitTypes.PipelineError)
+    ) {
+      this.#delayTimer.stop();
+    }
   }
 
   /**
@@ -721,6 +728,10 @@ export class ExampleComponent {
    * @returns Nothing; the resolved collection is rendered from reactive State.
    */
   protected fetchWithHttpResource(): void {
+    this.selectedCharacterId.set(null);
+    this.#selectedCharacterBeforeCreate = null;
+    this.editorMode.set('create');
+    this.#clearCharacterForm();
     this.#exampleService.fetchWithHttpResource();
   }
 

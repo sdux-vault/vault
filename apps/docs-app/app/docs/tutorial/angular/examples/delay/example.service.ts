@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
-import { EXAMPLE_DELAY_MILLISECONDS } from '../complete-character-management/example.service';
 import {
   createCharacterState,
   deriveForceSensitiveDisplay,
@@ -11,6 +10,9 @@ import {
 } from './example.character-domain';
 import { removeUnknownLastNameFilter } from './example.filter';
 import type { StarWarsCharacter } from './star-wars-character.shape';
+
+/** Fixed Policy-stage hold applied to every tutorial pipeline attempt. */
+export const EXAMPLE_DELAY_MILLISECONDS = 3_000;
 
 /**
  * Owns the character collection and exposes domain operations for the tutorial component.

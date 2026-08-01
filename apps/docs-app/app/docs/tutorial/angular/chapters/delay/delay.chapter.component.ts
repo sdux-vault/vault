@@ -3,14 +3,16 @@ import { RouterModule } from '@angular/router';
 import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  PackageNameComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
+import type { ExampleFileType } from '../../../types/example-file.type';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS } from '../../generated/filters-and-reducers.generated';
+import { STAR_WARS_DELAY } from '../../generated/delay.generated';
 
 @Component({
   selector: 'sdux-delay-chapter',
@@ -20,19 +22,18 @@ import { STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS } from '../../generated/filte
     FeatureCellBrandNameComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    StackblitzLanguageExampleComponent
+    StackblitzLanguageExampleComponent,
+    PackageNameComponent
   ],
   templateUrl: './delay.chapter.component.html'
 })
-export class DelayComponent {
+export class DelayChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #characters = STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS;
+  readonly #files = STAR_WARS_DELAY;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
-    const example = this.#stackblitzService.getExample(
-      'filters-and-reducers-tutorial'
-    )!;
+    const example = this.#stackblitzService.getExample('delay-tutorial')!;
 
     return {
       example,
@@ -40,50 +41,38 @@ export class DelayComponent {
     };
   });
 
-  readonly filterFiles = computed(() => [
-    this.#exampleFileService.getFile(
-      this.#characters,
+  readonly configurationFiles = computed(() =>
+    this.#getFiles(
+      ExampleFileTypes.Timer,
+      ExampleFileTypes.AppConfig,
       ExampleFileTypes.Service
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.ServiceSpec
-    ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Filter)
-  ]);
-
-  readonly reducerFiles = computed(() => [
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Service
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.CharacterDomain
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.CharacterDomainSpec
     )
-  ]);
+  );
 
-  readonly componentFiles = computed(() => [
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Component
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.ComponentSpec
-    ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.CharacterEditor
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.CharacterEditorSpec
+  readonly timingFiles = computed(() =>
+    this.#getFiles(
+      ExampleFileTypes.Component,
+      ExampleFileTypes.ComponentSpec,
+      ExampleFileTypes.Html
     )
-  ]);
+  );
+
+  readonly completedFiles = computed(() =>
+    this.#getFiles(
+      ExampleFileTypes.Timer,
+      ExampleFileTypes.TimerSpec,
+      ExampleFileTypes.AppConfig,
+      ExampleFileTypes.Service,
+      ExampleFileTypes.ServiceSpec,
+      ExampleFileTypes.Component,
+      ExampleFileTypes.ComponentSpec,
+      ExampleFileTypes.Html
+    )
+  );
+
+  #getFiles(...types: readonly ExampleFileType[]) {
+    return types.map((type) =>
+      this.#exampleFileService.getFile(this.#files, type)
+    );
+  }
 }

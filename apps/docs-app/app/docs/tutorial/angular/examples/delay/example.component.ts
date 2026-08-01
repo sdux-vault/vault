@@ -16,15 +16,14 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { StateEmitTypes } from '@sdux-vault/shared';
-import { EXAMPLE_DELAY_MILLISECONDS } from '../complete-character-management/example.service';
+import { StateEmitTypes, type StateEmitType } from '@sdux-vault/shared';
 import {
   EditorMode,
   ExampleCharacterEditor,
   OperationFeedback
 } from './example.character-editor';
 import { ElapsedTimer } from './example.elapsed-timer';
-import { ExampleService } from './example.service';
+import { EXAMPLE_DELAY_MILLISECONDS, ExampleService } from './example.service';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
@@ -121,22 +120,27 @@ export class ExampleComponent {
   #observeStateStream(): void {
     this.#exampleService.state$
       .pipe(takeUntilDestroyed())
-      .subscribe(({ type }) => {
-        if (
-          !this.#delayTimer.running &&
-          type === StateEmitTypes.DenyController
-        ) {
-          this.#delayTimer.reset();
-          this.#delayTimer.start();
-        }
-        if (
-          this.#delayTimer.running &&
-          (type === StateEmitTypes.FinalizePipeline ||
-            type === StateEmitTypes.PipelineError)
-        ) {
-          this.#delayTimer.stop();
-        }
-      });
+      .subscribe(({ type }) => this.handleDelayStateEmission(type));
+  }
+
+  /**
+   * Synchronizes the elapsed display with Delay Controller state emissions.
+   * @param type - State emission type used to start or stop the display timer.
+   * @returns Nothing; the timer updates its local elapsed-time signal.
+   */
+  protected handleDelayStateEmission(type: StateEmitType): void {
+    if (!this.#delayTimer.running && type === StateEmitTypes.DenyController) {
+      this.#delayTimer.reset();
+      this.#delayTimer.start();
+    }
+
+    if (
+      this.#delayTimer.running &&
+      (type === StateEmitTypes.FinalizePipeline ||
+        type === StateEmitTypes.PipelineError)
+    ) {
+      this.#delayTimer.stop();
+    }
   }
 
   /** Displays the fixed controller configuration beside the live elapsed timer. */

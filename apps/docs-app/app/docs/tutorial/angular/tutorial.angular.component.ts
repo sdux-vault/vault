@@ -24,6 +24,8 @@ import { AsyncInputChapterComponent } from './chapters/async-input/async-input.c
 import { AsyncInputService } from './chapters/async-input/services/async-input.service';
 import { DeleteCharactersChapterComponent } from './chapters/delete-characters/delete-characters.chapter.component';
 import { DeleteCharactersService } from './chapters/delete-characters/services/delete-characters.service';
+import { DelayChapterComponent } from './chapters/delay/delay.chapter.component';
+import { DelayService } from './chapters/delay/services/delay.service';
 import { DisplayCharacterChapterComponent } from './chapters/display-character/display-character.chapter.component';
 import { DisplayCharacterService } from './chapters/display-character/services/display-character.service';
 import { DisplayCharactersChapterComponent } from './chapters/display-characters/display-characters.chapter.component';
@@ -53,7 +55,8 @@ import { LifecycleService } from './chapters/lifecycle/services/lifecycle.servic
     DeleteCharactersChapterComponent,
     LifecycleChapterComponent,
     FiltersAndReducersChapterComponent,
-    ErrorsChapterComponent
+    ErrorsChapterComponent,
+    DelayChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -69,6 +72,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly #lifeCycleService = inject(LifecycleService);
   readonly #filtersAndReducersService = inject(FiltersAndReducersService);
   readonly #errorsService = inject(ErrorsService);
+  readonly #delayService = inject(DelayService);
 
   readonly #expandedChapterGroups = signal<Record<number, boolean>>({
     1: true,
@@ -78,7 +82,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     5: false,
     6: false,
     7: false,
-    8: false
+    8: false,
+    9: false
   });
 
   readonly #expandedChapters = signal<Record<number, boolean>>({
@@ -89,7 +94,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     5: false,
     6: false,
     7: false,
-    8: false
+    8: false,
+    9: false
   });
 
   constructor() {
@@ -273,6 +279,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     this.#lifeCycleService.chapters(),
     this.#filtersAndReducersService.chapters(),
     this.#errorsService.chapters(),
-    this.#asyncInputService.chapters()
+    this.#asyncInputService.chapters(),
+    this.#delayService.chapters()
   ];
 }

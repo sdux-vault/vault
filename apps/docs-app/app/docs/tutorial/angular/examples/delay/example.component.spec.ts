@@ -2,6 +2,7 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
+import { StateEmitTypes } from '@sdux-vault/shared';
 import { ExampleComponent } from './example.component';
 import { ExampleService } from './example.service';
 import { StarWarsCharacter } from './star-wars-character.shape';
@@ -429,5 +430,33 @@ describe('ExampleComponent', () => {
     expect(component.characters()).toEqual(
       withDerivedFields([initialCharacters[0]!])
     );
+  });
+
+  it('should start, update, reset, and stop the elapsed timer for controller emissions', async () => {
+    await vaultSettled(key);
+    let animationFrame: FrameRequestCallback;
+    const requestAnimationFrame = spyOn(
+      window,
+      'requestAnimationFrame'
+    ).and.callFake((callback: FrameRequestCallback) => {
+      animationFrame = callback;
+      return 42;
+    });
+    const cancelAnimationFrame = spyOn(window, 'cancelAnimationFrame');
+
+    component['handleDelayStateEmission'](StateEmitTypes.DenyController);
+    expect(requestAnimationFrame).toHaveBeenCalledOnceWith(
+      jasmine.any(Function)
+    );
+
+    animationFrame!(0);
+    expect(component['delayTimerMilliseconds']()).toBeGreaterThanOrEqual(0);
+
+    component['handleDelayStateEmission'](StateEmitTypes.FinalizePipeline);
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(42);
+
+    component['handleDelayStateEmission'](StateEmitTypes.DenyController);
+    component['handleDelayStateEmission'](StateEmitTypes.PipelineError);
+    expect(cancelAnimationFrame).toHaveBeenCalledTimes(4);
   });
 });

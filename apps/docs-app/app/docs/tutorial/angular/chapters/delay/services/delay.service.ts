@@ -6,13 +6,13 @@ import { ChapterShape } from '../../../../shape/chapter.shape';
 export class DelayService {
   chapters(): ChapterShape {
     return {
-      id: 6,
-      label: 'Filters/Reducers Chapter',
-      fragment: 'chapter-6',
+      id: 9,
+      label: 'Delay Controller Chapter',
+      fragment: 'chapter-9',
       steps: [
-        { id: 1, label: 'Add Filter Stage' },
-        { id: 2, label: 'Add Reducer Styles' },
-        { id: 3, label: 'Complete Filter/Reducer Tutorial' }
+        { id: 1, label: 'Configure Delay Controller' },
+        { id: 2, label: 'Observe Delayed Execution' },
+        { id: 3, label: 'Complete Delay Tutorial' }
       ] satisfies ChapterStepShape[]
     };
   }

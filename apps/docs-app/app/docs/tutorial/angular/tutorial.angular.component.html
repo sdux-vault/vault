@@ -675,6 +675,71 @@
           <sdux-async-input-chapter></sdux-async-input-chapter>
         </div>
       </div>
+
+      <section
+        class="chapter-break"
+        id="chapter-9"
+        aria-labelledby="chapter-9-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
+
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 9</p>
+          <div class="chapter-header">
+            <h2 id="chapter-9-title">Delay Controller Flow</h2>
+
+            <button
+              type="button"
+              class="chapter-toggle"
+              aria-controls="chapter-9-content"
+              [attr.aria-expanded]="isChapterExpanded(9)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'Delay Controller Flow',
+                  isChapterExpanded(9)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'Delay Controller Flow',
+                  isChapterExpanded(9)
+                )
+              "
+              (click)="toggleTutorialChapter(9)">
+              <mat-icon aria-hidden="true">
+                {{
+                  isChapterExpanded(9)
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                }}
+              </mat-icon>
+            </button>
+          </div>
+
+          <p>
+            This chapter adds a fixed pause before each pipeline attempt
+            continues. You will register and configure the Delay Controller,
+            then observe that it changes execution timing without changing the
+            candidate State.
+          </p>
+          <p>
+            The service owns the <sdux-feature-cell /> configuration and the
+            component owns only the editor, feedback, and teaching display. An
+            elapsed timer makes the pause visible without implementing the
+            controller behavior.
+          </p>
+        </div>
+      </section>
+
+      <div
+        id="chapter-9-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(9)"
+        [attr.aria-hidden]="!isChapterExpanded(9)"
+        [attr.inert]="!isChapterExpanded(9) ? '' : null">
+        <div class="chapter-content-inner">
+          <sdux-delay-chapter />
+        </div>
+      </div>
       <sdux-pipeline-related-topics></sdux-pipeline-related-topics>
     </main>
   </div>

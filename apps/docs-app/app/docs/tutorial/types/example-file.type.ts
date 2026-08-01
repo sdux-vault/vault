@@ -24,7 +24,9 @@ export const ExampleFileTypes = {
   Scss: 'scss',
   Service: 'service',
   ServiceSpec: 'serviceSpec',
-  Shape: 'shape'
+  Shape: 'shape',
+  Timer: 'timer',
+  TimerSpec: 'timerSpec'
 } as const;
 
 /**

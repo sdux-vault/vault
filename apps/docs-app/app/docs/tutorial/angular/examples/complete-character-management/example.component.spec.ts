@@ -9,7 +9,7 @@ import {
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
-import type { VaultErrorShape } from '@sdux-vault/shared';
+import { StateEmitTypes, type VaultErrorShape } from '@sdux-vault/shared';
 import {
   VaultErrorService,
   VaultPrivateErrorService
@@ -1124,7 +1124,9 @@ describe('ExampleComponent', () => {
       component['fetchWithPromise']();
       await new Promise((resolve) => setTimeout(resolve));
 
-      expect(requestAnimationFrame).toHaveBeenCalledTimes(2);
+      expect(requestAnimationFrame).toHaveBeenCalledOnceWith(
+        jasmine.any(Function)
+      );
       expect(service.state.isLoading()).toBeTrue();
       expect(cancelAnimationFrame).toHaveBeenCalledWith(42);
 
@@ -1207,7 +1209,9 @@ describe('ExampleComponent', () => {
       fetchButton!.click();
 
       expect(fetchWithHttpResource).toHaveBeenCalledOnceWith();
-      expect(requestAnimationFrame).toHaveBeenCalledTimes(2);
+      expect(requestAnimationFrame).toHaveBeenCalledOnceWith(
+        jasmine.any(Function)
+      );
 
       service.createCharacter({
         name: 'Han',
@@ -1241,7 +1245,35 @@ describe('ExampleComponent', () => {
       expect(timerInput.valueAsNumber).toBe(1_275);
     });
 
-    it('should start timing from each requested pipeline action', async () => {
+    it('should start, update, reset, and stop the elapsed timer for controller emissions', async () => {
+      await configureComponent(initialCharacters, true);
+      let animationFrame: FrameRequestCallback;
+      const requestAnimationFrame = spyOn(
+        window,
+        'requestAnimationFrame'
+      ).and.callFake((callback: FrameRequestCallback) => {
+        animationFrame = callback;
+        return 42;
+      });
+      const cancelAnimationFrame = spyOn(window, 'cancelAnimationFrame');
+
+      component['handleDelayStateEmission'](StateEmitTypes.DenyController);
+      expect(requestAnimationFrame).toHaveBeenCalledOnceWith(
+        jasmine.any(Function)
+      );
+
+      animationFrame!(0);
+      expect(component['delayTimerMilliseconds']()).toBeGreaterThanOrEqual(0);
+
+      component['handleDelayStateEmission'](StateEmitTypes.FinalizePipeline);
+      expect(cancelAnimationFrame).toHaveBeenCalledWith(42);
+
+      component['handleDelayStateEmission'](StateEmitTypes.DenyController);
+      component['handleDelayStateEmission'](StateEmitTypes.PipelineError);
+      expect(cancelAnimationFrame).toHaveBeenCalledTimes(4);
+    });
+
+    it('should keep one timing loop for multiple pending pipeline actions', async () => {
       await configureComponent(initialCharacters, true);
       const persistNullValue = spyOn(service, 'persistNullValue');
       const fetchWithPromise = spyOn(service, 'fetchWithPromise');
@@ -1278,7 +1310,9 @@ describe('ExampleComponent', () => {
       expect(addByObservable).toHaveBeenCalledOnceWith();
       expect(fetchWithHttpResource).toHaveBeenCalledOnceWith();
       expect(restoreInitialCharacters).toHaveBeenCalledOnceWith();
-      expect(requestAnimationFrame).toHaveBeenCalledTimes(6);
+      expect(requestAnimationFrame).toHaveBeenCalledOnceWith(
+        jasmine.any(Function)
+      );
     });
 
     it('should delegate both Distinct Until Changed button clicks', async () => {

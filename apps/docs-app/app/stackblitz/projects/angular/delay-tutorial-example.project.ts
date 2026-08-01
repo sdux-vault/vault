@@ -2412,6 +2412,7 @@ export class ExampleCharacterEditor {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
+import { StateEmitTypes } from '@sdux-vault/shared';
 import { ExampleComponent } from './example.component';
 import { ExampleService } from './example.service';
 import { StarWarsCharacter } from './star-wars-character.shape';
@@ -2840,6 +2841,34 @@ describe('ExampleComponent', () => {
       withDerivedFields([initialCharacters[0]!])
     );
   });
+
+  it('should start, update, reset, and stop the elapsed timer for controller emissions', async () => {
+    await vaultSettled(key);
+    let animationFrame: FrameRequestCallback;
+    const requestAnimationFrame = spyOn(
+      window,
+      'requestAnimationFrame'
+    ).and.callFake((callback: FrameRequestCallback) => {
+      animationFrame = callback;
+      return 42;
+    });
+    const cancelAnimationFrame = spyOn(window, 'cancelAnimationFrame');
+
+    component['handleDelayStateEmission'](StateEmitTypes.DenyController);
+    expect(requestAnimationFrame).toHaveBeenCalledOnceWith(
+      jasmine.any(Function)
+    );
+
+    animationFrame!(0);
+    expect(component['delayTimerMilliseconds']()).toBeGreaterThanOrEqual(0);
+
+    component['handleDelayStateEmission'](StateEmitTypes.FinalizePipeline);
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(42);
+
+    component['handleDelayStateEmission'](StateEmitTypes.DenyController);
+    component['handleDelayStateEmission'](StateEmitTypes.PipelineError);
+    expect(cancelAnimationFrame).toHaveBeenCalledTimes(4);
+  });
 });
 `,
     'src/example.component.ts': `import {
@@ -2860,15 +2889,14 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { StateEmitTypes } from '@sdux-vault/shared';
-import { EXAMPLE_DELAY_MILLISECONDS } from '../complete-character-management/example.service';
+import { StateEmitTypes, type StateEmitType } from '@sdux-vault/shared';
 import {
   EditorMode,
   ExampleCharacterEditor,
   OperationFeedback
 } from './example.character-editor';
 import { ElapsedTimer } from './example.elapsed-timer';
-import { ExampleService } from './example.service';
+import { EXAMPLE_DELAY_MILLISECONDS, ExampleService } from './example.service';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
@@ -2965,22 +2993,27 @@ export class ExampleComponent {
   #observeStateStream(): void {
     this.#exampleService.state\$
       .pipe(takeUntilDestroyed())
-      .subscribe(({ type }) => {
-        if (
-          !this.#delayTimer.running &&
-          type === StateEmitTypes.DenyController
-        ) {
-          this.#delayTimer.reset();
-          this.#delayTimer.start();
-        }
-        if (
-          this.#delayTimer.running &&
-          (type === StateEmitTypes.FinalizePipeline ||
-            type === StateEmitTypes.PipelineError)
-        ) {
-          this.#delayTimer.stop();
-        }
-      });
+      .subscribe(({ type }) => this.handleDelayStateEmission(type));
+  }
+
+  /**
+   * Synchronizes the elapsed display with Delay Controller state emissions.
+   * @param type - State emission type used to start or stop the display timer.
+   * @returns Nothing; the timer updates its local elapsed-time signal.
+   */
+  protected handleDelayStateEmission(type: StateEmitType): void {
+    if (!this.#delayTimer.running && type === StateEmitTypes.DenyController) {
+      this.#delayTimer.reset();
+      this.#delayTimer.start();
+    }
+
+    if (
+      this.#delayTimer.running &&
+      (type === StateEmitTypes.FinalizePipeline ||
+        type === StateEmitTypes.PipelineError)
+    ) {
+      this.#delayTimer.stop();
+    }
   }
 
   /** Displays the fixed controller configuration beside the live elapsed timer. */
@@ -3673,7 +3706,6 @@ describe('ExampleService', () => {
 `,
     'src/example.service.ts': `import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
-import { EXAMPLE_DELAY_MILLISECONDS } from '../complete-character-management/example.service';
 import {
   createCharacterState,
   deriveForceSensitiveDisplay,
@@ -3684,6 +3716,9 @@ import {
 } from './example.character-domain';
 import { removeUnknownLastNameFilter } from './example.filter';
 import type { StarWarsCharacter } from './star-wars-character.shape';
+
+/** Fixed Policy-stage hold applied to every tutorial pipeline attempt. */
+export const EXAMPLE_DELAY_MILLISECONDS = 3_000;
 
 /**
  * Owns the character collection and exposes domain operations for the tutorial component.

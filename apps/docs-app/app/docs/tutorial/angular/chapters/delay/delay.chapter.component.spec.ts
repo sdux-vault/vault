@@ -1,29 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sduxTestingModule } from '@sdux-vault/ui/web-components';
-import { DelayComponent } from './delay.chapter.component';
+import { DelayChapterComponent } from './delay.chapter.component';
 
-describe('Component: FiltersAndReducersChapterComponent', () => {
-  let fixture: ComponentFixture<DelayComponent>;
-  let component: DelayComponent;
+describe('Component: DelayChapterComponent', () => {
+  let fixture: ComponentFixture<DelayChapterComponent>;
+  let component: DelayChapterComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DelayComponent, sduxTestingModule]
+      imports: [DelayChapterComponent, sduxTestingModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DelayComponent);
+    fixture = TestBed.createComponent(DelayChapterComponent);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
   });
 
-  it('returns the angular StackBlitz metadata when the example includes an angular language', () => {
+  it('returns the angular StackBlitz metadata for the delay tutorial', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 6: Filters and Reducers',
-          id: 'filters-and-reducers-tutorial',
-          exampleName: 'filters-and-reducers-tutorial-example',
+          title: 'Chapter 9: Delay Controller',
+          id: 'delay-tutorial',
+          exampleName: 'delay-tutorial-example',
           displayCopyIcon: false,
           languages: [{ name: 'Angular', key: 'angular' }],
           description: jasmine.any(String) as unknown as string
@@ -33,48 +33,28 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
     );
   });
 
-  it('returns the filter-stage files for the chapter example', () => {
-    expect(component.filterFiles()).toEqual([
+  it('returns the configuration files', () => {
+    expect(component.configurationFiles()).toEqual([
+      {
+        type: 'timer',
+        fileName: 'example.elapsed-timer.ts',
+        source: jasmine.any(String) as unknown as string
+      },
+      {
+        type: 'appConfig',
+        fileName: 'app.config.ts',
+        source: jasmine.any(String) as unknown as string
+      },
       {
         type: 'service',
         fileName: 'example.service.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'serviceSpec',
-        fileName: 'example.service.spec.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'filter',
-        fileName: 'example.filter.ts',
         source: jasmine.any(String) as unknown as string
       }
     ]);
   });
 
-  it('returns the reducer-stage files for the chapter example', () => {
-    expect(component.reducerFiles()).toEqual([
-      {
-        type: 'service',
-        fileName: 'example.service.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterDomain',
-        fileName: 'example.character-domain.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterDomainSpec',
-        fileName: 'example.character-domain.spec.ts',
-        source: jasmine.any(String) as unknown as string
-      }
-    ]);
-  });
-
-  it('returns the generated component files for the chapter example', () => {
-    expect(component.componentFiles()).toEqual([
+  it('returns the timing files', () => {
+    expect(component.timingFiles()).toEqual([
       {
         type: 'component',
         fileName: 'example.component.ts',
@@ -89,17 +69,20 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
         type: 'html',
         fileName: 'example.component.html',
         source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterEditor',
-        fileName: 'example.character-editor.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterEditorSpec',
-        fileName: 'example.character-editor.spec.ts',
-        source: jasmine.any(String) as unknown as string
       }
+    ]);
+  });
+
+  it('returns the completed example files', () => {
+    expect(component.completedFiles().map(({ type }) => type)).toEqual([
+      'timer',
+      'timerSpec',
+      'appConfig',
+      'service',
+      'serviceSpec',
+      'component',
+      'componentSpec',
+      'html'
     ]);
   });
 });
