@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const filtersAndReducersExampleProject: Project = {
-  title: 'filters-and-reducers-example',
+export const filtersAndReducersTutorialExampleProject: Project = {
+  title: 'filters-and-reducers-tutorial-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const filtersAndReducersExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "filters-and-reducers-example",
+  "name": "filters-and-reducers-tutorial-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {

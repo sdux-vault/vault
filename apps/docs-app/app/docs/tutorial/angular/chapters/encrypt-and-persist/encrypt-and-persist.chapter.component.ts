@@ -4,6 +4,7 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  PackageNameComponent,
   SDuXDownloadComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
@@ -18,11 +19,12 @@ import { STAR_WARS_ENCRYPT_AND_PERSIST } from '../../generated/encrypt-and-persi
   standalone: true,
   imports: [
     RouterModule,
-    FeatureCellBrandNameComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     StackblitzLanguageExampleComponent,
-    SDuXDownloadComponent
+    SDuXDownloadComponent,
+    FeatureCellBrandNameComponent,
+    PackageNameComponent
   ],
   templateUrl: './encrypt-and-persist.chapter.component.html'
 })

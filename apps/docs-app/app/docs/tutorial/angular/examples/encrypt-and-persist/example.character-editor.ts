@@ -76,15 +76,6 @@ export interface StepwiseRequestView<T> {
   readonly candidate: T;
 }
 
-/** Shape of the finalized error emission exposed to the teaching output. */
-export interface ErrorEmissionView<T> {
-  /** Finalized Vault error produced by the Error stage. */
-  readonly error: VaultErrorShape;
-
-  /** Immutable FeatureCell snapshot associated with the finalized error. */
-  readonly state: StateSnapshotShape<T>;
-}
-
 export class ExampleCharacterEditor {
   /** Fixed faction choices rendered by both the create and edit flows. */
   readonly factions = [
@@ -298,34 +289,6 @@ export class ExampleCharacterEditor {
       {
         ...snapshot,
         value: snapshot.value === undefined ? 'undefined' : snapshot.value
-      },
-      null,
-      2
-    );
-  }
-
-  /**
-   * Serializes a finalized error emission for a teaching output.
-   * @param emission - Error and snapshot pair, or `undefined` when none exists.
-   * @returns Indented JSON, or the literal `'undefined'` when no emission exists.
-   */
-  serializeErrorEmission<T>(
-    emission: ErrorEmissionView<T> | undefined
-  ): string {
-    if (!emission) {
-      return 'undefined';
-    }
-
-    return JSON.stringify(
-      {
-        error: emission.error,
-        state: {
-          ...emission.state,
-          value:
-            emission.state.value === undefined
-              ? 'undefined'
-              : emission.state.value
-        }
       },
       null,
       2

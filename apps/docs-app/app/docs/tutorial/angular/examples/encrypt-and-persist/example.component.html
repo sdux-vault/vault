@@ -21,18 +21,6 @@
     </div>
   }
 
-  @if (globalError(); as error) {
-    <div class="feedback error global-error" role="alert" aria-live="assertive">
-      <span>Global Error Response: {{ error.message }}</span>
-      <button
-        type="button"
-        class="button secondary"
-        (click)="clearGlobalError()">
-        Clear
-      </button>
-    </div>
-  }
-
   <fieldset class="feature-cell-controls">
     @if (deleteCandidate(); as character) {
       <section
@@ -288,18 +276,6 @@
       </div>
 
       <div class="tap-content">
-        <div class="action-row">
-          <button
-            type="button"
-            class="button danger"
-            (click)="toggleFilterError()">
-            {{ isThrowError() ? 'Reset Error' : 'Throw Error' }}
-          </button>
-          <span
-            >When enabled, add, edit, and delete candidates fail in the Filter
-            stage.</span
-          >
-        </div>
         <input
           id="tap-output-toggle"
           class="tap-toggle"
@@ -320,14 +296,6 @@
             rows="8"
             aria-label="Encrypted State output"
             [value]="encryptedState()"></textarea>
-        </div>
-        <div class="tap-column">
-          <div class="tap-header"><h3>Error Emission</h3></div>
-          <textarea
-            readonly
-            rows="8"
-            aria-label="Error Emission output"
-            [value]="errorEmissionJson()"></textarea>
         </div>
       </div>
     </div>

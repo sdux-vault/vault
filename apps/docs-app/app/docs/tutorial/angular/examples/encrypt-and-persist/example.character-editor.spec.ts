@@ -224,50 +224,6 @@ describe('Character editor', () => {
     });
   });
 
-  describe('serializeErrorEmission', () => {
-    it('should serialize an emission with a present state value', () => {
-      const state: StateSnapshotShape<readonly StarWarsCharacter[]> = {
-        isLoading: false,
-        value: [leia],
-        error,
-        hasValue: true
-      };
-
-      expect(editor.serializeErrorEmission({ error, state })).toBe(
-        JSON.stringify({ error, state }, null, 2)
-      );
-    });
-
-    it('should substitute an absent state value', () => {
-      const state: StateSnapshotShape<readonly StarWarsCharacter[]> = {
-        isLoading: false,
-        value: undefined,
-        error,
-        hasValue: false
-      };
-
-      expect(editor.serializeErrorEmission({ error, state })).toBe(
-        JSON.stringify(
-          {
-            error,
-            state: {
-              isLoading: false,
-              value: 'undefined',
-              error,
-              hasValue: false
-            }
-          },
-          null,
-          2
-        )
-      );
-    });
-
-    it('should render a missing emission as undefined', () => {
-      expect(editor.serializeErrorEmission(undefined)).toBe('undefined');
-    });
-  });
-
   describe('serializeRawState', () => {
     it('should serialize present raw state fields', () => {
       expect(

@@ -204,22 +204,4 @@ describe('ExampleService', () => {
 
     expect(service.state.value()).toEqual([]);
   });
-
-  it('should capture a filter error without committing the candidate', async () => {
-    const service = await configureService();
-    const beforeError = service.state.value();
-
-    service.throwFilterError();
-    await vaultSettled(key);
-
-    expect(service.isThrowError()).toBeTrue();
-    expect(service.state.value()).toEqual(beforeError);
-    expect(service.state.error()?.message).toBe(
-      'The intentional character filter error was thrown.'
-    );
-    expect(service.emittedError()?.error).toEqual(service.state.error()!);
-
-    service.resetFilterError();
-    service.clearEmittedError();
-  });
 });

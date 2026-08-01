@@ -412,18 +412,6 @@ $example-min-width: calc($action-column-width + ($spacing-lg * 2));
       border-color: $sdux-success-base;
       background: color-mix(in srgb, $sdux-success-base 12%, transparent);
     }
-
-    &.global-error {
-      display: flex;
-      flex-wrap: wrap;
-      gap: $spacing-md;
-      align-items: center;
-      justify-content: space-between;
-
-      .button {
-        flex: 0 0 auto;
-      }
-    }
   }
 
   > .feature-cell-controls {

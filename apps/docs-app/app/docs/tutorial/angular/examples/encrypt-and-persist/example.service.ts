@@ -1,10 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
-import type {
-  StateSnapshotShape,
-  VaultErrorCallback,
-  VaultErrorShape
-} from '@sdux-vault/shared';
 import {
   createCharacterState,
   deriveForceSensitiveDisplay,
@@ -26,11 +21,6 @@ export const EXAMPLE_AES256_SALT = new Uint8Array([
 /** Namespaced key written by the Session Storage Persist behavior. */
 export const EXAMPLE_ENCRYPTED_STORAGE_KEY =
   'vault::sessionstorage::star-wars-character::SDUX::Behavior::Persist::SessionStorage';
-
-interface ErrorEmission {
-  readonly error: VaultErrorShape;
-  readonly state: Readonly<StateSnapshotShape<readonly StarWarsCharacter[]>>;
-}
 
 /**
  * Owns the character collection and exposes domain operations for the tutorial component.
@@ -70,13 +60,7 @@ export class ExampleService {
      */
     this.#vault.filters([
       removeUnknownLastNameFilter,
-      (characters) => {
-        if (this.#isThrowError()) {
-          throw new Error('The intentional character filter error was thrown.');
-        }
-
-        return characters;
-      }
+      (characters) => characters
     ]);
 
     /*
@@ -108,8 +92,6 @@ export class ExampleService {
       deriveFullName
     ]);
 
-    this.#vault.errors([this.#captureEmittedError]);
-
     /*
      * `.setAes256Secret()` configures the registered AES-256-GCM behavior before
      * initialization. The stable salt allows ciphertext persisted in one browser
@@ -134,39 +116,6 @@ export class ExampleService {
    * Each emission carries the same state value available through the Angular signal API.
    */
   readonly state$ = this.#vault.state$;
-
-  readonly #emittedError = signal<ErrorEmission | undefined>(undefined);
-  readonly emittedError = this.#emittedError.asReadonly();
-
-  readonly #captureEmittedError: VaultErrorCallback<
-    readonly StarWarsCharacter[]
-  > = (error, state) => {
-    this.#emittedError.set({ error, state });
-  };
-
-  clearEmittedError(): void {
-    this.#emittedError.set(undefined);
-  }
-
-  readonly #isThrowError = signal(false);
-  readonly isThrowError = this.#isThrowError.asReadonly();
-
-  resetFilterError(): void {
-    this.#isThrowError.set(false);
-  }
-
-  throwFilterError(): void {
-    this.#isThrowError.set(true);
-    this.#vault.replaceState([
-      {
-        id: 9999,
-        name: 'Darth',
-        lastName: 'Maul',
-        faction: 'Sith Order',
-        isForceSensitive: true
-      }
-    ]);
-  }
 
   /**
    * Assigns an ID and sends the new character through `mergeState` as a one-item array.

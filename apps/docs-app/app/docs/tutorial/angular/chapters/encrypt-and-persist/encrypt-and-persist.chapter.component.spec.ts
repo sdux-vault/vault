@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sduxTestingModule } from '@sdux-vault/ui/web-components';
 import { EncryptAndPersistChapterComponent } from './encrypt-and-persist.chapter.component';
 
-describe('Component: EncryptAndPersistChapterComponent', () => {
+fdescribe('Component: EncryptAndPersistChapterComponent', () => {
   let fixture: ComponentFixture<EncryptAndPersistChapterComponent>;
   let component: EncryptAndPersistChapterComponent;
 

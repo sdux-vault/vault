@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const lifecycleExampleProject: Project = {
-  title: 'lifecycle-example',
+export const encryptAndPersistTutorialExampleProject: Project = {
+  title: 'encrypt-and-persist-tutorial-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const lifecycleExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "lifecycle-example",
+  "name": "encrypt-and-persist-tutorial-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -84,7 +84,11 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
-import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
+import {
+  withAes256EncryptBehavior,
+  withArrayAppendMergeBehavior,
+  withSessionStoragePersistBehavior
+} from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { ExampleService } from './example.service';
 import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
@@ -105,7 +109,10 @@ export const appConfig: ApplicationConfig = {
      * must appear before FeatureCell providers so they can use the established
      * application-scoped runtime.
      */
-    provideVault(),
+    provideVault({
+      devMode: true,
+      bypassLicensing: true
+    }),
 
     /**
      * Registers the character service and its FeatureCell descriptor with
@@ -126,7 +133,9 @@ export const appConfig: ApplicationConfig = {
          * \`mergeState()\` appends the incoming one-item character array to the current
          * collection instead of replacing the entire FeatureCell value.
          */
-        withArrayAppendMergeBehavior
+        withArrayAppendMergeBehavior,
+        withAes256EncryptBehavior,
+        withSessionStoragePersistBehavior
       ]
     )
   ]
@@ -331,7 +340,7 @@ export function getNextCharacterId(
 /** Derives display-friendly force sensitivity labels without mutating the input. */
 export function deriveForceSensitiveDisplay(
   characters: readonly StarWarsCharacter[]
-): StarWarsCharacter[] {
+): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
@@ -342,7 +351,7 @@ export function deriveForceSensitiveDisplay(
 /** Derives a display-ready full name for each character without mutating the input. */
 export function deriveFullName(
   characters: readonly StarWarsCharacter[]
-): StarWarsCharacter[] {
+): readonly StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     fullName: \`\${character.name} \${character.lastName}\`
@@ -586,50 +595,6 @@ describe('Character editor', () => {
     });
   });
 
-  describe('serializeErrorEmission', () => {
-    it('should serialize an emission with a present state value', () => {
-      const state: StateSnapshotShape<readonly StarWarsCharacter[]> = {
-        isLoading: false,
-        value: [leia],
-        error,
-        hasValue: true
-      };
-
-      expect(editor.serializeErrorEmission({ error, state })).toBe(
-        JSON.stringify({ error, state }, null, 2)
-      );
-    });
-
-    it('should substitute an absent state value', () => {
-      const state: StateSnapshotShape<readonly StarWarsCharacter[]> = {
-        isLoading: false,
-        value: undefined,
-        error,
-        hasValue: false
-      };
-
-      expect(editor.serializeErrorEmission({ error, state })).toBe(
-        JSON.stringify(
-          {
-            error,
-            state: {
-              isLoading: false,
-              value: 'undefined',
-              error,
-              hasValue: false
-            }
-          },
-          null,
-          2
-        )
-      );
-    });
-
-    it('should render a missing emission as undefined', () => {
-      expect(editor.serializeErrorEmission(undefined)).toBe('undefined');
-    });
-  });
-
   describe('serializeRawState', () => {
     it('should serialize present raw state fields', () => {
       expect(
@@ -743,15 +708,6 @@ export interface StepwiseRequestView<T> {
 
   /** Candidate awaiting an explicit continue or block decision. */
   readonly candidate: T;
-}
-
-/** Shape of the finalized error emission exposed to the teaching output. */
-export interface ErrorEmissionView<T> {
-  /** Finalized Vault error produced by the Error stage. */
-  readonly error: VaultErrorShape;
-
-  /** Immutable FeatureCell snapshot associated with the finalized error. */
-  readonly state: StateSnapshotShape<T>;
 }
 
 export class ExampleCharacterEditor {
@@ -974,34 +930,6 @@ export class ExampleCharacterEditor {
   }
 
   /**
-   * Serializes a finalized error emission for a teaching output.
-   * @param emission - Error and snapshot pair, or \`undefined\` when none exists.
-   * @returns Indented JSON, or the literal \`'undefined'\` when no emission exists.
-   */
-  serializeErrorEmission<T>(
-    emission: ErrorEmissionView<T> | undefined
-  ): string {
-    if (!emission) {
-      return 'undefined';
-    }
-
-    return JSON.stringify(
-      {
-        error: emission.error,
-        state: {
-          ...emission.state,
-          value:
-            emission.state.value === undefined
-              ? 'undefined'
-              : emission.state.value
-        }
-      },
-      null,
-      2
-    );
-  }
-
-  /**
    * Serializes the complete raw StateSnapshot fields for the Raw StateSnapshot teaching output.
    * @param fields - Individual state fields a view reads from its reactive state.
    * @returns Indented JSON with an absent value substituted by the literal \`'undefined'\`.
@@ -1043,14 +971,7 @@ export class ExampleCharacterEditor {
     </div>
   }
 
-  @if (featureCellDestroyed()) {
-    <div class="feedback error" role="alert" aria-live="assertive">
-      The FeatureCell is intentionally catastrophic and inoperable after a
-      destroy(). You will need to reload the page to continue.
-    </div>
-  }
-
-  <fieldset class="feature-cell-controls" [disabled]="featureCellDestroyed()">
+  <fieldset class="feature-cell-controls">
     @if (deleteCandidate(); as character) {
       <section
         class="delete-confirmation"
@@ -1128,10 +1049,7 @@ export class ExampleCharacterEditor {
               <div>
                 <dt>Full name</dt>
                 <dd>
-                  {{
-                    character.fullName ??
-                      character.name + ' ' + character.lastName
-                  }}
+                  {{ character.fullName }}
                 </dd>
               </div>
               <div>
@@ -1152,7 +1070,7 @@ export class ExampleCharacterEditor {
               </div>
               <div>
                 <dt class="force-sensitive">Force-sensitive</dt>
-                <dd>{{ character.forceSensitiveDisplay ? 'Yes' : 'No' }}</dd>
+                <dd>{{ character.forceSensitiveDisplay }}</dd>
               </div>
             </dl>
           } @else {
@@ -1292,97 +1210,42 @@ export class ExampleCharacterEditor {
       </div>
     </div>
 
-    <div class="lifecycle-actions">
+    <div class="tap-output">
       <input
-        id="lifecycle-section-toggle"
+        id="results-section-toggle"
         class="section-toggle"
         type="checkbox"
-        aria-label="Toggle Lifecycle visibility"
+        aria-label="Toggle Results visibility"
         checked />
       <div class="section-header">
-        <span>Lifecycle</span>
+        <span>Results</span>
         <label
           class="section-chevron"
-          for="lifecycle-section-toggle"
-          title="Show or hide Lifecycle"></label>
+          for="results-section-toggle"
+          title="Show or hide Results"></label>
       </div>
 
-      <div class="operator-actions">
-        <div class="action-row lifecycle-action-row">
-          <input
-            id="persist-null-description"
-            class="description-toggle"
-            type="checkbox"
-            aria-label="Show Persist Null Value description" />
-          <div class="button-container">
-            <!-- Teaching point: Persist Null (ex-020) -->
-            <button
-              type="button"
-              class="button danger"
-              (click)="persistNullValue()">
-              Persist Null Value
-            </button>
-            <label
-              class="description-chevron"
-              for="persist-null-description"
-              title="Show or hide Persist Null Value description"></label>
-          </div>
-          <div class="description-container">
-            Calls <code>replaceState(&#123; value: null &#125;)</code> to
-            demonstrate null normalization. The FeatureCell intentionally
-            persists the value as <code>undefined</code>, clearing the current
-            state.
-          </div>
-        </div>
+      <div class="tap-content">
+        <input
+          id="tap-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle pipeline output visibility"
+          checked />
 
-        <div class="action-row lifecycle-action-row">
-          <input
-            id="reset-description"
-            class="description-toggle"
-            type="checkbox"
-            aria-label="Show Reset State description" />
-          <div class="button-container">
-            <!-- Teaching point: Reset (ex-021) -->
-            <button type="button" class="button danger" (click)="resetState()">
-              Reset State
-            </button>
+        <div class="tap-column">
+          <div class="tap-header">
+            <h3>Encrypted State</h3>
             <label
-              class="description-chevron"
-              for="reset-description"
-              title="Show or hide Reset State description"></label>
+              class="tap-chevron"
+              for="tap-output-toggle"
+              title="Show or hide pipeline output"></label>
           </div>
-          <div class="description-container">
-            Calls the FeatureCell's dedicated <code>reset()</code> API to
-            explicitly clear the current state value to
-            <code>undefined</code> without submitting replacement state.
-          </div>
-        </div>
-
-        <div class="action-row lifecycle-action-row">
-          <input
-            id="destroy-feature-cell-description"
-            class="description-toggle"
-            type="checkbox"
-            aria-label="Show Destroy FeatureCell description" />
-          <div class="button-container">
-            <!-- Teaching point: FeatureCell destruction (ex-005) -->
-            <button
-              type="button"
-              class="button danger"
-              (click)="destroyFeatureCell()">
-              Destroy FeatureCell
-            </button>
-            <label
-              class="description-chevron"
-              for="destroy-feature-cell-description"
-              title="Show or hide Destroy FeatureCell description"></label>
-          </div>
-          <div class="description-container">
-            Permanently tears down the FeatureCell, releases its runtime
-            resources, destroys attached behaviors and controllers, completes
-            internal streams, and prevents further pipeline execution, state
-            updates, or emissions.
-          </div>
+          <textarea
+            readonly
+            rows="8"
+            aria-label="Encrypted State output"
+            [value]="encryptedState()"></textarea>
         </div>
       </div>
     </div>
@@ -1802,18 +1665,6 @@ export class ExampleCharacterEditor {
     &.success {
       border-color: \$sdux-success-base;
       background: color-mix(in srgb, \$sdux-success-base 12%, transparent);
-    }
-
-    &.global-error {
-      display: flex;
-      flex-wrap: wrap;
-      gap: \$spacing-md;
-      align-items: center;
-      justify-content: space-between;
-
-      .button {
-        flex: 0 0 auto;
-      }
     }
   }
 
@@ -2464,6 +2315,19 @@ describe('ExampleComponent', () => {
     }
   ];
 
+  const withDerivedFields = (
+    characters: readonly StarWarsCharacter[]
+  ): readonly StarWarsCharacter[] =>
+    [...characters]
+      .map((character) => ({
+        ...character,
+        forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
+        fullName: \`\${character.name} \${character.lastName}\`
+      }))
+      .sort((left, right) => left.lastName.localeCompare(right.lastName));
+
+  const reducedCharacters = withDerivedFields(initialCharacters);
+
   let component: ExampleComponent;
   let fixture: ComponentFixture<ExampleComponent>;
   let service: ExampleService;
@@ -2490,7 +2354,7 @@ describe('ExampleComponent', () => {
   it('should expose the latest character collection from the service', async () => {
     expect(component.characters()).toEqual([]);
     await vaultSettled(key);
-    expect(component.characters()).toEqual(initialCharacters);
+    expect(component.characters()).toEqual(reducedCharacters);
   });
 
   it('should expose no selected character before a valid selection is made', async () => {
@@ -2504,7 +2368,7 @@ describe('ExampleComponent', () => {
     component['selectCharacter']('2');
 
     expect(component['selectedCharacterId']()).toBe(2);
-    expect(component['selectedCharacter']()).toEqual(initialCharacters[1]);
+    expect(component['selectedCharacter']()).toEqual(reducedCharacters[0]);
   });
 
   it('should ignore an unknown character id', async () => {
@@ -2532,8 +2396,8 @@ describe('ExampleComponent', () => {
       '.character-details'
     ) as HTMLElement;
 
-    expect(detailsPanel.textContent).toContain('Luke Skywalker');
-    expect(detailsPanel.textContent).toContain('Jedi Order');
+    expect(detailsPanel.textContent).toContain('Leia Organa');
+    expect(detailsPanel.textContent).toContain('Rebel Alliance');
     expect(detailsPanel.textContent).not.toContain('No character selected');
   });
 
@@ -2547,14 +2411,6 @@ describe('ExampleComponent', () => {
     expect(host.textContent).toContain('Leia');
     expect(host.textContent).toContain('Rebel Alliance');
     expect(host.textContent).not.toContain('No character selected');
-  });
-
-  it('should expose edit-mode labels before create mode begins', async () => {
-    await vaultSettled(key);
-
-    expect(component['editorMode']()).toBe('edit');
-    expect(component['editorTitle']()).toBe('Update character');
-    expect(component['submitLabel']()).toBe('Save changes');
   });
 
   it('should enter create mode and clear the form', async () => {
@@ -2577,40 +2433,6 @@ describe('ExampleComponent', () => {
     expect(component['characterForm'].untouched).toBeTrue();
   });
 
-  it('should preserve the original selection when create mode is started twice', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-
-    component['startCreate']();
-    component['selectedCharacterId'].set(2);
-
-    component['startCreate']();
-    component['cancelEdit']();
-
-    expect(component['selectedCharacterId']()).toBe(1);
-    expect(component['editorMode']()).toBe('edit');
-    expect(component['feedback']()).toEqual(
-      component.editor.feedback['newCharacterDiscarded']
-    );
-  });
-
-  it('should return to edit mode and clear feedback when selecting from create mode', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-
-    component['startCreate']();
-    component['feedback'].set({
-      message: 'Temporary feedback',
-      tone: 'info'
-    });
-
-    component['selectCharacter']('2');
-
-    expect(component['selectedCharacterId']()).toBe(2);
-    expect(component['editorMode']()).toBe('edit');
-    expect(component['feedback']()).toBeNull();
-  });
-
   it('should restore the previous selection when canceling create mode', async () => {
     await vaultSettled(key);
     fixture.detectChanges();
@@ -2625,12 +2447,12 @@ describe('ExampleComponent', () => {
     component['cancelEdit']();
 
     expect(component['editorMode']()).toBe('edit');
-    expect(component['selectedCharacterId']()).toBe(1);
+    expect(component['selectedCharacterId']()).toBe(2);
     expect(component['characterForm'].getRawValue()).toEqual({
-      name: 'Luke',
-      lastName: 'Skywalker',
-      faction: 'Jedi Order',
-      isForceSensitive: true
+      name: 'Leia',
+      lastName: 'Organa',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
     });
     expect(component['feedback']()).toEqual(
       component.editor.feedback['newCharacterDiscarded']
@@ -2824,7 +2646,7 @@ describe('ExampleComponent', () => {
 
     component['requestDelete']();
 
-    expect(component['deleteCandidate']()).toEqual(initialCharacters[1]);
+    expect(component['deleteCandidate']()).toEqual(reducedCharacters[0]);
     expect(component['feedback']()).toBeNull();
   });
 
@@ -2849,90 +2671,6 @@ describe('ExampleComponent', () => {
     component['cancelDelete']();
 
     expect(component['deleteCandidate']()).toBeNull();
-  });
-
-  it('should reset the form and delegate persist-null lifecycle updates to the service', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-    const persistNullValueSpy = spyOn(service, 'persistNullValue');
-
-    component['characterForm'].setValue({
-      name: 'Temp',
-      lastName: 'Character',
-      faction: 'Unaffiliated',
-      isForceSensitive: false
-    });
-    component['characterForm'].markAsDirty();
-    component['characterForm'].markAllAsTouched();
-
-    component['persistNullValue']();
-
-    expect(persistNullValueSpy).toHaveBeenCalledTimes(1);
-    expect(component['characterForm'].getRawValue()).toEqual({
-      name: '',
-      lastName: '',
-      faction: '',
-      isForceSensitive: false
-    });
-    expect(component['characterForm'].pristine).toBeTrue();
-    expect(component['characterForm'].untouched).toBeTrue();
-    expect(component['featureCellDestroyed']()).toBeFalse();
-  });
-
-  it('should reset the form and delegate reset lifecycle updates to the service', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-    const resetStateSpy = spyOn(service, 'resetState');
-
-    component['characterForm'].setValue({
-      name: 'Temp',
-      lastName: 'Character',
-      faction: 'Unaffiliated',
-      isForceSensitive: true
-    });
-    component['characterForm'].markAsDirty();
-    component['characterForm'].markAllAsTouched();
-
-    component['resetState']();
-
-    expect(resetStateSpy).toHaveBeenCalledTimes(1);
-    expect(component['characterForm'].getRawValue()).toEqual({
-      name: '',
-      lastName: '',
-      faction: '',
-      isForceSensitive: false
-    });
-    expect(component['characterForm'].pristine).toBeTrue();
-    expect(component['characterForm'].untouched).toBeTrue();
-    expect(component['featureCellDestroyed']()).toBeFalse();
-  });
-
-  it('should mark the feature as destroyed, clear the form, and delegate teardown to the service', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-    const destroyFeatureCellSpy = spyOn(service, 'destroyFeatureCell');
-
-    component['characterForm'].setValue({
-      name: 'Temp',
-      lastName: 'Character',
-      faction: 'Unaffiliated',
-      isForceSensitive: true
-    });
-    component['characterForm'].markAsDirty();
-    component['characterForm'].markAllAsTouched();
-
-    component['destroyFeatureCell']();
-
-    expect(destroyFeatureCellSpy).toHaveBeenCalledTimes(1);
-    expect(component['featureCellDestroyed']()).toBeTrue();
-    expect(component['characterForm'].getRawValue()).toEqual({
-      name: '',
-      lastName: '',
-      faction: '',
-      isForceSensitive: false
-    });
-    expect(component['characterForm'].pristine).toBeTrue();
-    expect(component['characterForm'].untouched).toBeTrue();
   });
 
   it('should ignore confirm delete when there is no pending candidate', async () => {
@@ -2978,7 +2716,9 @@ describe('ExampleComponent', () => {
       message: 'Leia Organa was removed.',
       tone: 'success'
     });
-    expect(component.characters()).toEqual([initialCharacters[0]!]);
+    expect(component.characters()).toEqual(
+      withDerivedFields([initialCharacters[0]!])
+    );
   });
 });
 `,
@@ -2990,6 +2730,7 @@ describe('ExampleComponent', () => {
   inject,
   signal
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   FormBuilder,
@@ -3003,7 +2744,10 @@ import {
   ExampleCharacterEditor,
   OperationFeedback
 } from './example.character-editor';
-import { ExampleService } from './example.service';
+import {
+  EXAMPLE_ENCRYPTED_STORAGE_KEY,
+  ExampleService
+} from './example.service';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
@@ -3077,6 +2821,26 @@ export class ExampleComponent {
   /** Watches the reactive collection and selects its first character when initial state arrives. */
   constructor() {
     this.#observeInitialSelection();
+    this.#observeStateStream();
+  }
+
+  /** Displays the exact encrypted envelope persisted by the latest finalized State. */
+  protected readonly encryptedState = signal('undefined');
+
+  /**
+   * Watches FeatureCell emissions and projects each snapshot into the
+   * diagnostic output used by the tutorial. It also starts the elapsed timer
+   * when a delayed attempt is observed and stops it when the pipeline
+   * finalizes or reports an error; the subscription ends with the component.
+   * @returns Nothing; the subscription updates snapshot, encryption, and timer
+   * signals.
+   */
+  #observeStateStream(): void {
+    this.#exampleService.state\$.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.encryptedState.set(
+        sessionStorage.getItem(EXAMPLE_ENCRYPTED_STORAGE_KEY) ?? 'undefined'
+      );
+    });
   }
 
   /**
@@ -3124,37 +2888,6 @@ export class ExampleComponent {
     this.editorMode.set('edit');
     this.feedback.set(null);
     this.#patchForm(character);
-  }
-
-  /** Tracks permanent FeatureCell teardown so the UI can explain the required recovery. */
-  protected readonly featureCellDestroyed = signal(false);
-
-  /**
-   * Delegates permanent FeatureCell teardown, clears the form, and exposes the terminal UI state.
-   * @returns Nothing; the FeatureCell and its runtime resources are permanently finalized.
-   */
-  protected destroyFeatureCell(): void {
-    this.#exampleService.destroyFeatureCell();
-    this.#clearCharacterForm();
-    this.featureCellDestroyed.set(true);
-  }
-
-  /**
-   * Delegates FeatureCell reset behavior to the service and clears the character form.
-   * @returns Nothing; the cleared state propagates through the reactive state APIs.
-   */
-  protected resetState(): void {
-    this.#exampleService.resetState();
-    this.#clearCharacterForm();
-  }
-
-  /**
-   * Delegates a null replacement to the service and clears the character form.
-   * @returns Nothing; the resulting undefined value is exposed through the reactive state APIs.
-   */
-  protected persistNullValue(): void {
-    this.#exampleService.persistNullValue();
-    this.#clearCharacterForm();
   }
 
   /**
@@ -3367,6 +3100,19 @@ export class ExampleComponent {
   }
 }
 `,
+    'src/example.filter.ts': `// example.filter.ts
+import { FilterFunction } from '@sdux-vault/shared';
+import type { StarWarsCharacter } from './star-wars-character.shape';
+
+/**
+ * Removes characters whose last name is exactly \`"unknown"\` without mutating the candidate collection.
+ * @param characters - Candidate character collection entering the Filter stage.
+ * @returns A new collection containing every character with a known last name.
+ */
+export const removeUnknownLastNameFilter: FilterFunction<
+  readonly StarWarsCharacter[]
+> = (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');
+`,
     'src/example.service.spec.ts': `import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -3395,6 +3141,15 @@ describe('ExampleService', () => {
     }
   ];
 
+  const withDerivedFields = (
+    characters: readonly StarWarsCharacter[]
+  ): readonly StarWarsCharacter[] =>
+    characters.map((character) => ({
+      ...character,
+      forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
+      fullName: \`\${character.name} \${character.lastName}\`
+    }));
+
   const configureService = async (
     initialState: readonly StarWarsCharacter[] | null = initialCharacters
   ): Promise<ExampleService> => {
@@ -3421,7 +3176,7 @@ describe('ExampleService', () => {
   it('should initialize with the configured FeatureCell State', async () => {
     const service = await configureService();
 
-    expect(service.state.value()).toEqual(initialCharacters);
+    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
     expect(service.state.isLoading()).toBeFalse();
     expect(service.state.error()).toBeNull();
     expect(service.state.hasValue()).toBeTrue();
@@ -3446,7 +3201,9 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([createdCharacter]);
+    expect(service.state.value()).toEqual(
+      withDerivedFields([createdCharacter])
+    );
   });
 
   it('should create the first character with id 1 when no value exists', async () => {
@@ -3468,7 +3225,9 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([{ ...createdCharacter }]);
+    expect(service.state.value()).toEqual(
+      withDerivedFields([createdCharacter])
+    );
   });
 
   it('should replace the matching character without changing the others', async () => {
@@ -3491,8 +3250,7 @@ describe('ExampleService', () => {
       isForceSensitive: false
     });
     expect(service.state.value()).toEqual([
-      updatedCharacter,
-      initialCharacters[1]!
+      ...withDerivedFields([updatedCharacter, initialCharacters[1]!])
     ]);
   });
 
@@ -3515,7 +3273,7 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(initialCharacters);
+    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
   });
 
   it('should safely update against an empty collection when no value exists', async () => {
@@ -3547,7 +3305,9 @@ describe('ExampleService', () => {
 
     await vaultSettled(key);
 
-    expect(service.state.value()).toEqual([initialCharacters[1]!]);
+    expect(service.state.value()).toEqual(
+      withDerivedFields([initialCharacters[1]!])
+    );
   });
 
   it('should safely remove against an empty collection when no value exists', async () => {
@@ -3559,44 +3319,31 @@ describe('ExampleService', () => {
 
     expect(service.state.value()).toEqual([]);
   });
-
-  it('should persist a null lifecycle value through replaceState', async () => {
-    const service = await configureService();
-
-    service.persistNullValue();
-
-    await vaultSettled(key);
-
-    expect(service.state.value()).toBeUndefined();
-    expect(service.state.hasValue()).toBeFalse();
-    expect(service.state.error()).toBeNull();
-  });
-
-  it('should reset the lifecycle state to an undefined value', async () => {
-    const service = await configureService();
-
-    service.resetState();
-
-    expect(service.state.value()).toBeUndefined();
-    expect(service.state.hasValue()).toBeFalse();
-    expect(service.state.error()).toBeNull();
-  });
-
-  it('should finalize the FeatureCell lifecycle with destroy()', async () => {
-    const service = await configureService();
-
-    expect(() => service.destroyFeatureCell()).not.toThrow();
-  });
 });
 `,
     'src/example.service.ts': `import { Injectable } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import {
   createCharacterState,
+  deriveForceSensitiveDisplay,
+  deriveFullName,
   getNextCharacterId,
+  withCharactersSortedByLastName,
   type StarWarsCharacterDraft
 } from './example.character-domain';
+import { removeUnknownLastNameFilter } from './example.filter';
 import type { StarWarsCharacter } from './star-wars-character.shape';
+
+/** Stable tutorial salt required to decrypt persisted State across reloads. */
+/** Teaching Point: ex-034 */
+export const EXAMPLE_AES256_SALT = new Uint8Array([
+  0x53, 0x44, 0x75, 0x58, 0x2d, 0x56, 0x61, 0x75, 0x6c, 0x74, 0x2d, 0x54, 0x75,
+  0x74, 0x6f, 0x72
+]);
+
+/** Namespaced key written by the Session Storage Persist behavior. */
+export const EXAMPLE_ENCRYPTED_STORAGE_KEY =
+  'vault::sessionstorage::star-wars-character::SDUX::Behavior::Persist::SessionStorage';
 
 /**
  * Owns the character collection and exposes domain operations for the tutorial component.
@@ -3624,8 +3371,74 @@ export class ExampleService {
    * Initializes the FeatureCell for the add/edit tutorial slice.
    */
   constructor() {
+    /*
+     * \`.filters()\` registers \`removeUnknownLastNameFilter\` as a
+     * \`FilterFunction<readonly StarWarsCharacter[]>\`.
+     *
+     * This pure function runs before reducers and returns a new candidate
+     * collection without characters whose last name is exactly \`unknown\`.
+     * The inline second filter normally returns that collection unchanged. When
+     * the teaching flag is enabled, it throws deliberately so the example can show
+     * pipeline error normalization without allowing the candidate to commit.
+     */
+    this.#vault.filters([
+      removeUnknownLastNameFilter,
+      (characters) => characters
+    ]);
+
+    /*
+     * The first \`.reducers()\` entry is a delegating
+     * \`ReducerFunction<readonly StarWarsCharacter[]>\`.
+     *
+     * After filtering, this imported pure function performs an immutable transformation
+     * through \`deriveForceSensitiveDisplay()\`, producing a new collection in which
+     * every retained character has a \`Yes\` or \`No\` display value.
+     */
+
+    /*
+     * The second entry uses a factory-generated pure reducer, a different function
+     * pattern that still returns the same \`ReducerFunction\` contract.
+     *
+     * It runs after Reducer 1, clones the transformed collection, and sorts characters
+     * alphabetically by \`lastName\` without mutating the incoming array.
+     */
+
+    /*
+     * The third entry is another delegating pure reducer.
+     *
+     * It runs after sorting and derives a display-ready \`fullName\` from the existing
+     * \`name\` and \`lastName\` fields so every view can reuse the same post-pipeline label.
+     */
+    this.#vault.reducers([
+      deriveForceSensitiveDisplay,
+      withCharactersSortedByLastName(),
+      deriveFullName
+    ]);
+
+    /*
+     * \`.setAes256Secret()\` configures the registered AES-256-GCM behavior before
+     * initialization. The stable salt allows ciphertext persisted in one browser
+     * session to be authenticated and decrypted during a later hydration cycle.
+     *
+     * This client-visible secret is intentionally tutorial-only. Production
+     * applications must obtain secret material from an appropriate secure design
+     * rather than treating bundled JavaScript as a confidential key store.
+     */
+    /** Teaching Point: ex-034 */
+    this.#vault.setAes256Secret?.({
+      aes256Secret: 'sdux-vault-tutorial-only-secret',
+      salt: EXAMPLE_AES256_SALT,
+      iterations: 250_000
+    });
+
     this.#vault.initialize();
   }
+
+  /**
+   * Exposes committed FeatureCell snapshots for consumers that teach observable state access.
+   * Each emission carries the same state value available through the Angular signal API.
+   */
+  readonly state\$ = this.#vault.state\$;
 
   /**
    * Assigns an ID and sends the new character through \`mergeState\` as a one-item array.
@@ -3681,33 +3494,6 @@ export class ExampleService {
         this.#vault.state.value()?.filter((character) => character.id !== id) ??
         []
     });
-  }
-
-  /**
-   * Permanently tears down the FeatureCell and releases its runtime resources.
-   * Destruction completes its streams and prevents any further pipeline execution.
-   * @returns Nothing; the FeatureCell lifecycle is permanently finalized.
-   */
-  destroyFeatureCell(): void {
-    this.#vault.destroy();
-  }
-
-  /**
-   * Resets the FeatureCell through its dedicated lifecycle API.
-   * Consumers observe the cleared value as \`undefined\` through the reactive state APIs.
-   * @returns Nothing; the FeatureCell performs the reset operation internally.
-   */
-  resetState(): void {
-    this.#vault.reset();
-  }
-
-  /**
-   * Persists \`null\` through \`replaceState\` to clear the FeatureCell's current value.
-   * The resulting state value resolves to \`undefined\` for consumers of the read model.
-   * @returns Nothing; consumers observe the cleared value through the reactive state APIs.
-   */
-  persistNullValue(): void {
-    this.#vault.replaceState({ value: null });
   }
 }
 `,

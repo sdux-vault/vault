@@ -29,7 +29,10 @@ export const appConfig: ApplicationConfig = {
      * must appear before FeatureCell providers so they can use the established
      * application-scoped runtime.
      */
-    provideVault(),
+    provideVault({
+      devMode: true,
+      bypassLicensing: true
+    }),
 
     /**
      * Registers the character service and its FeatureCell descriptor with

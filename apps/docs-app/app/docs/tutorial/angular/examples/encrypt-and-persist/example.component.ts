@@ -7,7 +7,6 @@ import {
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { VaultErrorService, VaultErrorShape } from '@sdux-vault/shared';
 import {
   AbstractControl,
   FormBuilder,
@@ -51,7 +50,6 @@ export class ExampleComponent {
    * The component never reaches through this service to access the FeatureCell directly.
    */
   readonly #exampleService = inject(ExampleService);
-  readonly #globalErrorService = VaultErrorService();
 
   /** Creates the non-nullable reactive form used by the create and edit flows. */
   readonly #formBuilder = inject(FormBuilder);
@@ -78,7 +76,6 @@ export class ExampleComponent {
 
   /** Exposes the latest operation result for the template's accessible feedback region. */
   protected readonly feedback = signal<OperationFeedback | null>(null);
-  protected readonly globalError = signal<VaultErrorShape | null>(null);
 
   /**
    * Resolves the selected identity against the latest reactive character collection.
@@ -101,7 +98,6 @@ export class ExampleComponent {
   constructor() {
     this.#observeInitialSelection();
     this.#observeStateStream();
-    this.#observeGlobalErrors();
   }
 
   /** Displays the exact encrypted envelope persisted by the latest finalized State. */
@@ -121,39 +117,6 @@ export class ExampleComponent {
         sessionStorage.getItem(EXAMPLE_ENCRYPTED_STORAGE_KEY) ?? 'undefined'
       );
     });
-  }
-
-  protected readonly errorEmissionJson = computed(() =>
-    this.#exampleService.emittedError()
-      ? JSON.stringify(this.#exampleService.emittedError(), null, 2)
-      : 'undefined'
-  );
-
-  protected readonly isThrowError = this.#exampleService.isThrowError;
-
-  #observeGlobalErrors(): void {
-    this.#globalErrorService.error$
-      .pipe(takeUntilDestroyed())
-      .subscribe((error: VaultErrorShape | null) => {
-        this.globalError.set(
-          error && this.#globalErrorService.hasError ? error : null
-        );
-      });
-  }
-
-  protected clearGlobalError(): void {
-    this.#exampleService.clearEmittedError();
-    this.#globalErrorService.clear();
-  }
-
-  protected toggleFilterError(): void {
-    if (this.isThrowError()) {
-      this.#exampleService.resetFilterError();
-      this.#globalErrorService.clear();
-      return;
-    }
-
-    this.#exampleService.throwFilterError();
   }
 
   /**

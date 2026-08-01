@@ -781,11 +781,10 @@
             FeatureCell working with plain in-memory values.
           </p>
           <p>
-            You will also simulate a Filter-stage failure, observe the global
-            error service, and inspect the feature-local
-            <span class="code">errors()</span>
-            emission. Encryption, persistence, and error observation remain
-            separate pipeline and application concerns.
+            You will also see how the static teaching salt supports repeatable
+            decryption, why persisted State takes priority over
+            <span class="code">initialState</span>, and why session storage
+            survives reloads only within the current browser tab.
           </p>
         </div>
       </section>

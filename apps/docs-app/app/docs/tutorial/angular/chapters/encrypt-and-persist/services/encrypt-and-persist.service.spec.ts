@@ -15,15 +15,15 @@ describe('Service: Encrypt and Persist', () => {
     service = TestBed.inject(EncryptAndPersistService);
   });
 
-  it('returns the chapter metadata for the filters-and-reducers tutorial', () => {
+  it('returns the chapter metadata for the encrypt-and-persist tutorial', () => {
     expect(service.chapters()).toEqual({
       id: 10,
       label: 'Encrypt and Persist Chapter',
       fragment: 'chapter-10',
       steps: [
-        { id: 1, label: 'Encrypt Feature State' },
-        { id: 2, label: 'Persist Feature State' },
-        { id: 3, label: 'Observe Pipeline Errors' },
+        { id: 1, label: 'Configure Encrypt and Persist Behaviors' },
+        { id: 2, label: 'Encrypt Feature State' },
+        { id: 3, label: 'Persist Feature State' },
         { id: 4, label: 'Complete Encrypt and Persist Tutorial' }
       ]
     });
