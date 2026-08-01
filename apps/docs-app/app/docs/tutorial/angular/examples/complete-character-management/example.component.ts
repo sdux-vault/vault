@@ -105,7 +105,7 @@ export class ExampleComponent {
   /** Exposes the FeatureCell loading signal so the template can cover the current selection. */
   protected readonly state = this.#exampleService.state;
 
-  /** Reflects whether the tutorial's intentional inline-filter failure is armed. */
+  /** Reflects whether the tutorial's intentional inline-filter failure is enabled. */
   protected readonly isThrowError = this.#exampleService.isThrowError;
 
   /** Enables Stepwise controls only while the Resolve callback awaits a decision. */
@@ -350,6 +350,7 @@ export class ExampleComponent {
    */
   /** Teaching Point: Global Error Service: Ex-011 */
   protected clearGlobalError(): void {
+    this.#exampleService.clearEmittedError();
     this.#globalErrorService.clear();
   }
 

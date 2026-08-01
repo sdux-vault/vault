@@ -45,7 +45,7 @@ export function createTutorialExampleGroups() {
         {
           title: 'Chapter 5: Lifecycle',
           id: 'lifecycle',
-          exampleName: 'lifecycle-example',
+          exampleName: 'lifecycle-tutorial-example',
           displayCopyIcon: false,
           description: `Demonstrates the completed <strong>Lifecycle</strong> tutorial example — a standalone component keeps the same service-owned character collection, shows the difference between persisting <strong>null</strong> and calling <strong>reset()</strong>, and then finalizes the FeatureCell with <strong>destroy()</strong> without moving lifecycle control into the template. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
@@ -53,9 +53,17 @@ export function createTutorialExampleGroups() {
         {
           title: 'Chapter 6: Filters and Reducers',
           id: 'filters-and-reducers',
-          exampleName: 'filters-and-reducers-example',
+          exampleName: 'filters-and-reducers-tutorial-example',
           displayCopyIcon: false,
           description: `Demonstrates the completed <strong>Filters and Reducers</strong> tutorial example — a standalone component keeps the same service-owned character collection, refines candidate State with a Filter after Resolve, then applies three Reducers to derive force-sensitive display labels, sort the collection by last name, and build full-name display values before the template renders them. Launch the live example directly in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
+        },
+        {
+          title: 'Chapter 7: Errors',
+          id: 'errors',
+          exampleName: 'errors-tutorial-example',
+          displayCopyIcon: false,
+          description: `Demonstrates the completed <strong>Errors</strong> tutorial example — a standalone component keeps the same service-owned character collection, arms an intentional Filter-stage failure, observes the singleton global Vault error service, and displays the finalized <strong>errors()</strong> emission without moving error ownership into the template. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         }
       ] satisfies StackBlitzExampleShape[]

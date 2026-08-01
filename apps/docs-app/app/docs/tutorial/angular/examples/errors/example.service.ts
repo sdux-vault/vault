@@ -1,5 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import type {
+  StateSnapshotShape,
+  VaultErrorCallback,
+  VaultErrorShape
+} from '@sdux-vault/shared';
 import {
   createCharacterState,
   deriveForceSensitiveDisplay,
@@ -11,8 +16,17 @@ import {
 import { removeUnknownLastNameFilter } from './example.filter';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
+/** Inputs observed by the tutorial's finalized error callback. */
+interface ErrorEmission {
+  /** Normalized Vault error committed by the Error stage. */
+  readonly error: VaultErrorShape;
+
+  /** Immutable FeatureCell snapshot associated with the finalized error. */
+  readonly state: Readonly<StateSnapshotShape<readonly StarWarsCharacter[]>>;
+}
+
 /**
- * Owns the character collection and exposes domain operations for the tutorial component.
+ * Owns the character collection and exposes CRUD plus error-teaching operations for the tutorial component.
  * The FeatureCell decorator associates this service with a typed state boundary, while
  * `injectVault` provides the reactive state and update methods for that boundary.
  * ️**Architectural Boundary:** Components consume this service instead of accessing the
@@ -34,7 +48,7 @@ export class ExampleService {
   readonly state = this.#vault.state;
 
   /**
-   * Initializes the FeatureCell for the add/edit tutorial slice.
+   * Initializes the FeatureCell for the errors tutorial slice.
    */
   constructor() {
     /*
@@ -50,6 +64,10 @@ export class ExampleService {
     this.#vault.filters([
       removeUnknownLastNameFilter,
       (characters) => {
+        if (this.#isThrowError()) {
+          throw new Error('The intentional character filter error was thrown.');
+        }
+
         return characters;
       }
     ]);
@@ -83,7 +101,84 @@ export class ExampleService {
       deriveFullName
     ]);
 
+    /*
+     * `.errors()` registers a
+     * `VaultErrorCallback<readonly StarWarsCharacter[]>` that receives the
+     * finalized Vault error and immutable StateSnapshot after error commitment.
+     *
+     * The callback publishes both observational inputs for the tutorial display;
+     * it cannot transform the error, replace state, or alter pipeline control.
+     */
+    this.#vault.errors([this.#captureEmittedError]);
+
     this.#vault.initialize();
+  }
+
+  /** Stores the latest finalized error and associated FeatureCell snapshot. */
+  readonly #emittedError = signal<ErrorEmission | undefined>(undefined);
+
+  /**
+   * Exposes the latest error-callback inputs as a read-only signal for the teaching output.
+   * Consumers can inspect the finalized error and snapshot without influencing either one.
+   */
+  readonly emittedError = this.#emittedError.asReadonly();
+
+  /**
+   * Observes a finalized Vault error after it has been normalized and committed to state.
+   * This VaultErrorCallback records both immutable inputs for the tutorial display and returns
+   * no value, so it cannot transform the error, recover the pipeline, or mutate state.
+   * @param error - Finalized Vault error produced by the Error stage.
+   * @param state - Immutable FeatureCell snapshot at the time of the error.
+   * @returns Nothing; the callback only updates the read-only teaching signal.
+   */
+  readonly #captureEmittedError: VaultErrorCallback<
+    readonly StarWarsCharacter[]
+  > = (error, state) => {
+    this.#emittedError.set({ error, state });
+  };
+
+  /** Clears the latest captured error-emission teaching output. */
+  clearEmittedError(): void {
+    this.#emittedError.set(undefined);
+  }
+
+  /**
+   * Tracks the identity assigned to the next newly created character.
+   * Initialization advances it beyond the largest ID in the initial collection.
+   */
+  #nextCharacterId = 1;
+
+  /** Arms the tutorial's intentional inline-filter failure. */
+  readonly #isThrowError = signal(false);
+
+  /** Exposes whether the intentional filter failure is currently enabled. */
+  readonly isThrowError = this.#isThrowError.asReadonly();
+
+  /**
+   * Disarms the intentional inline-filter failure without starting a pipeline request.
+   * @returns Nothing; subsequent State changes pass through the filter normally.
+   */
+  resetFilterError(): void {
+    this.#isThrowError.set(false);
+  }
+
+  /**
+   * Arms the intentional inline-filter error and submits an uncommitted replacement.
+   * A fresh identity ensures Distinct Until Changed admits every demonstration attempt;
+   * the enabled filter then throws before taps, reducers, persistence, or State commitment.
+   * @returns Nothing; consumers observe the normalized failure through reactive error APIs.
+   */
+  throwFilterError(): void {
+    this.#isThrowError.set(true);
+    this.#vault.replaceState([
+      {
+        id: this.#nextCharacterId++,
+        name: 'Darth',
+        lastName: 'Maul',
+        faction: 'Sith Order',
+        isForceSensitive: true
+      }
+    ]);
   }
 
   /**

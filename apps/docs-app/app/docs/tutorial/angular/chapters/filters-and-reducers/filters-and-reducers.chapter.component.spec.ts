@@ -23,7 +23,7 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
         example: Object({
           title: 'Chapter 6: Filters and Reducers',
           id: 'filters-and-reducers',
-          exampleName: 'filters-and-reducers-example',
+          exampleName: 'filters-and-reducers-tutorial-example',
           displayCopyIcon: false,
           languages: [{ name: 'Angular', key: 'angular' }],
           description: jasmine.any(String) as unknown as string

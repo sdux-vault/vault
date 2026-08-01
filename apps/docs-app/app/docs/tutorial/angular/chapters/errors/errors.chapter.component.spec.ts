@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sduxTestingModule } from '@sdux-vault/ui/web-components';
-import { LifecycleChapterComponent } from './lifecycle.chapter.component';
+import { ErrorsChapterComponent } from './errors.chapter.component';
 
-describe('Component: LifecycleChapterComponent', () => {
-  let fixture: ComponentFixture<LifecycleChapterComponent>;
-  let component: LifecycleChapterComponent;
+describe('Component: ErrorsChapterComponent', () => {
+  let fixture: ComponentFixture<ErrorsChapterComponent>;
+  let component: ErrorsChapterComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LifecycleChapterComponent, sduxTestingModule]
+      imports: [ErrorsChapterComponent, sduxTestingModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LifecycleChapterComponent);
+    fixture = TestBed.createComponent(ErrorsChapterComponent);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
@@ -21,9 +21,9 @@ describe('Component: LifecycleChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 5: Lifecycle',
-          id: 'lifecycle',
-          exampleName: 'lifecycle-tutorial-example',
+          title: 'Chapter 7: Errors',
+          id: 'errors',
+          exampleName: 'errors-tutorial-example',
           displayCopyIcon: false,
           languages: [{ name: 'Angular', key: 'angular' }],
           description: jasmine.any(String) as unknown as string
@@ -33,7 +33,15 @@ describe('Component: LifecycleChapterComponent', () => {
     );
   });
 
-  it('returns the generated service files for the chapter example', () => {
+  it('returns the app config file for the chapter example', () => {
+    expect(component.appConfigFile()).toEqual({
+      type: 'appConfig',
+      fileName: 'app.config.ts',
+      source: jasmine.any(String) as unknown as string
+    });
+  });
+
+  it('returns the service and filter files for the chapter example', () => {
     expect(component.serviceFiles()).toEqual([
       {
         type: 'service',
@@ -48,7 +56,7 @@ describe('Component: LifecycleChapterComponent', () => {
     ]);
   });
 
-  it('returns the generated component files for the chapter example', () => {
+  it('returns the component files for the chapter example', () => {
     expect(component.componentFiles()).toEqual([
       {
         type: 'component',

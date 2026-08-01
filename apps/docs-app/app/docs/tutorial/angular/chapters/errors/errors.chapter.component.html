@@ -1,0 +1,262 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section" id="step-23">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 23: Simulate Pipeline Errors</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This chapter keeps the same service-owned <sdux-feature-cell /> and the
+      same character workflow, but now you deliberately push one candidate path
+      into the Error stage. The goal is not to change how add, edit, or delete
+      are requested. The goal is to show what happens when the pipeline rejects
+      those candidates before State can commit.
+    </p>
+
+    <p>
+      The existing pure
+      <span class="code">removeUnknownLastNameFilter</span> still runs first.
+      After that, the service adds a second inline filter that normally returns
+      the candidate unchanged. When the teaching flag is enabled, that inline
+      filter throws intentionally. Because every create, update, and delete
+      candidate flows through the same filter stage, all of those requests keep
+      failing until you explicitly disable the simulated error.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Open <span class="code">example.service.ts</span> and register the
+          pure filter, the intentional throwing filter, and the
+          <span class="code">this.#vault.errors()</span> callback.
+        </li>
+        <li>
+          Keep the error callback observational only: capture the finalized
+          error and immutable snapshot without changing error authority or
+          pipeline control.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          The simulated failure lives in the pipeline, not in the component. The
+          component only triggers normal add, edit, and delete requests.
+        </li>
+        <li>
+          Once the teaching flag is enabled, every later mutation candidate
+          keeps re-entering the same throwing filter until you reset it.
+        </li>
+        <li>
+          The <span class="code">errors()</span> callback runs after the error
+          has been normalized and committed as the finalized Vault error.
+        </li>
+        <li>
+          The callback receives the finalized error plus the immutable
+          <sdux-feature-cell /> snapshot, but it does not mutate either one.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of serviceFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/errors-method"
+            >errors()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/global-error-handler">Global Error Handler</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-24">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 24: Display Global Error State</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Now surface the failure in two separate teaching outputs. First, the
+      component observes the singleton
+      <span class="code">VaultErrorService()</span> so the UI can render the
+      current global Vault error and clear it after acknowledgement. Second, the
+      component renders the serialized output from the service-owned
+      <span class="code">errors()</span> callback so you can see the finalized
+      error and snapshot that were emitted after error commitment.
+    </p>
+
+    <p>
+      Those two flows are related, but they are not the same thing. The global
+      error service is independent of any one <sdux-feature-cell /> and works
+      well for application-level concerns such as monitoring, banners, or shared
+      recovery controls. The emitted error JSON is chapter-specific teaching
+      output from this one fluent API registration.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Open <span class="code">example.component.ts</span> and subscribe to
+          the singleton global error stream.
+        </li>
+        <li>
+          Expose one action that clears the current global error and another
+          action that disarms the simulated throwing filter.
+        </li>
+        <li>
+          Update <span class="code">example.component.html</span> so the page
+          shows the global error banner, the Throw Error or Reset Error action,
+          and the serialized <span class="code">errors()</span> emission.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          <span class="code">VaultErrorService()</span> is a singleton service,
+          not a property of this chapter's <sdux-feature-cell />.
+        </li>
+        <li>
+          Clicking <span class="code">Clear</span> acknowledges the current
+          global error, but it does not disable the simulated throwing filter.
+        </li>
+        <li>
+          Clicking <span class="code">Reset Error</span> disables the filter and
+          clears the global error without sending a new pipeline request.
+        </li>
+        <li>
+          The <span class="code">Error Emission</span> textarea is populated by
+          the <span class="code">errors()</span> callback, not by the global
+          error singleton.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of componentFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+</section>
+
+<section class="section" id="step-25">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 25: Complete Errors Tutorial</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The errors chapter is complete once you can enable the simulated filter
+      failure, watch the global error banner appear, inspect the emitted error
+      snapshot, and then prove that every later add, update, and delete
+      candidate keeps failing while the filter remains enabled.
+    </p>
+
+    <p>
+      That final distinction matters. Clearing the global error acknowledges the
+      current singleton error state, but it does not change why the next
+      candidate will fail. The actual cause is still the enabled throwing filter
+      in the pipeline. Once you reset that filter, the same feature resumes
+      normal CRUD behavior without changing how the component requests work.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Click <span class="code">Throw Error</span> to enable the simulated
+          filter and send a candidate into the Error stage.
+        </li>
+        <li>
+          Try one add, edit, or delete action while the button reads
+          <span class="code">Reset Error</span> and confirm the same pipeline
+          failure keeps reappearing.
+        </li>
+        <li>
+          Click <span class="code">Clear</span> to acknowledge the active global
+          error, then trigger another mutation to confirm the failure is still
+          enabled.
+        </li>
+        <li>
+          Click <span class="code">Reset Error</span> and confirm later
+          mutations succeed again through the normal service-owned boundary.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Errors Flow Summary</div>
+
+      <ul>
+        <li>
+          The tutorial now demonstrates how one throwing filter can stop later
+          candidate commitment without changing the component's CRUD calls.
+        </li>
+        <li>
+          The singleton global error service provides application-level error
+          visibility that is independent of any one <sdux-feature-cell />.
+        </li>
+        <li>
+          The <span class="code">errors()</span> fluent API provides a separate
+          post-finalization observation surface for emitted error details.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section
+  class="tutorial-shortcut"
+  aria-label="Launch the completed errors tutorial example">
+  <div class="tutorial-shortcut-copy">
+    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <h2>Want the finished errors example without these three steps?</h2>
+    <p>
+      If you want the completed errors tutorial, launch the live StackBlitz
+      project and inspect the finished implementation directly.
+    </p>
+  </div>
+
+  @if (stackblitz(); as stackblitz) {
+    <div class="tutorial-shortcut-launcher">
+      <sdux-stackblitz-language-example
+        [example]="stackblitz.example"
+        [lang]="stackblitz.language" />
+    </div>
+  }
+</section>

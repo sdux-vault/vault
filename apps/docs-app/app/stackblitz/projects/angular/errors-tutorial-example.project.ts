@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const filtersAndReducersExampleProject: Project = {
-  title: 'filters-and-reducers-example',
+export const errorsTutorialExampleProject: Project = {
+  title: 'errors-tutorial-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const filtersAndReducersExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "filters-and-reducers-example",
+  "name": "errors-tutorial-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -1026,8 +1026,9 @@ export class ExampleCharacterEditor {
       <p class="eyebrow">Interactive example</p>
       <h2 id="character-example-title">Star Wars character registry</h2>
       <p>
-        Use SDuX Vault state management to select, create, and update characters
-        from an in-memory collection.
+        Use SDuX Vault state management to select, create, update, and delete
+        characters from an in-memory collection while observing simulated
+        pipeline errors.
       </p>
     </div>
   </header>
@@ -1040,6 +1041,18 @@ export class ExampleCharacterEditor {
       [attr.role]="operationFeedback.tone === 'error' ? 'alert' : 'status'"
       aria-live="polite">
       {{ operationFeedback.message }}
+    </div>
+  }
+
+  @if (globalError(); as error) {
+    <div class="feedback error global-error" role="alert" aria-live="assertive">
+      <span>Global Error Response: {{ error.message }}</span>
+      <button
+        type="button"
+        class="button secondary"
+        (click)="clearGlobalError()">
+        Clear
+      </button>
     </div>
   }
 
@@ -1281,104 +1294,96 @@ export class ExampleCharacterEditor {
         </section>
       </div>
     </div>
-    <div class="filter-reducer-output">
+
+    <div class="pipeline-actions">
       <input
-        id="filters-reducers-section-toggle"
+        id="actions-section-toggle"
         class="section-toggle"
         type="checkbox"
-        aria-label="Toggle Filters and Reducers visibility"
+        aria-label="Toggle Actions visibility"
         checked />
       <div class="section-header">
-        <span>Filters and Reducers</span>
+        <span>Actions</span>
         <label
           class="section-chevron"
-          for="filters-reducers-section-toggle"
-          title="Show or hide Filters and Reducers"></label>
+          for="actions-section-toggle"
+          title="Show or hide Actions"></label>
       </div>
 
-      <div class="filter-reducer-content">
-        <div class="tap-column">
-          <input
-            id="filter-output-toggle"
-            class="tap-toggle"
-            type="checkbox"
-            aria-label="Toggle Filter source visibility"
-            checked />
-          <div class="tap-header">
-            <h3>Filter</h3>
-            <label
-              class="tap-chevron"
-              for="filter-output-toggle"
-              title="Show or hide Filter output"></label>
+      <!-- Teaching template: Safe to delete this entire block for read-only or CRUD-only lesson copies. -->
+      <div class="pipeline-content">
+        <div class="action-groups">
+          <!-- Teaching template: Keep this group for null persistence, error, reset, and teardown lessons. -->
+          <div class="action-group">
+            <!-- Teaching point: Errors (ex-004) -->
+            <div class="action-row">
+              <input
+                id="error-description"
+                class="description-toggle"
+                type="checkbox"
+                aria-label="Show Throw Error description" />
+              <div class="button-container">
+                <!-- Teaching point: Errors (ex-004) -->
+                <button
+                  type="button"
+                  class="button danger"
+                  (click)="toggleFilterError()">
+                  {{ isThrowError() ? 'Reset Error' : 'Throw Error' }}
+                </button>
+                <label
+                  class="description-chevron"
+                  for="error-description"
+                  title="Show or hide Throw Error description"></label>
+              </div>
+              <div class="description-container">
+                Arms an inline filter and calls <code>replaceState()</code> with
+                a new Darth Maul candidate. The filter throws before State
+                commitment. After the failure, Reset Error disarms the filter
+                and clears the global error without starting another pipeline
+                request.
+              </div>
+            </div>
           </div>
-          <textarea
-            readonly
-            rows="6"
-            aria-label="Filter source"
-            [value]="editor.filterSource"></textarea>
         </div>
+      </div>
+    </div>
+
+    <div class="tap-output">
+      <input
+        id="results-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Results visibility"
+        checked />
+      <div class="section-header">
+        <span>Results</span>
+        <label
+          class="section-chevron"
+          for="results-section-toggle"
+          title="Show or hide Results"></label>
+      </div>
+
+      <div class="tap-content">
+        <input
+          id="tap-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle pipeline output visibility"
+          checked />
 
         <div class="tap-column">
-          <input
-            id="reducer-one-output-toggle"
-            class="tap-toggle"
-            type="checkbox"
-            aria-label="Toggle Reducer 1 output visibility"
-            checked />
           <div class="tap-header">
-            <h3>Reducer 1</h3>
+            <h3>Error Emission</h3>
             <label
               class="tap-chevron"
-              for="reducer-one-output-toggle"
-              title="Show or hide Reducer 1 output"></label>
+              for="tap-output-toggle"
+              title="Show or hide pipeline output"></label>
           </div>
           <textarea
             readonly
-            rows="6"
-            aria-label="Reducer 1 output"
-            [value]="editor.reducer1Source"></textarea>
-        </div>
-
-        <div class="tap-column">
-          <input
-            id="reducer-two-output-toggle"
-            class="tap-toggle"
-            type="checkbox"
-            aria-label="Toggle Reducer 2 output visibility"
-            checked />
-          <div class="tap-header">
-            <h3>Reducer 2</h3>
-            <label
-              class="tap-chevron"
-              for="reducer-two-output-toggle"
-              title="Show or hide Reducer 2 output"></label>
-          </div>
-          <textarea
-            readonly
-            rows="6"
-            aria-label="Reducer 2 output"
-            [value]="editor.reducer2Source"></textarea>
-        </div>
-
-        <div class="tap-column">
-          <input
-            id="reducer-three-output-toggle"
-            class="tap-toggle"
-            type="checkbox"
-            aria-label="Toggle Reducer 3 output visibility"
-            checked />
-          <div class="tap-header">
-            <h3>Reducer 3</h3>
-            <label
-              class="tap-chevron"
-              for="reducer-three-output-toggle"
-              title="Show or hide Reducer 3 output"></label>
-          </div>
-          <textarea
-            readonly
-            rows="6"
-            aria-label="Reducer 3 output"
-            [value]="editor.reducer3Source"></textarea>
+            rows="8"
+            aria-label="Error Emission output"
+            [value]="errorEmissionJson()"></textarea>
         </div>
       </div>
     </div>
@@ -2227,11 +2232,8 @@ export class ExampleCharacterEditor {
     .tap-content {
       display: grid;
       gap: \$spacing-lg;
-    }
-
-    .state-content,
-    .tap-content {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
     }
 
     .tap-column {
@@ -2322,10 +2324,6 @@ export class ExampleCharacterEditor {
   }
 
   > .feature-cell-controls > .filter-reducer-output {
-    .filter-reducer-content {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
     .tap-column {
       width: 100%;
 
@@ -2368,7 +2366,8 @@ export class ExampleCharacterEditor {
     .stepwise-content {
       display: grid;
       gap: \$spacing-lg;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
     }
 
     .stepwise-column {
@@ -2442,6 +2441,11 @@ export class ExampleCharacterEditor {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
+import {
+  VaultErrorService,
+  VaultErrorShape,
+  VaultPrivateErrorService
+} from '@sdux-vault/shared';
 import { ExampleComponent } from './example.component';
 import { ExampleService } from './example.service';
 import { StarWarsCharacter } from './star-wars-character.shape';
@@ -2561,6 +2565,63 @@ describe('ExampleComponent', () => {
     expect(host.textContent).toContain('Leia');
     expect(host.textContent).toContain('Rebel Alliance');
     expect(host.textContent).not.toContain('No character selected');
+  });
+
+  it('should display and clear an active global error independently from the emitted error output', async () => {
+    const privateErrorService = VaultPrivateErrorService();
+    const globalErrorService = VaultErrorService();
+    const clear = spyOn(globalErrorService, 'clear').and.callThrough();
+    const clearEmittedError = spyOn(
+      service,
+      'clearEmittedError'
+    ).and.callThrough();
+    const error: VaultErrorShape = {
+      message: 'The pipeline failed.',
+      featureCellKey: key,
+      timestamp: Date.now(),
+      raw: new Error('The pipeline failed.')
+    };
+
+    privateErrorService.clear();
+    privateErrorService.setError(error);
+
+    expect(component['globalError']()).toBe(error);
+
+    component['clearGlobalError']();
+
+    expect(clearEmittedError).toHaveBeenCalledOnceWith();
+    expect(clear).toHaveBeenCalledOnceWith();
+    expect(component['globalError']()).toBeNull();
+    expect(component['errorEmissionJson']()).toBe('undefined');
+  });
+
+  it('should arm the simulated filter error and reset the global error separately from the emitted error snapshot', async () => {
+    const globalErrorService = VaultErrorService();
+    const clear = spyOn(globalErrorService, 'clear').and.callThrough();
+
+    await vaultSettled(key);
+
+    component['toggleFilterError']();
+    await vaultSettled(key);
+    fixture.detectChanges();
+
+    expect(service.isThrowError()).toBeTrue();
+    expect(component['globalError']()?.message).toBe(
+      'The intentional character filter error was thrown.'
+    );
+
+    const emittedErrorJson = component['errorEmissionJson']();
+
+    expect(emittedErrorJson).not.toBe('undefined');
+
+    component['toggleFilterError']();
+
+    expect(service.isThrowError()).toBeFalse();
+    expect(clear).toHaveBeenCalledOnceWith();
+    expect(component['globalError']()).toBeNull();
+    expect(component['errorEmissionJson']()).toBe(emittedErrorJson);
+
+    VaultPrivateErrorService().clear();
   });
 
   it('should enter create mode and clear the form', async () => {
@@ -2880,6 +2941,7 @@ describe('ExampleComponent', () => {
   inject,
   signal
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   FormBuilder,
@@ -2888,6 +2950,7 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
+import { VaultErrorService, VaultErrorShape } from '@sdux-vault/shared';
 import {
   EditorMode,
   ExampleCharacterEditor,
@@ -2897,11 +2960,11 @@ import { ExampleService } from './example.service';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
- * Coordinates the add and edit flows layered on top of the tutorial's SDuX-managed collection.
- * The component owns presentation state such as selection, editor mode, form state, and feedback,
- * while the service remains the only place that mutates Feature State.
- * **Architectural Boundary:** The component owns local editor behavior while the service owns
- * FeatureCell access and committed collection State.
+ * Coordinates CRUD interactions and the tutorial's error-observation outputs.
+ * The component owns presentation state such as selection, editor mode, form state, feedback,
+ * and global error display, while the service remains the only place that mutates Feature State.
+ * **Architectural Boundary:** The component owns local UI behavior while the service owns
+ * FeatureCell access, pipeline registration, and committed collection State.
  */
 @Component({
   selector: 'sdux-star-wars-character-example',
@@ -2920,6 +2983,9 @@ export class ExampleComponent {
    * The component never reaches through this service to access the FeatureCell directly.
    */
   readonly #exampleService = inject(ExampleService);
+
+  /** Provides the singleton stream and controls for application-level Vault errors. */
+  readonly #globalErrorService = VaultErrorService();
 
   /** Creates the non-nullable reactive form used by the create and edit flows. */
   readonly #formBuilder = inject(FormBuilder);
@@ -2967,6 +3033,54 @@ export class ExampleComponent {
   /** Watches the reactive collection and selects its first character when initial state arrives. */
   constructor() {
     this.#observeInitialSelection();
+
+    this.#observeGlobalErrors();
+  }
+
+  /** Serializes the finalized error and StateSnapshot observed by the latest error callback. */
+  protected readonly errorEmissionJson = computed(() =>
+    this.editor.serializeErrorEmission(this.#exampleService.emittedError())
+  );
+
+  /** Holds the active application-level Vault error until the user clears it. */
+  protected readonly globalError = signal<VaultErrorShape | null>(null);
+
+  #observeGlobalErrors(): void {
+    this.#globalErrorService.error\$
+      .pipe(takeUntilDestroyed())
+      .subscribe((error: VaultErrorShape | null) => {
+        this.globalError.set(
+          error && this.#globalErrorService.hasError ? error : null
+        );
+      });
+  }
+
+  /**
+   * Clears the active application-level error after the user acknowledges it.
+   * The singleton emits \`null\`, which also removes the error message from the template.
+   * @returns Nothing; the global error service and reactive UI state are cleared.
+   */
+  protected clearGlobalError(): void {
+    this.#exampleService.clearEmittedError();
+    this.#globalErrorService.clear();
+  }
+
+  /** Reflects whether the tutorial's intentional inline-filter failure is enabled. */
+  protected readonly isThrowError = this.#exampleService.isThrowError;
+
+  /**
+   * Arms and executes the intentional filter failure, or resets it after demonstration.
+   * Resetting also clears the application-level error without submitting another State request.
+   * @returns Nothing; the service signal drives the button's next available action.
+   */
+  protected toggleFilterError(): void {
+    if (this.isThrowError()) {
+      this.#exampleService.resetFilterError();
+      this.#globalErrorService.clear();
+      return;
+    }
+
+    this.#exampleService.throwFilterError();
   }
 
   #observeInitialSelection(): void {
@@ -3239,6 +3353,7 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
+import { VaultPrivateErrorService } from '@sdux-vault/shared';
 import { ExampleService } from './example.service';
 import { StarWarsCharacter } from './star-wars-character.shape';
 
@@ -3439,10 +3554,57 @@ describe('ExampleService', () => {
 
     expect(service.state.value()).toEqual([]);
   });
+
+  it('should preserve the current characters and capture the emitted error when the simulated filter throws', async () => {
+    const service = await configureService();
+
+    service.throwFilterError();
+
+    await vaultSettled(key);
+
+    expect(service.isThrowError()).toBeTrue();
+    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
+    expect(service.state.error()?.message).toBe(
+      'The intentional character filter error was thrown.'
+    );
+    expect(service.emittedError()).toEqual({
+      error: service.state.error()!,
+      state: {
+        isLoading: false,
+        value: withDerivedFields(initialCharacters),
+        error: service.state.error()!,
+        hasValue: true
+      }
+    });
+
+    VaultPrivateErrorService().clear();
+  });
+
+  it('should clear the emitted error output and disarm the simulated filter', async () => {
+    const service = await configureService();
+
+    service.throwFilterError();
+    await vaultSettled(key);
+
+    expect(service.emittedError()).toBeDefined();
+
+    service.clearEmittedError();
+    service.resetFilterError();
+
+    expect(service.emittedError()).toBeUndefined();
+    expect(service.isThrowError()).toBeFalse();
+
+    VaultPrivateErrorService().clear();
+  });
 });
 `,
-    'src/example.service.ts': `import { Injectable } from '@angular/core';
+    'src/example.service.ts': `import { Injectable, signal } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import type {
+  StateSnapshotShape,
+  VaultErrorCallback,
+  VaultErrorShape
+} from '@sdux-vault/shared';
 import {
   createCharacterState,
   deriveForceSensitiveDisplay,
@@ -3454,8 +3616,17 @@ import {
 import { removeUnknownLastNameFilter } from './example.filter';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
+/** Inputs observed by the tutorial's finalized error callback. */
+interface ErrorEmission {
+  /** Normalized Vault error committed by the Error stage. */
+  readonly error: VaultErrorShape;
+
+  /** Immutable FeatureCell snapshot associated with the finalized error. */
+  readonly state: Readonly<StateSnapshotShape<readonly StarWarsCharacter[]>>;
+}
+
 /**
- * Owns the character collection and exposes domain operations for the tutorial component.
+ * Owns the character collection and exposes CRUD plus error-teaching operations for the tutorial component.
  * The FeatureCell decorator associates this service with a typed state boundary, while
  * \`injectVault\` provides the reactive state and update methods for that boundary.
  * ️**Architectural Boundary:** Components consume this service instead of accessing the
@@ -3477,7 +3648,7 @@ export class ExampleService {
   readonly state = this.#vault.state;
 
   /**
-   * Initializes the FeatureCell for the add/edit tutorial slice.
+   * Initializes the FeatureCell for the errors tutorial slice.
    */
   constructor() {
     /*
@@ -3493,6 +3664,10 @@ export class ExampleService {
     this.#vault.filters([
       removeUnknownLastNameFilter,
       (characters) => {
+        if (this.#isThrowError()) {
+          throw new Error('The intentional character filter error was thrown.');
+        }
+
         return characters;
       }
     ]);
@@ -3526,7 +3701,84 @@ export class ExampleService {
       deriveFullName
     ]);
 
+    /*
+     * \`.errors()\` registers a
+     * \`VaultErrorCallback<readonly StarWarsCharacter[]>\` that receives the
+     * finalized Vault error and immutable StateSnapshot after error commitment.
+     *
+     * The callback publishes both observational inputs for the tutorial display;
+     * it cannot transform the error, replace state, or alter pipeline control.
+     */
+    this.#vault.errors([this.#captureEmittedError]);
+
     this.#vault.initialize();
+  }
+
+  /** Stores the latest finalized error and associated FeatureCell snapshot. */
+  readonly #emittedError = signal<ErrorEmission | undefined>(undefined);
+
+  /**
+   * Exposes the latest error-callback inputs as a read-only signal for the teaching output.
+   * Consumers can inspect the finalized error and snapshot without influencing either one.
+   */
+  readonly emittedError = this.#emittedError.asReadonly();
+
+  /**
+   * Observes a finalized Vault error after it has been normalized and committed to state.
+   * This VaultErrorCallback records both immutable inputs for the tutorial display and returns
+   * no value, so it cannot transform the error, recover the pipeline, or mutate state.
+   * @param error - Finalized Vault error produced by the Error stage.
+   * @param state - Immutable FeatureCell snapshot at the time of the error.
+   * @returns Nothing; the callback only updates the read-only teaching signal.
+   */
+  readonly #captureEmittedError: VaultErrorCallback<
+    readonly StarWarsCharacter[]
+  > = (error, state) => {
+    this.#emittedError.set({ error, state });
+  };
+
+  /** Clears the latest captured error-emission teaching output. */
+  clearEmittedError(): void {
+    this.#emittedError.set(undefined);
+  }
+
+  /**
+   * Tracks the identity assigned to the next newly created character.
+   * Initialization advances it beyond the largest ID in the initial collection.
+   */
+  #nextCharacterId = 1;
+
+  /** Arms the tutorial's intentional inline-filter failure. */
+  readonly #isThrowError = signal(false);
+
+  /** Exposes whether the intentional filter failure is currently enabled. */
+  readonly isThrowError = this.#isThrowError.asReadonly();
+
+  /**
+   * Disarms the intentional inline-filter failure without starting a pipeline request.
+   * @returns Nothing; subsequent State changes pass through the filter normally.
+   */
+  resetFilterError(): void {
+    this.#isThrowError.set(false);
+  }
+
+  /**
+   * Arms the intentional inline-filter error and submits an uncommitted replacement.
+   * A fresh identity ensures Distinct Until Changed admits every demonstration attempt;
+   * the enabled filter then throws before taps, reducers, persistence, or State commitment.
+   * @returns Nothing; consumers observe the normalized failure through reactive error APIs.
+   */
+  throwFilterError(): void {
+    this.#isThrowError.set(true);
+    this.#vault.replaceState([
+      {
+        id: this.#nextCharacterId++,
+        name: 'Darth',
+        lastName: 'Maul',
+        faction: 'Sith Order',
+        isForceSensitive: true
+      }
+    ]);
   }
 
   /**

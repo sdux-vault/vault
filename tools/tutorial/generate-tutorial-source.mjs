@@ -91,6 +91,17 @@ const sourceGroups = [
     )
   },
   {
+    exportName: 'STAR_WARS_ERRORS_CHARACTERS',
+    sourceDirectory: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/examples/errors'
+    ),
+    outputFile: path.join(
+      projectRoot,
+      'apps/docs-app/app/docs/tutorial/angular/generated/errors.generated.ts'
+    )
+  },
+  {
     exportName: 'INITIAL_SERVICE',
     sourceFile: path.join(
       projectRoot,

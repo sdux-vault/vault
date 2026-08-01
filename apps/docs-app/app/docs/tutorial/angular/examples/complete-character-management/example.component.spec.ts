@@ -684,14 +684,20 @@ describe('ExampleComponent', () => {
 
       privateErrorService.clear();
       await configureComponent();
+      const clearEmittedError = spyOn(
+        service,
+        'clearEmittedError'
+      ).and.callThrough();
       privateErrorService.setError(error);
 
       expect(component['globalError']()).toBe(error);
 
       component['clearGlobalError']();
 
+      expect(clearEmittedError).toHaveBeenCalledOnceWith();
       expect(clear).toHaveBeenCalledOnceWith();
       expect(component['globalError']()).toBeNull();
+      expect(component['errorEmissionJson']()).toBe('undefined');
     });
 
     it('should display and clear the readMeDisplay', async () => {
