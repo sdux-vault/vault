@@ -20,20 +20,15 @@
       The existing pure
       <span class="code">removeUnknownLastNameFilter</span> still runs first.
       After that, the service adds a second inline filter that normally returns
-      the candidate unchanged. When the teaching flag is armed, that inline
+      the candidate unchanged. When the teaching flag is enabled, that inline
       filter throws intentionally. Because every create, update, and delete
       candidate flows through the same filter stage, all of those requests keep
-      failing until you explicitly disarm the simulated error.
+      failing until you explicitly disable the simulated error.
     </p>
 
     <div class="callout callout-action">
       <div class="title">Take Action</div>
       <ol>
-        <li>
-          Open <span class="code">app.config.ts</span> and confirm the example
-          bootstraps the normal Vault runtime before the tutorial service is
-          registered.
-        </li>
         <li>
           Open <span class="code">example.service.ts</span> and register the
           pure filter, the intentional throwing filter, and the
@@ -47,13 +42,6 @@
       </ol>
     </div>
 
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab [label]="'app.config.ts'">
-        <pre
-          class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
-
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
 
@@ -63,8 +51,8 @@
           component only triggers normal add, edit, and delete requests.
         </li>
         <li>
-          Once the teaching flag is armed, every later mutation candidate keeps
-          re-entering the same throwing filter until you reset it.
+          Once the teaching flag is enabled, every later mutation candidate
+          keeps re-entering the same throwing filter until you reset it.
         </li>
         <li>
           The <span class="code">errors()</span> callback runs after the error
@@ -90,7 +78,7 @@
       <div class="title">Explore the Docs</div>
       <ul>
         <li>
-          <a routerLink="/docs/pipeline/api/feature-cell-methods/errors-method"
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/errors-method"
             >errors()</a
           >
         </li>
@@ -158,10 +146,10 @@
         </li>
         <li>
           Clicking <span class="code">Clear</span> acknowledges the current
-          global error, but it does not disarm the simulated throwing filter.
+          global error, but it does not disable the simulated throwing filter.
         </li>
         <li>
-          Clicking <span class="code">Reset Error</span> disarms the filter and
+          Clicking <span class="code">Reset Error</span> disables the filter and
           clears the global error without sending a new pipeline request.
         </li>
         <li>
@@ -193,16 +181,16 @@
 
   <div class="section-body">
     <p>
-      The errors chapter is complete once you can arm the simulated filter
+      The errors chapter is complete once you can enable the simulated filter
       failure, watch the global error banner appear, inspect the emitted error
       snapshot, and then prove that every later add, update, and delete
-      candidate keeps failing while the filter remains armed.
+      candidate keeps failing while the filter remains enabled.
     </p>
 
     <p>
       That final distinction matters. Clearing the global error acknowledges the
       current singleton error state, but it does not change why the next
-      candidate will fail. The actual cause is still the armed throwing filter
+      candidate will fail. The actual cause is still the enabled throwing filter
       in the pipeline. Once you reset that filter, the same feature resumes
       normal CRUD behavior without changing how the component requests work.
     </p>
@@ -211,7 +199,7 @@
       <div class="title">Take Action</div>
       <ol>
         <li>
-          Click <span class="code">Throw Error</span> to arm the simulated
+          Click <span class="code">Throw Error</span> to enable the simulated
           filter and send a candidate into the Error stage.
         </li>
         <li>
@@ -222,7 +210,7 @@
         <li>
           Click <span class="code">Clear</span> to acknowledge the active global
           error, then trigger another mutation to confirm the failure is still
-          armed.
+          enabled.
         </li>
         <li>
           Click <span class="code">Reset Error</span> and confirm later

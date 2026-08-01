@@ -130,7 +130,7 @@ export class ExampleComponent {
     this.#globalErrorService.clear();
   }
 
-  /** Reflects whether the tutorial's intentional inline-filter failure is armed. */
+  /** Reflects whether the tutorial's intentional inline-filter failure is enabled. */
   protected readonly isThrowError = this.#exampleService.isThrowError;
 
   /**

@@ -53,8 +53,7 @@ export class ErrorsChapterComponent {
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.ServiceSpec
-    ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Filter)
+    )
   ]);
 
   readonly componentFiles = computed(() => [
@@ -62,10 +61,10 @@ export class ErrorsChapterComponent {
       this.#characters,
       ExampleFileTypes.Component
     ),
+    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.ComponentSpec
-    ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html)
+    )
   ]);
 }

@@ -3487,7 +3487,7 @@ export class ExampleService {
      * This pure function runs before reducers and returns a new candidate
      * collection without characters whose last name is exactly \`unknown\`.
      * The inline second filter normally returns that collection unchanged. When
-     * the teaching flag is armed, it throws deliberately so the example can show
+     * the teaching flag is enabled, it throws deliberately so the example can show
      * pipeline error normalization without allowing the candidate to commit.
      */
     this.#vault.filters([

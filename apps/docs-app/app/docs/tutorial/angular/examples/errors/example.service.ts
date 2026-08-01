@@ -58,7 +58,7 @@ export class ExampleService {
      * This pure function runs before reducers and returns a new candidate
      * collection without characters whose last name is exactly `unknown`.
      * The inline second filter normally returns that collection unchanged. When
-     * the teaching flag is armed, it throws deliberately so the example can show
+     * the teaching flag is enabled, it throws deliberately so the example can show
      * pipeline error normalization without allowing the candidate to commit.
      */
     this.#vault.filters([
@@ -151,7 +151,7 @@ export class ExampleService {
   /** Arms the tutorial's intentional inline-filter failure. */
   readonly #isThrowError = signal(false);
 
-  /** Exposes whether the intentional filter failure is currently armed. */
+  /** Exposes whether the intentional filter failure is currently enabled. */
   readonly isThrowError = this.#isThrowError.asReadonly();
 
   /**
@@ -165,7 +165,7 @@ export class ExampleService {
   /**
    * Arms the intentional inline-filter error and submits an uncommitted replacement.
    * A fresh identity ensures Distinct Until Changed admits every demonstration attempt;
-   * the armed filter then throws before taps, reducers, persistence, or State commitment.
+   * the enabled filter then throws before taps, reducers, persistence, or State commitment.
    * @returns Nothing; consumers observe the normalized failure through reactive error APIs.
    */
   throwFilterError(): void {

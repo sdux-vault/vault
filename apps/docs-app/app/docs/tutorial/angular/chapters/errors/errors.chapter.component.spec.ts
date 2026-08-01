@@ -52,11 +52,6 @@ describe('Component: ErrorsChapterComponent', () => {
         type: 'serviceSpec',
         fileName: 'example.service.spec.ts',
         source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'filter',
-        fileName: 'example.filter.ts',
-        source: jasmine.any(String) as unknown as string
       }
     ]);
   });
@@ -69,13 +64,13 @@ describe('Component: ErrorsChapterComponent', () => {
         source: jasmine.any(String) as unknown as string
       },
       {
-        type: 'componentSpec',
-        fileName: 'example.component.spec.ts',
+        type: 'html',
+        fileName: 'example.component.html',
         source: jasmine.any(String) as unknown as string
       },
       {
-        type: 'html',
-        fileName: 'example.component.html',
+        type: 'componentSpec',
+        fileName: 'example.component.spec.ts',
         source: jasmine.any(String) as unknown as string
       }
     ]);
