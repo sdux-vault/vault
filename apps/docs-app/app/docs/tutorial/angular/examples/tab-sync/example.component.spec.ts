@@ -73,6 +73,18 @@ describe('ExampleComponent', () => {
     expect(component['selectedCharacter']()).toBeNull();
   });
 
+  it('should open the current example in a new tab for Tab Sync', () => {
+    const openSpy = spyOn(window, 'open').and.returnValue(null);
+
+    component['viewTabSync']();
+
+    expect(openSpy).toHaveBeenCalledOnceWith(
+      window.location.href,
+      '_blank',
+      'noopener'
+    );
+  });
+
   it('should select a known character id and resolve the selected character', async () => {
     await vaultSettled(key);
     component['selectCharacter']('2');
