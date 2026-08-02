@@ -26,6 +26,7 @@ export const STACKBLITZ_EXAMPLE_URLS = [
   '/examples/angular/observable',
   '/examples/angular/promise',
   '/examples/angular/replace',
+  '/examples/angular/state-introspection-tutorial',
   '/examples/angular/tab-sync',
   '/examples/bun/http-resource',
   '/examples/bun/promise',

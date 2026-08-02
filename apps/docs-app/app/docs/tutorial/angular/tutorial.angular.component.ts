@@ -38,6 +38,8 @@ import { LifecycleChapterComponent } from './chapters/lifecycle/lifecycle.chapte
 import { LifecycleService } from './chapters/lifecycle/services/lifecycle.service';
 import { EncryptAndPersistChapterComponent } from './chapters/encrypt-and-persist/encrypt-and-persist.chapter.component';
 import { EncryptAndPersistService } from './chapters/encrypt-and-persist/services/encrypt-and-persist.service';
+import { StateIntrospectionChapterComponent } from './chapters/state-introspection/state-introspection.chapter.component';
+import { StateIntrospectionService } from './chapters/state-introspection/services/state-introspection.service';
 
 @Component({
   selector: 'sdux-angular-tutorial',
@@ -59,7 +61,8 @@ import { EncryptAndPersistService } from './chapters/encrypt-and-persist/service
     FiltersAndReducersChapterComponent,
     ErrorsChapterComponent,
     DelayChapterComponent,
-    EncryptAndPersistChapterComponent
+    EncryptAndPersistChapterComponent,
+    StateIntrospectionChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -77,6 +80,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly #errorsService = inject(ErrorsService);
   readonly #delayService = inject(DelayService);
   readonly #encryptAndPersistService = inject(EncryptAndPersistService);
+  readonly #stateIntrospectionService = inject(StateIntrospectionService);
 
   readonly #expandedChapterGroups = signal<Record<number, boolean>>({
     1: true,
@@ -88,7 +92,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     7: false,
     8: false,
     9: false,
-    10: false
+    10: false,
+    11: false
   });
 
   readonly #expandedChapters = signal<Record<number, boolean>>({
@@ -101,7 +106,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     7: false,
     8: false,
     9: false,
-    10: false
+    10: false,
+    11: false
   });
 
   constructor() {
@@ -287,6 +293,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     this.#errorsService.chapters(),
     this.#asyncInputService.chapters(),
     this.#delayService.chapters(),
-    this.#encryptAndPersistService.chapters()
+    this.#encryptAndPersistService.chapters(),
+    this.#stateIntrospectionService.chapters()
   ];
 }
