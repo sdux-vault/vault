@@ -25,10 +25,10 @@ import {
   // withStepwiseResolveBehavior
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
-// import {
-//   withTabSyncController,
-//   withTabSyncStateBehavior
-// } from '@sdux-vault/core';
+import {
+  withTabSyncController,
+  withTabSyncStateBehavior
+} from '@sdux-vault/core';
 import {
   ANALYTICS_ENABLED,
   SDUX_BRAND_NAME,
@@ -205,18 +205,18 @@ export const appConfig: ApplicationConfig = {
         initialState: STAR_WARS_CHARACTERS
       },
       [
-        withArrayAppendMergeBehavior
+        withArrayAppendMergeBehavior,
         // withAes256EncryptBehavior,
         // withSessionStoragePersistBehavior
         // withStepwiseResolveBehavior,
         // withStepwiseFilterBehavior,
         // withStepwiseReducerBehavior,
-        // withTabSyncStateBehavior
+        withTabSyncStateBehavior
       ],
       [
         // withDelayController
-        // withStepwiseController,
-        // withTabSyncController
+        //  withStepwiseController,
+        withTabSyncController
       ]
     )
   ]

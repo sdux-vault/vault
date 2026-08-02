@@ -852,6 +852,59 @@
           <sdux-state-introspection-chapter></sdux-state-introspection-chapter>
         </div>
       </div>
+      <section
+        class="chapter-break"
+        id="chapter-12"
+        aria-labelledby="chapter-12-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 12</p>
+          <div class="chapter-header">
+            <h2 id="chapter-12-title">Tab Sync</h2>
+            <button
+              type="button"
+              class="chapter-toggle"
+              aria-controls="chapter-12-content"
+              [attr.aria-expanded]="isChapterExpanded(12)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'Tab Sync',
+                  isChapterExpanded(12)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'Tab Sync',
+                  isChapterExpanded(12)
+                )
+              "
+              (click)="toggleTutorialChapter(12)">
+              <mat-icon aria-hidden="true">{{
+                isChapterExpanded(12)
+                  ? 'keyboard_arrow_down'
+                  : 'keyboard_arrow_right'
+              }}</mat-icon>
+            </button>
+          </div>
+          <p>
+            You will configure Tab Sync once, open a second browser tab, and
+            observe finalized
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            State stay aligned while each tab keeps its own form and
+            presentation state.
+          </p>
+        </div>
+      </section>
+      <div
+        id="chapter-12-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(12)"
+        [attr.aria-hidden]="!isChapterExpanded(12)"
+        [attr.inert]="!isChapterExpanded(12) ? '' : null">
+        <div class="chapter-content-inner">
+          <sdux-tab-sync-chapter></sdux-tab-sync-chapter>
+        </div>
+      </div>
       <sdux-pipeline-related-topics></sdux-pipeline-related-topics>
     </main>
   </div>

@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const filtersAndReducersTutorialExampleProject: Project = {
-  title: 'filters-and-reducers-tutorial-example',
+export const tabSyncTutorialExampleProject: Project = {
+  title: 'tab-sync-tutorial-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const filtersAndReducersTutorialExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "filters-and-reducers-tutorial-example",
+  "name": "tab-sync-tutorial-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -86,6 +86,10 @@ import {
 } from '@angular/core';
 import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
+import {
+  withTabSyncController,
+  withTabSyncStateBehavior
+} from '@sdux-vault/core';
 import { ExampleService } from './example.service';
 import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
 
@@ -126,7 +130,23 @@ export const appConfig: ApplicationConfig = {
          * \`mergeState()\` appends the incoming one-item character array to the current
          * collection instead of replacing the entire FeatureCell value.
          */
-        withArrayAppendMergeBehavior
+        withArrayAppendMergeBehavior,
+
+        /**
+         * Extends this FeatureCell's State behavior with opt-in browser-tab
+         * synchronization. Finalized local snapshots are shared with matching
+         * peer tabs, while snapshots received from a peer update this FeatureCell's
+         * reactive State so the example presents the same character collection.
+         */
+        withTabSyncStateBehavior
+      ],
+      [
+        /**
+         * Coordinates Tab Sync startup so a newly opened tab can adopt an
+         * existing peer snapshot before continuing with its local State. Register
+         * this controller with the State behavior to complete the tab-sync pair.
+         */
+        withTabSyncController
       ]
     )
   ]
@@ -1281,104 +1301,52 @@ export class ExampleCharacterEditor {
         </section>
       </div>
     </div>
-    <div class="filter-reducer-output">
+
+    <!-- Teaching template: Safe to remove this entire section until you teach cross-tab synchronization. -->
+    <div class="tab-sync-operator">
       <input
-        id="filters-reducers-section-toggle"
+        id="tab-sync-operator-toggle"
         class="section-toggle"
         type="checkbox"
-        aria-label="Toggle Filters and Reducers visibility"
+        aria-label="Toggle Tab Sync Controller and Behavior visibility"
         checked />
       <div class="section-header">
-        <span>Filters and Reducers</span>
+        <span>Tab Sync Controller and Behavior</span>
         <label
           class="section-chevron"
-          for="filters-reducers-section-toggle"
-          title="Show or hide Filters and Reducers"></label>
+          for="tab-sync-operator-toggle"
+          title="Show or hide Tab Sync Controller and Behavior"></label>
       </div>
 
-      <div class="filter-reducer-content">
-        <div class="tap-column">
+      <div class="operator-actions">
+        <div class="action-row tab-sync-action-row">
           <input
-            id="filter-output-toggle"
-            class="tap-toggle"
+            id="tab-sync-description"
+            class="description-toggle"
             type="checkbox"
-            aria-label="Toggle Filter source visibility"
-            checked />
-          <div class="tap-header">
-            <h3>Filter</h3>
+            aria-label="Show View Tab Sync description" />
+          <div class="button-container">
+            <!-- Teaching point: Tab Sync (ex-029) -->
+            <button type="button" class="button" (click)="viewTabSync()">
+              View Tab Sync
+            </button>
             <label
-              class="tap-chevron"
-              for="filter-output-toggle"
-              title="Show or hide Filter output"></label>
+              class="description-chevron"
+              for="tab-sync-description"
+              title="Show or hide View Tab Sync description"></label>
           </div>
-          <textarea
-            readonly
-            rows="6"
-            aria-label="Filter source"
-            [value]="editor.filterSource"></textarea>
-        </div>
-
-        <div class="tap-column">
-          <input
-            id="reducer-one-output-toggle"
-            class="tap-toggle"
-            type="checkbox"
-            aria-label="Toggle Reducer 1 output visibility"
-            checked />
-          <div class="tap-header">
-            <h3>Reducer 1</h3>
-            <label
-              class="tap-chevron"
-              for="reducer-one-output-toggle"
-              title="Show or hide Reducer 1 output"></label>
+          <div class="description-container">
+            Opens this example in another tab to demonstrate initial state
+            negotiation and ongoing synchronization through
+            withTabSyncController and withTabSyncBehavior. Successful Pipeline
+            executions synchronize committed FeatureCell State values and shared
+            resets; failed Pipeline executions leave the peer tab unchanged.
+            Loading status, Error, Controller outcomes, form values, and other
+            page interactions remain local to the tab where they occur. A new
+            tab receives the last committed State with loading status set to
+            false and Error set to null, without inheriting transient metadata
+            from its peer.
           </div>
-          <textarea
-            readonly
-            rows="6"
-            aria-label="Reducer 1 output"
-            [value]="editor.reducer1Source"></textarea>
-        </div>
-
-        <div class="tap-column">
-          <input
-            id="reducer-two-output-toggle"
-            class="tap-toggle"
-            type="checkbox"
-            aria-label="Toggle Reducer 2 output visibility"
-            checked />
-          <div class="tap-header">
-            <h3>Reducer 2</h3>
-            <label
-              class="tap-chevron"
-              for="reducer-two-output-toggle"
-              title="Show or hide Reducer 2 output"></label>
-          </div>
-          <textarea
-            readonly
-            rows="6"
-            aria-label="Reducer 2 output"
-            [value]="editor.reducer2Source"></textarea>
-        </div>
-
-        <div class="tap-column">
-          <input
-            id="reducer-three-output-toggle"
-            class="tap-toggle"
-            type="checkbox"
-            aria-label="Toggle Reducer 3 output visibility"
-            checked />
-          <div class="tap-header">
-            <h3>Reducer 3</h3>
-            <label
-              class="tap-chevron"
-              for="reducer-three-output-toggle"
-              title="Show or hide Reducer 3 output"></label>
-          </div>
-          <textarea
-            readonly
-            rows="6"
-            aria-label="Reducer 3 output"
-            [value]="editor.reducer3Source"></textarea>
         </div>
       </div>
     </div>
@@ -2962,6 +2930,18 @@ export class ExampleComponent {
   /** Watches the reactive collection and selects its first character when initial state arrives. */
   constructor() {
     this.#observeInitialSelection();
+  }
+
+  /**
+   * Opens the current example URL in a new browser tab for a Tab Sync demonstration.
+   * The direct click preserves browser popup permissions while \`noopener\` isolates tab contexts.
+   * @returns Nothing; opening the tab is delegated to the browser when a window is available.
+   */
+  protected viewTabSync(): void {
+    /* istanbul ignore else -- This Angular component runs only in a browser. */
+    if (typeof window !== 'undefined') {
+      window.open(window.location.href, '_blank', 'noopener');
+    }
   }
 
   /**

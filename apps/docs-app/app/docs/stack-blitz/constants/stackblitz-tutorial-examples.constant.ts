@@ -97,6 +97,14 @@ export function createTutorialExampleGroups() {
           displayCopyIcon: false,
           description: `Demonstrates the completed <strong>State Introspection</strong> tutorial example — a standalone component exposes raw StateSnapshot and StateSnapshot$ values, observes Before Taps and After Taps, renders finalized State Emission, and captures an Initial State baseline through a service-owned FeatureCell boundary. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
+        },
+        {
+          title: 'Chapter 12: Tab Sync',
+          id: 'tab-sync-tutorial',
+          exampleName: 'tab-sync-tutorial-example',
+          displayCopyIcon: false,
+          description: `Demonstrates the completed <strong>Tab Sync</strong> tutorial example — a standalone component registers the Tab Sync State behavior and controller, opens a second tab, and keeps finalized FeatureCell State values aligned while forms, selection, loading, errors, and other page interactions remain local. Launch the live example directly in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
         }
       ] satisfies StackBlitzExampleShape[]
     }

@@ -1,0 +1,249 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section" id="step-45">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 45: Configure Tab Sync</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Tab Sync keeps one <sdux-feature-cell /> State value aligned across
+      browser tabs that share the same origin. You configure the complete
+      feature in <span class="code">app.config.ts</span>: the State behavior
+      shares finalized values, and the controller coordinates the initial State
+      when you open another tab.
+    </p>
+
+    <p>
+      Register both on the same <sdux-feature-cell />. The behavior belongs in
+      the behaviors array and the controller belongs in the controllers array
+      passed to
+      <span class="code"
+        ><a href="/docs/references/functions/provide-feature-cell"
+          >provideFeatureCell</a
+        >()</span
+      >. Nothing changes in the service or component to make synchronization
+      work.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>Open the <span class="code">app.config.ts</span> file.</li>
+        <li>
+          Import
+          <span class="code"
+            ><a
+              routerLink="/docs/references/behaviors/with-tab-sync-state-behavior"
+              >withTabSyncStateBehavior</a
+            ></span
+          >
+          and
+          <span class="code"
+            ><a
+              routerLink="/docs/references/controllers/with-tab-sync-controller"
+              >withTabSyncController</a
+            ></span
+          >
+          from
+          <span class="code"><sdux-package-name [package]="'core'" /></span>.
+        </li>
+        <li>
+          Add the behavior to the behavior list and the controller to the
+          controller list for the same <sdux-feature-cell />.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          The behavior and controller are a required pair for this
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+        <li>
+          The configuration owns cross-tab State coordination; the service and
+          component stay focused on their existing responsibilities.
+        </li>
+        <li>
+          Only finalized
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          State is shared with a peer tab.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      <sdux-example-viewer-tab [label]="'app.config.ts'">
+        <pre
+          class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
+      </sdux-example-viewer-tab>
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-warning">
+      <div class="title">Pro Feature</div>
+      <p>
+        Tab Sync is a Pro feature.
+        <a href="/sdux/vault">Explore Pro</a> for production-ready access and
+        guidance.
+      </p>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/tab-sync"
+            >Tab Sync Behavior</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/controllers/with-tab-sync-controller"
+            >Tab Sync Controller</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-46">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 46: View Tab Sync</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Select <span class="code">View Tab Sync</span> to open this example in a
+      new browser tab. Make a character change in either tab and watch the
+      committed collection update in the other tab. The button only opens the
+      second tab; the registered behavior and controller perform all State
+      synchronization.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Select <span class="code">View Tab Sync</span> to open a second tab.
+        </li>
+        <li>
+          Add, edit, delete, or reset a character collection in either tab.
+        </li>
+        <li>
+          Return to the other tab and inspect the synchronized character State.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Committed
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          State values are preserved and updated between tabs, including shared
+          resets.
+        </li>
+        <li>
+          Forms, selection, loading, errors, and other page interactions remain
+          local to the tab where they occur.
+        </li>
+        <li>A failed pipeline attempt does not update a peer tab.</li>
+        <li>
+          The new tab receives State without inheriting transient loading or
+          error metadata from its peer.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of componentFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+</section>
+
+<section class="section" id="step-47">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 47: Complete Tab Sync Tutorial</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Your Tab Sync example is complete when the behavior and controller are
+      registered together in <span class="code">app.config.ts</span>, and the
+      View Tab Sync action lets you observe committed character State moving
+      between tabs. The existing service and component continue to own their
+      original responsibilities.
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Cross-tab coordination is structural configuration, not component or
+          service logic.
+        </li>
+        <li>
+          Each tab keeps its local form and presentation state while sharing the
+          finalized
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          value.
+        </li>
+        <li>
+          The same
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> key
+          identifies the State that participates in synchronization.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of chapterFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+</section>
+
+<section
+  class="tutorial-shortcut"
+  aria-label="Launch the completed tab sync tutorial example">
+  <div class="tutorial-shortcut-copy">
+    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <h2>Want the finished Tab Sync example?</h2>
+  </div>
+
+  @if (stackblitz(); as stackblitz) {
+    <div class="tutorial-shortcut-launcher">
+      <p>
+        If you want the completed Tab Sync tutorial, launch the live StackBlitz
+        project and inspect the finished implementation directly.
+      </p>
+      <sdux-stackblitz-language-example
+        [example]="stackblitz.example"
+        [lang]="stackblitz.language" />
+    </div>
+  }
+  <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
+    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
+</section>
