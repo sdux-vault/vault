@@ -28,6 +28,7 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<string, () => Promise<unknown>> 
   'angular/replace-example': () => import('../../../stackblitz/projects/angular/replace-example.project'),
   'angular/state-introspection-tutorial-example': () => import('../../../stackblitz/projects/angular/state-introspection-tutorial-example.project'),
   'angular/tab-sync-example': () => import('../../../stackblitz/projects/angular/tab-sync-example.project'),
+  'angular/tab-sync-tutorial-example': () => import('../../../stackblitz/projects/angular/tab-sync-tutorial-example.project'),
   'bun/http-resource-example': () => import('../../../stackblitz/projects/bun/http-resource-example.project'),
   'bun/promise-example': () => import('../../../stackblitz/projects/bun/promise-example.project'),
   'bun/replace-example': () => import('../../../stackblitz/projects/bun/replace-example.project'),

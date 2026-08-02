@@ -100,7 +100,10 @@ export const routes: Routes = [
           // import('./docs/tutorial/angular/examples/encrypt-and-persist/example.component').then(
           //   (m) => m.ExampleComponent
           // )
-          import('./docs/tutorial/angular/examples/state-introspection/example.component').then(
+          // import('./docs/tutorial/angular/examples/state-introspection/example.component').then(
+          //   (m) => m.ExampleComponent
+          // )
+          import('./docs/tutorial/angular/examples/tab-sync/example.component').then(
             (m) => m.ExampleComponent
           )
         // import('./docs/tutorial/angular/examples/errors/example.component').then(

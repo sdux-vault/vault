@@ -29,7 +29,7 @@
 | HTTP Resource                              | ex-026 | ✅    | ✅      | ✅          |
 | Distinct Until Changed                     | ex-027 | ✅    | ✅      |
 | Distinct Until Changed comparison function | ex-028 | ✅    | ✅      |
-| Tab Sync                                   | ex-029 | ✅    | ✅      |
+| Tab Sync                                   | ex-029 | ✅    | ✅      | ✅          |
 | Before Taps                                | ex-031 | ✅    | ✅      | ✅          |
 | After Taps                                 | ex-032 | ✅    | ✅      | ✅          |
 | Delay                                      | ex-033 | ✅    | ✅      | ✅          |

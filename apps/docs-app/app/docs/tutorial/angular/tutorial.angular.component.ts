@@ -40,6 +40,8 @@ import { EncryptAndPersistChapterComponent } from './chapters/encrypt-and-persis
 import { EncryptAndPersistService } from './chapters/encrypt-and-persist/services/encrypt-and-persist.service';
 import { StateIntrospectionChapterComponent } from './chapters/state-introspection/state-introspection.chapter.component';
 import { StateIntrospectionService } from './chapters/state-introspection/services/state-introspection.service';
+import { TabSyncChapterComponent } from './chapters/tab-sync/tab-sync.chapter.component';
+import { TabSyncService } from './chapters/tab-sync/services/tab-sync.service';
 
 @Component({
   selector: 'sdux-angular-tutorial',
@@ -62,7 +64,8 @@ import { StateIntrospectionService } from './chapters/state-introspection/servic
     ErrorsChapterComponent,
     DelayChapterComponent,
     EncryptAndPersistChapterComponent,
-    StateIntrospectionChapterComponent
+    StateIntrospectionChapterComponent,
+    TabSyncChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -81,6 +84,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly #delayService = inject(DelayService);
   readonly #encryptAndPersistService = inject(EncryptAndPersistService);
   readonly #stateIntrospectionService = inject(StateIntrospectionService);
+  readonly #tabSyncService = inject(TabSyncService);
 
   readonly #expandedChapterGroups = signal<Record<number, boolean>>({
     1: true,
@@ -93,7 +97,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     8: false,
     9: false,
     10: false,
-    11: false
+    11: false,
+    12: false
   });
 
   readonly #expandedChapters = signal<Record<number, boolean>>({
@@ -107,7 +112,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     8: false,
     9: false,
     10: false,
-    11: false
+    11: false,
+    12: false
   });
 
   constructor() {
@@ -294,6 +300,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     this.#asyncInputService.chapters(),
     this.#delayService.chapters(),
     this.#encryptAndPersistService.chapters(),
-    this.#stateIntrospectionService.chapters()
+    this.#stateIntrospectionService.chapters(),
+    this.#tabSyncService.chapters()
   ];
 }

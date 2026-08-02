@@ -468,6 +468,7 @@ export const SITEMAP_URLS = [
   '/examples/angular/replace',
   '/examples/angular/state-introspection-tutorial',
   '/examples/angular/tab-sync',
+  '/examples/angular/tab-sync-tutorial',
   '/examples/bun/http-resource',
   '/examples/bun/promise',
   '/examples/bun/replace',
