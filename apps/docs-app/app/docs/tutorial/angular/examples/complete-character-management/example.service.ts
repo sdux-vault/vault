@@ -261,9 +261,8 @@ export class ExampleService {
     this.#stepwiseReducerDecisions = decisions;
     this.#isStepwiseReducerPending.set(true);
   };
-  /** Teaching Point: ex-031 */
-  /** Stores the latest filtered collection observed immediately before reducer execution. */
 
+  /** Stores the latest filtered collection observed immediately before reducer execution. */
   /** Teaching Point: ex-031 */
   readonly #beforeTapInput = signal<StarWarsCharacter[] | undefined>(undefined);
 

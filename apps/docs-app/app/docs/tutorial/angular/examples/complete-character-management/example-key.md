@@ -14,15 +14,15 @@
 | Create / Update                            | ex-010 | ✅    | ✅ ✅   | ✅          |
 | Global Error                               | ex-011 | ✅    | ✅      | ✅          |
 | Initial State                              | ex-012 | ✅    | ✅      | ✅          |
-| Raw StateSnapshot                          | ex-013 | ✅    | ✅      |
-| Raw StateSnapshot$                         | ex-014 | ✅    | ✅      |
+| Raw StateSnapshot                          | ex-013 | ✅    | ✅      | ✅          |
+| Raw StateSnapshot$                         | ex-014 | ✅    | ✅      | ✅          |
 | Filter                                     | ex-016 | ✅    | ✅      | ✅          |
 | Reducer 1                                  | ex-017 | ✅    | ✅      | ✅          |
 | Reducer 2                                  | ex-018 | ✅    | ✅      | ✅          |
 | Reducer 3                                  | ex-019 | ✅    | ✅      | ✅          |
 | Persist Null                               | ex-020 | ✅    | ✅      | ✅          |
 | Reset                                      | ex-021 | ✅    | ✅      | ✅          |
-| Restore                                    | ex-022 | ✅    | ✅      |
+| Restore                                    | ex-022 | ✅    | ✅      | ✅          |
 | Hydration                                  | ex-023 | ✅    | ✅      | ✅          |
 | Promise                                    | ex-024 | ✅    | ✅      | ✅          |
 | Observable                                 | ex-025 | ✅    | ✅      | ✅          |
@@ -30,11 +30,11 @@
 | Distinct Until Changed                     | ex-027 | ✅    | ✅      |
 | Distinct Until Changed comparison function | ex-028 | ✅    | ✅      |
 | Tab Sync                                   | ex-029 | ✅    | ✅      |
-| Before Taps                                | ex-031 | ✅    | ✅      |
-| After Taps                                 | ex-032 | ✅    | ✅      |
+| Before Taps                                | ex-031 | ✅    | ✅      | ✅          |
+| After Taps                                 | ex-032 | ✅    | ✅      | ✅          |
 | Delay                                      | ex-033 | ✅    | ✅      | ✅          |
 | Encryption & Persist                       | ex-034 | ✅    | ✅      | ✅          |
-| State Emission                             | ex-035 | ✅    | ✅      |
+| State Emission                             | ex-035 | ✅    | ✅      | ✅          |
 | Error Emission                             | ex-036 | ✅    | ✅      | ✅          |
 | Stepwise Resolve                           | ex-038 | ✅    | ✅      |
 | Stepwise Filter                            | ex-039 | ✅    | ✅      |
@@ -88,7 +88,7 @@
 24. `ex-033` Delay
 25. `ex-034` Encryption & Persist
 
-### State Introspection
+### State Introspection ✅
 
 26. `ex-013` Raw StateSnapshot
 27. `ex-014` Raw StateSnapshot$

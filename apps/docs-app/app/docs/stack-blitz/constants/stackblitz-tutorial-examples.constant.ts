@@ -89,6 +89,14 @@ export function createTutorialExampleGroups() {
           displayCopyIcon: false,
           description: `Demonstrates the completed <strong>Encrypt and Persist</strong> tutorial example — a standalone component encrypts finalized FeatureCell state with AES-256-GCM, persists the encrypted envelope in tab-scoped session storage, and observes simulated Filter-stage failures through both the global error service and the fluent API <strong>errors()</strong> callback. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
+        },
+        {
+          title: 'Chapter 11: State Introspection',
+          id: 'state-introspection-tutorial',
+          exampleName: 'state-introspection-tutorial-example',
+          displayCopyIcon: false,
+          description: `Demonstrates the completed <strong>State Introspection</strong> tutorial example — a standalone component exposes raw StateSnapshot and StateSnapshot$ values, observes Before Taps and After Taps, renders finalized State Emission, and captures an Initial State baseline through a service-owned FeatureCell boundary. Launch the live example directly in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
         }
       ] satisfies StackBlitzExampleShape[]
     }
