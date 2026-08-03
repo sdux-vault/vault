@@ -31,4 +31,26 @@ export const PipelineProvideFeatureCell = provideFeatureCell(
   [withTabSyncController]
 );
 
+// const tutorialExampleFeatureCell = provideFeatureCell(
+//   ExampleService,
+//   {
+//     key: 'star-wars-character',
+//     initialState: STAR_WARS_CHARACTERS
+//   },
+//   [
+//     withArrayAppendMergeBehavior,
+//     // withAes256EncryptBehavior,
+//     // withSessionStoragePersistBehavior
+//     withStepwiseResolveBehavior,
+//     withStepwiseFilterBehavior,
+//     withStepwiseReducerBehavior
+//     // withTabSyncStateBehavior
+//   ],
+//   [
+//     // withDelayController
+//     withStepwiseController
+//     // withTabSyncController
+//   ]
+// )
+
 export const FeatureCellInvocations: Provider[] = [PipelineProvideFeatureCell];

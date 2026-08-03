@@ -14,21 +14,7 @@ import {
   MatFormFieldDefaultOptions
 } from '@angular/material/form-field';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
-import {
-  // withAes256EncryptBehavior,
-  withArrayAppendMergeBehavior,
-  // withDelayController
-  // withSessionStoragePersistBehavior
-  withStepwiseController,
-  withStepwiseFilterBehavior,
-  withStepwiseReducerBehavior,
-  withStepwiseResolveBehavior
-} from '@sdux-vault/addons';
-import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
-import {} from // withTabSyncController,
-
-// withTabSyncStateBehavior
-'@sdux-vault/core';
+import { provideVault } from '@sdux-vault/angular';
 import {
   ANALYTICS_ENABLED,
   SDUX_BRAND_NAME,
@@ -48,8 +34,6 @@ import { PIPELINE_BUILDER_BEHAVIOR_TOKEN } from './builder/tokens/pipeline-build
 import { PIPELINE_BUILDER_STAGE_TOKEN } from './builder/tokens/pipeline-builder-stages.token';
 import { FeatureCellInvocations } from './cells/feature-cells';
 import { SduxHttpClientInterceptor } from './dashboard/utils/sdux-http-client.interceptor';
-import { ExampleService } from './docs/tutorial/angular/examples/complete-character-management/example.service';
-import { STAR_WARS_CHARACTERS } from './docs/tutorial/angular/examples/complete-character-management/star-wars-character.constant';
 import { routes } from './vault.routes';
 
 const appearance: MatFormFieldDefaultOptions = {
@@ -197,27 +181,6 @@ export const appConfig: ApplicationConfig = {
     {
       provide: PIPELINE_BUILDER_BEHAVIOR_TOKEN,
       useValue: PIPELINE_BUILDER_ALL_BEHAVIOR_CONSTANT
-    },
-    provideFeatureCell(
-      ExampleService,
-      {
-        key: 'star-wars-character',
-        initialState: STAR_WARS_CHARACTERS
-      },
-      [
-        withArrayAppendMergeBehavior,
-        // withAes256EncryptBehavior,
-        // withSessionStoragePersistBehavior
-        withStepwiseResolveBehavior,
-        withStepwiseFilterBehavior,
-        withStepwiseReducerBehavior
-        // withTabSyncStateBehavior
-      ],
-      [
-        // withDelayController
-        withStepwiseController
-        // withTabSyncController
-      ]
-    )
+    }
   ]
 };
