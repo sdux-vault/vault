@@ -16,13 +16,13 @@ import {
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import {
   // withAes256EncryptBehavior,
-  withArrayAppendMergeBehavior
+  withArrayAppendMergeBehavior,
   // withDelayController
   // withSessionStoragePersistBehavior
-  // withStepwiseController,
-  // withStepwiseFilterBehavior,
-  // withStepwiseReducerBehavior,
-  // withStepwiseResolveBehavior
+  withStepwiseController,
+  withStepwiseFilterBehavior,
+  withStepwiseReducerBehavior,
+  withStepwiseResolveBehavior
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import {} from // withTabSyncController,
@@ -205,17 +205,17 @@ export const appConfig: ApplicationConfig = {
         initialState: STAR_WARS_CHARACTERS
       },
       [
-        withArrayAppendMergeBehavior
+        withArrayAppendMergeBehavior,
         // withAes256EncryptBehavior,
         // withSessionStoragePersistBehavior
-        // withStepwiseResolveBehavior,
-        // withStepwiseFilterBehavior,
-        // withStepwiseReducerBehavior,
+        withStepwiseResolveBehavior,
+        withStepwiseFilterBehavior,
+        withStepwiseReducerBehavior
         // withTabSyncStateBehavior
       ],
       [
         // withDelayController
-        //  withStepwiseController,
+        withStepwiseController
         // withTabSyncController
       ]
     )

@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const distinctUntilChangedTutorialExampleProject: Project = {
-  title: 'distinct-until-changed-tutorial-example',
+export const stepwiseTutorialExampleProject: Project = {
+  title: 'stepwise-tutorial-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const distinctUntilChangedTutorialExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "distinct-until-changed-tutorial-example",
+  "name": "stepwise-tutorial-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -84,7 +84,13 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
-import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
+import {
+  withArrayAppendMergeBehavior,
+  withStepwiseController,
+  withStepwiseFilterBehavior,
+  withStepwiseReducerBehavior,
+  withStepwiseResolveBehavior
+} from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { ExampleService } from './example.service';
 import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
@@ -121,12 +127,42 @@ export const appConfig: ApplicationConfig = {
       },
       [
         /**
-         * \`provideFeatureCell()\` accepts an optional behaviors array as its third argument.
-         * Registering \`withArrayAppendMergeBehavior\` here changes the Merge stage so
-         * \`mergeState()\` appends the incoming one-item character array to the current
-         * collection instead of replacing the entire FeatureCell value.
+         * Preserves the example's collection-oriented merge behavior so a newly
+         * created character can be appended to the existing FeatureCell State.
+         * The behavior runs during the pipeline's Merge stage and keeps the
+         * service focused on describing the update rather than combining arrays.
          */
-        withArrayAppendMergeBehavior
+        withArrayAppendMergeBehavior,
+
+        /**
+         * Adds an approval boundary after the Resolve stage. The service exposes
+         * the resolved candidate and waits for the example UI to accept or reject
+         * it before the candidate continues through the pipeline.
+         */
+        withStepwiseResolveBehavior,
+
+        /**
+         * Adds an approval boundary after filtering. The filtered candidate is
+         * made available to the service callback so the UI can accept it and let
+         * reducers continue, or reject it and preserve the committed State.
+         */
+        withStepwiseFilterBehavior,
+
+        /**
+         * Adds an approval boundary after all reducers finish. The service can
+         * expose the reduced candidate for inspection and decide whether it may
+         * become the next committed FeatureCell State.
+         */
+        withStepwiseReducerBehavior
+      ],
+      [
+        /**
+         * Connects the three Stepwise behavior boundaries to the controller that
+         * can pause each candidate until the service supplies an accept or reject
+         * decision. Without this controller, the callbacks cannot hold the
+         * pipeline for the interactive approval demonstrated by the example.
+         */
+        withStepwiseController
       ]
     )
   ]
@@ -322,16 +358,14 @@ export function getDistinctChangedStateCharacter(index: number): {
 }
 
 /** Returns the first integer ID greater than every identity in the collection. */
-export function getNextCharacterId(
-  characters: readonly StarWarsCharacter[]
-): number {
+export function getNextCharacterId(characters: StarWarsCharacter[]): number {
   return Math.max(...characters.map(({ id }) => id), 0) + 1;
 }
 
 /** Derives display-friendly force sensitivity labels without mutating the input. */
 export function deriveForceSensitiveDisplay(
-  characters: readonly StarWarsCharacter[]
-): readonly StarWarsCharacter[] {
+  characters: StarWarsCharacter[]
+): StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No'
@@ -341,8 +375,8 @@ export function deriveForceSensitiveDisplay(
 
 /** Derives a display-ready full name for each character without mutating the input. */
 export function deriveFullName(
-  characters: readonly StarWarsCharacter[]
-): readonly StarWarsCharacter[] {
+  characters: StarWarsCharacter[]
+): StarWarsCharacter[] {
   return characters.map((character) => ({
     ...character,
     fullName: \`\${character.name} \${character.lastName}\`
@@ -352,7 +386,7 @@ export function deriveFullName(
 
 /** Creates a pure reducer that orders a cloned collection by last name. */
 export function withCharactersSortedByLastName(): ReducerFunction<
-  readonly StarWarsCharacter[]
+  StarWarsCharacter[]
 > {
   return (characters) =>
     [...characters].sort((left, right) =>
@@ -1026,8 +1060,8 @@ export class ExampleCharacterEditor {
       <p class="eyebrow">Interactive example</p>
       <h2 id="character-example-title">Star Wars character registry</h2>
       <p>
-        Use SDuX Vault state management to select, create, and update characters
-        from an in-memory collection.
+        Use SDuX Vault state management to select, create, update, and remove
+        characters from an in-memory collection.
       </p>
     </div>
   </header>
@@ -1043,6 +1077,13 @@ export class ExampleCharacterEditor {
     </div>
   }
 
+  @if (!hydrationSettled()) {
+    <div class="feedback caution" role="status" aria-live="polite">
+      The initial state hydrate method is awaiting resolve or reject in the
+      <strong>Actions</strong> section
+    </div>
+  }
+
   <fieldset class="feature-cell-controls">
     @if (deleteCandidate(); as character) {
       <section
@@ -1051,7 +1092,7 @@ export class ExampleCharacterEditor {
         role="alert">
         <div>
           <h3 id="delete-confirmation-title">
-            Delete
+            Remove
             {{
               character.fullName ?? character.name + ' ' + character.lastName
             }}?
@@ -1071,6 +1112,7 @@ export class ExampleCharacterEditor {
         </div>
       </section>
     }
+
     <div class="workspace">
       <div class="workspace-row workspace-row-top">
         <div class="field selection">
@@ -1092,10 +1134,7 @@ export class ExampleCharacterEditor {
               <option
                 [value]="character.id"
                 [selected]="character.id === selectedCharacterId()">
-                {{
-                  character.fullName ??
-                    character.name + ' ' + character.lastName
-                }}
+                {{ character.fullName }}
               </option>
             }
           </select>
@@ -1112,55 +1151,69 @@ export class ExampleCharacterEditor {
         <section
           class="panel character-details"
           aria-labelledby="details-title">
-          <div class="header">
-            <h3 id="details-title">Character details</h3>
-          </div>
-
-          @if (selectedCharacter(); as character) {
-            <dl>
-              <div>
-                <dt>Full name</dt>
-                <dd>
-                  {{ character.fullName }}
-                </dd>
-              </div>
-              <div>
-                <dt>First name</dt>
-                <dd>{{ character.name }}</dd>
-              </div>
-              <div>
-                <dt>Last name</dt>
-                <dd>{{ character.lastName }}</dd>
-              </div>
-              <div>
-                <dt>Identifier</dt>
-                <dd>{{ character.id }}</dd>
-              </div>
-              <div>
-                <dt>Faction</dt>
-                <dd>{{ character.faction }}</dd>
-              </div>
-              <div>
-                <dt class="force-sensitive">Force-sensitive</dt>
-                <dd>{{ character.forceSensitiveDisplay }}</dd>
-              </div>
-            </dl>
-          } @else {
-            <div class="empty-state">
-              @if (characters().length === 0) {
-                <h4>The collection is empty</h4>
-                <p>Add a character to continue the example.</p>
-                <button type="button" class="button" (click)="startCreate()">
-                  Add the first character
-                </button>
-              } @else {
-                <h4>No character selected</h4>
-                <p>
-                  Choose a character from the list or complete the form to add a
-                  new one.
-                </p>
-              }
+          @if (state.isLoading()) {
+            <div
+              class="loading-overlay"
+              role="status"
+              aria-label="Loading characters">
+              <span class="spinner" aria-hidden="true"></span>
+              <p class="loading-guidance">
+                <strong>State is loading.</strong>
+                Complete the pending State change request by selecting Resolve
+                or Reject in the Actions section.
+              </p>
             </div>
+          } @else {
+            <div class="header">
+              <h3 id="details-title">Character details</h3>
+            </div>
+
+            @if (selectedCharacter(); as character) {
+              <dl>
+                <div>
+                  <dt>Full name</dt>
+                  <dd>
+                    {{ character.fullName }}
+                  </dd>
+                </div>
+                <div>
+                  <dt>First name</dt>
+                  <dd>{{ character.name }}</dd>
+                </div>
+                <div>
+                  <dt>Last name</dt>
+                  <dd>{{ character.lastName }}</dd>
+                </div>
+                <div>
+                  <dt>Identifier</dt>
+                  <dd>{{ character.id }}</dd>
+                </div>
+                <div>
+                  <dt>Faction</dt>
+                  <dd>{{ character.faction }}</dd>
+                </div>
+                <div>
+                  <dt class="force-sensitive">Force-sensitive</dt>
+                  <dd>{{ character.forceSensitiveDisplay }}</dd>
+                </div>
+              </dl>
+            } @else {
+              <div class="empty-state">
+                @if (characters().length === 0) {
+                  <h4>The collection is empty</h4>
+                  <p>Add a character to continue the example.</p>
+                  <button type="button" class="button" (click)="startCreate()">
+                    Add the first character
+                  </button>
+                } @else {
+                  <h4>No character selected</h4>
+                  <p>
+                    Choose a character from the list or complete the form to add
+                    a new one.
+                  </p>
+                }
+              </div>
+            }
           }
         </section>
 
@@ -1281,93 +1334,155 @@ export class ExampleCharacterEditor {
         </section>
       </div>
     </div>
-    <div class="distinct-operator">
+
+    <div class="lifecycle-actions">
       <input
-        id="distinct-operator-toggle"
+        id="lifecycle-section-toggle"
         class="section-toggle"
         type="checkbox"
-        aria-label="Toggle Distinct Until Changed Operator visibility"
+        aria-label="Toggle Lifecycle visibility"
         checked />
       <div class="section-header">
-        <span>Distinct Until Changed Operator</span>
+        <span>Lifecycle</span>
         <label
           class="section-chevron"
-          for="distinct-operator-toggle"
-          title="Show or hide Distinct Until Changed Operator"></label>
+          for="lifecycle-section-toggle"
+          title="Show or hide Lifecycle"></label>
       </div>
 
       <div class="operator-actions">
-        <!-- Teaching point: Distinct Until Changed (ex-027) -->
-        <div class="action-row">
+        <div class="action-row lifecycle-action-row">
           <input
-            id="same-state-description"
+            id="reset-description"
             class="description-toggle"
             type="checkbox"
-            aria-label="Show Submit Same State description" />
+            aria-label="Show Reset State description" />
           <div class="button-container">
-            <!-- Teaching point: Distinct Until Changed (ex-027) -->
-            <button type="button" class="button" (click)="submitSameState()">
-              Submit Same State
+            <button type="button" class="button danger" (click)="resetState()">
+              Reset State
             </button>
             <label
               class="description-chevron"
-              for="same-state-description"
-              title="Show or hide Submit Same State description"></label>
+              for="reset-description"
+              title="Show or hide Reset State description"></label>
           </div>
           <div class="description-container">
-            Reconstructs Rey as a new object on every click and merges that
-            one-character delta into the collection. The custom comparison
-            checks every incoming identity against the previous collection, so
-            another Rey returns VAULT_NOOP regardless of reducer sorting.
-          </div>
-        </div>
-
-        <!-- Teaching point: Distinct Until Changed (ex-027) -->
-        <div class="action-row submit-changed-action-row">
-          <input
-            id="changed-state-description"
-            class="description-toggle"
-            type="checkbox"
-            aria-label="Show Submit Changed State description" />
-          <div class="button-container">
-            <!-- Teaching point: Distinct Until Changed (ex-027) -->
-            <button type="button" class="button" (click)="submitChangedState()">
-              Submit Changed State
-            </button>
-            <label
-              class="description-chevron"
-              for="changed-state-description"
-              title="Show or hide Submit Changed State description"></label>
-          </div>
-          <div class="description-container">
-            Cycles through four Jedi with a modulo index and merges the next
-            one-character delta into the collection. The first four unique IDs
-            proceed through the pipeline; after the modulo wraps, the repeated
-            identity is suppressed without depending on collection order.
+            Calls the FeatureCell's dedicated <code>reset()</code> API to
+            explicitly clear the current state value to
+            <code>undefined</code> without submitting replacement state.
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Teaching point: Distinct Until Changed comparison function (ex-028) -->
-      <div class="comparison-function-column">
-        <input
-          id="comparison-function-output-toggle"
-          class="tap-toggle"
-          type="checkbox"
-          aria-label="Toggle Comparison Function output visibility"
-          checked />
-        <div class="tap-header">
-          <h3>Comparison Function</h3>
-          <label
-            class="tap-chevron"
-            for="comparison-function-output-toggle"
-            title="Show or hide Comparison Function output"></label>
+    <div class="pipeline-actions">
+      <input
+        id="actions-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Actions visibility"
+        checked />
+      <div class="section-header">
+        <span>Actions</span>
+        <label
+          class="section-chevron"
+          for="actions-section-toggle"
+          title="Show or hide Actions"></label>
+      </div>
+
+      <div class="pipeline-content">
+        <div class="action-groups">
+          <div class="action-group">
+            <div class="action-row">
+              <input
+                id="hydrate-description"
+                class="description-toggle"
+                type="checkbox"
+                aria-label="Show Hydration description" />
+              <div class="button-container hydrate-controls">
+                <button
+                  type="button"
+                  class="button hydrate-terminal"
+                  [disabled]="hydrationSettled()"
+                  (click)="resolveHydration()">
+                  Resolve
+                </button>
+                <button
+                  type="button"
+                  class="button danger hydrate-terminal"
+                  [disabled]="hydrationSettled()"
+                  (click)="rejectHydration()">
+                  Reject
+                </button>
+                <label
+                  class="description-chevron"
+                  for="hydrate-description"
+                  title="Show or hide Hydration description"></label>
+              </div>
+              <div class="description-container">
+                The service registers a deferred hydration factory before
+                initialize() makes it the authoritative initial State source.
+                Resolve sends five characters through the full Replace pipeline,
+                including the configured Filter, Taps, and Reducers. Reject
+                emits an initialization Error and leaves the FeatureCell without
+                a value; configured initial State is not used as a fallback.
+                Hydration runs once during initialization and does not run again
+                when State is reset.
+              </div>
+            </div>
+          </div>
         </div>
-        <textarea
-          readonly
-          rows="6"
-          aria-label="Comparison Function output"
-          [value]="editor.comparisonFunctionSource"></textarea>
+      </div>
+    </div>
+
+    <div class="stepwise-output">
+      <input
+        id="stepwise-section-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Stepwise Requests visibility"
+        checked />
+      <div class="section-header">
+        <span>Stepwise Requests</span>
+        <label
+          class="section-chevron"
+          for="stepwise-section-toggle"
+          title="Show or hide Stepwise Requests"></label>
+      </div>
+
+      <div class="stepwise-content">
+        <div class="stepwise-column">
+          <div class="stepwise-header">
+            <h3>Stepwise Resolve</h3>
+          </div>
+          <textarea
+            readonly
+            rows="8"
+            aria-label="Stepwise Resolve output"
+            [value]="stepwiseResolveRequestJson()"></textarea>
+        </div>
+
+        <div class="stepwise-column">
+          <div class="stepwise-header">
+            <h3>Stepwise Filter</h3>
+          </div>
+          <textarea
+            readonly
+            rows="8"
+            aria-label="Stepwise Filter output"
+            [value]="stepwiseFilterRequestJson()"></textarea>
+        </div>
+
+        <div class="stepwise-column">
+          <div class="stepwise-header">
+            <h3>Stepwise Reducer</h3>
+          </div>
+          <textarea
+            readonly
+            rows="8"
+            aria-label="Stepwise Reducer output"
+            [value]="stepwiseReducerRequestJson()"></textarea>
+        </div>
       </div>
     </div>
   </fieldset>
@@ -2423,15 +2538,23 @@ export class ExampleCharacterEditor {
 `,
     'src/example.component.spec.ts': `import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  withArrayAppendMergeBehavior,
+  withStepwiseController,
+  withStepwiseFilterBehavior,
+  withStepwiseReducerBehavior,
+  withStepwiseResolveBehavior
+} from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import { ExampleComponent } from './example.component';
+import { exampleHydrate } from './example.hydrate';
 import { ExampleService } from './example.service';
-import { StarWarsCharacter } from './star-wars-character.shape';
+import type { StarWarsCharacter } from './star-wars-character.shape';
 
 describe('ExampleComponent', () => {
   const key = 'star-wars-character';
-  const initialCharacters: readonly StarWarsCharacter[] = [
+  const initialCharacters: StarWarsCharacter[] = [
     {
       id: 1,
       name: 'Luke',
@@ -2448,22 +2571,39 @@ describe('ExampleComponent', () => {
     }
   ];
 
-  const withDerivedFields = (
-    characters: readonly StarWarsCharacter[]
-  ): readonly StarWarsCharacter[] =>
-    [...characters]
-      .map((character) => ({
-        ...character,
-        forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
-        fullName: \`\${character.name} \${character.lastName}\`
-      }))
-      .sort((left, right) => left.lastName.localeCompare(right.lastName));
-
-  const reducedCharacters = withDerivedFields(initialCharacters);
-
   let component: ExampleComponent;
   let fixture: ComponentFixture<ExampleComponent>;
   let service: ExampleService;
+
+  const settlePipeline = async (): Promise<void> => {
+    let settled = false;
+    const settledPromise = vaultSettled(key).then(() => {
+      settled = true;
+    });
+
+    while (!settled) {
+      await Promise.race([
+        settledPromise,
+        new Promise<void>((resolve) => setTimeout(resolve))
+      ]);
+
+      if (service.isStepwiseResolvePending()) {
+        component['acceptStepwiseResolve']();
+        continue;
+      }
+
+      if (service.isStepwiseFilterPending()) {
+        component['acceptStepwiseFilter']();
+        continue;
+      }
+
+      if (service.isStepwiseReducerPending()) {
+        component['acceptStepwiseReducer']();
+      }
+    }
+
+    await settledPromise;
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -2471,180 +2611,64 @@ describe('ExampleComponent', () => {
       providers: [
         provideVaultTesting(),
         provideZonelessChangeDetection(),
-        provideFeatureCell(ExampleService, {
-          key,
-          initialState: initialCharacters
-        })
+        provideFeatureCell(
+          ExampleService,
+          { key, initialState: initialCharacters },
+          [
+            withArrayAppendMergeBehavior,
+            withStepwiseResolveBehavior,
+            withStepwiseFilterBehavior,
+            withStepwiseReducerBehavior
+          ],
+          [withStepwiseController]
+        )
       ]
     }).compileComponents();
+
+    spyOn(exampleHydrate, 'getPromise').and.returnValue(
+      Promise.resolve(initialCharacters)
+    );
+    spyOn(window, 'confirm').and.returnValue(true);
 
     fixture = TestBed.createComponent(ExampleComponent);
     component = fixture.componentInstance;
     service = TestBed.inject(ExampleService);
     fixture.detectChanges();
+    await settlePipeline();
+    fixture.detectChanges();
   });
 
-  it('should expose the latest character collection from the service', async () => {
-    expect(component.characters()).toEqual([]);
-    await vaultSettled(key);
-    expect(component.characters()).toEqual(reducedCharacters);
-  });
+  afterEach(() => TestBed.resetTestingModule());
 
-  it('should expose no selected character before a valid selection is made', async () => {
-    await vaultSettled(key);
-    expect(component['selectedCharacterId']()).toBeNull();
-    expect(component['selectedCharacter']()).toBeNull();
-  });
-
-  it('should select a known character id and resolve the selected character', async () => {
-    await vaultSettled(key);
+  it('should select a known character and patch the editor', () => {
     component['selectCharacter']('2');
 
-    expect(component['selectedCharacterId']()).toBe(2);
-    expect(component['selectedCharacter']()).toEqual(reducedCharacters[0]);
+    expect(component['selectedCharacter']()?.id).toBe(2);
+    expect(component['characterForm'].getRawValue()).toEqual({
+      name: 'Leia',
+      lastName: 'Organa',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
   });
 
-  it('should ignore an unknown character id', async () => {
-    await vaultSettled(key);
+  it('should ignore an unknown character selection', () => {
     component['selectCharacter']('999');
 
-    expect(component['selectedCharacterId']()).toBeNull();
-    expect(component['selectedCharacter']()).toBeNull();
+    expect(component['selectedCharacter']()?.id).toBe(2);
   });
 
-  it('should keep the empty state when a selected id is not found', async () => {
-    await vaultSettled(key);
-    component['selectCharacter']('3');
-
-    expect(component['selectedCharacterId']()).toBeNull();
-    expect(component['selectedCharacter']()).toBeNull();
-  });
-
-  it('should render the initially selected character details after state loads', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-
-    const host = fixture.nativeElement as HTMLElement;
-    const detailsPanel = host.querySelector(
-      '.character-details'
-    ) as HTMLElement;
-
-    expect(detailsPanel.textContent).toContain('Leia Organa');
-    expect(detailsPanel.textContent).toContain('Rebel Alliance');
-    expect(detailsPanel.textContent).not.toContain('No character selected');
-  });
-
-  it('should render the selected character details after selection', async () => {
-    await vaultSettled(key);
-    component['selectCharacter']('2');
-    fixture.detectChanges();
-
-    const host = fixture.nativeElement as HTMLElement;
-
-    expect(host.textContent).toContain('Leia');
-    expect(host.textContent).toContain('Rebel Alliance');
-    expect(host.textContent).not.toContain('No character selected');
-  });
-
-  it('should enter create mode and clear the form', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-
+  it('should enter create mode and restore it when canceled', () => {
     component['startCreate']();
-
     expect(component['editorMode']()).toBe('create');
-    expect(component['editorTitle']()).toBe('Add a character');
-    expect(component['submitLabel']()).toBe('Add character');
-    expect(component['selectedCharacterId']()).toBeNull();
-    expect(component['characterForm'].getRawValue()).toEqual({
-      name: '',
-      lastName: '',
-      faction: '',
-      isForceSensitive: false
-    });
-    expect(component['characterForm'].pristine).toBeTrue();
-    expect(component['characterForm'].untouched).toBeTrue();
-  });
-
-  it('should restore the previous selection when canceling create mode', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-    component['startCreate']();
-    component['characterForm'].setValue({
-      name: 'Han',
-      lastName: 'Solo',
-      faction: 'Rebel Alliance',
-      isForceSensitive: false
-    });
 
     component['cancelEdit']();
 
     expect(component['editorMode']()).toBe('edit');
     expect(component['selectedCharacterId']()).toBe(2);
-    expect(component['characterForm'].getRawValue()).toEqual({
-      name: 'Leia',
-      lastName: 'Organa',
-      faction: 'Rebel Alliance',
-      isForceSensitive: false
-    });
-    expect(component['feedback']()).toEqual(
-      component.editor.feedback['newCharacterDiscarded']
-    );
   });
 
-  it('should restore the selected character form when canceling edit mode', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-    component['selectCharacter']('2');
-    component['characterForm'].setValue({
-      name: 'General Leia',
-      lastName: 'Organa',
-      faction: 'Resistance',
-      isForceSensitive: false
-    });
-
-    component['cancelEdit']();
-
-    expect(component['editorMode']()).toBe('edit');
-    expect(component['selectedCharacterId']()).toBe(2);
-    expect(component['characterForm'].getRawValue()).toEqual({
-      name: 'Leia',
-      lastName: 'Organa',
-      faction: 'Rebel Alliance',
-      isForceSensitive: false
-    });
-    expect(component['feedback']()).toEqual(
-      component.editor.feedback['unsavedChangesDiscarded']
-    );
-  });
-
-  it('should fall back to create mode when canceling without a selected character', async () => {
-    await vaultSettled(key);
-    component['selectedCharacterId'].set(null);
-    component['editorMode'].set('edit');
-    component['characterForm'].setValue({
-      name: 'Temp',
-      lastName: 'Character',
-      faction: 'Unaffiliated',
-      isForceSensitive: false
-    });
-
-    component['cancelEdit']();
-
-    expect(component['editorMode']()).toBe('create');
-    expect(component['selectedCharacterId']()).toBeNull();
-    expect(component['characterForm'].getRawValue()).toEqual({
-      name: '',
-      lastName: '',
-      faction: '',
-      isForceSensitive: false
-    });
-    expect(component['feedback']()).toBeNull();
-  });
-
-  it('should show invalid-form feedback when save is attempted with invalid values', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
+  it('should show invalid feedback for an invalid form', () => {
     component['startCreate']();
 
     component['saveCharacter']();
@@ -2652,43 +2676,69 @@ describe('ExampleComponent', () => {
     expect(component['feedback']()).toEqual(
       component.editor.feedback['invalidForm']
     );
-    expect(component['characterForm'].controls.name.touched).toBeTrue();
-    expect(component['characterForm'].controls.lastName.touched).toBeTrue();
-    expect(component['characterForm'].controls.faction.touched).toBeTrue();
   });
 
-  it('should delegate the same-state action to the service', async () => {
-    await vaultSettled(key);
-    const submitSameStateSpy = spyOn(service, 'submitSameState');
+  it('should delegate the three Stepwise decisions', () => {
+    const resolveSpy = spyOn(service, 'acceptStepwiseResolve');
+    const cancelResolveSpy = spyOn(service, 'cancelStepwiseResolve');
+    const filterSpy = spyOn(service, 'cancelStepwiseFilter');
+    const reducerSpy = spyOn(service, 'acceptStepwiseReducer');
+    const cancelReducerSpy = spyOn(service, 'cancelStepwiseReducer');
 
-    component['submitSameState']();
+    component['acceptStepwiseResolve']();
+    component['cancelStepwiseResolve']();
+    component['cancelStepwiseFilter']();
+    component['acceptStepwiseReducer']();
+    component['cancelStepwiseReducer']();
 
-    expect(submitSameStateSpy).toHaveBeenCalledOnceWith();
+    expect(resolveSpy).toHaveBeenCalledTimes(1);
+    expect(cancelResolveSpy).toHaveBeenCalledTimes(1);
+    expect(filterSpy).toHaveBeenCalledTimes(1);
+    expect(reducerSpy).toHaveBeenCalledTimes(1);
+    expect(cancelReducerSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should delegate the changed-state action to the service', async () => {
-    await vaultSettled(key);
-    const submitChangedStateSpy = spyOn(service, 'submitChangedState');
+  it('should delegate Reset State to the service', () => {
+    const resetSpy = spyOn(service, 'resetState');
 
-    component['submitChangedState']();
+    component['resetState']();
 
-    expect(submitChangedStateSpy).toHaveBeenCalledOnceWith();
+    expect(resetSpy).toHaveBeenCalledOnceWith();
+    expect(component['characterForm'].pristine).toBeTrue();
   });
 
-  it('should create a character from normalized form values', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
+  it('should restore edits for an existing selection or fall back to create mode', () => {
+    expect(component['editorTitle']()).toBe('Update character');
+    expect(component['submitLabel']()).toBe('Save changes');
+    component['selectCharacter']('2');
+    component['characterForm'].setValue({
+      name: 'Changed',
+      lastName: 'Name',
+      faction: 'Changed Faction',
+      isForceSensitive: true
+    });
+    component['cancelEdit']();
+
+    expect(component['feedback']()).toEqual(
+      component.editor.feedback['unsavedChangesDiscarded']
+    );
+
+    component['selectedCharacterId'].set(null);
+    component['cancelEdit']();
+    expect(component['editorMode']()).toBe('create');
+    expect(component['editorTitle']()).toBe('Add a character');
+    expect(component['submitLabel']()).toBe('Add character');
+  });
+
+  it('should create and update characters from valid form values', () => {
     const createdCharacter: StarWarsCharacter = {
-      id: 30,
+      id: 20,
       name: 'Han',
       lastName: 'Solo',
       faction: 'Rebel Alliance',
       isForceSensitive: false
     };
-    const createCharacterSpy = spyOn(
-      service,
-      'createCharacter'
-    ).and.returnValue(createdCharacter);
+    spyOn(service, 'createCharacter').and.returnValue(createdCharacter);
 
     component['startCreate']();
     component['characterForm'].setValue({
@@ -2697,36 +2747,27 @@ describe('ExampleComponent', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-
     component['saveCharacter']();
 
-    expect(createCharacterSpy).toHaveBeenCalledOnceWith({
-      name: 'Han',
+    expect(component['selectedCharacterId']()).toBe(20);
+    expect(component['feedback']()?.message).toContain('Han Solo');
+
+    const updatedCharacter = { ...createdCharacter, name: 'General Han' };
+    spyOn(service, 'updateCharacter').and.returnValue(updatedCharacter);
+    component['characterForm'].setValue({
+      name: 'General Han',
       lastName: 'Solo',
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(component['selectedCharacterId']()).toBe(30);
-    expect(component['editorMode']()).toBe('edit');
-    expect(component['characterForm'].getRawValue()).toEqual({
-      name: 'Han',
-      lastName: 'Solo',
-      faction: 'Rebel Alliance',
-      isForceSensitive: false
-    });
-    expect(component['feedback']()).toEqual({
-      message: 'Han Solo was added and selected.',
-      tone: 'success'
-    });
+    component['saveCharacter']();
+
+    expect(component['feedback']()?.message).toContain('General Han Solo');
   });
 
-  it('should require a selected character before saving an edit', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-    const updateCharacterSpy = spyOn(service, 'updateCharacter');
-
-    component['selectedCharacterId'].set(null);
+  it('should require a selection before saving an edit', () => {
     component['editorMode'].set('edit');
+    component['selectedCharacterId'].set(null);
     component['characterForm'].setValue({
       name: 'Leia',
       lastName: 'Organa',
@@ -2736,140 +2777,100 @@ describe('ExampleComponent', () => {
 
     component['saveCharacter']();
 
-    expect(updateCharacterSpy).not.toHaveBeenCalled();
     expect(component['feedback']()).toEqual(
       component.editor.feedback['selectBeforeSave']
     );
   });
 
-  it('should update the selected character from normalized form values', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-    const updatedCharacter: StarWarsCharacter = {
-      id: 2,
-      name: 'General Leia',
-      lastName: 'Organa',
-      faction: 'Resistance',
-      isForceSensitive: false
-    };
-    const updateCharacterSpy = spyOn(
-      service,
-      'updateCharacter'
-    ).and.returnValue(updatedCharacter);
-
+  it('should manage delete confirmation and reset the editor after confirmation', () => {
+    const removeSpy = spyOn(service, 'removeCharacter');
     component['selectCharacter']('2');
-    component['characterForm'].setValue({
-      name: '  General Leia  ',
-      lastName: '  Organa  ',
-      faction: 'Resistance',
-      isForceSensitive: false
-    });
-
-    component['saveCharacter']();
-
-    expect(updateCharacterSpy).toHaveBeenCalledOnceWith(2, {
-      name: 'General Leia',
-      lastName: 'Organa',
-      faction: 'Resistance',
-      isForceSensitive: false
-    });
-    expect(component['characterForm'].getRawValue()).toEqual({
-      name: 'General Leia',
-      lastName: 'Organa',
-      faction: 'Resistance',
-      isForceSensitive: false
-    });
-    expect(component['feedback']()).toEqual({
-      message: 'General Leia Organa was updated.',
-      tone: 'success'
-    });
-  });
-
-  it('should open delete confirmation for the selected character and clear feedback', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-
-    component['feedback'].set({
-      message: 'Old feedback',
-      tone: 'info'
-    });
-    component['selectCharacter']('2');
-
     component['requestDelete']();
 
-    expect(component['deleteCandidate']()).toEqual(reducedCharacters[0]);
-    expect(component['feedback']()).toBeNull();
-  });
-
-  it('should ignore delete requests when no character is selected', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-
-    component['selectedCharacterId'].set(null);
-    component['deleteCandidate'].set(null);
-
-    component['requestDelete']();
-
-    expect(component['deleteCandidate']()).toBeNull();
-  });
-
-  it('should clear the pending delete candidate when delete is canceled', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-
-    component['deleteCandidate'].set(initialCharacters[0]!);
-
+    expect(component['deleteCandidate']()?.id).toBe(2);
     component['cancelDelete']();
-
     expect(component['deleteCandidate']()).toBeNull();
-  });
 
-  it('should ignore confirm delete when there is no pending candidate', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-    const removeCharacterSpy = spyOn(service, 'removeCharacter');
-
-    component['deleteCandidate'].set(null);
-
-    component['confirmDelete']();
-
-    expect(removeCharacterSpy).not.toHaveBeenCalled();
-    expect(component['editorMode']()).toBe('edit');
-  });
-
-  it('should reset the editor after delete confirmation when the removal is suppressed', async () => {
-    await vaultSettled(key);
-    fixture.detectChanges();
-    const removeCharacterSpy = spyOn(
-      service,
-      'removeCharacter'
-    ).and.callThrough();
-
-    component['selectCharacter']('2');
     component['requestDelete']();
-
     component['confirmDelete']();
-    await vaultSettled(key);
 
-    expect(removeCharacterSpy).toHaveBeenCalledOnceWith(2);
-    expect(component['deleteCandidate']()).toBeNull();
-    expect(component['selectedCharacterId']()).toBeNull();
+    expect(removeSpy).toHaveBeenCalledWith(2);
     expect(component['editorMode']()).toBe('create');
-    expect(component['characterForm'].getRawValue()).toEqual({
-      name: '',
-      lastName: '',
-      faction: '',
-      isForceSensitive: false
-    });
-    expect(component['characterForm'].pristine).toBeTrue();
-    expect(component['characterForm'].untouched).toBeTrue();
-    expect(component['feedback']()).toEqual({
-      message: 'Leia Organa was removed.',
-      tone: 'success'
-    });
-    expect(component.characters()).toEqual(
-      withDerivedFields(initialCharacters)
-    );
+    expect(component['deleteCandidate']()).toBeNull();
+  });
+
+  it('should ignore delete requests and confirmations without a candidate', () => {
+    component['selectedCharacterId'].set(null);
+    component['requestDelete']();
+    component['confirmDelete']();
+
+    expect(component['deleteCandidate']()).toBeNull();
+  });
+
+  it('should handle hydration callbacks when they are available or absent', () => {
+    const resolve = jasmine.createSpy('resolve');
+    spyOn(exampleHydrate, 'getResolve').and.returnValue(resolve);
+    component['resolveHydration']();
+    expect(resolve).toHaveBeenCalledTimes(1);
+    expect(component['hydrationSettled']()).toBeTrue();
+
+    const reject = jasmine.createSpy('reject');
+    spyOn(exampleHydrate, 'getReject').and.returnValue(reject);
+    component['rejectHydration']();
+    expect(reject).toHaveBeenCalledTimes(1);
+
+    (exampleHydrate.getResolve as jasmine.Spy).and.returnValue(null);
+    (exampleHydrate.getReject as jasmine.Spy).and.returnValue(null);
+    component['resolveHydration']();
+    component['rejectHydration']();
+  });
+
+  it('should reset prompt guards and avoid duplicate prompts', () => {
+    const confirmSpy = window.confirm as jasmine.Spy;
+    confirmSpy.calls.reset();
+    confirmSpy.and.returnValue(true);
+
+    component['processStepwiseResolvePending'](true);
+    component['processStepwiseResolvePending'](true);
+    component['processStepwiseResolvePending'](false);
+    component['processStepwiseFilterPending'](true);
+    component['processStepwiseFilterPending'](true);
+    component['processStepwiseFilterPending'](false);
+    component['processStepwiseReducerPending'](true);
+    component['processStepwiseReducerPending'](true);
+    component['processStepwiseReducerPending'](false);
+
+    expect(confirmSpy).toHaveBeenCalledTimes(3);
+  });
+
+  it('should follow the native prompt decision for each Stepwise stage', () => {
+    const resolveSpy = spyOn(component as never, 'acceptStepwiseResolve');
+    const filterSpy = spyOn(component as never, 'cancelStepwiseFilter');
+    const reducerSpy = spyOn(component as never, 'acceptStepwiseReducer');
+    (window.confirm as jasmine.Spy).and.returnValues(true, false, true);
+
+    component['handleStepwiseResolvePrompt']();
+    component['handleStepwiseFilterPrompt']();
+    component['handleStepwiseReducerPrompt']();
+
+    expect(resolveSpy).toHaveBeenCalledTimes(1);
+    expect(filterSpy).toHaveBeenCalledTimes(1);
+    expect(reducerSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should block each Stepwise stage when the prompt is canceled', () => {
+    const resolveSpy = spyOn(component as never, 'cancelStepwiseResolve');
+    const filterSpy = spyOn(component as never, 'cancelStepwiseFilter');
+    const reducerSpy = spyOn(component as never, 'cancelStepwiseReducer');
+    (window.confirm as jasmine.Spy).and.returnValue(false);
+
+    component['handleStepwiseResolvePrompt']();
+    component['handleStepwiseFilterPrompt']();
+    component['handleStepwiseReducerPrompt']();
+
+    expect(resolveSpy).toHaveBeenCalledTimes(1);
+    expect(filterSpy).toHaveBeenCalledTimes(1);
+    expect(reducerSpy).toHaveBeenCalledTimes(1);
   });
 });
 `,
@@ -2894,15 +2895,18 @@ import {
   ExampleCharacterEditor,
   OperationFeedback
 } from './example.character-editor';
+import { exampleHydrate } from './example.hydrate';
 import { ExampleService } from './example.service';
 import type { StarWarsCharacter } from './star-wars-character.shape';
 
 /**
- * Coordinates the add and edit flows layered on top of the tutorial's SDuX-managed collection.
- * The component owns presentation state such as selection, editor mode, form state, and feedback,
- * while the service remains the only place that mutates Feature State.
- * **Architectural Boundary:** The component owns local editor behavior while the service owns
- * FeatureCell access and committed collection State.
+ * Coordinates the reactive character editor presented by this tutorial example.
+ * It consumes the service's computed character collection and keeps selection, form,
+ * confirmation, and feedback state in Angular signals.
+ * Computed signals derive the selected character and mode-specific labels for the template.
+ * User actions delegate collection changes to \`ExampleService\`, then reactive state refreshes the view.
+ * **Architectural Boundary:** The component owns presentation state while the service owns
+ * FeatureCell access and character collection mutations.
  */
 @Component({
   selector: 'sdux-star-wars-character-example',
@@ -2913,7 +2917,9 @@ import type { StarWarsCharacter } from './star-wars-character.shape';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExampleComponent {
-  /** Exposes shared editor validation, labels, and feedback wording. */
+  // Reactive state: shared services and framework utilities.
+
+  /** Exposes the character editor instance for template and internal use. */
   readonly editor = new ExampleCharacterEditor();
 
   /**
@@ -2922,21 +2928,71 @@ export class ExampleComponent {
    */
   readonly #exampleService = inject(ExampleService);
 
-  /** Creates the non-nullable reactive form used by the create and edit flows. */
+  /** Creates the non-nullable reactive form used by the character editor. */
   readonly #formBuilder = inject(FormBuilder);
+
+  // Lifecycle guards: one-time selection and one-prompt-per-request coordination.
 
   /** Prevents later collection emissions from replacing the user's current selection. */
   #hasInitializedSelection = false;
 
+  /** Prevents duplicate native confirm prompts for the same pending Stepwise Resolve request. */
+  #hasPromptedStepwiseResolve = false;
+
+  /** Prevents duplicate native confirm prompts for the same pending Stepwise Filter request. */
+  #hasPromptedStepwiseFilter = false;
+
+  /** Prevents duplicate native confirm prompts for the same pending Stepwise Reducer request. */
+  #hasPromptedStepwiseReducer = false;
+
   /** Remembers the selected identity so canceling create mode can restore the prior editor. */
   #selectedCharacterBeforeCreate: number | null = null;
+
+  // Reactive state: direct service projections consumed by the template.
 
   /**
    * Projects the current FeatureCell value into a read-only Angular computed signal.
    * The empty-array fallback gives templates a stable collection before a value is available.
    */
+  /** Teaching Point: ex-001 */
   readonly characters = computed<readonly StarWarsCharacter[]>(
-    () => this.#exampleService.state.value() ?? []
+    () => this.state.value() ?? []
+  );
+
+  /** Exposes the FeatureCell loading signal so the template can cover the current selection. */
+  protected readonly state = this.#exampleService.state;
+
+  /** Enables Stepwise controls only while the Resolve callback awaits a decision. */
+  protected readonly isStepwiseResolvePending =
+    this.#exampleService.isStepwiseResolvePending;
+
+  /** Enables Filter controls only while its Stepwise callback awaits a decision. */
+  protected readonly isStepwiseFilterPending =
+    this.#exampleService.isStepwiseFilterPending;
+
+  /** Enables Reducer controls only while its Stepwise callback awaits a decision. */
+  protected readonly isStepwiseReducerPending =
+    this.#exampleService.isStepwiseReducerPending;
+
+  /** Serializes the current and candidate values supplied to the Stepwise Resolve callback. */
+  protected readonly stepwiseResolveRequestJson = computed(() =>
+    this.editor.serializeStepwiseRequest(
+      this.#exampleService.stepwiseResolveRequest()
+    )
+  );
+
+  /** Serializes the current and filtered candidate values from Stepwise Filter. */
+  protected readonly stepwiseFilterRequestJson = computed(() =>
+    this.editor.serializeStepwiseRequest(
+      this.#exampleService.stepwiseFilterRequest()
+    )
+  );
+
+  /** Serializes the current and fully reduced candidate from Stepwise Reducer. */
+  protected readonly stepwiseReducerRequestJson = computed(() =>
+    this.editor.serializeStepwiseRequest(
+      this.#exampleService.stepwiseReducerRequest()
+    )
   );
 
   /** Holds the identity currently selected by the character picker, or \`null\` when none is selected. */
@@ -2948,6 +3004,12 @@ export class ExampleComponent {
   /** Exposes the latest operation result for the template's accessible feedback region. */
   protected readonly feedback = signal<OperationFeedback | null>(null);
 
+  /** Prevents the one-time hydration source from being settled more than once. */
+  protected readonly hydrationSettled = signal(false);
+
+  /** Holds the character awaiting explicit confirmation before removal. */
+  protected readonly deleteCandidate = signal<StarWarsCharacter | null>(null);
+
   /**
    * Resolves the selected identity against the latest reactive character collection.
    * Returning \`null\` keeps the template safe when the character was removed or never existed.
@@ -2957,7 +3019,20 @@ export class ExampleComponent {
     return this.characters().find(({ id }) => id === selectedId) ?? null;
   });
 
-  /** Defines the non-nullable form model and validation rules shared by create and edit flows. */
+  /** Derives the editor heading from the current mode so the template stays declarative. */
+  protected readonly editorTitle = computed(() =>
+    this.editorMode() === 'create' ? 'Add a character' : 'Update character'
+  );
+
+  /** Derives the submit-button label from the operation that saving will perform. */
+  protected readonly submitLabel = computed(() =>
+    this.editorMode() === 'create' ? 'Add character' : 'Save changes'
+  );
+
+  /**
+   * Defines the non-nullable form model and validation rules shared by create and edit flows.
+   * Name fields validate trimmed lengths while faction selection remains required.
+   */
   protected readonly characterForm = this.#formBuilder.nonNullable.group({
     name: ['', [this.#trimmedTextLength(2, 40)]],
     lastName: ['', [this.#trimmedTextLength(2, 40)]],
@@ -2965,25 +3040,13 @@ export class ExampleComponent {
     isForceSensitive: [false]
   });
 
-  /** Watches the reactive collection and selects its first character when initial state arrives. */
+  /**
+   * Watches the reactive collection and selects its first character when initial state arrives.
+   * The one-time guard preserves later user selections and does not interrupt create mode.
+   */
   constructor() {
     this.#observeInitialSelection();
-  }
-
-  /**
-   * Starts timing and merges a newly allocated instance of the same character.
-   * @returns Nothing; Distinct Until Changed decides whether downstream stages execute.
-   */
-  protected submitSameState(): void {
-    this.#exampleService.submitSameState();
-  }
-
-  /**
-   * Starts timing and merges the next Jedi in the service's four-value cycle.
-   * @returns Nothing; the accepted collection is exposed through reactive State.
-   */
-  protected submitChangedState(): void {
-    this.#exampleService.submitChangedState();
+    this.#observeStepwisePromptEffects();
   }
 
   /**
@@ -3012,7 +3075,39 @@ export class ExampleComponent {
   }
 
   /**
-   * Resolves a picker value to a known character identity in the current SDuX-managed collection.
+   * Watches the three stepwise request signals and forwards each pending
+   * request to its matching presentation method. This keeps Resolve, Filter,
+   * and Reducer approval prompts in the component layer while the service and
+   * pipeline retain ownership of FeatureCell State.
+   * @returns Nothing; the effects coordinate the component's stepwise prompt state.
+   */
+  #observeStepwisePromptEffects(): void {
+    effect(() => {
+      this.processStepwiseResolvePending(this.isStepwiseResolvePending());
+    });
+
+    effect(() => {
+      this.processStepwiseFilterPending(this.isStepwiseFilterPending());
+    });
+
+    effect(() => {
+      this.processStepwiseReducerPending(this.isStepwiseReducerPending());
+    });
+  }
+
+  /**
+   * Creates a validator that trims text before enforcing required, minimum, and maximum lengths.
+   * @param minimum - Smallest accepted number of non-whitespace characters.
+   * @param maximum - Largest accepted number of non-whitespace characters.
+   * @returns An Angular validator that reports the matching validation error or \`null\`.
+   */
+  #trimmedTextLength(minimum: number, maximum: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null =>
+      this.editor.validateTrimmedText(control.value, minimum, maximum);
+  }
+
+  /**
+   * Resolves a picker value to a known character and opens that character in edit mode.
    * Unknown identities are ignored so stale or invalid option values cannot disturb the editor.
    * @param value - Character identity received from the select element.
    * @returns Nothing; selection, form, and feedback signals are updated in place.
@@ -3029,12 +3124,64 @@ export class ExampleComponent {
     this.selectedCharacterId.set(character.id);
     this.#selectedCharacterBeforeCreate = null;
     this.editorMode.set('edit');
+    this.deleteCandidate.set(null);
     this.feedback.set(null);
     this.#patchForm(character);
   }
 
   /**
+   * Enters create mode, remembers the prior selection, and resets the form to clean defaults.
+   * Repeated calls preserve the original selection so cancel can still return to it.
+   * @returns Nothing; the editor signals and form state are reset in place.
+   */
+  protected startCreate(): void {
+    if (this.editorMode() !== 'create') {
+      this.#selectedCharacterBeforeCreate = this.selectedCharacterId();
+    }
+
+    this.selectedCharacterId.set(null);
+    this.editorMode.set('create');
+    this.deleteCandidate.set(null);
+    this.feedback.set(null);
+    this.#clearCharacterForm();
+  }
+
+  /**
+   * Discards current edits and restores the character selected before editing or creating began.
+   * When no valid selection exists, it falls back to a clean create form.
+   * @returns Nothing; editor mode, form values, and feedback are updated in place.
+   */
+  protected cancelEdit(): void {
+    if (this.editorMode() === 'create') {
+      const character = this.characters().find(
+        ({ id }) => id === this.#selectedCharacterBeforeCreate
+      );
+
+      if (character) {
+        this.selectedCharacterId.set(character.id);
+        this.#selectedCharacterBeforeCreate = null;
+        this.editorMode.set('edit');
+        this.#patchForm(character);
+        this.feedback.set(this.editor.feedback['newCharacterDiscarded']);
+        return;
+      }
+    }
+
+    const character = this.selectedCharacter();
+
+    if (character) {
+      this.editorMode.set('edit');
+      this.#patchForm(character);
+      this.feedback.set(this.editor.feedback['unsavedChangesDiscarded']);
+      return;
+    }
+
+    this.startCreate();
+  }
+
+  /**
    * Validates and normalizes form values before delegating create or update work to the service.
+   * The flow is form submission → service use case → FeatureCell pipeline → reactive collection update.
    * Invalid input or a missing edit selection produces feedback without changing collection state.
    * @returns Nothing; the selected identity, form, and feedback reflect the submitted operation.
    */
@@ -3083,98 +3230,6 @@ export class ExampleComponent {
   }
 
   /**
-   * Enters create mode, remembers the prior selection, and resets the form to clean defaults.
-   * Repeated calls preserve the original selection so cancel can still return to it.
-   * @returns Nothing; the editor signals and form state are reset in place.
-   */
-  protected startCreate(): void {
-    if (this.editorMode() !== 'create') {
-      this.#selectedCharacterBeforeCreate = this.selectedCharacterId();
-    }
-
-    this.selectedCharacterId.set(null);
-    this.editorMode.set('create');
-    this.feedback.set(null);
-    this.#clearCharacterForm();
-  }
-
-  /**
-   * Discards current edits and restores the character selected before editing or creating began.
-   * When no valid selection exists, it falls back to a clean create form.
-   * @returns Nothing; editor mode, form values, and feedback are updated in place.
-   */
-  protected cancelEdit(): void {
-    if (this.editorMode() === 'create') {
-      const character = this.characters().find(
-        ({ id }) => id === this.#selectedCharacterBeforeCreate
-      );
-
-      if (character) {
-        this.selectedCharacterId.set(character.id);
-        this.#selectedCharacterBeforeCreate = null;
-        this.editorMode.set('edit');
-        this.#patchForm(character);
-        this.feedback.set(this.editor.feedback['newCharacterDiscarded']);
-        return;
-      }
-    }
-
-    const character = this.selectedCharacter();
-
-    if (character) {
-      this.editorMode.set('edit');
-      this.#patchForm(character);
-      this.feedback.set(this.editor.feedback['unsavedChangesDiscarded']);
-      return;
-    }
-
-    this.startCreate();
-  }
-
-  /**
-   * Resolves the stable label used in messages and template fallbacks.
-   * @param character - Raw or reduced character whose display label should be returned.
-   * @returns A stable full-name label composed from the current character fields.
-   */
-  #characterLabel(character: StarWarsCharacter): string {
-    return \`\${character.name} \${character.lastName}\`;
-  }
-
-  /**
-   * Clears every editable character field and restores clean form metadata.
-   * @returns Nothing; the existing reactive form is reset in place.
-   */
-  #clearCharacterForm(): void {
-    this.characterForm.reset({
-      name: '',
-      lastName: '',
-      faction: '',
-      isForceSensitive: false
-    });
-    this.characterForm.markAsPristine();
-    this.characterForm.markAsUntouched();
-  }
-
-  /**
-   * Copies a character into the form and resets dirty and touched metadata for a clean edit state.
-   * @param character - Character whose values should populate the editor.
-   * @returns Nothing; the existing reactive form is updated in place.
-   */
-  #patchForm(character: StarWarsCharacter): void {
-    this.characterForm.setValue({
-      name: character.name,
-      lastName: character.lastName,
-      faction: character.faction,
-      isForceSensitive: character.isForceSensitive
-    });
-    this.characterForm.markAsPristine();
-    this.characterForm.markAsUntouched();
-  }
-
-  /** Holds the character awaiting explicit confirmation before removal. */
-  protected readonly deleteCandidate = signal<StarWarsCharacter | null>(null);
-
-  /**
    * Opens the confirmation state for the currently selected character.
    * No confirmation is shown when the selection cannot resolve to a character.
    * @returns Nothing; the delete candidate and feedback signals are updated in place.
@@ -3221,25 +3276,248 @@ export class ExampleComponent {
     );
   }
 
-  /** Derives the editor heading from the current mode so the template stays declarative. */
-  protected readonly editorTitle = computed(() =>
-    this.editorMode() === 'create' ? 'Add a character' : 'Update character'
-  );
-
-  /** Derives the submit-button label from the operation that saving will perform. */
-  protected readonly submitLabel = computed(() =>
-    this.editorMode() === 'create' ? 'Add character' : 'Save changes'
-  );
+  /**
+   * Delegates FeatureCell reset behavior to the service and clears the character form.
+   * @returns Nothing; the cleared state propagates through the reactive state APIs.
+   */
+  protected resetState(): void {
+    this.#exampleService.resetState();
+    this.#clearCharacterForm();
+  }
 
   /**
-   * Creates a validator that trims text before enforcing required, minimum, and maximum lengths.
-   * @param minimum - Smallest accepted number of non-whitespace characters.
-   * @param maximum - Largest accepted number of non-whitespace characters.
-   * @returns An Angular validator that reports the matching validation error or \`null\`.
+   * Resolves the authoritative hydration source and completes FeatureCell initialization.
+   * A missing resolver preserves the pending UI because no hydration cycle was completed.
+   * @returns Nothing; the hydrated characters continue through the full pipeline automatically.
    */
-  #trimmedTextLength(minimum: number, maximum: number): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null =>
-      this.editor.validateTrimmedText(control.value, minimum, maximum);
+  protected resolveHydration(): void {
+    const resolveHydration = exampleHydrate.getResolve();
+
+    if (!resolveHydration) {
+      return;
+    }
+
+    resolveHydration();
+    this.hydrationSettled.set(true);
+  }
+
+  /**
+   * Rejects the authoritative hydration source and completes initialization with an Error.
+   * Vault exposes the failure without evaluating configured initial State as a fallback.
+   * @returns Nothing; loading and Error State update through pipeline finalization.
+   */
+  protected rejectHydration(): void {
+    const rejectHydration = exampleHydrate.getReject();
+
+    if (!rejectHydration) {
+      return;
+    }
+
+    rejectHydration();
+    this.hydrationSettled.set(true);
+  }
+
+  /**
+   * Accepts the pending Stepwise Resolve candidate and resumes its pipeline.
+   * @returns Nothing; the resulting State arrives through the existing reactive stream.
+   */
+  protected acceptStepwiseResolve(): void {
+    this.#exampleService.acceptStepwiseResolve();
+  }
+
+  /**
+   * Blocks the pending Stepwise Resolve candidate and preserves committed State.
+   * @returns Nothing; the suspended pipeline terminates as a controlled no-op.
+   */
+  protected cancelStepwiseResolve(): void {
+    this.#exampleService.cancelStepwiseResolve();
+  }
+
+  /**
+   * Accepts the candidate produced by the Filter stage and resumes its pipeline.
+   * @returns Nothing; downstream reducers and State commitment remain reactive.
+   */
+  protected acceptStepwiseFilter(): void {
+    this.#exampleService.acceptStepwiseFilter();
+  }
+
+  /**
+   * Blocks the candidate produced by the Filter stage and preserves committed State.
+   * @returns Nothing; the suspended attempt terminates as a controlled no-op.
+   */
+  protected cancelStepwiseFilter(): void {
+    this.#exampleService.cancelStepwiseFilter();
+  }
+
+  /**
+   * Accepts the fully reduced candidate and allows State commitment to continue.
+   * @returns Nothing; the finalized State arrives through the reactive stream.
+   */
+  protected acceptStepwiseReducer(): void {
+    this.#exampleService.acceptStepwiseReducer();
+  }
+
+  /**
+   * Blocks the fully reduced candidate and preserves committed State.
+   * @returns Nothing; the suspended pipeline terminates as a controlled no-op.
+   */
+  protected cancelStepwiseReducer(): void {
+    this.#exampleService.cancelStepwiseReducer();
+  }
+
+  /**
+   * Reports whether a pending Stepwise stage should open its native confirmation prompt.
+   * @param isPending - Whether the current Stepwise stage is awaiting a decision.
+   * @param hasPrompted - Whether this pending request has already shown its dialog.
+   * @returns True when a browser prompt can be shown for the pending request.
+   */
+  protected shouldPromptForPendingStepwise(
+    isPending: boolean,
+    hasPrompted: boolean
+  ): boolean {
+    return isPending && !hasPrompted && typeof window !== 'undefined';
+  }
+
+  /** Processes the current Stepwise Resolve pending state and opens its prompt at most once. */
+  protected processStepwiseResolvePending(isPending: boolean): void {
+    if (!isPending) {
+      this.#hasPromptedStepwiseResolve = false;
+      return;
+    }
+
+    if (
+      !this.shouldPromptForPendingStepwise(
+        isPending,
+        this.#hasPromptedStepwiseResolve
+      )
+    ) {
+      return;
+    }
+
+    this.#hasPromptedStepwiseResolve = true;
+    this.handleStepwiseResolvePrompt();
+  }
+
+  /** Processes the current Stepwise Filter pending state and opens its prompt at most once. */
+  protected processStepwiseFilterPending(isPending: boolean): void {
+    if (!isPending) {
+      this.#hasPromptedStepwiseFilter = false;
+      return;
+    }
+
+    if (
+      !this.shouldPromptForPendingStepwise(
+        isPending,
+        this.#hasPromptedStepwiseFilter
+      )
+    ) {
+      return;
+    }
+
+    this.#hasPromptedStepwiseFilter = true;
+    this.handleStepwiseFilterPrompt();
+  }
+
+  /** Processes the current Stepwise Reducer pending state and opens its prompt at most once. */
+  protected processStepwiseReducerPending(isPending: boolean): void {
+    if (!isPending) {
+      this.#hasPromptedStepwiseReducer = false;
+      return;
+    }
+
+    if (
+      !this.shouldPromptForPendingStepwise(
+        isPending,
+        this.#hasPromptedStepwiseReducer
+      )
+    ) {
+      return;
+    }
+
+    this.#hasPromptedStepwiseReducer = true;
+    this.handleStepwiseReducerPrompt();
+  }
+
+  /** Opens the native confirmation flow for a pending Stepwise Resolve request. */
+  protected handleStepwiseResolvePrompt(): void {
+    if (
+      window.confirm(
+        'Stepwise Resolve is pending. Press OK to accept or Cancel to block the candidate.'
+      )
+    ) {
+      this.acceptStepwiseResolve();
+      return;
+    }
+
+    this.cancelStepwiseResolve();
+  }
+
+  /** Opens the native confirmation flow for a pending Stepwise Filter request. */
+  protected handleStepwiseFilterPrompt(): void {
+    if (
+      window.confirm(
+        'Stepwise Filter is pending. Press OK to accept or Cancel to block the candidate.'
+      )
+    ) {
+      this.acceptStepwiseFilter();
+      return;
+    }
+
+    this.cancelStepwiseFilter();
+  }
+
+  /** Opens the native confirmation flow for a pending Stepwise Reducer request. */
+  protected handleStepwiseReducerPrompt(): void {
+    if (
+      window.confirm(
+        'Stepwise Reducer is pending. Press OK to accept or Cancel to block the candidate.'
+      )
+    ) {
+      this.acceptStepwiseReducer();
+      return;
+    }
+
+    this.cancelStepwiseReducer();
+  }
+
+  /**
+   * Resolves the stable label used in messages and template fallbacks.
+   * @param character - Raw or reduced character whose display label should be returned.
+   * @returns The post-reducer full name when present, otherwise a local fallback.
+   */
+  #characterLabel(character: StarWarsCharacter): string {
+    return character.fullName ?? \`\${character.name} \${character.lastName}\`;
+  }
+
+  /**
+   * Clears every editable character field and restores clean form metadata.
+   * @returns Nothing; the existing reactive form is reset in place.
+   */
+  #clearCharacterForm(): void {
+    this.characterForm.reset({
+      name: '',
+      lastName: '',
+      faction: '',
+      isForceSensitive: false
+    });
+    this.characterForm.markAsPristine();
+    this.characterForm.markAsUntouched();
+  }
+
+  /**
+   * Copies a character into the form and resets dirty and touched metadata for a clean edit state.
+   * @param character - Character whose values should populate the editor.
+   * @returns Nothing; the existing reactive form is updated in place.
+   */
+  #patchForm(character: StarWarsCharacter): void {
+    this.characterForm.setValue({
+      name: character.name,
+      lastName: character.lastName,
+      faction: character.faction,
+      isForceSensitive: character.isForceSensitive
+    });
+    this.characterForm.markAsPristine();
+    this.characterForm.markAsUntouched();
   }
 }
 `,
@@ -3253,306 +3531,733 @@ import type { StarWarsCharacter } from './star-wars-character.shape';
  * @returns A new collection containing every character with a known last name.
  */
 export const removeUnknownLastNameFilter: FilterFunction<
-  readonly StarWarsCharacter[]
+  StarWarsCharacter[]
 > = (characters) => characters.filter(({ lastName }) => lastName !== 'unknown');
 `,
-    'src/example.service.spec.ts': `import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideZonelessChangeDetection } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+    'src/example.hydrate.spec.ts': `import { exampleHydrate } from './example.hydrate';
+
+describe('exampleHydrate', () => {
+  describe('controller availability', () => {
+    it('should not expose terminal controllers before hydration is requested', () => {
+      expect(exampleHydrate.getResolve()).toBeNull();
+      expect(exampleHydrate.getReject()).toBeNull();
+    });
+  });
+
+  describe('active request lifecycle', () => {
+    it('should resolve the authoritative collection and clear its controllers', async () => {
+      const promise = exampleHydrate.getPromise();
+      const resolve = exampleHydrate.getResolve();
+
+      expect(resolve).not.toBeNull();
+
+      resolve!();
+      const characters = await promise;
+
+      expect(characters.length).toBe(5);
+      expect(exampleHydrate.getResolve()).toBeNull();
+    });
+
+    it('should reject the authoritative source and clear its controllers', async () => {
+      const promise = exampleHydrate.getPromise();
+      const reject = exampleHydrate.getReject();
+
+      expect(reject).not.toBeNull();
+
+      reject!();
+
+      await expectAsync(promise).toBeRejectedWithError(
+        'The character hydration was rejected.'
+      );
+      expect(exampleHydrate.getReject()).toBeNull();
+    });
+  });
+
+  describe('stale controller safety', () => {
+    it('should ignore a stale resolver captured from a previous cycle', async () => {
+      const firstPromise = exampleHydrate.getPromise();
+      const staleResolve = exampleHydrate.getResolve()!;
+
+      staleResolve();
+      await firstPromise;
+
+      const secondPromise = exampleHydrate.getPromise();
+      let secondSettled = false;
+      void secondPromise.then(() => {
+        secondSettled = true;
+      });
+
+      staleResolve();
+      await Promise.resolve();
+
+      expect(secondSettled).toBeFalse();
+
+      exampleHydrate.getResolve()!();
+
+      await expectAsync(secondPromise).toBeResolved();
+    });
+
+    it('should ignore a stale rejecter captured from a previous cycle', async () => {
+      const firstPromise = exampleHydrate.getPromise();
+      const staleReject = exampleHydrate.getReject()!;
+
+      staleReject();
+      await expectAsync(firstPromise).toBeRejected();
+
+      const secondPromise = exampleHydrate.getPromise();
+      let secondSettled = false;
+      void secondPromise.catch(() => {
+        secondSettled = true;
+      });
+
+      staleReject();
+      await Promise.resolve();
+
+      expect(secondSettled).toBeFalse();
+
+      exampleHydrate.getReject()!();
+
+      await expectAsync(secondPromise).toBeRejectedWithError(
+        'The character hydration was rejected.'
+      );
+    });
+  });
+});
+`,
+    'src/example.hydrate.ts': `import type {
+  RawStarWarsCharacter,
+  StarWarsCharacter
+} from './star-wars-character.shape';
+
+/** Raw characters supplied by the tutorial's authoritative hydration source. */
+const HYDRATED_CHARACTERS: readonly RawStarWarsCharacter[] = [
+  {
+    id: 301,
+    name: 'Cal',
+    lastName: 'Kestis',
+    faction: 'Jedi Order',
+    isForceSensitive: true
+  },
+  {
+    id: 302,
+    name: 'Jyn',
+    lastName: 'Erso',
+    faction: 'Rebel Alliance',
+    isForceSensitive: false
+  },
+  {
+    id: 303,
+    name: 'Bo-Katan',
+    lastName: 'Kryze',
+    faction: 'Mandalorians',
+    isForceSensitive: false
+  },
+  {
+    id: 304,
+    name: 'Mace',
+    lastName: 'Windu',
+    faction: 'Jedi Order',
+    isForceSensitive: true
+  },
+  {
+    id: 305,
+    name: 'BB-8',
+    lastName: 'unknown',
+    faction: 'Resistance',
+    isForceSensitive: false
+  }
+];
+
+/** Resolves the pending hydration with its authoritative character collection. */
+type CharacterResolver = (characters: StarWarsCharacter[]) => void;
+
+/** Rejects the pending hydration with its simulated initialization failure. */
+type CharacterRejecter = (reason: Error) => void;
+
+/**
+ * Coordinates the manually settled Promise used by the hydration teaching example.
+ * The singleton lets the service register one deferred initialization source while
+ * the component controls whether that authoritative source resolves or rejects.
+ */
+class ExampleHydrate {
+  /** Reuses the hydration Promise requested during the active initialization cycle. */
+  #pendingPromise: Promise<StarWarsCharacter[]> | null = null;
+
+  /** Holds the native resolver until hydration completes successfully. */
+  #resolveCharacters: CharacterResolver | null = null;
+
+  /** Holds the native rejecter until hydration terminates with an Error. */
+  #rejectCharacters: CharacterRejecter | null = null;
+
+  /**
+   * Creates or returns the deferred source that \`hydrate()\` evaluates during \`initialize()\`.
+   * @returns The active Promise for the authoritative initial character State.
+   */
+  getPromise(): Promise<StarWarsCharacter[]> {
+    if (!this.#pendingPromise) {
+      this.#pendingPromise = new Promise((resolve, reject) => {
+        this.#resolveCharacters = resolve;
+        this.#rejectCharacters = reject;
+      });
+    }
+
+    return this.#pendingPromise;
+  }
+
+  /**
+   * Returns a controller-safe function that successfully completes hydration once.
+   * The resolved collection is cloned so the pipeline receives detached teaching data.
+   * @returns A zero-argument resolver, or \`null\` before hydration has started.
+   */
+  getResolve(): (() => void) | null {
+    const resolveCharacters = this.#resolveCharacters;
+
+    if (!resolveCharacters) {
+      return null;
+    }
+
+    return () => {
+      if (this.#resolveCharacters !== resolveCharacters) {
+        return;
+      }
+
+      this.#clearPendingRequest();
+      resolveCharacters(
+        HYDRATED_CHARACTERS.map((character) => ({ ...character }))
+      );
+    };
+  }
+
+  /**
+   * Returns a controller-safe function that fails the authoritative source once.
+   * The rejection enters Vault's initialization Error lifecycle without consulting
+   * configured initial State or persistence as a fallback.
+   * @returns A zero-argument rejecter, or \`null\` before hydration has started.
+   */
+  getReject(): (() => void) | null {
+    const rejectCharacters = this.#rejectCharacters;
+
+    if (!rejectCharacters) {
+      return null;
+    }
+
+    return () => {
+      if (this.#rejectCharacters !== rejectCharacters) {
+        return;
+      }
+
+      this.#clearPendingRequest();
+      rejectCharacters(new Error('The character hydration was rejected.'));
+    };
+  }
+
+  /** Releases the completed Promise and both terminal controllers. */
+  #clearPendingRequest(): void {
+    this.#resolveCharacters = null;
+    this.#rejectCharacters = null;
+    this.#pendingPromise = null;
+  }
+}
+
+/** Shared coordinator used by the service and component for the hydration example. */
+export const exampleHydrate = new ExampleHydrate();
+`,
+    'src/example.service.spec.ts': `import type { FactoryProvider } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
+import {
+  withArrayAppendMergeBehavior,
+  withStepwiseController,
+  withStepwiseFilterBehavior,
+  withStepwiseReducerBehavior,
+  withStepwiseResolveBehavior
+} from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
+import { TestBed } from '@angular/core/testing';
+import { exampleHydrate } from './example.hydrate';
 import { ExampleService } from './example.service';
-import { StarWarsCharacter } from './star-wars-character.shape';
+import type { StarWarsCharacter } from './star-wars-character.shape';
+import { of } from 'rxjs';
 
 describe('ExampleService', () => {
   const key = 'star-wars-character';
-  const initialCharacters: readonly StarWarsCharacter[] = [
+  const initialCharacters: StarWarsCharacter[] = [
     {
-      id: 10,
-      name: 'Leia',
-      lastName: 'Organa',
-      faction: 'Rebel Alliance',
-      isForceSensitive: false
-    },
-    {
-      id: 20,
+      id: 1,
       name: 'Luke',
       lastName: 'Skywalker',
       faction: 'Jedi Order',
       isForceSensitive: true
+    },
+    {
+      id: 2,
+      name: 'Leia',
+      lastName: 'Organa',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
     }
   ];
 
-  const withDerivedFields = (
-    characters: readonly StarWarsCharacter[]
-  ): readonly StarWarsCharacter[] =>
-    characters.map((character) => ({
-      ...character,
-      forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
-      fullName: \`\${character.name} \${character.lastName}\`
-    }));
+  const expectedCharacters = (characters: readonly StarWarsCharacter[]) =>
+    [...characters]
+      .map((character) => ({
+        ...character,
+        forceSensitiveDisplay: character.isForceSensitive ? 'Yes' : 'No',
+        fullName: \`\${character.name} \${character.lastName}\`
+      }))
+      .sort((left, right) => left.lastName.localeCompare(right.lastName));
+
+  const acceptStepwiseAndSettle = async (
+    service: ExampleService
+  ): Promise<void> => {
+    let settled = false;
+    const settledPromise = vaultSettled(key).then(() => {
+      settled = true;
+    });
+
+    while (!settled) {
+      await Promise.race([
+        settledPromise,
+        new Promise<void>((resolve) => setTimeout(resolve))
+      ]);
+
+      if (service.isStepwiseResolvePending()) {
+        service.acceptStepwiseResolve();
+        continue;
+      }
+
+      if (service.isStepwiseFilterPending()) {
+        service.acceptStepwiseFilter();
+        continue;
+      }
+
+      if (service.isStepwiseReducerPending()) {
+        service.acceptStepwiseReducer();
+      }
+    }
+
+    await settledPromise;
+  };
 
   const configureService = async (
-    initialState: readonly StarWarsCharacter[] | null = initialCharacters
+    initialState: StarWarsCharacter[] | null = initialCharacters
   ): Promise<ExampleService> => {
     await TestBed.configureTestingModule({
       providers: [
         provideVaultTesting(),
         provideZonelessChangeDetection(),
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        provideFeatureCell(ExampleService, { key, initialState }, [], [])
+        provideFeatureCell(
+          ExampleService,
+          { key, initialState },
+          [
+            withArrayAppendMergeBehavior,
+            withStepwiseResolveBehavior,
+            withStepwiseFilterBehavior,
+            withStepwiseReducerBehavior
+          ],
+          [withStepwiseController]
+        )
       ]
     });
 
-    const configuredService = TestBed.inject(ExampleService);
-    await vaultSettled(key);
+    spyOn(exampleHydrate, 'getPromise').and.returnValue(
+      Promise.resolve(initialState ?? undefined) as Promise<StarWarsCharacter[]>
+    );
 
-    return configuredService;
+    const service = TestBed.inject(ExampleService);
+    await acceptStepwiseAndSettle(service);
+    return service;
   };
 
-  beforeEach(async () => {
-    TestBed.resetTestingModule();
-  });
+  beforeEach(() => TestBed.resetTestingModule());
 
-  it('should initialize with the configured FeatureCell State', async () => {
+  it('should initialize and expose reduced FeatureCell State', async () => {
     const service = await configureService();
 
-    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
-    expect(service.state.isLoading()).toBeFalse();
-    expect(service.state.error()).toBeNull();
+    expect(service.state.value()).toEqual(
+      expectedCharacters(initialCharacters)
+    );
     expect(service.state.hasValue()).toBeTrue();
+    expect(service.state.error()).toBeNull();
   });
 
-  it('should submit a new character using the next available id', async () => {
+  it('should expose each Stepwise callback request', async () => {
     const service = await configureService();
 
-    const createdCharacter = service.createCharacter({
-      name: 'Han',
-      lastName: 'Solo',
-      faction: 'Rebel Alliance',
-      isForceSensitive: false
-    });
-
-    await vaultSettled(key);
-
-    expect(createdCharacter).toEqual({
-      id: 21,
-      name: 'Han',
-      lastName: 'Solo',
-      faction: 'Rebel Alliance',
-      isForceSensitive: false
-    });
-    expect(service.state.value()).toEqual(
-      withDerivedFields([createdCharacter])
+    expect(service.stepwiseResolveRequest()).toEqual(
+      jasmine.objectContaining({ candidate: jasmine.any(Array) })
+    );
+    expect(service.stepwiseFilterRequest()).toEqual(
+      jasmine.objectContaining({ candidate: jasmine.any(Array) })
+    );
+    expect(service.stepwiseReducerRequest()).toEqual(
+      jasmine.objectContaining({ candidate: jasmine.any(Array) })
     );
   });
 
-  it('should create the first character with id 1 when no value exists', async () => {
+  it('should safely ignore decisions when no request is pending', async () => {
+    const service = await configureService();
+
+    service.acceptStepwiseResolve();
+    service.cancelStepwiseResolve();
+    service.acceptStepwiseFilter();
+    service.cancelStepwiseFilter();
+    service.acceptStepwiseReducer();
+    service.cancelStepwiseReducer();
+
+    expect(service.isStepwiseResolvePending()).toBeFalse();
+    expect(service.isStepwiseFilterPending()).toBeFalse();
+    expect(service.isStepwiseReducerPending()).toBeFalse();
+  });
+
+  it('should create, update, and remove characters through the FeatureCell', async () => {
+    const service = await configureService();
+    const created = service.createCharacter({
+      name: 'Han',
+      lastName: 'Solo',
+      faction: 'Rebel Alliance',
+      isForceSensitive: false
+    });
+
+    expect(created.id).toBe(3);
+    await acceptStepwiseAndSettle(service);
+    service.updateCharacter(3, { ...created, name: 'General Han' });
+    await acceptStepwiseAndSettle(service);
+    service.removeCharacter(3);
+    await acceptStepwiseAndSettle(service);
+
+    expect(service.state.value()).toEqual(
+      expectedCharacters(initialCharacters)
+    );
+  });
+
+  it('should reset and restore the captured initial characters', async () => {
+    const service = await configureService();
+
+    service.resetState();
+    expect(service.restoreInitialCharacters()).toEqual(
+      jasmine.objectContaining({
+        id: 2,
+        name: 'Leia',
+        lastName: 'Organa',
+        forceSensitiveDisplay: 'No',
+        fullName: 'Leia Organa'
+      })
+    );
+  });
+
+  it('should handle empty initial State in update, remove, and restore flows', async () => {
     const service = await configureService(null);
 
-    const createdCharacter = service.createCharacter({
-      name: 'Han',
-      lastName: 'Solo',
-      faction: 'Rebel Alliance',
-      isForceSensitive: false
-    });
-
-    await vaultSettled(key);
-
-    expect(createdCharacter).toEqual({
-      id: 1,
-      name: 'Han',
-      lastName: 'Solo',
-      faction: 'Rebel Alliance',
-      isForceSensitive: false
-    });
-    expect(service.state.value()).toEqual(
-      withDerivedFields([createdCharacter])
-    );
-  });
-
-  it('should submit the same-state candidate through the FeatureCell', async () => {
-    const service = await configureService();
-
-    service.submitSameState();
-
-    await vaultSettled(key);
-
-    expect(service.state.value()).toEqual(
-      withDerivedFields([
-        {
-          id: 501,
-          name: 'Rey',
-          lastName: 'Skywalker',
-          faction: 'Jedi Order',
-          isForceSensitive: true
-        }
-      ])
-    );
-  });
-
-  it('should submit changed-state candidates through the FeatureCell cycle', async () => {
-    const service = await configureService();
-
-    service.submitChangedState();
-    await vaultSettled(key);
-
-    expect(service.state.value()).toEqual(
-      withDerivedFields([
-        {
-          id: 601,
-          name: 'Qui-Gon',
-          lastName: 'Jinn',
-          faction: 'Jedi Order',
-          isForceSensitive: true
-        }
-      ])
-    );
-  });
-
-  it('should suppress an update when the character identity is unchanged', async () => {
-    const service = await configureService();
-
-    const updatedCharacter = service.updateCharacter(10, {
-      name: 'General Leia',
-      lastName: 'Organa',
-      faction: 'Resistance',
-      isForceSensitive: false
-    });
-
-    await vaultSettled(key);
-
-    expect(updatedCharacter).toEqual({
-      id: 10,
-      name: 'General Leia',
-      lastName: 'Organa',
-      faction: 'Resistance',
-      isForceSensitive: false
-    });
-    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
-  });
-
-  it('should leave the collection unchanged when updating a missing character', async () => {
-    const service = await configureService();
-
-    const updatedCharacter = service.updateCharacter(999, {
+    service.updateCharacter(3, {
       name: 'Missing',
       lastName: 'Character',
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
+    await acceptStepwiseAndSettle(service);
 
-    await vaultSettled(key);
-
-    expect(updatedCharacter).toEqual({
-      id: 999,
-      name: 'Missing',
-      lastName: 'Character',
-      faction: 'Unaffiliated',
-      isForceSensitive: false
-    });
-    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
-  });
-
-  it('should safely update against an empty collection when no value exists', async () => {
-    const service = await configureService(null);
-
-    const updatedCharacter = service.updateCharacter(1, {
-      name: 'Missing',
-      lastName: 'Character',
-      faction: 'Unaffiliated',
-      isForceSensitive: false
-    });
-
-    await vaultSettled(key);
-
-    expect(updatedCharacter).toEqual({
-      id: 1,
-      name: 'Missing',
-      lastName: 'Character',
-      faction: 'Unaffiliated',
-      isForceSensitive: false
-    });
-    expect(service.state.value()).toEqual([]);
-  });
-
-  it('should suppress a removal when the remaining character identities are unchanged', async () => {
-    const service = await configureService();
-
-    service.removeCharacter(10);
-
-    await vaultSettled(key);
-
-    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
-  });
-
-  it('should safely remove against an empty collection when no value exists', async () => {
-    const service = await configureService(null);
-
-    service.removeCharacter(10);
-
-    await vaultSettled(key);
+    service.removeCharacter(3);
+    await acceptStepwiseAndSettle(service);
 
     expect(service.state.value()).toEqual([]);
+    expect(service.restoreInitialCharacters()).toBeNull();
+  });
+
+  it('should capture an empty baseline when a valued snapshot has no value', async () => {
+    const featureCellProviders = provideFeatureCell(ExampleService, {
+      key,
+      initialState: null
+    });
+    const featureCellProvider = featureCellProviders[0] as FactoryProvider;
+    const vault = jasmine.createSpyObj('FeatureCell', [
+      'hydrate',
+      'withStepwiseResolve',
+      'filters',
+      'withStepwiseFilter',
+      'reducers',
+      'withStepwiseReducer',
+      'initialize',
+      'replaceState'
+    ]);
+
+    Object.assign(vault, {
+      state: {
+        value: signal<StarWarsCharacter[] | undefined>(undefined)
+      },
+      state\$: of({ snapshot: { hasValue: true, value: undefined } })
+    });
+
+    vault.hydrate.and.returnValue(vault);
+    vault.withStepwiseResolve.and.returnValue(vault);
+    vault.filters.and.returnValue(vault);
+    vault.withStepwiseFilter.and.returnValue(vault);
+    vault.reducers.and.returnValue(vault);
+    vault.withStepwiseReducer.and.returnValue(vault);
+
+    await TestBed.configureTestingModule({
+      providers: [
+        provideVaultTesting(),
+        provideZonelessChangeDetection(),
+        { provide: featureCellProvider.provide, useValue: vault },
+        ExampleService
+      ]
+    });
+
+    const service = TestBed.inject(ExampleService);
+
+    expect(service.restoreInitialCharacters()).toBeNull();
+    expect(vault.replaceState).toHaveBeenCalledOnceWith({ value: [] });
   });
 });
 `,
-    'src/example.service.ts': `import { Injectable } from '@angular/core';
-import { withDistinctUntilChanged } from '@sdux-vault/addons';
+    'src/example.service.ts': `// example.service.ts
+import { inject, Injectable, Injector, signal } from '@angular/core';
+import { type StepwiseBehaviorDecisionShape } from '@sdux-vault/addons';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
+import { filter, take } from 'rxjs';
 import {
+  cloneCharacters,
   createCharacterState,
   deriveForceSensitiveDisplay,
   deriveFullName,
-  getDistinctChangedStateCharacter,
   getNextCharacterId,
-  withCharactersSortedByLastName,
-  type StarWarsCharacterDraft
+  type StarWarsCharacterDraft,
+  withCharactersSortedByLastName
 } from './example.character-domain';
 import { removeUnknownLastNameFilter } from './example.filter';
-import type {
-  RawStarWarsCharacter,
-  StarWarsCharacter
-} from './star-wars-character.shape';
+import { exampleHydrate } from './example.hydrate';
+import type { StarWarsCharacter } from './star-wars-character.shape';
 
-/** Structurally identical merge delta reconstructed for every Same State request. */
-/** Teaching Point: ex-027 */
-const DISTINCT_SAME_STATE_CHARACTER: RawStarWarsCharacter = {
-  id: 501,
-  name: 'Rey',
-  lastName: 'Skywalker',
-  faction: 'Jedi Order',
-  isForceSensitive: true
-};
+/** Values exposed while a Resolve-stage candidate awaits a tutorial decision. */
+/** Teaching Point: ex-038 */
+export interface StepwiseResolveRequest {
+  /** Last value committed before the pending pipeline attempt began. */
+  readonly current: StarWarsCharacter[] | undefined;
 
+  /** Fully resolved pre-filter candidate waiting for an explicit continue or block decision. */
+  readonly candidate: StarWarsCharacter[];
+}
+
+/** Values exposed while a filtered candidate awaits a tutorial decision. */
+/** Teaching Point: ex-039 */
+export interface StepwiseFilterRequest {
+  /** Last value committed before the pending pipeline attempt began. */
+  readonly current: StarWarsCharacter[] | undefined;
+
+  /** Candidate produced by the Filter stage and awaiting policy approval. */
+  readonly candidate: StarWarsCharacter[];
+}
+
+/** Values exposed while a reduced candidate awaits a tutorial decision. */
+/** Teaching Point: ex-040 */
+export interface StepwiseReducerRequest {
+  /** Last value committed before the pending pipeline attempt began. */
+  readonly current: StarWarsCharacter[] | undefined;
+
+  /** Candidate produced by all reducers and awaiting policy approval. */
+  readonly candidate: StarWarsCharacter[];
+}
+
+// Teaching point: CRUD Foundation (ex-007)
 /**
  * Owns the character collection and exposes domain operations for the tutorial component.
  * The FeatureCell decorator associates this service with a typed state boundary, while
  * \`injectVault\` provides the reactive state and update methods for that boundary.
+ * Create, update, remove, and restore operations all flow through the FeatureCell pipeline.
  * ️**Architectural Boundary:** Components consume this service instead of accessing the
  * FeatureCell directly, keeping state ownership and character rules in one place.
  */
-@FeatureCell<readonly StarWarsCharacter[]>('star-wars-character')
+@FeatureCell<StarWarsCharacter[]>('star-wars-character')
 @Injectable({ providedIn: 'root' })
 export class ExampleService {
   /**
    * Provides the strongly typed FeatureCell API associated with this decorated service.
    * Every collection update passes through this reference before reactive state changes.
    */
-  readonly #vault = injectVault<readonly StarWarsCharacter[]>(ExampleService);
+  readonly #vault = injectVault<StarWarsCharacter[]>(ExampleService);
 
+  /** Supplies the Angular injection context required to create an HTTP resource. */
+  readonly #injector = inject(Injector);
+
+  /**
+   * Stores a detached copy of the first resolved character collection.
+   * Restore operations use this baseline instead of any later edited state.
+   */
+  #initialCharacters: StarWarsCharacter[] = [];
+
+  /**
+   * Tracks the identity assigned to the next newly created character.
+   * Initialization advances it beyond the largest ID in the initial collection.
+   */
+  #nextCharacterId = 1;
+
+  /** Retains the latest Resolve-stage comparison shown by the tutorial. */
+  /** Teaching Point: ex-038 */
+  readonly #stepwiseResolveRequest = signal<StepwiseResolveRequest | undefined>(
+    undefined
+  );
+
+  // Teaching point: Stepwise Resolve (ex-038)
+  /** Exposes the current and candidate values supplied to the Stepwise callback. */
+  /** Teaching Point: ex-038 */
+  readonly stepwiseResolveRequest = this.#stepwiseResolveRequest.asReadonly();
+
+  /** Tracks whether the active callback is waiting for a user decision. */
+  /** Teaching Point: ex-038 */
+  readonly #isStepwiseResolvePending = signal(false);
+
+  /** Enables the Accept and Cancel controls only while a callback is suspended. */
+  /** Teaching Point: ex-038 */
+  readonly isStepwiseResolvePending =
+    this.#isStepwiseResolvePending.asReadonly();
+
+  /** Holds the one-use decision functions for the active Stepwise request. */
+  /** Teaching Point: ex-038 */
+  #stepwiseResolveDecisions: StepwiseBehaviorDecisionShape | undefined;
+
+  /**
+   * Suspends the Resolve stage and publishes both callback values for inspection.
+   * The pipeline remains paused until the component delegates either an Accept
+   * (\`continue\`) or Cancel (\`block\`) decision back to this service.
+   */
+  /** Teaching Point: ex-038 */
+  readonly #captureStepwiseResolve = (
+    current: StarWarsCharacter[] | undefined,
+    candidate: StarWarsCharacter[],
+    decisions: StepwiseBehaviorDecisionShape
+  ): void => {
+    this.#stepwiseResolveRequest.set({ current, candidate });
+    this.#stepwiseResolveDecisions = decisions;
+    this.#isStepwiseResolvePending.set(true);
+  };
+
+  /** Retains the latest filtered candidate comparison shown by the tutorial. */
+  /** Teaching Point: ex-039 */
+  readonly #stepwiseFilterRequest = signal<StepwiseFilterRequest | undefined>(
+    undefined
+  );
+
+  // Teaching point: Stepwise Filter (ex-039)
+  /** Exposes the current and filtered candidate values supplied to the callback. */
+  /** Teaching Point: ex-039 */
+  readonly stepwiseFilterRequest = this.#stepwiseFilterRequest.asReadonly();
+
+  /** Tracks whether the Filter-stage callback is waiting for a user decision. */
+  /** Teaching Point: ex-039 */
+  readonly #isStepwiseFilterPending = signal(false);
+
+  /** Enables the Filter Accept and Cancel controls only while the stage is suspended. */
+  /** Teaching Point: ex-039 */
+  readonly isStepwiseFilterPending = this.#isStepwiseFilterPending.asReadonly();
+
+  /** Holds the one-use decision functions for the active Filter-stage request. */
+  /** Teaching Point: ex-039 */
+  #stepwiseFilterDecisions: StepwiseBehaviorDecisionShape | undefined;
+
+  /**
+   * Suspends the filtered candidate and publishes both callback values for inspection.
+   * The pipeline remains paused until the component delegates an explicit decision.
+   */
+  /** Teaching Point: ex-039 */
+  readonly #captureStepwiseFilter = (
+    current: StarWarsCharacter[] | undefined,
+    candidate: StarWarsCharacter[],
+    decisions: StepwiseBehaviorDecisionShape
+  ): void => {
+    this.#stepwiseFilterRequest.set({ current, candidate });
+    this.#stepwiseFilterDecisions = decisions;
+    this.#isStepwiseFilterPending.set(true);
+  };
+
+  /** Retains the latest reduced candidate comparison shown by the tutorial. */
+  /** Teaching Point: ex-040 */
+  readonly #stepwiseReducerRequest = signal<StepwiseReducerRequest | undefined>(
+    undefined
+  );
+
+  // Teaching point: Stepwise Reducer (ex-040)
+  /** Exposes the current and reduced candidate values supplied to the callback. */
+  /** Teaching Point: ex-040 */
+  readonly stepwiseReducerRequest = this.#stepwiseReducerRequest.asReadonly();
+
+  /** Tracks whether the Reducer-stage callback is waiting for a user decision. */
+  /** Teaching Point: ex-040 */
+  readonly #isStepwiseReducerPending = signal(false);
+
+  /** Enables Reducer controls only while the stage is suspended. */
+  /** Teaching Point: ex-040 */
+  readonly isStepwiseReducerPending =
+    this.#isStepwiseReducerPending.asReadonly();
+
+  /** Holds the one-use decision functions for the active Reducer-stage request. */
+  /** Teaching Point: ex-040 */
+  #stepwiseReducerDecisions: StepwiseBehaviorDecisionShape | undefined;
+
+  /**
+   * Suspends the reduced candidate and publishes both callback values for inspection.
+   * The pipeline remains paused until the component delegates an explicit decision.
+   */
+  /** Teaching Point: ex-040 */
+  readonly #captureStepwiseReducer = (
+    current: StarWarsCharacter[] | undefined,
+    candidate: StarWarsCharacter[],
+    decisions: StepwiseBehaviorDecisionShape
+  ): void => {
+    this.#stepwiseReducerRequest.set({ current, candidate });
+    this.#stepwiseReducerDecisions = decisions;
+    this.#isStepwiseReducerPending.set(true);
+  };
+
+  // Teaching point: Raw StateSnapshot (ex-016)
   /**
    * Exposes the FeatureCell's Angular signal state for value, loading, error, and presence checks.
    * Consumers can bind to these reactive accessors without subscribing manually.
    */
+  /** Teaching Point: ex-016 */
   readonly state = this.#vault.state;
 
+  // Teaching point: Raw StateSnapshot\$ (ex-017)
   /**
-   * Initializes the FeatureCell for the add/edit tutorial slice.
+   * Exposes committed FeatureCell snapshots for consumers that teach observable state access.
+   * Each emission carries the same state value available through the Angular signal API.
+   */
+  /** Teaching Point: ex-017 */
+  readonly state\$ = this.#vault.state\$;
+
+  /**
+   * Captures the first committed collection, then configures and initializes the FeatureCell pipeline.
    */
   constructor() {
+    this.#captureInitialCharacters();
+
+    /*
+     * \`.hydrate()\` registers a deferred factory as the authoritative source for
+     * this FeatureCell's initial State. The factory is declared before
+     * \`.initialize()\` but does not execute until initialization begins.
+     *
+     * Resolving the Promise sends the hydrated collection through the complete
+     * Replace → Resolve → Filter → Tap → Reducer → Emit pipeline. Rejecting it
+     * emits an initialization Error without falling back to configured initial
+     * State or persistence because hydration has the highest precedence.
+     */
+    this.#vault.hydrate(() => exampleHydrate.getPromise());
+
+    // Teaching point: Stepwise Resolve (ex-038)
+    /*
+     * \`.withStepwiseResolve()\` installs an explicit approval boundary at the
+     * Resolve stage. Its \`StepwiseFunction\` receives the last committed State,
+     * the fully resolved candidate, and a one-use decision contract.
+     *
+     * This callback deliberately makes no immediate decision. It publishes both
+     * values for inspection and leaves the pipeline suspended until the tutorial
+     * UI calls \`continue()\` through Accept or \`block()\` through Cancel. Exactly
+     * one terminal decision is consumed for each pending request.
+     */
+    this.#vault.withStepwiseResolve!({
+      stepwiseCallback: this.#captureStepwiseResolve
+    });
+
     /*
      * \`.filters()\` registers \`removeUnknownLastNameFilter\` as a
      * \`FilterFunction<readonly StarWarsCharacter[]>\`.
@@ -3563,12 +4268,22 @@ export class ExampleService {
      * the teaching flag is enabled, it throws deliberately so the example can show
      * pipeline error normalization without allowing the candidate to commit.
      */
-    this.#vault.filters([
-      removeUnknownLastNameFilter,
-      (characters) => {
-        return characters;
-      }
-    ]);
+    this.#vault.filters([removeUnknownLastNameFilter]);
+
+    // Teaching point: Stepwise Filter (ex-039)
+    /*
+     * \`.withStepwiseFilter()\` installs a second explicit approval boundary
+     * immediately after the Filter stage. Its \`StepwiseFunction\` receives the
+     * last committed State, the already-filtered candidate, and the same
+     * one-use decision contract demonstrated by Stepwise Resolve.
+     *
+     * The callback publishes its isolated inputs without mutating them. Accept
+     * invokes \`continue()\` so reducers may process the filtered candidate;
+     * Cancel invokes \`block()\` so the attempt ends without changing State.
+     */
+    this.#vault.withStepwiseFilter!({
+      stepwiseCallback: this.#captureStepwiseFilter
+    });
 
     /*
      * The first \`.reducers()\` entry is a delegating
@@ -3600,20 +4315,19 @@ export class ExampleService {
     ]);
 
     /*
-     * \`.operators()\` installs a domain-specific Distinct Until Changed comparator
-     * at the Operator stage. Array Append Merge has already materialized the full
-     * candidate, so the callback compares stable character identities without relying
-     * on array position. A candidate containing no new IDs returns \`VAULT_NOOP\`, even
-     * when a downstream reducer sorted the previously committed collection.
+     * \`.withStepwiseReducer()\` installs the final approval boundary after all
+     * reducers have completed. Its \`StepwiseFunction\` receives the last committed
+     * State and the fully reduced candidate, including the derived force display
+     * values, deterministic last-name ordering, and display-ready full names
+     * produced above.
+     *
+     * Accept invokes \`continue()\` so the reduced candidate may proceed toward
+     * commitment; Cancel invokes \`block()\` so the attempt ends without replacing
+     * the current State. The callback observes isolated inputs and mutates neither.
      */
-    this.#vault.operators([
-      withDistinctUntilChanged<readonly StarWarsCharacter[]>(
-        (incoming, previous) =>
-          incoming.every(({ id }) =>
-            previous.some((character) => character.id === id)
-          )
-      )
-    ]);
+    this.#vault.withStepwiseReducer!({
+      stepwiseCallback: this.#captureStepwiseReducer
+    });
 
     /*
      * \`.initialize()\` finalizes the pipeline configuration and activates the
@@ -3624,39 +4338,103 @@ export class ExampleService {
     this.#vault.initialize();
   }
 
-  /** Selects the next meaningful Distinct Until Changed replacement. */
-  /** Teaching Point: ex-027 */
-  #distinctChangedStateIndex = 0;
-
-  /**
-   * Reconstructs the same character and submits it through \`mergeState\`.
-   * Array Append Merge combines each newly allocated Rey with current State before
-   * the Operator stage. The identity comparison accepts the first candidate and
-   * suppresses later candidates that introduce no previously unseen character ID.
-   * @returns Nothing; consumers observe the first accepted merged collection reactively.
-   */
-  submitSameState(): void {
-    this.#vault.mergeState([{ ...DISTINCT_SAME_STATE_CHARACTER }]);
+  #captureInitialCharacters(): void {
+    this.#vault.state\$
+      .pipe(
+        filter(({ snapshot }) => snapshot.hasValue),
+        take(1)
+      )
+      .subscribe(({ snapshot }) => {
+        this.#initialCharacters = cloneCharacters(snapshot.value ?? []);
+        this.#nextCharacterId = getNextCharacterId(this.#initialCharacters);
+      });
   }
 
-  // Teaching point: Distinct Until Changed (ex-027)
   /**
-   * Merges the next Jedi into State in a deterministic four-character cycle.
-   * Modulo arithmetic advances the index and wraps it to zero after the fourth
-   * request. Array Append Merge materializes the complete collection before the
-   * Operator accepts new identities and suppresses identities already in State.
-   * @returns Nothing; consumers observe accepted merged collections reactively.
+   * Accepts the active Resolve-stage candidate and resumes its pipeline.
+   * A call made without a pending callback is safely ignored.
    */
-  submitChangedState(): void {
-    const { character, nextIndex } = getDistinctChangedStateCharacter(
-      this.#distinctChangedStateIndex
-    );
-
-    this.#distinctChangedStateIndex = nextIndex;
-
-    this.#vault.mergeState([character]);
+  /** Teaching point: Accept Stepwise Resolve (ex-038) */
+  acceptStepwiseResolve(): void {
+    this.#completeStepwiseResolve('continue');
   }
 
+  /**
+   * Cancels the active Resolve-stage candidate while preserving committed State.
+   * A call made without a pending callback is safely ignored.
+   */
+  /** Teaching point: Accept Stepwise Resolve (ex-038) */
+  cancelStepwiseResolve(): void {
+    this.#completeStepwiseResolve('block');
+  }
+
+  /** Accepts the active filtered candidate and allows reducers to continue. */
+  /** Teaching point: Accept Stepwise Filter (ex-039) */
+  acceptStepwiseFilter(): void {
+    this.#completeStepwiseFilter('continue');
+  }
+
+  /** Cancels the active filtered candidate while preserving committed State. */
+  /** Teaching point: Cancel Stepwise Filter (ex-039) */
+  cancelStepwiseFilter(): void {
+    this.#completeStepwiseFilter('block');
+  }
+
+  /** Accepts the fully reduced candidate and allows commitment to continue. */
+  /** Teaching point: Accept Stepwise Reducer (ex-040) */
+  acceptStepwiseReducer(): void {
+    this.#completeStepwiseReducer('continue');
+  }
+
+  /** Cancels the fully reduced candidate while preserving committed State. */
+  /** Teaching point: Cancel Stepwise Reducer (ex-040) */
+  cancelStepwiseReducer(): void {
+    this.#completeStepwiseReducer('block');
+  }
+
+  /** Consumes exactly one pending decision before allowing another request. */
+  /** Teaching point: Complete Stepwise Resolve (ex-038) */
+  #completeStepwiseResolve(decision: 'continue' | 'block'): void {
+    const decisions = this.#stepwiseResolveDecisions;
+
+    if (!decisions) {
+      return;
+    }
+
+    this.#stepwiseResolveDecisions = undefined;
+    this.#isStepwiseResolvePending.set(false);
+    decisions[decision]();
+  }
+
+  /** Consumes exactly one pending Filter-stage decision. */
+  /** Teaching point: Complete Stepwise Filter (ex-039) */
+  #completeStepwiseFilter(decision: 'continue' | 'block'): void {
+    const decisions = this.#stepwiseFilterDecisions;
+
+    if (!decisions) {
+      return;
+    }
+
+    this.#stepwiseFilterDecisions = undefined;
+    this.#isStepwiseFilterPending.set(false);
+    decisions[decision]();
+  }
+
+  /** Teaching point: Complete Stepwise Reducer (ex-040) */
+  /** Consumes exactly one pending Reducer-stage decision. */
+  #completeStepwiseReducer(decision: 'continue' | 'block'): void {
+    const decisions = this.#stepwiseReducerDecisions;
+
+    if (!decisions) {
+      return;
+    }
+
+    this.#stepwiseReducerDecisions = undefined;
+    this.#isStepwiseReducerPending.set(false);
+    decisions[decision]();
+  }
+
+  // Teaching point: Create (ex-009)
   /**
    * Assigns an ID and sends the new character through \`mergeState\` as a one-item array.
    * The configured array-append merge behavior adds that item while preserving existing characters.
@@ -3664,8 +4442,7 @@ export class ExampleService {
    * @returns The character submitted to the FeatureCell with its assigned ID.
    */
   createCharacter(draft: StarWarsCharacterDraft): StarWarsCharacter {
-    const nextCharacterId = getNextCharacterId(this.#vault.state.value() ?? []);
-    const character = createCharacterState(nextCharacterId, draft);
+    const character = createCharacterState(this.#nextCharacterId++, draft);
 
     this.#vault.mergeState({
       value: [character]
@@ -3674,6 +4451,7 @@ export class ExampleService {
     return character;
   }
 
+  // Teaching point: Create / Update (ex-010)
   /**
    * Builds a replacement character and maps it into the latest collection through \`replaceState\`.
    * A matching ID is replaced while every other character retains its existing value.
@@ -3693,12 +4471,13 @@ export class ExampleService {
           .value()
           ?.map((character) =>
             character.id === id ? updatedCharacter : character
-          ) ?? []
+          )
     });
 
     return updatedCharacter;
   }
 
+  // Teaching point: Remove (ex-006)
   /**
    * Filters the requested identity from the latest collection through \`replaceState\`.
    * An unknown ID leaves the visible collection unchanged.
@@ -3711,6 +4490,32 @@ export class ExampleService {
         this.#vault.state.value()?.filter((character) => character.id !== id) ??
         []
     });
+  }
+
+  // Teaching point: Reset (ex-021)
+  /**
+   * Resets the FeatureCell through its dedicated lifecycle API.
+   * Consumers observe the cleared value as \`undefined\` through the reactive state APIs.
+   * @returns Nothing; the FeatureCell performs the reset operation internally.
+   */
+  resetState(): void {
+    this.#vault.reset();
+  }
+
+  // Teaching point: Restore (ex-022)
+  /**
+   * Clones the captured baseline and replaces the current FeatureCell collection with it.
+   * Returning the first restored character lets the component restore its selection as well.
+   * @returns The first restored character, or \`null\` when the initial collection was empty.
+   */
+  restoreInitialCharacters(): StarWarsCharacter | null {
+    const initialCharacters = cloneCharacters(this.#initialCharacters);
+
+    this.#vault.replaceState({
+      value: initialCharacters
+    });
+
+    return initialCharacters[0] ?? null;
   }
 }
 `,

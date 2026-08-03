@@ -113,6 +113,14 @@ export function createTutorialExampleGroups() {
           displayCopyIcon: false,
           description: `Demonstrates the completed <strong>Distinct Until Changed</strong> tutorial example — a service registers a custom Operator-stage comparison that suppresses repeated character identities while allowing new identities to continue through the FeatureCell pipeline. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
+        },
+        {
+          title: 'Chapter 14: Stepwise Pipeline',
+          id: 'stepwise-tutorial',
+          exampleName: 'stepwise-tutorial-example',
+          displayCopyIcon: false,
+          description: `Demonstrates the completed <strong>Stepwise Pipeline</strong> tutorial example — a standalone component configures Resolve, Filter, and Reducer approval boundaries, displays each pending candidate, and lets you continue or block the pipeline through explicit decisions. Launch the live example directly in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
         }
       ] satisfies StackBlitzExampleShape[]
     }

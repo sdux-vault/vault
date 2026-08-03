@@ -103,7 +103,10 @@ export const routes: Routes = [
           // import('./docs/tutorial/angular/examples/state-introspection/example.component').then(
           //   (m) => m.ExampleComponent
           // )
-          import('./docs/tutorial/angular/examples/distinct-until-changed/example.component').then(
+          // import('./docs/tutorial/angular/examples/distinct-until-changed/example.component').then(
+          //   (m) => m.ExampleComponent
+          // )
+          import('./docs/tutorial/angular/examples/stepwise/example.component').then(
             (m) => m.ExampleComponent
           )
         // import('./docs/tutorial/angular/examples/tab-sync/example.component').then(
