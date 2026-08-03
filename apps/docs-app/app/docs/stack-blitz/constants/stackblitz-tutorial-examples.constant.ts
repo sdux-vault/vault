@@ -105,6 +105,14 @@ export function createTutorialExampleGroups() {
           displayCopyIcon: false,
           description: `Demonstrates the completed <strong>Tab Sync</strong> tutorial example — a standalone component registers the Tab Sync State behavior and controller, opens a second tab, and keeps finalized FeatureCell State values aligned while forms, selection, loading, errors, and other page interactions remain local. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
+        },
+        {
+          title: 'Chapter 13: Distinct Until Changed',
+          id: 'distinct-until-changed-tutorial',
+          exampleName: 'distinct-until-changed-tutorial-example',
+          displayCopyIcon: false,
+          description: `Demonstrates the completed <strong>Distinct Until Changed</strong> tutorial example — a service registers a custom Operator-stage comparison that suppresses repeated character identities while allowing new identities to continue through the FeatureCell pipeline. Launch the live example directly in StackBlitz.`,
+          languages: [{ name: 'Angular', key: 'angular' }]
         }
       ] satisfies StackBlitzExampleShape[]
     }

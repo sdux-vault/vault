@@ -1,0 +1,221 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section" id="step-48">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 48: Configure Distinct Until Changed</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Register Distinct Until Changed with
+      <span class="code">operators()</span> in
+      <span class="code">example.service.ts</span>. The operator evaluates the
+      resolved and merged candidate before filters and reducers, then suppresses
+      a candidate that the comparison considers unchanged.
+    </p>
+    <p>
+      This is the only functional update in the example. The component and
+      template changes only provide buttons and a read-only comparison-function
+      view so you can observe the configured behavior.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Install the
+          <span class="code"><sdux-package-name [package]="'addons'" /></span>
+          package.
+        </li>
+        <li>Open <span class="code">example.service.ts</span>.</li>
+        <li>
+          Import and register
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/operators/with-distinct-until-changed"
+              >withDistinctUntilChanged</a
+            >()</span
+          >
+          through <span class="code">this.#vault.operators()</span>.
+        </li>
+        <li>
+          Review the identity comparison that accepts a candidate only when it
+          introduces a new character ID.
+        </li>
+      </ol>
+    </div>
+    <sdux-example-viewer-source [displayTabs]="false">
+      <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+        <pre
+          class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+      </sdux-example-viewer-tab>
+    </sdux-example-viewer-source>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Operators run after Resolve and Merge, before filters and reducers.
+        </li>
+        <li>
+          The first candidate proceeds; later equivalent candidates stop at the
+          Operator stage.
+        </li>
+        <li>
+          The comparison function textarea is observational only. It does not
+          execute from the component or template.
+        </li>
+      </ul>
+    </div>
+    <sdux-example-viewer-source>
+      @for (file of serviceFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/operators-method"
+            >operators()</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/behaviors/operators/distinct-until-changed"
+            >Distinct Until Changed</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-49">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 49: Submit Same and Changed State</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Select <span class="code">Submit Same State</span> to reconstruct Rey as a
+      new object and merge it into the collection. The first new identity is
+      accepted; later Rey submissions contain no new ID, so the comparison
+      suppresses the candidate even though the object was newly allocated.
+    </p>
+    <p>
+      Select <span class="code">Submit Changed State</span> to cycle through
+      four distinct Jedi. Each new identity proceeds through the pipeline and
+      updates State. After the cycle wraps, repeated identities are suppressed
+      without relying on collection order.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Select <span class="code">Submit Same State</span> twice and observe
+          that only the first accepted identity changes State.
+        </li>
+        <li>
+          Select <span class="code">Submit Changed State</span> through the
+          four-character cycle.
+        </li>
+        <li>
+          Inspect the Comparison Function textarea as you compare the visible
+          collection with each request.
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Both buttons delegate to the service; they do not implement comparison
+          logic in the component.
+        </li>
+        <li>
+          Suppressed candidates do not continue to downstream filter or reducer
+          stages.
+        </li>
+        <li>
+          The comparison function is displayed solely to explain the service
+          configuration.
+        </li>
+      </ul>
+    </div>
+    <sdux-example-viewer-source>
+      @for (file of componentFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+</section>
+
+<section class="section" id="step-50">
+  <div class="section-title-navigation">
+    <div class="section-title">
+      Step 50: Complete Distinct Until Changed Tutorial
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Your example is complete when the service registers the distinct operator,
+      repeated identities are suppressed before downstream stages, and new
+      identities continue to update
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> State.
+      The buttons and comparison textarea make that service-owned decision
+      visible without taking over the operator's work.
+    </p>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Distinctness is defined by the configured comparison function, not
+          object allocation or collection position.
+        </li>
+        <li>The service owns the operator registration and State updates.</li>
+        <li>
+          The component and template remain presentation-only for this teaching
+          view.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section
+  class="tutorial-shortcut"
+  aria-label="Launch the completed distinct until changed tutorial example">
+  <div class="tutorial-shortcut-copy">
+    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <h2>
+      Want the finished distinct until changed example without these treee
+      steps?
+    </h2>
+  </div>
+  @if (stackblitz(); as stackblitz) {
+    <div class="tutorial-shortcut-launcher">
+      <p>
+        Launch the completed tutorial in StackBlitz to compare accepted and
+        suppressed candidates.
+      </p>
+      <sdux-stackblitz-language-example
+        [example]="stackblitz.example"
+        [lang]="stackblitz.language" />
+    </div>
+  }
+  <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
+    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
+</section>

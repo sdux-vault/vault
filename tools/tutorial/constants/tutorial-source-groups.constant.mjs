@@ -41,7 +41,8 @@ export const TutorialSourceGroupsConstants = (projectRoot) => {
     ['STAR_WARS_DELAY', 'delay'],
     ['STAR_WARS_ENCRYPT_AND_PERSIST', 'encrypt-and-persist'],
     ['STAR_WARS_STATE_INTROSPECTION', 'state-introspection'],
-    ['STAR_WARS_TAB_SYNC', 'tab-sync']
+    ['STAR_WARS_TAB_SYNC', 'tab-sync'],
+    ['STAR_WARS_DISTINCT_UNTIL_CHANGED', 'distinct-until-changed']
   ].map(([exportName, directoryName]) => ({
     exportName,
     sourceDirectory: path.join(angularTutorialExamplesDirectory, directoryName),

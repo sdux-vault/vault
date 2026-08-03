@@ -455,6 +455,7 @@ export const SITEMAP_URLS = [
   '/examples/angular/delete-characters',
   '/examples/angular/display-character',
   '/examples/angular/display-characters',
+  '/examples/angular/distinct-until-changed-tutorial',
   '/examples/angular/encrypt-and-persist-tutorial',
   '/examples/angular/errors-tutorial',
   '/examples/angular/filters-and-reducers-tutorial',
