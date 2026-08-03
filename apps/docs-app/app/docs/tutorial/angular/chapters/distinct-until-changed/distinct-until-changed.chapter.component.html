@@ -30,8 +30,13 @@
         <li>Open <span class="code">example.service.ts</span>.</li>
         <li>
           Import and register
-          <span class="code">withDistinctUntilChanged()</span> through
-          <span class="code">this.#vault.operators()</span>.
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/operators/with-distinct-until-changed"
+              >withDistinctUntilChanged</a
+            >()</span
+          >
+          through <span class="code">this.#vault.operators()</span>.
         </li>
         <li>
           Review the identity comparison that accepts a candidate only when it
@@ -166,9 +171,10 @@
     <p>
       Your example is complete when the service registers the distinct operator,
       repeated identities are suppressed before downstream stages, and new
-      identities continue to update FeatureCell State. The buttons and
-      comparison textarea make that service-owned decision visible without
-      taking over the operator's work.
+      identities continue to update
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> State.
+      The buttons and comparison textarea make that service-owned decision
+      visible without taking over the operator's work.
     </p>
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>

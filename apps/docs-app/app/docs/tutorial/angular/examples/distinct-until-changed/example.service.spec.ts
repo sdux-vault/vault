@@ -115,7 +115,46 @@ describe('ExampleService', () => {
     );
   });
 
-  it('should replace the matching character without changing the others', async () => {
+  it('should submit the same-state candidate through the FeatureCell', async () => {
+    const service = await configureService();
+
+    service.submitSameState();
+
+    await vaultSettled(key);
+
+    expect(service.state.value()).toEqual(
+      withDerivedFields([
+        {
+          id: 501,
+          name: 'Rey',
+          lastName: 'Skywalker',
+          faction: 'Jedi Order',
+          isForceSensitive: true
+        }
+      ])
+    );
+  });
+
+  it('should submit changed-state candidates through the FeatureCell cycle', async () => {
+    const service = await configureService();
+
+    service.submitChangedState();
+    await vaultSettled(key);
+
+    expect(service.state.value()).toEqual(
+      withDerivedFields([
+        {
+          id: 601,
+          name: 'Qui-Gon',
+          lastName: 'Jinn',
+          faction: 'Jedi Order',
+          isForceSensitive: true
+        }
+      ])
+    );
+  });
+
+  it('should suppress an update when the character identity is unchanged', async () => {
     const service = await configureService();
 
     const updatedCharacter = service.updateCharacter(10, {
@@ -134,9 +173,7 @@ describe('ExampleService', () => {
       faction: 'Resistance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([
-      ...withDerivedFields([updatedCharacter, initialCharacters[1]!])
-    ]);
+    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
   });
 
   it('should leave the collection unchanged when updating a missing character', async () => {
@@ -183,16 +220,14 @@ describe('ExampleService', () => {
     expect(service.state.value()).toEqual([]);
   });
 
-  it('should remove the matching character from the current collection', async () => {
+  it('should suppress a removal when the remaining character identities are unchanged', async () => {
     const service = await configureService();
 
     service.removeCharacter(10);
 
     await vaultSettled(key);
 
-    expect(service.state.value()).toEqual(
-      withDerivedFields([initialCharacters[1]!])
-    );
+    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
   });
 
   it('should safely remove against an empty collection when no value exists', async () => {

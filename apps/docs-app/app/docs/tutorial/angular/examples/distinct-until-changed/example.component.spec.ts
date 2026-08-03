@@ -234,6 +234,24 @@ describe('ExampleComponent', () => {
     expect(component['characterForm'].controls.faction.touched).toBeTrue();
   });
 
+  it('should delegate the same-state action to the service', async () => {
+    await vaultSettled(key);
+    const submitSameStateSpy = spyOn(service, 'submitSameState');
+
+    component['submitSameState']();
+
+    expect(submitSameStateSpy).toHaveBeenCalledOnceWith();
+  });
+
+  it('should delegate the changed-state action to the service', async () => {
+    await vaultSettled(key);
+    const submitChangedStateSpy = spyOn(service, 'submitChangedState');
+
+    component['submitChangedState']();
+
+    expect(submitChangedStateSpy).toHaveBeenCalledOnceWith();
+  });
+
   it('should create a character from normalized form values', async () => {
     await vaultSettled(key);
     fixture.detectChanges();
@@ -396,7 +414,7 @@ describe('ExampleComponent', () => {
     expect(component['editorMode']()).toBe('edit');
   });
 
-  it('should remove the pending character and reset the editor after delete confirmation', async () => {
+  it('should reset the editor after delete confirmation when the removal is suppressed', async () => {
     await vaultSettled(key);
     fixture.detectChanges();
     const removeCharacterSpy = spyOn(
@@ -427,7 +445,7 @@ describe('ExampleComponent', () => {
       tone: 'success'
     });
     expect(component.characters()).toEqual(
-      withDerivedFields([initialCharacters[0]!])
+      withDerivedFields(initialCharacters)
     );
   });
 });
