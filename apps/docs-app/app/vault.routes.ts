@@ -72,56 +72,14 @@ export const routes: Routes = [
           import('./docs/tutorial/angular/tutorial.angular.component').then(
             (m) => m.TutorialAngularComponent
           )
-      },
-      {
-        path: 'example',
-        loadComponent: () =>
-          // import('./docs/tutorial/angular/examples/display-character/example.component').then(
-          //   (m) => m.ExampleComponent
-          // )
-          // import('./docs/tutorial/angular/examples/display-characters/example.component').then(
-          //   (m) => m.ExampleComponent
-          // )
-          // import('./docs/tutorial/angular/examples/add-edit-characters/example.component').then(
-          //   (m) => m.ExampleComponent
-          // )
-          // import('./docs/tutorial/angular/examples/delete-characters/example.component').then(
-          //   (m) => m.ExampleComponent
-          // )
-          // import('./docs/tutorial/angular/examples/lifecycle/example.component').then(
-          //   (m) => m.ExampleComponent
-          // )
-          // import('./docs/tutorial/angular/examples/async-input/example.component').then(
-          //   (m) => m.ExampleComponent
-          // )
-          // import('./docs/tutorial/angular/examples/delay/example.component').then(
-          //   (m) => m.ExampleComponent
-          // )
-          // import('./docs/tutorial/angular/examples/encrypt-and-persist/example.component').then(
-          //   (m) => m.ExampleComponent
-          // )
-          // import('./docs/tutorial/angular/examples/state-introspection/example.component').then(
-          //   (m) => m.ExampleComponent
-          // )
-          // import('./docs/tutorial/angular/examples/distinct-until-changed/example.component').then(
-          //   (m) => m.ExampleComponent
-          // )
-          import('./docs/tutorial/angular/examples/stepwise/example.component').then(
-            (m) => m.ExampleComponent
-          )
-        // import('./docs/tutorial/angular/examples/tab-sync/example.component').then(
-        //   (m) => m.ExampleComponent
-        // )
-        // import('./docs/tutorial/angular/examples/errors/example.component').then(
-        //   (m) => m.ExampleComponent
-        // )
-        // import('./docs/tutorial/angular/examples/filters-and-reducers/example.component').then(
-        //   (m) => m.ExampleComponent
-        // )
-        // import('./docs/tutorial/angular/examples/complete-character-management/example.component').then(
-        //   (m) => m.ExampleComponent
-        // )
       }
+      // {
+      //   path: 'example',
+      //   loadComponent: () =>
+      //     import('./docs/tutorial/angular/examples/stepwise/example.component').then(
+      //       (m) => m.ExampleComponent
+      //     )
+      // }
     ]
   },
   {

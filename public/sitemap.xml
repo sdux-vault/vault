@@ -2306,6 +2306,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/angular/stepwise-tutorial</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/angular/tab-sync</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
