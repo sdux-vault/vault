@@ -1,0 +1,377 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section" id="step-51">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 51: Configure the Stepwise Pipeline</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Stepwise behaviors pause a pipeline candidate after Resolve, Filter, or
+      Reducer processing and wait for one explicit policy decision. Register the
+      three behaviors and the Stepwise Controller together in
+      <span class="code">app.config.ts</span>.
+    </p>
+    <p>
+      The controller is required because it carries each request to the decision
+      source and resumes the pipeline only after you choose
+      <span class="code">continue()</span> or <span class="code">block()</span>.
+      A blocked candidate is discarded and the committed State remains intact.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>Open the <span class="code">app.config.ts</span> file.</li>
+        <li>
+          Import the three Stepwise behaviors and the controller from
+          <span class="code"><sdux-package-name [package]="'addons'" /></span>.
+        </li>
+        <li>
+          Add the behaviors to the FeatureCell behavior list and the controller
+          to its controller list.
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Stepwise behaviors decide whether a candidate may continue; they do
+          not transform the candidate.
+        </li>
+        <li>
+          Only one Stepwise behavior belongs at each supported pipeline stage.
+        </li>
+        <li>
+          The controller serializes requests so only one decision is active at a
+          time.
+        </li>
+        <li>
+          The Hydrate <span class="code">Resolve</span> and
+          <span class="code">Reject</span> buttons from the Async Input chapter
+          demonstrate the Stepwise decision flow. You will need to resolve or
+          reject the initial candidate in order to trigger the stepwise approval
+          prompts for the candidate.
+        </li>
+        <li>
+          <span class="code">Reset State</span>
+          button from the Lifecycle chapter demonstrate state is reset without
+          the need to accept or reject the stepwise prompts.
+        </li>
+      </ul>
+    </div>
+    <sdux-example-viewer-source [displayTabs]="false">
+      <sdux-example-viewer-tab [label]="'app.config.ts'">
+        <pre
+          class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
+      </sdux-example-viewer-tab>
+    </sdux-example-viewer-source>
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/controllers/with-stepwise-controller"
+            >Stepwise Controller</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/stepwise"
+            >Stepwise Behaviors</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-52">
+  <div class="section-title-navigation">
+    <div class="section-title">
+      Step 52: Configure Resolve in the Service and Component
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Configure <span class="code">withStepwiseResolve()</span> in the service
+      to place an approval boundary immediately after the candidate is resolved.
+      The callback receives the current State, the resolved candidate, and a
+      one-use decision contract. The service stores those values for the UI to
+      inspect and waits for the component to choose a decision.
+    </p>
+    <p>
+      The component observes a pending Resolve request and displays a modal
+      confirmation prompt. Choose to continue when the resolved candidate is
+      acceptable; choose to reject when it should be discarded. Rejecting blocks
+      the candidate and leaves committed State unchanged.
+    </p>
+    <p>
+      The Stepwise Resolve textarea shows the
+      <span class="code">current</span> and
+      <span class="code">candidate</span> values reported to the callback. This
+      textarea is only to help visualize the data; it does not affect the
+      decision flow.
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          The service owns the Stepwise decision boundary, while the component
+          owns the user interaction. The service exposes the callback data; the
+          component turns that pending request into a confirmation prompt.
+        </li>
+        <li>
+          Accepting calls the one-use continuation and allows the resolved
+          candidate to proceed through the pipeline. Rejecting blocks that
+          candidate and preserves the last committed State.
+        </li>
+        <li>
+          The textarea is an observation surface, not part of the decision flow.
+          It displays the exact <span class="code">current</span> and
+          <span class="code">candidate</span> values supplied to the callback.
+        </li>
+        <li>
+          Stepwise Resolve pauses the pipeline indefinitely at a defined stage;
+          it does not transform the candidate. The candidate continues unchanged
+          only after an explicit decision.
+        </li>
+      </ul>
+    </div>
+
+    <sdux-example-viewer-source>
+      @for (file of serviceFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-warning">
+      <div class="title">One, Two or Three?</div>
+      <ul>
+        <li>
+          For this chapter, all three stepwise behaviors are configured. You can
+          use just one, two or all three depending on your use-case and business
+          needs.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-53">
+  <div class="section-title-navigation">
+    <div class="section-title">
+      Step 53: Configure Filter in the Service and Component
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Configure <span class="code">withStepwiseFilter()</span> after the Filter
+      stage. The callback receives the last committed State and the candidate
+      after filtering. This gives you a policy boundary where you can inspect
+      the filtered data before any Reducer runs.
+    </p>
+
+    <p>
+      The component uses the same decision flow for the filtered candidate. A
+      modal prompts you to continue or reject the data after filtering and
+      before reduction. Rejecting aborts the candidate without changing
+      committed State.
+    </p>
+    <p>
+      The Stepwise Filter textarea displays the
+      <span class="code">current</span> and filtered
+      <span class="code">candidate</span> reported by the callback.
+    </p>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          The service owns the Stepwise decision boundary, while the component
+          owns the user interaction. The service exposes the callback data; the
+          component turns that pending request into a confirmation prompt.
+        </li>
+        <li>
+          Accepting calls the one-use continuation and allows the resolved
+          candidate to proceed through the pipeline. Rejecting blocks that
+          candidate and preserves the last committed State.
+        </li>
+        <li>
+          The textarea is an observation surface, not part of the decision flow.
+          It displays the exact <span class="code">current</span> and
+          <span class="code">candidate</span> values supplied to the callback.
+        </li>
+        <li>
+          Stepwise Filter pauses the pipeline indefinitely at a defined stage;
+          it does not transform the candidate. The candidate continues unchanged
+          only after an explicit decision.
+        </li>
+      </ul>
+    </div>
+    <sdux-example-viewer-source>
+      @for (file of serviceFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+    <div class="callout callout-warning">
+      <div class="title">One, Two or Three?</div>
+      <ul>
+        <li>
+          For this chapter, all three stepwise behaviors are configured. You can
+          use just one, two or all three depending on your use-case and business
+          needs.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-54">
+  <div class="section-title-navigation">
+    <div class="section-title">
+      Step 54: Configure Reducer in the Service and Component
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Configure <span class="code">withStepwiseReducer()</span> after the
+      Reducer stage. The callback receives the fully reduced candidate,
+      including its derived display values, before that candidate can become
+      committed State.
+    </p>
+
+    <p>
+      The Reducer decision is the final approval boundary before commitment. The
+      modal lets you accept the fully derived candidate or reject it. A
+      rejection blocks the state update and preserves the last committed State.
+    </p>
+    <p>
+      The Stepwise Reducer textarea displays the reduced candidate reported by
+      the callback, including the values produced by the configured reducers.
+    </p>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          The service owns the Stepwise decision boundary, while the component
+          owns the user interaction. The service exposes the callback data; the
+          component turns that pending request into a confirmation prompt.
+        </li>
+        <li>
+          Accepting calls the one-use continuation and allows the resolved
+          candidate to proceed through the pipeline. Rejecting blocks that
+          candidate and preserves the last committed State.
+        </li>
+        <li>
+          The textarea is an observation surface, not part of the decision flow.
+          It displays the exact <span class="code">current</span> and
+          <span class="code">candidate</span> values supplied to the callback.
+        </li>
+        <li>
+          Stepwise Reducer pauses the pipeline indefinitely at a defined stage;
+          it does not transform the candidate. The candidate continues unchanged
+          only after an explicit decision.
+        </li>
+      </ul>
+    </div>
+    <sdux-example-viewer-source>
+      @for (file of serviceFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+    <div class="callout callout-warning">
+      <div class="title">One, Two or Three?</div>
+      <ul>
+        <li>
+          For this chapter, all three stepwise behaviors are configured. You can
+          use just one, two or all three depending on your use-case and business
+          needs.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-55">
+  <div class="section-title-navigation">
+    <div class="section-title">Step 55: Complete Stepwise Tutorial</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Your Stepwise example is complete when the controller and behaviors are
+      registered in <span class="code">app.config.ts</span>, the service pauses
+      Resolve, Filter, and Reducer candidates, and the component supplies one
+      explicit decision for each pending request.
+    </p>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          <span class="code">continue()</span> resumes the candidate at the
+          paused stage.
+        </li>
+        <li>
+          <span class="code">block()</span> aborts the candidate without
+          replacing committed State.
+        </li>
+        <li>
+          The textareas show the isolated callback inputs so you can see exactly
+          what each policy boundary evaluated.
+        </li>
+      </ul>
+    </div>
+    <sdux-example-viewer-source>
+      @for (file of chapterFiles(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+</section>
+
+<section
+  class="tutorial-shortcut"
+  aria-label="Launch the completed stepwise tutorial example">
+  <div class="tutorial-shortcut-copy">
+    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <h2>Want the finished Stepwise example?</h2>
+  </div>
+  @if (stackblitz(); as stackblitz) {
+    <div class="tutorial-shortcut-launcher">
+      <p>
+        If you want the completed Stepwise tutorial, launch the live StackBlitz
+        project and inspect the finished implementation directly.
+      </p>
+      <sdux-stackblitz-language-example
+        [example]="stackblitz.example"
+        [lang]="stackblitz.language" />
+    </div>
+  }
+  <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
+    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
+</section>

@@ -27,8 +27,8 @@
 | Promise                                    | ex-024 | ✅    | ✅      | ✅          |
 | Observable                                 | ex-025 | ✅    | ✅      | ✅          |
 | HTTP Resource                              | ex-026 | ✅    | ✅      | ✅          |
-| Distinct Until Changed                     | ex-027 | ✅    | ✅      |
-| Distinct Until Changed comparison function | ex-028 | ✅    | ✅      |
+| Distinct Until Changed                     | ex-027 | ✅    | ✅      | ✅          |
+| Distinct Until Changed comparison function | ex-028 | ✅    | ✅      | ✅          |
 | Tab Sync                                   | ex-029 | ✅    | ✅      | ✅          |
 | Before Taps                                | ex-031 | ✅    | ✅      | ✅          |
 | After Taps                                 | ex-032 | ✅    | ✅      | ✅          |
@@ -36,9 +36,9 @@
 | Encryption & Persist                       | ex-034 | ✅    | ✅      | ✅          |
 | State Emission                             | ex-035 | ✅    | ✅      | ✅          |
 | Error Emission                             | ex-036 | ✅    | ✅      | ✅          |
-| Stepwise Resolve                           | ex-038 | ✅    | ✅      |
-| Stepwise Filter                            | ex-039 | ✅    | ✅      |
-| Stepwise Reducer                           | ex-040 | ✅    | ✅      |
+| Stepwise Resolve                           | ex-038 | ✅    | ✅      | ✅          |
+| Stepwise Filter                            | ex-039 | ✅    | ✅      | ✅          |
+| Stepwise Reducer                           | ex-040 | ✅    | ✅      | ✅          |
 
 ## Proposed Teaching Order
 
@@ -96,13 +96,13 @@
 29. `ex-032` After Taps
 30. `ex-035` State Emission
 
-### Reactive Change Control
+### Reactive Change Control ✅
 
 31. `ex-027` Distinct Until Changed
 32. `ex-028` Distinct Until Changed comparison function
 33. `ex-029` Tab Sync
 
-### Stepwise Pipeline
+### Stepwise Pipeline ✅
 
 34. `ex-038` Stepwise Resolve
 35. `ex-039` Stepwise Filter

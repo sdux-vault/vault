@@ -956,6 +956,57 @@
           <sdux-distinct-until-changed-chapter></sdux-distinct-until-changed-chapter>
         </div>
       </div>
+      <section
+        class="chapter-break"
+        id="chapter-14"
+        aria-labelledby="chapter-14-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 14</p>
+          <div class="chapter-header">
+            <h2 id="chapter-14-title">Stepwise Pipeline</h2>
+            <button
+              type="button"
+              class="chapter-toggle"
+              aria-controls="chapter-14-content"
+              [attr.aria-expanded]="isChapterExpanded(14)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'Stepwise Pipeline',
+                  isChapterExpanded(14)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'Stepwise Pipeline',
+                  isChapterExpanded(14)
+                )
+              "
+              (click)="toggleTutorialChapter(14)">
+              <mat-icon aria-hidden="true">{{
+                isChapterExpanded(14)
+                  ? 'keyboard_arrow_down'
+                  : 'keyboard_arrow_right'
+              }}</mat-icon>
+            </button>
+          </div>
+          <p>
+            You will pause Resolve, Filter, and Reducer candidates, inspect the
+            callback values, and decide whether each candidate may continue or
+            should be rejected before it becomes committed FeatureCell State.
+          </p>
+        </div>
+      </section>
+      <div
+        id="chapter-14-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(14)"
+        [attr.aria-hidden]="!isChapterExpanded(14)"
+        [attr.inert]="!isChapterExpanded(14) ? '' : null">
+        <div class="chapter-content-inner">
+          <sdux-stepwise-chapter></sdux-stepwise-chapter>
+        </div>
+      </div>
       <sdux-pipeline-related-topics></sdux-pipeline-related-topics>
     </main>
   </div>

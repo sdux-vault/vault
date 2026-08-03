@@ -44,6 +44,8 @@ import { TabSyncChapterComponent } from './chapters/tab-sync/tab-sync.chapter.co
 import { TabSyncService } from './chapters/tab-sync/services/tab-sync.service';
 import { DistinctUntilChangedChapterComponent } from './chapters/distinct-until-changed/distinct-until-changed.chapter.component';
 import { DistinctUntilChangedService } from './chapters/distinct-until-changed/services/distinct-until-changed.service';
+import { StepwiseChapterComponent } from './chapters/stepwise/stepwise.chapter.component';
+import { StepwiseService } from './chapters/stepwise/services/stepwise.service';
 
 @Component({
   selector: 'sdux-angular-tutorial',
@@ -68,7 +70,8 @@ import { DistinctUntilChangedService } from './chapters/distinct-until-changed/s
     EncryptAndPersistChapterComponent,
     StateIntrospectionChapterComponent,
     TabSyncChapterComponent,
-    DistinctUntilChangedChapterComponent
+    DistinctUntilChangedChapterComponent,
+    StepwiseChapterComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -89,6 +92,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   readonly #stateIntrospectionService = inject(StateIntrospectionService);
   readonly #tabSyncService = inject(TabSyncService);
   readonly #distinctUntilChangedService = inject(DistinctUntilChangedService);
+  readonly #stepwiseService = inject(StepwiseService);
 
   readonly #expandedChapterGroups = signal<Record<number, boolean>>({
     1: true,
@@ -103,7 +107,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     10: false,
     11: false,
     12: false,
-    13: false
+    13: false,
+    14: false
   });
 
   readonly #expandedChapters = signal<Record<number, boolean>>({
@@ -119,7 +124,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     10: false,
     11: false,
     12: false,
-    13: false
+    13: false,
+    14: false
   });
 
   constructor() {
@@ -308,6 +314,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     this.#encryptAndPersistService.chapters(),
     this.#stateIntrospectionService.chapters(),
     this.#tabSyncService.chapters(),
-    this.#distinctUntilChangedService.chapters()
+    this.#distinctUntilChangedService.chapters(),
+    this.#stepwiseService.chapters()
   ];
 }
