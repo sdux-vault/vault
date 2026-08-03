@@ -905,6 +905,57 @@
           <sdux-tab-sync-chapter></sdux-tab-sync-chapter>
         </div>
       </div>
+      <section
+        class="chapter-break"
+        id="chapter-13"
+        aria-labelledby="chapter-13-title">
+        <div class="chapter-rule" aria-hidden="true"></div>
+        <div class="chapter-copy">
+          <p class="chapter-eyebrow">Chapter 13</p>
+          <div class="chapter-header">
+            <h2 id="chapter-13-title">Distinct Until Changed</h2>
+            <button
+              type="button"
+              class="chapter-toggle"
+              aria-controls="chapter-13-content"
+              [attr.aria-expanded]="isChapterExpanded(13)"
+              [matTooltip]="
+                getTutorialChapterToggleAriaLabel(
+                  'Distinct Until Changed',
+                  isChapterExpanded(13)
+                )
+              "
+              [attr.aria-label]="
+                getTutorialChapterToggleAriaLabel(
+                  'Distinct Until Changed',
+                  isChapterExpanded(13)
+                )
+              "
+              (click)="toggleTutorialChapter(13)">
+              <mat-icon aria-hidden="true">{{
+                isChapterExpanded(13)
+                  ? 'keyboard_arrow_down'
+                  : 'keyboard_arrow_right'
+              }}</mat-icon>
+            </button>
+          </div>
+          <p>
+            You will configure an Operator-stage comparison that suppresses
+            repeated State candidates while allowing meaningful character
+            changes to continue through the pipeline.
+          </p>
+        </div>
+      </section>
+      <div
+        id="chapter-13-content"
+        class="chapter-content"
+        [class.chapter-content-collapsed]="!isChapterExpanded(13)"
+        [attr.aria-hidden]="!isChapterExpanded(13)"
+        [attr.inert]="!isChapterExpanded(13) ? '' : null">
+        <div class="chapter-content-inner">
+          <sdux-distinct-until-changed-chapter></sdux-distinct-until-changed-chapter>
+        </div>
+      </div>
       <sdux-pipeline-related-topics></sdux-pipeline-related-topics>
     </main>
   </div>

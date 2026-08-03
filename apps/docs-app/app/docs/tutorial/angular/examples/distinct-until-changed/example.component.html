@@ -1,0 +1,352 @@
+<section class="character-example" aria-labelledby="character-example-title">
+  <header class="header">
+    <div>
+      <p class="eyebrow">Interactive example</p>
+      <h2 id="character-example-title">Star Wars character registry</h2>
+      <p>
+        Use SDuX Vault state management to select, create, and update characters
+        from an in-memory collection.
+      </p>
+    </div>
+  </header>
+
+  @if (feedback(); as operationFeedback) {
+    <div
+      class="feedback"
+      [class.error]="operationFeedback.tone === 'error'"
+      [class.success]="operationFeedback.tone === 'success'"
+      [attr.role]="operationFeedback.tone === 'error' ? 'alert' : 'status'"
+      aria-live="polite">
+      {{ operationFeedback.message }}
+    </div>
+  }
+
+  <fieldset class="feature-cell-controls">
+    @if (deleteCandidate(); as character) {
+      <section
+        class="delete-confirmation"
+        aria-labelledby="delete-confirmation-title"
+        role="alert">
+        <div>
+          <h3 id="delete-confirmation-title">
+            Delete
+            {{
+              character.fullName ?? character.name + ' ' + character.lastName
+            }}?
+          </h3>
+          <p>This action removes the character from the current collection.</p>
+        </div>
+        <div class="actions">
+          <button
+            type="button"
+            class="button secondary"
+            (click)="cancelDelete()">
+            Cancel
+          </button>
+          <button type="button" class="button danger" (click)="confirmDelete()">
+            Ok
+          </button>
+        </div>
+      </section>
+    }
+    <div class="workspace">
+      <div class="workspace-row workspace-row-top">
+        <div class="field selection">
+          <label for="character-selection">
+            Character ({{ characters().length }} total)
+          </label>
+          <select
+            #characterSelection
+            id="character-selection"
+            [disabled]="characters().length === 0"
+            (change)="selectCharacter(characterSelection.value)">
+            <option
+              value=""
+              disabled
+              [selected]="selectedCharacterId() === null">
+              Select a character
+            </option>
+            @for (character of characters(); track character.id) {
+              <option
+                [value]="character.id"
+                [selected]="character.id === selectedCharacterId()">
+                {{
+                  character.fullName ??
+                    character.name + ' ' + character.lastName
+                }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="actions add-action" aria-label="Character actions">
+          <button type="button" class="button" (click)="startCreate()">
+            Add character
+          </button>
+        </div>
+      </div>
+
+      <div class="workspace-row workspace-row-bottom">
+        <section
+          class="panel character-details"
+          aria-labelledby="details-title">
+          <div class="header">
+            <h3 id="details-title">Character details</h3>
+          </div>
+
+          @if (selectedCharacter(); as character) {
+            <dl>
+              <div>
+                <dt>Full name</dt>
+                <dd>
+                  {{ character.fullName }}
+                </dd>
+              </div>
+              <div>
+                <dt>First name</dt>
+                <dd>{{ character.name }}</dd>
+              </div>
+              <div>
+                <dt>Last name</dt>
+                <dd>{{ character.lastName }}</dd>
+              </div>
+              <div>
+                <dt>Identifier</dt>
+                <dd>{{ character.id }}</dd>
+              </div>
+              <div>
+                <dt>Faction</dt>
+                <dd>{{ character.faction }}</dd>
+              </div>
+              <div>
+                <dt class="force-sensitive">Force-sensitive</dt>
+                <dd>{{ character.forceSensitiveDisplay }}</dd>
+              </div>
+            </dl>
+          } @else {
+            <div class="empty-state">
+              @if (characters().length === 0) {
+                <h4>The collection is empty</h4>
+                <p>Add a character to continue the example.</p>
+                <button type="button" class="button" (click)="startCreate()">
+                  Add the first character
+                </button>
+              } @else {
+                <h4>No character selected</h4>
+                <p>
+                  Choose a character from the list or complete the form to add a
+                  new one.
+                </p>
+              }
+            </div>
+          }
+        </section>
+
+        <section class="panel editor" aria-labelledby="editor-title">
+          <div class="header">
+            <h3 id="editor-title">{{ editorTitle() }}</h3>
+          </div>
+
+          <form
+            [formGroup]="characterForm"
+            (ngSubmit)="saveCharacter()"
+            novalidate>
+            <div class="form-grid">
+              @let nameControl = characterForm.controls.name;
+              @let showNameError =
+                nameControl.invalid &&
+                (nameControl.dirty || nameControl.touched);
+
+              <div class="field">
+                <label for="character-first-name">First name</label>
+                <input
+                  id="character-first-name"
+                  type="text"
+                  formControlName="name"
+                  autocomplete="off"
+                  maxlength="40"
+                  [attr.aria-invalid]="showNameError ? true : null"
+                  [attr.aria-describedby]="
+                    showNameError ? 'character-first-name-error' : null
+                  " />
+                @if (showNameError) {
+                  <p class="error" id="character-first-name-error">
+                    Enter a first name between 2 and 40 characters.
+                  </p>
+                }
+              </div>
+
+              @let lastNameControl = characterForm.controls.lastName;
+              @let showLastNameError =
+                lastNameControl.invalid &&
+                (lastNameControl.dirty || lastNameControl.touched);
+
+              <div class="field">
+                <label for="character-last-name">Last name</label>
+                <input
+                  id="character-last-name"
+                  type="text"
+                  formControlName="lastName"
+                  autocomplete="off"
+                  maxlength="40"
+                  [attr.aria-invalid]="showLastNameError ? true : null"
+                  [attr.aria-describedby]="
+                    showLastNameError ? 'character-last-name-error' : null
+                  " />
+                @if (showLastNameError) {
+                  <p class="error" id="character-last-name-error">
+                    Enter a last name between 2 and 40 characters.
+                  </p>
+                }
+              </div>
+
+              @let factionControl = characterForm.controls.faction;
+              @let showFactionError =
+                factionControl.invalid &&
+                (factionControl.dirty || factionControl.touched);
+
+              <div class="field">
+                <label for="character-faction">Faction</label>
+                <select
+                  id="character-faction"
+                  formControlName="faction"
+                  [attr.aria-invalid]="showFactionError ? true : null"
+                  [attr.aria-describedby]="
+                    showFactionError ? 'character-faction-error' : null
+                  ">
+                  <option value="" disabled>Select a faction</option>
+                  @for (faction of editor.factions; track faction) {
+                    <option [value]="faction">{{ faction }}</option>
+                  }
+                </select>
+                @if (showFactionError) {
+                  <p class="error" id="character-faction-error">
+                    Select a faction.
+                  </p>
+                }
+              </div>
+
+              <label class="checkbox">
+                <input type="checkbox" formControlName="isForceSensitive" />
+                <span>Character is force-sensitive</span>
+              </label>
+            </div>
+
+            <div class="actions">
+              @if (editorMode() === 'edit') {
+                <button
+                  type="button"
+                  class="button danger delete"
+                  [disabled]="!selectedCharacter()"
+                  (click)="requestDelete()">
+                  Delete Character
+                </button>
+              }
+              <button
+                type="submit"
+                class="button"
+                [disabled]="characterForm.invalid">
+                {{ submitLabel() }}
+              </button>
+              <button
+                type="button"
+                class="button secondary"
+                (click)="cancelEdit()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+    <div class="distinct-operator">
+      <input
+        id="distinct-operator-toggle"
+        class="section-toggle"
+        type="checkbox"
+        aria-label="Toggle Distinct Until Changed Operator visibility"
+        checked />
+      <div class="section-header">
+        <span>Distinct Until Changed Operator</span>
+        <label
+          class="section-chevron"
+          for="distinct-operator-toggle"
+          title="Show or hide Distinct Until Changed Operator"></label>
+      </div>
+
+      <div class="operator-actions">
+        <!-- Teaching point: Distinct Until Changed (ex-027) -->
+        <div class="action-row">
+          <input
+            id="same-state-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Submit Same State description" />
+          <div class="button-container">
+            <!-- Teaching point: Distinct Until Changed (ex-027) -->
+            <button type="button" class="button" (click)="submitSameState()">
+              Submit Same State
+            </button>
+            <label
+              class="description-chevron"
+              for="same-state-description"
+              title="Show or hide Submit Same State description"></label>
+          </div>
+          <div class="description-container">
+            Reconstructs Rey as a new object on every click and merges that
+            one-character delta into the collection. The custom comparison
+            checks every incoming identity against the previous collection, so
+            another Rey returns VAULT_NOOP regardless of reducer sorting.
+          </div>
+        </div>
+
+        <!-- Teaching point: Distinct Until Changed (ex-027) -->
+        <div class="action-row submit-changed-action-row">
+          <input
+            id="changed-state-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Submit Changed State description" />
+          <div class="button-container">
+            <!-- Teaching point: Distinct Until Changed (ex-027) -->
+            <button type="button" class="button" (click)="submitChangedState()">
+              Submit Changed State
+            </button>
+            <label
+              class="description-chevron"
+              for="changed-state-description"
+              title="Show or hide Submit Changed State description"></label>
+          </div>
+          <div class="description-container">
+            Cycles through four Jedi with a modulo index and merges the next
+            one-character delta into the collection. The first four unique IDs
+            proceed through the pipeline; after the modulo wraps, the repeated
+            identity is suppressed without depending on collection order.
+          </div>
+        </div>
+      </div>
+
+      <!-- Teaching point: Distinct Until Changed comparison function (ex-028) -->
+      <div class="comparison-function-column">
+        <input
+          id="comparison-function-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle Comparison Function output visibility"
+          checked />
+        <div class="tap-header">
+          <h3>Comparison Function</h3>
+          <label
+            class="tap-chevron"
+            for="comparison-function-output-toggle"
+            title="Show or hide Comparison Function output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="6"
+          aria-label="Comparison Function output"
+          [value]="editor.comparisonFunctionSource"></textarea>
+      </div>
+    </div>
+  </fieldset>
+</section>

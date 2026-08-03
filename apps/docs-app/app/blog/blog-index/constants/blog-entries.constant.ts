@@ -39,7 +39,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'atomic-deterministic-updates',
     title: 'Your State Updates Are Atomic and Deterministic',
-    date: '2026-06-06',
+    date: '2026-07-30',
     readingTime: 5,
     active: true
   },
@@ -281,7 +281,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'a-featurecell-in-plain-javascript',
     title: 'A FeatureCell in Plain JavaScript — No Framework, No Build Step',
-    date: '2026-07-22',
+    date: '2026-07-23',
     readingTime: 7,
     active: true
   },

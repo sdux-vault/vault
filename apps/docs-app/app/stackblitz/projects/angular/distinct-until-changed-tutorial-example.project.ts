@@ -1,7 +1,7 @@
 import { Project } from '@stackblitz/sdk';
 
-export const tabSyncTutorialExampleProject: Project = {
-  title: 'tab-sync-tutorial-example',
+export const distinctUntilChangedTutorialExampleProject: Project = {
+  title: 'distinct-until-changed-tutorial-example',
   template: 'node',
   files: {
     'angular.json': `{
@@ -53,7 +53,7 @@ export const tabSyncTutorialExampleProject: Project = {
 }
 `,
     'package.json': `{
-  "name": "tab-sync-tutorial-example",
+  "name": "distinct-until-changed-tutorial-example",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -86,10 +86,6 @@ import {
 } from '@angular/core';
 import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
-import {
-  withTabSyncController,
-  withTabSyncStateBehavior
-} from '@sdux-vault/core';
 import { ExampleService } from './example.service';
 import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
 
@@ -130,23 +126,7 @@ export const appConfig: ApplicationConfig = {
          * \`mergeState()\` appends the incoming one-item character array to the current
          * collection instead of replacing the entire FeatureCell value.
          */
-        withArrayAppendMergeBehavior,
-
-        /**
-         * Extends this FeatureCell's State behavior with opt-in browser-tab
-         * synchronization. Finalized local snapshots are shared with matching
-         * peer tabs, while snapshots received from a peer update this FeatureCell's
-         * reactive State so the example presents the same character collection.
-         */
-        withTabSyncStateBehavior
-      ],
-      [
-        /**
-         * Coordinates Tab Sync startup so a newly opened tab can adopt an
-         * existing peer snapshot before continuing with its local State. Register
-         * this controller with the State behavior to complete the tab-sync pair.
-         */
-        withTabSyncController
+        withArrayAppendMergeBehavior
       ]
     )
   ]
@@ -1301,53 +1281,93 @@ export class ExampleCharacterEditor {
         </section>
       </div>
     </div>
-
-    <!-- Teaching template: Safe to remove this entire section until you teach cross-tab synchronization. -->
-    <div class="tab-sync-operator">
+    <div class="distinct-operator">
       <input
-        id="tab-sync-operator-toggle"
+        id="distinct-operator-toggle"
         class="section-toggle"
         type="checkbox"
-        aria-label="Toggle Tab Sync Controller and Behavior visibility"
+        aria-label="Toggle Distinct Until Changed Operator visibility"
         checked />
       <div class="section-header">
-        <span>Tab Sync Controller and Behavior</span>
+        <span>Distinct Until Changed Operator</span>
         <label
           class="section-chevron"
-          for="tab-sync-operator-toggle"
-          title="Show or hide Tab Sync Controller and Behavior"></label>
+          for="distinct-operator-toggle"
+          title="Show or hide Distinct Until Changed Operator"></label>
       </div>
 
       <div class="operator-actions">
-        <div class="action-row tab-sync-action-row">
+        <!-- Teaching point: Distinct Until Changed (ex-027) -->
+        <div class="action-row">
           <input
-            id="tab-sync-description"
+            id="same-state-description"
             class="description-toggle"
             type="checkbox"
-            aria-label="Show View Tab Sync description" />
+            aria-label="Show Submit Same State description" />
           <div class="button-container">
-            <!-- Teaching point: Tab Sync (ex-029) -->
-            <button type="button" class="button" (click)="viewTabSync()">
-              View Tab Sync
+            <!-- Teaching point: Distinct Until Changed (ex-027) -->
+            <button type="button" class="button" (click)="submitSameState()">
+              Submit Same State
             </button>
             <label
               class="description-chevron"
-              for="tab-sync-description"
-              title="Show or hide View Tab Sync description"></label>
+              for="same-state-description"
+              title="Show or hide Submit Same State description"></label>
           </div>
           <div class="description-container">
-            Opens this example in another tab to demonstrate initial state
-            negotiation and ongoing synchronization through
-            withTabSyncController and withTabSyncBehavior. Successful Pipeline
-            executions synchronize committed FeatureCell State values and shared
-            resets; failed Pipeline executions leave the peer tab unchanged.
-            Loading status, Error, Controller outcomes, form values, and other
-            page interactions remain local to the tab where they occur. A new
-            tab receives the last committed State with loading status set to
-            false and Error set to null, without inheriting transient metadata
-            from its peer.
+            Reconstructs Rey as a new object on every click and merges that
+            one-character delta into the collection. The custom comparison
+            checks every incoming identity against the previous collection, so
+            another Rey returns VAULT_NOOP regardless of reducer sorting.
           </div>
         </div>
+
+        <!-- Teaching point: Distinct Until Changed (ex-027) -->
+        <div class="action-row submit-changed-action-row">
+          <input
+            id="changed-state-description"
+            class="description-toggle"
+            type="checkbox"
+            aria-label="Show Submit Changed State description" />
+          <div class="button-container">
+            <!-- Teaching point: Distinct Until Changed (ex-027) -->
+            <button type="button" class="button" (click)="submitChangedState()">
+              Submit Changed State
+            </button>
+            <label
+              class="description-chevron"
+              for="changed-state-description"
+              title="Show or hide Submit Changed State description"></label>
+          </div>
+          <div class="description-container">
+            Cycles through four Jedi with a modulo index and merges the next
+            one-character delta into the collection. The first four unique IDs
+            proceed through the pipeline; after the modulo wraps, the repeated
+            identity is suppressed without depending on collection order.
+          </div>
+        </div>
+      </div>
+
+      <!-- Teaching point: Distinct Until Changed comparison function (ex-028) -->
+      <div class="comparison-function-column">
+        <input
+          id="comparison-function-output-toggle"
+          class="tap-toggle"
+          type="checkbox"
+          aria-label="Toggle Comparison Function output visibility"
+          checked />
+        <div class="tap-header">
+          <h3>Comparison Function</h3>
+          <label
+            class="tap-chevron"
+            for="comparison-function-output-toggle"
+            title="Show or hide Comparison Function output"></label>
+        </div>
+        <textarea
+          readonly
+          rows="6"
+          aria-label="Comparison Function output"
+          [value]="editor.comparisonFunctionSource"></textarea>
       </div>
     </div>
   </fieldset>
@@ -2476,18 +2496,6 @@ describe('ExampleComponent', () => {
     expect(component['selectedCharacter']()).toBeNull();
   });
 
-  it('should open the current example in a new tab for Tab Sync', () => {
-    const openSpy = spyOn(window, 'open').and.returnValue(null);
-
-    component['viewTabSync']();
-
-    expect(openSpy).toHaveBeenCalledOnceWith(
-      window.location.href,
-      '_blank',
-      'noopener'
-    );
-  });
-
   it('should select a known character id and resolve the selected character', async () => {
     await vaultSettled(key);
     component['selectCharacter']('2');
@@ -2945,15 +2953,19 @@ export class ExampleComponent {
   }
 
   /**
-   * Opens the current example URL in a new browser tab for a Tab Sync demonstration.
-   * The direct click preserves browser popup permissions while \`noopener\` isolates tab contexts.
-   * @returns Nothing; opening the tab is delegated to the browser when a window is available.
+   * Starts timing and merges a newly allocated instance of the same character.
+   * @returns Nothing; Distinct Until Changed decides whether downstream stages execute.
    */
-  protected viewTabSync(): void {
-    /* istanbul ignore else -- This Angular component runs only in a browser. */
-    if (typeof window !== 'undefined') {
-      window.open(window.location.href, '_blank', 'noopener');
-    }
+  protected submitSameState(): void {
+    this.#exampleService.submitSameState();
+  }
+
+  /**
+   * Starts timing and merges the next Jedi in the service's four-value cycle.
+   * @returns Nothing; the accepted collection is exposed through reactive State.
+   */
+  protected submitChangedState(): void {
+    this.#exampleService.submitChangedState();
   }
 
   /**
@@ -3435,17 +3447,32 @@ describe('ExampleService', () => {
 });
 `,
     'src/example.service.ts': `import { Injectable } from '@angular/core';
+import { withDistinctUntilChanged } from '@sdux-vault/addons';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import {
   createCharacterState,
   deriveForceSensitiveDisplay,
   deriveFullName,
+  getDistinctChangedStateCharacter,
   getNextCharacterId,
   withCharactersSortedByLastName,
   type StarWarsCharacterDraft
 } from './example.character-domain';
 import { removeUnknownLastNameFilter } from './example.filter';
-import type { StarWarsCharacter } from './star-wars-character.shape';
+import type {
+  RawStarWarsCharacter,
+  StarWarsCharacter
+} from './star-wars-character.shape';
+
+/** Structurally identical merge delta reconstructed for every Same State request. */
+/** Teaching Point: ex-027 */
+const DISTINCT_SAME_STATE_CHARACTER: RawStarWarsCharacter = {
+  id: 501,
+  name: 'Rey',
+  lastName: 'Skywalker',
+  faction: 'Jedi Order',
+  isForceSensitive: true
+};
 
 /**
  * Owns the character collection and exposes domain operations for the tutorial component.
@@ -3520,12 +3547,61 @@ export class ExampleService {
     ]);
 
     /*
+     * \`.operators()\` installs a domain-specific Distinct Until Changed comparator
+     * at the Operator stage. Array Append Merge has already materialized the full
+     * candidate, so the callback compares stable character identities without relying
+     * on array position. A candidate containing no new IDs returns \`VAULT_NOOP\`, even
+     * when a downstream reducer sorted the previously committed collection.
+     */
+    this.#vault.operators([
+      withDistinctUntilChanged<readonly StarWarsCharacter[]>(
+        (incoming, previous) =>
+          incoming.every(({ id }) =>
+            previous.some((character) => character.id === id)
+          )
+      )
+    ]);
+
+    /*
      * \`.initialize()\` finalizes the pipeline configuration and activates the
      * FeatureCell. Its initial value and subsequent updates now pass through the
      * registered Filter → Before Tap → Reducer → After Tap stages before becoming committed
      * reactive State, which is then observed by the State Emission callback.
      */
     this.#vault.initialize();
+  }
+
+  /** Selects the next meaningful Distinct Until Changed replacement. */
+  /** Teaching Point: ex-027 */
+  #distinctChangedStateIndex = 0;
+
+  /**
+   * Reconstructs the same character and submits it through \`mergeState\`.
+   * Array Append Merge combines each newly allocated Rey with current State before
+   * the Operator stage. The identity comparison accepts the first candidate and
+   * suppresses later candidates that introduce no previously unseen character ID.
+   * @returns Nothing; consumers observe the first accepted merged collection reactively.
+   */
+  submitSameState(): void {
+    this.#vault.mergeState([{ ...DISTINCT_SAME_STATE_CHARACTER }]);
+  }
+
+  // Teaching point: Distinct Until Changed (ex-027)
+  /**
+   * Merges the next Jedi into State in a deterministic four-character cycle.
+   * Modulo arithmetic advances the index and wraps it to zero after the fourth
+   * request. Array Append Merge materializes the complete collection before the
+   * Operator accepts new identities and suppresses identities already in State.
+   * @returns Nothing; consumers observe accepted merged collections reactively.
+   */
+  submitChangedState(): void {
+    const { character, nextIndex } = getDistinctChangedStateCharacter(
+      this.#distinctChangedStateIndex
+    );
+
+    this.#distinctChangedStateIndex = nextIndex;
+
+    this.#vault.mergeState([character]);
   }
 
   /**
