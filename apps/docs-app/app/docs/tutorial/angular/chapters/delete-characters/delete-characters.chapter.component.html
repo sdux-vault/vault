@@ -1,3 +1,47 @@
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Make destructive changes explicit, confirmable, and state-safe.
+    </h3>
+    <p>
+      Deletion changes more than a button label: it removes a record from the
+      feature's committed collection and can be difficult to undo. This chapter
+      adds a deliberate confirmation point while keeping the actual removal on
+      the same service-owned pipeline used for every other mutation.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The component coordinates selection, confirmation, and feedback, but it
+      never edits the committed collection directly. The service owns the
+      destructive policy and routes a new collection through
+      <span class="code">replaceState()</span>, so the operation remains
+      observable, immutable, and consistent with the rest of the Feature State
+      lifecycle.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>removing a saved item after an explicit confirmation</li>
+      <li>revoking an assignment or removing access to a record</li>
+      <li>deleting a draft while preserving a clear cancellation path</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have a pending-delete state, a cancelable confirmation flow, and
+      a service-owned removal method that removes the selected character by
+      identity while preserving every other committed record.
+    </p>
+  </div>
+</section>
+
 <section class="section" id="step-16">
   <div class="section-title-navigation">
     <div class="section-title">Step 16: Add Delete Capabilities</div>

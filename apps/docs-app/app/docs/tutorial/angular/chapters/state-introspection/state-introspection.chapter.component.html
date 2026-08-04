@@ -1,4 +1,50 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Observe a pipeline without turning observation into control.
+    </h3>
+    <p>
+      When a State transition is difficult to explain, a final rendered value is
+      not enough. You need to see what was committed, what was loading, which
+      candidate entered the pipeline, how taps changed it, and what event
+      produced the emission. This chapter introduces those observation points
+      without giving diagnostics authority over State.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The service exposes immutable snapshots and pipeline observations while
+      the component renders them for inspection. Reading
+      <span class="code">state</span>, <span class="code">state$</span>, or tap
+      callbacks does not commit a candidate, transform a value, or alter
+      pipeline control. That separation keeps diagnostics trustworthy and
+      prevents logging code from becoming hidden business logic.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>debugging why a candidate differs from committed State</li>
+      <li>diagnostic or telemetry views that need lifecycle context</li>
+      <li>tests that verify pipeline boundaries and emitted outcomes</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will be able to inspect raw StateSnapshot values, observe
+      <span class="code">state$</span>, compare before- and after-tap values,
+      and capture State emissions without moving observation authority into the
+      component.
+    </p>
+  </div>
+</section>
+
 <section class="section" id="step-38">
   <div class="section-title-navigation">
     <div class="section-title">Step 38: Read Raw StateSnapshot</div>

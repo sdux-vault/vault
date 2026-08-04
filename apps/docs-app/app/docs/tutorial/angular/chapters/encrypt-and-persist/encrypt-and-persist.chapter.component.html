@@ -1,4 +1,51 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Persist browser data only when the user value and threat model justify it.
+    </h3>
+    <p>
+      Persistence can make an application feel dependable, but it also gives
+      data a longer life than the current page. This chapter shows how to keep a
+      useful local workspace across refreshes while protecting the value at the
+      persistence boundary and making the security trade-offs explicit.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The FeatureCell continues to work with plain in-memory State while
+      encryption protects the finalized value before persistence writes it to
+      browser storage. Encrypting before persisting keeps storage concerns out
+      of application code, but it is not a complete browser-security strategy:
+      key management, XSS exposure, storage lifetime, and the sensitivity of the
+      data still require deliberate decisions.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>restoring non-sensitive preferences across page refreshes</li>
+      <li>keeping a local workspace or draft available during a session</li>
+      <li>
+        retaining browser data when its value justifies its storage lifetime
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have encryption and Session Storage persistence registered in the
+      correct pipeline boundary, a plain in-memory Feature State, and a clear
+      understanding of what this protection covers—and what your application
+      security design must still address.
+    </p>
+  </div>
+</section>
+
 <section class="section" id="step-34">
   <div class="section-title-navigation">
     <div class="section-title">

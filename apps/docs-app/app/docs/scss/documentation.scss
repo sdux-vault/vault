@@ -189,6 +189,11 @@
     border-radius: var(--sdux-border-radius);
     box-shadow: var(--sdux-shadow-sm);
 
+    p {
+      margin-top: global.$spacing-sm;
+      margin-bottom: global.$spacing-sm;
+    }
+
     .section-title {
       font-size: global.$font-size-lg;
       font-weight: global.$font-weight-semibold;
@@ -216,7 +221,7 @@
       }
 
       .section-top-link {
-        padding-right: 10px;
+        padding-right: global.$spacing-sm;
         width: 45px;
 
         a {
@@ -282,7 +287,7 @@
 
     /* 👇 This is the key fix */
     .section-body + .section-body {
-      margin-top: global.$spacing-lg;
+      margin-top: global.$spacing-sm;
       border-top: 1px solid var(--sdux-surface-outline);
 
       .h-title-navigation {

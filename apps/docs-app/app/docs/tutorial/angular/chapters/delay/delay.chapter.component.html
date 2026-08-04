@@ -1,4 +1,48 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Control when an accepted update proceeds, without changing the update.
+    </h3>
+    <p>
+      Some State transitions need a deliberate pause: a UI transition may need
+      time to settle, a loading experience may need realistic latency, or an
+      external timing constraint may require a controlled handoff. This chapter
+      adds that pause while preserving the candidate itself and the order of
+      pipeline work.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The Delay Controller owns when a pipeline attempt continues; the service
+      owns configuration and State; the component only presents the elapsed
+      experience. A delay is not debounce or throttle: every attempt still
+      proceeds after the interval, and no candidate is transformed, collapsed,
+      or discarded to create the timing effect.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>coordinating a visible State transition with a UI animation</li>
+      <li>simulating network latency while developing loading behavior</li>
+      <li>staging pipeline execution against an external timing constraint</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have a registered Delay Controller, a service-configured
+      interval, and a visual elapsed-time indicator that proves each add, edit,
+      or delete attempt pauses before the unchanged candidate commits.
+    </p>
+  </div>
+</section>
+
 <section class="section" id="step-31">
   <div class="section-title-navigation">
     <div class="section-title">Step 31: Configure the Delay Controller</div>
