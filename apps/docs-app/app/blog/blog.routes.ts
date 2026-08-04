@@ -375,6 +375,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-07-28-state-management-without-framework-lock-in/state-management-without-framework-lock-in.component').then(
         (m) => m.BlogStateManagementWithoutFrameworkLockInComponent
       )
+  },
+  {
+    path: 'behaviors-are-why-the-pipeline-stays-predictable',
+    data: {
+      category: 'blogs',
+      type: 'behaviors-are-why-the-pipeline-stays-predictable'
+    },
+    loadComponent: () =>
+      import('./posts/2026-08-04-behaviors-are-why-the-pipeline-stays-predictable/behaviors-are-why-the-pipeline-stays-predictable.component').then(
+        (m) => m.BlogBehaviorsAreWhyThePipelineStaysPredictableComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //
