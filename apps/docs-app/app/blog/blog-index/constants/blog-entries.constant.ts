@@ -292,5 +292,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-07-28',
     readingTime: 7,
     active: true
+  },
+  {
+    slug: 'behaviors-are-why-the-pipeline-stays-predictable',
+    title: 'Behaviors Are Why the Pipeline Stays Predictable',
+    date: '2026-08-04',
+    readingTime: 6,
+    active: true
   }
 ];
