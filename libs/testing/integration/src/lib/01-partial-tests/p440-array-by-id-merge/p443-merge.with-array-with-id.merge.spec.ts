@@ -1,6 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
 import { getBankEmployeeData } from '../../structure/data/bank-employee.data';
@@ -32,7 +32,7 @@ describe('p443: WithArrayById - Initial and Mixed Values Merge Test', () => {
             initialState: 'a string',
             insights: {} as any
           },
-          [withArrayAppendMergeBehavior]
+          [withArrayByIdMergeBehavior]
         )
       ]
     });
@@ -80,14 +80,37 @@ describe('p443: WithArrayById - Initial and Mixed Values Merge Test', () => {
 
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeTrue();
+
+    testService.vault.mergeState([1, 2] as any);
+    await flushVaultPipeline();
+
+    expect(state.value()).toEqual([1, 2] as any);
+
+    expect(state.isLoading()).toBeFalse();
+    expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeTrue();
+
+    testService.vault.mergeState([1, 2] as any, Object({ isDelete: true }));
+    await flushVaultPipeline();
+
+    expect(state.value()).toEqual([1, 2] as any);
+
+    expect(state.isLoading()).toBeFalse();
+    expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeTrue();
 
     testService.vault.mergeState([
+      getBankEmployeeData(0, false),
       getBankEmployeeData(1, false),
-      getBankEmployeeData(3, false)
-    ] as BankEmployeeShape[]);
+      getBankEmployeeData(0, false),
+      getBankEmployeeData(1, false)
+    ] as any);
     await flushVaultPipeline();
 
     expect(state.value()).toEqual([
+      1,
+      2,
       Object({
         id: 'be-001',
         firstName: 'Alice',
@@ -121,28 +144,12 @@ describe('p443: WithArrayById - Initial and Mixed Values Merge Test', () => {
           state: 'IL',
           zip: '62711'
         })
-      }),
-      Object({
-        id: 'be-004',
-        firstName: 'Derek',
-        lastName: 'Hughes',
-        role: 'LoanOfficer',
-        status: 'Suspended',
-        salary: 78000,
-        hireDate: '2016-06-10',
-        birthDate: '1989-02-14',
-        phoneNumber: '555-810-4431',
-        address: Object({
-          street: '88 Willow Hill Rd',
-          city: 'Chicago',
-          state: 'IL',
-          zip: '60657'
-        })
       })
-    ]);
+    ] as any);
 
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeTrue();
   });
 
   it('should have the correct insight events', async () => {

@@ -1,6 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
 import { getBankEmployeeData } from '../../structure/data/bank-employee.data';
@@ -32,7 +32,7 @@ describe('p442: WithArrayById - Initial Values Merge Test', () => {
             initialState: getBankEmployeeData(1, true),
             insights: {} as any
           },
-          [withArrayAppendMergeBehavior]
+          [withArrayByIdMergeBehavior]
         )
       ]
     });
@@ -96,9 +96,13 @@ describe('p442: WithArrayById - Initial Values Merge Test', () => {
 
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeTrue();
 
     testService.vault.mergeState([
-      getBankEmployeeData(1, false),
+      Object({
+        ...getBankEmployeeData(0, false),
+        firstName: 'Alison'
+      }),
       getBankEmployeeData(3, false)
     ] as BankEmployeeShape[]);
     await flushVaultPipeline();
@@ -123,7 +127,7 @@ describe('p442: WithArrayById - Initial Values Merge Test', () => {
       }),
       Object({
         id: 'be-001',
-        firstName: 'Alice',
+        firstName: 'Alison',
         lastName: 'Wells',
         role: 'Teller',
         status: 'Active',
@@ -136,23 +140,6 @@ describe('p442: WithArrayById - Initial Values Merge Test', () => {
           city: 'Springfield',
           state: 'IL',
           zip: '62704'
-        })
-      }),
-      Object({
-        id: 'be-002',
-        firstName: 'Brian',
-        lastName: 'Stone',
-        role: 'Manager',
-        status: 'Vacation',
-        salary: 90000,
-        hireDate: '2012-09-05',
-        birthDate: '1981-04-17',
-        phoneNumber: '555-490-3322',
-        address: Object({
-          street: '54 Ridgeview Ave',
-          city: 'Springfield',
-          state: 'IL',
-          zip: '62711'
         })
       }),
       Object({
@@ -176,6 +163,24 @@ describe('p442: WithArrayById - Initial Values Merge Test', () => {
 
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeTrue();
+
+    testService.vault.mergeState(
+      [
+        getBankEmployeeData(0, false),
+        getBankEmployeeData(3, false),
+        getBankEmployeeData(1, false),
+        getBankEmployeeData(2, false)
+      ] as BankEmployeeShape[],
+      Object({ isDelete: true })
+    );
+    await flushVaultPipeline();
+
+    expect(state.value()).toEqual([]);
+
+    expect(state.isLoading()).toBeFalse();
+    expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeTrue();
   });
 
   it('should have the correct insight events', async () => {

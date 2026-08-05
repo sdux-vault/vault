@@ -9,7 +9,7 @@ import { expectMonitorSnapshot } from '../../structure/utils/expect-monitor-snap
 import { PartialMergeWithArrayWithIdService } from './partial-merge.with-array-with-id.service';
 import { p440Snapshot } from './snap-shots/p440-merge.with-array-with-id.merge.snapshot';
 
-fdescribe('p440: WithArrayById - Without Initial Values Merge Test', () => {
+describe('p440: WithArrayById - Without Initial Values Merge Test', () => {
   const key = 'partial-merge.with-array-by-id';
   let testService: PartialMergeWithArrayWithIdService;
   let stopListening: () => void;
