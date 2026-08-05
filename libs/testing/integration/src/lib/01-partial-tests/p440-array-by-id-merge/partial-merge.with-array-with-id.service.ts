@@ -28,6 +28,7 @@ export class PartialMergeWithArrayWithIdService extends PrimaryPartialAbstractCl
 
   initialize(): void {
     // Initialize the FeatureCell using the default merge behavior.
+    this.vault.withArrayMergeId?.({ idKey: 'id' });
     this.vault.initialize();
   }
 }

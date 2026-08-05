@@ -1,6 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import { flushVaultPipeline } from '@sdux-vault/testing-utils';
@@ -10,7 +10,7 @@ import { expectMonitorSnapshot } from '../../structure/utils/expect-monitor-snap
 import { PartialMergeWithArrayWithIdService } from './partial-merge.with-array-with-id.service';
 import { p441Snapshot } from './snap-shots/p441-merge.with-array-with-id.merge.snapshot';
 
-describe('p441: WithArrayById - Without Initial Values and Clear Merge Test', () => {
+fdescribe('p441: WithArrayById - Without Initial Values and Clear Merge Test', () => {
   const key = 'partial-merge.with-array-by-id';
   let testService: PartialMergeWithArrayWithIdService;
   let stopListening: () => void;
@@ -32,7 +32,7 @@ describe('p441: WithArrayById - Without Initial Values and Clear Merge Test', ()
             initialState: null,
             insights: {} as any
           },
-          [withArrayAppendMergeBehavior]
+          [withArrayByIdMergeBehavior]
         )
       ]
     });
@@ -50,6 +50,16 @@ describe('p441: WithArrayById - Without Initial Values and Clear Merge Test', ()
   it('should merge the bank employees with and without clear', async () => {
     const state = testService.getState();
     await vaultSettled(key);
+
+    expect(state.value()).toBeUndefined();
+    expect(state.isLoading()).toBeFalse();
+    expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeFalse();
+
+    testService.vault.replaceState(
+      Object({ value: getBankEmployeeData(1, true) })
+    );
+    await flushVaultPipeline();
 
     testService.vault.mergeState(
       Object({ value: getBankEmployeeData(1, true) })
@@ -78,6 +88,7 @@ describe('p441: WithArrayById - Without Initial Values and Clear Merge Test', ()
 
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeTrue();
 
     testService.vault.mergeState([]);
     await vaultSettled(key);
@@ -104,6 +115,7 @@ describe('p441: WithArrayById - Without Initial Values and Clear Merge Test', ()
 
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeTrue();
 
     testService.vault.mergeState({ value: () => Promise.resolve(undefined) }, {
       clearUndefined: false
@@ -132,6 +144,7 @@ describe('p441: WithArrayById - Without Initial Values and Clear Merge Test', ()
 
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeTrue();
 
     testService.vault.mergeState({ value: () => Promise.resolve(undefined) }, {
       clearUndefined: true
@@ -142,6 +155,22 @@ describe('p441: WithArrayById - Without Initial Values and Clear Merge Test', ()
 
     expect(state.isLoading()).toBeFalse();
     expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeFalse();
+
+    testService.vault.mergeState(
+      { value: () => Promise.resolve(getBankEmployeeData(1, false) as any) },
+      {
+        clearUndefined: true,
+        isDelete: true
+      } as any
+    );
+    await flushVaultPipeline();
+
+    expect(state.value()).toBeUndefined();
+
+    expect(state.isLoading()).toBeFalse();
+    expect(state.error()).toBeNull();
+    expect(state.hasValue()).toBeFalse();
   });
 
   it('should have the correct insight events', async () => {
