@@ -1,4 +1,48 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Put an explicit human or policy decision at a pipeline boundary.
+    </h3>
+    <p>
+      Some candidates should not continue on automation alone. An approval,
+      review, or policy check may need to inspect the data after it is resolved,
+      filtered, or reduced. This chapter pauses the pipeline at those deliberate
+      boundaries so a decision can accept the candidate unchanged or block it
+      before committed State changes.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      Stepwise belongs to the service-owned pipeline; the component presents the
+      pending decision but does not control candidate transformation or State
+      authority. It is more than a confirmation modal: an unresolved decision
+      can pause execution indefinitely, so every application must provide a
+      reliable path to continue or block the request.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>approval before publishing or committing a consequential change</li>
+      <li>confirmation after derived validation or policy review</li>
+      <li>staged onboarding where each boundary needs an explicit decision</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have Stepwise behaviors and a controller configured at Resolve,
+      Filter, and Reducer boundaries, with explicit continue or block decisions
+      that preserve committed State when a candidate is rejected.
+    </p>
+  </div>
+</section>
+
 <section class="section" id="step-51">
   <div class="section-title-navigation">
     <div class="section-title">Step 51: Configure the Stepwise Pipeline</div>

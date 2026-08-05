@@ -88,3 +88,15 @@
   font-weight: global.$font-weight-medium;
   line-height: 1;
 }
+
+.fake-h2 {
+  @include global.h2-element;
+}
+
+.fake-h3 {
+  @include global.h3-element;
+}
+
+.fake-h4 {
+  @include global.h4-element;
+}

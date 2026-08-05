@@ -15,6 +15,7 @@ export const SITEMAP_URLS = [
   '/blog/ai-assisted-debugging',
   '/blog/atomic-deterministic-updates',
   '/blog/atomic-state-commitment',
+  '/blog/behaviors-are-why-the-pipeline-stays-predictable',
   '/blog/circuit-breaker-state-pipeline',
   '/blog/components-without-connect-or-useselector',
   '/blog/controllers-dont-touch-your-data',

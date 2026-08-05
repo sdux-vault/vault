@@ -399,6 +399,16 @@
       "url": "/blog/state-management-without-framework-lock-in",
       "symbols": ["state-management-without-framework-lock-in"],
       "content": "Plain TypeScript, Zero Magic: State Management Without Framework Lock-In state-management-without-framework-lock-in TA"
+    },
+    {
+      "id": "blog:behaviors-are-why-the-pipeline-stays-predictable",
+      "title": "Behaviors Are Why the Pipeline Stays Predictable",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/behaviors-are-why-the-pipeline-stays-predictable",
+      "symbols": ["behaviors-are-why-the-pipeline-stays-predictable"],
+      "content": "Behaviors Are Why the Pipeline Stays Predictable behaviors-are-why-the-pipeline-stays-predictable ED"
     }
   ]
 }

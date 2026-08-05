@@ -287,11 +287,15 @@ counterCell.initialize();</code></pre>
 
           <p>
             In Angular, the registration boundary is the
-            <span class="code">provideFeatureCell()</span> call. In React, Vue,
-            and Svelte, the same boundary is still explicit: you create the
-            cell, initialize it once, and then let framework components consume
-            the stable reference. The wiring changes by framework, but the
-            predictability rule does not.
+            <span class="code"
+              ><a href="/docs/references/functions/provide-feature-cell"
+                >provideFeatureCell</a
+              >()</span
+            >
+            call. In React, Vue, and Svelte, the same boundary is still
+            explicit: you create the cell, initialize it once, and then let
+            framework components consume the stable reference. The wiring
+            changes by framework, but the predictability rule does not.
           </p>
 
           <!-- StackBlitz: behaviors-are-why-the-pipeline-stays-predictable -->

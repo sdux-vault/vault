@@ -1,4 +1,49 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Suppress semantically redundant updates when repeated inputs are normal.
+    </h3>
+    <p>
+      Applications can receive the same logical value many times: a poll may
+      repeat its result, a selection event may reconstruct an equivalent object,
+      or an upstream source may replay unchanged data. This chapter shows how to
+      define “same” deliberately so redundant candidates stop early without
+      hiding meaningful State changes.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The service owns the comparison function and the operator evaluates the
+      candidate before downstream filters and reducers run. The component only
+      exposes controls and observation; it does not decide whether two values
+      are equivalent. A comparator that is too broad can suppress a real update,
+      so distinctness is a domain decision rather than a generic performance
+      switch.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>repeated selection or interaction events with the same meaning</li>
+      <li>polling or replayed inputs that often contain unchanged State</li>
+      <li>expensive downstream derivation that should skip redundant work</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have a service-registered comparison function that accepts new
+      character identities, suppresses equivalent candidates before downstream
+      stages, and makes the meaning of “changed” visible in the example.
+    </p>
+  </div>
+</section>
+
 <section class="section" id="step-48">
   <div class="section-title-navigation">
     <div class="section-title">Step 48: Configure Distinct Until Changed</div>

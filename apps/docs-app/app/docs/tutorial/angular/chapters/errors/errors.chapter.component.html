@@ -1,4 +1,50 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Keep the reason for failure separate from how the UI communicates it.
+    </h3>
+    <p>
+      A failed request is both a pipeline event and a product communication
+      problem. The application must preserve the reason a candidate was rejected
+      while deciding whether to show a banner, record telemetry, or offer
+      recovery. This chapter makes that distinction visible by simulating a
+      failure without changing the normal CRUD requests.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The pipeline owns error authority and finalization; the component observes
+      the result and chooses how to present it. Clearing a global error
+      acknowledges the current message but does not repair the failing
+      condition. Keeping those responsibilities separate prevents UI feedback
+      from becoming accidental pipeline control.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>
+        validation failures that should prevent a candidate from committing
+      </li>
+      <li>unavailable dependencies that need visible recovery guidance</li>
+      <li>authorization or operational failures that require monitoring</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will be able to trigger a controlled pipeline failure, inspect its
+      finalized error and snapshot, distinguish local emission from global error
+      state, and restore normal CRUD behavior by resetting the cause.
+    </p>
+  </div>
+</section>
+
 <section class="section" id="step-23">
   <div class="section-title-navigation">
     <div class="section-title">Step 23: Simulate Pipeline Errors</div>

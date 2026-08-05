@@ -1,4 +1,47 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Build a feature whose State has a home outside the component.
+    </h3>
+    <p>
+      A detail view is easy to begin and easy to outgrow. As loading, editing,
+      errors, and cleanup arrive, one component can become responsible for user
+      interaction, rendering, and the rules that govern its data. This tutorial
+      starts by giving the character feature a focused State boundary before
+      those responsibilities become tangled.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      <sdux-brand-name /> keeps Feature State and its pipeline in an Angular
+      service, so the component can stay focused on display and temporary user
+      interaction. It does not replace the component; it gives the component a
+      clear, reactive State source to render.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>a profile, product, or record detail view</li>
+      <li>a selected item from a managed collection</li>
+      <li>a feature that will later add editing, loading, and validation</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have a typed, service-owned
+      <sdux-feature-cell />, initialized with character State and exposed to an
+      Angular component as a read-only, reactive detail view.
+    </p>
+  </div>
+</section>
+
 <section class="section" id="step-1">
   <div class="section-title-navigation">
     <div class="section-title">Step 1: Angular Project Setup</div>
