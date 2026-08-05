@@ -11,29 +11,10 @@ describe('Function: extendArrayByIdMerge', () => {
     } as unknown as FeatureCellBaseShape<any>;
   });
 
-  it('should attach query methods to the cell', () => {
+  it('should attach array by id merge method to the cell', () => {
     extendArrayByIdMergeFunction(cell);
 
-    expect(typeof cell.delete).toBe('function');
     expect(typeof cell.withArrayMergeId).toBe('function');
-  });
-
-  describe('delete()', () => {
-    it('should throw a clear error when delete behavior is not installed', async () => {
-      extendArrayByIdMergeFunction(cell);
-
-      let caught: Error | undefined;
-
-      try {
-        await cell.delete!('123');
-      } catch (err) {
-        caught = err as Error;
-      }
-
-      expect(caught).toBeDefined();
-      expect(caught instanceof Error).toBeTrue();
-      expect(caught!.message).toBe('[vault] delete() behavior not installed');
-    });
   });
 
   describe('withArrayMergeId', () => {

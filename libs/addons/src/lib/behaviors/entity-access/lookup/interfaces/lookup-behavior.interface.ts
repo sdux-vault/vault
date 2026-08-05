@@ -39,7 +39,7 @@ declare module '@sdux-vault/shared' {
   /**
    * Augments FeatureCell extensions with lookup APIs.
    */
-  // eslint-disable-next-line
+
   interface FeatureCellExtension<TEntity> {
     /**
      * Resolves an entity by identifier using the lookup behavior.
@@ -56,14 +56,7 @@ declare module '@sdux-vault/shared' {
      * @returns An observable that emits the matching entity.
      */
     lookup$?<TEntity>(id: string): Observable<TEntity>;
-  }
-}
 
-declare module '@sdux-vault/shared' {
-  /**
-   * Augments the FeatureCell base shape with lookup configuration support.
-   */
-  interface FeatureCellFluentApi<TEntity> {
     /**
      * Registers lookup behavior configuration on the FeatureCell instance.
      *

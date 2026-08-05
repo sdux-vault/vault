@@ -12,28 +12,6 @@ export interface ArrayByIdMergeBehaviorExtension<TEntity> extends Partial<
    * Index signature supporting dynamic behavior extension bindings.
    */
   [key: string]: BehaviorExtFunction | undefined;
-
-  /**
-   * Delete an entity by identifier from the current state.
-   *
-   * @param id - Identifier used to locate the entity.
-   * @returns void
-   */
-  delete(id: string): void;
-}
-
-declare module '@sdux-vault/shared' {
-  /** Augments FeatureCell extensions with the delete API. */
-  // eslint-disable-next-line
-  interface FeatureCellExtension<TEntity> {
-    /**
-     * Deletes an entity by identifier from the current state.
-     *
-     * @param id - Identifier used to locate the entity.
-     * @returns void
-     */
-    delete?(id: string): void;
-  }
 }
 
 declare module '@sdux-vault/shared' {

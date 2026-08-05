@@ -50,21 +50,106 @@ describe('Behavior: withArrayByIdMerge', () => {
     );
   });
 
+  it('should install the withArrayMergeId fluent API', () => {
+    const cell = {} as any;
+    const behaviorConfigs = new Map<string, unknown>();
+    const options = { idKey: 'key' };
+
+    withArrayByIdMergeBehavior.installFluentApi(cell, behaviorConfigs);
+
+    expect(cell.withArrayMergeId(options)).toBe(cell);
+    expect(behaviorConfigs.get('withArrayMergeId')).toEqual({
+      idKey: 'key'
+    });
+
+    options.idKey = 'mutated';
+    expect(behaviorConfigs.get('withArrayMergeId')).toEqual({ idKey: 'key' });
+  });
+
+  it('should reject missing behavior configuration', () => {
+    expect(
+      () =>
+        new withArrayByIdMergeBehavior('behavior-key', {
+          behaviorConfig: undefined
+        } as BehaviorClassContext)
+    ).toThrowError(
+      '[vault] ArrayByIdMerge behavior requires configuration via withArrayMergeId()'
+    );
+  });
+
+  it('should reject configuration without an id key', () => {
+    expect(
+      () =>
+        new withArrayByIdMergeBehavior('behavior-key', {
+          behaviorConfig: {}
+        } as BehaviorClassContext)
+    ).toThrowError('[vault] ArrayByIdMerge behavior requires idKey');
+  });
+
+  it('should reject a non-string id key', () => {
+    expect(
+      () =>
+        new withArrayByIdMergeBehavior('behavior-key', {
+          behaviorConfig: { idKey: 123 }
+        } as any)
+    ).toThrowError(
+      '[vault] ArrayByIdMerge behavior requires idKey to be a non-empty string'
+    );
+  });
+
+  it('should reject a whitespace-only id key', () => {
+    expect(
+      () =>
+        new withArrayByIdMergeBehavior('behavior-key', {
+          behaviorConfig: { idKey: '   ' }
+        } as BehaviorClassContext)
+    ).toThrowError(
+      '[vault] ArrayByIdMerge behavior requires idKey to be a non-empty string'
+    );
+  });
+
+  it('should reject an empty id key', () => {
+    expect(
+      () =>
+        new withArrayByIdMergeBehavior('behavior-key', {
+          behaviorConfig: { idKey: '' }
+        } as BehaviorClassContext)
+    ).toThrowError(
+      '[vault] ArrayByIdMerge behavior requires idKey to be a non-empty string'
+    );
+  });
+
   // ---------------------------------------------------------------------------
   // Comparison Examples Behavior
   // ---------------------------------------------------------------------------
   describe('comparison examples', () => {
-    it('should clone next array when both curr and next are arrays', () => {
-      const curr = [1, 2, 3];
-      const next = [4, 5];
+    it('should append entities that are not already present', () => {
+      const curr = [{ id: 1, name: 'one' }];
+      const next = [{ id: 2, name: 'two' }];
 
       const result = behavior.computeMerge(curr, next);
 
-      expect(result).toEqual([1, 2, 3, 4, 5]);
-      expect(result).not.toBe(next); // ensure deep clone
+      expect(result).toEqual([
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' }
+      ]);
+      expect(result).not.toBe(curr);
+      expect(result).not.toBe(next);
+      expect(curr).toEqual([{ id: 1, name: 'one' }]);
     });
 
-    it('should replace the array with the scalar', () => {
+    it('should append an entity when current entries are not objects', () => {
+      const curr = [1];
+      const next = { id: 2, name: 'two' };
+
+      const result = behavior.computeMerge(curr, next);
+
+      expect(result).toEqual([1, { id: 2, name: 'two' }]);
+      expect(result).not.toBe(curr);
+      expect(curr).toEqual([1]);
+    });
+
+    it('should return a non-entity next value when curr is an array', () => {
       const curr = [1, 2, 3];
       const next = 10;
 
@@ -117,38 +202,168 @@ describe('Behavior: withArrayByIdMerge', () => {
       const result = behavior.computeMerge(curr, next);
 
       expect(result).toEqual([1, 2, 3]);
-      expect(result).toBe(next);
+      expect(result).not.toBe(next);
     });
 
-    it('should return nextValue when both are non-arrays', () => {
-      const curr = { x: 1 };
-      const next = { y: 2 };
+    it('should update an existing entity from a single object', () => {
+      const curr = [{ id: 1, name: 'old' }];
+      const next = { id: 1, name: 'new' };
 
       const result = behavior.computeMerge(curr, next);
 
-      expect(result).toEqual({ y: 2 });
-      expect(result).toBe(next);
+      expect(result).toEqual([{ id: 1, name: 'new' }]);
+      expect(result).not.toBe(curr);
+      expect(result[0]).not.toBe(next);
+      expect(curr).toEqual([{ id: 1, name: 'old' }]);
     });
 
-    it('should return nextValue when both are non-arrays', () => {
-      let curr = [{ x: 1 }];
-      let next = [{ y: 2 }] as any;
+    it('should isolate nested references in merged results', () => {
+      const curr = [{ id: 1, profile: { name: 'old' } }];
+      const next = { id: 2, profile: { name: 'new' } };
 
-      curr = behavior.computeMerge(curr, next);
+      const result = behavior.computeMerge(curr, next) as any[];
 
-      expect(curr).toEqual([Object({ x: 1 }), Object({ y: 2 })]);
-      expect(next).toEqual([Object({ y: 2 })]);
+      next.profile.name = 'changed';
+      curr[0].profile.name = 'also changed';
 
-      next = [{ y: 2, z: 3 }];
-
-      curr = behavior.computeMerge(curr, next);
-
-      expect(curr).toEqual([
-        Object({ x: 1 }),
-        Object({ y: 2 }),
-        Object({ y: 2, z: 3 })
+      expect(result).toEqual([
+        { id: 1, profile: { name: 'old' } },
+        { id: 2, profile: { name: 'new' } }
       ]);
-      expect(next).toEqual([Object({ y: 2, z: 3 })]);
+      expect(result[0]).not.toBe(curr[0]);
+      expect(result[1]).not.toBe(next);
+      expect(result[0].profile).not.toBe(curr[0].profile);
+      expect(result[1].profile).not.toBe(next.profile);
+    });
+
+    it('should isolate object values returned by the non-array branch', () => {
+      const next = { profile: { name: 'new' } };
+
+      const result = behavior.computeMerge({ existing: true }, next) as any;
+
+      next.profile.name = 'changed';
+
+      expect(result).toEqual({ profile: { name: 'new' } });
+      expect(result).not.toBe(next);
+      expect(result.profile).not.toBe(next.profile);
+    });
+
+    it('should update matching entities and append new entities in an array', () => {
+      const curr = [
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' }
+      ];
+      const next = [
+        { id: 2, name: 'updated' },
+        { id: 3, name: 'three' }
+      ];
+
+      const result = behavior.computeMerge(curr, next);
+
+      expect(result).toEqual([
+        { id: 1, name: 'one' },
+        { id: 2, name: 'updated' },
+        { id: 3, name: 'three' }
+      ]);
+      expect(result).not.toBe(curr);
+      expect(curr).toEqual([
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' }
+      ]);
+    });
+
+    it('should delete a matching entity from a single object', () => {
+      const curr = [
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' }
+      ];
+
+      const result = behavior.computeMerge(curr, { id: 1 }, { isDelete: true });
+
+      expect(result).toEqual([{ id: 2, name: 'two' }]);
+      expect(result).not.toBe(curr);
+      expect(curr).toEqual([
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' }
+      ]);
+    });
+
+    it('should delete matching entities from an array and ignore missing entities', () => {
+      const curr = [
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' },
+        { id: 3, name: 'three' }
+      ];
+
+      const result = behavior.computeMerge(
+        curr,
+        [{ id: 1 }, { id: 99 }, { id: 3 }],
+        { isDelete: true }
+      );
+
+      expect(result).toEqual([{ id: 2, name: 'two' }]);
+      expect(result).not.toBe(curr);
+      expect(curr).toEqual([
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' },
+        { id: 3, name: 'three' }
+      ]);
+    });
+
+    it('should delete matching entities from a mixed array by consuming duplicate ids', () => {
+      const curr = [
+        { id: 1, name: 'first' },
+        'preserve',
+        { id: 1, name: 'second' },
+        { id: 2, name: 'two' }
+      ];
+
+      const result = behavior.computeMerge(
+        curr,
+        [{ id: 1 }, { id: 1 }, { id: 99 }],
+        { isDelete: true }
+      );
+
+      expect(result).toEqual(['preserve', { id: 2, name: 'two' }]);
+      expect(result).not.toBe(curr);
+      expect(curr).toEqual([
+        { id: 1, name: 'first' },
+        'preserve',
+        { id: 1, name: 'second' },
+        { id: 2, name: 'two' }
+      ]);
+    });
+
+    it('should return the current array unchanged when delete items are absent', () => {
+      const curr = [{ id: 1, name: 'one' }];
+
+      const result = behavior.computeMerge(curr, [{ id: 2 }, { id: 3 }], {
+        isDelete: true
+      });
+
+      expect(result).toEqual([{ id: 1, name: 'one' }]);
+      expect(result).not.toBe(curr);
+      expect(curr).toEqual([{ id: 1, name: 'one' }]);
+    });
+
+    it('should return the current array unchanged for invalid delete input', () => {
+      const curr = [{ id: 1, name: 'one' }];
+      const next = [{ id: 2 }, null] as any;
+
+      const result = behavior.computeMerge(curr, next, { isDelete: true });
+
+      expect(result).toEqual([{ id: 1, name: 'one' }]);
+      expect(result).not.toBe(curr);
+      expect(curr).toEqual([{ id: 1, name: 'one' }]);
+    });
+
+    it('should return a non-array current value unchanged during deletion', () => {
+      const curr = { id: 1, name: 'one' };
+
+      const result = behavior.computeMerge(curr, { id: 1 }, { isDelete: true });
+
+      expect(result).toEqual(curr);
+      expect(result).not.toBe(curr);
     });
 
     it('should return nextValue even if next is null', () => {
@@ -181,22 +396,25 @@ describe('Behavior: withArrayByIdMerge', () => {
   // ---------------------------------------------------------------------------
   // Deep array edge cases
   // ---------------------------------------------------------------------------
-  it('should clone nested arrays (shallow clone only)', () => {
+  it('should return an isolated invalid nested array', () => {
     const curr = [[1], [2]];
     const next = [[9], [8]];
 
     const result = behavior.computeMerge(curr, next);
 
-    expect(result).toEqual([[1], [2], [9], [8]]);
+    expect(result).toEqual(next);
+    expect(result).not.toBe(next);
   });
 
   it('should preserve empty arrays correctly', () => {
-    const curr = [1, 2];
+    const curr = [{ id: 1 }];
     const next: any[] = [];
 
     const result = behavior.computeMerge(curr, next);
 
-    expect(result).toEqual([1, 2]);
+    expect(result).toEqual([{ id: 1 }]);
+    expect(result).not.toBe(curr);
+    expect(curr).toEqual([{ id: 1 }]);
   });
 
   // ---------------------------------------------------------------------------
@@ -244,11 +462,22 @@ describe('Behavior: withArrayByIdMerge', () => {
   // Multiple sequential merges
   // ---------------------------------------------------------------------------
   it('should support sequential merges on same behavior instance', () => {
-    const mid = behavior.computeMerge([1, 2, 3], [9]);
-    const final = behavior.computeMerge(mid, [100, 200]);
+    const mid = behavior.computeMerge(
+      [{ id: 1 }, { id: 2 }],
+      [{ id: 2, value: 'updated' }, { id: 3 }]
+    );
 
-    expect(mid).toEqual([1, 2, 3, 9]);
-    expect(final).toEqual([1, 2, 3, 9, 100, 200]);
+    expect(mid).toEqual([{ id: 1 }, { id: 2, value: 'updated' }, { id: 3 }]);
+
+    const final = behavior.computeMerge(mid, { id: 1, value: 'updated' });
+
+    expect(final).toEqual([
+      { id: 1, value: 'updated' },
+      { id: 2, value: 'updated' },
+      { id: 3 }
+    ]);
+    expect(final).not.toBe(mid);
+    expect(mid).toEqual([{ id: 1 }, { id: 2, value: 'updated' }, { id: 3 }]);
   });
 
   // ---------------------------------------------------------------------------
@@ -271,7 +500,7 @@ describe('Behavior: withArrayByIdMerge', () => {
       );
     });
 
-    it('should ignore throwing getters because merge does not inspect object properties', () => {
+    it('should return an object without an identifier as-is', () => {
       const next = Object.create(null);
       Object.defineProperty(next, 'length', {
         get() {
@@ -347,10 +576,11 @@ describe('Behavior: withArrayByIdMerge', () => {
       const next = { b: 999 };
 
       const result = behavior.computeMerge(curr as any, next as any);
-      expect(result).toBe(next);
+      expect(result).toEqual(next);
+      expect(result).not.toBe(next);
     });
 
-    it('should ignore Proxy traps during Array.isArray check', () => {
+    it('should return the current array when next is an empty proxy array', () => {
       const next = new Proxy([], {
         getPrototypeOf() {
           throw 'proto-error';
@@ -362,17 +592,24 @@ describe('Behavior: withArrayByIdMerge', () => {
       // computeMerge does NOT use prototype checks directly → so NOTHING should throw
       const result = behavior.computeMerge(curr, next);
 
-      expect(result).toEqual([1, 2]); // non-array branch returned next
+      expect(result).toEqual([1, 2]);
+      expect(result).not.toBe(curr);
+      expect(curr).toEqual([1, 2]);
     });
 
-    it('should clone next array even if next is frozen', () => {
-      const next = Object.freeze([1, 2, 3]);
-      const curr = ['a'];
+    it('should merge entities from a frozen next array', () => {
+      const next = Object.freeze([{ id: 2, value: 'two' }]);
+      const curr = [{ id: 1, value: 'one' }];
 
       const result = behavior.computeMerge(curr, next);
 
-      expect(result).toEqual(['a', 1, 2, 3]);
+      expect(result).toEqual([
+        { id: 1, value: 'one' },
+        { id: 2, value: 'two' }
+      ]);
+      expect(result).not.toBe(curr);
       expect(result).not.toBe(next);
+      expect(curr).toEqual([{ id: 1, value: 'one' }]);
     });
 
     it('should treat typed arrays as non-arrays and return next as-is', () => {
@@ -381,7 +618,175 @@ describe('Behavior: withArrayByIdMerge', () => {
 
       const result = behavior.computeMerge(curr, next as any);
 
-      expect(result).toBe(next);
+      expect(result).toEqual(next);
+      expect(result).not.toBe(next);
+    });
+
+    it('should not mutate the input array during updates', () => {
+      const curr = [{ id: 1, name: 'one' }];
+      const next = { id: 1, name: 'updated' };
+
+      const result = behavior.computeMerge(curr, next);
+
+      expect(result).toEqual([{ id: 1, name: 'updated' }]);
+      expect(result).not.toBe(curr);
+      expect(curr).toEqual([{ id: 1, name: 'one' }]);
+    });
+
+    it('should not mutate the input array during deletes', () => {
+      const curr = [
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' }
+      ];
+
+      const result = behavior.computeMerge(curr, { id: 1 }, { isDelete: true });
+
+      expect(result).toEqual([{ id: 2, name: 'two' }]);
+      expect(result).not.toBe(curr);
+      expect(curr).toEqual([
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' }
+      ]);
+    });
+
+    it('should not mutate frozen current input during an update', () => {
+      const curr = Object.freeze([
+        Object.freeze({
+          id: 1,
+          profile: Object.freeze({ name: 'one' })
+        })
+      ]);
+      const next = Object.freeze({ id: 1, profile: { name: 'new' } });
+
+      const result = behavior.computeMerge(curr, next);
+
+      expect(result).toEqual([{ id: 1, profile: { name: 'new' } }]);
+      expect(curr).toEqual([{ id: 1, profile: { name: 'one' } }]);
+    });
+
+    it('should not mutate frozen current input during deletion', () => {
+      const curr = Object.freeze([
+        Object.freeze({ id: 1, profile: Object.freeze({ name: 'one' }) }),
+        Object.freeze({ id: 2, profile: Object.freeze({ name: 'two' }) })
+      ]);
+
+      const result = behavior.computeMerge(curr, Object.freeze({ id: 1 }), {
+        isDelete: true
+      });
+
+      expect(result).toEqual([{ id: 2, profile: { name: 'two' } }]);
+      expect(curr).toEqual([
+        { id: 1, profile: { name: 'one' } },
+        { id: 2, profile: { name: 'two' } }
+      ]);
+    });
+  });
+
+  describe('identifier uniqueness normalization', () => {
+    it('should not treat inherited properties as identifiers', () => {
+      for (const idKey of ['toString', 'constructor', '__proto__']) {
+        const specialKeyBehavior = new withArrayByIdMergeBehavior(
+          'behavior-key',
+          {
+            behaviorConfig: { idKey }
+          } as BehaviorClassContext
+        );
+        const curr = [{ name: 'one' }, { name: 'two' }];
+        const next = { name: 'three' };
+
+        const result = specialKeyBehavior.computeMerge(curr, next);
+
+        expect(result).toEqual(next);
+      }
+    });
+
+    it('should recognize an own property even when the key is inherited by default', () => {
+      const specialKeyBehavior = new withArrayByIdMergeBehavior(
+        'behavior-key',
+        {
+          behaviorConfig: { idKey: 'toString' }
+        } as BehaviorClassContext
+      );
+      const curr = [{ toString: 'one', name: 'one' }];
+      const next = { toString: 'one', name: 'updated' };
+
+      const result = specialKeyBehavior.computeMerge(curr, next);
+
+      expect(result).toEqual([{ toString: 'one', name: 'updated' }]);
+    });
+
+    it('should collapse duplicate identifiers already present in current state', () => {
+      const curr = [
+        { id: 1, name: 'first' },
+        { id: 2, name: 'two' },
+        { id: 1, name: 'last' }
+      ];
+
+      const result = behavior.computeMerge(curr, { id: 3, name: 'three' });
+
+      expect(result).toEqual([
+        { id: 1, name: 'last' },
+        { id: 2, name: 'two' },
+        { id: 3, name: 'three' }
+      ]);
+    });
+
+    it('should collapse duplicate identifiers in the incoming array with last-write-wins', () => {
+      const curr = [{ id: 1, name: 'one' }];
+      const next = [
+        { id: 2, name: 'first' },
+        { id: 2, name: 'last' }
+      ];
+
+      const result = behavior.computeMerge(curr, next);
+
+      expect(result).toEqual([
+        { id: 1, name: 'one' },
+        { id: 2, name: 'last' }
+      ]);
+    });
+
+    it('should update matching identifiers in place and append only new identifiers', () => {
+      const curr = [
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' }
+      ];
+      const next = [
+        { id: 2, name: 'updated' },
+        { id: 3, name: 'first' },
+        { id: 3, name: 'last' }
+      ];
+
+      const result = behavior.computeMerge(curr, next);
+
+      expect(result).toEqual([
+        { id: 1, name: 'one' },
+        { id: 2, name: 'updated' },
+        { id: 3, name: 'last' }
+      ]);
+    });
+
+    it('should normalize duplicate identifiers when the current value is undefined', () => {
+      const next = [
+        { id: 1, name: 'first' },
+        { id: 1, name: 'last' }
+      ];
+
+      const result = behavior.computeMerge(undefined, next);
+
+      expect(result).toEqual([{ id: 1, name: 'last' }]);
+    });
+
+    it('should remove all canonical duplicates when deleting an identifier', () => {
+      const curr = [
+        { id: 1, name: 'first' },
+        { id: 2, name: 'two' },
+        { id: 1, name: 'last' }
+      ];
+
+      const result = behavior.computeMerge(curr, { id: 1 }, { isDelete: true });
+
+      expect(result).toEqual([{ id: 2, name: 'two' }]);
     });
   });
 
