@@ -27,7 +27,12 @@ import { Component, input, ViewEncapsulation } from '@angular/core';
                 >&lt;T&gt;
               </li>
               @if (type() === 'arrayById') {
-                <li>options?: ArrayByIdMergeConfig</li>
+                <li>
+                  options?:
+                  <a href="/docs/references/config/array-by-id-merge-config"
+                    >ArrayByIdMergeConfig</a
+                  >
+                </li>
               } @else {
                 <li>
                   options?:

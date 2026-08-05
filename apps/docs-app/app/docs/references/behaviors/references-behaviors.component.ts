@@ -12,6 +12,7 @@ import { NotFoundComponent } from '../../../not-found/not-found.component';
 
 import { withAes256EncryptBehaviorComponent } from './with-aes256encrypt-behavior.component';
 import { withArrayAppendMergeBehaviorComponent } from './with-array-append-merge-behavior.component';
+import { withArrayByIdMergeBehaviorComponent } from './with-array-by-id-merge-behavior.component';
 import { withArrayMergeBehaviorComponent } from './with-array-merge-behavior.component';
 import { withArrayPushMergeBehaviorComponent } from './with-array-push-merge-behavior.component';
 import { withCookieStoragePersistBehaviorComponent } from './with-cookie-storage-persist-behavior.component';
@@ -54,6 +55,7 @@ import { withTabSyncStateBehaviorComponent } from './with-tab-sync-state-behavio
     MatExpansionModule,
     withAes256EncryptBehaviorComponent,
     withArrayAppendMergeBehaviorComponent,
+    withArrayByIdMergeBehaviorComponent,
     withArrayMergeBehaviorComponent,
     withArrayPushMergeBehaviorComponent,
     withCookieStoragePersistBehaviorComponent,

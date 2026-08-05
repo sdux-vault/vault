@@ -13,6 +13,18 @@
       "description": "Defines configuration options for the AES-256 encryption behavior."
     },
     {
+      "id": "options:ArrayByIdMergeOptions",
+      "title": "ArrayByIdMergeOptions",
+      "kind": "interface",
+      "project": "addons",
+      "docLink": "options",
+      "relativePath": "libs/addons/src/lib/behaviors/merge/array/array-by-id-merge/options/array-by-id-merge-behavior.options.ts",
+      "symbols": ["ArrayByIdMergeOptions"],
+      "content": "ArrayByIdMergeOptions ArrayByIdMergeOptions options addons libs/addons/src/lib/behaviors/merge/array/array-by-id-merge/options/array-by-id-merge-behavior.options.ts",
+      "url": "/docs/references/options/array-by-id-merge-options",
+      "description": "Configuration options for the merge behavior."
+    },
+    {
       "id": "options:FromStreamOptions",
       "title": "FromStreamOptions",
       "kind": "interface",
@@ -1033,6 +1045,18 @@
       "description": "Core merge behavior that performs **array append semantics**."
     },
     {
+      "id": "behaviors:withArrayByIdMergeBehavior",
+      "title": "withArrayByIdMergeBehavior",
+      "kind": "behavior",
+      "project": "addons",
+      "docLink": "behaviors",
+      "relativePath": "libs/addons/src/lib/behaviors/merge/array/array-by-id-merge/with-array-by-id-merge.behavior.ts",
+      "symbols": ["withArrayByIdMergeBehavior"],
+      "content": "withArrayByIdMergeBehavior withArrayByIdMergeBehavior behaviors addons libs/addons/src/lib/behaviors/merge/array/array-by-id-merge/with-array-by-id-merge.behavior.ts",
+      "url": "/docs/pipeline/addons/merge/with-array-by-id-merge-behavior",
+      "description": "Provides array-by-identifier merge behavior and its FeatureCell extension API."
+    },
+    {
       "id": "behaviors:withArrayMergeBehavior",
       "title": "withArrayMergeBehavior",
       "kind": "behavior",
@@ -1403,6 +1427,78 @@
       "content": "withTabSyncStateBehavior withTabSyncStateBehavior behaviors core libs/core/src/lib/behaviors/vault/with-tab-sync-state/with-tab-sync-state.behavior.ts",
       "url": "/docs/pipeline/behaviors/vault/with-tab-sync-state-behavior",
       "description": "Cross-tab state synchronization behavior that extends core state management."
+    },
+    {
+      "id": "config:ArrayByIdMergeConfig",
+      "title": "ArrayByIdMergeConfig",
+      "kind": "interface",
+      "project": "addons",
+      "docLink": "config",
+      "relativePath": "libs/addons/src/lib/behaviors/merge/array/array-by-id-merge/config/array-by-id-merge.config.ts",
+      "symbols": ["ArrayByIdMergeConfig"],
+      "content": "ArrayByIdMergeConfig ArrayByIdMergeConfig config addons libs/addons/src/lib/behaviors/merge/array/array-by-id-merge/config/array-by-id-merge.config.ts",
+      "url": "/docs/references/config/array-by-id-merge-config",
+      "description": "Defines merge options for array-by-identifier updates and deletions."
+    },
+    {
+      "id": "config:FeatureCellConfig",
+      "title": "FeatureCellConfig",
+      "kind": "interface",
+      "project": "engine",
+      "docLink": "config",
+      "relativePath": "../engine/lib/src/config/feature-cell.config.ts",
+      "symbols": ["FeatureCellConfig"],
+      "content": "FeatureCellConfig FeatureCellConfig config engine ../engine/lib/src/config/feature-cell.config.ts",
+      "url": "/docs/references/config/feature-cell-config",
+      "description": "Declarative configuration for constructing a FeatureCell."
+    },
+    {
+      "id": "config:InsightConfig",
+      "title": "InsightConfig",
+      "kind": "interface",
+      "project": "shared",
+      "docLink": "config",
+      "relativePath": "libs/shared/src/lib/config/insight.config.ts",
+      "symbols": ["InsightConfig"],
+      "content": "InsightConfig InsightConfig config shared libs/shared/src/lib/config/insight.config.ts",
+      "url": "/docs/references/config/insight-config",
+      "description": "Defines configuration options that control which data is included in emitted ..."
+    },
+    {
+      "id": "config:MergeConfig",
+      "title": "MergeConfig",
+      "kind": "interface",
+      "project": "shared",
+      "docLink": "config",
+      "relativePath": "libs/shared/src/lib/config/merge.config.ts",
+      "symbols": ["MergeConfig"],
+      "content": "MergeConfig MergeConfig config shared libs/shared/src/lib/config/merge.config.ts",
+      "url": "/docs/references/config/merge-config",
+      "description": "Configuration options for merge operations executed by a MergeBehavior."
+    },
+    {
+      "id": "config:ObjectDeepMergeConfig",
+      "title": "ObjectDeepMergeConfig",
+      "kind": "interface",
+      "project": "shared",
+      "docLink": "config",
+      "relativePath": "libs/shared/src/lib/config/object-deep-merge.config.ts",
+      "symbols": ["ObjectDeepMergeConfig"],
+      "content": "ObjectDeepMergeConfig ObjectDeepMergeConfig config shared libs/shared/src/lib/config/object-deep-merge.config.ts",
+      "url": "/docs/references/config/object-deep-merge-config",
+      "description": "Configuration options for deep object merge behaviors."
+    },
+    {
+      "id": "config:VaultConfig",
+      "title": "VaultConfig",
+      "kind": "interface",
+      "project": "shared",
+      "docLink": "config",
+      "relativePath": "libs/shared/src/lib/config/vault.config.ts",
+      "symbols": ["VaultConfig"],
+      "content": "VaultConfig VaultConfig config shared libs/shared/src/lib/config/vault.config.ts",
+      "url": "/docs/references/config/vault-config",
+      "description": "Configuration options supplied to Vault at initialization."
     },
     {
       "id": "shapes:BehaviorMetaBaseShape",
@@ -2494,7 +2590,7 @@
       "symbols": ["FeatureCellFluentApi"],
       "content": "FeatureCellFluentApi FeatureCellFluentApi interfaces shared libs/shared/src/lib/interfaces/behaviors/feature-cell-fluent-api.interface.ts",
       "url": "/docs/references/interfaces/feature-cell-fluent-api",
-      "description": "Extends the FeatureCell base shape with state cache configuration support."
+      "description": "Augments the FeatureCell base shape with array-by-id-merge delete configurati..."
     },
     {
       "id": "interfaces:FromObservableBehaviorExtension",
@@ -3095,66 +3191,6 @@
       "content": "VaultUsagePromiseFactoryRequiredError VaultUsagePromiseFactoryRequiredError classes shared libs/shared/src/lib/errors/vault-error.usage.promise-factory-required.ts",
       "url": "/docs/references/classes/vault-usage-promise-factory-required-error",
       "description": "Thrown when a Promise-based state method receives a raw value instead of a fa..."
-    },
-    {
-      "id": "config:FeatureCellConfig",
-      "title": "FeatureCellConfig",
-      "kind": "interface",
-      "project": "engine",
-      "docLink": "config",
-      "relativePath": "../engine/lib/src/config/feature-cell.config.ts",
-      "symbols": ["FeatureCellConfig"],
-      "content": "FeatureCellConfig FeatureCellConfig config engine ../engine/lib/src/config/feature-cell.config.ts",
-      "url": "/docs/references/config/feature-cell-config",
-      "description": "Declarative configuration for constructing a FeatureCell."
-    },
-    {
-      "id": "config:InsightConfig",
-      "title": "InsightConfig",
-      "kind": "interface",
-      "project": "shared",
-      "docLink": "config",
-      "relativePath": "libs/shared/src/lib/config/insight.config.ts",
-      "symbols": ["InsightConfig"],
-      "content": "InsightConfig InsightConfig config shared libs/shared/src/lib/config/insight.config.ts",
-      "url": "/docs/references/config/insight-config",
-      "description": "Defines configuration options that control which data is included in emitted ..."
-    },
-    {
-      "id": "config:MergeConfig",
-      "title": "MergeConfig",
-      "kind": "interface",
-      "project": "shared",
-      "docLink": "config",
-      "relativePath": "libs/shared/src/lib/config/merge.config.ts",
-      "symbols": ["MergeConfig"],
-      "content": "MergeConfig MergeConfig config shared libs/shared/src/lib/config/merge.config.ts",
-      "url": "/docs/references/config/merge-config",
-      "description": "Configuration options for merge operations executed by a MergeBehavior."
-    },
-    {
-      "id": "config:ObjectDeepMergeConfig",
-      "title": "ObjectDeepMergeConfig",
-      "kind": "interface",
-      "project": "shared",
-      "docLink": "config",
-      "relativePath": "libs/shared/src/lib/config/object-deep-merge.config.ts",
-      "symbols": ["ObjectDeepMergeConfig"],
-      "content": "ObjectDeepMergeConfig ObjectDeepMergeConfig config shared libs/shared/src/lib/config/object-deep-merge.config.ts",
-      "url": "/docs/references/config/object-deep-merge-config",
-      "description": "Configuration options for deep object merge behaviors."
-    },
-    {
-      "id": "config:VaultConfig",
-      "title": "VaultConfig",
-      "kind": "interface",
-      "project": "shared",
-      "docLink": "config",
-      "relativePath": "libs/shared/src/lib/config/vault.config.ts",
-      "symbols": ["VaultConfig"],
-      "content": "VaultConfig VaultConfig config shared libs/shared/src/lib/config/vault.config.ts",
-      "url": "/docs/references/config/vault-config",
-      "description": "Configuration options supplied to Vault at initialization."
     },
     {
       "id": "contexts:BehaviorClassContext",
