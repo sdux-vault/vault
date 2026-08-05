@@ -1040,7 +1040,7 @@ Test features are incremented by 10 in order to have plenty of space to add test
 
 ---
 
-#### Resolve by Value
+#### Resolve Stage Behaviors
 
 | Feature           | Test Key | State             | Interceptors | Pre-Caching | Operators | Filters | Before Tap | Reduce | After Tap | Post-Caching | Encrypt | Persist | Licensing | DevTools | ErrorCallbacks | Errors |
 | ----------------- | -------- | ----------------- | ------------ | ----------- | --------- | ------- | ---------- | ------ | --------- | ------------ | ------- | ------- | --------- | -------- | -------------- | ------ |
@@ -1115,208 +1115,224 @@ Test features are incremented by 10 in order to have plenty of space to add test
 
 ### Partial Behavior Integration Test Coverage Matrix
 
-| Test | Feature                 | Test Key                   | Resolve State         | Replace | Merge | Ctrl | Intc | Caching | Ops | Filters | Reduce | Encrypt | Persist | Tap | State | DevTools | Errors |
-| ---- | ----------------------- | -------------------------- | --------------------- | ------- | ----- | ---- | ---- | ------- | --- | ------- | ------ | ------- | ------- | --- | ----- | -------- | ------ |
+| Test | Feature                 | Test Key                   | Resolve State             | Replace | Merge | Ctrl | Intc | Caching | Ops | Filters | Reduce | Encrypt | Persist | Tap | State | DevTools | Errors |
+| ---- | ----------------------- | -------------------------- | ------------------------- | ------- | ----- | ---- | ---- | ------- | --- | ------- | ------ | ------- | ------- | --- | ----- | -------- | ------ |
 | ✅   | Value                   |
-|      |                         | p10                        | Value/No InitialState | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p12                        | Value/No InitialState |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p13                        | Value/No InitialState |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p14 - Error                | Value/InitialState    |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p15 - Error                | Value/InitialState    | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p16                        | Value/InitialState    | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p10                        | Value/No InitialState     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p12                        | Value/No InitialState     |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p13                        | Value/No InitialState     |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p14 - Error                | Value/InitialState        |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p15 - Error                | Value/InitialState        | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p16                        | Value/InitialState        | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | HttpResource            |
-|      |                         | p20 – Resolve              | HttpResource          | ✅      | ️      |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p21 – Resolve              | HttpResource          | ️        | ✅️    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p22 – Error                | HttpResource          | ✅️      | ️      |      |      |         |     |         |        |         |         |     |       | ✅️       | ✅     |
+|      |                         | p20 – Resolve              | HttpResource              | ✅      | ️      |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p21 – Resolve              | HttpResource              | ️        | ✅️    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p22 – Error                | HttpResource              | ✅️      | ️      |      |      |         |     |         |        |         |         |     |       | ✅️       | ✅     |
 | ✅   | Observable              |
-|      |                         | p30                        | Observable            | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p31                        | Observable            |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p32 – Reset                | Observable            | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p33 – Reset                | Observable            |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p34 - error                | Observable            | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p30                        | Observable                | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p31                        | Observable                |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p32 – Reset                | Observable                | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p33 – Reset                | Observable                |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p34 - error                | Observable                | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | FromObservable          |
-|      |                         | p40                        | Value/Initial State   | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p41                        | Value/Initial State   |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p42                        | Reset                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p40                        | Value/Initial State       | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p41                        | Value/Initial State       |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p42                        | Reset                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | FromStream              |
-|      |                         | p50 – Push Merge           | fromStream/Initial    |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p51 – Merge                | fromStream/Initial    |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p52 – Push Merge           | fromStream/No Initial |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p53 – Error                | fromStream            |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p54 – AutoReset Error      | fromStream            |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p55 – No AutoReset Error   | fromStream            |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p50 – Push Merge           | fromStream/Initial        |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p51 – Merge                | fromStream/Initial        |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p52 – Push Merge           | fromStream/No Initial     |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p53 – Error                | fromStream                |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p54 – AutoReset Error      | fromStream                |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p55 – No AutoReset Error   | fromStream                |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 |      | Auto-vault Get          |
-|      |                         | p60 – Get                  | autoVaultGet          | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
+|      |                         | p60 – Get                  | autoVaultGet              | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
 |      | Auto-vault Get List     |
-|      |                         | p60 – Get                  | autoVaultGetList      | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
+|      |                         | p60 – Get                  | autoVaultGetList          | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
 |      | Auto-vault Post         |
-|      |                         | p80 – Post                 | autoVaultPost         | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
+|      |                         | p80 – Post                 | autoVaultPost             | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
 |      | Auto-vault Patch        |
-|      |                         | p90 – Patch                | autoVaultPatch        | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
+|      |                         | p90 – Patch                | autoVaultPatch            | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
 |      | Auto-vault Put          |
-|      |                         | p100 – Put                 | autoVaultPut          | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
+|      |                         | p100 – Put                 | autoVaultPut              | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
 |      | Auto-vault Delete       |
-|      |                         | p110 – Delete              | autoVaultDelete       | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
+|      |                         | p110 – Delete              | autoVaultDelete           | ⚠️      | ⚠️    |      |      |         |     |         |        |         |         |     |       | ⚠️       | ❌     |
 | ✅   | withArrayAppendMerge    |
-|      |                         | p130                       | Value/No InitialState | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p131                       | Value/No InitialState | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p132                       | Value/InitialState    | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p133                       | Value/Mixed Values    | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p130                       | Value/No InitialState     | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p131                       | Value/No InitialState     | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p132                       | Value/InitialState        | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p133                       | Value/Mixed Values        | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | withObjectShallowMerge  |
-|      |                         | p140                       | Value/No InitialState | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p141                       | Value/No InitialState | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p142                       | Value/InitialState    | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p140                       | Value/No InitialState     | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p141                       | Value/No InitialState     | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p142                       | Value/InitialState        | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | withObjectDeepMerge     |
-|      |                         | p150                       | Value/No InitialState | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p151                       | Value/No InitialState | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p152                       | Value/InitialState    | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p150                       | Value/No InitialState     | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p151                       | Value/No InitialState     | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p152                       | Value/InitialState        | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | withDebounce            |
-|      |                         | p160                       | Value                 | ✅      |       |      | ✅   |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p161                       | Value                 |         | ✅    |      | ✅   |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p160                       | Value                     | ✅      |       |      | ✅   |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p161                       | Value                     |         | ✅    |      | ✅   |         |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | withDelay               |
-|      |                         | p170                       | Value                 | ✅      |       |      | ✅   |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p171                       | Value                 |         | ✅    |      | ✅   |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p170                       | Value                     | ✅      |       |      | ✅   |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p171                       | Value                     |         | ✅    |      | ✅   |         |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | withDistinctUntilChange |
-|      |                         | p180                       | Value                 | ✅      |       |      |      |         | ✅  |         |        |         |         |     |       | ✅       |        |
-|      |                         | p181                       | Value                 |         | ✅    |      |      |         | ✅  |         |        |         |         |     |       | ✅       |        |
-|      |                         | p182                       | Value                 | ✅      | ✅    |      |      |         | ✅  |         |        |         |         |     |       | ✅       |        |
-|      |                         | p183                       | Value                 | ✅      |       |      |      |         | ✅  |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p184                       | Value                 |         | ✅    |      |      |         | ✅  |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p180                       | Value                     | ✅      |       |      |      |         | ✅  |         |        |         |         |     |       | ✅       |        |
+|      |                         | p181                       | Value                     |         | ✅    |      |      |         | ✅  |         |        |         |         |     |       | ✅       |        |
+|      |                         | p182                       | Value                     | ✅      | ✅    |      |      |         | ✅  |         |        |         |         |     |       | ✅       |        |
+|      |                         | p183                       | Value                     | ✅      |       |      |      |         | ✅  |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p184                       | Value                     |         | ✅    |      |      |         | ✅  |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | Filters                 |
-|      |                         | p190                       | Value                 | ✅      |       |      |      |         |     | ✅      |        |         |         |     |       | ✅       |        |
-|      |                         | p191                       | Value                 |         | ✅    |      |      |         |     | ✅      |        |         |         |     |       | ✅       |        |
-|      |                         | p192                       | Value                 | ✅      |       |      |      |         |     | ✅      |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p193                       | Value                 |         | ✅    |      |      |         |     | ✅      |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p190                       | Value                     | ✅      |       |      |      |         |     | ✅      |        |         |         |     |       | ✅       |        |
+|      |                         | p191                       | Value                     |         | ✅    |      |      |         |     | ✅      |        |         |         |     |       | ✅       |        |
+|      |                         | p192                       | Value                     | ✅      |       |      |      |         |     | ✅      |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p193                       | Value                     |         | ✅    |      |      |         |     | ✅      |        |         |         |     |       | ✅       | ✅     |
 | ✅   | Reducers                |
-|      |                         | p200                       | Value                 | ✅      |       |      |      |         |     |         | ✅     |         |         |     |       | ✅       |        |
-|      |                         | p201                       | Value                 |         | ✅    |      |      |         |     |         | ✅     |         |         |     |       | ✅       |        |
-|      |                         | p202                       | Value                 | ✅      |       |      |      |         |     |         | ✅     |         |         |     |       | ✅       | ✅     |
-|      |                         | p203                       | Value                 |         | ✅    |      |      |         |     |         | ✅     |         |         |     |       | ✅       | ✅     |
+|      |                         | p200                       | Value                     | ✅      |       |      |      |         |     |         | ✅     |         |         |     |       | ✅       |        |
+|      |                         | p201                       | Value                     |         | ✅    |      |      |         |     |         | ✅     |         |         |     |       | ✅       |        |
+|      |                         | p202                       | Value                     | ✅      |       |      |      |         |     |         | ✅     |         |         |     |       | ✅       | ✅     |
+|      |                         | p203                       | Value                     |         | ✅    |      |      |         |     |         | ✅     |         |         |     |       | ✅       | ✅     |
 | ✅   | Replay Global Error     |
-|      |                         | p210                       | Value                 | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       |          | ✅     |
-|      |                         | p211                       | Value                 |         | ✅    | ✅   |      |         |     |         |        |         |         |     |       |          | ✅     |
+|      |                         | p210                       | Value                     | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       |          | ✅     |
+|      |                         | p211                       | Value                     |         | ✅    | ✅   |      |         |     |         |        |         |         |     |       |          | ✅     |
 | ✅   | Local Storage           |
-|      |                         | p220                       | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p221 - load                | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p222 - reset               | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p223 - destroy             | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p224 - missing license     | Error                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
-|      |                         | p224 - invalid license     | Error                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
+|      |                         | p220                       | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p221 - load                | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p222 - reset               | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p223 - destroy             | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p224 - missing license     | Error                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
+|      |                         | p224 - invalid license     | Error                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
 | ✅   | Session Storage         |
-|      |                         | p230                       | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p231 - load                | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p232 - reset               | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p233 - destroy             | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p234 - missing license     | Error                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
-|      |                         | p234 - invalid license     | Error                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
+|      |                         | p230                       | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p231 - load                | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p232 - reset               | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p233 - destroy             | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p234 - missing license     | Error                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
+|      |                         | p234 - invalid license     | Error                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
 | ✅   | Cookie Storage          |
-|      |                         | p240                       | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p241 - Load                | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p242 - Reset               | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p243 - Destroy             | Value                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
-|      |                         | p244                       | Error                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
-|      |                         | p245 - missing license     | Error                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
-|      |                         | p245 - invalid license     | Error                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
+|      |                         | p240                       | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p241 - Load                | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p242 - Reset               | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p243 - Destroy             | Value                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       |        |
+|      |                         | p244                       | Error                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
+|      |                         | p245 - missing license     | Error                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
+|      |                         | p245 - invalid license     | Error                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
 | ✅   | BeforeTap               |
-|      |                         | p250                       | Value                 | ✅      |       |      |      |         |     |         |        |         |         | ✅  |       | ✅       |        |
-|      |                         | p251                       | Value                 |         | ✅    |      |      |         |     |         |        |         |         | ✅  |       | ✅       | ✅     |
+|      |                         | p250                       | Value                     | ✅      |       |      |      |         |     |         |        |         |         | ✅  |       | ✅       |        |
+|      |                         | p251                       | Value                     |         | ✅    |      |      |         |     |         |        |         |         | ✅  |       | ✅       | ✅     |
 | ✅   | AfterTap                |
-|      |                         | p260                       | Value                 | ✅      |       |      |      |         |     |         |        |         |         | ✅  |       | ✅       |        |
-|      |                         | p261                       | Value                 |         | ✅    |      |      |         |     |         |        |         |         | ✅  |       | ✅       | ✅     |
+|      |                         | p260                       | Value                     | ✅      |       |      |      |         |     |         |        |         |         | ✅  |       | ✅       |        |
+|      |                         | p261                       | Value                     |         | ✅    |      |      |         |     |         |        |         |         | ✅  |       | ✅       | ✅     |
 |      | Cache                   |
-|      |                         | p270                       | Value                 |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p271                       | Promise               |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p272                       | Observable            |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p273                       | Promise               |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p274                       | Long Running Value    |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p275                       | Promise               |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p276                       | Observable            |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p277                       | Value                 |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p270                       | Value                     |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p271                       | Promise                   |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p272                       | Observable                |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p273                       | Promise                   |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p274                       | Long Running Value        |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p275                       | Promise                   |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p276                       | Observable                |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p277                       | Value                     |         | ✅    |      |      | ✅      |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | Error Callbacks         |
-|      |                         | p280 - Error               | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p281 - Error               | Value                 |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p282 - Error               | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p283 - Error               | Value                 |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p280 - Error               | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p281 - Error               | Value                     |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p282 - Error               | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p283 - Error               | Value                     |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | withGlobalErrorPause    |
-|      |                         | p290                       | Value                 | ✅      | ✅    |      | ✅   |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p290                       | Value                     | ✅      | ✅    |      | ✅   |         |     |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | Aes256 Encryption       |
-|      |                         | p300 - Initial State       | Value                 | ✅      | ✅    |      |      |         |     |         |        | ✅      |         |     |       | ✅       |        |
-|      |                         | p301 - Non-standard        | Value                 | ✅      | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       |        |
-|      |                         | p302 - Error               | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p303 = Malformed Error     | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p304 - missing license     | Error                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
-|      |                         | p305 - invalid license     | Error                 | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
+|      |                         | p300 - Initial State       | Value                     | ✅      | ✅    |      |      |         |     |         |        | ✅      |         |     |       | ✅       |        |
+|      |                         | p301 - Non-standard        | Value                     | ✅      | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       |        |
+|      |                         | p302 - Error               | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p303 = Malformed Error     | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p304 - missing license     | Error                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
+|      |                         | p305 - invalid license     | Error                     | ✅      |       |      |      |         |     |         |        |         | ✅      |     |       | ✅       | ✅     |
 | ✅   | Emit State Callback     |
-|      |                         | p310                       | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     | ✅    | ✅       |        |
-|      |                         | p311                       | Value                 | ✅      | ✅    |      |      |         |     |         |        |         |         |     | ✅    | ✅       |        |
-|      |                         | p312                       | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     | ✅    | ✅       |        |
+|      |                         | p310                       | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     | ✅    | ✅       |        |
+|      |                         | p311                       | Value                     | ✅      | ✅    |      |      |         |     |         |        |         |         |     | ✅    | ✅       |        |
+|      |                         | p312                       | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     | ✅    | ✅       |        |
 | ✅   | withArrayPushMerge      |
-|      |                         | p320 - No Initial State    | Value                 |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p320 - No Initial State    | Value                     |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | Promise                 |
-|      |                         | p330                       | Promise               | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p331                       | Promise               |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p332 Reset                 | Promise               | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p333 Reset                 | Promise               |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p334                       | Promise               | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p330                       | Promise                   | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p331                       | Promise                   |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p332 Reset                 | Promise                   | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p333 Reset                 | Promise                   |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p334                       | Promise                   | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | FromPromise             |
-|      |                         | p340 - Initial State       | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p341 - Initial State       | Value                 |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p342                       | Reset                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p343 - Error               | Error                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p340 - Initial State       | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p341 - Initial State       | Value                     |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p342                       | Reset                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p343 - Error               | Error                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | Lookup                  |
-|      |                         | p350                       | Value                 |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p351                       | Promise               |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p352                       | Observable            |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p353                       | With Initial State    |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p354                       | Promise/Error         |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p355                       | Observable/Error      |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p356                       | Error                 |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p350                       | Value                     |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p351                       | Promise                   |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p352                       | Observable                |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p353                       | With Initial State        |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p354                       | Promise/Error             |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p355                       | Observable/Error          |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p356                       | Error                     |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | Licensing               |
-|      |                         | p360 – behavior            | Value                 | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p361 – invalid license     | Value                 | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p362 – no license          | Value                 | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p362 – multiple cells      | Value                 | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p365 – controller          | Value                 | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p366 – invalid license     | Value                 | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p367 – no license          | Value                 | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p368 – multiple cells      | Value                 | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p369 – timeout             | Value                 | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p360 – behavior            | Value                     | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p361 – invalid license     | Value                     | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p362 – no license          | Value                     | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p362 – multiple cells      | Value                     | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p365 – controller          | Value                     | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p366 – invalid license     | Value                     | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p367 – no license          | Value                     | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p368 – multiple cells      | Value                     | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p369 – timeout             | Value                     | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | withStepwiseResolve     |
-|      |                         | p370                       | Value/Continue        | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p371                       | Value/Abort           |         | ✅    | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p372                       | Value/Block           | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p373                       | Value/Continue        | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p374                       | Value/Continue        | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p370                       | Value/Continue            | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p371                       | Value/Abort               |         | ✅    | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p372                       | Value/Block               | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p373                       | Value/Continue            | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p374                       | Value/Continue            | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | withStepwiseFilter      |
-|      |                         | p380                       | Value/Continue        | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p381                       | Value/Abort           |         | ✅    | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p382                       | Value/Block           | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p383                       | Value/Continue        | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p384                       | Value/Continue        | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p380                       | Value/Continue            | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p381                       | Value/Abort               |         | ✅    | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p382                       | Value/Block               | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p383                       | Value/Continue            | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p384                       | Value/Continue            | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | withStepwiseReducer     |
-|      |                         | p390                       | Value/Continue        | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p391                       | Value/Abort           |         | ✅    | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p392                       | Value/Block           | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p393                       | Value/Continue        | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p394                       | Value/Continue        | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p390                       | Value/Continue            | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p391                       | Value/Abort               |         | ✅    | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p392                       | Value/Block               | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p393                       | Value/Continue            | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p394                       | Value/Continue            | ✅      |       | ✅   |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | FromDeferred            |
-|      |                         | p400                       | Value/Initial State   | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p401                       | Value/Initial State   |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p402                       | Reset                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p403                       | Value/Error           | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p400                       | Value/Initial State       | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p401                       | Value/Initial State       |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p402                       | Reset                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p403                       | Value/Error               | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
 | ✅   | Query                   |
-|      |                         | p410                       | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p411                       | Value                 |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p410                       | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p411                       | Value                     |         | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 | ✅   | Behavior Licensing      |
-|      |                         | p420 – Licensing           | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p421 – Extension           | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p422 – Multiple Extensions | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p423 – Bypass Licensing    | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p424 – Bypass no license   | Value                 | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
-|      |                         | p425 – No Behavior         | Value/Error           | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p426 – No Controller       | Value/Error           | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p427 – Multiple            | Value/Error           | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p429 – Extension           | Value/Error           | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
-|      |                         | p429 – Missing License     | Value/Error           | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p420 – Licensing           | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p421 – Extension           | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p422 – Multiple Extensions | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p423 – Bypass Licensing    | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p424 – Bypass no license   | Value                     | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p425 – No Behavior         | Value/Error               | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p426 – No Controller       | Value/Error               | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p427 – Multiple            | Value/Error               | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p429 – Extension           | Value/Error               | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p429 – Missing License     | Value/Error               | ✅      |       |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+| ✅   | tabSync                 |
+|      |                         | p430                       | Base                      | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p431                       | Receive                   | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p432                       | Ignore same tab           | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p433                       | ignore different key      | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p434                       | local then remote         | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p435                       | behavior not registered   | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p436                       | controller not registered | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p437                       | initial value             | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p438                       | invalid license           | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+|      |                         | p439                       | missing license           | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ✅     |
+| ✅   | withArrayByIdMerge      |
+|      |                         | p440                       | Value/No InitialState     | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p441                       | Value/No InitialState     | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p442                       | Value/InitialState        | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
+|      |                         | p443                       | Value/Mixed Values        | -       | ✅    |      |      |         |     |         |        |         |         |     |       | ✅       | ❌     |
 
 ---

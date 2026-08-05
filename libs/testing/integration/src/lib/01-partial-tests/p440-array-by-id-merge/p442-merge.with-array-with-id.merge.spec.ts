@@ -7,11 +7,12 @@ import { getBankEmployeeData } from '../../structure/data/bank-employee.data';
 import { BankEmployeeShape } from '../../structure/shapes/bank-employee.shape';
 import { createTestInsightListener } from '../../structure/utils/create-test-insight-listener.util';
 import { expectMonitorSnapshot } from '../../structure/utils/expect-monitor-snapshot.util';
-import { PartialMergeWithArrayAppendService } from './partial-merge.with-array-append.service';
-import { p133Snapshot } from './snap-shots/p133-merge.with-array-append.merge.snapshot';
+import { PartialMergeWithArrayWithIdService } from './partial-merge.with-array-with-id.service';
+import { p442Snapshot } from './snap-shots/p442-merge.with-array-with-id.merge.snapshot';
 
-describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
-  let testService: PartialMergeWithArrayAppendService;
+describe('p442: WithArrayById - Initial Values Merge Test', () => {
+  const key = 'partial-merge.with-array-by-id';
+  let testService: PartialMergeWithArrayWithIdService;
   let stopListening: () => void;
 
   const emitted: any[] = [];
@@ -22,13 +23,13 @@ describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
         provideVaultTesting({
           devMode: true
         }),
-        PartialMergeWithArrayAppendService,
+        PartialMergeWithArrayWithIdService,
         provideZonelessChangeDetection(),
         provideFeatureCell(
-          PartialMergeWithArrayAppendService,
+          PartialMergeWithArrayWithIdService,
           {
-            key: 'partial-merge.with-array-append',
-            initialState: 'a string',
+            key,
+            initialState: getBankEmployeeData(1, true),
             insights: {} as any
           },
           [withArrayAppendMergeBehavior]
@@ -38,7 +39,7 @@ describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
 
     stopListening = createTestInsightListener(emitted);
 
-    testService = TestBed.inject(PartialMergeWithArrayAppendService);
+    testService = TestBed.inject(PartialMergeWithArrayWithIdService);
     testService.initialize();
   });
 
@@ -47,10 +48,9 @@ describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
   });
 
   it('should merge the bank employees', async () => {
-    const state = testService.getState();
     await flushVaultPipeline();
 
-    expect(state.value()).toEqual('a string' as any);
+    const state = testService.getState();
 
     testService.vault.mergeState(
       getBankEmployeeData(0, true) as BankEmployeeShape[]
@@ -58,6 +58,23 @@ describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
     await flushVaultPipeline();
 
     expect(state.value()).toEqual([
+      Object({
+        id: 'be-002',
+        firstName: 'Brian',
+        lastName: 'Stone',
+        role: 'Manager',
+        status: 'Vacation',
+        salary: 90000,
+        hireDate: '2012-09-05',
+        birthDate: '1981-04-17',
+        phoneNumber: '555-490-3322',
+        address: Object({
+          street: '54 Ridgeview Ave',
+          city: 'Springfield',
+          state: 'IL',
+          zip: '62711'
+        })
+      }),
       Object({
         id: 'be-001',
         firstName: 'Alice',
@@ -87,6 +104,23 @@ describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
     await flushVaultPipeline();
 
     expect(state.value()).toEqual([
+      Object({
+        id: 'be-002',
+        firstName: 'Brian',
+        lastName: 'Stone',
+        role: 'Manager',
+        status: 'Vacation',
+        salary: 90000,
+        hireDate: '2012-09-05',
+        birthDate: '1981-04-17',
+        phoneNumber: '555-490-3322',
+        address: Object({
+          street: '54 Ridgeview Ave',
+          city: 'Springfield',
+          state: 'IL',
+          zip: '62711'
+        })
+      }),
       Object({
         id: 'be-001',
         firstName: 'Alice',
@@ -146,6 +180,6 @@ describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
 
   it('should have the correct insight events', async () => {
     await flushVaultPipeline();
-    expectMonitorSnapshot(emitted, p133Snapshot);
+    expectMonitorSnapshot(emitted, p442Snapshot);
   });
 });

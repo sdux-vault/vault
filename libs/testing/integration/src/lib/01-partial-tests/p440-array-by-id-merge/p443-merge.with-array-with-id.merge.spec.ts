@@ -7,11 +7,12 @@ import { getBankEmployeeData } from '../../structure/data/bank-employee.data';
 import { BankEmployeeShape } from '../../structure/shapes/bank-employee.shape';
 import { createTestInsightListener } from '../../structure/utils/create-test-insight-listener.util';
 import { expectMonitorSnapshot } from '../../structure/utils/expect-monitor-snapshot.util';
-import { PartialMergeWithArrayAppendService } from './partial-merge.with-array-append.service';
-import { p133Snapshot } from './snap-shots/p133-merge.with-array-append.merge.snapshot';
+import { PartialMergeWithArrayWithIdService } from './partial-merge.with-array-with-id.service';
+import { p443Snapshot } from './snap-shots/p443-merge.with-array-with-id.merge.snapshot';
 
-describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
-  let testService: PartialMergeWithArrayAppendService;
+describe('p443: WithArrayById - Initial and Mixed Values Merge Test', () => {
+  const key = 'partial-merge.with-array-by-id';
+  let testService: PartialMergeWithArrayWithIdService;
   let stopListening: () => void;
 
   const emitted: any[] = [];
@@ -22,12 +23,12 @@ describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
         provideVaultTesting({
           devMode: true
         }),
-        PartialMergeWithArrayAppendService,
+        PartialMergeWithArrayWithIdService,
         provideZonelessChangeDetection(),
         provideFeatureCell(
-          PartialMergeWithArrayAppendService,
+          PartialMergeWithArrayWithIdService,
           {
-            key: 'partial-merge.with-array-append',
+            key,
             initialState: 'a string',
             insights: {} as any
           },
@@ -38,7 +39,7 @@ describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
 
     stopListening = createTestInsightListener(emitted);
 
-    testService = TestBed.inject(PartialMergeWithArrayAppendService);
+    testService = TestBed.inject(PartialMergeWithArrayWithIdService);
     testService.initialize();
   });
 
@@ -146,6 +147,6 @@ describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
 
   it('should have the correct insight events', async () => {
     await flushVaultPipeline();
-    expectMonitorSnapshot(emitted, p133Snapshot);
+    expectMonitorSnapshot(emitted, p443Snapshot);
   });
 });
