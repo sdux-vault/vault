@@ -21,12 +21,20 @@ export const AddonRoadMapConstants: RoadMapShape[] = [
     behavior: 'N/A'
   },
   {
-    feature: 'Array Apped Merge',
+    feature: 'Array Append Merge',
     isExtendable: true,
     package: '@sdux-vault/addons',
     behavior:
       '<a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior">withArrayAppendMergeBehavior</a>'
   },
+  {
+    feature: 'Array By Id Merge',
+    isExtendable: true,
+    package: '@sdux-vault/addons',
+    behavior:
+      '<a href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior">withArrayByIdMergeBehavior</a>'
+  },
+
   {
     feature: 'Array Push Merge',
     isExtendable: true,
@@ -101,7 +109,8 @@ export const AddonRoadMapConstants: RoadMapShape[] = [
     feature: 'Distinct Until Changed Operator',
     isExtendable: true,
     package: '@sdux-vault/addons',
-    behavior: 'withDistinctUntilChangedBehavior'
+    behavior:
+      '<a href="/docs/pipeline/addons/operators/with-distinct-until-changed">withDistinctUntilChangedBehavior</a>'
   },
   {
     feature: 'Replay Global Error Controller',
