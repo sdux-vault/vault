@@ -321,6 +321,13 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Behaviors Are Why the Pipeline Stays Predictable — SDuX Blog',
       description:
         'Learn how Behaviors keep the FeatureCell pipeline predictable by isolating work into explicit, stage-bound units with deterministic ordering.'
+    },
+    {
+      link: '/blog/state-updates-need-policy-not-more-middleware',
+      display: 'State Updates Need Policy, Not More Middleware',
+      title: 'State Updates Need Policy — SDuX Blog',
+      description:
+        'Learn how the Policy Layer separates execution authority from state computation and when to use Delay, Throttle, Stepwise, or recovery controllers.'
     }
   ]
 };

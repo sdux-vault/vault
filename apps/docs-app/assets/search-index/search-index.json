@@ -3661,6 +3661,16 @@
       "url": "/blog/behaviors-are-why-the-pipeline-stays-predictable",
       "symbols": ["behaviors-are-why-the-pipeline-stays-predictable"],
       "content": "Behaviors Are Why the Pipeline Stays Predictable behaviors-are-why-the-pipeline-stays-predictable ED"
+    },
+    {
+      "id": "blog:state-updates-need-policy-not-more-middleware",
+      "title": "State Updates Need Policy, Not More Middleware",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/state-updates-need-policy-not-more-middleware",
+      "symbols": ["state-updates-need-policy-not-more-middleware"],
+      "content": "State Updates Need Policy, Not More Middleware state-updates-need-policy-not-more-middleware ED"
     }
   ]
 }

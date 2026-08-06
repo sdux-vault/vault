@@ -386,6 +386,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-08-04-behaviors-are-why-the-pipeline-stays-predictable/behaviors-are-why-the-pipeline-stays-predictable.component').then(
         (m) => m.BlogBehaviorsAreWhyThePipelineStaysPredictableComponent
       )
+  },
+  {
+    path: 'state-updates-need-policy-not-more-middleware',
+    data: {
+      category: 'blogs',
+      type: 'state-updates-need-policy-not-more-middleware'
+    },
+    loadComponent: () =>
+      import('./posts/2026-08-06-state-updates-need-policy-not-more-middleware/state-updates-need-policy-not-more-middleware.component').then(
+        (m) => m.BlogStateUpdatesNeedPolicyNotMoreMiddlewareComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

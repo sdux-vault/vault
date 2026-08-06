@@ -299,5 +299,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-08-04',
     readingTime: 6,
     active: true
+  },
+  {
+    slug: 'state-updates-need-policy-not-more-middleware',
+    title: 'State Updates Need Policy, Not More Middleware',
+    date: '2026-08-06',
+    readingTime: 9,
+    active: true
   }
 ];

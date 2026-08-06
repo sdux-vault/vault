@@ -42,6 +42,7 @@ export const SITEMAP_URLS = [
   '/blog/state-management-in-vue-without-a-store',
   '/blog/state-management-without-a-ui-on-deno',
   '/blog/state-management-without-framework-lock-in',
+  '/blog/state-updates-need-policy-not-more-middleware',
   '/blog/tab-sync-state',
   '/blog/testing-state-3-steps',
   '/blog/testing-without-mock-stores',
