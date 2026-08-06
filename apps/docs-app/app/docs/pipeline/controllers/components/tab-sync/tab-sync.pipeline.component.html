@@ -241,39 +241,7 @@
         completes.
       </p>
 
-      <div class="table-title"><sdux-brand-name /> Tab Sync Controller</div>
-      <table aria-label="Tab Sync Controller">
-        <thead>
-          <tr>
-            <th scope="col" class="column-250">Controller</th>
-            <th scope="col" class="column-auto">Description</th>
-            <th scope="col" class="column-150">Package</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>
-              <strong
-                ><a href="/docs/pipeline/controllers/with-tab-sync-controller"
-                  >withTabSyncController</a
-                ></strong
-              >
-              <p>type: controller</p>
-            </td>
-            <td>
-              Coordinates initial cross-tab state negotiation using a
-              localStorage tab registry for peer detection and BroadcastChannel
-              for snapshot exchange. On the first pipeline Attempt, the
-              controller determines whether to adopt peer state or proceed
-              independently. After negotiation, the controller abstains on all
-              subsequent Attempts and responds to snapshot requests from newly
-              opened tabs.
-            </td>
-            <td><sdux-package-name [package]="'core'" /></td>
-          </tr>
-        </tbody>
-      </table>
+      <sdux-controller-tab-sync-common />
 
       <div class="table-title">Internal Configuration Constants</div>
       <table aria-label="Internal Configuration Constants">

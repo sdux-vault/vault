@@ -7,8 +7,10 @@ import {
 import { VaultControllerDelayCommonComponent } from 'apps/docs-app/app/docs/common/controller/controller-delay.common.component';
 import { VaultControllerReplayGlobalErrorCommonComponent } from 'apps/docs-app/app/docs/common/controller/controller-replay-global-error.common.component';
 import { VaultControllerStepwiseCommonComponent } from 'apps/docs-app/app/docs/common/controller/controller-stepwise.common.component';
+import { VaultControllerTabSyncCommonComponent } from 'apps/docs-app/app/docs/common/controller/controller-tab-sync.common.component';
 import { VaultControllerThrottleCommonComponent } from 'apps/docs-app/app/docs/common/controller/controller-throttle.common.component';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
+import { VaultControllerMaxFailuresCommonComponent } from '../../../../common/controller/controller-max-failures.common.component';
 @Component({
   selector: 'sdux-pipeline-policy',
   standalone: true,
@@ -24,7 +26,9 @@ import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-to
     VaultControllerDelayCommonComponent,
     VaultControllerThrottleCommonComponent,
     VaultControllerStepwiseCommonComponent,
-    VaultControllerReplayGlobalErrorCommonComponent
+    VaultControllerReplayGlobalErrorCommonComponent,
+    VaultControllerMaxFailuresCommonComponent,
+    VaultControllerTabSyncCommonComponent
   ],
   templateUrl: './policy.pipeline.component.html',
   styleUrls: ['../../../../scss/documentation.scss'],
