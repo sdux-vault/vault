@@ -54,14 +54,14 @@ export const CoreRoadMapConstants: RoadMapShape[] = [
     isExtendable: false,
     package: '@sdux-vault/core',
     behavior:
-      '<a href="/docs/pipeline/behaviors/tap/with-core-after-tap-behavior">withCoreAfterTapBehavior</a>'
+      '<a href="/docs/pipeline/behaviors/taps/with-core-after-tap-behavior">withCoreAfterTapBehavior</a>'
   },
   {
     feature: 'Before Tap',
     isExtendable: false,
     package: '@sdux-vault/core',
     behavior:
-      '<a href="/docs/pipeline/behaviors/tap/with-core-before-tap-behavior">withCoreBeforeTapBehavior</a>'
+      '<a href="/docs/pipeline/behaviors/taps/with-core-before-tap-behavior">withCoreBeforeTapBehavior</a>'
   },
   {
     feature: 'Error (Core)',

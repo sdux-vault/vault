@@ -176,6 +176,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/state-updates-need-policy-not-more-middleware</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/tab-sync-state</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
