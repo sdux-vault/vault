@@ -12,7 +12,7 @@ import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-com
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
-        <h3>ValueResolveExampleComponent</h3>
+        <h2>ValueResolveExampleComponent</h2>
       </div>
       <header class="docs-header">
         <div class="lead">Defines configuration options that control state cache behavior.<br/><br/>
@@ -112,7 +112,7 @@ import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-com
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
-        <h3>ValueResolveExampleComponent</h3>
+        <h2>ValueResolveExampleComponent</h2>
       </div>
       <header class="docs-header">
         <div class="lead">No description available.<br/><br/></div>
@@ -246,7 +246,7 @@ import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-com
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
         <div class="header">
-          <h3>BankEmployeeModel</h3>
+          <h2>BankEmployeeModel</h2>
         </div>
 
         <p>No documentation found in Compodocs for this interface.</p>
@@ -270,7 +270,7 @@ import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-com
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
-        <h3>DevMode</h3>
+        <h2>DevMode</h2>
       </div>
       <header class="docs-header">
         <div class="lead">No description available.<br/><br/></div>
@@ -386,7 +386,7 @@ import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-com
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
-        <h3>CacheTTL</h3>
+        <h2>CacheTTL</h2>
       </div>
       <header class="docs-header">
         <div class="lead">Defines supported cache time-to-live durations in milliseconds.<br/><br/>
@@ -492,7 +492,7 @@ import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-com
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
-        <h3>BEHAVIOR_META</h3>
+        <h2>BEHAVIOR_META</h2>
       </div>
       <header class="docs-header">
         <div class="lead">Unique metadata symbol used to associate &#123;&#64;link BehaviorMeta&#125; definitions
@@ -550,7 +550,7 @@ import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-com
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
-        <h3>isDefined</h3>
+        <h2>isDefined</h2>
       </div>
       <header class="docs-header">
         <div class="lead">Determines whether a value is defined (not undefined).
@@ -626,7 +626,7 @@ import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-com
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
-        <h3>isHttpResourceRef</h3>
+        <h2>isHttpResourceRef</h2>
       </div>
       <header class="docs-header">
         <div class="lead">Type guard that determines whether a value is an HttpResourceRef&amp;lt;T&amp;gt;.
@@ -715,7 +715,7 @@ import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-com
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
-        <h3>VaultBehavior</h3>
+        <h2>VaultBehavior</h2>
       </div>
       <header class="docs-header">
         <div class="lead">Decorator that registers a class as an ngVault behavior.
@@ -808,7 +808,7 @@ import { BrandNameComponent, PackageNameComponent } from '@sdux-vault/ui/web-com
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
       <div class="header">
-        <h3>BehaviorType</h3>
+        <h2>BehaviorType</h2>
       </div>
       <header class="docs-header">
         <div class="lead">Union of all valid ngVault behavior type strings.

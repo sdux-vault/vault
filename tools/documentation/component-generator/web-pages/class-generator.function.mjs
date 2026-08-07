@@ -236,7 +236,7 @@ export async function renderClassDocumentation(entry, documentation) {
   if (!documentation) {
     return `<div class="docs-container">
         <div class="header">
-          <h3>${sanitizeHtml(entry.name)}</h3>
+          <h2>${sanitizeHtml(entry.name)}</h2>
         </div>
 
         <p>No documentation found in Compodocs for this ${entry.kind}.</p>
@@ -599,7 +599,7 @@ export async function renderClassDocumentation(entry, documentation) {
   // ---------- FINAL HTML ----------
   return `<div class="docs-container">
       <div class="header">
-        <h3>${sanitizeHtml(entry.name)}</h3>
+        <h2>${sanitizeHtml(entry.name)}</h2>
       </div>
       <header class="docs-header">
         <div class="lead">${description}</div>
