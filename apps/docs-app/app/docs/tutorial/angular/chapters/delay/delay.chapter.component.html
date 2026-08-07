@@ -43,6 +43,39 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-9-start-title">
+  <div class="section-title" id="chapter-9-start-title">
+    Chapter 9 Starting Point and Timing Decision
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 8 project. If your checkpoint does not
+      already include <sdux-package-name [package]="'addons'" />, install it
+      once. This chapter changes <span class="code">app.config.ts</span>, the
+      service, component, template, timing helper, and their tests.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Delay Changes Time, Not Meaning</div>
+      <p>
+        The configured value is a fixed interval in milliseconds. The controller
+        holds a pipeline attempt and later releases the same candidate. It does
+        not debounce repeated attempts, throttle a stream, or choose a winning
+        value.
+      </p>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Do Not Add Latency for Presentation Alone</div>
+      <p>
+        Prefer CSS or Angular animation lifecycle APIs when only a visual effect
+        must finish. Use pipeline delay when the State transition itself has an
+        explicit timing requirement, or temporarily to simulate latency while
+        developing loading behavior. Document the latency cost and verify the
+        controller's queueing behavior before using overlapping requests.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-31">
   <div class="section-title-navigation">
     <div class="section-title">Step 31: Configure the Delay Controller</div>
@@ -223,7 +256,23 @@
           Run the example and perform one collection update while watching the
           timer return to zero after the pipeline completes.
         </li>
+        <li>
+          Trigger two updates close together and compare the observed order with
+          the controller documentation. Do not infer debounce, cancellation, or
+          concurrency behavior from a single request.
+        </li>
       </ol>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="title">Troubleshooting the Timer</div>
+      <p>
+        The elapsed value is display instrumentation, not the source of truth
+        for pipeline timing. If its displayed duration varies slightly, verify
+        the committed State transition and configured interval first. Browser
+        frame scheduling can make a visual timer imprecise without changing
+        controller behavior.
+      </p>
     </div>
 
     <div class="callout callout-learn-more">
@@ -351,11 +400,33 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-9-exit-title">
+  <div class="section-title" id="chapter-9-exit-title">
+    Chapter 9 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        The controller delays an attempt while preserving its candidate and
+        stage order.
+      </li>
+      <li>
+        The elapsed timer observes timing but does not pause or release the
+        pipeline.
+      </li>
+      <li>
+        Continue to Chapter 10 only when browser persistence matches your
+        learning goal.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed delay tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished Delay Controller example?</h2>
   </div>
 

@@ -18,7 +18,7 @@ describe('Service: Encrypt and Persist', () => {
   it('returns the chapter metadata for the encrypt-and-persist tutorial', () => {
     expect(service.chapters()).toEqual({
       id: 10,
-      label: 'Encrypt and Persist Chapter',
+      label: 'Encrypt and Persist',
       fragment: 'chapter-10',
       steps: [
         { id: 1, label: 'Configure Encrypt and Persist Behaviors' },

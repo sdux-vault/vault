@@ -18,7 +18,7 @@ describe('Service: LifeCycle', () => {
   it('returns the chapter metadata for the lifecycle tutorial', () => {
     expect(service.chapters()).toEqual({
       id: 5,
-      label: 'Lifecycle Chapter',
+      label: 'Lifecycle',
       fragment: 'chapter-5',
       steps: [
         { id: 1, label: 'Persist Null and Reset State' },

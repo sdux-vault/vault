@@ -18,7 +18,7 @@ describe('Service: Async Input', () => {
   it('returns the chapter metadata for the async input tutorial', () => {
     expect(service.chapters()).toEqual({
       id: 8,
-      label: 'Async Input Chapter',
+      label: 'Async Input',
       fragment: 'chapter-8',
       steps: [
         { id: 1, label: 'Hydrate Initial State' },

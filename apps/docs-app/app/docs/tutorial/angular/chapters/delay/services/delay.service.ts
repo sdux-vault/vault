@@ -7,7 +7,7 @@ export class DelayService {
   chapters(): ChapterShape {
     return {
       id: 9,
-      label: 'Delay Controller Chapter',
+      label: 'Delay',
       fragment: 'chapter-9',
       steps: [
         { id: 1, label: 'Configure Delay Controller' },

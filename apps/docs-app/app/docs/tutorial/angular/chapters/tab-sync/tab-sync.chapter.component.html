@@ -45,6 +45,47 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-12-start-title">
+  <div class="section-title" id="chapter-12-start-title">
+    Chapter 12 Starting Point and Synchronization Scope
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 11 project. Tab Sync is a Pro capability;
+      production use requires a valid license. This lab changes configuration,
+      component presentation, and tests. The service does not add cross-tab
+      messaging code.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Shared vs. Local</div>
+      <ul>
+        <li>
+          Shared: finalized FeatureCell value identified by the same key on the
+          same origin—scheme, host, and port.
+        </li>
+        <li>
+          Local: selection, unsaved form values, pending confirmation, loading,
+          and error presentation in each tab.
+        </li>
+        <li>
+          Not provided: server authority, authorization, cross-device sync,
+          offline reconciliation, audit history, or collaborative conflict
+          resolution.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Concurrent Edits Need a Product Policy</div>
+      <p>
+        This lab demonstrates propagation, not transactional consistency. Do not
+        infer a conflict policy from sequential edits. Before production use,
+        verify the controller's ordering and loop-prevention contract and decide
+        how simultaneous edits, stale forms, and server rejection are resolved.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-45">
   <div class="section-title-navigation">
     <div class="section-title">Step 45: Configure Tab Sync</div>
@@ -185,7 +226,22 @@
         <li>
           Return to the other tab and inspect the synchronized character State.
         </li>
+        <li>
+          Leave an unsaved edit open in Tab B, commit a change in Tab A, and
+          confirm the committed collection updates while Tab B's transient form
+          remains local. Cancel the stale form before continuing.
+        </li>
       </ol>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="title">Troubleshooting</div>
+      <p>
+        If the second tab does not update, confirm both pages have the same
+        origin and FeatureCell key, allow the browser to open the new tab, and
+        verify both the behavior and controller are registered. Private-browsing
+        or restricted storage/messaging policies can prevent the demonstration.
+      </p>
     </div>
 
     <div class="callout callout-learn-more">
@@ -269,11 +325,32 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-12-exit-title">
+  <div class="section-title" id="chapter-12-exit-title">
+    Chapter 12 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        Same-origin tabs share finalized State while unsaved forms remain local.
+      </li>
+      <li>
+        Failed requests do not propagate, and the lab makes no transactional
+        promise.
+      </li>
+      <li>
+        Close the extra tab and save one deterministic checkpoint for Chapter
+        13.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed tab sync tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished Tab Sync example?</h2>
   </div>
 

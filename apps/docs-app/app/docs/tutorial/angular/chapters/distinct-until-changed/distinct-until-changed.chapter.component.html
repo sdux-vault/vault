@@ -44,6 +44,39 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-13-start-title">
+  <div class="section-title" id="chapter-13-start-title">
+    Chapter 13 Starting Point and Comparator Contract
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 12 project. This lab updates the service,
+      component, template, and tests. The comparator receives the incoming
+      candidate and previous value and returns whether the candidate should be
+      treated as unchanged. An unchanged result suppresses downstream work.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">The Deliberately Narrow Rule Used Here</div>
+      <p>
+        The displayed comparator returns unchanged when every incoming character
+        ID already exists in the previous collection. A candidate containing a
+        new ID continues. Object allocation and collection order do not
+        determine the result.
+      </p>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Do Not Reuse This Rule for General CRUD</div>
+      <p>
+        This identity-set rule can suppress edits to existing IDs and
+        removal-only candidates because neither introduces a new ID. A
+        production comparator must include every meaningful domain change—field
+        edits, additions, removals, and ordering when order matters. A
+        comparator that is too broad silently hides valid work.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-48">
   <div class="section-title-navigation">
     <div class="section-title">Step 48: Configure Distinct Until Changed</div>
@@ -61,9 +94,21 @@
     </p>
     <p>
       This is the only functional update in the example. The component and
-      template changes only provide buttons and a read-only comparison-function
-      view so you can observe the configured behavior.
+      template changes provide buttons and a read-only comparison-function view
+      so you can observe the configured behavior.
     </p>
+    <div class="callout callout-info">
+      <div class="title">Comparator Examples</div>
+      <ul>
+        <li>Same IDs and same fields: suppressed by this rule.</li>
+        <li>
+          Same IDs with edited fields: also suppressed—unsafe for general CRUD.
+        </li>
+        <li>Incoming subset after a removal: also suppressed.</li>
+        <li>At least one new ID: allowed to continue.</li>
+        <li>Reordered IDs only: suppressed because order is ignored.</li>
+      </ul>
+    </div>
     <div class="callout callout-action">
       <div class="title">Take Action</div>
       <ol>
@@ -173,6 +218,11 @@
           Inspect the Comparison Function textarea as you compare the visible
           collection with each request.
         </li>
+        <li>
+          Reset to the chapter checkpoint before repeating the sequence so the
+          starting IDs are deterministic. Observe that a suppressed candidate
+          does not reach the later Filter or Reducer stages.
+        </li>
       </ol>
     </div>
     <div class="callout callout-learn-more">
@@ -238,13 +288,30 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-13-exit-title">
+  <div class="section-title" id="chapter-13-exit-title">
+    Chapter 13 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        You can state the comparator's boolean meaning and predict suppression.
+      </li>
+      <li>
+        You recognize that this identity-only rule can hide edits and removals.
+      </li>
+      <li>Reset to a deterministic collection before adding Stepwise gates.</li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed distinct until changed tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>
-      Want the finished distinct until changed example without these treee
+      Want the finished distinct until changed example without these three
       steps?
     </h2>
   </div>

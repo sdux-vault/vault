@@ -18,7 +18,7 @@ describe('Service: DeleteCharactersService', () => {
   it('returns the chapter metadata for the delete-characters tutorial', () => {
     expect(service.chapters()).toEqual({
       id: 4,
-      label: 'Delete Chapter',
+      label: 'Delete',
       fragment: 'chapter-4',
       steps: [
         { id: 1, label: 'Add Delete Capabilities' },

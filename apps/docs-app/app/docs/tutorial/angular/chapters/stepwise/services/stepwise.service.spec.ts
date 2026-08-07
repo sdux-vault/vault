@@ -18,7 +18,7 @@ describe('Service: Stepwise Pipeline', () => {
   it('returns the chapter metadata for the stepwise tutorial', () => {
     expect(service.chapters()).toEqual({
       id: 14,
-      label: 'Stepwise Pipeline Chapter',
+      label: 'Stepwise',
       fragment: 'chapter-14',
       steps: [
         { id: 1, label: 'Configure Stepwise Pipeline' },

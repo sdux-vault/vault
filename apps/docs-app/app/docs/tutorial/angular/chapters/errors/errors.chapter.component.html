@@ -45,6 +45,45 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-7-start-title">
+  <div class="section-title" id="chapter-7-start-title">
+    Chapter 7 Starting Point and Failure Model
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 6 project. This chapter changes the
+      service, component, template, and specs. Normal CRUD calls remain
+      unchanged so the pipeline—not the component—demonstrates failure and
+      recovery.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Separate Four Responsibilities</div>
+      <ul>
+        <li>The throwing filter creates the teaching failure.</li>
+        <li>The pipeline normalizes and finalizes the FeatureCell error.</li>
+        <li>
+          <span class="code">errors()</span> observes the feature-specific
+          finalized error and snapshot.
+        </li>
+        <li>
+          <span class="code">VaultErrorService</span> exposes application-level
+          error state for presentation or monitoring.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Exceptions Are Not Routine Validation</div>
+      <p>
+        This chapter throws deliberately so the Error stage is observable. Do
+        not use unexpected exceptions as the default contract for ordinary form
+        or domain validation. Use the library's documented rejection/validation
+        mechanism for expected invalid input, and reserve exceptions for
+        failures that should enter error handling.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-23">
   <div class="section-title-navigation">
     <div class="section-title">Step 23: Simulate Pipeline Errors</div>
@@ -151,7 +190,7 @@
       <span class="code"
         ><a href="/docs/references/functions/vault-error-service"
           >VaultErrorService</a
-        >()</span
+        ></span
       >
       so the UI can render the current global Vault error and clear it after
       acknowledgement. Second, the component renders the serialized output from
@@ -195,7 +234,7 @@
           <span class="code"
             ><a href="/docs/references/functions/vault-error-service"
               >VaultErrorService</a
-            >()</span
+            ></span
           >
           is a singleton service, not a property of this chapter's
           <sdux-feature-cell />.
@@ -214,6 +253,17 @@
           error singleton.
         </li>
       </ul>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Production Error Data</div>
+      <p>
+        Render user-safe messages separately from diagnostic causes. Before
+        sending an error or State snapshot to telemetry, redact credentials,
+        personal data, and domain secrets; add correlation metadata outside the
+        UI; and define whether retry repeats the request or first removes its
+        failing condition. Clearing a banner is acknowledgement, not retry.
+      </p>
     </div>
 
     <sdux-example-viewer-source>
@@ -296,11 +346,33 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-7-exit-title">
+  <div class="section-title" id="chapter-7-exit-title">
+    Chapter 7 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        A teaching failure preserves the prior value and produces feature and
+        global error observations.
+      </li>
+      <li>
+        Clearing presentation does not remove the cause; disabling the filter
+        restores later requests.
+      </li>
+      <li>
+        Save this checkpoint for Chapter 8, which applies the same error model
+        to async inputs.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed errors tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished errors example without these three steps?</h2>
   </div>
 

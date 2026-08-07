@@ -10,10 +10,10 @@ export class DisplayCharacterService {
   chapters(): ChapterShape {
     return {
       id: 1,
-      label: 'Foundation Chapter',
+      label: 'Foundation: Read State',
       fragment: 'top',
       steps: [
-        { id: 1, label: 'Project Set-up' },
+        { id: 1, label: 'Angular Project Setup' },
         { id: 2, label: `Install ${this.#brandName.value}` },
         { id: 3, label: 'Define Feature State' },
         { id: 4, label: 'Build the Service' },

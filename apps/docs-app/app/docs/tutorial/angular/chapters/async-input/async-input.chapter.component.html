@@ -47,6 +47,53 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-8-start-title">
+  <div class="section-title" id="chapter-8-start-title">
+    Chapter 8 Starting Point and Input Guide
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 7 project. This capability lab adds
+      source helpers and updates configuration, service, component, template,
+      and tests. All four inputs converge on the same FeatureCell snapshot; what
+      differs is when the source begins and whether the request merges or
+      replaces State.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Choose the Input That Matches the Source</div>
+      <ul>
+        <li>
+          <strong>Hydration:</strong> one authoritative asynchronous source
+          needed before initialization can finish.
+        </li>
+        <li>
+          <strong>Promise:</strong> one deferred result submitted after
+          initialization; this example appends its resolved collection.
+        </li>
+        <li>
+          <strong>Observable:</strong> an RxJS source whose value is resolved by
+          the FeatureCell rather than subscribed to by the component.
+        </li>
+        <li>
+          <strong>HTTP Resource:</strong> Angular resource state parsed and
+          validated before atomically replacing the collection.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">One Pending Teaching Source at a Time</div>
+      <p>
+        The controlled Promise and Observable helpers exist to expose loading
+        and failure states. Settle the current source before starting another.
+        For production concurrency, cancellation, empty Observable completion,
+        and multiple emissions, follow the exact Resolve behavior contract
+        linked in each step rather than inferring a general RxJS policy from
+        this lab.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-26">
   <div class="section-title-navigation">
     <div class="section-title">Step 26: Hydrate Initial State</div>
@@ -84,6 +131,16 @@
       request enters Error State instead of falling back to
       <span class="code">initialState</span> or persistence.
     </p>
+    <div class="callout callout-info">
+      <div class="title">Initialization Precedence in This Lab</div>
+      <p>
+        Register hydration before <span class="code">initialize()</span>. When a
+        hydration factory is present, its fulfilled value supplies the initial
+        candidate. A rejection enters Error State; it does not silently switch
+        to the configured initial value. Chapter 10 separately demonstrates the
+        precedence rules of its persistence behavior.
+      </p>
+    </div>
     <p>
       This step does not introduce a new UI workflow or redesign the character
       editor. The visible teaching interaction is limited to the Resolve and
@@ -507,6 +564,18 @@
       </ol>
     </div>
 
+    <div class="callout callout-warning">
+      <div class="title">Public Endpoint Recovery</div>
+      <p>
+        This step depends on the public SWAPI endpoint and can fail because of
+        connectivity, CORS policy, rate limits, or remote schema changes. Treat
+        a normalized error with the previous collection preserved as a valid
+        failure observation. Use the completed StackBlitz source as the
+        reference and retry later; do not weaken response validation to force an
+        external response to commit.
+      </p>
+    </div>
+
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
       <ul>
@@ -643,6 +712,11 @@
           <a href="/docs/references/functions/feature-cell">FeatureCell</a> owns
           resolution, loading, errors, and committed State.
         </li>
+        <li>
+          Explain why hydration participates in initialization, why Promise and
+          Observable use <span class="code">mergeState()</span> here, and why
+          the HTTP Resource uses <span class="code">replaceState()</span>.
+        </li>
       </ul>
     </div>
 
@@ -679,11 +753,30 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-8-exit-title">
+  <div class="section-title" id="chapter-8-exit-title">
+    Chapter 8 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>All four inputs share FeatureCell loading and error State.</li>
+      <li>
+        You can explain which sources merge, replace, or participate in
+        initialization.
+      </li>
+      <li>
+        Settle every controlled source, then save this checkpoint for the Delay
+        lab.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed async input tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished async input example without these five steps?</h2>
   </div>
 
@@ -698,10 +791,10 @@
         [example]="stackblitz.example"
         [lang]="stackblitz.language" />
     </div>
-
-    <div class="tutorial-download">
-      <p>Download the complete chapter source code as a ZIP archive.</p>
-      <sdux-download [url]="downloadUrl"></sdux-download>
-    </div>
   }
+
+  <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
+    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
 </section>

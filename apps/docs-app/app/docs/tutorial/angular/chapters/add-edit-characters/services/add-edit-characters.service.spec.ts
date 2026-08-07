@@ -18,7 +18,7 @@ describe('Service: AddEditCharactersService', () => {
   it('returns the chapter metadata for the add-edit-characters tutorial', () => {
     expect(service.chapters()).toEqual({
       id: 3,
-      label: 'Add/Edit Chapter',
+      label: 'Create and Edit',
       fragment: 'chapter-3',
       steps: [
         { id: 1, label: 'Configure Merge Behavior' },

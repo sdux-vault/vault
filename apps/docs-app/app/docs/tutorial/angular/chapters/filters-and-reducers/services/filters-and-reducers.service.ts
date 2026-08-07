@@ -7,11 +7,11 @@ export class FiltersAndReducersService {
   chapters(): ChapterShape {
     return {
       id: 6,
-      label: 'Filters/Reducers Chapter',
+      label: 'Filters and Reducers',
       fragment: 'chapter-6',
       steps: [
         { id: 1, label: 'Add Filter Stage' },
-        { id: 2, label: 'Add Reducer Styles' },
+        { id: 2, label: 'Register Ordered Reducers' },
         { id: 3, label: 'Complete Filter/Reducer Tutorial' }
       ] satisfies ChapterStepShape[]
     };

@@ -7,7 +7,7 @@ export class DisplayCharactersService {
   chapters(): ChapterShape {
     return {
       id: 2,
-      label: 'Multi-select Chapter',
+      label: 'Selection: Display Records',
       fragment: 'chapter-2',
       steps: [
         { id: 1, label: 'Add a Dropdown' },

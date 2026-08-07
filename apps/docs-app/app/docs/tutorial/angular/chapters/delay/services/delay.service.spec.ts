@@ -4,7 +4,7 @@ describe('Service: Delay Controller', () => {
   it('returns the chapter metadata for the delay tutorial', () => {
     expect(new DelayService().chapters()).toEqual({
       id: 9,
-      label: 'Delay Controller Chapter',
+      label: 'Delay',
       fragment: 'chapter-9',
       steps: [
         { id: 1, label: 'Configure Delay Controller' },

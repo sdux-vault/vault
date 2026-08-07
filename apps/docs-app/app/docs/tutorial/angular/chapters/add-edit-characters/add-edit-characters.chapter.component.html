@@ -46,6 +46,47 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-3-start-title">
+  <div class="section-title" id="chapter-3-start-title">
+    Chapter 3 Starting Point and Change Map
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 2 project. This chapter updates
+      <span class="code">app.config.ts</span> and
+      <span class="code">example.service.ts</span>, then adds domain/editor
+      helpers and expands the component, template, and tests. The FeatureCell
+      key, initial collection, and service ownership do not change.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Two Requests, Two Collection Promises</div>
+      <ul>
+        <li>
+          Create submits <span class="code">[C]</span> through append-configured
+          <span class="code">mergeState()</span>:
+          <span class="code">[A, B] → [A, B, C]</span>.
+        </li>
+        <li>
+          Update derives a complete replacement collection and submits it
+          through
+          <span class="code">replaceState()</span>:
+          <span class="code">[A, B] → [A, B′]</span>.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Local Tutorial Concurrency</div>
+      <p>
+        The example reads the current in-memory collection, derives the next
+        collection, and replaces it. In a server-backed or multi-writer feature,
+        resolve concurrent writes with server authority, version checks, or a
+        documented conflict policy instead of assuming the local snapshot is
+        current.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-13">
   <div class="section-title-navigation">
     <div class="section-title">Step 13: Configure Array Append Merge</div>
@@ -66,8 +107,8 @@
     </p>
 
     <p>
-      To change that Merge-stage behavior, install npm install
-      <sdux-package-name [package]="'addons'" /> and register
+      To change that Merge-stage behavior, install the
+      <sdux-package-name [package]="'addons'" /> package and register
       <span class="code"
         ><a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
           >withArrayAppendMergeBehavior</a
@@ -83,7 +124,7 @@
       <div class="title">Take Action</div>
       <ol>
         <li>
-          Install the npm install
+          Install the
           <sdux-package-name [package]="'addons'" /> package.
         </li>
         <li>Open <span class="code">app.config.ts</span>.</li>
@@ -95,7 +136,7 @@
               >withArrayAppendMergeBehavior</a
             ></span
           >
-          from npm install <sdux-package-name [package]="'addons'" />.
+          from <sdux-package-name [package]="'addons'" />.
         </li>
         <li>
           Pass
@@ -181,7 +222,7 @@
 
       <ul>
         <li>
-          <a href="/docs/pipeline/addons/with-array-append-merge-behavior"
+          <a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
             >withArrayAppendMergeBehavior</a
           >
         </li>
@@ -217,6 +258,27 @@
       <sdux-brand-name /> write inside the service instead of spreading mutation
       logic across the component and template.
     </p>
+
+    <div class="callout callout-info">
+      <div class="title">Implement in This Order</div>
+      <ol>
+        <li>
+          Add <span class="code">example.character-domain.ts</span> for the
+          draft type, next-ID rule, and character factory.
+        </li>
+        <li>
+          Add service methods that translate create/update intent into the
+          correct FeatureCell request.
+        </li>
+        <li>
+          Add <span class="code">example.character-editor.ts</span> for pure
+          form validation, normalization, and feedback helpers.
+        </li>
+        <li>
+          Add component mode/form state and delegate valid saves to the service.
+        </li>
+      </ol>
+    </div>
 
     <div class="callout callout-action">
       <div class="title">Take Action</div>
@@ -265,8 +327,8 @@
       }
     </sdux-example-viewer-source>
 
-    <div class="callout callout-warning">
-      <div class="title">Why This Helper Exists</div>
+    <div class="callout callout-info">
+      <div class="title">Supporting Domain File</div>
       <p>
         Create
         <span class="code">example.character-domain.ts</span> to hold the draft
@@ -327,7 +389,22 @@
           a character, select it, edit it, and see the detail panel react to the
           saved State.
         </li>
+        <li>
+          Submit an invalid draft and confirm validation prevents a FeatureCell
+          request. Cancel both create and edit modes and confirm committed State
+          remains unchanged.
+        </li>
       </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Define Unknown-ID Update Behavior</div>
+      <p>
+        The displayed service implementation and spec define what happens when
+        an update ID is absent. Keep the UI consistent with that contract. A
+        production API should report the mismatch explicitly rather than
+        silently converting an update into a create.
+      </p>
     </div>
 
     <div class="callout callout-learn-more">
@@ -362,8 +439,8 @@
       }
     </sdux-example-viewer-source>
 
-    <div class="callout callout-warning">
-      <div class="title">Why This Helper Exists</div>
+    <div class="callout callout-info">
+      <div class="title">Supporting Editor File</div>
       <p>
         Create
         <span class="code">example.character-editor.ts</span> to hold the shared
@@ -377,11 +454,33 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-3-exit-title">
+  <div class="section-title" id="chapter-3-exit-title">
+    Chapter 3 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        Create appends one identity; update replaces the matching identity
+        without disturbing other records.
+      </li>
+      <li>
+        Invalid or canceled work sends no FeatureCell request and leaves
+        committed State unchanged.
+      </li>
+      <li>
+        Save this checkpoint for Chapter 4, which adds explicit, confirmable
+        deletion.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed add/edit tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished add/edit example without these three steps?</h2>
   </div>
 

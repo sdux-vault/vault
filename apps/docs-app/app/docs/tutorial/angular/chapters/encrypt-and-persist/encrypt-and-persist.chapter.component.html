@@ -48,6 +48,49 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-10-start-title">
+  <div class="section-title" id="chapter-10-start-title">
+    Chapter 10 Starting Point, License, and Threat Model
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 9 project. Encryption and persistence are
+      Pro capabilities. This example enables development evaluation with
+      <span class="code">devMode: true</span> and
+      <span class="code">bypassLicensing: true</span>; production use requires a
+      valid license and must not rely on the bypass.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">What This Boundary Protects</div>
+      <p>
+        AES-256-GCM protects the confidentiality and integrity of the persisted
+        envelope when the key-derived secret remains unavailable to an attacker
+        who obtains storage alone. The FeatureCell continues to expose plain
+        State to trusted application code.
+      </p>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">What It Does Not Protect</div>
+      <ul>
+        <li>
+          Successful same-origin script execution, XSS, malicious extensions, or
+          a compromised browser runtime can read plain in-memory State and any
+          client-available secret.
+        </li>
+        <li>
+          Encryption does not provide authorization, server security, data
+          minimization, retention policy, or cross-device recovery.
+        </li>
+        <li>
+          Never paste production secrets or sensitive user data into this
+          teaching example. Bundled browser JavaScript is not a confidential key
+          store.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-34">
   <div class="section-title-navigation">
     <div class="section-title">
@@ -81,8 +124,10 @@
           >withSessionStoragePersistBehavior</a
         ></span
       >
-      in <span class="code">app.config.ts</span>, with Encrypt registered before
-      Persist.
+      in <span class="code">app.config.ts</span>. Encrypt and Persist occupy
+      fixed pipeline stages: the finalized plain value is encrypted before the
+      Persist stage writes its envelope. Their position in the behavior
+      declaration array does not redefine that stage order.
     </p>
 
     <div class="callout callout-action">
@@ -118,7 +163,8 @@
             ><a href="/docs/references/functions/provide-feature-cell"
               >provideFeatureCell</a
             >()</span
-          >. The order does not matter when adding behaviors.
+          >. Declaration order does not override the behaviors' fixed pipeline
+          stages.
         </li>
       </ol>
     </div>
@@ -158,7 +204,7 @@
         </li>
         <li>
           <a
-            routerLink="/docs/pipeline/addons/encrypt/with-aes256encrypt-behavior"
+            routerLink="/docs/pipeline/addons/encrypt/with-aes256-encrypt-behavior"
             >withAes256EncryptBehavior</a
           >
         </li>
@@ -194,10 +240,12 @@
     </p>
 
     <p>
-      The example uses a static salt for teaching purposes so you can repeat the
-      tutorial and inspect the configuration. In a secure application, obtain
-      salt material dynamically from an appropriate secure configuration source
-      and keep it stable for data that must be decrypted later.
+      The example uses a client-visible tutorial secret and a stable salt so you
+      can repeat the exercise and decrypt the same persisted envelope after a
+      reload. The salt is not a password or confidential key; it supports key
+      derivation and must remain stable for ciphertext that must be read later.
+      Production key management is an application-security decision. Do not
+      treat a secret bundled with browser code as confidential.
     </p>
 
     <div class="callout callout-action">
@@ -208,8 +256,10 @@
           <span class="code">setAes256Secret()</span> configuration.
         </li>
         <li>
-          Review the static salt and identify where production code would load
-          stable salt material dynamically.
+          Review the tutorial-only secret, stable salt, and iteration count.
+          Name the threat each value addresses and identify why
+          browser-delivered secret material cannot resist an attacker executing
+          in the same origin.
         </li>
         <li>
           Use the Results panel to compare plain Feature State with the
@@ -231,6 +281,11 @@
         </li>
         <li>
           A stable salt is required to decrypt previously persisted ciphertext.
+        </li>
+        <li>
+          The salt may be stored with or alongside ciphertext; security depends
+          on protecting the secret/key material and the running application, not
+          on hiding the salt.
         </li>
       </ul>
     </div>
@@ -259,7 +314,7 @@
         </li>
         <li>
           <a
-            routerLink="/docs/pipeline/addons/encrypt/with-aes256encrypt-behavior"
+            routerLink="/docs/pipeline/addons/encrypt/with-aes256-encrypt-behavior"
             >withAes256EncryptBehavior</a
           >
         </li>
@@ -299,6 +354,25 @@
       when no persisted value is available. This makes the persistence boundary
       explicit instead of silently mixing two sources of truth.
     </p>
+    <div class="callout callout-info">
+      <div class="title">Persistence Outcomes in This Example</div>
+      <ul>
+        <li>
+          Valid persisted envelope: decrypt, hydrate, and use the persisted
+          value instead of <span class="code">initialState</span>.
+        </li>
+        <li>
+          No persisted envelope: this configured persistence path exposes no
+          restored value, so inspect <span class="code">hasValue</span> and the
+          displayed <span class="code">undefined</span> result rather than
+          assuming an initial-value fallback.
+        </li>
+        <li>
+          Corrupt or undecryptable envelope: expect the documented error
+          lifecycle and do not commit partially recovered data.
+        </li>
+      </ul>
+    </div>
     <div class="callout callout-action">
       <div class="title">Take Action</div>
       <ol>
@@ -308,6 +382,13 @@
           configure.
         </li>
         <li>Make a character change and inspect the persisted output.</li>
+        <li>
+          Open the browser developer tools Application or Storage panel, select
+          Session Storage, and find the namespaced key exported as
+          <span class="code">EXAMPLE_ENCRYPTED_STORAGE_KEY</span> in
+          <span class="code">example.service.ts</span>. Confirm the stored value
+          is an encrypted envelope rather than plain character JSON.
+        </li>
         <li>
           Refresh the page in the same tab and verify that the collection is
           restored.
@@ -396,7 +477,10 @@
       <div class="title">Tutorial Summary</div>
       <ul>
         <li>Encrypt and Persist behaviors run at the persistence boundary.</li>
-        <li>Static salt is acceptable only for this teaching example.</li>
+        <li>
+          The stable salt and client-visible secret are teaching configuration,
+          not a production key-management design.
+        </li>
       </ul>
     </div>
     <sdux-example-viewer-source>
@@ -410,11 +494,33 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-10-exit-title">
+  <div class="section-title" id="chapter-10-exit-title">
+    Chapter 10 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        The FeatureCell exposes plain State while Session Storage contains an
+        encrypted envelope.
+      </li>
+      <li>
+        A same-tab reload restores the documented value without implying XSS
+        protection.
+      </li>
+      <li>
+        Remove teaching secrets and evaluation bypass assumptions from
+        production adaptations.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed encrypt and persist tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished encrypt and persist example?</h2>
   </div>
   @if (stackblitz(); as stackblitz) {

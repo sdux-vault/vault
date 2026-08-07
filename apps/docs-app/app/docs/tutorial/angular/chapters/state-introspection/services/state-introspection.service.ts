@@ -7,7 +7,7 @@ export class StateIntrospectionService {
   chapters(): ChapterShape {
     return {
       id: 11,
-      label: 'State Introspection Chapter',
+      label: 'State Introspection',
       fragment: 'chapter-11',
       steps: [
         { id: 1, label: 'Read Raw StateSnapshot' },

@@ -18,7 +18,7 @@ describe('Service: State Introspection', () => {
   it('returns the chapter metadata for the state introspection tutorial', () => {
     expect(service.chapters()).toEqual({
       id: 11,
-      label: 'State Introspection Chapter',
+      label: 'State Introspection',
       fragment: 'chapter-11',
       steps: [
         { id: 1, label: 'Read Raw StateSnapshot' },

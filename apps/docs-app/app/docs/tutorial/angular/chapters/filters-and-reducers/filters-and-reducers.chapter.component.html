@@ -42,6 +42,45 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-6-start-title">
+  <div class="section-title" id="chapter-6-start-title">
+    Chapter 6 Starting Point and Stage Map
+  </div>
+  <div class="section-body">
+    <p>
+      Start with a fresh completed Chapter 5 checkpoint, not the FeatureCell
+      instance you destroyed while testing. This chapter changes the character
+      shape/domain helpers, service, component, template, and their specs.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Candidate Progression</div>
+      <ol>
+        <li>Resolve produces the incoming character collection.</li>
+        <li>
+          The filter removes records that fail this lab's eligibility rule.
+        </li>
+        <li>The first reducer derives a Force-sensitive display label.</li>
+        <li>The second reducer clones and sorts by last name.</li>
+        <li>The third reducer derives the reusable full name.</li>
+        <li>
+          Only the final display-ready collection becomes committed State.
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Teaching Predicate, Not a Universal Domain Rule</div>
+      <p>
+        Removing the literal last name <span class="code">unknown</span> makes
+        the Filter stage easy to see; it is not a recommendation to discard
+        incomplete people or records. Production filters should encode a
+        defensible rule such as authorization, active status, or validated
+        eligibility. Preserve raw data elsewhere when the application must
+        correct or audit it.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-20">
   <div class="section-title-navigation">
     <div class="section-title">Step 20: Add the Filter Stage</div>
@@ -104,10 +143,9 @@
           sees the already-filtered candidate collection.
         </li>
         <li>
-          In the <span class="code">star-wars-character.constant.ts</span> file
-          there are 5 characters with Chewbacca's last name being
-          <span class="code">unknown</span>. The filter remove him from the
-          candidate state request.
+          The seed file contains five characters. Chewbacca has the last name
+          <span class="code">unknown</span>, so this teaching filter removes
+          that record and passes four candidates to the reducers.
         </li>
       </ul>
     </div>
@@ -141,7 +179,7 @@
 
 <section class="section" id="step-21">
   <div class="section-title-navigation">
-    <div class="section-title">Step 21: Add Reducer Styles</div>
+    <div class="section-title">Step 21: Register Ordered Reducers</div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -166,6 +204,17 @@
       a display-ready full name without pushing string composition into the
       template.
     </p>
+
+    <div class="callout callout-info">
+      <div class="title">Why Compose Three Reducers?</div>
+      <p>
+        Each pure reducer protects one independently testable rule and can be
+        reused without copying template logic. Combine reducers when their
+        operations are inseparable or measured collection size makes repeated
+        passes materially expensive; do not combine them merely to shorten the
+        registration list.
+      </p>
+    </div>
 
     <div class="callout callout-action">
       <div class="title">Take Action</div>
@@ -282,6 +331,12 @@
           Verify that the displayed source views and reducer-driven UI values
           match the committed state.
         </li>
+        <li>
+          Confirm Chewbacca is absent, the four remaining records are sorted by
+          last name, and every visible record contains the two derived display
+          fields. Verify the helpers return new arrays rather than mutating
+          their inputs.
+        </li>
       </ol>
     </div>
 
@@ -318,11 +373,33 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-6-exit-title">
+  <div class="section-title" id="chapter-6-exit-title">
+    Chapter 6 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        The teaching filter passes four eligible records to three ordered,
+        immutable reducers.
+      </li>
+      <li>
+        The template consumes sorted and derived committed fields instead of
+        recreating rules.
+      </li>
+      <li>
+        Save this checkpoint for Chapter 7, which turns one filter into a
+        controlled failure source.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed filters and reducers tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>
       Want the finished filters and reducers example without these three steps?
     </h2>

@@ -43,6 +43,45 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-14-start-title">
+  <div class="section-title" id="chapter-14-start-title">
+    Chapter 14 Starting Point and Boundary Decision
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 13 project. This comparison lab updates
+      configuration, service, component, template, and tests. It installs all
+      three gates so you can inspect their different inputs; a production
+      feature should normally choose the smallest number of gates that enforce
+      its policy.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Choose the Gate by the Question</div>
+      <ul>
+        <li>
+          After Resolve: “May this normalized input enter domain filtering?”
+        </li>
+        <li>After Filter: “May this eligible/refined candidate be reduced?”</li>
+        <li>
+          After Reducer: “May this fully derived value become committed State?”
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">The Teaching UI Must Be Settled</div>
+      <p>
+        This example uses native confirmation prompts and one-use decision
+        contracts. Respond to every prompt before starting another request. The
+        example does not implement timeout, navigation cancellation, durable
+        approval, approver authorization, or audit history. A production
+        workflow must settle pending decisions on confirm, cancel, timeout,
+        teardown, and navigation, and must enforce consequential authorization
+        on a trusted server.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-51">
   <div class="section-title-navigation">
     <div class="section-title">Step 51: Configure the Stepwise Pipeline</div>
@@ -94,15 +133,15 @@
         </li>
         <li>
           The Hydrate <span class="code">Resolve</span> and
-          <span class="code">Reject</span> buttons from the Async Input chapter
-          demonstrate the Stepwise decision flow. You will need to resolve or
-          reject the initial candidate in order to trigger the stepwise approval
-          prompts for the candidate.
+          <span class="code">Reject</span> buttons settle the asynchronous
+          source; they are not Stepwise decisions. Resolving hydration produces
+          a candidate that then opens the separate Stepwise continue/block
+          prompts.
         </li>
         <li>
-          <span class="code">Reset State</span>
-          button from the Lifecycle chapter demonstrate state is reset without
-          the need to accept or reject the stepwise prompts.
+          The <span class="code">Reset State</span> button from the Lifecycle
+          chapter demonstrates that lifecycle reset does not require accepting
+          or blocking a Stepwise candidate.
         </li>
       </ul>
     </div>
@@ -161,6 +200,33 @@
       decision flow.
     </p>
 
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          In <span class="code">example.service.ts</span>, add the Resolve
+          request interface, pending Signal, one-use decision holder, callback,
+          and <span class="code">acceptStepwiseResolve()</span> /
+          <span class="code">cancelStepwiseResolve()</span> methods shown below.
+        </li>
+        <li>
+          Register <span class="code">withStepwiseResolve()</span> before
+          <span class="code">initialize()</span> and publish the callback values
+          without mutating them.
+        </li>
+        <li>
+          In the component, observe the pending Signal once, open the
+          confirmation prompt, and delegate exactly one accept or cancel action
+          to the service.
+        </li>
+        <li>
+          Resolve hydration, accept the Resolve gate, and confirm the candidate
+          advances to the Filter gate. Repeat and cancel at Resolve to confirm
+          committed State remains unchanged.
+        </li>
+      </ol>
+    </div>
+
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
       <ul>
@@ -201,8 +267,8 @@
       <ul>
         <li>
           For this chapter, all three stepwise behaviors are configured. You can
-          use just one, two or all three depending on your use-case and business
-          needs.
+          use just one, two, or all three depending on your use case and
+          business needs.
         </li>
       </ul>
     </div>
@@ -237,6 +303,24 @@
       <span class="code">current</span> and filtered
       <span class="code">candidate</span> reported by the callback.
     </p>
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Add the Filter request interface, pending Signal, decision holder,
+          callback, and accept/cancel service methods following the Resolve
+          pattern.
+        </li>
+        <li>
+          Register <span class="code">withStepwiseFilter()</span> after the
+          normal filters are configured and before initialization.
+        </li>
+        <li>
+          Add one guarded component prompt for the Filter pending Signal. Accept
+          to run reducers; cancel to preserve committed State.
+        </li>
+      </ol>
+    </div>
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
       <ul>
@@ -246,7 +330,7 @@
           component turns that pending request into a confirmation prompt.
         </li>
         <li>
-          Accepting calls the one-use continuation and allows the resolved
+          Accepting calls the one-use continuation and allows the filtered
           candidate to proceed through the pipeline. Rejecting blocks that
           candidate and preserves the last committed State.
         </li>
@@ -275,8 +359,8 @@
       <ul>
         <li>
           For this chapter, all three stepwise behaviors are configured. You can
-          use just one, two or all three depending on your use-case and business
-          needs.
+          use just one, two, or all three depending on your use case and
+          business needs.
         </li>
       </ul>
     </div>
@@ -309,6 +393,28 @@
       The Stepwise Reducer textarea displays the reduced candidate reported by
       the callback, including the values produced by the configured reducers.
     </p>
+    <div class="callout callout-action">
+      <div class="title">Take Action</div>
+      <ol>
+        <li>
+          Add the Reducer request interface, pending Signal, decision holder,
+          callback, and accept/cancel service methods following the earlier
+          gates.
+        </li>
+        <li>
+          Register <span class="code">withStepwiseReducer()</span> after reducer
+          configuration and before initialization.
+        </li>
+        <li>
+          Add the guarded Reducer prompt. Accept to allow commitment; cancel to
+          retain the last committed collection.
+        </li>
+        <li>
+          Compare the reduced candidate with the Resolve and Filter outputs and
+          identify the derived labels and ordering added by reducers.
+        </li>
+      </ol>
+    </div>
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
       <ul>
@@ -318,7 +424,7 @@
           component turns that pending request into a confirmation prompt.
         </li>
         <li>
-          Accepting calls the one-use continuation and allows the resolved
+          Accepting calls the one-use continuation and allows the reduced
           candidate to proceed through the pipeline. Rejecting blocks that
           candidate and preserves the last committed State.
         </li>
@@ -347,8 +453,8 @@
       <ul>
         <li>
           For this chapter, all three stepwise behaviors are configured. You can
-          use just one, two or all three depending on your use-case and business
-          needs.
+          use just one, two, or all three depending on your use case and
+          business needs.
         </li>
       </ul>
     </div>
@@ -397,11 +503,32 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-14-exit-title">
+  <div class="section-title" id="chapter-14-exit-title">
+    Chapter 14 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        Resolve, Filter, and Reducer prompts expose different candidate stages.
+      </li>
+      <li>
+        Block preserves committed State; continue advances from the paused
+        stage.
+      </li>
+      <li>
+        Settle every prompt and add timeout, teardown, authorization, and audit
+        policy in production.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed stepwise tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished Stepwise example?</h2>
   </div>
   @if (stackblitz(); as stackblitz) {

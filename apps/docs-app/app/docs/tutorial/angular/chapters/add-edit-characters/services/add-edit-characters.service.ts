@@ -7,7 +7,7 @@ export class AddEditCharactersService {
   chapters(): ChapterShape {
     return {
       id: 3,
-      label: 'Add/Edit Chapter',
+      label: 'Create and Edit',
       fragment: 'chapter-3',
       steps: [
         { id: 1, label: 'Configure Merge Behavior' },

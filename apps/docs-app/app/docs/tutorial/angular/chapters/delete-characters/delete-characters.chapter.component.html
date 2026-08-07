@@ -42,6 +42,32 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-4-start-title">
+  <div class="section-title" id="chapter-4-start-title">
+    Chapter 4 Starting Point and Change Map
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 3 project. Add one service removal
+      method, then add component-local pending-delete state,
+      request/cancel/confirm handlers, confirmation markup, and focused tests.
+      The registered append merge remains available for create; deletion submits
+      a complete next collection through
+      <span class="code">replaceState()</span>.
+    </p>
+    <div class="callout callout-warning">
+      <div class="title">What “Destructive” Means Here</div>
+      <p>
+        The array transformation is immutable, but the user-visible record is
+        intentionally removed from committed State. This browser-only tutorial
+        does not implement server authorization, durable deletion, undo,
+        optimistic rollback, or audit logging. Add those controls at the real
+        persistence boundary in production.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-16">
   <div class="section-title-navigation">
     <div class="section-title">Step 16: Add Delete Capabilities</div>
@@ -169,7 +195,23 @@
           the selected character, confirm removes it, and the empty-state
           guidance appears when the collection is cleared.
         </li>
+        <li>
+          Request deletion, cancel, and confirm the collection did not change.
+          Request again, confirm, and verify that the record disappears,
+          selection clears, and every other record remains.
+        </li>
       </ol>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="title">Unknown or Stale IDs</div>
+      <p>
+        Filtering an ID that is already absent produces an equivalent
+        collection. Use the service spec to confirm whether this implementation
+        still submits that collection and emits a snapshot. In a multi-writer
+        application, revalidate the pending record at confirmation time and
+        report a stale deletion instead of claiming success.
+      </p>
     </div>
 
     <div class="callout callout-learn-more">
@@ -202,11 +244,33 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-4-exit-title">
+  <div class="section-title" id="chapter-4-exit-title">
+    Chapter 4 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        Cancel preserves the record; confirm removes only that identity and
+        clears stale local selection.
+      </li>
+      <li>
+        The component coordinates confirmation while the service owns
+        replacement.
+      </li>
+      <li>
+        Save this checkpoint for Chapter 5 and reload it after testing terminal
+        destruction.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed delete tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished delete example without these two steps?</h2>
   </div>
 

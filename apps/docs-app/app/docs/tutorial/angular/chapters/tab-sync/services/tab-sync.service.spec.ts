@@ -18,7 +18,7 @@ describe('Service: Tab Sync', () => {
   it('returns the chapter metadata for the tab sync tutorial', () => {
     expect(service.chapters()).toEqual({
       id: 12,
-      label: 'Tab Sync Chapter',
+      label: 'Tab Sync',
       fragment: 'chapter-12',
       steps: [
         { id: 1, label: 'Configure Tab Sync' },

@@ -39,6 +39,42 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-2-start-title">
+  <div class="section-title" id="chapter-2-start-title">
+    Chapter 2 Starting Point and Decision
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 1 project. This chapter changes only
+      <span class="code">example.component.ts</span>,
+      <span class="code">example.component.html</span>, and the component spec.
+      Registration, bootstrap, seed data, and the service remain unchanged.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Keep Selection Local When</div>
+      <p>
+        The selected ID describes only what this component is displaying.
+        Promote selection to shared Feature State only when another consumer, a
+        route, persistence, or cross-tab behavior must observe the same
+        selection. Local state is the smaller and safer choice for this
+        master-detail view.
+      </p>
+    </div>
+    <div class="callout callout-action">
+      <div class="title">Confirm the Starting Checkpoint</div>
+      <ol>
+        <li>
+          Run the Chapter 1 project and confirm the first character renders.
+        </li>
+        <li>
+          Keep <span class="code">ExampleService</span> unchanged throughout
+          this chapter.
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-11">
   <div class="section-title-navigation">
     <div class="section-title">Step 11: Add a Dropdown</div>
@@ -72,6 +108,17 @@
       unknown ids, and renders the selected record without moving
       <sdux-brand-name /> ownership out of the service.
     </p>
+
+    <div class="callout callout-info">
+      <div class="title">Reactive Lookup</div>
+      <p>
+        The selected character depends on two values: the latest committed
+        collection from the service and the component-local selected ID. When
+        either changes, the computed lookup runs again. A known ID produces its
+        record; an empty or unknown ID produces no selected record and the
+        template renders the empty state.
+      </p>
+    </div>
 
     <div class="callout callout-action">
       <div class="title">Take Action</div>
@@ -169,7 +216,21 @@
           Choose a different character to verify the same read path reacts to
           the new selection.
         </li>
+        <li>
+          In the component spec, submit an unknown ID and confirm the selection
+          remains empty rather than manufacturing or mutating Feature State.
+        </li>
       </ol>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="title">Chapter 2 Checkpoint</div>
+      <p>
+        You should now be able to explain why the collection is shared Feature
+        State, why the selected ID is local presentation state, and how the
+        computed detail reacts to both. Chapter 3 keeps that boundary and adds
+        service-owned create and update requests.
+      </p>
     </div>
 
     <div class="callout callout-learn-more">
@@ -193,11 +254,33 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-2-exit-title">
+  <div class="section-title" id="chapter-2-exit-title">
+    Chapter 2 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        A known ID selects its record; an empty or unknown ID produces the empty
+        detail state.
+      </li>
+      <li>
+        The collection remains Feature State while selection remains
+        component-local.
+      </li>
+      <li>
+        Save this checkpoint for Chapter 3, which adds service-owned create and
+        update requests.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed dropdown tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished dropdown example without these two steps?</h2>
   </div>
 

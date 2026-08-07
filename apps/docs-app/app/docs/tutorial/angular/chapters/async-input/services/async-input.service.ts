@@ -7,7 +7,7 @@ export class AsyncInputService {
   chapters(): ChapterShape {
     return {
       id: 8,
-      label: 'Async Input Chapter',
+      label: 'Async Input',
       fragment: 'chapter-8',
       steps: [
         { id: 1, label: 'Hydrate Initial State' },

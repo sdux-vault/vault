@@ -7,7 +7,7 @@ export class TabSyncService {
   chapters(): ChapterShape {
     return {
       id: 12,
-      label: 'Tab Sync Chapter',
+      label: 'Tab Sync',
       fragment: 'chapter-12',
       steps: [
         { id: 1, label: 'Configure Tab Sync' },

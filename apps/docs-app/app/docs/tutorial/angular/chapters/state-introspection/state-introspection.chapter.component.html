@@ -45,6 +45,58 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-11-start-title">
+  <div class="section-title" id="chapter-11-start-title">
+    Chapter 11 Starting Point and Observation Guide
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 10 project. This diagnostic lab updates
+      the service, component, template, and tests. Use one mutation throughout
+      the steps so you can compare the same attempt at each boundary.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Choose an Observation Surface</div>
+      <ul>
+        <li>
+          <span class="code">state</span>: Angular Signal accessors for the
+          latest value, loading flag, error, and value-presence flag.
+        </li>
+        <li>
+          <span class="code">state$</span>: an RxJS stream whose emissions carry
+          a complete snapshot and event context.
+        </li>
+        <li>
+          <span class="code">beforeTaps()</span>: the filtered candidate
+          immediately before reducers run.
+        </li>
+        <li>
+          <span class="code">afterTaps()</span>: the derived candidate
+          immediately after reducers run.
+        </li>
+        <li>
+          <span class="code">emitStates()</span>: the finalized snapshot after
+          State emission.
+        </li>
+        <li>
+          The captured baseline: an application-created clone of the first
+          stream value whose snapshot reports
+          <span class="code">hasValue</span>.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Diagnostics Must Be Bounded</div>
+      <p>
+        The textareas serialize complete values only to teach the boundaries. In
+        production, redact sensitive fields, sample high-frequency emissions,
+        limit payload size, and avoid retaining snapshots longer than necessary.
+        Observation callbacks must not become hidden business logic.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-38">
   <div class="section-title-navigation">
     <div class="section-title">Step 38: Read Raw StateSnapshot</div>
@@ -190,6 +242,11 @@
       point for understanding what the pipeline is about to process; it is not a
       replacement for a Filter or Reducer.
     </p>
+    <p>
+      In this example, “Before Taps” means after filtering and immediately
+      before reducer execution. The registered callback publishes the immutable
+      input to a read-only teaching Signal and returns no replacement value.
+    </p>
     <div class="callout callout-action">
       <div class="title">Take Action</div>
       <ol>
@@ -251,6 +308,11 @@
       Register <span class="code">afterTaps()</span> to observe the value after
       tap processing has completed. This gives you a second diagnostic point so
       you can see how the candidate changes before State emission.
+    </p>
+    <p>
+      The reducers—not the observation callback—produce the transformed value.
+      “After Taps” publishes that post-reducer candidate for comparison and
+      cannot change what the FeatureCell later commits.
     </p>
     <div class="callout callout-action">
       <div class="title">Take Action</div>
@@ -377,6 +439,20 @@
       inspect the original collection and restore it after experimenting with
       the CRUD controls.
     </p>
+    <div class="callout callout-warning">
+      <div class="title">
+        First Committed Baseline vs. Configured Initial State
+      </div>
+      <p>
+        The UI labels this teaching clone “Initial State,” but the code captures
+        the first qualifying committed stream value. Hydration, persistence,
+        filters, and reducers may make that value different from the raw
+        <span class="code">initialState</span> supplied during registration. Use
+        <span class="code">restoreInitialCharacters()</span> for the cloned
+        baseline and <span class="code">reset()</span> for lifecycle reset; they
+        are not interchangeable.
+      </p>
+    </div>
     <div class="callout callout-action">
       <div class="title">Take Action</div>
       <ol>
@@ -470,29 +546,51 @@
         </sdux-example-viewer-tab>
       }
     </sdux-example-viewer-source>
+  </div>
+</section>
 
-    <section
-      class="tutorial-shortcut"
-      aria-label="Launch the completed state introspection tutorial example">
-      <div class="tutorial-shortcut-copy">
-        <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
-        <h2>Want the finished state introspection example?</h2>
-      </div>
-      @if (stackblitz(); as stackblitz) {
-        <div class="tutorial-shortcut-launcher">
-          <p>
-            Launch the live StackBlitz project and inspect the completed
-            implementation directly.
-          </p>
-          <sdux-stackblitz-language-example
-            [example]="stackblitz.example"
-            [lang]="stackblitz.language" />
-        </div>
-      }
-      <div class="tutorial-download">
-        <p>Download the complete chapter source code as a ZIP archive.</p>
-        <sdux-download [url]="downloadUrl"></sdux-download>
-      </div>
-    </section>
+<section class="section" aria-labelledby="chapter-11-exit-title">
+  <div class="section-title" id="chapter-11-exit-title">
+    Chapter 11 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        Select state, state$, tap callbacks, or emitted snapshots from timing
+        and shape—not habit.
+      </li>
+      <li>
+        Distinguish the first committed baseline from initialState and lifecycle
+        reset.
+      </li>
+      <li>
+        Keep production diagnostics redacted, sampled, bounded, and
+        observational.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section
+  class="tutorial-shortcut"
+  aria-label="Launch the completed state introspection tutorial example">
+  <div class="tutorial-shortcut-copy">
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+    <h2>Want the finished state introspection example?</h2>
+  </div>
+  @if (stackblitz(); as stackblitz) {
+    <div class="tutorial-shortcut-launcher">
+      <p>
+        Launch the live StackBlitz project and inspect the completed
+        implementation directly.
+      </p>
+      <sdux-stackblitz-language-example
+        [example]="stackblitz.example"
+        [lang]="stackblitz.language" />
+    </div>
+  }
+  <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
+    <sdux-download [url]="downloadUrl"></sdux-download>
   </div>
 </section>

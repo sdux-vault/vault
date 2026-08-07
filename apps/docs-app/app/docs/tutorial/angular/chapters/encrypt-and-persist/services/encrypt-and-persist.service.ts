@@ -7,7 +7,7 @@ export class EncryptAndPersistService {
   chapters(): ChapterShape {
     return {
       id: 10,
-      label: 'Encrypt and Persist Chapter',
+      label: 'Encrypt and Persist',
       fragment: 'chapter-10',
       steps: [
         { id: 1, label: 'Configure Encrypt and Persist Behaviors' },

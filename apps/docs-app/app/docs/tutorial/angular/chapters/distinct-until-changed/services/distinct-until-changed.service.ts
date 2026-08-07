@@ -7,7 +7,7 @@ export class DistinctUntilChangedService {
   chapters(): ChapterShape {
     return {
       id: 13,
-      label: 'Distinct Until Changed Chapter',
+      label: 'Distinct Until Changed',
       fragment: 'chapter-13',
       steps: [
         { id: 1, label: 'Configure Distinct Until Changed' },

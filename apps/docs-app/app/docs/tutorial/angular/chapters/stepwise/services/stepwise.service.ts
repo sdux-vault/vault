@@ -7,7 +7,7 @@ export class StepwiseService {
   chapters(): ChapterShape {
     return {
       id: 14,
-      label: 'Stepwise Pipeline Chapter',
+      label: 'Stepwise',
       fragment: 'chapter-14',
       steps: [
         { id: 1, label: 'Configure Stepwise Pipeline' },

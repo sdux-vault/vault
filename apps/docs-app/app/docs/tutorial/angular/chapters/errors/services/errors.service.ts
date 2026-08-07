@@ -7,7 +7,7 @@ export class ErrorsService {
   chapters(): ChapterShape {
     return {
       id: 7,
-      label: 'Errors Chapter',
+      label: 'Errors',
       fragment: 'chapter-7',
       steps: [
         { id: 1, label: 'Simulate Pipeline Errors' },

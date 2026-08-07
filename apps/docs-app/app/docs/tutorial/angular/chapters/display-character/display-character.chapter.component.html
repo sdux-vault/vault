@@ -42,6 +42,52 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-1-start-title">
+  <div class="section-title" id="chapter-1-start-title">
+    Chapter 1 Starting Point
+  </div>
+  <div class="section-body">
+    <p>
+      Start from an empty working directory. This chapter creates the Angular
+      project and every file required for the first read path. The checked-in
+      tutorial baseline uses Node.js 24 or newer, npm 11 or newer, and Angular
+      21. If your organization standardizes different supported versions, use a
+      mutually compatible Angular and SDuX package set.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Files You Will Create or Change</div>
+      <ul>
+        <li>
+          <span class="code">star-wars-character.shape.ts</span> and
+          <span class="code">star-wars-character.constant.ts</span> define the
+          domain contract and seed data.
+        </li>
+        <li>
+          <span class="code">example.service.ts</span> owns the FeatureCell and
+          exposes its reactive snapshot.
+        </li>
+        <li>
+          <span class="code">app.config.ts</span> registers the Vault and the
+          feature; <span class="code">main.ts</span> bootstraps the example.
+        </li>
+        <li>
+          The component, template, and stylesheet render the first committed
+          character without calling SDuX APIs directly.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Ownership Rule for Every Chapter</div>
+      <p>
+        Keep committed Feature State and all FeatureCell calls in the service.
+        Keep selection, form controls, confirmation prompts, and display-only
+        feedback in the component unless a later requirement explicitly makes
+        that data shared Feature State.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-1">
   <div class="section-title-navigation">
     <div class="section-title">Step 1: Angular Project Setup</div>
@@ -75,6 +121,11 @@ cd sdux-tutorial;
 </code></pre>
           </sdux-example-viewer-tab>
         </sdux-example-viewer-source>
+        <li>
+          Confirm that the CLI creates
+          <span class="code">sdux-tutorial/src/app</span> and that your terminal
+          is now inside <span class="code">sdux-tutorial</span>.
+        </li>
       </ol>
     </div>
   </div>
@@ -381,6 +432,30 @@ cd sdux-tutorial;
       is activated or any State is rendered in the UI.
     </p>
 
+    <div class="callout callout-info">
+      <div class="title">Registration Is Not Activation</div>
+      <ul>
+        <li>
+          <span class="code">provideVault()</span> creates the application-level
+          SDuX runtime.
+        </li>
+        <li>
+          <span class="code">provideFeatureCell()</span> declares the unique
+          key, State type, initial value, behaviors, and controllers available
+          to this feature.
+        </li>
+        <li>
+          <span class="code">&#64;FeatureCell()</span> associates the service
+          with that same key, and <span class="code">injectVault()</span> gives
+          the service its typed API.
+        </li>
+        <li>
+          <span class="code">initialize()</span> starts the registered
+          FeatureCell lifecycle. Configure fluent APIs before calling it.
+        </li>
+      </ul>
+    </div>
+
     <div class="callout callout-action">
       <div class="title">Take Action</div>
       <ol>
@@ -486,9 +561,8 @@ cd sdux-tutorial;
       <div class="title">Take Action</div>
       <ol>
         <li>
-          Create the
-          <span class="code">example.service.ts</span> in the same directory as
-          the State definition.
+          Update the <span class="code">example.service.ts</span> created in
+          Step 4. Do not create a second service.
         </li>
         <li>
           Decorate <span class="code">ExampleService</span> with the
@@ -660,6 +734,30 @@ cd sdux-tutorial;
       </ol>
     </div>
 
+    <div class="callout callout-learn-more">
+      <div class="title">Expected Result and Recovery</div>
+      <ul>
+        <li>
+          The page renders the first seeded character with its identifier, name,
+          faction, and Force-sensitive value. No selection or edit controls are
+          present yet.
+        </li>
+        <li>
+          If Angular reports that the service or FeatureCell cannot be resolved,
+          compare the key in <span class="code">provideFeatureCell()</span> with
+          the key in <span class="code">&#64;FeatureCell()</span>, and confirm
+          <span class="code">provideVault()</span> appears first in the provider
+          list.
+        </li>
+        <li>
+          If the page renders but no value appears, confirm the seed collection
+          is passed as <span class="code">initialState</span> and that the
+          service calls <span class="code">initialize()</span> after
+          configuration.
+        </li>
+      </ul>
+    </div>
+
     <sdux-example-viewer-source [displayTabs]="false">
       <sdux-example-viewer-tab [label]="'main.ts'">
         <pre
@@ -706,6 +804,25 @@ cd sdux-tutorial;
       the template renders.
     </p>
 
+    <div class="callout callout-action">
+      <div class="title">Verify the Chapter Checkpoint</div>
+      <ol>
+        <li>
+          Compare your project with the complete-file tabs below. Treat them as
+          the expected state after Step 10, not as additional files to add
+          blindly.
+        </li>
+        <li>
+          Confirm the service test protects registration and initial snapshot
+          behavior, while the component test protects only the UI projection.
+        </li>
+        <li>
+          Keep this completed source for Chapter 2, where the component adds
+          local selection without changing service ownership.
+        </li>
+      </ol>
+    </div>
+
     <div class="callout callout-learn-more">
       <div class="title">What This Final Reference Includes</div>
 
@@ -740,11 +857,33 @@ cd sdux-tutorial;
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-1-exit-title">
+  <div class="section-title" id="chapter-1-exit-title">
+    Chapter 1 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        Registration, service connection, and initialization use the same
+        feature key.
+      </li>
+      <li>
+        The component renders committed State through the service without
+        injecting the FeatureCell.
+      </li>
+      <li>
+        Save this checkpoint for Chapter 2, where only local selection and
+        presentation change.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed initial tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished initial example without all ten steps?</h2>
   </div>
 
@@ -758,10 +897,10 @@ cd sdux-tutorial;
         [example]="stackblitz.example"
         [lang]="stackblitz.language" />
     </div>
-
-    <div class="tutorial-download">
-      <p>Download the complete chapter source code as a ZIP archive.</p>
-      <sdux-download [url]="downloadUrl"></sdux-download>
-    </div>
   }
+
+  <div class="tutorial-download">
+    <p>Download the complete chapter source code as a ZIP archive.</p>
+    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
 </section>

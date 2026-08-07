@@ -45,6 +45,48 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-5-start-title">
+  <div class="section-title" id="chapter-5-start-title">
+    Chapter 5 Starting Point and Lifecycle Contract
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 4 project. This chapter changes the
+      service, component, template, and their specs. Record-level CRUD remains
+      available until the FeatureCell is destroyed.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Choose by Intended Outcome</div>
+      <ul>
+        <li>
+          <span class="code">replaceState(null)</span> commits an intentional
+          value. <span class="code">hasValue</span> remains meaningful because
+          <span class="code">null</span> is data, not absence.
+        </li>
+        <li>
+          <span class="code">reset()</span> clears the current runtime snapshot
+          to its neutral state and leaves this FeatureCell available for later
+          work.
+        </li>
+        <li>
+          <span class="code">destroy()</span> finalizes the current FeatureCell
+          lifecycle. Do not offer later requests from the same teaching view.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Scope of “Permanent”</div>
+      <p>
+        Destruction is terminal for the active FeatureCell instance, not a
+        promise that data can never exist again in a future application runtime.
+        Recreating a feature after navigation, reload, or a new injector must
+        follow the lifecycle contract documented for your application, including
+        any persistence cleanup it requires.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="step-18">
   <div class="section-title-navigation">
     <div class="section-title">Step 18: Persist Null and Reset State</div>
@@ -182,7 +224,22 @@
           then disables later interaction after
           <span class="code">destroy()</span>.
         </li>
+        <li>
+          Compare the rendered raw snapshot after each operation: intentional
+          <span class="code">null</span>, absent reset value, and the explicit
+          destroyed-state message must remain distinguishable.
+        </li>
       </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Recovery Checkpoint</div>
+      <p>
+        After testing <span class="code">destroy()</span>, reload or replace
+        your project with the completed Chapter 5 checkpoint before starting
+        Chapter 6. Do not expect the destroyed instance to accept the next
+        chapter's requests.
+      </p>
     </div>
 
     <div class="callout callout-learn-more">
@@ -217,11 +274,33 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="chapter-5-exit-title">
+  <div class="section-title" id="chapter-5-exit-title">
+    Chapter 5 Exit Checkpoint
+  </div>
+  <div class="section-body">
+    <ul>
+      <li>
+        Committed null, runtime reset, and terminal destruction produce
+        different lifecycle outcomes.
+      </li>
+      <li>
+        The UI stops offering requests after destruction of the active
+        FeatureCell instance.
+      </li>
+      <li>
+        Start Chapter 6 from a fresh checkpoint rather than the destroyed
+        runtime instance.
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section
   class="tutorial-shortcut"
   aria-label="Launch the completed lifecycle tutorial example">
   <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Skip Ahead</p>
+    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
     <h2>Want the finished lifecycle example without these two steps?</h2>
   </div>
 

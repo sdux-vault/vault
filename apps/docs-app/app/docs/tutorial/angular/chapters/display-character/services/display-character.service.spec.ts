@@ -18,10 +18,10 @@ describe('Service: DisplayCharacterService', () => {
   it('returns the chapter metadata for the display-character chapter', () => {
     expect(service.chapters()).toEqual({
       id: 1,
-      label: 'Foundation Chapter',
+      label: 'Foundation: Read State',
       fragment: 'top',
       steps: [
-        { id: 1, label: 'Project Set-up' },
+        { id: 1, label: 'Angular Project Setup' },
         { id: 2, label: `Install Mock BN` },
         { id: 3, label: 'Define Feature State' },
         { id: 4, label: 'Build the Service' },
