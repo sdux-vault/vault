@@ -71,6 +71,26 @@ describe('CLI: sitemap-lastmod', () => {
     expect(dates.get('/about')).toBe('2026-06-02');
   });
 
+  it('should preserve dates after a branch is merged into main', () => {
+    const { resolver } = createResolver([]);
+    const existingSitemap = `
+      <url>
+        <loc>https://www.sdux-vault.com/blog/state-updates-need-policy-not-more-middleware</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+      </url>`;
+
+    const dates = resolver.resolve(
+      ['/blog/state-updates-need-policy-not-more-middleware'],
+      existingSitemap
+    );
+
+    expect(
+      dates.get('/blog/state-updates-need-policy-not-more-middleware')
+    ).toBe('2026-08-07');
+  });
+
   it('should compare the diff against the main merge base', () => {
     const { resolver, calls } = createResolver([]);
 
