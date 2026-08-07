@@ -1,7 +1,14 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { NavigationEnd, Router } from '@angular/router';
+import {
+  SDUX_CATCH_PHRASE,
+  SDUX_BRAND_NAME,
+  SDUX_FEATURE_CELL_BRAND_NAME,
+  SDUX_VAULT_BRAND_NAME
+} from '@sdux-vault/ui/web-components';
 import { Subject } from 'rxjs';
+import { RELATED_TOPICS_REGISTRY } from '../../docs/related-topic/constants/related-topics.registry';
 import { SeoService } from './seo.service';
 
 describe('Service: Seo', () => {
@@ -18,7 +25,11 @@ describe('Service: Seo', () => {
         {
           provide: Router,
           useValue: { events: routerEvents$.asObservable() }
-        }
+        },
+        { provide: SDUX_BRAND_NAME, useValue: 'SDuX' },
+        { provide: SDUX_VAULT_BRAND_NAME, useValue: 'SDuX Vault' },
+        { provide: SDUX_FEATURE_CELL_BRAND_NAME, useValue: 'FeatureCell' },
+        { provide: SDUX_CATCH_PHRASE, useValue: 'Plain TypeScript, Zero Magic' }
       ]
     });
 
@@ -105,6 +116,29 @@ describe('Service: Seo', () => {
       document.head.querySelector<HTMLMetaElement>('meta[name="description"]')
         ?.content
     ).toBe('Reference documentation for Log Level Type in SDuX Vault.');
+  });
+
+  it('should use an empty item list when a related-topic category has no items', () => {
+    const category = RELATED_TOPICS_REGISTRY.categories.default;
+    const items = category.items;
+    category.items = undefined;
+
+    try {
+      service.initialize();
+      routerEvents$.next(new NavigationEnd(1, '/unknown', '/unknown'));
+
+      expect(document.title).toBe('Unknown — SDuX Vault Reference');
+    } finally {
+      category.items = items;
+    }
+  });
+
+  it('should use the configured vault brand when the pathname has no segment', () => {
+    const displayName = (
+      service as unknown as { toDisplayName(pathname: string): string }
+    ).toDisplayName('');
+
+    expect(displayName).toBe('SDuX Vault');
   });
 
   it('should remove query strings and fragments from canonical URLs', () => {

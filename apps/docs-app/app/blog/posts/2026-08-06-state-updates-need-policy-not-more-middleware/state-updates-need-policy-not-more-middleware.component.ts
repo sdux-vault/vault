@@ -3,7 +3,8 @@ import {
   BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -15,7 +16,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BrandNameComponent,
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
-    FeatureCellBrandNameComponent
+    FeatureCellBrandNameComponent,
+    SDuXVideoComponent
   ],
   template: `
     <sdux-blog-layout
@@ -443,6 +445,16 @@ export const employeeCell = FeatureCell&lt;Employee[]&gt;(
               >Tab Sync</a
             >.
           </p>
+        </div>
+      </section>
+
+      <section class="diagram-section">
+        <div class="section-title">Watch It</div>
+
+        <div class="section-body">
+          <sdux-video
+            videoId="6W5YYH6SW3E"
+            [tooltip]="'Conductor Definition'" />
         </div>
       </section>
     </sdux-blog-layout>

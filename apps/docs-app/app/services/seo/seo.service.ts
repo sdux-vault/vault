@@ -2,6 +2,10 @@ import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
+import {
+  BrandNameService,
+  CatchPhraseService
+} from '@sdux-vault/ui/web-components';
 import { distinctUntilChanged, filter, map } from 'rxjs';
 import { RELATED_TOPICS_REGISTRY } from '../../docs/related-topic/constants/related-topics.registry';
 
@@ -24,6 +28,8 @@ export class SeoService {
   #document = inject(DOCUMENT);
   #meta = inject(Meta);
   #title = inject(Title);
+  #brandName = inject(BrandNameService);
+  #catchPhrase = inject(CatchPhraseService);
 
   /** Starts listening for completed navigations and synchronizing URL metadata. */
   initialize(): void {
@@ -103,9 +109,8 @@ export class SeoService {
   } {
     if (pathname === '/') {
       return {
-        title: 'SDuX — Plain TypeScript, Zero Magic™',
-        description:
-          'SDuX Vault is a deterministic, reactive state-management library for TypeScript and JavaScript.'
+        title: `${this.#brandName.value} — ${this.#catchPhrase.phrase}™`,
+        description: `${this.#brandName.vaultValue} is a deterministic, reactive state-management library for TypeScript and JavaScript.`
       };
     }
 
@@ -122,15 +127,16 @@ export class SeoService {
       return { title: topic.title, description: topic.description };
     }
 
-    const displayName = this.#toDisplayName(pathname);
+    const displayName = this.toDisplayName(pathname);
     return {
-      title: `${displayName} — SDuX Vault Reference`,
-      description: `Reference documentation for ${displayName} in SDuX Vault.`
+      title: `${displayName} — ${this.#brandName.vaultValue} Reference`,
+      description: `Reference documentation for ${displayName} in ${this.#brandName.vaultValue}.`
     };
   }
 
-  #toDisplayName(pathname: string): string {
-    const segment = pathname.split('/').filter(Boolean).pop() ?? 'SDuX Vault';
+  private toDisplayName(pathname: string): string {
+    const segment =
+      pathname.split('/').filter(Boolean).pop() ?? this.#brandName.vaultValue;
     return decodeURIComponent(segment)
       .replace(/[-_]+/g, ' ')
       .replace(/\b\w/g, (character) => character.toUpperCase());
