@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>VaultRegistrationFluentApiShape</h3>
+      <h2>
+        <a href="/docs/references/shapes/vault-registration-fluent-api-shape"
+          >VaultRegistrationFluentApiShape</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

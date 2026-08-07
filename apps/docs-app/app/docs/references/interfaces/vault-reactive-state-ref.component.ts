@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>VaultReactiveStateRef</h3>
+      <h2>
+        <a href="/docs/references/interfaces/vault-reactive-state-ref"
+          >VaultReactiveStateRef</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

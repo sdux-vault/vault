@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>FromStreamOptions</h3>
+      <h2>
+        <a href="/docs/references/options/from-stream-options"
+          >FromStreamOptions</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

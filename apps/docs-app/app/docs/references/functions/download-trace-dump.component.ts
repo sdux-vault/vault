@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>downloadTraceDump</h3>
+      <h2>
+        <a href="/docs/references/functions/download-trace-dump"
+          >downloadTraceDump</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">Downloads a trace dump as a JSON file.<br /><br /></div>

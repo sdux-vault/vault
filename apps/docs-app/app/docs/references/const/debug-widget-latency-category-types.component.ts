@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>DebugWidgetLatencyCategoryTypes</h3>
+      <h2>
+        <a href="/docs/references/const/debug-widget-latency-category-types"
+          >DebugWidgetLatencyCategoryTypes</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

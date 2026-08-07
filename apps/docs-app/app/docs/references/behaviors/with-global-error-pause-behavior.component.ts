@@ -15,7 +15,12 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withGlobalErrorPauseBehavior</h3>
+      <h2>
+        <a
+          href="/docs/pipeline/addons/interceptors/with-global-error-pause-behavior"
+          >withGlobalErrorPauseBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

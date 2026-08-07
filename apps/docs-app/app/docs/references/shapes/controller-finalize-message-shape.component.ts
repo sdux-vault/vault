@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>ControllerFinalizeMessageShape</h3>
+      <h2>
+        <a href="/docs/references/shapes/controller-finalize-message-shape"
+          >ControllerFinalizeMessageShape</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

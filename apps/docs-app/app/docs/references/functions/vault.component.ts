@@ -15,7 +15,7 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>Vault</h3>
+      <h2>Vault</h2>
     </div>
     <header class="docs-header">
       <div class="lead">

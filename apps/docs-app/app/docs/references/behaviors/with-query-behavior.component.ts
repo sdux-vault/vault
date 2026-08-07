@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withQueryBehavior</h3>
+      <h2>
+        <a href="/docs/pipeline/addons/entity-access/with-query-behavior"
+          >withQueryBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

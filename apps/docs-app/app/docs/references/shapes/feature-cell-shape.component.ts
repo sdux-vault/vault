@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>FeatureCellShape</h3>
+      <h2>
+        <a href="/docs/references/shapes/feature-cell-shape"
+          >FeatureCellShape</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

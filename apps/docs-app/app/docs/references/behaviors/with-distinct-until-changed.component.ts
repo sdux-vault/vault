@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withDistinctUntilChanged</h3>
+      <h2>
+        <a href="/docs/pipeline/addons/operators/with-distinct-until-changed"
+          >withDistinctUntilChanged</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

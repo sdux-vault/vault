@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>DebugWidgetEventTracePhaseType</h3>
+      <h2>
+        <a href="/docs/references/types/debug-widget-event-trace-phase-type"
+          >DebugWidgetEventTracePhaseType</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">Union of valid trace phase values.<br /><br /></div>

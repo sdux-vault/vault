@@ -15,7 +15,12 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>VaultUsagePromiseFactoryRequiredError</h3>
+      <h2>
+        <a
+          href="/docs/references/classes/vault-usage-promise-factory-required-error"
+          >VaultUsagePromiseFactoryRequiredError</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

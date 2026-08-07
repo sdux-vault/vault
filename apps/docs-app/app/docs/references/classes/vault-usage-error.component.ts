@@ -15,7 +15,9 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>VaultUsageError</h3>
+      <h2>
+        <a href="/docs/references/classes/vault-usage-error">VaultUsageError</a>
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

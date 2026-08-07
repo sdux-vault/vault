@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>BehaviorClassContract</h3>
+      <h2>
+        <a href="/docs/references/contracts/behavior-class-contract"
+          >BehaviorClassContract</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

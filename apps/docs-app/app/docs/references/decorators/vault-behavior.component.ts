@@ -15,7 +15,9 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>VaultBehavior</h3>
+      <h2>
+        <a href="/docs/references/decorators/vault-behavior">VaultBehavior</a>
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

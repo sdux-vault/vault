@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>VaultErrorKindType</h3>
+      <h2>
+        <a href="/docs/references/types/vault-error-kind-type"
+          >VaultErrorKindType</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

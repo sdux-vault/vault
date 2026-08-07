@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>defineBehaviorKey</h3>
+      <h2>
+        <a href="/docs/references/functions/define-behavior-key"
+          >defineBehaviorKey</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

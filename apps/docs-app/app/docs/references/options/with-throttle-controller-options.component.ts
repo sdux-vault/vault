@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>WithThrottleControllerOptions</h3>
+      <h2>
+        <a href="/docs/references/options/with-throttle-controller-options"
+          >WithThrottleControllerOptions</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

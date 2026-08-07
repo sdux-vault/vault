@@ -15,7 +15,7 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>isDefined</h3>
+      <h2><a href="/docs/references/functions/is-defined">isDefined</a></h2>
     </div>
     <header class="docs-header">
       <div class="lead">

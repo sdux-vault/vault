@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withCoreEmitStateBehavior</h3>
+      <h2>
+        <a href="/docs/pipeline/behaviors/state/with-core-emit-state-behavior"
+          >withCoreEmitStateBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

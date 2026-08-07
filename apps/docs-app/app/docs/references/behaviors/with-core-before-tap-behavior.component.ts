@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withCoreBeforeTapBehavior</h3>
+      <h2>
+        <a href="/docs/pipeline/behaviors/tap/with-core-before-tap-behavior"
+          >withCoreBeforeTapBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

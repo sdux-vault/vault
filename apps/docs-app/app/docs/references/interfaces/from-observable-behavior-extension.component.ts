@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>FromObservableBehaviorExtension</h3>
+      <h2>
+        <a href="/docs/references/interfaces/from-observable-behavior-extension"
+          >FromObservableBehaviorExtension</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

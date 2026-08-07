@@ -15,7 +15,12 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withCoreErrorCallbackBehavior</h3>
+      <h2>
+        <a
+          href="/docs/pipeline/behaviors/error/with-core-error-callback-behavior"
+          >withCoreErrorCallbackBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

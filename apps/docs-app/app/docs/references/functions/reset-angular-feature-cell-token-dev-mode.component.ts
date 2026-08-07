@@ -15,7 +15,12 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>resetAngularFeatureCellTokenDevMode</h3>
+      <h2>
+        <a
+          href="/docs/references/functions/reset-angular-feature-cell-token-dev-mode"
+          >resetAngularFeatureCellTokenDevMode</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

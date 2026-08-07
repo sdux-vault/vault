@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>VaultSignalStateRef</h3>
+      <h2>
+        <a href="/docs/references/interfaces/vault-signal-state-ref"
+          >VaultSignalStateRef</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

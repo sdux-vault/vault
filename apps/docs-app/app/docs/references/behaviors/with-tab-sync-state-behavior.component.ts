@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withTabSyncStateBehavior</h3>
+      <h2>
+        <a href="/docs/pipeline/behaviors/vault/with-tab-sync-state-behavior"
+          >withTabSyncStateBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

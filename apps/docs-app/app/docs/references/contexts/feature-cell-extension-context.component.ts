@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>FeatureCellExtensionContext</h3>
+      <h2>
+        <a href="/docs/references/contexts/feature-cell-extension-context"
+          >FeatureCellExtensionContext</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

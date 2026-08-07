@@ -15,7 +15,9 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>CONTROLLER_META</h3>
+      <h2>
+        <a href="/docs/references/const/controller_meta">CONTROLLER_META</a>
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

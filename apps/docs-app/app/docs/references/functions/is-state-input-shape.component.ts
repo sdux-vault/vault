@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>isStateInputShape</h3>
+      <h2>
+        <a href="/docs/references/functions/is-state-input-shape"
+          >isStateInputShape</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

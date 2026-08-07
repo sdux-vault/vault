@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>StateEmitSnapshotShape</h3>
+      <h2>
+        <a href="/docs/references/shapes/state-emit-snapshot-shape"
+          >StateEmitSnapshotShape</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">
