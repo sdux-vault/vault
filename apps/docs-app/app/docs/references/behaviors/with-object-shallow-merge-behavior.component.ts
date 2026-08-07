@@ -15,7 +15,12 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withObjectShallowMergeBehavior</h3>
+      <h2>
+        <a
+          href="/docs/pipeline/behaviors/merge/with-object-shallow-merge-behavior"
+          >withObjectShallowMergeBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

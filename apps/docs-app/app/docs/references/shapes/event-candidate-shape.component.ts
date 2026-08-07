@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>EventCandidateShape</h3>
+      <h2>
+        <a href="/docs/references/shapes/event-candidate-shape"
+          >EventCandidateShape</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

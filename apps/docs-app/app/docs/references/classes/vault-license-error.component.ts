@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>VaultLicenseError</h3>
+      <h2>
+        <a href="/docs/references/classes/vault-license-error"
+          >VaultLicenseError</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

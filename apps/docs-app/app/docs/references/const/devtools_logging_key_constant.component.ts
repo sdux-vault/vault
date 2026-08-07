@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>DEVTOOLS_LOGGING_KEY_CONSTANT</h3>
+      <h2>
+        <a href="/docs/references/const/devtools_logging_key_constant"
+          >DEVTOOLS_LOGGING_KEY_CONSTANT</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>PipelineUpstreamValue</h3>
+      <h2>
+        <a href="/docs/references/types/pipeline-upstream-value"
+          >PipelineUpstreamValue</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

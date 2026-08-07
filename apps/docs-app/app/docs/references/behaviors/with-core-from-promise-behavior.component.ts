@@ -15,7 +15,12 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withCoreFromPromiseBehavior</h3>
+      <h2>
+        <a
+          href="/docs/pipeline/behaviors/promise/with-core-from-promise-behavior"
+          >withCoreFromPromiseBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

@@ -11,20 +11,22 @@ import path from 'node:path';
  *
  * Each URL entry includes:
  * - `<loc>` — the fully qualified URL
- * - `<changefreq>` — defaults to `weekly`
- * - `<priority>` — `1.0` for the homepage, `0.8` for all others
+ * - `<lastmod>` — included when a changed source file has a verified commit date
  */
 export class SitemapGenerator {
   #baseUrl;
   #urls;
 
   /**
-   * @param {{ baseUrl: string, urls: string[] }} options
+   * @param {{ baseUrl: string, urls: string[], lastmodByUrl?: Map<string, string> }} options
    */
-  constructor({ baseUrl, urls }) {
+  constructor({ baseUrl, urls, lastmodByUrl = new Map() }) {
     this.#baseUrl = baseUrl.replace(/\/$/, '');
     this.#urls = urls;
+    this.#lastmodByUrl = lastmodByUrl;
   }
+
+  #lastmodByUrl;
 
   /**
    * Validates the URL registry for common mistakes.
@@ -66,10 +68,14 @@ export class SitemapGenerator {
       const loc =
         urlPath === '/' ? this.#baseUrl + '/' : `${this.#baseUrl}${urlPath}`;
       const priority = urlPath === '/' ? '1.0' : '0.8';
+      const lastmod = this.#lastmodByUrl.get(urlPath);
 
       return [
         '  <url>',
         `    <loc>${this.#escapeXml(loc)}</loc>`,
+        ...(lastmod
+          ? [`    <lastmod>${this.#escapeXml(lastmod)}</lastmod>`]
+          : []),
         '    <changefreq>weekly</changefreq>',
         `    <priority>${priority}</priority>`,
         '  </url>'

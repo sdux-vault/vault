@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withArrayPushMergeBehavior</h3>
+      <h2>
+        <a href="/docs/pipeline/addons/merge/with-array-push-merge-behavior"
+          >withArrayPushMergeBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

@@ -15,7 +15,7 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>vaultDebug</h3>
+      <h2><a href="/docs/references/functions/vault-debug">vaultDebug</a></h2>
     </div>
     <header class="docs-header">
       <div class="lead">Emits a debug-level Vault log message.<br /><br /></div>

@@ -15,7 +15,7 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>EventType</h3>
+      <h2><a href="/docs/references/types/event-type">EventType</a></h2>
     </div>
     <header class="docs-header">
       <div class="lead">

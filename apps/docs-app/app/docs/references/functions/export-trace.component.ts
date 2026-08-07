@@ -15,7 +15,7 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>exportTrace</h3>
+      <h2><a href="/docs/references/functions/export-trace">exportTrace</a></h2>
     </div>
     <header class="docs-header">
       <div class="lead">

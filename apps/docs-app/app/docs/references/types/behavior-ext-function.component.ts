@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>BehaviorExtFunction</h3>
+      <h2>
+        <a href="/docs/references/types/behavior-ext-function"
+          >BehaviorExtFunction</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

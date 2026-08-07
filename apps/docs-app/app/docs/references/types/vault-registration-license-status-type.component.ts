@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>VaultRegistrationLicenseStatusType</h3>
+      <h2>
+        <a href="/docs/references/types/vault-registration-license-status-type"
+          >VaultRegistrationLicenseStatusType</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

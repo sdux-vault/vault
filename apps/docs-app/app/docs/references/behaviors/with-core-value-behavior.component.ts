@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withCoreValueBehavior</h3>
+      <h2>
+        <a href="/docs/pipeline/behaviors/resolve/with-core-value-behavior"
+          >withCoreValueBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

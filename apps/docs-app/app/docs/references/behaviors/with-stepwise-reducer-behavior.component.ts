@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withStepwiseReducerBehavior</h3>
+      <h2>
+        <a href="/docs/pipeline/addons/stepwise/with-stepwise-reducer-behavior"
+          >withStepwiseReducerBehavior</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

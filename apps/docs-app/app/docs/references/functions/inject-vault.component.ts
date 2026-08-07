@@ -15,7 +15,7 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>injectVault</h3>
+      <h2><a href="/docs/references/functions/inject-vault">injectVault</a></h2>
     </div>
     <header class="docs-header">
       <div class="lead">

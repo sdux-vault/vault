@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>ResolveBehaviorMetaShape</h3>
+      <h2>
+        <a href="/docs/references/shapes/resolve-behavior-meta-shape"
+          >ResolveBehaviorMetaShape</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

@@ -15,7 +15,9 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>LogLevelTypes</h3>
+      <h2>
+        <a href="/docs/references/const/log-level-types">LogLevelTypes</a>
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

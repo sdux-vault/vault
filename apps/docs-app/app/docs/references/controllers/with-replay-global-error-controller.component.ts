@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>withReplayGlobalErrorController</h3>
+      <h2>
+        <a href="/docs/pipeline/controllers/with-replay-global-error-controller"
+          >withReplayGlobalErrorController</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

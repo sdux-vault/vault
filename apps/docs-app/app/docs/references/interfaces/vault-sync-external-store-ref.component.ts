@@ -15,7 +15,11 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>VaultSyncExternalStoreRef</h3>
+      <h2>
+        <a href="/docs/references/interfaces/vault-sync-external-store-ref"
+          >VaultSyncExternalStoreRef</a
+        >
+      </h2>
     </div>
     <header class="docs-header">
       <div class="lead">

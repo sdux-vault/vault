@@ -108,6 +108,19 @@ describe('CLI: sitemap-generator', () => {
       expect(xml).toContain('<priority>0.8</priority>');
     });
 
+    it('should include lastmod only for URLs with a verified date', () => {
+      const generator = new SitemapGenerator({
+        baseUrl: 'https://example.com',
+        urls: ['/changed', '/unchanged'],
+        lastmodByUrl: new Map([['/changed', '2026-08-07']])
+      });
+
+      const xml = generator.generate();
+
+      expect(xml).toContain('<lastmod>2026-08-07</lastmod>');
+      expect(xml.match(/<lastmod>/g)).toHaveSize(1);
+    });
+
     it('should escape XML special characters in URLs', () => {
       const generator = new SitemapGenerator({
         baseUrl: 'https://example.com',

@@ -15,7 +15,7 @@ import {
   imports: [BrandNameComponent, PackageNameComponent],
   template: `<div class="docs-container">
     <div class="header">
-      <h3>SDuXShape</h3>
+      <h2><a href="/docs/references/shapes/s-du-x-shape">SDuXShape</a></h2>
     </div>
     <header class="docs-header">
       <div class="lead">
