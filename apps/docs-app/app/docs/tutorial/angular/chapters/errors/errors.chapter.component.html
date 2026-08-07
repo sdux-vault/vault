@@ -46,9 +46,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-7-start-title">
-  <div class="section-title" id="chapter-7-start-title">
+  <h2 class="section-title" id="chapter-7-start-title">
     Chapter 7 Starting Point and Failure Model
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 6 project. This chapter changes the
@@ -84,9 +84,11 @@
   </div>
 </section>
 
-<section class="section" id="step-23">
+<section class="section" id="step-23" aria-labelledby="step-23-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 23: Simulate Pipeline Errors</div>
+    <h2 class="section-title" id="step-23-title">
+      Step 23: Simulate Pipeline Errors
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -112,7 +114,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Open <span class="code">example.service.ts</span> and register the
@@ -175,9 +177,11 @@
   </div>
 </section>
 
-<section class="section" id="step-24">
+<section class="section" id="step-24" aria-labelledby="step-24-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 24: Display Global Error State</div>
+    <h2 class="section-title" id="step-24-title">
+      Step 24: Display Global Error State
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -208,7 +212,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Open <span class="code">example.component.ts</span> and subscribe to
@@ -266,6 +270,44 @@
       </p>
     </div>
 
+    <div class="callout callout-learn-more">
+      <div class="title">Error Representations and Consumers</div>
+      <table>
+        <caption>
+          Error representations, their consumers, and safe production content
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Representation</th>
+            <th scope="col">Consumer</th>
+            <th scope="col">Safe content</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Raw exception</td>
+            <td>Normalization boundary</td>
+            <td>Do not render or transmit without redaction.</td>
+          </tr>
+          <tr>
+            <td><span class="code">VaultErrorShape</span></td>
+            <td>Application error handling</td>
+            <td>Normalized classification and approved context.</td>
+          </tr>
+          <tr>
+            <td>UI message</td>
+            <td>User</td>
+            <td>Actionable, non-sensitive summary.</td>
+          </tr>
+          <tr>
+            <td>Telemetry payload</td>
+            <td>Operators</td>
+            <td>Error code, feature key, and request ID—not the candidate.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <sdux-example-viewer-source>
       @for (file of componentFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -277,9 +319,11 @@
   </div>
 </section>
 
-<section class="section" id="step-25">
+<section class="section" id="step-25" aria-labelledby="step-25-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 25: Complete Errors Tutorial</div>
+    <h2 class="section-title" id="step-25-title">
+      Step 25: Complete Errors Tutorial
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -302,7 +346,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Run and Verify</div>
       <ol>
         <li>
           Click <span class="code">Throw Error</span> to enable the simulated
@@ -347,9 +391,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-7-exit-title">
-  <div class="section-title" id="chapter-7-exit-title">
+  <h2 class="section-title" id="chapter-7-exit-title">
     Chapter 7 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

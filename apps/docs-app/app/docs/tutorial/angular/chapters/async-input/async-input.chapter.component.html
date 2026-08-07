@@ -48,9 +48,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-8-start-title">
-  <div class="section-title" id="chapter-8-start-title">
+  <h2 class="section-title" id="chapter-8-start-title">
     Chapter 8 Starting Point and Input Guide
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 7 project. This capability lab adds
@@ -94,6 +94,10 @@
     <div class="callout callout-learn-more">
       <div class="title">One Pipeline, Four Source Contracts</div>
       <table>
+        <caption>
+          How each asynchronous source enters and settles the FeatureCell
+          pipeline
+        </caption>
         <thead>
           <tr>
             <th scope="col">Input</th>
@@ -157,9 +161,11 @@
   </div>
 </section>
 
-<section class="section" id="step-26">
+<section class="section" id="step-26" aria-labelledby="step-26-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 26: Hydrate Initial State</div>
+    <h2 class="section-title" id="step-26-title">
+      Step 26: Hydrate Initial State
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -311,9 +317,9 @@
   </div>
 </section>
 
-<section class="section" id="step-27">
+<section class="section" id="step-27" aria-labelledby="step-27-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 27: Resolve a Promise</div>
+    <h2 class="section-title" id="step-27-title">Step 27: Resolve a Promise</h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -453,9 +459,11 @@
   </div>
 </section>
 
-<section class="section" id="step-28">
+<section class="section" id="step-28" aria-labelledby="step-28-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 28: Resolve an Observable</div>
+    <h2 class="section-title" id="step-28-title">
+      Step 28: Resolve an Observable
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -592,9 +600,11 @@
   </div>
 </section>
 
-<section class="section" id="step-29">
+<section class="section" id="step-29" aria-labelledby="step-29-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 29: Resolve an HTTP Resource</div>
+    <h2 class="section-title" id="step-29-title">
+      Step 29: Resolve an HTTP Resource
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -746,9 +756,11 @@
   </div>
 </section>
 
-<section class="section" id="step-30">
+<section class="section" id="step-30" aria-labelledby="step-30-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 30: Complete Async Input Tutorial</div>
+    <h2 class="section-title" id="step-30-title">
+      Step 30: Complete Async Input Tutorial
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -849,22 +861,28 @@
       </ul>
     </div>
 
-    <h4>Final checkpoint: complete Async Input source</h4>
-    <sdux-example-viewer-source>
-      @for (file of componentFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
+    <details class="tutorial-checkpoint">
+      <summary>Complete Async Input files</summary>
+      <p>
+        Use this reference after completing the focused source changes. Start
+        with implementation tabs and open specs only to validate a contract.
+      </p>
+      <sdux-example-viewer-source>
+        @for (file of componentFiles(); track file?.type) {
+          <sdux-example-viewer-tab [label]="file.fileName">
+            <pre
+              class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+          </sdux-example-viewer-tab>
+        }
+      </sdux-example-viewer-source>
+    </details>
   </div>
 </section>
 
 <section class="section" aria-labelledby="chapter-8-exit-title">
-  <div class="section-title" id="chapter-8-exit-title">
+  <h2 class="section-title" id="chapter-8-exit-title">
     Chapter 8 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>All four inputs share FeatureCell loading and error State.</li>

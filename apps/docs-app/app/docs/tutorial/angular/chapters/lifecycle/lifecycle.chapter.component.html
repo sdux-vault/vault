@@ -46,9 +46,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-5-start-title">
-  <div class="section-title" id="chapter-5-start-title">
+  <h2 class="section-title" id="chapter-5-start-title">
     Chapter 5 Starting Point and Lifecycle Contract
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 4 project. This chapter changes the
@@ -84,12 +84,47 @@
         any persistence cleanup it requires.
       </p>
     </div>
+    <div class="callout callout-learn-more">
+      <div class="title">Lifecycle Operations at a Glance</div>
+      <table>
+        <caption>
+          Lifecycle operations and whether the current FeatureCell remains
+          usable
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Operation</th>
+            <th scope="col">Resulting value</th>
+            <th scope="col">Later request</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="code">replaceState(null)</span></td>
+            <td>Intentional null value</td>
+            <td>Allowed</td>
+          </tr>
+          <tr>
+            <td><span class="code">reset()</span></td>
+            <td>Neutral runtime snapshot</td>
+            <td>Allowed</td>
+          </tr>
+          <tr>
+            <td><span class="code">destroy()</span></td>
+            <td>Feature torn down</td>
+            <td>Requires recreation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
-<section class="section" id="step-18">
+<section class="section" id="step-18" aria-labelledby="step-18-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 18: Persist Null and Reset State</div>
+    <h2 class="section-title" id="step-18-title">
+      Step 18: Persist Null and Reset State
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -118,7 +153,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Open <span class="code">example.service.ts</span> and add
@@ -176,9 +211,11 @@
   </div>
 </section>
 
-<section class="section" id="step-19">
+<section class="section" id="step-19" aria-labelledby="step-19-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 19: Finalize with destroy()</div>
+    <h2 class="section-title" id="step-19-title">
+      Step 19: Finalize with destroy()
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -207,7 +244,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Update <span class="code">example.component.ts</span> to add lifecycle
@@ -271,13 +308,28 @@
         </sdux-example-viewer-tab>
       }
     </sdux-example-viewer-source>
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/api/feature-cell-methods/reset"
+            >reset()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/api/feature-cell-methods/destroy"
+            >destroy()</a
+          >
+        </li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <section class="section" aria-labelledby="chapter-5-exit-title">
-  <div class="section-title" id="chapter-5-exit-title">
+  <h2 class="section-title" id="chapter-5-exit-title">
     Chapter 5 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

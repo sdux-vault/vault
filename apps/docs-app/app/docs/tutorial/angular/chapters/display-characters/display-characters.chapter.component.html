@@ -40,9 +40,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-2-start-title">
-  <div class="section-title" id="chapter-2-start-title">
+  <h2 class="section-title" id="chapter-2-start-title">
     Chapter 2 Starting Point and Decision
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 1 project. This chapter changes only
@@ -75,9 +75,9 @@
   </div>
 </section>
 
-<section class="section" id="step-11">
+<section class="section" id="step-11" aria-labelledby="step-11-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 11: Add a Dropdown</div>
+    <h2 class="section-title" id="step-11-title">Step 11: Add a Dropdown</h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -151,6 +151,13 @@
           returns a record; otherwise render the empty guidance.
         </li>
         <li>
+          Give the picker a visible <span class="code">label</span> associated
+          by <span class="code">for</span> and <span class="code">id</span>.
+          Include a disabled empty option, and disable the picker when the
+          collection is empty so pointer and keyboard users receive the same
+          contract.
+        </li>
+        <li>
           Start with no selection, choose Leia, and confirm the detail panel
           shows Leia. Submit an unknown value in the component spec and confirm
           no record is manufactured and Feature State remains unchanged.
@@ -203,9 +210,11 @@
   </div>
 </section>
 
-<section class="section" id="step-12">
+<section class="section" id="step-12" aria-labelledby="step-12-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 12: Complete Dropdown Tutorial</div>
+    <h2 class="section-title" id="step-12-title">
+      Step 12: Complete Dropdown Tutorial
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -230,7 +239,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Run and Verify</div>
       <ol>
         <li>Return to the running Angular application.</li>
         <li>
@@ -284,9 +293,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-2-exit-title">
-  <div class="section-title" id="chapter-2-exit-title">
+  <h2 class="section-title" id="chapter-2-exit-title">
     Chapter 2 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

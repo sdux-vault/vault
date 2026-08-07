@@ -43,9 +43,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-6-start-title">
-  <div class="section-title" id="chapter-6-start-title">
+  <h2 class="section-title" id="chapter-6-start-title">
     Chapter 6 Starting Point and Stage Map
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with a fresh completed Chapter 5 checkpoint, not the FeatureCell
@@ -81,9 +81,11 @@
   </div>
 </section>
 
-<section class="section" id="step-20">
+<section class="section" id="step-20" aria-labelledby="step-20-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 20: Add the Filter Stage</div>
+    <h2 class="section-title" id="step-20-title">
+      Step 20: Add the Filter Stage
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -108,7 +110,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Open <span class="code">example.filter.ts</span> and add the pure
@@ -177,9 +179,11 @@
   </div>
 </section>
 
-<section class="section" id="step-21">
+<section class="section" id="step-21" aria-labelledby="step-21-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 21: Register Ordered Reducers</div>
+    <h2 class="section-title" id="step-21-title">
+      Step 21: Register Ordered Reducers
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -217,7 +221,7 @@
     </div>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Open <span class="code">example.character-domain.ts</span> and use the
@@ -282,7 +286,8 @@
         </li>
         <li>
           <span class="code">withCharactersSortedByLastName()</span> clones and
-          sorts the four records by last name.
+          sorts the four records into this exact order: Obi-Wan Kenobi, Leia
+          Organa, Luke Skywalker, and Darth Vader.
         </li>
         <li>
           <span class="code">deriveFullName</span> adds
@@ -290,6 +295,16 @@
           display-ready collection is committed.
         </li>
       </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Keep Pipeline Transforms Deterministic</div>
+      <p>
+        Filters and reducers should be deterministic and side-effect-free for a
+        given candidate. Do not fetch data, write storage, or trigger telemetry
+        from these transforms. Route I/O and recoverable transport work through
+        an explicit service or Resolve boundary before applying domain shaping.
+      </p>
     </div>
 
     <sdux-example-viewer-source>
@@ -314,11 +329,11 @@
   </div>
 </section>
 
-<section class="section" id="step-22">
+<section class="section" id="step-22" aria-labelledby="step-22-title">
   <div class="section-title-navigation">
-    <div class="section-title">
+    <h2 class="section-title" id="step-22-title">
       Step 22: Complete Filters and Reducers Chapter
-    </div>
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -343,7 +358,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Update <span class="code">example.component.ts</span> to keep the same
@@ -402,9 +417,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-6-exit-title">
-  <div class="section-title" id="chapter-6-exit-title">
+  <h2 class="section-title" id="chapter-6-exit-title">
     Chapter 6 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

@@ -43,9 +43,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-1-start-title">
-  <div class="section-title" id="chapter-1-start-title">
+  <h2 class="section-title" id="chapter-1-start-title">
     Chapter 1 Starting Point
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start from an empty working directory. This chapter creates the Angular
@@ -88,9 +88,11 @@
   </div>
 </section>
 
-<section class="section" id="step-1">
+<section class="section" id="step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 1: Angular Project Setup</div>
+    <h2 class="section-title" id="step-1-title">
+      Step 1: Angular Project Setup
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -105,7 +107,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>Create an application</li>
         <sdux-example-viewer-source [displayTabs]="false">
@@ -131,9 +133,11 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-2">
+<section class="section" id="step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 2: Install <sdux-brand-name /></div>
+    <h2 class="section-title" id="step-2-title">
+      Step 2: Install <sdux-brand-name />
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -200,7 +204,7 @@ cd sdux-tutorial;
     </ul>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>Install the <sdux-package-name [package]="'angular'" /> package</li>
 
@@ -216,9 +220,11 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-3">
+<section class="section" id="step-3" aria-labelledby="step-3-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 3: Define Feature State</div>
+    <h2 class="section-title" id="step-3-title">
+      Step 3: Define Feature State
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -265,7 +271,7 @@ cd sdux-tutorial;
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Create a new file named:
@@ -311,9 +317,11 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-4">
+<section class="section" id="step-4" aria-labelledby="step-4-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 4: Build the Angular Service</div>
+    <h2 class="section-title" id="step-4-title">
+      Step 4: Build the Angular Service
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -340,7 +348,7 @@ cd sdux-tutorial;
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Create
@@ -355,6 +363,7 @@ cd sdux-tutorial;
       </ol>
     </div>
 
+    <h4>Focused change: plain Angular service</h4>
     <sdux-example-viewer-source [displayTabs]="false">
       <sdux-example-viewer-tab [label]="'example.service.ts'">
         <pre
@@ -364,11 +373,11 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-5">
+<section class="section" id="step-5" aria-labelledby="step-5-title">
   <div class="section-title-navigation">
-    <div class="section-title">
+    <h2 class="section-title" id="step-5-title">
       Step 5: Initialize the <sdux-vault-brand-name />
-    </div>
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -383,7 +392,7 @@ cd sdux-tutorial;
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Open <span class="code">app.config.ts</span> and keep the providers
@@ -401,6 +410,7 @@ cd sdux-tutorial;
       </ol>
     </div>
 
+    <h4>Focused change: Vault registration</h4>
     <sdux-example-viewer-source [displayTabs]="false">
       <sdux-example-viewer-tab [label]="'Add provideVault() to app.config.ts'">
         <pre
@@ -423,9 +433,11 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-6">
+<section class="section" id="step-6" aria-labelledby="step-6-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 6: Register the <sdux-feature-cell /></div>
+    <h2 class="section-title" id="step-6-title">
+      Step 6: Register the <sdux-feature-cell />
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -474,7 +486,7 @@ cd sdux-tutorial;
     </div>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Create
@@ -510,6 +522,7 @@ cd sdux-tutorial;
       </ol>
     </div>
 
+    <h4>Checkpoint: registered FeatureCell configuration</h4>
     <sdux-example-viewer-source>
       @for (file of registeredAppConfigSource(); track file.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -533,11 +546,11 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-7">
+<section class="section" id="step-7" aria-labelledby="step-7-title">
   <div class="section-title-navigation">
-    <div class="section-title">
+    <h2 class="section-title" id="step-7-title">
       Step 7: Connect the Service to <sdux-brand-name />
-    </div>
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -575,7 +588,7 @@ cd sdux-tutorial;
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Update the <span class="code">example.service.ts</span> created in
@@ -597,6 +610,7 @@ cd sdux-tutorial;
       </ol>
     </div>
 
+    <h4>Focused change: FeatureCell-connected service</h4>
     <sdux-example-viewer-source [displayTabs]="false">
       <sdux-example-viewer-tab [label]="'example.service.ts'">
         <pre
@@ -626,9 +640,11 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-8">
+<section class="section" id="step-8" aria-labelledby="step-8-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 8: Display Character State</div>
+    <h2 class="section-title" id="step-8-title">
+      Step 8: Display Character State
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -655,7 +671,7 @@ cd sdux-tutorial;
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Create
@@ -734,9 +750,11 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-9">
+<section class="section" id="step-9" aria-labelledby="step-9-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 9: Start the Application</div>
+    <h2 class="section-title" id="step-9-title">
+      Step 9: Start the Application
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -750,7 +768,7 @@ cd sdux-tutorial;
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>Open the <span class="code">main.ts</span> file.</li>
         <li>
@@ -794,6 +812,7 @@ cd sdux-tutorial;
       </ul>
     </div>
 
+    <h4>Focused change: application bootstrap</h4>
     <sdux-example-viewer-source [displayTabs]="false">
       <sdux-example-viewer-tab [label]="'main.ts'">
         <pre
@@ -803,9 +822,11 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-10">
+<section class="section" id="step-10" aria-labelledby="step-10-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 10: Complete Initial Tutorial</div>
+    <h2 class="section-title" id="step-10-title">
+      Step 10: Complete Initial Tutorial
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -882,21 +903,38 @@ cd sdux-tutorial;
       </ul>
     </div>
 
-    <sdux-example-viewer-source>
-      @for (file of displayCharacterSource; track file.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
+    <div class="callout callout-warning">
+      <div class="title">Tutorial Data Boundary</div>
+      <p>
+        The checked-in constant supplies deterministic teaching data. In a
+        production feature, adapt an authoritative API or persistence result
+        before submitting it through the service-owned FeatureCell; keep
+        transport parsing and hydration ownership out of the component.
+      </p>
+    </div>
+
+    <details class="tutorial-checkpoint">
+      <summary>Complete Chapter 1 files</summary>
+      <p>
+        Compare implementation files first. Open the specifications only when
+        you need to verify the registration or UI-projection contract.
+      </p>
+      <sdux-example-viewer-source>
+        @for (file of displayCharacterSource; track file.type) {
+          <sdux-example-viewer-tab [label]="file.fileName">
+            <pre
+              class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
+          </sdux-example-viewer-tab>
+        }
+      </sdux-example-viewer-source>
+    </details>
   </div>
 </section>
 
 <section class="section" aria-labelledby="chapter-1-exit-title">
-  <div class="section-title" id="chapter-1-exit-title">
+  <h2 class="section-title" id="chapter-1-exit-title">
     Chapter 1 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

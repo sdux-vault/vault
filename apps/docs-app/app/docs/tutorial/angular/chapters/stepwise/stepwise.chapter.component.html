@@ -44,9 +44,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-14-start-title">
-  <div class="section-title" id="chapter-14-start-title">
+  <h2 class="section-title" id="chapter-14-start-title">
     Chapter 14 Starting Point and Boundary Decision
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 13 project. This comparison lab updates
@@ -79,9 +79,24 @@
         on a trusted server.
       </p>
     </div>
+    <div class="callout callout-info">
+      <div class="title">Controller Queue Contract</div>
+      <p>
+        The current controller queues Stepwise requests in FIFO order and
+        exposes one active request at a time. It ignores a response whose ID
+        does not match the active request.
+        <span class="code">destroy()</span> clears the queued and active
+        requests; <span class="code">reset()</span> is currently a no-op. The
+        teaching UI prevents overlapping requests, so application timeout and
+        navigation policy are still required.
+      </p>
+    </div>
     <div class="callout callout-learn-more">
       <div class="title">One Decision Pattern at Three Boundaries</div>
       <table>
+        <caption>
+          How continue and block decisions affect each Stepwise boundary
+        </caption>
         <thead>
           <tr>
             <th scope="col">Gate</th>
@@ -122,9 +137,11 @@
   </div>
 </section>
 
-<section class="section" id="step-51">
+<section class="section" id="step-51" aria-labelledby="step-51-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 51: Configure the Stepwise Pipeline</div>
+    <h2 class="section-title" id="step-51-title">
+      Step 51: Configure the Stepwise Pipeline
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -221,11 +238,11 @@
   </div>
 </section>
 
-<section class="section" id="step-52">
+<section class="section" id="step-52" aria-labelledby="step-52-title">
   <div class="section-title-navigation">
-    <div class="section-title">
+    <h2 class="section-title" id="step-52-title">
       Step 52: Configure Resolve in the Service and Component
-    </div>
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -340,11 +357,11 @@
   </div>
 </section>
 
-<section class="section" id="step-53">
+<section class="section" id="step-53" aria-labelledby="step-53-title">
   <div class="section-title-navigation">
-    <div class="section-title">
+    <h2 class="section-title" id="step-53-title">
       Step 53: Configure Filter in the Service and Component
-    </div>
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -438,11 +455,11 @@
   </div>
 </section>
 
-<section class="section" id="step-54">
+<section class="section" id="step-54" aria-labelledby="step-54-title">
   <div class="section-title-navigation">
-    <div class="section-title">
+    <h2 class="section-title" id="step-54-title">
       Step 54: Configure Reducer in the Service and Component
-    </div>
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -533,9 +550,11 @@
   </div>
 </section>
 
-<section class="section" id="step-55">
+<section class="section" id="step-55" aria-labelledby="step-55-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 55: Complete Stepwise Tutorial</div>
+    <h2 class="section-title" id="step-55-title">
+      Step 55: Complete Stepwise Tutorial
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -594,22 +613,28 @@
         native confirmation dialog as durable approval or authorization.
       </p>
     </div>
-    <h4>Final checkpoint: complete Stepwise source</h4>
-    <sdux-example-viewer-source>
-      @for (file of chapterFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
+    <details class="tutorial-checkpoint">
+      <summary>Complete Stepwise files</summary>
+      <p>
+        Compare the implementation before opening its specs. The focused stage
+        deltas above remain the primary edit instructions.
+      </p>
+      <sdux-example-viewer-source>
+        @for (file of chapterFiles(); track file?.type) {
+          <sdux-example-viewer-tab [label]="file.fileName">
+            <pre
+              class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+          </sdux-example-viewer-tab>
+        }
+      </sdux-example-viewer-source>
+    </details>
   </div>
 </section>
 
 <section class="section" aria-labelledby="chapter-14-exit-title">
-  <div class="section-title" id="chapter-14-exit-title">
+  <h2 class="section-title" id="chapter-14-exit-title">
     Chapter 14 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

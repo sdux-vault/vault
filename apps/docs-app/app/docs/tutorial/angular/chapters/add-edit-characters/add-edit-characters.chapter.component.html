@@ -47,9 +47,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-3-start-title">
-  <div class="section-title" id="chapter-3-start-title">
+  <h2 class="section-title" id="chapter-3-start-title">
     Chapter 3 Starting Point and Change Map
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 2 project. This chapter updates
@@ -87,9 +87,11 @@
   </div>
 </section>
 
-<section class="section" id="step-13">
+<section class="section" id="step-13" aria-labelledby="step-13-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 13: Configure Array Append Merge</div>
+    <h2 class="section-title" id="step-13-title">
+      Step 13: Configure Array Append Merge
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -121,7 +123,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Install the
@@ -231,9 +233,11 @@
   </div>
 </section>
 
-<section class="section" id="step-14">
+<section class="section" id="step-14" aria-labelledby="step-14-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 14: Add the Add/Edit Service Slice</div>
+    <h2 class="section-title" id="step-14-title">
+      Step 14: Add the Add/Edit Service Slice
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -281,7 +285,7 @@
     </div>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Update <span class="code">example.service.ts</span> to add the create
@@ -342,9 +346,11 @@
   </div>
 </section>
 
-<section class="section" id="step-15">
+<section class="section" id="step-15" aria-labelledby="step-15-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 15: Complete Add/Edit Chapter</div>
+    <h2 class="section-title" id="step-15-title">
+      Step 15: Complete Add/Edit Chapter
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -373,7 +379,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Update <span class="code">example.component.ts</span> to add the form,
@@ -384,6 +390,12 @@
           editor panel, the add action, and the empty-state guidance for create
           mode.
         </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
         <li>
           Return to the running Angular application and verify that you can add
           a character, select it, edit it, and see the detail panel react to the
@@ -398,21 +410,25 @@
     </div>
 
     <div class="callout callout-warning">
-      <div class="title">Define Unknown-ID Update Behavior</div>
+      <div class="title">Returned Object Is Not Commit Confirmation</div>
       <p>
         In this example, <span class="code">updateCharacter(999, draft)</span>
         constructs and returns the requested replacement object, but the
         <span class="code">replaceState()</span> factory finds no matching
         record and commits an equivalent collection. It does not append the
-        missing character. The service spec verifies both the returned object
-        and unchanged collection. A production API should report this mismatch
-        explicitly rather than letting the UI claim that an update succeeded.
+        missing character. The returned replacement object proves only what was
+        submitted; it does not prove that the update committed. The service spec
+        verifies both the returned object and unchanged collection. Drive
+        production success feedback from an authoritative operation result.
       </p>
     </div>
 
     <div class="callout callout-learn-more">
       <div class="title">Add/Edit Outcome Contract</div>
       <table>
+        <caption>
+          Add and edit requests, their FeatureCell APIs, and committed outcomes
+        </caption>
         <thead>
           <tr>
             <th scope="col">Action</th>
@@ -495,9 +511,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-3-exit-title">
-  <div class="section-title" id="chapter-3-exit-title">
+  <h2 class="section-title" id="chapter-3-exit-title">
     Chapter 3 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

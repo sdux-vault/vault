@@ -49,9 +49,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-10-start-title">
-  <div class="section-title" id="chapter-10-start-title">
+  <h2 class="section-title" id="chapter-10-start-title">
     Chapter 10 Starting Point, License, and Threat Model
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 9 project. Encryption and persistence are
@@ -91,11 +91,11 @@
   </div>
 </section>
 
-<section class="section" id="step-34">
+<section class="section" id="step-34" aria-labelledby="step-34-title">
   <div class="section-title-navigation">
-    <div class="section-title">
+    <h2 class="section-title" id="step-34-title">
       Step 34: Configure Encrypt and Persist Behaviors
-    </div>
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -131,7 +131,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Install the
@@ -222,9 +222,11 @@
   </div>
 </section>
 
-<section class="section" id="step-35">
+<section class="section" id="step-35" aria-labelledby="step-35-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 35: Encrypt Feature State</div>
+    <h2 class="section-title" id="step-35-title">
+      Step 35: Encrypt Feature State
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -331,9 +333,11 @@
   </div>
 </section>
 
-<section class="section" id="step-36">
+<section class="section" id="step-36" aria-labelledby="step-36-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 36: Persist Feature State</div>
+    <h2 class="section-title" id="step-36-title">
+      Step 36: Persist Feature State
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -350,7 +354,10 @@
       after encryption to store the encrypted envelope in browser
       <span class="code">sessionStorage</span>. Refresh the page and the
       persisted state remains available in that same tab. Close the tab and the
-      session storage is cleared, so it is not durable application storage.
+      session normally ends, so it is not durable application storage. Browsers
+      can restore a previous session after a crash or through
+      session-restoration features, so do not treat tab closure as a guaranteed
+      erasure boundary.
     </p>
     <p>
       The example intentionally provides
@@ -389,13 +396,14 @@
         and missing storage. It does not provide a button that injects corrupted
         ciphertext. The behavior tests—not this UI—establish that malformed JSON
         loads as <span class="code">undefined</span> and AES decryption failure
-        rejects. Choose an application recovery policy such as clearing the
-        namespaced key and requiring a fresh authoritative load; do not silently
-        accept or partially parse damaged data.
+        rejects. For this tutorial, clear only
+        <span class="code">EXAMPLE_ENCRYPTED_STORAGE_KEY</span>, report the
+        normalized failure, and require a fresh authoritative load. Never clear
+        all origin storage, silently accept, or partially parse damaged data.
       </p>
     </div>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Persisted state is handled through the <sdux-brand-name /> pipeline.
@@ -466,11 +474,11 @@
   </div>
 </section>
 
-<section class="section" id="step-37">
+<section class="section" id="step-37" aria-labelledby="step-37-title">
   <div class="section-title-navigation">
-    <div class="section-title">
+    <h2 class="section-title" id="step-37-title">
       Step 37: Complete Encrypt and Persist Tutorial
-    </div>
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -482,7 +490,7 @@
       session storage preserves it for reloads in the current tab.
     </p>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Run and Verify</div>
       <ol>
         <li>
           Refresh the page and confirm the session-scoped collection is
@@ -516,9 +524,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-10-exit-title">
-  <div class="section-title" id="chapter-10-exit-title">
+  <h2 class="section-title" id="chapter-10-exit-title">
     Chapter 10 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

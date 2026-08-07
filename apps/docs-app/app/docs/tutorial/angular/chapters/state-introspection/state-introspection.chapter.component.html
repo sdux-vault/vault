@@ -46,9 +46,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-11-start-title">
-  <div class="section-title" id="chapter-11-start-title">
+  <h2 class="section-title" id="chapter-11-start-title">
     Chapter 11 Starting Point and Observation Guide
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 10 project. This diagnostic lab updates
@@ -97,6 +97,9 @@
     <div class="callout callout-learn-more">
       <div class="title">Observation Timeline for One Mutation</div>
       <table>
+        <caption>
+          When each introspection surface observes one FeatureCell mutation
+        </caption>
         <thead>
           <tr>
             <th scope="col">Surface</th>
@@ -150,9 +153,11 @@
   </div>
 </section>
 
-<section class="section" id="step-38">
+<section class="section" id="step-38" aria-labelledby="step-38-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 38: Read Raw StateSnapshot</div>
+    <h2 class="section-title" id="step-38-title">
+      Step 38: Read Raw StateSnapshot
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -218,9 +223,11 @@
   </div>
 </section>
 
-<section class="section" id="step-39">
+<section class="section" id="step-39" aria-labelledby="step-39-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 39: Observe Raw StateSnapshot$</div>
+    <h2 class="section-title" id="step-39-title">
+      Step 39: Observe the state$ Snapshot
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -250,9 +257,10 @@
           Signal.
         </li>
         <li>
-          Bind the Signal to Raw StateSnapshot$. Add, edit, and delete a
-          character; after each settled request, confirm this stream output and
-          the raw Signal output describe the same committed snapshot.
+          Bind the Signal to the latest <span class="code">state$</span>
+          snapshot. Add, edit, and delete a character; after each settled
+          request, confirm this stream output and the raw Signal output describe
+          the same committed snapshot.
         </li>
       </ol>
     </div>
@@ -284,9 +292,11 @@
   </div>
 </section>
 
-<section class="section" id="step-40">
+<section class="section" id="step-40" aria-labelledby="step-40-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 40: Inspect Before Taps</div>
+    <h2 class="section-title" id="step-40-title">
+      Step 40: Inspect Before Taps
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -356,9 +366,11 @@
   </div>
 </section>
 
-<section class="section" id="step-41">
+<section class="section" id="step-41" aria-labelledby="step-41-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 41: Inspect After Taps</div>
+    <h2 class="section-title" id="step-41-title">
+      Step 41: Inspect After Taps
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -425,9 +437,11 @@
   </div>
 </section>
 
-<section class="section" id="step-42">
+<section class="section" id="step-42" aria-labelledby="step-42-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 42: Observe State Emission</div>
+    <h2 class="section-title" id="step-42-title">
+      Step 42: Observe State Emission
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -491,9 +505,11 @@
   </div>
 </section>
 
-<section class="section" id="step-43">
+<section class="section" id="step-43" aria-labelledby="step-43-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 43: Capture Initial State</div>
+    <h2 class="section-title" id="step-43-title">
+      Step 43: Capture Initial State
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -577,11 +593,11 @@
   </div>
 </section>
 
-<section class="section" id="step-44">
+<section class="section" id="step-44" aria-labelledby="step-44-title">
   <div class="section-title-navigation">
-    <div class="section-title">
+    <h2 class="section-title" id="step-44-title">
       Step 44: Complete State Introspection Tutorial
-    </div>
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -589,9 +605,9 @@
   <div class="section-body">
     <p>
       Your state-introspection example is complete when it exposes the raw
-      StateSnapshot and StateSnapshot$ views, captures Before Taps and After
-      Taps, renders the finalized State Emission, and records the Initial State
-      baseline. The service owns every
+      StateSnapshot and <span class="code">state$</span> snapshot views,
+      captures Before Taps and After Taps, renders the finalized State Emission,
+      and records the Initial State baseline. The service owns every
       <a href="/docs/references/functions/feature-cell">FeatureCell</a>
       interaction while the component presents each observation point.
     </p>
@@ -612,22 +628,28 @@
         </li>
       </ul>
     </div>
-    <h4>Final checkpoint: complete State Introspection source</h4>
-    <sdux-example-viewer-source>
-      @for (file of allFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
+    <details class="tutorial-checkpoint">
+      <summary>Complete State Introspection files</summary>
+      <p>
+        Compare the service and component before opening the verification specs.
+        The focused steps above remain the primary edit instructions.
+      </p>
+      <sdux-example-viewer-source>
+        @for (file of allFiles(); track file?.type) {
+          <sdux-example-viewer-tab [label]="file.fileName">
+            <pre
+              class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+          </sdux-example-viewer-tab>
+        }
+      </sdux-example-viewer-source>
+    </details>
   </div>
 </section>
 
 <section class="section" aria-labelledby="chapter-11-exit-title">
-  <div class="section-title" id="chapter-11-exit-title">
+  <h2 class="section-title" id="chapter-11-exit-title">
     Chapter 11 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

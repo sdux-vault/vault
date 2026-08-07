@@ -44,9 +44,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-9-start-title">
-  <div class="section-title" id="chapter-9-start-title">
+  <h2 class="section-title" id="chapter-9-start-title">
     Chapter 9 Starting Point and Timing Decision
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 8 project. If your checkpoint does not
@@ -76,9 +76,11 @@
   </div>
 </section>
 
-<section class="section" id="step-31">
+<section class="section" id="step-31" aria-labelledby="step-31-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 31: Configure the Delay Controller</div>
+    <h2 class="section-title" id="step-31-title">
+      Step 31: Configure the Delay Controller
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -117,7 +119,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Install the
@@ -207,9 +209,11 @@
   </div>
 </section>
 
-<section class="section" id="step-32">
+<section class="section" id="step-32" aria-labelledby="step-32-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 32: Observe Delayed Execution</div>
+    <h2 class="section-title" id="step-32-title">
+      Step 32: Observe Delayed Execution
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -312,6 +316,15 @@
         This is delay, not debounce, cancellation, retry, or conflict
         resolution.
       </p>
+      <pre
+        class="code-inline"><code>t=0 ms    Request A denied and queued for t=1000
+t=200 ms  Request B denied and queued for t=1200
+t≈1000    Request A becomes eligible for revote
+t≈1200    Request B becomes eligible for revote</code></pre>
+      <p>
+        Each trace receives its own deadline. Eligibility time is not a
+        transactional or business-ordering guarantee.
+      </p>
     </div>
 
     <sdux-example-viewer-source>
@@ -337,9 +350,11 @@
   </div>
 </section>
 
-<section class="section" id="step-33">
+<section class="section" id="step-33" aria-labelledby="step-33-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 33: Complete Delay Tutorial</div>
+    <h2 class="section-title" id="step-33-title">
+      Step 33: Complete Delay Tutorial
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -364,7 +379,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Run and Verify</div>
       <ol>
         <li>
           Confirm that the configured interval appears in the interactive
@@ -421,9 +436,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-9-exit-title">
-  <div class="section-title" id="chapter-9-exit-title">
+  <h2 class="section-title" id="chapter-9-exit-title">
     Chapter 9 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

@@ -43,9 +43,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-4-start-title">
-  <div class="section-title" id="chapter-4-start-title">
+  <h2 class="section-title" id="chapter-4-start-title">
     Chapter 4 Starting Point and Change Map
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 3 project. Add one service removal
@@ -68,9 +68,11 @@
   </div>
 </section>
 
-<section class="section" id="step-16">
+<section class="section" id="step-16" aria-labelledby="step-16-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 16: Add Delete Capabilities</div>
+    <h2 class="section-title" id="step-16-title">
+      Step 16: Add Delete Capabilities
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -99,7 +101,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Open <span class="code">example.service.ts</span> and add a
@@ -150,9 +152,11 @@
   </div>
 </section>
 
-<section class="section" id="step-17">
+<section class="section" id="step-17" aria-labelledby="step-17-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 17: Complete Delete Tutorial</div>
+    <h2 class="section-title" id="step-17-title">
+      Step 17: Complete Delete Tutorial
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -179,7 +183,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Update <span class="code">example.component.ts</span> to add the
@@ -190,15 +194,21 @@
           Update <span class="code">example.component.html</span> to add the
           confirmation panel and the delete action button.
         </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
         <li>
-          Return to the running Angular application and verify that cancel keeps
-          the selected character, confirm removes it, and the empty-state
-          guidance appears when the collection is cleared.
+          Select Leia Organa and note the five-record count. Cancel deletion and
+          confirm the count remains five and Leia remains selected.
         </li>
         <li>
-          Request deletion, cancel, and confirm the collection did not change.
-          Request again, confirm, and verify that the record disappears,
-          selection clears, and every other record remains.
+          Request deletion again, confirm it, and verify that the count becomes
+          four, Leia disappears, selection clears, and Luke Skywalker remains
+          unchanged. The empty-state guidance appears after the last record is
+          removed.
         </li>
       </ol>
     </div>
@@ -212,8 +222,9 @@
         the example does not treat that as an error or create a record. The
         service spec verifies the resulting value, not an emission-count
         guarantee. In a multi-writer application, revalidate the pending record
-        at confirmation time and report a stale deletion instead of claiming
-        success.
+        at confirmation time. Any success feedback shown for a stale ID is a
+        tutorial limitation, not an authoritative server acknowledgment; report
+        the stale deletion instead of claiming success.
       </p>
     </div>
 
@@ -267,9 +278,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-4-exit-title">
-  <div class="section-title" id="chapter-4-exit-title">
+  <h2 class="section-title" id="chapter-4-exit-title">
     Chapter 4 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

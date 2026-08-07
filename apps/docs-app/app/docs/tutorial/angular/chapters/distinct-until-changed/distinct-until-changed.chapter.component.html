@@ -45,9 +45,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-13-start-title">
-  <div class="section-title" id="chapter-13-start-title">
+  <h2 class="section-title" id="chapter-13-start-title">
     Chapter 13 Starting Point and Comparator Contract
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 12 project. This lab updates the service,
@@ -77,9 +77,11 @@
   </div>
 </section>
 
-<section class="section" id="step-48">
+<section class="section" id="step-48" aria-labelledby="step-48-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 48: Configure Distinct Until Changed</div>
+    <h2 class="section-title" id="step-48-title">
+      Step 48: Configure Distinct Until Changed
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -110,7 +112,7 @@
       </ul>
     </div>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           Install the
@@ -168,6 +170,25 @@
         metadata assumption.
       </p>
     </div>
+    <div class="callout callout-info">
+      <div class="title">Reset Clears Comparison History</div>
+      <p>
+        The registered behavior forgets its previous accepted value on
+        <span class="code">reset()</span> and
+        <span class="code">destroy()</span>. The next non-null candidate is
+        therefore accepted as the first value, even when it is semantically
+        equal to a value seen before reset.
+      </p>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Comparator Cost</div>
+      <p>
+        This example compares small ID collections. A deep comparison of a large
+        object graph runs for every candidate and can become expensive; prefer a
+        stable revision, normalized identity set, or another bounded comparison
+        when the full structure is not required.
+      </p>
+    </div>
     <sdux-example-viewer-source>
       @for (file of serviceFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -195,9 +216,11 @@
   </div>
 </section>
 
-<section class="section" id="step-49">
+<section class="section" id="step-49" aria-labelledby="step-49-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 49: Submit Same and Changed State</div>
+    <h2 class="section-title" id="step-49-title">
+      Step 49: Submit Same and Changed State
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -216,7 +239,7 @@
       without relying on collection order.
     </p>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Run and Verify</div>
       <ol>
         <li>
           Select <span class="code">Submit Same State</span> twice and observe
@@ -265,11 +288,11 @@
   </div>
 </section>
 
-<section class="section" id="step-50">
+<section class="section" id="step-50" aria-labelledby="step-50-title">
   <div class="section-title-navigation">
-    <div class="section-title">
+    <h2 class="section-title" id="step-50-title">
       Step 50: Complete Distinct Until Changed Tutorial
-    </div>
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -301,9 +324,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-13-exit-title">
-  <div class="section-title" id="chapter-13-exit-title">
+  <h2 class="section-title" id="chapter-13-exit-title">
     Chapter 13 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

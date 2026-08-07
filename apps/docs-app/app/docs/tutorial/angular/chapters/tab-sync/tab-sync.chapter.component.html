@@ -46,9 +46,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-12-start-title">
-  <div class="section-title" id="chapter-12-start-title">
+  <h2 class="section-title" id="chapter-12-start-title">
     Chapter 12 Starting Point and Synchronization Scope
-  </div>
+  </h2>
   <div class="section-body">
     <p>
       Start with the completed Chapter 11 project. Tab Sync is a Pro capability;
@@ -86,12 +86,32 @@
         server rejection.
       </p>
     </div>
+    <div class="callout callout-info">
+      <div class="title">Environment Support Checklist</div>
+      <ul>
+        <li>Both tabs use the same scheme, host, port, and FeatureCell key.</li>
+        <li>
+          The browser permits the required storage and messaging mechanism.
+        </li>
+        <li>Private or restricted contexts may disable the demonstration.</li>
+        <li>
+          The browser allows the second tab to open and both pages remain
+          active.
+        </li>
+        <li>
+          Reload both tabs after correcting configuration; do not copy State
+          manually.
+        </li>
+      </ul>
+    </div>
   </div>
 </section>
 
-<section class="section" id="step-45">
+<section class="section" id="step-45" aria-labelledby="step-45-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 45: Configure Tab Sync</div>
+    <h2 class="section-title" id="step-45-title">
+      Step 45: Configure Tab Sync
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -119,7 +139,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>Open the <span class="code">app.config.ts</span> file.</li>
         <li>
@@ -211,9 +231,9 @@
   </div>
 </section>
 
-<section class="section" id="step-46">
+<section class="section" id="step-46" aria-labelledby="step-46-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 46: View Tab Sync</div>
+    <h2 class="section-title" id="step-46-title">Step 46: View Tab Sync</h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -228,8 +248,17 @@
       synchronization.
     </p>
 
+    <div class="callout callout-info">
+      <div class="title">Local-State Demonstration</div>
+      <p>
+        The stale-form exercise intentionally contrasts synchronized committed
+        State with unsynchronized draft state. Cancel the local draft after the
+        peer update; do not save it as though it were based on the new record.
+      </p>
+    </div>
+
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Run and Verify</div>
       <ol>
         <li>
           Select <span class="code">View Tab Sync</span> to open a second tab.
@@ -255,6 +284,8 @@
         origin and FeatureCell key, allow the browser to open the new tab, and
         verify both the behavior and controller are registered. Private-browsing
         or restricted storage/messaging policies can prevent the demonstration.
+        After correcting the cause, reload both tabs to re-establish the initial
+        handshake and retry one committed update.
       </p>
     </div>
 
@@ -290,9 +321,11 @@
   </div>
 </section>
 
-<section class="section" id="step-47">
+<section class="section" id="step-47" aria-labelledby="step-47-title">
   <div class="section-title-navigation">
-    <div class="section-title">Step 47: Complete Tab Sync Tutorial</div>
+    <h2 class="section-title" id="step-47-title">
+      Step 47: Complete Tab Sync Tutorial
+    </h2>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -340,9 +373,9 @@
 </section>
 
 <section class="section" aria-labelledby="chapter-12-exit-title">
-  <div class="section-title" id="chapter-12-exit-title">
+  <h2 class="section-title" id="chapter-12-exit-title">
     Chapter 12 Exit Checkpoint
-  </div>
+  </h2>
   <div class="section-body">
     <ul>
       <li>

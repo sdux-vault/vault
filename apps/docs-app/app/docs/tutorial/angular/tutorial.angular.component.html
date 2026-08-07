@@ -53,6 +53,13 @@
             </button>
           </div>
 
+          <p class="chapter-meta">
+            {{ chapterMetadata[group.id].track }} · Prerequisite:
+            {{ chapterMetadata[group.id].prerequisite }} ·
+            {{ chapterMetadata[group.id].tier }} ·
+            {{ chapterMetadata[group.id].estimatedTime }}
+          </p>
+
           @if (isTutorialGroupExpanded(group.id)) {
             <div
               class="tutorial-step-list"
@@ -136,9 +143,9 @@
       </header>
 
       <section class="section" aria-labelledby="before-you-begin-title">
-        <div class="section-title" id="before-you-begin-title">
+        <h2 class="section-title" id="before-you-begin-title">
           Before You Begin
-        </div>
+        </h2>
 
         <div class="section-body">
           <p>
@@ -152,17 +159,22 @@
             <div class="title">Environment and Time</div>
             <ul>
               <li>
-                The checked-in tutorial baseline uses Node.js 24 or newer, npm
-                11 or newer, Angular 21.2.13,
-                <span class="code">&#64;sdux-vault/angular</span> 1.0.6, and
-                <span class="code">&#64;sdux-vault/addons</span> 1.0.4.
+                The checked-in tutorial baseline uses Node.js
+                {{ verifiedEnvironment.node }}, npm
+                {{ verifiedEnvironment.npm }}, Angular
+                {{ verifiedEnvironment.angular }},
+                <span class="code">&#64;sdux-vault/angular</span>
+                {{ verifiedEnvironment.sduxAngular }}, and
+                <span class="code">&#64;sdux-vault/addons</span>
+                {{ verifiedEnvironment.sduxAddons }}.
               </li>
               <li>
                 <strong>Last verified:</strong>
-                <time datetime="2026-08-06">August 6, 2026</time>. The
-                StackBlitz manifests use the latest published SDuX packages; use
-                versions compatible with the checked-in library baseline when
-                reproducing the tutorial locally.
+                <time [attr.datetime]="verifiedEnvironment.verifiedOn">
+                  {{ verifiedEnvironment.verifiedOnLabel }} </time
+                >. The StackBlitz manifests use the latest published SDuX
+                packages; use versions compatible with the checked-in library
+                baseline when reproducing the tutorial locally.
               </li>
               <li>
                 Complete Chapters 1–7 for the core read, write, lifecycle,
@@ -220,9 +232,9 @@
       </section>
 
       <section class="section" aria-labelledby="mental-model-title">
-        <div class="section-title" id="mental-model-title">
+        <h2 class="section-title" id="mental-model-title">
           The SDuX Mental Model
-        </div>
+        </h2>
 
         <div class="section-body">
           <p>
@@ -286,11 +298,18 @@
               initialization, or a pending decision.
             </dd>
           </dl>
+
+          <p>
+            Persistence, synchronization, timing, and policy controllers are
+            optional branches. Add them only when a production requirement needs
+            that capability; they are not required for the core FeatureCell
+            path.
+          </p>
         </div>
       </section>
 
       <section class="diagram-section">
-        <div class="section-title"><sdux-brand-name /> in 5 Minutes</div>
+        <h2 class="section-title"><sdux-brand-name /> in 5 Minutes</h2>
 
         <div class="section-body">
           <p>
@@ -1186,9 +1205,9 @@
         </div>
       </div>
       <section class="section" aria-labelledby="tutorial-complete-title">
-        <div class="section-title" id="tutorial-complete-title">
+        <h2 class="section-title" id="tutorial-complete-title">
           Tutorial Completion Checklist
-        </div>
+        </h2>
         <div class="section-body">
           <p>
             You have completed the curriculum when you can explain and verify

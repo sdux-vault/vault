@@ -78,6 +78,113 @@ import { StepwiseService } from './chapters/stepwise/services/stepwise.service';
   encapsulation: ViewEncapsulation.None
 })
 export class TutorialAngularComponent extends TutorialNavigationDirective {
+  protected readonly verifiedEnvironment = {
+    verifiedOn: '2026-08-06',
+    verifiedOnLabel: 'August 6, 2026',
+    node: '24 or newer',
+    npm: '11 or newer',
+    angular: '21.2.13',
+    sduxAngular: '1.0.6',
+    sduxAddons: '1.0.4'
+  } as const;
+
+  protected readonly chapterMetadata: Readonly<
+    Record<
+      number,
+      {
+        readonly track: 'Core path' | 'Capability lab';
+        readonly prerequisite: string;
+        readonly tier: 'Core' | 'Pro';
+        readonly estimatedTime: string;
+      }
+    >
+  > = {
+    1: {
+      track: 'Core path',
+      prerequisite: 'None',
+      tier: 'Core',
+      estimatedTime: '60–90 min'
+    },
+    2: {
+      track: 'Core path',
+      prerequisite: 'Chapter 1',
+      tier: 'Core',
+      estimatedTime: '20–30 min'
+    },
+    3: {
+      track: 'Core path',
+      prerequisite: 'Chapter 2',
+      tier: 'Core',
+      estimatedTime: '30–45 min'
+    },
+    4: {
+      track: 'Core path',
+      prerequisite: 'Chapter 3',
+      tier: 'Core',
+      estimatedTime: '20–30 min'
+    },
+    5: {
+      track: 'Core path',
+      prerequisite: 'Chapter 4',
+      tier: 'Core',
+      estimatedTime: '20–30 min'
+    },
+    6: {
+      track: 'Core path',
+      prerequisite: 'Chapter 5',
+      tier: 'Core',
+      estimatedTime: '30–45 min'
+    },
+    7: {
+      track: 'Core path',
+      prerequisite: 'Chapter 6',
+      tier: 'Core',
+      estimatedTime: '20–30 min'
+    },
+    8: {
+      track: 'Capability lab',
+      prerequisite: 'Chapter 7',
+      tier: 'Core',
+      estimatedTime: '30–45 min'
+    },
+    9: {
+      track: 'Capability lab',
+      prerequisite: 'Chapter 8',
+      tier: 'Core',
+      estimatedTime: '20–30 min'
+    },
+    10: {
+      track: 'Capability lab',
+      prerequisite: 'Chapter 9',
+      tier: 'Pro',
+      estimatedTime: '30–45 min'
+    },
+    11: {
+      track: 'Capability lab',
+      prerequisite: 'Chapter 10',
+      tier: 'Core',
+      estimatedTime: '30–45 min'
+    },
+    12: {
+      track: 'Capability lab',
+      prerequisite: 'Chapter 11',
+      tier: 'Pro',
+      estimatedTime: '20–30 min'
+    },
+    13: {
+      track: 'Capability lab',
+      prerequisite: 'Chapter 12',
+      tier: 'Core',
+      estimatedTime: '20–30 min'
+    },
+    14: {
+      track: 'Capability lab',
+      prerequisite: 'Chapter 13',
+      tier: 'Core',
+      estimatedTime: '30–45 min'
+    }
+  };
+
   readonly #route = inject(ActivatedRoute);
   readonly #displayCharactersService = inject(DisplayCharactersService);
   readonly #displayCharacterService = inject(DisplayCharacterService);
