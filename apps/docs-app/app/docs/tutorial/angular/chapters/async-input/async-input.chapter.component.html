@@ -91,6 +91,69 @@
         this lab.
       </p>
     </div>
+    <div class="callout callout-learn-more">
+      <div class="title">One Pipeline, Four Source Contracts</div>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Input</th>
+            <th scope="col">Request boundary</th>
+            <th scope="col">Successful result in this example</th>
+            <th scope="col">Failure result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hydration Promise</td>
+            <td><span class="code">initialize()</span></td>
+            <td>
+              Supplies the authoritative initial collection, then filters and
+              reduces it before the first commit.
+            </td>
+            <td>
+              Initialization ends in Error State; configured initial State is
+              not used as a fallback.
+            </td>
+          </tr>
+          <tr>
+            <td>Promise</td>
+            <td><span class="code">mergeState()</span></td>
+            <td>
+              Resolves once, removes Grogu through the existing filter, derives
+              display fields, and appends the retained characters.
+            </td>
+            <td>Preserves the committed collection and records the error.</td>
+          </tr>
+          <tr>
+            <td>Observable</td>
+            <td><span class="code">mergeState()</span></td>
+            <td>
+              Consumes the helper's first emission, removes R2-D2 through the
+              existing filter, derives display fields, and appends the retained
+              characters.
+            </td>
+            <td>Preserves the committed collection and records the error.</td>
+          </tr>
+          <tr>
+            <td>HTTP Resource</td>
+            <td><span class="code">replaceState()</span></td>
+            <td>
+              Parses Han, Yoda, and Lando; filtering removes Yoda, and the
+              resulting Lando/Han collection replaces the previous value.
+            </td>
+            <td>
+              Preserves the previous collection when transport, parsing, or
+              validation fails.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        These outcomes describe the checked-in teaching helpers. They do not
+        define cancellation, repeated-emission, or overlapping-request policy
+        for arbitrary sources.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -153,22 +216,34 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Open <span class="code">example.hydrate.ts</span> and identify the
-          Promise, stored resolver, and stored rejecter used only to hold the
-          tutorial request open.
+          Create <span class="code">example.hydrate.ts</span> from the
+          checkpoint below. Its <span class="code">getPromise()</span> method
+          creates one pending Promise;
+          <span class="code">getResolve()</span> and
+          <span class="code">getReject()</span> return one-use controls.
         </li>
         <li>
-          Open <span class="code">example.service.ts</span> and follow the
-          registration of that helper with
-          <span class="code">hydrate()</span> before
-          <span class="code">initialize()</span>.
+          In <span class="code">example.service.ts</span>, import
+          <span class="code">exampleHydrate</span>. Immediately before
+          <span class="code">this.#vault.initialize()</span>, add
+          <span class="code"
+            >this.#vault.hydrate(() =&gt; exampleHydrate.getPromise())</span
+          >.
         </li>
         <li>
-          Open <span class="code">example.component.ts</span> and follow how the
-          Resolve and Reject buttons settle the helper's Promise.
+          In <span class="code">example.component.ts</span>, import the helper;
+          add <span class="code">hydrationSettled</span>,
+          <span class="code">resolveHydration()</span>, and
+          <span class="code">rejectHydration()</span>; then bind the existing
+          Resolve and Reject controls to those methods as shown below.
+        </li>
+        <li>
+          Reload the example. Confirm loading remains visible until you choose
+          Resolve or Reject. Resolve must render the filtered, reduced hydrated
+          collection; Reject must end loading and display Error State.
         </li>
       </ol>
     </div>
@@ -208,6 +283,7 @@
       </ul>
     </div>
 
+    <h4>Focused change: hydration helper</h4>
     <sdux-example-viewer-source>
       @for (file of hydrationFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -286,24 +362,34 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Open <span class="code">example.promise.ts</span> and identify the
-          pending Promise, stored resolver, and stored rejecter used to hold the
-          tutorial request open.
+          Create <span class="code">example.promise.ts</span> from the
+          checkpoint. Preserve its single pending Promise and one-use Resolve
+          and Reject controls; do not move that state into the component.
         </li>
         <li>
-          Open <span class="code">example.service.ts</span> and follow how the
-          deferred Promise is submitted through
+          In <span class="code">example.service.ts</span>, import
+          <span class="code">examplePromise</span> and add
+          <span class="code">fetchWithPromise()</span>. Read
+          <span class="code">getPromise()</span> once and pass
+          <span class="code">() =&gt; deferredPromise</span> as the
+          <span class="code">value</span> submitted to
           <span class="code">mergeState()</span>.
         </li>
         <li>
-          Open <span class="code">example.component.ts</span> and follow how the
-          Fetch, Resolve, and Reject actions delegate to the helper and service
-          without accessing the
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          directly.
+          In <span class="code">example.component.ts</span>, add
+          <span class="code">promisePending</span>,
+          <span class="code">fetchWithPromise()</span>,
+          <span class="code">resolvePromise()</span>, and
+          <span class="code">rejectPromise()</span>. The Fetch method delegates
+          to the service; only the teaching controls call the helper.
+        </li>
+        <li>
+          Click Fetch, then Resolve. Confirm loading is true while pending and
+          false after Ahsoka and Din are appended. Repeat with Reject and
+          confirm the existing collection remains visible.
         </li>
       </ol>
     </div>
@@ -338,6 +424,7 @@
       </ul>
     </div>
 
+    <h4>Focused change: Promise helper</h4>
     <sdux-example-viewer-source>
       @for (file of promiseFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -416,22 +503,33 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Open <span class="code">example.observable.ts</span> and identify the
-          controlled Subject, Observable wrapper, emitter, and error callback
-          used to hold the tutorial source open.
+          Create <span class="code">example.observable.ts</span> from the
+          checkpoint. Its <span class="code">ReplaySubject(1)</span> owns the
+          active source, while <span class="code">getEmit()</span> and
+          <span class="code">getError()</span> settle and release it.
         </li>
         <li>
-          Open <span class="code">example.service.ts</span> and follow how the
-          Observable is submitted through
-          <span class="code">mergeState()</span>.
+          In <span class="code">example.service.ts</span>, import
+          <span class="code">exampleObservable</span> and add
+          <span class="code">addByObservable()</span>, passing
+          <span class="code">exampleObservable.getObservable()</span> directly
+          to <span class="code">mergeState()</span>.
         </li>
         <li>
-          Open <span class="code">example.component.ts</span> and follow how the
-          Add, Emit, and Error actions delegate to the helper and service
-          without subscribing in the component.
+          In <span class="code">example.component.ts</span>, add
+          <span class="code">observablePending</span>,
+          <span class="code">addByObservable()</span>,
+          <span class="code">emitObservable()</span>, and
+          <span class="code">errorObservable()</span>. Do not subscribe in the
+          component.
+        </li>
+        <li>
+          Click Add, then Emit. Confirm loading ends and Ezra and Hera are
+          appended. Repeat with Error and confirm the committed collection is
+          preserved.
         </li>
       </ol>
     </div>
@@ -465,6 +563,7 @@
       </ul>
     </div>
 
+    <h4>Focused change: Observable helper</h4>
     <sdux-example-viewer-source>
       @for (file of observableFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -544,22 +643,32 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Open <span class="code">example.http-resource.ts</span> and identify
-          the HTTP resource, selected remote records, response parser, and
-          validation errors.
+          Create <span class="code">example.http-resource.ts</span> from the
+          checkpoint. Keep the endpoint, selected-character metadata, and
+          <span class="code">parseStarWarsCharacters()</span> together at the
+          transport boundary.
         </li>
         <li>
-          Open <span class="code">example.service.ts</span> and follow how the
-          resource is submitted through
+          In <span class="code">example.service.ts</span>, inject
+          <span class="code">Injector</span>, import
+          <span class="code">exampleHttpResource</span>, and add
+          <span class="code">fetchWithHttpResource()</span>. Pass the resource
+          returned by <span class="code">getResource(this.#injector)</span> to
           <span class="code">replaceState()</span>.
         </li>
         <li>
-          Open <span class="code">example.component.ts</span> and follow how the
-          HTTP Resource button delegates to the service without reading the
-          resource or owning its lifecycle.
+          In <span class="code">example.component.ts</span>, add
+          <span class="code">fetchWithHttpResource()</span> and delegate to the
+          service. Keep the resource itself out of the component.
+        </li>
+        <li>
+          Click Replace with httpResource. On success, confirm Lando Calrissian
+          and Han Solo replace the collection in last-name order. On a network
+          or validation failure, confirm the previous collection remains and the
+          normalized error is visible.
         </li>
       </ol>
     </div>
@@ -608,6 +717,7 @@
       </ul>
     </div>
 
+    <h4>Focused change: HTTP Resource adapter</h4>
     <sdux-example-viewer-source>
       @for (file of httpResourceFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -663,28 +773,25 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Run and Verify</div>
       <ol>
         <li>
-          Compare <span class="code">example.hydrate.ts</span> with the
-          hydration registration in <span class="code">example.service.ts</span>
-          and identify how the deferred source participates in initialization.
+          Reload and resolve hydration. Confirm initialization commits four
+          characters because the filter removes BB-8 before reducers add display
+          fields and sort the collection.
         </li>
         <li>
-          Compare <span class="code">example.promise.ts</span> and
-          <span class="code">example.observable.ts</span> with their service
-          methods and identify how each source is submitted through
-          <span class="code">mergeState()</span>.
+          Run the Promise success and rejection paths. Confirm success appends
+          Ahsoka and Din, while rejection preserves the committed collection.
         </li>
         <li>
-          Open <span class="code">example.http-resource.ts</span> and follow how
-          the resource is created, parsed, validated, and submitted through
-          <span class="code">replaceState()</span>.
+          Run the Observable success and error paths. Confirm success appends
+          Ezra and Hera, while an error preserves the committed collection.
         </li>
         <li>
-          Compare <span class="code">example.component.ts</span> with the four
-          source files and identify which layer owns source creation, teaching
-          controls, resolution, presentation, and committed State.
+          Run the HTTP Resource path. Confirm a valid response replaces the
+          collection with Lando and Han; treat normalized failure with the old
+          collection preserved as the documented external-endpoint recovery.
         </li>
       </ol>
     </div>
@@ -742,6 +849,7 @@
       </ul>
     </div>
 
+    <h4>Final checkpoint: complete Async Input source</h4>
     <sdux-example-viewer-source>
       @for (file of componentFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">

@@ -78,9 +78,12 @@
       <div class="title">Concurrent Edits Need a Product Policy</div>
       <p>
         This lab demonstrates propagation, not transactional consistency. Do not
-        infer a conflict policy from sequential edits. Before production use,
-        verify the controller's ordering and loop-prevention contract and decide
-        how simultaneous edits, stale forms, and server rejection are resolved.
+        infer a winner or ordering guarantee from sequential edits. This
+        tutorial deliberately defines no simultaneous-write contract: Tab Sync
+        transports finalized Feature State but does not reconcile record-level
+        conflicts. Before production use, choose server-owned versions, ETags,
+        or another explicit policy for simultaneous edits, stale forms, and
+        server rejection.
       </p>
     </div>
   </div>
@@ -161,6 +164,17 @@
           State is shared with a peer tab.
         </li>
       </ul>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">What the Stale-Form Exercise Proves</div>
+      <p>
+        The exercise proves only that a peer's committed collection can update
+        while Tab B's unsaved form remains local. It does not prove that saving
+        the stale form is safe or define which concurrent write wins. Cancel the
+        stale form in this lab. In production, compare a server-owned version
+        before accepting the save.
+      </p>
     </div>
 
     <sdux-example-viewer-source>

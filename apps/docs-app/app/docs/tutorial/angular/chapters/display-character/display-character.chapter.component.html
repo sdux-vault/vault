@@ -274,6 +274,23 @@ cd sdux-tutorial;
       </ol>
     </div>
 
+    <div class="callout callout-learn-more">
+      <div class="title">Angular Now; SDuX Next</div>
+      <dl>
+        <dt><span class="code">&#64;Injectable()</span></dt>
+        <dd>
+          Angular makes the service injectable. This step introduces no SDuX
+          symbol yet.
+        </dd>
+        <dt><span class="code">ExampleService</span></dt>
+        <dd>
+          Names the feature boundary that later steps decorate, register, and
+          connect to one FeatureCell.
+        </dd>
+      </dl>
+    </div>
+
+    <h4>Checkpoint: plain Angular service before SDuX integration</h4>
     <sdux-example-viewer-source [displayTabs]="false">
       <sdux-example-viewer-tab
         [label]="'Define the State for a Star Wars character'">
@@ -675,6 +692,25 @@ cd sdux-tutorial;
       </ul>
     </div>
 
+    <div class="callout callout-info">
+      <div class="title">New Symbols and Their Owners</div>
+      <ul>
+        <li>
+          <span class="code">characters</span> is a component computed Signal
+          that projects the service's committed collection.
+        </li>
+        <li>
+          The component injects <span class="code">ExampleService</span>; it
+          never injects or configures the FeatureCell directly.
+        </li>
+        <li>
+          The template reads component values only. The SCSS is reusable
+          presentation scaffolding and has no State authority.
+        </li>
+      </ul>
+    </div>
+
+    <h4>Checkpoint: first reactive component, template, and styles</h4>
     <sdux-example-viewer-source>
       @for (file of initialComponentAndHtmlFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">

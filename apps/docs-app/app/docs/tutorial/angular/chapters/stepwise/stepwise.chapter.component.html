@@ -79,6 +79,46 @@
         on a trusted server.
       </p>
     </div>
+    <div class="callout callout-learn-more">
+      <div class="title">One Decision Pattern at Three Boundaries</div>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Gate</th>
+            <th scope="col">Candidate shown</th>
+            <th scope="col">Continue</th>
+            <th scope="col">Block</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Resolve</td>
+            <td>Resolved input before normal filters</td>
+            <td>Runs filters next</td>
+            <td>Ends the attempt without changing committed State</td>
+          </tr>
+          <tr>
+            <td>Filter</td>
+            <td>Filtered candidate before reducers</td>
+            <td>Runs reducers next</td>
+            <td>Ends the attempt without changing committed State</td>
+          </tr>
+          <tr>
+            <td>Reducer</td>
+            <td>Fully derived candidate before commit</td>
+            <td>Allows the attempt to proceed to commitment</td>
+            <td>Ends the attempt without changing committed State</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        The checked-in component turns each pending Signal into a native
+        confirmation prompt. The service consumes the matching decision object
+        once, clears its pending flag, and then calls either
+        <span class="code">continue()</span> or
+        <span class="code">block()</span>.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -103,17 +143,28 @@
       A blocked candidate is discarded and the committed State remains intact.
     </p>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
-        <li>Open the <span class="code">app.config.ts</span> file.</li>
         <li>
-          Import the three Stepwise behaviors and the controller from
+          In <span class="code">app.config.ts</span>, import
+          <span class="code">withStepwiseResolveBehavior</span>,
+          <span class="code">withStepwiseFilterBehavior</span>,
+          <span class="code">withStepwiseReducerBehavior</span>, and
+          <span class="code">withStepwiseController</span> from
           <span class="code"><sdux-package-name [package]="'addons'" /></span>.
         </li>
         <li>
-          Add the behaviors to the
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          behavior list and the controller to its controller list.
+          Add the three behaviors after
+          <span class="code">withArrayAppendMergeBehavior</span> in the third
+          <span class="code">provideFeatureCell()</span> argument. Add
+          <span class="code">withStepwiseController</span> to the fourth
+          argument.
+        </li>
+        <li>
+          Reload, settle the hydration source, and confirm a Stepwise Resolve
+          prompt appears before any Filter or Reducer prompt. If no prompt
+          appears, verify that the controller is in the controller array, not
+          the behavior array.
         </li>
       </ol>
     </div>
@@ -128,8 +179,9 @@
           Only one Stepwise behavior belongs at each supported pipeline stage.
         </li>
         <li>
-          The controller serializes requests so only one decision is active at a
-          time.
+          This teaching workflow starts no second request until the active
+          prompt is settled. Do not infer a general request-serialization policy
+          from that UI constraint.
         </li>
         <li>
           The Hydrate <span class="code">Resolve</span> and
@@ -201,7 +253,7 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
           In <span class="code">example.service.ts</span>, add the Resolve
@@ -225,6 +277,29 @@
           committed State remains unchanged.
         </li>
       </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">New Symbols at the Resolve Gate</div>
+      <ul>
+        <li>
+          <span class="code">StepwiseResolveRequest</span> stores only the
+          immutable <span class="code">current</span> and
+          <span class="code">candidate</span> values shown by the UI.
+        </li>
+        <li>
+          <span class="code">#stepwiseResolveDecisions</span> holds the one-use
+          decision contract while
+          <span class="code">isStepwiseResolvePending</span> tells the component
+          when to prompt.
+        </li>
+        <li>
+          <span class="code">#completeStepwiseResolve()</span> clears the stored
+          decision and pending flag before invoking
+          <span class="code">continue()</span> or
+          <span class="code">block()</span>.
+        </li>
+      </ul>
     </div>
 
     <div class="callout callout-learn-more">
@@ -253,6 +328,7 @@
       </ul>
     </div>
 
+    <h4>Baseline checkpoint: complete Resolve-gate implementation</h4>
     <sdux-example-viewer-source>
       @for (file of serviceFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -261,17 +337,6 @@
         </sdux-example-viewer-tab>
       }
     </sdux-example-viewer-source>
-
-    <div class="callout callout-warning">
-      <div class="title">One, Two or Three?</div>
-      <ul>
-        <li>
-          For this chapter, all three stepwise behaviors are configured. You can
-          use just one, two, or all three depending on your use case and
-          business needs.
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
@@ -304,20 +369,34 @@
       <span class="code">candidate</span> reported by the callback.
     </p>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Apply the Resolve Pattern at Filter</div>
       <ol>
         <li>
-          Add the Filter request interface, pending Signal, decision holder,
-          callback, and accept/cancel service methods following the Resolve
-          pattern.
+          In <span class="code">example.service.ts</span>, duplicate only the
+          Resolve gate's request, pending Signal, decision holder, and callback;
+          rename them with <span class="code">Filter</span> and type the
+          callback as filtered character input.
         </li>
         <li>
-          Register <span class="code">withStepwiseFilter()</span> after the
-          normal filters are configured and before initialization.
+          Register
+          <span class="code"
+            >this.#vault.withStepwiseFilter!(&lbrace; stepwiseCallback:
+            this.#captureStepwiseFilter &rbrace;)</span
+          >
+          after <span class="code">filters()</span> and before
+          <span class="code">reducers()</span>.
         </li>
         <li>
-          Add one guarded component prompt for the Filter pending Signal. Accept
-          to run reducers; cancel to preserve committed State.
+          Add <span class="code">acceptStepwiseFilter()</span> and
+          <span class="code">cancelStepwiseFilter()</span> in the service and
+          component. Observe the Filter pending Signal once and route the prompt
+          to those methods.
+        </li>
+        <li>
+          Continue at Resolve. At Filter, confirm the candidate no longer
+          contains records whose last name is
+          <span class="code">unknown</span>. Continue to reach Reducer; repeat
+          and block at Filter to confirm committed State is unchanged.
         </li>
       </ol>
     </div>
@@ -346,23 +425,15 @@
         </li>
       </ul>
     </div>
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-    <div class="callout callout-warning">
-      <div class="title">One, Two or Three?</div>
-      <ul>
-        <li>
-          For this chapter, all three stepwise behaviors are configured. You can
-          use just one, two, or all three depending on your use case and
-          business needs.
-        </li>
-      </ul>
+    <div class="callout callout-learn-more">
+      <div class="title">Focused Delta from Resolve</div>
+      <p>
+        The storage and one-use completion pattern is unchanged. The meaningful
+        differences are the registration point, the
+        <span class="code">#captureStepwiseFilter</span> callback, and the next
+        stage: Continue now permits reducers to run. Use the final checkpoint in
+        Step 55 for the complete file.
+      </p>
     </div>
   </div>
 </section>
@@ -394,24 +465,34 @@
       the callback, including the values produced by the configured reducers.
     </p>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Apply the Resolve Pattern at Reducer</div>
       <ol>
         <li>
-          Add the Reducer request interface, pending Signal, decision holder,
-          callback, and accept/cancel service methods following the earlier
-          gates.
+          Duplicate the gate pattern once more, rename it with
+          <span class="code">Reducer</span>, and expose
+          <span class="code">stepwiseReducerRequest</span> and
+          <span class="code">isStepwiseReducerPending</span> as read-only
+          Signals.
         </li>
         <li>
-          Register <span class="code">withStepwiseReducer()</span> after reducer
-          configuration and before initialization.
+          Register
+          <span class="code"
+            >this.#vault.withStepwiseReducer!(&lbrace; stepwiseCallback:
+            this.#captureStepwiseReducer &rbrace;)</span
+          >
+          after <span class="code">reducers()</span> and before
+          <span class="code">initialize()</span>.
         </li>
         <li>
-          Add the guarded Reducer prompt. Accept to allow commitment; cancel to
-          retain the last committed collection.
+          Add the Reducer accept/cancel methods and one guarded component
+          prompt, following the established one-use decision flow.
         </li>
         <li>
-          Compare the reduced candidate with the Resolve and Filter outputs and
-          identify the derived labels and ordering added by reducers.
+          Continue at Resolve and Filter. At Reducer, confirm the candidate has
+          <span class="code">forceSensitiveDisplay</span> and
+          <span class="code">fullName</span> and is sorted by last name.
+          Continue to commit it; repeat and block at Reducer to retain the prior
+          State.
         </li>
       </ol>
     </div>
@@ -440,23 +521,14 @@
         </li>
       </ul>
     </div>
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-    <div class="callout callout-warning">
-      <div class="title">One, Two or Three?</div>
-      <ul>
-        <li>
-          For this chapter, all three stepwise behaviors are configured. You can
-          use just one, two, or all three depending on your use case and
-          business needs.
-        </li>
-      </ul>
+    <div class="callout callout-learn-more">
+      <div class="title">Focused Delta from Filter</div>
+      <p>
+        Only the candidate timing and terminal Continue result change. Reducer
+        sees the fully derived value, and Continue allows commitment rather than
+        another domain stage. The Signal, decision-holder, prompt, and one-use
+        cleanup pattern remain the same.
+      </p>
     </div>
   </div>
 </section>
@@ -492,6 +564,37 @@
         </li>
       </ul>
     </div>
+    <div class="callout callout-action">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>
+          Resolve hydration and continue through all three prompts. Confirm the
+          reduced candidate becomes committed State only after the Reducer
+          decision.
+        </li>
+        <li>
+          Reload and block at Resolve, then repeat and block at Filter, then
+          repeat and block at Reducer. In all three runs, confirm the prior
+          committed State remains unchanged and no later prompt opens.
+        </li>
+        <li>
+          After every run, confirm all pending flags are false. Do not start a
+          second request while a native prompt is open in this teaching UI.
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Production Extension: Settle Every Exit Path</div>
+      <p>
+        This example does not implement timeout or cancellation on navigation
+        and teardown. A production controller integration must settle its active
+        decision when the user confirms, cancels, navigates away, the owning
+        view is destroyed, or the approval deadline expires. Add those policies
+        in application code before adopting this pattern; do not treat the
+        native confirmation dialog as durable approval or authorization.
+      </p>
+    </div>
+    <h4>Final checkpoint: complete Stepwise source</h4>
     <sdux-example-viewer-source>
       @for (file of chapterFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">

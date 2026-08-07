@@ -264,6 +264,34 @@
       </ul>
     </div>
 
+    <div class="callout callout-info">
+      <div class="title">Trace Chewbacca and Leia Through the Pipeline</div>
+      <ol>
+        <li>
+          Resolve supplies five seed characters. Chewbacca enters with
+          <span class="code">lastName: 'unknown'</span>; Leia enters with
+          <span class="code">lastName: 'Organa'</span>.
+        </li>
+        <li>
+          <span class="code">removeUnknownLastNameFilter</span> returns a new
+          four-record array. Chewbacca is absent, while Leia continues.
+        </li>
+        <li>
+          <span class="code">deriveForceSensitiveDisplay</span> adds Leia's
+          <span class="code">forceSensitiveDisplay</span> value.
+        </li>
+        <li>
+          <span class="code">withCharactersSortedByLastName()</span> clones and
+          sorts the four records by last name.
+        </li>
+        <li>
+          <span class="code">deriveFullName</span> adds
+          <span class="code">fullName: 'Leia Organa'</span>; that four-record,
+          display-ready collection is committed.
+        </li>
+      </ol>
+    </div>
+
     <sdux-example-viewer-source>
       @for (file of reducerFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">

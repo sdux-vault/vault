@@ -44,36 +44,25 @@ describe('Component: AsyncInputChapterComponent', () => {
 
   it('returns the hydration teaching files', () => {
     expect(component.hydrationFiles()).toEqual([
-      file('hydrate', 'example.hydrate.ts'),
-      file('service', 'example.service.ts'),
-      file('component', 'example.component.ts')
+      file('hydrate', 'example.hydrate.ts')
     ]);
   });
 
   it('returns the Promise teaching files', () => {
     expect(component.promiseFiles()).toEqual([
-      file('promise', 'example.promise.ts'),
-      file('service', 'example.service.ts'),
-      file('component', 'example.component.ts'),
-      file('html', 'example.component.html')
+      file('promise', 'example.promise.ts')
     ]);
   });
 
   it('returns the Observable teaching files', () => {
     expect(component.observableFiles()).toEqual([
-      file('observable', 'example.observable.ts'),
-      file('service', 'example.service.ts'),
-      file('component', 'example.component.ts'),
-      file('html', 'example.component.html')
+      file('observable', 'example.observable.ts')
     ]);
   });
 
   it('returns the HTTP Resource teaching files', () => {
     expect(component.httpResourceFiles()).toEqual([
-      file('httpResource', 'example.http-resource.ts'),
-      file('service', 'example.service.ts'),
-      file('component', 'example.component.ts'),
-      file('html', 'example.component.html')
+      file('httpResource', 'example.http-resource.ts')
     ]);
   });
 

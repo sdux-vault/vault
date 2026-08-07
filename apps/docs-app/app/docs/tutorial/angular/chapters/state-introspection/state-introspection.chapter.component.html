@@ -94,6 +94,59 @@
         Observation callbacks must not become hidden business logic.
       </p>
     </div>
+    <div class="callout callout-learn-more">
+      <div class="title">Observation Timeline for One Mutation</div>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Surface</th>
+            <th scope="col">Moment observed</th>
+            <th scope="col">Shape</th>
+            <th scope="col">Question it answers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="code">state</span></td>
+            <td>Latest reactive read</td>
+            <td>Four Angular Signal accessors</td>
+            <td>What is the FeatureCell reporting now?</td>
+          </tr>
+          <tr>
+            <td><span class="code">state$</span></td>
+            <td>Each FeatureCell state event</td>
+            <td>Event containing an immutable snapshot</td>
+            <td>Which snapshots arrived over time?</td>
+          </tr>
+          <tr>
+            <td><span class="code">beforeTaps()</span></td>
+            <td>After filtering, before reducers</td>
+            <td>Filtered candidate collection</td>
+            <td>What is about to be transformed?</td>
+          </tr>
+          <tr>
+            <td><span class="code">afterTaps()</span></td>
+            <td>After all reducers</td>
+            <td>Derived candidate collection</td>
+            <td>What is about to be committed?</td>
+          </tr>
+          <tr>
+            <td><span class="code">emitStates()</span></td>
+            <td>After final State emission</td>
+            <td>Finalized StateSnapshot</td>
+            <td>What did this attempt emit?</td>
+          </tr>
+          <tr>
+            <td>Captured baseline</td>
+            <td>
+              First <span class="code">state$</span> snapshot with a value
+            </td>
+            <td>Application-owned cloned collection</td>
+            <td>What known collection should this lab restore?</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
@@ -113,19 +166,26 @@
       a stream.
     </p>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Open <span class="code">example.service.ts</span> and expose the
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          state.
+          In <span class="code">example.service.ts</span>, expose
+          <span class="code">readonly state = this.#vault.state</span>
+          immediately after the private Vault reference.
         </li>
         <li>
-          Open <span class="code">example.component.ts</span> and serialize the
-          four raw state fields.
+          In <span class="code">example.component.ts</span>, expose the service
+          state and add <span class="code">rawStateJson</span> as a computed
+          value containing <span class="code">isLoading</span>,
+          <span class="code">value</span>, <span class="code">error</span>, and
+          <span class="code">hasValue</span>.
         </li>
         <li>
-          Use the character controls, then inspect the Raw StateSnapshot output.
+          Bind <span class="code">rawStateJson()</span> to the Raw StateSnapshot
+          textarea. Add a character and confirm its committed, reduced
+          collection appears with <span class="code">isLoading: false</span>,
+          <span class="code">error: null</span>, and
+          <span class="code">hasValue: true</span>.
         </li>
       </ol>
     </div>
@@ -145,14 +205,6 @@
         </li>
       </ul>
     </div>
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
     <div class="callout callout-learn-more">
       <div class="title">Explore the Docs</div>
       <ul>
@@ -181,14 +233,26 @@
       boundary, including the snapshot and the event type that produced it.
     </p>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
-        <li>Subscribe to <span class="code">state$</span> in the component.</li>
         <li>
-          Serialize the latest snapshot into the Raw StateSnapshot$ output.
+          In <span class="code">example.service.ts</span>, expose
+          <span class="code">readonly state$ = this.#vault.state$</span> beside
+          <span class="code">state</span>.
         </li>
         <li>
-          Trigger add, edit, and delete operations and compare the emissions.
+          In <span class="code">example.component.ts</span>, initialize
+          <span class="code">rawStateStreamJson</span> to
+          <span class="code">'undefined'</span>. Subscribe to
+          <span class="code">state$</span> with
+          <span class="code">takeUntilDestroyed()</span>, destructure each
+          event's <span class="code">snapshot</span>, and serialize it into that
+          Signal.
+        </li>
+        <li>
+          Bind the Signal to Raw StateSnapshot$. Add, edit, and delete a
+          character; after each settled request, confirm this stream output and
+          the raw Signal output describe the same committed snapshot.
         </li>
       </ol>
     </div>
@@ -206,14 +270,6 @@
         <li>The component keeps the subscription lifecycle-safe.</li>
       </ul>
     </div>
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
     <div class="callout callout-learn-more">
       <div class="title">Explore the Docs</div>
       <ul>
@@ -248,16 +304,28 @@
       input to a read-only teaching Signal and returns no replacement value.
     </p>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Register a <span class="code">beforeTaps()</span> callback in the
-          service.
+          In <span class="code">example.service.ts</span>, import
+          <span class="code">TapCallback</span> and create a private writable
+          Signal named <span class="code">#beforeTapInput</span>. Expose only
+          its <span class="code">asReadonly()</span> result.
         </li>
-        <li>Capture its input and render it in the Before Taps output.</li>
         <li>
-          Submit a character change and compare the candidate with the committed
-          State.
+          Add <span class="code">#captureBeforeTapInput</span> as a typed
+          callback that sets that Signal and returns no value. Register it with
+          <span class="code"
+            >this.#vault.beforeTaps([this.#captureBeforeTapInput])</span
+          >
+          immediately before initialization.
+        </li>
+        <li>
+          In the component, serialize
+          <span class="code">beforeTapInput()</span> into
+          <span class="code">beforeTapInputJson</span> and bind it to Before
+          Taps. Add a character whose fields need reducers and confirm this
+          output lacks reducer-derived display fields.
         </li>
       </ol>
     </div>
@@ -274,14 +342,6 @@
         </li>
       </ul>
     </div>
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
     <div class="callout callout-learn-more">
       <div class="title">Explore the Docs</div>
       <ul>
@@ -315,16 +375,27 @@
       cannot change what the FeatureCell later commits.
     </p>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Register an <span class="code">afterTaps()</span> callback in the
-          service.
+          Mirror the previous Signal/callback pattern with
+          <span class="code">#afterTapInput</span>,
+          <span class="code">afterTapInput</span>, and
+          <span class="code">#captureAfterTapInput</span>.
         </li>
-        <li>Capture its input and render it in the After Taps output.</li>
         <li>
-          Run a mutation and compare Before Taps, After Taps, and State
-          Emission.
+          Register the callback with
+          <span class="code"
+            >this.#vault.afterTaps([this.#captureAfterTapInput])</span
+          >
+          after the reducers and before initialization.
+        </li>
+        <li>
+          Serialize <span class="code">afterTapInput()</span> in the component.
+          Repeat the previous mutation and confirm After Taps contains
+          <span class="code">forceSensitiveDisplay</span> and
+          <span class="code">fullName</span> and is sorted by last name, while
+          Before Taps does not contain those derived fields.
         </li>
       </ol>
     </div>
@@ -341,14 +412,6 @@
         </li>
       </ul>
     </div>
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
     <div class="callout callout-learn-more">
       <div class="title">Explore the Docs</div>
       <ul>
@@ -376,15 +439,27 @@
       use when you need to inspect the committed result of an attempt.
     </p>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Register an <span class="code">emitStates()</span> callback in the
-          service.
+          In the service, create <span class="code">#emittedState</span> as a
+          Signal of <span class="code">StateSnapshotShape</span> or
+          <span class="code">undefined</span>, and expose its read-only view as
+          <span class="code">emittedState</span>.
         </li>
-        <li>Capture the emitted snapshot and render it as State Emission.</li>
         <li>
-          Trigger each character operation and inspect the final snapshot.
+          Add <span class="code">#captureEmittedState</span> as a
+          <span class="code">CoreEmitStateCallback</span> that publishes the
+          snapshot. Register it through
+          <span class="code"
+            >this.#vault.emitStates([this.#captureEmittedState])</span
+          >
+          before initialization.
+        </li>
+        <li>
+          Serialize <span class="code">emittedState()</span> in the component.
+          Perform an edit and confirm State Emission matches the final
+          StateSnapshot after loading has ended.
         </li>
       </ol>
     </div>
@@ -402,14 +477,6 @@
         </li>
       </ul>
     </div>
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
     <div class="callout callout-learn-more">
       <div class="title">Explore the Docs</div>
       <ul>
@@ -454,16 +521,31 @@
       </p>
     </div>
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Use <span class="code">filter</span> and
-          <span class="code">take(1)</span> to capture the initial snapshot.
+          In the service constructor, call
+          <span class="code">#captureInitialCharacters()</span> before pipeline
+          configuration.
         </li>
-        <li>Render the captured value in the Initial State output.</li>
         <li>
-          Use Restore Initial Data or Reset State when you want to return to a
-          clean lifecycle state.
+          In that method, subscribe to <span class="code">state$</span>, filter
+          for <span class="code">snapshot.hasValue</span>, take one event, and
+          clone <span class="code">snapshot.value ?? []</span> into
+          <span class="code">#initialCharacters</span>.
+        </li>
+        <li>
+          Implement <span class="code">restoreInitialCharacters()</span> by
+          cloning the captured baseline and submitting it through
+          <span class="code">replaceState()</span>. Keep
+          <span class="code">resetState()</span> as a separate call to
+          <span class="code">reset()</span>.
+        </li>
+        <li>
+          Add a character, select Restore Initial Data, and confirm the first
+          committed collection returns. Then select Reset State and confirm the
+          lifecycle output reports no value; these actions are intentionally
+          different.
         </li>
       </ol>
     </div>
@@ -481,14 +563,6 @@
         </li>
       </ul>
     </div>
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
     <div class="callout callout-learn-more">
       <div class="title">Explore the Docs</div>
       <ul>
@@ -538,6 +612,7 @@
         </li>
       </ul>
     </div>
+    <h4>Final checkpoint: complete State Introspection source</h4>
     <sdux-example-viewer-source>
       @for (file of allFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">

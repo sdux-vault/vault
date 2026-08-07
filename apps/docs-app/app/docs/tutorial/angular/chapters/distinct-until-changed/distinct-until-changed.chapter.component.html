@@ -156,6 +156,18 @@
         </li>
       </ul>
     </div>
+    <div class="callout callout-info">
+      <div class="title">Suppressed-Request Contract</div>
+      <p>
+        When the comparator returns <span class="code">true</span>, the operator
+        returns SDuX's no-op sentinel. The candidate does not reach the later
+        Filter or Reducer stages and does not replace the committed collection.
+        The example verifies the retained collection; it does not expose enough
+        instrumentation to promise that every loading flag, timestamp, or other
+        lifecycle field is unchanged. Do not build UI logic around an unobserved
+        metadata assumption.
+      </p>
+    </div>
     <sdux-example-viewer-source>
       @for (file of serviceFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">

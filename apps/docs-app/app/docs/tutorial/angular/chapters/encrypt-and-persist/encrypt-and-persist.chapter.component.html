@@ -249,21 +249,29 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Open <span class="code">example.service.ts</span> and locate the
-          <span class="code">setAes256Secret()</span> configuration.
+          In <span class="code">example.service.ts</span>, export the stable
+          16-byte <span class="code">EXAMPLE_AES256_SALT</span>. Before
+          <span class="code">initialize()</span>, call
+          <span class="code">setAes256Secret()</span> with the tutorial secret,
+          that salt, and <span class="code">250_000</span> PBKDF2 iterations.
         </li>
         <li>
-          Review the tutorial-only secret, stable salt, and iteration count.
-          Name the threat each value addresses and identify why
-          browser-delivered secret material cannot resist an attacker executing
-          in the same origin.
+          Treat <span class="code">aes256Secret</span> as PBKDF2 input key
+          material, <span class="code">salt</span> as non-secret derivation
+          input, and <span class="code">iterations</span> as derivation cost.
+          The behavior generates and stores the AES-GCM initialization vector in
+          the encrypted envelope; do not substitute the stable salt for that
+          per-encryption IV.
         </li>
         <li>
           Use the Results panel to compare plain Feature State with the
-          encrypted envelope.
+          encrypted envelope. Confirm the envelope contains version,
+          <span class="code">iv</span>, <span class="code">data</span>, and
+          <span class="code">alg: 'AES-256-GCM'</span> fields rather than plain
+          character JSON.
         </li>
       </ol>
     </div>
@@ -368,10 +376,23 @@
           assuming an initial-value fallback.
         </li>
         <li>
-          Corrupt or undecryptable envelope: expect the documented error
-          lifecycle and do not commit partially recovered data.
+          Malformed storage JSON: the Session Storage behavior returns
+          <span class="code">undefined</span>. A valid JSON AES envelope that
+          cannot be decrypted rejects instead of returning partial plaintext.
         </li>
       </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Recovery Scope</div>
+      <p>
+        The interactive example demonstrates valid persistence, same-tab reload,
+        and missing storage. It does not provide a button that injects corrupted
+        ciphertext. The behavior tests—not this UI—establish that malformed JSON
+        loads as <span class="code">undefined</span> and AES decryption failure
+        rejects. Choose an application recovery policy such as clearing the
+        namespaced key and requiring a fresh authoritative load; do not silently
+        accept or partially parse damaged data.
+      </p>
     </div>
     <div class="callout callout-action">
       <div class="title">Take Action</div>

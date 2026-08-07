@@ -44,12 +44,6 @@ export class StateIntrospectionChapterComponent {
     };
   });
 
-  readonly serviceFiles = computed(() => [
-    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Service),
-    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Component),
-    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Html)
-  ]);
-
   readonly allFiles = computed(() => [
     this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Service),
     this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Component),

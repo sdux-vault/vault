@@ -206,12 +206,34 @@
     <div class="callout callout-info">
       <div class="title">Unknown or Stale IDs</div>
       <p>
-        Filtering an ID that is already absent produces an equivalent
-        collection. Use the service spec to confirm whether this implementation
-        still submits that collection and emits a snapshot. In a multi-writer
-        application, revalidate the pending record at confirmation time and
-        report a stale deletion instead of claiming success.
+        <span class="code">removeCharacter()</span> always submits a
+        <span class="code">replaceState()</span> factory. When the ID is absent,
+        the factory filters the latest collection into an equivalent new array;
+        the example does not treat that as an error or create a record. The
+        service spec verifies the resulting value, not an emission-count
+        guarantee. In a multi-writer application, revalidate the pending record
+        at confirmation time and report a stale deletion instead of claiming
+        success.
       </p>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Delete Outcome Contract</div>
+      <ul>
+        <li>
+          Cancel clears only the component's delete candidate; collection and
+          selection remain unchanged.
+        </li>
+        <li>
+          Confirm removes the matching record, clears selection, clears the
+          form, and returns the editor to create mode. Every nonmatching record
+          is retained.
+        </li>
+        <li>
+          A stale ID produces an equivalent collection. This tutorial makes no
+          promise about subscriber emission for equivalent array values.
+        </li>
+      </ul>
     </div>
 
     <div class="callout callout-learn-more">

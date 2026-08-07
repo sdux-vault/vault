@@ -39,26 +39,6 @@ describe('Component: StateIntrospectionChapterComponent', () => {
     );
   });
 
-  it('returns the service files for the chapter example', () => {
-    expect(component.serviceFiles()).toEqual([
-      {
-        type: 'service',
-        fileName: 'example.service.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'component',
-        fileName: 'example.component.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'html',
-        fileName: 'example.component.html',
-        source: jasmine.any(String) as unknown as string
-      }
-    ]);
-  });
-
   it('returns all the generated files for the chapter example', () => {
     expect(component.allFiles()).toEqual([
       {

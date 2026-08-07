@@ -242,24 +242,30 @@
     </p>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
         <li>
-          Open <span class="code">example.component.ts</span> and follow the
-          State emission handling for the elapsed display.
+          In <span class="code">example.component.ts</span>, subscribe to the
+          service's <span class="code">state$</span> with lifecycle-safe
+          cleanup. Start <span class="code">ExampleElapsedTimer</span> when a
+          loading snapshot arrives and stop it when the request finalizes or
+          errors.
         </li>
         <li>
-          Open <span class="code">example.component.html</span> and identify the
-          fixed delay value and live elapsed value.
+          In <span class="code">example.component.html</span>, bind the fixed
+          configured interval and the timer's live elapsed value. Keep both as
+          presentation output; neither controls the pipeline.
         </li>
         <li>
           Run the example and perform one collection update while watching the
           timer return to zero after the pipeline completes.
         </li>
         <li>
-          Trigger two updates close together and compare the observed order with
-          the controller documentation. Do not infer debounce, cancellation, or
-          concurrency behavior from a single request.
+          Trigger two updates close together. The controller queues each trace
+          with its own release timestamp and requests a revote for each expired
+          trace; it does not debounce them into one request. Confirm both
+          attempts settle, but do not treat their visual timing as a
+          business-level ordering guarantee.
         </li>
       </ol>
     </div>
@@ -294,6 +300,18 @@
           The timer stops when the pipeline finalizes or enters Error State.
         </li>
       </ul>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="title">Rapid-Request Contract</div>
+      <p>
+        The Delay Controller stores queued traces by trace ID. Each first
+        attempt receives its own configured delay and is denied until its
+        release time; expired traces are revoted and removed when allowed to
+        continue. Reset or destroy clears queued traces and the active timer.
+        This is delay, not debounce, cancellation, retry, or conflict
+        resolution.
+      </p>
     </div>
 
     <sdux-example-viewer-source>
@@ -357,8 +375,10 @@
           pause before the committed collection changes.
         </li>
         <li>
-          Review the completed source to confirm that the component does not
-          implement delay behavior itself.
+          In the final checkpoint, confirm that only
+          <span class="code">withDelay()</span> configures the pause. Removing
+          <span class="code">example.elapsed-timer.ts</span> would remove the
+          display but would not change controller timing.
         </li>
       </ol>
     </div>

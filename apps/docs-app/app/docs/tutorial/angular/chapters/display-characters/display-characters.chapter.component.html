@@ -121,21 +121,39 @@
     </div>
 
     <div class="callout callout-action">
-      <div class="title">Take Action</div>
+      <div class="title">Make the Change</div>
       <ol>
-        <li>Open <span class="code">example.component.ts</span>.</li>
         <li>
-          Expose the committed collection and add Signals for the selected
-          character id and selected character.
+          In <span class="code">example.component.ts</span>, replace the
+          single-record computed value with
+          <span class="code">characters</span>, a computed read of
+          <span class="code">this.#exampleService.state.value() ?? []</span>.
         </li>
         <li>
-          Add a method that maps the dropdown value to a known character id from
-          the current <sdux-brand-name />-managed collection.
+          Add <span class="code">selectedCharacterId</span> as a local Signal
+          initialized to <span class="code">null</span>. Add
+          <span class="code">selectedCharacter</span> as a computed lookup that
+          returns the matching collection record or
+          <span class="code">null</span>.
         </li>
-        <li>Open <span class="code">example.component.html</span>.</li>
         <li>
-          Add a dropdown above the details panel and render an empty state until
-          the user selects a character from the managed collection.
+          Add <span class="code">selectCharacter(value: string)</span>. Convert
+          the dropdown value with <span class="code">Number(value)</span>, set
+          the Signal only when that ID exists in
+          <span class="code">characters()</span>, and otherwise leave the
+          current local selection unchanged.
+        </li>
+        <li>
+          In <span class="code">example.component.html</span>, render one option
+          per <span class="code">characters()</span> entry and pass the selected
+          value to <span class="code">selectCharacter()</span>. Render the
+          details panel only when <span class="code">selectedCharacter()</span>
+          returns a record; otherwise render the empty guidance.
+        </li>
+        <li>
+          Start with no selection, choose Leia, and confirm the detail panel
+          shows Leia. Submit an unknown value in the component spec and confirm
+          no record is manufactured and Feature State remains unchanged.
         </li>
       </ol>
     </div>
@@ -163,6 +181,7 @@
       </ul>
     </div>
 
+    <h4>Checkpoint: complete dropdown files</h4>
     <sdux-example-viewer-source>
       @for (file of files(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -171,6 +190,16 @@
         </sdux-example-viewer-tab>
       }
     </sdux-example-viewer-source>
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/state-property"
+            >FeatureCell state</a
+          >
+        </li>
+      </ul>
+    </div>
   </div>
 </section>
 

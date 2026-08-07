@@ -400,11 +400,51 @@
     <div class="callout callout-warning">
       <div class="title">Define Unknown-ID Update Behavior</div>
       <p>
-        The displayed service implementation and spec define what happens when
-        an update ID is absent. Keep the UI consistent with that contract. A
-        production API should report the mismatch explicitly rather than
-        silently converting an update into a create.
+        In this example, <span class="code">updateCharacter(999, draft)</span>
+        constructs and returns the requested replacement object, but the
+        <span class="code">replaceState()</span> factory finds no matching
+        record and commits an equivalent collection. It does not append the
+        missing character. The service spec verifies both the returned object
+        and unchanged collection. A production API should report this mismatch
+        explicitly rather than letting the UI claim that an update succeeded.
       </p>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Add/Edit Outcome Contract</div>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Action</th>
+            <th scope="col">FeatureCell request</th>
+            <th scope="col">Expected result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Add a valid draft</td>
+            <td><span class="code">mergeState()</span></td>
+            <td>
+              Appends one character using the largest current ID plus one.
+            </td>
+          </tr>
+          <tr>
+            <td>Edit a known ID</td>
+            <td><span class="code">replaceState()</span></td>
+            <td>Replaces only the matching record and preserves all others.</td>
+          </tr>
+          <tr>
+            <td>Edit an unknown ID</td>
+            <td><span class="code">replaceState()</span></td>
+            <td>Leaves the collection equivalent; it never becomes create.</td>
+          </tr>
+          <tr>
+            <td>Invalid form or Cancel</td>
+            <td>No request</td>
+            <td>Committed State remains unchanged.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="callout callout-learn-more">

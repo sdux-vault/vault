@@ -43,38 +43,19 @@ export class AsyncInputChapterComponent {
   });
 
   readonly hydrationFiles = computed(() =>
-    this.#getFiles(
-      ExampleFileTypes.Hydrate,
-      ExampleFileTypes.Service,
-      ExampleFileTypes.Component
-    )
+    this.#getFiles(ExampleFileTypes.Hydrate)
   );
 
   readonly promiseFiles = computed(() =>
-    this.#getFiles(
-      ExampleFileTypes.Promise,
-      ExampleFileTypes.Service,
-      ExampleFileTypes.Component,
-      ExampleFileTypes.Html
-    )
+    this.#getFiles(ExampleFileTypes.Promise)
   );
 
   readonly observableFiles = computed(() =>
-    this.#getFiles(
-      ExampleFileTypes.Observable,
-      ExampleFileTypes.Service,
-      ExampleFileTypes.Component,
-      ExampleFileTypes.Html
-    )
+    this.#getFiles(ExampleFileTypes.Observable)
   );
 
   readonly httpResourceFiles = computed(() =>
-    this.#getFiles(
-      ExampleFileTypes.HttpResource,
-      ExampleFileTypes.Service,
-      ExampleFileTypes.Component,
-      ExampleFileTypes.Html
-    )
+    this.#getFiles(ExampleFileTypes.HttpResource)
   );
 
   readonly componentFiles = computed(() =>
