@@ -447,8 +447,8 @@ employeeCell.state$.subscribe((employees) =&gt; &#123;
         <div class="section-title">Test the Power</div>
         <div class="section-body">
           <p>
-            <a href="/stackblitz#replace-state">Open a StackBlitz</a> and try it
-            yourself. The cell will be registered and initialized. After
+            <a href="/docs/stackblitz#replace-state">Open a StackBlitz</a> and
+            try it yourself. The cell will be registered and initialized. After
             experiment with its surface in the StackBlitz editor. Autocomplete
             lists the entire contract, every member typed to your state. That is
             the fluent API working for you: predictable, deterministic, and

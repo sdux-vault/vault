@@ -19,7 +19,7 @@ export class RelatedTopicsService {
   };
 
   #buildSeenLink(link: RelatedTopicLinkShape): string {
-    return `${link.link}${link.fragment}`;
+    return link.fragment ? `${link.link}#${link.fragment}` : link.link;
   }
 
   #findAlias(category: string): string | undefined {
