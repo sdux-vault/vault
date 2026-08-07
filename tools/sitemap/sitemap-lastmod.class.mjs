@@ -104,15 +104,13 @@ export class SitemapLastmodResolver {
 
   #parseExistingDates(xml) {
     const dates = new Map();
-    const entryPattern =
-      /<url>[\s\S]*?<loc>([^<]+)<\/loc>[\s\S]*?(?:<lastmod>([^<]+)<\/lastmod>)?[\s\S]*?<\/url>/g;
+    const entryPattern = /<url>([\s\S]*?)<\/url>/g;
     let match;
 
     while ((match = entryPattern.exec(xml)) !== null) {
-      if (match[2]) {
-        const url = new URL(match[1]).pathname;
-        dates.set(url, match[2]);
-      }
+      const loc = match[1].match(/<loc>([^<]+)<\/loc>/)?.[1];
+      const lastmod = match[1].match(/<lastmod>([^<]+)<\/lastmod>/)?.[1];
+      if (loc && lastmod) dates.set(new URL(loc).pathname, lastmod);
     }
 
     return dates;
