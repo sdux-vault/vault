@@ -12,7 +12,9 @@ describe('Component: VaultArrayMergeComparisonCommon', () => {
 
   const getFirstTableHeaders = (): string[] =>
     fixture.debugElement
-      .queryAll(By.css('table:first-of-type thead th'))
+      .queryAll(
+        By.css('table[aria-label="Input and Result Examples"] thead th')
+      )
       .map(({ nativeElement }) => normalizeText(nativeElement.textContent));
 
   beforeEach(async () => {

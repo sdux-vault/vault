@@ -25,14 +25,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'circuit-breaker-state-pipeline',
     title: 'Circuit Breaker Pattern, Built Into Your State Pipeline',
-    date: '2026-06-08',
+    date: '2026-08-13',
     readingTime: 4,
     active: true
   },
   {
     slug: 'pipeline-anatomy',
     title: 'Pipeline Anatomy — What Happens When You Update State',
-    date: '2026-06-06',
+    date: '2026-08-11',
     readingTime: 8,
     active: true
   },
