@@ -34,15 +34,7 @@ declare module '@sdux-vault/shared' {
      * @returns The matching entity, or undefined if not found.
      */
     query?(id: string): TEntity | undefined;
-  }
-}
 
-declare module '@sdux-vault/shared' {
-  /**
-   * Augments the FeatureCell base shape with query configuration support.
-   */
-  // eslint-disable-next-line
-  interface FeatureCellFluentApi<TEntity> {
     /**
      * Registers query behavior configuration on the FeatureCell instance.
      *

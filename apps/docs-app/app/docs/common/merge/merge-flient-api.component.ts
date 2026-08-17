@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'sdux-vault-merge-fluent-api-common',
@@ -26,10 +26,19 @@ import { Component, ViewEncapsulation } from '@angular/core';
                   >StateInputType</a
                 >&lt;T&gt;
               </li>
-              <li>
-                options?:
-                <a href="/docs/references/config/merge-config">MergeConfig</a>
-              </li>
+              @if (type() === 'arrayById') {
+                <li>
+                  options?:
+                  <a href="/docs/references/config/array-by-id-merge-config"
+                    >ArrayByIdMergeConfig</a
+                  >
+                </li>
+              } @else {
+                <li>
+                  options?:
+                  <a href="/docs/references/config/merge-config">MergeConfig</a>
+                </li>
+              }
             </ul>
             <p>returns:</p>
             <ul>
@@ -53,6 +62,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
               <em>undefined</em> values are handled. This method does not bypass
               resolution, operators, or downstream pipeline stages.
             </p>
+
+            @if (type() === 'arrayById') {
+              <p>
+                For Array By ID Merge, set <em>isDelete</em> to remove incoming
+                entities that match existing identifiers instead of updating or
+                appending them.
+              </p>
+            }
           </td>
         </tr>
       </tbody>
@@ -61,4 +78,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrls: ['../../scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class VaultMergeFluentApiCommonComponent {}
+export class VaultMergeFluentApiCommonComponent {
+  type = input<string>();
+}

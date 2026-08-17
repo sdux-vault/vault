@@ -24,6 +24,14 @@ export const RELATED_TOPICS_MERGE_REGISTRY: RelatedTopicCategoryShape = {
         'Append resolved array items to existing array state using withArrayAppendMergeBehavior in SDuX Vault.'
     },
     {
+      link: '/docs/pipeline/addons/merge/with-array-by-id-merge-behavior',
+      display: 'Array By ID Merge Behavior',
+      title:
+        'Array By ID Merge in SDuX Vault — Identifier-Based Array State Merging',
+      description:
+        'Update, append, or delete array entities by identifier using withArrayByIdMergeBehavior in SDuX Vault.'
+    },
+    {
       link: '/docs/pipeline/behaviors/merge/with-array-merge-behavior',
       display: 'Array Merge Behavior (Default)',
       title: 'Array Merge in SDuX Vault — Default Array Replacement',

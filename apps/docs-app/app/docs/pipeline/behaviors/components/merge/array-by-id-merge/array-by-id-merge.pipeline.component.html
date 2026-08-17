@@ -1,0 +1,411 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<!-- Finished 2026-08-05 -->
+<div class="docs-container">
+  <div class="header">
+    <h2>Array By ID Merge Behavior</h2>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      <strong>Array By ID Merge</strong> is a <em>Merge Behavior</em> that
+      combines array-based <sdux-feature-cell /> State values by an identifier
+      property during the Merge Stage.
+    </p>
+
+    <p>
+      The Behavior updates an existing entity when its identifier matches the
+      incoming entity and appends incoming entities with new identifiers. The
+      identifier property is selected through the <em>FluentApi</em>
+      configuration.
+    </p>
+
+    <p>
+      Array By ID Merge supports deletion of matching entities through the Merge
+      configuration supplied with a merge-style State update. The Behavior
+      returns the merged State value for the remaining Pipeline Stages.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="title">Note</div>
+      <p>
+        The Merge Stage is entered through explicit State-update APIs. A
+        merge-style update supplies the incoming value and optional Merge
+        configuration to the active Merge Behavior.
+      </p>
+    </div>
+  </header>
+
+  <section class="diagram-section">
+    <div class="section-title">Diagrams</div>
+
+    <div class="section-body">
+      <sdux-diagram
+        image="diagrams/1.0/1.2.2-merge-state-flow.svg"
+        [tooltip]="'Merge State Flow'" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Configuration</div>
+
+    <div class="section-body">
+      <p>
+        Array By ID Merge is configured for a
+        <sdux-feature-cell /> through the <em>Merge Stage</em>. The Behavior
+        requires an identifier property name before the <sdux-feature-cell /> is
+        initialized.
+      </p>
+
+      <p>
+        Exactly one Merge Behavior is active for a
+        <sdux-feature-cell /> at any time. When Array By ID Merge is registered,
+        it becomes the active Merge Behavior for that <sdux-feature-cell />.
+      </p>
+
+      <div class="table-title">
+        <a href="/docs/references/options/array-by-id-merge-options"
+          >ArrayByIdMergeOptions</a
+        >
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th class="column-275">Property</th>
+            <th class="column-auto">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              idKey: string
+              <p>required</p>
+            </td>
+            <td>Property name used to identify matching entities.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <sdux-vault-merge-fluent-api-common [type]="'arrayById'" />
+
+      <div class="callout callout-warning">
+        <div class="title">Note</div>
+        <p>
+          The <em>isDelete</em> option is supplied with an individual
+          merge-style update. When enabled, incoming entity identifiers identify
+          entities to remove from the current array.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Evaluation Outcomes</div>
+
+    <div class="section-body">
+      <p>
+        Array By ID Merge evaluates the current committed
+        <sdux-feature-cell /> State and the incoming resolved value to produce
+        one merged result during the <em>Merge Stage</em>.
+      </p>
+
+      <div class="table-title">Identifier-Based Results</div>
+      <table aria-label="Identifier-Based Results">
+        <thead>
+          <tr>
+            <th class="column-300">Inputs</th>
+            <th class="column-25"></th>
+            <th class="column-auto">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong>current:</strong>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 1,
+  name: 'Ada'
+&#125;]</code></pre>
+              <p><strong>next:</strong></p>
+              <pre class="code-inline"><code class="language-ts">&#123;
+  id: 1,
+  name: 'Grace'
+&#125;</code></pre>
+              <p><strong>idKey:</strong> 'id'</p>
+            </td>
+            <td></td>
+            <td>
+              <strong>state:</strong>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 1,
+  name: 'Grace'
+&#125;]</code></pre>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>current:</strong>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 1,
+  name: 'Ada'
+&#125;]</code></pre>
+              <p><strong>next:</strong></p>
+              <pre class="code-inline"><code class="language-ts">&#123;
+  id: 2,
+  name: 'Lin'
+&#125;</code></pre>
+              <p><strong>idKey:</strong> 'id'</p>
+            </td>
+            <td></td>
+            <td>
+              <strong>state:</strong>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 1,
+  name: 'Ada'
+&#125;, &#123;
+  id: 2,
+  name: 'Lin'
+&#125;]</code></pre>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>current:</strong>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 1,
+  name: 'Ada'
+&#125;, &#123;
+  id: 2,
+  name: 'Lin'
+&#125;]</code></pre>
+              <p><strong>next:</strong></p>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 1,
+  name: 'Grace'
+&#125;, &#123;
+  id: 3,
+  name: 'Katherine'
+&#125;]</code></pre>
+            </td>
+            <td></td>
+            <td>
+              <strong>state:</strong>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 1,
+  name: 'Grace'
+&#125;, &#123;
+  id: 2,
+  name: 'Lin'
+&#125;, &#123;
+  id: 3,
+  name: 'Katherine'
+&#125;]</code></pre>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>current:</strong>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 1,
+  name: 'Ada'
+&#125;, &#123;
+  id: 2,
+  name: 'Lin'
+&#125;]</code></pre>
+              <p><strong>next:</strong></p>
+              <pre class="code-inline"><code class="language-ts">&#123;
+  id: 1
+&#125;</code></pre>
+              <p><strong>isDelete:</strong> true</p>
+            </td>
+            <td></td>
+            <td>
+              <strong>state:</strong>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 2,
+  name: 'Lin'
+&#125;]</code></pre>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>current:</strong>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 1
+&#125;, &#123;
+  id: 2
+&#125;]</code></pre>
+              <p><strong>next:</strong></p>
+              <pre class="code-inline"><code class="language-ts">[]</code></pre>
+            </td>
+            <td></td>
+            <td>
+              <strong>state:</strong>
+              <pre class="code-inline"><code class="language-ts">[&#123;
+  id: 1
+&#125;, &#123;
+  id: 2
+&#125;]</code></pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        When an incoming value is <em>undefined</em>, the
+        <em>clearUndefined</em> Merge configuration determines whether the
+        current State is preserved or cleared. This option applies to the
+        merge-style update and does not change the identifier configuration.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Examples</div>
+
+    <div class="section-body">
+      <h4>Example 1: Configure Array By ID Merge in a FeatureCell</h4>
+
+      <p>
+        This example registers Array By ID Merge for an employee array and
+        configures <strong>id</strong> as the identifier property. The
+        <sdux-feature-cell /> uses the FluentApi before initialization.
+      </p>
+
+      <sdux-multi-framework-example
+        description="Configure Array By ID Merge in a FeatureCell">
+        <ng-template #angular>
+          <pre class="code-inline"><code class="language-ts">{{`// app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideVault({ logLevel: 'off' }),
+
+    provideFeatureCell(
+      EmployeeService
+      {
+        key: 'employees',
+        initialState: []
+      },
+      [
+        // Explicitly attach the Array By ID merge behavior
+        withArrayByIdMergeBehavior
+      ]
+    )
+  ]
+};`}}
+
+{{`@FeatureCell`}}&lt;Employee[]&gt;{{`('employees')
+@Injectable({ providedIn: 'root' })
+export class EmployeeService {
+  readonly vault = injectVault`}}&lt;Employee[]&gt;{{`(EmployeeService);
+
+  constructor() {
+    this.vault
+      .withArrayMergeId({ idKey: 'id' })
+      .initialize();
+  }
+}`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`export const employeeCell = FeatureCell`}}&lt;Employee[]&gt;{{`(
+  {
+    key: 'employees',
+    initialState: []
+  },
+  [withArrayByIdMergeBehavior]
+);
+
+employeeCell
+  .withArrayMergeId({ idKey: 'id' })
+  .initialize();`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>Example 2: Update and Delete Entities by Identifier</h4>
+
+      <p>
+        The incoming entity with an existing identifier updates that entity. A
+        merge-style update with <strong>isDelete</strong> removes matching
+        entities from the current array.
+      </p>
+
+      <sdux-multi-framework-example
+        description="Update and Delete Entities by Identifier">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.mergeState({
+  value: { id: 1, name: 'Grace Hopper' }
+});
+
+this.vault.mergeState(
+  { value: { id: 2 } },
+  { isDelete: true }
+);`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.mergeState({
+  value: { id: 1, name: 'Grace Hopper' }
+});
+
+employeeCell.mergeState(
+  { value: { id: 2 } },
+  { isDelete: true }
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+
+      <h4>Example 3: Merge and Delete Arrays of Entities</h4>
+
+      <p>
+        An array merge can update one existing entity and append another in the
+        same merge-style update. An array supplied with
+        <strong>isDelete</strong> removes each matching entity by identifier.
+      </p>
+
+      <sdux-multi-framework-example
+        description="Merge and Delete Arrays of Entities">
+        <ng-template #angular>
+          <pre
+            class="code-inline"><code class="language-ts">{{`this.vault.mergeState({
+  value: [
+    { id: 1, name: 'Grace Hopper' },
+    { id: 3, name: 'Katherine Johnson' }
+  ]
+});
+
+this.vault.mergeState(
+  {
+    value: [
+      { id: 1 },
+      { id: 2 }
+    ]
+  },
+  { isDelete: true }
+);`}}</code></pre>
+        </ng-template>
+        <ng-template #core>
+          <pre
+            class="code-inline"><code class="language-ts">{{`employeeCell.mergeState({
+  value: [
+    { id: 1, name: 'Grace Hopper' },
+    { id: 3, name: 'Katherine Johnson' }
+  ]
+});
+
+employeeCell.mergeState(
+  {
+    value: [
+      { id: 1 },
+      { id: 2 }
+    ]
+  },
+  { isDelete: true }
+);`}}</code></pre>
+        </ng-template>
+      </sdux-multi-framework-example>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

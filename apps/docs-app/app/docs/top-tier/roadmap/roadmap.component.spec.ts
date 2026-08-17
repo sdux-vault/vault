@@ -364,11 +364,18 @@ describe('Component: RoadMap', () => {
     it('should default ASC sort', () => {
       expect(component.sortedAddonRoadMap.slice(0, 5)).toEqual([
         Object({
-          feature: 'Array Apped Merge',
+          feature: 'Array Append Merge',
           isExtendable: true,
           package: '@sdux-vault/addons',
           behavior:
             '<a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior">withArrayAppendMergeBehavior</a>'
+        }),
+        Object({
+          feature: 'Array By Id Merge',
+          isExtendable: true,
+          package: '@sdux-vault/addons',
+          behavior:
+            '<a href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior">withArrayByIdMergeBehavior</a>'
         }),
         Object({
           feature: 'Array Push Merge',
@@ -388,13 +395,8 @@ describe('Component: RoadMap', () => {
           feature: 'Distinct Until Changed Operator',
           isExtendable: true,
           package: '@sdux-vault/addons',
-          behavior: 'withDistinctUntilChangedBehavior'
-        }),
-        Object({
-          feature: 'Error',
-          isExtendable: true,
-          package: '@sdux-vault/addons',
-          behavior: 'N/A'
+          behavior:
+            '<a href="/docs/pipeline/addons/operators/with-distinct-until-changed">withDistinctUntilChangedBehavior</a>'
         })
       ]);
     });
@@ -450,11 +452,18 @@ describe('Component: RoadMap', () => {
           behavior: 'N/A'
         }),
         Object({
-          feature: 'Array Apped Merge',
+          feature: 'Array Append Merge',
           isExtendable: true,
           package: '@sdux-vault/addons',
           behavior:
             '<a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior">withArrayAppendMergeBehavior</a>'
+        }),
+        Object({
+          feature: 'Array By Id Merge',
+          isExtendable: true,
+          package: '@sdux-vault/addons',
+          behavior:
+            '<a href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior">withArrayByIdMergeBehavior</a>'
         }),
         Object({
           feature: 'Array Push Merge',
@@ -469,13 +478,6 @@ describe('Component: RoadMap', () => {
           package: '@sdux-vault/addons',
           behavior:
             '<a href="/docs/pipeline/controllers/with-stepwise-controller">withStepwiseController</a>'
-        }),
-        Object({
-          feature: 'Stepwise Filter',
-          isExtendable: true,
-          package: '@sdux-vault/addons',
-          behavior:
-            '<a href="/docs/pipeline/addons/stepwise/with-stepwise-filter-behavior">withStepwiseFilterBehavior</a>'
         })
       ]);
     });

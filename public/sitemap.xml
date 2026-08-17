@@ -327,6 +327,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/pipeline/addons/merge/with-array-by-id-merge-behavior</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/addons/merge/with-array-merge-behavior</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -885,6 +890,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/docs/references/behaviors/with-array-by-id-merge-behavior</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/docs/references/behaviors/with-array-merge-behavior</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1121,6 +1131,11 @@
   <url>
     <loc>https://www.sdux-vault.com/docs/references/classes/vault-usage-promise-factory-required-error</loc>
     <lastmod>2026-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/config/array-by-id-merge-config</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1897,6 +1912,11 @@
   <url>
     <loc>https://www.sdux-vault.com/docs/references/options/aes256behavior-options</loc>
     <lastmod>2026-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/docs/references/options/array-by-id-merge-options</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

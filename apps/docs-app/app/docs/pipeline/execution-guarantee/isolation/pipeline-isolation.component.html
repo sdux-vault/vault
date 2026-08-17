@@ -6,8 +6,10 @@
   <header class="docs-header">
     <div class="lead">
       <strong>Pipeline Isolation</strong> describes the referential isolation
-      contract that <sdux-brand-name /> enforces at every pipeline boundary to
-      prevent unintended mutations from propagating across stages.
+      contract that <sdux-brand-name /> enforces at every pipeline boundary for
+      supported cloneable state graphs. It prevents unintended mutations from
+      propagating across stages while making partial and unsupported value types
+      explicit.
     </div>
 
     <p>
@@ -20,14 +22,16 @@
     <p>
       These guarantees are not incidental. They are the result of deliberate
       architectural decisions that ensure every pipeline stage operates on an
-      independent copy of the data, eliminating mutation leaks by construction.
+      independent copy of supported cloneable data, eliminating mutation leaks
+      by construction where JavaScript permits full isolation.
     </p>
 
     <p>
       This page is intended for engineers who want a precise understanding of
       <sdux-brand-name />'s isolation boundaries, the types that receive full
       isolation, and the edge cases where JavaScript imposes inherent
-      constraints.
+      constraints. Engineers remain responsible for understanding the documented
+      behavior of partial and unsupported value types.
     </p>
   </header>
 
@@ -39,9 +43,9 @@
     <div class="section-body">
       <p>
         <sdux-brand-name /> enforces referential isolation at every pipeline
-        boundary. All state values passed into and returned from pipeline stages
-        are isolated automatically, preventing unintended mutations from
-        propagating across stage boundaries.
+        boundary for supported cloneable state graphs. State values passed into
+        and returned from pipeline stages are isolated automatically according
+        to the value-type behavior documented below.
       </p>
 
       <p>
@@ -61,8 +65,8 @@
           <strong>Fallback:</strong> When deep cloning is not possible (for
           example functions, promises, or class instances), the pipeline applies
           a deep freeze or returns the value as-is, depending on the type. This
-          prevents mutation where possible and preserves identity where cloning
-          is not meaningful.
+          provides the strongest practical protection without claiming full
+          isolation where cloning is not meaningful.
         </li>
       </ul>
 
@@ -73,7 +77,9 @@
 
       <p>
         Already-frozen objects are recognized as isolated and are returned
-        without additional processing.
+        without additional processing. Engine objects such as <em>Map</em> and
+        <em>Set</em> may still have mutable internal state after being frozen;
+        consult the isolation matrix before relying on full isolation.
       </p>
 
       <p>
@@ -101,15 +107,24 @@
       </p>
 
       <ul>
-        <li>No mutation leaks across pipeline boundaries</li>
+        <li>
+          No mutation leaks across pipeline boundaries for fully isolated value
+          types
+        </li>
         <li>Stable, predictable data flow through all stages</li>
-        <li>Isolation is automatic and independent of user input shape</li>
+        <li>
+          Isolation is automatic for supported cloneable value shapes;
+          partial/unsupported shapes follow the documented matrix
+        </li>
         <li>Cyclic object graphs are handled safely</li>
       </ul>
 
       <p>
-        These guarantees hold regardless of whether the pipeline processes
-        synchronous values, promises, observables, or streams.
+        These guarantees apply to the supported cloneable values produced while
+        processing synchronous values, promises, observables, or streams. The
+        promise, observable, or stream wrapper does not make its internal value
+        state fully cloneable; inspect the value-type entry when using those
+        forms as state.
       </p>
     </div>
   </section>
@@ -162,7 +177,7 @@
         </thead>
         <tbody>
           <tr>
-            <td>✅ Yes</td>
+            <td>✅ Safe</td>
             <td>No mutation leaks possible</td>
           </tr>
           <tr>
@@ -182,243 +197,245 @@
           <thead>
             <tr>
               <th scope="col" class="column-175">Category</th>
+              <th scope="col" class="column-50">Level</th>
               <th scope="col" class="column-150">Type</th>
               <th scope="col" class="column-auto">Clone Behavior</th>
               <th scope="col" class="column-auto">Fallback Behavior</th>
-              <th scope="col" class="column-75">Isolated</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Primitives</td>
-              <td>number, string, boolean, bigint, symbol, null, undefined</td>
+              <td>✅</td>
+              <td>
+                number<br />string<br />boolean<br />bigint<br />symbol<br />null<br />undefined
+              </td>
               <td>Returned as-is</td>
               <td>Returned as-is</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>Plain Objects</td>
+              <td>✅</td>
               <td>{{ '{ a: 1 }' }}</td>
               <td>Deep cloned</td>
               <td>Deep cloned + frozen</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>Arrays</td>
+              <td>✅</td>
               <td>[1, 2, 3]</td>
               <td>Deep cloned</td>
               <td>Deep cloned + frozen</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>JSON-like Data</td>
+              <td>✅</td>
               <td>POJO graphs</td>
               <td>Deep cloned</td>
               <td>Deep cloned + frozen</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>Dates</td>
+              <td>✅</td>
               <td>new Date()</td>
               <td>Cloned</td>
               <td>Frozen</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>RegExp</td>
+              <td>✅</td>
               <td>/abc/g</td>
               <td>Cloned</td>
               <td>Frozen</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>TypedArray</td>
+              <td>✅</td>
               <td>Uint8Array</td>
               <td>Cloned</td>
               <td>Frozen</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>ArrayBuffer</td>
+              <td>✅</td>
               <td>ArrayBuffer</td>
               <td>Cloned</td>
               <td>Frozen</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>DataView</td>
+              <td>✅</td>
               <td>DataView</td>
               <td>Cloned</td>
               <td>Frozen</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>Cyclic Objects</td>
+              <td>✅</td>
               <td>{{ '{ self }' }}</td>
               <td>Cloned with cycles</td>
               <td>Deep cloned + frozen (cycle-safe)</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>Frozen Objects</td>
+              <td>✅</td>
               <td>Object.freeze(obj)</td>
               <td>Returned as-is</td>
               <td>Returned as-is</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>Null-proto Object</td>
+              <td>✅</td>
               <td>Object.create(null)</td>
               <td>Cloned</td>
               <td>Deep cloned + frozen</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>Shared References</td>
+              <td>✅</td>
               <td>{{ '{ a: x, b: x }' }}</td>
               <td>Preserved in clone</td>
               <td>Preserved in clone</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>Sparse Arrays</td>
+              <td>✅</td>
               <td>[ , , 3 ]</td>
               <td>Preserved</td>
               <td>Preserved</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>Boxed Primitives</td>
+              <td>✅</td>
               <td>new Number(1)</td>
               <td>Cloned</td>
               <td>Frozen</td>
-              <td>✅ Yes</td>
             </tr>
             <tr>
               <td>Functions</td>
+              <td>⚠️</td>
               <td>() =&gt; {{ '{}' }}</td>
               <td>Cannot clone</td>
               <td>Returned as-is</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Promises</td>
+              <td>⚠️</td>
               <td>Promise.resolve()</td>
               <td>Cannot clone</td>
               <td>Returned as-is</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Map</td>
+              <td>⚠️</td>
               <td>new Map()</td>
               <td>Deep cloned</td>
               <td>Frozen wrapper</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Set</td>
+              <td>⚠️</td>
               <td>new Set()</td>
               <td>Deep cloned</td>
               <td>Frozen wrapper</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Error</td>
+              <td>⚠️</td>
               <td>new Error()</td>
               <td>Cloned (core fields)</td>
               <td>Frozen</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Class Instance</td>
+              <td>⚠️</td>
               <td>new Foo()</td>
               <td>Prototype stripped</td>
               <td>Frozen instance</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Observable</td>
+              <td>⚠️</td>
               <td>new Observable()</td>
               <td>Cannot clone</td>
               <td>Frozen wrapper</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Getters / Setters</td>
+              <td>⚠️</td>
               <td>{{ '{ get x(){} }' }}</td>
               <td>Getter invoked</td>
               <td>Getter not invoked</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Non-enumerable Props</td>
+              <td>⚠️</td>
               <td>defineProperty</td>
               <td>Dropped</td>
               <td>Preserved if fallback path</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Symbol-keyed Props</td>
+              <td>⚠️</td>
               <td>{{ '{ [sym]: 1 }' }}</td>
               <td>Dropped</td>
               <td>Preserved if fallback path</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Proxy (well-formed)</td>
+              <td>⚠️</td>
               <td>new Proxy()</td>
               <td>Cloned</td>
               <td>Frozen target</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Intl Objects</td>
+              <td>⚠️</td>
               <td>Intl.DateTimeFormat</td>
               <td>Cloned</td>
               <td>Frozen</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>Mixed Graphs</td>
+              <td>⚠️</td>
               <td>fn + object</td>
               <td>Partial clone</td>
               <td>Clone + preserve refs</td>
-              <td>⚠️ Partial</td>
             </tr>
             <tr>
               <td>WeakMap</td>
+              <td>❌</td>
               <td>new WeakMap()</td>
               <td>Cannot clone</td>
               <td>Returned as-is</td>
-              <td>❌ No</td>
             </tr>
             <tr>
               <td>WeakSet</td>
+              <td>❌</td>
               <td>new WeakSet()</td>
               <td>Cannot clone</td>
               <td>Returned as-is</td>
-              <td>❌ No</td>
             </tr>
             <tr>
               <td>DOM Nodes</td>
+              <td>❌</td>
               <td>HTMLElement</td>
               <td>Cannot clone</td>
               <td>Frozen wrapper</td>
-              <td>❌ No</td>
             </tr>
             <tr>
               <td>Proxy (malicious)</td>
+              <td>❌</td>
               <td>fake ownKeys</td>
               <td>Throws</td>
               <td>Throws</td>
-              <td>❌ No</td>
             </tr>
             <tr>
               <td>ES Modules</td>
+              <td>❌</td>
               <td>module namespace</td>
               <td>Cannot clone</td>
               <td>Returned as-is</td>
-              <td>❌ No</td>
             </tr>
           </tbody>
         </table>

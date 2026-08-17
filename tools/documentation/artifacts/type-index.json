@@ -8,6 +8,14 @@
       "relativePath": "libs/addons/src/lib/vault/encrypt/behaviors/aes256/options/aes256-behavior.options.ts",
       "docLink": "options"
     },
+    "ArrayByIdMergeOptions": {
+      "kind": "interface",
+      "docKind": "options",
+      "name": "ArrayByIdMergeOptions",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/merge/array/array-by-id-merge/options/array-by-id-merge-behavior.options.ts",
+      "docLink": "options"
+    },
     "FromStreamOptions": {
       "kind": "interface",
       "docKind": "options",
@@ -694,6 +702,17 @@
       "relativePath": "libs/addons/src/lib/behaviors/merge/array/array-append-merge/with-array-append-merge.behavior.ts",
       "docLink": "behaviors"
     },
+    "withArrayByIdMergeBehavior": {
+      "kind": "behavior",
+      "docKind": "behavior",
+      "name": "withArrayByIdMergeBehavior",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/merge/array/array-by-id-merge/with-array-by-id-merge.behavior.ts",
+      "docLink": "behaviors",
+      "reExportedFrom": [
+        "libs/addons/src/lib/behaviors/merge/array/array-by-id-merge/index.ts"
+      ]
+    },
     "withArrayMergeBehavior": {
       "kind": "behavior",
       "docKind": "behavior",
@@ -941,6 +960,56 @@
       "project": "core",
       "relativePath": "libs/core/src/lib/behaviors/vault/with-tab-sync-state/with-tab-sync-state.behavior.ts",
       "docLink": "behaviors"
+    }
+  },
+  "config": {
+    "ArrayByIdMergeConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "ArrayByIdMergeConfig",
+      "project": "addons",
+      "relativePath": "libs/addons/src/lib/behaviors/merge/array/array-by-id-merge/config/array-by-id-merge.config.ts",
+      "docLink": "config"
+    },
+    "FeatureCellConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "FeatureCellConfig",
+      "project": "engine",
+      "relativePath": "../engine/lib/src/config/feature-cell.config.ts",
+      "docLink": "config"
+    },
+    "InsightConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "InsightConfig",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/config/insight.config.ts",
+      "docLink": "config"
+    },
+    "MergeConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "MergeConfig",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/config/merge.config.ts",
+      "docLink": "config"
+    },
+    "ObjectDeepMergeConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "ObjectDeepMergeConfig",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/config/object-deep-merge.config.ts",
+      "docLink": "config"
+    },
+    "VaultConfig": {
+      "kind": "interface",
+      "docKind": "config",
+      "name": "VaultConfig",
+      "project": "shared",
+      "relativePath": "libs/shared/src/lib/config/vault.config.ts",
+      "docLink": "config"
     }
   },
   "shapes": {
@@ -2085,48 +2154,6 @@
       "project": "shared",
       "relativePath": "libs/shared/src/lib/errors/vault-error.usage.promise-factory-required.ts",
       "docLink": "classes"
-    }
-  },
-  "config": {
-    "FeatureCellConfig": {
-      "kind": "interface",
-      "docKind": "config",
-      "name": "FeatureCellConfig",
-      "project": "engine",
-      "relativePath": "../engine/lib/src/config/feature-cell.config.ts",
-      "docLink": "config"
-    },
-    "InsightConfig": {
-      "kind": "interface",
-      "docKind": "config",
-      "name": "InsightConfig",
-      "project": "shared",
-      "relativePath": "libs/shared/src/lib/config/insight.config.ts",
-      "docLink": "config"
-    },
-    "MergeConfig": {
-      "kind": "interface",
-      "docKind": "config",
-      "name": "MergeConfig",
-      "project": "shared",
-      "relativePath": "libs/shared/src/lib/config/merge.config.ts",
-      "docLink": "config"
-    },
-    "ObjectDeepMergeConfig": {
-      "kind": "interface",
-      "docKind": "config",
-      "name": "ObjectDeepMergeConfig",
-      "project": "shared",
-      "relativePath": "libs/shared/src/lib/config/object-deep-merge.config.ts",
-      "docLink": "config"
-    },
-    "VaultConfig": {
-      "kind": "interface",
-      "docKind": "config",
-      "name": "VaultConfig",
-      "project": "shared",
-      "relativePath": "libs/shared/src/lib/config/vault.config.ts",
-      "docLink": "config"
     }
   },
   "contexts": {

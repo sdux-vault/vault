@@ -177,13 +177,6 @@ export const FutureRoadMapConstants: RoadMapShape[] = [
       'Conditionally persists state based on a predicate, allowing fine-grained control over when persistence should occur.'
   },
   {
-    feature: 'Unique Append Merge',
-    type: 'Merge',
-    isExtendable: true,
-    explanation:
-      'Appends incoming array values while deduplicating entries based on a key or identifier.'
-  },
-  {
     feature: 'Prefer Incoming Merge',
     type: 'Merge',
     isExtendable: true,

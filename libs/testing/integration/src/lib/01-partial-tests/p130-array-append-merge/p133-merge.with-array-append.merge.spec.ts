@@ -10,7 +10,7 @@ import { expectMonitorSnapshot } from '../../structure/utils/expect-monitor-snap
 import { PartialMergeWithArrayAppendService } from './partial-merge.with-array-append.service';
 import { p133Snapshot } from './snap-shots/p133-merge.with-array-append.merge.snapshot';
 
-describe('p130: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
+describe('p133: WithArrayAppend - Initial and Mixed Values Merge Test', () => {
   let testService: PartialMergeWithArrayAppendService;
   let stopListening: () => void;
 

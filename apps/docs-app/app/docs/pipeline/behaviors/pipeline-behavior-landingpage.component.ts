@@ -17,6 +17,7 @@ import { PipelineInterceptorsBehaviorComponent } from './components/interceptors
 import { PipelineInterceptorsWithRxJSComponent } from './components/interceptors/rxjs/rxjs.pipeline.component';
 import { PipelineInterceptorsWithGlobalErrorPauseBehaviorComponent } from './components/interceptors/with-global-error-pause/with-global-error-pause.pipeline.component';
 import { PipelineArrayAppendMergeBehaviorComponent } from './components/merge/array-append-merge/array.append-merge,pipeline.component';
+import { PipelineArrayByIdMergeBehaviorComponent } from './components/merge/array-by-id-merge/array-by-id-merge.pipeline.component';
 import { PipelineArrayMergeBehaviorComponent } from './components/merge/array-merge/array-merge.pipeline.component';
 import { PipelineArrayPushMergeBehaviorComponent } from './components/merge/array-push-merge/array-push-merge.pipeline.component';
 import { PipelineMergeBehaviorComponent } from './components/merge/merge.pipeline.component';
@@ -104,7 +105,8 @@ import { PipelineWhatIsABehaviorComponent } from './what-is-a-behavior/what-is-a
     PipelineCoreTapBehaviorComponent,
     PipelineUpdatingStateBehaviorComponent,
     PipelineQueryBehaviorComponent,
-    PipelineEntityAccessComponent
+    PipelineEntityAccessComponent,
+    PipelineArrayByIdMergeBehaviorComponent
   ],
   templateUrl: './pipeline-behavior-landingpage.component.html',
   styleUrls: ['../../scss/documentation.scss'],

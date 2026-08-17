@@ -10,6 +10,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { NotFoundComponent } from '../../../not-found/not-found.component';
 
+import { ArrayByIdMergeConfigComponent } from './array-by-id-merge-config.component';
 import { FeatureCellConfigComponent } from './feature-cell-config.component';
 import { InsightConfigComponent } from './insight-config.component';
 import { MergeConfigComponent } from './merge-config.component';
@@ -24,6 +25,7 @@ import { VaultConfigComponent } from './vault-config.component';
     CommonModule,
     MatTabsModule,
     MatExpansionModule,
+    ArrayByIdMergeConfigComponent,
     FeatureCellConfigComponent,
     InsightConfigComponent,
     MergeConfigComponent,

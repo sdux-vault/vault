@@ -32,7 +32,7 @@ declare module '@sdux-vault/shared' {
    * Extends the FeatureCell extensions contract with cache-backed entity lookup APIs.
    * These extensions expose optional methods for resolving entities through a state cache.
    */
-  // eslint-disable-next-line
+
   interface FeatureCellExtension<TEntity> {
     /**
      * Resolves an entity by identifier using a cache-backed lookup.
@@ -49,15 +49,7 @@ declare module '@sdux-vault/shared' {
      * @returns An observable that emits the resolved entity value.
      */
     cacheLookup$?<TEntity>(id: string): Observable<TEntity>;
-  }
-}
 
-declare module '@sdux-vault/shared' {
-  /**
-   * Extends the FeatureCell base shape with state cache configuration support.
-   * This extension enables consumers to configure cache behavior directly on the FeatureCell.
-   */
-  interface FeatureCellFluentApi<TEntity> {
     /**
      * Configures state cache behavior for the FeatureCell.
      *

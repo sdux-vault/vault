@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NotFoundComponent } from '../../../not-found/not-found.component';
 
 import { AES256BehaviorOptionsComponent } from './aes256behavior-options.component';
+import { ArrayByIdMergeOptionsComponent } from './array-by-id-merge-options.component';
 import { FromStreamOptionsComponent } from './from-stream-options.component';
 import { LookupBehaviorOptionsComponent } from './lookup-behavior-options.component';
 import { QueryBehaviorOptionsComponent } from './query-behavior-options.component';
@@ -29,6 +30,7 @@ import { WithThrottleControllerOptionsComponent } from './with-throttle-controll
     MatTabsModule,
     MatExpansionModule,
     AES256BehaviorOptionsComponent,
+    ArrayByIdMergeOptionsComponent,
     FromStreamOptionsComponent,
     LookupBehaviorOptionsComponent,
     QueryBehaviorOptionsComponent,
