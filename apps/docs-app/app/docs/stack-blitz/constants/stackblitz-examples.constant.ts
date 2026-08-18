@@ -1,9 +1,8 @@
 import type { StackBlitzExampleShape } from '../shapes/stackblitz-example.shape';
-import { createTutorialExampleGroups } from './stackblitz-tutorial-examples.constant';
 
 /** StackBlitz example group definitions. */
 export function createExampleGroups(brandName: string) {
-  const tutorialGroups = createTutorialExampleGroups();
+  // const tutorialGroups = createTutorialExampleGroups();
   const groups = [
     {
       heading: 'Getting Started',
@@ -143,6 +142,19 @@ export function createExampleGroups(brandName: string) {
           ]
         },
         {
+          title: 'Array By ID Merge',
+          id: 'array-by-id-merge',
+          exampleName: 'array-by-id-merge-example',
+          displayCopyIcon: true,
+          description: `Demonstrates <strong>mergeState</strong> with <strong>withArrayByIdMergeBehavior</strong> — ${brandName} compares incoming records by their <strong>id</strong>, updating matching entries, adding new records, and deleting records by ID when requested. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [
+            { name: 'Angular', key: 'angular' },
+            { name: 'React', key: 'react' },
+            { name: 'Svelte', key: 'svelte' },
+            { name: 'Vue', key: 'vue' }
+          ]
+        },
+        {
           title: 'Filter & Reducer Pipeline',
           id: 'basic-filter-reducer',
           exampleName: 'basic-filter-reducer-example',
@@ -236,8 +248,8 @@ export function createExampleGroups(brandName: string) {
           ]
         }
       ] satisfies StackBlitzExampleShape[]
-    },
-    ...tutorialGroups
+    }
+    // ...tutorialGroups
   ];
 
   return groups.map((group) => ({
