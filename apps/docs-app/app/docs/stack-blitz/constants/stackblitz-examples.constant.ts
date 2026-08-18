@@ -1,8 +1,9 @@
 import type { StackBlitzExampleShape } from '../shapes/stackblitz-example.shape';
+import { createTutorialExampleGroups } from './stackblitz-tutorial-examples.constant';
 
 /** StackBlitz example group definitions. */
 export function createExampleGroups(brandName: string) {
-  // const tutorialGroups = createTutorialExampleGroups();
+  const tutorialGroups = createTutorialExampleGroups();
   const groups = [
     {
       heading: 'Getting Started',
@@ -248,8 +249,8 @@ export function createExampleGroups(brandName: string) {
           ]
         }
       ] satisfies StackBlitzExampleShape[]
-    }
-    // ...tutorialGroups
+    },
+    ...tutorialGroups
   ];
 
   return groups.map((group) => ({
