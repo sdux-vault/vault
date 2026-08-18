@@ -18,7 +18,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   template: `
     <sdux-blog-layout
       title="Your State Updates Are Atomic and Deterministic"
-      date="2026-06-06"
+      date="2026-07-30"
       pillar="TA"
       readingTime="5">
       <header class="docs-header">

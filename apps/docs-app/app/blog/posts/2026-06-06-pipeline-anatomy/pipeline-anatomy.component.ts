@@ -10,7 +10,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   template: `
     <sdux-blog-layout
       title="Pipeline Anatomy — What Happens When You Update State"
-      date="2026-06-06"
+      date="2026-08-11"
       pillar="ED"
       readingTime="8">
       <header class="docs-header">

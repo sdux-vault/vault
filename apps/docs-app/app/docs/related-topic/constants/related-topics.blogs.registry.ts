@@ -328,6 +328,13 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'State Updates Need Policy — SDuX Blog',
       description:
         'Learn how the Policy Layer separates execution authority from state computation and when to use Delay, Throttle, Stepwise, or recovery controllers.'
+    },
+    {
+      link: '/blog/array-state-updates-without-manual-find-and-replace-logic',
+      display: 'Array State Updates Without Manual Find-and-Replace Logic',
+      title: 'Array State Updates — SDuX Blog',
+      description:
+        'Learn how Array By ID Merge updates, appends, and deletes FeatureCell array entities by a configured identifier.'
     }
   ]
 };
