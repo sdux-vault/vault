@@ -24,7 +24,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   template: `
     <sdux-blog-layout
       title="A FeatureCell in Plain JavaScript — No Framework, No Build Step"
-      date="2026-07-22"
+      date="2026-07-23"
       pillar="TA"
       readingTime="7">
       <header class="docs-header">

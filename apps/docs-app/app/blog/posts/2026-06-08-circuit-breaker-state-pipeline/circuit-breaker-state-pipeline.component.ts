@@ -16,7 +16,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   template: `
     <sdux-blog-layout
       title="Circuit Breaker Pattern, Built Into Your State Pipeline"
-      date="2026-06-08"
+      date="2026-08-13"
       pillar="ED"
       readingTime="4">
       <header class="docs-header">

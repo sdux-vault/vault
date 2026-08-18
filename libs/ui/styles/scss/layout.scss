@@ -100,13 +100,14 @@ pre.pre-wrapper {
 @mixin code-block($bg-color, $text-color) {
   background: $bg-color;
   color: $text-color;
-  padding-right: global.$spacing-xs;
+  padding: global.$spacing-xs global.$spacing-xs;
   border-radius: global.$border-radius-xs;
   font-size: calc(1em - 1px);
 }
 
 .code {
   @include code-block(var(--sdux-surface-elevated), var(--sdux-text-black));
+  font-style: italic;
 }
 
 .code-inline {

@@ -397,6 +397,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-08-06-state-updates-need-policy-not-more-middleware/state-updates-need-policy-not-more-middleware.component').then(
         (m) => m.BlogStateUpdatesNeedPolicyNotMoreMiddlewareComponent
       )
+  },
+  {
+    path: 'array-state-updates-without-manual-find-and-replace-logic',
+    data: {
+      category: 'blogs',
+      type: 'array-state-updates-without-manual-find-and-replace-logic'
+    },
+    loadComponent: () =>
+      import('./posts/2026-08-18-array-state-updates-without-manual-find-and-replace-logic/array-state-updates-without-manual-find-and-replace-logic.component').then(
+        (m) => m.BlogArrayStateUpdatesWithoutManualFindAndReplaceLogicComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

@@ -306,5 +306,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-08-06',
     readingTime: 9,
     active: true
+  },
+  {
+    slug: 'array-state-updates-without-manual-find-and-replace-logic',
+    title: 'Array State Updates Without Manual Find-and-Replace Logic',
+    date: '2026-08-18',
+    readingTime: 5,
+    active: true
   }
 ];
