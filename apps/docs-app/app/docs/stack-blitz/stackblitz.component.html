@@ -40,22 +40,20 @@
           </div>
           <ul class="toc" aria-label="Example categories">
             @for (group of exampleGroups; track group.id) {
-              @if (group.tutorialOnly === false) {
-                <li>
-                  <a [routerLink]="[]" [fragment]="group.id">{{
-                    group.heading
-                  }}</a>
-                  <ul>
-                    @for (example of group.examples; track example.id) {
-                      <li>
-                        <a [routerLink]="[]" [fragment]="example.id">{{
-                          example.title
-                        }}</a>
-                      </li>
-                    }
-                  </ul>
-                </li>
-              }
+              <li>
+                <a [routerLink]="[]" [fragment]="group.id">{{
+                  group.heading
+                }}</a>
+                <ul>
+                  @for (example of group.examples; track example.id) {
+                    <li>
+                      <a [routerLink]="[]" [fragment]="example.id">{{
+                        example.title
+                      }}</a>
+                    </li>
+                  }
+                </ul>
+              </li>
             }
           </ul>
         </div>
@@ -98,41 +96,39 @@
   <!-- ============================================================ -->
 
   @for (group of exampleGroups; track group.id) {
-    @if (group.tutorialOnly === false) {
-      <section class="section" [id]="group.id">
-        <div class="section-title-navigation">
-          <div class="section-title">{{ group.heading }}</div>
-          <div class="section-top-link">
-            <a [routerLink]="[]" fragment="top">↑ top</a>
-          </div>
+    <section class="section" [id]="group.id">
+      <div class="section-title-navigation">
+        <div class="section-title">{{ group.heading }}</div>
+        <div class="section-top-link">
+          <a [routerLink]="[]" fragment="top">↑ top</a>
         </div>
-        <div class="section-body">
-          <p>{{ group.description }}</p>
-        </div>
+      </div>
+      <div class="section-body">
+        <p>{{ group.description }}</p>
+      </div>
 
-        @for (example of group.examples; track example.id) {
-          <section class="section-body" [id]="example.id">
-            <div class="h-title-navigation">
-              <div class="h-section-title">
-                <strong> {{ example.title }} Example </strong>
-                @if ($any(example).isVault) {
-                  <img
-                    src="assets/brand/sdux/sdux-vault-logo.svg"
-                    class="vault-badge-icon"
-                    alt="SDuX Vault Licensed feature"
-                    matTooltip="This is a SDuX Vault Licensed feature" />
-                }
-              </div>
-              <div class="h-top-link">
-                <a [routerLink]="[]" fragment="top">↑ top</a>
-              </div>
+      @for (example of group.examples; track example.id) {
+        <section class="section-body" [id]="example.id">
+          <div class="h-title-navigation">
+            <div class="h-section-title">
+              <strong> {{ example.title }} Example </strong>
+              @if ($any(example).isVault) {
+                <img
+                  src="assets/brand/sdux/sdux-vault-logo.svg"
+                  class="vault-badge-icon"
+                  alt="SDuX Vault Licensed feature"
+                  matTooltip="This is a SDuX Vault Licensed feature" />
+              }
             </div>
+            <div class="h-top-link">
+              <a [routerLink]="[]" fragment="top">↑ top</a>
+            </div>
+          </div>
 
-            <sdux-stackblitz-example [example]="example" />
-          </section>
-        }
-      </section>
-    }
+          <sdux-stackblitz-example [example]="example" />
+        </section>
+      }
+    </section>
   }
 
   <!-- ============================================================ -->

@@ -2,7 +2,7 @@ import type { StackBlitzExampleShape } from '../shapes/stackblitz-example.shape'
 
 /** StackBlitz tutorial example group definitions. */
 export function createTutorialExampleGroups() {
-  const groups = [
+  return [
     {
       heading: 'Tutorial',
       tutorialOnly: true,
@@ -125,9 +125,4 @@ export function createTutorialExampleGroups() {
       ] satisfies StackBlitzExampleShape[]
     }
   ];
-
-  return groups.map((group) => ({
-    ...group,
-    examples: [...group.examples].sort((a, b) => a.title.localeCompare(b.title))
-  }));
 }
