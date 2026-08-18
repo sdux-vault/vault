@@ -2514,6 +2514,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/angular/array-by-id-merge</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/angular/async-input-tutorial</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2684,6 +2689,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/react/array-by-id-merge</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/react/basic-filter-reducer</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2735,6 +2745,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/examples/svelte/array-append-merge</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/svelte/array-by-id-merge</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2820,6 +2835,11 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/examples/vue/array-append-merge</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/examples/vue/array-by-id-merge</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
