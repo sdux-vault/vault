@@ -53,14 +53,13 @@
             </button>
           </div>
 
-          <p class="chapter-meta">
-            {{ chapterMetadata[group.id].track }} · Prerequisite:
-            {{ chapterMetadata[group.id].prerequisite }} ·
-            {{ chapterMetadata[group.id].tier }} ·
-            {{ chapterMetadata[group.id].estimatedTime }}
-          </p>
-
           @if (isTutorialGroupExpanded(group.id)) {
+            <div class="chapter-meta">
+              {{ chapterMetadata[group.id].track }} · Prerequisite:
+              {{ chapterMetadata[group.id].prerequisite }} ·
+              {{ chapterMetadata[group.id].tier }} ·
+              {{ chapterMetadata[group.id].estimatedTime }}
+            </div>
             <div
               class="tutorial-step-list"
               [id]="'tutorial-step-list-' + group.id">
