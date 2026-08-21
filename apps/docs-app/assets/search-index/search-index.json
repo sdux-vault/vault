@@ -3707,6 +3707,26 @@
       "url": "/blog/state-updates-need-policy-not-more-middleware",
       "symbols": ["state-updates-need-policy-not-more-middleware"],
       "content": "State Updates Need Policy, Not More Middleware state-updates-need-policy-not-more-middleware ED"
+    },
+    {
+      "id": "blog:array-state-updates-without-manual-find-and-replace-logic",
+      "title": "Array State Updates Without Manual Find-and-Replace Logic",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/array-state-updates-without-manual-find-and-replace-logic",
+      "symbols": ["array-state-updates-without-manual-find-and-replace-logic"],
+      "content": "Array State Updates Without Manual Find-and-Replace Logic array-state-updates-without-manual-find-and-replace-logic SP"
+    },
+    {
+      "id": "blog:svelte-reactivity-without-a-second-state-subscription",
+      "title": "Svelte Reactivity Without a Second State Subscription",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/svelte-reactivity-without-a-second-state-subscription",
+      "symbols": ["svelte-reactivity-without-a-second-state-subscription"],
+      "content": "Svelte Reactivity Without a Second State Subscription svelte-reactivity-without-a-second-state-subscription ED"
     }
   ]
 }

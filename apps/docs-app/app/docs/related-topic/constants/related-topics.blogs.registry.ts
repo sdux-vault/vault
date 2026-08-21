@@ -335,6 +335,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Array State Updates — SDuX Blog',
       description:
         'Learn how Array By ID Merge updates, appends, and deletes FeatureCell array entities by a configured identifier.'
+    },
+    {
+      link: '/blog/svelte-reactivity-without-a-second-state-subscription',
+      display: 'Svelte Reactivity Without a Second State Subscription',
+      title:
+        'Svelte Reactivity Without a Second State Subscription — SDuX Blog',
+      description:
+        'Learn how @sdux-vault/svelte makes FeatureCell State reactive through Svelte effects without manual state$ subscription cleanup.'
     }
   ]
 };

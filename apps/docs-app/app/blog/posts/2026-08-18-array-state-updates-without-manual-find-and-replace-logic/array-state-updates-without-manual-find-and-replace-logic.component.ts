@@ -33,7 +33,12 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <p class="lead">
           Updating collection state should not mean rebuilding the same
           find-and-replace code in every feature.
-          <strong>withArrayByIdMergeBehavior</strong>, included in the
+          <strong
+            ><a
+              href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+              >withArrayByIdMergeBehavior</a
+            ></strong
+          >, included in the
           <span class="code"><sdux-package-name [package]="'addons'" /></span>
           (version 1.1.0 or later) package, gives an
           <sdux-feature-cell [tm]="true" /> one explicit rule for replacing,
@@ -46,7 +51,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           Behavior evaluate each merge-style update consistently.
         </p>
         <div class="callout callout-info">
-          <strong>Key takeaway:</strong> withArrayByIdMergeBehavior
+          <strong>Key takeaway:</strong>
+          <a href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+            >withArrayByIdMergeBehavior</a
+          >
           <ul>
             <li>replaces matching entities</li>
             <li>appends entities with new identifiers</li>
@@ -70,17 +78,23 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             deletion.
           </p>
           <p>
-            withArrayByIdMergeBehavior moves that policy into the Merge Stage.
-            The stage receives the current committed state and the resolved
-            incoming value, then returns a merged state value for the remaining
-            pipeline stages. It does not commit or expose state itself.
+            <a
+              href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+              >withArrayByIdMergeBehavior</a
+            >
+            moves that policy into the Merge Stage. The stage receives the
+            current committed state and the resolved incoming value, then
+            returns a merged state value for the remaining pipeline stages. It
+            does not commit or expose state itself.
           </p>
           <div class="callout callout-warning">
             <p>
               <strong>Configuration requirement:</strong> a
-              <span class="code">idKey</span> is required before the FeatureCell
+              <span class="code">idKey</span> is required before the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
               is initialized. Exactly one Merge Behavior is active for a
-              FeatureCell at a time.
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              at a time.
             </p>
           </div>
         </div>
@@ -92,10 +106,18 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         </div>
         <div class="section-body">
           <p>
-            Register <span class="code">withArrayByIdMergeBehavior</span> with
-            the FeatureCell, then configure the property that identifies each
-            entity. The FluentApi call happens before initialization, so every
-            later merge-style update uses the same identifier rule.
+            Register
+            <span class="code"
+              ><a
+                href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+                >withArrayByIdMergeBehavior</a
+              ></span
+            >
+            with the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+            then configure the property that identifies each entity. The
+            FluentApi call happens before initialization, so every later
+            merge-style update uses the same identifier rule.
           </p>
           <sdux-multi-framework-example
             description="Configure withArrayByIdMergeBehavior in a FeatureCell">
