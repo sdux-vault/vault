@@ -9,6 +9,12 @@ export class FiltersAndReducersService {
       id: 6,
       label: 'Filters and Reducers',
       fragment: 'chapter-6',
+      metadata: {
+        track: 'Core',
+        prerequisite: 'Chapter 5',
+        tier: '★★',
+        estimatedTime: '20–30 min'
+      },
       steps: [
         { id: 1, label: 'Add Filter Stage' },
         { id: 2, label: 'Register Ordered Reducers' },

@@ -20,6 +20,12 @@ describe('Service: Stepwise Pipeline', () => {
       id: 14,
       label: 'Stepwise',
       fragment: 'chapter-14',
+      metadata: {
+        track: 'Lab',
+        prerequisite: 'Chapter 6',
+        tier: '★★★★',
+        estimatedTime: '30-45 min'
+      },
       steps: [
         { id: 1, label: 'Configure Stepwise Pipeline' },
         { id: 2, label: 'Configure Stepwise Resolve' },

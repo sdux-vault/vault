@@ -9,6 +9,12 @@ export class DisplayCharactersService {
       id: 2,
       label: 'Selection: Display Records',
       fragment: 'chapter-2',
+      metadata: {
+        track: 'Core',
+        prerequisite: 'Chapter 1',
+        tier: '★',
+        estimatedTime: '20–30 min'
+      },
       steps: [
         { id: 1, label: 'Add a Dropdown' },
         { id: 2, label: 'Complete Dropdown Tutorial' }

@@ -20,6 +20,12 @@ describe('Service: DisplayCharacterService', () => {
       id: 1,
       label: 'Foundation: Read State',
       fragment: 'top',
+      metadata: {
+        track: 'Core',
+        prerequisite: 'None',
+        tier: '★',
+        estimatedTime: '60-90 minutes'
+      },
       steps: [
         { id: 1, label: 'Angular Project Setup' },
         { id: 2, label: `Install Mock BN` },

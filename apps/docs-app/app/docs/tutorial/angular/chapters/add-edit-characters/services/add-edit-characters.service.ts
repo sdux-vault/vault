@@ -9,6 +9,12 @@ export class AddEditCharactersService {
       id: 3,
       label: 'Create and Edit',
       fragment: 'chapter-3',
+      metadata: {
+        track: 'Core',
+        prerequisite: 'Chapter 2',
+        tier: '★',
+        estimatedTime: '20–30 min'
+      },
       steps: [
         { id: 1, label: 'Configure Merge Behavior' },
         { id: 2, label: 'Add/Edit Capabilities' },

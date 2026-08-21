@@ -6,6 +6,12 @@ describe('Service: Delay Controller', () => {
       id: 9,
       label: 'Delay',
       fragment: 'chapter-9',
+      metadata: {
+        track: 'Lab',
+        prerequisite: 'Chapter 6',
+        tier: '★★★',
+        estimatedTime: '30–45 min'
+      },
       steps: [
         { id: 1, label: 'Configure Delay Controller' },
         { id: 2, label: 'Observe Delayed Execution' },

@@ -9,6 +9,12 @@ export class EncryptAndPersistService {
       id: 10,
       label: 'Encrypt and Persist',
       fragment: 'chapter-10',
+      metadata: {
+        track: 'Lab',
+        prerequisite: 'Chapter 6',
+        tier: '★★★',
+        estimatedTime: '30–45 min'
+      },
       steps: [
         { id: 1, label: 'Configure Encrypt and Persist Behaviors' },
         { id: 2, label: 'Encrypt Feature State' },

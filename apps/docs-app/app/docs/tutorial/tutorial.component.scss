@@ -62,11 +62,27 @@
       gap: global.$spacing-xs;
       width: 100%;
 
-      .chapter-meta {
-        display: flex;
-        align-items: center;
-        gap: global.$spacing-xs;
-        font-size: global.$font-size-sm;
+      .chapter-meta-group {
+        border: 1px solid global.$sdux-primary-base;
+        border-radius: global.$border-radius-md;
+        margin: global.$spacing-xs;
+        padding: global.$spacing-xs;
+
+        .chapter-meta-header,
+        .chapter-meta {
+          display: flex;
+          align-items: center;
+          gap: global.$spacing-xs;
+          font-size: global.$font-size-sm;
+
+          .difficulty {
+            color: global.$sdux-success-base;
+          }
+        }
+
+        .chapter-meta-header {
+          justify-content: space-between;
+        }
       }
 
       .tutorial-steps-heading {

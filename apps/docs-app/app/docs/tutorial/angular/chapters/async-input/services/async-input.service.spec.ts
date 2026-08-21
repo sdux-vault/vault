@@ -20,6 +20,12 @@ describe('Service: Async Input', () => {
       id: 8,
       label: 'Async Input',
       fragment: 'chapter-8',
+      metadata: {
+        track: 'Lab',
+        prerequisite: 'Chapter 7',
+        tier: '★★',
+        estimatedTime: '20–30 min'
+      },
       steps: [
         { id: 1, label: 'Hydrate Initial State' },
         { id: 2, label: 'Resolve a Promise' },

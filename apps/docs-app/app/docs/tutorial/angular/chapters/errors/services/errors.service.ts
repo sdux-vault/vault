@@ -9,6 +9,12 @@ export class ErrorsService {
       id: 7,
       label: 'Errors',
       fragment: 'chapter-7',
+      metadata: {
+        track: 'Core',
+        prerequisite: 'Chapter 6',
+        tier: '★★',
+        estimatedTime: '20–30 min'
+      },
       steps: [
         { id: 1, label: 'Simulate Pipeline Errors' },
         { id: 2, label: 'Display Global Error State' },

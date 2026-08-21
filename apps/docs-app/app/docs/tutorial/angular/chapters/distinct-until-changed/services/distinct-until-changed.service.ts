@@ -9,6 +9,12 @@ export class DistinctUntilChangedService {
       id: 13,
       label: 'Distinct Until Changed',
       fragment: 'chapter-13',
+      metadata: {
+        track: 'Lab',
+        prerequisite: 'Chapter 6',
+        tier: '★★★',
+        estimatedTime: '20–30 min'
+      },
       steps: [
         { id: 1, label: 'Configure Distinct Until Changed' },
         { id: 2, label: 'Submit Same and Changed State' },

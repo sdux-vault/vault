@@ -22,30 +22,30 @@ import { AddEditCharactersChapterComponent } from './chapters/add-edit-character
 import { AddEditCharactersService } from './chapters/add-edit-characters/services/add-edit-characters.service';
 import { AsyncInputChapterComponent } from './chapters/async-input/async-input.chapter.component';
 import { AsyncInputService } from './chapters/async-input/services/async-input.service';
-import { DeleteCharactersChapterComponent } from './chapters/delete-characters/delete-characters.chapter.component';
-import { DeleteCharactersService } from './chapters/delete-characters/services/delete-characters.service';
 import { DelayChapterComponent } from './chapters/delay/delay.chapter.component';
 import { DelayService } from './chapters/delay/services/delay.service';
+import { DeleteCharactersChapterComponent } from './chapters/delete-characters/delete-characters.chapter.component';
+import { DeleteCharactersService } from './chapters/delete-characters/services/delete-characters.service';
 import { DisplayCharacterChapterComponent } from './chapters/display-character/display-character.chapter.component';
 import { DisplayCharacterService } from './chapters/display-character/services/display-character.service';
 import { DisplayCharactersChapterComponent } from './chapters/display-characters/display-characters.chapter.component';
 import { DisplayCharactersService } from './chapters/display-characters/services/display-characters.service';
+import { DistinctUntilChangedChapterComponent } from './chapters/distinct-until-changed/distinct-until-changed.chapter.component';
+import { DistinctUntilChangedService } from './chapters/distinct-until-changed/services/distinct-until-changed.service';
+import { EncryptAndPersistChapterComponent } from './chapters/encrypt-and-persist/encrypt-and-persist.chapter.component';
+import { EncryptAndPersistService } from './chapters/encrypt-and-persist/services/encrypt-and-persist.service';
 import { ErrorsChapterComponent } from './chapters/errors/errors.chapter.component';
 import { ErrorsService } from './chapters/errors/services/errors.service';
 import { FiltersAndReducersChapterComponent } from './chapters/filters-and-reducers/filters-and-reducers.chapter.component';
 import { FiltersAndReducersService } from './chapters/filters-and-reducers/services/filters-and-reducers.service';
 import { LifecycleChapterComponent } from './chapters/lifecycle/lifecycle.chapter.component';
 import { LifecycleService } from './chapters/lifecycle/services/lifecycle.service';
-import { EncryptAndPersistChapterComponent } from './chapters/encrypt-and-persist/encrypt-and-persist.chapter.component';
-import { EncryptAndPersistService } from './chapters/encrypt-and-persist/services/encrypt-and-persist.service';
-import { StateIntrospectionChapterComponent } from './chapters/state-introspection/state-introspection.chapter.component';
 import { StateIntrospectionService } from './chapters/state-introspection/services/state-introspection.service';
-import { TabSyncChapterComponent } from './chapters/tab-sync/tab-sync.chapter.component';
-import { TabSyncService } from './chapters/tab-sync/services/tab-sync.service';
-import { DistinctUntilChangedChapterComponent } from './chapters/distinct-until-changed/distinct-until-changed.chapter.component';
-import { DistinctUntilChangedService } from './chapters/distinct-until-changed/services/distinct-until-changed.service';
-import { StepwiseChapterComponent } from './chapters/stepwise/stepwise.chapter.component';
+import { StateIntrospectionChapterComponent } from './chapters/state-introspection/state-introspection.chapter.component';
 import { StepwiseService } from './chapters/stepwise/services/stepwise.service';
+import { StepwiseChapterComponent } from './chapters/stepwise/stepwise.chapter.component';
+import { TabSyncService } from './chapters/tab-sync/services/tab-sync.service';
+import { TabSyncChapterComponent } from './chapters/tab-sync/tab-sync.chapter.component';
 
 @Component({
   selector: 'sdux-angular-tutorial',
@@ -87,103 +87,6 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     sduxAngular: '1.0.6',
     sduxAddons: '1.0.4'
   } as const;
-
-  protected readonly chapterMetadata: Readonly<
-    Record<
-      number,
-      {
-        readonly track: 'Core path' | 'Capability lab';
-        readonly prerequisite: string;
-        readonly tier: 'Core' | 'Pro';
-        readonly estimatedTime: string;
-      }
-    >
-  > = {
-    1: {
-      track: 'Core path',
-      prerequisite: 'None',
-      tier: 'Core',
-      estimatedTime: '60–90 min'
-    },
-    2: {
-      track: 'Core path',
-      prerequisite: 'Chapter 1',
-      tier: 'Core',
-      estimatedTime: '20–30 min'
-    },
-    3: {
-      track: 'Core path',
-      prerequisite: 'Chapter 2',
-      tier: 'Core',
-      estimatedTime: '30–45 min'
-    },
-    4: {
-      track: 'Core path',
-      prerequisite: 'Chapter 3',
-      tier: 'Core',
-      estimatedTime: '20–30 min'
-    },
-    5: {
-      track: 'Core path',
-      prerequisite: 'Chapter 4',
-      tier: 'Core',
-      estimatedTime: '20–30 min'
-    },
-    6: {
-      track: 'Core path',
-      prerequisite: 'Chapter 5',
-      tier: 'Core',
-      estimatedTime: '30–45 min'
-    },
-    7: {
-      track: 'Core path',
-      prerequisite: 'Chapter 6',
-      tier: 'Core',
-      estimatedTime: '20–30 min'
-    },
-    8: {
-      track: 'Capability lab',
-      prerequisite: 'Chapter 7',
-      tier: 'Core',
-      estimatedTime: '30–45 min'
-    },
-    9: {
-      track: 'Capability lab',
-      prerequisite: 'Chapter 8',
-      tier: 'Core',
-      estimatedTime: '20–30 min'
-    },
-    10: {
-      track: 'Capability lab',
-      prerequisite: 'Chapter 9',
-      tier: 'Pro',
-      estimatedTime: '30–45 min'
-    },
-    11: {
-      track: 'Capability lab',
-      prerequisite: 'Chapter 10',
-      tier: 'Core',
-      estimatedTime: '30–45 min'
-    },
-    12: {
-      track: 'Capability lab',
-      prerequisite: 'Chapter 11',
-      tier: 'Pro',
-      estimatedTime: '20–30 min'
-    },
-    13: {
-      track: 'Capability lab',
-      prerequisite: 'Chapter 12',
-      tier: 'Core',
-      estimatedTime: '20–30 min'
-    },
-    14: {
-      track: 'Capability lab',
-      prerequisite: 'Chapter 13',
-      tier: 'Core',
-      estimatedTime: '30–45 min'
-    }
-  };
 
   readonly #route = inject(ActivatedRoute);
   readonly #displayCharactersService = inject(DisplayCharactersService);

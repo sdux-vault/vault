@@ -20,6 +20,12 @@ describe('Service: State Introspection', () => {
       id: 11,
       label: 'State Introspection',
       fragment: 'chapter-11',
+      metadata: {
+        track: 'Lab',
+        prerequisite: 'Chapter 6',
+        tier: '★★',
+        estimatedTime: '30–45 min'
+      },
       steps: [
         { id: 1, label: 'Read Raw StateSnapshot' },
         { id: 2, label: 'Observe Raw StateSnapshot$' },
