@@ -313,5 +313,12 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-08-18',
     readingTime: 5,
     active: true
+  },
+  {
+    slug: 'svelte-reactivity-without-a-second-state-subscription',
+    title: 'Svelte Reactivity Without a Second State Subscription',
+    date: '2026-08-20',
+    readingTime: 5,
+    active: true
   }
 ];

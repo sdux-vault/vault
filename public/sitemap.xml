@@ -31,6 +31,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/array-state-updates-without-manual-find-and-replace-logic</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/atomic-deterministic-updates</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -178,6 +183,11 @@
   <url>
     <loc>https://www.sdux-vault.com/blog/state-updates-need-policy-not-more-middleware</loc>
     <lastmod>2026-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/svelte-reactivity-without-a-second-state-subscription</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -408,6 +408,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-08-18-array-state-updates-without-manual-find-and-replace-logic/array-state-updates-without-manual-find-and-replace-logic.component').then(
         (m) => m.BlogArrayStateUpdatesWithoutManualFindAndReplaceLogicComponent
       )
+  },
+  {
+    path: 'svelte-reactivity-without-a-second-state-subscription',
+    data: {
+      category: 'blogs',
+      type: 'svelte-reactivity-without-a-second-state-subscription'
+    },
+    loadComponent: () =>
+      import('./posts/2026-08-20-svelte-reactivity-without-a-second-state-subscription/svelte-reactivity-without-a-second-state-subscription.component').then(
+        (m) => m.BlogSvelteReactivityWithoutASecondStateSubscriptionComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //
